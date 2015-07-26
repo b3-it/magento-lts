@@ -1,0 +1,317 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Egovs_Acl>
+			<version>0.1.0</version>
+		</Egovs_Acl>
+	</modules>
+	<global>
+		<blocks>
+			<adminhtml>
+				<rewrite>
+					<xcatalog_product>Egovs_Acl_Block_Adminhtml_Catalog_Product</xcatalog_product>
+					<catalog_product_edit>Egovs_Acl_Block_Adminhtml_Catalog_Product_Edit</catalog_product_edit>
+					<catalog_product_grid>Egovs_Acl_Block_Adminhtml_Catalog_Product_Grid</catalog_product_grid>
+					<catalog_product_attribute>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute</catalog_product_attribute>
+					<catalog_product_edit_tabs>Egovs_Acl_Block_Adminhtml_Catalog_Product_Edit_Tabs</catalog_product_edit_tabs>
+					<catalog_product_edit_tab_super_config>Egovs_Acl_Block_Adminhtml_Catalog_Product_Edit_Tab_Super_Config</catalog_product_edit_tab_super_config>
+					<catalog_product_attribute_edit>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute_Edit</catalog_product_attribute_edit>
+					<catalog_product_attribute_set_main>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute_Set_Main</catalog_product_attribute_set_main>
+					<catalog_product_attribute_set_toolbar_main>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute_Set_Toolbar_Main</catalog_product_attribute_set_toolbar_main>
+					<xcatalog_category_edit_form>Egovs_Acl_Block_Adminhtml_Catalog_Category_Edit_Form</xcatalog_category_edit_form>
+					<newsletter_template_edit>Egovs_Acl_Block_Adminhtml_Newsletter_Template_Edit</newsletter_template_edit>
+					<newsletter_template_grid_renderer_action>Egovs_Acl_Block_Adminhtml_Newsletter_Template_Grid_Renderer_Action</newsletter_template_grid_renderer_action>
+					<xcustomer>Egovs_Acl_Block_Adminhtml_Customer</xcustomer>
+					<xcustomer_edit>Egovs_Acl_Block_Adminhtml_Customer_Edit</xcustomer_edit>
+					<xcustomer_group_edit>Egovs_Acl_Block_Adminhtml_Customer_Group_Edit</xcustomer_group_edit>
+				</rewrite>
+			</adminhtml>
+			<egovsacl>
+				<class>Egovs_Acl_Block</class>
+				
+			</egovsacl>
+		</blocks>
+		<models>
+			<acl>
+				<class>Egovs_Acl_Model</class>
+			</acl>
+		</models>
+		<resources>
+		</resources>
+		<egovsacl>
+			<controller_actions>
+				<catalog_category>
+					<save>admin/catalog/categories/categorysave</save>
+					<delete>admin/catalog/categories/categorydelete</delete>
+				</catalog_category>
+				<catalog_product_attribute>
+					<new>admin/catalog/attributes/attributes/newattribute</new>
+					<save>admin/catalog/attributes/attributes/attributesave</save>
+					<delete>admin/catalog/attributes/attributes/attributedelete</delete>
+				</catalog_product_attribute>
+				<customer>
+					<new>admin/customer/manage/newcustomer</new>
+					<save>admin/customer/manage/customersave</save>
+					<delete>admin/customer/manage/customerdelete</delete>
+				</customer>
+				<customer_group>
+					<save>admin/customer/group/customergroupsave</save>
+					<delete>admin/customer/group/customergroupdelete</delete>
+				</customer_group>
+				<newsletter_queue>
+					<edit>admin/newsletter/template/newslettertemplatequeue</edit>
+				</newsletter_queue>
+				<newsletter_template>		
+					<save>admin/newsletter/template/newslettertemplatesave</save>
+					<delete>admin/newsletter/template/newslettertemplatedelete</delete>
+				</newsletter_template>
+			</controller_actions>
+			<block_buttons>
+				<Mage_Adminhtml_Block_Customer_Group_Edit>
+					<save>admin/customer/group/customergroupsave</save>
+					<delete>admin/customer/group/customergroupdelete</delete>
+				</Mage_Adminhtml_Block_Customer_Group_Edit>
+				<Mage_Adminhtml_Block_Catalog_Category_Edit_Form>
+					<save_button>admin/catalog/categories/categorysave</save_button>
+					<delete_button>admin/catalog/categories/categorydelete</delete_button>
+				</Mage_Adminhtml_Block_Catalog_Category_Edit_Form>
+				<Mage_Adminhtml_Block_Catalog_Product>
+					<add_new>admin/catalog/products/newproducts</add_new>
+				</Mage_Adminhtml_Block_Catalog_Product>
+				<Mage_Adminhtml_Block_Customer>
+					<add>admin/customer/manage/newcustomer</add>
+				</Mage_Adminhtml_Block_Customer>
+				<Mage_Adminhtml_Block_Customer_Edit>
+					<save>admin/customer/manage/customersave</save>
+	    			<save_and_continue>admin/customer/manage/customersave</save_and_continue>
+	    			<delete>admin/customer/manage/customerdelete</delete>			
+				</Mage_Adminhtml_Block_Customer_Edit>
+			</block_buttons>
+		</egovsacl>
+	</global>
+	<adminhtml>
+		<events>
+			<catalog_product_save_before>
+				<observers>
+					<Egovs_Acl_Model_Observer>
+						<type>singleton</type>
+						<class>acl/observer</class>
+						<method>onProductSaveBefore</method>
+					</Egovs_Acl_Model_Observer>
+				</observers>
+			</catalog_product_save_before>
+			<adminhtml_catalog_category_tree_can_add_root_category>
+				<observers>
+					<Egovs_Acl_Model_Observer_root>
+						<class>acl/observer</class>
+						<method>onCategoryCanAddRoot</method>
+					</Egovs_Acl_Model_Observer_root>
+				</observers>
+			</adminhtml_catalog_category_tree_can_add_root_category>
+			<adminhtml_catalog_category_tree_can_add_sub_category>
+				<observers>
+					<Egovs_Acl_Model_Observer_root>
+						<class>acl/observer</class>
+						<method>onCategoryCanAddSub</method>
+					</Egovs_Acl_Model_Observer_root>
+				</observers>
+			</adminhtml_catalog_category_tree_can_add_sub_category>
+			<controller_action_predispatch>
+				<observers>
+					<Egovs_Acl_Model_Observer_root>
+						<class>acl/observer</class>
+						<method>onControllerActionDispatch</method>
+					</Egovs_Acl_Model_Observer_root>
+				</observers>
+			</controller_action_predispatch>
+			<core_block_abstract_prepare_layout_after>
+				<observers>
+					<Egovs_Acl_Model_Observer_Block>
+						<type>singleton</type>
+						<class>acl/observerblock</class>
+						<method>onBlockPrepareLayoutAfter</method>
+					</Egovs_Acl_Model_Observer_Block>
+				</observers>
+			</core_block_abstract_prepare_layout_after>
+		</events>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<catalog>
+							<children>
+								<products>
+									<children>
+										<newproducts translate="title" module="">
+											<title>New Product</title>
+											<sort_order>10</sort_order>
+											<children>
+												<productstatus translate="title" module="">
+													<title>Product Activate</title>
+													<sort_order>30</sort_order>
+												</productstatus>
+												<productsave translate="title" module="">
+													<title>Product Save</title>
+													<sort_order>40</sort_order>
+												</productsave>
+											</children>
+										</newproducts>
+										<disabledproducts translate="title" module="">
+											<title>Disabled Product</title>
+											<sort_order>20</sort_order>
+											<children>
+												<productdelete translate="title" module="">
+													<title>Product Delete</title>
+													<sort_order>20</sort_order>
+												</productdelete>
+												<productstatus translate="title" module="">
+													<title>Product Activate</title>
+													<sort_order>30</sort_order>
+												</productstatus>
+												<productsave translate="title" module="">
+													<title>Product Save</title>
+													<sort_order>40</sort_order>
+												</productsave>
+											</children>
+										</disabledproducts>
+										<enabledproducts translate="title" module="">
+											<title>Enabled Product</title>
+											<sort_order>30</sort_order>
+											<children>
+												<productdelete translate="title" module="">
+													<title>Product Delete</title>
+													<sort_order>20</sort_order>
+												</productdelete>
+												<productstatus translate="title" module="">
+													<title>Product Activate</title>
+													<sort_order>30</sort_order>
+												</productstatus>
+												<productsave translate="title" module="">
+													<title>Product Save</title>
+													<sort_order>40</sort_order>
+												</productsave>
+											</children>
+										</enabledproducts>
+									</children>
+								</products>
+								<attributes>
+									<children>
+										<attributes>
+											<children>
+												<newattribute translate="title" module="">
+													<title>New Attribute</title>
+													<sort_order>10</sort_order>
+												</newattribute>
+												<attributesave translate="title" module="">
+													<title>Save Attribute</title>
+													<sort_order>20</sort_order>
+												</attributesave>
+												<attributedelete translate="title" module="">
+													<title>Delete Attribute</title>
+													<sort_order>30</sort_order>
+												</attributedelete>
+											</children>
+										</attributes>
+										<sets>
+											<children>
+												<newattributeset translate="title" module="">
+													<title>New Attribute Set</title>
+													<sort_order>10</sort_order>
+												</newattributeset>
+												<attributesetsave translate="title" module="">
+													<title>Save Attribute Set</title>
+													<sort_order>20</sort_order>
+												</attributesetsave>
+												<attributesetdelete translate="title"
+													module="">
+													<title>Delete Attribute Set</title>
+													<sort_order>30</sort_order>
+												</attributesetdelete>
+											</children>
+										</sets>
+									</children>
+								</attributes>
+								<categories>
+									<children>
+										<categorysave translate="title" module="">
+											<title>Save Category</title>
+											<sort_order>20</sort_order>
+										</categorysave>
+										<categorydelete translate="title" module="">
+											<title>Delete Category</title>
+											<sort_order>30</sort_order>
+										</categorydelete>
+										<addrootcategory translate="title" module="">
+											<title>Add Root Category</title>
+											<sort_order>40</sort_order>
+										</addrootcategory>
+										<addcategory translate="title" module="">
+											<title>Add Subcategory</title>
+											<sort_order>50</sort_order>
+										</addcategory>
+									</children>
+								</categories>
+							</children>
+						</catalog>
+						<customer>
+							<children>
+								<manage>
+									<children>
+										<newcustomer translate="title" module="">
+											<title>New Customer</title>
+											<sort_order>10</sort_order>
+										</newcustomer>
+										<customersave translate="title" module="">
+											<title>Save Customer</title>
+											<sort_order>20</sort_order>
+										</customersave>
+										<customerdelete translate="title" module="">
+											<title>Delete Customer</title>
+											<sort_order>30</sort_order>
+										</customerdelete>
+									</children>
+								</manage>
+								<group>
+									<children>
+										<customergroupsave translate="title" module="">
+											<title>Save Customer Group</title>
+											<sort_order>20</sort_order>
+										</customergroupsave>
+										<customergroupdelete translate="title"
+											module="">
+											<title>Delete Customer Group</title>
+											<sort_order>30</sort_order>
+										</customergroupdelete>
+									</children>
+								</group>
+							</children>
+						</customer>
+						<newsletter>
+							<children>
+								<template>
+									<children>
+										<newslettertemplatequeue translate="title"
+											module="">
+											<title>Queue Template</title>
+											<sort_order>10</sort_order>
+										</newslettertemplatequeue>
+										<newslettertemplatesave translate="title"
+											module="">
+											<title>Save Template</title>
+											<sort_order>20</sort_order>
+										</newslettertemplatesave>
+										<newslettertemplatedelete translate="title"
+											module="">
+											<title>Delete Template</title>
+											<sort_order>30</sort_order>
+										</newslettertemplatedelete>
+									</children>
+								</template>
+							</children>
+						</newsletter>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+</config>
