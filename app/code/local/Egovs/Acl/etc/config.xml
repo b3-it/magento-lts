@@ -9,7 +9,6 @@
 		<blocks>
 			<adminhtml>
 				<rewrite>
-					<xcatalog_product>Egovs_Acl_Block_Adminhtml_Catalog_Product</xcatalog_product>
 					<catalog_product_edit>Egovs_Acl_Block_Adminhtml_Catalog_Product_Edit</catalog_product_edit>
 					<catalog_product_grid>Egovs_Acl_Block_Adminhtml_Catalog_Product_Grid</catalog_product_grid>
 					<catalog_product_attribute>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute</catalog_product_attribute>
@@ -18,12 +17,7 @@
 					<catalog_product_attribute_edit>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute_Edit</catalog_product_attribute_edit>
 					<catalog_product_attribute_set_main>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute_Set_Main</catalog_product_attribute_set_main>
 					<catalog_product_attribute_set_toolbar_main>Egovs_Acl_Block_Adminhtml_Catalog_Product_Attribute_Set_Toolbar_Main</catalog_product_attribute_set_toolbar_main>
-					<xcatalog_category_edit_form>Egovs_Acl_Block_Adminhtml_Catalog_Category_Edit_Form</xcatalog_category_edit_form>
-					<newsletter_template_edit>Egovs_Acl_Block_Adminhtml_Newsletter_Template_Edit</newsletter_template_edit>
 					<newsletter_template_grid_renderer_action>Egovs_Acl_Block_Adminhtml_Newsletter_Template_Grid_Renderer_Action</newsletter_template_grid_renderer_action>
-					<xcustomer>Egovs_Acl_Block_Adminhtml_Customer</xcustomer>
-					<xcustomer_edit>Egovs_Acl_Block_Adminhtml_Customer_Edit</xcustomer_edit>
-					<xcustomer_group_edit>Egovs_Acl_Block_Adminhtml_Customer_Group_Edit</xcustomer_group_edit>
 				</rewrite>
 			</adminhtml>
 			<egovsacl>
@@ -86,6 +80,11 @@
 	    			<save_and_continue>admin/customer/manage/customersave</save_and_continue>
 	    			<delete>admin/customer/manage/customerdelete</delete>			
 				</Mage_Adminhtml_Block_Customer_Edit>
+				<Mage_Adminhtml_Block_Newsletter_Template_Edit>
+					<save_button>admin/newsletter/template/newslettertemplatesave</save_button>
+					<save_as_button>admin/newsletter/template/newslettertemplatesave</save_as_button>
+					<delete_button>admin/newsletter/template/newslettertemplatedelete</delete_button>
+				</Mage_Adminhtml_Block_Newsletter_Template_Edit>
 			</block_buttons>
 		</egovsacl>
 	</global>
