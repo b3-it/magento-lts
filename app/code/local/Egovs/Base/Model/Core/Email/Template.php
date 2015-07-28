@@ -87,6 +87,10 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
      **/
 	public function send($email, $name=null, array $variables = array())
 	{
+		if(!$this->getTemplateSubject())
+		{
+			$this->setTemplateSubject(Mage::app()->getStore()->getName());
+		}
 		if (!$this->isValidForSend()) {
 			if (!Mage::getStoreConfigFlag('system/smtp/disable'))
 			{
@@ -112,6 +116,48 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 // 		ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
 // 		ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
 
+
+
+		$this->setUseAbsoluteLinks(true);
+		$text = $this->getProcessedTemplate($variables, true);
+		$subject = $this->getProcessedTemplateSubject($variables);
+
+		
+		
+		$setReturnPath = Mage::getStoreConfig(Mage_Core_Model_Email_Template::XML_PATH_SENDING_SET_RETURN_PATH);
+		switch ($setReturnPath) {
+			case 1:
+				$returnPathEmail = $this->getSenderEmail();
+				break;
+			case 2:
+				$returnPathEmail = Mage::getStoreConfig(Mage_Core_Model_Email_Template::XML_PATH_SENDING_RETURN_PATH_EMAIL);
+				break;
+			default:
+				$returnPathEmail = null;
+				break;
+		}
+		
+		if ($this->hasQueue() && $this->getQueue() instanceof Mage_Core_Model_Email_Queue) {
+			/** @var $emailQueue Mage_Core_Model_Email_Queue */
+			$emailQueue = $this->getQueue();
+			$emailQueue->setMessageBody($text);
+			$emailQueue->setMessageParameters(array(
+					'subject'           => $subject,
+					'return_path_email' => $returnPathEmail,
+					'is_plain'          => $this->isPlain(),
+					'from_email'        => $this->getSenderEmail(),
+					'from_name'         => $this->getSenderName(),
+					'reply_to'          => $this->getMail()->getReplyTo(),
+					'return_to'         => $this->getMail()->getReturnPath(),
+			))
+			->addRecipients($emails, $names, Mage_Core_Model_Email_Queue::EMAIL_TYPE_TO)
+			->addRecipients($this->_bccEmails, array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
+			$emailQueue->addMessageToQueue();
+		
+			return true;
+		}
+		
+		
 		$mail = $this->getMail();
 		$adr = $this->_normalizeNamesEmail($emails, $names);
 		if (count($adr) > 1) {
@@ -121,11 +167,7 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		} else {
 			$mail->addTo($adr[0]['email'], empty($adr[0]['name']) ? '' : '=?utf-8?B?'.base64_encode($adr[0]['name']).'?=');
 		}
-
-		$this->setUseAbsoluteLinks(true);
-		$text = $this->getProcessedTemplate($variables, true);
-		$subject = $this->getProcessedTemplateSubject($variables);
-
+		
 		/*
          * 20111220:Frank Rochitzer
          * Mails werden jetzt als Multipart-Content versendet

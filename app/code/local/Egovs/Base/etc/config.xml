@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Egovs_Base>
-			<version>0.1.17</version>
+			<version>0.1.18</version>
 		</Egovs_Base>
 	</modules>
 	<admin>
@@ -185,7 +185,16 @@
 		<models>
 			<egovsbase>
 				<class>Egovs_Base_Model</class>
+				 <resourceModel>egovsbase_resource</resourceModel>
 			</egovsbase>
+			<egovsbase_resource>
+                <class>Egovs_Base_Model_Resource</class>
+                <entities>
+                    <mail_attachment>
+                        <table>egovs_email_queue_attachment</table>
+                    </mail_attachment>
+                </entities>
+            </egovsbase_resource>
 			 <customer>
                 <rewrite>
 					<address_config>Egovs_Base_Model_Customer_Address_Config</address_config>
@@ -199,9 +208,8 @@
 			<core>
 				<rewrite>
 					<email>Egovs_Base_Model_Core_Email</email>
-				</rewrite>
-				<rewrite>
 					<email_template>Egovs_Base_Model_Core_Email_Template</email_template>
+					<email_queue>Egovs_Base_Model_Core_Email_Queue</email_queue>
 				</rewrite>
 			</core>
 			<newsletter>
