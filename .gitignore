@@ -1,3 +1,6 @@
 .settings
 cache
 session
+report
+*.bak
+app/etc/local.xml
