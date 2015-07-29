@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Egovs_Extstock>
+            <version>0.1.3</version>
+            <depends>Egovs_Acl</depends>
+            <depends>Egovs_Extreport</depends>
+        </Egovs_Extstock>
+    </modules>
+    <admin>
+        <routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<Egovs_Extstock_Adminhtml after="Mage_Adminhtml">Egovs_Extstock_Adminhtml</Egovs_Extstock_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+    	<translate>
+            <modules>
+                <Egovs_Extstock>
+                    <files>
+                        <default>Egovs_Extstock.csv</default>
+                    </files>
+                </Egovs_Extstock>
+            </modules>
+        </translate>
+		<menu>
+			<extstock module="extstock" translate="title">
+				<title>Extended Inventory</title>
+				<sort_order>71</sort_order>               
+				<children>
+					<extstockorderlist module="extstock">
+						<title>Manage Stock Orders</title>
+						<sort_order>0</sort_order>
+						<action>adminhtml/extstock_extstock</action>
+					</extstockorderlist>
+					<extstocklist module="extstock">
+						<title>Stock</title>
+						<sort_order>1</sort_order>
+						<action>adminhtml/extstock_extstocklist</action>
+					</extstocklist>
+				</children>
+			</extstock>
+			<report>
+				<children>
+					<extstockroot translate="title" module="extstock">
+	                     <title>Extended Stock</title>
+	                     <children>
+	                         <inwards translate="title" module="reports">
+	                             <title>Inwards</title>
+	                             <action>adminhtml/extstock_report/inwards</action>
+	                         </inwards>
+	                     </children>
+	                 </extstockroot>
+				</children>
+			</report>			
+		</menu>
+		<layout>
+            <updates>
+                <adminhtml>
+                    <file>main.xml</file>
+                </adminhtml>
+                <catalog>
+                    <file>catalog.xml</file>
+                </catalog>
+                <customer>
+                    <file>customer.xml</file>
+                </customer>
+                <extstock>
+                    <file>egovs_extstock.xml</file>
+                </extstock>
+            </updates>
+        </layout>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<extstock translate="title" module="extstock">
+							<title>Extended Inventory</title>
+							<children>
+								<extstockorderlist translate="title" module="extstock">
+									<title>Manage Stock Orders</title>
+									<children>
+										<extstockstatus translate="title" module="">
+											<title>Change Order Status</title>
+											<sort_order>10</sort_order>
+										</extstockstatus>
+										<extstocksave translate="title" module="">
+											<title>Save</title>
+											<sort_order>30</sort_order>
+										</extstocksave>
+										<instock translate="title" module="">
+											<title>Change Stock Status</title>
+											<sort_order>20</sort_order>
+										</instock>
+									</children>
+								</extstockorderlist>
+								<extstocklist translate="title" module="extstock">
+									<title>Stock</title>
+								</extstocklist>
+							</children>	
+						</extstock>
+						<report>
+                          	<children>
+                          		<extstockroot translate="title" module="extstock">
+									<title>Extended Stock</title>
+									<children>
+										<inwards translate="title" module="reports">
+											<title>Inwards</title>
+										</inwards>
+									</children>
+								</extstockroot>
+							</children>
+                        </report>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+    </adminhtml>
+       
+    <global>
+        <models>
+            <extstock>
+                <class>Egovs_Extstock_Model</class>
+                <resourceModel>extstock_mysql4</resourceModel>
+            </extstock>
+            <extstock_mysql4>
+                <class>Egovs_Extstock_Model_Mysql4</class>
+                <entities>
+                    <extstock>
+                        <table>extstock</table>
+                    </extstock>
+                    <salesorder>
+                    	<table>extstock_sales_order</table>
+                    </salesorder>
+                </entities>
+            </extstock_mysql4>
+            <adminhtml>
+            	<rewrite>
+            		<sales_order_create>Egovs_Extstock_Model_Adminhtml_Sales_Order_Create</sales_order_create>
+            	</rewrite>
+            </adminhtml>
+        </models>
+        <resources>
+            <extstock_setup>
+                <setup>
+                    <module>Egovs_Extstock</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </extstock_setup>
+            <extstock_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </extstock_write>
+            <extstock_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </extstock_read>
+        </resources>
+        <blocks>
+            <extstock>
+                <class>Egovs_Extstock_Block</class>                
+            </extstock>
+            <adminhtml>
+                 <rewrite>
+                 	<catalog_product_edit_tab_inventory>Egovs_Extstock_Block_Adminhtml_Catalog_Product_Edit_Tab_Inventory</catalog_product_edit_tab_inventory>
+                 	<catalog_product_edit_tab_super_config_simple>Egovs_Extstock_Block_Adminhtml_Catalog_Product_Edit_Tab_Super_Config_Simple</catalog_product_edit_tab_super_config_simple>
+                 </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <extstock>
+                <class>Egovs_Extstock_Helper</class>
+            </extstock>
+        </helpers>
+        <events>
+        	<checkout_type_onepage_save_order_after>
+        		<observers>
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Egovs_Extstock_Model_Observer</class>
+        				<method>onCheckoutTypeOnepageSaveOrderAfter</method>
+        			</Extstock>
+        		</observers>
+        	</checkout_type_onepage_save_order_after>
+        	<catalog_product_save_after>
+        		<observers>	
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Egovs_Extstock_Model_Observer</class>
+        				<method>onCatalogProductSaveAfter</method>
+        			</Extstock>
+        		</observers>
+        	</catalog_product_save_after>
+        	<sales_order_item_cancel>
+        		<observers>
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Egovs_Extstock_Model_Observer</class>
+        				<method>onSalesOrderItemCancel</method>
+        			</Extstock>
+        		</observers>
+        	</sales_order_item_cancel>
+        	<sales_creditmemo_item_save_after>
+        		<observers>
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Egovs_Extstock_Model_Observer</class>
+        				<method>refundOrderItem</method>
+        			</Extstock>
+        		</observers>
+        	</sales_creditmemo_item_save_after>
+        </events>
+    </global> 
+	<crontab>
+		<jobs>
+			<extstock_lowstock_warning>
+				<schedule>
+					<cron_expr>0 4 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>extstock/lowstock::testLowStock</model>
+				</run>
+			</extstock_lowstock_warning>
+		</jobs>
+	</crontab>
+</config>

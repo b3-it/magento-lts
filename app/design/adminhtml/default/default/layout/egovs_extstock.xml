@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<adminhtml_catalog_product_edit>
+		<reference name="product_tabs">
+			<block type="extstock/adminhtml_catalog_product_edit_tab_extstock" name="tab_extstock" />					
+			<action method="addTabAfter"><name>extstock</name><block>tab_extstock</block><after>inventory</after></action>
+		</reference>
+	</adminhtml_catalog_product_edit>
+	
+	<adminhtml_extstock_extstock_index>
+        <reference name="content">
+            <block type="extstock/adminhtml_extstock" name="extstock" />
+        </reference>
+    </adminhtml_extstock_extstock_index>
+    <adminhtml_extstock_extstocklist_index>
+        <reference name="content">
+            <block type="extstock/adminhtml_extstocklist" name="extstocklist" />
+        </reference>
+    </adminhtml_extstock_extstocklist_index>
+</layout>
