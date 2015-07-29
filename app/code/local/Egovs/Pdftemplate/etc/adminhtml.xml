@@ -10,12 +10,12 @@
 	                	<pdftemplate module="pdftemplate">
 	                    	<title>Templates</title>
 	                    	<sort_order>0</sort_order>
-	                    	<action>pdftemplate/adminhtml_template</action>
+	                    	<action>adminhtml/pdftemplate_template</action>
 	                	</pdftemplate>
 	                	<pdftemplateblock module="pdftemplate">
 	                    	<title>Blocks</title>
 	                    	<sort_order>10</sort_order>
-	                    	<action>pdftemplate/adminhtml_blocks</action>
+	                    	<action>adminhtml/pdftemplate_blocks</action>
 	                	</pdftemplateblock>
 	                </children>
                 </pdftemplates>
@@ -31,6 +31,7 @@
                 <children>
                     <system>
                         <children>
+                        <!-- die ACL's müssen mit den  Menueeinträgen übereinstimmen-->
                             <pdftemplates>
                                 <title>PDF Templates</title>
                                 <sort_order>10</sort_order>

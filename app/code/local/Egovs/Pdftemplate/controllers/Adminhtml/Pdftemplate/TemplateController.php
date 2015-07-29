@@ -11,7 +11,7 @@
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 
-class Egovs_Pdftemplate_Adminhtml_TemplateController extends Mage_Adminhtml_Controller_Action
+class Egovs_Pdftemplate_Adminhtml_Pdftemplate_TemplateController extends Mage_Adminhtml_Controller_Action
 {
 
 	protected function _initAction() {

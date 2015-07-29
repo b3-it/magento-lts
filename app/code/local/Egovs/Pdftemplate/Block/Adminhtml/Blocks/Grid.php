@@ -67,23 +67,27 @@ class Egovs_Pdftemplate_Block_Adminhtml_Blocks_Grid extends Mage_Adminhtml_Block
           'options'   => $groups
       ));
 */ 
-      $phash = Mage::helper('paymentbase')->getActivePaymentMethods();
-      $phash['all'] = Mage::helper('paymentbase')->__('All Payment Methods');
       
-      
-      $this->addColumn('payment', array(
-          'header'    => Mage::helper('paymentbase')->__('Payment Method'),
-          //'align'     =>'right',
-          'width'     => '200px',
-          'index'     => 'payment',
-      	  'type'      => 'options',
-          'options'   => $phash
-      ));
+      if(Mage::helper('pdftemplate')->isModuleEnabled('Egovs_Paymentbase'))
+      {
+	      $phash = Mage::helper('paymentbase')->getActivePaymentMethods();
+	      $phash['all'] = Mage::helper('paymentbase')->__('All Payment Methods');
+	      
+	      
+	      $this->addColumn('payment', array(
+	          'header'    => Mage::helper('paymentbase')->__('Payment Method'),
+	          //'align'     =>'right',
+	          'width'     => '200px',
+	          'index'     => 'payment',
+	      	  'type'      => 'options',
+	          'options'   => $phash
+	      ));
+      }
       
       $shipping = Mage::getModel('adminhtml/system_config_source_shipping_allowedmethods')->toOptionArray();
      
       $phash = array();
-      $phash['all'] = Mage::helper('paymentbase')->__('All Shipping Methods');
+      $phash['all'] = Mage::helper('pdftemplate')->__('All Shipping Methods');
       //Leerer Eintrag wird von Magento erzeugt
       foreach ($shipping as $option) {
       	if (empty($option['label'])) {
@@ -100,7 +104,7 @@ class Egovs_Pdftemplate_Block_Adminhtml_Blocks_Grid extends Mage_Adminhtml_Block
      
       
       $this->addColumn('shipping', array(
-          'header'    => Mage::helper('paymentbase')->__('Shipping Method'),
+          'header'    => Mage::helper('pdftemplate')->__('Shipping Method'),
           //'align'     =>'right',
           'width'     => '200px',
           'index'     => 'shipping',

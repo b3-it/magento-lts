@@ -5,33 +5,15 @@
             <version>0.1.5</version>
         </Egovs_Pdftemplate>
     </modules>
-    <frontend>
-        <routers>
-            <pdftemplate>
-                <use>standard</use>
-                <args>
-                    <module>Egovs_Pdftemplate</module>
-                    <frontName>pdftemplate</frontName>
-                </args>
-            </pdftemplate>
-        </routers>
-        <layout>
-            <updates>
-                <pdftemplate>
-                    <file>pdftemplate.xml</file>
-                </pdftemplate>
-            </updates>
-        </layout>
-    </frontend>
     <admin>
         <routers>
-			<pdftemplate>
-				<use>admin</use>
+			<adminhtml>	
 				<args>
-					<module>Egovs_Pdftemplate</module>
-					<frontName>pdftemplate</frontName>
+					<modules>
+						<Egovs_Pdftemplate_Adminhtml after="Mage_Adminhtml">Egovs_Pdftemplate_Adminhtml</Egovs_Pdftemplate_Adminhtml>
+					</modules>
 				</args>
-			</pdftemplate>
+			</adminhtml>
         </routers>
     </admin>
     <adminhtml>
@@ -47,7 +29,7 @@
 		<layout>
 			<updates>
 				<pdftemplate>
-					<file>pdftemplate.xml</file>
+					<file>egovs_pdftemplate.xml</file>
 				</pdftemplate>
 			</updates>
 		</layout>

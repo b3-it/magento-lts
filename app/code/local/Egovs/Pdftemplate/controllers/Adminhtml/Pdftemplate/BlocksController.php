@@ -12,7 +12,7 @@
  */
 
 
-class Egovs_Pdftemplate_Adminhtml_BlocksController extends Mage_Adminhtml_Controller_action
+class Egovs_Pdftemplate_Adminhtml_Pdftemplate_BlocksController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
