@@ -131,6 +131,15 @@
                 <class>Egovs_Pdftemplate_Helper</class>
             </pdftemplate>
         </helpers>
+        <translate>
+			<modules>
+				<Egovs_Pdftemplate>
+					<files>
+						<default>Egovs_Pdftemplate.csv</default>
+					</files>
+				</Egovs_Pdftemplate>
+			</modules>
+		</translate>
 	    <pdftemplate_taxlabels>
         		<taxlabels>
 	        	<mwst0>

@@ -50,6 +50,7 @@ class Egovs_Base_Model_Core_Email_Mailer extends Mage_Core_Model_Email_Template_
         // Send all emails from corresponding list
         while (!empty($this->_emailInfos)) {
             $emailInfo = array_pop($this->_emailInfos);
+            $emailTemplate->load($this->getTemplateId());
             // Handle "Bcc" recepients of the current email
             $emailTemplate->addBcc($emailInfo->getBccEmails());
             // Set required design parameters and delegate email sending to Mage_Core_Model_Email_Template
@@ -61,9 +62,9 @@ class Egovs_Base_Model_Core_Email_Mailer extends Mage_Core_Model_Email_Template_
             	$variables = array();
             }
             
-            $emailTemplate->load($this->getTemplateId());
-            $text = $this->getProcessedTemplate($variables, true);
-            $subject = $this->getProcessedTemplateSubject($variables);
+            
+            $text = $emailTemplate->getProcessedTemplate($variables, true);
+            $subject = $emailTemplate->getProcessedTemplateSubject($variables);
             
             /*
             $emails = array_values(is_array($email) ? $email : array($email));

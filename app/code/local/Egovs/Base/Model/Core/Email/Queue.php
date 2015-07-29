@@ -61,8 +61,8 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
             ->load();
 
 
-        ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
-        ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
+        //ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
+        //ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
 
         /** @var $message Mage_Core_Model_Email_Queue */
         foreach ($collection as $message) {
