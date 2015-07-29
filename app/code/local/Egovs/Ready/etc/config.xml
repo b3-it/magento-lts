@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Egovs_Ready>
+			<version>0.1.0.0</version>
+		</Egovs_Ready>
+	</modules>
+	
+	<global>
+		<blocks>
+			<egovsready>
+				<class>Egovs_Ready_Block</class>
+			</egovsready>
+		</blocks>
+		<helpers>
+			<egovsready>
+				<class>Egovs_Ready_Helper</class>
+			</egovsready>
+		</helpers>
+	</global>
+	
+	<frontend>
+		<layout>
+			<updates>
+				<egovsready>
+					<file>egovsready.xml</file>
+				</egovsready>
+			</updates>
+		</layout>
+	</frontend>
+</config>
