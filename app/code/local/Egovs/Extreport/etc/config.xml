@@ -1,0 +1,265 @@
+<?xml version="1.0" ?>
+<config>
+        <modules>
+            <Egovs_Extreport>
+                <version>0.1.1</version>
+                <depends><Egovs_Extstock /></depends>
+            </Egovs_Extreport>
+        </modules>
+        <global>
+           <blocks>
+                <extreport>
+                	<class>Egovs_Extreport_Block_Adminhtml</class>
+                </extreport>
+            </blocks>
+            <models>
+	            <extreport>
+	            	<class>Egovs_Extreport_Model</class>
+	            	<resourceModel>extreport_mysql4</resourceModel>	            	
+	            </extreport>
+            	<extreport_mysql4>
+                	<class>Egovs_Extreport_Model_Mysql4</class>
+                	<entities>
+	                    <log_visitor>
+	                        <table>log_visitor</table>
+	                    </log_visitor>
+                	</entities>
+            	</extreport_mysql4>
+            	<reports_mysql4>
+            		<rewrite>
+	            		<report_collection>Egovs_Extreport_Model_Mysql4_Report_Collection</report_collection>
+	            	</rewrite>
+	            	<rewrite>
+	            		<shipping_collection>Egovs_Extreport_Model_Mysql4_Sales_Shipping_Collection</shipping_collection>
+	            	</rewrite>
+	            	<rewrite>
+	            		<tax_collection>Egovs_Extreport_Model_Mysql4_Sales_Tax_Collection</tax_collection>
+	            	</rewrite>
+            	</reports_mysql4>
+            </models>
+            <resources>
+            	<extreport_read>
+	                <connection>
+	                    <use>core_read</use>
+	                </connection>
+	            </extreport_read>
+	        </resources>
+        	<helpers>
+	            <extreport>
+	                <class>Egovs_Extreport_Helper</class>
+	            </extreport>    
+	        </helpers>
+        </global>
+        <admin>
+	        <routers>
+				<extreport>
+					<use>admin</use>
+					<args>
+						<module>Egovs_Extreport</module>
+						<frontName>extreport</frontName>
+					</args>
+				</extreport>
+	        </routers>
+        </admin>
+        <adminhtml>
+	        <translate>
+		        <modules>
+		            <Egovs_Extreport>
+		                <files>
+		                    <default>Egovs_Extreport.csv</default>
+		                </files>
+		            </Egovs_Extreport>
+		        </modules>
+	    	</translate>
+	        <menu>
+	          <report>
+	           	<children>
+	                 <visitorsroot translate="title" module="reports">
+	                     <title>Visitors</title>
+	                     <children>
+	                         <visitstotal translate="title" module="reports">
+	                             <title>Visitors Total</title>
+	                             <action>extreport/adminhtml_visitors/totals</action>
+	                         </visitstotal>
+	                     </children>
+	                 </visitorsroot>
+	                 <customers translate="title" module="reports">
+	                     <children>
+	                         <customeractivity translate="title" module="reports">
+	                             <title>Activity</title>
+	                             <action>extreport/adminhtml_customer/activity</action>
+	                         </customeractivity>
+	                     </children>
+	                 </customers>
+	                 <products translate="title" module="reports">
+	                     <children>
+	                     	<stockflow translate="title" module="extreport">
+	                             <title>Stock flow</title>
+	                             <action>extreport/adminhtml_product/stockflow</action>
+	                         </stockflow>
+	                         <overview translate="title" module="reports">
+	                             <title>Overview</title>
+	                             <action>extreport/adminhtml_product/overview</action>
+	                         </overview>
+	                         <shipped translate="title" module="extreport">
+	                             <title>Shipped</title>
+	                             <action>extreport/adminhtml_product/shipped</action>
+	                         </shipped>
+	                     </children>
+	                 </products>
+	                 <salesroot translate="title" module="reports">
+	                     <children>
+	                         <revenue translate="title" module="reports">
+	                         	 <title>Yield</title>
+	                             <action>extreport/adminhtml_sales/revenue</action>
+	                         </revenue>
+	                     	<costunit translate="title" module="reports">
+	                     		<title>KLR</title>
+	                     		<action>extreport/adminhtml_sales/costunit</action>
+	                     	</costunit>
+	                         <quantityordered translate="title" module="extreport">
+	                            <title>Sold Products</title>
+	                            <action>extreport/adminhtml_sales/quantityordered</action>
+	                         </quantityordered>
+	                         <kassenzeichen translate="title" module="extreport">
+	                            <title>Kassenzeichen</title>
+	                            <action>extreport/adminhtml_sales/kassenzeichen</action>                                       	
+	                         </kassenzeichen>
+	                         <weight translate="title" module="extreport">
+	                            <title>Weight</title>
+	                            <action>extreport/adminhtml_sales/weight</action>                                       	
+	                         </weight>
+	                        <haushaltsstelle  module="extreport">
+	                            <title>Haushaltsstelle</title>
+	                            <action>extreport/adminhtml_sales/haushaltsstelle</action>
+	                         </haushaltsstelle>
+	                     </children>
+	                 </salesroot>             	
+	             </children>
+	          </report>
+	         </menu>
+	         <acl>
+	         	<!--  Bei Änderung ist Logout und erneuter Login nötig!
+	         	source:http://activecodeline.com/magento-module-development-building-interface-with-config-file-and-reusing-config-values
+	         	-->
+	             <resources>
+	                 <admin>
+	                 	<children>
+	                 		<report>
+                            	<children>
+                            		<visitorsroot>
+                            			<title>Visitors</title>
+										<children>
+											<visitstotal translate="title" module="reports">
+												<title>Visitors Total</title>
+											</visitstotal>
+										</children>
+									</visitorsroot>
+									<customers>
+										<children>
+											<customeractivity translate="title" module="reports">
+												<title>Activity</title>
+											</customeractivity>
+										</children>
+									</customers>
+                            		<products>
+				                    	<children>
+											<stockflow translate="title" module="extreport">
+												<title>Stock flow</title>
+											</stockflow>
+											<overview translate="title" module="reports">
+												<title>Overview</title>
+											</overview>
+											<shipped translate="title" module="extreport">
+												<title>Shipped</title>
+											</shipped>
+										</children>
+				                 	</products>
+                            		<salesroot>
+                            			<children>
+                            				<revenue translate="title"	module="reports">
+												<title>Yield</title>
+											</revenue>
+                            				<costunit translate="title"	module="reports">
+                            					<title>Cost unit</title>
+                            				</costunit>
+											<quantityordered translate="title" module="extreport">
+												<title>Sold Products</title>
+											</quantityordered>
+											<kassenzeichen translate="title" module="extreport">
+												<title>Kassenzeichen</title>
+											</kassenzeichen>
+											<weight translate="title" module="extreport">
+												<title>Weight</title>
+											</weight>
+											<haushaltsstelle module="extreport">
+												<title>Haushaltsstelle</title>
+											</haushaltsstelle>
+                            			</children>
+                            		</salesroot>
+                            	</children>
+                            </report>
+	                        <system>
+	                            <children>
+	                                <config>
+	                                    <children>
+	                                        <reports translate="title" module="reports">
+	                                            <title>Reports</title>
+	                                        </reports>
+	                                    </children>
+	                                </config>
+	                            </children>
+	                        </system>
+	                    </children>
+	                 </admin>
+	             </resources>
+	         </acl>
+         </adminhtml>
+         
+         <default>
+			<reports>
+				<productoverview>                    
+                   	<id>1</id>
+					<name>1</name>
+					<custom_name>1</custom_name>
+					<sku>1</sku>
+					<type>1</type>
+					<category>1</category>
+					<price>1</price>
+					<taxclass>1</taxclass>
+					<weight>1</weight>
+					<qty>1</qty>
+					<visibility>1</visibility>
+					<status>1</status>
+					<availability>1</availability>
+					<website>1</website>
+                </productoverview>
+				<salessettled>
+					<increment_id>1</increment_id>
+					<created_at>1</created_at>
+					<order_increment_id>1</order_increment_id>
+                    <order_created_at>1</order_created_at>
+					<billing_firstname>1</billing_firstname>
+					<billing_lastname>1</billing_lastname>
+					<state>1</state>
+                    <grand_total>1</grand_total>
+                    <type>1</type>
+				</salessettled>
+				<salesoutstanding>
+					<increment_id>1</increment_id>
+					<created_at>1</created_at>
+					<order_increment_id>1</order_increment_id>
+                    <order_created_at>1</order_created_at>
+					<billing_firstname>1</billing_firstname>
+					<billing_lastname>1</billing_lastname>
+					<state>1</state>
+                    <grand_total>1</grand_total>
+                    <type>1</type>
+				</salesoutstanding>
+				<costunit>
+					<!-- Bruttopreise anzeigen siehe Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX -->
+					<tax_sales_display_price>2</tax_sales_display_price>
+				</costunit>
+			</reports>
+		 </default>
+</config>

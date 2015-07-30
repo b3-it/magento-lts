@@ -1,0 +1,4 @@
+<?php
+class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_Creditmemo_Totals_Item extends Mage_Adminhtml_Block_Sales_Order_Totals_Item
+{
+}

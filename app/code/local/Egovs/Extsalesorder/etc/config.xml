@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Egovs_Extsalesorder>
+			<version>0.2.1</version>
+			<depends><Egovs_Base /></depends>
+		</Egovs_Extsalesorder>
+	</modules>
+	<global>
+		<blocks>
+			<extsalesorder>
+				<class>Egovs_Extsalesorder_Block</class>
+			</extsalesorder>
+			<adminhtml>
+				<rewrite>
+					<sales_invoice_grid>Egovs_Extsalesorder_Block_Adminhtml_Sales_Invoice_Grid</sales_invoice_grid>
+					<sales_order_view>Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_View</sales_order_view>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+		<models>
+			<extsalesorder>
+				<class>Egovs_Extsalesorder_Model</class>
+			</extsalesorder>
+			<sales>
+				<rewrite>
+					<order>Egovs_Extsalesorder_Model_Sales_Order</order>
+				</rewrite>
+			</sales>
+		</models>
+		<resources>
+            <!-- initialize sql upgrade setup -->
+            <!-- folder name within sql folder -->
+            <egovs_extsalesorder_setup>
+                <setup>
+                    <module>Egovs_Extsalesorder</module>
+                    <class>Mage_Sales_Model_Resource_Setup</class>
+                </setup>
+            </egovs_extsalesorder_setup>
+        </resources>
+		<helpers>
+			<extsalesorder>
+				<class>Egovs_Extsalesorder_Helper</class>
+			</extsalesorder>
+		</helpers>
+		<events>
+			<!-- Add observer configuration -->
+            <sales_order_invoice_resource_init_virtual_grid_columns>
+                <observers>
+                    <extsalesorder>
+                        <model>extsalesorder/sales_observer</model>
+                        <method>addColumnToInvoiceResource</method>
+                    </extsalesorder>
+                </observers>
+            </sales_order_invoice_resource_init_virtual_grid_columns>
+            <sales_order_resource_init_virtual_grid_columns>
+                <observers>
+                    <extsalesorder>
+                        <model>extsalesorder/sales_observer</model>
+                        <method>addColumnToOrderResource</method>
+                    </extsalesorder>
+                </observers>
+            </sales_order_resource_init_virtual_grid_columns>
+            <adminhtml_sales_order_creditmemo_register_before>
+				<observers>
+        			<specialordercancel>
+        				<type>singleton</type>
+        				<class>Egovs_Specialordercancel_Model_Observer</class>
+        				<method>onAdminhtmlSalesOrderCreditmemoRegisterBefore</method>
+        			</specialordercancel>
+        		</observers>
+			</adminhtml_sales_order_creditmemo_register_before>
+		</events>
+		<sales>
+			<order>
+				<!-- 
+					Wir benutzen hier einen speziellen Status um einen Spezial-Storno zu markieren 
+				-->				
+                <statuses>
+                    <special_canceled translate="label"><label>Returns</label></special_canceled>
+                </statuses>
+                <states>
+                    <closed translate="label">
+                        <statuses>
+                            <special_canceled/>
+                        </statuses>
+                    </closed>
+                </states>
+            </order>
+		</sales>
+	</global>
+	<admin>
+        <routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Egovs_Extsalesorder_Adminhtml before="Mage_Adminhtml">Egovs_Extsalesorder_Adminhtml</Egovs_Extsalesorder_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+	<adminhtml>
+		<translate>
+			<modules>
+				<Egovs_Extsalesorder>
+					<files>
+						<default>Egovs_Extsalesorder.csv</default>
+					</files>
+				</Egovs_Extsalesorder>
+			</modules>
+		</translate>
+		<acl>
+			<resources>
+				<admin>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+            <updates>
+                <extsalesorder>
+                    <file>egovs_extsalesorder.xml</file>
+                </extsalesorder>
+            </updates>
+        </layout>
+	</adminhtml>
+</config>
