@@ -85,7 +85,7 @@
             <codePool>local</codePool>
         </Egovs_Extnewsletter>
         <Egovs_Extreport>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Extreport>
         <Egovs_Extsalesorder>
@@ -130,10 +130,6 @@
             <active>false</active>
             <codePool>local</codePool>
         </Egovs_Informationservice>
-        <Egovs_Ldap>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Egovs_Ldap>
         <Egovs_Openaccountpayment>
             <active>false</active>
             <codePool>local</codePool>
@@ -159,7 +155,7 @@
             <codePool>local</codePool>
         </Egovs_Pdftemplate>
         <Egovs_ProductFile>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_ProductFile>
         <Egovs_Saferpay>
@@ -171,7 +167,7 @@
             </depends>
         </Egovs_Saferpay>
         <Egovs_Search>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Search>
         <Egovs_Shipment>

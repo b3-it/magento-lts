@@ -13,7 +13,7 @@
  * @copyright  	Copyright (c) 2011 TRW-NET - http://www.trw-net.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_Extreport_Adminhtml_SalesController extends Egovs_Extreport_Controller_Abstract
+class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extreport_Controller_Abstract
 {
 	protected $_group = 'salesroot';
 	

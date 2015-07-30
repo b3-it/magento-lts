@@ -52,14 +52,14 @@
         </global>
         <admin>
 	        <routers>
-				<extreport>
-					<use>admin</use>
-					<args>
-						<module>Egovs_Extreport</module>
-						<frontName>extreport</frontName>
-					</args>
-				</extreport>
-	        </routers>
+				<adminhtml>	
+				<args>
+					<modules>
+						<Egovs_Extreport_Adminhtml after="Mage_Adminhtml">Egovs_Extreport_Adminhtml</Egovs_Extreport_Adminhtml>
+					</modules>
+				</args>
+				</adminhtml>
+			</routers>
         </admin>
         <adminhtml>
 	        <translate>
@@ -79,7 +79,7 @@
 	                     <children>
 	                         <visitstotal translate="title" module="reports">
 	                             <title>Visitors Total</title>
-	                             <action>extreport/adminhtml_visitors/totals</action>
+	                             <action>adminhtml/extreport_visitors/totals</action>
 	                         </visitstotal>
 	                     </children>
 	                 </visitorsroot>
@@ -87,7 +87,7 @@
 	                     <children>
 	                         <customeractivity translate="title" module="reports">
 	                             <title>Activity</title>
-	                             <action>extreport/adminhtml_customer/activity</action>
+	                             <action>adminhtml/extreport_customer/activity</action>
 	                         </customeractivity>
 	                     </children>
 	                 </customers>
@@ -95,15 +95,15 @@
 	                     <children>
 	                     	<stockflow translate="title" module="extreport">
 	                             <title>Stock flow</title>
-	                             <action>extreport/adminhtml_product/stockflow</action>
+	                             <action>adminhtml/extreport_product/stockflow</action>
 	                         </stockflow>
 	                         <overview translate="title" module="reports">
 	                             <title>Overview</title>
-	                             <action>extreport/adminhtml_product/overview</action>
+	                             <action>adminhtml/extreport_product/overview</action>
 	                         </overview>
 	                         <shipped translate="title" module="extreport">
 	                             <title>Shipped</title>
-	                             <action>extreport/adminhtml_product/shipped</action>
+	                             <action>adminhtml/extreport_product/shipped</action>
 	                         </shipped>
 	                     </children>
 	                 </products>
@@ -111,27 +111,27 @@
 	                     <children>
 	                         <revenue translate="title" module="reports">
 	                         	 <title>Yield</title>
-	                             <action>extreport/adminhtml_sales/revenue</action>
+	                             <action>adminhtml/extreport_sales/revenue</action>
 	                         </revenue>
 	                     	<costunit translate="title" module="reports">
 	                     		<title>KLR</title>
-	                     		<action>extreport/adminhtml_sales/costunit</action>
+	                     		<action>adminhtml/extreport_sales/costunit</action>
 	                     	</costunit>
 	                         <quantityordered translate="title" module="extreport">
 	                            <title>Sold Products</title>
-	                            <action>extreport/adminhtml_sales/quantityordered</action>
+	                            <action>adminhtml/extreport_sales/quantityordered</action>
 	                         </quantityordered>
 	                         <kassenzeichen translate="title" module="extreport">
 	                            <title>Kassenzeichen</title>
-	                            <action>extreport/adminhtml_sales/kassenzeichen</action>                                       	
+	                            <action>adminhtml/extreport_sales/kassenzeichen</action>                                       	
 	                         </kassenzeichen>
 	                         <weight translate="title" module="extreport">
 	                            <title>Weight</title>
-	                            <action>extreport/adminhtml_sales/weight</action>                                       	
+	                            <action>adminhtml/extreport_sales/weight</action>                                       	
 	                         </weight>
 	                        <haushaltsstelle  module="extreport">
 	                            <title>Haushaltsstelle</title>
-	                            <action>extreport/adminhtml_sales/haushaltsstelle</action>
+	                            <action>adminhtml/extreport_sales/haushaltsstelle</action>
 	                         </haushaltsstelle>
 	                     </children>
 	                 </salesroot>             	
