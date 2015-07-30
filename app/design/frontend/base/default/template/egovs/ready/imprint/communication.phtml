@@ -1,0 +1,21 @@
+<?php
+/**
+ * 
+ *-- TODO:: kurze Beschreibung --
+ *
+ *
+ *
+ * @category		Egovs
+ * @package			Egovs_Ready
+ * @name			Egovs_Ready_Block_Catalog_Product_Price
+ * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ */
+?>
+
+<?php echo $this->__('Telephone') ?>: <?php echo $this->getTelephone() ?><br />
+<?php echo $this->__('Fax') ?>: <?php echo $this->getFax() ?><br />
+<?php echo $this->__('Web') ?>: <a href="http://<?php echo $this->getWeb() ?>" title="<?php echo $this->getCompanyFirst() ?>"><?php echo $this->getWeb() ?></a><br />
+<?php echo $this->__('E-Mail') ?>: <a href="mailto:<?php echo $this->getEmail() ?>" title="<?php echo $this->getCompanyFirst() ?>"><?php echo $this->getEmail() ?></a>

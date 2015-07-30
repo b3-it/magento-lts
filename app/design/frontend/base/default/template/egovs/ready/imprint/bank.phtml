@@ -1,0 +1,31 @@
+<?php
+/**
+ * 
+ *-- TODO:: kurze Beschreibung --
+ *
+ *
+ *
+ * @category		Egovs
+ * @package			Egovs_Ready
+ * @name			Egovs_Ready_Block_Catalog_Product_Price
+ * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ */
+?>
+
+<?php echo $this->__('Account owner') ?>: <?php echo $this->getBankAccountOwner() ?><br />
+<?php if (strlen(trim($this->getBankAccount())) > 0): ?>
+	<?php echo $this->__('Account') ?>: <?php echo $this->getBankAccount() ?><br />
+<?php endif ?>
+<?php if (strlen(trim($this->getBankCodeNumber())) > 0): ?>
+	<?php echo $this->__('Bank number') ?>: <?php echo $this->getBankCodeNumber() ?><br />
+<?php endif ?>
+<?php echo $this->__('Bank name') ?>: <?php echo $this->getBankName() ?><br />
+<?php if (strlen(trim($this->getSwift())) > 0): ?>
+    <?php echo $this->__('SWIFT') ?>: <?php echo $this->getSwift() ?><br />
+<?php endif ?>
+<?php if (strlen(trim($this->getIban())) > 0): ?>
+    <?php echo $this->__('IBAN') ?>: <?php echo $this->getIban() ?><br />
+<?php endif ?>

@@ -1,0 +1,25 @@
+<?php
+/**
+ * 
+ *-- TODO:: kurze Beschreibung --
+ *
+ *
+ *
+ * @category		Egovs
+ * @package			Egovs_Ready
+ * @name			Egovs_Ready_Block_Catalog_Product_Price
+ * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ */
+?>
+
+<?php echo $this->__('CEO') ?>: <?php echo $this->getCeo() ?><br />
+<?php echo $this->__('Register court') ?>: <?php echo $this->getCourt() ?><br />
+<?php if (strlen(trim($this->getRegisterNumber())) > 0): ?>
+    <?php echo $this->__('Register number') ?>: <?php echo $this->getRegisterNumber() ?><br />
+<?php endif ?>
+<?php if (strlen(trim($this->getBusinessRules())) > 0): ?>
+    <?php echo $this->__('Reference for business rules') ?>: <?php echo $this->getBusinessRules() ?>
+<?php endif ?>

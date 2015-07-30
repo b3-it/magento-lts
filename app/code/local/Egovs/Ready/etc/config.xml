@@ -17,6 +17,25 @@
 				<class>Egovs_Ready_Helper</class>
 			</egovsready>
 		</helpers>
+		<resources>
+            <egovsready_setup>
+                <setup>
+                    <module>Egovs_Ready</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+            </egovsready_setup>
+        </resources>
+        <events>
+            <catalog_product_save_before>
+                <observers>
+                    <magesetup_observer>
+                        <class>egovsready/observer</class>
+                        <type>model</type>
+                        <method>onCatalogProductSaveBefore</method>
+                    </magesetup_observer>
+                </observers>
+            </catalog_product_save_before>
+        </events>
 	</global>
 	
 	<frontend>
