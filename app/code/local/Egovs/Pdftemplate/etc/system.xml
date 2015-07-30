@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <sales_pdf>
+            <groups>
+                <invoice>
+                 <fields>
+                        <invoice_pdf_template translate="label">
+                            <label>Invoice PDF Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdftemplate/system_config_source_templates</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoice_pdf_template>
+                    </fields>
+                </invoice>
+                <shipment>
+                    <fields>
+                        <shipment_pdf_template translate="label">
+                            <label>Shipment PDF Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdftemplate/system_config_source_templates</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipment_pdf_template>
+                    </fields>
+                </shipment>
+                <creditmemo>
+                    <fields>
+                        <creditmemo_pdf_template translate="label">
+                            <label>Creditmemo PDF Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdftemplate/system_config_source_templates</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </creditmemo_pdf_template>
+                    </fields>
+                </creditmemo>
+            </groups>
+        </sales_pdf>
+        <sales>
+            <groups>
+                <identity>
+                     <fields>                   
+                        <phone translate="label">
+                            <label>Telefon</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </phone>
+                        <fax translate="label">
+                            <label>Fax</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fax>
+                        <email translate="label">
+                            <label>E-Mail</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email>
+                        <city translate="label">
+                            <label>Ort</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>231</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </city>
+                        <shortaddress translate="label">
+                            <label>Kurzadresse</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>240</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shortaddress>
+                        <kostenstelle>
+                        <label>Kostenstelle</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>280</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </kostenstelle>
+                    </fields>
+                   
+                </identity>
+            </groups>
+        </sales>
+        <dev>
+			<groups>
+				<modulelog>
+					<fields>
+						<egovs_pdftemplate>
+							<label>PdfTemplate</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</egovs_pdftemplate>
+					</fields>
+				</modulelog>
+			</groups>
+		</dev>
+    </sections>
+</config>

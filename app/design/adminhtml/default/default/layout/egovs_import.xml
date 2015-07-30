@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_import_import_index>
+        <reference name="content">
+            <block type="import/adminhtml_import_edit" name="import" />
+        </reference>
+    </adminhtml_import_import_index>
+    <adminhtml_import_export_index>
+        <reference name="content">
+            <block type="import/adminhtml_export_edit" name="export" />
+        </reference>
+    </adminhtml_import_export_index>
+
+</layout>

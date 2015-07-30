@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+
+<widgets>
+    <catalog_category_image type="egovsbase/catalog_category_widget_image" translate="name description" module="egovsbase">
+        <name>Catalog Category Image</name>
+        <description>Image to a Specified Category</description>
+        <is_email_compatible>1</is_email_compatible>
+        <parameters>
+            <id_path translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Category</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_category_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Category...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>10</sort_order>
+            </id_path>
+            <anchor_text translate="label description">
+                <visible>1</visible>
+                <label>Anchor Custom Text</label>
+                <description>If empty, the Category Name will be used</description>
+                <type>text</type>
+            </anchor_text>
+            <title translate="label">
+                <visible>1</visible>
+                <label>Anchor Custom Title</label>
+                <type>text</type>
+            </title>
+            <template translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <type>select</type>
+                <value>egovs/catalog/category/widget/link/link_block_image.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>egovs/catalog/category/widget/link/link_block_image.phtml</value>
+                        <label>Category Image Block Template</label>
+                    </default>
+                </values>
+            </template>
+        </parameters>
+    </catalog_category_image>
+    <catalog_category_general type="egovsbase/catalog_category_widget_general" translate="name description" module="egovsbase">
+        <name>Catalog Category General</name>
+        <description>General Informations to a Specified Category</description>
+        <is_email_compatible>1</is_email_compatible>
+        <parameters>
+            <id_path translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Category</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_category_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Category...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>10</sort_order>
+            </id_path>
+            <description translate="label description">
+                <visible>1</visible>
+                <label>Description Custom Text</label>
+                <description>If empty, the Category Description will be used</description>
+                <type>text</type>
+            </description>
+            <name translate="label description">
+                <visible>1</visible>
+                <label>Name Custom Text</label>
+                <description>If empty, the Category Name will be used</description>
+                <type>text</type>
+            </name>
+            <anchor_text translate="label description">
+                <visible>1</visible>
+                <label>Anchor Custom Text</label>
+                <description>If empty, the Category Name will be used</description>
+                <type>text</type>
+            </anchor_text>
+            <title translate="label">
+                <visible>1</visible>
+                <label>Anchor Custom Title</label>
+                <type>text</type>
+            </title>
+            <template translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <type>select</type>
+                <value>egovs/catalog/category/widget/category_general.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>egovs/catalog/category/widget/category_general.phtml</value>
+                        <label>Category General Block Template</label>
+                    </default>
+                </values>
+            </template>
+        </parameters>
+    </catalog_category_general>
+</widgets>
