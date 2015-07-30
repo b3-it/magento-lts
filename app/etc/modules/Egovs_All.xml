@@ -167,7 +167,7 @@
             </depends>
         </Egovs_Saferpay>
         <Egovs_Search>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Search>
         <Egovs_Shipment>
