@@ -48,7 +48,7 @@ tinyMCE.addI18n({
             "ltr_desc":"Schrift von links nach rechts"
         },
         layer:{
-            content:"Neue Ebene…",
+            "content":"Neue Ebene…",
             "absolute_desc":"Absolute Positionierung",
             "backward_desc":"Nach hinten legen",
             "forward_desc":"Nach vorne holen",
@@ -67,29 +67,29 @@ tinyMCE.addI18n({
         },
         advhr:{
             "advhr_desc":"Trennlinie",
-            "delta_height":"",
-            "delta_width":""
+            "delta_height":"Versatz Höhe",
+            "delta_width":"Versatz Breite"
         },
         emotions:{
             "emotions_desc":"Smilies",
-            "delta_height":"",
-            "delta_width":""
+            "delta_height":"Versatz Höhe",
+            "delta_width":"Versatz Breite"
         },
         searchreplace:{
             "replace_desc":"Suchen/Ersetzen",
             "search_desc":"Suchen",
-            "delta_width":"",
-            "delta_height":""
+            "delta_width":"Versatz Breite",
+            "delta_height":"Versatz Höhe"
         },
         advimage:{
             "image_desc":"Bild einf\u00fcgen/ver\u00e4ndern",
-            "delta_width":"",
-            "delta_height":""
+            "delta_width":"Versatz Breite",
+            "delta_height":"Versatz Höhe"
         },
         advlink:{
             "link_desc":"Link einf\u00fcgen/ver\u00e4ndern",
-            "delta_height":"",
-            "delta_width":""
+            "delta_height":"Versatz Höhe",
+            "delta_width":"Versatz Breite"
         },
         xhtmlxtras:{
             "attribs_desc":"Attribute einf\u00fcgen/bearbeiten",
@@ -113,8 +113,8 @@ tinyMCE.addI18n({
         },
         style:{
             "desc":"CSS-Styles bearbeiten",
-            "delta_height":"",
-            "delta_width":""
+            "delta_height":"Versatz Höhe",
+            "delta_width":"Versatz Breite"
         },
         paste:{
             "plaintext_mode":"Einf\u00fcgemodus ist nun \"Nur Text\". Erneut klicken stellt den Normalmodus wieder her.",
@@ -166,13 +166,13 @@ tinyMCE.addI18n({
         media:{
             "edit":"Multimediaeinbettung bearbeiten",
             "desc":"Multimedia einbetten/bearbeiten",
-            "delta_height":"",
-            "delta_width":""
+            "delta_height":"Versatz Höhe",
+            "delta_width":"Versatz Breite"
         },
         fullpage:{
             "desc":"Dokument-Eigenschaften",
-            "delta_width":"",
-            "delta_height":""
+            "delta_width":"Versatz Breite",
+            "delta_height":"Versatz Höhe"
         },
         template:{
             "desc":"Inhalt aus Vorlage einf\u00fcgen"
