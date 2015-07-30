@@ -364,7 +364,7 @@ select.multiselect option       { padding:3px 4px; border-bottom:1px solid #ddd;
 }
 
 /* Form List */ /* Table for default form data */
-.form-list                      { width:auto; border:0 !important; }
+.form-list                      { width:40%; border:0 !important; }
 .form-list td.label,
 .form-list td.value,
 .form-list td.value2,
