@@ -85,7 +85,7 @@
             <codePool>local</codePool>
         </Egovs_Extnewsletter>
         <Egovs_Extreport>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Extreport>
         <Egovs_Extsalesorder>
