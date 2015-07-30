@@ -124,7 +124,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 			$_htmlObject = new Varien_Object();
 			$_htmlObject->setParentHtml($_html);
 			$_htmlTemplate = $this->getLayout()->createBlock('core/template')
-				->setTemplate('egovsready/catalog/product/price/info.phtml')
+				->setTemplate('egovs/ready/catalog/product/price/info.phtml')
 				->setProduct($this->getProduct())
 				->setFormattedTaxRate($this->getFormattedTaxRate())
 				->setIsIncludingShippingCosts($this->isIncludingShippingCosts())

@@ -17,6 +17,11 @@
 				<class>Egovs_Ready_Helper</class>
 			</egovsready>
 		</helpers>
+		<models>
+			<egovsready>
+				<class>Egovs_Ready_Model</class>
+			</egovsready>
+		</models>
 		<resources>
             <egovsready_setup>
                 <setup>
