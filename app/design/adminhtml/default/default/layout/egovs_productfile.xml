@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<layout>
+    <adminhtml_catalog_product_edit>
+        <reference name="product_tabs">
+            <action method="addTabAfter">
+            	<name>catalog_product_edit_tab_productfile</name>
+            	<block>productfile/adminhtml_catalog_product_edit_tabs_productfile</block>
+            	<after>tags</after>
+            </action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+</layout>
