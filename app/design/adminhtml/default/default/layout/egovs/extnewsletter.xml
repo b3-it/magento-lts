@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <adminhtml_extnewsletter_issue_index>
+        <reference name="content">
+            <block type="extnewsletter/adminhtml_issue" name="issue" />
+        </reference>
+    </adminhtml_extnewsletter_issue_index>
+    <adminhtml_extnewsletter_report_issues>
+        <reference name="content">
+            <block type="extnewsletter/adminhtml_report_issues" name="issue" />
+        </reference>
+    </adminhtml_extnewsletter_report_issues>
+    <adminhtml_extnewsletter_report_products>
+        <reference name="content">
+            <block type="extnewsletter/adminhtml_report_products" name="products" />
+        </reference>
+    </adminhtml_extnewsletter_report_products>
+</layout>

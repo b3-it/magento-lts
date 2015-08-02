@@ -24,7 +24,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 	private $threshold = array(
 			'log'      => 3,
 			'mail'     => 9,
-			'kick'     => 81
+			'deny'     => 81
 	);
 	
 	
@@ -87,7 +87,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			foreach ($result as $event) {
 				$data = array(
 						'name'      => $event->getName(),
-						'value'     => stripslashes($event->getValue()),
+						'value'     => mysql_escape_string(stripslashes($event->getValue())),
 						'page'      => $_SERVER['REQUEST_URI'],
 						//'userid'    => $user,
 						'session'   => session_id() ? session_id() : '0',
@@ -124,17 +124,17 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			$res['log'] = 'log';
 			$res['email'] = 'email';
 			$res['deny'] = 'deny';
-			return res;
+			return $res;
 		} elseif ($impact >= $this->threshold['mail']) {
 			$res['log'] = 'log';
 			$res['email'] = 'email';
-			return res;
+			return $res;
 		} elseif ($impact >= $this->threshold['log']) {
 			$res['log'] = 'log';
-			return res;
+			return $res;
 		} 
 		
-		return res;
+		return $res;
 	}
 
 }

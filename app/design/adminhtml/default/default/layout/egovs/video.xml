@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+	<!-- <default> -->
+	<adminhtml_catalog_product_videosupport>
+		<reference name="head">
+			<action method="addJs"><script>egovs/mage/adminhtml/product-video.js</script></action>
+		</reference>
+	</adminhtml_catalog_product_videosupport>
+	<!-- </default> -->
+	<adminhtml_catalog_product_new>
+		<update handle="adminhtml_catalog_product_videosupport"/>
+	</adminhtml_catalog_product_new>
+	
+	<adminhtml_catalog_product_edit>
+		<update handle="adminhtml_catalog_product_videosupport"/>
+	</adminhtml_catalog_product_edit>	
+</layout>

@@ -81,7 +81,7 @@
             <codePool>local</codePool>
         </Egovs_Downloadupdate>
         <Egovs_Extnewsletter>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Extnewsletter>
         <Egovs_Extreport>
@@ -127,9 +127,13 @@
             <codePool>local</codePool>
         </Egovs_Herausgeberbox>
         <Egovs_Informationservice>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Informationservice>
+         <Egovs_Maintenance>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Maintenance>
         <Egovs_Openaccountpayment>
             <active>false</active>
             <codePool>local</codePool>
@@ -182,7 +186,7 @@
             </depends>
         </Egovs_ShippingTax>
         <Egovs_Sitemap>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Sitemap>
         <Egovs_Video>

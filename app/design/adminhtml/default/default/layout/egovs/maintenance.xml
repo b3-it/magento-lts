@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_maintenance_offline_index>
+        <reference name="content">
+            <block type="maintenance/adminhtml_offline" name="maintenance" >
+            </block>
+        </reference>
+    </adminhtml_maintenance_offline_index>
+</layout> 
