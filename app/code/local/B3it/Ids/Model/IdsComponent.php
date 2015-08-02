@@ -47,12 +47,17 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			$init->config['General']['use_base_path'] = false;
 			
 			$init->config['Caching']['caching'] = 'none';
+			/*Mage_Core_Controller_Request_Http */
+			$rq = $data->getRequest();
+			
+			$path = explode('/', trim($data->getRequest()->getPathInfo(), '/'));
 			
 			$request = array(
 					'REQUEST' => $_REQUEST,
 					'GET' => $_GET,
 					'POST' => $_POST,
-					'COOKIE' => $_COOKIE
+					'COOKIE' => $_COOKIE,
+					'PATH' => $path
 			);
 			
 			
