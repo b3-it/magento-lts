@@ -113,7 +113,7 @@
     <layout>
         <updates>
             <productupdate>
-                <file>egovssearch.xml</file>
+                <file>egovs/search.xml</file>
             </productupdate>
         </updates>
     </layout>

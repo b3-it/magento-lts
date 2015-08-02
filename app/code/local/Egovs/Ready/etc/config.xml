@@ -47,7 +47,7 @@
 		<layout>
 			<updates>
 				<egovsready>
-					<file>egovsready.xml</file>
+					<file>egovs/ready.xml</file>
 				</egovsready>
 			</updates>
 		</layout>

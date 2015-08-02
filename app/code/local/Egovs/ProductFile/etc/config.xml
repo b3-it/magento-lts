@@ -56,7 +56,7 @@
 		<layout>
 			<updates>
 				<productfile>
-					<file>egovs_productfile.xml</file>
+					<file>egovs/productfile.xml</file>
 				</productfile>					
 			</updates>
 		</layout>
