@@ -100,22 +100,22 @@
 				<connection><use>core_read</use></connection>
 			</egovssearch_read>
 		</resources></global>
-<frontend>
-    <translate>
-        <modules>
-            <Egovs_Search>
-                <files>
-                    <default>Egovs_Search.csv</default>
-                </files>
-            </Egovs_Search>
-        </modules>
-    </translate>
-    <layout>
-        <updates>
-            <productupdate>
-                <file>egovs/search.xml</file>
-            </productupdate>
-        </updates>
-    </layout>
-</frontend>
+		<frontend>
+		    <translate>
+		        <modules>
+		            <Egovs_Search>
+		                <files>
+		                    <default>Egovs_Search.csv</default>
+		                </files>
+		            </Egovs_Search>
+		        </modules>
+		    </translate>
+		    <layout>
+		        <updates>
+		            <egovssearch>
+		                <file>egovs/search.xml</file>
+		            </egovssearch>
+		        </updates>
+		    </layout>
+		</frontend>
 </config>
