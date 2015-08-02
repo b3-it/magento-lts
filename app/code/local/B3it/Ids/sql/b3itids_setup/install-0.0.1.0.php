@@ -3,12 +3,12 @@
  * SQL installer
  * 
  * @category	B3it
- * @package		B3it_Admin
- * @author		René Mütterlein <r.muetterlein@b3-it.de>
- * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @package		B3it_Ids
+ * @author		Holger Kögel <h.koegel@b3-it.de>
  * @copyright	Copyright (c) 2014 B3 IT Systeme GmbH
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 /* @var $installer Mage_Core_Model_Resource_Setup */
 $installer   = $this;
 $connection  = $installer->getConnection();
@@ -26,11 +26,13 @@ $installer->run("
 		  `userid` int(11) unsigned NOT NULL,
 		  `session` varchar(32) NOT NULL,
 		  `ip` varchar(15) NOT NULL,
-		  `reaction` tinyint(3) unsigned NOT NULL COMMENT '0 = log; 1 = mail; 2 = warn; 3 = kick;',
+		  `reaction` varchar(32) default '',
 		  `impact` int(11) unsigned NOT NULL,
 		  `created` datetime default now(),
 		PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+
 
 $installer->run("
 		DROP TABLE IF EXISTS {$this->getTable('ids_events_filters')};

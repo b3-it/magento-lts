@@ -9,6 +9,12 @@
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 
+
+/**
+ * test mit ?test='%20OR%201=1--
+ */
+
+
 set_include_path(get_include_path().PS.Mage::getBaseDir('lib').DS.'IDS');
 
 use IDS\Init;
