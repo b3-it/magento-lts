@@ -1,0 +1,25 @@
+<?php 
+/**
+ *
+ * Shows productfile attribute data in product view. Add to layout xml, eg. catalog.xml:
+ * <block type="catalog/product_view" name="product.productfile" as="additional" template="egovs/productfile/showattributes.phtml"/>
+ *
+ */
+?>
+<?php
+    $_helper = Mage::helper('productfile');
+    $_product = Mage::registry('product');
+    $_url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $_helper->getProductFileUploadDirectory() . "/";
+    $_path = Mage::getBaseDir('media') . DS . $_helper->getProductFileUploadDirectory() . DS;
+?>
+<?php if(file_exists($_path . $_product->getProductfile()) && !is_dir($_path . $_product->getProductfile())): ?>
+	<div class="productfile">
+		<a class="no-loading-mask" href="<?php echo $_url . $_product->getProductfile() ?>">
+			<?php if (file_exists($_path . $_product->getProductimage()) && !is_dir($_path . $_product->getProductimage())): ?>
+				<img src="<?php echo $_helper->getThumbnailProductImageUrl($_product->getProductimage()) ?>" alt="<?php echo $_helper->__('Product file image small') . " - " . $this->htmlEscape($_product->getProductfiledescription()) ?>" title="<?php echo $_helper->__('Product file image small') . " - " . $this->htmlEscape($_product->getProductfiledescription()) ?>" /><br />
+			<?php endif; ?>
+			<?php if ($_product->getProductfiledescription()): echo $this->htmlEscape($_product->getProductfiledescription()); else: echo $_product->getProductfile(); endif; ?>
+			<?php echo "(" . $_helper->getProductFileType() . "-" . $_helper->__('File') . ", " . $_helper->getProductFileSize() . ")" ?>
+		</a>
+	</div>
+<?php endif; ?>

@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+	   <Egovs_Openid>
+	       <version>0.1.0</version>
+	   </Egovs_Openid>
+	</modules>
+	<global>
+		<blocks>
+			<customer>
+				 <rewrite>
+				 	<form_login>Egovs_Openid_Block_Customer_Login</form_login>
+				 </rewrite>
+			</customer>
+		</blocks>
+		
+	</global>
+	  <frontend>
+        <routers>
+            <openid>
+                <use>standard</use>
+                <args>
+                    <module>Egovs_Openid</module>
+                    <frontName>openid</frontName>
+                </args>
+            </openid>
+        </routers>
+        </frontend>
+</config>

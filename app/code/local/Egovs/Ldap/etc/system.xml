@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <admin translate="label" module="admin"> 
+            <groups>
+                <ldap translate="label">
+                    <label>LDAP</label>
+                    <sort_order>170</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <default_role translate="label">
+                            <label>Default Role</label>
+                            <frontend_type>select</frontend_type>
+							<source_model>ldapauth/config_source_rolle</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </default_role>
+                        <servername translate="label">
+                            <label>Server Host</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </servername>
+                        <port translate="label">
+                            <label>Port</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </port>
+                        <ldapprotocolversionthree translate="label">
+                            <label>LDAP Protocol Version 3</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ldapprotocolversionthree>
+                        <oubind translate="label">
+                            <label>OU for Bind</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </oubind>
+                        <acceptedldapcategory translate="label">
+                            <label>Accepted LDAP Category</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </acceptedldapcategory>
+                    </fields>
+                </ldap>      
+            </groups>
+        </admin>
+    </sections>
+</config>

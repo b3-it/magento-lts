@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+	<!--
+	Pro Produkttyp müssen die entsprechende Blöcke zur Anzeige von Preisen angepasst werden!
+	Wichtig für neue Produkttypen!! 
+	 -->
+	<default>
+		<reference name="catalog_product_price_template">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+
+		<reference name="wishlist_sidebar">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</default>
+
+	<!-- Preisblock für Steuer und Versandkosten hinzufügen -->
+	<catalog_category_default>
+		<reference name="product_list">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</catalog_category_default>
+
+	<catalog_category_layered>
+		<reference name="product_list">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</catalog_category_layered>
+
+	<catalog_category_view>
+		<reference name="product_list">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</catalog_category_view>
+
+	<catalog_product_compare_index>
+		<reference name="catalog.compare.list">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</catalog_product_compare_index>
+
+	<catalog_product_view>
+		<reference name="catalog.product.related">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</catalog_product_view>
+
+	<catalogsearch_advanced_result>
+		<reference name="search_result_list">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</catalogsearch_advanced_result>
+
+	<catalogsearch_result_index>
+		<reference name="search_result_list">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</catalogsearch_result_index>
+
+	<tag_product_list>
+		<reference name="search_result_list">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</tag_product_list>
+
+	<tag_customer_view>
+		<reference name="customer_view">
+			<action method="addPriceBlockType">
+				<type>simple</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>virtual</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>grouped</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>downloadable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>configurable</type>
+				<block>egovsready/catalog_product_price</block>
+				<template>catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</tag_customer_view>
+	
+	<PRODUCT_TYPE_simple>
+		<reference name="product.info.simple.extra">
+			<block type="catalog/product_view_type_simple" name="egovsready.deliverytime" template="egovsready/catalog/product/delivery_time.phtml" />
+		</reference>
+	</PRODUCT_TYPE_simple>
+
+	<PRODUCT_TYPE_configurable>
+		<reference name="product.info.configurable.extra">
+			<block type="catalog/product_view_type_configurable" name="egovsready.deliverytime" template="egovsready/catalog/product/delivery_time.phtml" />
+		</reference>
+	</PRODUCT_TYPE_configurable>
+
+	<PRODUCT_TYPE_grouped>
+		<reference name="product.info.grouped.extra">
+			<block type="catalog/product_view_type_grouped" name="egovsready.deliverytime" template="egovsready/catalog/product/delivery_time.phtml" />
+		</reference>
+	</PRODUCT_TYPE_grouped>
+
+	<PRODUCT_TYPE_virtual>
+		<reference name="product.info.virtual.extra">
+			<block type="catalog/product_view_type_virtual" name="egovsready.deliverytime" template="egovsready/catalog/product/delivery_time.phtml" />
+		</reference>
+	</PRODUCT_TYPE_virtual>
+
+	<PRODUCT_TYPE_downloadable>
+		<reference name="product.info.downloadable.extra">
+			<block type="downloadable/catalog_product_view_type" name="egovsready.deliverytime" template="egovsready/catalog/product/delivery_time.phtml" />
+		</reference>
+	</PRODUCT_TYPE_downloadable>
+
+	<PRODUCT_TYPE_bundle>
+		<reference name="product.clone_prices">
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/view/price.phtml</template>
+			</action>
+		</reference>
+		<reference name="product.info">
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</PRODUCT_TYPE_bundle>
+	
+	<customer_logged_in>
+        <reference name="right">
+            <action method="unsetChild" ifconfig="sales/reorder/hide_sidebar_box">
+                <name>reorder</name>
+            </action>
+        </reference>
+        <reference name="left">
+            <action method="unsetChild" ifconfig="sales/reorder/hide_sidebar_box">
+                <name>reorder</name>
+            </action>
+        </reference>
+    </customer_logged_in>
+</layout>

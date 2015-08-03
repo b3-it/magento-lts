@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Egovs_Informationservice>
+			<version>0.1.5</version>
+		</Egovs_Informationservice>
+	</modules>
+	<frontend>
+		<routers>
+			<informationservice>
+				<use>standard</use>
+				<args>
+					<module>Egovs_Informationservice</module>
+					<frontName>informationservice</frontName>
+				</args>
+			</informationservice>
+		</routers>
+		<layout>
+			<updates>
+				<informationservice>
+					<file>informationservice.xml</file>
+				</informationservice>
+			</updates>
+		</layout>
+		<events>
+			<egovs_base_customer_reject_address_editing>
+				<observers>
+					<egovs_informationservice_customer_reject_address_editing>
+						<type>singleton</type>
+						<class>informationservice/customer_observer</class>
+						<method>rejectAddressEditing</method>
+					</egovs_informationservice_customer_reject_address_editing>
+				</observers>
+			</egovs_base_customer_reject_address_editing>
+		</events>
+	</frontend>
+	<admin>
+		<routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<Egovs_Informationservice_Adminhtml after="Mage_Adminhtml">Egovs_Informationservice_Adminhtml</Egovs_Informationservice_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+		<menu>
+			<informationservice module="informationservice">
+				<title>Information Service</title>
+				<sort_order>71</sort_order>
+				<children>
+					<request module="informationservice">
+						<title>Manage Requests</title>
+						<sort_order>0</sort_order>
+						<action>adminhtml/informationservice_request</action>
+					</request>
+				</children>
+			</informationservice>
+			<system>
+				<children>
+					<requesttype module="informationservice">
+						<title>Manage Requests Types</title>
+						<sort_order>100</sort_order>
+						<action>adminhtml/informationservice_requesttype</action>
+					</requesttype>
+				</children>
+			</system>
+			<report>
+				<children>
+					<informationservice translate="title"
+						module="informationservice">
+						<title>Information Service</title>
+						<action>adminhtml/informationservice_report</action>
+					</informationservice>
+				</children>
+			</report>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<informationservice translate="title"
+											module="informationservice">
+											<title>Information Service Section</title>
+										</informationservice>
+									</children>
+								</config>
+							</children>
+						</system>
+						<informationservice translate="title"
+							module="informationservice">
+							<title>Information Service</title>
+							<sort_order>10</sort_order>
+							<children>
+								<request module="informationservice">
+									<title>Manage Requests</title>
+									<sort_order>0</sort_order>
+								</request>
+							</children>
+						</informationservice>
+						<report>
+							<children>
+								<informationservice translate="title"
+									module="informationservice">
+									<title>Information Service</title>
+								</informationservice>
+							</children>
+						</report>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<informationservice>
+					<file>egovs/informationservice.xml</file>
+				</informationservice>
+			</updates>
+		</layout>
+		<translate>
+			<modules>
+				<Egovs_Informationservice>
+					<files>
+						<default>Egovs_Informationservice.csv</default>
+					</files>
+				</Egovs_Informationservice>
+			</modules>
+		</translate>
+		<events>
+
+			<admin_user_delete_before> <!-- EVENT TO HOOK -->
+				<observers>
+					<egovs_informationservice_model_observer> <!-- MODUL -->
+						<type>singleton</type>
+						<class>informationservice/observer</class>
+						<method>beforeDeleteAdminUser</method>
+					</egovs_informationservice_model_observer>
+				</observers>
+			</admin_user_delete_before>
+		</events>
+	</adminhtml>
+	<global>
+		<models>
+			<informationservice>
+				<class>Egovs_Informationservice_Model</class>
+				<resourceModel>informationservice_mysql4</resourceModel>
+			</informationservice>
+			<informationservice_mysql4>
+				<class>Egovs_Informationservice_Model_Mysql4</class>
+				<entities>
+					<request>
+						<table>informationservice_request</table>
+					</request>
+					<task>
+						<table>informationservice_task</table>
+					</task>
+					<requesttype>
+						<table>informationservice_requesttype</table>
+					</requesttype>
+				</entities>
+			</informationservice_mysql4>
+		</models>
+		<resources>
+			<informationservice_setup>
+				<setup>
+					<module>Egovs_Informationservice</module>
+					<class>Egovs_Informationservice_Model_Mysql4_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</informationservice_setup>
+			<informationservice_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</informationservice_write>
+			<informationservice_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</informationservice_read>
+		</resources>
+		<blocks>
+			<informationservice>
+				<class>Egovs_Informationservice_Block</class>
+			</informationservice>
+		</blocks>
+		<helpers>
+			<informationservice>
+				<class>Egovs_Informationservice_Helper</class>
+			</informationservice>
+		</helpers>
+	</global>
+	<default>
+		<trans_email>
+			<ident_informationsystem>
+				<email>custom1@example.com</email>
+				<name>Custom 1</name>
+			</ident_informationsystem>
+		</trans_email>
+		<informationservice>
+			<price>
+				<price_per_time>25</price_per_time>
+			</price>
+		</informationservice>
+	</default>
+</config>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @package    Egovs_Admin
+ * @copyright  Copyright (c) 2014 B3 IT Systeme GmbH
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <B3it_Admin>
+            <version>0.0.2.0</version>
+        </B3it_Admin>
+    </modules>
+    <adminhtml>
+        <translate>
+            <modules>
+                <B3it_Admin>
+                    <files>
+                        <default>B3it_Admin.csv</default>
+                    </files>
+                </B3it_Admin>
+            </modules>
+        </translate>
+        <events>
+            <admin_user_authenticate_after>
+                <observers>
+                    <B3it_Admin_Model_Observer>
+                        <type>singleton</type>
+                        <class>b3itadmin/observer</class>
+                        <method>onAdminUserAuthenticateAfter</method>
+                    </B3it_Admin_Model_Observer>
+                </observers>
+            </admin_user_authenticate_after>
+            <controller_action_layout_render_before_adminhtml_permissions_user_edit>
+                <observers>
+                    <B3it_Admin_Model_Observer>
+                        <type>singleton</type>
+                        <class>b3itadmin/observer</class>
+                        <method>onLayoutRenderAdminhtmlPermissionsUserEditBefore</method>
+                    </B3it_Admin_Model_Observer>
+                </observers>
+            </controller_action_layout_render_before_adminhtml_permissions_user_edit>
+            <controller_action_layout_render_before_adminhtml_permissions_user_index>
+                <observers>
+                    <B3it_Admin_Model_Observer>
+                        <type>singleton</type>
+                        <class>b3itadmin/observer</class>
+                        <method>onLayoutRenderAdminhtmlPermissionsUserIndexBefore</method>
+                    </B3it_Admin_Model_Observer>
+                </observers>
+            </controller_action_layout_render_before_adminhtml_permissions_user_index>
+            <core_layout_block_create_after>
+                <!-- Nicht anders umsetzbar -> Filter funktionieren sonst nicht -->
+                <observers>
+                    <B3it_Admin_Model_Observer>
+                        <type>singleton</type>
+                        <class>b3itadmin/observer</class>
+                        <method>onLayoutRenderAdminhtmlPermissionsUserGridBefore</method>
+                    </B3it_Admin_Model_Observer>
+                </observers>
+            </core_layout_block_create_after>
+        </events>
+    </adminhtml>
+    <global>
+        <blocks>
+            <b3itadmin>
+                <class>B3it_Admin_Block</class>
+            </b3itadmin>
+        </blocks>
+        <models>
+            <b3itadmin>
+                <class>B3it_Admin_Model</class>
+            </b3itadmin>
+            <admin>
+                <rewrite>
+                    <user>B3it_Admin_Model_User</user>
+                </rewrite>
+            </admin>
+        </models>
+        <resources>
+            <b3itadmin_setup>
+                <setup>
+                    <module>B3it_Admin</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </b3itadmin_setup>
+        </resources>
+        <helpers>
+            <b3itadmin>
+                <class>B3it_Admin_Helper</class>
+            </b3itadmin>
+        </helpers>
+    </global>
+    
+    <crontab>
+        <jobs>
+            <unlock_locked_accounts>
+                <schedule>
+                    <cron_expr>30 0 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>b3itadmin/observer::unlockLockedAccounts</model>
+                </run>
+            </unlock_locked_accounts>
+        </jobs>
+    </crontab>
+    
+    <default>
+        <admin>
+            <security>
+                <max_failed_logins>3</max_failed_logins>
+                <yubico_verfiy_https>1</yubico_verfiy_https>
+            </security>
+        </admin>
+    </default>
+</config>

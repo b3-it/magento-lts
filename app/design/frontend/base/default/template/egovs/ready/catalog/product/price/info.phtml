@@ -39,7 +39,7 @@
         <?php endif ?>
     <?php endif ?>
     <?php if ($this->getDisplayProductWeight()): ?>
-        (<?php echo $this->__('Shipping Weight %s', $this->getFormattedWeight()) ?>)
+        	<br/> (<?php echo $this->__('Shipping Weight %s', $this->getFormattedWeight()) ?>)
     <?php endif ?>
 <?php else: ?>
     <?php if( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ): ?>

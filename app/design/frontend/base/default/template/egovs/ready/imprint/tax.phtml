@@ -1,0 +1,24 @@
+<?php
+/**
+ * 
+ *-- TODO:: kurze Beschreibung --
+ *
+ *
+ *
+ * @category		Egovs
+ * @package			Egovs_Ready
+ * @name			Egovs_Ready_Block_Catalog_Product_Price
+ * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ */
+?>
+
+<?php echo $this->__('Financial office') ?>: <?php echo $this->getFinancialOffice() ?><br />
+<?php if (strlen(trim($this->getTaxNumber())) > 0): ?>
+    <?php echo $this->__('Tax number') ?>: <?php echo $this->getTaxNumber() ?><br />
+<?php endif ?>
+<?php if (strlen(trim($this->getVatId())) > 0): ?>
+    <?php echo $this->__('VAT-ID') ?>: <?php echo $this->getVatId() ?><br />
+<?php endif ?>

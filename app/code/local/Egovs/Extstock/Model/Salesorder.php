@@ -4,9 +4,9 @@
  *
  * @category	Egovs
  * @package		Egovs_Extstock
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2010 - 2012 EDV Beratung Hempel
- * @copyright	Copyright (c) 2010 - 2012 TRW-NET
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Extstock_Model_Salesorder extends Mage_Core_Model_Abstract

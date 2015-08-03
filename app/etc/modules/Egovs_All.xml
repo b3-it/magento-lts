@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+    	<Egovs_Import>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Import>
+        <Egovs_Acl>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Acl>
+        <Egovs_Base>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Customer />
+                <Mage_Sales />
+            </depends>
+        </Egovs_Base>
+        <Egovs_BankPayment>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_BankPayment>
+        <Egovs_Bitv>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Bitv>
+        <Egovs_Cashpayment>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </Egovs_Cashpayment>
+        <Egovs_Checkout>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Checkout>
+        <Egovs_Customer>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Customer />
+            </depends>
+        </Egovs_Customer>
+        <Egovs_Debit>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_Debit>
+        <Egovs_DebitPIN>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Debit />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_DebitPIN>
+        <Egovs_SepaDebitBund>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_SepaDebitBund>
+        <Egovs_Doc>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Doc>
+        <Egovs_Downloadupdate>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Downloadupdate>
+        <Egovs_Extnewsletter>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Extnewsletter>
+        <Egovs_Extreport>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Extreport>
+        <Egovs_Extsalesorder>
+            <active>false</active>
+            <codePool>local</codePool>
+            <xdepends>
+                <Egovs_Paymentbase />
+            </xdepends>
+        </Egovs_Extsalesorder>
+        <Egovs_Extstock>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Extstock>
+        <Egovs_Freepayment>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </Egovs_Freepayment>
+        <Egovs_Giropay>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_Giropay>
+        <Egovs_GermanTax>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_GermanTax>
+        <Egovs_Herausgeberbox>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Herausgeberbox>
+        <Egovs_Informationservice>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Informationservice>
+         <Egovs_Maintenance>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Maintenance>
+        <Egovs_Openaccountpayment>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_Openaccountpayment>
+        <Egovs_Openid>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Openid>
+        <Egovs_Paymentbase>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Mage_Cms />
+            </depends>
+        </Egovs_Paymentbase>
+        <Egovs_Pdftemplate>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Pdftemplate>
+        <Egovs_ProductFile>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_ProductFile>
+        <Egovs_Saferpay>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_Saferpay>
+        <Egovs_Search>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Search>
+        <Egovs_Shipment>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Shipment>
+        <Egovs_ShippingTax>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Tax />
+            </depends>
+        </Egovs_ShippingTax>
+        <Egovs_Sitemap>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Sitemap>
+        <Egovs_Video>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Video>
+        <Egovs_Vies>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_Vies>
+        <Egovs_Zahlpartnerkonten>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_Zahlpartnerkonten>
+    </modules>
+</config>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <action method="addTab"><name>customer_edit_tab_infoservice</name><block>informationservice/adminhtml_request_customer_tab</block></action>
+        </reference>
+    </adminhtml_customer_edit>
+</layout>
