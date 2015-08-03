@@ -2,6 +2,7 @@
 backups
 cache
 session
+log
 report
 *.bak
 app/etc/local.xml
