@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Egovs_Video>
+			<version>0.2.0</version>
+		</Egovs_Video>
+	</modules>
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Egovs_Video_Adminhtml before="Mage_Adminhtml">Egovs_Video_Adminhtml</Egovs_Video_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+		<translate>
+			<modules>
+				<Egovs_Video>
+					<files>
+						<default>Egovs_Video.csv</default>
+					</files>
+				</Egovs_Video>
+			</modules>
+		</translate>
+		<layout>
+			<updates>
+				<egovsvideo>
+					<file>egovs/video.xml</file>
+				</egovsvideo>
+			</updates>
+		</layout>
+	</adminhtml>
+	<global>
+		<blocks>
+			<adminhtml>
+				<rewrite>
+					<catalog_product_helper_form_gallery_content>Egovs_Video_Block_Adminhtml_Catalog_Product_Helper_Form_Gallery_Content</catalog_product_helper_form_gallery_content>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+		<helpers>
+			<egovsvideo>
+				<class>Egovs_Video_Helper</class>
+			</egovsvideo>
+			<adminhtml>
+				<rewrite>
+					<media_js>Egovs_Video_Helper_Media_Js</media_js>
+				</rewrite>
+			</adminhtml>
+		</helpers>
+	</global>
+</config>

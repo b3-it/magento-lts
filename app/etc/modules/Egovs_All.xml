@@ -162,6 +162,10 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_ProductFile>
+        <Egovs_Ready>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Ready>
         <Egovs_Saferpay>
             <active>false</active>
             <codePool>local</codePool>
@@ -190,7 +194,7 @@
             <codePool>local</codePool>
         </Egovs_Sitemap>
         <Egovs_Video>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Video>
         <Egovs_Vies>

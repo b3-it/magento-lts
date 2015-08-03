@@ -52,4 +52,11 @@
 			</updates>
 		</layout>
 	</frontend>
+	<default>
+		<general>
+			<country>
+				<default>DE</default>
+			</country>
+		</general>
+	</default>
 </config>

@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<config>
+<modules>
+    <Egovs_Shipment>
+        <version>0.1.0</version>
+    </Egovs_Shipment>
+</modules>
+<default>
+  <carriers>
+   <freeshipmentbyprice>
+       <active>1</active>
+       <allowed_methods>freeshipment</allowed_methods>
+       <methods>freeshipment</methods>
+       <sallowspecific>0</sallowspecific>
+       <model>egovsshipment/freeshipment</model>
+       <name>freeshipmentbyprice</name>
+       <price>0.00</price>
+       <title>Versandkostenfrei</title>
+       <specificerrmsg>Diese Versandmethode ist derzeit nicht verfügbar. Bitte kontaktieren Sie uns wenn sie diese Methode verwenden möchten.</specificerrmsg>
+       <handling_type>F</handling_type>
+       <rank>1</rank>
+   </freeshipmentbyprice>
+   <storepickup>
+        <active>1</active>
+        <allowed_methods>storepickup</allowed_methods>
+        <methods>storepickup</methods>
+        <sallowspecific>0</sallowspecific>
+        <model>egovsshipment/pickup</model>
+        <name>im Laden</name>
+        <price>0.00</price>
+        <title>Selbstabholung</title>
+        <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+        <handling_type>F</handling_type>
+        <!-- Nur Für sich alleine Anzeigen -->
+        <rank>1000</rank>
+    </storepickup>
+  </carriers>
+</default>
+<global>
+    <models>
+    <!--
+    	<freeshipmentbyprice>
+    		<class>Egovs_Shipment_Model</class>
+    	</freeshipmentbyprice>
+    	<storepickup>
+        		<class>Egovs_Shipment_Model</class>
+        </storepickup>
+        -->
+        <egovsshipment>
+        		<class>Egovs_Shipment_Model</class>
+        </egovsshipment>
+    </models>
+    <helpers>
+   		<freeshipmentbyprice>
+       		<class>Egovs_Shipment_Helper</class>
+   		</freeshipmentbyprice>
+ 	</helpers>
+    <blocks>
+        <egovsshipment>
+            <class>Egovs_Shipment_Block</class>
+        </egovsshipment> 
+    </blocks>
+</global>
+<frontend>
+       <translate>
+            <modules>
+                <Egovs_Shipment>
+                    <files>
+                        <default>Egovs_Shipment.csv</default>
+                    </files>
+                </Egovs_Shipment>
+            </modules>
+        </translate>
+    <routers>
+        <egovs_shipment>
+            <use>standard</use>
+            <args>
+                <module>Egovs_Shipment</module>
+                <frontName>egovs_shipment</frontName>
+            </args>
+        </egovs_shipment>
+    </routers>	
+</frontend>
+<adminhtml>
+       <translate>
+            <modules>
+                <Egovs_Shipment>
+                    <files>
+                        <default>Egovs_Shipment.csv</default>
+                    </files>
+                </Egovs_Shipment>
+            </modules>
+        </translate>
+</adminhtml>
+    <default>
+     	<carriers>
+            <freeshipmentbyprice>
+            	<amount>2</amount>
+            	<ignorevirtual>0</ignorevirtual>
+            </freeshipmentbyprice>
+            <pickup>
+            	<ignorevirtual>0</ignorevirtual>
+            </pickup>
+    	</carriers>
+    </default>
+</config>
