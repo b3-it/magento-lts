@@ -47,7 +47,7 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
     	if($node == null) return; 
     	if($node->getJumptitle()!= null)
     	{
-    		$this->_jump[] = $node;
+    		$this->_jump[$node->getNameInLayout()] = $node;
     	}
     	
 	   	foreach($node->getChild('') as $key=>$value)
