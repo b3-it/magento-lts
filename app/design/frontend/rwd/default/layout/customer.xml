@@ -291,7 +291,7 @@ Customer account address book
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
         		<!-- egovs custom code begin -->
-				<action method="setData"><key>accesskey</key><value>a</value></action>
+				<action method="setData"><key>accesskey</key><value>b</value></action>
                 <action method="setData"><key>jumptitle</key><value>Adressbuch</value></action>
 				<!-- egovs custom code end -->
             <block type="customer/address_book" name="address_book" template="customer/address/book.phtml"/>
