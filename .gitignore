@@ -1,8 +1,10 @@
 .settings
-backups
-cache
-session
-log
-report
+media/tmp
+media/catalog/product
+var/backups
+var/cache
+var/session
+var/log
+var/report
 *.bak
 app/etc/local.xml
