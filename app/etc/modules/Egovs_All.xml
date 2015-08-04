@@ -26,7 +26,7 @@
             </depends>
         </Egovs_BankPayment>
         <Egovs_Bitv>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Bitv>
         <Egovs_Cashpayment>
