@@ -1,0 +1,115 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+
+/* @var $this Mage_Catalog_Block_Product_View_Media */
+?>
+<?php
+    $_product = $this->getProduct();
+    $_helper = $this->helper('catalog/output');
+?>
+<div class="product-image product-image-zoom">
+    <div class="product-image-gallery">
+        <img id="image-main"
+             class="gallery-image visible"
+             src="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"
+             alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+             title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+
+        <?php $i=0; foreach ($this->getGalleryImages() as $_image): ?>
+            <?php if ($this->isGalleryImageVisible($_image)): ?>
+            <img id="image-<?php echo $i; ?>"
+                 class="gallery-image"
+                 src="<?php echo $this->getGalleryImageUrl($_image); ?>"
+                 data-zoom-image="<?php echo  $this->getGalleryImageUrl($_image); ?>" />
+            <?php endif; ?>
+        <?php $i++; endforeach; ?>
+    </div>
+</div>
+
+<?php $init_flash = false; if (count($this->getGalleryImages()) > 0): ?>
+<div class="more-views">
+    <h2><?php echo $this->__('More Views') ?></h2>
+    <ul class="product-image-thumbs">
+    <?php $i=0; foreach ($this->getGalleryImages() as $_image): ?>
+        <?php if ($this->isGalleryImageVisible($_image)): ?>
+        <?php
+            $image_path = $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(75);
+            $file_name = $_image->getFile();
+            $full_url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "catalog/product" . $file_name;
+            $file_label = $this->escapeHtml($_image->getLabel());
+            $file_info = pathinfo($file_name);
+            $types_flash = array('flv', 'avi');
+            $types_html5 = array('ogg', 'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a');
+        ?>
+        <li>
+            <?php
+                if ( in_array($file_info['extension'], $types_flash) ):
+                if ( $init_flash === false ) :
+                    //echo '<script type="text/javascript" src="' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'flash/swfobject.js"></script>';
+                    $init_flash = true;
+                endif;
+            ?>
+            <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="320" height="240">
+            <!--[if !IE]>-->
+            <object type="application/x-shockwave-flash" data="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) ?>flash/player.swf" width="320" height="240">
+            <!--<![endif]-->
+                <param name="movie" value="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) ?>flash/player.swf" />
+                <param name="wmode" value="transparent" />
+                <param name="bgcolor" value="#FFFFFF" />
+                <param name="quality" value="high" />
+                <param name="allowFullScreen" value="true" />
+                <param name="allowscriptaccess" value="always" />
+                <param name="splashscreen" value="" />
+                <param name="mylogo" value="" />
+                <param name="flashvars" value="vdo=<?php echo $full_url; ?>&amp;autoplay=false" />
+            <!--[if !IE]>-->
+            </object>
+            <!--<![endif]-->
+            </object>
+            <?php elseif ( in_array($file_info['extension'], $types_html5) ): ?>
+            <video id="egov_product_video_<?php echo $i; ?>" class="egov_product_video" controls preload="auto" poster="<?php echo $image_path; ?>">
+                <source src="<?php echo $full_url; ?>" type="video/<?php echo $file_info['extension']; ?>">
+            </video>
+            <?php else: ?>
+            <a class="thumb-link" href="javascript:void(0);" title="<?php echo $file_label ?>" data-image-index="<?php echo $i; ?>">
+                <img src="<?php echo $image_path; ?>"
+                     width="75" height="75" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" />
+            </a>
+            <?php endif; ?>
+        </li>
+        <?php endif; ?>
+    <?php $i++; endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+
+<?php echo $this->getChildHtml('after'); ?>
