@@ -502,6 +502,16 @@ h2.unsichtbar, span.unsichtbar, p.unsichtbar, div.jsunsichtbar {
   font-weight: bold;
 }
 
+.egov-product-flash {
+  max-width: 300px;
+  max-height: 200px;
+}
+
+.egov-product-video {
+  max-width: 300px;
+  max-height: 200px;
+}
+
 /* ============================================ *
  * Base Styles
  * ============================================ */
