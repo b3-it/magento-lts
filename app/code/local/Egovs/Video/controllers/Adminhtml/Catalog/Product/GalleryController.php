@@ -44,7 +44,7 @@ require_once 'Mage/Adminhtml/controllers/Catalog/Product/GalleryController.php';
  */
 class Egovs_Video_Adminhtml_Catalog_Product_GalleryController extends Mage_Adminhtml_Catalog_Product_GalleryController
 {
-	
+
 	/**
 	 * Der Dateifilter wird um *.flv, *.avi, *.swf erweitert
 	 *
@@ -53,11 +53,13 @@ class Egovs_Video_Adminhtml_Catalog_Product_GalleryController extends Mage_Admin
 	 */
 	public function uploadAction()
     {
-    	Mage::log("video::GalleryController called...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);                
-        
+    	Mage::log("video::GalleryController called...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+
     	try {
             $uploader = new Mage_Core_Model_File_Uploader('image');
-            $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png', 'flv', 'avi', 'swf'));
+            $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png', 'flv', 'avi', 'ogg',
+                                                  'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a'
+                                           ));
             $uploader->addValidateCallback('catalog_product_image',
                 Mage::helper('egovsvideo/catalog_image'), 'validateUploadFile');
             $uploader->setAllowRenameFiles(true);
@@ -65,7 +67,7 @@ class Egovs_Video_Adminhtml_Catalog_Product_GalleryController extends Mage_Admin
             $result = $uploader->save(
                 Mage::getSingleton('catalog/product_media_config')->getBaseTmpMediaPath()
             );
-            
+
 //             Mage::log(sprintf('video::Result: %s', var_export($result, true)), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 
             /**
