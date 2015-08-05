@@ -2,6 +2,7 @@
 app/etc/local.xml
 media/catalog/product
 media/tmp
+media/catalog/product
 var/backups
 var/cache
 var/session
