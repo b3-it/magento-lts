@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+	 <default>
+        <reference name="top.search">          
+			  <action method="setData"><key>accesskey</key><value>a</value></action>
+              <action method="setData"><key>jumptitle</key><value>Artikelsuche</value></action>
+		</reference>
+		
+		<reference name="header" >				
+                <action method="setData"><key>accesskey</key><value>z</value></action>
+                <action method="setData"><key>jumptitle</key><value>Kundenmenü</value></action>
+        </reference>
+
+    </default>
+</layout> 

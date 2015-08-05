@@ -1,0 +1,46 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Core Application
+// ==============================================
+
+// ----------------------------------------------
+// Browser Resets
+
+@import "vendor/normalize";
+@import "core/reset";
+
+// ----------------------------------------------
+// Barrierefreiheit Tastatursteuerung
+@import "egov/barrierefreiheit"
+
+// ----------------------------------------------
+// Core
+
+
+// ----------------------------------------------
+// Vendor
+
+
+// ----------------------------------------------
+// Layout
+
+
+// ----------------------------------------------
+// Modules
+
+// The sort order here is important for two reasons:
+//  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
+//  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
+//     so we should try not to change this order once it is in place
+
+
+
+// ----------------------------------------------
+// Override
+

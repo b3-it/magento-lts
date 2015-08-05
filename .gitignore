@@ -1,4 +1,5 @@
 .settings
+app/etc/local.xml
 media/catalog/product
 media/tmp
 var/backups
@@ -8,4 +9,4 @@ var/log
 var/report
 var/resource_config.json
 *.bak
-app/etc/local.xml
+*.scss.bak
