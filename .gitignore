@@ -1,4 +1,5 @@
 .settings
+.sass-cache
 app/etc/local.xml
 media/catalog/product
 media/tmp
