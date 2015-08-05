@@ -1,27 +1,10 @@
 //
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
+
 
 /* ============================================ *
  * Header
@@ -30,20 +13,31 @@
 @include bp(min-width, $bp-medium + 1) {
 
     .page-header {
-        max-width: $max-container-width;
-        margin: 0 auto;
-        padding: 0 $trim;
+        clear: both;
+        z-index: 99;
+
+        background: $global-header-gradientcolor-2 url($global-header-background-image) no-repeat center 4px;
+        background: url($global-header-background-image) no-repeat center 4px, url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzdlYWE2ZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU5ODE0YyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+        background: url($global-header-background-image) no-repeat center 4px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-header-gradientcolor-1), color-stop(100%, $global-header-gradientcolor-2));
+        background: url($global-header-background-image) no-repeat center 4px, -webkit-linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%);
+        background: url($global-header-background-image) no-repeat center 4px, -moz-linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%);
+        background: url($global-header-background-image) no-repeat center 4px, -o-linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%);
+        background: url($global-header-background-image) no-repeat center 4px, linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%);
     }
 
     .page-header-container {
+        max-width: $max-container-width;
+        min-width: 60em;
         position: relative;
+        margin: -42px auto 30px;
+        padding: 0 0 0 45px;
     }
 
 }
 
 .header-language-container,
 .page-header {
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
 }
 
 /* ============================================ *
