@@ -809,10 +809,9 @@ a.button:hover {
         width: percentage(760px/960px);
 
         .col-main {
-            background: $global-content-background $global-content-top-image $global-norepeat-scroll;
-
+            background: $global-content-background url( $global-content-top-image ) $global-norepeat-scroll -5px -9px;
             float: right;
-            width: percentage(560px/760px);
+            _width: percentage(560px/760px);
         }
 
         .col-left {
