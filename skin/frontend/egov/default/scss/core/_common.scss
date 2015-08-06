@@ -780,7 +780,11 @@ a.button:hover {
     width: percentage(720px/960px);
 
     .std {
-        padding-top: 20px;
+        padding-top: $global-content-top-padding;
+        padding-bottom: $global-content-bottom-padding;
+        border-bottom-width: $global-content-bottom-bordersize;
+        border-bottom-style: solid;
+        border-bottom-color: $global-content-bottom-bordercolor;
     }
 }
 
@@ -816,10 +820,10 @@ a.button:hover {
 
         .col-main {
             background: $global-content-background url( $global-content-top-image ) $global-norepeat-scroll -5px -9px;
+
             float: right;
-            border-radius: 4px;
             overflow: hidden;
-            _width: percentage(560px/760px);
+            width: percentage(560px/760px);
         }
 
         .col-left {

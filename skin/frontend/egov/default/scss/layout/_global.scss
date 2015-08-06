@@ -36,7 +36,12 @@ body {
     min-width: 320px;
     min-height: 100%;
     margin: 0 auto;
-    background: #FFFFFF;
+    background: $global-wrapper-color;
+    position: relative;
+
+    .page {
+        height: 100vh;
+    }
 }
 
 .wrapper:after {
