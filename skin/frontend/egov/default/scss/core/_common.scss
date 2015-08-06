@@ -816,12 +816,13 @@ a.button:hover {
 
     .col-wrapper {
         float: left;
+        margin-left: $global-category-width + 70;
         width: percentage(760px/960px);
 
         .col-main {
             background: $global-content-background url( $global-content-top-image ) $global-norepeat-scroll -5px -9px;
 
-            float: right;
+            _float: right;
             overflow: hidden;
             width: percentage(560px/760px);
         }

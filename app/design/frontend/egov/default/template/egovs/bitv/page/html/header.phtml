@@ -48,7 +48,7 @@
 
         <?php echo $this->getChildHtml('currency_switcher') ?>
 
-        <p class="welcome-msg"><?php echo $this->getChildHtml('welcome') ?> <?php echo $this->getChildHtml('accountLinks') ?></p>
+<!-- Welcome-Message von hier verschoben -->
     </div>
 </div>
 
@@ -88,7 +88,9 @@
                     <?php echo $this->getChildHtml('minicart_head'); ?>
                 </div>
             </div>
-
+			<div class="welcome-header">
+		        <h2 class="welcome-msg"><?php echo $this->getChildHtml('welcome') ?> <?php echo $this->getChildHtml('accountLinks') ?></h2>			
+			</div>
 
         </div>
 
