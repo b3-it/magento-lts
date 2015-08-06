@@ -1,0 +1,566 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+         <payment translate="label" module="payment">
+            <groups>
+                <!-- Disable Nicht-ePayBL Bezahlmodule-->
+                <ccsave>
+                    <show_in_default>0</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </ccsave>
+                <banktransfer>
+                    <show_in_default>0</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </banktransfer>
+                <cashondelivery>
+                    <show_in_default>0</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </cashondelivery>
+                
+                <openaccount>
+                    <fields>
+                        <include_personal_data translate="label">
+                            <label>Include personal data</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Send personal data to ePayBL</comment>
+                        </include_personal_data>
+                    </fields>
+                </openaccount>
+                <bankpayment>
+                    <fields>
+                        <include_personal_data translate="label">
+                            <label>Include personal data</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Send personal data to ePayBL</comment>
+                        </include_personal_data>
+                    </fields>
+                </bankpayment>
+                <debit>
+                    <fields>
+                        <include_personal_data translate="label">
+                            <label>Include personal data</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Send personal data to ePayBL</comment>
+                        </include_personal_data>
+                    </fields>
+                </debit>
+                <!-- DebitPIN benötigt diese Regelung nicht -->
+                <giropay>
+                    <fields>
+                        <include_personal_data translate="label">
+                            <label>Include personal data</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Send personal data to ePayBL</comment>
+                        </include_personal_data>
+                    </fields>
+                </giropay>
+                <saferpay>
+                    <fields>
+                        <include_personal_data translate="label">
+                            <label>Include personal data</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Send personal data to ePayBL</comment>
+                        </include_personal_data>
+                    </fields>
+                </saferpay>
+            </groups>
+        </payment>
+        <web>
+            <groups>
+                <proxy translate="label" module="payment">
+                    <label>Proxy Settings</label>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <use_proxy translate="label">
+                            <label>Use Proxy</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </use_proxy>
+                        <use_proxy_egovs_payments translate="label">
+                            <label>Use Proxy for ePayBL Payments too</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </use_proxy_egovs_payments>
+                        <use_proxy_saferpay_payments translate="label">
+                            <label>Use Proxy for Saferpay Payments too</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </use_proxy_saferpay_payments>
+                        <exclude_list translate="label comment">
+                            <label>Exclude Proxy for following URLs</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Enter your exclude URLs line by line. To exclude Proxy for ePayBL and Saferpay use toggles above! Example: ec.europa.eu</comment>
+                        </exclude_list>
+                        <proxy_name translate="label">
+                            <label>Name or IP of Proxy</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </proxy_name >
+                        <proxy_port translate="label">
+                            <label>Proxy Port</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </proxy_port>
+						<proxy_user translate="label">
+                            <label>Proxy Username</label>
+						    <comment>Optional</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </proxy_user>
+                        <proxy_user_pwd translate="label">
+                            <label>Proxy Password</label>
+                            <comment>Optional</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </proxy_user_pwd>
+
+                    </fields>
+                </proxy>
+            </groups>
+        </web>
+        <payment_services>
+            <groups>
+            	<paymentbase translate="label">
+                    <label>ePayBL Settings</label>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <mandantnr translate="label">
+                            <label>Mandantennummer</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </mandantnr >
+                       <bewirtschafternr translate="label">
+                            <label>Bewirtschafternummer</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                           <depends>
+                               <active>1</active>
+                           </depends>
+                           <validate>required-entry</validate>
+                        </bewirtschafternr >
+                        <webshopdesmandanten translate="label">
+                            <label>webShop des Mandanten</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Der Webshop des Mandanten muß 4-stellig sein</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </webshopdesmandanten>
+                        <service translate="label">
+                            <label>Service URL</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_acl</frontend_model>
+                            <backend_model>paymentbase/system_config_backend_url</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>URL des ePayBL Servers</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </service>
+                        <client_certificate translate="label">
+                            <label>Client Zertifikat</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_acl</frontend_model>
+                            <backend_model>paymentbase/system_config_backend_epayblcert</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Pfad des Client-Zertifikats des Mandanten (relativer Pfad zu Shop-Root)</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </client_certificate>
+                        <ca_certificate translate="label">
+                            <label>CA Zertifikat</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_acl</frontend_model>
+                            <backend_model>paymentbase/system_config_backend_epayblcert</backend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Pfad des CA-Zertifikats des Mandanten (relativer Pfad zu Shop-Root)</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </ca_certificate>
+                        <adapter translate="label">
+                            <label>Adapter for Customization</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>paymentbase/system_config_source_adapters</source_model>
+                            <sort_order>61</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Should be used a custom adapter for customization?</comment>
+                        </adapter>
+                        <mandate_pdf_template_store translate="label">
+                            <label>Mandate PDF Template Store</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </mandate_pdf_template_store>
+                        <maxcounthaushaltsstelle translate="label">
+                            <label>Max. Anzahl Haushaltsstellen</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>0 zum Ausschalten der Prüfung</comment>
+                        </maxcounthaushaltsstelle>
+                        <adminemail translate="label">
+                            <label>E-Mail-Adresse Admin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Semikolon (;) getrennte Liste von E-Mail-Adressen, an die im Fehlerfall eine Meldung geschickt wird</comment>
+                        </adminemail>
+                        <objektnummer translate="label">
+                        	<label>Objektnummer Versand</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Objektnummer für den Versand die an ePayBL übergeben werden soll</comment>
+                        </objektnummer>
+                        <haushaltsstelle translate="label">
+                        	<label>Haushaltsstelle Versand</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Haushaltsstelle für den Versand die an ePayBL übergeben werden soll</comment>
+                        </haushaltsstelle>
+                        <href translate="label">
+                        	<label>HREF Versand</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Buchungsreferenz für den Versand die an ePayBL übergeben werden soll</comment>
+                        </href>
+                        <buchungstext translate="label">
+                        	<label>Buchungstext Versand</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Buchungstext für den Versand die an ePayBL übergeben werden soll</comment>
+                        </buchungstext>
+                        <successaction translate="label comment">
+                            <label>Success Action</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Aktion, die bei einer erfolgreichen Zahlung mit externen Zahlungsdienstleistern (Saferpay) ausgeführt wird. Default: egovs_checkout/multipage/successview</comment>
+                        </successaction>
+                        <accounting_list_limit translate="label comment">
+                            <label>Maximum Length of Accounting List</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>135</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>One item in shopping cart equates two items in accounting list. Enter without shipping positions. 0 for no limit.</comment>
+                        </accounting_list_limit>
+                        <href_max_length translate="label comment">
+                            <label>Maximum Length for HREF</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>136</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits-range digits-range-0-255</validate>
+                            <comment>Possible range is between 0 and 255 digits (Default: 100)</comment>
+                        </href_max_length>
+                        <auto_sync_epaybl_data translate="label">
+                            <label>Automatic Sync ePayBL Data</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_acl</frontend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <backend_model>paymentbase/system_config_backend_syncBankAccountData</backend_model>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </auto_sync_epaybl_data>
+                        <is_alive translate="label">
+                            <label>Check if is alive</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>paymentbase/system_config_backend_alive</backend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Jetzt Prüfen ob ePayBL-Server erreichbar ist?</comment>
+                        </is_alive>
+                    </fields>
+                </paymentbase>
+                <payplace translate="label" module="paymentbase">
+                    <label>Payplace</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1020</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <merchant_id translate="label">
+                            <label>Payplace Merchant ID</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Your Payplace Merchant ID</comment>
+                        </merchant_id>
+                        <merchant_name translate="label">
+                            <label>Payplace Merchant Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Name for Payplace Merchant. You can also use Magento template Tags (http://www.magentocommerce.com/wiki/3_-_store_setup_and_management/cms/markup_tags)</comment>
+                        </merchant_name>
+                        <account_name translate="label">
+                            <label>Account Name</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Your Login Name</comment>
+                        </account_name>
+                        <account_pwd translate="label">
+                            <label>Account Password</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Your Login Password</comment>
+                        </account_pwd>
+                        <api_user translate="label">
+                            <label>Api User</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>paymentbase/system_config_source_apiuser</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment></comment>
+                        </api_user>
+                        <api_password translate="label">
+                            <label>Password</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>paymentbase/system_config_backend_apikey</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </api_password>
+                        <service_url translate="label">
+                            <label>Payplace URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Test: https://test.soap.bs-card-service.com/soapapi/services/XmlApiNl <br/>Live: https://soap.bs-card-service.com/soapapi/services/XmlApiNl]]></comment>
+                        </service_url>
+                        <css_url translate="label">
+                            <label>css Url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Css url customizing Paypage Design</comment>
+                        </css_url>
+                        <locale translate="label">
+                            <label>Form Locale</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Locale in Form</comment>
+                        </locale>
+                    </fields>
+                </payplace>
+            </groups>
+        </payment_services>
+        <general>
+            <groups>
+                <imprint>
+                    <fields>
+                        <bank_account_owner translate="label">
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
+                            <egovsdepend>
+                                <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
+                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                            </egovsdepend>
+                        </bank_account_owner>
+                        <bank_account translate="label">
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
+                            <egovsdepend>
+                                <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
+                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                            </egovsdepend>
+                        </bank_account>
+                        <bank_code_number translate="label">
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
+                            <egovsdepend>
+                                <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
+                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                            </egovsdepend>
+                        </bank_code_number>
+                        <bank_name translate="label">
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
+                            <egovsdepend>
+                                <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
+                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                            </egovsdepend>
+                        </bank_name>
+                        <swift translate="label">
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
+                            <egovsdepend>
+                                <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
+                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                            </egovsdepend>
+                        </swift>
+                        <iban translate="label">
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
+                            <egovsdepend>
+                                <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
+                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                            </egovsdepend>
+                        </iban>
+                        <auto_sync_epaybl_data_now translate="label" module="paymentbase">
+                            <label>Synchronize bank account data with ePayBL Bewirtschafter data</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>paymentbase/system_config_backend_syncBankAccountData</backend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </auto_sync_epaybl_data_now>
+                    </fields>
+                </imprint>
+            </groups>
+        </general>
+    </sections>
+</config>

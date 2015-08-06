@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets>
+    <paymentbase_logo_widget type="paymentbase/widget_creditcardlogos" translate="name description" module="paymentbase">
+        <name>Credit card logos type</name>
+        <description type="desc">Shows logos for credit cards at the frontend</description>
+        <parameters>
+            <title translate="label">
+                <label>Title</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <value>Credit card logos</value>
+            </title>
+            <template translate="label">
+                <label>Frontend Template</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <default translate="label">
+                        <value>egovs/paymentbase/cc_logos_widget.phtml</value>
+                        <label>Credit card logos (Default)</label>
+                    </default>
+                </values>
+            </template>
+            <force_enabled translate="label">
+                <label>Force enabled</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <description>Force display of logos indepent from the credit card payment module.</description>
+                <values>
+                    <disabled translate="label">
+                        <value>0</value>
+                        <label>Disabled</label>
+                    </disabled>
+                    <enabled translate="label">
+                        <value>1</value>
+                        <label>Enabled</label>
+                    </enabled>                    
+                </values>
+            </force_enabled>
+            <custom_cms_block translate="label">
+                <label>Custom CMS block</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <source_model>paymentbase/cms_block_source_blocks</source_model>
+                <description>If you have your own design for credit card logos, please choose a cms block with the content.</description>
+            </custom_cms_block>
+        </parameters>
+    </paymentbase_logo_widget>
+</widgets>

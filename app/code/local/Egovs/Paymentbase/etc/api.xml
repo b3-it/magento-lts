@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <api>
+        <adapters>
+            <soap_v2_payplace>
+                <model>paymentbase/payplace_api_server_v2_adapter_soap</model>
+                <handler>soap_v2_payplace</handler>
+                <active>1</active>
+                <required>
+                    <extensions>
+                        <soap />
+                    </extensions>
+                </required>
+            </soap_v2_payplace>
+            <soap_wsi_payplace>
+                <model>paymentbase/payplace_api_server_wsi_adapter_soap</model>
+                <handler>soap_wsi_payplace</handler>
+                <active>1</active>
+                <required>
+                    <extensions>
+                        <soap />
+                    </extensions>
+                </required>
+            </soap_wsi_payplace>
+        </adapters>
+        <handlers>
+            <soap_v2_payplace>
+                <model>paymentbase/payplace_api_server_v2_handler</model>
+            </soap_v2_payplace>
+            <soap_wsi_payplace>
+                <model>paymentbase/payplace_api_server_wsi_handler</model>
+            </soap_wsi_payplace>
+        </handlers>
+        <resources>
+            <payplacepaypage_callback>
+                <model>paymentbase/payplace_api</model>
+                <title>Payplace PayPage Callback API</title>
+                <acl>payplacepaypage_callback</acl>
+                <methods>
+                    <notify translate="title" module="paymentbase">
+                        <title>Payplace PayPage Callback Notify</title>
+                        <!-- Method in Model if different-->
+                        <!-- <method>notify</method> -->
+                        <acl>payplacepaypage_callback/notify</acl>
+                    </notify>
+                </methods>
+                <faults module="paymentbase">
+                    <data_invalid> <!-- if we get invalid input data -->
+                        <code>100</code >
+                        <!-- we cannot know all the errors that can appear, their details can be found in error message for call -->
+                        <message>Invalid data. Details in error message.</message>
+                    </data_invalid>
+                    <order_not_found>
+                        <code>1000</code >
+                        <!-- we cannot know all the errors that can appear, their details can be found in error message for call -->
+                        <message>No order available</message>
+                    </order_not_found>
+                    <basket_id_invalid>
+                        <code>110</code>
+                        <message>Invalid basket id</message>
+                    </basket_id_invalid>
+                    <rc_invalid>
+                        <code>120</code>
+                        <message>Invalid rc. Details in error message.</message>
+                    </rc_invalid>
+                    <id_invalid>
+                        <code>130</code>
+                        <message>Invalid id.</message>
+                    </id_invalid>
+                    <epaybl_call_error>
+                        <code>2000</code>
+                        <message>Unkown ePayBL error. Details in error message.</message>
+                    </epaybl_call_error>
+                    <unknown_creditcard_type>
+                        <code>2100</code>
+                        <message>Unknown creditcard type. Details in error message.</message>
+                    </unknown_creditcard_type>
+                </faults>
+            </payplacepaypage_callback>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <!-- ergibt payplacePaypageNotify -->
+                <payplacepaypage_callback>payplacePaypageCallback</payplacepaypage_callback>
+            </resources_function_prefix>
+            <wsdl>
+                <prefix>
+                    <ixa>http://www.voeb-zvd.de/xmlapi/1.0</ixa>
+                </prefix>
+            </wsdl>
+        </v2>
+        <acl>
+            <resources>
+                <payplacepaypage_callback translate="title" module="paymentbase">
+                    <title>Payplace PayPage Callback</title>
+                    <sort_order>100</sort_order>
+                    <notify translate="title" module="paymentbase">
+                        <title>Callback Notify</title>
+                    </notify>
+                </payplacepaypage_callback>
+            </resources>
+        </acl>
+    </api>
+</config>

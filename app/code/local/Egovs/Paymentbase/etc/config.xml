@@ -1,0 +1,459 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Egovs_Paymentbase>
+			<version>2.0.0.0</version>
+		</Egovs_Paymentbase>
+	</modules>
+	<global>
+		<blocks>
+			<adminhtml> </adminhtml>
+			<paymentbase>
+	            <class>Egovs_Paymentbase_Block</class>
+	        </paymentbase>
+		</blocks>
+		<models>
+			<paymentbase>
+				<class>Egovs_Paymentbase_Model</class>
+				<resourceModel>paymentbase_mysql4</resourceModel>
+			</paymentbase>
+			<paymentbase_mysql4>
+				<class>Egovs_Paymentbase_Model_Mysql4</class>
+				<entities>
+					<transactions>
+						<table>egovs_paymentbase_transactions</table>
+					</transactions>
+					<localparams>
+						<table>egovs_paymentbase_localparams</table>
+					</localparams>
+					<defineparams>
+						<table>egovs_paymentbase_defineparams</table>
+					</defineparams>
+					<haushaltsparameter>
+						<table>egovs_paymentbase_haushaltsparameter</table>
+					</haushaltsparameter>
+					<haushaltsparameter_objektnummerhhstelle>
+						<table>egovs_paymentbase_objektnummer_hhstelle</table>
+					</haushaltsparameter_objektnummerhhstelle>
+					<sepa_mandate_history>
+						<table>sepa_mandate_history</table>
+					</sepa_mandate_history>
+				</entities>
+			</paymentbase_mysql4>
+			<customer_paymentbase>
+				<class>Egovs_Paymentbase_Model_Customer</class>
+				<resourceModel>customer_paymentbase_mysql4</resourceModel>
+			</customer_paymentbase>
+			<customer_paymentbase_mysql4>
+				<class>Egovs_Paymentbase_Model_Mysql4_Customer</class>
+				<entities>
+					<sepa_mandate_history>
+						<table>customer_paymentbase_sepa_mandate_history</table>
+					</sepa_mandate_history>
+				</entities>
+			</customer_paymentbase_mysql4>
+		</models>
+		<resources>
+			<paymentbase_setup>
+				<setup>
+					<module>Egovs_Paymentbase</module>
+					<class>Egovs_Paymentbase_Model_Resource_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</paymentbase_setup>
+			<paymentbase_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</paymentbase_write>
+			<paymentbase_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</paymentbase_read>
+		</resources>
+		<helpers>
+			<paymentbase>
+				<class>Egovs_Paymentbase_Helper</class>
+			</paymentbase>
+		</helpers>
+		<!--<sales>
+			<order>
+				<statuses>
+                    <pending_creditmemo translate="label"><label>Pending credit memo</label></pending_creditmemo>
+                </statuses>
+                <states>
+                    <complete translate="label">
+                        <statuses>
+                            <pending_creditmemo default="0"/>
+                        </statuses>
+                    </complete>
+                </states>
+            </order>
+		</sales>
+	-->
+		<events>
+        	<sales_quote_merge_after>
+        		<observers>
+        			<paymentbase>
+        				<type>singleton</type>
+        				<class>Egovs_Paymentbase_Model_Observer</class>
+        				<method>onQuoteMerge</method>
+        			</paymentbase>
+        		</observers>
+        	</sales_quote_merge_after>
+			<sales_order_save_after>
+				<observers>
+					<paymentbase>
+						<type>singleton</type>
+						<class>Egovs_Paymentbase_Model_Observer</class>
+						<method>onFirstSalesOrderSaveAfter</method>
+					</paymentbase>
+				</observers>
+			</sales_order_save_after>
+        	<checkout_entry_before>
+        		<observers>
+        			<paymentbase>
+        				<type>singleton</type>
+        				<class>Egovs_Paymentbase_Model_Observer</class>
+        				<method>onCheckoutEntryBefore</method>
+        			</paymentbase>
+        		</observers>
+        	</checkout_entry_before>
+        	<checkout_cart_product_add_before>
+        	     <observers>
+        			<paymentbase>
+        				<type>singleton</type>
+        				<class>Egovs_Paymentbase_Model_Observer</class>
+        				<method>onCheckoutCartUpdateItemsBefore</method>
+        			</paymentbase>
+        		</observers>
+        	</checkout_cart_product_add_before>
+        	<checkout_cart_add_product_complete>
+        	     <observers>
+        			<paymentbase>
+        				<type>singleton</type>
+        				<class>Egovs_Paymentbase_Model_Observer</class>
+        				<method>onCheckoutCartAddItemsAfter</method>
+        			</paymentbase>
+        		</observers>
+        	</checkout_cart_add_product_complete>
+			<sales_order_payment_place_end>
+				<observers>
+					<paymentbase>
+						<type>singleton</type>
+						<class>Egovs_Paymentbase_Model_Observer</class>
+						<method>onSalesOrderPaymentPlaceEnd</method>
+					</paymentbase>
+				</observers>
+			</sales_order_payment_place_end>
+			<customer_save_after>
+				<observers>
+					<paymentbase>
+						<type>singleton</type>
+						<class>Egovs_Paymentbase_Model_Observer</class>
+						<method>doInformPattform</method>
+					</paymentbase>
+				</observers>
+			</customer_save_after>
+			<customer_delete_after>
+				<observers>
+					<paymentbase>
+						<type>singleton</type>
+						<class>Egovs_Paymentbase_Model_Observer</class>
+						<method>doDeleteFromPlatform</method>
+					</paymentbase>
+				</observers>
+			</customer_delete_after>
+        </events>
+		<payment>
+			<attributes>
+				<mapping>
+					<created_at>bestelldat</created_at>
+					<increment_id>bestellnr</increment_id>
+					<kennz_mahn>kennz_mahn</kennz_mahn>
+				</mapping>
+			</attributes>
+			<groups translate="epaybl">
+				<epaybl>ePayBL Payment Methods</epaybl>
+			</groups>
+		</payment>
+
+		<fieldsets>
+			<sales_convert_quote_payment>
+				<paywithinxdays>
+					<to_order_payment>*</to_order_payment>
+				</paywithinxdays>
+			</sales_convert_quote_payment>
+			<sales_convert_order_payment>
+				<paywithinxdays>
+					<to_quote_payment>*</to_quote_payment>
+				</paywithinxdays>
+			</sales_convert_order_payment>
+		</fieldsets>
+	</global>
+
+	<adminhtml>
+		<global_search>
+			<kassenzeichen>
+				<class>paymentbase/search_kassenzeichen</class>
+			</kassenzeichen>
+			<sepa_mandate_id>
+				<class>paymentbase/search_sepa</class>
+			</sepa_mandate_id>
+		</global_search>
+        <translate>
+            <modules>
+                <Egovs_Paymentbase>
+                    <files>
+                        <default>Egovs_Paymentbase.csv</default>
+                    </files>
+                </Egovs_Paymentbase>
+            </modules>
+        </translate>
+		<layout>
+			<updates>
+				<paymentbase>
+					<file>egovs/paymentbase.xml</file>
+				</paymentbase>
+			</updates>
+		</layout>
+
+        <acl>
+			<resources>
+				<admin>
+					<children>
+						<sales>
+							<children>
+								<retrievepayedorders translate="title" module="">
+									<title>Retrieve payed orders</title>
+									<sort_order>20</sort_order>
+								</retrievepayedorders>
+								<invalid_kassenzeichen translate="title" module="paymentbase">
+									<title>Invalid Kassenzeichen</title>
+									<sort_order>21</sort_order>
+								</invalid_kassenzeichen>
+								<order_overview>
+									<title>Orders Overview</title>
+									<sort_order>30</sort_order>
+								</order_overview>
+							</children>
+						</sales>
+						<system>
+							<children>
+								<paymentparams  translate="title"  module="paymentbase">
+									<title>ePayment Parameter</title>
+									<sort_order>100</sort_order>
+									<children>
+										<haushaltsparameter module="paymentbase">
+											<title>Define Haushaltsparameter</title>
+											<sort_order>100</sort_order>
+										</haushaltsparameter>
+										<definepaymentparams module="paymentbase">
+											<title>Define ePayment Parameter</title>
+											<sort_order>110</sort_order>
+										</definepaymentparams>
+										<paymentparams2 module="paymentbase">
+											<title>user-defined ePayment Parameter</title>
+											<sort_order>120</sort_order>
+										</paymentparams2>
+									</children>
+								</paymentparams>
+								<config>
+									<children>
+										<payment>
+											<children>
+												<paymentbase translate="title" module="paymentbase">
+													<title>ePayBL Settings</title>
+													<sort_order>10</sort_order>
+													<children>
+														<service translate="title" module="paymentbase">
+															<title>Service URL</title>
+															<sort_order>10</sort_order>
+														</service>
+														<client_certificate translate="title" module="paymentbase">
+															<title>Client Certificate</title>
+															<sort_order>20</sort_order>
+														</client_certificate>
+														<ca_certificate translate="title" module="paymentbase">
+															<title>CA Certificate</title>
+															<sort_order>30</sort_order>
+														</ca_certificate>
+														<auto_sync_epaybl_data translate="title" module="paymentbase">
+															<title>Synchronize bank account data with ePayBL</title>
+															<sort_order>30</sort_order>
+														</auto_sync_epaybl_data>
+													</children>
+												</paymentbase>
+											</children>
+										</payment>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+
+        <menu>
+			<sales translate="title" module="sales">
+				<children>
+					<retrievepayedorders translate="title" module="sales">
+						<title>Retrieve payed orders</title>
+						<action>adminhtml/paymentbase_retrievepayedorders</action>
+						<sort_order>20</sort_order>
+					</retrievepayedorders>
+					<invalid_kassenzeichen translate="title" module="paymentbase">
+						<title>Invalid Kassenzeichen</title>
+						<action>adminhtml/paymentbase_invalid_kassenzeichen</action>
+						<sort_order>21</sort_order>
+					</invalid_kassenzeichen>
+					<order_overview translate="title" module="paymentbase">
+						<title>Orders Overview</title>
+						<action>adminhtml/paymentbase_sales_overview</action>
+						<sort_order>21</sort_order>
+					</order_overview>
+				</children>
+			</sales>
+			<system>
+				<children>
+					<paymentparams module="paymentbase">
+						<title>ePayment Parameter</title>
+						<sort_order>100</sort_order>
+						<action>paymentbase/paymentbase_localparams</action>
+						<children>
+							<haushaltsparameter module="paymentbase">
+								<title>Define Haushaltsparameter</title>
+								<sort_order>100</sort_order>
+								<action>adminhtml/paymentbase_haushaltsparameter</action>
+							</haushaltsparameter>
+							<definepaymentparams module="paymentbase">
+								<title>Define ePayment Parameter</title>
+								<sort_order>110</sort_order>
+								<action>adminhtml/paymentbase_defineparams</action>
+							</definepaymentparams>
+							<paymentparams2 module="paymentbase">
+								<title>user-defined ePayment Parameter</title>
+								<sort_order>120</sort_order>
+								<action>adminhtml/paymentbase_localparams</action>
+							</paymentparams2>
+						</children>
+					</paymentparams>
+				</children>
+			</system>
+		</menu>
+
+		<events>
+			<controller_action_layout_generate_blocks_before>
+				<observers>
+					<paymentbase>
+						<type>singleton</type>
+						<class>Egovs_Paymentbase_Model_Observer</class>
+						<method>onAdminSalesOrderCreate</method>
+					</paymentbase>
+				</observers>
+			</controller_action_layout_generate_blocks_before>
+		</events>
+    </adminhtml>
+
+    <admin>
+		<routers>
+			<adminhtml>
+                <args>
+                    <modules>
+                    	<Egovs_Paymentbase before="Mage_Adminhtml">Egovs_Paymentbase_Adminhtml</Egovs_Paymentbase>
+                    </modules>
+                </args>
+            </adminhtml>
+		</routers>
+	</admin>
+
+    <frontend>
+    	<routers>
+    		<paymentbase>
+    			<use>standard</use>
+    			<args>
+    				<module>Egovs_Paymentbase</module>
+    				<frontName>paymentbase</frontName>
+    			</args>
+    		</paymentbase>
+    	</routers>
+        <translate>
+            <modules>
+                <Egovs_Paymentbase>
+                    <files>
+                        <default>Egovs_Paymentbase.csv</default>
+                    </files>
+                </Egovs_Paymentbase>
+            </modules>
+        </translate>
+    </frontend>
+
+    <default>
+		<payment>
+			<checkmo>
+				<active>0</active>
+			</checkmo>
+			<bankpayment>
+				<include_personal_data>0</include_personal_data>
+			</bankpayment>
+			<depit>
+				<include_personal_data>0</include_personal_data>
+			</depit>
+			<openaccount>
+				<include_personal_data>0</include_personal_data>
+			</openaccount>
+			<giropay>
+				<include_personal_data>0</include_personal_data>
+			</giropay>
+			<saferpay>
+				<include_personal_data>0</include_personal_data>
+			</saferpay>
+        </payment>
+		<web>
+			<proxy>
+				<use_proxy_egovs_payments>0</use_proxy_egovs_payments>
+				<use_proxy_saferpay_payments>0</use_proxy_saferpay_payments>
+				<exclude_list>ec.europa.eu</exclude_list>
+			</proxy>
+		</web>
+    	<payment_services>
+    		<paymentbase>
+                	<active>0</active>
+                    <maxcounthaushaltsstelle>0</maxcounthaushaltsstelle>
+					<is_alive>0</is_alive>
+					<accounting_list_limit>0</accounting_list_limit>
+                	<mandate_pdf_template_store>/mandates</mandate_pdf_template_store>
+                	<href_max_length>100</href_max_length>
+                </paymentbase>
+    		<payplace>
+    			<service_url>https://test.soap.bs-card-service.com/soapapi/services/XmlApiNl</service_url>
+    			<merchant_name>{{config path="general/imprint/shop_name"}}</merchant_name>
+    		</payplace>
+    	</payment_services>
+     </default>
+
+	<crontab>
+		<jobs>
+			<egovs_paymentbase>
+				<schedule>
+					<cron_expr>0,10,20,30,40,50 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>paymentbase/observer::cleanExpiredGatewayOrders</model>
+				</run>
+			</egovs_paymentbase>
+			<egovs_epaybl_auto_sync>
+				<schedule>
+					<cron_expr>0 3 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>paymentbase/observer::syncBankAccountDataWithePayBL</model>
+				</run>
+			</egovs_epaybl_auto_sync>
+		</jobs>
+	</crontab>
+</config>

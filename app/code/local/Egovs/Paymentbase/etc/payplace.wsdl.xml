@@ -1,0 +1,2775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:impl="http://www.voeb-zvd.de/xmlapi/1.0"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  targetNamespace="http://www.voeb-zvd.de/xmlapi/1.0">
+  <wsdl:types>
+    <!--elementFormDefault="qualified"-->
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:ixa="http://www.voeb-zvd.de/xmlapi/1.0"
+      targetNamespace="http://www.voeb-zvd.de/xmlapi/1.0"
+      elementFormDefault="qualified">
+      <!-- general definitions -->
+      <xsd:group name="baseData">
+        <xsd:annotation>
+          <xsd:documentation>Includes basic data for several kinds of
+            transactions.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element ref="ixa:timeStamp" minOccurs="0"/>
+          <xsd:element ref="ixa:eventExtId"/>
+          <xsd:element ref="ixa:basketId" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:group>
+      <xsd:group name="extendedBaseData">
+        <xsd:annotation>
+          <xsd:documentation>Includes basic data for direct and form service
+            payments.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:group ref="ixa:baseData"/>
+          <xsd:element ref="ixa:kind"/>
+          <xsd:element ref="ixa:indicator" minOccurs="0"/>
+          <xsd:element ref="ixa:seriesFlag" minOccurs="0"/>
+          <xsd:element ref="ixa:additionalNote" minOccurs="0"/>
+          <xsd:element ref="ixa:debitMode" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:group>
+      <xsd:group name="paymentData">
+        <xsd:annotation>
+          <xsd:documentation>Defines the data of a payment transaction.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:sequence>
+              <xsd:element ref="ixa:txReferenceExtId"/>
+              <xsd:element ref="ixa:changedAmount" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="ixa:amount"/>
+              <xsd:element ref="ixa:currency"/>
+            </xsd:sequence>
+          </xsd:choice>
+          <xsd:choice minOccurs="0">
+            <xsd:element ref="ixa:creditCard"/>
+            <xsd:sequence>
+              <xsd:element ref="ixa:dueDate" minOccurs="0"/>
+              <xsd:element ref="ixa:bankAccount"/>
+              <xsd:element ref="ixa:mandate" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>For SEPA direct debit payments (but not for
+                    credits).</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:choice>
+          <xsd:element ref="ixa:merchantRef" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>For credit card payments only.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:group>
+      <xsd:group name="txDiagnosisData">
+        <xsd:sequence>
+          <xsd:element ref="ixa:eventExtId"/>
+          <xsd:element ref="ixa:kind"/>
+          <xsd:element ref="ixa:txReferenceExtId"/>
+        </xsd:sequence>
+      </xsd:group>
+      
+      <xsd:group name="riskCheckData">
+        <xsd:sequence>
+          <xsd:group ref="ixa:baseData"/>
+          <xsd:element name="action" type="ixa:riskCheckActionEnum"/>
+          <xsd:element ref="ixa:eScoreData" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Mandatory for eScore, omit for Bürgel.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:choice>
+            <xsd:sequence>
+              <xsd:element ref="ixa:customerId" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>Optional for eScore, omit for Bürgel.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="ixa:addressData"/>
+              <xsd:element ref="ixa:reason" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:element ref="ixa:bankAccount"/>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:group>
+      <xsd:group name="batchData">
+        <xsd:sequence>
+          <xsd:element name="batchExtId" type="ixa:anyExtId">
+            <xsd:annotation>
+              <xsd:documentation>Unique identifier of a batch.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="action" type="ixa:batchActionEnum"/>
+        </xsd:sequence>
+      </xsd:group>
+      <xsd:simpleType name="batchActionEnum">
+        <xsd:annotation>
+          <xsd:documentation>Action for batches.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="open"/>
+          <xsd:enumeration value="close"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:group name="panAliasData">
+        <xsd:annotation>
+          <xsd:documentation>Element group for pan-alias requests.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="action" type="ixa:panAliasActionEnum"/>
+          <xsd:element name="panalias" type="ixa:panaliasString" minOccurs="0"/>
+          <xsd:element ref="ixa:holder" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:group>
+      <xsd:simpleType name="panAliasActionEnum">
+        <xsd:annotation>
+          <xsd:documentation>Action for pan-alias requests.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="create"/>
+          <xsd:enumeration value="remove"/>
+          <xsd:enumeration value="exists"/>
+          <xsd:enumeration value="info"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="customerContinuation">
+        <xsd:annotation>
+          <xsd:documentation>Includes data for redirecting a customer after a form service
+            payment.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:successURL"/>
+            <xsd:element ref="ixa:errorURL" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>If not provided, the URL for a successful transaction will be
+                  used.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ixa:notificationFailedURL" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>If not provided, the URL for a successful transaction will be
+                  used</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:attribute name="redirect" default="false" type="xsd:boolean">
+            <xsd:annotation>
+              <xsd:documentation>If "true" the customer will be redirected directly. If "false" a
+                page with a link "back to the shop" is shown to the customer.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <!-- enums have to be declared outside any element to have enum classes generated by the Axis2
+        code generation with jaxbri data binding -->
+      <xsd:simpleType name="riskCheckActionEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="addresscheck">
+            <xsd:annotation>
+              <xsd:documentation>eScore address verification ES0013</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="creditassessment">
+            <xsd:annotation>
+              <xsd:documentation>eScore credit assessment ES0012</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="scoring">
+            <xsd:annotation>
+              <xsd:documentation>eScore integrated address verification, credit assessment and
+                scoring ES0015</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="boniscoreandscoring">
+            <xsd:annotation>
+              <xsd:documentation>eScoreIntegrated credit assessment (Boniscore) and scoring
+                ES0036</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="boniscoreandaddresscheck">
+            <xsd:annotation>
+              <xsd:documentation>eScore integrated credit assessment (Boniscore) and address
+                verification ES0037</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="bankaccount">
+            <xsd:annotation>
+              <xsd:documentation>RPP check ES0024</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="concheck">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel ConCheck</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="concheckbasic">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel ConCheck basic</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      
+      <xsd:simpleType name="customerTitleEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="Mr."/>
+          <xsd:enumeration value="Mrs."/>
+          <xsd:enumeration value="Company"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="baseRequest">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" ref="ixa:option"/>
+          <xsd:element ref="ixa:merchantId"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" use="required" type="xsd:ID"/>
+      </xsd:complexType>
+      <xsd:complexType name="paymentBaseRequest">
+        <xsd:complexContent>
+          <xsd:extension base="ixa:baseRequest">
+            <xsd:sequence>
+              <xsd:group ref="ixa:extendedBaseData"/>
+              <xsd:element ref="ixa:autocapture" minOccurs="0"/>
+              <xsd:element ref="ixa:additionalCheck" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="baseResponse">
+        <xsd:attribute name="ref" use="optional" type="xsd:NCName"/>
+      </xsd:complexType>
+      <xsd:complexType name="countryList">
+        <xsd:sequence>
+          <xsd:element ref="ixa:country" maxOccurs="unbounded"/>
+          <xsd:element ref="ixa:rejectMessage" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="country">
+        <xsd:restriction base="xsd:string">
+          <xsd:length value="2"/>
+          <xsd:pattern value="[A-Z]+"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="ip">
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="anyExtId">
+        <xsd:restriction base="xsd:token">
+          <xsd:minLength value="1"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="mismatchActionEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="notify">
+            <xsd:annotation>
+              <xsd:documentation>The shop will be informed if an additional check
+                fails.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="reject">
+            <xsd:annotation>
+              <xsd:documentation>The transaction will be aborted if an additional check
+                fails.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="date">
+        <xsd:annotation>
+          <xsd:documentation>A date in YYYY-MM-DD format.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[12][0-9][0-9][0-9]-(1[0-3]|0[1-9])-[0-3][0-9]"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="base64String">
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[A-Za-z0-9/+]*={0,2}"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:attributeGroup name="compareAction">
+        <xsd:attribute name="mismatchAction" type="ixa:mismatchActionEnum"/>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup name="rootelementattributes">
+        <xsd:attribute name="version" use="required">
+          <xsd:annotation>
+            <xsd:documentation>The version of the interface specification.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:token">
+              <xsd:annotation>
+                <xsd:documentation>Version 1.6</xsd:documentation>
+              </xsd:annotation>
+              <xsd:pattern value="1\.6"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+      </xsd:attributeGroup>
+      
+      <!-- general and root elements -->
+      <xsd:element name="xmlApiRequest">
+        <xsd:annotation>
+          <xsd:documentation>Root element of an XML API request.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded">
+            <!-- request data -->
+            <xsd:element ref="ixa:paymentRequest"/>
+            <xsd:element ref="ixa:txDiagnosisRequest"/>
+            
+            <xsd:element ref="ixa:riskCheckRequest"/>
+            <xsd:element ref="ixa:formServiceRequest"/>
+            <xsd:element ref="ixa:giropayBankCheckRequest"/>
+            <xsd:element ref="ixa:tdsInitialRequest"/>
+            <xsd:element ref="ixa:tdsFinalRequest"/>
+            <xsd:element ref="ixa:batchRequest"/>
+            <xsd:element ref="ixa:panAliasRequest"/>
+            <xsd:element ref="ixa:registerPanRequest"/>
+          </xsd:choice>
+          <xsd:attributeGroup ref="ixa:rootelementattributes"/>
+          <xsd:attribute name="id" type="xsd:ID">
+            <xsd:annotation>
+              <xsd:documentation>This id makes it easier to assign a response to a request. This
+                attribute will be copied to the "ref" attribute of the response, if it is
+                provided.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="xmlApiResponse">
+        <xsd:annotation>
+          <xsd:documentation>Root element of a response of the XML API.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded">
+            <xsd:element ref="ixa:paymentResponse"/>
+            <xsd:element ref="ixa:formServiceResponse"/>
+            <xsd:element ref="ixa:txDiagnosisResponse"/>
+            <xsd:element ref="ixa:giropayBankCheckResponse"/>
+            <xsd:element ref="ixa:tdsInitialResponse"/>
+            
+            <xsd:element ref="ixa:riskCheckResponse"/>
+            <xsd:element ref="ixa:batchResponse"/>
+            <xsd:element ref="ixa:panAliasResponse"/>
+          </xsd:choice>
+          <xsd:attributeGroup ref="ixa:rootelementattributes"/>
+          <xsd:attribute name="ref" type="xsd:NCName">
+            <xsd:annotation>
+              <xsd:documentation>This reference makes it easier to assign a response to a request.
+                This attribute will be copied from the "id" attribute of the request, if it has been
+                provided.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="callbackRequest">
+        <xsd:annotation>
+          <xsd:documentation>Root element of a callback request.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ixa:paymentResponse"/>
+            <xsd:element ref="ixa:panAliasResponse"/>
+          </xsd:choice>
+          <xsd:attributeGroup ref="ixa:rootelementattributes"/>
+          <xsd:attribute name="id" type="xsd:ID">
+            <xsd:annotation>
+              <xsd:documentation>This id makes it easier to assign a response to a request. Copy this
+                attribute to the "ref" attribute of the response, if it is
+                provided.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="callbackResponse">
+        <xsd:annotation>
+          <xsd:documentation>Root element of a callback response.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attributeGroup ref="ixa:rootelementattributes"/>
+          <xsd:attribute name="ref" type="xsd:NCName">
+            <xsd:annotation>
+              <xsd:documentation>This reference makes it easier to assign a response to a request.
+                This attribute will be copied from the "id" attribute of the request, if it has been
+                provided.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="exportResponse">
+        <xsd:annotation>
+          <xsd:documentation>Root element for a transaction export.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:paymentResponse" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ixa:riskCheckResponse" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+          <xsd:attribute name="ref" type="xsd:NCName"/>
+        </xsd:complexType>
+      </xsd:element>
+      <!-- special request and response tags -->
+      <xsd:element name="txDiagnosisRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseRequest">
+              <xsd:sequence>
+                <xsd:group ref="ixa:txDiagnosisData"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="riskCheckRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseRequest">
+              <xsd:sequence>
+                <xsd:group ref="ixa:riskCheckData"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="paymentRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:paymentBaseRequest">
+              <xsd:sequence>
+                <xsd:element name="action">
+                  <xsd:simpleType>
+                    <xsd:restriction base="ixa:actionEnum">
+                      <xsd:enumeration value="preauthorization"/>
+                      <xsd:enumeration value="authorization"/>
+                      <xsd:enumeration value="capture"/>
+                      <xsd:enumeration value="refund"/>
+                      <xsd:enumeration value="reversal"/>
+                      <xsd:enumeration value="credit"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:choice minOccurs="0">
+                  <xsd:sequence>
+                    <xsd:element ref="ixa:xid"/>
+                    <xsd:element ref="ixa:cavv" minOccurs="0"/>
+                  </xsd:sequence>
+                  <xsd:element ref="ixa:ucaf"/>
+                </xsd:choice>
+                <xsd:group ref="ixa:paymentData"/>
+                <xsd:element ref="ixa:address" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>For payments with an American Express credit card or if a SEPA
+                      PDF mandate should be created.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:batchReferenceExtId" minOccurs="0"/>
+                <xsd:element ref="ixa:aid" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="tdsInitialRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:paymentBaseRequest">
+              <xsd:sequence>
+                <xsd:element name="action">
+                  <xsd:simpleType>
+                    <xsd:restriction base="ixa:actionEnum">
+                      <xsd:enumeration value="preauthorization"/>
+                      <xsd:enumeration value="authorization"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element ref="ixa:amount"/>
+                <xsd:element ref="ixa:currency"/>
+                <xsd:element ref="ixa:creditCard"/>
+                <xsd:element ref="ixa:merchantRef" minOccurs="0"/>
+                <xsd:element ref="ixa:fallBackOnSSL" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="tdsFinalRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseRequest">
+              <xsd:sequence>
+                <xsd:element ref="ixa:paRes"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="giropayBankCheckRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseRequest">
+              <xsd:choice>
+                <xsd:element ref="ixa:bankCode">
+                  <xsd:annotation>
+                    <xsd:documentation>Supported until 31/01/2014</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:bic"/>
+              </xsd:choice>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="formServiceRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:paymentBaseRequest">
+              <xsd:sequence>
+                <xsd:element name="action" minOccurs="0">
+                  <xsd:simpleType>
+                    <xsd:restriction base="ixa:actionEnum">
+                      <xsd:enumeration value="preauthorization"/>
+                      <xsd:enumeration value="authorization"/>
+                      <xsd:enumeration value="avs"/>
+                      <xsd:enumeration value="payment"/>
+                      <xsd:enumeration value="avspayment"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element ref="ixa:amount" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Not for giropay age verification, otherwise
+                      mandatory</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:currency" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Not for giropay age verification, otherwise
+                      mandatory</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:choice>
+                  <xsd:sequence>
+                    <xsd:annotation>
+                      <xsd:documentation>Only for giropay.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:element ref="ixa:bankAccount"/>
+                    <xsd:element ref="ixa:giropayData"/>
+                  </xsd:sequence>
+                  <xsd:sequence>
+                    <xsd:annotation>
+                      <xsd:documentation>For credit card payments, panalias also for direct
+                        debit.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:element ref="ixa:panalias" minOccurs="0"/>
+                    <xsd:element ref="ixa:merchantRef" minOccurs="0"/>
+                    <xsd:element ref="ixa:address" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Only used for payments with an American Express credit
+                          card.</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:sequence>
+                      <xsd:annotation>
+                        <xsd:documentation>For SEPA direct debits</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:element ref="ixa:dueDate" minOccurs="0"/>
+                      <xsd:element ref="ixa:mandate" minOccurs="0"/>
+                    </xsd:sequence>
+                  </xsd:sequence>
+                </xsd:choice>
+                <xsd:element ref="ixa:additionalData" minOccurs="0"/>
+                <xsd:choice minOccurs="0">
+                  <xsd:element ref="ixa:formData">
+                    <xsd:annotation>
+                      <xsd:documentation>Not for giropay, not for PayPal.</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element ref="ixa:basket">
+                    <xsd:annotation>
+                      <xsd:documentation>For PayPal.</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:choice>
+                <xsd:element ref="ixa:callbackData"/>
+                <xsd:element ref="ixa:customerContinuation"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerPanRequest">
+        <xsd:annotation>
+          <xsd:documentation>Register a pan alias. The form service is used to have the user enter
+            the credit card (or bank account) details.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseRequest">
+              <xsd:sequence>
+                <xsd:element ref="ixa:kind" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>debit or creditcard. If omitted, creditcard is
+                      assumed.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:panalias" minOccurs="0"/>
+                <xsd:element ref="ixa:formData"/>
+                <xsd:element ref="ixa:callbackData"/>
+                <xsd:element ref="ixa:customerContinuation"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="batchRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseRequest">
+              <xsd:group ref="ixa:batchData"/>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="panAliasRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseRequest">
+              <xsd:group ref="ixa:panAliasData"/>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="tdsInitialResponse">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:sequence>
+                <xsd:element ref="ixa:acsURL"/>
+                <xsd:element ref="ixa:paReq"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="riskCheckResponse">
+        <xsd:annotation>
+          <xsd:documentation>Response element for eScore and Bürgel transactions.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:sequence>
+                <xsd:element ref="ixa:merchantId" minOccurs="0"/>
+                <xsd:group ref="ixa:baseData"/>
+                <xsd:element name="action" type="ixa:riskCheckActionEnum"/>
+                <xsd:element ref="ixa:eScoreData" minOccurs="0"/>
+                <xsd:choice>
+                  <xsd:sequence>
+                    <xsd:element ref="ixa:customerId" minOccurs="0"/>
+                    <xsd:element ref="ixa:addressData" minOccurs="0"/>
+                    <xsd:element ref="ixa:reason" minOccurs="0"/>
+                    <xsd:element ref="ixa:backendTxId" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>For Bürgel and eScore address
+                          verification.</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ixa:addressNote" minOccurs="0"/>
+                    <xsd:element ref="ixa:eScoreFreightRoutingCode" minOccurs="0"/>
+                    <xsd:element ref="ixa:score" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Score value, not for eScore RPP and eScore address
+                          verification</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ixa:eScoreInformaScoreVal" minOccurs="0"/>
+                    <xsd:element ref="ixa:eScoreScoreType" minOccurs="0"/>
+                    <xsd:element ref="ixa:negativeCriterion" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="ixa:relation" minOccurs="0" maxOccurs="unbounded">
+                      <xsd:annotation>
+                        <xsd:documentation>Buergel ConCheck only.</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:sequence>
+                  <xsd:sequence>
+                    <!-- eScore RPP - ES0024 -->
+                    <xsd:element ref="ixa:bankAccount"/>
+                    <xsd:element ref="ixa:eScoreBankAccountValidationResult" minOccurs="0"/>
+                    <xsd:element ref="ixa:eScoreBankAccountValidationMessage" minOccurs="0"/>
+                    <xsd:element ref="ixa:eScoreRppMatch" minOccurs="0"/>
+                    <xsd:element ref="ixa:eScoreRppResult" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="ixa:eScoreErrorCodeName" minOccurs="0"/>
+                    <xsd:element ref="ixa:eScoreErrorDescription" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:choice>
+                <xsd:element ref="ixa:scoringRc"/>
+                <xsd:element ref="ixa:rc"/>
+                <xsd:element minOccurs="0" ref="ixa:message"/>
+                <xsd:element ref="ixa:txExtId" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="paymentResponse">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:sequence>
+                <xsd:element ref="ixa:merchantId" minOccurs="0"/>
+                <xsd:group ref="ixa:extendedBaseData"/>
+                <xsd:element name="action" minOccurs="0" type="ixa:actionEnum"/>
+                <xsd:element ref="ixa:brand" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Only in export files for credit card
+                      payments.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:sequence>
+                  <xsd:choice>
+                    <xsd:sequence>
+                      <xsd:element ref="ixa:txReferenceExtId"/>
+                      <xsd:element ref="ixa:changedAmount" minOccurs="0"/>
+                    </xsd:sequence>
+                    <xsd:sequence>
+                      <xsd:element ref="ixa:amount"/>
+                      <xsd:element ref="ixa:currency"/>
+                    </xsd:sequence>
+                  </xsd:choice>
+                  <xsd:choice minOccurs="0">
+                    <xsd:element ref="ixa:creditCard"/>
+                    <xsd:element name="bankAccount">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element ref="ixa:bankCode" minOccurs="0"/>
+                          <xsd:element ref="ixa:accountNumber" minOccurs="0"/>
+                          <xsd:element ref="ixa:bic" minOccurs="0"/>
+                          <xsd:element ref="ixa:iban" minOccurs="0"/>
+                          <xsd:element ref="ixa:panalias" minOccurs="0"/>
+                          <xsd:element ref="ixa:holder" minOccurs="0"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:choice>
+                </xsd:sequence>
+                <xsd:element ref="ixa:batchReferenceExtId" minOccurs="0"/>
+                <xsd:element ref="ixa:rc"/>
+                <xsd:element minOccurs="0" ref="ixa:message"/>
+                <xsd:element name="backRc" minOccurs="0" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>Response code of a back end system (if available).E.g. GICC
+                      response code in the case of credit card transactions.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:txExtId" minOccurs="0"/>
+                <xsd:element ref="ixa:backendTxId" minOccurs="0"/>
+                <xsd:element ref="ixa:aid" minOccurs="0"/>
+                <xsd:element ref="ixa:additionalData" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>For giropay and form service callback.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:compareResult" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                    <xsd:documentation>Only if a comparison with notification was
+                      requested.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:scoringRc" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>If an American Express address verification was carried
+                      out.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="rcAvsAmex" minOccurs="0" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>If an American Express address verification was carried
+                      out.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="giropayBankCheckResponse">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:sequence>
+                <xsd:choice>
+                  <xsd:element ref="ixa:bankCode">
+                    <xsd:annotation>
+                      <xsd:documentation>Supported until 31/01/2014</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element ref="ixa:bic"/>
+                </xsd:choice>
+                <xsd:element name="bankCheckResult" type="ixa:checkResultEnum" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Result of the validation. "passed": the bank takes part in
+                      giropay. "failed": the bank does not take part. "unknown": the bank code ist
+                      invalid or unknown.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="service" minOccurs="0" maxOccurs="3" type="ixa:giropayServiceEnum">
+                  <xsd:annotation>
+                    <xsd:documentation>Lists the giropay services that are available for this
+                      bank.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:rc"/>
+                <xsd:element minOccurs="0" ref="ixa:message"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="formServiceResponse">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:choice>
+                
+                
+                <xsd:element ref="ixa:redirectURL"/>
+              </xsd:choice>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="txDiagnosisResponse">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:sequence>
+                <xsd:group ref="ixa:txDiagnosisData"/>
+                <xsd:element ref="ixa:rc"/>
+                <xsd:element ref="ixa:message"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="batchResponse">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:sequence>
+                <xsd:group ref="ixa:batchData"/>
+                <xsd:element ref="ixa:rc"/>
+                <xsd:element ref="ixa:message" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="panAliasResponse">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ixa:baseResponse">
+              <xsd:sequence>
+                <xsd:element ref="ixa:rc"/>
+                <xsd:element name="panalias" type="ixa:panaliasString" minOccurs="0"/>
+                <xsd:choice>
+                  <xsd:sequence>
+                    
+                    <xsd:element name="pan" type="ixa:paddedPanString" minOccurs="0"/>
+                    <xsd:element ref="ixa:expiryDate" minOccurs="0"/>
+                  </xsd:sequence>
+                  <xsd:choice>
+                    <xsd:sequence>
+                      <xsd:element ref="ixa:bankCode" minOccurs="0"/>
+                      <xsd:element ref="ixa:accountNumber" minOccurs="0"/>
+                    </xsd:sequence>
+                    <xsd:sequence>
+                      <xsd:element ref="ixa:bic" minOccurs="0"/>
+                      <xsd:element ref="ixa:iban" minOccurs="0"/>
+                    </xsd:sequence>
+                  </xsd:choice>
+                  <xsd:element ref="ixa:holder" minOccurs="0"/>
+                  <xsd:element ref="ixa:brand" minOccurs="0">
+                    <xsd:annotation>
+                      <xsd:documentation>Only in response to registerPanRequest.</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <!-- elements for groups of information -->
+      <xsd:element name="additionalCheck">
+        <xsd:annotation>
+          <xsd:documentation>Includes information for payment related verifications of country of
+            delivery, IP address, etc.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:compare" minOccurs="1" maxOccurs="3"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="creditCard">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:pan" minOccurs="0"/>
+            <xsd:element ref="ixa:panalias" minOccurs="0"/>
+            <xsd:element ref="ixa:expiryDate" minOccurs="0"/>
+            <xsd:element ref="ixa:holder" minOccurs="0"/>
+            <xsd:element ref="ixa:verificationCode" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="bankAccount">
+        <xsd:annotation>
+          <xsd:documentation>Includes bank details for debit and giropay
+            transactions.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:sequence>
+                <xsd:element ref="ixa:bankCode" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Optional for giropay refunds, otherwise
+                      required.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:accountNumber" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Optional for giropay initialisations, otherwise
+                      required.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:element ref="ixa:bic" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Required for giropay initialisation or non German IBANs, omit
+                      otherwise.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element ref="ixa:iban" minOccurs="0">
+                  <xsd:annotation>
+                    <xsd:documentation>Optional for giropay initialisations, otherwise
+                      required.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:choice>
+            <xsd:element ref="ixa:panalias" minOccurs="0"/>
+            <xsd:element ref="ixa:holder" minOccurs="0"/>
+            <xsd:element ref="ixa:bankName" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addressData">
+        <xsd:annotation>
+          <xsd:documentation>Defines an address, e.g. for adress verification or
+            scoring.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="title" type="ixa:customerTitleEnum" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Mandatory for eScore, omit it for Bürgel.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="firstName" type="xsd:string"/>
+            <xsd:element name="lastName" type="xsd:string"/>
+            <xsd:element name="name2" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Second or extra name for Bürgel requests.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dateOfBirth" minOccurs="0" type="ixa:date">
+              <xsd:annotation>
+                <xsd:documentation>Date of birth in YYYY-MM-DD format.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="street">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="30"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="streetNumber">
+              <xsd:annotation>
+                <xsd:documentation>Only 8 characters allowed for eScore, Bürgel allows up to 10
+                  characters.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="10"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="postcode">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:pattern value="[0-9]+"/>
+                  <xsd:length value="5"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="city">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="30"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element ref="ixa:country"/>
+            <xsd:element name="phone" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Not for eScore, optional for Bürgel.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:pattern value="[-0-9 /]+"/>
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="20"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="email" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Not for eScore, optional for Bürgel.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="1"/>
+                  <xsd:maxLength value="60"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="address">
+        <xsd:annotation>
+          <xsd:documentation>Address for American Express address verification or for a SEPA PDF
+            mandate.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="firstName" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Not for American Express address verification</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="lastName" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Not for American Express address verification</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="street" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Mandatory for American Express address
+                  verification</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="streetNumber" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Mandatory for American Express address
+                  verification</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="postcode" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Mandatory for American Express address
+                  verification</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="city" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Mandatory for American Express address
+                  verification</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ixa:country" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Not for American Express address verification</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="labelledText">
+        <xsd:annotation>
+          <xsd:documentation>Additional line of text, consisting of a label and the text itself, that
+            is shown to customers on the giropay login page.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:label"/>
+            <xsd:element ref="ixa:text"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="credentials">
+        <xsd:annotation>
+          <xsd:documentation>Authentication data for callbacks (giropay or form
+            service)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:login"/>
+            <xsd:element ref="ixa:password"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="callbackData">
+        <xsd:annotation>
+          <xsd:documentation>Includes data (URL and possibly authentication data) for callbacks
+            (giropay or form service).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:notifyURL"/>
+            <xsd:element ref="ixa:credentials" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="giropayData">
+        <xsd:annotation>
+          <xsd:documentation>Includes data specific to giropay.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:merchantSubId"/>
+            <xsd:element ref="ixa:extMerchantId" minOccurs="0"/>
+            <xsd:element ref="ixa:extMerchantTag" minOccurs="0"/>
+            <xsd:element ref="ixa:labelledText" minOccurs="0" maxOccurs="5"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="eScoreData">
+        <xsd:annotation>
+          <xsd:documentation>Includes data specific to eScore.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:partnerNumber" minOccurs="0"/>
+            <xsd:element ref="ixa:partnerCode" minOccurs="0"/>
+            <xsd:element ref="ixa:userName" minOccurs="0"/>
+            <xsd:element ref="ixa:userCode" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="formData">
+        <xsd:annotation>
+          <xsd:documentation>For the form service. Information that influences the display of the
+            form and the payment process.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="locale" type="xsd:string" default="de" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Language of the form to be displayed. "de" for German, "en" for
+                  English. If not submitted the German form will be displayed. For donations and
+                  contributions additional "locales" with adapted text exist: "spde" (donation,
+                  German), "spen" (donation, English), "btde" (contribution, German), "bten"
+                  (contribution, English).</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Version of the form. If omitted, the current default is 1.6. Use
+                  1.6m to display forms optimised for mobile phones. Note that a different version
+                  might require a different CSS file.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="cssURL" type="xsd:anyURI" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>URL of the cascading stylesheet which the form service uses to
+                  display the form.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="formServiceOption" minOccurs="0" maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>Possible values for the "name" attribute: for credit card
+                  transactions: "cardHolder" states that the form that is shown to the customer
+                  contains a mandatory field for entering the credit card owner.
+                  "optionalCardHolder" means that the form includes a field for the card owner but
+                  the customer is not required to enter anything. Without this parameter the form
+                  will not include an input field for the credit card owner. "fallBackOnSSL":
+                  specifies that an SSL transaction without liability shifting is carried out in
+                  case of a Visa card if no answer is received from the Visa Directory or if the
+                  Visa or MasterCard Directory could not determine if the credit card is enrolled
+                  for 3D Secure. If not submitted, the transaction will be aborted under these
+                  circumstances. "amexAvs": if the customer pays with an American Express card he is
+                  asked for his address and an American Express address verification is carried out.
+                  The result of the address verification is returned in the payment notification in
+                  the fields rcAvsAmex and scoringRc. "generate_ppan_verify_online": only if your
+                  account is configured to use card number aliases. Specifies that the transaction
+                  is a registration of a card number and not a payment. The text in the form is
+                  displayed as is appropriate for a registration, the amount is not displayed. Can
+                  be used only together with &lt;action&gt;preauthorization&lt;/action&gt; and only
+                  with an amount of not more than 1 EUR or 1 of another currency respectively. In
+                  the case of direct debits: "accountHolder" signifies that the direct debit form,
+                  which is displayed to the customer, includes a mandatory field to enter the
+                  account holder. "optionalAccountHolder" signifies that the direct debit form
+                  includes an optional field to enter the account holder. Without this detail the
+                  direct debit form only includes fields for the account number and the bank
+                  identification number. "checklist": before the direct debit a blacklist is
+                  checked. Only available if this option has been activated for your account.
+                  "sepa_pdf_mandate" specifies that a PDF file with a SEPA direct debit mandate
+                  should be created in the form service. This requires additional information which
+                  the customer has to enter in the course of the form service dialogue. Only
+                  available if this option has been activated for your account. Possibly there will
+                  be more options in future versions.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:complexType>
+                <xsd:attribute name="name" use="required" type="xsd:string"/>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="merchantName" minOccurs="0" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>Merchant name to be displayed in the form. If empty, no merchant
+                  name will be displayed. If this element is omitted the merchant name configured in
+                  the system is displayed.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="label" minOccurs="0" maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>
+                  <xsd:documentation>Custom label to be displayed in the form instead of the standard
+                    text. Currently possible for the keys 'submit' and 'cancel' for the submit and
+                    cancel buttons.</xsd:documentation>
+                </xsd:documentation>
+              </xsd:annotation>
+              <xsd:complexType>
+                <xsd:simpleContent>
+                  <xsd:extension base="xsd:string">
+                    <xsd:attribute name="key" use="required"/>
+                  </xsd:extension>
+                </xsd:simpleContent>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="retries" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Specifies how often the customer can retry the payment if the
+                  payment fails.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:int">
+                  <xsd:minInclusive value="0"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="compare">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:item" minOccurs="2" maxOccurs="3"/>
+            <xsd:element ref="ixa:rejectMessage" minOccurs="0"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="xsd:NCName"/>
+          <xsd:attributeGroup ref="ixa:compareAction"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="item">
+        <xsd:complexType>
+          <xsd:choice minOccurs="0">
+            <xsd:element ref="ixa:ip"/>
+            <xsd:sequence>
+              <xsd:element ref="ixa:acceptCountries" minOccurs="0"/>
+              <xsd:element ref="ixa:rejectCountries" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:element ref="ixa:country"/>
+          </xsd:choice>
+          <xsd:attribute name="type" type="ixa:itemTypeEnum" use="required">
+            <xsd:annotation>
+              <xsd:documentation>Type of the comparison item.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:simpleType name="itemTypeEnum">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="ipStrict"/>
+          <xsd:enumeration value="ipSloppy"/>
+          <xsd:enumeration value="countryList"/>
+          <xsd:enumeration value="cardIssuingCountry"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="additionalCheckResult">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:compareResult" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:simpleType name="sequenceTypeEnum">
+        <xsd:annotation>
+          <xsd:documentation>SEPA payment sequence type</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="oneoff">
+            <xsd:annotation>
+              <xsd:documentation>Single payment, the default</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="first">
+            <xsd:annotation>
+              <xsd:documentation>First payment of a sequence</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="recurring">
+            <xsd:annotation>
+              <xsd:documentation>Follow-up payment</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="final">
+            <xsd:annotation>
+              <xsd:documentation>Last payment of a sequence</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="mandate">
+        <xsd:annotation>
+          <xsd:documentation>Includes data of a SEPA direct debit mandate</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="reference">
+              <xsd:annotation>
+                <xsd:documentation>Unique identification of the SEPA mandate.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="35"/>
+                  <xsd:pattern value="[0-9A-Za-z+?/\-:().,']+"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="signedOn" type="ixa:date">
+              <xsd:annotation>
+                <xsd:documentation>Date when the SEPA mandate was signed.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="name" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Name of the recipient used in the SEPA mandate. If not submitted
+                  the name configured in the standing data is used.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="70"/>
+                  <xsd:pattern value="[0-9A-Za-z+?/\-:().,' ]+"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="sequenceType" minOccurs="0" type="ixa:sequenceTypeEnum">
+              <xsd:annotation>
+                <xsd:documentation>If not submitted a single payment is assumed.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="previousCreditorId" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Previous creditor ID of the shop. Only for recurring payments if
+                  the creditor ID of the shop has changed from the previous
+                  payment.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:length value="18"/>
+                  <xsd:pattern value="DE[0-9]{2}[A-Za-z0-9]{3}0[0-9]{10}"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="previousBic" minOccurs="0" type="ixa:bicType">
+              <xsd:annotation>
+                <xsd:documentation>Previous BIC of the customer. Only for recurring payments if the
+                  IBAN has changed from the previous payment. Only required for non German previous
+                  IBANs.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="previousIban" minOccurs="0" type="ixa:ibanType">
+              <xsd:annotation>
+                <xsd:documentation>Previous IBAN of the customer. Only for recurring payments if the
+                  IBAN has changed from the previous payment.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="previousReference" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Previous mandate reference. Only for recurring payments if the
+                  mandate reference has changed from the previous payment.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="35"/>
+                  <xsd:pattern value="[0-9A-Za-z+?/\-:().,']+"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:simpleType name="panaliasString">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="0"/>
+          <xsd:maxLength value="50"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="paddedPanString">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="12"/>
+          <xsd:maxLength value="16"/>
+          <xsd:pattern value="[0-9\*]+"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="bicType">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="8"/>
+          <xsd:maxLength value="11"/>
+          <xsd:pattern value="[A-Z]{6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3})?"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="ibanType">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="15"/>
+          <xsd:maxLength value="34"/>
+          <xsd:pattern value="[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="giropayServiceEnum">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="payment"/>
+          <xsd:enumeration value="ageverification"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- elements of a single information -->
+      <xsd:element name="pan">
+        <xsd:annotation>
+          <xsd:documentation>Credit card number (Primary Account Number)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:minLength value="12"/>
+            <xsd:maxLength value="19"/>
+            <xsd:pattern value="[0-9]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="panalias">
+        <xsd:annotation>
+          <xsd:documentation>An alias for creditcard's pan and expiry.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="ixa:panaliasString">
+              <xsd:attribute name="generate" default="false" type="xsd:boolean" use="optional">
+                <xsd:annotation>
+                  <xsd:documentation>If "true" alias will be generated.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:attribute>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="expiryDate">
+        <xsd:annotation>
+          <xsd:documentation>Expiry date of a credit card.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="month">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:byte">
+                  <xsd:minInclusive value="1"/>
+                  <xsd:maxInclusive value="12"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="year">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:int">
+                  <xsd:minInclusive value="1000"/>
+                  <xsd:maxInclusive value="9999"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+        
+      </xsd:element>
+      
+      <xsd:simpleType name="checkResultEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="passed">
+            <xsd:annotation>
+              <xsd:documentation>OK, test passed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="failed">
+            <xsd:annotation>
+              <xsd:documentation>Did not pass the test.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="unknown">
+            <xsd:annotation>
+              <xsd:documentation>The validation was not possible or could not be completed
+                normally.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="compareResult">
+        <xsd:annotation>
+          <xsd:documentation>Result of a comparison.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="ixa:checkResultEnum">
+              <xsd:attribute name="ref" type="xsd:NCName"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="acceptCountries" type="ixa:countryList">
+        <xsd:annotation>
+          <xsd:documentation>List of accepted issuing countries for a credit card payment. Without
+            this parameter the issuing country is not restricted.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="rejectCountries" type="ixa:countryList">
+        <xsd:annotation>
+          <xsd:documentation>List of issuing countries that are not acceptedfor a credit card
+            payment. Without this parameter the issuing country is not
+            restricted.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="rc">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="4"/>
+            <xsd:pattern value="[0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="message">
+        <xsd:annotation>
+          <xsd:documentation>A message that explains the return code.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="option">
+        <xsd:annotation>
+          <xsd:documentation>In future versions this element will allow to influence details of the
+            response or the transaction.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute name="name" use="required" type="xsd:NCName"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="txExtId">
+        <xsd:annotation>
+          <xsd:documentation>A uniqe identification returned by the system to reference a
+            transaction.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="ixa:anyExtId">
+            <xsd:maxLength value="20"/>
+            <xsd:pattern value="[A-Za-z0-9_/\-]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="txReferenceExtId">
+        <xsd:annotation>
+          <xsd:documentation>References the txExtId of a previous transaction.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="ixa:anyExtId">
+            <xsd:maxLength value="22"/>
+            <xsd:pattern value="[A-Za-z0-9_/\-]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eventExtId">
+        <xsd:annotation>
+          <xsd:documentation>Unique process number, that identifies this transaction for a
+            shop.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="ixa:anyExtId">
+            <xsd:maxLength value="17"/>
+            <xsd:pattern value="[A-Za-z0-9_/\-]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="basketId">
+        <xsd:annotation>
+          <xsd:documentation>Shopping basket number. Can be freely filled in by the merchant to
+            submit additional information.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="timeStamp">
+        <xsd:annotation>
+          <xsd:documentation>Date and time in the form YYYY-MM-DDTHH:mm:ss.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern
+              value="[12][9012][0-9][0-9]-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-2])T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"
+            />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:simpleType name="actionEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="preauthorization">
+            <xsd:annotation>
+              <xsd:documentation>Reservation</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="authorization">
+            <xsd:annotation>
+              <xsd:documentation>Reservation/Capture</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="capture">
+            <xsd:annotation>
+              <xsd:documentation>Capture</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="refund">
+            <xsd:annotation>
+              <xsd:documentation>Refund</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="reversal">
+            <xsd:annotation>
+              <xsd:documentation>Reversal, cancellation</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="credit">
+            <xsd:annotation>
+              <xsd:documentation>Credit</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="avs">
+            <xsd:annotation>
+              <xsd:documentation>giropay age verification.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="payment">
+            <xsd:annotation>
+              <xsd:documentation>The default in case of a giropay transaction.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="avspayment">
+            <xsd:annotation>
+              <xsd:documentation>Combined giropay age verification and payment.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="indicatorEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="ecom"/>
+          <xsd:enumeration value="moto"/>
+          <xsd:enumeration value="pos"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="indicator" type="ixa:indicatorEnum">
+        <xsd:annotation>
+          <xsd:documentation>Determines the kind of credit card payment.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="changedAmount">
+        <xsd:annotation>
+          <xsd:documentation>Amount in the smallest currency unit (Cent in the case of the Euro).
+            Only has to be submitted if different from the amount of the referenced
+            transaction.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:long">
+            <xsd:minInclusive value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="amount">
+        <xsd:annotation>
+          <xsd:documentation>Amount in the smallest currency unit (Cent in the case of the
+            Euro).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:long">
+            <xsd:minInclusive value="0"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="currency">
+        <xsd:annotation>
+          <xsd:documentation>Three letter currency code according to ISO 4217.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="3"/>
+            <xsd:pattern value="[A-Z]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="country" type="ixa:country">
+        <xsd:annotation>
+          <xsd:documentation>Two letter country code according to the current version of ISO
+            3166.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="accountNumber">
+        <xsd:annotation>
+          <xsd:documentation>The customer's account number.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="10"/>
+            <xsd:pattern value="[0-9]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="holder" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>The account holder of the customer's bank account or the owner of a
+            credit card.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="bankCode">
+        <xsd:annotation>
+          <xsd:documentation>Bank code of the customer's bank details.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="8"/>
+            <xsd:pattern value="[0-9]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="bic" type="ixa:bicType">
+        <xsd:annotation>
+          <xsd:documentation>BIC of the customer's bank details.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="iban" type="ixa:ibanType">
+        <xsd:annotation>
+          <xsd:documentation>IBAN of the customer's bank details.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="bankName">
+        <xsd:annotation>
+          <xsd:documentation>Name of the customer'S bank.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="verificationCode">
+        <xsd:annotation>
+          <xsd:documentation>Card verification code. Safety code of a credit card (also known as cvv
+            or cvc).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:minLength value="3"/>
+            <xsd:maxLength value="4"/>
+            <xsd:pattern value="[0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:simpleType name="seriesFlagEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="installment">
+            <xsd:annotation>
+              <xsd:documentation>instalment</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="recurring">
+            <xsd:annotation>
+              <xsd:documentation>preiodic payment (subscription payments).</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="seriesFlag" type="ixa:seriesFlagEnum">
+        <xsd:annotation>
+          <xsd:documentation>Marks a payment as part of a series of as part of a series of
+            instalments or subscription payments. The initial payment is marked like the follow-up
+            transactions.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:simpleType name="kindEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="cic"/>
+          <xsd:enumeration value="creditcard"/>
+          <xsd:enumeration value="creditcard-3dsecure"/>
+          <xsd:enumeration value="debit"/>
+          <xsd:enumeration value="debit-checklist"/>
+          <xsd:enumeration value="giropay"/>
+          <xsd:enumeration value="maestro"/>
+          <xsd:enumeration value="paypal"/>
+          <xsd:enumeration value="scoring"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="kind" type="ixa:kindEnum">
+        <xsd:annotation>
+          <xsd:documentation>Determines the kind of transaction.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="acsURL" type="xsd:anyURI">
+        <xsd:annotation>
+          <xsd:documentation>The URL of the ACS the customer should be redirected
+            to.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="paReq" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>PA request. The PA request is submitted to the ACS. It is already signed
+            and is submitted as a Base64 encoded string.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="paRes" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>PA response. The PA response is returned by the ACS when the customer is
+            redirected back. It has to be returned unchanged as a Base64 encoded string to the
+            interface.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:simpleType name="reasonEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="ABK">
+            <xsd:annotation>
+              <xsd:documentation>eScore: request for credit assessment before concluding a purchase
+                contract (in particular purchase on account or by instalments)</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ABV">
+            <xsd:annotation>
+              <xsd:documentation>eScore: request for credit assessment before concluding an insurance
+                contract</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BZV">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment within the scope of evaluating the
+                reliability of an insurance broker or an insurance field
+                representative</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BMT">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment before opening or installing a mobile
+                telecommunication account</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BFT">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment before opening or installing a landline
+                telecommunication account</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ABI">
+            <xsd:annotation>
+              <xsd:documentation>eScore: request for credit assessment before or in connection with
+                the initiation or carrying out of debt-collecting measures</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ABF">
+            <xsd:annotation>
+              <xsd:documentation>eScore: request for credit assessment before takeover/purchase of a
+                claim or before assuming del credere liability</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ABD">
+            <xsd:annotation>
+              <xsd:documentation>eScore: request for credit assessment before concluding a service
+                contract</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ABW">
+            <xsd:annotation>
+              <xsd:documentation>eScore: request for credit assessment before concluding a contract
+                for work and labour</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ABL">
+            <xsd:annotation>
+              <xsd:documentation>eScore: request for credit assessment before concluding a lease or
+                rental contract (chattels)</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BKV">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment before granting of
+                credit</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BKE">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment before opening an
+                account</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BKA">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment due to a credit or customer card
+                application</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BBS">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment before concluding a building loan
+                contract</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BMV">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment before concluding a rental contract (real
+                estate)</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BFV">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment before concluding a franchising
+                contract</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="BER">
+            <xsd:annotation>
+              <xsd:documentation>eScore: credit assessment due to ascertainment order (credit agency
+                company)</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="creditRequest">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: credit request - Kreditanfrage</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="businessInitiation">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: business initiation - Geschäftsanbahnung</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="creditAssessment">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: credit assessment - Bonitätsprüfung</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="claim">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: claim - Forderung</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="reason" default="ABK" type="ixa:reasonEnum">
+        <xsd:annotation>
+          <xsd:documentation>Request reason for eScore credit assessment and scoring request. If this
+            field is not submitted, "ABK" (Request for credit assessment before concluding a
+            purchase contract) will be set.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:simpleType name="scoringRcEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="Y">
+            <xsd:annotation>
+              <xsd:documentation>yellow/amber</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="R">
+            <xsd:annotation>
+              <xsd:documentation>red</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="G">
+            <xsd:annotation>
+              <xsd:documentation>green</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="U">
+            <xsd:annotation>
+              <xsd:documentation>unknown</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="scoringRc" type="ixa:scoringRcEnum">
+        <xsd:annotation>
+          <xsd:documentation>Traffic light return code of a scoring request. Depending on the
+            particular soring providern the value Y (amber) may be omitted.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="eScoreInformaScoreVal">
+        <xsd:annotation>
+          <xsd:documentation>Generated scoring value of the InFoScore Consumer Data
+            GmbH.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="3"/>
+            <xsd:pattern value="[0-9]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      
+      <xsd:element name="eScoreScoreType">
+        <xsd:annotation>
+          <xsd:documentation>Score type (B or I or M) and 3 digits for further
+            classification.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="4"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      
+      
+      <xsd:element name="eScoreRppResult">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ixa:eScoreContentType" minOccurs="0"/>
+            <xsd:element ref="ixa:eScoreContentDescription" minOccurs="0"/>
+            <xsd:element ref="ixa:eScoreContentCode" minOccurs="0"/>
+            <xsd:element ref="ixa:eScoreNoOfMatches" minOccurs="0"/>
+            <xsd:element ref="ixa:eScoreFirstNoticeDate" minOccurs="0"/>
+            <xsd:element ref="ixa:eScoreLastNoticeDate" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="negativeCriterion">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="kind">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>3 uppercase letters for eScore, a number for
+                      Bürgel.</xsd:documentation>
+                  </xsd:annotation>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="text" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Bürgel only</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="amount" type="xsd:long" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Bürgel only</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="currency" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Bürgel only</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="count" type="xsd:int" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Bürgel only</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="date" type="ixa:date">
+              <xsd:annotation>
+                <xsd:documentation>eScore: date of the negative criterion. Bürgel: last occurence of
+                  this kind of negative criterion.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="completionDate" type="ixa:date" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>eScore only</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="completionFlag" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>eScore only.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:length value="1"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="docReference" type="xsd:string" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Reference number of the negative criterion.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      
+      <xsd:simpleType name="addressNoteEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="PPB">
+            <xsd:annotation>
+              <xsd:documentation>Confirmation on personal level. The address supplied (incl. name and
+                first name) was completely correct or could be corrected completely. In this case
+                only the freight routing code and possibly the corrected fields are returned to the
+                initiator.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PHB">
+            <xsd:annotation>
+              <xsd:documentation>Confirmation on household level. The address supplied (incl. name
+                without first name) could be corrected completely or was completely correct on
+                household level and had a first name, which is not rectifiable/known. In this case
+                the corrected fields except the first name are returned to the initiator, as the
+                first name could not be confirmed. The existence of the first name at this address
+                could not be confirmed. In addition the field eScoreFreightRouting- Code is returned
+                to the initiator as long as the freight routing code is
+                available.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PAB">
+            <xsd:annotation>
+              <xsd:documentation>Confirmation on address level. The address supplied (without name,
+                without first name) could be corrected completely or on address level was already
+                complete and had not rectifiable/known personal data. In this case the corrected
+                fields except the first name and surname are returned to the initiator, as the first
+                name and surname could not be confirmed. The existence of the first name and surname
+                at this address could not be confirmed. In addition the field
+                eScoreFreightRoutingCode is returned to the initiator as long as the freight routing
+                code is available.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PNZ">
+            <xsd:annotation>
+              <xsd:documentation>The person at the address supplied is known, but at this address is
+                not or no longer deliverable. This corresponds to a confirmation on address level
+                (PAB), however, with the above-mentioned limitation, that the person queried is
+                undeliverable there.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PPV">
+            <xsd:annotation>
+              <xsd:documentation>The person at the address supplied is deceased according to the
+                Deutsche Post (German mail).</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PKI">
+            <xsd:annotation>
+              <xsd:documentation>The response of the Deutsche Post (German mail) is possibly
+                contradictory and/or ambiguous. Therefore the person/address is not
+                assessed!</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PPF">
+            <xsd:annotation>
+              <xsd:documentation>eScore: the address is postally wrong.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PNP">
+            <xsd:annotation>
+              <xsd:documentation>eScore: the address cannot be checked because it contains structural
+                errors, e.g. the name is missing.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PUG">
+            <xsd:annotation>
+              <xsd:documentation>eScore: the address if formally correct but the building is not
+                known.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="PUZ">
+            <xsd:annotation>
+              <xsd:documentation>eScore: outdated address. The person moved away, the new address is
+                known.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="B0">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: the returned address equals the submitted
+                address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="B1">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: the requested person/address was found in the
+                database.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="B2">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: found submitted data in history, updated response
+                data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="B3">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: person data from input, address
+                corrected.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="B4">
+            <xsd:annotation>
+              <xsd:documentation>Bürgel: found input data in database after
+                correction.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="addressNote" type="ixa:addressNoteEnum">
+        <xsd:annotation>
+          <xsd:documentation>Information about the correctness of the submitted
+            address.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="eScoreFreightRoutingCode">
+        <xsd:annotation>
+          <xsd:documentation>Freight routing code of the Deutsche Post AG (German
+            mail)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreRppMatch">
+        <xsd:annotation>
+          <xsd:documentation>Hit in RPP. 0: no hit, 1: hit(s).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="0"/>
+            <xsd:enumeration value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreContentType">
+        <xsd:annotation>
+          <xsd:documentation>eScore RPP: type of the notice</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreContentDescription">
+        <xsd:annotation>
+          <xsd:documentation>eScore RPP: content description, e.g. RLS for a return debit note or NCA
+            for publicly known bank details ("non consumer account")</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="30"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreContentCode">
+        <xsd:annotation>
+          <xsd:documentation>eScore RPP: reason of the notice</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreNoOfMatches">
+        <xsd:annotation>
+          <xsd:documentation>number of hits</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreFirstNoticeDate">
+        <xsd:annotation>
+          <xsd:documentation>date of the first notice</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="ixa:date"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreLastNoticeDate">
+        <xsd:annotation>
+          <xsd:documentation>date of the last notice</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="ixa:date"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreErrorCodeName">
+        <xsd:annotation>
+          <xsd:documentation>error code of the RPP check</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="33"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreErrorDescription">
+        <xsd:annotation>
+          <xsd:documentation>Error description of the RPP check</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreBankAccountValidationResult">
+        <xsd:annotation>
+          <xsd:documentation>Result of the validation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="2"/>
+            <xsd:pattern value="[0-9]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="eScoreBankAccountValidationMessage">
+        <xsd:annotation>
+          <xsd:documentation>Description of the validation result</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="30"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      
+      <xsd:element name="notifyURL" type="xsd:anyURI">
+        <xsd:annotation>
+          <xsd:documentation>URL, to which the notification about the outcome of the giropay or form
+            service payment should be sent.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="additionalData" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Freely allocatable field for form service and giropay
+            transactions.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="autocapture">
+        <xsd:annotation>
+          <xsd:documentation>Period – in hours – between reservation and automatic capture. If the
+            parameter is not sent no automatic capture takes place. Values between 0 to 336 hours,
+            thus up to 14 days in the case of credit card payments and values between 0 to 720
+            hours, thus up to 30 days in the case of debits are allowed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:int">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="720"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="fallBackOnSSL" type="xsd:boolean" default="false">
+        <xsd:annotation>
+          <xsd:documentation>Only relevant for 3D secure transactions with a Visa card, which cannot
+            be authorised at the ACS. If set, in this case the transaction is carried out as SSL
+            transaction without liability shifting. If not set, in this case the transaction is
+            abandoned.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="label">
+        <xsd:annotation>
+          <xsd:documentation>Label, which precedes additional text (field text) on the giropay login
+            page.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="30"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="text">
+        <xsd:annotation>
+          <xsd:documentation>Additional text, which is displayed to the customer on the giropay login
+            page.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="80"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="login" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>User name. Where applicable it is used for the authentication with
+            call-backs (giropay or form service).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="password" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Password. Where applicable it is used for the authentication with
+            call-backs (giropay or form service).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="merchantId">
+        <xsd:annotation>
+          <xsd:documentation>Unique identification of the online trader for whom the transaction is
+            carried out.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="10"/>
+            <xsd:pattern value="[0-9]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="merchantSubId">
+        <xsd:annotation>
+          <xsd:documentation>Identification of the online trader for giropay.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="4"/>
+            <xsd:pattern value="[0-9]+"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="extMerchantId">
+        <xsd:annotation>
+          <xsd:documentation>External identification number of the online trader for
+            giropay.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="extMerchantTag">
+        <xsd:annotation>
+          <xsd:documentation>Optional field, which can be freely allocated by the trader for
+            giropay.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="successURL" type="xsd:anyURI">
+        <xsd:annotation>
+          <xsd:documentation>URL, which the customer should be directed to after a successful form
+            service or giropay payment.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="errorURL" type="xsd:anyURI">
+        <xsd:annotation>
+          <xsd:documentation>URL, which the customer should be directed to after a failed form
+            service payment</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="notificationFailedURL" type="xsd:anyURI">
+        <xsd:annotation>
+          <xsd:documentation>URL, to which the customer should be redirected after a successful form
+            service transaction for which the notification of your application
+            failed.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      
+      <xsd:element name="redirectURL" type="xsd:anyURI">
+        <xsd:annotation>
+          <xsd:documentation>URL to which the customer should be redirected in the course of a form
+            service transaction.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partnerNumber">
+        <xsd:annotation>
+          <xsd:documentation>eScore participant number</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="5"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="partnerCode">
+        <xsd:annotation>
+          <xsd:documentation>eScore participant identification code</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="8"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="userName">
+        <xsd:annotation>
+          <xsd:documentation>eScore user name</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="30"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="userCode">
+        <xsd:annotation>
+          <xsd:documentation>eScore user identifier</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:simpleType name="debitModeEnum">
+        <xsd:restriction base="xsd:NCName">
+          <xsd:enumeration value="debitOrder">
+            <xsd:annotation>
+              <xsd:documentation>Debit due to a debit order.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="directDebit">
+            <xsd:annotation>
+              <xsd:documentation>Debit due to a direct debit authorisation.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="sepaCore">
+            <xsd:annotation>
+              <xsd:documentation>SEPA Core direct debit (default is SDD COR1).</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="debitMode" default="directDebit" type="ixa:debitModeEnum">
+        <xsd:annotation>
+          <xsd:documentation>Type of debit / withdrawal.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="aid" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Approval number of authorising party.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="rejectMessage">
+        <xsd:annotation>
+          <xsd:documentation>Individual error message if payment is rejected, e.g. because the
+            issuing country of the credit card is not an accepted country . For form service only.
+            If not supplied the standard error message of the system for the error is
+            displayed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ip" type="ixa:ip">
+        <xsd:annotation>
+          <xsd:documentation>IP address of a computer</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="backendTxId" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Transaction ID of a back end system, e.g. giropay transaction
+            ID.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerId" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Unique identification of a customer, e.g. for
+            scoring.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="cavv">
+        <xsd:annotation>
+          <xsd:documentation>3D secure field. Determined by ACS.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="ixa:base64String">
+            <xsd:length value="28"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="xid">
+        <xsd:annotation>
+          <xsd:documentation>
+            <xsd:documentation>3D secure field. Unique transaction identifier determined by
+              merchant.</xsd:documentation>
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="ixa:base64String">
+            <xsd:length value="28"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ucaf" type="ixa:base64String">
+        <xsd:annotation>
+          <xsd:documentation>3D secure field. Base64 encoded binary data.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="batchReferenceExtId" type="ixa:anyExtId">
+        <xsd:annotation>
+          <xsd:documentation>Assigns a transaction to the batch with this extId.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="additionalNote">
+        <xsd:annotation>
+          <xsd:documentation>Overrides the merchant name on the customer's credit card
+            statement.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="25"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="merchantRef">
+        <xsd:annotation>
+          <xsd:documentation>Transaction reference for credit card transactions.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="30"/>
+            <xsd:pattern value="[a-zA-Z0-9/,.+ _\-]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="brand" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Credit card brand</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="score" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Score value (usually numeric) for risk check
+            transactions.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="relation">
+        <xsd:annotation>
+          <xsd:documentation>Relation of a person to a company in Bürgel ConCheck
+            responses.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="objectNumber" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="nameExtra" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="postcode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="countryCode" minOccurs="0" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="basket">
+        <xsd:annotation>
+          <xsd:documentation>Shopping basket, contains the articles the customer is buying and the
+            shipping costs. For PayPal payments. The information will be displayed to the customer
+            on the PayPal payment form. The sum of shipping costs and the prices of all articles has
+            to be equal to the amount of the payment.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="shippingCosts" type="xsd:long" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Shipping costs in lower currency unit, e.g.
+                  cent.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ixa:article" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="article">
+        <xsd:annotation>
+          <xsd:documentation>Article in a shopping basket. For PayPal payments. The information will
+            be displayed to the customer on the PayPal payment form.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="code" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="quantity" type="xsd:long" minOccurs="0"/>
+            <xsd:element name="price" type="xsd:long" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Price in lower currency unit, e.g. cent.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="dueDate" type="ixa:date">
+        <xsd:annotation>
+          <xsd:documentation>Due date. Required for SEPA Core (debitMode sepacore) direct debit
+            authorization or capture.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message xmlns:ixa="http://www.voeb-zvd.de/xmlapi/1.0" name="payplaceCallbackResponse">
+    <wsdl:part name="output" element="ixa:callbackResponse"/>
+  </wsdl:message>
+  <wsdl:message xmlns:ixa="http://www.voeb-zvd.de/xmlapi/1.0" name="payplaceCallbackRequest">
+    <wsdl:part name="input" element="ixa:callbackRequest"/>
+  </wsdl:message>
+  <wsdl:portType name="{{var wsdl.handler}}PortType">
+    <wsdl:operation name="payplacePaypageCallbackNotify" parameterOrder="input">
+      <wsdl:input name="callbackRequest" message="impl:payplaceCallbackRequest"/>
+      <wsdl:output name="callbackResponse" message="impl:payplaceCallbackResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="{{var wsdl.handler}}Binding" type="impl:{{var wsdl.handler}}PortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="payplacePaypageCallbackNotify">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="{{var wsdl.name}}Service">
+    <wsdl:port name="{{var wsdl.name}}Port" binding="impl:{{var wsdl.handler}}Binding">
+      <wsdlsoap:address location="{{var wsdl.url}}"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
