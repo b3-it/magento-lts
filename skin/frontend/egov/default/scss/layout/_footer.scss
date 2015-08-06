@@ -21,7 +21,7 @@
 .footer {
     clear: both;
     margin: 0px auto;
-    width: $global-footer-width;
+    max-width: $max-container-width;
     min-width: $global-min-width;
     padding-top: $global-footer-top-padding;
 
@@ -178,12 +178,8 @@
     }
 
     address {
-        border-top: 1px solid $c-module-border;
-        text-align: center;
-        width: 100%;
+        text-align: right;
         font-size: $f-size-xxs;
-        margin-top: $trim;
-        padding: $trim 0;
     }
 
     @include bp(max-width, $bp-xlarge) {

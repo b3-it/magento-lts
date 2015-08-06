@@ -1,25 +1,7 @@
 //
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -86,7 +68,8 @@
 
     #header-nav {
         display: block; /* Force visibility */
-        border-bottom: 1px solid $c-module-border-light;
+        position: relative;
+        padding-top: $global-category-top-padding;
     }
 
 }
@@ -97,8 +80,11 @@
 
 @include bp(min-width, $bp-medium + 1) {
     .nav-primary {
+        width: $global-category-width;
+        float: left;
         display: block;
-        margin-top: 15px;
+        margin-top: $global-category-margintop;
+        margin-right: $global-category-marginright;
     }
 
 }
@@ -110,17 +96,41 @@
 $nav-primary-height: 30px;
 
 .nav-primary {
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.3);
+    border-radius: 4px 4px 0 0;
+
     a {
         text-decoration: none;
         position: relative;
         display: block;
-        color: $c-text;
+        color: $global-category-font-color;
         line-height: $nav-primary-height;
         font-family: $f-stack-special;
     }
 
     li {
-        position: relative;
+        display: block;
+        width: 100%;
+
+        background-color: $global-category-item-color;
+        background-size: 100% auto;
+        *zoom: 1;
+        filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
+        /* Für IE9/IE10 Filter entfernen */
+        background-image: url($global-category-image);
+        background-size: 100%;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));
+        background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        background-image: -o-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+
+        a {
+            padding: 13px 25px 9px 13px;
+            background: $global-content-background url($global-category-arrow-right) $global-norepeat-scroll 95% 55%;
+            line-height: $global-category-lineheight;
+            text-shadow: $global-category-textshadow;
+        }
     }
 
     li.level1 a {
@@ -149,7 +159,6 @@ $nav-primary-height: 30px;
         // Increase clickable area of anchors for small viewports
         a.level0,
         a {
-            line-height: $nav-primary-height + 5px;
         }
 
         // Hide all sub-menus
@@ -200,12 +209,10 @@ $nav-primary-height: 30px;
     .nav-primary {
 
         a.level0 {
-            padding: 0 25px;
         }
 
         li.level0,
         a.level0 {
-            display: inline-block;
         }
 
         li:last-child > a {
