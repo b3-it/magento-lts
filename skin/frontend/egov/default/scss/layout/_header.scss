@@ -27,7 +27,7 @@
 
     .page-header-container {
         max-width: $max-container-width;
-        min-width: 60em;
+        min-width: $global-min-width;
         position: relative;
         margin: -42px auto 30px;
         padding: 0 0 0 45px;

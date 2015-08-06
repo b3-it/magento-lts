@@ -66,7 +66,7 @@ a {
 
 a:hover {
     color: $c-link-hover;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 a:focus {
@@ -163,9 +163,8 @@ h6, .h6 { @include h6; }
     h3,
     strong {
         @include h4;
-        color: $c-text-primary;
+        color: $global-footer-fontcolor;
         margin-bottom: 0;
-        text-transform: uppercase;
         font-weight: 600;
     }
     small {
@@ -283,8 +282,7 @@ body:not(.customer-account) .block:first-child .block-title {
     }
 
     li {
-        text-transform: uppercase;
-        font-family: $f-stack-special;
+        font-family: $base-font-family;
         margin: 7px 0;
 
         strong {
@@ -311,24 +309,14 @@ body:not(.customer-account) .block:first-child .block-title {
 .cart-table .button,
 .sidebar .actions .button,
 .button.button-secondary {
-    background: $c-button-secondary;
-    color: $c-text;
-    padding: 7px 15px;
 
     &:hover {
-        background: $c-button-secondary-hover;
-        cursor: pointer;
     }
 
     &:active {
-        background: $c-button-secondary-active;
-        color: $c-text;
     }
 
     &:focus {
-        color: $c-text;
-        background: $c-button-secondary-active;
-        outline: none;
     }
 }
 
@@ -342,32 +330,24 @@ body:not(.customer-account) .block:first-child .block-title {
 .cart-table .product-cart-actions .button,
 #co-shipping-method-form .buttons-set .button,
 .footer .button {
-    background: $c-button;
-    display: inline-block;
-    padding: 7px 15px;
-    border: 0;
-    color: #FFFFFF;
-    font-size: $f-size-s;
-    font-weight: normal;
-    font-family: $f-stack-special;
-    line-height: 19px;
-    text-align: center;
-    text-transform: uppercase;
-    vertical-align: middle;
-    white-space: nowrap;
+
+    background-color: $global-button-color;
+    background-image: -moz-linear-gradient(center top , $global-button-gradient-1, $global-button-gradient-2, $global-button-color 100%);
+    background-size: 100% auto;
+    border: 1px solid $global-button-color;
+    border-radius: 3px;
+    padding: 1px 6px;
 
     &:hover {
-        background: $c-button-hover;
+        background: $global-button-hovercolor $global-repeat-scroll;
         cursor: pointer;
     }
     &:active {
-        background: $c-button-active;
-        color: #FFFFFF;
+        background: $global-button-hovercolor $global-repeat-scroll;
     }
     &:focus {
-        background-color: $c-button-active;
+        background-color: $global-button-hovercolor $global-repeat-scroll;
         outline: none;
-        color: #FFFFFF;
     }
 }
 
@@ -423,7 +403,7 @@ a.button:hover {
     text-transform: uppercase;
     display: inline-block;
     color: $c-action;
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
 
     &:hover {
         text-decoration: none;
@@ -580,7 +560,7 @@ a.button:hover {
 .breadcrumbs li {
     float: left;
     font-size: $f-size-xs;
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
     text-transform: uppercase;
 }
 
@@ -724,12 +704,22 @@ a.button:hover {
  * Container
  */
 
+.main-container {
+    max-width: $max-container-width;
+}
+
+.footer-container {
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
+    height: $global-footer-height;
+    line-height: $global-footer-lineheight;
+    background: $global-footer-backgroundcolor $global-repeat-scroll;
+    width: 100%;
+}
+
 .main-container,
 .footer-container {
     position: relative;
-    max-width: $max-container-width;
     margin: 0 auto;
-    padding: $trim-small;
 
     &:after {
         @include clearfix;
@@ -740,7 +730,6 @@ a.button:hover {
 
     .main-container,
     .footer-container {
-        padding: $trim;
     }
 }
 
@@ -820,6 +809,8 @@ a.button:hover {
         width: percentage(760px/960px);
 
         .col-main {
+            background: $global-content-background $global-content-top-image $global-norepeat-scroll;
+
             float: right;
             width: percentage(560px/760px);
         }
@@ -987,11 +978,11 @@ a.button:hover {
  */
 
 .promo-msg {
-    color: $c-text-primary;
+    color: $global-footer-fontcolor;
     text-align: center;
     margin: $box-spacing;
     text-transform: uppercase;
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
 }
 
 /* -------------------------------------------- *
@@ -1186,7 +1177,7 @@ a.button:hover {
 }
 
 .price-box .price {
-    color: $c-text-primary;
+    color: $global-footer-fontcolor;
     font-size: $f-size-xl;
 }
 
@@ -1198,12 +1189,12 @@ a.button:hover {
 .price-box .price-label {
     color: $c-text-gray;
     white-space: nowrap;
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
 }
 
 .price-box .minimal-price-link {
     padding-left: 1em;
-    color: $c-text-primary;
+    color: $global-footer-fontcolor;
     display: block; /* We want this to show on its own line, otherwise the layout looks funky */
 
     .label {
@@ -1236,7 +1227,7 @@ a.button:hover {
 }
 
 .price-box .special-price {
-    color: $c-text-primary;
+    color: $global-footer-fontcolor;
     padding-left: 1em;
 
     .price-label {
@@ -1287,7 +1278,7 @@ span.weee {
 
 .item-options {
     font-size: $f-size;
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
 
     &:after {
         @include clearfix;
@@ -1546,7 +1537,7 @@ span.weee {
 
 .toolbar,
 .pager {
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
     color: $c-text;
     line-height: 30px;
     font-size: $f-size-xs;
