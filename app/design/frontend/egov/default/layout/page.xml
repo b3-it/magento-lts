@@ -139,6 +139,8 @@
             </block>
 
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml">
+                <action method="setData"><key>accesskey</key><value>s</value></action>
+                <action method="setData"><key>jumptitle</key><value>Servicemenü</value></action>
                 <block type="page/html_wrapper" name="bottom.container" as="bottomContainer" translate="label">
                     <label>Page Footer</label>
                     <action method="setElementClass"><value>bottom-container</value></action>
