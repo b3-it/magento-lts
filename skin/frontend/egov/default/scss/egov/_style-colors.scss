@@ -4,8 +4,33 @@
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
+
+$global-repeat-scroll: none repeat scroll 0 0;
+$global-norepeat-scroll: no-repeat scroll;
+
+$global-wrapper-color: #FFFFFF;
+
+$global-button-color: #a8d3c4;
+$global-button-hovercolor: #e4efeb;
+$global-button-gradient-1: rgba(228, 239, 235, 0.9) 0%;
+$global-button-gradient-2: rgba(168, 211, 196, 0.97) 66%;
+
 $global-header-gradientcolor-1: #7eaa6f;
 $global-header-gradientcolor-2: #59814c;
+
+$global-category-font-color: #333333;
+$global-category-item-color: #c1d0bb;
+$global-category-gradientrgb-1: rgba(224, 230, 215, 0.9);
+$global-category-gradientrgb-2: rgba(193, 208, 187, 0.97);
+$global-category-color-ms-1: #FFE0E6D7;
+$global-category-color-ms-2: #FFC1D0BB;
+$global-category-textshadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+
+$global-content-background: rgba(0, 0, 0, 0);
+$global-content-bottom-bordercolor: #c1d0bb;
+
+$global-footer-fontcolor: #4b4b4d;
+$global-footer-backgroundcolor: $global-button-hovercolor;
 
 // =============================================
 // Barrierefrei Defaults
