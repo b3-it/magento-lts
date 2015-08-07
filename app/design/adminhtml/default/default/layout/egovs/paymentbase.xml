@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_paymentbase_invalid_kassenzeichen_index>
+        <reference name="content">
+            <block type="paymentbase/adminhtml_invalid_kassenzeichen" name="invalid_kassenzeichen"/>
+        </reference>
+    </adminhtml_paymentbase_invalid_kassenzeichen_index>
+    
+    <adminhtml_paymentbase_localparams_index>
+        <reference name="content">
+            <block type="paymentbase/adminhtml_localparams" name="localparams"/>
+        </reference>
+    </adminhtml_paymentbase_localparams_index>
+    
+    <adminhtml_paymentbase_defineparams_index>
+        <reference name="content">
+            <block type="paymentbase/adminhtml_defineparams" name="defineparams"/>
+        </reference>
+    </adminhtml_paymentbase_defineparams_index>
+    
+    <adminhtml_paymentbase_haushaltsparameter_index>
+        <reference name="content">
+            <block type="paymentbase/adminhtml_haushaltsparameter" name="haushaltsparameters"/>
+        </reference>
+    </adminhtml_paymentbase_haushaltsparameter_index>
+    
+    <adminhtml_paymentbase_haushaltsparameter_edit>
+        <reference name="head">
+            <action method="addJs"><script>egovs/paymentbase/adminhtml/haushalt.js</script></action>
+        </reference>
+    </adminhtml_paymentbase_haushaltsparameter_edit>
+    
+    <custom_order_info_template>
+        <reference name="order_info">
+            <action method="setTemplate"><template>egovs/sales/order/view/info.phtml</template></action>
+        </reference>
+    </custom_order_info_template>
+    
+	<adminhtml_customer_edit>
+        <reference name="customer_edit_tab_view">
+            <action method="setTemplate"><template>egovs/customer/tab/view.phtml</template></action>
+        </reference>        
+    </adminhtml_customer_edit>
+	
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <action method="addTab"><name>sepa_history</name><block>paymentbase/adminhtml_customer_edit_tab_sepahistory</block></action>
+        </reference>        
+    </adminhtml_customer_edit>
+	
+    <adminhtml_sales_order_view>
+        <update handle="custom_order_info_template"/>
+    </adminhtml_sales_order_view>
+    
+    <adminhtml_sales_order_invoice_new>
+        <update handle="custom_order_info_template"/>
+    </adminhtml_sales_order_invoice_new>
+    
+    <adminhtml_sales_order_invoice_view>
+        <update handle="custom_order_info_template"/>
+    </adminhtml_sales_order_invoice_view>
+    
+    <adminhtml_sales_order_shipment_new>
+        <update handle="custom_order_info_template"/>
+    </adminhtml_sales_order_shipment_new>
+    
+    <adminhtml_sales_order_shipment_view>
+        <update handle="custom_order_info_template"/>
+    </adminhtml_sales_order_shipment_view>
+    
+    <adminhtml_sales_order_creditmemo_new>
+        <update handle="custom_order_info_template"/>
+    </adminhtml_sales_order_creditmemo_new>
+    
+    <adminhtml_sales_order_creditmemo_view>
+        <update handle="custom_order_info_template"/>
+    </adminhtml_sales_order_creditmemo_view>
+</layout>
