@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Egovs
+ * @package    Egovs_Openaccountpayment
+ * @copyright  Copyright (c) 2008 Andrej Sinicyn
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+?>
+<div>
+    <?php echo $this->getMethod()->getTitle(); ?><br />
+    <?php if ($this->getAccountHolder()
+    		  || $this->getAccountNumber()
+    		  || $this->getSortCode()
+    		  || $this->getBankName()
+    		  || ($this->getIBAN() && $this->getBIC())
+     ): ?>
+    <div style="font-style: italic;"><?php echo $this->__('Account info'); ?></div>
+    <?php endif;?>
+    <table>
+        <tbody>
+        <?php if ($this->getAccountHolder()): ?>
+            <?php echo '<tr><td><label>' . $this->__('Account holder') . '</label>:</td><td>' . $this->getAccountHolder() . '</td></tr>'; ?>
+        <?php endif; ?>
+        <?php if ($this->getAccountNumber()): ?>
+            <?php echo '<tr><td><label>' . $this->__('Account number') . '</label>:</td><td>' . $this->getAccountNumber() . '</td></tr>'; ?>
+        <?php endif; ?>
+        <?php if ($this->getSortCode()): ?>
+            <?php echo '<tr><td><label>' . $this->__('Sort code') . '</label>:</td><td>' . $this->getSortCode() . '</td></tr>'; ?>
+        <?php endif; ?>
+        <?php if ($this->getBankName()): ?>
+            <?php echo '<tr><td><label>' . $this->__('Bank name') . '</label>:</td><td>' . $this->getBankName() . '</td></tr>'; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+    <?php if ($this->getIBAN() && $this->getBIC()): ?>
+        <br />
+        <div style="font-style: italic;"><?php echo $this->__('International') ?></div>
+        <table>
+            <tbody>
+            <?php echo '<tr><td><label>' . $this->__('IBAN') . '</label>:</td><td>' . $this->getIBAN() . '</td></tr>'; ?>
+            <?php echo '<tr><td><label>' . $this->__('BIC') . '</label>:</td><td>' . $this->getBIC() . '</td></tr>'; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+    <?php if ($this->getMethod()->getPayWithinXDays()): ?>
+        <br />
+        <?php echo $this->__('Pay within %s days.', $this->getMethod()->getPayWithinXDays()); ?><br />
+    <?php endif; ?>
+    <?php if ($this->getMethod()->getCustomText()): ?>
+        <br />
+        <?php echo $this->getMethod()->getCustomText(); ?><br />
+    <?php endif; ?>
+</div>
