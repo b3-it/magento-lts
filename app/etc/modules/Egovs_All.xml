@@ -18,7 +18,7 @@
             </depends>
         </Egovs_Base>
         <Egovs_BankPayment>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />
@@ -135,7 +135,7 @@
             <codePool>local</codePool>
         </Egovs_Maintenance>
         <Egovs_Openaccountpayment>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />

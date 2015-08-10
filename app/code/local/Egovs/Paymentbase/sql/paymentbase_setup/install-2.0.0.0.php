@@ -71,9 +71,13 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/
 	);
 }
 
-$entityTypeId = 'catalog_product';
+$epayblSettings = 'ePayBL Settings';
+// Gruppe soll direkt nach Preis angezeigt werden (2)
+$installer->addAttributeGroup(Mage_Catalog_Model_Product::ENTITY, 'Default', $epayblSettings, 2);
+$entityTypeId = Mage_Catalog_Model_Product::ENTITY;
 $attributeId = 'haushaltsstelle';
 $installer->addAttribute($entityTypeId, $attributeId, array(
+		'group' => $epayblSettings,
 		'label' => 'Haushaltsstelle',
 		'input' => 'select',
 		'source' => 'paymentbase/attributes_source_'.str_replace('_','' , $attributeId),
@@ -89,6 +93,7 @@ $installer->addAttribute($entityTypeId, $attributeId, array(
 
 $attributeId = 'objektnummer';
 $installer->addAttribute($entityTypeId, $attributeId, array(
+		'group' => $epayblSettings,
 		'label' => 'Objektnummer',
 		'input' => 'select',
 		'source' => 'paymentbase/attributes_source_'.str_replace('_','' , $attributeId),
@@ -105,6 +110,7 @@ $installer->addAttribute($entityTypeId, $attributeId, array(
 
 $attributeId = 'objektnummer_mwst';
 $installer->addAttribute($entityTypeId, $attributeId, array(
+		'group' => $epayblSettings,
 		'label' => 'Objektnummer MwSt',
 		'input' => 'select',
 		'source' => 'paymentbase/attributes_source_'.str_replace('_','' , $attributeId),
@@ -121,6 +127,7 @@ $installer->addAttribute($entityTypeId, $attributeId, array(
 
 $attributeId = 'href';
 $installer->addAttribute($entityTypeId, $attributeId, array(
+		'group' => $epayblSettings,
 		'label' => 'HREF',
 		'input' => 'select',
 		'source' => 'paymentbase/attributes_source_'.str_replace('_','' , $attributeId),
@@ -136,6 +143,7 @@ $installer->addAttribute($entityTypeId, $attributeId, array(
 
 $attributeId = 'href_mwst';
 $installer->addAttribute($entityTypeId, $attributeId, array(
+		'group' => $epayblSettings,
 		'label' => 'HREF MwSt',
 		'input' => 'select',
 		'source' => 'paymentbase/attributes_source_'.str_replace('_','' , $attributeId),
@@ -151,6 +159,7 @@ $installer->addAttribute($entityTypeId, $attributeId, array(
 
 $attributeId = 'buchungstext';
 $installer->addAttribute($entityTypeId, $attributeId, array(
+		'group' => $epayblSettings,
 		'label' => 'Buchungstext',
 		'input' => 'select',
 		'source' => 'paymentbase/attributes_source_'.str_replace('_','' , $attributeId),
@@ -166,6 +175,7 @@ $installer->addAttribute($entityTypeId, $attributeId, array(
 
 $attributeId = 'buchungstext_mwst';
 $installer->addAttribute($entityTypeId, $attributeId, array(
+		'group' => $epayblSettings,
 		'label' => 'Buchungstext MwSt',
 		'input' => 'select',
 		'source' => 'paymentbase/attributes_source_'.str_replace('_','' , $attributeId),
