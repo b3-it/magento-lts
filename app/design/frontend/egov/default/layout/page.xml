@@ -78,12 +78,6 @@
                 <block type="page/template_links" name="top.links" as="topLinks"/>
                 <block type="egovs_base/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" />
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
-                <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
-                    <label>Navigation Bar</label>
-                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
-                        <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
-                    </block>
-                </block>
                 <block type="page/html_wrapper" name="top.container" as="topContainer" translate="label">
                     <label>Page Header</label>
                     <action method="setElementClass"><value>top-container</value></action>
@@ -99,6 +93,12 @@
 
             <block type="core/text_list" name="left" as="left" translate="label">
                 <label>Left Column</label>
+                <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
+                    <label>Navigation Bar</label>
+                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
+                        <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
+                    </block>
+                </block>
             </block>
 
             <block type="core/messages" name="global_messages" as="global_messages"/>
