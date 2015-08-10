@@ -777,11 +777,12 @@ a.button:hover {
 
 .col-main {
     float: left;
-    width: percentage(720px/960px);
+    width: percentage($global-content-width/$global-fullpage-width);
 
     .std {
-        padding-top: $global-content-top-padding;
+        width: percentage(($global-content-width+$global-rightcol-width)/$global-fullpage-width);
         padding-bottom: $global-content-bottom-padding;
+        padding-right: $global-content-paddingright;
         border-bottom-width: $global-content-bottom-bordersize;
         border-bottom-style: solid;
         border-bottom-color: $global-content-bottom-bordercolor;
@@ -810,25 +811,26 @@ a.button:hover {
 }
 
 .col3-layout {
-    .col-right {
-        width: percentage(200px/960px);
-    }
-
     .col-wrapper {
-        float: left;
-        margin-left: $global-category-width + 70;
-        width: percentage(760px/960px);
+        width: 100%;
+
+        .col-left {
+            width: percentage($global-leftcol-width/$global-fullpage-width);
+            float: left;
+        }
 
         .col-main {
             background: $global-content-background url( $global-content-top-image ) $global-norepeat-scroll -5px -9px;
-
-            _float: right;
+            background-size: 100% auto;
             overflow: hidden;
-            width: percentage(560px/760px);
+            width: percentage(($global-content-width+$global-rightcol-width)/$global-fullpage-width);
+            padding-top: $global-content-paddingtop;
+            padding-left: $global-content-paddingleft;
         }
 
-        .col-left {
-            width: percentage(200px/760px);
+        .col-right {
+            float: right;
+            width: percentage($global-rightcol-width/$global-fullpage-width);
         }
     }
 }
@@ -840,7 +842,7 @@ a.button:hover {
             clear: left;
             padding-left: 0;
             padding-right: 10px;
-            width: percentage(240px/960px);
+            width: percentage($global-rightcol-width/$global-fullpage-width);
         }
 
         .col-wrapper {
@@ -849,11 +851,11 @@ a.button:hover {
 
             .col-main {
                 float: right;
-                width: percentage(720px/960px);
+                _width: percentage($global-content-width/$global-fullpage-width);
             }
 
             .col-left {
-                width: percentage(240px/960px);
+                _width: percentage($global-leftcol-width/$global-fullpage-width);
             }
         }
     }

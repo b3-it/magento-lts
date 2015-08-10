@@ -5,6 +5,15 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+$global-fullpage-width: 960px;
+$global-leftcol-width: 225px;
+$global-content-width: 515px;
+$global-rightcol-width: 220px;
+
+$global-content-paddingtop: 20px;
+$global-content-paddingleft: 21px;
+$global-content-paddingright: 32px;
+
 $global-header-height: 200px;
 
 $global-footer-lineheight: 2em;
@@ -16,7 +25,7 @@ $global-footer-linkswidth: 53em;
 
 $global-min-width: 60em;
 
-$global-content-top-position: -130px;
+$global-content-top-position: -50px;
 $global-content-top-padding: 20px;
 $global-content-bottom-padding: 60px;
 $global-content-bottom-bordersize: 1px;
