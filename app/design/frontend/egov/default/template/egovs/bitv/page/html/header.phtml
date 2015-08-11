@@ -13,7 +13,7 @@
         $_accesskey = 'accesskey="'.$jump->getAccesskey().'"';
     }
 ?>
-    <div>
+    <div id="bitv">
         <a href="#<?php echo $this->helper('bitv')->getJumpTarget($jump);?>" <?php  echo $_accesskey;?>>
             <?php echo Mage::helper('bitv')->__($jump->getJumptitle());?>
         </a>

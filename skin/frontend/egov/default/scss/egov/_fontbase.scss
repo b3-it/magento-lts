@@ -5,10 +5,10 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
-$base-font-rotis: 'RotisSansSerifW01-Extra', Arial, sans-serif;
+$base-font-rotis: 'RotisSansSerifW01-Extra';
 $base-font-family: Arial, Verdana, Helvetica, 'Sans Serif';
 
-$global-headline-rotis: 'RotisSansSerifExBd', Arial, Verdana, Helvetica, 'Sans Serif';
+$global-headline-rotis: $base-font-rotis;
 
 @font-face {
   font-family: $base-font-rotis;
