@@ -53,25 +53,25 @@ input,
 select,
 table,
 textarea {
-    font-family: $f-stack-sans;
-    color: $c-text;
-    font-size: $f-size;
-    line-height: $b-line-height;
+    font-family: $base-font-family;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
+    line-height: $global-lineheight;
 }
 
 a {
-    color: $c-link;
+    color: $global-linkcolor;
     text-decoration: none;
 }
 
 a:hover {
-    color: $c-link-hover;
+    color: $global-linkcolor-hover;
     text-decoration: none;
 }
 
 a:focus {
-    outline-color: $c-link-active;
-    color: darken($c-action, 30%);
+    outline-color: $global-linkcolor-active;
+    color: darken($global-linkcolor-active, 30%);
 }
 
 ol,

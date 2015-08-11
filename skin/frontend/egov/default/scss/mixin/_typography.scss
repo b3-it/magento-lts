@@ -30,9 +30,9 @@
 @mixin h1 {
     margin: 0;
     margin-bottom: 0.7em;
-    color: $c-h1;
-    font-family: $f-stack-special;
-    font-size: 28px;
+    color: $global-h1-color;
+    font-family: $global-headline-rotis;
+    font-size: $global-h1-size;
     font-weight: 400;
     font-style: normal;
     line-height: 1.2;
@@ -43,9 +43,9 @@
 @mixin h2 {
     margin: 0;
     margin-bottom: 0.5em;
-    color: $c-h2;
-    font-family: $f-stack-special;
-    font-size: 24px;
+    color: $global-h2-color;
+    font-family: $global-headline-rotis;
+    font-size: $global-h2-size;
     font-weight: 400;
     font-style: normal;
     line-height: 1.2;
@@ -56,9 +56,9 @@
 @mixin h3 {
     margin: 0;
     margin-bottom: 10px;
-    color: $c-h3;
-    font-family: $f-stack-special;
-    font-size: 18px;
+    color: $global-h3-color;
+    font-family: $base-font-family;
+    font-size: $global-h3-size;
     font-weight: 400;
     font-style: normal;
     line-height: 1.4;
@@ -69,9 +69,9 @@
 @mixin h4 {
     margin: 0;
     margin-bottom: 10px;
-    color: $c-h4;
-    font-family: $f-stack-special;
-    font-size: 14px;
+    color: $global-h4-color;
+    font-family: $base-font-family;
+    font-size: $global-h4-size;
     font-weight: bold;
     font-style: normal;
     line-height: 1.4;
@@ -82,9 +82,9 @@
 @mixin h5 {
     margin: 0;
     margin-bottom: 10px;
-    color: $c-h5;
-    font-family: $f-stack-sans;
-    font-size: 13px;
+    color: $global-h5-color;
+    font-family: $base-font-family;
+    font-size: $global-h5-size;
     font-weight: bold;
     font-style: normal;
     line-height: 1.4;
@@ -95,9 +95,9 @@
 @mixin h6 {
     margin: 0;
     margin-bottom: 5px;
-    color: $c-h6;
-    font-family: $f-stack-sans;
-    font-size: 12px;
+    color: $global-h6-color;
+    font-family: $base-font-family;
+    font-size: $global-h6-size;
     font-weight: bold;
     font-style: normal;
     line-height: 1.4;

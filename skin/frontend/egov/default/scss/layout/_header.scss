@@ -39,6 +39,25 @@
 .header-language-container,
 .page-header {
     font-family: $base-font-family;
+
+    .welcome-header {
+
+        .welcome-msg {
+            position: relative;
+            left: $global-welcome-left;
+            top: $global-welcome-top;
+            width: 50%;
+            z-index: 99;
+            color: $global-fontcolor-light;
+        }
+
+        .header-position {
+            position: relative;
+            left: $global-h1-left;
+            top: $global-h1-top;
+            width: 50%;
+        }
+    }
 }
 
 /* ============================================ *

@@ -6,11 +6,13 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php $_menu = $this->getHtml('level-top');
-      if($_menu): ?>
-<nav class="nav-primary">
-                                    <ul id="nav">
-                                        <?php echo $_menu ?>
-                                    </ul>
-                                </nav>
+
+<?php $_menu = $this->getHtml('level-top') ?>
+
+<?php if($_menu): ?>
+    <nav id="nav">
+        <ol class="nav-primary">
+            <?php echo $_menu ?>
+        </ol>
+    </nav>
 <?php endif ?>
