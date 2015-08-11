@@ -129,6 +129,19 @@ h6, .h6 { @include h6; }
 .block,
 .col-left-first {
     margin-bottom: 20px;
+    border: 1px solid $global-lightcolor;
+}
+
+.block {
+    .block-title {
+        background-color: $global-box-title-backgroundcolor;
+        border-bottom: 3px solid $global-lightcolor;
+        padding: 0.2em 0 0.3em 0.6em;
+
+        span {
+            color: $global-h4-color;
+        }
+    }
 }
 
 .col-left-first .block:last-of-type {
@@ -139,7 +152,6 @@ h6, .h6 { @include h6; }
     position: relative;
     padding: 10px 0 0;
     margin-bottom: 5px;
-    border-top: 1px solid $c-module-border;
 
     h2,
     h3,
@@ -147,7 +159,7 @@ h6, .h6 { @include h6; }
         @include h4;
         color: $global-footer-fontcolor;
         margin-bottom: 0;
-        font-weight: 600;
+        font-weight: normal;
     }
     small {
         font-size: 100%;
@@ -168,7 +180,14 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    margin-top: 5px;
+    margin-top: $blobal-blockcontent-margintop;
+    margin-bottom: $blobal-blockcontent-marginbottom;
+    margin-left: $blobal-blockcontent-marginleft;
+    margin-right: $blobal-blockcontent-marginright;
+
+    input {
+        width: 100%;
+    }
 }
 
 .block-content.unpad {
@@ -748,7 +767,6 @@ a.button:hover {
 
 .col-right {
     float: right;
-    padding-right: 0; /* Remove the 15px padding */
 
     img {
         max-width: 100%;
@@ -759,12 +777,14 @@ a.button:hover {
     width: percentage($global-content-width/$global-fullpage-width);
 
     .std {
-        width: percentage(($global-content-width+$global-rightcol-width)/$global-fullpage-width);
+        width: percentage(($global-content-width + $global-rightcol-width - 20) / $global-fullpage-width);
         padding-bottom: $global-content-bottom-padding;
         padding-right: $global-content-paddingright;
         border-bottom-width: $global-content-bottom-bordersize;
         border-bottom-style: solid;
         border-bottom-color: $global-content-bottom-bordercolor;
+
+        margin: 0px;
     }
 }
 
@@ -810,6 +830,9 @@ a.button:hover {
         .col-right {
             float: right;
             width: percentage($global-rightcol-width/$global-fullpage-width);
+            padding: 0px;
+            position: relative;
+            left: -10px;
         }
     }
 }
@@ -830,11 +853,9 @@ a.button:hover {
 
             .col-main {
                 float: right;
-                _width: percentage($global-content-width/$global-fullpage-width);
             }
 
             .col-left {
-                _width: percentage($global-leftcol-width/$global-fullpage-width);
             }
         }
     }
@@ -856,7 +877,6 @@ a.button:hover {
     .col3-layout .col-wrapper .col-left,
     .col3-layout .col-right,
     .col3-layout .col-wrapper .col-main {
-        padding: 0;
         margin-bottom: 10px; // Since columns are stacked, we want there to be vertical spacing
         float: none;
         width: auto;
