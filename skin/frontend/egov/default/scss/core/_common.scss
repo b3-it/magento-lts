@@ -1,25 +1,7 @@
 ﻿//
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -53,25 +35,25 @@ input,
 select,
 table,
 textarea {
-    font-family: $f-stack-sans;
-    color: $c-text;
-    font-size: $f-size;
-    line-height: $b-line-height;
+    font-family: $base-font-family;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
+    line-height: $global-lineheight;
 }
 
 a {
-    color: $c-link;
+    color: $global-linkcolor;
     text-decoration: none;
 }
 
 a:hover {
-    color: $c-link-hover;
+    color: $global-linkcolor-hover;
     text-decoration: none;
 }
 
 a:focus {
-    outline-color: $c-link-active;
-    color: darken($c-action, 30%);
+    outline-color: $global-linkcolor-active;
+    color: darken($global-linkcolor-active, 30%);
 }
 
 ol,
@@ -705,7 +687,7 @@ a.button:hover {
  */
 
 .main-container {
-    max-width: $max-container-width;
+    max-width: $global-fullpage-width;
     position: relative;
     top: $global-content-top-position;
 }
@@ -756,7 +738,6 @@ a.button:hover {
 
 .col-left {
     float: left;
-    width: percentage(240px/960px);
     padding-left: 0; /* Remove the 15px padding */
     clear: left;
 
@@ -767,7 +748,6 @@ a.button:hover {
 
 .col-right {
     float: right;
-    width: percentage(240px/960px);
     padding-right: 0; /* Remove the 15px padding */
 
     img {
@@ -776,7 +756,6 @@ a.button:hover {
 }
 
 .col-main {
-    float: left;
     width: percentage($global-content-width/$global-fullpage-width);
 
     .std {
@@ -815,7 +794,7 @@ a.button:hover {
         width: 100%;
 
         .col-left {
-            width: percentage($global-leftcol-width/$global-fullpage-width);
+            padding-right: $global-leftcol-paddingright;
             float: left;
         }
 
@@ -823,7 +802,7 @@ a.button:hover {
             background: $global-content-background url( $global-content-top-image ) $global-norepeat-scroll -5px -9px;
             background-size: 100% auto;
             overflow: hidden;
-            width: percentage(($global-content-width+$global-rightcol-width)/$global-fullpage-width);
+            width: $global-fullpage-width - $global-leftcol-width;
             padding-top: $global-content-paddingtop;
             padding-left: $global-content-paddingleft;
         }

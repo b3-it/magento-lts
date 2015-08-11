@@ -9,34 +9,45 @@ $global-repeat-scroll: none repeat scroll 0 0;
 $global-norepeat-scroll: no-repeat scroll;
 
 $global-wrapper-color: #FFFFFF;
+$global-fontcolor-dark: #000000;
+$global-fontcolor-light: #FFFFFF;
+$global-lightcolor: #C1D0BB;
+$global-linkcolor: #59814C;
+$global-linkcolor-hover: #59814C;
+$global-linkcolor-active: #59814C;
 
 $global-h1-color: #FFFFFF;
-$global-h2-color: #FFFFFF;
-$global-h3-color: #FFFFFF;
-$global-h4-color: #FFFFFF;
-$global-h5-color: #FFFFFF;
-$global-h6-color: #FFFFFF;
+$global-h2-color: #59814C;
+$global-h3-color: #FF0000;
+$global-h4-color: #FF0000;
+$global-h5-color: #FF0000;
+$global-h6-color: #FF0000;
 
-$global-button-color: #a8d3c4;
-$global-button-hovercolor: #e4efeb;
+$global-text-shadow: rgba(0, 0, 0, 0.3);
+
+$global-button-color: #A8D3C4;
+$global-button-hovercolor: #E4EFEB;
 $global-button-gradient-1: rgba(228, 239, 235, 0.9) 0%;
 $global-button-gradient-2: rgba(168, 211, 196, 0.97) 66%;
 
-$global-header-gradientcolor-1: #7eaa6f;
-$global-header-gradientcolor-2: #59814c;
+$global-header-gradientcolor-1: #7EAA6F;
+$global-header-gradientcolor-2: $global-linkcolor;
 
 $global-category-font-color: #333333;
-$global-category-item-color: #c1d0bb;
+$global-category-hover-color: #333333;
+$global-category-item-color: $global-lightcolor;
 $global-category-gradientrgb-1: rgba(224, 230, 215, 0.9);
 $global-category-gradientrgb-2: rgba(193, 208, 187, 0.97);
 $global-category-color-ms-1: #FFE0E6D7;
 $global-category-color-ms-2: #FFC1D0BB;
 $global-category-textshadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 
-$global-content-background: rgba(0, 0, 0, 0);
-$global-content-bottom-bordercolor: #c1d0bb;
+$golbal-subcat-bordercolor: #F4EEE3;
 
-$global-footer-fontcolor: #4b4b4d;
+$global-content-background: rgba(0, 0, 0, 0);
+$global-content-bottom-bordercolor: $global-lightcolor;
+
+$global-footer-fontcolor: #4D4D4D;
 $global-footer-backgroundcolor: $global-button-hovercolor;
 
 // =============================================
