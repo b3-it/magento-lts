@@ -13,3 +13,5 @@ var/resource_config.json
 *.bak
 *.scss.bak
 Thumbs.db
+css/styles.css
+css/styles-ie8.css
