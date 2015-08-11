@@ -12,6 +12,7 @@ $global-wrapper-color: #FFFFFF;
 $global-fontcolor-dark: #000000;
 $global-fontcolor-light: #FFFFFF;
 $global-lightcolor: #C1D0BB;
+$global-lightcolor-hover: #E0E6D7;
 $global-linkcolor: #59814C;
 $global-linkcolor-hover: #59814C;
 $global-linkcolor-active: #59814C;
@@ -25,21 +26,24 @@ $global-h6-color: #FF0000;
 
 $global-text-shadow: rgba(0, 0, 0, 0.3);
 
-$global-button-color: #A8D3C4;
-$global-button-hovercolor: #E4EFEB;
-$global-button-gradient-1: rgba(228, 239, 235, 0.9) 0%;
-$global-button-gradient-2: rgba(168, 211, 196, 0.97) 66%;
+$global-rgba-1: rgba(224, 230, 215, 0.9);
+$global-rgba-2: rgba(193, 208, 187, 0.97);
+
+$global-button-color: $global-lightcolor;
+$global-button-hovercolor: $global-lightcolor-hover;
+$global-button-gradient-1: $global-rgba-1 0%;
+$global-button-gradient-2: $global-rgba-2 66%;
 
 $global-header-gradientcolor-1: #7EAA6F;
 $global-header-gradientcolor-2: $global-linkcolor;
 
-$global-box-title-backgroundcolor: #E0E6D7;
+$global-box-title-backgroundcolor: $global-lightcolor-hover;
 
 $global-category-font-color: #333333;
 $global-category-hover-color: #333333;
 $global-category-item-color: $global-lightcolor;
-$global-category-gradientrgb-1: rgba(224, 230, 215, 0.9);
-$global-category-gradientrgb-2: rgba(193, 208, 187, 0.97);
+$global-category-gradientrgb-1: $global-rgba-1;
+$global-category-gradientrgb-2: $global-rgba-2;
 $global-category-color-ms-1: #FFE0E6D7;
 $global-category-color-ms-2: #FFC1D0BB;
 $global-category-textshadow: 0 1px 1px rgba(255, 255, 255, 0.5);
