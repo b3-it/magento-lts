@@ -66,10 +66,9 @@
     #header-search {
         display: block; // Force visibility
         position: absolute;
-        top: 55px;
+        top: 18px;
         right: 0;
-        width: 25%;
-        height: 50px;
+        width: 23%;
         padding: 0;
     }
 
@@ -89,7 +88,7 @@
 }
 
 #search {
-    width: 79%;
+    width: 77%;
     float: left;
     font-family: $base-font-family;
     height: 20px;

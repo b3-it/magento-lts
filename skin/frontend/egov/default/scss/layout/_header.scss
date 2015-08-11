@@ -348,7 +348,7 @@ a.skip-link {
 .account-cart-wrapper {
     position: absolute;
     top:5px;
-    right:30px;
+    right:25%;
 
     @include bp(max-width, $bp-medium) {
         position: static;
