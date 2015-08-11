@@ -21,7 +21,7 @@
 .footer {
     clear: both;
     margin: 0px auto;
-    max-width: $max-container-width;
+    max-width: $global-fullpage-width;
     min-width: $global-min-width;
     padding-top: $global-footer-top-padding;
 
@@ -55,6 +55,13 @@
     .block-title,
     address {
         color: $global-footer-fontcolor;
+    }
+
+    .copyright {
+        width: auto;
+        float: right;
+        position: relative;
+        top: 30px;
     }
 
     .links {
