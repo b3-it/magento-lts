@@ -1,5 +1,5 @@
 .settings
-.sass-cache
+.sass-cache/
 app/etc/local.xml
 media/catalog/product
 media/tmp
@@ -12,5 +12,6 @@ var/report
 var/resource_config.json
 *.bak
 *.scss.bak
+*.css.map
 Thumbs.db
 skin/frontend/**/css/*.css
