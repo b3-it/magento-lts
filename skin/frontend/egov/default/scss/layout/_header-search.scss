@@ -92,6 +92,12 @@
     float: left;
     font-family: $base-font-family;
     height: 20px;
+    border-top: 1px solid $global-input-bordercolor;
+    border-right: none;
+    border-bottom: 1px solid $global-input-bordercolor;
+    border-left: 1px solid $global-input-bordercolor;
+    border-radius: 3px 0 0 3px;
+
 }
 
 #search_mini_form .search-button {
