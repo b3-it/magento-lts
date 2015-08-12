@@ -13,5 +13,7 @@ var/resource_config.json
 *.bak
 *.scss.bak
 Thumbs.db
-css/styles.css
-css/styles-ie8.css
+madisonisland.css
+madisonisland-ie8.css
+styles.css
+styles-ie8.css
