@@ -13,4 +13,4 @@ var/resource_config.json
 *.bak
 *.scss.bak
 Thumbs.db
-css/*.css
+skin/frontend/*/*/css/*.css
