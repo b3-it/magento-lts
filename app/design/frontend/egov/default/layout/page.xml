@@ -73,7 +73,7 @@
             <block type="page/html_notices" name="global_notices" as="global_notices" template="page/html/notices.phtml" />
 
              <block type="bitv/page_html_header" name="header" as="header">
-            <!--    <action method="setData"><key>accesskey</key><value>u</value></action>
+                <action method="setData"><key>accesskey</key><value>u</value></action>
                 <action method="setData"><key>jumptitle</key><value>Kundenmenü</value></action>
                 <block type="page/template_links" name="top.links" as="topLinks"/>
                 <block type="egovs_base/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" />
@@ -81,11 +81,11 @@
                 <block type="page/html_wrapper" name="top.container" as="topContainer" translate="label">
                     <label>Page Header</label>
                     <action method="setElementClass"><value>top-container</value></action>
-                </block>-->
-                <block type="page/html_welcome" name="welcome" as="welcome"/> 
+                </block>
+                <block type="page/html_welcome" name="welcome" as="welcome"/>
             </block>
 
-            <block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/> 
+            <block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
 
             <block type="core/text_list" name="left_first" as="left_first" translate="label">
                 <label>Left Column First (shows above main column on smaller screens)</label>
