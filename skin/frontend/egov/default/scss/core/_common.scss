@@ -555,7 +555,11 @@ a.button:hover {
 
 .breadcrumbs {
     overflow: hidden;
-    margin: -15px 0 15px;
+    margin: 0px;
+    position: relative;
+    left: $global-welcome-left;
+    top: -10px;
+    color: $global-fontcolor-light;
 }
 
 .breadcrumbs li {
@@ -567,15 +571,16 @@ a.button:hover {
 
 .breadcrumbs a {
     float: left;
-    color: $c-text;
+    color: $global-fontcolor-light;
 }
 
 .breadcrumbs a:hover {
-    color: $c-action;
+    color: $global-fontcolor-light;
+    text-decoration: underline;
 }
 
 .breadcrumbs strong {
-    color: $c-text;
+    color: $global-fontcolor-light;
     font-weight: normal;
 }
 
@@ -752,7 +757,6 @@ a.button:hover {
 .col-left,
 .col-right,
 .col-main {
-    padding: 0 10px;
 }
 
 .col-left {
@@ -777,9 +781,9 @@ a.button:hover {
     width: percentage($global-content-width/$global-fullpage-width);
 
     .std {
-        width: percentage(($global-content-width + $global-rightcol-width - 20) / $global-fullpage-width);
+        width: $global-content-width;
         padding-bottom: $global-content-bottom-padding;
-        padding-right: $global-content-paddingright;
+        margin-right: $global-content-marginright;
         border-bottom-width: $global-content-bottom-bordersize;
         border-bottom-style: solid;
         border-bottom-color: $global-content-bottom-bordercolor;
@@ -814,25 +818,28 @@ a.button:hover {
         width: 100%;
 
         .col-left {
-            padding-right: $global-leftcol-paddingright;
+            margin-right: $global-leftcol-marginright;
             float: left;
         }
 
         .col-main {
-            background: $global-content-background url( $global-content-top-image ) $global-norepeat-scroll -5px -9px;
+            background-image: url($global-content-top-image);
+            background-repeat: no-repeat;
+            background-color: $global-content-background;
+            background-position: 0px -3px;
             background-size: 100% auto;
             overflow: hidden;
-            width: $global-fullpage-width - $global-leftcol-width;
+            width: $global-fullpage-width - $global-leftcol-width + 10;
             padding-top: $global-content-paddingtop;
             padding-left: $global-content-paddingleft;
+            padding-right: 5px;
         }
 
         .col-right {
             float: right;
-            width: percentage($global-rightcol-width/$global-fullpage-width);
+            width: $global-rightcol-width;
+            margin-right: $global-rightcol-marginright;
             padding: 0px;
-            position: relative;
-            left: -10px;
         }
     }
 }
