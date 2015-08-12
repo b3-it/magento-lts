@@ -781,7 +781,6 @@ a.button:hover {
     width: percentage($global-content-width/$global-fullpage-width);
 
     .std {
-        _width: $global-fullpage-width - $global-leftcol-width - $global-rightcol-width - $global-content-marginright;
         width: $global-content-width;
         padding-bottom: $global-content-bottom-padding;
         margin-right: $global-content-marginright;
@@ -825,9 +824,9 @@ a.button:hover {
 
         .col-main {
             background-image: url($global-content-top-image);
-            background-repeat: $global-norepeat-scroll;
+            background-repeat: no-repeat;
             background-color: $global-content-background;
-            background-position: 0px 0px;
+            background-position: 0px -3px;
             background-size: 100% auto;
             overflow: hidden;
             width: $global-fullpage-width - $global-leftcol-width + 10;
