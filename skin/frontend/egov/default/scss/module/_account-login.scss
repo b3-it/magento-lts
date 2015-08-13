@@ -1,0 +1,46 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+#login-form {
+    // Reset aller Einstellungen aus dem gobalen Bereich
+    .col-1, .col-2 {
+        margin: 0px auto;
+        padding: 10px;
+        border: 0px;
+    }
+}
+
+.egov-account-login {
+    width: auto;
+
+    .new-users, .registered-users {
+        background-image: url($global-content-top-image);
+        background-repeat: no-repeat;
+        background-color: $global-content-background;
+        background-position: 0px 0px;
+        background-size: 100% auto;
+        overflow: hidden;
+    }
+
+    .new-users {
+        width: 48%;
+    }
+
+    .registered-users {
+        width: 48%;
+    }
+
+    .buttons-set {
+        width: auto;
+        float: right;
+    }
+
+    .button {
+        padding: 5px 6px;
+        width: 170px;
+    }
+}
