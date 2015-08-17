@@ -80,7 +80,6 @@
 
 @include bp(min-width, $bp-medium + 1) {
     .nav-primary {
-        width: $global-category-width;
         display: block;
         margin-top: $global-category-margintop;
         margin-right: $global-category-marginright;

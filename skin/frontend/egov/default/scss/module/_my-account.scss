@@ -17,6 +17,15 @@
         color: $global-warning-color;
     }
 
+    button {
+        padding: 5px;
+
+        small {
+            position: relative;
+            top: -3px;
+        }
+    }
+
     form {
         .form-list {
             li {
@@ -37,6 +46,10 @@
                 color: $global-warning-color;
                 margin-right: 5px;
             }
+        }
+
+        .back-button {
+            float: left;
         }
 
         .fieldset {

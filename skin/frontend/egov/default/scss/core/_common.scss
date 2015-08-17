@@ -820,6 +820,7 @@ a.button:hover {
         float: left;
         position: relative;
         top: -15px;
+        width: $global-leftcol-width;
     }
 
     .col-main {
@@ -849,6 +850,7 @@ a.button:hover {
         .col-left {
             margin-right: $global-leftcol-marginright;
             float: left;
+            width: $global-leftcol-width;
         }
 
         .col-main {
