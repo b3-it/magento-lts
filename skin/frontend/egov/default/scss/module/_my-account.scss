@@ -76,7 +76,7 @@
 .block-account {
     border: 1px solid $global-lightcolor;
     border-radius: 4px 4px 0 0;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 
     .account-block-title {
         *zoom: 1;
@@ -112,5 +112,29 @@
     .block-content {
         margin: 0px;
         padding: 0px;
+
+        ul {
+            border: 1px solid $global-lightcolor;
+
+            li {
+                background: $global-wrapper-color $global-repeat-scroll;
+                border-top: 1px solid $global-subcat-bordercolor;
+                padding: 0 0 0 14px;
+                margin: 0px;
+
+                strong, a:hover, a:active {
+                    color: $global-linkcolor-active;
+                }
+
+                a {
+                    padding: 10px 12px 10px 14px;
+                    display: block;
+                }
+            }
+        }
     }
+}
+
+.block-cart {
+    margin-top: 20px;
 }
