@@ -40,6 +40,9 @@
     font-family: $base-font-family;
 
     .welcome-header {
+    	h1 {
+    		color:$global-fontcolor-light;
+    	}
 
         .welcome-msg {
             position: relative;

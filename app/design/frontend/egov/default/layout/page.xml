@@ -75,7 +75,7 @@
              <block type="bitv/page_html_header" name="header" as="header">
                 <action method="setData"><key>accesskey</key><value>u</value></action>
                 <action method="setData"><key>jumptitle</key><value>Kundenmenü</value></action>
-                <block type="page/template_links" name="top.links" as="topLinks"/>
+                <block type="page/template_links" name="top.links" as="topLinks" />
                 <block type="egovs_base/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" />
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
                 <block type="page/html_wrapper" name="top.container" as="topContainer" translate="label">
