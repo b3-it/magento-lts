@@ -815,9 +815,22 @@ a.button:hover {
 }
 
 .col2-left-layout {
+    .col-left {
+        margin-right: $global-leftcol-marginright;
+        float: left;
+    }
+
     .col-main {
-        float: right;
-        padding-right: 0; /* Remove the 15px padding */
+        background-image: url($global-content-top-image);
+        background-repeat: no-repeat;
+        background-color: $global-content-background;
+        background-position: 0px -3px;
+        background-size: 100% auto;
+        overflow: hidden;
+        width: $global-fullpage-width - $global-leftcol-width + 10;
+        padding-top: $global-content-paddingtop;
+        padding-left: $global-content-paddingleft;
+        padding-right: 20px;
     }
 }
 

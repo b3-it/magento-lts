@@ -58,9 +58,6 @@
                         <p class="form-instructions">
                             <?php echo $this->__('If you have an account with us, please log in.') ?>
                         </p>
-                        <p class="required">
-                            <?php echo $this->__('* Required Fields') ?>
-                        </p>
                         <ul class="form-list">
                             <li>
                                 <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
@@ -80,6 +77,9 @@
                             <?php echo $this->getChildHtml('persistent.remember.me'); ?>
                         </ul>
                         <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
+                        <p class="required">
+                            <?php echo $this->__('* Required Fields') ?>
+                        </p>
                     </div>
                     <div class="button-recovery">
                         <a class="button" href="<?php echo $this->getForgotPasswordUrl() ?>">

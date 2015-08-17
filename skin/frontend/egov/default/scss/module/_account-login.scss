@@ -88,4 +88,17 @@
             cursor: pointer;
         }
     }
+
+    .form-list {
+        margin-top: 20px;
+
+        li {
+            font-weight: bold;
+
+            em {
+                color: #FF0000;
+                margin-right: 5px;
+            }
+        }
+    }
 }
