@@ -6,18 +6,33 @@
 //
 
 .my-account {
+
     .page-title {
         h1 {
             color: $global-h2-color;
         }
     }
 
-    .required {
+    p.required {
         color: $global-warning-color;
     }
 
     form {
+        .form-list {
+            li {
+                label {
+                    font-weight: bold;
+                }
+
+                .column-left, .column-right {
+                    width: 47%;
+                    float: left;
+                }
+            }
+        }
+
         .required {
+
             em {
                 color: $global-warning-color;
                 margin-right: 5px;
@@ -27,6 +42,8 @@
         .fieldset {
             width: 48%;
             float: left;
+            height: auto;
+            margin-bottom: 30px;
         }
 
         input[type="text"],
@@ -53,5 +70,47 @@
             background-color: $global-lightcolor-hover;
             border-color: $global-lightcolor;
         }
+    }
+}
+
+.block-account {
+    border: 1px solid $global-lightcolor;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 20px;
+
+    .account-block-title {
+        *zoom: 1;
+        filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
+        /* Für IE9/IE10 Filter entfernen */
+        background-image: url($global-category-image);
+        background-size: 100% auto;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));
+        background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        background-image: -o-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+
+        background-color: $global-category-item-color;
+
+        margin: 0px;
+        padding: 0px;
+        cursor: pointer;
+
+        span {
+            color: $global-category-font-color;
+            font-family: $base-font-family;
+            font-size: $global-category-fontsize;
+            display: inline-block;
+            width: 100%;
+            padding: 13px 25px 9px 13px;
+            background: $global-content-background url($global-category-arrow-right) $global-norepeat-scroll 95% 55%;
+            line-height: $global-category-lineheight;
+            text-shadow: $global-category-textshadow;
+        }
+    }
+
+    .block-content {
+        margin: 0px;
+        padding: 0px;
     }
 }

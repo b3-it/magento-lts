@@ -107,7 +107,7 @@
     li.level0 {
         *zoom: 1;
         filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
-        /* F�r IE9/IE10 Filter entfernen */
+        /* Für IE9/IE10 Filter entfernen */
         background-image: url($global-category-image);
         background-size: 100%;
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));

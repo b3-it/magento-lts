@@ -210,6 +210,7 @@
 "Manage Customers","Kunden verwalten"
 "Maximum length must be less then %s symbols","Maximale Länge darf nicht mehr als %s Zeichen betragen."
 "Middle Name","Mittel Name"
+"Middle Name/Initial","Mittel Name/Initiale"
 "Missing email, skipping the record, line: %s","E-Mail fehlt, Eintrag in Zeile %s wird übersprungen"
 "Missing email, skipping the record.","E-Mail fehlt, Eintrag wird übersprungen."
 "Missing first name, skipping the record, line: %s","Vorname fehlt, Eintrag in Zeile %s wird übersprungen"
