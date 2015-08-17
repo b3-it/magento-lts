@@ -11,4 +11,47 @@
             color: $global-h2-color;
         }
     }
+
+    .required {
+        color: $global-warning-color;
+    }
+
+    form {
+        .required {
+            em {
+                color: $global-warning-color;
+                margin-right: 5px;
+            }
+        }
+
+        .fieldset {
+            width: 48%;
+            float: left;
+        }
+
+        input[type="text"],
+        input[type="tel"] {
+            width: 90%;
+        }
+
+        select {
+            width: 89%;
+        }
+
+        select,
+        input[type="tel"] {
+            border: 1px solid $global-wrapper-color;
+            box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
+            margin-bottom: 16px;
+            outline: medium none;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        select:hover, select:active,
+        input[type="tel"]:hover, input[type="tel"]:active {
+            background-color: $global-lightcolor-hover;
+            border-color: $global-lightcolor;
+        }
+    }
 }

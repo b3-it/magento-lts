@@ -41,7 +41,7 @@ textarea {
     line-height: $global-lineheight;
 }
 
-textarea, input[type=text], input[type=email], input[type=password] {
+textarea, input[type="text"], input[type="email"], input[type="password"] {
     border: 1px solid $global-wrapper-color;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
     margin-bottom: 16px;
@@ -49,8 +49,8 @@ textarea, input[type=text], input[type=email], input[type=password] {
     padding: 3px 6px;
     border-radius: 3px;
 }
-textarea:focus, input[type=text]:focus, input[type=email]:focus, input[type=password]:focus,
-textarea:active, input[type=text]:active, input[type=email]:active, input[type=password]:active {
+textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus,
+textarea:active, input[type="text"]:active, input[type="email"]:active, input[type="password"]:active {
     background-color: $global-lightcolor-hover;
     border-color: $global-lightcolor;
 }
