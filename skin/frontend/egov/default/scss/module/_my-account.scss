@@ -153,16 +153,6 @@
         color: $global-fontcolor-dark;
     }
 
-    .egov-pencile {
-        @extend .egov-fa-pencil;
-        font-size: $global-fontsize + 4 !important;
-    }
-
-    .egov-password {
-        @extend .egov-fa-password;
-        font-size: $global-fontsize + 4 !important;
-    }
-
     .full-size {
         width: 100%;
     }
@@ -232,4 +222,15 @@
 
 .block-cart {
     margin-top: 20px;
+}
+
+.addresses-primary {
+    .box {
+        margin-bottom: 20px;
+
+        h3 {
+            font-size: $global-h3-size;
+            font-weight: bold;
+        }
+    }
 }
