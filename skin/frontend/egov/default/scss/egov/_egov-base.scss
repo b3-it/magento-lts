@@ -85,6 +85,15 @@
     margin: 5px;
 }
 
+.egov-fa-home {
+    @extend .fa;
+    @extend .fa-home;
+}
+.egov-home {
+    @extend .egov-fa-home;
+    font-size: $global-fontsize + 12;
+    margin: 5px;
+}
 
 
 
