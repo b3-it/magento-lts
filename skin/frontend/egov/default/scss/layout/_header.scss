@@ -133,7 +133,7 @@
 }
 
 /* ============================================ *
- * Logo 
+ * Logo
  * ============================================ */
 
 .logo {
@@ -352,8 +352,19 @@ a.skip-link {
     position: absolute;
     top:5px;
     right:25%;
+    width: 80%;
+    text-align: right;
 
     @include bp(max-width, $bp-medium) {
         position: static;
     }
+}
+
+.skip-egov{
+    display: inline-block;
+    float: none;
+    padding: 0 10px;
+    text-transform: uppercase;
+    vertical-align: top;
+    width: auto;
 }
