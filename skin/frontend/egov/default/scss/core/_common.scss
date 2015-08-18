@@ -173,7 +173,6 @@ h6, .h6 { @include h6; }
         @include h4;
         color: $global-footer-fontcolor;
         margin-bottom: 0;
-        font-weight: normal;
     }
     small {
         font-size: 100%;
@@ -1066,7 +1065,8 @@ a.button:hover {
  */
 
 .messages {
-    margin-bottom: $gap;
+    margin-top: $global-message-margintop;
+    margin-bottom: $global-message-marginbottom;
 }
 
 .messages li li {

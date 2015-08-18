@@ -7,14 +7,80 @@
 
 .my-account {
 
+    .dashboard {
+        .box-head {
+            padding-bottom: 0px;
+            border: 0px;
+            margin-top: 3px;
+
+            a {
+                padding: 0px;
+            }
+        }
+
+        .box-account {
+            p, address {
+                font-style: normal;
+            }
+        }
+
+        .col2-set {
+            .col-1 .box-title, .col-2 .box-title {
+                padding-bottom: 0px;
+
+                h4 {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
+        .welcome-msg {
+            padding-bottom: 30px;
+        }
+    }
+
+    .addresses-list {
+        font-family: $base-font-family;
+    }
+
     .page-title {
         h1 {
             color: $global-h2-color;
         }
     }
 
+    .col-1, .col-2 {
+        padding-right: 0px !important;
+
+        .box {
+            position: relative;
+            height:100%;
+        }
+    }
+
     p.required {
         color: $global-warning-color;
+    }
+
+    .box {
+        border: 1px solid $global-lightcolor;
+        margin: 0px;
+        width: 90%;
+
+        .box-title {
+            background-color: $global-lightcolor;
+            border-bottom: 3px solid $global-lightcolor;
+            padding: 0.2em 0 0em 0.6em;
+            color: $global-fontcolor-dark;
+
+            h3 {
+                color: $global-fontcolor-dark;
+            }
+        }
+
+        .box-content {
+            margin: 5px;
+        }
     }
 
     button {
@@ -84,6 +150,16 @@
             border-color: $global-lightcolor;
         }
     }
+
+    .spacer {
+        display: inline-block;
+        margin: 0px 10px;
+        color: $global-fontcolor-dark;
+    }
+
+    .full-size {
+        width: 100%;
+    }
 }
 
 .block-account {
@@ -150,4 +226,16 @@
 
 .block-cart {
     margin-top: 20px;
+}
+
+.addresses-primary,
+.addresses-additional {
+    .box {
+        margin-bottom: 20px;
+
+        h3 {
+            font-size: $global-h3-size;
+            font-weight: bold;
+        }
+    }
 }
