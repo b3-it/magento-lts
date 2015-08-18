@@ -65,6 +65,30 @@
     @extend .egov-fa-fax;
 }
 
+.egov-fa-grid {
+    @extend .fa;
+    @extend .fa-th-large;
+}
+.egov-grid {
+    @extend .egov-fa-grid;
+    font-size: $global-fontsize + 8;
+    margin: 5px;
+}
+
+.egov-fa-list {
+    @extend .fa;
+    @extend .fa-align-justify;
+}
+.egov-list {
+    @extend .egov-fa-list;
+    font-size: $global-fontsize + 8;
+    margin: 5px;
+}
+
+
+
+
+
 .egov-float-left {
     float: left !important;
 }
