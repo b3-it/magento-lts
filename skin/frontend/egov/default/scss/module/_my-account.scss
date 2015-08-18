@@ -39,6 +39,10 @@
         }
     }
 
+    .addresses-list {
+        font-family: $base-font-family;
+    }
+
     .page-title {
         h1 {
             color: $global-h2-color;
@@ -224,7 +228,8 @@
     margin-top: 20px;
 }
 
-.addresses-primary {
+.addresses-primary,
+.addresses-additional {
     .box {
         margin-bottom: 20px;
 

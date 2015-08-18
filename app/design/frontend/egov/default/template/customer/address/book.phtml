@@ -35,14 +35,11 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
         <?php echo $this->__('Add New Address') ?>
     </button>
 </div>
+
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
 <!--Sprungziel Tastatursteuerung -->
-<div id="jumptarget<?php echo $this->getNameInLayout();?>">
-    <?php echo $this->getMessagesBlock()->toHtml() ?>
-</div>
-
-<div class="col2-set addresses-list">
+<div id="jumptarget<?php echo $this->getNameInLayout();?>" class="col2-set addresses-list">
     <div class="col-1 addresses-primary">
         <h2>
             <?php echo $this->__('Default Addresses') ?>
@@ -217,5 +214,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
         }
         return false;
     }
+
+    $j('.my-account ul.messages').delay(10000).fadeOut('slow');
 //]]>
 </script>
