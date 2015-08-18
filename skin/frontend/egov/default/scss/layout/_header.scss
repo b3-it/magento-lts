@@ -362,7 +362,7 @@ a.skip-link {
 
 .skip-egov{
     display: inline-block;
-    float: none;
+    float: none !important;
     padding: 0 10px;
     text-transform: uppercase;
     vertical-align: top;
