@@ -231,7 +231,7 @@
 }
 
 .cart-table {
-    font-family: $f-stack-special;
+    font-family: $base-font-family;
 
     th,
     td,
@@ -248,11 +248,23 @@
         margin-bottom: 0;
     }
 
+    thead th {
+        background-color: $global-checkout-thbackground;
+        color: $global-checkout-thfontcolor;
+    }
+
+    tbody td {
+        background-color: $global-checkout-tdbackground;
+        color: $global-checkout-tdfontcolor;
+    }
+
     thead th,
     tbody td {
-        background-color: transparent;
-        padding: 10px 5px;
-        font-family: $f-stack-special;
+        padding: 5px 1px;
+        font-family: $base-font-family;
+        border-color: $global-checkout-tableborder;
+        border-width: $global-checkout-borderwidth;
+        border-style: solid;
     }
 
     .product-cart-info,
@@ -261,7 +273,6 @@
     }
 
     tr {
-        border-bottom: 1px solid $c-table-border;
     }
 
     tfoot {
