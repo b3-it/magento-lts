@@ -77,7 +77,7 @@
 
 .egov-fa-list {
     @extend .fa;
-    @extend .fa-align-justify;
+    @extend .fa-bars;
 }
 .egov-list {
     @extend .egov-fa-list;
@@ -115,6 +115,25 @@
     margin: 5px;
 }
 
+.egov-fa-star {
+    @extend .fa;
+    @extend .fa-star;
+}
+.egov-star {
+    @extend .egov-fa-star;
+    font-size: $global-fontsize;
+    margin: 5px;
+}
+
+.egov-fa-refresh {
+    @extend .fa;
+    @extend .fa-refresh;
+}
+.egov-refresh {
+    @extend .egov-fa-refresh;
+    font-size: $global-fontsize;
+    margin: 5px;
+}
 
 
 .egov-float-left {
