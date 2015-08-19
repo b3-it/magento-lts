@@ -17,13 +17,14 @@
 
     &:not(.skip-active):hover {
         .icon {
-            background-position: -50px+4px (-50px + ($toolbar-icon-padding-offset/2) + 2px);
+            background-image: none;
+            text-indent: 0;
         }
     }
 
     .icon {
-        @extend .icon-sprite;
-        background-position: -0px+4px (-50px + ($toolbar-icon-padding-offset/2) + 2px);
+        background-image: none;
+        text-indent: 0;
     }
 }
 
@@ -49,7 +50,7 @@
         position: absolute;
         z-index: 200;
         top: 40px;
-        right: 340px;
+        right: 350px;
         width: 200px;
         opacity: 0.9;
     }
@@ -62,7 +63,8 @@
         line-height: 2;
     }
 
-    #header-account a:hover {
+    #header-account a:hover,
+    #egov-menu a:hover {
         color: $global-linkcolor-hover;
     }
 
@@ -72,7 +74,7 @@
         position: absolute;
         z-index: 200;
         top: 40px;
-        right: 470px;
+        right: 485px;
         width: 200px;
         opacity: 0.9;
     }
@@ -82,19 +84,23 @@
  * Account Links
  */
 
-#header-account {
+#header-account,
+#egov-menu {
     padding: 5px 0;
 }
 
-#header-account a {
+#header-account a,
+#egov-menu a {
     position: relative;
     display: block;
     padding: 5px 10px;
-    line-height:23px;
-    text-align: center;
+    line-height: 23px;
+    margin-left: 10px;
 }
 
-#header-account a:hover {
-    color: $c-action;
+#header-account a:hover,
+#egov-menu a:hover {
+    color: $global-linkcolor-hover;
+    font-weight: bold;
 }
 

@@ -350,7 +350,7 @@ body:not(.customer-account) .block:first-child .block-title {
     background-size: 100% auto;
     border: 1px solid $global-button-color;
     border-radius: 3px;
-    padding: 1px 6px;
+    padding: 5px 10px;
 
     &:hover {
         background: $global-button-hovercolor $global-repeat-scroll;
@@ -366,17 +366,19 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 a.button {
+    color: $global-fontcolor-dark;
     text-decoration: none;
+    padding: 5px 10px;
 }
 
 a.button:hover {
-    color: #FFFFFF;
+    color: $global-fontcolor-dark;
 }
 
 /* Disabled - class for anchor, state for form elements */
 .button.disabled,
 .button:disabled {
-    background: #C8C8C8;
+    background: $global-lightcolor;
     opacity: 0.6;
     cursor: not-allowed;
 }
@@ -391,7 +393,7 @@ a.button:hover {
 // Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
 // extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
 @mixin touch-button {
-    color: $c-text;
+    color: $global-fontcolor-dark;
     background-color: $c-module-background;
     padding: 5px 10px;
 }
@@ -416,7 +418,7 @@ a.button:hover {
     text-decoration: underline;
     text-transform: uppercase;
     display: inline-block;
-    color: $c-action;
+    color: $global-fontcolor-dark;
     font-family: $base-font-family;
 
     &:hover {
