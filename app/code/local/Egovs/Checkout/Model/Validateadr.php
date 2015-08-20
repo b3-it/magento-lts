@@ -1,0 +1,167 @@
+<?php
+class Egovs_Checkout_Model_Validateadr extends Varien_Object
+{
+	public function validateShippingAddress(&$data) {
+		$method = 'shipping';
+		$errors = array();
+		 
+		if (!$this->__testShipping($data,'firstname'))
+			$errors[] = Mage::helper('mpcheckout')->__('Please enter first name or company name.');
+		if (!$this->__testShipping($data,'lastname'))
+			$errors[] = Mage::helper('mpcheckout')->__('Please enter last name or company name.');
+		 
+		if ($this->__testShipping($data,'company'))
+			$errors = array();
+		 
+		if (isset($data['street'])) {
+			$adr = $data['street'];
+			if (is_array($adr)) $adr = implode('',$adr);
+			if(strlen($adr) < 1) $errors[] = Mage::helper('mpcheckout')->__('Please enter street.');
+		} else {
+			$errors[] = Mage::helper('mpcheckout')->__('Please enter street.');
+		}
+		 
+		//if(!$this->__testShipping($data,'street'))$errors[] = Mage::helper('mpcheckout')->__('Please enter street.');
+		if (!$this->__testShipping($data,'city'))$errors[] = Mage::helper('mpcheckout')->__('Please enter city.');
+		if (!$this->__testShipping($data,'postcode'))$errors[] = Mage::helper('mpcheckout')->__('Please enter zip/postal code.');
+		if (!$this->__testShipping($data,'country_id'))$errors[] = Mage::helper('mpcheckout')->__('Please enter country.');
+		//if(!$this->i__testShippingsValid($data,'region_id'))$errors[] = Mage::helper('mpcheckout')->__('Please enter region.');
+		if (!$this->__isValid($data,'telephone',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter telephone.');
+		if (!$this->__isValid($data,'email',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter email.');
+		if (!$this->__isValid($data,'company',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter company.');
+		if (!$this->__isValid($data,'fax',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter fax.');
+		if ((isset($data['country_id'])) && ($this->__isFieldRequired('region',$method))) {
+			if(($data['country_id']=='DE') && ($data['region'] == ''))	$errors[] = Mage::helper('mpcheckout')->__('Please enter region.');
+		}
+		if ((isset($data['country_id'])) && (isset($data['region']))) {
+			if($data['country_id']!='DE') unset($data['region']);
+		}
+		if ((isset($data['country_id'])) && ($data['country_id']=='DE')) {
+			if (isset($data['postcode']) && (strlen($data['postcode'])>0)) {
+				$data['postcode'] = trim(str_replace('D-','',$data['postcode']));
+				if (preg_match("/^[0-9]{5}$/",$data['postcode'])==0) {
+					$errors[] = Mage::helper('mpcheckout')->__('Please enter valid zip/postal code.');
+				}
+			}
+
+		}
+		
+		$this->_validateVat($data, $errors);
+		
+		if (count($errors) > 0 ) {
+			return implode(' ',$errors);
+		}
+		
+		return true;
+	}
+	
+	public function validateShippingAddressField($field, $value) {
+		$this->__testShipping(array($field => $value), $field);
+	}
+
+	public function validatePickupAddress(&$data) {
+		$errors = array();
+			
+		if (!$this->__testShipping($data,'firstname'))
+			$errors[] = Mage::helper('mpcheckout')->__('Please enter first name or company name.');
+		if (!$this->__testShipping($data,'lastname'))
+			$errors[] = Mage::helper('mpcheckout')->__('Please enter last name or company name.');
+			
+		if ($this->__testShipping($data,'company'))
+			$errors = array();
+		
+		$this->_validateVat($data, $errors);
+	
+		if (count($errors)> 0 ) {
+			return implode(' ',$errors);
+		}
+	
+		return true;
+	}
+	
+	/**
+	 * Überprüft  die VAT mit den Adressdaten
+	 * 
+	 * Im Moment können folgende Felder validiert werden:
+	 * <ul>
+	 * 	<li>VAT</li>
+	 * 	<li>Land</li>
+	 *  <li>Firmenname (optional)</li>
+	 * </ul>
+	 * 
+	 * Falls die Adresse vom VIES geliefert wird, wird dieses in die Validierung einbezogen.
+	 * Bei einem Fehler wird der Fehler im $errors Array eingefügt.
+	 * 
+	 * @param array $data   Adresse
+	 * @param array $errors Fehler Array
+	 * 
+	 * @return boolean
+	 * 
+	 * @see Egovs_Vies_Model_Webservice_Types_CheckVatResponse::validateWith
+	 */
+	protected function _validateVat(&$data, &$errors) {
+		//falls das feld nicht gesetzt wurde braucht es nicht geprüft werden
+		if (!isset($data['taxvat']) || empty($data['taxvat'])) {
+			return true;
+		}
+		
+		if(!Mage::helper('mpcheckout')->isModuleEnabled('Egovs_Vies'))
+		{
+			return true;
+		}
+		
+		
+		$quote = Mage::getSingleton('checkout/session')->getQuote();
+		if ($quote instanceof Mage_Sales_Model_Quote && ($customer = $quote->getCustomer())) {
+			if ($customer instanceof Mage_Customer_Model_Customer) {
+				if ($customer->getTaxvat() && isset($data['country_id']) && stripos(trim($customer->getTaxvat()), $data['country_id']) === 0) {
+					$customer->setTaxvatValid(true);
+					return true;
+				}
+			}
+		}
+				
+		/* @var $vatService Egovs_Vies_Model_Webservice_CheckVatService */
+		$vatService = Mage::getModel('egovsvies/webservice_checkVatService');
+		
+		if (!$vatService || !($vatService instanceof Egovs_Vies_Model_Webservice_CheckVatService)) {
+			//TODO Warnung über nicht validierbare VAT ausgeben?
+			return true;
+		}
+		
+		$result = $vatService->checkVatBy($data['taxvat']);
+		
+		if ($result instanceof Egovs_Vies_Model_Webservice_Types_CheckVatResponse) {
+			return $result->validateWith($data, $errors);
+		}
+		
+		return false;
+	}
+
+
+	private function __testShipping($data, $key) {
+		return ((isset($data[$key])) && (strlen($data[$key]) > 1));
+	}
+
+
+	private function __isFieldRequired($key,$method = null) {
+		 
+		return (Mage::helper('mpcheckout/config')->isFieldRequired($key,$method));
+	}
+
+	private function __isValid(&$data, $key, $method = null) {
+
+		//falls das feld nicht gesetzt wurde braucht es nicht geprüft werden
+		if (!isset($data[$key])) return true;
+		 
+		if ((strlen($data[$key]) < 1)) {
+			if ($this->__isFieldRequired($key,$method)) {
+				return false;
+			} else {
+				//unset($data[$key]);
+				return true;
+			}
+		}
+		return true;
+	}
+}
