@@ -37,7 +37,7 @@
             </depends>
         </Egovs_Cashpayment>
         <Egovs_Checkout>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Checkout>
         <Egovs_Customer>

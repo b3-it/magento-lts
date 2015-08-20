@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <tax>
+            <groups>
+                <classes>
+                    <fields>
+                        <shipping_tax_class translate="label">
+                            <source_model>germantax/adminhtml_system_config_source_shipping_taxclass</source_model>
+                        </shipping_tax_class>
+                    </fields>
+                </classes>
+            </groups>
+        </tax>
+    </sections>
+</config>
