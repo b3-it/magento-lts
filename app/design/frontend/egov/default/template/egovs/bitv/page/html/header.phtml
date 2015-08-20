@@ -5,6 +5,11 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+
 ?>
 <div id="menuesprung">
 <?php foreach($this->getJumps() as $jump):
@@ -56,8 +61,13 @@
             </a>
 
             <div class="account-cart-wrapper">
+                <a href="javascript:void(0);" data-target-element="#egov-menu" class="skip-link skip-egov">
+                    <span class="icon egov-home"> </span>
+                    <span class="label">eGov-Menu</span>
+                </a>
+
                 <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" data-target-element="#header-account" class="skip-link skip-account">
-                    <span class="icon"></span>
+                    <span class="icon egov-user"></span>
                     <span class="label"><?php echo $this->__('Account'); ?></span>
                 </a>
 
@@ -88,6 +98,11 @@
         <!-- Account -->
         <div id="header-account" class="skip-content">
             <?php echo $this->getChildHtml('topLinks') ?>
+        </div>
+
+        <!-- eGov-Menu -->
+        <div id="egov-menu" class="skip-content">
+            <?php echo $this->getChildHtml('topEgovmenu') ?>
         </div>
     </div>
 </header>

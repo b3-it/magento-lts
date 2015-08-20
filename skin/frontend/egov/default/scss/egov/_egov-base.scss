@@ -85,7 +85,35 @@
     margin: 5px;
 }
 
+.egov-fa-home {
+    @extend .fa;
+    @extend .fa-home;
+}
+.egov-home {
+    @extend .egov-fa-home;
+    font-size: $global-fontsize + 12;
+    margin: 5px;
+}
 
+.egov-fa-user {
+    @extend .fa;
+    @extend .fa-user;
+}
+.egov-user {
+    @extend .egov-fa-user;
+    font-size: $global-fontsize + 12;
+    margin: 5px;
+}
+
+.egov-fa-cart {
+    @extend .fa;
+    @extend .fa-shopping-cart;
+}
+.egov-cart {
+    @extend .egov-fa-cart;
+    font-size: $global-fontsize + 12;
+    margin: 5px;
+}
 
 
 

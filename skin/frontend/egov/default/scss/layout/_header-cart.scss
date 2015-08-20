@@ -16,13 +16,14 @@
 .skip-cart {
     &:not(.skip-active):hover {
         .icon {
-            background-position: -50px (-100px + ($toolbar-icon-padding-offset/2) + 1px);
+            background-image: none;
+            text-indent: 0;
         }
     }
 
     .icon {
-        @extend .icon-sprite;
-        background-position: -0px (-100px + ($toolbar-icon-padding-offset/2) + 1px);
+        background-image: none;
+        text-indent: 0;
     }
 }
 
