@@ -11,9 +11,6 @@
  */
 ?>
 
-<?php echo $this->getChildHtml('loadingMask') ?>
-<?php echo $this->getChildHtml('bitvmenu') ?>
-
 <div class="header-language-background">
     <div class="header-language-container">
         <div class="store-language-container">
@@ -23,6 +20,9 @@
         <?php echo $this->getChildHtml('currency_switcher') ?>
     </div>
 </div>
+
+<?php echo $this->getChildHtml('loadingMask') ?>
+<?php echo $this->getChildHtml('bitvmenu') ?>
 
 <header id="header" class="page-header">
     <div class="page-header-container">
