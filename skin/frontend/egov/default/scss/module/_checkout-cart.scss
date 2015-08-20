@@ -47,6 +47,12 @@
     #postcode {
         width: 100%;
     }
+
+    .col2-left-layout {
+        .col-main {
+            padding-top: 0px;
+        }
+    }
 }
 
 @mixin oneColumnCartItems {
@@ -234,6 +240,11 @@
     a.egov-delete {
         font-size: $global-fontsize + 8;
     }
+
+    button.egov-float-left {
+        margin-left:0px;
+        margin-right:10px;
+    }
 }
 
 .cart-table {
@@ -257,6 +268,10 @@
     thead th {
         background-color: $global-checkout-thbackground;
         color: $global-checkout-thfontcolor;
+
+        span.product-name {
+            padding-left: 5px;
+        }
     }
 
     tbody td {
@@ -274,7 +289,7 @@
     }
 
     .product-cart-info {
-        padding-left: 15px;
+        padding-left: 5px;
     }
 
     tr {
@@ -322,13 +337,9 @@
     }
 
     .product-cart-sku {
-        font-family: $f-stack-serif;
-        font-style: italic;
-        font-size: $f-size-xs;
         margin: 5px 0 12px;
 
         .label {
-            font-weight: 600;
         }
     }
 
@@ -378,7 +389,7 @@
     }
 
     .product-cart-actions {
-        min-width: 60px;
+        min-width: 50px;
         text-align: center;
 
         .qty {
