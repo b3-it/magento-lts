@@ -190,19 +190,16 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <input type="text" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
                data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
                title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
-<!--
-        <button type="submit" name="update_cart_action" data-cart-item-update value="update_qty" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Update')); ?>" class="button btn-update">
-            <?php echo $this->__('Update'); ?>
-        </button>
--->
-    <?php if ($isVisibleProduct): ?>
-        <a class="egov-pencile" href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item parameters')) ?>" title="<?php echo $this->__('Edit') ?>" alt="<?php echo $this->__('Edit') ?>"> </a>
-    <?php endif ?>
-    <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+        <div class="product-cart-symbols">
         <?php if ($isVisibleProduct): ?>
-        <a class="egov-star link-wishlist use-ajax" href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" alt="<?php echo $this->__('Move to wishlist'); ?>" title="<?php echo $this->__('Move to wishlist'); ?>"> </a>
+            <a class="egov-pencile" href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item parameters')) ?>" title="<?php echo $this->__('Edit') ?>" alt="<?php echo $this->__('Edit') ?>"> </a>
         <?php endif ?>
-    <?php endif ?>
+        <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+            <?php if ($isVisibleProduct): ?>
+            <a class="egov-star link-wishlist use-ajax" href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" alt="<?php echo $this->__('Move to wishlist'); ?>" title="<?php echo $this->__('Move to wishlist'); ?>"> </a>
+            <?php endif ?>
+        <?php endif ?>
+        </div>
     </td>
 
     <!--Sub total starts here -->
@@ -300,7 +297,11 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
     </td>
     <?php endif; ?>
     <td class="a-center product-cart-remove">
-        <a class="egov-delete" href="<?php echo $this->getDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>" alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+        <a class="remove egov-delete"
+           href="<?php echo $this->getDeleteUrl() ?>"
+           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
+           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
+           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
     </td>
 </tr>
 

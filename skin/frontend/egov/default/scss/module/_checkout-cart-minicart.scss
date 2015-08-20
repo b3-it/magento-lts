@@ -71,7 +71,7 @@
         li {
             padding: 8px 5px 8px 11px;
             border-bottom: 1px solid #DDDDDD;
-            position: relative;
+            min-height: 100px;
 
             &.last {
                 border: none;
@@ -212,6 +212,48 @@
         display: none;
     }
 }
+
+div.block-cart {
+    .block-content {
+        p.subtotal {
+            text-align: right;
+        }
+
+        .block-subtitle {
+            padding-top: 10px;
+        }
+    }
+
+    #cart-sidebar {
+        li.item {
+            border-bottom-color: $global-border-color;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+
+            .product-details {
+                .btn_edit {
+                    @extend .egov-float-right;
+                    margin-right: 10px;
+                }
+
+                .btn_delete {
+                    @extend .egov-float-right;
+                }
+
+                .tax-block {
+                    text-align: right;
+                }
+
+                p.product-name {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+}
+
 
 .header-minicart.skip-active .block-cart,
 .block-cart.skip-active {
