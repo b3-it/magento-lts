@@ -66,9 +66,9 @@
     #header-search {
         display: block; // Force visibility
         position: absolute;
-        top: 18px;
+        top: 14px;
         right: 0;
-        width: 23%;
+        width: 24%;
         padding: 0;
     }
 
@@ -88,10 +88,10 @@
 }
 
 #search {
-    width: 77%;
+    width: 75%;
     float: left;
     font-family: $base-font-family;
-    height: 20px;
+    height: 28px;
     border-top: 1px solid $global-input-bordercolor;
     border-right: none;
     border-bottom: 1px solid $global-input-bordercolor;
