@@ -125,6 +125,16 @@
     margin: 5px;
 }
 
+.egov-fa-compare {
+    @extend .fa;
+    @extend .fa-random;
+}
+.egov-compare {
+    @extend .egov-fa-compare;
+    font-size: $global-fontsize;
+    margin: 5px;
+}
+
 .egov-fa-refresh {
     @extend .fa;
     @extend .fa-refresh;
@@ -154,6 +164,30 @@
     font-size: $global-fontsize;
     margin: 5px;
 }
+
+
+
+
+.egov-fa-compare-1 {
+    @extend .fa;
+    @extend .fa-camera;
+}
+.egov-compare-1 {
+    @extend .egov-fa-compare-1;
+    font-size: $global-fontsize;
+    margin: 5px;
+}
+
+.egov-fa-compare-2 {
+    @extend .fa;
+    @extend .fa-camera-retro;
+}
+.egov-compare-2 {
+    @extend .egov-fa-compare-2;
+    font-size: $global-fontsize;
+    margin: 5px;
+}
+
 
 
 
