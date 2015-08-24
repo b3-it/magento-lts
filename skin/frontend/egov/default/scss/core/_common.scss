@@ -744,6 +744,9 @@ a.button:hover {
     position: relative;
     margin: 0 auto;
 
+    /* Zeilenhöhe auf Normal setzen (_global.scss [15]) */
+    line-height: $global-lineheight;
+
     &:after {
         @include clearfix;
     }
@@ -1230,17 +1233,17 @@ a.button:hover {
 }
 
 .price-box .price {
-    color: $global-footer-fontcolor;
-    font-size: $f-size-xl;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
 }
 
 .price-box .price,
 .price {
-    font-family: $f-stack-sans;
+    font-family: $base-font-family;
 }
 
 .price-box .price-label {
-    color: $c-text-gray;
+    color: $global-fontcolor-dark;
     white-space: nowrap;
     font-family: $base-font-family;
 }
@@ -1569,10 +1572,11 @@ span.weee {
 .toolbar {
     margin-top: $box-spacing;
     margin-bottom: 15px;
-    border-bottom: 1px solid $c-module-border;
-    border-top: 1px solid $c-module-border;
-    background: $c-module-background;
+    border-bottom: 1px solid $global-lightcolor;
+    border-top: 1px solid $global-lightcolor;
+    background: $global-lightcolor-hover;
     padding: 5px 10px 0px 10px;
+    font-size: $global-fontsize-small;
 
     &:after {
         @include clearfix;
@@ -1591,22 +1595,20 @@ span.weee {
 .toolbar,
 .pager {
     font-family: $base-font-family;
-    color: $c-text;
+    color: $global-category-font-color;
     line-height: 30px;
-    font-size: $f-size-xs;
 }
 
 .toolbar label,
 .pager-no-toolbar label {
     font-weight: normal;
-    text-transform: uppercase;
 }
 
 $toolbar-icon-padding-offset: 8px;
 
 .sorter {
-    float: left;
     margin-bottom: 5px;
+    width: 100%;
 
     label {
         float: left;
@@ -1619,75 +1621,58 @@ $toolbar-icon-padding-offset: 8px;
 }
 
 .sorter > .sort-by {
-    float: left;
-    margin-right: 5px;
+    float: right;
     height: 30px;
 
     .sort-by-switcher {
-        width: 30px;
-        height: 30px;
         display: inline-block;
-        @extend .icon-sprite;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $global-sorter-bordercolor;
+
+        margin: 0px -2px 0px 5px;
+        padding: 2px;
     }
     .sort-by-switcher--asc {
-        background-position: 0+4px (-550px+$toolbar-icon-padding-offset);
-        &:hover {
-            background-position: -50px+4px (-550px+$toolbar-icon-padding-offset);
-        }
+        @extend .egov-arrow-down;
     }
     .sort-by-switcher--desc {
-        background-position: 0+4px (-575px+$toolbar-icon-padding-offset);
-        &:hover {
-            background-position: -50px+4px (-575px+$toolbar-icon-padding-offset);
-        }
+        @extend .egov-arrow-up;
     }
 }
 
 .sorter > .view-mode {
-    float: right;
+    float: left;
 
     .grid,
     .list {
         float: left;
         width: 30px;
         height: 30px;
-        @extend .icon-sprite;
     }
     .grid {
         margin-right: 5px;
-        background-position: $toolbar-icon-padding-offset (-500px+$toolbar-icon-padding-offset);
-    }
-    strong.grid,
-    a.grid:hover {
-        background-position: -50px+$toolbar-icon-padding-offset (-500px+$toolbar-icon-padding-offset);
-    }
-    .list {
-        // We want the icon to line up with the container width, so we are adding 3px
-        background-position: $toolbar-icon-padding-offset+3px (-525px+$toolbar-icon-padding-offset);
-    }
-    strong.list,
-    a.list:hover {
-        background-position: -50px+$toolbar-icon-padding-offset+3px (-525px+$toolbar-icon-padding-offset);
     }
 }
 
 .pager {
-    float: right;
     overflow: hidden;
+    width: 100%;
 
     & > .count-container {
         float: left;
+        font-size: $global-fontsize;
     }
 
     .amount {
-        float: left;
-        font-family: $f-stack-sans;
+        float: right;
+        font-family: $base-font-family;
         white-space: nowrap;
         margin: 0 15px 0 0;
     }
 
     .limiter {
-        float: left;
+        float: right;
         height: 30px;
         line-height: 30px;
 

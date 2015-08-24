@@ -31,8 +31,8 @@
 .cart-forms .giftcard,
 .cart-forms .shipping {
     padding: $box-spacing;
-    background-color: $c-module-background;
-    border: 1px solid $c-module-border;
+    background-color: $global-checkout-total-background;
+    border: 1px solid $global-checkout-total-border;
 }
 
 .cart-table,
@@ -45,7 +45,6 @@
 
 .checkout-cart-index {
     #postcode {
-        width: 100%;
     }
 
     .col2-left-layout {
@@ -670,11 +669,9 @@
         }
 
         .shipping-country {
-            width: 37%;
         }
 
         .shipping-region {
-            width: 41%;
         }
 
         .shipping-postcode {
@@ -770,10 +767,9 @@
     }
 
     table {
-        font-family: $f-stack-special;
-        font-size: $f-size-xs;
+        font-family: $base-font-family;
+        font-size: $global-fontsize;
         margin-bottom: 20px;
-        text-transform: uppercase;
         width: 100%;
 
         td {
@@ -790,22 +786,21 @@
         }
 
         tfoot {
-            border-top: 1px solid #E6E6E6;
-            border-bottom: 1px solid #E6E6E6;
+            border-top: 1px solid $global-checkout-total-border;
+            border-bottom: 1px solid $global-checkout-total-border;
             td {
-                font-size: 24px;
+                font-size: $global-fontsize-big;
+                font-weight: bold;
                 padding: 2px 5px;
                 vertical-align: top;
             }
 
             strong span,
             span.price {
-                font-family: $f-stack-sans;
-
+                font-family: $base-font-family;
             }
 
             strong {
-                font-weight: 400;
             }
         }
     }

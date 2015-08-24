@@ -10,8 +10,8 @@ h2.unsichtbar, span.unsichtbar, p.unsichtbar, div.jsunsichtbar {
 }
 
 #menuesprung {
-    position: absolute;
     top: 40px;
+    line-height: $global-lineheight;
 }
 
 #menuesprung a, #menuesprung a:hover, #a a:visited {
@@ -22,7 +22,6 @@ h2.unsichtbar, span.unsichtbar, p.unsichtbar, div.jsunsichtbar {
 }
 
 #menuesprung a:active, #menuesprung a:focus {
-    position: absolute;
     width: 20em;
     top: 17px;
     left: 0px;

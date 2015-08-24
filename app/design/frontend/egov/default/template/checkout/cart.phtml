@@ -118,7 +118,6 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
     <div class="cart-forms">
         <?php /* Extensions placeholder */ ?>
         <?php echo $this->getChildHtml('checkout_cart_widget') ?>
-        <?php echo $this->getChildHtml('coupon') ?>
         <?php echo $this->getChildHtml('checkout.cart.extra') ?>
         <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
     </div>
@@ -126,12 +125,16 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
         <div class="cart-totals">
             <?php echo $this->getChildHtml('totals'); ?>
             <?php if(!$this->hasError()): ?>
-            <ul class="checkout-types bottom">
-            
-            <button class="button btn-proceed-checkout btn-checkout" onclick="window.location=' <?php echo $this->helper('mpcheckout/url')->getCheckoutUrl()?>';" title="zur Kasse gehen" type="button"> zur Kasse gehen </button>
- 
-            </ul>
+            <button class="button btn-proceed-checkout btn-checkout"
+                    onclick="window.location=' <?php echo $this->helper('mpcheckout/url')->getCheckoutUrl()?>';"
+                    title="<?php echo $this->__('Proceed to checkout'); ?>"
+                    type="button">
+                <?php echo $this->__('Proceed to checkout'); ?>
+            </button>
             <?php endif; ?>
+        </div>
+        <div class="cart-totals">
+            <?php echo $this->getChildHtml('coupon') ?>
         </div>
     </div>
     <?php echo $this->getChildHtml('crosssell') ?>

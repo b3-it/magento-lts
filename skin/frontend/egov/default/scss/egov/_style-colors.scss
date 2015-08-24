@@ -32,6 +32,9 @@ $global-checkout-thfontcolor: #FFFFFF;
 $global-checkout-tdbackground: transparent;
 $global-checkout-tdfontcolor: #000000;
 
+$global-checkout-total-background: $global-lightcolor-hover;
+$global-checkout-total-border: $global-lightcolor;
+
 $global-warning-color: #FF0000;
 
 $global-text-shadow: rgba(0, 0, 0, 0.3);
@@ -67,6 +70,7 @@ $global-footer-fontcolor: #4D4D4D;
 $global-footer-backgroundcolor: $global-button-hovercolor;
 
 $global-input-bordercolor: #CDCDCD;
+$global-sorter-bordercolor: #CDCDCD;
 
 // =============================================
 // Barrierefrei Defaults
