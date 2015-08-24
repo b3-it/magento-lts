@@ -176,6 +176,10 @@
         position: relative;
         text-align: center;
 
+        a.button {
+            padding: 5px 10px;
+        }
+
         .checkout-button {
             min-width: 145px;
         }

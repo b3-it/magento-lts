@@ -842,8 +842,24 @@ a.button:hover {
 }
 
 .col2-right-layout {
+	 .col-right {
+        margin-right: $global-rightcol-marginright;
+        float: right;
+        position: relative;
+        _top: -15px;
+        width: $global-rightcol-width;
+    }
     .col-main {
         padding-left: 0; /* Remove the 15px padding */
+        background-image: url($global-content-top-image);
+        background-repeat: no-repeat;
+        background-color: $global-content-background;
+        background-position: 0px -3px;
+        background-size: 100% auto;
+        overflow: hidden;
+        width: $global-fullpage-width - 25;
+        padding-left: $global-content-paddingleft;
+        padding-top: $global-content-paddingtop;
     }
 }
 
@@ -875,6 +891,7 @@ a.button:hover {
             width: $global-rightcol-width;
             margin-right: $global-rightcol-marginright;
             padding: 0px;
+            margin-top: $global-rightcol-margintop;
         }
     }
 }
