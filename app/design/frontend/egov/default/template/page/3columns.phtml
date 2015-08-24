@@ -19,9 +19,11 @@
     <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?> id="3-columns">
     <?php echo $this->getChildHtml('after_body_start') ?>
         <div class="wrapper">
-            <?php echo $this->getChildHtml('global_notices') ?>
             <div class="page">
                 <?php echo $this->getChildHtml('header') ?>
+
+                <?php echo $this->getChildHtml('global_notices') ?>
+
                 <div class="main-container col3-layout">
                     <div class="main">
                         <?php echo $this->getChildHtml('breadcrumbs') ?>

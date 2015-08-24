@@ -135,6 +135,27 @@
     margin: 5px;
 }
 
+.egov-fa-arrow-up {
+    @extend .fa;
+    @extend .fa-arrow-up;
+}
+.egov-arrow-up {
+    @extend .egov-fa-arrow-up;
+    font-size: $global-fontsize;
+    margin: 5px;
+}
+
+.egov-fa-arrow-down {
+    @extend .fa;
+    @extend .fa-arrow-down;
+}
+.egov-arrow-down {
+    @extend .egov-fa-arrow-down;
+    font-size: $global-fontsize;
+    margin: 5px;
+}
+
+
 
 .egov-float-left {
     float: left !important;
