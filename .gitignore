@@ -34,3 +34,5 @@ skin/frontend/**/css/*.css
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
+/skin/frontend/egov/default/css/styles-ie8.css
+/skin/frontend/egov/default/css/styles.css
