@@ -1,0 +1,93 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.egov-base-table {
+    width: 100%;
+    font-family: $base-font-family;
+
+    th, td, tbody td {
+        // Adding tbody for extra selector weight
+        border-bottom: none;
+        vertical-align: top;
+    }
+
+    thead th {
+        background-color: $global-checkout-thbackground;
+        color: $global-checkout-thfontcolor;
+
+        span.product-name {
+            padding-left: 5px;
+        }
+    }
+
+    thead th.space {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    tbody td {
+        background-color: $global-checkout-tdbackground;
+        color: $global-checkout-tdfontcolor;
+    }
+
+    thead th,
+    tbody td {
+        padding: 5px 1px;
+        font-family: $base-font-family;
+        border-color: $global-checkout-tableborder;
+        border-width: $global-checkout-borderwidth;
+        border-style: solid;
+    }
+}
+
+.egov-float-left {
+    float: left !important;
+}
+
+.egov-float-right {
+    float: right !important;
+}
+
+.egov-float-stop {
+    clear: all;
+}
+
+#loading-mask {
+    display: none;
+    border: 0 none;
+    height: 100%;
+    left: 0;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+
+    .loader {
+        background: #fff4e9 none repeat scroll 0 0;
+        border: 2px solid #f1af73;
+        color: #d85909;
+        font-weight: bold;
+        left: 50%;
+        margin-left: -60px;
+        padding: 15px 60px;
+        position: fixed;
+        text-align: center;
+        top: 45%;
+        z-index: 9999;
+
+        img {
+            float: left;
+            padding-right: 20px;
+        }
+
+        #loading-msg {
+            position: relative;
+            top: 10px;
+        }
+    }
+}

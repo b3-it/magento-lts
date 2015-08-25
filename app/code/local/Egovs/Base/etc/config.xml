@@ -227,6 +227,9 @@
 				<rewrite>
 					<observer>Egovs_Base_Model_Sales_Observer</observer>
 				</rewrite>
+				<rewrite>
+                    <quote>Egovs_Base_Model_Sales_Quote</quote>
+                </rewrite>
 			</sales>
 		</models>
 		<blocks>

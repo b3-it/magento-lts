@@ -227,16 +227,25 @@
             </extnewsletter>
         </helpers>
         <events>
-        	<egovs_mpckeckout_overview_post_newsletter>
+        	<checkout_type_onepage_save_order_after>
         		<observers>	
         			<downloadupdate>
         				<type>singleton</type>
         				<class>Egovs_Extnewsletter_Model_Observer</class>
-        				<method>onMPCheckoutSave</method>
+        				<method>onCheckoutSaveOrderAfter</method>
         			</downloadupdate>
         		</observers>
-        	</egovs_mpckeckout_overview_post_newsletter>
+        	</checkout_type_onepage_save_order_after>
         </events>
+         <sales>
+        	<quote>
+        		<item>
+        			<product_attributes>
+                        <extnewsletter/>
+                    </product_attributes>
+        		</item>
+        	</quote>
+        </sales>
     </global>
 	
 	<default>

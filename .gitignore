@@ -1,15 +1,36 @@
+# SASS-Files
+.sass-cache/
+*.scss.bak
+*.css.map
+
+# Eclipse-Settings
 .settings
-.sass-cache
+.settings/
+.project
+.buildpath
+
+# Magento-Config
 app/etc/local.xml
+
+#Debug-Toolbar
+app/etc/modules/Magento_Debug.xml
+
+# Media-Content
 media/catalog/product
 media/tmp
 media/catalog/product
+
+# Working-Data
 var/backups
 var/cache
 var/session
 var/log
 var/report
 var/resource_config.json
+
+# Backup-Files
 *.bak
-*.scss.bak
+
+# Windows image file caches
 Thumbs.db
+ehthumbs.db

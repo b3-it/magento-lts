@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<modules>
-		<Egovs_Ready>
-			<version>0.1.0.0</version>
-		</Egovs_Ready>
-	</modules>
-	
-	<global>
-		<blocks>
-			<egovsready>
-				<class>Egovs_Ready_Block</class>
-			</egovsready>
-		</blocks>
-		<helpers>
-			<egovsready>
-				<class>Egovs_Ready_Helper</class>
-			</egovsready>
-		</helpers>
-		<models>
-			<egovsready>
-				<class>Egovs_Ready_Model</class>
-			</egovsready>
-		</models>
-		<resources>
+    <modules>
+        <Egovs_Ready>
+            <version>0.1.0.0</version>
+        </Egovs_Ready>
+    </modules>
+
+    <global>
+        <blocks>
+            <egovsready>
+                <class>Egovs_Ready_Block</class>
+            </egovsready>
+        </blocks>
+        <helpers>
+            <egovsready>
+                <class>Egovs_Ready_Helper</class>
+            </egovsready>
+        </helpers>
+        <models>
+            <egovsready>
+                <class>Egovs_Ready_Model</class>
+            </egovsready>
+        </models>
+        <resources>
             <egovsready_setup>
                 <setup>
                     <module>Egovs_Ready</module>
@@ -41,22 +41,47 @@
                 </observers>
             </catalog_product_save_before>
         </events>
-	</global>
-	
-	<frontend>
-		<layout>
-			<updates>
-				<egovsready>
-					<file>egovs/ready.xml</file>
-				</egovsready>
-			</updates>
-		</layout>
-	</frontend>
-	<default>
-		<general>
-			<country>
-				<default>DE</default>
-			</country>
-		</general>
-	</default>
+    </global>
+	  <adminhtml>
+	      <translate>
+	          <modules>
+	              <Egovs_Ready>
+	                  <files>
+	                      <default>Egovs_Ready.csv</default>
+	  				        </files>
+	  			      </Egovs_Ready>
+	  		    </modules>
+	  	  </translate>
+    </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <egovsready>
+                    <file>egovs/ready.xml</file>
+                </egovsready>
+            </updates>
+        </layout>
+    </frontend>
+    <default>
+        <customer>
+            <address_templates>
+                <html><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}<br/>
+{{depend company}}{{var company}}<br />{{/depend}}
+{{if street1}}{{var street1}}<br />{{/if}}
+{{depend street2}}{{var street2}}<br />{{/depend}}
+{{depend street3}}{{var street3}}<br />{{/depend}}
+{{depend street4}}{{var street4}}<br />{{/depend}}
+{{if city}}{{var city}},  {{/if}}{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}<br/>
+{{var country}}<br/>
+{{depend telephone}}<span class="egov-phone"> </span> {{var telephone}}<br/>{{/depend}}
+{{depend fax}}<span class="egov-fax"> </span> {{var fax}}<br/>{{/depend}}
+{{depend vat_id}}VAT: {{var vat_id}}{{/depend}}]]></html>
+            </address_templates>
+        </customer>
+        <general>
+            <country>
+                <default>DE</default>
+            </country>
+        </general>
+    </default>
 </config>

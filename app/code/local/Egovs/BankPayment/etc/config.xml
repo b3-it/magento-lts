@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Egovs_BankPayment>
+			<version>2.0.0.0</version>
+		</Egovs_BankPayment>
+	</modules>
+	<global>
+		<models>
+			<bankpayment>
+				<class>Egovs_BankPayment_Model</class>
+			</bankpayment>
+		</models>
+		<blocks>
+			<bankpayment>
+				<class>Egovs_BankPayment_Block</class>
+			</bankpayment>
+		</blocks>
+		<resources>
+			<bankpayment_setup>
+				<setup>
+					<module>Egovs_BankPayment</module>
+					<class>Mage_Eav_Model_Entity_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</bankpayment_setup>
+			<bankpayment_write>
+				<use>core_write</use>
+			</bankpayment_write>
+			<bankpayment_read>
+				<use>core_read</use>
+			</bankpayment_read>
+		</resources>
+		<helpers>
+			<bankpayment>
+				<class>Egovs_BankPayment_Helper</class>
+			</bankpayment>
+		</helpers>
+		<events>
+			<sales_order_invoice_cancel>
+				<observers>
+        			<bankpayment>
+        				<type>singleton</type>
+        				<class>bankpayment/Observer</class>
+        				<method>onSalesOrderInvoiceCancel</method>
+        			</bankpayment>
+        		</observers>
+			</sales_order_invoice_cancel>				
+			<sales_order_invoice_pay>
+				<observers>
+        			<bankpayment>
+        				<type>singleton</type>
+        				<class>bankpayment/Observer</class>
+        				<method>onSalesOrderInvoiceOfflinePay</method>
+        			</bankpayment>
+        		</observers>
+			</sales_order_invoice_pay>
+		</events>
+		<sales>
+			<order>
+				<!-- 
+					Alle Statuse für Bankpayment müssen das Pattern "_bankpayment" enthalten.
+					Siehe dazu: Egovs_Model_System_Config_Source_Order_Status 
+				-->
+                <statuses>
+                    <pending_bankpayment translate="label"><label>Pending Bank Payment</label></pending_bankpayment>
+                    <!-- Wird noch nicht genutzt -->
+<!--                    <processing_bankpayment translate="label"><label>Processing Bank Payment</label></processing_bankpayment>-->
+                </statuses>
+                <states>
+                    <pending_payment translate="label">
+                        <label>Pending Payment</label>
+                        <statuses>
+                            <pending_bankpayment default="1"/>
+                        </statuses>
+                        <visible_on_front/>
+                    </pending_payment>
+                </states>
+            </order>
+		</sales>
+	</global>
+	<default>
+		<payment>
+			<bankpayment>
+				<active>0</active>
+				<model>bankpayment/bankpayment</model>
+				<order_status>pending_bankpayment</order_status>
+				<!-- 
+					Mit "egovs_pending_bankpayment" werden automatisch Rechnungen erstellt.
+					Mit "authorize" wird die Bestellung ohne automatische Rechnung erstellt.
+				 -->
+				<payment_action>egovs_pending_bankpayment</payment_action>
+				<title>Vorkasse</title>
+				<allowspecific>0</allowspecific>
+				<paywithinxdays>15</paywithinxdays>
+				<!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
+				<delete_customer_after_transaction>1</delete_customer_after_transaction>
+				<group>epaybl</group>
+			</bankpayment>
+		</payment>
+	</default>
+
+	<adminhtml>
+		<translate>
+			<modules>
+				<Egovs_BankPayment>
+					<files>
+						<default>Egovs_BankPayment.csv</default>
+					</files>
+				</Egovs_BankPayment>
+			</modules>
+		</translate>
+	</adminhtml>
+
+	<frontend>
+		<translate>
+			<modules>
+				<Egovs_BankPayment>
+					<files>
+						<default>Egovs_BankPayment.csv</default>
+					</files>
+				</Egovs_BankPayment>
+			</modules>
+		</translate>
+	</frontend>
+</config>

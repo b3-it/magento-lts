@@ -1,25 +1,7 @@
 ﻿//
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -53,25 +35,39 @@ input,
 select,
 table,
 textarea {
-    font-family: $f-stack-sans;
-    color: $c-text;
-    font-size: $f-size;
-    line-height: $b-line-height;
+    font-family: $base-font-family;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
+    line-height: $global-lineheight;
+}
+
+textarea, input[type="text"], input[type="email"], input[type="password"] {
+    border: 1px solid $global-wrapper-color;
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
+    margin-bottom: 16px;
+    outline: medium none;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus,
+textarea:active, input[type="text"]:active, input[type="email"]:active, input[type="password"]:active {
+    background-color: $global-lightcolor-hover;
+    border-color: $global-lightcolor;
 }
 
 a {
-    color: $c-link;
+    color: $global-linkcolor;
     text-decoration: none;
 }
 
 a:hover {
-    color: $c-link-hover;
+    color: $global-linkcolor-hover;
     text-decoration: none;
 }
 
 a:focus {
-    outline-color: $c-link-active;
-    color: darken($c-action, 30%);
+    outline-color: $global-linkcolor-active;
+    color: darken($global-linkcolor-active, 30%);
 }
 
 ol,
@@ -144,9 +140,24 @@ h6, .h6 { @include h6; }
  * Block Module
  */
 
-.block,
 .col-left-first {
-    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.block {
+    border-width: $global-checkout-borderwidth;
+    border-style: solid;
+    border-color: $global-border-color;
+
+    .block-title {
+        background-color: $global-box-title-backgroundcolor;
+        border-bottom: 3px solid $global-lightcolor;
+        padding: 0.2em 0 0.3em 0.6em;
+
+        span {
+            color: $global-h4-color;
+        }
+    }
 }
 
 .col-left-first .block:last-of-type {
@@ -157,7 +168,6 @@ h6, .h6 { @include h6; }
     position: relative;
     padding: 10px 0 0;
     margin-bottom: 5px;
-    border-top: 1px solid $c-module-border;
 
     h2,
     h3,
@@ -165,7 +175,6 @@ h6, .h6 { @include h6; }
         @include h4;
         color: $global-footer-fontcolor;
         margin-bottom: 0;
-        font-weight: 600;
     }
     small {
         font-size: 100%;
@@ -186,7 +195,14 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    margin-top: 5px;
+    margin-top: $blobal-blockcontent-margintop;
+    margin-bottom: $blobal-blockcontent-marginbottom;
+    margin-left: $blobal-blockcontent-marginleft;
+    margin-right: $blobal-blockcontent-marginright;
+
+    input {
+        width: 100%;
+    }
 }
 
 .block-content.unpad {
@@ -274,6 +290,15 @@ body:not(.customer-account) .block:first-child .block-title {
  * Secondary Navigation
  */
 
+.block-account {
+    position: relative;
+    top: -20px;
+}
+
+.block-reorder {
+    margin-top: 20px;
+}
+
 .block-account,
 .block-cms-menu {
     .block-title {
@@ -336,7 +361,7 @@ body:not(.customer-account) .block:first-child .block-title {
     background-size: 100% auto;
     border: 1px solid $global-button-color;
     border-radius: 3px;
-    padding: 1px 6px;
+    padding: 5px 10px;
 
     &:hover {
         background: $global-button-hovercolor $global-repeat-scroll;
@@ -352,17 +377,19 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 a.button {
+    color: $global-fontcolor-dark;
     text-decoration: none;
+    padding: 5px 10px;
 }
 
 a.button:hover {
-    color: #FFFFFF;
+    color: $global-fontcolor-dark;
 }
 
 /* Disabled - class for anchor, state for form elements */
 .button.disabled,
 .button:disabled {
-    background: #C8C8C8;
+    background: $global-lightcolor;
     opacity: 0.6;
     cursor: not-allowed;
 }
@@ -377,7 +404,7 @@ a.button:hover {
 // Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
 // extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
 @mixin touch-button {
-    color: $c-text;
+    color: $global-fontcolor-dark;
     background-color: $c-module-background;
     padding: 5px 10px;
 }
@@ -402,7 +429,7 @@ a.button:hover {
     text-decoration: underline;
     text-transform: uppercase;
     display: inline-block;
-    color: $c-action;
+    color: $global-fontcolor-dark;
     font-family: $base-font-family;
 
     &:hover {
@@ -554,7 +581,11 @@ a.button:hover {
 
 .breadcrumbs {
     overflow: hidden;
-    margin: -15px 0 15px;
+    margin: 0px;
+    position: relative;
+    left: $global-welcome-left;
+    top: -10px;
+    color: $global-fontcolor-light;
 }
 
 .breadcrumbs li {
@@ -566,15 +597,16 @@ a.button:hover {
 
 .breadcrumbs a {
     float: left;
-    color: $c-text;
+    color: $global-fontcolor-light;
 }
 
 .breadcrumbs a:hover {
-    color: $c-action;
+    color: $global-fontcolor-light;
+    text-decoration: underline;
 }
 
 .breadcrumbs strong {
-    color: $c-text;
+    color: $global-fontcolor-light;
     font-weight: normal;
 }
 
@@ -705,7 +737,7 @@ a.button:hover {
  */
 
 .main-container {
-    max-width: $max-container-width;
+    max-width: $global-fullpage-width;
     position: relative;
     top: $global-content-top-position;
 }
@@ -722,6 +754,9 @@ a.button:hover {
 .footer-container {
     position: relative;
     margin: 0 auto;
+
+    /* Zeilenhöhe auf Normal setzen (_global.scss [15]) */
+    line-height: $global-lineheight;
 
     &:after {
         @include clearfix;
@@ -751,12 +786,10 @@ a.button:hover {
 .col-left,
 .col-right,
 .col-main {
-    padding: 0 10px;
 }
 
 .col-left {
     float: left;
-    width: percentage(240px/960px);
     padding-left: 0; /* Remove the 15px padding */
     clear: left;
 
@@ -767,8 +800,6 @@ a.button:hover {
 
 .col-right {
     float: right;
-    width: percentage(240px/960px);
-    padding-right: 0; /* Remove the 15px padding */
 
     img {
         max-width: 100%;
@@ -776,15 +807,17 @@ a.button:hover {
 }
 
 .col-main {
-    float: left;
-    width: percentage(720px/960px);
+    width: percentage($global-content-width/$global-fullpage-width);
 
     .std {
-        padding-top: $global-content-top-padding;
+        width: $global-content-width;
         padding-bottom: $global-content-bottom-padding;
+        margin-right: $global-content-marginright;
         border-bottom-width: $global-content-bottom-bordersize;
         border-bottom-style: solid;
         border-bottom-color: $global-content-bottom-bordercolor;
+
+        margin: 0px;
     }
 }
 
@@ -797,38 +830,84 @@ a.button:hover {
 }
 
 .col2-left-layout {
+    .main {
+        position: relative;
+        top: 20px;
+    }
+
+    .col-left {
+        margin-right: $global-leftcol-marginright;
+        float: left;
+        position: relative;
+        width: $global-leftcol-width;
+    }
+
     .col-main {
-        float: right;
-        padding-right: 0; /* Remove the 15px padding */
+        background-image: url($global-content-top-image);
+        background-repeat: no-repeat;
+        background-color: $global-content-background;
+        background-position: 0px -3px;
+        background-size: 100% auto;
+        overflow: hidden;
+        width: $global-fullpage-width - $global-leftcol-width - 25;
+        padding-left: $global-content-paddingleft;
+        padding-top: $global-content-paddingtop;
+        padding-right: 20px;
     }
 }
 
 .col2-right-layout {
+	 .col-right {
+        margin-right: $global-rightcol-marginright;
+        float: right;
+        position: relative;
+        width: $global-rightcol-width;
+    }
     .col-main {
         padding-left: 0; /* Remove the 15px padding */
+        background-image: url($global-content-top-image);
+        background-repeat: no-repeat;
+        background-color: $global-content-background;
+        background-position: 0px -3px;
+        background-size: 100% auto;
+        overflow: hidden;
+        width: $global-fullpage-width - 25;
+        padding-left: $global-content-paddingleft;
+        padding-top: $global-content-paddingtop;
     }
 }
 
 .col3-layout {
-    .col-right {
-        width: percentage(200px/960px);
-    }
-
     .col-wrapper {
-        float: left;
-        margin-left: $global-category-width + 70;
-        width: percentage(760px/960px);
-
-        .col-main {
-            background: $global-content-background url( $global-content-top-image ) $global-norepeat-scroll -5px -9px;
-
-            _float: right;
-            overflow: hidden;
-            width: percentage(560px/760px);
-        }
+        width: 100%;
+        position: relative;
+        top: 4px;
 
         .col-left {
-            width: percentage(200px/760px);
+            margin-right: $global-leftcol-marginright;
+            float: left;
+            width: $global-leftcol-width;
+        }
+
+        .col-main {
+            background-image: url($global-content-top-image);
+            background-repeat: no-repeat;
+            background-color: $global-content-background;
+            background-position: 0px -3px;
+            background-size: 100% auto;
+            overflow: hidden;
+            width: $global-fullpage-width - $global-leftcol-width - 25;
+            padding-top: $global-content-paddingtop;
+            padding-left: $global-content-paddingleft;
+            padding-right: 5px;
+        }
+
+        .col-right {
+            float: right;
+            width: $global-rightcol-width;
+            margin-right: $global-rightcol-marginright;
+            padding: 0px;
+            margin-top: $global-rightcol-margintop;
         }
     }
 }
@@ -840,7 +919,7 @@ a.button:hover {
             clear: left;
             padding-left: 0;
             padding-right: 10px;
-            width: percentage(240px/960px);
+            width: percentage($global-rightcol-width/$global-fullpage-width);
         }
 
         .col-wrapper {
@@ -849,11 +928,9 @@ a.button:hover {
 
             .col-main {
                 float: right;
-                width: percentage(720px/960px);
             }
 
             .col-left {
-                width: percentage(240px/960px);
             }
         }
     }
@@ -875,7 +952,6 @@ a.button:hover {
     .col3-layout .col-wrapper .col-left,
     .col3-layout .col-right,
     .col3-layout .col-wrapper .col-main {
-        padding: 0;
         margin-bottom: 10px; // Since columns are stacked, we want there to be vertical spacing
         float: none;
         width: auto;
@@ -1027,7 +1103,8 @@ a.button:hover {
  */
 
 .messages {
-    margin-bottom: $gap;
+    margin-top: $global-message-margintop;
+    margin-bottom: $global-message-marginbottom;
 }
 
 .messages li li {
@@ -1189,17 +1266,17 @@ a.button:hover {
 }
 
 .price-box .price {
-    color: $global-footer-fontcolor;
-    font-size: $f-size-xl;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
 }
 
 .price-box .price,
 .price {
-    font-family: $f-stack-sans;
+    font-family: $base-font-family;
 }
 
 .price-box .price-label {
-    color: $c-text-gray;
+    color: $global-fontcolor-dark;
     white-space: nowrap;
     font-family: $base-font-family;
 }
@@ -1526,12 +1603,13 @@ span.weee {
  */
 
 .toolbar {
-    margin-top: $box-spacing;
     margin-bottom: 15px;
-    border-bottom: 1px solid $c-module-border;
-    border-top: 1px solid $c-module-border;
-    background: $c-module-background;
+    border-bottom: 1px solid $global-lightcolor;
+    border-top: 1px solid $global-lightcolor;
+    background: $global-lightcolor-hover;
     padding: 5px 10px 0px 10px;
+    font-size: $global-fontsize-small;
+    max-height: 40px;
 
     &:after {
         @include clearfix;
@@ -1550,22 +1628,20 @@ span.weee {
 .toolbar,
 .pager {
     font-family: $base-font-family;
-    color: $c-text;
+    color: $global-category-font-color;
     line-height: 30px;
-    font-size: $f-size-xs;
 }
 
 .toolbar label,
 .pager-no-toolbar label {
     font-weight: normal;
-    text-transform: uppercase;
 }
 
 $toolbar-icon-padding-offset: 8px;
 
 .sorter {
-    float: left;
     margin-bottom: 5px;
+    width: 100%;
 
     label {
         float: left;
@@ -1578,75 +1654,58 @@ $toolbar-icon-padding-offset: 8px;
 }
 
 .sorter > .sort-by {
-    float: left;
-    margin-right: 5px;
+    float: right;
     height: 30px;
 
     .sort-by-switcher {
-        width: 30px;
-        height: 30px;
         display: inline-block;
-        @extend .icon-sprite;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $global-sorter-bordercolor;
+
+        margin: 0px -2px 0px 5px;
+        padding: 2px;
     }
     .sort-by-switcher--asc {
-        background-position: 0+4px (-550px+$toolbar-icon-padding-offset);
-        &:hover {
-            background-position: -50px+4px (-550px+$toolbar-icon-padding-offset);
-        }
+        @extend .egov-arrow-down;
     }
     .sort-by-switcher--desc {
-        background-position: 0+4px (-575px+$toolbar-icon-padding-offset);
-        &:hover {
-            background-position: -50px+4px (-575px+$toolbar-icon-padding-offset);
-        }
+        @extend .egov-arrow-up;
     }
 }
 
 .sorter > .view-mode {
-    float: right;
+    float: left;
 
     .grid,
     .list {
         float: left;
         width: 30px;
         height: 30px;
-        @extend .icon-sprite;
     }
     .grid {
         margin-right: 5px;
-        background-position: $toolbar-icon-padding-offset (-500px+$toolbar-icon-padding-offset);
-    }
-    strong.grid,
-    a.grid:hover {
-        background-position: -50px+$toolbar-icon-padding-offset (-500px+$toolbar-icon-padding-offset);
-    }
-    .list {
-        // We want the icon to line up with the container width, so we are adding 3px
-        background-position: $toolbar-icon-padding-offset+3px (-525px+$toolbar-icon-padding-offset);
-    }
-    strong.list,
-    a.list:hover {
-        background-position: -50px+$toolbar-icon-padding-offset+3px (-525px+$toolbar-icon-padding-offset);
     }
 }
 
 .pager {
-    float: right;
     overflow: hidden;
+    width: 100%;
 
     & > .count-container {
         float: left;
+        font-size: $global-fontsize;
     }
 
     .amount {
-        float: left;
-        font-family: $f-stack-sans;
+        float: right;
+        font-family: $base-font-family;
         white-space: nowrap;
         margin: 0 15px 0 0;
     }
 
     .limiter {
-        float: left;
+        float: right;
         height: 30px;
         line-height: 30px;
 

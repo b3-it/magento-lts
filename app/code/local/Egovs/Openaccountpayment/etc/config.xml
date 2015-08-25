@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Egovs_Openaccountpayment>
+			<version>2.0.0.0</version>
+		</Egovs_Openaccountpayment>
+	</modules>
+	<global>
+		<models>
+			<openaccount>
+				<class>Egovs_Openaccountpayment_Model</class>
+			</openaccount>
+		</models>
+		<blocks>
+			<openaccount>
+				<class>Egovs_Openaccountpayment_Block</class>
+			</openaccount>
+		</blocks>
+		<resources>
+			<openaccount_setup>
+				<setup>
+					<module>Egovs_Openaccountpayment</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</openaccount_setup>
+			<openaccount_write>
+				<use>core_write</use>
+			</openaccount_write>
+			<openaccount_read>
+				<use>core_read</use>
+			</openaccount_read>
+		</resources>
+		<helpers>
+			<openaccount>
+				<class>Egovs_Openaccountpayment_Helper</class>
+			</openaccount>
+		</helpers>
+		<events>
+			<sales_order_invoice_cancel>
+				<observers>
+        			<openaccount>
+        				<type>singleton</type>
+        				<class>openaccount/Observer</class>
+        				<method>onSalesOrderInvoiceCancel</method>
+        			</openaccount>
+        		</observers>
+			</sales_order_invoice_cancel>				
+			<sales_order_invoice_pay>
+				<observers>
+        			<openaccount>
+        				<type>singleton</type>
+        				<class>openaccount/Observer</class>
+        				<method>onSalesOrderInvoiceOfflinePay</method>
+        			</openaccount>
+        		</observers>
+			</sales_order_invoice_pay>
+		</events>
+	</global>
+
+	<default>
+		<payment>
+			<openaccount>
+				<active>0</active>
+				<model>openaccount/openaccount</model>
+				<order_status>processing</order_status>
+				<!-- 
+					Mit "egovs_pending_openaccount" werden automatisch Rechnungen erstellt.
+					Mit "authorize" wird die Bestellung ohne automatische Rechnung erstellt.
+				 -->
+				<payment_action>authorize_capture</payment_action>
+				<title>Offene Rechnung</title>
+				<allowspecific>0</allowspecific>
+				<paywithinxdays>15</paywithinxdays>
+				<!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
+				<delete_customer_after_transaction>1</delete_customer_after_transaction>
+				<group>epaybl</group>
+			</openaccount>
+		</payment>
+	</default>
+
+	<adminhtml>
+		<translate>
+			<modules>
+				<Egovs_Openaccountpayment>
+					<files>
+						<default>Egovs_Openaccountpayment.csv</default>
+					</files>
+				</Egovs_Openaccountpayment>
+			</modules>
+		</translate>
+	</adminhtml>
+
+	<frontend>
+		<translate>
+			<modules>
+				<Egovs_Openaccountpayment>
+					<files>
+						<default>Egovs_Openaccountpayment.csv</default>
+					</files>
+				</Egovs_Openaccountpayment>
+			</modules>
+		</translate>
+	</frontend>
+</config>

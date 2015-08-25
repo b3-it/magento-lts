@@ -5,10 +5,59 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+$fa-icon-margin: 5px;
+
+$global-fontsize: 12px;
+$global-fontsize-small: 0.8em;
+$global-fontsize-big: 1.2em;
+$global-lineheight: 1.35em;
+$global-indent: 0px;
+
+$global-logo-width: 225px;
+$global-logo-height: 35px;
+$global-logo-top: 60px;
+$global-logo-left: 0px;
+
+$global-h1-size: 36px;
+$global-h2-size: 18px;
+$global-h3-size: 12px;
+$global-h4-size: 12px;
+$global-h5-size: 8px;
+$global-h6-size: 8px;
+
+$global-h1-left: 280px;
+$global-h1-top: 10px;
+
+$global-checkout-borderwidth: 1px;
+
+$global-welcome-left: 281px;
+$global-welcome-top: -10px;
+
+$global-message-margintop: 20px;
+$global-message-marginbottom: 20px;
+
+$global-fullpage-width: 960px;
+$global-leftcol-width: 225px;
+$global-content-width: 415px;
+$global-rightcol-width: 220px;
+
+$global-leftcol-marginright: 21px;
+$global-rightcol-marginright: 26px;
+$global-rightcol-margintop: 45px;
+
+$global-content-paddingtop: 20px;
+$global-content-paddingleft: 21px;
+$global-content-marginright: 32px;
+
 $global-header-height: 200px;
 
+$blobal-blockcontent-marginleft: 5px;
+$blobal-blockcontent-marginright: 5px;
+$blobal-blockcontent-margintop: 5px;
+$blobal-blockcontent-marginbottom: 5px;
+
 $global-footer-lineheight: 2em;
-$global-footer-fontsize: 0.75em;
+$global-footer-fontsize: $global-fontsize;
 $global-footer-height: 160px;
 $global-footer-top-padding: 28px;
 $global-footer-width: 76.5em;
@@ -16,13 +65,23 @@ $global-footer-linkswidth: 53em;
 
 $global-min-width: 60em;
 
-$global-content-top-position: -130px;
+$global-content-top-position: -50px;
 $global-content-top-padding: 20px;
 $global-content-bottom-padding: 60px;
 $global-content-bottom-bordersize: 1px;
 
 $global-category-width: 225px;
 $global-category-top-padding: 70px;
-$global-category-margintop: 15px;
-$global-category-marginright: 22px;
+$global-category-margintop: 0px;
+$global-category-marginright: 0px;
 $global-category-lineheight: 21px;
+$global-category-fontsize: 15px;
+$global-category-height: 30px;
+$global-category-subindent: 5px;
+
+$global-subcat-left: 0px;
+$global-subcat-top: 0px;
+$global-subcat-paddingtop: 0px;
+$global-subcat-paddingbottom: 0px;
+$global-subcat-paddingleft: 0px;
+$global-subcat-paddingright: 0px;

@@ -1,27 +1,9 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magento.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magento.com for more information.
- *
  * @category    design
- * @package     rwd_default
- * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
@@ -33,10 +15,11 @@
     <default translate="label" module="page">
         <label>All Pages</label>
         <block type="page/html" name="root" output="toHtml" template="page/3columns.phtml">
-           <!-- egovs custom code begin -->
+            <!-- egovs custom code begin -->
             <action method="setData"><key>accesskey</key><value>i</value></action>
             <action method="setData"><key>jumptitle</key><value>Inhalt</value></action>
             <!-- egovs custom code end -->
+
             <block type="page/html_head" name="head" as="head">
                 <action method="addJs"><script>prototype/prototype.js</script></action>
                 <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
@@ -55,9 +38,6 @@
 
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
 
-                <!-- Remove items which the RWD package is not dependent upon -->
-                <action method="removeItem"><type>skin_js</type><name>js/ie6.js</name></action>
-
                 <!-- Add vendor dependencies -->
                 <action method="addItem"><type>skin_js</type><name>js/lib/modernizr.custom.min.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/lib/selectivizr.js</name></action>
@@ -69,7 +49,9 @@
                 <action method="addItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/slideshow.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/lib/imagesloaded.js</name></action>
+                <!--
                 <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action>
+                -->
                 <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
 
                 <!-- Add stylesheets with no media queries for use in IE 8 and below -->
@@ -91,20 +73,15 @@
             </block>
 
             <block type="page/html_notices" name="global_notices" as="global_notices" template="page/html/notices.phtml" />
-       
-            
-            <block type="bitv/page_html_header" name="header" as="header">
+
+             <block type="page/html_header" name="header" as="header">
                 <action method="setData"><key>accesskey</key><value>u</value></action>
                 <action method="setData"><key>jumptitle</key><value>Kundenmenü</value></action>
-                <block type="page/template_links" name="top.links" as="topLinks"/>
+                <block type="bitv/page_html_header" name="bitvmenu" as="bitvmenu" />
+                <block type="page/template_links" name="top.links" as="topLinks" />
+                <block type="core/template" name="topEgovmenu" template="page/template/egovmenu.phtml" />
                 <block type="egovsbase/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" />
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
-                <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
-                    <label>Navigation Bar</label>
-                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
-                        <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
-                    </block>
-                </block>
                 <block type="page/html_wrapper" name="top.container" as="topContainer" translate="label">
                     <label>Page Header</label>
                     <action method="setElementClass"><value>top-container</value></action>
@@ -117,9 +94,16 @@
             <block type="core/text_list" name="left_first" as="left_first" translate="label">
                 <label>Left Column First (shows above main column on smaller screens)</label>
             </block>
+          
 
             <block type="core/text_list" name="left" as="left" translate="label">
                 <label>Left Column</label>
+                <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
+                    <label>Navigation Bar</label>
+                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
+                        <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
+                    </block>
+                </block>
             </block>
 
             <block type="core/messages" name="global_messages" as="global_messages"/>
@@ -152,10 +136,6 @@
                 <block type="page/template_links" name="footer_links2" as="footer_links2" template="page/template/links.phtml">
                     <action method="setTitle"><title>Account</title></action>
                 </block>
-                <!-- This static block can be created and populated in admin. The footer_links cms block can be used as a starting point. -->
-                <!--<block type="cms/block" name="footer_social_links">
-                    <action method="setBlockId"><block_id>footer_social_links</block_id></action>
-                </block>-->
             </block>
 
             <block type="core/text_list" name="before_body_end" as="before_body_end" translate="label">

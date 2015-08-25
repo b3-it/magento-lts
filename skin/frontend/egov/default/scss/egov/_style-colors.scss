@@ -5,32 +5,72 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
-$global-repeat-scroll: none repeat scroll 0 0;
-$global-norepeat-scroll: no-repeat scroll;
-
 $global-wrapper-color: #FFFFFF;
+$global-fontcolor-dark: #000000;
+$global-fontcolor-light: #FFFFFF;
+$global-lightcolor: #E0E6D7;
+$global-lightcolor-hover: #F0F6E7;
+$global-linkcolor: #59814C;
+$global-linkcolor-hover: #59814C;
+$global-linkcolor-active: #59814C;
 
-$global-button-color: #a8d3c4;
-$global-button-hovercolor: #e4efeb;
-$global-button-gradient-1: rgba(228, 239, 235, 0.9) 0%;
-$global-button-gradient-2: rgba(168, 211, 196, 0.97) 66%;
+$global-h1-color: #59814c;
+$global-h2-color: #59814C;
+$global-h3-color: #59814C;
+$global-h4-color: #000000;
+$global-h5-color: #FF0000;
+$global-h6-color: #FF0000;
 
-$global-header-gradientcolor-1: #7eaa6f;
-$global-header-gradientcolor-2: #59814c;
+$global-cart-color: #59814C;
+$global-cart-subtotal: #59814C;
+
+$global-border-color: #C1D0BB;
+
+$global-checkout-tableborder: #E0E6D7;
+$global-checkout-thbackground: #59814C;
+$global-checkout-thfontcolor: #FFFFFF;
+$global-checkout-tdbackground: transparent;
+$global-checkout-tdfontcolor: #000000;
+
+$global-checkout-total-background: $global-lightcolor-hover;
+$global-checkout-total-border: $global-lightcolor;
+
+$global-warning-color: #FF0000;
+
+$global-text-shadow: rgba(0, 0, 0, 0.3);
+
+$global-rgba-1: rgba(224, 230, 215, 0.9);
+$global-rgba-2: rgba(193, 208, 187, 0.97);
+
+$global-button-color: $global-lightcolor;
+$global-button-hovercolor: $global-lightcolor-hover;
+$global-button-gradient-1: $global-rgba-1 0%;
+$global-button-gradient-2: $global-rgba-2 66%;
+
+$global-header-gradientcolor-1: #7EAA6F;
+$global-header-gradientcolor-2: $global-linkcolor;
+
+$global-box-title-backgroundcolor: $global-lightcolor-hover;
 
 $global-category-font-color: #333333;
-$global-category-item-color: #c1d0bb;
-$global-category-gradientrgb-1: rgba(224, 230, 215, 0.9);
-$global-category-gradientrgb-2: rgba(193, 208, 187, 0.97);
+$global-category-hover-color: #333333;
+$global-category-item-color: $global-lightcolor;
+$global-category-gradientrgb-1: $global-rgba-1;
+$global-category-gradientrgb-2: $global-rgba-2;
 $global-category-color-ms-1: #FFE0E6D7;
 $global-category-color-ms-2: #FFC1D0BB;
 $global-category-textshadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 
-$global-content-background: rgba(0, 0, 0, 0);
-$global-content-bottom-bordercolor: #c1d0bb;
+$global-subcat-bordercolor: #F4EEE3;
 
-$global-footer-fontcolor: #4b4b4d;
+$global-content-background: rgba(0, 0, 0, 0);
+$global-content-bottom-bordercolor: $global-lightcolor;
+
+$global-footer-fontcolor: #4D4D4D;
 $global-footer-backgroundcolor: $global-button-hovercolor;
+
+$global-input-bordercolor: #CDCDCD;
+$global-sorter-bordercolor: #CDCDCD;
 
 // =============================================
 // Barrierefrei Defaults

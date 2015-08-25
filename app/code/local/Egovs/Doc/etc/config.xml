@@ -6,69 +6,78 @@
         </Egovs_Doc>
     </modules>
     <admin>
-     <routers>
-			<adminhtml>	
-				<args>
-					<modules>
-						<Egovs_Doc_Adminhtml after="Mage_Adminhtml">Egovs_Doc_Adminhtml</Egovs_Doc_Adminhtml>
-					</modules>
-				</args>
-			</adminhtml>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Egovs_Doc_Adminhtml after="Mage_Adminhtml">Egovs_Doc_Adminhtml</Egovs_Doc_Adminhtml>
+					          </modules>
+				        </args>
+			      </adminhtml>
         </routers>
     </admin>
     <adminhtml>
-		<menu>
-		    <egovs_doc module="egovs_doc">
-			    <title>Documentation</title>
-				<sort_order>10000</sort_order>               
-				<children>
-				    <egovs_doc_view module="egovs_doc">
-						<title>View Documentation</title>
-						<sort_order>0</sort_order>
-						<action>adminhtml/doc_doc</action>
-				    </egovs_doc_view>
-				</children>
-		    </egovs_doc>
-		</menu>
-		<acl>
-			<resources>
-				<all>
-					<title>Allow Everything</title>
-				</all>
-				<admin>
-					<children>
-						<egovs_doc>
-							<title>View Documentation</title>
-							<sort_order>10</sort_order>
-						    <children>
-						        <egovs_doc_manager translate="title" module="egovs_doc">
-						            <title>View</title>
-						            <sort_order>20</sort_order>
-						            <children>
-						            	<view translate="title" module="egovs_doc">
-							        		<title>View</title>
-							        		<sort_order>10</sort_order>
-						        		</view>
-						            	<edit translate="title" module="egovs_doc">
-							        		<title>Edit</title>
-							        		<sort_order>20</sort_order>
-						        		</edit>
-						            </children>
-						        </egovs_doc_manager>
-						    </children>
-						</egovs_doc>
-					</children>
-				</admin>
-			</resources>
-		</acl>
-		<layout>
-			<updates>
-				<egovs_doc>
-					<file>egovs_doc.xml</file>
-				</egovs_doc>
-			</updates>
-		</layout>
-    </adminhtml>   
+		    <menu>
+		        <egovs_doc module="egovs_doc">
+		    	    <title>Documentation</title>
+		    		<sort_order>10000</sort_order>
+		    		<children>
+		    		    <egovs_doc_view module="egovs_doc">
+		    				<title>View Documentation</title>
+		    				<sort_order>0</sort_order>
+		    				<action>adminhtml/doc_doc</action>
+		    		    </egovs_doc_view>
+		    		</children>
+		        </egovs_doc>
+		    </menu>
+		    <translate>
+		        <modules>
+		            <Egovs_Doc>
+		                <files>
+		                    <default>Egovs_Doc.csv</default>
+                    </files>
+                </Egovs_Doc>
+            </modules>
+		    </translate>
+		    <acl>
+		        <resources>
+		            <all>
+		                <title>Allow Everything</title>
+		    		    </all>
+		    		    <admin>
+		    		        <children>
+		    		            <egovs_doc>
+		    		                <title>View Documentation</title>
+		    		                <sort_order>10</sort_order>
+		    		                <children>
+		    		                    <egovs_doc_manager translate="title" module="egovs_doc">
+		    		                        <title>View</title>
+		    		                        <sort_order>20</sort_order>
+		    		                        <children>
+		    		                            <view translate="title" module="egovs_doc">
+		    		                                <title>View</title>
+		    		                                <sort_order>10</sort_order>
+		    		                            </view>
+		    		                            <edit translate="title" module="egovs_doc">
+		    		                                <title>Edit</title>
+		    		                                <sort_order>20</sort_order>
+		    		                            </edit>
+		    				                    </children>
+		    				                </egovs_doc_manager>
+		    				            </children>
+		    				        </egovs_doc>
+		    			      </children>
+		    		    </admin>
+		    	  </resources>
+		    </acl>
+		    <layout>
+		        <updates>
+		            <egovs_doc>
+		                <file>egovs_doc.xml</file>
+		    		    </egovs_doc>
+		    	  </updates>
+		    </layout>
+    </adminhtml>
     <global>
         <models>
             <egovs_doc>
@@ -114,18 +123,16 @@
                 <class>Egovs_Doc_Helper</class>
             </egovs_doc>
         </helpers>
-        
+
         <egovs_doc>
-        <categories>
-            <Allgemein>
-                <label>Allgemein</label>
-            </Allgemein>
-            <Kundenverwaltung>
-                <label>Kundenverwaltung</label>
-            </Kundenverwaltung>
-        </categories>
+            <categories>
+                <Allgemein>
+                    <label>Allgemein</label>
+                </Allgemein>
+                <Kundenverwaltung>
+                    <label>Kundenverwaltung</label>
+                </Kundenverwaltung>
+            </categories>
         </egovs_doc>
-        
-        
     </global>
 </config>

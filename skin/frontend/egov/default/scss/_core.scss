@@ -21,8 +21,10 @@
 @import "egov/style-size";
 @import "egov/style-images";
 @import "egov/style-colors";
-@import "egov/barrierefreiheit";
+@import "egov/bitv";
 @import "egov/video";
+@import "egov/egov-base";
+@import "egov/fa-icons";
 
 
 // ----------------------------------------------
@@ -69,6 +71,7 @@
 @import "module/checkout-cart-minicart";
 @import "module/search";
 @import "module/account-reviews";
+@import "module/account-login";
 @import "module/cms";
 @import "module/pricing_conditions";
 @import "module/cookies";
@@ -80,6 +83,7 @@
 @import "module/popular-terms";
 @import "module/widget";
 @import "module/checkout-multi-address";
+@import "module/my-account"
 
 
 // ----------------------------------------------

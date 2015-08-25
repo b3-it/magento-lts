@@ -66,10 +66,9 @@
     #header-search {
         display: block; // Force visibility
         position: absolute;
-        top: 55px;
+        top: 14px;
         right: 0;
-        width: 25%;
-        height: 50px;
+        width: 24%;
         padding: 0;
     }
 
@@ -89,10 +88,16 @@
 }
 
 #search {
-    width: 100%;
-    height: 40px;
-    padding-right: 40px;
-    font-family: $f-stack-special;
+    width: 75%;
+    float: left;
+    font-family: $base-font-family;
+    height: 28px;
+    border-top: 1px solid $global-input-bordercolor;
+    border-right: none;
+    border-bottom: 1px solid $global-input-bordercolor;
+    border-left: 1px solid $global-input-bordercolor;
+    border-radius: 3px 0 0 3px;
+
 }
 
 #search_mini_form .search-button {

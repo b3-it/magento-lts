@@ -47,28 +47,50 @@
         }
 
         p {
-            color: $c-text;
-            font-family: $f-stack-serif;
-            font-size: 14px;
-            font-style: italic;
-            line-height: 24px;
+            color: $global-fontcolor-dark;
+            font-family: $base-font-family;
+            font-size: $global-fontsize;
+            line-height: $global-lineheight;
         }
 
         h1 {
-            color: $c-text-primary;
+            color: $global-h1-color;
         }
 
         h2 {
-            color: $c-text-primary;
+            color: $global-h2-color;
+            border: 0px;
         }
 
-        li {
-            color: $c-text;
-            font-family: $f-stack-serif;
-            font-size: $f-size;
-            font-style: italic;
-            line-height: 24px;
+        h3 {
+            color: $global-h3-color;
         }
+
+        h4 {
+            color: $global-h4-color;
+        }
+
+        h5 {
+            color: $global-h5-color;
+        }
+
+        ul {
+            padding: 0px;
+
+            li {
+                color: $global-fontcolor-dark;
+                font-family: $base-font-family;
+                font-size: $global-fontsize;
+                text-indent: $global-indent;
+                list-style-image: url($global-category-arrow-right);
+                list-style-type: none;
+
+                a {
+                    color: $global-linkcolor;
+                }
+            }
+        }
+
     }
 
     .col-left {

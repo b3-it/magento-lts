@@ -3,13 +3,30 @@
 class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract 
 {
     
-	public function onMPCheckoutSave($observer)
+	
+	public function onCheckoutSaveOrderAfter($observer)
 	{
-		$products = $observer->getData('products');
-		$email = $observer->getData('email');
+		$order = $observer->getOrder();
+		if(!$order) return $this;
+		
+		$products = array();
+		if(Mage::getStoreConfigFlag('newsletter/subscription/auto_subscribe_newsletter'))
+		{
+			$products[] = 0;
+		}
+		if(Mage::getStoreConfig('newsletter/subscription/auto_subscribe_for_product'))
+		{
+			foreach($order->getAllItems() as $item)
+			{
+				if($item->getProduct()->getExtnewsletter())
+				{
+					$products[] = $item->getProduct()->getId();
+				}
+			}	
+		}	
+		$email = $order->getCustomer()->getData('email');
 		Mage::getModel('extnewsletter/subscriber')->subscribeWithOptions($email,$products);
 	}
-	
 	
 	
 	

@@ -1,25 +1,7 @@
 //
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -56,16 +38,17 @@ h4.product-name,
 h5.product-name,
 p.product-name {
     @include h2;
-    font-size: $f-size-s;
-    font-family: $f-stack-sans;
-    font-weight: normal;
+    font-size: $global-fontsize;
+    font-family: $base-font-family;
+    font-weight: bold;
     line-height: 1.4;
 
     a {
-        color: $c-text;
+        color: $global-linkcolor;
+        text-decoration: underline;
+
         &:hover {
-            color: $c-action;
-            text-decoration: none;
+            color: $global-linkcolor-hover;
         }
     }
 }
@@ -74,11 +57,10 @@ p.product-name {
 .products-list .product-name {
     text-transform: uppercase;
     margin-bottom: 5px;
-    font-size: $f-size;
-    font-family: $f-stack-special;
+    font-size: $base-font-family;
+    font-family: $global-fontsize;
 
     a {
-        font-weight: 500;
     }
 }
 
@@ -153,8 +135,8 @@ $productsGridActionHeight: 85px;
 }
 
 .products-grid .price-box {
-    color: $c-text-gray;
-    font-size: $f-size-s;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
     margin: 0 0 5px;
 }
 
@@ -329,7 +311,7 @@ $productsGridActionHeight: 85px;
         margin-top: 0;
     }
     .price-box .price {
-        font-size: $f-size-xxl;
+        font-size: $global-fontsize;
     }
     .action {
         margin: $element-spacing 0;

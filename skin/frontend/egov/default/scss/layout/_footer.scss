@@ -21,9 +21,18 @@
 .footer {
     clear: both;
     margin: 0px auto;
-    max-width: $max-container-width;
+    max-width: $global-fullpage-width;
     min-width: $global-min-width;
     padding-top: $global-footer-top-padding;
+
+    a {
+        border-bottom: 1px dotted $global-footer-fontcolor;
+        color: $global-footer-fontcolor;
+        white-space: nowrap;
+        margin-right: 1em;
+        font-size: $global-footer-fontsize;
+        line-height: $global-footer-lineheight;
+    }
 
     @include bp(max-width, $bp-xsmall) {
         padding-top: $trim-small;
@@ -34,7 +43,7 @@
         text-align: right;
         width: 20.5em;
         float: left;
-        padding-top: 0.3em;
+        padding-top: 0px;
         border-top: 0px;
     }
 
@@ -46,6 +55,13 @@
     .block-title,
     address {
         color: $global-footer-fontcolor;
+    }
+
+    .copyright {
+        width: auto;
+        float: right;
+        position: relative;
+        top: 30px;
     }
 
     .links {
