@@ -62,10 +62,6 @@ class Egovs_Checkout_Block_Multipage_Success extends Egovs_Checkout_Block_Multip
      */
     public function getPrintUrl()
     {
-        /*if (Mage::getSingleton('customer/session')->isLoggedIn()) {
-            return $this->getUrl('sales/order/print', array('order_id'=>Mage::getSingleton('checkout/session')->getLastOrderId()));
-        }
-        return $this->getUrl('sales/guest/printOrder', array('order_id'=>Mage::getSingleton('checkout/session')->getLastOrderId()));*/
         return $this->getUrl('sales/order/print', array('order_id'=>Mage::getSingleton('checkout/session')->getLastOrderId()));
     }
 
