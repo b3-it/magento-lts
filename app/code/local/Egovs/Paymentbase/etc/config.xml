@@ -397,6 +397,9 @@
 			<checkmo>
 				<active>0</active>
 			</checkmo>
+            <ccsave>
+                <active>0</active>
+            </ccsave>
 			<bankpayment>
 				<include_personal_data>0</include_personal_data>
 			</bankpayment>

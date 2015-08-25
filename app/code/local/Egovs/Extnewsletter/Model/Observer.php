@@ -3,13 +3,6 @@
 class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract 
 {
     
-	public function onMPCheckoutSave($observer)
-	{
-		$products = $observer->getData('products');
-		$email = $observer->getData('email');
-		Mage::getModel('extnewsletter/subscriber')->subscribeWithOptions($email,$products);
-	}
-	
 	
 	public function onCheckoutSaveOrderAfter($observer)
 	{
@@ -17,13 +10,20 @@ class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract
 		if(!$order) return $this;
 		
 		$products = array();
-		foreach($order->getItems() as $item)
+		if(Mage::getStoreConfigFlag('newsletter/subscription/auto_subscribe_newsletter'))
 		{
-			if($item->getProduct()->getIsProductNewsletter())
+			$products[] = 0;
+		}
+		if(Mage::getStoreConfig('newsletter/subscription/auto_subscribe_for_product'))
+		{
+			foreach($order->getAllItems() as $item)
 			{
-				$products[] = $item->getProduct()->getId();
-			}
-		}		
+				if($item->getProduct()->getExtnewsletter())
+				{
+					$products[] = $item->getProduct()->getId();
+				}
+			}	
+		}	
 		$email = $order->getCustomer()->getData('email');
 		Mage::getModel('extnewsletter/subscriber')->subscribeWithOptions($email,$products);
 	}

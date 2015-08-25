@@ -237,6 +237,15 @@
         		</observers>
         	</checkout_type_onepage_save_order_after>
         </events>
+         <sales>
+        	<quote>
+        		<item>
+        			<product_attributes>
+                        <extnewsletter/>
+                    </product_attributes>
+        		</item>
+        	</quote>
+        </sales>
     </global>
 	
 	<default>
