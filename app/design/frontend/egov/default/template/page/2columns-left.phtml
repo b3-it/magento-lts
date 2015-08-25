@@ -10,8 +10,15 @@
  * Template for Mage_Page_Block_Html
  */
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="<?php echo $this->getLang(); ?>" id="top" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="<?php echo $this->getLang(); ?>" id="top" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="<?php echo $this->getLang(); ?>" id="top" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="<?php echo $this->getLang(); ?>" id="top" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="<?php echo $this->getLang(); ?>" id="top" class="no-js"> <!--<![endif]-->
+
     <head>
         <?php echo $this->getChildHtml('head') ?>
     </head>
@@ -19,24 +26,31 @@
     <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?> id="2-columns-left">
         <?php echo $this->getChildHtml('after_body_start') ?>
         <div class="wrapper">
-            <?php echo $this->getChildHtml('global_notices') ?>
             <div class="page">
                 <?php echo $this->getChildHtml('header') ?>
+
+                <?php echo $this->getChildHtml('global_notices') ?>
+
                 <div class="main-container col2-left-layout">
                     <div class="main">
                         <?php echo $this->getChildHtml('breadcrumbs') ?>
-                <?php // This left_first block will display above the main content on smaller viewports ?>
-                <?php if ($_leftContent = $this->getChildHtml('left_first')): ?>
-                <div class="col-left sidebar col-left-first"><?php echo $_leftContent;   ?></div>
-                <?php endif; ?>
-                        <div class="col-main">
-                            <?php echo $this->getChildHtml('global_messages') ?>
-                            <?php echo $this->getChildHtml('content') ?>
+                        <div class="col-wrapper">
+                        <?php if ($_leftContent = $this->getChildHtml('left_first')): ?>
+                            <div class="col-left sidebar col-left-first">
+                                <?php echo $_leftContent;   ?>
+                            </div>
+                        <?php endif; ?>
+                            <div class="col-left sidebar">
+                                <?php echo $this->getChildHtml('left') ?>
+                            </div>
+                            <div class="col-main">
+                                <?php echo $this->getChildHtml('global_messages') ?>
+                                <?php echo $this->getChildHtml('content') ?>
+                            </div>
                         </div>
-                <div class="col-left sidebar"><?php echo $this->getChildHtml('left') ?></div>
                     </div>
                 </div>
-        		<?php echo $this->getChildHtml('footer_before') ?>
+        		    <?php echo $this->getChildHtml('footer_before') ?>
                 <?php echo $this->getChildHtml('footer') ?>
                 <?php echo $this->getChildHtml('global_cookie_notice') ?>
                 <?php echo $this->getChildHtml('before_body_end') ?>
