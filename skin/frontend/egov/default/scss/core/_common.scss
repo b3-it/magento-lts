@@ -140,13 +140,15 @@ h6, .h6 { @include h6; }
  * Block Module
  */
 
-.block,
 .col-left-first {
-    margin-bottom: 20px;
-    border: 1px solid $global-lightcolor;
+    margin-top: 20px;
 }
 
 .block {
+    border-width: $global-checkout-borderwidth;
+    border-style: solid;
+    border-color: $global-border-color;
+
     .block-title {
         background-color: $global-box-title-backgroundcolor;
         border-bottom: 3px solid $global-lightcolor;
@@ -287,6 +289,15 @@ body:not(.customer-account) .block:first-child .block-title {
 /* -------------------------------------------- *
  * Secondary Navigation
  */
+
+.block-account {
+    position: relative;
+    top: -20px;
+}
+
+.block-reorder {
+    margin-top: 20px;
+}
 
 .block-account,
 .block-cms-menu {
@@ -789,6 +800,8 @@ a.button:hover {
 
 .col-right {
     float: right;
+    margin-top: $global-rightcol-margintop; 
+    margin-right: $global-rightcol-marginright;       
 
     img {
         max-width: 100%;
@@ -796,7 +809,7 @@ a.button:hover {
 }
 
 .col-main {
-    width: percentage($global-content-width/$global-fullpage-width);
+   /* width: percentage($global-content-width/$global-fullpage-width);*/
 
     .std {
         width: $global-content-width;
@@ -819,11 +832,15 @@ a.button:hover {
 }
 
 .col2-left-layout {
+    .main {
+        position: relative;
+        top: 20px;
+    }
+
     .col-left {
         margin-right: $global-leftcol-marginright;
         float: left;
         position: relative;
-        _top: -15px;
         width: $global-leftcol-width;
     }
 
@@ -843,10 +860,7 @@ a.button:hover {
 
 .col2-right-layout {
 	 .col-right {
-        margin-right: $global-rightcol-marginright;
-        float: right;
         position: relative;
-        _top: -15px;
         width: $global-rightcol-width;
     }
     .col-main {
@@ -860,12 +874,18 @@ a.button:hover {
         width: $global-fullpage-width - 25;
         padding-left: $global-content-paddingleft;
         padding-top: $global-content-paddingtop;
+
+        .std {
+        	width: $global-fullpage-width - $global-rightcol-width - 75; 
+        }
     }
 }
 
 .col3-layout {
     .col-wrapper {
         width: 100%;
+        position: relative;
+        top: 4px;
 
         .col-left {
             margin-right: $global-leftcol-marginright;
@@ -887,11 +907,8 @@ a.button:hover {
         }
 
         .col-right {
-            float: right;
             width: $global-rightcol-width;
-            margin-right: $global-rightcol-marginright;
             padding: 0px;
-            margin-top: $global-rightcol-margintop;
         }
     }
 }
@@ -1587,13 +1604,13 @@ span.weee {
  */
 
 .toolbar {
-    margin-top: $box-spacing;
     margin-bottom: 15px;
     border-bottom: 1px solid $global-lightcolor;
     border-top: 1px solid $global-lightcolor;
     background: $global-lightcolor-hover;
     padding: 5px 10px 0px 10px;
     font-size: $global-fontsize-small;
+    max-height: 40px;
 
     &:after {
         @include clearfix;

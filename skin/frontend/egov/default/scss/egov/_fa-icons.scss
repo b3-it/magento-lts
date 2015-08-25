@@ -1,0 +1,148 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// Icon für Bearbeiten (Stift)
+.egov-pencile {
+    @extend .fa;
+    @extend .fa-pencil;
+    font-size: $global-fontsize + 4 !important;
+}
+
+// Icon für Löschen (Mülltonne)
+.egov-delete {
+    @extend .fa;
+    @extend .fa-trash-o;
+    font-size: $global-fontsize + 4;
+}
+
+// Icon für Passwort (Schloss)
+.egov-password {
+    @extend .fa;
+    @extend .fa-lock;
+    font-size: $global-fontsize + 4 !important;
+}
+
+// Icon für eMail (Briefumschlag)
+.egov-email {
+    @extend .fa;
+    @extend .fa-envelope;
+    font-size: $global-fontsize + 4 !important;
+}
+
+// Icon für Telefon (Telefon)
+.egov-phone {
+    @extend .fa;
+    @extend .fa-phone;
+}
+
+// Icon für Mobil (Handy)
+.egov-mobile {
+    @extend .fa;
+    @extend .fa-mobile;
+}
+
+// Icon für Fax (Fax)
+.egov-fax {
+    @extend .fa;
+    @extend .fa-fax;
+}
+
+// Icon für Kachel-Asicht der Produkte (Gitter)
+.egov-grid {
+    @extend .fa;
+    @extend .fa-th-large;
+    font-size: $global-fontsize + 8;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Listen-Ansicht der Produkte (Liste)
+.egov-list {
+    @extend .fa;
+    @extend .fa-bars;
+    font-size: $global-fontsize + 8;
+    margin: $fa-icon-margin;
+}
+
+// Navbar-Icon für Startseite (Häuschen)
+.egov-home {
+    @extend .fa;
+    @extend .fa-home;
+    font-size: $global-fontsize + 12;
+    margin: $fa-icon-margin;
+}
+
+// Navbar-Icon für Benutzermenü (Männchen)
+.egov-user {
+    @extend .fa;
+    @extend .fa-user;
+    font-size: $global-fontsize + 12;
+    margin: $fa-icon-margin;
+}
+
+// Navbar-Icon für Warenkorb (Einkaufswagen)
+.egov-cart {
+    @extend .fa;
+    @extend .fa-shopping-cart;
+    font-size: $global-fontsize + 12;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Wunschzettel (Stern)
+.egov-star {
+    @extend .fa;
+    @extend .fa-star;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Katalog-Sortierung absteigend (Pfeil runter)
+.egov-arrow-up {
+    @extend .fa;
+    @extend .fa-arrow-up;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Katalog-Sortierung aufsteigend (Pfeil hoch)
+.egov-arrow-down {
+    @extend .fa;
+    @extend .fa-arrow-down;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Nachbestellen in der Bestellübersicht (runder Pfeil)
+.egov-reorder {
+    @extend .fa;
+    @extend .fa-repeat;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Details in der Bestellübersicht (Auge)
+.egov-view {
+    @extend .fa;
+    @extend .fa-eye;
+    font-size: $global-fontsize + 2;
+    margin: $fa-icon-margin;
+}
+
+// Icons für Produkte auf Vergleichsliste (2 Icons)
+// Fotoapparat 1
+.egov-compare-1 {
+    @extend .fa;
+    @extend .fa-camera;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}
+// Fotoapparat 2
+.egov-compare-2 {
+    @extend .fa;
+    @extend .fa-camera-retro;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}

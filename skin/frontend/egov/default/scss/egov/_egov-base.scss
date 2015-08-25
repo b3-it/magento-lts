@@ -5,191 +5,44 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
-.egov-fa-pencil {
-    @extend .fa;
-    @extend .fa-pencil;
-}
-.egov-pencile {
-    @extend .egov-fa-pencil;
-    font-size: $global-fontsize + 4 !important;
-}
+.egov-base-table {
+    width: 100%;
+    font-family: $base-font-family;
 
-.egov-fa-delete {
-    @extend .fa;
-    @extend .fa-trash-o;
-}
-.egov-delete {
-    @extend .egov-fa-delete;
-    font-size: $global-fontsize + 4;
-}
+    th, td, tbody td {
+        // Adding tbody for extra selector weight
+        border-bottom: none;
+        vertical-align: top;
+    }
 
-.egov-fa-password {
-    @extend .fa;
-    @extend .fa-lock;
-}
-.egov-password {
-    @extend .egov-fa-password;
-    font-size: $global-fontsize + 4 !important;
-}
+    thead th {
+        background-color: $global-checkout-thbackground;
+        color: $global-checkout-thfontcolor;
 
-.egov-fa-email {
-    @extend .fa;
-    @extend .fa-envelope;
-}
-.egov-email {
-    @extend .egov-fa-email;
-    font-size: $global-fontsize + 4 !important;
-}
+        span.product-name {
+            padding-left: 5px;
+        }
+    }
 
-.egov-fa-phone {
-    @extend .fa;
-    @extend .fa-phone;
-}
-.egov-phone {
-    @extend .egov-fa-phone;
-}
+    thead th.space {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 
-.egov-fa-mobile {
-    @extend .fa;
-    @extend .fa-mobile;
-}
-.egov-mobile {
-    @extend .egov-fa-mobile;
-}
+    tbody td {
+        background-color: $global-checkout-tdbackground;
+        color: $global-checkout-tdfontcolor;
+    }
 
-.egov-fa-fax {
-    @extend .fa;
-    @extend .fa-fax;
+    thead th,
+    tbody td {
+        padding: 5px 1px;
+        font-family: $base-font-family;
+        border-color: $global-checkout-tableborder;
+        border-width: $global-checkout-borderwidth;
+        border-style: solid;
+    }
 }
-.egov-fax {
-    @extend .egov-fa-fax;
-}
-
-.egov-fa-grid {
-    @extend .fa;
-    @extend .fa-th-large;
-}
-.egov-grid {
-    @extend .egov-fa-grid;
-    font-size: $global-fontsize + 8;
-    margin: 5px;
-}
-
-.egov-fa-list {
-    @extend .fa;
-    @extend .fa-bars;
-}
-.egov-list {
-    @extend .egov-fa-list;
-    font-size: $global-fontsize + 8;
-    margin: 5px;
-}
-
-.egov-fa-home {
-    @extend .fa;
-    @extend .fa-home;
-}
-.egov-home {
-    @extend .egov-fa-home;
-    font-size: $global-fontsize + 12;
-    margin: 5px;
-}
-
-.egov-fa-user {
-    @extend .fa;
-    @extend .fa-user;
-}
-.egov-user {
-    @extend .egov-fa-user;
-    font-size: $global-fontsize + 12;
-    margin: 5px;
-}
-
-.egov-fa-cart {
-    @extend .fa;
-    @extend .fa-shopping-cart;
-}
-.egov-cart {
-    @extend .egov-fa-cart;
-    font-size: $global-fontsize + 12;
-    margin: 5px;
-}
-
-.egov-fa-star {
-    @extend .fa;
-    @extend .fa-star;
-}
-.egov-star {
-    @extend .egov-fa-star;
-    font-size: $global-fontsize;
-    margin: 5px;
-}
-
-.egov-fa-compare {
-    @extend .fa;
-    @extend .fa-random;
-}
-.egov-compare {
-    @extend .egov-fa-compare;
-    font-size: $global-fontsize;
-    margin: 5px;
-}
-
-.egov-fa-refresh {
-    @extend .fa;
-    @extend .fa-refresh;
-}
-.egov-refresh {
-    @extend .egov-fa-refresh;
-    font-size: $global-fontsize;
-    margin: 5px;
-}
-
-.egov-fa-arrow-up {
-    @extend .fa;
-    @extend .fa-arrow-up;
-}
-.egov-arrow-up {
-    @extend .egov-fa-arrow-up;
-    font-size: $global-fontsize;
-    margin: 5px;
-}
-
-.egov-fa-arrow-down {
-    @extend .fa;
-    @extend .fa-arrow-down;
-}
-.egov-arrow-down {
-    @extend .egov-fa-arrow-down;
-    font-size: $global-fontsize;
-    margin: 5px;
-}
-
-
-
-
-.egov-fa-compare-1 {
-    @extend .fa;
-    @extend .fa-camera;
-}
-.egov-compare-1 {
-    @extend .egov-fa-compare-1;
-    font-size: $global-fontsize;
-    margin: 5px;
-}
-
-.egov-fa-compare-2 {
-    @extend .fa;
-    @extend .fa-camera-retro;
-}
-.egov-compare-2 {
-    @extend .egov-fa-compare-2;
-    font-size: $global-fontsize;
-    margin: 5px;
-}
-
-
-
 
 .egov-float-left {
     float: left !important;

@@ -797,16 +797,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
                 }
             }
             
-            /*
-            $payment = $this->getRequest()->getPost('payment');
-            $paymentInstance = $this->_getCheckout()->getQuote()->getPayment();
-            if (isset($payment['cc_number'])) {
-                $paymentInstance->setCcNumber($payment['cc_number']);
-            }
-            if (isset($payment['cc_cid'])) {
-                $paymentInstance->setCcCid($payment['cc_cid']);
-            }
-            */
+           
             $email = $this->getRequest()->getPost('sendOrderEmail');
             $this->_getCheckout()->saveOrder($email != null);
             $redirectUrl = $this->_getCheckout()->getCheckout()->getRedirectUrl();
@@ -862,13 +853,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
     	$msg = "successviewAction [lastQuoteId: $lastQuoteId; lastOrderId: $lastOrderId;].";
     	Mage::log("mpcheckout::".$msg, Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
-/*
-    	if (!$lastQuoteId || !$lastOrderId) {
-    		$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
-    		$this->_redirect('checkout/cart');
-    		return;
-    	}
-*/
+
     	$this->loadLayout();
     	$this->_initLayoutMessages('checkout/session');
     	//erst am Ende deaktivieren
