@@ -202,6 +202,10 @@ body.customer-account {
             top: -20px;
         }
 
+        h2 {
+            font-family: $base-font-family;
+        }
+
         .page-title {
             h1 {
                 border: 0;
@@ -250,33 +254,6 @@ body.customer-account {
 
     .data-table {
         margin-top: 5px;
-
-        td {
-            a {
-                font-family: $f-stack-special;
-                text-transform: uppercase;
-                font-style: normal;
-                font-size: $f-size-s;
-            }
-        }
-
-        span.nobr {
-            white-space: normal;
-
-            a {
-                white-space: nowrap;
-            }
-        }
-
-        td.view {
-            a {
-                display: block;
-            }
-        }
-
-        .separator {
-            display: none;
-        }
     }
 
     .sidebar {

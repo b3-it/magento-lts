@@ -131,6 +131,14 @@
     margin: $fa-icon-margin;
 }
 
+// Icon für Alles-Anzeigen in der Bestellübersicht (2 Zettel)
+.egov-view-all {
+    @extend .fa;
+    @extend .fa-files-o;
+    font-size: $global-fontsize + 2;
+    margin: $fa-icon-margin;
+}
+
 // Icons für Produkte auf Vergleichsliste (2 Icons)
 // Fotoapparat 1
 .egov-compare-1 {
