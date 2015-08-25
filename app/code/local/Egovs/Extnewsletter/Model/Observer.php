@@ -11,6 +11,23 @@ class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract
 	}
 	
 	
+	public function onCheckoutSaveOrderAfter($observer)
+	{
+		$order = $observer->getOrder();
+		if(!$order) return $this;
+		
+		$products = array();
+		foreach($order->getItems() as $item)
+		{
+			if($item->getProduct()->getIsProductNewsletter())
+			{
+				$products[] = $item->getProduct()->getId();
+			}
+		}		
+		$email = $order->getCustomer()->getData('email');
+		Mage::getModel('extnewsletter/subscriber')->subscribeWithOptions($email,$products);
+	}
+	
 	
 	
 	private function _deletePrevious($queueid)

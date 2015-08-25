@@ -916,15 +916,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
         		$customerShipping->setIsDefaultShipping(true);
         	}
             $customer->save();
-            /*
-            $customerBillingId = $customerBilling->getId();
-            if (!$this->getQuote()->isVirtual()) {
-                $customerShippingId = isset($customerShipping) ? $customerShipping->getId() : $customerBillingId;
-                $customer->setDefaultShipping($customerShippingId);
-            }
-            $customer->setDefaultBilling($customerBillingId);
-            $customer->save();
-            */
+          
 
             $this->getQuote()->setCustomerId($customer->getId());
 
@@ -971,7 +963,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
          */
         if(!$redirectUrl){
         	if($sendOrderEmail){
-            	$order->sendNewOrderEmail();
+            	$order->queueNewOrderEmail();
         	}
         }
 
@@ -1030,22 +1022,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
      */
     public function getLastOrderId()
     {
-        /*
-        $customerSession = Mage::getSingleton('customer/session');
-        if (!$customerSession->isLoggedIn()) {
-            $this->_redirect('checkout/cart');
-            return;
-        }
-        $collection = Mage::getResourceModel('sales/order_collection')
-            ->addAttributeSelect('self/real_order_id')
-            ->addAttributeFilter('self/customer_id', $customerSession->getCustomerId())
-            ->setOrder('self/created_at', 'DESC')
-            ->setPageSize(1)
-            ->loadData();
-        foreach ($collection as $order) {
-            $orderId = $order->getRealOrderId();
-        }
-        */
+        
         $order = Mage::getModel('sales/order');
         $order->load($this->getCheckout()->getLastOrderId());
         $orderId = $order->getIncrementId();
