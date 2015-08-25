@@ -823,7 +823,6 @@ a.button:hover {
         margin-right: $global-leftcol-marginright;
         float: left;
         position: relative;
-        _top: -15px;
         width: $global-leftcol-width;
     }
 
@@ -838,6 +837,7 @@ a.button:hover {
         padding-left: $global-content-paddingleft;
         padding-top: $global-content-paddingtop;
         padding-right: 20px;
+        float: right;
     }
 }
 
@@ -846,7 +846,6 @@ a.button:hover {
         margin-right: $global-rightcol-marginright;
         float: right;
         position: relative;
-        _top: -15px;
         width: $global-rightcol-width;
     }
     .col-main {
