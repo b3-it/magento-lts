@@ -247,44 +247,13 @@
 }
 
 .cart-table {
-    font-family: $base-font-family;
-
-    th,
-    td,
-    tbody td {
-        // Adding tbody for extra selector weight
-        border-bottom: none;
-        vertical-align: top;
-    }
+    @extend .egov-base-table;
 
     h2 {
         color: $c-h2;
         font-size: $f-size;
         font-weight: 600;
         margin-bottom: 0;
-    }
-
-    thead th {
-        background-color: $global-checkout-thbackground;
-        color: $global-checkout-thfontcolor;
-
-        span.product-name {
-            padding-left: 5px;
-        }
-    }
-
-    tbody td {
-        background-color: $global-checkout-tdbackground;
-        color: $global-checkout-tdfontcolor;
-    }
-
-    thead th,
-    tbody td {
-        padding: 5px 1px;
-        font-family: $base-font-family;
-        border-color: $global-checkout-tableborder;
-        border-width: $global-checkout-borderwidth;
-        border-style: solid;
     }
 
     .product-cart-info {

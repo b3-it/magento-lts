@@ -26,12 +26,12 @@
     <col width="1" />
         <thead>
             <tr>
-                <th class="number"><?php echo $this->__('Order #') ?></th>
-                <th class="date"><?php echo $this->__('Date') ?></th>
-                <th class="ship"><?php echo $this->__('Ship To') ?></th>
-                <th class="total"><span class="nobr"><?php echo $this->__('Order Total') ?></span></th>
-                <th class="status"><?php echo $this->__('Status') ?></th>
-                <th class="view">&nbsp;</th>
+                <th class="space number"><?php echo $this->__('Order #') ?></th>
+                <th class="space date"><?php echo $this->__('Date') ?></th>
+                <th class="space ship"><?php echo $this->__('Ship To') ?></th>
+                <th class="space total"><span class="nobr"><?php echo $this->__('Order Total') ?></span></th>
+                <th class="space status"><?php echo $this->__('Status') ?></th>
+                <th class="space view">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -44,10 +44,16 @@
                     <td class="status"><em><?php echo $_order->getStatusLabel() ?></em></td>
                     <td class="a-center view">
                         <span class="nobr">
-                        <a href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $this->__('View Order') ?></a>
+                        <a class="egov-view"
+                           href="<?php echo $this->getViewUrl($_order) ?>"
+                           title="<?php echo $this->__('View Order') ?>"
+                           alt="<?php echo $this->__('View Order') ?>"> </a>
                         <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
                             <span class="separator">|</span>
-                            <a href="<?php echo $this->getReorderUrl($_order) ?>" class="link-reorder"><?php echo $this->__('Reorder') ?></a>
+                            <a href="<?php echo $this->getReorderUrl($_order) ?>"
+                               class="link-reorder egov-reorder"
+                               alt="<?php echo $this->__('Reorder') ?>"
+                               title="<?php echo $this->__('Reorder') ?>"> </a>
                         <?php endif ?>
                         </span>
                     </td>

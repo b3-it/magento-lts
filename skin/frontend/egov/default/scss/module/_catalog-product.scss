@@ -8,6 +8,12 @@
 
 .category-products, .category-title {
     width: $global-content-width;
+    float: left;
+}
+
+.category-products {
+    position: relative;
+    top: -18px;
 }
 
 /* ============================================ *
