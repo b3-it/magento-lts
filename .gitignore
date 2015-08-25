@@ -12,6 +12,9 @@
 # Magento-Config
 app/etc/local.xml
 
+#Debug-Toolbar
+app/etc/modules/Magento_Debug.xml
+
 # Media-Content
 media/catalog/product
 media/tmp
