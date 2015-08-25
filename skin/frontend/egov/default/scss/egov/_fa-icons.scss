@@ -119,11 +119,11 @@
 .egov-reorder {
     @extend .fa;
     @extend .fa-repeat;
-    font-size: $global-fontsize - 2;
+    font-size: $global-fontsize;
     margin: $fa-icon-margin;
 }
 
-// Icon für Details in der Bestellübersicht (Sanduhr)
+// Icon für Details in der Bestellübersicht (Auge)
 .egov-view {
     @extend .fa;
     @extend .fa-eye;
