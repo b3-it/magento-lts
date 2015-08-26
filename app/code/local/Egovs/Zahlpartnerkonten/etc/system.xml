@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
     <sections>
-         <payment translate="label" >
+         <payment_services translate="label" >
             <groups>
                 <paymentbase translate="label">      
                     <fields>
@@ -43,6 +43,6 @@
                   </fields>
                 </paymentbase>      
             </groups>
-        </payment>
+        </payment_services>
     </sections>
 </config>
