@@ -36,8 +36,8 @@ class Egovs_Paymentbase_Model_Attributes_Backend_Objektnummerhhstelle
 		$collection->getSelect()
 			->join(array('hh'=>'egovs_paymentbase_haushaltsparameter'), 'main_table.hhstelle=hh.paymentbase_haushaltsparameter_id AND hh.type='.Egovs_Paymentbase_Model_Haushaltsparameter_Type::HAUSHALTSTELLE)
 			->join(array('ob'=>'egovs_paymentbase_haushaltsparameter'), 'main_table.objektnummer=ob.paymentbase_haushaltsparameter_id AND ob.type='.$type)
-			->where('hh.value=?', $hhstelle)
-			->where('ob.value=?', $value);
+			->where('hh.paymentbase_haushaltsparameter_id=?', $hhstelle)
+			->where('ob.paymentbase_haushaltsparameter_id=?', $value);
 		//Mage::log($collection->getSelect()->__toString(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);	
 		
 		if (count($collection) == 0) {
