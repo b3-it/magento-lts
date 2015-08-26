@@ -6,6 +6,9 @@
 //
 
 .mp-checkout {
+    h2 {
+    }
+
     ul.checkout-progress {
         margin: 10px 0px 20px 0px;
         list-style: outside none none;
@@ -153,5 +156,11 @@
             margin-left: 10px;
             font-weight: bold;
         }
+    }
+}
+
+.egovs-checkout-multipage-successview {
+    ul.checkout-progress {
+        display:none;
     }
 }
