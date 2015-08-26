@@ -61,6 +61,24 @@
         margin: 0px 10px;
     }
 
+    .col-main {
+        fieldset, .page-title, .buttons-set {
+            width: $global-fullpage-width - $global-content-marginright - $global-content-rightspace;
+        }
+
+        .order_pre {
+            color: $global-fontcolor-dark;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: $global-checkout-success-order-text;
+        }
+        .order_number {
+            color: $global-linkcolor;
+            font-weight: bold;
+            font-size: $global-checkout-success-order-number;
+        }
+    }
+
     .col2-set {
         div.col-1, div.col-2 {
             @extend .block;
@@ -82,8 +100,16 @@
             @extend .block-title;
         }
 
-        address, fieldset, p, .overview_shipping {
+        address, fieldset, p,
+        .overview_shipping, .successview_shipping {
             margin: 5px 0px 10px 10px;
+        }
+    }
+
+    .col1-layout {
+        .main {
+            position: relative;
+            top: 15px;
         }
     }
 

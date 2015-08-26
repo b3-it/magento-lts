@@ -151,8 +151,11 @@ h6, .h6 { @include h6; }
 
     .block-title {
         background-color: $global-box-title-backgroundcolor;
-        border-bottom: 3px solid $global-lightcolor;
+        border-bottom: 3px solid $global-box-bordercolor;
         padding: 0.2em 0 0.3em 0.6em;
+        color: $global-fontcolor-dark;
+        font-weight: normal;
+        font-size: $global-fontsize-big;
 
         span {
             color: $global-h4-color;

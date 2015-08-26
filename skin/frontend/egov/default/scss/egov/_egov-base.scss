@@ -43,6 +43,11 @@
         border-width: $global-checkout-borderwidth;
         border-style: solid;
     }
+
+    tbody td h3 {
+        margin: 0px;
+        padding: 0px;
+    }
 }
 
 .egov-base-totals {
@@ -59,10 +64,15 @@
         border-style: solid;
         padding: 5px;
         text-align: right;
+
+        strong span.price {
+            font-size: $global-fontsize-big;
+        }
     }
 
     tbody td:nth-child(2) {
         width: 160px;
+        padding: 3px;
     }
 }
 
