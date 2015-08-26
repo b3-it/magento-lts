@@ -35,7 +35,8 @@
     }
 
     thead th,
-    tbody td {
+    tbody td,
+    tbody th {
         padding: 5px 1px;
         font-family: $base-font-family;
         border-color: $global-checkout-tableborder;

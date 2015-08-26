@@ -823,9 +823,31 @@ a.button:hover {
 
 .col1-layout {
     .col-main {
+        padding-left: 0; /* Remove the 15px padding */
+        background-image: url($global-content-top-image);
+        background-repeat: no-repeat;
+        background-color: $global-content-background;
+        background-position: 0px -3px;
+        background-size: 100% auto;
+        overflow: hidden;
+        padding-left: $global-content-paddingleft;
+        padding-top: $global-content-paddingtop;
         float: none;
         width: auto;
-        padding: 0; /* Remove the 15px padding */
+        margin-top: 4px !important;
+
+        .std {
+            width: $global-fullpage-width - $global-content-marginright - $global-content-rightspace;
+        }
+
+        table {
+            @extend .egov-base-table;
+            border-collapse: collapse;
+
+            tbody th, tbody td, thead th {
+                padding: 5px;
+            }
+        }
     }
 }
 
@@ -849,7 +871,7 @@ a.button:hover {
         background-position: 0px -3px;
         background-size: 100% auto;
         overflow: hidden;
-        width: $global-fullpage-width - $global-leftcol-width - 25;
+        width: $global-fullpage-width - $global-leftcol-width - $global-content-rightspace;
         padding-left: $global-content-paddingleft;
         padding-top: $global-content-paddingtop;
         padding-right: 20px;
@@ -896,7 +918,7 @@ a.button:hover {
             background-position: 0px -3px;
             background-size: 100% auto;
             overflow: hidden;
-            width: $global-fullpage-width - $global-leftcol-width - 25;
+            width: $global-fullpage-width - $global-leftcol-width - $global-content-rightspace;
             padding-top: $global-content-paddingtop;
             padding-left: $global-content-paddingleft;
             padding-right: 5px;
