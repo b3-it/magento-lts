@@ -19,14 +19,11 @@
 					<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
 				</li>
 			</ul>
-			<div style="padding-bottom: 15px;">
-				<?php echo $this->getChildHtml('newsletter') ?>
-			</div>
-			
+
 			<div>
 				<?php echo $this->getChildHtml('infotexts'); ?>
 				<?php echo $this->getChildHtml('agreementtexts'); ?>
-	
+
 				<?php echo $this->getChildHtml('agreements') ?>
 			</div>
 	</fieldset>
@@ -39,10 +36,11 @@
 				<?php $_address=$this->getBillingAddress() ?>
 				<h4>
 					<?php echo $this->__('Billing Address') ?>
-					<span class="separator"> | </span> <a
-						href="<?php echo $this->getAddressesEditUrl() ?>"> <span
-						class="hiddenForSighted"><?php echo $this->__('Billing Address') ?>
-					</span> <?php echo $this->__('Change') ?> </a>
+					<span class="spacer"> | </span>
+					<a class="egov-pencile"
+					   href="<?php echo $this->getAddressesEditUrl() ?>"
+					   alt="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"
+					   title="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<address>
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
@@ -51,10 +49,11 @@
 			<div class="col-2">
 				<h4>
 					<?php echo $this->__('Payment Method') ?>
-					<span class="separator"> | </span> <a
-						href="<?php echo $this->getEditBillingUrl() ?>"> <span
-						class="hiddenForSighted"><?php echo $this->__('Payment Method') ?>
-					</span> <?php echo $this->__('Change') ?> </a>
+					<span class="spacer"> | </span>
+					<a class="egov-pencile"
+						 href="<?php echo $this->getEditBillingUrl() ?>"
+						 alt="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"
+						 title="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<input type="hidden" name="payment[cc_number]"
 					value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
@@ -74,10 +73,11 @@
 				<?php if(!$this->isStorePickup()):?>
 				<h4>
 					<?php echo $this->__('Shipping to') ?>
-					<span class="separator"> | </span> <a
-						href="<?php echo $this->getEditShippingUrl() ?>"> <span
-						class="hiddenForSighted"><?php echo $this->__('Shipping to') ?> </span>
-						<?php echo $this->__('Change') ?> </a>
+					<span class="spacer"> | </span>
+					<a class="egov-pencile"
+						 href="<?php echo $this->getEditShippingUrl() ?>"
+						 alt="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"
+						 title="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<address>
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
@@ -85,18 +85,19 @@
 				<?php endif;?>
 
 			</div>
-			
+
 			<div class="col-2">
 				<h4>
 					<?php echo $this->__('Shipping Method') ?>
-					<span class="separator"> | </span> <a
-						href="<?php echo $this->getEditShippingmethodUrl() ?>"> <span
-						class="hiddenForSighted"><?php echo $this->__('Shipping Method') ?>
-					</span> <?php echo $this->__('Change') ?> </a>
+					<span class="spacer"> | </span>
+					<a class="egov-pencile"
+						 href="<?php echo $this->getEditShippingmethodUrl() ?>"
+						 alt="<?php echo $this->__('Shipping Method') ?> <?php echo $this->__('Change') ?>"
+						 title="<?php echo $this->__('Shipping Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<?php if($_rate=$this->getShippingAddressRate($_address)): ?>
 				<div class="overview_shipping">
-					<?php 
+					<?php
 					if($_rate->getCarrierTitle() === $_rate->getMethodTitle())
 						echo $_rate->getCarrierTitle();
 					else
@@ -127,12 +128,12 @@
 			<table class="data-table" id="checkout-review-table">
 				<?php if ($this->helper('tax')->displayCartBothPrices()): $colspan = $rowspan = 2; else: $colspan = $rowspan = 1; endif; ?>
 				<col />
-				<col width="1" />
-				<col width="1" />
-				<col width="1" />
+				<col width="80" />
+				<col width="80" />
+				<col width="10" />
 				<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-				<col width="1" />
-				<col width="1" />
+				<col width="80" />
+				<col width="80" />
 				<?php endif; ?>
 				<thead>
 					<tr>

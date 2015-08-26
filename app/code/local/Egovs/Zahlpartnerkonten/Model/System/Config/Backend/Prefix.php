@@ -29,7 +29,7 @@ class Egovs_Zahlpartnerkonten_Model_System_Config_Backend_Prefix extends Mage_Co
         $length = (int) $this->getFieldsetDataValue('zpkonten_length');
          
         if (strlen($prefix) >= intval($length)) {
-        	Mage::throwException(Mage::helper('zpkonten')->__('Prefix is to long.'));
+        	Mage::throwException(Mage::helper('zpkonten')->__('Prefix is too long.'));
         }
         
         return $this;

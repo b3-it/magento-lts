@@ -92,12 +92,8 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 		if (preg_match('#^(guest|register)#', $method)) return $this;
         $action = $this->getRequest()->getActionName();
         
-        
-        //Mage::log("mpcheckout::action: ".$action, Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
-        
-     	if ($action == 'successview' && $this->_getCheckout()->getCheckoutSession()->getDisplaySuccess(true)) {
-            //Besser erst in Successview deaktivieren
-     		//$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
+       
+     	if ($action == 'successview' && $this->_getCheckout()->getCheckoutSession()->getDisplaySuccess()) {
      		return $this;
         }
         
@@ -811,18 +807,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
             );
             
             
-            $prod_req = array_keys($this->getRequest()->getPost('extnewsletter',array()));
-            $prod = array();
-            foreach($prod_req as $p)
-            {
-            	$prod[] = (int)$p;
-            }
             
-            $news = array(
-    			'products'=>$prod,
-    			'email'=>$this->_getCheckout()->getQuote()->getCustomer()->getEmail(),
-    			'address'=>$this->_getCheckout()->getQuote()->getBillingAddress());
-    		Mage::dispatchEvent('egovs_mpckeckout_overview_post_newsletter', $news);
             
             
             $this->_getCheckout()->getCheckoutSession()->clear();
@@ -851,8 +836,8 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     	$lastQuoteId = $this->_getCheckout()->getCheckout()->getLastQuoteId();
     	$lastOrderId = $this->_getCheckout()->getCheckout()->getLastOrderId();
 
-    	$msg = "successviewAction [lastQuoteId: $lastQuoteId; lastOrderId: $lastOrderId;].";
-    	Mage::log("mpcheckout::".$msg, Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
+    	//$msg = "successviewAction [lastQuoteId: $lastQuoteId; lastOrderId: $lastOrderId;].";
+    	//Mage::log("mpcheckout::".$msg, Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 
     	$this->loadLayout();
     	$this->_initLayoutMessages('checkout/session');

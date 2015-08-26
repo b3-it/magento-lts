@@ -35,12 +35,34 @@
     }
 
     thead th,
-    tbody td {
+    tbody td,
+    tbody th {
         padding: 5px 1px;
         font-family: $base-font-family;
         border-color: $global-checkout-tableborder;
         border-width: $global-checkout-borderwidth;
         border-style: solid;
+    }
+}
+
+.egov-base-totals {
+    font-family: $base-font-family;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    tbody td {
+        background-color: $global-checkout-total-background;
+        color: $global-fontcolor-dark;
+        border-color: $global-checkout-tableborder;
+        border-width: $global-checkout-borderwidth;
+        border-style: solid;
+        padding: 5px;
+        text-align: right;
+    }
+
+    tbody td:nth-child(2) {
+        width: 160px;
     }
 }
 

@@ -12,8 +12,9 @@ class Egovs_Checkout_Model_Checkouttype extends Mage_Checkout_Model_Type_Abstrac
   	public function toOptionArray()
     {
     	$res = array();
+    	$res[] = array('value'=>self::TYPE_MULTIPAGE,'label'=>Mage::helper('mpcheckout')->__('Multipage'));
 		$res[] = array('value'=>self::TYPE_ONEPAGE,'label'=>Mage::helper('mpcheckout')->__('Onepage'));
-		$res[] = array('value'=>self::TYPE_MULTIPAGE,'label'=>Mage::helper('mpcheckout')->__('Multipage'));
+		
         
     	
     	return $res;

@@ -20,7 +20,7 @@ class Egovs_Zahlpartnerkonten_Block_Adminhtml_Pool_New_Form extends Mage_Adminht
           'label'     => Mage::helper('zpkonten')->__('Mandant'),
           'disabled'	=>true,
           'name'      => 'mandant',
-     	  'value'	=> Mage::getStoreConfig('payment/paymentbase/mandantnr')
+     	  'value'	=> Mage::getStoreConfig('payment_services/paymentbase/mandantnr')
       ));
       
       
@@ -28,21 +28,21 @@ class Egovs_Zahlpartnerkonten_Block_Adminhtml_Pool_New_Form extends Mage_Adminht
           'label'     => Mage::helper('zpkonten')->__('Bewirtschafter'),
           'disabled'	=>true,
           'name'      => 'bewirtschafter',
-     	'value'	=> Mage::getStoreConfig('payment/paymentbase/bewirtschafternr')
+     	'value'	=> Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')
       ));
      
      $fieldset->addField('prefix', 'text', array(
      		'label'     => Mage::helper('zpkonten')->__('Präfix'),
      		'disabled'	=>true,
      		'name'      => 'prefix',
-     		'value'	=> Mage::getStoreConfig('payment/paymentbase/mandanten_kz_prefix')
+     		'value'	=> Mage::getStoreConfig('payment_services/paymentbase/mandanten_kz_prefix')
      ));
      
      $fieldset->addField('checksum', 'select', array(
      		'label'     => Mage::helper('zpkonten')->__('Use checksum'),
      		'disabled'	=>true,
      		'name'      => 'checksum',
-     		'value'	=> Mage::getStoreConfigFlag('payment/paymentbase/zpkonten_checksum'),
+     		'value'	=> Mage::getStoreConfigFlag('payment_services/paymentbase/zpkonten_checksum'),
      		'options'	=> array('1' => Mage::helper('adminhtml')->__('Active'), '0' => Mage::helper('adminhtml')->__('Inactive')),
      ));
       
