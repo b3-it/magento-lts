@@ -29,12 +29,20 @@
 <layout version="0.1.0">
     <mpcheckout>
         <!-- Mage_Checkout -->
-       
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+            <action method="addBodyClass">
+                <classname>mp-checkout</classname>
+            </action>
+        </reference>
+
         <reference name="right">
             <action method="unsetChildren"/>
         </reference>
-       <remove name="breadcrumbs"/>    
-       <remove name="catalog.leftnav_sachsen"/>   
+       <remove name="breadcrumbs"/>
+       <remove name="catalog.leftnav_sachsen"/>
        <remove name="right.newsletter"/>
        <reference name="left">
             <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar_in_checkout.phtml" before="-">
@@ -42,39 +50,30 @@
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
             </block>
-            
-        </reference> 
-        <reference name="root">
-            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+
         </reference>
         <reference name="content">
             <block type="mpcheckout/multipage_state" name="checkout_state" template="egovs/checkout/multipage/state.phtml"/>
         </reference>
     </mpcheckout>
 
-    
+
     <egovs_checkout_multipage_login>
-         <update handle="mpcheckout"/>
-		 <remove name="checkout_state"/>
+        <update handle="mpcheckout"/>
+        <remove name="checkout_state"/>
         <!-- Mage_Checkout -->
         <reference name="content">
-			<block type="mpcheckout/multipage_login" name="checkout_login" template="egovs/checkout/multipage/login.phtml">
-				<action method="setData"><key>accesskey</key><value>l</value></action>
-               	<action method="setData"><key>jumptitle</key><value>Login/Registrieren</value></action>
-			</block>
+            <block type="mpcheckout/multipage_login" name="checkout_login" template="egovs/checkout/multipage/login.phtml">
+                <action method="setData"><key>accesskey</key><value>l</value></action>
+                <action method="setData"><key>jumptitle</key><value>Login/Registrieren</value></action>
+            </block>
         </reference>
     </egovs_checkout_multipage_login>
-
-
-
-
 
     <egovs_checkout_edit_newshipping>
         <update handle="mpcheckout"/>
         <update handle="egovs_checkout_multipage_customer_address"/>
     </egovs_checkout_edit_newshipping>
-
-   
 
     <egovs_checkout_edit_editshipping>
         <update handle="checkout_multishipping"/>
@@ -97,8 +96,6 @@
         </reference>
     </egovs_checkout_multipage_customer_address>
 
-
-
     <egovs_checkout_multipage_addresses>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
@@ -107,19 +104,17 @@
                      </block>
         </reference>
     </egovs_checkout_multipage_addresses>
-    
+
    <egovs_checkout_multipage_newaddress>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="mpcheckout/multipage_newaddress" name="checkout_addresses" template="egovs/checkout/multipage/newaddress.phtml">
 			 	<action method="setData"><key>accesskey</key><value>i</value></action>
-               	<action method="setData"><key>jumptitle</key><value>Adresseingabe</value></action> 
+               	<action method="setData"><key>jumptitle</key><value>Adresseingabe</value></action>
             </block>
         </reference>
     </egovs_checkout_multipage_newaddress>
-
-
 
     <egovs_checkout_multipage_shipping>
         <update handle="mpcheckout"/>
@@ -129,7 +124,7 @@
             </block>
         </reference>
     </egovs_checkout_multipage_shipping>
-    
+
      <egovs_checkout_multipage_newshipping>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
@@ -138,7 +133,7 @@
             </block>
         </reference>
     </egovs_checkout_multipage_newshipping>
-    
+
     <egovs_checkout_multipage_shippingmethod>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
@@ -147,8 +142,6 @@
             </block>
         </reference>
     </egovs_checkout_multipage_shippingmethod>
-
-
 
     <egovs_checkout_multipage_billing>
         <update handle="mpcheckout"/>
@@ -166,9 +159,7 @@
             </block>
         </reference>
     </egovs_checkout_multipage_billing>
-    
-    
-    
+
    <egovs_checkout_multipage_billingdetails>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
@@ -178,18 +169,21 @@
             </block>
         </reference>
     </egovs_checkout_multipage_billingdetails>
-    
-
 
     <egovs_checkout_multipage_overview>
-         <!--<remove name="left"/>
-		 <remove name="right"/>-->
+        <!--
+        <remove name="left"/>
+        <remove name="right"/>
+        -->
         <reference name="right">
-			<action method="unsetChildren"></action>
-		</reference>
-		
+            <action method="unsetChildren"></action>
+        </reference>
+
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+            <action method="addBodyClass">
+                <classname>mp-checkout</classname>
+            </action>
         </reference>
         <reference name="content">
             <block type="mpcheckout/multipage_state" name="checkout_state" template="egovs/checkout/multipage/state.phtml"/>
@@ -198,13 +192,13 @@
         <reference name="content">
             <block type="mpcheckout/multipage_overview" name="checkout_overview" template="egovs/checkout/multipage/overview.phtml">
                 <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
-            	<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
-            	<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
-            	
-            	<block type="mpcheckout/multipage_review_totals" name="checkout.onepage.review.info.totals" as="totals" template="egovs/checkout/multipage/review/totals.phtml"/>
-            	<block type="mpcheckout/multipage_texts_agreement" name="checkout.multipage.agreementtexts" as="agreementtexts" template="egovs/checkout/multipage/texts/agreement.phtml"/>
-            	<block type="mpcheckout/multipage_texts_info" name="checkout.multipage.infotexts" as="infotexts" template="egovs/checkout/multipage/texts/info.phtml"/>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
+
+                <block type="mpcheckout/multipage_review_totals" name="checkout.onepage.review.info.totals" as="totals" template="egovs/checkout/multipage/review/totals.phtml"/>
+                <block type="mpcheckout/multipage_texts_agreement" name="checkout.multipage.agreementtexts" as="agreementtexts" template="egovs/checkout/multipage/texts/agreement.phtml"/>
+                <block type="mpcheckout/multipage_texts_info" name="checkout.multipage.infotexts" as="infotexts" template="egovs/checkout/multipage/texts/info.phtml"/>
                 <block type="mpcheckout/multipage_agreements" name="checkout.multipage.agreements" as="agreements" template="egovs/checkout/multipage/agreements.phtml"/>
                 <block type="extnewsletter/checkout_selectproducts" name="checkout.multipage.selectproducts" as="newsletter" template="egovs/extnewsletter/checkout/selectproducts.phtml"/>
                 <xblock type="checkout/cart_totals" name="totals" />
@@ -214,7 +208,7 @@
             </block>
         </reference>
     </egovs_checkout_multipage_overview>
-    
+
 
     <egovs_checkout_multipage_success>
         <update handle="mpcheckout"/>
@@ -223,11 +217,11 @@
             <block type="mpcheckout/multipage_success" name="checkout_success" template="egovs/checkout/multipage/success.phtml"/>
         </reference>
     </egovs_checkout_multipage_success>
-    
+
     <egovs_checkout_multipage_successview>
          <remove name="left"/>
 		 <remove name="right"/>
-        
+
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
@@ -236,25 +230,19 @@
         </reference>
         <reference name="content">
             <block type="mpcheckout/multipage_successview" name="checkout_successview" template="egovs/checkout/multipage/successview.phtml">
-            	         
                 <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
-            	<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
-            	<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
-            	  <block type="mpcheckout/multipage_review_totals" name="totals" template="egovs/checkout/multipage/review/totals.phtml"/>
-            	
-                <block type="mpcheckout/multipage_payment_successinfo" name="payment_info">
-                   
-                </block>
-                
-                
+                <block type="mpcheckout/multipage_review_totals" name="totals" template="egovs/checkout/multipage/review/totals.phtml"/>
+                <block type="mpcheckout/multipage_payment_successinfo" name="payment_info"></block>
             </block>
         </reference>
     </egovs_checkout_multipage_successview>
-    
-    
+
+
     <egovs_shipment_cart_totals>
         <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
     </egovs_shipment_cart_totals>
- 
+
 </layout>
