@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dwd_Abomigration>
+            <version>0.1.0</version>
+        </Dwd_Abomigration>
+    </modules>
+     <admin>
+        <routers>
+			<abomigration>
+				<use>admin</use>
+				<args>
+					<module>Dwd_Abomigration</module>
+					<frontName>abomigration</frontName>
+				</args>
+			</abomigration>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+		    <abomigration module="abomigration">  
+		        <title>Abo Migration</title>
+		        <sort_order>72</sort_order>
+				<children>
+					<import_data module="abomigration">
+						<title>Migrationsdaten importieren</title>
+						<sort_order>1000</sort_order>
+						<action>abomigration/adminhtml_import</action>
+					</import_data>
+				    <manage_data module="abomigration">
+				        <title>Migration verwalten</title>
+				        <sort_order>1100</sort_order>
+				        <action>abomigration/adminhtml_abomigration</action>
+				    </manage_data>
+				    <!--
+				    <cron module="abomigration">
+				        <title>Cron test</title>
+				        <sort_order>1200</sort_order>
+				        <action>abomigration/adminhtml_abomigration/testCron</action>
+				    </cron>
+				    -->
+				</children>
+		    </abomigration>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+					    <abomigration>
+							<title>Abomigration Module</title>
+							<sort_order>10</sort_order>
+					        <children>
+					            <import_data module="abomigration">
+					                <title>Migratios Daten importieren</title>
+					                <sort_order>1000</sort_order>
+					                
+					            </import_data>
+					            <manage_data module="abomigration">
+					                <title>Migration verwalten</title>
+					                <sort_order>1100</sort_order>
+					               
+					            </manage_data>   
+					        </children>
+					    </abomigration>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<abomigration>
+					<file>dwd_abomigration.xml</file>
+				</abomigration>
+			</updates>
+		</layout>
+		<translate>
+            <modules>
+                <Dwd_Abomigration>
+                    <files>
+                        <default>Dwd_Abomigration.csv</default>
+                    </files>
+                </Dwd_Abomigration>
+            </modules>
+        </translate>
+    </adminhtml>   
+    <global>
+        <models>
+            <abomigration>
+                <class>Dwd_Abomigration_Model</class>
+                <resourceModel>abomigration_mysql4</resourceModel>
+            </abomigration>
+            <abomigration_mysql4>
+                <class>Dwd_Abomigration_Model_Mysql4</class>
+                <entities>
+                    <abomigration>
+                        <table>dwd_abomigration</table>
+                    </abomigration>
+                </entities>
+            </abomigration_mysql4>
+        </models>
+        <resources>
+            <abomigration_setup>
+                <setup>
+                    <module>Dwd_Abomigration</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </abomigration_setup>
+            <abomigration_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </abomigration_write>
+            <abomigration_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </abomigration_read>
+        </resources>
+        <blocks>
+            <abomigration>
+                <class>Dwd_Abomigration_Block</class>
+            </abomigration>
+        </blocks>
+        <helpers>
+            <abomigration>
+                <class>Dwd_Abomigration_Helper</class>
+            </abomigration>
+        </helpers>
+    </global>
+    <crontab>
+        <jobs>
+            <dwd_abomigration>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>abomigration/cron::runCron</model>
+                </run>
+            </dwd_abomigration>
+        </jobs>
+    </crontab>
+</config>

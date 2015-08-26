@@ -1,0 +1,39 @@
+drop table stationen_set_relation;
+drop table stationen_derivation_entity_varchar;
+drop table stationen_entity_int;
+drop table stationen_entity_varchar;
+drop table stationen_set_entity_varchar;
+drop table stationen_set_entity;
+drop table stationen_derivation_entity;
+drop table stationen_entity;
+
+
+delete from core_resource where code = 'stationen_setup';
+delete from eav_attribute where entity_type_id in(13,14,15);
+
+
+drop table stationen_set_relation;
+drop table stationen_entity_int;
+drop table stationen_entity_varchar;
+drop table stationen_set_entity_varchar;
+drop table stationen_set_entity;
+drop table stationen_entity;
+alter table sales_flat_quote_item drop column station_id;
+alter table sales_flat_order_item drop column station_id;
+---
+SET FOREIGN_KEY_CHECKS=0;
+alter table sales_flat_quote_item drop column station_id;
+alter table sales_flat_order_item drop column station_id;
+drop table stationen_set_relation;
+drop table stationen_derivation_entity_varchar;
+drop table stationen_entity_int;
+drop table stationen_entity_varchar;
+drop table stationen_set_entity_varchar;
+drop table stationen_set_entity;
+drop table stationen_derivation_category_relation;
+drop table stationen_derivation_entity;
+drop table stationen_entity;
+SET FOREIGN_KEY_CHECKS=1;
+
+delete from core_resource where code = 'stationen_setup';
+delete from eav_attribute where entity_type_id in(9,10,11);

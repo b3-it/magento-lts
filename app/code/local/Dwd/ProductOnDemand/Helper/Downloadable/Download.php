@@ -1,0 +1,165 @@
+<?php
+class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable_Helper_Download
+{
+	/**
+	 * Retrieve Resource file handle (socket, file pointer etc)
+	 *
+	 * @return resource
+	 */
+	protected function _getHandle() {
+		if (!$this->_resourceFile) {
+			Mage::throwException(Mage::helper('downloadable')->__('Please set resource file and link type.'));
+		}
+	
+		if (is_null($this->_handle)) {
+			if ($this->_linkType == self::LINK_TYPE_URL) {
+				$_redirects = 0; 
+				do {
+					$port = 80;
+					$this->_urlHeaders = array();
+					$errno = false;
+					$errstr = '';
+					/**
+					 * Validate URL
+					 */
+					$urlProp = parse_url($this->_resourceFile);
+					if (!isset($urlProp['scheme'])
+						|| (
+								strtolower($urlProp['scheme'] != 'http')
+								&& strtolower($urlProp['scheme'] != 'https')
+						)
+					) {
+						Mage::throwException(Mage::helper('downloadable')->__('Invalid download URL scheme.'));
+					}
+					if (!isset($urlProp['host'])) {
+						Mage::throwException(Mage::helper('downloadable')->__('Invalid download URL host.'));
+					}
+					
+					$hostname = $urlProp['host'];
+					if (strtolower($urlProp['scheme'] == 'https')) {
+						$_baseUrl = 'tls://'.$urlProp['host'];
+						$port = 443;
+					} else {
+						$_baseUrl = $urlProp['host'];
+					}
+		
+					if (isset($urlProp['port'])) {
+						$port = (int)$urlProp['port'];
+					}
+					
+					$_baseUrl .= ":$port";
+		
+					$path = '/';
+					if (isset($urlProp['path'])) {
+						$path = $urlProp['path'];
+					}
+					$query = '';
+					if (isset($urlProp['query'])) {
+						$query = '?' . $urlProp['query'];
+					}
+		
+					try {
+						$_verifyPeer = Mage::getStoreConfigFlag('catalog/dwd_pod/verfiy_peer');
+						if (strtolower($urlProp['scheme'] == 'https') && $_verifyPeer) {
+							
+							$context = stream_context_create(
+									array(
+										'ssl' => array(
+												'verify_peer' => $_verifyPeer,
+												'capath' => Mage::getStoreConfig('catalog/dwd_pod/ca_path'),
+										)
+								)
+							);
+							$this->_handle = stream_socket_client($_baseUrl, $errno, $errstr, ini_get("default_socket_timeout"), STREAM_CLIENT_CONNECT, $context);
+						} else {
+							$this->_handle = stream_socket_client($_baseUrl, $errno, $errstr);
+						}
+					} catch (Exception $e) {
+						throw $e;
+					}
+		
+					if ($this->_handle === false) {
+						Mage::throwException(Mage::helper('downloadable')->__('Cannot connect to remote host, error: %s.', $errstr));
+					}
+		
+					$headers = 'GET ' . $path . $query . ' HTTP/1.0' . "\r\n"
+							. 'Host: ' . $hostname . "\r\n"
+									. 'User-Agent: Magento ver/' . Mage::getVersion() . "\r\n"
+											. 'Connection: close' . "\r\n"
+													. "\r\n";
+					fwrite($this->_handle, $headers);
+		
+					while (!feof($this->_handle)) {
+						$str = fgets($this->_handle, 1024);
+						if ($str == "\r\n") {
+							break;
+						}
+						$match = array();
+						if (preg_match('#^([^:]+): (.*)\s+$#', $str, $match)) {
+							$k = strtolower($match[1]);
+							if ($k == 'set-cookie') {
+								continue;
+							}
+							else {
+								$this->_urlHeaders[$k] = trim($match[2]);
+							}
+						}
+						elseif (preg_match('#^HTTP/[0-9\.]+ (\d+) (.*)\s$#', $str, $match)) {
+							$this->_urlHeaders['code'] = $match[1];
+							$this->_urlHeaders['code-string'] = trim($match[2]);
+						}
+					}
+					
+					if (!isset($this->_urlHeaders['code']) || $this->_urlHeaders['code'] != 200) {
+						fclose($this->_handle);
+						$this->_handle = null;
+					}
+					
+					if (isset($this->_urlHeaders['location']) && (($this->_urlHeaders['code'] >= 300 && $this->_urlHeaders['code'] <= 303) || $this->_urlHeaders['code'] == 307)) {
+						$_redirects++;
+						$this->_resourceFile = $this->_urlHeaders['location'];
+					}
+				} while (
+						isset($this->_urlHeaders['code'])
+						&& (
+								($this->_urlHeaders['code'] >= 300
+									&& $this->_urlHeaders['code'] <= 303)
+								|| $this->_urlHeaders['code'] == 307
+							)
+						&& $_redirects < 5
+				);
+				
+				if (!isset($this->_urlHeaders['code']) || $this->_urlHeaders['code'] != 200) {
+					if (isset($this->_urlHeaders['code'])) {
+						Mage::log(sprintf(
+								"%sCode %s:\r\nRequest Headers:\r\n%s\r\nResponse Headers:\r\n%s",
+								Mage::helper('downloadable')->__('An error occurred while getting the requested content:'),
+								$this->_urlHeaders['code'],
+								$headers,
+								var_export($this->_urlHeaders, true)
+							),
+							Zend_Log::ERR,
+							Egovs_Helper::EXCEPTION_LOG_FILE
+						);
+					}
+					Mage::throwException(Mage::helper('downloadable')->__('An error occurred while getting the requested content. Please contact the store owner.'));
+				}
+			}
+			elseif ($this->_linkType == self::LINK_TYPE_FILE) {
+				$this->_handle = new Varien_Io_File();
+				if (!is_file($this->_resourceFile)) {
+					Mage::helper('core/file_storage_database')->saveFileToFilesystem($this->_resourceFile);
+				}
+				$this->_handle->open(array('path'=>Mage::getBaseDir('var')));
+				if (!$this->_handle->fileExists($this->_resourceFile, true)) {
+					Mage::throwException(Mage::helper('downloadable')->__('The file does not exist.'));
+				}
+				$this->_handle->streamOpen($this->_resourceFile, 'r');
+			}
+			else {
+				Mage::throwException(Mage::helper('downloadable')->__('Invalid download link type.'));
+			}
+		}
+		return $this->_handle;
+	}
+}

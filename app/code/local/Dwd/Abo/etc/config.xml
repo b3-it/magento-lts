@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dwd_Abo>
+            <version>0.1.2</version>
+        </Dwd_Abo>
+    </modules>
+    <frontend>
+        <routers>
+            <abo>
+                <use>standard</use>
+                <args>
+                    <module>Dwd_Abo</module>
+                    <frontName>dwd_abo</frontName>
+                </args>
+            </abo>
+        </routers>
+        <layout>
+            <updates>
+                <dwd_abo>
+                    <file>dwd_abo.xml</file>
+                </dwd_abo>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Dwd_Abo>
+                    <files>
+                        <default>Dwd_Abo.csv</default>
+                    </files>
+                </Dwd_Abo>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+			<dwd_abo>
+				<use>admin</use>
+				<args>
+					<module>Dwd_Abo</module>
+					<frontName>dwd_abo</frontName>
+				</args>
+			</dwd_abo>
+        </routers>
+    </admin>
+    <adminhtml>
+		    <menu>
+		    	<!-- Nur für intern -->
+		        <!-- <dwd_abo module="dwd_abo">
+		    		<title>Abo</title>
+		    		<sort_order>71</sort_order>
+		    		<children>
+		    		    <abo module="dwd_abo">
+		    				<title>Show Abos</title>
+		    				<sort_order>0</sort_order>
+		    				<action>dwd_abo/adminhtml_abo</action>
+		    			</abo>
+		    		    <collect module="dwd_abo">
+		    		        <title>Collect Abos</title>
+		    		        <sort_order>0</sort_order>
+		    		        <action>dwd_abo/adminhtml_abo/collect</action>
+		    		    </collect>
+		    		</children>
+		        </dwd_abo> -->
+		        <sales>
+					<children>
+		    			<dwd_abo module="dwd_abo">
+		    				<title>Show Abos</title>
+		    				<sort_order>100</sort_order>
+		    				<action>dwd_abo/adminhtml_abo</action>
+		    			</dwd_abo>
+		    		</children>
+		    	</sales>
+		    </menu>
+		    <acl>
+		    	<resources>
+		    		<all>
+		    			<title>Allow Everything</title>
+		    		</all>
+		    		<admin>
+		    			<children>
+		    				<dwd_abo>
+		    					<title>Abo Module</title>
+		    					<sort_order>10</sort_order>
+		    					<children>
+		    						<abo module="dwd_abo">
+					    				<title>Show Abos</title>
+					    				<sort_order>0</sort_order>
+					    			</abo>
+					    		    <collect module="dwd_abo">
+					    		        <title>Collect Abos</title>
+					    		        <sort_order>10</sort_order>
+					    		    </collect>
+		    					</children>
+		    			    </dwd_abo>
+		    				<sales>
+					    		<children>
+					    			<dwd_abo module="dwd_abo">
+										<title>Abo</title>
+									</dwd_abo>
+								</children>
+							</sales>
+		    			    <system>
+		    			        <children>
+		    			            <config>
+		    			                <children>
+		    			                    <dwd_abo translate="title" module="dwd_abo">
+		    			                        <title>Abo Section</title>
+		    			                    </dwd_abo>
+		    			                </children>
+		    			            </config>
+		    			        </children>
+		    			    </system>
+		    			</children>
+		    		</admin>
+		    	</resources>
+		    </acl>
+		    <layout>
+		    	<updates>
+		    	    <dwd_abo>
+		    			<file>dwd_abo.xml</file>
+		    	    </dwd_abo>
+		    	</updates>
+		    </layout>
+        <translate>
+            <modules>
+                <Dwd_Abo>
+                    <files>
+                        <default>Dwd_Abo.csv</default>
+                    </files>
+                </Dwd_Abo>
+            </modules>
+        </translate>
+    </adminhtml>
+    <global>
+        <models>
+            <dwd_abo>
+                <class>Dwd_Abo_Model</class>
+                <resourceModel>dwd_abo_mysql4</resourceModel>
+            </dwd_abo>
+            <dwd_abo_mysql4>
+                <class>Dwd_Abo_Model_Mysql4</class>
+                <entities>
+                    <abo>
+                        <table>dwd_abo</table>
+                    </abo>
+                    <tierprice_depends>
+                        <table>dwd_abo_tierprice_depends</table>
+                    </tierprice_depends>
+                </entities>
+            </dwd_abo_mysql4>
+        </models>
+        <resources>
+            <dwd_abo_setup>
+                <setup>
+                    <module>Dwd_Abo</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dwd_abo_setup>
+            <abo_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </abo_write>
+            <abo_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </abo_read>
+        </resources>
+        <blocks>
+            <dwd_abo>
+                <class>Dwd_Abo_Block</class>
+            </dwd_abo>
+        </blocks>
+        <helpers>
+            <dwd_abo>
+                <class>Dwd_Abo_Helper</class>
+            </dwd_abo>
+        </helpers>
+    	<allowed_renewal_payment_methods>	
+    		<openaccount>openaccount</openaccount>
+			<sepadebitbund>sepadebitbund</sepadebitbund>
+    	</allowed_renewal_payment_methods>
+    </global>
+        <crontab>
+        <jobs>
+            <dwd_abo_collect>
+                <schedule>
+                    <cron_expr>0,10,20,30,40,50 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>dwd_abo/cron::collect</model>
+                </run>
+            </dwd_abo_collect>
+        </jobs>
+    </crontab>
+</config>

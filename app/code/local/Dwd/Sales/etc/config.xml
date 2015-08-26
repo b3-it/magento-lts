@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Dwd_Sales>
+			<version>0.1.0</version>
+		</Dwd_Sales>
+	</modules>
+	<admin>
+		<routers>
+			<dwdsales>
+				<use>admin</use>
+				<args>
+					<module>Dwd_Sales</module>
+					<frontName>dwdsales</frontName>
+				</args>
+			</dwdsales>
+		</routers>
+	</admin>
+	<adminhtml>
+		<menu>
+			<sales module="sales">
+				<children>
+					<dwdsales module="dwdsales">
+						<title>Shipping Items</title>
+						<sort_order>10</sort_order>
+						<action>dwdsales/adminhtml_shipping</action>
+					</dwdsales>
+				</children>
+			</sales>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<sales>
+							<children>
+								<dwdsales>
+									<title>Shipping Items</title>
+									<sort_order>10</sort_order>
+								</dwdsales>
+							</children>
+						</sales>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<dwdsales>
+					<file>dwd_sales.xml</file>
+				</dwdsales>
+			</updates>
+		</layout>
+		<translate>
+			<modules>
+				<Dwd_Sales>
+					<files>
+						<default>Dwd_Sales.csv</default>
+					</files>
+				</Dwd_Sales>
+			</modules>
+		</translate>
+	</adminhtml>
+	<global>
+		<blocks>
+			<dwdsales>
+				<class>Dwd_Sales_Block</class>
+			</dwdsales>
+		</blocks>
+		<helpers>
+			<dwdsales>
+				<class>Dwd_Sales_Helper</class>
+			</dwdsales>
+		</helpers>
+	</global>
+</config>

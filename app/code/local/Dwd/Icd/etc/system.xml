@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+         <dwd_icd translate="label" module="dwd_icd">
+         	<label>Instant Credential Deployment</label>
+            <tab>general</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>50</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <email translate="label">
+                    <label>E-Mail Settings</label>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <admin_email_address translate="label">
+                            <label>ICD Admin Email Adresses</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>separate by ;</comment>
+                        </admin_email_address>
+                        <sales_order_email_template translate="label">
+                            <label>Sales Order Email CMS Block</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <source_model>dwd_icd/system_config_source_cms_block</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sales_order_email_template>
+                     </fields>
+                </email>  
+                <debug translate="label">
+                    <label>System Settings</label>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <is_debug translate="label">
+                            <label>Debug Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </is_debug>
+                        <lifetime translate="label">
+                            <label>Lifetime</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </lifetime>
+                     </fields>
+                </debug>  
+         </groups>
+        </dwd_icd>
+        <dev>
+            <groups>
+                <modulelog>
+                    <fields>
+                        <dwd_icd>
+                            <label>DWD ICD</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </dwd_icd>
+                    </fields>
+                </modulelog>
+            </groups>
+        </dev>
+    </sections>
+</config>
