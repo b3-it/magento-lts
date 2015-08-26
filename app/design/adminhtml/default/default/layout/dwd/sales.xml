@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <dwdsales_adminhtml_shipping_index>
+        <reference name="content">
+            <block type="dwdsales/adminhtml_shipping" name="dwdsales" />
+        </reference>
+    </dwdsales_adminhtml_shipping_index>
+</layout>
