@@ -28,6 +28,10 @@
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
             </div>
 
+            <div class="product-name">
+                <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></span>
+            </div>
+
             <div class="product-img-box">
                 <div class="product-name">
                     <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
@@ -36,10 +40,6 @@
             </div>
 
             <div class="product-shop">
-                <div class="product-name">
-                    <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></span>
-                </div>
-
                 <div class="price-info">
                     <?php echo $this->getPriceHtml($_product); ?>
                     <?php echo $this->getChildHtml('bundle_prices') ?>
@@ -93,7 +93,7 @@
                     </div>
                 <?php endif; ?>
             </div>
-<?php echo $this->getChildHtml('descriptionfile') ?>
+            <?php echo $this->getChildHtml('descriptionfile') ?>
             <?php echo $this->getChildHtml('related_products') ?>
 
             <div class="clearer"></div>

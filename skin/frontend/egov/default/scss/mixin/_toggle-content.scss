@@ -1,25 +1,7 @@
 //
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -28,8 +10,8 @@
         display: block;
         width: 100%;
         position: relative;
-        border: 1px solid $c-module-border;
-        background-color: $c-module-background;
+        border: 1px solid $global-border-color;
+        background-color: $global-lightcolor;
 
         li {
             float: left;
@@ -43,26 +25,25 @@
                 height: 40px;
                 line-height: 40px;
                 cursor: pointer;
-                text-transform: uppercase;
-                font-size: $f-size-xs;
+                font-size: $global-fontsize;
                 position: relative;
                 bottom: -1px;
             }
         }
 
         li.current {
-            border-right: 1px solid $c-module-border;
-            border-left: 1px solid $c-module-border;
+            border-right: 1px solid $global-border-color;
+            border-left: 1px solid $global-border-color;
 
             > span {
-                background-color: #FFFFFF;
+                background-color: $global-wrapper-color;
                 z-index: 5;
             }
         }
 
         li.current span,
         li:hover span {
-            color: $c-action;
+            color: $global-linkcolor;
         }
 
         li:first-child {
@@ -85,7 +66,7 @@
             width: 100%;
             display: none;
             padding: 15px;
-            border: 1px solid $c-module-border;
+            border: 1px solid $global-border-color;
             border-top: 0;
         }
 
@@ -95,7 +76,7 @@
     }
 }
 
-@mixin accordionDtBase($arrow-direction: 'down', $border-color: $c-module-border) {
+@mixin accordionDtBase($arrow-direction: 'down', $border-color: $global-border-color) {
     @include h4;
     @include not-selectable;
     font-weight: normal;
@@ -105,7 +86,7 @@
     border-style: solid;
     border-color: $border-color;
     position: relative;
-    background-color: $c-module-background;
+    background-color: $global-lightcolor;
 
     &:after {
         @include triangle(#{$arrow-direction}, 4px, $c-action);
@@ -115,7 +96,7 @@
     }
 
     &:hover {
-        background-color: $c-module-background-hover;
+        background-color: $global-lightcolor-hover;
     }
 }
 
@@ -135,7 +116,7 @@
             margin: 0;
             border-width: 0 1px;
             border-style: solid;
-            border-color: $c-module-border;
+            border-color: $global-border-color;
         }
         > dd:last-child {
             border-width: 0 1px 1px 1px;
@@ -150,10 +131,10 @@
             border-bottom-width: 0;
 
             &:hover {
-                color: $c-action;
+                color: $global-linkcolor;
             }
             &:after {
-                @include triangle(right, 4px, $c-action);
+                @include triangle(right, 4px, $global-linkcolor);
             }
             &.last {
                 border-bottom-width: 1px;
@@ -173,7 +154,7 @@
                 }
 
                 &.current:after {
-                    @include triangle(down, 4px, $c-action);
+                    @include triangle(down, 4px, $global-linkcolor);
                     left: 6px;
                     top: 50%;
                     margin-top: -3px;
