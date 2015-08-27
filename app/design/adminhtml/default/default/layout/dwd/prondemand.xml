@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_catalog_product_prondemand>
+        <reference name="product_tabs">
+            <block type="prondemand/adminhtml_catalog_product_edit_tab_prondemand" name="product.edit.tab.prondemand" template="dwd/prondemand/product/edit/downloadable.phtml">
+                <block type="configdownloadable/adminhtml_widget_accordion" name="accordion">
+                    <block type="downloadable/adminhtml_catalog_product_edit_tab_downloadable_samples" name="accordion_samples">
+                        <action method="setData"><name>title</name><value>Samples</value></action>
+                    </block>
+                    <block type="prondemand/adminhtml_catalog_product_edit_tab_prondemand_ondemand" name="catalog.product.edit.tab.downloadable.ondemand" as="accordion_ondemand" template="dwd/prondemand/product/edit/downloadable/ondemand.phtml">
+                        <action method="setData"><name>title</name><value>Dynamic Links</value></action>
+                        <action method="setData"><name>is_open</name><value>1</value></action>
+                    </block>
+                    
+                    <action method="setData"><name>id</name><value>downloadableInfo</value></action>
+                    <action method="addAccordionItem"><name>samples</name><block>accordion_samples</block></action>
+                    <action method="addAccordionItem"><name>ondemand</name><block>catalog.product.edit.tab.downloadable.ondemand</block></action>
+                </block>
+            </block>
+            <action method="addTab"><name>prondemand_tab</name><block>product.edit.tab.prondemand</block></action>
+            <action method="addTab"><name>period</name><block>periode/adminhtml_catalog_product_edit_tab_periode</block></action>        
+        </reference>
+    </adminhtml_catalog_product_prondemand>
+    
+     <PRODUCT_TYPE_prondemand>
+        <reference name="product.composite.fieldset"> 
+             <block type="prondemand/adminhtml_catalog_product_composite_fieldset_prondemand" name="product.composite.fieldset.downloadable" before="product.composite.fieldset.options" template="dwd/prondemand/product/composite/fieldset/prondemand.phtml" >
+            </block>
+        </reference>
+    </PRODUCT_TYPE_prondemand>
+    
+    
+    <adminhtml_sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender"><type>prondemand</type><block>adminhtml/sales_order_view_items_renderer_default</block><template>dwd/prondemand/sales/order/view/items/renderer/prondemand.phtml</template></action>
+            <action method="addColumnRender"><column>podname</column><block>prondemand/adminhtml_sales_items_column_name</block><template>dwd/prondemand/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>prondemand</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/prondemand/sales/order/invoice/create/items/renderer/prondemand.phtml</template></action>
+            <action method="addColumnRender"><column>podname</column><block>prondemand/adminhtml_sales_items_column_name</block><template>dwd/prondemand/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>prondemand</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/prondemand/sales/order/view/items/renderer/prondemand.phtml</template></action>
+            <action method="addColumnRender"><column>podname</column><block>prondemand/adminhtml_sales_items_column_name</block><template>dwd/prondemand/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_items">
+            <action method="addItemRender"><type>prondemand</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/prondemand/sales/order/invoice/view/items/renderer/prondemand.phtml</template></action>
+            <action method="addColumnRender"><column>podname</column><block>prondemand/adminhtml_sales_items_column_name</block><template>dwd/prondemand/sales/items/column/invoice/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>prondemand</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/prondemand/sales/order/creditmemo/create/items/renderer/prondemand.phtml</template></action>
+            <action method="addColumnRender"><column>podname</column><block>prondemand/adminhtml_sales_items_column_name</block><template>dwd/prondemand/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>prondemand</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/prondemand/sales/order/creditmemo/view/items/renderer/prondemand.phtml</template></action>
+            <action method="addColumnRender"><column>podname</column><block>prondemand/adminhtml_sales_items_column_name</block><template>dwd/prondemand/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_items">
+            <action method="addItemRender"><type>prondemand</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/prondemand/sales/order/creditmemo/view/items/renderer/prondemand.phtml</template></action>
+            <action method="addColumnRender"><column>podname</column><block>prondemand/adminhtml_sales_items_column_name</block><template>dwd/prondemand/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+</layout>

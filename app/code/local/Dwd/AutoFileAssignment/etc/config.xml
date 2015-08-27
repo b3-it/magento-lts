@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Dwd_AutoFileAssignment>
+            <version>0.1.0</version>
+        </Dwd_AutoFileAssignment>
+    </modules>
+    
+    <adminhtml>
+        <!-- Translate muss in config.xml liegen und nicht in adminhtml.xml -->
+        <translate>
+            <modules>
+                <Dwd_AutoFileAssignment>
+                    <files>
+                        <default>Dwd_AutoFileAssignment.csv</default>
+                    </files>
+                </Dwd_AutoFileAssignment>
+            </modules>
+        </translate>
+    </adminhtml>
+    
+    <global>
+        <models>
+            <dwdafa>
+                <class>Dwd_AutoFileAssignment_Model</class>
+                <resourceModel>dwdafa_resource</resourceModel>
+            </dwdafa>
+            <dwdafa_resource>
+                <class>Dwd_AutoFileAssignment_Model_Resource</class>
+                <entities></entities>
+            </dwdafa_resource>
+        </models>
+        <resources>
+            <dwdafa_setup>
+                <setup>
+                    <module>Dwd_AutoFileAssignment</module>
+                </setup>
+            </dwdafa_setup>
+        </resources>
+        <blocks>
+            <dwdafa>
+                <class>Dwd_AutoFileAssignment_Block</class>
+            </dwdafa>
+        </blocks>
+        <helpers>
+            <dwdafa>
+                <class>Dwd_AutoFileAssignment_Helper</class>
+            </dwdafa>
+        </helpers>
+    </global>
+    
+    <default>
+        <catalog>
+            <dwd_afa>
+                <runtime>*/4,0</runtime>
+                <use_tree_assignment>1</use_tree_assignment>
+                <storage>/configdownloadable</storage>
+            </dwd_afa>
+        </catalog>
+        <crontab>
+            <jobs>
+                <dwdafa_autoassign_files>
+                    <schedule>
+                        <cron_expr>0 */4 * * *</cron_expr>
+                    </schedule>
+                </dwdafa_autoassign_files>
+            </jobs>
+        </crontab>
+    </default>
+    
+    <crontab>
+        <jobs>
+            <dwdafa_clean_links>
+                <schedule>
+                    <cron_expr>15 0 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>dwdafa/observer::cleanExpiredDynamicLinks</model>
+                </run>
+            </dwdafa_clean_links>
+            <dwdafa_autoassign_files>
+                <schedule>
+                    <config_path>crontab/jobs/dwdafa_auto_assign_files/schedule/cron_expr</config_path>
+                </schedule>
+                <run>
+                    <model>dwdafa/observer::autoAssignFiles</model>
+                </run>
+            </dwdafa_autoassign_files>
+        </jobs>
+    </crontab>
+</config>

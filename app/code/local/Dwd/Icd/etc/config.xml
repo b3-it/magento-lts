@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dwd_Icd>
+            <version>0.1.6</version>
+        </Dwd_Icd>
+    </modules>
+    <frontend>
+        <routers>
+            <dwd_icd>
+                <use>standard</use>
+                <args>
+                    <module>Dwd_Icd</module>
+                    <frontName>dwd_icd</frontName>
+                </args>
+            </dwd_icd>
+        </routers>
+        <secure_url>
+            <dwd_icd>/dwd_icd/index/</dwd_icd>
+        </secure_url>
+        <layout>
+            <updates>
+                <dwd_icd>
+                    <file>dwd_icd.xml</file>
+                </dwd_icd>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Dwd_Icd>
+                    <files>
+                        <default>Dwd_Icd.csv</default>
+                    </files>
+                </Dwd_Icd>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+       <routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<Dwd_Icd_Adminhtml after="Mage_Adminhtml">Dwd_Icd_Adminhtml</Dwd_Icd_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+    </admin>
+    <adminhtml>
+		<menu>
+		<sales>
+		<children>
+		    <dwd_icd module="dwd_icd">
+				<title>ICD</title>
+				<sort_order>71</sort_order>
+				<children>
+				    <icd_account module="dwd_icd">
+				        <title>Accounts</title>
+				        <sort_order>20</sort_order>
+				        <action>adminhtml/icd_account</action>
+				    </icd_account>
+				    <icd_orderitems module="dwd_icd">
+				        <title>Order Items</title>
+				        <sort_order>30</sort_order>
+				        <action>adminhtml/icd_orderitem</action>
+				    </icd_orderitems>
+
+				    <icd_sync_all module="dwd_icd">
+				        <title>Synchronize All</title>
+				        <sort_order>40</sort_order>
+				        <action>adminhtml/icd_account/syncAll</action>
+				    </icd_sync_all>
+
+				</children>
+			</dwd_icd>
+			</children>
+			</sales>
+			<system>
+				<children>
+					<icd_connection module="dwd_icd">
+						<title>ICD Connections</title>
+						<sort_order>10</sort_order>
+					    <action>adminhtml/icd_connection</action>
+					</icd_connection>
+				</children>
+			</system>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+					    <sales>
+					    	<children>
+					    	<dwd_icd module="dwd_icd">
+								<title>ICD</title>
+								<children>
+				    				<icd_account module="dwd_icd">
+				       					<title>Accounts</title>
+				    				</icd_account>
+				    				<icd_orderitems module="dwd_icd">
+				        				<title>Order Items</title>
+				       				</icd_orderitems>
+				    				<icd_sync_all module="dwd_icd">
+				        				<title>Syncronice All</title>
+				       			    </icd_sync_all>
+								</children>
+							</dwd_icd>
+					    	</children>
+					    </sales>
+					    <system>
+					        <children>
+					            <config>
+					                <children>
+					                    <dwd_icd translate="title" module="dwd_icd">
+					                        <title>ICD Connections</title>
+					                    </dwd_icd>
+					                </children>
+					            </config>
+					        </children>
+					    </system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<icd>
+					<file>dwd/icd.xml</file>
+				</icd>
+			</updates>
+		</layout>
+        <translate>
+            <modules>
+                <Dwd_Icd>
+                    <files>
+                        <default>Dwd_Icd.csv</default>
+                    </files>
+                </Dwd_Icd>
+            </modules>
+        </translate>
+    </adminhtml>
+    <global>
+        <models>
+            <dwd_icd>
+                <class>Dwd_Icd_Model</class>
+                <resourceModel>dwd_icd_mysql4</resourceModel>
+            </dwd_icd>
+            <dwd_icd_mysql4>
+                <class>Dwd_Icd_Model_Mysql4</class>
+                <entities>
+                    <icd_connection>
+                        <table>icd_connection</table>
+                    </icd_connection>
+                    <icd_account>
+                        <table>icd_account</table>
+                    </icd_account>
+                    <icd_orderitem>
+                        <table>icd_orderitem</table>
+                    </icd_orderitem>
+                    <icd_debug>
+                        <table>icd_debug</table>
+                    </icd_debug>
+                    <icd_groups>
+                        <table>icd_groups</table>
+                    </icd_groups>
+                    <icd_attributes>
+                        <table>icd_attributes</table>
+                    </icd_attributes>
+                </entities>
+            </dwd_icd_mysql4>
+        </models>
+        <resources>
+            <dwd_icd_setup>
+                <setup>
+                    <module>Dwd_Icd</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dwd_icd_setup>
+            <dwd_icd_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </dwd_icd_write>
+            <dwd_icd_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </dwd_icd_read>
+        </resources>
+        <blocks>
+            <dwd_icd>
+                <class>Dwd_Icd_Block</class>
+            </dwd_icd>
+            <mpcheckout>
+                <rewrite>
+                    <multipage_successview>Dwd_Icd_Block_Checkout_Multipage_Successview</multipage_successview>
+                </rewrite>
+            </mpcheckout>
+        </blocks>
+        <helpers>
+            <dwd_icd>
+                <class>Dwd_Icd_Helper</class>
+            </dwd_icd>
+        </helpers>
+        <applications>
+            <AgrowetterPrognose>
+                <label>Agrowetter Prognose</label>
+            </AgrowetterPrognose>
+            <!--
+            <AgrowetterPrognoseMonat>
+                <label>Agrowetter Prognose Monat</label>
+            </AgrowetterPrognoseMonat>
+             <AgrowetterPrognoseJahr>
+                <label>Agrowetter Prognose Jahr</label>
+            </AgrowetterPrognoseJahr>
+            -->
+             <AgrowetterBeregnung>
+                <label>Agrowetter Prognose Beregnung</label>
+            </AgrowetterBeregnung>
+            <AgrowetterWetterfax>
+                <label>Agrowetter Prognose Wetterfax</label>
+            </AgrowetterWetterfax>
+            <Luftfahrt_pcmet>
+                    <label>Luftfahrt PC Met</label>
+            </Luftfahrt_pcmet>
+        </applications>
+        <events>
+        	<stationen_save_before>
+        	<observers>
+                    <icd_stationen_save_before>
+                        <class>dwd_icd/observer</class>
+                        <method>beforeStationSaved</method>
+                    </icd_stationen_save_before>
+                </observers>
+        	</stationen_save_before>
+        </events>
+        <sales>
+        	<quote>
+        		<item>
+        			<product_attributes>
+                        <icd_use/>
+                    </product_attributes>
+        		</item>
+        	</quote>
+        </sales>
+    </global>
+    <crontab>
+        <jobs>
+            <dwd_icd_sync>
+                <schedule>
+                    <cron_expr>5,15,25,35,45,55 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>dwd_icd/cron::runSync</model>
+                </run>
+            </dwd_icd_sync>
+        </jobs>
+    </crontab>
+    <default>
+    <system>
+    	<dwd_icd>
+    		<debug>
+    			<is_debug>0</is_debug>
+    		    <lifetime>120</lifetime>
+    		</debug>
+    	    <email>
+    	        <sales_order_email_template>icd_sales_order_email</sales_order_email_template>
+    	    </email>
+    	</dwd_icd>
+    </system>
+    <product>
+    <icd_use>0</icd_use>
+    </product>
+    </default>
+</config>

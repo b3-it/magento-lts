@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+        <default>
+                <reference name="head">
+                        <action method="setTemplate"><template>egovs/page/head.phtml</template></action>
+                        <!-- Support für Native events und Aufrufe wie $(id).trigger('change') -->
+                        <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action>
+                </reference>
+        </default>
+        <adminhtml_customer_edit>
+                <reference name="customer_edit_tab_view">
+                        <action method="setTemplate"><template>egovs/customer/tab/view.phtml</template></action>
+                </reference>        
+        </adminhtml_customer_edit>
+        <adminhtml_sales_order_create_index>
+                <reference name="head">
+                        <action method="addJs"><file>egovs/mage/adminhtml/sales.js</file></action>
+                </reference>
+        </adminhtml_sales_order_create_index>
+        
+        <pdftemplate_pdf_item_renderer>
+                <reference name="pdftemplate_pdf_item_renderer">
+                        <action method="addItemRenderer">
+                                <type>configvirtual</type>
+                                <block>configvirtual/sales_item_renderer_pdf_configvirtual</block>
+                                <template>dwd/configvirtual/sales/items/renderer/pdf/configvirtual.phtml</template>
+                        </action>
+                        <action method="addItemRenderer">
+                                <type>configdownloadable</type>
+                                <block>configdownloadable/sales_item_renderer_pdf_configdownloadable</block>
+                                <template>dwd/configdownloadable/sales/items/renderer/pdf/configdownloadable.phtml</template>
+                        </action>
+                        <action method="addItemRenderer">
+                                <type>prondemand</type>
+                                <block>prondemand/sales_item_renderer_pdf_prondemand</block>
+                                <template>dwd/prondemand/sales/items/renderer/pdf/prondemand.phtml</template>
+                        </action>
+                </reference>
+        </pdftemplate_pdf_item_renderer>
+</layout>
