@@ -298,9 +298,53 @@ body:not(.customer-account) .block:first-child .block-title {
     top: -20px;
 }
 
-.block-reorder {
+
+/* ============================================ *
+ * Reorder-Box Styles
+ * ============================================ */
+
+div.block-reorder {
     margin-top: $global-boxmargin;
+    width: $global-leftcol-width + 5;
+
+    .validation-advice {
+        display: block;
+        margin: 10px 0px;
+        color: $global-warning-color;
+        font-weight: bold;
+    }
+
+    input[type="checkbox"].validation-passed {
+        outline: $global-warning-color 2px solid;
+    }
+
+    button.egov-float-left {
+        position: relative;
+        left: -3px;
+    }
+
+    button.btn-cart {
+        @extend .egov-float-right;
+        position: relative;
+        right: -3px;
+    }
+
+    li {
+        margin-top: $box-spacing;
+        margin-bottom: 0;
+
+        input {
+            width: auto;
+            float: left;
+        }
+    }
+
+    p.product-name {
+        display: inline-block;
+        margin-bottom: 0;
+    }
 }
+
 
 .block-account,
 .block-cms-menu {

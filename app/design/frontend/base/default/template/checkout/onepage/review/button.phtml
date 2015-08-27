@@ -5,7 +5,18 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+
+/* http://www.codexpedia.com/magento/getting-the-grand-total-from-magento-shopping-cart/ */
+
+$quote = Mage::getSingleton('checkout/session')->getQuote();
+
 ?>
 <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Place Order')) ?>" class="button btn-checkout" onclick="review.save();">
-    <?php echo $this->__('Place Order') ?>
+    <?php if($quote) {
+        echo $this->__('Buy for %s', $quote->getStore()->formatPrice($quote->getGrandTotal(), false));
+    }
+    else {
+        echo $this->__('Place Order');
+    } ?>
 </button>
+

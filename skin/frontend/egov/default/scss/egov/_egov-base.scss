@@ -22,11 +22,11 @@
         span.product-name {
             padding-left: $global-tdpadding;
         }
-    }
 
-    thead th.space {
-        padding-left: $global-tdpadding;
-        padding-right: $global-tdpadding;
+        .space {
+            padding-left: $global-tdpadding;
+            padding-right: $global-tdpadding;
+        }
     }
 
     thead th,
