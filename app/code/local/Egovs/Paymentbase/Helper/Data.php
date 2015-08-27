@@ -1953,4 +1953,21 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
     	 
     	throw new Exception($errorMessage);
     }
+    
+    
+    /**
+     * Ermitteln des Wertes eines Haushaltsparameters anhand einer Id
+     * @param Id des Haushaltparameters $id
+     * @return string
+     */
+    public function getHaushaltsparameter($id)
+    {
+    	$obj = Mage::getModel('paymentbase/haushaltsparamter')->load(id);
+    	if($obj)
+    	{
+    		return $obj->getValue();
+    	}
+    	return "";
+    	
+    }
 }
