@@ -181,20 +181,12 @@
     }
 }
 
+
 /* ============================================ *
  * My Account Global Styles
  * ============================================ */
 body.customer-account {
-    .validation-advice {
-        display: block;
-        margin: 10px 0px;
-        color: $global-warning-color;
-        font-weight: bold;
-    }
 
-    input[type=checkbox].validation-passed {
-        outline: $global-warning-color 2px solid;
-    }
 
     .my-account {
         .dashboard {
@@ -261,17 +253,6 @@ body.customer-account {
             margin-left: 0px;
         }
 
-        button.egov-float-left {
-            position: relative;
-            left: -3px;
-        }
-
-        button.btn-cart {
-            @extend .egov-float-right;
-            position: relative;
-            right: -3px;
-        }
-
         .block {
             ol#compare-items {
                 li {
@@ -287,23 +268,6 @@ body.customer-account {
                 .actions {
                     margin-top: $trim;
                 }
-            }
-        }
-
-        ol#cart-sidebar-reorder {
-            li {
-                margin-top: $box-spacing;
-                margin-bottom: 0;
-
-                input {
-                    width: auto;
-                    float: left;
-                }
-            }
-
-            p.product-name {
-                display: inline-block;
-                margin-bottom: 0;
             }
         }
 
