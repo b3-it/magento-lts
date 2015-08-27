@@ -29,11 +29,6 @@
         padding-right: $global-tdpadding;
     }
 
-    tbody td {
-        background-color: $global-checkout-tdbackground;
-        color: $global-checkout-tdfontcolor;
-    }
-
     thead th,
     tbody td,
     tbody th {
@@ -44,9 +39,21 @@
         border-style: solid;
     }
 
-    tbody td h3 {
-        margin: 0px;
-        padding: 0px;
+    tbody {
+        td {
+            background-color: $global-checkout-tdbackground;
+            color: $global-checkout-tdfontcolor;
+
+            h3 {
+                margin: 0px;
+                padding: 0px;
+            }
+        }
+
+        td:nth-child(2), td:nth-child(3),
+        td:nth-child(5), td:nth-child(6) {
+            text-align: right;
+        }
     }
 }
 
