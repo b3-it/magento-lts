@@ -764,7 +764,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				}
 			}
 			
-			$product = Mage::getSingleton('catalog/product')->load($item->getProductId());
+			$product = $item->getProduct();
 			$haushaltsstelle = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('haushaltsstelle'));
 			$objektnummer = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('objektnummer'));
 			$objektnummerMwst = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('objektnummer_mwst'));
