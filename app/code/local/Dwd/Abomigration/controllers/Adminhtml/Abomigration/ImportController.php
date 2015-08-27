@@ -9,7 +9,7 @@
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Dwd_Abomigration_Adminhtml_ImportController extends Mage_Adminhtml_Controller_Action
+class Dwd_Abomigration_Adminhtml_Abomigration_ImportController extends Mage_Adminhtml_Controller_Action
 {
     /**
      * Custom constructor.

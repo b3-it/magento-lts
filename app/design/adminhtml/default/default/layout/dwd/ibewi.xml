@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <ibewi_adminhtml_access_index>
+    <adminhtml_ibewi_access_index>
         <reference name="content">
             <block type="ibewi/adminhtml_access" name="ibewi" />
         </reference>
-    </ibewi_adminhtml_access_index>
-   <ibewi_adminhtml_customer_index>
+    </adminhtml_ibewi_access_index>
+   <adminhtml_ibewi_customer_index>
         <reference name="content">
         	<block type="ibewi/adminhtml_container" name="ibewi" template="dwd/ibewi/container.phtml">
         		<block type="ibewi/adminhtml_filter" as="top" name="top" />
             	<block type="ibewi/adminhtml_customer" as="grid" name="grid" />
         	</block>
         </reference>
-    </ibewi_adminhtml_customer_index>
-    <ibewi_adminhtml_order_index>
+    </adminhtml_ibewi_customer_index>
+    <adminhtml_ibewi_order_index>
         <reference name="content">
         	<block type="ibewi/adminhtml_container" name="ibewi" template="dwd/ibewi/container.phtml">
             	<block type="ibewi/adminhtml_filter" as="top" name="top" />
             	<block type="ibewi/adminhtml_order" as="grid" name="grid" />
             </block>
         </reference>
-    </ibewi_adminhtml_order_index>    
+    </adminhtml_ibewi_order_index>    
 </layout>

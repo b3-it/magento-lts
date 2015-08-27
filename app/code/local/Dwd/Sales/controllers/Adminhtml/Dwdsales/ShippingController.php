@@ -1,6 +1,6 @@
 <?php
 
-class Dwd_Sales_Adminhtml_ShippingController extends Mage_Adminhtml_Controller_action
+class Dwd_Sales_Adminhtml_Dwdsales_ShippingController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {

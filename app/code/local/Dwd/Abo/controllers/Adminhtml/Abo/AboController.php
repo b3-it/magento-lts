@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Dwd_Abo_Adminhtml_AboController extends Mage_Adminhtml_Controller_action
+class Dwd_Abo_Adminhtml_Abo_AboController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {

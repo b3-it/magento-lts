@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Dwd_Ibewi_Adminhtml_AccessController extends Dwd_Ibewi_Controller_Adminhtml_Abstract
+class Dwd_Ibewi_Adminhtml_Ibewi_AccessController extends Dwd_Ibewi_Controller_Adminhtml_Abstract
 {
 
 	protected function _initAction() {

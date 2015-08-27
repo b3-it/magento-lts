@@ -33,15 +33,15 @@
         </translate>
     </frontend>
     <admin>
-        <routers>
-			<dwd_abo>
-				<use>admin</use>
+		<routers>
+			<adminhtml>	
 				<args>
-					<module>Dwd_Abo</module>
-					<frontName>dwd_abo</frontName>
+					<modules>
+						<Dwd_Abo_Adminhtml after="Mage_Adminhtml">Dwd_Abo_Adminhtml</Dwd_Abo_Adminhtml>
+					</modules>
 				</args>
-			</dwd_abo>
-        </routers>
+			</adminhtml>
+		</routers>
     </admin>
     <adminhtml>
 		    <menu>
@@ -53,12 +53,12 @@
 		    		    <abo module="dwd_abo">
 		    				<title>Show Abos</title>
 		    				<sort_order>0</sort_order>
-		    				<action>dwd_abo/adminhtml_abo</action>
+		    				<action>adminhtml/abo_abo</action>
 		    			</abo>
 		    		    <collect module="dwd_abo">
 		    		        <title>Collect Abos</title>
 		    		        <sort_order>0</sort_order>
-		    		        <action>dwd_abo/adminhtml_abo/collect</action>
+		    		        <action>adminhtml/abo_abo/collect</action>
 		    		    </collect>
 		    		</children>
 		        </dwd_abo> -->
@@ -67,7 +67,7 @@
 		    			<dwd_abo module="dwd_abo">
 		    				<title>Show Abos</title>
 		    				<sort_order>100</sort_order>
-		    				<action>dwd_abo/adminhtml_abo</action>
+		    				<action>adminhtml/abo_abo</action>
 		    			</dwd_abo>
 		    		</children>
 		    	</sales>
@@ -118,7 +118,7 @@
 		    <layout>
 		    	<updates>
 		    	    <dwd_abo>
-		    			<file>dwd_abo.xml</file>
+		    			<file>dwd/abo.xml</file>
 		    	    </dwd_abo>
 		    	</updates>
 		    </layout>

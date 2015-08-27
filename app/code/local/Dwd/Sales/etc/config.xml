@@ -6,15 +6,15 @@
 		</Dwd_Sales>
 	</modules>
 	<admin>
-		<routers>
-			<dwdsales>
-				<use>admin</use>
-				<args>
-					<module>Dwd_Sales</module>
-					<frontName>dwdsales</frontName>
-				</args>
-			</dwdsales>
-		</routers>
+	<routers>
+		<adminhtml>	
+			<args>
+				<modules>
+					<Dwd_Sales_Adminhtml after="Mage_Adminhtml">Dwd_Sales_Adminhtml</Dwd_Sales_Adminhtml>
+				</modules>
+			</args>
+		</adminhtml>
+	</routers>
 	</admin>
 	<adminhtml>
 		<menu>
@@ -23,7 +23,7 @@
 					<dwdsales module="dwdsales">
 						<title>Shipping Items</title>
 						<sort_order>10</sort_order>
-						<action>dwdsales/adminhtml_shipping</action>
+						<action>adminhtml/dwdsales_shipping</action>
 					</dwdsales>
 				</children>
 			</sales>
@@ -50,7 +50,7 @@
 		<layout>
 			<updates>
 				<dwdsales>
-					<file>dwd_sales.xml</file>
+					<file>dwd/sales.xml</file>
 				</dwdsales>
 			</updates>
 		</layout>

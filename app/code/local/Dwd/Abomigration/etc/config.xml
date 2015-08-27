@@ -6,15 +6,15 @@
         </Dwd_Abomigration>
     </modules>
      <admin>
-        <routers>
-			<abomigration>
-				<use>admin</use>
-				<args>
-					<module>Dwd_Abomigration</module>
-					<frontName>abomigration</frontName>
-				</args>
-			</abomigration>
-        </routers>
+	<routers>
+		<adminhtml>	
+			<args>
+				<modules>
+					<Dwd_Abomigration_Adminhtml after="Mage_Adminhtml">Dwd_Abomigration_Adminhtml</Dwd_Abomigration_Adminhtml>
+				</modules>
+			</args>
+		</adminhtml>
+	</routers>
     </admin>
     <adminhtml>
 		<menu>
@@ -25,18 +25,18 @@
 					<import_data module="abomigration">
 						<title>Migrationsdaten importieren</title>
 						<sort_order>1000</sort_order>
-						<action>abomigration/adminhtml_import</action>
+						<action>adminhtml/abomigration_import</action>
 					</import_data>
 				    <manage_data module="abomigration">
 				        <title>Migration verwalten</title>
 				        <sort_order>1100</sort_order>
-				        <action>abomigration/adminhtml_abomigration</action>
+				        <action>adminhtml/abomigration_abomigration</action>
 				    </manage_data>
 				    <!--
 				    <cron module="abomigration">
 				        <title>Cron test</title>
 				        <sort_order>1200</sort_order>
-				        <action>abomigration/adminhtml_abomigration/testCron</action>
+				        <action>adminhtml/abomigration_abomigration/testCron</action>
 				    </cron>
 				    -->
 				</children>
@@ -72,7 +72,7 @@
 		<layout>
 			<updates>
 				<abomigration>
-					<file>dwd_abomigration.xml</file>
+					<file>dwd/abomigration.xml</file>
 				</abomigration>
 			</updates>
 		</layout>
