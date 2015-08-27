@@ -26,7 +26,7 @@ $global-cart-subtotal: #59814C;
 
 $global-border-color: #C1D0BB;
 
-$global-checkout-tableborder: #E0E6D7;
+$global-checkout-tableborder: #C1D0BB;
 $global-checkout-thbackground: #59814C;
 $global-checkout-thfontcolor: #FFFFFF;
 $global-checkout-tdbackground: transparent;
@@ -53,7 +53,9 @@ $global-button-gradient-2: $global-rgba-2 66%;
 $global-header-gradientcolor-1: #7EAA6F;
 $global-header-gradientcolor-2: $global-linkcolor;
 
-$global-box-title-backgroundcolor: $global-lightcolor-hover;
+$global-box-title-backgroundcolor: #E0E6D7;
+$global-box-content-backgroundcolor: #FFFFFF;
+$global-box-bordercolor: #C1D0BB;
 
 $global-category-font-color: #333333;
 $global-category-hover-color: #333333;
