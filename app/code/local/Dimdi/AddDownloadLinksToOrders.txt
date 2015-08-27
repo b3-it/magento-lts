@@ -1,0 +1,18 @@
+START TRANSACTION;
+-- purchased Infos an die Bestellung hängen
+INSERT INTO downloadable_link_purchased (order_id, order_increment_id, order_item_id, created_at, updated_at, customer_id, product_name, product_sku, link_section_title)
+SELECT o.entity_id, o.increment_id,item_id,now(),now(), o.customer_id, name, sku,'Links' FROM sales_flat_order_item
+join sales_flat_order as o on o.entity_id = sales_flat_order_item.order_id
+where product_type = 'downloadable';
+
+-- links hinzu
+INSERT INTO downloadable_link_purchased_item (purchased_id, order_item_id, product_id, link_hash, number_of_downloads_bought, number_of_downloads_used, link_id, link_title, is_shareable, link_url, link_file, link_type, status, created_at, updated_at)
+SELECT link.purchased_id, link.order_item_id, item.product_id, md5(concat(item.product_id,rand(),link.order_item_id,item.order_id)), 0,0, dlink.link_id,titel.title,
+dlink.is_shareable, dlink.link_url, dlink.link_file, dlink.link_type, 'available', item.created_at, item.updated_at
+FROM downloadable_link_purchased as link
+join sales_flat_order_item as item on item.item_id = link.order_item_id
+join downloadable_link as dlink on dlink.product_id = item.product_id
+join downloadable_link_title as titel on titel.store_id = 0 and titel.link_id=dlink.link_id;
+
+
+COMMIT;

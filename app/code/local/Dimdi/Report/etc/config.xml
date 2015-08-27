@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Dimdi_Report>
+			<version>0.1.0</version>
+		</Dimdi_Report>
+	</modules>
+
+	<admin>
+	<routers>
+		<adminhtml>	
+			<args>
+				<modules>
+					<Dimdi_Report_Adminhtml after="Mage_Adminhtml">Dimdi_Report_Adminhtml</Dimdi_Report_Adminhtml>
+				</modules>
+			</args>
+		</adminhtml>
+	</routers>
+	</admin>
+	<adminhtml>
+		<menu>
+			<report>
+				<children>
+					<dimdireport module="dimdireport">
+						<title>Dimdi Report</title>
+						<sort_order>71</sort_order>
+						<children>
+							<!--
+							<access module="dimdireport">
+								<title>zeige Zugriff</title>
+								<sort_order>10</sort_order>
+								<action>adminhtml/dimdireport_access</action>
+							</access>
+							
+							-->
+							<order module="dimdireport">
+								<title>Rechnungen</title>
+								<sort_order>30</sort_order>
+								<action>adminhtml/dimdireport_order</action>
+							</order>
+						</children>
+					</dimdireport>
+				</children>
+			</report>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<report>
+							<children>
+								<dimdireport module="dimdireport">
+									<title>Dimdi Report</title>
+									<sort_order>10</sort_order>
+									<children>
+										<!--
+										<access module="dimdireport">
+											<title>zeige Zugriff</title>
+											<sort_order>10</sort_order>
+										</access>
+										-->
+										<order module="dimdireport">
+											<title>Rechnungen</title>
+											<sort_order>30</sort_order>
+										</order>
+									</children>
+								</dimdireport>
+							</children>
+						</report>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<dimdireport>
+					<file>dimdi_report.xml</file>
+				</dimdireport>
+			</updates>
+		</layout>
+		<translate>
+			<modules>
+				<Dimdi_Report>
+					<files>
+						<default>Dimdi_Report.csv</default>
+					</files>
+				</Dimdi_Report>
+			</modules>
+		</translate>
+	</adminhtml>
+	<global>
+		<models>
+			<dimdireport>
+				<class>Dimdi_Report_Model</class>
+				<resourceModel>dimdireport_mysql4</resourceModel>
+			</dimdireport>
+			<dimdireport_mysql4>
+				<class>Dimdi_Report_Model_Mysql4</class>
+				<entities>
+					<access>
+						<table>dimdi_report_access</table>
+					</access>
+				</entities>
+			</dimdireport_mysql4>
+		</models>
+		<resources>
+			<dimdi_report_setup>
+				<setup>
+					<module>Dimdi_Report</module>
+					<class>Mage_Eav_Model_Entity_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</dimdi_report_setup>
+			<dimdireport_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</dimdireport_write>
+			<dimdireport_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</dimdireport_read>
+		</resources>
+		<blocks>
+			<dimdireport>
+				<class>Dimdi_Report_Block</class>
+			</dimdireport>
+		</blocks>
+		<helpers>
+			<dimdireport>
+				<class>Dimdi_Report_Helper</class>
+			</dimdireport>
+		</helpers>
+	</global>
+</config>
