@@ -20,13 +20,13 @@
         color: $global-checkout-thfontcolor;
 
         span.product-name {
-            padding-left: 5px;
+            padding-left: $global-tdpadding;
         }
     }
 
     thead th.space {
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left: $global-tdpadding;
+        padding-right: $global-tdpadding;
     }
 
     tbody td {
@@ -37,7 +37,7 @@
     thead th,
     tbody td,
     tbody th {
-        padding: 5px 1px;
+        padding: $global-tdpadding 1px;
         font-family: $base-font-family;
         border-color: $global-checkout-tableborder;
         border-width: $global-checkout-borderwidth;
@@ -62,7 +62,7 @@
         border-color: $global-checkout-tableborder;
         border-width: $global-checkout-borderwidth;
         border-style: solid;
-        padding: 5px;
+        padding: $global-tdpadding;
         text-align: right;
 
         strong span.price {
