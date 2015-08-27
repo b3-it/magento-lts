@@ -6,8 +6,7 @@
 //
 
 .mp-checkout {
-    h2 {
-    }
+    text-align: left;
 
     ul.checkout-progress {
         margin: 10px 0px 20px 0px;
@@ -65,10 +64,6 @@
     }
 
     .col-main {
-        fieldset, .page-title, .buttons-set {
-            width: $global-fullpage-width - $global-content-marginright - $global-content-rightspace;
-        }
-
         .order_pre {
             color: $global-fontcolor-dark;
             font-weight: bold;

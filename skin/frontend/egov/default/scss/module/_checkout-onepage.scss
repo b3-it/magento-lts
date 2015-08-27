@@ -146,7 +146,7 @@
 }
 
 .opc .section.allow .step-title h2 {
-    color: $c-text-gray;
+    color: $global-lightcolor;
 }
 
 .opc .section.allow .step-title:hover h2,
@@ -370,7 +370,7 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
     padding-left: $global-boxmargin;
 
     .block-content {
-        font-size:$global-fontsize-big;
+        font-size: $global-fontsize;
     }
     dt {
         padding-top: 6px;
