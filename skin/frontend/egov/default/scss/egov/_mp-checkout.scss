@@ -8,6 +8,11 @@
 .mp-checkout {
     text-align: left;
 
+    .col-1, .col-2, h3, h4 {
+        border: 0px !important;
+        background-color: transparent !important;
+    }
+
     ul.checkout-progress {
         margin: 10px 0px 20px 0px;
         list-style: outside none none;
@@ -74,6 +79,10 @@
             color: $global-linkcolor;
             font-weight: bold;
             font-size: $global-checkout-success-order-number;
+        }
+
+        .multiple-checkout, .buttons-set {
+            width: 96%;
         }
     }
 

@@ -19,6 +19,26 @@
         left: -13px;
     }
 
+    .col-main {
+        width: 100%;
+        float: none;
+
+        .page-title {
+            width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
+        }
+
+        p.required {
+            margin-top: $global-boxpadding;
+            margin-bottom: $global-boxpadding;
+            color: $global-warning-color;
+        }
+
+        #checkoutSteps {
+            width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
+            display: inline-block;
+        }
+    }
+
     .col-right {
         margin-right: 0px;
 
@@ -26,32 +46,24 @@
             border: 0px;
 
             .block-title {
-                border-width: $global-box-border $global-box-border $global-box-border-bottom $global-box-border;
-                border-style: solid;
-                border-color: $global-border-color;
+                _border-width: $global-box-border $global-box-border $global-box-border-bottom $global-box-border;
+                _border-style: solid;
+                _border-color: $global-border-color;
                 margin: 0px;
-                padding-top: 3px !important;
+                _padding-top: 3px !important;
+
+                background-color: transparent;
+                border: 0px;
             }
 
             .block-content {
-                border-width: 0px $global-box-border $global-box-border $global-box-border;
-                border-style: solid;
-                border-color: $global-border-color;
+                _border-width: 0px $global-box-border $global-box-border $global-box-border;
+                _border-style: solid;
+                _border-color: $global-border-color;
                 margin: 0px;
                 padding: $global-boxpadding;
-                background-color: $global-box-content-backgroundcolor;
+                _background-color: $global-box-content-backgroundcolor;
             }
-        }
-    }
-
-    .col-main {
-        width: auto;
-        float: none;
-
-        p.required {
-            margin-top: $global-boxpadding;
-            margin-bottom: $global-boxpadding;
-            color: $global-warning-color;
         }
     }
 }
@@ -60,7 +72,7 @@
     .checkout-onepage-index {
         .col-main {
             float: left;
-            width: percentage(660px/960px);
+            _width: percentage(660px/960px);
             padding-right: 20px;
         }
 

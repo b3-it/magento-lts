@@ -926,7 +926,7 @@ a.button:hover {
 }
 
 .col2-right-layout {
-	 .col-right {
+	  .col-right {
         margin-right: $global-rightcol-marginright;
         float: right;
         position: relative;
@@ -951,6 +951,7 @@ a.button:hover {
         width: 100%;
         position: relative;
         top: 4px;
+        left: -8px;
 
         .col-left {
             margin-right: $global-leftcol-marginright;
@@ -976,7 +977,6 @@ a.button:hover {
             width: $global-rightcol-width;
             margin-right: $global-rightcol-marginright;
             padding: 0px;
-            margin-top: $global-rightcol-margintop;
         }
     }
 }
