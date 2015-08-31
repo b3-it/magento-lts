@@ -1,0 +1,42 @@
+<div class="entry-edit">
+ <div class="entry-edit-head">
+	<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Contract Items')?></h4>
+ </div>
+<fieldset>
+<div class="grid">
+	<div class="hor-scroll">
+<table class="data" cellspacing="0">
+<col width="1">
+<col width="1">
+<col >
+<col width="1">
+<col width="1">
+<thead>
+	<tr class="headings">
+    	<th><span class="nobr"><a class="not-sort" title="asc" name="entity_id"><span class="sort-title">ID</span></a></span></th>
+        <th><span class="nobr"><a class="not-sort" title="asc" name="name" ><span class="sort-title"><?php echo $this->__('Name')?></span></a></span></th>
+        <th><span class="nobr"><a class="not-sort" title="asc" name="sku" ><span class="sort-title"><?php echo $this->__('Sku')?></span></a></span></th>
+        <th><span class="nobr"><a class="not-sort" title="asc" name="name" ><span class="sort-title"><?php echo $this->__('Qty')?></span></a></span></th>
+        <th><span class="nobr"><a class="not-sort" title="asc" name="name"><span class="sort-title"><?php echo $this->__('Delete')?></span></a></span></th>
+        
+    </tr>
+</thead>
+
+
+<?php $even = true; foreach ($this->getItems() as $item):?>
+<?php if($even): $even=false;?>
+<tr class="even">
+<?php else: $even=true;?>
+<tr>
+<?php endif;?>
+	<td><input type="hidden" name="create_contract[items][id][]" value="<?php echo $item->getId()?>"/> <?php echo $item->getId()?></td>
+	<td><?php echo $item->getSku()?></td>
+	<td><?php echo $item->getName()?></td>
+	<td><input type="text" name="create_contract[items][qty][]" value="<?php echo $item->getQty()?>"/></td>
+	<td><button onMouseDown="removeContractItem('<?php echo $item->getId()?>'); return false;" ><img id="delete_button2" alt="Remove Item" src="<?php echo $this->getSkinUrl('images/cancel_icon.gif') ?>"/></button></td>
+</tr>
+<?php endforeach;?>
+</table>
+</div></div>
+</fieldset>
+</div>

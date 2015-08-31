@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Dwd_Abo>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Dwd_Stationen />
@@ -11,7 +11,7 @@
             </depends>
         </Dwd_Abo>
         <Dwd_Abomigration>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Dwd_Abo />
@@ -27,7 +27,7 @@
             </depends>
         </Dwd_AutoFileAssignment>
         <Dwd_ConfigurableDownloadable>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Downloadable />
@@ -36,7 +36,7 @@
             </depends>
         </Dwd_ConfigurableDownloadable>
         <Dwd_ConfigurableVirtual>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Dwd_Stationen />
@@ -44,27 +44,27 @@
             </depends>
         </Dwd_ConfigurableVirtual>
         <Dwd_Icd>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Dwd_Icd>
         <Dwd_Ibewi>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Dwd_Ibewi>
         <Dwd_Periode>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Dwd_Periode>
         <Dwd_ProductOnDemand>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Dwd_ProductOnDemand>
         <Dwd_Sales>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Dwd_Sales>
         <Dwd_Stationen>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Dwd_Stationen>
     </modules>
