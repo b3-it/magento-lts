@@ -54,11 +54,13 @@
         }
     }
 
-    .product-shop .product-name .h1,
-    .product-img-box .product-name h1 {
-        color: $c-action;
+    .product-name {
         margin-bottom: 10px;
-        border: 0;
+
+        .h1 {
+            color: $global-h1-color;
+            border: 0;
+        }
     }
 
     .product-shop {
