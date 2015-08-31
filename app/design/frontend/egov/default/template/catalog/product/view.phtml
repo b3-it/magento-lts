@@ -40,6 +40,9 @@
             </div>
 
             <div class="product-shop">
+                <div class="product-sku">
+                    <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+                </div>
                 <div class="price-info">
                     <?php echo $this->getPriceHtml($_product); ?>
                     <?php echo $this->getChildHtml('bundle_prices') ?>
