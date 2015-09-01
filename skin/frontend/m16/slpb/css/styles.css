@@ -1,0 +1,90 @@
+a {color: #4d87c7; font-size: 12px;}
+a:active { outline: medium none; }
+a:hover, a:focus { background-color: #4d87c7; color: #ffffff; text-decoration: none; }
+body {background-color: #e4e4e4;}
+.wrapper {background-color: transparent;}
+.page {background: none repeat scroll 0 0 #fff; margin: 0 auto; width: 1000px;}
+h2 { color: #222222; font-size: 18px; }
+h3 { color: #222222; font-size: 16px; line-height: 1.375; }
+h4 { color: #222222; font-size: 14px; font-weight: bold; }
+button:focus, select:focus, input:focus {border: 1px solid #003456;}
+input[type=checkbox]:focus + label, input[type=radio]:focus + label {border: 1px solid #003456;margin:-1px;}
+span.fett {font-weight: bold;}
+.small {font-size: 0.95em;}
+.col-left, .col-right{width:200px;}
+.col-main {width:706px;}
+.col2-right-layout .col-main { margin-left: 10px; }
+.col3-layout .col-main { width:540px; margin-left:0px; }
+.col2-set .col-2 { width:50%; }
+.col2-set .wide { width:60%; }
+form#quick_form {margin-bottom: 20px; display: block;}
+#search_mini_form input { width: 178px; }
+input#quicksearch {width: 300px;}
+div#quick_autocomplete {background: #DADADA; border: 2px solid #A3ABB3; padding: 5px; cursor: pointer; position:absolute; z-index:99;}
+input.input-text,select,textarea {border:1px solid #7b7b7b;}
+input.input-text,textarea {width: 150px; margin-bottom: 0px; }
+.form-search input.input-text {width: 178px; margin-right: 10px;}
+button.button {background-color: rgb(255,255,255); border-style: solid;border-color: rgb(202,202,202) rgb(123,123,123) rgb(123,123,123) rgb(202,202,202);}
+button.button span {color:#000;}
+fieldset  .form-list fieldset {margin-bottom: 20px;}
+.buttons-set { margin:5px 0 0; padding:5px; border:1px solid #ddd; }
+.buttons-set .back-link { line-height:20px; }
+.buttons-set .break-link { margin-left:15px; line-height:20px; }
+.breadcrumbs { border: 1px solid #ddd; margin: 0 5px 10px 10px; padding: 10px; }
+.header .head-link_row { height:2.6em; margin:0px; position:relative; width:100%; }
+.header {background-repeat: no-repeat;margin-bottom: 70px;}
+.header .head-top_row {height: 100px;}
+.header .head-function_row {background-color:transparent; margin-right:0px; margin-left: 12px; text-align: left;}
+.header .head-function_row fieldset label {display:none;}
+.header .form-search { z-index:999; position:relative; margin-left: 8px; margin-right: 427px; padding-top:35px; }
+.header a.quicklistbutton {border: 1px solid rgb(43, 79, 130); color: rgb(0, 0, 0); cursor: pointer; display: block; float: right; font-weight: normal; position:relative; margin-top:10px; margin-right:10px; overflow: visible; padding: 0 5px; text-align: center; width: 100px; }
+.header ul.links {margin:0; padding: 0.6em 1.5em 0;}
+.header ul.links li {}
+.header ul.links li a {color: #209a32; font-size:1.3em; letter-spacing:0.02em; line-height:1.85em; margin:0; padding: 0 0.6em;}
+.header ul.links li a:hover { border-radius: 3px 3px 0 0; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); color: #fff; outline: 0 none; }
+.block {border:0px;}
+.block .block-title {border-radius: 3px 3px 0 0; background-color: #179535; border-color: #179535 #179535 #a3abb3 #179535; border-style: solid; border-width: 0px 0px 3px 0px !important; padding:3px 5px;}
+.block .block-title h3 {color:#FFFFFF;}
+.block .block-title h2 {color: #ffffff; font-size: 13px; line-height: 1.5;}
+.block-categories .block-content, .block .block-content, #cartbox {background-color: #edf6ee; height:100%;}
+.block .block-content a {display: block;}
+.block .block-content .active > a {background-color: #f3f8f3;}
+.block .block-content .active > a:hover {background-color: #4d87c7; color: #fff;}
+a.egovsbutton { border-width: 1px; border-style:solid; border-color: #cacaca #7b7b7b #7b7b7b #cacaca; color:#000000; font-weight: normal; padding: 0 5px; text-align: center; }
+a.slpblistbutton {border-width: 1px; border-style:solid; border-color: #cacaca #7b7b7b #7b7b7b #cacaca; color:#000000; cursor: pointer; display: block; font-weight: normal; margin-top: 2px; overflow: visible; padding: 0 5px; text-align: center; width: 100px; }
+a.egovslistbutton {border-width: 1px; border-style:solid; border-color: #cacaca #7b7b7b #7b7b7b #cacaca; color:#000000;}
+a.totalsorderbutton {border-width: 1px; border-style:solid; border-color: #cacaca #7b7b7b #7b7b7b #cacaca; color: #000000; cursor: pointer; display: block; padding: 2px 5px; font-size: 1.1em; margin-bottom: 5px; margin-left: 25px; margin-top: 5px;}
+.std h4 a {border: 1px solid rgb(43, 79, 130); color:#000000; padding: 0 5px; text-align: center; margin-top: 2px;}
+#shopping-cart-table tfoot .last div a span { border-width: 1px; border-style:solid; border-color: #cacaca #7b7b7b #7b7b7b #cacaca; color:#000000; font-weight: normal; padding: 3px 10px; text-align: center; }
+.products-grid ul.add-to-links, .add-to-box ul.add-to-links {display:none;}
+#checkout-review-totals-table .price, .price {color:#000;}
+.footer a {color: #003366; text-decoration:none;}
+.header .welcome-msg {color: rgb(23, 149, 53); font-size: 1.5em; left: 5px; margin-top: 60px; margin-left: 0; padding-left: 5px;}
+.header #logo { height: 75px; width: 245px; float:right; text-indent: -999em; position:relative; top:40px; margin-right: 20px;}
+#logo {overflow: hidden;}
+.head-top_row #titel {display:none;}
+.add-to-box .or {display:none;}
+button.form-button-right {float:right;}
+button.form-button-alt span {color:#000000; font-weight:normal;}
+div#quick_autocomplete li {padding: 5px;}
+div#quick_autocomplete li.even { background: none repeat scroll 0 0 #f2f2f2; }
+#shopping-cart-table thead, #checkout-review-totals-table tbody, .data-table thead { background-color: #f2f2f2; color:#000000; }
+.group-select .input-box {float: left; width: 260px;}
+.shopping-cart-totals tfoot span.price {color:#000000;}
+#shopping-cart-table tfoot { background-color:#ffffff; }
+#shopping-cart-table tfoot .first img {display:none;}
+.shopping-cart-collaterals {margin-top: 10px;}
+.shopping-cart-totals { background-color: #f2f2f2; padding: 10px 5px; }
+.shopping-cart-totals tfoot {font-size: 100%;}
+.shopping-cart-totals tfoot tr {border-top: 0px;}
+.account-login .new-users .block-content {height:16.4em;}
+.account-login .new-users .block-content a.egovsbutton {padding: 3px 0px;}
+.account-login .registered-users .block-content {height:16.4em;}
+.account-login .registered-users .block-content a {color:#000000; text-decoration:none; font-weight:bold; padding:3px 10px; border-color: #cacaca #7b7b7b #7b7b7b #cacaca; border-style: solid; border-width: 1px;}
+.col2-left-layout .col-main {width: 77%;}
+.tax-details {display:none;}
+.products-grid .product-grid-name {min-height: 72px;}
+.multiple-checkout .col2-set .wide {width:47%;}
+#checkout-review-table h4 {color:#000000; font-weight:normal;}
+#checkout-review-table thead {border: 1px solid #dddddd; font-weight: bold; padding: 5px; background-color: #f2f2f2; color:#000000;}
+#customer_company_third {display:none;}

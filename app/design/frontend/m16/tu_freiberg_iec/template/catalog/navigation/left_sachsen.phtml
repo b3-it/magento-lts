@@ -1,0 +1,17 @@
+<?php //if(count($this->getStoreCategories())>1): ?>
+<div class="block block-categories">
+	  <div class="block-title">
+       <!--Sprungziel Tastatursteuerung -->
+       <div id="jumptarget<?php echo $this->getNameInLayout();?>">
+	    <h2><span class="unsichtbar">jumptarget<?php echo $this->getNameInLayout();?>:</span><?php echo $this->__('Category') ?></h2>
+       </div>
+	  </div>
+  <div class="block-content">
+    <ul>
+    <?php foreach ($this->getStoreCategories() as $_category): ?>
+        <?php echo $this->drawItem($_category) ?>
+    <?php endforeach ?>
+    </ul>
+  </div>
+</div>
+<?php //endif; ?>
