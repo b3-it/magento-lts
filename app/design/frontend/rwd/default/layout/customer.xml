@@ -232,10 +232,6 @@ Customer account pages, rendered for all tabs in dashboard
 
         <reference name="left_first">
             <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="customer/account/navigation.phtml">
-                <!-- egovs custom code begin -->
-				<action method="setData"><key>accesskey</key><value>o</value></action>
-                <action method="setData"><key>jumptitle</key><value>Benutzerkonto</value></action>
-                <!-- egovs custom code end -->
                 <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>Account Dashboard</label></action>
                 <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
                 <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
@@ -266,12 +262,7 @@ Customer account home dashboard layout
         </reference>
         <reference name="my.account.wrapper">
             <block type="customer/account_dashboard" name="customer_account_dashboard" template="customer/account/dashboard.phtml">
-                <!-- egovs custom code begin -->
-				<action method="setData"><key>accesskey</key><value>i</value></action>
-                <action method="setData"><key>jumptitle</key><value>Inhalt/Anzeige</value></action>
-                <block type="egovsbase/customer_account_dashboard_hello" name="customer_account_dashboard_hello" as="hello" template="customer/account/dashboard/hello.phtml"/>
-                <!-- egovs custom code end -->
-               
+                <block type="customer/account_dashboard_hello" name="customer_account_dashboard_hello" as="hello" template="customer/account/dashboard/hello.phtml"/>
                 <block type="core/template" name="customer_account_dashboard_top" as="top" />
                 <block type="customer/account_dashboard_info" name="customer_account_dashboard_info" as="info" template="customer/account/dashboard/info.phtml"/>
                 <block type="customer/account_dashboard_newsletter" name="customer_account_dashboard_newsletter" as="newsletter" template="customer/account/dashboard/newsletter.phtml"/>
@@ -290,10 +281,6 @@ Customer account address book
         <!-- Mage_Customer -->
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
-        		<!-- egovs custom code begin -->
-				<action method="setData"><key>accesskey</key><value>b</value></action>
-                <action method="setData"><key>jumptitle</key><value>Adressbuch</value></action>
-				<!-- egovs custom code end -->
             <block type="customer/address_book" name="address_book" template="customer/address/book.phtml"/>
         </reference>
     </customer_address_index>

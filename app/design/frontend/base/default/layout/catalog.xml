@@ -363,7 +363,6 @@ SEO Site Map
         </reference>
     </catalog_seo_sitemap>
 
-
     <catalog_seo_sitemap_category translate="label">
         <label>Catalog Seo Sitemap (Category List)</label>
         <reference name="head">
