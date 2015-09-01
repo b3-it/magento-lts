@@ -1,0 +1,16 @@
+<p class="switcher"><label for="store_switcher"><?php echo $this->__('Choose Customer Group') ?></label>
+<select name="group_switcher" id="group_switcher" onchange="return switchGroup(this);">
+<option value=""> All Groups </option>
+<?php foreach ($this->getCustomerGroups() as $key => $value) {?>
+<option value="<?php echo $key?>" <?php if($key == $this->getSelectedGroup()) echo 'selected="selected"'?>> <?php  echo $value?> </option>
+<?php };?>
+</select>
+</p>
+<script type="text/javascript">
+    function switchGroup(obj){
+        var groupParam = obj.value ? 'group/'+obj.value + '/' : '';
+        
+        setLocation('<?php echo $this->getSwitchUrl() ?>'+groupParam);
+    }
+</script>
+

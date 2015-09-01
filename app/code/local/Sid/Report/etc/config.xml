@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<config>
+        <modules>
+            <Sid_Report>
+                <version>0.1.0</version>
+            </Sid_Report>
+        </modules>
+        <global>
+           <blocks>
+                <sidreport>
+                	<class>Sid_Report_Block</class>
+                </sidreport>
+            </blocks>
+        	<helpers>
+	            <sidreport>
+	                <class>Sid_Report_Helper</class>
+	            </sidreport>    
+	        </helpers>
+	        <models>
+	        	<sidreport>
+	        		<class>Sid_Report_Model</class>
+	        		<resourceModel>sidreport_resource</resourceModel>
+	        	</sidreport>
+	        	<sidreport_resource>
+                	<class>Sid_Report_Model_Resource</class>
+            	</sidreport_resource>
+	        	<reports_mysql4>
+	        		<rewrite>
+	        			<report_collection>Sid_Report_Model_Mysql4_Report_Collection</report_collection>
+	        		</rewrite>
+	        	</reports_mysql4>
+	        </models>
+        </global>
+        <admin>
+	       <routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<Sid_Report_Adminhtml after="Mage_Adminhtml">Sid_Report_Adminhtml</Sid_Report_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+        </admin>
+        <adminhtml>
+        	<layout>
+		        <updates>
+		            <sidreport>
+		                <file>sid/report.xml</file>
+		            </sidreport>
+		        </updates>
+		    </layout>
+	        <translate>
+		        <modules>
+		            <Sid_Report>
+		                <files>
+		                    <default>Sid_Report.csv</default>
+		                </files>
+		            </Sid_Report>
+		        </modules>
+	    	</translate>
+	        <menu>
+	          <report>
+	           	<children>
+	                 <salesroot translate="title" module="reports">
+	                     <children>
+	                     	<frame_contract_report translate="title" module="sidreport">
+	                         	 <title>Frame Contract</title>
+	                             <action>adminhtml/sidreport_sales/sales</action>
+	                         </frame_contract_report>
+	                     </children>
+	                 </salesroot>             	
+	             </children>
+	          </report>
+	         </menu>
+	         <acl>
+	         	<!--  Bei Änderung ist Logout und erneuter Login nötig!
+	         	source:http://activecodeline.com/magento-module-development-building-interface-with-config-file-and-reusing-config-values
+	         	-->
+	             <resources>
+	                 <admin>
+	                 	<children>
+	                 		<report>
+	                 			<children>
+                            		<salesroot>
+                            			<children>
+                            				<frame_contract_report translate="title" module="sidreport">
+												<title>Frame Contract</title>
+                            				</frame_contract_report>
+                            			</children>
+                            		</salesroot>
+	                 			</children>
+                            </report>
+	                    </children>
+	                 </admin>
+	             </resources>
+	         </acl>
+         </adminhtml>
+</config>

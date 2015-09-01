@@ -1,0 +1,62 @@
+<div class="entry-edit">
+	<div class="entry-edit-head">
+	<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Customer Group')?></h4>
+	</div>
+	<div id="user_base_fieldset" class="fieldset ">
+	<div>
+	<table class="form-list">
+	<tr>
+	<td class="label"><?php echo $this->__('Allow All Customer Groups')?></td>
+		<td class="value">
+			<select name="allow_all_customergroups">
+			<?php if($this->getAllowAllCustomergroups()){?>
+				<option value="0"><?php echo $this->__('No')?></option>
+				<option selected="selected"  value="1"><?php echo $this->__('Yes')?></option>
+				<?php }else {?>
+				<option selected="selected"  value="0"><?php echo $this->__('No')?></option>
+				<option value="1"><?php echo $this->__('Yes')?></option>
+				<?php }?>
+			</select>
+		</td>
+	</tr>
+	</table>
+	</div>
+	<div class="grid">
+	<table class="data" cellspacing="0">
+	<thead>
+    	<tr class="headings">
+        	
+        	<th width="50px"><span class="nobr"><?php echo $this->__('Read')?></span></th>
+        	<th width="50px"><span class="nobr"><?php echo $this->__('Write')?></span></th>
+        	<th><span class="nobr"><?php echo $this->__('Customer Group')?></span></th>
+       	</tr>
+    </thead>
+	<?php $even=false; foreach($this->getCustomerGroups() as $group){ $even =! $even;?>
+	<?php if($even){?>
+		<tr class="even">
+	<?php }else {?>
+		<tr>
+	<?php }?>
+		
+		<td align="center">
+			<?php if($group['read'] == 1){?>
+				<input name="customergroups[<?php echo $group['id']; ?>][read]" type="checkbox" checked="checked"/>
+			<?php } else { ?>
+			<input name="customergroups[<?php echo $group['id']; ?>][read]" type="checkbox" />
+			<?php }?>
+		</td>
+		<td align="center">
+			<?php if($group['write'] == 1){?>
+				<input name="customergroups[<?php echo $group['id']; ?>][write]" type="checkbox" checked="checked"/>
+			<?php } else { ?>
+			<input name="customergroups[<?php echo $group['id']; ?>][write]" type="checkbox" />
+			<?php }?>
+		</td>
+		<td><?php echo $group['label'];?></td>
+	</tr>
+	<?php }?>
+	</table>
+	</div>
+	</div>
+</div>
+
