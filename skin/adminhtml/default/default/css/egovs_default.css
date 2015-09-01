@@ -1,0 +1,15 @@
+.slpb_col2 {
+    width: 50%;
+    border-right: 1px solid #aeaeae;
+    float: left;
+    margin-right: 5px
+}
+
+.slpb_edit_2col{
+    width: 38px ;
+    background: none repeat scroll 0 0 #fff;
+    border-color: #aaa #c8c8c8 #c8c8c8 #aaa;
+    border-style: solid;
+    border-width: 1px;
+    font: 12px arial,helvetica,sans-serif;
+}
