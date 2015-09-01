@@ -1,0 +1,33 @@
+<?php
+/**
+ * Merkzettel - Auswahl - Block
+ * 
+ * @category   	Sid
+ * @package    	Sid_Wishlist
+ * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
+ * @copyright  	Copyright (c) 2012 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @copyright  	Copyright (c) 2012 TRW-NET - http://www.trw-net.de
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+?>
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+	<div class="page-title title-buttons">
+	    <h2><?php echo $this->__('Collector List') ?></h2>
+	</div>
+	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+	<fieldset>
+	    <input type="hidden" name="continue" value="0" id="can_continue_flag" />
+	    <input type="hidden" name="new_wishlist" value="0" id="add_new_wishlist_flag" />
+	    <h3><?php echo $this->__('Select a Collector List') ?></h3>
+	    	<?php echo $this->getSelectBoxHtml(); ?>
+	
+	    <br />
+	
+		<div class="buttons-set">
+			<a href="<?php echo $this->getBackUrl() ?>" class="back-link egovslistbutton"><?php echo $this->__('Back') ?> </a>
+			<button class="button" type="submit">
+				<span><?php echo $this->__('Continue') ?> </span>
+		</button>
+		</div>
+	</fieldset>
+</form>

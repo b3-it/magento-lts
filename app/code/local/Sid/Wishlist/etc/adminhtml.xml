@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <!--<admin>
+                <children>
+                    <sidwishlist translate="title">
+                        <title>SID Wishlist</title>
+                        <sort_order>10</sort_order>
+                    </sidwishlist>
+                </children>
+            </admin> -->
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <sidwishlist translate="title" module="sidwishlist">
+                                        <title>Collector List Service Section</title>
+                                    </sidwishlist>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <layout>
+        <updates>
+            <sidwishlist>
+                <file>sidwishlist.xml</file>
+            </sidwishlist>
+        </updates>
+    </layout>
+</config>
