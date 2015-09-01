@@ -204,6 +204,10 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-right: $blobal-blockcontent-marginright;
 
     input {
+        _width: 100%;
+    }
+
+    input[type="text"], input[type="email"] {
         width: 100%;
     }
 }
