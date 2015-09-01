@@ -49,7 +49,11 @@
 
     .col2-left-layout {
         .col-main {
-            padding-top: 0px;
+            .display-both-prices {
+                /* Abstand bei Warenkorb-Anzeige entfernen (-BoxMargin) */
+                position: relative;
+                top: 0 - $global-boxmargin;
+            }
         }
     }
 }

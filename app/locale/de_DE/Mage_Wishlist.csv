@@ -2,6 +2,7 @@
 "%d product(s) have been added to shopping cart: %s.","%d Artikel wurden dem Warenkorb hinzugefügt: %s."
 "%s for ""%s"".","%s für ""%s"""
 "%s has been moved to wishlist %s","%s wurde auf den Wunschzettel %s verschoben"
+"%s was added to your shopping cart.","%s wurde in den Warenkorb gelegt."
 "%s's Wishlist","Wunschzettel von %s"
 "* Required Fields","* Pflichtfelder"
 "Add All to Cart","Alles in den Warenkorb"
