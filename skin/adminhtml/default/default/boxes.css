@@ -9,16 +9,18 @@
  * http://opensource.org/licenses/afl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
- * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
 /***************** WIDGETS ******************
@@ -364,7 +366,7 @@ select.multiselect option       { padding:3px 4px; border-bottom:1px solid #ddd;
 }
 
 /* Form List */ /* Table for default form data */
-.form-list                      { width:40%; border:0 !important; }
+.form-list                      { width:auto; border:0 !important; }
 .form-list td.label,
 .form-list td.value,
 .form-list td.value2,
@@ -376,17 +378,17 @@ select.multiselect option       { padding:3px 4px; border-bottom:1px solid #ddd;
 .form-list td.use-default label { display:inline-block; vertical-align:middle; padding:0 3px; }
 .form-list td.label label       { display:block; width:185px; padding-right:15px; padding-top:1px; }
 .form-list td.value input.input-text,
-.form-list td.value textarea    { width:90%; }
+.form-list td.value textarea    { width:95%; }
 .form-list td.value textarea    { height:15em; }
-.form-list td.value select      { width:90%; }
+.form-list td.value select      { width:95%; }
 .form-list td.value select.select-date { width:87px; }
 .form-list td.note              { background:url(images/note_cell_bg.gif) 6px 10px no-repeat !important; padding-left:18px; }
-.form-list td.scope-label       { padding-left:5px; color:#6f8992; font-size:.9em; min-width:150px; }
+.form-list td.scope-label       { padding-left:5px; color:#6f8992; font-size:.9em; }
 .form-list p.note               { margin:0; padding:0 0 0 13px; background:url(images/note_bg.gif) 1px 6px no-repeat; font-size:11px; }
-.form-list td.value p.note      { width:90%; }
+.form-list td.value p.note      { width:95%; }
 
 .columns .form-list             { width:auto; }
-.columns .form-list td.value    { width:90%; padding-right:5px !important; }
+.columns .form-list td.value    { width:75%; padding-right:5px !important; }
 .columns .form-list td.value .next-toinput { width:75px; display:inline; margin-right:5px; }
 .columns .form-list td.value .next-toselect input.input-text { width:195px!important; display:inline; }
 
@@ -564,7 +566,7 @@ td.divider              { font-size:1px; line-height:0; }
 *******************************************************************************/
 .wrapper { min-width:960px; }
 .wrapper-popup { min-width:750px; }
-.header { background:url(images/header_top_bg.gif) repeat-x #425e66; text-align:right; }
+.header { background:url('images/header_top_bg.png') repeat-x #425e66; text-align:right; }
 .middle { min-height:450px; background:url(images/simple_container_bg.gif) repeat-x #fff; padding:23px 27px 0 27px; }
 .middle-popup { border-bottom:3px solid #fff; background:url(images/middle_bg.gif) repeat-x 0 100% #fff; padding:0 0 0 0; background:yellow; }
 .container-collapsed { padding:1.8em 2.2em 1.8em 2em; padding-top:0; }

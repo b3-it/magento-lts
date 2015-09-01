@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_icd_connection_index>
+        <reference name="menu">
+            <action method="setActive"><menupath>system/icd_connection</menupath></action>
+        </reference>
+        <reference name="content">
+            <block type="dwd_icd/adminhtml_connection" name="icd" />
+        </reference>
+    </adminhtml_icd_connection_index>
+	
+    <adminhtml_icd_account_index>
+        <reference name="menu">
+            <action method="setActive"><menupath>sales/icd_account</menupath></action>
+        </reference>
+        <reference name="content">
+            <block type="dwd_icd/adminhtml_account" name="icd" />
+        </reference>
+    </adminhtml_icd_account_index>
+    
+	<adminhtml_icd_orderitem_index>
+	    <reference name="menu">
+	        <action method="setActive"><menupath>sales/icd_orderitems</menupath></action>
+	    </reference>
+        <reference name="content">
+            <block type="dwd_icd/adminhtml_orderitem" name="icd" />
+        </reference>
+    </adminhtml_icd_orderitem_index>
+</layout>

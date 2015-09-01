@@ -55,7 +55,6 @@ p.product-name {
 
 .products-grid .product-name,
 .products-list .product-name {
-    text-transform: uppercase;
     margin-bottom: 5px;
     font-size: $base-font-family;
     font-family: $global-fontsize;
@@ -452,6 +451,29 @@ $productsGridActionHeight: 85px;
 /* ============================================ *
  * Layered Navigation
  * ============================================ */
+.block-layered-nav {
+    margin-top: $global-boxmargin;
+    border: 0px;
+
+    .block-title {
+        border-width: $global-box-border $global-box-border $global-box-border-bottom $global-box-border;
+        border-color: $global-border-color;
+        border-style: solid;
+    }
+
+    .block-content {
+        margin: 0px;
+
+        #narrow-by-list {
+            position: relative;
+            top: -6px;
+
+            dd span.count {
+                float: right;
+            }
+        }
+    }
+}
 
 .block-layered-nav .block-subtitle--filter {
     // Will be shown at smaller viewports

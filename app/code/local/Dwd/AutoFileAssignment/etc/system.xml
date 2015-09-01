@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <catalog>
+            <groups>
+                <dwd_afa translate="label" module="dwdafa">
+                    <label>Automatic File Assignment (AFA) Options for Downloadables</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>610</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <runtime translate="label comment">
+                            <label>Runtime</label>
+                            <frontend_type>time</frontend_type>
+                            <frontend_model>dwdafa/adminhtml_system_config_form_field_cron_time</frontend_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </runtime>
+                        <frequency translate="label comment">
+                            <label>Frequency</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>dwdafa/adminhtml_system_config_source_cron_frequency</source_model>
+                            <backend_model>dwdafa/adminhtml_system_config_backend_cron</backend_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Runtime frequency</comment>
+                        </frequency>
+                        <storage translate="label">
+                            <label>File Storage</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </storage>
+                        <admin_email translate="label comment">
+                            <label>E-Mail-Adresse Admin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Semikolon (;) getrennte Liste von E-Mail-Adressen, an die im Fehlerfall eine Meldung geschickt wird</comment>
+                        </admin_email>
+                        <run_now translate="label">
+                            <label>Run now</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>dwdafa/adminhtml_system_config_backend_runnow</backend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </run_now>
+                        <run_clean_expired translate="label">
+                            <label>Clean expired links now</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>dwdafa/adminhtml_system_config_backend_runnow</backend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </run_clean_expired>
+                        <run_unlock translate="label comment">
+                            <label>Unlock AFA</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>dwdafa/adminhtml_system_config_backend_runnow</backend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If AFA doesn't run anymore, use this to unlock.</comment>
+                        </run_unlock>
+                        <use_tree_assignment translate="label comment">
+                            <label>Use a tree for assignment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Assignment by tree is much faster</comment>
+                        </use_tree_assignment>
+                    </fields>
+                </dwd_afa>
+            </groups>
+        </catalog>
+    </sections>
+</config>

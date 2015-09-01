@@ -6,6 +6,13 @@
 //
 
 .mp-checkout {
+    text-align: left;
+
+    .col-1, .col-2, h3, h4 {
+        border: 0px !important;
+        background-color: transparent !important;
+    }
+
     ul.checkout-progress {
         margin: 10px 0px 20px 0px;
         list-style: outside none none;
@@ -61,6 +68,24 @@
         margin: 0px 10px;
     }
 
+    .col-main {
+        .order_pre {
+            color: $global-fontcolor-dark;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: $global-checkout-success-order-text;
+        }
+        .order_number {
+            color: $global-linkcolor;
+            font-weight: bold;
+            font-size: $global-checkout-success-order-number;
+        }
+
+        .multiple-checkout, .buttons-set {
+            width: 96%;
+        }
+    }
+
     .col2-set {
         div.col-1, div.col-2 {
             @extend .block;
@@ -82,8 +107,16 @@
             @extend .block-title;
         }
 
-        address, fieldset, p, .overview_shipping {
+        address, fieldset, p,
+        .overview_shipping, .successview_shipping {
             margin: 5px 0px 10px 10px;
+        }
+    }
+
+    .col1-layout {
+        .main {
+            position: relative;
+            top: 15px;
         }
     }
 
@@ -127,5 +160,11 @@
             margin-left: 10px;
             font-weight: bold;
         }
+    }
+}
+
+.egovs-checkout-multipage-successview {
+    ul.checkout-progress {
+        display:none;
     }
 }

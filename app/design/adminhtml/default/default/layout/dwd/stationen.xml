@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_stationen_stationen_index>
+        <reference name="content">
+            <block type="stationen/adminhtml_stationen" name="stationen" />
+        </reference>
+    </adminhtml_stationen_stationen_index>
+   <adminhtml_stationen_import_index>
+        <reference name="content">
+            <block type="stationen/adminhtml_import" name="import" />
+        </reference>
+    </adminhtml_stationen_import_index>
+	<adminhtml_stationen_set_index>
+        <reference name="content">
+            <block type="stationen/adminhtml_set" name="set" />
+        </reference>
+    </adminhtml_stationen_set_index>
+    <adminhtml_stationen_set_stationen>
+        <block type="core/text_list" name="root" output="toHtml">
+          <block type="stationen/adminhtml_set_edit_tab_stationen_grid" name="stationen.grid"/>
+           <block type="adminhtml/widget_grid_serializer" name="grid_serializer">
+               <reference name="grid_serializer">
+                   <action method="initSerializerBlock">
+                       <grid_block_name>stationen.grid</grid_block_name>
+                       <data_callback>getSelectedStationen</data_callback>
+                       <hidden_input_name>all_selected</hidden_input_name>
+                       <reload_param_name>stationen_set</reload_param_name>
+                   </action>
+                   <action method="addColumnInputName">
+                       <input_name>dummy</input_name>
+                   </action>                  
+               </reference>
+           </block>
+       </block>
+    </adminhtml_stationen_set_stationen>
+    <adminhtml_stationen_set_stationengrid>
+     	 <block type="core/text_list" name="root" output="toHtml">
+            <block type="stationen/adminhtml_set_edit_tab_stationen_grid" name="stationen.grid"/>
+        </block>
+     </adminhtml_stationen_set_stationengrid>
+     
+     <adminhtml_stationen_set_products>
+        <block type="core/text_list" name="root" output="toHtml">
+          <block type="stationen/adminhtml_set_edit_tab_products_grid" name="stationen.grid"/>
+           <block type="adminhtml/widget_grid_serializer" name="grid_serializer">
+               <reference name="grid_serializer">
+                   <action method="initSerializerBlock">
+                       <grid_block_name>stationen.grid</grid_block_name>
+                       <data_callback>getSelectedProducts</data_callback>
+                       <hidden_input_name>all_selected_products</hidden_input_name>
+                       <reload_param_name>products_set</reload_param_name>
+                   </action>
+                   <action method="addColumnInputName">
+                       <input_name>dummy</input_name>
+                   </action>                  
+               </reference>
+           </block>
+       </block>
+    </adminhtml_stationen_set_products>
+    <adminhtml_stationen_set_productsgrid>
+     	 <block type="core/text_list" name="root" output="toHtml">
+            <block type="stationen/adminhtml_set_edit_tab_products_grid" name="stationen.grid"/>
+        </block>
+     </adminhtml_stationen_set_productsgrid>
+     
+     <adminhtml_stationen_stationen_set>
+        <block type="core/text_list" name="root" output="toHtml">
+          <block type="stationen/adminhtml_stationen_edit_tab_set_grid" name="stationen.grid"/>
+           <block type="adminhtml/widget_grid_serializer" name="grid_serializer">
+               <reference name="grid_serializer">
+                   <action method="initSerializerBlock">
+                       <grid_block_name>stationen.grid</grid_block_name>
+                       <data_callback>getSelectedSets</data_callback>
+                       <hidden_input_name>all_selected</hidden_input_name>
+                       <reload_param_name>stationen_set</reload_param_name>
+                   </action>
+                   <action method="addColumnInputName">
+                       <input_name>dummy</input_name>
+                   </action>                  
+               </reference>
+           </block>
+       </block>
+    </adminhtml_stationen_stationen_set>
+    <adminhtml_stationen_stationen_setgrid>
+     	 <block type="core/text_list" name="root" output="toHtml">
+            <block type="stationen/adminhtml_stationen_edit_tab_set_grid" name="stationen.grid"/>
+        </block>
+     </adminhtml_stationen_stationen_setgrid>     
+</layout>

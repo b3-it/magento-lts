@@ -1,0 +1,44 @@
+<?php if ($this->hasStationen()):?>
+<script type="text/javascript">
+	function selectStation(id)
+	{
+	    $$('select#stationenListe option').each(function(o) {
+	    	  if(o.readAttribute('value') == id) {
+	    	    o.selected = true;
+	    	    if($('quicksearch')) {$('quicksearch').value = '';}
+	    	    throw $break;
+	    	  }
+	    	});
+
+	}
+
+	function selectStationSuggest(id)
+	{
+	    $$('select#stationenListe option').each(function(o) {
+	    	  if(o.readAttribute('value') == id) {
+	    	    o.selected = true;
+	    	    throw $break;
+	    	  }
+	    	});
+
+	}
+</script>
+<div id="station_wahl"><?php echo $this->__('choose Station')?></div>
+<div id="list" >
+    <select id="stationenListe" name="station">
+    <option value=""><?php echo $this->__('-- please select --')?></option>
+<?php foreach($this->getStationsList() as $station){?>
+    <option value="<?php echo $station->getId()?>"><?php echo $station->getName()?></option>
+<?php }?>
+    </select>
+</div>
+<script type="text/javascript">
+if ( typeof stationen !== 'undefined' && stationen.length > 0 ) {}
+else
+{
+    $('station_wahl').insert({
+        before: "<br>"
+    });
+}
+</script>
+<?php endif;?>

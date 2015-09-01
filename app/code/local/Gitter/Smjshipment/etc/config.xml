@@ -1,0 +1,94 @@
+<?xml version="1.0" ?>
+<config>
+<modules>
+    <Gitter_Smjshipment>
+        <version>0.1.0</version>
+    </Gitter_Smjshipment>
+</modules>
+<default>
+  <carriers>
+   <smjshipment>
+       <active>1</active>
+       <allowed_methods>smjshipment</allowed_methods>
+       <methods>smjshipment</methods>
+       <sallowspecific>0</sallowspecific>
+       <model>smjshipment/smjshipment</model>
+       <name>smjshipment</name>
+       <price>0.00</price>
+       <title>Versand nach Art</title>
+       <specificerrmsg>Diese Versandmethode ist derzeit nicht verfügbar. Bitte kontaktieren Sie uns wenn sie diese Methode verwenden möchten.</specificerrmsg>
+       <handling_type>F</handling_type>
+   </smjshipment>
+  </carriers>
+</default>
+<global>
+    <models>
+    	<smjshipment>
+    		<class>Gitter_Smjshipment_Model</class>
+    	</smjshipment>
+    </models>
+    <helpers>
+   		<smjshipment>
+       		<class>Gitter_Smjshipment_Helper</class>
+   		</smjshipment>
+ 	</helpers>
+ 	<resources>
+            <smjshipment_setup>
+                <setup>
+                    <module>Gitter_Smjshipment</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </smjshipment_setup>
+        </resources>
+    <sales>
+        <quote>
+            <item>
+                <product_attributes>
+                    <smjshipment_group/>
+                </product_attributes> 
+            </item>
+        </quote>
+    </sales>
+</global>
+<frontend>
+       <translate>
+            <modules>
+                <Gitter_Smjshipment>
+                    <files>
+                        <default>Gitter_Smjshipping.csv</default>
+                    </files>
+                </Gitter_Smjshipment>
+            </modules>
+        </translate>
+</frontend>
+<adminhtml>
+       <translate>
+            <modules>
+                <Gitter_Smjshipment>
+                    <files>
+                        <default>Gitter_Smjshipping.csv</default>
+                    </files>
+                </Gitter_Smjshipment>
+            </modules>
+        </translate>
+</adminhtml>
+    <default>
+     	<carriers>
+            <smjshipment>
+            	<nat_book1>2</nat_book1>
+            	<nat_book6>4</nat_book6>
+            	<nat_book10>6</nat_book10>
+            	<nat_normal>6</nat_normal>
+            	<nat_oversize>6</nat_oversize>
+            	<int_book1>4</int_book1>
+            	<int_book6>8</int_book6>
+            	<int_book10>15</int_book10>
+            	<int_normal>15</int_normal>
+            	<int_oversize>15</int_oversize>
+            </smjshipment>
+    	</carriers>
+    </default>
+</config>

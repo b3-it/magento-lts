@@ -1,0 +1,70 @@
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+function addItem(id)
+{
+	new Ajax.Request('<?php echo $this->getItemsAddUrl();?>',
+	  {
+	    method:'post',
+	    parameters: 'id='+id,
+	    onSuccess: function(transport){
+			$('contract_item_list').update(transport.responseText);
+	    },
+	    onFailure: function(){ alert('Something went wrong...') }
+	  });	
+}
+
+function removeContractItem(id)
+{
+	new Ajax.Request('<?php echo $this->getItemsRemoveUrl();?>',
+			  {
+			    method:'post',
+			    parameters: 'id='+id,
+			    onSuccess: function(transport){
+					$('contract_item_list').update(transport.responseText);
+			    },
+			    onFailure: function(){ alert('Something went wrong...') }
+			  });	
+}
+           
+
+//]]>
+</script>
+
+<script type="text/javascript">
+
+function stopRKey(evt) {
+  var evt = (evt) ? evt : ((event) ? event : null);
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
+}
+
+document.onkeypress = stopRKey;
+
+</script> 
+
+<form id="edit_form" action="<?php echo $this->getSaveUrl() ?>" method="post">
+    <?php echo $this->getBlockHtml('formkey')?>
+
+    <div id="product_selection">
+        <?php echo $this->getChildHtml('product') ?>
+    </div>
+<div class="entry-edit">
+<div class="entry-edit-head">
+	<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Contract')?></h4>
+</div>
+<fieldset>
+    <div id="contract_customer">
+    	<?php echo $this->getChildHtml('customer') ?>
+    </div>
+    <div id="contract_item_list">
+    	<?php echo $this->getChildHtml('list') ?>
+    </div>
+    </div>
+
+	<button style="" class="scalable save"  onMouseDown="form.submit();"><span>Speichern</span></button>
+</fieldset>
+</div>
+</form>

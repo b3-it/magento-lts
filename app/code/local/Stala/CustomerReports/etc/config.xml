@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Stala_CustomerReports>
+			<version>0.1.0</version>
+			<depends>
+				<Egovs_Extreport />
+			</depends>
+		</Stala_CustomerReports>
+    </modules>
+    <adminhtml>
+    	<acl>
+			<!-- Bei Änderung ist Logout und erneuter Login nötig! source:http://activecodeline.com/magento-module-development-building-interface-with-config-file-and-reusing-config-values -->
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<stalareports translate="title" module="reports">
+											<title>Reports Section</title>
+										</stalareports>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+    	<translate>
+	        <modules>
+	            <Stala_CustomerReports>
+	                <files>
+	                    <default>Stala_CustomerReports.csv</default>
+	                </files>
+	            </Stala_CustomerReports>
+	        </modules>
+	    </translate>
+    </adminhtml>
+    <global>
+        <blocks>
+            <stalareports>
+            	<class>Stala_CustomerReports_Block_Adminhtml</class>
+            </stalareports>
+            <sales>
+            <rewrite>
+            	<adminhtml_report_filter_form>Stala_CustomerReports_Block_Adminhtml_Sales_Report_Filter_Form</adminhtml_report_filter_form>
+            	<adminhtml_report_filter_form_order>Stala_CustomerReports_Block_Adminhtml_Sales_Report_Filter_Form_Order</adminhtml_report_filter_form_order>
+            </rewrite>
+            
+            </sales>
+            <adminhtml>
+            	<rewrite>
+            		<report_sales_sales_grid>Stala_CustomerReports_Block_Adminhtml_Report_Sales_Sales_Grid</report_sales_sales_grid>
+            		<report_sales_tax_grid>Stala_CustomerReports_Block_Adminhtml_Report_Sales_Tax_Grid</report_sales_tax_grid>
+            		
+            		<report_sales_shipping_grid>Stala_CustomerReports_Block_Adminhtml_Report_Sales_Shipping_Grid</report_sales_shipping_grid>
+            		<report_sales_invoiced_grid>Stala_CustomerReports_Block_Adminhtml_Report_Sales_Invoiced_Grid</report_sales_invoiced_grid>
+            		
+            		<report_customer_accounts_grid>Stala_CustomerReports_Block_Adminhtml_Report_Customer_Accounts_Grid</report_customer_accounts_grid>
+            		<report_customer_totals_grid>Stala_CustomerReports_Block_Adminhtml_Report_Customer_Totals_Grid</report_customer_totals_grid>
+            		<report_customer_orders_grid>Stala_CustomerReports_Block_Adminhtml_Report_Customer_Orders_Grid</report_customer_orders_grid>
+            	</rewrite>
+            </adminhtml>
+            <extreport>
+            	<rewrite>
+            		<sales_quantityordered_grid>Stala_CustomerReports_Block_Adminhtml_Report_Sales_Quantity_Grid</sales_quantityordered_grid>
+            		<sales_revenue_grid>Stala_CustomerReports_Block_Adminhtml_Report_Sales_Revenue_Grid</sales_revenue_grid>
+            	</rewrite>
+            </extreport>
+         </blocks>
+         <models>
+           	<stalareports>
+            	<class>Stala_CustomerReports_Model</class>
+            	<resourceModel>stalareports_mysql4</resourceModel>
+            </stalareports>
+            <stalareports_mysql4>
+            	<class>Stala_CustomerReports_Model_Mysql4</class>
+            </stalareports_mysql4>
+            <reports_mysql4>
+           		<rewrite>
+            		<accounts_collection>Stala_CustomerReports_Model_Mysql4_Accounts_Collection</accounts_collection>
+            		<customer_totals_collection>Stala_CustomerReports_Model_Mysql4_Customer_Totals_Collection</customer_totals_collection>
+            		<customer_orders_collection>Stala_CustomerReports_Model_Mysql4_Customer_Orders_Collection</customer_orders_collection>
+            	</rewrite>
+	        </reports_mysql4>
+	        <!-- Tax -->
+	        <tax_mysql4>
+	        	<rewrite>
+	        		<report_collection>Stala_CustomerReports_Model_Mysql4_Tax_Collection</report_collection>
+	        		<report_updatedat_collection>Stala_CustomerReports_Model_Mysql4_Tax_Updatedat_Collection</report_updatedat_collection>
+	        	</rewrite>
+	        </tax_mysql4>
+	      	<tax_resource>
+	        	<rewrite>
+	        		<report_tax_createdat>Stala_CustomerReports_Model_Resource_Tax_Createdat</report_tax_createdat>
+	        		<report_tax_updatedat>Stala_CustomerReports_Model_Resource_Tax_Updatedat</report_tax_updatedat>
+	        	</rewrite>
+	        </tax_resource>
+	        
+	        <!-- Tax -->
+	        <!-- Sales -->
+	        <sales_mysql4>
+	        	<rewrite>
+	        		<report_order_collection>Stala_CustomerReports_Model_Mysql4_Sales_Order_Collection</report_order_collection>
+	        		<report_order_updatedat_collection>Stala_CustomerReports_Model_Mysql4_Sales_Order_Updatedat_Collection</report_order_updatedat_collection>
+	        		<report_invoiced_collection_invoiced>Stala_CustomerReports_Model_Mysql4_Sales_Invoiced_Invoiced</report_invoiced_collection_invoiced>
+	        		<report_invoiced_collection_order>Stala_CustomerReports_Model_Mysql4_Sales_Invoiced_Order</report_invoiced_collection_order>
+	        		<report_shipping_collection_shipment>Stala_CustomerReports_Model_Mysql4_Sales_Shipping_Shipment</report_shipping_collection_shipment>
+	        		<report_shipping_collection_order>Stala_CustomerReports_Model_Mysql4_Sales_Shipping_Order</report_shipping_collection_order>
+	        		        		
+	        	</rewrite>
+	        </sales_mysql4>
+	        <sales_resource>
+	        	<rewrite>
+	        		<report_order_createdat>Stala_CustomerReports_Model_Resource_Sales_Order_Createdat</report_order_createdat>
+	        		<report_order_updatedat>Stala_CustomerReports_Model_Resource_Sales_Order_Updatedat</report_order_updatedat>
+	        		<report_invoiced>Stala_CustomerReports_Model_Resource_Sales_Invoiced</report_invoiced>
+	        		<report_shipping>Stala_CustomerReports_Model_Resource_Sales_Shipping</report_shipping>
+	        	</rewrite>
+	        </sales_resource>
+	        
+	         <!-- Sales -->
+	        <extreport_mysql4>
+	        	<rewrite>
+	        		<sales_quantity_collection>Stala_CustomerReports_Model_Mysql4_Quantity_Collection</sales_quantity_collection>
+	        		<sales_revenue_collection>Stala_CustomerReports_Model_Mysql4_Revenue_Collection</sales_revenue_collection>
+	        	</rewrite>
+	        </extreport_mysql4>
+         </models>
+         <resources>
+             <stalareports_setup>
+                <setup>
+                    <module>Stala_CustomerReports</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </stalareports_setup>
+            <stalareports_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </stalareports_write>
+			<stalareports_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</stalareports_read>
+		</resources>
+		<helpers>
+			<stalareports>
+				<class>Stala_CustomerReports_Helper</class>
+			</stalareports>
+		</helpers>
+    </global>
+</config>

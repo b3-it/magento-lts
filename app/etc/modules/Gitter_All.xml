@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+       	<Gitter_Smjshipment>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Gitter_Smjshipment>
+    </modules>
+</config> 

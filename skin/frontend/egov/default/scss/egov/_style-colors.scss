@@ -25,15 +25,16 @@ $global-cart-color: #59814C;
 $global-cart-subtotal: #59814C;
 
 $global-border-color: #C1D0BB;
+$global-border-color-light: #E0E6D7;
 
-$global-checkout-tableborder: #E0E6D7;
+$global-checkout-tableborder: #C1D0BB;
 $global-checkout-thbackground: #59814C;
 $global-checkout-thfontcolor: #FFFFFF;
 $global-checkout-tdbackground: transparent;
 $global-checkout-tdfontcolor: #000000;
 
-$global-checkout-total-background: $global-lightcolor-hover;
-$global-checkout-total-border: $global-lightcolor;
+$global-checkout-total-background: #F0F6E7;
+$global-checkout-total-border: #E0E6D7;
 
 $global-mp-checkout-active: #59814C;
 $global-mp-checkout-inactive: #8F8F8F;
@@ -45,19 +46,21 @@ $global-text-shadow: rgba(0, 0, 0, 0.3);
 $global-rgba-1: rgba(224, 230, 215, 0.9);
 $global-rgba-2: rgba(193, 208, 187, 0.97);
 
-$global-button-color: $global-lightcolor;
-$global-button-hovercolor: $global-lightcolor-hover;
+$global-button-color: #F0F6E7;
+$global-button-hovercolor: #F0F6E7;
 $global-button-gradient-1: $global-rgba-1 0%;
 $global-button-gradient-2: $global-rgba-2 66%;
 
 $global-header-gradientcolor-1: #7EAA6F;
 $global-header-gradientcolor-2: $global-linkcolor;
 
-$global-box-title-backgroundcolor: $global-lightcolor-hover;
+$global-box-title-backgroundcolor: #E0E6D7;
+$global-box-content-backgroundcolor: #FFFFFF;
+$global-box-bordercolor: #C1D0BB;
 
 $global-category-font-color: #333333;
 $global-category-hover-color: #333333;
-$global-category-item-color: $global-lightcolor;
+$global-category-item-color: #F0F6E7;
 $global-category-gradientrgb-1: $global-rgba-1;
 $global-category-gradientrgb-2: $global-rgba-2;
 $global-category-color-ms-1: #FFE0E6D7;
@@ -67,7 +70,7 @@ $global-category-textshadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 $global-subcat-bordercolor: #F4EEE3;
 
 $global-content-background: rgba(0, 0, 0, 0);
-$global-content-bottom-bordercolor: $global-lightcolor;
+$global-content-bottom-bordercolor: #F0F6E7;
 
 $global-footer-fontcolor: #4D4D4D;
 $global-footer-backgroundcolor: $global-button-hovercolor;

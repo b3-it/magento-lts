@@ -94,6 +94,21 @@
             </order>
 		</sales>
 	-->
+		<sales>
+			<quote>
+				<item>
+					<product_attributes>
+						<haushaltsstelle />
+						<objektnummer />
+						<objektnummer_mwst />
+						<href />
+						<href_mwst />
+						<buchungstext />
+						<buchungstext_mwst />
+					</product_attributes>
+				</item>
+			</quote>
+		</sales>
 		<events>
         	<sales_quote_merge_after>
         		<observers>

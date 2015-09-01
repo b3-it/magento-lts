@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_abo_abo_index>
+        <reference name="content">
+            <block type="dwd_abo/adminhtml_abo" name="abo" >
+            </block>
+        </reference>
+    </adminhtml_abo_abo_index>
+    <adminhtml_abo_abo_collect>
+        <reference name="content">
+            <block type="dwd_abo/adminhtml_abo" name="abo" />
+        </reference>
+    </adminhtml_abo_abo_collect>
+</layout> 

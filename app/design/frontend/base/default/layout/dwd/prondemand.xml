@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+-->
+<layout version="0.1.0">
+
+    
+    <checkout_cart_index>
+        <reference name="checkout.cart">
+            <action method="addItemRender"><type>prondemand</type><block>prondemand/checkout_cart_item_renderer</block><template>dwd/prondemand/checkout/cart/item/default.phtml</template></action>
+        </reference>
+    </checkout_cart_index>
+    
+      <xegovs_checkout_multipage_overview>
+        <reference name="checkout_overview">
+            <action method="addItemRender"><type>prondemand</type><block>prondemand/checkout_cart_item_renderer</block><template>dwd/prondemand/checkout/onepage/review/item.phtml</template></action>
+        </reference>
+       
+   </xegovs_checkout_multipage_overview>
+   
+     <xegovs_checkout_multipage_successview>
+         <reference name="checkout_successview">
+           <action method="addItemRender"><type>prondemand</type><block>prondemand/checkout_cart_item_renderer</block><template>dwd/prondemand/checkout/onepage/review/item.phtml</template></action>
+        </reference> 
+   </xegovs_checkout_multipage_successview> 
+    
+    <downloadable_customer_products translate="label">
+        <reference name="my.account.wrapper">
+            <action method="unsetChild"><name>downloadable_customer_products_list</name></action>
+            <block type="prondemand/customer_products_list" name="downloadable_customer_products_list" template="downloadable/customer/products/list.phtml">
+                <action method="setData"><key>accesskey</key><value>i</value></action>
+                <action method="setData"><key>jumptitle</key><value>Inhalt/Anzeige</value></action>			
+            </block>
+        </reference>
+    </downloadable_customer_products>
+    
+    <PRODUCT_TYPE_prondemand translate="label" module="prondemand">
+        <label>Catalog Product View (Product On Demand)</label>
+        <reference name="product.info">
+            <block type="downloadable/catalog_product_view_type" name="product.info.prondemand" as="product_type_data" template="downloadable/catalog/product/type.phtml">
+                <block type="downloadable/catalog_product_samples" name="product.info.prondemand.samples" as="samples" template="downloadable/catalog/product/samples.phtml"/>
+                <block type="cataloginventory/stockqty_default" name="product.info.prondemand.extra" as="product_type_data_extra" template="cataloginventory/stockqty/default.phtml"/>
+            </block>
+        </reference>
+    </PRODUCT_TYPE_prondemand>
+    
+    
+    <sales_email_order_items>
+        <reference name="items">
+            <action method="addItemRender"><type>prondemand</type><block>prondemand/sales_email_items_order_prondemand</block><template>dwd/prondemand/email/order/items/order/prondemand.phtml</template></action>
+        </reference>
+    </sales_email_order_items>
+    
+    <sales_email_order_invoice_items>
+        <reference name="items">
+            <action method="addItemRender"><type>prondemand</type><block>prondemand/sales_email_items_prondemand</block><template>dwd/prondemand/email/order/items/invoice/prondemand.phtml</template></action>
+        </reference>
+    </sales_email_order_invoice_items>
+    
+    <sales_email_order_creditmemo_items>
+        <reference name="items">
+            <action method="addItemRender"><type>prondemand</type><block>prondemand/sales_email_items_prondemand</block><template>dwd/prondemand/email/order/items/creditmemo/prondemand.phtml</template></action>
+        </reference>
+    </sales_email_order_creditmemo_items>
+</layout>

@@ -361,8 +361,6 @@
 "Zip/Postal Code","PLZ"
 "ok","ok"
 "or","oder"
-
-
 "My Cart (%s)","Warenkorb (%s)"
 "Order Total will be displayed before you submit the order.","Ihre Gesamtbestellung wird angezeigt, bevor Sie die Bestellung abschicken."
 "Payment Failed Email Reciever","E-Mail Empfänger bei fehlgeschlagener Zahlung"
@@ -370,3 +368,4 @@
 "Please continue shopping.","Hier können Sie mit dem Einkaufen fortfahren."
 "Sorry, guest checkout is not enabled. Please try again or contact the store owner.","Entschuldigen Sie, aber ein Bezahlvorgang als Gast ist nicht möglich. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut oder nehmen Sie Kontakt mit dem Shopbetreiber auf."
 "Product Name","Produktname"
+"Checkout Procedure","Zur Kasse"

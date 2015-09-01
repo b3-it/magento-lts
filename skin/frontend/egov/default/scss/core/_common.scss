@@ -141,7 +141,7 @@ h6, .h6 { @include h6; }
  */
 
 .col-left-first {
-    margin-top: 20px;
+    margin-top: $global-boxmargin;
 }
 
 .block {
@@ -151,8 +151,11 @@ h6, .h6 { @include h6; }
 
     .block-title {
         background-color: $global-box-title-backgroundcolor;
-        border-bottom: 3px solid $global-lightcolor;
+        border-bottom: $global-box-border-bottom solid $global-box-bordercolor;
         padding: 0.2em 0 0.3em 0.6em;
+        color: $global-fontcolor-dark;
+        font-weight: normal;
+        font-size: $global-fontsize-big;
 
         span {
             color: $global-h4-color;
@@ -201,6 +204,10 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-right: $blobal-blockcontent-marginright;
 
     input {
+        _width: 100%;
+    }
+
+    input[type="text"], input[type="email"] {
         width: 100%;
     }
 }
@@ -295,9 +302,53 @@ body:not(.customer-account) .block:first-child .block-title {
     top: -20px;
 }
 
-.block-reorder {
-    margin-top: 20px;
+
+/* ============================================ *
+ * Reorder-Box Styles
+ * ============================================ */
+
+div.block-reorder {
+    margin-top: $global-boxmargin;
+    width: $global-leftcol-width + 5;
+
+    .validation-advice {
+        display: block;
+        margin: 10px 0px;
+        color: $global-warning-color;
+        font-weight: bold;
+    }
+
+    input[type="checkbox"].validation-passed {
+        outline: $global-warning-color 2px solid;
+    }
+
+    button.egov-float-left {
+        position: relative;
+        left: -3px;
+    }
+
+    button.btn-cart {
+        @extend .egov-float-right;
+        position: relative;
+        right: -3px;
+    }
+
+    li {
+        margin-top: $box-spacing;
+        margin-bottom: 0;
+
+        input {
+            width: auto;
+            float: left;
+        }
+    }
+
+    p.product-name {
+        display: inline-block;
+        margin-bottom: 0;
+    }
 }
+
 
 .block-account,
 .block-cms-menu {
@@ -800,8 +851,6 @@ a.button:hover {
 
 .col-right {
     float: right;
-    margin-top: $global-rightcol-margintop; 
-    margin-right: $global-rightcol-marginright;       
 
     img {
         max-width: 100%;
@@ -809,7 +858,7 @@ a.button:hover {
 }
 
 .col-main {
-   /* width: percentage($global-content-width/$global-fullpage-width);*/
+    width: percentage($global-content-width/$global-fullpage-width);
 
     .std {
         width: $global-content-width;
@@ -881,7 +930,9 @@ a.button:hover {
 }
 
 .col2-right-layout {
-	 .col-right {
+	  .col-right {
+        margin-right: $global-rightcol-marginright;
+        float: right;
         position: relative;
         width: $global-rightcol-width;
     }
@@ -896,10 +947,6 @@ a.button:hover {
         width: $global-fullpage-width - 25;
         padding-left: $global-content-paddingleft;
         padding-top: $global-content-paddingtop;
-
-        .std {
-        	width: $global-fullpage-width - $global-rightcol-width - 75; 
-        }
     }
 }
 
@@ -908,6 +955,7 @@ a.button:hover {
         width: 100%;
         position: relative;
         top: 4px;
+        left: -8px;
 
         .col-left {
             margin-right: $global-leftcol-marginright;
@@ -929,7 +977,9 @@ a.button:hover {
         }
 
         .col-right {
+            float: right;
             width: $global-rightcol-width;
+            margin-right: $global-rightcol-marginright;
             padding: 0px;
         }
     }
@@ -1529,17 +1579,17 @@ span.weee {
 .no-touch .product-img-box .product-image:not(.zoom-available):hover {
     position: relative;
     display: block;
-    border: 1px solid $c-module-border-light;
+    border: 1px solid $global-border-color-light;
 }
 
 @include bp (max-width, $bp-medium) {
     body .product-img-box .product-image:hover {
-        border-color: $c-module-border-light;
+        border-color: $global-border-color-light;
     }
 }
 
 .no-touch .product-image:hover {
-    border-color: $c-module-border-highlight;
+    border-color: $global-border-color-light;
 }
 
 /* -------------------------------------------- *

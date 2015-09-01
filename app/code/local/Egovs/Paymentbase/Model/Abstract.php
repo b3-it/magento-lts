@@ -764,14 +764,14 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				}
 			}
 			
-			$product = Mage::getSingleton('catalog/product')->load($item->getProductId());
-			$haushaltsstelle = $product->getData('haushaltsstelle');
-			$objektnummer = $product->getData('objektnummer');
-			$objektnummerMwst = $product->getData('objektnummer_mwst');
-			$href = $product->getData('href');
-			$hrefMwst = $product->getData('href_mwst');
-			$buchungstext = $product->getData('buchungstext');
-			$buchungstextMwst = $product->getData('buchungstext_mwst');
+			$product = $item->getProduct();
+			$haushaltsstelle = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('haushaltsstelle'));
+			$objektnummer = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('objektnummer'));
+			$objektnummerMwst = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('objektnummer_mwst'));
+			$href = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('href'));
+			$hrefMwst = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('href_mwst'));
+			$buchungstext = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('buchungstext'));
+			$buchungstextMwst = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('buchungstext_mwst'));
 			
 			
 			$taxKeys = array();

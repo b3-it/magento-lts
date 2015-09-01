@@ -1,25 +1,7 @@
 //
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -27,21 +9,70 @@
  * Checkout - One Page
  * ============================================ */
 
-.checkout-onepage-index .col-right,
 .checkout-onepage-index .col-left {
     display: none;
 }
 
-.checkout-onepage-index .col-main {
-    width: auto;
-    float: none;
+.checkout-onepage-index {
+    .main-container {
+        top: -27px;
+        left: -13px;
+    }
+
+    .col-main {
+        width: 100%;
+        float: none;
+
+        .page-title {
+            width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
+        }
+
+        p.required {
+            margin-top: $global-boxpadding;
+            margin-bottom: $global-boxpadding;
+            color: $global-warning-color;
+        }
+
+        #checkoutSteps {
+            width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
+            display: inline-block;
+        }
+    }
+
+    .col-right {
+        margin-right: 0px;
+
+        .block-progress {
+            border: 0px;
+
+            .block-title {
+                _border-width: $global-box-border $global-box-border $global-box-border-bottom $global-box-border;
+                _border-style: solid;
+                _border-color: $global-border-color;
+                margin: 0px;
+                _padding-top: 3px !important;
+
+                background-color: transparent;
+                border: 0px;
+            }
+
+            .block-content {
+                _border-width: 0px $global-box-border $global-box-border $global-box-border;
+                _border-style: solid;
+                _border-color: $global-border-color;
+                margin: 0px;
+                padding: $global-boxpadding;
+                _background-color: $global-box-content-backgroundcolor;
+            }
+        }
+    }
 }
 
 @include bp(min-width, $bp-large+1) {
     .checkout-onepage-index {
         .col-main {
             float: left;
-            width: percentage(660px/960px);
+            _width: percentage(660px/960px);
             padding-right: 20px;
         }
 
@@ -69,7 +100,7 @@
 
 .opc .section .step-title {
     width: 100%;
-    border-top: 1px solid $c-divider-border;
+    border-top: $global-box-border solid $global-border-color;
     position: relative;
     @include not-selectable;
 
@@ -88,7 +119,7 @@
 }
 
 .opc .section.active .step-title {
-    border-bottom: 1px solid $c-divider-border;
+    border-bottom: $global-box-border solid $global-border-color;
 }
 
 .opc .section .step-title a {
@@ -96,11 +127,10 @@
 }
 
 .opc .section.allow:not(.active) .step-title a {
+    @extend .button;
+    @extend .egov-float-right;
     display: block;
-    float: right;
-    line-height: 40px;
-    height: 40px;
-    padding: 0px 10px;
+    margin-top: 7px;
 }
 
 .no-touch .opc .section .step-title a:hover {
@@ -110,12 +140,12 @@
 .opc .section .step-title .number,
 .opc .section.allow.active .step-title .number,
 .no-touch .opc .section.allow:hover .step-title .number {
-    width: 26px;
-    height: 26px;
+    width: $global-checkout-op-number;
+    height: $global-checkout-op-number;
     text-align: center;
-    color: #FFFFFF;
+    color: $global-fontcolor-light;
     line-height: 26px;
-    background-color: $c-action;
+    background-color: $global-cart-color;
     display: block;
     position: absolute;
     top: 50%;
@@ -124,36 +154,36 @@
 }
 
 .opc .section.allow .step-title .number {
-    background-color: tint($c-action, 50%);
+    background-color: tint($global-cart-color, 50%);
 }
 
 .opc .section.allow .step-title h2 {
-    color: $c-text-gray;
+    color: $global-lightcolor;
 }
 
 .opc .section.allow .step-title:hover h2,
 .opc .section.active .step-title h2 {
-    color: $c-text-primary;
+    color: $global-cart-color;
 }
 
 .opc .section .step-title h2 {
-    font-size: $f-size-xl;
+    font-size: $global-fontsize-big;
     font-weight: 400;
-    line-height: 40px;
-    height: 40px;
+    line-height: $global-checkout-op-height;
+    height: $global-checkout-op-height;
     float: left;
     margin: 0px 4px 0px 45px;
 }
 
 .opc .section .step {
-    padding: $box-spacing-large;
+    padding: $global-boxmargin 0px;
 
     &:after {
         @include clearfix;
     }
 
     @include bp(max-width, $bp-large) {
-        padding: $box-spacing;
+        padding: $global-boxmargin 0px;
     }
 }
 
@@ -185,9 +215,12 @@
         margin: 0;
     }
     a {
-        line-height: 20px;
-        display: inline-block;
-        padding: 5px 5px 5px 0;
+        @extend .button;
+
+        small {
+            position: relative;
+            top: -3px;
+        }
     }
 }
 
@@ -346,32 +379,34 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
 .block-progress {
     border: 0;
     margin: 0;
-    border-left: 1px solid $c-module-border;
-    padding-left: 20px;
+    padding-left: $global-boxmargin;
 
     .block-content {
-        font-size: $f-size-s;
+        font-size: $global-fontsize;
     }
     dt {
         padding-top: 6px;
         @include h4;
         margin-bottom: 6px;
-        text-transform: uppercase;
         font-weight: normal;
-        color: $c-text-gray;
+        color: $global-fontcolor-dark;
     }
 
     dt.complete {
-        color: $c-h4;
+        color: $global-fontcolor-dark;
+
+        span.spacer {
+            display: inline-block;
+            margin: 0px 10px;
+        }
     }
     dd {
         padding-left: 15px;
         margin-bottom: 10px;
-        font-family: $f-stack-serif;
-        font-style: italic;
+        font-family: $base-font-family;
 
         address {
-            font-style: italic;
+            font-size: $global-fontsize;
         }
     }
 
@@ -384,13 +419,11 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
         dt {
             padding: 0;
             margin: 0 0 3px 0;
-            color: $c-text;
-            font-family: $f-stack-serif;
+            color: $global-fontcolor-dark;
+            font-family: $base-font-family;
             text-transform: none;
-            font-style: italic;
             float: left;
             clear: both;
-            font-size: $f-size-s;
 
             &:after {
                 content: ': ';
@@ -400,7 +433,6 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
         dd {
             float: left;
             margin-bottom: 3px;
-            font-size: $f-size-s;
         }
 
         &:after {
@@ -412,11 +444,17 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
 
 /* review step */
 #checkout-review-table {
+    @extend .egov-base-table;
+
     .btn-remove {
         img {
             display: none;
         }
     }
+}
+
+#checkout-totals-table {
+    @extend .egov-base-totals;
 }
 
 #checkout-review-table-wrapper {
@@ -469,7 +507,7 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
 /* On small screens, the progress review content will be moved to the review step via JS. Styled via this CSS: */
 #checkout-step-review .opc-block-progress {
     border-left: none;
-    padding-left: 0;
+    padding: $global-boxpadding 0px !important;
 
     .block-title {
         display: none;

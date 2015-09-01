@@ -1,0 +1,10 @@
+<?php 
+	$produkt = $this->getProducts();
+	$station = $this->getStations();
+	$format = $this->getFormats();
+
+?>
+
+<?php if ($station):?>Station(en): <?php echo $this->getListAsHtml($station);?><br/><?php endif;?>
+<?php if ($produkt):?>Produkte(e): <?php echo $this->getListAsHtml($produkt);?> <br/><?php endif;?>
+<?php if ($format):?>Format(e): <?php echo $this->getListAsHtml($format);?> <br/><?php endif;?>
