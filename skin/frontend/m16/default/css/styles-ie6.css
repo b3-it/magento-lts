@@ -1,0 +1,44 @@
+/**
+ * Magento
+ *
+ * testfile jonas
+ */
+
+
+
+/* Ergänzung Egov */
+.main {
+	margin-top: -50px;
+}
+
+* html > body .block-content a {
+	margin-left: 15px;
+	padding-left: 50px;
+}	
+* html > body .block-links .block-content {
+color: #358335;
+}
+* html > body li.level0 a {
+color: #358335;
+padding-left: 25px;
+display: block;
+}
+* html > body li.level0 a span{
+color: #358335;
+}
+* html > body li.last a{
+color: #358335;
+display: block;
+}
+
+* html > body form#shipping_method_form, form#multishipping-billing-form{
+display: block;
+margin-left: 50px;
+}
+/*.col-1 address, .col-1 h4, .col-1 h5, .multiple-checkout h3,*/
+* html > body .col-1 address, .col-1 h4, .col-1 h5, .multiple-checkout h3, .multiple-checkout p, .multiple-checkout div.agreecontent, .multiple-checkout h2.checknewsletter, .multiple-checkout ul {
+display: block;
+margin-left: 70px;
+
+}
+

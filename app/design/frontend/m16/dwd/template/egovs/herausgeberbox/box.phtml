@@ -1,0 +1,37 @@
+<div class="block block-links">
+	 <div class="block-title">
+	 <h2><?php echo $this->helper('herausgeberbox')->__('Publisher')?></h2>
+	 </div>
+	 <div class="block-content">
+
+		<div id="jumptarget<?php echo $this->getNameInLayout();?>">
+
+
+
+<ul class="links"<?php if($this->getName()): ?> id="<?php echo $this->getName() ?>"<?php endif;?>>
+<?php if ($this->checkIfActive("impressum")): ?>
+    <li class=""><a href="<?php echo $this->getUrl("impressum");?>"><?php echo $this->helper('herausgeberbox')->__('Impress')?></a></li>
+<?php endif;?>
+<?php if ($this->checkIfActive("contacts")): ?>
+    <li class="last"><a href="<?php echo $this->getUrl("contacts");?>"><?php echo Mage::helper('herausgeberbox')->__('Contact us')?></a></li>
+<?php endif;?>
+<?php if ($this->checkIfActive("contactpage")): ?>
+    <li class="last"><a href="<?php echo $this->getUrl("contactpage");?>"><?php echo Mage::helper('herausgeberbox')->__('Contact')?></a></li>
+<?php endif;?>
+<?php if ($this->checkIfActive("esignatur")): ?>
+    <li class="last"><a href="<?php echo $this->getUrl("esignatur");?>"><?php echo Mage::helper('herausgeberbox')->__('eSignature')?></a></li>
+<?php endif;?>
+<?php if ($this->checkIfActive("rechtlichehinweise")): ?>
+    <li class="last"><a href="<?php echo $this->getUrl("rechtlichehinweise");?>"><?php echo Mage::helper('herausgeberbox')->__('Legal Informations')?></a></li>
+<?php endif;?>
+<?php if ($this->checkIfActive("behoerdenwegweiser")): ?>
+    <li class="last"><a href="<?php echo $this->getUrl("behoerdenwegweiser");?>"><?php echo Mage::helper('herausgeberbox')->__('Authority Finder')?></a></li>
+<?php endif;?>
+</ul>
+
+     </div>
+	 </div>
+
+ </div>
+
+

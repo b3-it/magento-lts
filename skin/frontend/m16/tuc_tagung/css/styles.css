@@ -1,0 +1,11 @@
+﻿.col2-right-layout .col-main {margin-left: 5px;}
+.block-related li { padding:5px 0; border:0px; }
+.block-related input.checkbox { float:left; }
+.block-related .item { margin-left:20px; }
+.block-related .item .product-image { float:left; }
+.block-related .item .product-details { margin-left:65px; }
+span.tax-details {display: none;}
+ul.add-to-links {display: none;}
+.product-view .additional {display: none;}
+#shopping-cart-totals-table .tax-details {display: none;}
+.discount {display: none;}

@@ -1,0 +1,76 @@
+<?php
+
+?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $_lists = $this->getWishlists(); ?>
+<div class="page-title">
+    <h2><?php echo $this->__('My Collector Lists') ?></h2>
+</div>
+<!--Sprungziel Tastatursteuerung -->
+<div id="jumptarget<?php echo $this->getNameInLayout();?>">
+<?php echo $this->getPagerHtml(); ?>
+<?php if($_lists->getSize()): ?>
+<table class="data-table" id="my-collections-table">
+    <col width="1" />
+    <col width="1" />
+    <col />
+    <col />
+    <col />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('List #') ?></th>
+            <th><?php echo $this->__('Date created') ?></th>
+            <th><?php echo $this->__('Name') ?></th>
+            <th><?php echo $this->__('Description') ?></th>            
+            <th><?php echo $this->__('Owner') ?></th>
+            <th><span class="nobr"><?php echo $this->__('Total') ?></span></th>
+            <th><span class="nobr"><?php echo $this->__('Default') ?></span></th>
+            <th><span class="nobr"><?php echo $this->__('Status') ?></span></th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php foreach ($_lists->getItems() as $_list): ?>
+        <tr>
+            <td><?php echo $_list->getId() ?></td>
+            <td><span class="nobr"><?php echo $this->formatDate($_list->getCreatedAtStoreDate()) ?></span></td>
+            <td><?php echo $this->htmlEscape($_list->getName()); ?></td>
+            <td><?php echo $this->htmlEscape($_list->getDescription()); ?></td>
+            <td><?php echo $this->htmlEscape($_list->getOwner()); ?></td>
+            <td><?php echo $_list->formatPrice($_list->getGrandTotal()) ?></td>
+            <td><em><?php echo $_list->getDefaultLabel() ?></em></td>
+            <td><em><?php echo $_list->getStatusLabel() ?></em></td>
+            <td class="a-center">
+                <span class="nobr">
+                	<a href="<?php echo $this->getViewUrl($_list) ?>"><?php echo $this->__('View') ?></a>                
+                </span>
+            </td>
+            <td class="a-center">
+            	<a href="<?php echo $this->getDeleteUrl($_list) ?>" title="<?php echo $this->__('Delete') ?>" onclick="return confirmDeletion();"><img src="<?php echo $this->getSkinUrl('images/btn_trash.gif'); ?>" alt="<?php echo $this->__('Delete') ?>" /></a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+</div>
+<script type="text/javascript">decorateTable('my-collections-table');</script>
+<script type="text/javascript">
+    //<![CDATA[
+    function confirmDeletion() {
+        return confirm('<?php echo $this->__('Are you sure you want to remove this collector list?') ?>');
+    }
+  	//]]>
+</script>
+<?php $s = $this->getPagerHtml(); $s= str_replace('showxonpage','showxonpage_1',$s); echo $s; ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have no collection lists.'); ?></p>
+<?php endif ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+</div>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+	 <default>
+        <reference name="right"> <!-- von header auf content geändert jonas 2010_07_09 -->
+            <block type="core/template" name="top.search" as="topSearch" before="cart_sidebar" template="egovs/search/form.mini.phtml">
+			  <action method="setData"><key>accesskey</key><value>a</value></action>
+              <action method="setData"><key>jumptitle</key><value>Artikelsuche</value></action>
+			</block>
+			
+			
+
+        </reference>
+		<!-- auskommentiert wegen Dopplung, wird schon in catalogsearch.xml aufgerufen, Jonas 27.07.2010 -->
+        <reference name="content_links"> 
+           <action method="addLink" translate="label title" module="catalogsearch" ifconfig="catalog/seo/search_terms"><label>Search Terms</label><url helper="catalogsearch/getSearchTermUrl" /><title>Search Terms</title></action> 
+            <action method="addLink" translate="label title" module="catalogsearch"><label>Advanced Search</label><url helper="catalogsearch/getAdvancedSearchUrl" /><title>Advanced Search</title></action>
+        </reference>
+		
+    </default>
+</layout> 
