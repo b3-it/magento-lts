@@ -147,6 +147,10 @@ h6, .h6 { @include h6; }
     margin-top: $global-boxmargin;
 }
 
+.block-viewed, .block-poll {
+    margin-bottom: $global-boxmargin;
+}
+
 .block {
     border-width: $global-checkout-borderwidth;
     border-style: solid;
