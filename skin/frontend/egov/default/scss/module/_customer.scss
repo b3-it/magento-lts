@@ -165,23 +165,6 @@
     }
 }
 
-.customer-account-forgotpassword {
-    .fieldset,
-    .buttons-set {
-        margin-left: $trim;
-        max-width: 400px;
-
-        @include bp(max-width, $bp-xsmall) {
-            margin-left: 0;
-        }
-    }
-
-    .fieldset .input-box input.input-text {
-        width: 100%;
-    }
-}
-
-
 /* ============================================ *
  * My Account Global Styles
  * ============================================ */

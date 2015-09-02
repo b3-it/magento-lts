@@ -15,6 +15,7 @@ $global-indent: 0px;
 $global-boxmargin: 20px;
 $global-boxpadding: 5px;
 $global-tdpadding: 5px;
+$global-listmargin: 15px;
 
 $global-logo-width: 225px;
 $global-logo-height: 35px;
@@ -53,7 +54,7 @@ $global-message-marginbottom: $global-boxmargin;
 $global-fullpage-width: 960px;
 $global-leftcol-width: 225px;
 $global-content-width: 415px;
-$global-rightcol-width: 220px;
+$global-rightcol-width: 230px;
 
 $global-leftcol-marginright: 21px;
 $global-rightcol-marginright: 26px;
@@ -65,6 +66,8 @@ $global-content-marginright: 32px;
 $global-content-rightspace: 25px;
 
 $global-header-height: 200px;
+
+$global-adv-search-width: $global-fullpage-width - $global-content-marginright - $global-rightcol-width - $global-rightcol-marginright;
 
 $blobal-blockcontent-marginleft: 5px;
 $blobal-blockcontent-marginright: 5px;

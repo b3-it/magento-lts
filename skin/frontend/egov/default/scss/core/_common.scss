@@ -41,7 +41,8 @@ textarea {
     line-height: $global-lineheight;
 }
 
-textarea, input[type="text"], input[type="email"], input[type="password"] {
+textarea, input[type="text"], input[type="email"],
+input[type="password"], input[type="tel"], select {
     border: 1px solid $global-wrapper-color;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
     margin-bottom: 16px;
@@ -49,8 +50,10 @@ textarea, input[type="text"], input[type="email"], input[type="password"] {
     padding: 3px 6px;
     border-radius: 3px;
 }
-textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus,
-textarea:active, input[type="text"]:active, input[type="email"]:active, input[type="password"]:active {
+textarea:focus, input[type="text"]:focus, input[type="email"]:focus,
+input[type="password"]:focus, input[type="tel"]:focus, select:focus,
+textarea:active, input[type="text"]:active, input[type="email"]:active,
+input[type="password"]:active, input[type="tel"]:active, select:active {
     background-color: $global-lightcolor-hover;
     border-color: $global-lightcolor;
 }
@@ -641,9 +644,8 @@ a.button:hover {
 
 .breadcrumbs li {
     float: left;
-    font-size: $f-size-xs;
+    font-size: $global-fontsize-small;
     font-family: $base-font-family;
-    text-transform: uppercase;
 }
 
 .breadcrumbs a {
@@ -935,6 +937,7 @@ a.button:hover {
         float: right;
         position: relative;
         width: $global-rightcol-width;
+        margin-top: $global-rightcol-margintop;
     }
     .col-main {
         padding-left: 0; /* Remove the 15px padding */
@@ -944,9 +947,13 @@ a.button:hover {
         background-position: 0px -3px;
         background-size: 100% auto;
         overflow: hidden;
-        width: $global-fullpage-width - 25;
+        width: 100%;
         padding-left: $global-content-paddingleft;
         padding-top: $global-content-paddingtop;
+
+        .std {
+            width: $global-fullpage-width - $global-content-marginright - $global-rightcol-width - $global-rightcol-marginright;
+        }
     }
 }
 
@@ -955,7 +962,6 @@ a.button:hover {
         width: 100%;
         position: relative;
         top: 4px;
-        left: -8px;
 
         .col-left {
             margin-right: $global-leftcol-marginright;
@@ -981,6 +987,7 @@ a.button:hover {
             width: $global-rightcol-width;
             margin-right: $global-rightcol-marginright;
             padding: 0px;
+            margin-top: $global-rightcol-margintop;
         }
     }
 }
