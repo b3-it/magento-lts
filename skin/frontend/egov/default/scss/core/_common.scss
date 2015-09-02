@@ -417,7 +417,7 @@ div.block-reorder {
     background-color: $global-button-color;
     background-image: -moz-linear-gradient(center top , $global-button-gradient-1, $global-button-gradient-2, $global-button-color 100%);
     background-size: 100% auto;
-    border: 1px solid $global-button-color;
+    border: 1px solid $global-border-color;
     border-radius: 3px;
     padding: 5px 10px;
 
@@ -648,7 +648,6 @@ a.button:hover {
 
 .breadcrumbs li {
     float: left;
-    font-size: $global-fontsize-small;
     font-family: $base-font-family;
 }
 
