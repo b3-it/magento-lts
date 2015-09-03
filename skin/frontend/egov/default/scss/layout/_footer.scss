@@ -61,7 +61,7 @@
         width: auto;
         float: right;
         position: relative;
-        top: 30px;
+        top: 10px;
     }
 
     .links {
@@ -105,32 +105,32 @@
      * Social icons
      */
 
-    .links.social-media em {
-        background-image: url(../images/social_icons.png);
-        background-repeat: no-repeat;
-        width: 13px;
-        vertical-align: middle;
-        display: inline-block;
-        margin-right: 7px;
-    }
-
-    @include if-min-resolution(2) {
-        .links.social-media em {
-            background-image: url(../images/social_icons@2x.png);
-            background-size: 50px 125px;
-        }
-    }
-
-    @mixin footer-social-icon($class, $y, $height: 13) {
-        .links.social-media em.#{$class} {
-            background-position: 0 -#{$y}px;
-            height: #{$height}px;
-        }
-
-        .links.social-media a:hover em.#{$class} {
-            background-position: -25px -#{$y}px;
-        }
-    }
+    //.links.social-media em {
+    //    background-image: url(../images/social_icons.png);
+    //    background-repeat: no-repeat;
+    //    width: 13px;
+    //    vertical-align: middle;
+    //    display: inline-block;
+    //    margin-right: 7px;
+    //}
+    //
+    //@include if-min-resolution(2) {
+    //    .links.social-media em {
+    //        background-image: url(../images/social_icons@2x.png);
+    //        background-size: 50px 125px;
+    //    }
+    //}
+    //
+    //@mixin footer-social-icon($class, $y, $height: 13) {
+    //    .links.social-media em.#{$class} {
+    //        background-position: 0 -#{$y}px;
+    //        height: #{$height}px;
+    //    }
+    //
+    //    .links.social-media a:hover em.#{$class} {
+    //        background-position: -25px -#{$y}px;
+    //    }
+    //}
 
     // @include footer-social-icon(facebook, 0);
     // @include footer-social-icon(twitter, 24);
@@ -140,46 +140,46 @@
 
     // ---------------------------------------------
 
-    .block-subscribe .input-box {
-        float: left;
-        width: percentage(210px/320px);
-        padding-top: 0;
-    }
-
-    .block-subscribe .input-text {
-        width: 100%;
-        border-right: 0;
-        @include border-radius(0);
-    }
-
-    .block-subscribe .block-content {
-        padding-top: 7px;
-
-        &:after {
-            @include clearfix;
-        }
-    }
-
-    .block-subscribe .actions {
-        float: left;
-        width: percentage(110px/320px);
-        margin: 0;
-    }
-
-    .block-subscribe .actions .button {
-        height: 30px;
-        line-height: 17px;
-        float: left;
-    }
-
-    .bugs,
-    address {
-        clear: both;
-    }
-
-    .bugs {
-        display: none;
-    }
+    //.block-subscribe .input-box {
+    //    float: left;
+    //    width: percentage(210px/320px);
+    //    padding-top: 0;
+    //}
+    //
+    //.block-subscribe .input-text {
+    //    width: 100%;
+    //    border-right: 0;
+    //    @include border-radius(0);
+    //}
+    //
+    //.block-subscribe .block-content {
+    //    padding-top: 7px;
+    //
+    //    &:after {
+    //        @include clearfix;
+    //    }
+    //}
+    //
+    //.block-subscribe .actions {
+    //    float: left;
+    //    width: percentage(110px/320px);
+    //    margin: 0;
+    //}
+    //
+    //.block-subscribe .actions .button {
+    //    height: 30px;
+    //    line-height: 17px;
+    //    float: left;
+    //}
+    //
+    //.bugs,
+    //address {
+    //    clear: both;
+    //}
+    //
+    //.bugs {
+    //    display: none;
+    //}
 
     .form-language,
     .currency-switcher,

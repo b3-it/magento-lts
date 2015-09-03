@@ -183,7 +183,6 @@ body.customer-account {
 
         .page-title {
             h1 {
-                border: 0;
                 text-align: left;
             }
         }
@@ -575,15 +574,8 @@ body.customer-account {
 ol#cart-sidebar-reorder {
     li {
         margin-top: $box-spacing;
-        margin-bottom: 0;
-
-        input {
-            margin-right: 10px;
-        }
-    }
-
-    p.product-name {
-        display: inline;
+        margin-bottom: 0px;
+        margin-left: 0px;
     }
 }
 

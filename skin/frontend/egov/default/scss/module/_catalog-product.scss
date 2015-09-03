@@ -7,13 +7,17 @@
 
 
 .category-products, .category-title {
-    width: $global-content-width;
+    width: $global-content-3col-percent;
     float: left;
 }
 
 .category-products {
     position: relative;
     top: -18px;
+
+    p.action .button {
+        width: 95%;
+    }
 }
 
 /* ============================================ *
