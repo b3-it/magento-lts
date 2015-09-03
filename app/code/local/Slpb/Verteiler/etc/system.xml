@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config> 
+    <sections>
+         <general translate="label" module="verteiler">
+         	<groups>
+                <slpb translate="label"> 
+                <label>SLpB</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                	<fields>
+                        <order_paymentmethod translate="label">
+                            <label>Bezahlmethode für Verteilerversand</label>
+                            <comment>Verwenden sie nur Zahlverfahren die ohne Benutzereingabe auskommen!</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_paymentmethod>>
+                         <order_shippingmethod translate="label">
+                            <label>Versandmethode für Verteilerversand</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <source_model>adminhtml/system_config_source_shipping_allowedmethods</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_shippingmethod>>
+                	</fields>
+                </slpb>             
+         </groups>
+        </general>
+    </sections>
+</config> 
