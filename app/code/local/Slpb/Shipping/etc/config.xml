@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+    <config>
+      <default>
+          <carriers>
+	          <slpbshipping>
+	              <active>1</active>
+	               <allowed_methods>slpbshipping</allowed_methods>
+	                <methods>slpbshipping</methods>
+	              <sallowspecific>0</sallowspecific>
+	              <model>slpbshipping/carrier_shipping</model>
+	              <name>SLpB Versand</name>
+	              <price>0.00</price>
+	              <title>SLpB Versand</title>
+	              <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+	              <handling_type>F</handling_type>
+	              <store>1</store>
+	          </slpbshipping>
+	          <storepickup>
+	              <active>1</active>
+	               <allowed_methods>storepickup</allowed_methods>
+	                <methods>storepickup</methods>
+	              <sallowspecific>0</sallowspecific>
+	              <model>storepickup/carrier_pickup</model>
+	              <name>SLpB Selbstabholung</name>
+	              <price>0.00</price>
+	              <title>SLpB Selbstabholung</title>
+	              <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+	              <handling_type>F</handling_type>
+	              <store>1</store>
+	              <!-- Nur Für sich alleine Anzeigen -->
+	              <rank>1000</rank>
+	          </storepickup>
+          </carriers>
+        </default>
+        <modules>
+        <Slpb_Shipping>
+            <version>0.1.0</version>
+           	<depends>
+				<Mage_Shipping />
+		</depends>	
+        </Slpb_Shipping>
+    </modules>
+    <global>
+        <models>
+        	<storepickup>
+        		<class>Slpb_Shipping_Model</class>
+        	</storepickup>
+        	<slpbshipping>
+        		<class>Slpb_Shipping_Model</class>
+        		<resourceModel>slpbshipping_mysql4</resourceModel>
+        	</slpbshipping>
+        	 <slpbshipping_mysql4>
+                <class>Slpb_Shipping_Model_Mysql4</class>
+                <entities>
+                    <tablerate>
+                        <table>slpbshipping_tablerate</table>
+                    </tablerate>
+                 </entities>
+             </slpbshipping_mysql4>
+        </models>
+        <resources>
+            <slpbshipping_setup>
+                <setup>
+                    <module>Slpb_Shipping</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </slpbshipping_setup>
+            <slpbshipping_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </slpbshipping_write>
+            <slpbshipping_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </slpbshipping_read>
+        </resources>
+    </global>
+    </config>
