@@ -11,7 +11,7 @@
 
 @mixin h1 {
     margin: 0;
-    margin-bottom: 0.7em;
+    /* margin-bottom: 0.7em; */  // Deaktiviert, damit die Welcome-Schrift korrekt sitzt
     color: $global-h1-color;
     font-family: $global-headline-rotis;
     font-size: $global-h1-size;

@@ -863,23 +863,16 @@ a.button:hover {
 }
 
 .col-main {
-    width: percentage($global-content-width/$global-fullpage-width);
+    width: 100%;
 
     .std {
-        width: $global-content-width;
-        padding-bottom: $global-content-bottom-padding;
-        margin-right: $global-content-marginright;
-        border-bottom-width: $global-content-bottom-bordersize;
-        border-bottom-style: solid;
-        border-bottom-color: $global-content-bottom-bordercolor;
-
         margin: 0px;
     }
 }
 
 .col1-layout {
     .col-main {
-        padding-left: 0; /* Remove the 15px padding */
+        padding-left: 0;
         background-image: url($global-content-top-image);
         background-repeat: no-repeat;
         background-color: $global-content-background;
@@ -893,7 +886,7 @@ a.button:hover {
         margin-top: 4px !important;
 
         .std {
-            width: $global-fullpage-width - $global-content-marginright - $global-content-rightspace;
+            width: $global-content-1col-percent;
         }
 
         table {
@@ -914,10 +907,10 @@ a.button:hover {
     }
 
     .col-left {
-        margin-right: $global-leftcol-marginright;
+        margin-right: $global-leftcol-rightmargin-percent;
         float: left;
         position: relative;
-        width: $global-leftcol-width;
+        width: $global-leftcol-percent;
     }
 
     .col-main {
@@ -927,19 +920,19 @@ a.button:hover {
         background-position: 0px -3px;
         background-size: 100% auto;
         overflow: hidden;
-        width: $global-fullpage-width - $global-leftcol-width - $global-content-rightspace;
-        padding-left: $global-content-paddingleft;
+        width: $global-content-2col-left-percent;
+        padding-left: $global-content-leftpadding-percent;
         padding-top: $global-content-paddingtop;
-        padding-right: 20px;
+        padding-right: $global-rightcol-rightmargin-percent;
     }
 }
 
 .col2-right-layout {
 	  .col-right {
-        margin-right: $global-rightcol-marginright;
+        margin-right: $global-rightcol-rightmargin-percent;
         float: right;
         position: relative;
-        width: $global-rightcol-width;
+        width: $global-rightcol-percent;
         margin-top: $global-rightcol-margintop;
     }
     .col-main {
@@ -951,11 +944,11 @@ a.button:hover {
         background-size: 100% auto;
         overflow: hidden;
         width: 100%;
-        padding-left: $global-content-paddingleft;
+        padding-left: $global-content-leftpadding-percent;
         padding-top: $global-content-paddingtop;
 
         .std {
-            width: $global-fullpage-width - $global-content-marginright - $global-rightcol-width - $global-rightcol-marginright;
+            width: $global-content-2col-right-percent;
         }
     }
 }
@@ -967,9 +960,9 @@ a.button:hover {
         top: 4px;
 
         .col-left {
-            margin-right: $global-leftcol-marginright;
+            margin-right: $global-leftcol-rightmargin-percent;
             float: left;
-            width: $global-leftcol-width;
+            width: $global-leftcol-percent;
         }
 
         .col-main {
@@ -979,16 +972,20 @@ a.button:hover {
             background-position: 0px -3px;
             background-size: 100% auto;
             overflow: hidden;
-            width: $global-fullpage-width - $global-leftcol-width - $global-content-rightspace;
+            width: $global-content-2col-left-percent;
             padding-top: $global-content-paddingtop;
-            padding-left: $global-content-paddingleft;
+            padding-left: $global-content-leftpadding-percent;
             padding-right: 5px;
+
+            .std {
+                width: $global-content-3col-percent;
+            }
         }
 
         .col-right {
             float: right;
-            width: $global-rightcol-width;
-            margin-right: $global-rightcol-marginright;
+            width: $global-rightcol-3col-percent;
+            margin-right: $global-rightcol-rightmargin-percent;
             padding: 0px;
             margin-top: $global-rightcol-margintop;
         }
@@ -997,23 +994,17 @@ a.button:hover {
 
 @include bp(max-width, 1000px) {
     .col3-layout {
-        .col-right {
-            float: left;
-            clear: left;
-            padding-left: 0;
-            padding-right: 10px;
-            width: percentage($global-rightcol-width/$global-fullpage-width);
-        }
-
         .col-wrapper {
-            float: right;
             width: 100%;
 
-            .col-main {
-                float: right;
+            .col-left {
+                float: left;
             }
 
-            .col-left {
+            .col-main {
+            }
+
+            .col-right {
             }
         }
     }

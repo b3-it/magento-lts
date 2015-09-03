@@ -15,35 +15,35 @@
         vertical-align: top;
     }
 
-    th:first-child {
-        border-radius: 2px 0px 0px 0px;
-        border-left-width: 0px !important;
-        border-left-style: none !important;
-    }
-
-    th:last-child {
-        border-radius: 0px 3px 0px 0px;
-        border-right-width: 0px !important;
-        border-right-style: none !important;
-    }
-
-    thead th {
-        background-color: $global-checkout-thbackground;
-        color: $global-checkout-thfontcolor;
-        border-top-width: 0px !important;
-        border-top-style: none !important;
-
-        span.product-name {
-            padding-left: $global-tdpadding;
+    thead {
+        th:first-child {
+            border-radius: 3px 0px 0px 0px;
+            border-left-width: 0px !important;
+            border-left-style: none !important;
         }
 
-        .space {
-            padding-left: $global-tdpadding;
-            padding-right: $global-tdpadding;
+        th:last-child {
+            border-radius: 0px 3px 0px 0px;
+            border-right-width: 0px !important;
+            border-right-style: none !important;
+        }
+
+        th {
+            background-color: $global-checkout-thbackground;
+            color: $global-checkout-thfontcolor;
+
+            span.product-name {
+                padding-left: $global-tdpadding;
+            }
+
+            .space {
+                padding-left: $global-tdpadding;
+                padding-right: $global-tdpadding;
+            }
         }
     }
 
-    thead th,
+
     tbody td,
     tbody th {
         padding: $global-tdpadding 1px;
