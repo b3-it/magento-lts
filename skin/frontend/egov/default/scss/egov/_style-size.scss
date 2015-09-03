@@ -7,6 +7,9 @@
 
 $fa-icon-margin: 5px;
 
+// Da ein Radio kleiner wirkt, werden 3px abgezogen
+$global-radio-checkback-spacing: 8px;
+
 $global-fontsize: 12px;
 $global-fontsize-small: 0.8em;
 $global-fontsize-big: 1.2em;
@@ -29,7 +32,6 @@ $global-h3-size: 1em;
 $global-h4-size: 1em;
 $global-h5-size: 8px;
 $global-h6-size: 8px;
-$global-pagetitle-size: 2em;
 
 $global-pagetitle-size: 2em;
 
@@ -58,17 +60,6 @@ $global-welcome-top: 20px;
 $global-message-margintop: 20px;
 $global-message-marginbottom: 20px;
 
-// Berechnung aller Breiten in Prozent
-$global-fullpage-width-value        : 960;
-$global-3col-factor                 : 1.35; // Verhältnis zwischen Linker- und Hauptspalte bei 3-Spaltig
-$global-leftcol-percent             : percentage( 225 / $global-fullpage-width-value );
-$global-leftcol-rightmargin-percent : percentage( 22  / $global-fullpage-width-value );
-$global-rightcol-leftmargin-percent : percentage( 32  / $global-fullpage-width-value );
-$global-rightcol-percent            : percentage( 230 / $global-fullpage-width-value );
-$global-rightcol-3col-percent       : $global-rightcol-percent * $global-3col-factor;
-$global-rightcol-rightmargin-percent: percentage( 26  / $global-fullpage-width-value );
-$global-content-leftpadding-percent : percentage( 21  / $global-fullpage-width-value );
-
 // Angabe aller Breiten in Pixel
 $global-fullpage-width      : 960px;
 $global-leftcol-width       : 225px;
@@ -79,8 +70,18 @@ $global-content-marginright : 32px;
 $global-rightcol-marginright: 26px;
 $global-rightcol-width      : 230px;
 
-$global-rightcol-margintop : 45px;
+$global-rightcol-margintop : 32px;
 $global-content-paddingtop : 20px;
+
+// Berechnung aller Breiten in Prozent
+$global-3col-factor                 : 1.4; // Verhältnis zwischen Linker- und Hauptspalte bei 3-Spaltig
+$global-leftcol-percent             : percentage( $global-leftcol-width        / $global-fullpage-width );
+$global-leftcol-rightmargin-percent : percentage( $global-leftcol-marginright  / $global-fullpage-width );
+$global-rightcol-leftmargin-percent : percentage( $global-content-marginright  / $global-fullpage-width );
+$global-rightcol-percent            : percentage( $global-rightcol-width       / $global-fullpage-width );
+$global-rightcol-3col-percent       : $global-rightcol-percent * $global-3col-factor;
+$global-rightcol-rightmargin-percent: percentage( $global-rightcol-marginright / $global-fullpage-width );
+$global-content-leftpadding-percent : percentage( $global-content-paddingleft  / $global-fullpage-width );
 
 // Breite der Linken Spalte mit dem Abstand nach rechts
 $global-left-col-fixed  : $global-leftcol-width + $global-leftcol-marginright;

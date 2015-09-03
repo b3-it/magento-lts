@@ -58,6 +58,17 @@ input[type="password"]:active, input[type="tel"]:active, select:active {
     border-color: $global-lightcolor;
 }
 
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    top: 1px;
+    left: 2px;
+    margin-right: $global-radio-checkback-spacing;
+}
+
+input[type="radio"] {
+    margin-right: $global-radio-checkback-spacing - 3;
+}
+
 a {
     color: $global-linkcolor;
     text-decoration: none;
@@ -137,6 +148,11 @@ h6, .h6 { @include h6; }
 .product-name h1,
 .product-name .h1 {
     @include pageTitle;
+}
+
+.page-title h1,
+.page-title h2 {
+    border-bottom: 1px solid $global-linkcolor;
 }
 
 /* -------------------------------------------- *
@@ -348,11 +364,6 @@ div.block-reorder {
             width: auto;
             float: left;
         }
-    }
-
-    p.product-name {
-        display: inline-block;
-        margin-bottom: 0;
     }
 }
 
@@ -885,7 +896,7 @@ a.button:hover {
         width: auto;
         margin-top: 4px !important;
 
-        .std {
+        .std, .page-title {
             width: $global-content-1col-percent;
         }
 
