@@ -203,7 +203,6 @@
         $links-width: (100 - ($links-trim * 3)) / 4;
 
         .links {
-            width: $links-width;
             padding-right: 0;
             margin-right: $links-trim;
         }

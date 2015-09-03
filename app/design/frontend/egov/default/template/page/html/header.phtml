@@ -50,10 +50,16 @@
             </a>
 
             <div class="account-cart-wrapper">
+                <a href="<?php echo Mage::getBaseUrl(); ?>" class="skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
+                    <span class="icon egov-home"> </span>
+                    <span class="label"><?php echo $this->__('Startup Page'); ?></span>
+                </a>
+                <!--
                 <a href="javascript:void(0);" data-target-element="#egov-menu" class="skip-link skip-egov">
                     <span class="icon egov-home"> </span>
                     <span class="label">eGov-Menu</span>
                 </a>
+                -->
 
                 <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" data-target-element="#header-account" class="skip-link skip-account">
                     <span class="icon egov-user"></span>
@@ -90,9 +96,11 @@
         </div>
 
         <!-- eGov-Menu -->
+        <!--
         <div id="egov-menu" class="skip-content">
             <?php echo $this->getChildHtml('topEgovmenu') ?>
         </div>
+        -->
     </div>
 </header>
 
