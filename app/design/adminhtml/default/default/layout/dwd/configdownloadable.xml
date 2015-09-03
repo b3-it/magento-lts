@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_catalog_product_configdownloadable>
+        <reference name="product_tabs">
+            <block type="configdownloadable/adminhtml_catalog_product_edit_tab_configdownloadable" name="product.edit.tab.configdownloadable" template="dwd/configdownloadable/product/edit/downloadable.phtml">
+                <block type="configdownloadable/adminhtml_widget_accordion" name="accordion">
+                    <block type="downloadable/adminhtml_catalog_product_edit_tab_downloadable_samples" name="accordion_samples">
+                        <action method="setData"><name>title</name><value>Samples</value></action>
+                    </block>
+                    <block type="configdownloadable/adminhtml_catalog_product_edit_tab_configdownloadable_dynlinks" name="catalog.product.edit.tab.downloadable.dynlinks" as="accordion_dynlinks" template="dwd/configdownloadable/product/edit/downloadable/dynlinks.phtml">
+                        <action method="setData"><name>title</name><value>Dynamic Links</value></action>
+                        <action method="setData"><name>is_open</name><value>1</value></action>
+                    </block>
+                    <block type="configdownloadable/adminhtml_catalog_product_edit_tab_configdownloadable_links" name="catalog.product.edit.tab.downloadable.links" as="accordion_links">
+                        <action method="setData"><name>title</name><value>Links</value></action>
+                    </block>
+                    
+                    <action method="setData"><name>id</name><value>downloadableInfo</value></action>
+                    <action method="addAccordionItem"><name>samples</name><block>accordion_samples</block></action>
+                    <action method="addAccordionItem"><name>dynlinks</name><block>catalog.product.edit.tab.downloadable.dynlinks</block></action>
+                    <action method="addAccordionItem"><name>links</name><block>catalog.product.edit.tab.downloadable.links</block></action>
+                </block>
+            </block>
+            <action method="addTab"><name>configdownloadable_tab</name><block>product.edit.tab.configdownloadable</block></action>
+            <action method="addTab"><name>period</name><block>periode/adminhtml_catalog_product_edit_tab_periode</block></action>        
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>dwd/period.js</script></action>
+        </reference>
+    </adminhtml_catalog_product_configdownloadable>
+    
+     <PRODUCT_TYPE_configdownloadable>
+        <reference name="product.composite.fieldset"> 
+             <block type="configdownloadable/adminhtml_catalog_product_composite_fieldset_configdownloadable" name="product.composite.fieldset.downloadable" before="product.composite.fieldset.options" template="dwd/configdownloadable/product/composite/fieldset/configdownloadable.phtml" >
+            	<block type="stationen/catalog_product_view_list" name="product.info.configdownloadable.cbstationen" as="stationlist" template="dwd/stationen/catalog/product/view/list.phtml"/>
+            	<block type="periode/catalog_product_view_select" name="product.info.configdownloadable.periode" as="periode" template="dwd/periode/catalog/product/view/select.phtml"/>
+            </block>
+        </reference>
+    </PRODUCT_TYPE_configdownloadable>
+    
+    
+     <adminhtml_sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configdownloadable</type><block>adminhtml/sales_order_view_items_renderer_default</block><template>dwd/configdownloadable/sales/order/view/items/renderer/configdownloadable.phtml</template></action>
+            <action method="addColumnRender"><column>cdname</column><block>configdownloadable/adminhtml_sales_items_column_name</block><template>dwd/configdownloadable/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configdownloadable</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configdownloadable/sales/order/invoice/create/items/renderer/configdownloadable.phtml</template></action>
+            <action method="addColumnRender"><column>cdname</column><block>configdownloadable/adminhtml_sales_items_column_name</block><template>dwd/configdownloadable/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configdownloadable</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configdownloadable/sales/order/invoice/view/items/renderer/configdownloadable.phtml</template></action>
+            <action method="addColumnRender"><column>cdname</column><block>configdownloadable/adminhtml_sales_items_column_name</block><template>dwd/configdownloadable/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_items">
+            <action method="addItemRender"><type>configdownloadable</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configdownloadable/sales/order/invoice/view/items/renderer/configdownloadable.phtml</template></action>
+            <action method="addColumnRender"><column>cdname</column><block>configdownloadable/adminhtml_sales_items_column_name</block><template>dwd/configdownloadable/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configdownloadable</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configdownloadable/sales/order/creditmemo/create/items/renderer/configdownloadable.phtml</template></action>
+            <action method="addColumnRender"><column>cdname</column><block>configdownloadable/adminhtml_sales_items_column_name</block><template>dwd/configdownloadable/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configdownloadable</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configdownloadable/sales/order/creditmemo/view/items/renderer/configdownloadable.phtml</template></action>
+            <action method="addColumnRender"><column>cdname</column><block>configdownloadable/adminhtml_sales_items_column_name</block><template>dwd/configdownloadable/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_items">
+            <action method="addItemRender"><type>configdownloadable</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configdownloadable/sales/order/creditmemo/view/items/renderer/configdownloadable.phtml</template></action>
+            <action method="addColumnRender"><column>cdname</column><block>configdownloadable/adminhtml_sales_items_column_name</block><template>dwd/configdownloadable/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+</layout>

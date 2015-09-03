@@ -1,0 +1,115 @@
+<script type="text/javascript">
+//<![CDATA[
+	
+	function putbackItem(obj,id)
+	{
+		var qty = $('qty_' + id).value;
+		var adrId = $('adr_' + id).value;
+		obj.hide();
+		new Ajax.Request('<?php echo $this->getItemPutbackUrl();?>',
+				  {
+				    method:'post',
+				    parameters: {'id': id ,'adrid': adrId, 'qty' : qty},
+				    onSuccess: function(transport){
+						$('quoteitems').update(transport.responseText);
+				    },
+				    onFailure: function(){ alert('Something went wrong...') }
+				  });	
+	}
+	
+	function takeItem(obj,id)
+	{
+		var qty = $('qty_' + id).value;
+		var adrId = $('adr_' + id).value;
+		obj.hide();
+		new Ajax.Request('<?php echo $this->getItemTakeUrl();?>',
+				  {
+				    method:'post',
+				    parameters: {'id': id ,'adrid': adrId, 'qty' : qty},
+				    onSuccess: function(transport){
+						$('quoteitems').update(transport.responseText);
+				    },
+				    onFailure: function(){ alert('Something went wrong...') }
+				  });	
+	}
+	           
+
+//]]>
+</script>
+
+<?php $cartitems = $this->getQuoteItems(false);?>    
+<?php if(count($cartitems) > 0){?>
+<h3><?php echo $this->__('Please select shipping address and quantity for applicable items') ?></h3>
+    <table class="data-table" id="multiship-addresses-quote-table">
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Product') ?></th>
+                <th><?php echo $this->__('Sku') ?></th>
+                <th class="a-center"><?php echo $this->__('Total Qty') ?></th>
+                <th class="a-center"><?php echo $this->__('Qty') ?></th>
+                <th><?php echo $this->__('Send to') ?></th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($cartitems as $_index => $_item): ?>
+            <tr>
+                <td><?php echo $_item->getProduct()->getName()?></td>
+                <td><?php echo $_item->getProduct()->getSku()?></td>
+                <td><?php echo $this->htmlEscape($_item->getCalcQty()) ?></td>
+                <td><input type="text" id="qty_<?php echo $_item->getId() ?>" value="<?php echo $this->htmlEscape($_item->getCalcQty()) ?>" size="2" class="input-text qty" /></td>
+                <td><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable'); else: echo $this->getAddressesHtmlSelect($_item, $_index); endif; ?></td>
+                <td><button onclick="takeItem(this,<?php echo $_item->getId() ?>);return;" class="button" type="reset"><span><?php echo $this->__('Assign')?></span></button></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php }?>    
+    <br><br>
+<?php $items = $this->getQuoteItems(true);?>    
+<?php if(count($items) > 0){?>
+<h3><?php echo $this->__('Assigned Items') ?></h3>    
+    <table class="data-table" id="multiship-addresses-table">
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <col/>
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Product') ?></th>
+                <th><?php echo $this->__('Sku') ?></th>
+                <th class="a-center"><?php echo $this->__('Qty') ?></th>
+                <th><?php echo $this->__('Send to') ?></th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($items as $_index => $_item): ?>
+            <tr>
+                <td><?php echo $_item->getProduct()->getName()?></td>
+                <td><?php echo $_item->getProduct()->getSku()?></td>
+                <td><?php echo $this->htmlEscape($_item->getQty()) ?>
+                	<input type="hidden" id="qty_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getQty()) ?>"  />
+                 	<input type="hidden" id="adr_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getAddressId()) ?>"  />
+                 	<input type="hidden" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->htmlEscape($_item->getQty()) ?>" size="2" class="input-text qty" />
+                 </td>
+                <td><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable'); else: echo $this->getAddressesHtml($_item->getAddressId()); endif; ?></td>
+                <td><button onclick="putbackItem(this,<?php echo $_item->getQuoteItemId() ?>);return;" class="button" type="reset"><span><?php echo $this->__('Unassign')?></span></button></td>
+                
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php }?>
+
+    <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
+    <div class="buttons-set">
+        <a href="<?php echo $this->getBackUrl() ?>" class="back-link">&laquo; <?php echo $this->__('Back to Shopping Cart') ?></a>
+        <?php if(count($cartitems) == 0){?>
+        <button type="submit" class="button" onclick="$('can_continue_flag').value=1" ><span><?php echo $this->__('Continue to Overview') ?></span></button>
+    	<?php }?>
+    </div>

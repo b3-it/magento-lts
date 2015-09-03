@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <Stala_Discountshipment>
+            <version>0.1.0</version>
+        </Stala_Discountshipment>
+    </modules>
+    <global>
+        <models>
+            <discountshipment>
+                <class>Stala_Discountshipment_Model</class>
+            </discountshipment>
+        </models>
+        <helpers>
+            <discountshipment>
+                <class>Stala_Discountshipment_Helper</class>
+            </discountshipment>
+        </helpers>
+    </global>
+    <frontend>
+        <translate>
+            <modules>
+                <Stala_Discountshipment>
+                    <files>
+                        <default>Stala_Discountshipment.csv</default>
+                    </files>
+                </Stala_Discountshipment>
+            </modules>
+        </translate>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Stala_Discountshipment>
+                    <files>
+                        <default>Stala_Discountshipment.csv</default>
+                    </files>
+                </Stala_Discountshipment>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <carriers>
+            <discountshipment>
+                <active>1</active>
+                <allowed_methods>discountshipment</allowed_methods>
+                <methods>discountshipment</methods>
+                <sallowspecific>0</sallowspecific>
+                <model>discountshipment/discountshipment</model>
+                <name>discountshipment</name>
+                <price>0.00</price>
+                <title>Shipping using Discount</title>
+                <specificerrmsg>Diese Versandmethode ist derzeit nicht verfügbar. Bitte kontaktieren
+                    Sie uns wenn sie diese Methode verwenden möchten.</specificerrmsg>
+                <handling_type>F</handling_type>
+                <name>Versankostenfrei</name>
+                <title>Versankostenfrei</title>
+                <rank>1</rank>
+            </discountshipment>
+        </carriers>
+    </default>
+</config>

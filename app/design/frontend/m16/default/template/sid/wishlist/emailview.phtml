@@ -1,0 +1,91 @@
+
+<div class="page-title">
+	<h2>
+		<?php echo $this->__('Collector List: %s', $this->getQuote()->getName()) ?>
+	</h2>
+</div>
+
+<?php if ($this->hasItems()): ?>
+
+		<table cellspacing="0" border="0" id="collection-list-table"
+			class="data-table box-table shopping-cart">
+			<col width="40" />
+			<col width="75" />
+			<col />
+			<col />
+			<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			<col width="80" />
+			<?php endif; ?>
+			<?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			<col width="80" />
+			<?php endif; ?>
+			<col width="1" />
+			<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			<col width="80" />
+			<?php endif; ?>
+			<?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			<col width="80" />
+			<?php endif; ?>
+			<?php if ($this->isAuthorizedOrderer()): ?>
+			<col width="1" />
+			<?php endif ?>	
+	
+			<?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
+			<thead>
+				<tr>
+					
+					<th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
+					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?>
+					</th>
+					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Description') ?>
+					</th>
+					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?>
+					</th>
+					<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty Requested') ?>
+					</th>
+					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?>
+					</th>
+					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Status') ?>
+					</th>
+					
+					<?php endif; ?>
+				</tr>
+				<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+				<tr>
+					<th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?>
+					</th>
+					<th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?>
+					</th>
+					<th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?>
+					</th>
+					<th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?>
+					</th>
+				</tr>
+				<?php endif; ?>
+			</thead>
+			<tbody>
+				<?php foreach($this->getItems() as $_item): ?>
+					<?php echo $this->getItemHtml($_item) ?>
+				<?php endforeach ?>
+			</tbody>
+		</table>
+		
+
+	
+	<div class="shopping-cart-collaterals">
+		<div class="col2-set">	
+			<div class="col-2">
+				<div class="shopping-cart-totals">
+					<?php echo $this->getChildHtml('totals'); ?>
+	
+					<?php echo $this->getChildHtml('methods') ?>
+	
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+<div class="clear"></div>
+

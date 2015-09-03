@@ -1,0 +1,40 @@
+<?php
+$timenow     = date("Y-m-d") . 'T' . date("H:i:s");
+$current_url = Mage::helper('core/url')->getCurrentUrl();
+$base_url    = $this->getUrl();
+
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+?>
+<rdf:RDF xmlns:rdf   ="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns       ="http://purl.org/rss/1.0/"
+         xmlns:dc    ="http://purl.org/dc/elements/1.1/"
+         xmlns:georss="http://www.georss.org/georss">
+
+    <docs>
+        RSS-Informationen
+    </docs>
+
+    <channel rdf:about="<?php echo $base_url ?>">
+        <link><?php echo $current_url ?></link>
+        <title>Stationsdaten</title>
+        <description>Stationsdaten des DWD</description>
+
+        <items>
+            <rdf:Seq>
+<?php foreach($this->getStationsList() as $station){?>
+                <rdf:li resource="<?php echo $base_url; echo $station->getId();?>" />
+<?php }?>
+            </rdf:Seq>
+        </items>
+    </channel>
+
+<?php foreach($this->getStationsList() as $station){?>
+    <item rdf:about="<?php echo $base_url; echo $station->getId();?>">
+        <title><![CDATA[Station: <b><?php echo $station->getName()?></b>]]></title>
+        <description><![CDATA[<?php if ($station->getDescription()): echo $station->getDescription()?><br/><?php endif;?><span class="olMapClickLink" onClick="selectStation(<?php echo $station->getId()?>);">Station ausw&auml;hlen</span>]]></description>
+        <georss:point><?php echo $station->getLat()?> <?php echo $station->getLon()?></georss:point>
+        <dc:creator>DWD Wettershop</dc:creator>
+        <dc:date><?php echo $timenow ?></dc:date>
+    </item>
+<?php }?>
+</rdf:RDF>

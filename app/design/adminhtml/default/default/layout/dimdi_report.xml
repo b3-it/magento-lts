@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_dimdireport_order_index>
+        <reference name="content">
+            <block type="dimdireport/adminhtml_container" name="dimdireport" template="dwd/ibewi/container.phtml">
+                <block type="dimdireport/adminhtml_filter" as="top" name="top" />
+                <block type="dimdireport/adminhtml_order" as="grid" name="grid" />
+            </block>
+        </reference>
+    </adminhtml_dimdireport_order_index>    
+</layout>

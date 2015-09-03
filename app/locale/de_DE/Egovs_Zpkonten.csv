@@ -1,4 +1,4 @@
-﻿ï»¿"Last Payment Method","letztes Zahlverfahren"
+﻿"Last Payment Method","letztes Zahlverfahren"
 "New","Neu"
 "Used","Benutzt"
 "ZP Konto","Zahlpartnerkonto"
@@ -12,3 +12,4 @@
 "Start","Startwert des Kassenzeichens"
 "Increment","Erhöhung des Kassenzeichen um"
 "Maximum","Hächstwert des Kassenzeichens"
+"Prefix is too long.","Der Prefix ist zu lang."

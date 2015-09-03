@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Stala_Product>
+            <version>0.1.0</version>
+        </Stala_Product>
+    </modules>
+    <adminhtml>
+
+    </adminhtml>   
+    <global>
+ 		<models>
+ 			<stalaproduct>
+ 			<class>Stala_Product_Model</class>
+ 			</stalaproduct>
+ 		</models>
+        <resources>
+            <stala_product_setup>
+                <setup>
+                    <module>Stala_Product</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+					<use>core_setup</use>
+				</connection>
+                </stala_product_setup>
+        </resources>
+        <blocks>
+            <product>
+                <class>Stala_Product_Block</class>
+            </product>
+            <adminhtml>
+				<rewrite>
+					<catalog_product_grid>Stala_Product_Block_Adminhtml_Catalog_Product_Grid</catalog_product_grid>
+		        </rewrite>
+		    </adminhtml>
+        </blocks>
+        <helpers>
+            <product>
+                <class>Stala_Product_Helper</class>
+            </product>
+        </helpers>
+    </global>
+</config>

@@ -1,0 +1,20 @@
+﻿.wrapper                             { background: url("../images/sachsen_head_bg_blau.gif") repeat-x; }
+.header-container                    { background: url("../images/sachsen_head_blau.gif") no-repeat 0 11px; }
+.buttons-set a.egovsbutton           { background: url("../images/button_hintergrund_blau.png") repeat-x scroll 0 0 #003456; }
+a.egovsbutton                        { background: url("../images/button_hintergrund_blau.png") repeat-x #003456 !important; }
+a.egovslistbutton                    { background: url("../images/button_hintergrund_blau.png") repeat-x #003456 !important; }
+a.totalsorderbutton                  { background: url("../images/button_hintergrund_blau.png") repeat scroll 0 0 #003456; }
+button.button                        { background: url("../images/button_hintergrund_blau.png") repeat scroll 0 0 #003456; }
+button.form-button-alt               { background: url("../images/button_hintergrund_blau.png") repeat scroll 0 0 #003456; }
+div.col-main ul.links a              { background: url("../images/vanstrich_blau.gif") no-repeat scroll 0 2px transparent; }
+.block .block-content a              { background: url("../images/vanstrich_blau.gif") no-repeat scroll 0 3px transparent; }
+.block .block-content .active > a    { background: url("../images/vanstrich_active_blau.png") no-repeat scroll 0 3px transparent !important; }
+.block .block-content .parent a      { background: url("../images/vanstrich_blau.gif") no-repeat scroll 0 3px transparent; }
+.products-list .product-descriptor a { background: url("../images/vanstrich_blau.gif") no-repeat left; }
+ul.add-to-links a                    { background: url("../images/vanstrich_blau.gif") no-repeat left; }
+.agree-content a                     { background: url("../images/vanstrich_blau.gif") no-repeat scroll 0 3px transparent; }
+.sitemapegovs a                      { background: url("../images/vanstrich_blau.gif") no-repeat scroll 0 3px transparent; }
+
+/* Überflüssige Hintergrundbilder entfernen */
+.mini-products-list .product-details .btn-remove { background: none; }
+.new-users .block-content .egovsbutton span      { background: none; }

@@ -88,11 +88,11 @@ class Egovs_Zahlpartnerkonten_Adminhtml_Zahlpartnerkonten_PoolController extends
 					Mage::throwException(Mage::helper('zpkonten')->__('Es sind nur 30 Stellen zugelassen.'));
 				}
 				
-				$length = Mage::getStoreConfig('payment/paymentbase/zpkonten_length');
-				$prefix = Mage::getStoreConfig('payment/paymentbase/mandanten_kz_prefix');
+				$length = Mage::getStoreConfig('payment_services/paymentbase/zpkonten_length');
+				$prefix = Mage::getStoreConfig('payment_services/paymentbase/mandanten_kz_prefix');
 				
 				if (strlen($prefix) >= intval($length)) {
-		    		Mage::throwException(Mage::helper('zpkonten')->__('Prefix is to long.'));
+		    		Mage::throwException(Mage::helper('zpkonten')->__('Prefix is too long.'));
 		    	} 
 				
 				$length -= strlen($prefix);

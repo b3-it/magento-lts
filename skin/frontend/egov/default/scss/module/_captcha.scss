@@ -77,6 +77,13 @@
  * ============================================ */
 #co-billing-form ul.form-list > .control {
     float: left;
-    margin: 0 0 5px;
-    width: 100%;
+    margin: $global-boxpadding 0px $global-boxpadding 0px;
+    width: 45%;
+    display: inline-block;
+
+    label {
+        position: relative;
+        left: 3px;
+        top: -2px;
+    }
 }

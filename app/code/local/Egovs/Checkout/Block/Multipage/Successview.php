@@ -34,8 +34,8 @@
 class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_Abstract
 {
     private $_quote = null;
-    
-    
+
+
     /**
      * Get multishipping checkout model
      *
@@ -54,7 +54,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
             );
         }
        return parent::_prepareLayout();
-        
+
     }
 
     protected function _beforeToHtml()
@@ -65,10 +65,10 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 
         	$this->getLayout()
     	  	->getBlock('payment_info')
-        	->setPaymentInfo($this->getPayment());	     	
+        	->setPaymentInfo($this->getPayment());
         return $this;
     }
-	
+
  	/**
      * Retrieve info block name
      *
@@ -81,8 +81,8 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
         }
         return false;
     }
-    
-    
+
+
     public function getBillingAddress()
     {
         return $this->getQuote()->getBillingAddress();
@@ -102,8 +102,8 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
     {
         return $this->getQuote()->getTotals();
     }
-    
-    
+
+
     public function getPayment()
     {
         return $this->getQuote()->getPayment();
@@ -175,7 +175,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
         return $this->getQuote()->getGrandTotal();
     }
 
- 
+
 
     /**
      * Retrieve virtual product collection array
@@ -209,8 +209,8 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
     		$this->_quote = Mage::getModel('sales/quote')
     			->setStoreId(Mage::app()->getStore()->getId())
     			->load($lastQuoteId);
-    		
-    		
+
+
     	}
         return $this->_quote;// $this->getCheckout()->getQuote();
     }
@@ -219,7 +219,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
     {
     	return ($this->getQuote()->isVirtual());
     }
-    
+
     public function getBillinAddressTotals()
     {
         $_address = $this->getQuote()->getBillingAddress();
@@ -232,7 +232,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
         $colspan = $this->helper('tax')->displayCartBothPrices() ? 5 : 3;
         return $this->getChild('totals')->setTotals($totals)->renderTotals(-1, $colspan);
     }
-    
+
     public function getOrderId()
     {
     	$lastorderid = Mage::getSingleton('checkout/session')->getLastOrderId();
@@ -240,17 +240,17 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
     	#print_r($order->getData());
     	return $order->getIncrementId();
     }
-    
-    
+
+
     public function getKassenzeichen()
-    {	
+    {
     	//$kzeichen = Mage::getSingleton('core/session')->getData('kassenzeichen');
     	$lastorderid = Mage::getSingleton('checkout/session')->getLastOrderId();
     	$order = Mage::getSingleton('sales/order')->load($lastorderid);
     	$kzeichen = $order->getPayment()->getData('kassenzeichen');
-    	if(($kzeichen != null)&&(strlen($kzeichen)>0)) return Mage::helper('mpcheckout')->__('Your Transaction Number is:') .' '. $kzeichen;
-    	
-    	return '';
-    	
+    	if(($kzeichen != null)&&(strlen($kzeichen)>0)) return $kzeichen;
+
+    	return false;
+
     }
 }

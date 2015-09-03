@@ -1,0 +1,31 @@
+#logo                               {background-image: url("../images/tu_freiberg_logo.png"); background-repeat: no-repeat; background-position: 5px 8px transparent;}
+.header .head-function_row          {background-image: url("../images/kategorie_2013.png"); background-repeat: no-repeat; background-position: center 8px; background-color: #d5e3ec;}
+.header .head-link_row              {background-image: url("../images/head_link_row_back.png"); background-repeat: repeat-x;}
+.footer                             {background-image: url("../images/tu_freiberg_streifen.png"); background-repeat: no-repeat; background-position: top right; background-color: #0571b1;}
+.header                             {background-image: url("../images/header_ohne_logo.png"); background-repeat: no-repeat; background-position: top left;}
+.col2-left-layout .col-main         {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.col2-right-layout .col-main        {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.col3-layout .col-main              {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.block .block-title                 {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.block .block-content               {background-image: url("../images/box_content.png"); background-repeat: repeat-x; background-color: #FFFFFF;}
+a.egovsbutton                       {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+a.egovslistbutton                   {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+a.totalsorderbutton                 {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+button.button                       {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+button.form-button-alt              {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+.title-buttons a                    {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+.order-info li a                    {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+.data-table thead                   {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+#cartbox a.egovsbutton              {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB; background-position: top left;}
+#login-form .col-1 a.egovsbutton    {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+a.f-right                           {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+input.input-text, select, textarea  {background-image: url("../images/input_back.png"); background-repeat: repeat-x;}
+button.button span                  {background-image: none;}
+button.form-button-alt span         {background-image: none;}
+table#my-orders-table a             {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+.block .block-content a             {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+.products-list .product-descriptor a{background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+ul.add-to-links a                   {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+.dashboard a                        {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+.block .block-content .active > a   {background-image: url("../images/vanstrich_active.gif"); background-repeat: no-repeat scroll; background-position: 0px 1px transparent !important;}
+.block .block-content li.current    {background-image: url("../images/vanstrich_active.gif"); background-repeat: no-repeat scroll; background-position: 0px 1px transparent !important;}

@@ -202,7 +202,7 @@
             <codePool>local</codePool>
         </Egovs_Vies>
         <Egovs_Zahlpartnerkonten>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />

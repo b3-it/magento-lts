@@ -63,7 +63,7 @@
 .egov-list {
     @extend .fa;
     @extend .fa-bars;
-    font-size: $global-fontsize + 8;
+    font-size: $global-fontsize + 10;
     margin: $fa-icon-margin;
 }
 
@@ -127,6 +127,14 @@
 .egov-view {
     @extend .fa;
     @extend .fa-eye;
+    font-size: $global-fontsize + 2;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Alles-Anzeigen in der Bestellübersicht (2 Zettel)
+.egov-view-all {
+    @extend .fa;
+    @extend .fa-files-o;
     font-size: $global-fontsize + 2;
     margin: $fa-icon-margin;
 }

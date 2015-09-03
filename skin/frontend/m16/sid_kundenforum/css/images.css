@@ -1,0 +1,34 @@
+#logo                                     {display: none;}
+.header .head-function_row                {background-image: url("../images/sid_kundenforum.png"); background-repeat: no-repeat; background-position: center 8px; background-color: #ffffff;}
+.header .head-link_row                    {background-color: #FCA41C;}
+.footer                                   {background-color: #447B80;}
+.header                                   {background-image: url("../images/header_sid.png"); background-repeat: no-repeat; background-position: top left;}
+.col2-left-layout .col-main               {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.col2-right-layout .col-main              {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.col3-layout .col-main                    {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.block .block-title                       {background-image: url("../images/box_heading.png"); background-repeat: repeat-x;}
+.block .block-content                     {background-image: url("../images/box_content.png"); background-repeat: repeat-x; background-color: #FFFFFF;}
+a.egovsbutton                             {background-image: url("../images/button_back_40.png"); background-repeat: repeat-x; background-position: 0 -9px;}
+a.egovslistbutton                         {background-image: url("../images/button_back_24.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+a.totalsorderbutton                       {background-image: url("../images/button_back_40.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+button.button                             {background-image: url("../images/button_back_40.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+button.form-button-alt                    {background-image: url("../images/button_back_24.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+.title-buttons a                          {background-image: url("../images/button_back_24.png"); background-repeat: repeat-x; background-position: left center; background-color: #FCA41C;}
+.order-info li a                          {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+.data-table thead                         {background-image: url("../images/box_heading.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+#cartbox a.egovsbutton                    {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB; background-position: top left;}
+#login-form .col-1 a.egovsbutton          {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+a.f-right                                 {background-image: url("../images/button_back.png"); background-repeat: repeat-x; background-color: #2FA2DB;}
+input.input-text, select, textarea        {background-image: url("../images/input_back.png"); background-repeat: repeat-x;}
+button.button span                        {background-image: none;}
+button.form-button-alt span               {background-image: none;}
+table#my-orders-table a                   {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+.block .block-content a                   {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+#cartbox .block-content a.egovslistbutton {background-image: url("../images/button_back_24.png"); background-repeat: repeat-x;}
+.products-list .product-descriptor a      {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+ul.add-to-links a                         {background-image: url("../images/vanstrich.gif"); background-repeat: no-repeat; background-position: left;}
+.dashboard a                              {}
+.block .block-content .active > a         {background-image: url("../images/vanstrich_active.gif"); background-repeat: no-repeat; background-position: 0px 1px transparent !important;}
+.block .block-content li.current          {background-image: url("../images/vanstrich_active.gif"); background-repeat: no-repeat; background-position: 0px 1px transparent !important;}
+#review-button                            {background-image: url("../images/button_back_24.png");   background-repeat: repeat-x;  background-position: left center;}                                       
+table#my-orders-table a.dots              {background-image: none;}

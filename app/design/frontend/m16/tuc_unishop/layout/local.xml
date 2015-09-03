@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <!-- Mage_Reports raus: Kürzlich angesehe Produklte -->
+            <remove name="left.reports.product.viewed" />
+            <remove name="right.reports.product.viewed" />
+            <remove name="right.reports.product.compared" />
+
+        <reference name="left">
+            <action method="unsetChild"><name>herausgeberbox</name></action>
+		    <action method="unsetChild"><name>catalog.compare.sidebar</name></action>
+			<action method="unsetChild"><name>left.newsletter</name></action>
+        </reference>
+
+		<reference name="right">
+		    <block type="herausgeberbox/box" name="herausgeberbox" as="herausgeberbox" template="egovs/herausgeberbox/box.phtml"/>
+			<action method="unsetChild"><name>catalog.compare.sidebar</name></action>
+		</reference>
+    </default>
+
+    <catalog_category_default>
+        <update handle="page_three_columns" />
+        <reference name="product_list">
+            <!-- Nicht benötigt wenn setLayoutCode in page.xml gesetzt ist -->
+            <action method="addColumnCountLayoutDepend"><layout>three_columns</layout><count>5</count></action>
+        </reference>
+    </catalog_category_default>
+
+    <contacts_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+        </reference>
+    </contacts_index_index>
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName"><name>recurring_profiles</name></action>
+            <action method="removeLinkByName"><name>billing_agreements</name></action>
+            <action method="removeLinkByName"><name>debitpin_activate</name></action>
+            <action method="removeLinkByName"><name>debitpin_change</name></action>
+        </reference>
+
+        <!-- Produkt vergleichen im Benutzerkonto raus -->
+        <reference name="left">
+            <action method="unsetChild"><name>catalog.compare.sidebar</name></action>
+            <action method="unsetChild"><name>cart_sidebar</name></action>
+        </reference>
+
+        <reference name="right">
+            <action method="unsetChild"><name>catalog.compare.sidebar</name></action>
+        </reference>
+    </customer_account>
+
+    <checkout_cart_index>
+        <!-- Mage_Checkout -->
+        <reference name="root">
+            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+
+            <block type="core/text_list" name="right" as="right" translate="label">
+                <label>Right Column</label>
+                <block type="herausgeberbox/box" name="herausgeberbox" as="herausgeberbox" template="egovs/herausgeberbox/box.phtml"/>
+            </block>
+        </reference>
+
+        <!-- Rabattcodes im Warenkorb raus -->
+        <remove name="checkout.cart.coupon" />
+    </checkout_cart_index>
+
+</layout>

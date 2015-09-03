@@ -28,7 +28,7 @@ Default layout, loads most of the pages
 
         <!-- Mage_Catalog -->
         <reference name="left">
-         </reference>
+        </reference>
         <reference name="right">
             <block type="catalog/product_compare_sidebar" before="cart_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
         </reference>
@@ -49,11 +49,13 @@ Category default layout
 
     <catalog_category_default translate="label">
         <label>Catalog Category (Non-Anchor)</label>
-        <reference name="left_first">
-            <block type="catalog/navigation" name="catalog.leftnav" after="currency" template="catalog/navigation/left.phtml">
+
+        <reference name="left">
+            <block type="catalog/layer_view" name="catalog.leftnav" before="left.newsletter" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
             </block>
         </reference>
+
         <reference name="content">
             <block type="catalog/category_view" name="category.products" template="catalog/category/view.phtml">
                 <block type="catalog/product_list" name="product_list" template="catalog/product/list.phtml">
@@ -79,7 +81,7 @@ Category default layout
                     <action method="addColumnCountLayoutDepend"><layout>three_columns</layout><count>3</count></action>
                     <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
                     <!-- Since the addColumnCountLayoutDepend does not work, we are manually setting the max columns -->
-                    <action method="setColumnCount"><count>4</count></action>
+                    <action method="setColumnCount"><count>3</count></action>
                 </block>
             </block>
         </reference>
@@ -91,11 +93,13 @@ Category layered navigation layout
 
     <catalog_category_layered translate="label">
         <label>Catalog Category (Anchor)</label>
-        <reference name="left_first">
-            <block type="catalog/layer_view" name="catalog.leftnav" after="currency" template="catalog/layer/view.phtml">
+
+        <reference name="left">
+            <block type="catalog/layer_view" name="catalog.leftnav" before="left.newsletter" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
             </block>
         </reference>
+
         <reference name="content">
             <block type="catalog/category_view" name="category.products" template="catalog/category/view.phtml">
                 <block type="catalog/product_list" name="product_list" template="catalog/product/list.phtml">
@@ -126,7 +130,7 @@ Category layered navigation layout
                     <action method="addColumnCountLayoutDepend"><layout>three_columns</layout><count>3</count></action>
                     <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
                     <!-- Since the addColumnCountLayoutDepend does not work, we are manually setting the max columns -->
-                    <action method="setColumnCount"><count>4</count></action>
+                    <action method="setColumnCount"><count>3</count></action>
                 </block>
             </block>
         </reference>
@@ -179,11 +183,7 @@ Product view
         </reference>
         <reference name="content">
             <block type="catalog/product_view" name="product.info" template="catalog/product/view.phtml">
-                <!--
-                <action method="addReviewSummaryTemplate"><type>default</type><template>review/helper/summary.phtml</template></action>
-                <action method="addReviewSummaryTemplate"><type>short</type><template>review/helper/summary_short.phtml</template></action>
-                <action method="addReviewSummaryTemplate"><type>...</type><template>...</template></action>
-                -->
+
                 <block type="catalog/product_view_media" name="product.info.media" as="media" template="catalog/product/view/media.phtml">
                     <block type="core/text_list" name="product.info.media.after" as="after" />
                 </block>

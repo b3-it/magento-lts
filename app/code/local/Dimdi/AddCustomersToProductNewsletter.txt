@@ -1,0 +1,30 @@
+START TRANSACTION;
+ 
+delete from newsletter_subscriber;
+delete from extnewsletter_subscriber;
+
+-- einfuegen der Kunden als subscriber
+insert into newsletter_subscriber (store_id, customer_id, subscriber_email, subscriber_status)
+SELECT distinct 1, customer_id, customer_email,1 FROM sales_flat_order as main_table
+join sales_flat_order_item as item on main_table.entity_id=item.order_id
+  where product_id in (SELECT entity_id FROM catalog_product_entity_int as main
+  join eav_entity_type as typ on entity_type_code='catalog_product'
+  join eav_attribute as att on typ.entity_type_id=att.entity_type_id and attribute_code='extnewsletter' and main.attribute_id=att.attribute_id
+  where main.value > 0)
+and main_table.customer_id is not null
+and customer_id not in (select customer_id from newsletter_subscriber);
+
+-- confirm code setzen
+update newsletter_subscriber set last_confirmation_request = now(), subscriber_confirm_code = LEFT(SHA1(concat(rand(),subscriber_email, rand(), 'dimdi_salt')),32);
+
+-- produkte registrieren
+insert into extnewsletter_subscriber(subscriber_id,product_id,is_active)
+SELECT distinct subscriber_id, product_id,1 FROM sales_flat_order as main_table
+join sales_flat_order_item as item on main_table.entity_id=item.order_id
+join newsletter_subscriber as news on news.customer_id=main_table.customer_id
+  where product_id in (SELECT entity_id FROM catalog_product_entity_int as main
+  join eav_entity_type as typ on entity_type_code='catalog_product'
+  join eav_attribute as att on typ.entity_type_id=att.entity_type_id and attribute_code='extnewsletter' and main.attribute_id=att.attribute_id)
+  and main_table.customer_id is not null;
+  
+COMMIT;

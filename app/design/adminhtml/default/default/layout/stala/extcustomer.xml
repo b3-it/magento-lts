@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<adminhtml_customer_edit>
+		<reference name="head">
+			<action method="addJs"><script>stala/adminhtml/freecopies_grid.js</script></action>
+		</reference>
+	</adminhtml_customer_edit>
+	<adminhtml_extcustomer_customer_freecopies_index>
+		<!-- Es muss alles entfernt werden, wir brauchen eine leere Seite -->
+		<!-- <remove name="root"/> -->
+		<!-- Oder wir überschreiben root -->
+		<!-- <block type="extcustomer/adminhtml_customer_tabs_freecopies" name="root" template="egovs/widget/grid/container.phtml" output="toHtml">
+			<block type="extcustomer/adminhtml_customer_tabs_freecopies_form" name="overview"/>
+		</block> -->
+		<block type="core/text_list" name="root" output="toHtml">
+			<block type="extcustomer/adminhtml_customer_tabs_freecopies_form" name="global_freecopies"/>
+            <block type="extcustomer/adminhtml_customer_tabs_freecopies_grid" name="customer.edit.tab.freecopies.grid"/>
+            <block type="extcustomer/adminhtml_widget_grid_serializer" name="freecopies_grid_serializer">
+                <reference name="freecopies_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>customer.edit.tab.freecopies.grid</grid_block_name>
+                        <data_callback>getSelectedFreecopyProducts</data_callback>
+                        <hidden_input_name>indie_freecopies</hidden_input_name> <!-- Name für endgültige Werte -->
+                        <reload_param_name>customer_freecopies</reload_param_name> <!-- Name für temporäre Werte -->
+                    </action>
+                    <action method="addColumnInputName">
+                        <input_name>freecopies</input_name> <!-- Name der Spalte die editierbar sein soll -->
+                    </action>
+                </reference>
+            </block>
+        </block>	
+	</adminhtml_extcustomer_customer_freecopies_index>
+	
+	<adminhtml_extcustomer_customer_freecopies_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="extcustomer/adminhtml_customer_tabs_freecopies_grid" name="customer.edit.tab.freecopies.grid"/>
+        </block>
+    </adminhtml_extcustomer_customer_freecopies_grid>
+    
+    <adminhtml_extcustomer_customer_freecopies_report>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="extcustomer/adminhtml_customer_tabs_freecopies_report" name="customer.edit.tab.freecopies.report"/>
+        </block>
+    </adminhtml_extcustomer_customer_freecopies_report>
+	
+	<adminhtml_customer_edit>
+		<reference name="customer_edit_tabs">
+			<block type="extcustomer/adminhtml_customer_tabs_freecopiestab" name="tab_freecopies" after="tags">
+				<!-- Mit der action Methode können beliebige Funktionen aufgerufen werden. -->
+				<!-- <action method="setUrl" module="extcustomer">
+					<value>extcustomer/adminhtml_customer_parentcustomer</value>
+				</action> -->
+			</block>			
+			<action method="addTab">
+				<name>freecopies</name>
+				<block>tab_freecopies</block>
+			</action>
+			<block type="extcustomer/adminhtml_customer_tabs_freecopiesreporttab" name="tab_freecopies_report" after="tab_freecopies">
+				<!-- Mit der action Methode können beliebige Funktionen aufgerufen werden. -->
+				<!-- <action method="setUrl" module="extcustomer">
+					<value>extcustomer/adminhtml_customer_parentcustomer</value>
+				</action> -->
+			</block>			
+			<action method="addTab">
+				<name>freecopies_report</name>
+				<block>tab_freecopies_report</block>
+			</action>
+			
+            <action method="addTab">
+            	<name>customer_edit_tab_parentcustomer</name>
+            	<block>extcustomer/adminhtml_customer_tabs_parentcustomertab</block>
+            </action>
+            
+            <action method="addTab">
+            	<name>customer_edit_tab_childcustomer</name>
+            	<block>extcustomer/adminhtml_customer_tabs_childcustomertab</block>
+            </action>
+
+			<!-- Macht Tabs voneinander abhängig (betrifft rendering) -->
+<!-- 				<action method="bindShadowTabs"><first>freecopies</first><second>tags</second></action> -->
+			<!-- Weitere Methode um Tabs hinzuzufügen, aber ohne die Notwendigkeit eines Interfaces in der Klasse-->
+			<!-- <action method="addTab">
+				<alias>freecopies</alias>
+				<title>Freecopies</title>
+				<name>freecopies2</name>
+				<block>extcustomer/adminhtml_customer_tabs_freecopies</block>
+			</action> -->     
+		</reference>
+	</adminhtml_customer_edit>
+	
+	<adminhtml_extcustomer_product_freecopies_index>
+		<!-- Es muss alles entfernt werden, wir brauchen eine leere Seite -->
+		<!-- <remove name="root"/> -->
+		<!-- Oder wir überschreiben root -->
+		<!-- <block type="extcustomer/adminhtml_customer_tabs_freecopies" name="root" template="egovs/widget/grid/container.phtml" output="toHtml">
+			<block type="extcustomer/adminhtml_customer_tabs_freecopies_form" name="overview"/>
+		</block> -->
+		<block type="core/text_list" name="root" output="toHtml">
+			<block type="extcustomer/adminhtml_product_tabs_freecopies_grid" name="product.edit.tab.freecopies.grid"/>
+            <block type="extcustomer/adminhtml_widget_grid_serializer" name="cross_freecopies_grid_serializer">
+                <reference name="cross_freecopies_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>product.edit.tab.freecopies.grid</grid_block_name>
+                        <data_callback>getSelectedFreecopyProducts</data_callback>
+                        <hidden_input_name>cross_freecopies</hidden_input_name> <!-- Name für endgültige Werte -->
+                        <reload_param_name>product_cross_freecopies</reload_param_name> <!-- Name für temporäre Werte -->
+                    </action>
+                    <action method="addColumnInputName">
+                    	<!-- Name der Spalte die editierbar sein soll  -->
+                    	<!-- Muss mit Namen im Grid übereinstimmen  -->
+                        <input_name>dummy_input</input_name> <!-- ist hier nur dummy da sonst das JS nicht korrekt arbeitet  -->
+                    </action>
+                </reference>
+            </block>
+        </block>	
+	</adminhtml_extcustomer_product_freecopies_index>
+	
+	<adminhtml_extcustomer_product_freecopies_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="extcustomer/adminhtml_product_tabs_freecopies_grid" name="product.edit.tab.freecopies.grid"/>
+        </block>
+    </adminhtml_extcustomer_product_freecopies_grid>
+    
+	<adminhtml_catalog_product_edit>
+		<reference name="product_tabs">
+			<block type="extcustomer/adminhtml_product_tabs_freecopiestab" name="tab_crossfreecopies" after="crosssell"/>
+			<action method="addTab">
+				<name>crossfreecopies</name>
+				<block>tab_crossfreecopies</block>
+			</action>   
+		</reference>
+	</adminhtml_catalog_product_edit>
+</layout>

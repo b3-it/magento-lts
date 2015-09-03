@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.7-b01  svn-revision#${svn.Last.Changed.Rev}. --><xs:schema xmlns:tns="https://kunden.dwd.de/dwdshop/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="https://kunden.dwd.de/dwdshop/services">
+    
+    <xs:element name="addAttributeNameValuePair" type="tns:addAttributeNameValuePair"/>
+    
+    <xs:element name="addAttributeNameValuePairResponse" type="tns:addAttributeNameValuePairResponse"/>
+    
+    <xs:element name="addGroup" type="tns:addGroup"/>
+    
+    <xs:element name="addGroupResponse" type="tns:addGroupResponse"/>
+    
+    <xs:element name="addUser" type="tns:addUser"/>
+    
+    <xs:element name="addUserGroupsAttibuteNameValuePairs" type="tns:addUserGroupsAttibuteNameValuePairs"/>
+    
+    <xs:element name="addUserGroupsAttibuteNameValuePairsResponse" type="tns:addUserGroupsAttibuteNameValuePairsResponse"/>
+    
+    <xs:element name="addUserResponse" type="tns:addUserResponse"/>
+    
+    <xs:element name="removeAttributeNameValuePair" type="tns:removeAttributeNameValuePair"/>
+    
+    <xs:element name="removeAttributeNameValuePairResponse" type="tns:removeAttributeNameValuePairResponse"/>
+    
+    <xs:element name="removeGroup" type="tns:removeGroup"/>
+    
+    <xs:element name="removeGroupResponse" type="tns:removeGroupResponse"/>
+    
+    <xs:element name="removeUser" type="tns:removeUser"/>
+    
+    <xs:element name="removeUserResponse" type="tns:removeUserResponse"/>
+    
+    <xs:element name="setPasswordUser" type="tns:setPasswordUser"/>
+    
+    <xs:element name="setPasswordUserResponse" type="tns:setPasswordUserResponse"/>
+    
+    <xs:complexType name="addUserGroupsAttibuteNameValuePairs">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg2" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="arg3" type="tns:attributeNameValuePair" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="attributeNameValuePair">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="value" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addUserGroupsAttibuteNameValuePairsResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ldapStatus">
+        <xs:sequence>
+            <xs:element name="code" type="xs:int"/>
+            <xs:element name="statusMessage" type="xs:string" minOccurs="0"/>
+            <xs:element name="successStatus" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addGroup">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addGroupResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addAttributeNameValuePair">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="tns:attributeNameValuePair" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addAttributeNameValuePairResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addUser">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addUserResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="removeAttributeNameValuePair">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="tns:attributeNameValuePair" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="removeAttributeNameValuePairResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="removeUser">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="removeUserResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="removeGroup">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="removeGroupResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="setPasswordUser">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="setPasswordUserResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:ldapStatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

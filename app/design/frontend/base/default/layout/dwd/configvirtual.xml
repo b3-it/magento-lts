@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+-->
+<layout version="0.1.0">
+    <PRODUCT_TYPE_configvirtual translate="label" module="configvirtual">
+       <label>Catalog Product View (Virtual)</label>
+       <reference name="product.info">
+       		<block type="configvirtual/catalog_product_view_type" name="product.info.configvirtual" as="product_type_data" template="dwd/configvirtual/catalog/product/type.phtml">
+                 <block type="stationen/catalog_product_view_map" name="product.info.configvirtual.stationen" as="map" template="dwd/stationen/catalog/product/view/map.phtml"/>
+                 <block type="stationen/catalog_product_view_list" name="product.info.configvirtual.cbstationen" as="list" template="dwd/stationen/catalog/product/view/list.phtml"/>
+                 <block type="stationen/catalog_product_view_suggest" name="product.info.configvirtual.suggest" as="suggest" template="dwd/stationen/catalog/product/view/suggest.phtml"/>
+                 <block type="periode/catalog_product_view_select" name="product.info.configvirtual.periode" as="periode" template="dwd/periode/catalog/product/view/select.phtml"/>
+            </block>
+        </reference>
+    </PRODUCT_TYPE_configvirtual>
+    
+
+    
+    
+    <checkout_cart_index>
+        <reference name="checkout.cart">
+            <action method="addItemRender"><type>configvirtual</type><block>configvirtual/checkout_cart_item_renderer</block><template>dwd/configvirtual/checkout/cart/item/default.phtml</template></action>
+        </reference>
+    </checkout_cart_index>
+    
+      <egovs_checkout_multipage_overview>
+        <reference name="checkout_overview">
+            <action method="addItemRender"><type>configvirtual</type><block>configvirtual/checkout_cart_item_renderer</block><template>dwd/configvirtual/checkout/onepage/review/item.phtml</template></action>
+        </reference>
+       
+   </egovs_checkout_multipage_overview>
+   
+     <egovs_checkout_multipage_successview>
+         <reference name="checkout_successview">
+           <action method="addItemRender"><type>configvirtual</type><block>configvirtual/checkout_cart_item_renderer</block><template>dwd/configvirtual/checkout/onepage/review/item.phtml</template></action>
+        </reference> 
+   </egovs_checkout_multipage_successview> 
+    
+    <sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configvirtual</type><block>configvirtual/sales_item_renderer</block><template>dwd/configvirtual/sales/items/renderer/renderer.phtml</template></action>
+        </reference>
+    </sales_order_view>
+    
+    <sales_email_order_items>
+        <reference name="items">
+            <action method="addItemRender"><type>configvirtual</type><block>configvirtual/sales_email_items_order_configvirtual</block><template>dwd/configvirtual/email/order/items/order/configvirtual.phtml</template></action>
+        </reference>
+    </sales_email_order_items>
+    
+    <sales_email_order_invoice_items>
+        <reference name="items">
+            <action method="addItemRender"><type>configvirtual</type><block>configvirtual/sales_email_items_configvirtual</block><template>dwd/configvirtual/email/order/items/invoice/configvirtual.phtml</template></action>
+        </reference>
+    </sales_email_order_invoice_items>
+    
+    <sales_email_order_creditmemo_items>
+        <reference name="items">
+            <action method="addItemRender"><type>configvirtual</type><block>configvirtual/sales_email_items_configvirtual</block><template>dwd/configvirtual/email/order/items/creditmemo/configvirtual.phtml</template></action>
+        </reference>
+    </sales_email_order_creditmemo_items>
+    
+</layout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_catalog_product_tucvoucher>
+        <reference name="product_tabs">
+            <action method="addTab"><name>tucvoucher_form</name><block>tucvoucher/adminhtml_catalog_product_edit_tab_voucher</block></action>
+            
+        </reference>
+    </adminhtml_catalog_product_tucvoucher>
+    
+    <adminhtml_voucher_product_edit_form>
+        <!-- Es muss alles entfernt werden, wir brauchen eine leere Seite -->
+        <!-- <remove name="root"/> -->
+        <!-- Oder wir überschreiben root -->
+        <!-- <block type="extcustomer/adminhtml_customer_tabs_freecopies" name="root" template="egovs/widget/grid/container.phtml" output="toHtml">
+			<block type="extcustomer/adminhtml_customer_tabs_freecopies_form" name="overview"/>
+		</block> -->
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="tucvoucher/adminhtml_catalog_product_edit_tab_voucher_form" name="product.edit.tab.tucvoucher.form"/>
+            <block type="tucvoucher/adminhtml_catalog_product_edit_tab_voucher_grid" name="product.edit.tab.tucvoucher.grid"/>
+        </block>
+    </adminhtml_voucher_product_edit_form>
+    
+   
+    
+    <adminhtml_sales_order_view>
+        <reference name="order_items">
+            <xxaction method="addItemRender"><type>tucvoucher</type><block>adminhtml/sales_order_view_items_renderer_default</block><template>dwd/configvirtual/sales/order/view/items/renderer/configvirtual.phtml</template></xxaction>
+            <action method="addColumnRender"><column>name</column><block>tucvoucher/adminhtml_sales_items_column_name</block><template>sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>tucvoucher</type><block>tucvoucher/adminhtml_sales_creditmemo_items_renderer_default</block><template>sales/order/creditmemo/create/items/renderer/default.phtml</template></action>
+            
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+</layout>

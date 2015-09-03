@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dwd_Ibewi>
+            <version>0.1.2</version>
+        </Dwd_Ibewi>
+    </modules>
+    <frontend>
+        <routers>
+            <ibewi>
+                <use>standard</use>
+                <args>
+                    <module>Dwd_Ibewi</module>
+                    <frontName>ibewi</frontName>
+                </args>
+            </ibewi>
+        </routers>
+    </frontend>
+    <admin>
+		<routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<Dwd_Ibewi_Adminhtml after="Mage_Adminhtml">Dwd_Ibewi_Adminhtml</Dwd_Ibewi_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+    </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <mage_adminhtml>
+                    <files>
+                        <default>Dwd_Ibewi.csv</default>
+                    </files>
+                </mage_adminhtml>
+            </modules>
+        </translate>
+        <menu>
+            <report>
+                <children>
+                    <ibewi module="ibewi">
+                        <title>Ibewi</title>
+                        <sort_order>71</sort_order>
+                        <children>
+                            <access module="ibewi">
+                                <title>zeige Zugriff</title>
+                                <sort_order>10</sort_order>
+                                <action>adminhtml/ibewi_access</action>
+                            </access>
+                            <customer module="ibewi">
+                                <title>Kunden</title>
+                                <sort_order>20</sort_order>
+                                <action>adminhtml/ibewi_customer</action>
+                            </customer>
+                            <order module="ibewi">
+                                <title>Rechnungen</title>
+                                <sort_order>30</sort_order>
+                                <action>adminhtml/ibewi_order</action>
+                            </order>
+                        </children>
+                    </ibewi>
+                </children>
+            </report>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <report>
+                            <children>
+                                <ibewi module="ibewi">
+                                    <title>Ibewi Report</title>
+                                    <sort_order>10</sort_order>
+                                    <children>
+                                        <access module="ibewi">
+                                            <title>zeige Zugriff</title>
+                                            <sort_order>10</sort_order>
+                                        </access>
+                                        <customer module="ibewi">
+                                            <title>Kunden</title>
+                                            <sort_order>20</sort_order>
+                                        </customer>
+                                        <order module="ibewi">
+                                            <title>Rechnungen</title>
+                                            <sort_order>30</sort_order>
+                                        </order>
+                                    </children>
+                                </ibewi>
+                            </children>
+                        </report>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <ibewi>
+                    <file>dwd/ibewi.xml</file>
+                </ibewi>
+            </updates>
+        </layout>
+    </adminhtml>
+    <global>
+        <models>
+            <ibewi>
+                <class>Dwd_Ibewi_Model</class>
+                <resourceModel>ibewi_mysql4</resourceModel>
+            </ibewi>
+            <ibewi_mysql4>
+                <class>Dwd_Ibewi_Model_Mysql4</class>
+                <entities>
+                    <access>
+                        <table>ibewi_access</table>
+                    </access>
+                </entities>
+            </ibewi_mysql4>
+        </models>
+        <resources>
+            <dwd_ibewi_setup>
+                <setup>
+                    <module>Dwd_Ibewi</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dwd_ibewi_setup>
+            <ibewi_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </ibewi_write>
+            <ibewi_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </ibewi_read>
+        </resources>
+        <blocks>
+            <ibewi>
+                <class>Dwd_Ibewi_Block</class>
+            </ibewi>
+        </blocks>
+        <helpers>
+            <ibewi>
+                <class>Dwd_Ibewi_Helper</class>
+            </ibewi>
+        </helpers>
+        <ibewi>
+        	<einheiten>
+	        	<VHS>
+					<label>pro Vorhersage</label>
+				</VHS>
+				<EPU>
+					<label>pro ECOMET-Produkteinheit</label>
+				</EPU>
+				<TAG>
+					<label>pro Tag</label>
+				</TAG>
+				<MON>
+					<label>pro Monat</label>
+				</MON>
+				<JAH>
+					<label>pro Jahr</label>
+				</JAH>
+				<LIZ>
+					<label>pro Lizenz</label>
+				</LIZ>
+				<STU>
+					<label>pro Stück</label>
+				</STU>
+				<WOC>
+					<label>pro Woche</label>
+				</WOC>
+				<ABR>
+					<label>pro Abruf</label>
+				</ABR>
+				<RÜK>
+					<label>pro Rückblick</label>
+				</RÜK>
+				<STK>
+					<label>pro Statistik</label>
+				</STK>
+				<EIN>
+					<label>pro Einheit</label>
+				</EIN>
+        	</einheiten>
+        	<report>
+        		<konto1>53100</konto1>
+        		<konto2>58600</konto2>
+        		<kostenstelle_versand>320200</kostenstelle_versand>
+        		<ibewi_maszeinheit_versand>EIN</ibewi_maszeinheit_versand>
+        		<vesand_sku>
+        			<case0>
+        				<value>0</value>
+        				<label>99-07-01-010009</label>
+        			</case0>
+        		    <case7>
+        				<value>7</value>
+        				<label>99-07-01-010001</label>
+        			</case7>
+        			<case19>
+        				<value>19</value>
+        				<label>99-07-01-010099</label>
+        			</case19>
+        		</vesand_sku>
+        	</report>
+        </ibewi>
+        <fieldsets>
+        	<sales_convert_quote_item>
+                <ibewi_maszeinheit>
+                    <to_order_item>*</to_order_item>
+                </ibewi_maszeinheit>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                <ibewi_maszeinheit>
+                    <to_quote_item>*</to_quote_item>
+                    <to_invoice_item>*</to_invoice_item>
+                </ibewi_maszeinheit>
+           </sales_convert_order_item>
+        </fieldsets>
+        <sales>
+        	<quote>
+        		<item>
+        			<product_attributes>
+                        <ibewi_maszeinheit/>
+                    </product_attributes>
+        		</item>
+        	</quote>
+        </sales>
+           <events>
+            <sales_quote_product_add_after>
+                <observers>
+                    <sales_quote_item_set_product>
+                        <class>ibewi/observer</class>
+                        <method>onQuoteItemSetProduct</method>
+                    </sales_quote_item_set_product>
+                </observers>
+            </sales_quote_product_add_after>
+             </events>
+    </global>
+</config>

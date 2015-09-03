@@ -43,19 +43,19 @@ class Egovs_Zahlpartnerkonten_Model_Pool extends Mage_Core_Model_Abstract
      * @return Egovs_Zahlpartnerkonten_Model_Pool
      */
     public function validate() {
-    	if (strlen(Mage::getStoreConfig('payment/paymentbase/bewirtschafternr')) <= 0) {
+    	if (strlen(Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')) <= 0) {
     		Mage::throwException(Mage::helper('zpkonten')->__('Bewirtschafter is missing.'));
     	}
     	 
-    	if (strlen(Mage::getStoreConfig('payment/paymentbase/mandantnr')) <= 0) {
+    	if (strlen(Mage::getStoreConfig('payment_services/paymentbase/mandantnr')) <= 0) {
     		Mage::throwException(Mage::helper('zpkonten')->__('Mandant is missing.'));
     	} 
 
-    	$length = Mage::getStoreConfig('payment/paymentbase/zpkonten_length');
-    	$prefix = Mage::getStoreConfig('payment/paymentbase/mandanten_kz_prefix');
+    	$length = Mage::getStoreConfig('payment_services/paymentbase/zpkonten_length');
+    	$prefix = Mage::getStoreConfig('payment_services/paymentbase/mandanten_kz_prefix');
     	
     	if (strlen($prefix) >= intval($length)) {
-    		Mage::throwException(Mage::helper('zpkonten')->__('Prefix is to long.'));
+    		Mage::throwException(Mage::helper('zpkonten')->__('Prefix is too long.'));
     	}
     	
     	return $this;
@@ -70,13 +70,13 @@ class Egovs_Zahlpartnerkonten_Model_Pool extends Mage_Core_Model_Abstract
      */
     public function createKassenzeichen($value) {
     	$this->setData('status', Egovs_Zahlpartnerkonten_Model_Status::STATUS_NEW);
-    	$this->setData('bewirtschafter', Mage::getStoreConfig('payment/paymentbase/bewirtschafternr'));
-    	$this->setData('mandant', Mage::getStoreConfig('payment/paymentbase/mandantnr'));
+    	$this->setData('bewirtschafter', Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr'));
+    	$this->setData('mandant', Mage::getStoreConfig('payment_services/paymentbase/mandantnr'));
     	$this->setData('currency', Mage::getStoreConfig('currency/options/base'));
     	
 
-    	$length = Mage::getStoreConfig('payment/paymentbase/zpkonten_length');
-    	$prefix = Mage::getStoreConfig('payment/paymentbase/mandanten_kz_prefix');
+    	$length = Mage::getStoreConfig('payment_services/paymentbase/zpkonten_length');
+    	$prefix = Mage::getStoreConfig('payment_services/paymentbase/mandanten_kz_prefix');
     	
     	$diff = $length - strlen($prefix);
     	$kz = $prefix;
@@ -87,7 +87,7 @@ class Egovs_Zahlpartnerkonten_Model_Pool extends Mage_Core_Model_Abstract
     	}
     	
 	    
-    	if (Mage::getStoreConfig('payment/paymentbase/zpkonten_checksum')) {
+    	if (Mage::getStoreConfig('payment_services/paymentbase/zpkonten_checksum')) {
 	    	$kz .= $this->_pruefziffer($kz);
     	}
     	$this->setData('kassenzeichen', $kz);
@@ -176,7 +176,7 @@ class Egovs_Zahlpartnerkonten_Model_Pool extends Mage_Core_Model_Abstract
     public function testFreeLimit($data) {
     	//pruefen ob noch genug freie kassenzeichen vorhanden
   		try {
-  			$soll = Mage::getStoreConfig('payment/paymentbase/zpkonten_pool_limit');
+  			$soll = Mage::getStoreConfig('payment_services/paymentbase/zpkonten_pool_limit');
   			$ist = $this->getCollection()->countFreeKassenzeichen($data);
   			$data['actual'] = $ist;
   			if ($ist <= $soll) {

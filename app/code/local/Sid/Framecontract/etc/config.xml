@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sid_Framecontract>
+            <version>0.1.3</version>
+        </Sid_Framecontract>
+    </modules>
+    <frontend>
+        <routers>
+            <framecontract>
+                <use>standard</use>
+                <args>
+                    <module>Sid_Framecontract</module>
+                    <frontName>framecontract</frontName>
+                </args>
+            </framecontract>
+        </routers>
+        <layout>
+            <updates>
+                <framecontract>
+                    <file>framecontract.xml</file>
+                </framecontract>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<Sid_Framecontract_Adminhtml after="Mage_Adminhtml">Sid_Framecontract_Adminhtml</Sid_Framecontract_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+		    <framecontract translate='title' module="framecontract">
+				    <title>Framework Contract</title>
+				    <sort_order>71</sort_order>
+				    <children>
+				        <contract translate='title' module="framecontract">
+				    		    <title>Manage Contracts</title>
+				    		    <sort_order>10</sort_order>
+				    		    <action>adminhtml/framecontract_contract</action>
+				    	  </contract>
+				        <vendor translate='title' module="framecontract">
+				    		    <title>Manage Vendors</title>
+				    		    <sort_order>0</sort_order>
+				    		    <action>adminhtml/framecontract_vendor</action>
+				    	  </vendor>
+				        <product_visibility translate='title' module="framecontract">
+				    		    <title>Product Visibility</title>
+				    		    <sort_order>10</sort_order>
+				    		    <action>adminhtml/framecontract_product</action>
+				    	  </product_visibility>
+				    	<!--
+				    	<order module="framecontract">
+				    		<title>Product Order</title>
+				    		<sort_order>10</sort_order>
+				    		<action>framecontract/adminhtml_order</action>
+				    	</order>
+				    	 -->
+				    </children>
+			  </framecontract>
+
+			  <system>
+            <children>
+                <convert translate="title">
+                    <children>
+                        <framcontract_import translate="title" module="framecontract">
+                            <title>Import Framecontract Products</title>
+                            <action>adminhtml/framecontract_import</action>
+                            <sort_order>10</sort_order>
+                        </framcontract_import>
+                    </children>
+                </convert>
+            </children>
+        </system>
+		</menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <framecontract translate='title' module="framecontract">
+                        <title>Framework Contract</title>
+                        <children>
+                            <contract translate='title' module="framecontract">
+                                <title>Manage Contracts</title>
+                                <sort_order>10</sort_order>
+                            </contract>
+                            <vendor translate='title' module="framecontract">
+                                <title>Manage Vendors</title>
+                                <sort_order>20</sort_order>
+                            </vendor>
+                            <product_visibility translate='title' module="framecontract">
+                                <title>Product Visibility</title>
+                                <sort_order>30</sort_order>
+                            </product_visibility>
+                            <!--
+                    				<order module="framecontract">
+                    					<title>Product Order</title>
+                    					<sort_order>10</sort_order>
+                    					<action>framecontract/adminhtml_order</action>
+                    				</order>
+                    				 -->
+                        </children>
+                    </framecontract>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <framecontract translate="title" module="framecontract">
+                                        <title>Framecontract Service Section</title>
+                                    </framecontract>
+                                </children>
+                            </config>
+                            <convert>
+                                <children>
+                                    <framcontract_import translate="title" module="framecontract">
+                                        <title>Import Framecontract Products</title>
+                                        <sort_order>30</sort_order>
+                                    </framcontract_import>
+                                </children>
+                            </convert>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+        <layout>
+            <updates>
+                <framecontract>
+                    <file>sid/framecontract.xml</file>
+                </framecontract>
+            </updates>
+        </layout>
+		    <translate>
+            <modules>
+                <Sid_Framecontract>
+                    <files>
+                        <default>Sid_Framecontract.csv</default>
+                    </files>
+                </Sid_Framecontract>
+            </modules>
+        </translate>
+    </adminhtml>
+    <global>
+       <events>
+           	<checkout_submit_all_after>
+        		<observers>
+        			<Sid_Framecontract>
+        				<type>singleton</type>
+        				<class>Sid_Framecontract_Model_Observer</class>
+        				<method>onCreateOrder</method>
+        			</Sid_Framecontract>
+        		</observers>
+        	</checkout_submit_all_after>
+        </events>
+        <models>
+            <framecontract>
+                <class>Sid_Framecontract_Model</class>
+                <resourceModel>framecontract_mysql4</resourceModel>
+            </framecontract>
+            <framecontract_mysql4>
+                <class>Sid_Framecontract_Model_Mysql4</class>
+                <entities>
+                    <contract>
+                        <table>framecontract_contract</table>
+                    </contract>
+                    <files>
+                        <table>framecontract_files</table>
+                    </files>
+                    <vendor>
+                        <table>framecontract_vendor</table>
+                    </vendor>
+                    <transmit>
+                        <table>framecontract_transmit</table>
+                    </transmit>
+                    <order>
+                        <table>framecontract_order</table>
+                    </order>
+                </entities>
+            </framecontract_mysql4>
+        </models>
+        <resources>
+            <framecontract_setup>
+                <setup>
+                    <module>Sid_Framecontract</module>
+                    <class>Sid_Framecontract_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </framecontract_setup>
+            <framecontract_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </framecontract_write>
+            <framecontract_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </framecontract_read>
+        </resources>
+        <blocks>
+            <framecontract>
+                <class>Sid_Framecontract_Block</class>
+            </framecontract>
+        </blocks>
+        <helpers>
+            <framecontract>
+                <class>Sid_Framecontract_Helper</class>
+            </framecontract>
+        </helpers>
+    </global>
+    	<crontab>
+		<jobs>
+			<framecontract>
+				<schedule>
+					<cron_expr>0 2 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>framecontract/observer::disableExpiredContracts</model>
+				</run>
+			</framecontract>
+		</jobs>
+	</crontab>
+</config>

@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+<config>
+<modules>
+    <Stala_Couriershipment>
+        <version>0.1.0</version>
+    </Stala_Couriershipment>
+</modules>
+<default>
+  <carriers>
+   <couriershipment>
+       <active>1</active>
+       <allowed_methods>couriershipment</allowed_methods>
+       <methods>couriershipment</methods>
+       <sallowspecific>0</sallowspecific>
+       <model>couriershipment/couriershipment</model>
+       <name>couriershipment</name>
+       <price>0.00</price>
+       <title>Shipping by Courier</title>
+       <specificerrmsg>Diese Versandmethode ist derzeit nicht verfügbar. Bitte kontaktieren Sie uns wenn sie diese Methode verwenden möchten.</specificerrmsg>
+       <handling_type>F</handling_type>
+   </couriershipment>
+  </carriers>
+</default>
+<global>
+    <models>
+    	<couriershipment>
+    		<class>Stala_Couriershipment_Model</class>
+    	</couriershipment>
+    </models>
+    <helpers>
+   		<couriershipment>
+       		<class>Stala_Couriershipment_Helper</class>
+   		</couriershipment>
+ 	</helpers>
+ 	       <resources>
+            <couriershipment_setup>
+                <setup>
+                    <module>Stala_Couriershipment</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </couriershipment_setup>
+            <couriershipment_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </couriershipment_write>
+            <couriershipment_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </couriershipment_read>
+        </resources>
+</global>
+<frontend>
+       <translate>
+            <modules>
+                <Stala_Couriershipment>
+                    <files>
+                        <default>Stala_Couriershipment.csv</default>
+                    </files>
+                </Stala_Couriershipment>
+            </modules>
+        </translate>
+</frontend>
+<adminhtml>
+       <translate>
+            <modules>
+                <Stala_Couriershipment>
+                    <files>
+                        <default>Stala_Couriershipment.csv</default>
+                    </files>
+                </Stala_Couriershipment>
+            </modules>
+        </translate>
+</adminhtml>
+    <default>
+     	<carriers>
+            <couriershipment>
+            	<name>Versand durch Kurier</name>      
+	            <title>Versand durch Kurier</title>
+	            <rank>2</rank>
+            </couriershipment>
+    	</carriers>
+    </default>
+</config>

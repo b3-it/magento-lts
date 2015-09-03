@@ -345,7 +345,7 @@ Product additional images gallery popup
 <!--
 SEO Site Map
 -->
- 
+
     <catalog_seo_sitemap translate="label">
         <label>Catalog Seo Sitemap (Common)</label>
         <remove name="right"/>
@@ -363,7 +363,6 @@ SEO Site Map
         </reference>
     </catalog_seo_sitemap>
 
-   
     <catalog_seo_sitemap_category translate="label">
         <label>Catalog Seo Sitemap (Category List)</label>
         <reference name="head">

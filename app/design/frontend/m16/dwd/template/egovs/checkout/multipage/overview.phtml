@@ -1,0 +1,191 @@
+<?php
+/**
+ * @category   design_blank
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+	<h2>
+		<?php echo $this->__('Review Order') ?>
+	</h2>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+	<fieldset>
+			<ul class="form-list group-select">
+				<li>
+					<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
+				</li>
+			</ul>
+			<div class="checknewsletter" style="padding-bottom: 15px;">
+				<?php echo $this->getChildHtml('newsletter') ?>
+			</div>
+			
+			<div>
+				<?php echo $this->getChildHtml('infotexts'); ?>
+				<?php echo $this->getChildHtml('agreementtexts'); ?>
+	
+				<?php echo $this->getChildHtml('agreements') ?>
+			</div>
+	</fieldset>
+	<fieldset class="multiple-checkout">
+		<div class="col2-set">
+			<h3>
+				<?php echo $this->__('Billing Information') ?>
+			</h3>
+			<div class="col-1">
+				<?php $_address=$this->getBillingAddress() ?>
+				<h4>
+					<?php echo $this->__('Billing Address') ?>
+					<span class="separator"> | </span> <a
+						href="<?php echo $this->getAddressesEditUrl() ?>"> <span
+						class="hiddenForSighted"><?php echo $this->__('Billing Address') ?>
+					</span> <?php echo $this->__('Change') ?> </a>
+				</h4>
+				<address>
+					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
+				</address>
+			</div>
+			<div class="col-2">
+				<h4>
+					<?php echo $this->__('Payment Method') ?>
+					<span class="separator"> | </span> <a
+						href="<?php echo $this->getEditBillingUrl() ?>"> <span
+						class="hiddenForSighted"><?php echo $this->__('Payment Method') ?>
+					</span> <?php echo $this->__('Change') ?> </a>
+				</h4>
+				<input type="hidden" name="payment[cc_number]"
+					value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
+				<input type="hidden" name="payment[cc_cid]"
+					value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
+				<?php echo $this->getPaymentHtml() ?>
+			</div>
+		</div>
+		<?php if(!$this->isVirtual()):?>
+		<h3>
+			<?php echo $this->__('Shipping Information') ?>
+		</h3>
+		<?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
+		<?php  $_address = $this->getShippingAddress() ?>
+		<div class="col2-set">
+			<div class="col-1">
+				<?php if(!$this->isStorePickup()):?>
+				<h4>
+					<?php echo $this->__('Shipping to') ?>
+					<span class="separator"> | </span> <a
+						href="<?php echo $this->getEditShippingUrl() ?>"> <span
+						class="hiddenForSighted"><?php echo $this->__('Shipping to') ?> </span>
+						<?php echo $this->__('Change') ?> </a>
+				</h4>
+				<address>
+					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
+				</address>
+				<?php endif;?>
+
+			</div>
+			
+			<div class="col-2">
+				<h4>
+					<?php echo $this->__('Shipping Method') ?>
+					<span class="separator"> | </span> <a
+						href="<?php echo $this->getEditShippingmethodUrl() ?>"> <span
+						class="hiddenForSighted"><?php echo $this->__('Shipping Method') ?>
+					</span> <?php echo $this->__('Change') ?> </a>
+				</h4>
+				<?php if($_rate=$this->getShippingAddressRate($_address)): ?>
+				<div class="overview_shipping">
+					<?php 
+					if($_rate->getCarrierTitle() === $_rate->getMethodTitle())
+						echo $_rate->getCarrierTitle();
+					else
+						echo $_rate->getCarrierTitle() ." (" . $_rate->getMethodTitle().")";
+					?>
+					<br /> <strong>Versandkosten:&nbsp;</strong>
+					<?php $_excl = $this->getShippingPriceExclTax($_address); ?>
+					<?php $_incl = $this->getShippingPriceInclTax($_address); ?>
+					<?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
+						<?php echo $_excl; ?>
+					<?php endif;?>
+					<?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
+						<?php echo $_incl; ?>
+					<?php endif;?>
+					<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+						<?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+
+
+			</div>
+		</div>
+		<?php endif; ?>
+
+		<div class="col1-wide">
+
+			<table class="data-table" id="checkout-review-table">
+				<?php if ($this->helper('tax')->displayCartBothPrices()): $colspan = $rowspan = 2; else: $colspan = $rowspan = 1; endif; ?>
+				<col />
+				<col width="1" />
+				<col width="1" />
+				<col width="1" />
+				<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+				<col width="1" />
+				<col width="1" />
+				<?php endif; ?>
+				<thead>
+					<tr>
+						<th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?>
+						</th>
+						<th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?>
+						</th>
+						<th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Qty') ?>
+						</th>
+						<th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?>
+						</th>
+					</tr>
+					<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+					<tr>
+						<th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?>
+						</th>
+						<th><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+						<th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?>
+						</th>
+						<th><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+					</tr>
+					<?php endif; ?>
+				</thead>
+
+				<tbody>
+					<?php foreach($this->getItems() as $_item): ?>
+					<?php echo $this->getItemHtml($_item)?>
+					<?php endforeach ?>
+				</tbody>
+			</table>
+			<table id="checkout-review-totals-table" class="data-table">
+				<?php echo $this->getChildHtml('totals'); ?>
+			</table>
+		</div>
+		<p class="grand-total">
+			<big><?php echo $this->__('Grand Total:') ?> </big>
+			<?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
+		</p>
+		<div class="buttons-set" id="review-buttons-container">
+			<a href="<?php echo $this->getBackUrl() ?>"
+				class="back-link egovslistbutton"><?php echo $this->__('Back') ?> </a>
+			<a class="break-link egovslistbutton"
+				href="<?php echo $this->getUrl() ?>"><span><?php echo $this->__('Continue Shopping') ?>
+			</span> </a>
+			<button type="submit" class="button" id="review-button">
+				<span><?php echo $this->__('Buy for %s', $this->helper('checkout')->getQuote()->getStore()->formatPrice($this->getTotal(), false)) ?> </span>
+			</button>
+			<span id="review-please-wait" class="please-wait"
+				style="display: none;"> <img
+				src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
+				alt="<?php echo $this->__('Please Wait') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+			</span>
+		</div>
+	</fieldset>
+</form>
+
