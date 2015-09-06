@@ -63,7 +63,7 @@
 .egov-list {
     @extend .fa;
     @extend .fa-bars;
-    font-size: $global-fontsize + 8;
+    font-size: $global-fontsize + 10;
     margin: $fa-icon-margin;
 }
 
@@ -140,6 +140,13 @@
 }
 
 // Icons für Produkte auf Vergleichsliste (2 Icons)
+.egov-compare {
+    @extend .fa;
+    @extend .fa-balance-scale;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}
+/*
 // Fotoapparat 1
 .egov-compare-1 {
     @extend .fa;
@@ -154,3 +161,4 @@
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
 }
+*/

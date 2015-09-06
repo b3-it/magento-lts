@@ -1,0 +1,40 @@
+
+<script type="text/javascript">
+if($('missing_products') != null){
+$('missing_products').hide();
+}
+</script>
+
+
+
+<div id="missing_products">
+<div class="content-header">
+<h3 ><?php echo $this->__('Benötigte Produkte')?></h3>
+</div>
+<div class="grid">
+<div class="hor-scroll">
+<table class="data">
+<thead>
+<tr class="headings">
+ <th><span class="nobr"><a href="#" name="sku" title="asc" ><span class="sort-title">Artikelnummer</span></a></span></th>
+ <th><span class="nobr"><a href="#" name="store_id" title="asc" ><span class="sort-title">Name</span></a></span></th>
+ <th><span class="nobr"><a href="#" name="created_at" title="asc" ><span class="sort-title">Menge</span></a></span></th>
+ 
+</tr>
+                                     
+
+
+</thead>
+<tbody>
+<?php foreach($this->getMissingProducts() as $k=>$v):?>
+
+<?php if(intval($v['qty']) < 1):?>
+<tr><td><?php echo $k?></td><td><?php echo $v['name']?></td><td><?php echo $v['qty'] ?></td></tr>
+<?php endif;?>
+
+<?php endforeach;?>
+</tbody>
+</table>
+</div>
+</div>
+</div>

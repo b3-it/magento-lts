@@ -7,21 +7,42 @@
 
 
 .category-products, .category-title {
-    width: $global-content-width;
+    width: $global-content-3col-percent;
     float: left;
 }
 
 .category-products {
     position: relative;
     top: -18px;
+
+    p.action .button {
+        width: 95%;
+    }
 }
 
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
+.col2-left-layout {
+	.category-products, .category-title {
+		width: $global-content-2col-left-width;
+	}
+}
+
+.col2-right-layout {
+	.category-products, .category-title {
+		width: $global-content-2col-right-width;
+	}
+}
+
+.col3-layout {
+    .product-view {
+        width: $global-content-width;
+    }
+}
+
 
 .product-view {
-    width: 96%;
 
     .tab-content {
         .std {
@@ -30,6 +51,10 @@
     }
 
     .product-essential {
+        .add-to-cart-wrapper {
+            padding: 0px;
+            margin-bottom: $global-boxmargin;
+        }
 
         .extra-info {
             .ratings {
@@ -63,8 +88,19 @@
         }
     }
 
+    #addTagForm {
+        label {
+            display: block;
+        }
+
+        .input-box {
+            display: inline-block;
+            margin-right: $global-boxmargin;
+        }
+    }
+
     .product-shop {
-        width: 50%;
+        width: 70%;
         float: right;
 
         .product-sku {
@@ -75,7 +111,6 @@
             float: left;
             padding-right: $trim/2;
             clear: left;
-            width: 70%;
         }
 
         .price-info {
@@ -86,7 +121,6 @@
 
         .extra-info,
         .price-info {
-            max-width: 70%;
             margin-bottom: $box-spacing;
         }
 
@@ -127,14 +161,14 @@
             .special-price {
 
                 .price-label {
-                    font-size: $global-fontsize-big;
+                    font-size: $global-fontsize;
                 }
 
                 span.weee {
                     color: $global-fontcolor-dark;
 
                     span.price {
-                        font-size: $global-fontsize-big;
+                        font-size: $global-fontsize;
                     }
                 }
             }
@@ -146,7 +180,7 @@
                 color: $global-fontcolor-dark;
 
                 .label {
-                    font-size: $global-fontsize-big;
+                    font-size: $global-fontsize;
                 }
 
                 .price {
@@ -167,7 +201,10 @@
         }
     }
 
-    .add-to-cart-wrapper,
+    .add-to-cart-wrapper {
+        clear: right;
+    }
+
     .block-related {
         width: 50%;
         float: right;
@@ -238,7 +275,7 @@
 }
 
 .product-img-box {
-    width: 50%;
+    width: 30%;
     float: left;
 
     .product-name {

@@ -1,25 +1,7 @@
 //
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -28,12 +10,44 @@
  * ============================================ */
 
 .contacts-index-index {
+
+    h1 {
+    }
+
+    ul.form-list {
+        li {
+            margin-bottom: $global-listmargin;
+        }
+
+        li.fields {
+            div.field {
+                width: 49%;
+                display: inline-block;
+                vertical-align: top;
+            }
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            margin-bottom: 0px;
+        }
+
+        input[type="tel"] {
+            width: 49%;
+            margin-bottom: 0px;
+        }
+
+        textarea {
+            width: 98%;
+            margin-bottom: 0px;
+        }
+    }
+
     .buttons-set {
-        margin-left: $trim;
-        max-width: 435px;
 
         p.required {
             float: left;
+            color: $global-warning-color;
         }
 
         @include bp(max-width, $bp-small) {
@@ -49,5 +63,39 @@
                 float: right;
             }
         }
+    }
+}
+
+#contactForm {
+
+    h2 {
+        display: none;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+
+    em {
+        color: $global-warning-color;
+        margin: 0px $fa-icon-margin 0px 0px;
+    }
+
+    .fieldset .legend + .required {
+        color: $global-warning-color;
+        margin: 0px 0px $global-listmargin 0px;
+    }
+
+    div.validation-advice {
+        width: 90%;
+        display: block;
+        color: $global-warning-color;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+
+    #contactForm {
+        padding-left: 0;
     }
 }

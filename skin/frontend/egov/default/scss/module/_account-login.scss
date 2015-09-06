@@ -5,6 +5,18 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.customer-account-login {
+    .main-container {
+        position: relative;
+        top: -35px;
+        left: -10px;
+    }
+
+    p.required {
+        color: $global-warning-color;
+    }
+}
+
 .account-login > .egov-account-login {
     // Reset aller Einstellungen aus dem gobalen Bereich
     .col-1, .col-2 {
@@ -14,13 +26,8 @@
 }
 
 .egov-account-login {
-    background-image: url($global-content-top-image);
-    background-repeat: no-repeat;
-    background-color: $global-content-background;
-    background-position: 0px 0px;
-    background-size: 100% auto;
     overflow: hidden;
-    padding: 20px;
+    width: 97%;
     position: relative;
     top: -15px;
 
@@ -44,7 +51,7 @@
 
     div.page-title > h1 {
         color: $global-linkcolor;
-        font-size: $global-h2-size;
+        font-size: $global-pagetitle-size;
     }
 
     .new-users, .registered-users {
@@ -100,5 +107,10 @@
                 margin-right: 5px;
             }
         }
+    }
+
+    ul.benefits > li {
+        list-style-type: none;
+        list-style-image: url($global-category-arrow-right);
     }
 }

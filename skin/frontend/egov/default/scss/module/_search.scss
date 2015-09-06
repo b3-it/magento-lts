@@ -1,25 +1,7 @@
 //
-// Magento
-//
-// NOTICE OF LICENSE
-//
-// This source file is subject to the Academic Free License (AFL 3.0)
-// that is bundled with this package in the file LICENSE_AFL.txt.
-// It is also available through the world-wide-web at this URL:
-// http://opensource.org/licenses/afl-3.0.php
-// If you did not receive a copy of the license and are unable to
-// obtain it through the world-wide-web, please send an email
-// to license@magento.com so we can send you a copy immediately.
-//
-// DISCLAIMER
-//
-// Do not edit or add to this file if you wish to upgrade Magento to newer
-// versions in the future. If you wish to customize Magento for your
-// needs please refer to http://www.magento.com for more information.
-//
 // @category    design
-// @package     rwd_default
-// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -38,7 +20,7 @@
     ul {
         @include border-radius(2px);
         background-color: #FFFFFF;
-        border: 1px solid $c-module-border-highlight;
+        border: 1px solid $global-border-color-light;
         left: 0;
         padding-left: 0;
         position: absolute;
@@ -46,19 +28,19 @@
         width: 100%;
 
         li {
-            border-bottom: 1px solid $c-module-background;
-            color: $c-link;
+            border-bottom: 1px solid $global-border-color;
+            color: $global-linkcolor;
             cursor: pointer;
-            font-size: $f-size-xs;
+            font-size: $global-fontsize-small;
             padding: 4px 6px;
             text-align: left;
 
             &:hover {
-                color: $c-link-hover;
+                color: $global-linkcolor-hover;
             }
 
             &.selected {
-                background-color: $c-action;
+                background-color: $global-linkcolor-active;
                 color: white;
             }
 
@@ -74,7 +56,7 @@
     }
 
     &:before {
-        @include triangle(up, 7px, $c-action);
+        @include triangle(up, 7px, $global-linkcolor);
         left: 50%;
         top: -7px;
     }
@@ -84,14 +66,37 @@
  * Search - Advanced
  * ============================================ */
 
+.catalogsearch-advanced-index {
+    .col-main {
+        margin-top: 5px;
+    }
+
+    .page-title, .buttons-set {
+        width: $global-content-2col-right-percent;
+    }
+}
+
 .advanced-search {
-    background: $c-module-background;
-    border: 1px solid $c-module-border-light;
-    padding: $trim;
+    width: $global-content-2col-right-percent;
+
+    #advanced-search-list {
+        input, select {
+            width: 100%;
+            margin: 0px;
+        }
+
+        #price, #price_to {
+            width: 20%;
+        }
+
+        li.even, li.odd {
+            margin-bottom: $global-listmargin;
+        }
+    }
 
     select.multiselect {
         option {
-            border-bottom: 1px solid $c-module-border-light;
+            border-bottom: 1px solid $global-border-color-light;
             padding: 2px 5px;
         }
     }

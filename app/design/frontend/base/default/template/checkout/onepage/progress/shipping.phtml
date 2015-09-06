@@ -27,9 +27,13 @@
 <?php if ($this->getCheckout()->getStepData('shipping', 'complete')): ?>
 <?php $completeClass = $this->getCheckout()->getStepData('shipping', 'complete') ? 'complete' : ''; ?>
 <dt class="<?php echo $completeClass ?>">
-    <?php echo $this->__('Shipping Address') ?> <span class="changelink"><span class="separator">|</span> <a
-        href="#payment"
-        onclick="checkout.changeSection('opc-shipping');return false;"><?php echo $this->__('Change') ?></a></span>
+    <?php echo $this->__('Shipping Address') ?>
+    <span class="spacer"> | </span>
+    <a class="egov-pencile"
+       href="#payment"
+       onclick="checkout.changeSection('opc-shipping');return false;"
+       alt="<?php echo $this->__('Change') ?>"
+       title="<?php echo $this->__('Change') ?>"> </a>
 </dt>
 <dd class="<?php echo $completeClass ?>">
     <?php if ($this->getCheckout()->getStepData('shipping', 'complete')): ?>

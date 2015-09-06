@@ -58,12 +58,15 @@
 @import "module/product-list";
 @import "module/catalog-product";
 @import "module/catalog-msrp";
+@import "module/catalog-seo-sitemap-category";
 @import "module/catalog-compare";
+@import "module/catalogsearch-term-popular";
 @import "module/checkout-cart";
 @import "module/checkout-onepage";
 @import "module/checkout-success";
 @import "module/configurableswatches";
 @import "module/customer";
+@import "module/customer-account-forgotpassword";
 @import "module/contacts";
 @import "module/paypal";
 @import "module/review";
@@ -76,6 +79,7 @@
 @import "module/cms";
 @import "module/pricing_conditions";
 @import "module/cookies";
+@import "module/sales-guest-form";
 @import "module/tags";
 @import "module/captcha";
 @import "module/account-orders";
