@@ -5,6 +5,10 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Import>
+        <Egovs_Infoletter>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Infoletter>
         <Egovs_Acl>
             <active>true</active>
             <codePool>local</codePool>

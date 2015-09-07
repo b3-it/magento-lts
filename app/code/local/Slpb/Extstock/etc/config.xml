@@ -1,0 +1,310 @@
+<config>
+    <modules>
+        <Slpb_Extstock>
+            <version>0.1.7</version>
+            <depends>Egovs_Acl</depends>
+        </Slpb_Extstock>
+    </modules>
+    <frontend>
+        <routers>
+            <extstock>
+                <use>standard</use>
+                <args>
+                    <module>Slpb_Extstock</module>
+                    <frontName>extstock</frontName>
+                </args>
+            </extstock>
+        </routers>
+        <layout>
+            <updates>
+                <extstock>
+                    <file>extstock.xml</file>
+                </extstock>
+            </updates>
+        </layout>
+ 
+    </frontend>
+    <admin>
+        <routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<Slpb_Extstock_Adminhtml after="Mage_Adminhtml">Slpb_Extstock_Adminhtml</Slpb_Extstock_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+    </admin>
+    <adminhtml>
+    	<translate>
+            <modules>
+                <Slpb_Extstock>
+                    <files>
+                        <default>Slpb_Extstock.csv</default>
+                    </files>
+                </Slpb_Extstock>
+            </modules>
+        </translate>
+		<menu>
+			<extstock module="extstock" translate="title">
+				<title>Extended Inventory</title>
+				<sort_order>71</sort_order>               
+				<children>
+					<warning translate="title" module="extstock">
+						<title>Warnings Per Stock</title>
+						<sort_order>10</sort_order>
+						<action>adminhtml/extstock_warning</action>
+					</warning>
+					<journal module="extstock">
+						<title>Stock Movement</title>
+						<sort_order>20</sort_order>
+						<action>adminhtml/extstock_journal</action>
+					</journal>
+					<ordersheet module="extstock">
+						<title>Order Sheet</title>
+						<sort_order>30</sort_order>
+						<action>adminhtml/extstock_stockorder</action>
+					</ordersheet>
+					<extstocklist module="extstock">
+						<title>Stock Inventory</title>
+						<sort_order>40</sort_order>
+						<action>adminhtml/extstock_extstocklist</action>
+					</extstocklist>
+					<detail translate="title" module="extstock">
+						<title>Inventory Per Stock</title>
+						<sort_order>50</sort_order>
+						<action>adminhtml/extstock_detail</action>
+					</detail>
+					<extstockorderlist module="extstock">
+						<title>Manage Stock Orders</title>
+						<sort_order>60</sort_order>
+						<action>adminhtml/extstock_extstock</action>
+					</extstockorderlist>				
+				</children>
+			</extstock>
+			<system>
+				<children>
+						<stock module="extstock" translate="title">
+						<title>Configure Stock</title>
+						<sort_order>1</sort_order>
+						<action>adminhtml/extstock_stock</action>
+					</stock>
+				</children>
+			</system>
+			<report>
+				<children>
+					<extstockroot translate="title" module="extstock">
+	                     <title>Extended Stock</title>
+	                     <children>
+	                         <inwards translate="title" module="reports">
+	                             <title>Inwards</title>
+	                             <action>adminhtml/extstock_report/inwards</action>
+	                         </inwards>
+	                     </children>
+	                 </extstockroot>
+				</children>
+			</report>			
+		</menu>
+		<layout>
+            <updates>
+                <extstock>
+                    <file>slpb/extstock2.xml</file>
+                </extstock>
+            </updates>
+        </layout>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<extstock translate="title" module="extstock">
+							<title>Extended Inventory</title>
+							<children>
+								<extstockorderlist translate="title" module="extstock">
+									<title>Manage Stock Orders</title>
+									<children>
+										<extstockstatus translate="title" module="">
+											<title>Change Order Status</title>
+											<sort_order>10</sort_order>
+										</extstockstatus>
+										<extstocksave translate="title" module="">
+											<title>Save</title>
+											<sort_order>30</sort_order>
+										</extstocksave>
+										<instock translate="title" module="">
+											<title>Change Stock Status</title>
+											<sort_order>20</sort_order>
+										</instock>
+									</children>
+								</extstockorderlist>
+								<extstocklist translate="title" module="extstock">
+									<title>Stock</title>
+								</extstocklist>
+							<journal module="extstock">
+								<title>Stock Movement</title>
+							</journal>
+							<ordersheet module="extstock">
+								<title>Order Sheet</title>
+							</ordersheet>
+							<detail translate="title" module="extstock">
+								<title>Inventory Per Stock</title>
+							</detail>
+					<warning translate="title" module="extstock">
+						<title>Warnings Per Stock</title>
+							<extstockorder translate="title" module="">
+								<title>New Stock Order</title>
+								<sort_order>10</sort_order>
+							</extstockorder>
+							<extstockmove translate="title" module="">
+								<title>New Stock Movement</title>
+								<sort_order>10</sort_order>
+							</extstockmove>			
+					</warning>
+						</children>	
+						</extstock>
+						<report>
+							<children>
+								<extstockroot translate="title" module="extstock">
+									<title>Extended Stock</title>
+									<children>
+										<inwards translate="title" module="reports">
+											<title>Inwards</title>
+										</inwards>
+									</children>
+								</extstockroot>
+							</children>
+						</report>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+    </adminhtml>
+       
+    <global>
+        <models>
+            <extstock>
+                <class>Slpb_Extstock_Model</class>
+                <resourceModel>extstock_mysql4</resourceModel>
+            </extstock>
+            <extstock_mysql4>
+                <class>Slpb_Extstock_Model_Mysql4</class>
+                <entities>
+                    <extstock>
+                        <table>extstock2</table>
+                    </extstock>
+                    <salesorder>
+                    	<table>extstock2_sales_order</table>
+                    </salesorder>
+                    <stock>
+                    	<table>extstock2_stock</table>
+                    </stock>
+                     <journal>
+                    	<table>extstock2_stock_journal</table>
+                    </journal>
+                    <stockorder>
+                    	<table>extstock2_stock_order</table>
+                    </stockorder>
+                </entities>
+            </extstock_mysql4>
+            <adminhtml>
+            	<rewrite>
+            		<sales_order_create>Slpb_Extstock_Model_Adminhtml_Sales_Order_Create</sales_order_create>
+            	</rewrite>
+            </adminhtml>
+        </models>
+        <resources>
+            <extstock2_setup>
+                <setup>
+                    <module>Slpb_Extstock</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </extstock2_setup>
+            <extstock_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </extstock_write>
+            <extstock_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </extstock_read>
+        </resources>
+        <blocks>
+            <extstock>
+                <class>Slpb_Extstock_Block</class>                
+            </extstock>
+            <adminhtml>
+                 <rewrite>
+                 	<!-- Muss überschrieben werden, da Template direkt in Klasse gesetzt wird und nicht über layout XML -->
+                 	<catalog_product_edit_tab_inventory>Slpb_Extstock_Block_Adminhtml_Catalog_Product_Edit_Tab_Inventory</catalog_product_edit_tab_inventory>
+                 	<catalog_product_edit_tab_super_config_simple>Slpb_Extstock_Block_Adminhtml_Catalog_Product_Edit_Tab_Super_Config_Simple</catalog_product_edit_tab_super_config_simple>
+                 </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <extstock>
+                <class>Slpb_Extstock_Helper</class>
+            </extstock>
+        </helpers>
+        <events>
+        	<checkout_type_onepage_save_order_after>
+        		<observers>
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Slpb_Extstock_Model_Observer</class>
+        				<method>onCheckoutTypeOnepageSaveOrderAfter</method>
+        			</Extstock>
+        		</observers>
+        	</checkout_type_onepage_save_order_after>
+        	<catalog_product_save_after>
+        		<observers>	
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Slpb_Extstock_Model_Observer</class>
+        				<method>onCatalogProductSaveAfter</method>
+        			</Extstock>
+        		</observers>
+        	</catalog_product_save_after>
+        	<sales_order_shipment_save_after>
+        		<observers>	
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Slpb_Extstock_Model_Observer</class>
+        				<method>onSalesOrderShipmentSaveAfter</method>
+        			</Extstock>
+        		</observers>
+        	</sales_order_shipment_save_after>
+        	<egovs_catalog_product_edit_tabs_preparelayout>
+        		<observers>	
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Slpb_Extstock_Model_Observer</class>
+        				<method>onPrepareTabLayout</method>
+        			</Extstock>
+        		</observers>
+        	</egovs_catalog_product_edit_tabs_preparelayout>
+        	<sales_order_item_cancel>
+        		<observers>
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Slpb_Extstock_Model_Observer</class>
+        				<method>onSalesOrderItemCancel</method>
+        			</Extstock>
+        		</observers>
+        	</sales_order_item_cancel>
+        	<sales_creditmemo_item_save_after>
+        		<observers>
+        			<Extstock>
+        				<type>singleton</type>
+        				<class>Slpb_Extstock_Model_Observer</class>
+        				<method>refundOrderItem</method>
+        			</Extstock>
+        		</observers>
+        	</sales_creditmemo_item_save_after>
+        </events>
+    </global> 
+ 
+</config>

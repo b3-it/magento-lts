@@ -7,23 +7,33 @@
 
 
 .category-products, .category-title {
-    width: $global-content-width;
+    width: $global-content-3col-percent;
     float: left;
 }
 
 .category-products {
     position: relative;
     top: -18px;
+
+    p.action .button {
+        width: 95%;
+    }
 }
 
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
-.col2-right-layout, .col2-left-layout {
+.col2-left-layout {
 	.category-products, .category-title {
-		width: $global-content-2col-width;
+		width: $global-content-2col-left-width;
 	}
-}  
+}
+
+.col2-right-layout {
+	.category-products, .category-title {
+		width: $global-content-2col-right-width;
+	}
+}
 
 .col3-layout {
     .product-view {

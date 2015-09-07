@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_Checkout>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Sales />
@@ -10,19 +10,19 @@
             </depends>
         </Sid_Checkout>
         <Sid_Framecontract>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Sid_Framecontract>
         <Sid_Report>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Sid_Report>
         <Sid_Roles>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Sid_Roles>
         <Sid_Wishlist>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Sales />

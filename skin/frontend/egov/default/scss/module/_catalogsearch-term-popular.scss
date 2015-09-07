@@ -10,5 +10,9 @@
         position: relative;
         left: -10px;
         top: -35Px;
+
+        .page-title, ul.tags-list {
+            width: $global-content-1col-percent;
+        }
     }
 }

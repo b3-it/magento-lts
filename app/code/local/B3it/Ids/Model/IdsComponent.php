@@ -77,6 +77,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 						$this->mail($result,$reaction);
 					}
 					if(isset($reaction['deny'])){
+						
 						die('Deny4You');
 					}
 			}	
@@ -84,6 +85,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 		}
 			
 	}
+	
 	
 	
 	private function log($result, $reaction)
@@ -120,6 +122,11 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 					$idsfilter->save();
 						
 				}
+			}
+			
+			
+			if(isset($reaction['deny'])){		
+				Mage::log("DENY : ".$ip,Zend_Log::ALERT,"ids.log",true);
 			}
 	}
 	

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_infoletter_queue_index>
+        <reference name="content">
+            <block type="infoletter/adminhtml_queue" name="infoletter" />
+        </reference>
+    </adminhtml_infoletter_queue_index>
+    <adminhtml_infoletter_recipient_index>
+        <reference name="content">
+            <block type="infoletter/adminhtml_recipient" name="infoletter" />
+        </reference>
+    </adminhtml_infoletter_recipient_index>
+ 
+</layout>
