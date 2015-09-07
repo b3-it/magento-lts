@@ -45,7 +45,7 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 		                'title' => Mage::helper('pdftemplate')->__('Invoice PDF Template'),
 		                'class' => 'required-entry',
 		                'required' => true,
-		                'values' => $pdf->toOptionArray()
+		                'values' => $pdf->toOptionArray(Egovs_Pdftemplate_Model_Type::TYPE_INVOICE)
 		            )
 		        );
 		        
@@ -56,7 +56,7 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 		                'title' => Mage::helper('pdftemplate')->__('Shipment PDF Template'),
 		                'class' => 'required-entry',
 		                'required' => true,
-		                'values' => $pdf->toOptionArray()
+		                'values' => $pdf->toOptionArray(Egovs_Pdftemplate_Model_Type::TYPE_DELIVERYNOTE)
 		            )
 		        );
 		        
@@ -68,7 +68,7 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 		                'title' => Mage::helper('pdftemplate')->__('Creditmemo PDF Template'),
 		                'class' => 'required-entry',
 		                'required' => true,
-		                'values' => $pdf->toOptionArray()
+		                'values' => $pdf->toOptionArray(Egovs_Pdftemplate_Model_Type::TYPE_CREDITMEMO)
 		            )
 		        );
 	        
