@@ -24,7 +24,12 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Grid extends Mage_Adminhtml_Block_W
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('infoletter/queue')->getCollection();
+      
+      $collection->getSelect()
+      ->joinleft(array('rec'=>$collection->getTable('infoletter/recipient')),'rec.message_id = main_table.message_id',array('recipients'=>'count(recipient_id)') );
+      
       $this->setCollection($collection);
+      
       return parent::_prepareCollection();
   }
 
@@ -37,19 +42,19 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Grid extends Mage_Adminhtml_Block_W
           'index'     => 'message_id',
       ));
 
-      $this->addColumn('name', array(
-          'header'    => Mage::helper('infoletter')->__('Name'),
+      $this->addColumn('title', array(
+          'header'    => Mage::helper('infoletter')->__('Title'),
           'align'     =>'left',
-          'index'     => 'name',
+          'index'     => 'title',
       ));
 
-	  /*
-      $this->addColumn('content', array(
-			'header'    => Mage::helper('infoletter')->__('Item Content'),
-			'width'     => '150px',
-			'index'     => 'content',
+
+      $this->addColumn('recipients', array(
+			'header'    => Mage::helper('infoletter')->__('Recipients'),
+			'width'     => '50px',
+			'index'     => 'recipients',
       ));
-	  */
+
 
       $this->addColumn('status', array(
           'header'    => Mage::helper('infoletter')->__('Status'),
@@ -84,8 +89,8 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Grid extends Mage_Adminhtml_Block_W
                 'is_system' => true,
         ));
 		
-		$this->addExportType('*/*/exportCsv', Mage::helper('infoletter')->__('CSV'));
-		$this->addExportType('*/*/exportXml', Mage::helper('infoletter')->__('XML'));
+		//$this->addExportType('*/*/exportCsv', Mage::helper('infoletter')->__('CSV'));
+		//$this->addExportType('*/*/exportXml', Mage::helper('infoletter')->__('XML'));
 	  
       return parent::_prepareColumns();
   }

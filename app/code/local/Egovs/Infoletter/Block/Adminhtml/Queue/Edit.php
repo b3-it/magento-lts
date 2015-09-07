@@ -48,7 +48,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit extends Mage_Adminhtml_Block_W
     public function getHeaderText()
     {
         if( Mage::registry('queue_data') && Mage::registry('queue_data')->getId() ) {
-            return Mage::helper('infoletter')->__("Edit Queue '%s'", $this->htmlEscape(Mage::registry('queue_data')->getName()));
+            return Mage::helper('infoletter')->__("Edit Queue '%s'", $this->htmlEscape(Mage::registry('queue_data')->getTitle()));
         } else {
             return Mage::helper('infoletter')->__('Add Queue');
         }

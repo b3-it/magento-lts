@@ -80,7 +80,7 @@ class Egovs_Infoletter_Model_Observer extends Mage_Core_Model_Abstract
 			$issues = array();
 			foreach($collection->getItems() as $item)
 			{
-				$issues[$item->getId()] = $item->getName();
+				$issues[$item->getId()] = $item->getTitle();
 			}
 			
 			return $issues ;

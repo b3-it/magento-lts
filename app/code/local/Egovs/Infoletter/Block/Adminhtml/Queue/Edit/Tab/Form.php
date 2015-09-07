@@ -18,11 +18,11 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
       $this->setForm($form);
       $fieldset = $form->addFieldset('queue_form', array('legend'=>Mage::helper('infoletter')->__('Queue information')));
      
-      $fieldset->addField('name', 'text', array(
+      $fieldset->addField('title', 'text', array(
           'label'     => Mage::helper('infoletter')->__('Name'),
           'class'     => 'required-entry',
           'required'  => true,
-          'name'      => 'name',
+          'name'      => 'title',
       ));
       
       $fieldset->addField('sender_name', 'text', array(
@@ -61,19 +61,34 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
       
       $widgetFilters = array('is_email_compatible' => 1);
       $wysiwygConfig = Mage::getSingleton('cms/wysiwyg_config')->getConfig(array('widget_filters' => $widgetFilters));
-     // if ($model->isPlain()) 
-      {
-      	$wysiwygConfig->setEnabled(true);
-      }
+     
+      $wysiwygConfig->setEnabled(true);
+      $wysiwygConfig->setAddWidgets(false);
+      $wysiwygConfig->setAddVariables(false);
+      $wysiwygConfig->setAddImages(false);
+      
       $fieldset->addField('message_body', 'editor', array(
       		'name'      => 'message_body',
-      		'label'     => Mage::helper('infoletter')->__('Message Body'),
-      		'title'     => Mage::helper('infoletter')->__('Message Body'),
+      		'label'     => Mage::helper('infoletter')->__('Message Body Html'),
+      		'title'     => Mage::helper('infoletter')->__('Message Body Html'),
+      		'required'  => true,
+      		'state'     => 'html',
+      		'style'     => 'height:36em;',
+      		'value'     => $model->getMessageBody(),
+      		'config'    => $wysiwygConfig,
+      		//'use_container' =>false,
+      ));
+      
+      $fieldset->addField('message_body_plain', 'editor', array(
+      		'name'      => 'message_body_plain',
+      		'label'     => Mage::helper('infoletter')->__('Message Body Plain'),
+      		'title'     => Mage::helper('infoletter')->__('Message Body Plain'),
       		'required'  => true,
       		//'state'     => 'html',
       		'style'     => 'height:36em;',
-      		//'value'     => $model->getMessageBody(),
-      		//'config'    => $wysiwygConfig
+      		'value'     => $model->getMessageBodyPlain(),
+      		//'config'    => $wysiwygConfig,
+      		//'use_container' =>false,
       ));
       
      
@@ -86,5 +101,11 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
           $form->setValues(Mage::registry('queue_data')->getData());
       }
       return parent::_prepareForm();
+  }
+  
+  private function getIsPalin($model)
+  {
+  		$found =  preg_match("#^</*>#", $model->getMessageBody());
+  		return !( $found===1);
   }
 }

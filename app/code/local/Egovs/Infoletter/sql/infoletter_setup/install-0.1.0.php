@@ -32,12 +32,15 @@ $table = $installer->getConnection()
 		->addColumn('message_body', Varien_Db_Ddl_Table::TYPE_TEXT, '1024k', array(
 				'nullable'  => false,
 		), 'Message Body')
+		->addColumn('message_body_plain', Varien_Db_Ddl_Table::TYPE_TEXT, '1024k', array(
+				'nullable'  => false,
+		), 'Message Body')
 		->addColumn('message_subject', Varien_Db_Ddl_Table::TYPE_TEXT, '512', array(
 				'nullable'  => false,
 		), 'Message Subject')
-		->addColumn('name', Varien_Db_Ddl_Table::TYPE_TEXT, '512', array(
+		->addColumn('title', Varien_Db_Ddl_Table::TYPE_TEXT, '512', array(
 				'nullable'  => false,
-		), 'name')
+		), 'title')
 		->addColumn('sender_name', Varien_Db_Ddl_Table::TYPE_TEXT, '512', array(
 				'nullable'  => false,
 		), 'Sender name')

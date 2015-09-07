@@ -3,7 +3,8 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 
 	protected $_transport = null;
 	protected $_mail = null;
-
+	protected $_lastErrorMessage = null;
+	
 	protected function _initTransport() {
 		$config = array();
 
@@ -111,6 +112,7 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 	}
 
 	public function send(Zend_Mail $mail = null) {
+		$this->_lastErrorMessage = null;
 		if (is_null($mail)) {
 			$mail = $this->getMail();
 		} else {
@@ -247,10 +249,16 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 						Mage::getStoreConfig('dev/log/exception_file')
 				);
 			Mage::logException($e);
+			$this->_lastErrorMessage = $e->getMessage();
 		}
 		
 		$this->_transport = null;
 		$this->_mail = null;
 		return $this;
+	}
+	
+	public function getLastErrorMessage()
+	{
+		return $this->_lastErrorMessage;
 	}
 }

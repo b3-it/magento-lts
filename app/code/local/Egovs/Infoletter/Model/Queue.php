@@ -95,31 +95,26 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
     			$mailer->getMail()->addTo($recipient->getEmail(), '=?utf-8?B?' . base64_encode($recipient->getName()) . '?=');
     		
     		    $text = $this->getMessageBody();			 
-    		    if ($parameters->getIsPlain()) {
+    		    if ($this->getHasPlain()) {
                 	/*
                 	 * Zend_Mime::ENCODING_QUOTEDPRINTABLE ist der Default-Wert,
                 	 * dieser darf nach RFC1521 aber nur ASCII enthalten!
                 	 */
-                	$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($text), null, Zend_Mime::ENCODING_BASE64);
-                } else {
-                	$boundary = '--END_OF_HTML_MAIL';
-                	$boundaryLocation = strpos($text, $boundary);
-                	if ($boundaryLocation) {
-                		$shtml = substr($text, 0, $boundaryLocation);
-                		$stext = str_replace($boundary, '', substr($text, $boundaryLocation));
-                		$stext = trim(strip_tags($stext));
-                		$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($stext), null, Zend_Mime::ENCODING_BASE64);
-                		$mailer->getMail()->setBodyHTML($shtml);
-                	} else {
-                		/*
-                		 * 28.06.2012::Frank Rochlitzer
-                		 * Codierung ist notwendig, da Mail sonst nicht korrekt als Multipart content gesendet wird
-                		 */
+                	$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($this->getMessageBodyPlain()), null, Zend_Mime::ENCODING_BASE64);
+                } 
+                
+                if ($this->getHasHtml()) {
+                	/*
+                	 * Zend_Mime::ENCODING_QUOTEDPRINTABLE ist der Default-Wert,
+                	 * dieser darf nach RFC1521 aber nur ASCII enthalten!
+                	 */
+                	$mailer->getMail()->setBodyHTML(Mage::helper('egovsbase')->htmlEntityDecode($this->getMessageBody()), null, Zend_Mime::ENCODING_BASE64);
+                	if (!$this->getHasPlain()) 
+                	{
                 		$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->__('This mail is in HTML format, please use an HTML ready mail client.'), null, Zend_Mime::ENCODING_BASE64);
-                		$mailer->getMail()->setBodyHTML($text);
                 	}
                 }
-    			 
+                
     			$mailer->getMail()->setSubject('=?utf-8?B?' . base64_encode($this->getMessageSubject()) . '?=');
     			$mailer->getMail()->setFrom($this->getSenderEmail(), $this->getSenderName());
     			if ($parameters->getReplyTo() !== null) {
@@ -131,12 +126,24 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
     			 
     			try {
     				$mailer->send();
-    				unset($mailer);
+    				
     				$this->setProcessedAt(Varien_Date::formatDate(true));
     				$this->save();
-    				$recipient->setStatus(Egovs_Infoletter_Model_Recipientstatus::STATUS_SEND)
+    				
+    				if($mailer->getLastErrorMessage())
+    				{
+    					$recipient->setStatus(Egovs_Infoletter_Model_Recipientstatus::STATUS_ERROR)
+    					->setProcessedAt(Varien_Date::formatDate(true))
+    					->setErrorText($mailer->getLastErrorMessage())
+    					->save();
+    				}
+    				
+    				else {
+    					$recipient->setStatus(Egovs_Infoletter_Model_Recipientstatus::STATUS_SEND)
     					->setProcessedAt(Varien_Date::formatDate(true))
     					->save();
+    				}
+    				unset($mailer);
     			}
     			catch (Exception $e) {
     				unset($mailer);
@@ -157,4 +164,13 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
     	return $this;
     }
     
+    private function getHasPlain()
+    {
+    	return mb_strlen($this->getMessageBodyPlain()) > 1;
+    }
+    
+    private function getHasHtml()
+    {
+    	return mb_strlen($this->getMessageBody()) > 1;
+    }
 }
