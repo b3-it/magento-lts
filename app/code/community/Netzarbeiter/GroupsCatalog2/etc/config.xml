@@ -56,11 +56,11 @@
                 </rewrite>
             </catalog_resource>
             <!-- rewrite the catalogseach fulltext collection to add the filter to the getSelectCountSql() method -->
-            <catalogsearch_resource>
+            <xx_catalogsearch_resource>
                 <rewrite>
                     <fulltext_collection>Netzarbeiter_GroupsCatalog2_Model_CatalogSearch_Resource_Fulltext_Collection</fulltext_collection>
                 </rewrite>
-            </catalogsearch_resource>
+            </xx_catalogsearch_resource>
             <!-- rewrite the wishlist item collection to add the filter (by setting the event prefix and object) -->
             <wishlist_resource>
                 <rewrite>
