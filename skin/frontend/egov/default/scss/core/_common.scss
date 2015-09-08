@@ -139,6 +139,15 @@ h6, .h6 { @include h6; }
     margin-bottom: $box-spacing;
 }
 
+p.note-msg {
+    display: block;
+    border-width: $global-box-border;
+    border-style: solid;
+    border-color: $global-border-color;
+    padding: $golbal-msgpadding;
+    background-color: $global-border-color-light;
+}
+
 /* -------------------------------------------- *
  * Page Titles
  */
@@ -152,7 +161,7 @@ h6, .h6 { @include h6; }
 
 .page-title h1,
 .page-title h2 {
-    border-bottom: 1px solid $global-linkcolor;
+    border-bottom: $global-box-border solid $global-linkcolor;
 }
 
 /* -------------------------------------------- *
@@ -655,6 +664,7 @@ a.button:hover {
     left: $global-welcome-left;
     top: -10px;
     color: $global-fontcolor-light;
+    width: 70%;
 }
 
 .breadcrumbs li {
@@ -699,7 +709,7 @@ a.button:hover {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 1px solid $c-module-border-light;
+    border: $global-box-border solid $global-border-color;
     text-align: center;
     /* Hide text */
     font: 0/0 a;
@@ -708,24 +718,24 @@ a.button:hover {
     position: relative;
 
     &:hover {
-        background-color: $c-action;
-        border-color: $c-action;
+        background-color: $global-button-color;
+        border-color: $global-border-color;
     }
 }
 
 .btn-remove {
     &:after {
         content: 'X';
-        color: $c-action;
+        color: $global-linkcolor;
         height: 20px;
         line-height: 20px;
         width: 100%;
         font-size: 10px;
-        font-family: Arial, $f-stack-sans;
+        font-family: $base-font-family;
         font-weight: bold;
     }
     &:hover:after {
-        color: #FFFFFF;
+        color: $global-linkcolor;
         text-decoration: none;
     }
 }
@@ -909,12 +919,16 @@ a.button:hover {
             }
         }
     }
+
+    p.note-msg {
+        width: 100%;
+    }
 }
 
 .col2-left-layout {
     .main {
         position: relative;
-        top: 20px;
+        top: 5px;
     }
 
     .col-left {
@@ -935,6 +949,10 @@ a.button:hover {
         padding-left: $global-content-leftpadding-percent;
         padding-top: $global-content-paddingtop;
         padding-right: $global-rightcol-rightmargin-percent;
+    }
+
+    p.note-msg {
+        width: $global-content-2col-left-percent;
     }
 }
 
@@ -961,6 +979,10 @@ a.button:hover {
         .std {
             width: $global-content-2col-right-percent;
         }
+    }
+
+    p.note-msg {
+        width: 100%;
     }
 }
 
@@ -999,6 +1021,11 @@ a.button:hover {
             margin-right: $global-rightcol-rightmargin-percent;
             padding: 0px;
             margin-top: $global-rightcol-margintop;
+            /*margin-top: 16px;*/
+        }
+
+        p.note-msg {
+            width: $global-content-3col-percent;
         }
     }
 }

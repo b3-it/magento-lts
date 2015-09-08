@@ -6,11 +6,6 @@
 //
 
 
-.category-products, .category-title {
-    width: $global-content-3col-percent;
-    float: left;
-}
-
 .category-products {
     position: relative;
     top: -18px;
@@ -23,24 +18,29 @@
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
+.col1-layout {
+    .category-products, .category-title, .product-view {
+        width: $global-content-1col-percent;
+	  }
+}
+
 .col2-left-layout {
-	.category-products, .category-title {
-		width: $global-content-2col-left-width;
-	}
+    .category-products, .category-title, .product-view {
+        width: 100%;
+	  }
 }
 
 .col2-right-layout {
-	.category-products, .category-title {
-		width: $global-content-2col-right-width;
-	}
+    .category-products, .category-title, .product-view {
+        width: $global-content-2col-right-width;
+	  }
 }
 
 .col3-layout {
-    .product-view {
-        width: $global-content-width;
+    .category-products, .category-title, .product-view {
+        width: $global-content-3col-percent;
     }
 }
-
 
 .product-view {
 
@@ -80,11 +80,12 @@
     }
 
     .product-name {
+        border-bottom: $global-box-border solid $global-linkcolor;
         margin-bottom: 10px;
 
         .h1 {
             color: $global-h1-color;
-            border: 0;
+            border: 0px;
         }
     }
 
@@ -490,9 +491,7 @@
 
 .product-view .add-to-links {
     clear: both;
-    margin-top: 0px;
-    margin-right: 15px;
-    float: left;
+    margin: 0px;
 
     &:after {
         @include clearfix;
@@ -641,12 +640,21 @@
 }
 
 #product-attribute-specs-table {
-    max-width: $max-std-formatted-width;
-    border: 1px solid $global-border-color;
+    width: 100%;
+    empty-cells: show;
+    border-collapse: collapse;
+    border-spacing: 0px;
+
+    th, td {
+        border-width: $global-box-border;
+        border-style: solid;
+        border-color: $global-border-color;
+        padding: 5px;
+        white-space: nowrap;
+    }
 
     th {
-        border-right: 1px solid $global-border-color;
-        border-bottom: 1px solid $global-border-color;
+        background-color: $global-lightcolor;
     }
 }
 
@@ -655,10 +663,10 @@
  */
 
 .grouped-items-table-wrapper {
-    border: solid 1px $global-border-color;
+    border: $global-box-border solid $global-border-color;
     width: 100%;
     padding: $box-spacing;
-    margin-bottom: 15px;
+    margin-bottom: $global-boxmargin;
 
     tbody tr:last-child td {
         border-bottom: none;

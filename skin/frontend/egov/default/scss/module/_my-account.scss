@@ -209,13 +209,13 @@
 }
 
 .block-cart {
-    margin-top: 20px;
+    margin-bottom: $global-boxmargin;
 }
 
 .addresses-primary,
 .addresses-additional {
     .box {
-        margin-bottom: 20px;
+        margin-bottom: $global-boxmargin;
 
         h3 {
             font-size: $global-h3-size;

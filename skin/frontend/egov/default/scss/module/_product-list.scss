@@ -40,7 +40,8 @@ p.product-name {
     font-size: $global-fontsize;
     font-family: $base-font-family;
     font-weight: bold;
-    line-height: 1.4;
+    line-height: $global-lineheight;
+    height: $global-lineheight * 2;
 
     a {
         color: $global-linkcolor;
@@ -65,38 +66,78 @@ p.product-name {
 /* ============================================ *
  * Product Grid
  * ============================================ */
-
-$product-column-spacing: 20px;
-
 .products-grid {
     position: relative;
-}
 
-.products-grid:after {
-    @include clearfix;
-}
-
-.products-grid > li {
-    position: relative;
-    margin-bottom: $product-column-spacing;
-    text-align: center;
+    > li {
+        position: relative;
+        margin-bottom: $global-product-spacing;
+        text-align: center;
+    }
 
     &:after {
         @include clearfix;
     }
-}
 
-.products-grid .product-image {
-    width: 100%;
-    margin-bottom: 15px;
-}
+    .product-image {
+        width: 100%;
+        margin-bottom: 15px;
 
-.products-grid .product-image img {
-    width: 100%;
-    height: auto;
+        img {
+            width: 100%;
+            height: auto;
 
-    &:hidden {
-        display: none;
+            &:hidden {
+                display: none;
+            }
+        }
+    }
+
+    .product-info {
+        position: relative;
+        padding-bottom: $global-product-grid-action-height + 10px;
+    }
+
+    .actions {
+        padding-top: $box-spacing;
+        position: absolute;
+        bottom: 0px;
+        min-height: $global-product-grid-action-height;
+        width: 100%;
+
+        a.button, button.button {
+            width: 100%;
+            font-size: $global-fontsize;
+            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
+
+            span {
+                font-family: $base-font-family;
+            }
+        }
+
+        a.button {
+            display: inline-block;
+        }
+    }
+
+    .ratings {
+        .rating-box {
+            margin: 0 auto;
+        }
+
+        .amount {
+            display: none;
+        }
+    }
+
+    .price-box {
+        color: $global-fontcolor-dark;
+        font-size: $global-fontsize;
+        margin: 0 0 5px;
+    }
+
+    .add-to-links {
+        margin-bottom: 0;
     }
 }
 
@@ -106,40 +147,6 @@ $product-column-spacing: 20px;
         margin-bottom: 15px;
         margin-left: 10%;
     }
-}
-
-// If the height of the .product-info element changes, this value should be adjusted
-$productsGridActionHeight: 85px;
-
-.products-grid .product-info {
-    position: relative;
-    padding-bottom: $productsGridActionHeight + 10px;
-}
-
-.products-grid .actions {
-    padding-top: $box-spacing;
-    position: absolute;
-    bottom: 0px;
-    min-height: $productsGridActionHeight;
-    width: 100%;
-}
-
-.products-grid .ratings .rating-box {
-    margin: 0 auto;
-}
-
-.products-grid .ratings .amount {
-    display: none;
-}
-
-.products-grid .price-box {
-    color: $global-fontcolor-dark;
-    font-size: $global-fontsize;
-    margin: 0 0 5px;
-}
-
-.products-grid .add-to-links {
-    margin-bottom: 0;
 }
 
 // ---------------------------------------------
@@ -179,7 +186,7 @@ $productsGridActionHeight: 85px;
     $container: 600 - (2 * $trim);
 
     // Math: (540 - (2 * 30 gutter)) / 3 items = 160
-    $column-width: ($container - ($column-gutters * $product-column-spacing)) / $column-count;
+    $column-width: ($container - ($column-gutters * $global-product-spacing)) / $column-count;
 
     .products-grid {
         /* Undo two-column config */
@@ -187,13 +194,13 @@ $productsGridActionHeight: 85px;
             clear: none;
         }
         > li:nth-child(even) {
-            margin-right: percentage($product-column-spacing / $container);
+            margin-right: percentage($global-product-spacing / $container);
         }
 
         /* Set three-column config */
         > li {
             width: percentage($column-width / $container);
-            margin-right: percentage($product-column-spacing / $container);
+            margin-right: percentage($global-product-spacing / $container);
         }
         > li:nth-child(#{$column-count}n+1) {
             clear: left;
@@ -215,7 +222,7 @@ $productsGridActionHeight: 85px;
     /* Config: Columns + flexible gutter */
     $column-gutters: ($column-count) - 1;
     $container: $container-width - (2 * $trim);
-    $column-width: ($container - ($column-gutters * $product-column-spacing)) / $column-count;
+    $column-width: ($container - ($column-gutters * $global-product-spacing)) / $column-count;
 
     /* Undo three-column config */
     .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(odd) {
@@ -226,16 +233,16 @@ $productsGridActionHeight: 85px;
     }
     .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(even),
     .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(3n) {
-        margin-right: percentage($product-column-spacing / $container);
+        margin-right: percentage($global-product-spacing / $container);
     }
 
     /* Set column config */
     .products-grid--max-#{$column-count}-col#{$class-append} > li {
-        margin-right: percentage($product-column-spacing / $container);
+        margin-right: percentage($global-product-spacing / $container);
     }
     .products-grid--max-#{$column-count}-col#{$class-append} > li {
         width: percentage($column-width / $container);
-        margin-right: percentage($product-column-spacing / $container);
+        margin-right: percentage($global-product-spacing / $container);
     }
     .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(#{$column-count}n+1) {
         clear: left;
@@ -452,10 +459,9 @@ $productsGridActionHeight: 85px;
  * ============================================ */
 .block-layered-nav {
     margin-top: $global-boxmargin;
-    border: 0px;
 
     .block-title {
-        border-width: $global-box-border $global-box-border $global-box-border-bottom $global-box-border;
+        border-width: 0px 0px $global-box-border-bottom 0px;
         border-color: $global-border-color;
         border-style: solid;
     }
@@ -464,11 +470,18 @@ $productsGridActionHeight: 85px;
         margin: 0px;
 
         #narrow-by-list {
-            position: relative;
-            top: -6px;
+            dd {
+                border: 0px;
 
-            dd span.count {
-                float: right;
+                span.count {
+                    float: right;
+                }
+            }
+
+            dt {
+                border-width: $global-box-border 0px $global-box-border-bottom 0px;
+                border-color: $global-border-color;
+                border-style: solid;
             }
         }
     }
@@ -491,7 +504,7 @@ $productsGridActionHeight: 85px;
     margin-top: $box-spacing;
 
     ol > li > span, ol > li > a {
-        padding: 5px 15px;
+        padding: $global-boxpadding;
         display: block;
     }
     ol > li > a .count {
@@ -541,7 +554,7 @@ $productsGridActionHeight: 85px;
         }
 
         &:hover {
-            background-color: $c-button-hover;
+            background-color: $global-button-hovercolor;
             color: #FFFFFF;
         }
 
@@ -571,7 +584,7 @@ $productsGridActionHeight: 85px;
 
         &:hover {
             text-decoration: none;
-            background: $c-module-background-hover;
+            background: $global-button-hovercolor;
         }
     }
 }
@@ -580,14 +593,15 @@ $productsGridActionHeight: 85px;
     .block-subtitle {
         display: block;
         @include h4;
+        margin-left: $global-boxpadding;
     }
 
     ol {
-        padding-left: $box-spacing;
-        margin-bottom: $box-spacing;
+        padding-left: $global-boxpadding * 2;
+        margin-bottom: $global-boxpadding * 2;
     }
     ol li {
-        margin-bottom: 5px;
+        margin: 0px $global-boxpadding $global-boxpadding 0px;
 
         .label {
             font-weight: bold;
@@ -600,6 +614,11 @@ $productsGridActionHeight: 85px;
 }
 
 .block-layered-nav .actions {
-    text-align: right;
-    margin-bottom: $element-spacing;
+    margin-bottom: $global-boxpadding * 2;
+
+    a {
+        @extend .button;
+        float: right;
+        margin-right: $global-boxpadding;
+    }
 }
