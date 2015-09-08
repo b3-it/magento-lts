@@ -3,12 +3,15 @@
     <adminhtml_infoletter_queue_index>
         <reference name="content">
             <block type="infoletter/adminhtml_queue" name="infoletter" />
+            
         </reference>
     </adminhtml_infoletter_queue_index>
-    <adminhtml_infoletter_recipient_index>
-        <reference name="content">
-            <block type="infoletter/adminhtml_recipient" name="infoletter" />
+    <adminhtml_infoletter_queue_edit>
+        <reference name="head">
+         <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
         </reference>
-    </adminhtml_infoletter_recipient_index>
+    </adminhtml_infoletter_queue_edit>
+   
  
 </layout>

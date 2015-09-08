@@ -10,11 +10,11 @@
             <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet> </action>
         </reference>
     </default>
-    <egovsbase_adminhtml_tools_analyse_sales_order_item_index>
+    <adminhtml_egovsbase_tools_analyse_sales_order_item_index>
         <reference name="content">
             <block type="egovsbase/adminhtml_tools_analyse_sales_order_item" name="egovssbase" >
             </block>
         </reference>
-    </egovsbase_adminhtml_tools_analyse_sales_order_item_index>
+    </adminhtml_egovsbase_tools_analyse_sales_order_item_index>
 
 </layout>

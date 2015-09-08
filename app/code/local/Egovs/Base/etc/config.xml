@@ -7,13 +7,6 @@
 	</modules>
 	<admin>
 		<routers>
-			<egovsbase>
-				<use>admin</use>
-				<args>
-					<module>Egovs_Base</module>
-					<frontName>egovsbase</frontName>
-				</args>
-			</egovsbase>
 			<adminhtml>
 				<args>
 					<modules>
@@ -27,7 +20,7 @@
 	  <layout>
 			<updates>
 				<egovsbase>
-					<file>egovs_base.xml</file>
+					<file>egovs/base.xml</file>
 				</egovsbase>
 			</updates>
 		</layout>
@@ -41,6 +34,15 @@
 			</modules>
 		</translate>
 		<menu>
+		<sales>
+			<children>
+				<egovs_base_order_item module="egovsbase">
+					<title>Produkte pro Bestellung</title>
+					<sort_order>20</sort_order>
+					<action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
+				</egovs_base_order_item>
+			</children>
+		</sales>
 			<system>
 				<children>
 				<cache>
@@ -66,7 +68,7 @@
 									<egovs_base_order_item module="egovsbase">
 										<title>Produkte pro Bestellung</title>
 										<sort_order>20</sort_order>
-										<action>egovsbase/adminhtml_tools_analyse_sales_order_item/</action>
+										<action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
 									</egovs_base_order_item>    
 									
 								</children>

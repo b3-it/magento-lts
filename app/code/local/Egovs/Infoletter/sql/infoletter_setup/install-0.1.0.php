@@ -75,9 +75,10 @@ $table = $installer->getConnection()
 		->addColumn('email', Varien_Db_Ddl_Table::TYPE_TEXT, 128, array(
 				'nullable'  => false,
 		), 'Recipient Email')
-		->addColumn('name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
-				'nullable'  => false,
-		), 'Recipient Name')
+		->addColumn('prefix', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array('nullable'  => false,'default'  => ''), 'Recipient Name')
+		->addColumn('firstname', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array('nullable'  => false,'default'  => ''), 'Recipient Name')
+		->addColumn('lastname', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array('nullable'  => false,'default'  => ''), 'Recipient Name')
+		->addColumn('company', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array('nullable'  => false,'default'  => ''), 'Recipient Name')
 		->addColumn('status', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
 				'unsigned'  => true,
 		), 'Status')
