@@ -53,17 +53,21 @@
 			</updates>
 		</layout>
 	</adminhtml>
+	
+	<admin>
+        <routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Egovs_Vies_Adminhtml before="Mage_Adminhtml">Egovs_Vies_Adminhtml</Egovs_Vies_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    
 	<frontend>
 		<events>
-			<customer_save_before>
-				<observers>
-					<egovsvies_auto_assign_group>
-						<type>singleton</type>
-						<class>Egovs_Vies_Model_Customer_Observer</class>
-						<method>autoAssignGroup</method>
-					</egovsvies_auto_assign_group>
-				</observers>
-			</customer_save_before>
 		</events>
 		<translate>
 			<modules>
@@ -137,25 +141,6 @@
                 </observers>
             </customer_address_save_after>
             
-			<customer_save_before>
-				<observers>
-					<egovsvies_vat>
-						<type>singleton</type>
-						<class>egovsvies/customer_observer</class>
-						<method>validateVat</method>
-					</egovsvies_vat>
-				</observers>
-			</customer_save_before>
-			<customer_address_save_before>
-				<observers>
-					<egovsvies_vat>
-						<type>singleton</type>
-						<class>egovsvies/customer_observer</class>
-						<method>validateVatAddress</method>
-					</egovsvies_vat>
-					
-				</observers>
-			</customer_address_save_before>
 			<controller_action_layout_render_before_customer_account_create>
 				<observers>
 					<egovsvies_vat>
@@ -177,9 +162,9 @@
 			<!--<address>
 				<taxvat_show>opt</taxvat_show>
 			</address>-->
-			<vies_vat_validation>
-				<vies_webservice_timeout>20</vies_webservice_timeout>
-			</vies_vat_validation>
+            <create_account>
+                <tax_calculation_address_type>shipping</tax_calculation_address_type>
+            </create_account>
 		</customer>
 		<checkout>
 			<registerrequired>
