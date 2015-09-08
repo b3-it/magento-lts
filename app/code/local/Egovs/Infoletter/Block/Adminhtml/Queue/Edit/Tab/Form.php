@@ -64,7 +64,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
      
       $wysiwygConfig->setEnabled(true);
       $wysiwygConfig->setAddWidgets(false);
-      $wysiwygConfig->setAddVariables(false);
+      $wysiwygConfig->setAddVariables(true);
       $wysiwygConfig->setAddImages(false);
       
       $fieldset->addField('message_body', 'editor', array(

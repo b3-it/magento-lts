@@ -100,7 +100,9 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
                 	 * Zend_Mime::ENCODING_QUOTEDPRINTABLE ist der Default-Wert,
                 	 * dieser darf nach RFC1521 aber nur ASCII enthalten!
                 	 */
-                	$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($this->getMessageBodyPlain()), null, Zend_Mime::ENCODING_BASE64);
+    		    	$variables = $recipient->getData();
+    		    	$text = $this->getProcessedMessageBodyPlain($variables);
+                	$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($text), null, Zend_Mime::ENCODING_BASE64);
                 } 
                 
                 if ($this->getHasHtml()) {
@@ -108,7 +110,9 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
                 	 * Zend_Mime::ENCODING_QUOTEDPRINTABLE ist der Default-Wert,
                 	 * dieser darf nach RFC1521 aber nur ASCII enthalten!
                 	 */
-                	$mailer->getMail()->setBodyHTML(Mage::helper('egovsbase')->htmlEntityDecode($this->getMessageBody()), null, Zend_Mime::ENCODING_BASE64);
+                	$variables = $recipient->getData();
+                	$text = $this->getProcessedMessageBody($variables);
+                	$mailer->getMail()->setBodyHTML(Mage::helper('egovsbase')->htmlEntityDecode($text), null, Zend_Mime::ENCODING_BASE64);
                 	if (!$this->getHasPlain()) 
                 	{
                 		$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->__('This mail is in HTML format, please use an HTML ready mail client.'), null, Zend_Mime::ENCODING_BASE64);
@@ -163,6 +167,38 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
     	 
     	return $this;
     }
+    
+    
+    public function getProcessedMessageBody(array $variables = array())
+    {
+    	return $this->getProcessedTemplate($this->getMessageBody(),$variables);
+    }
+    
+    public function getProcessedMessageBodyPlain(array $variables = array())
+    {
+    	return $this->getProcessedTemplate($this->getMessageBodyPlain(),$variables);
+    }
+    
+    
+    private function getProcessedTemplate($text, array $variables = array())
+    {
+    	/* @var $processor Mage_Newsletter_Model_Template_Filter */
+    	$processor = Mage::helper('newsletter')->getTemplateProcessor();
+    	$variables['this'] = $this;
+   
+    
+    	$processor
+    	//->setTemplateProcessor(array($this, 'getTemplateByConfigPath'))
+    	//->setIncludeProcessor(array($this, 'getInclude'))
+    	->setVariables($variables);
+    
+    	// Filter the template text so that all HTML content will be present
+    	$result = $processor->filter($text);
+    	
+    
+    	return $result;
+    }
+    
     
     private function getHasPlain()
     {
