@@ -85,6 +85,14 @@
     				</adminhtml_customer_grid_massaction_prepare_after_observer_infoletter>
     			</observers>
     		</adminhtml_customer_grid_massaction_prepare_after>
+    		<adminhtml_sales_orderitem_grid_massaction_prepare_after>
+    		<observers>
+    				<adminhtml_sales_orderitem_grid_massaction_prepare_after_infoletter>
+    					<class>infoletter/observer</class>
+    					<method>onSalesOrderItemGridMassaction</method>
+    				</adminhtml_sales_orderitem_grid_massaction_prepare_after_infoletter>
+    			</observers>
+    		</adminhtml_sales_orderitem_grid_massaction_prepare_after>
     	</events>
     </adminhtml>
     <global>

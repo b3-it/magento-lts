@@ -166,83 +166,18 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
 		$this->_redirect('*/*/');
 	}
 
-    public function massDeleteAction() {
-        $queueIds = $this->getRequest()->getParam('queue');
-        if(!is_array($infoletterIds)) {
-			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
-        } else {
-            try {
-                foreach ($infoletterIds as $infoletterId) {
-                    $infoletter = Mage::getModel('infoletter/queue')->load($infoletterId);
-                    $infoletter->delete();
-                }
-                Mage::getSingleton('adminhtml/session')->addSuccess(
-                    Mage::helper('adminhtml')->__(
-                        'Total of %d record(s) were successfully deleted', count($infoletterIds)
-                    )
-                );
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-            }
-        }
-        $this->_redirect('*/*/index');
-    }
+   
 
-    public function massStatusAction()
+
+    public function previewAction ()
     {
-        $queueIds = $this->getRequest()->getParam('queue');
-        if(!is_array($infoletterIds)) {
-            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
-        } else {
-            try {
-                foreach ($queueIds as $queueId) {
-                    $queue = Mage::getSingleton('infoletter/queue')
-                        ->load($infoletterId)
-                        ->setStatus($this->getRequest()->getParam('status'))
-                        ->setIsMassupdate(true)
-                        ->save();
-                }
-                $this->_getSession()->addSuccess(
-                    $this->__('Total of %d record(s) were successfully updated', count($infoletterIds))
-                );
-            } catch (Exception $e) {
-                $this->_getSession()->addError($e->getMessage());
-            }
-        }
-        $this->_redirect('*/*/index');
-    }
+        //$this->_setTitle();
+        $this->loadLayout();
 
-    public function exportCsvAction()
-    {
-        $fileName   = 'queue.csv';
-        $content    = $this->getLayout()->createBlock('infoletter/adminhtml_queue_grid')
-            ->getCsv();
-
-        $this->_sendUploadResponse($fileName, $content);
-    }
-
-    public function exportXmlAction()
-    {
-        $fileName   = 'queue.xml';
-        $content    = $this->getLayout()->createBlock('infoletter/adminhtml_queue_grid')
-            ->getXml();
-
-        $this->_sendUploadResponse($fileName, $content);
-    }
-
-    protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
-    {
-        $response = $this->getResponse();
-        $response->setHeader('HTTP/1.1 200 OK','');
-        $response->setHeader('Pragma', 'public', true);
-        $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
-        $response->setHeader('Content-Disposition', 'attachment; filename='.$fileName);
-        $response->setHeader('Last-Modified', date('r'));
-        $response->setHeader('Accept-Ranges', 'bytes');
-        $response->setHeader('Content-Length', strlen($content));
-        $response->setHeader('Content-type', $contentType);
-        $response->setBody($content);
-        $response->sendResponse();
-        die;
+        $id     = $this->getRequest()->getParam('id');
+        $model  = Mage::getModel('infoletter/queue')->load($id);
+       
+        $this->getLayout()->getBlock('preview_form')->setFormData($model);
+        $this->renderLayout();
     }
 }

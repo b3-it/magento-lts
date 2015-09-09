@@ -73,6 +73,35 @@ class Egovs_Infoletter_Model_Observer extends Mage_Core_Model_Abstract
 			}
 		}
 		
+		
+		
+		public function onSalesOrderItemGridMassaction($observer)
+		{
+			$url =  Mage::getModel('core/url')->getUrl('adminhtml/infoletter_inject/massaction4orderitems');
+		
+			$issues = $this->_getQueueCollection();
+			
+			if(count($issues) > 0)
+			{
+		
+				$mblock = $observer->getMassactionBlock();
+				$mblock->addItem('infoletter_queue', array(
+						'label'=> Mage::helper('infoletter')->__('Subscribe to Queue'),
+						'url'  => $url,
+						'additional' => array(
+								'visibility' => array(
+										'name' => 'queue_id',
+										'type' => 'select',
+										'class' => 'required-entry',
+										'label' => Mage::helper('infoletter')->__('Queue'),
+										'values' => $issues
+								)
+						)
+				));
+			}
+		}
+		
+		
 		private function _getQueueCollection()
 		{
 			$collection = Mage::getModel('infoletter/queue')->getCollection();

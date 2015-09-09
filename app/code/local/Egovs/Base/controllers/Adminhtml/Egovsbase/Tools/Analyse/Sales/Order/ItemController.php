@@ -1,6 +1,6 @@
 <?php
 
-class Egovs_Base_Adminhtml_Tools_Analyse_Sales_Order_ItemController extends Mage_Adminhtml_Controller_Action
+class Egovs_Base_Adminhtml_Egovsbase_Tools_Analyse_Sales_Order_ItemController extends Mage_Adminhtml_Controller_Action
 {
 
     /**

@@ -101,41 +101,26 @@ class Egovs_Checkout_Model_Validateadr extends Varien_Object
 	 */
 	protected function _validateVat(&$data, &$errors) {
 		//falls das feld nicht gesetzt wurde braucht es nicht geprüft werden
-		if (!isset($data['taxvat']) || empty($data['taxvat'])) {
+		if (!isset($data['tax_id']) || empty($data['tax_id'])) {
 			return true;
 		}
 		
-		if(!Mage::helper('mpcheckout')->isModuleEnabled('Egovs_Vies'))
-		{
-			return true;
-		}
+		$result = Mage::helper('customer')->checkVatNumber($data['country_id'], $data['tax_id']);
+		$customerAddress = new Varien_Object($data);
 		
-		
+		$$disableAutoGroupChange = true;
 		$quote = Mage::getSingleton('checkout/session')->getQuote();
 		if ($quote instanceof Mage_Sales_Model_Quote && ($customer = $quote->getCustomer())) {
 			if ($customer instanceof Mage_Customer_Model_Customer) {
-				if ($customer->getTaxvat() && isset($data['country_id']) && stripos(trim($customer->getTaxvat()), $data['country_id']) === 0) {
-					$customer->setTaxvatValid(true);
-					return true;
-				}
+				$disableAutoGroupChange = $customer->getDisableAutoGroupChange();
 			}
 		}
-				
-		/* @var $vatService Egovs_Vies_Model_Webservice_CheckVatService */
-		$vatService = Mage::getModel('egovsvies/webservice_checkVatService');
+		$validationMessage = Mage::helper('customer')->getVatValidationUserMessage(
+				$customerAddress, $disableAutoGroupChange, $result
+		);
+		$errors[] = $validationMessage->getMessage();
 		
-		if (!$vatService || !($vatService instanceof Egovs_Vies_Model_Webservice_CheckVatService)) {
-			//TODO Warnung über nicht validierbare VAT ausgeben?
-			return true;
-		}
-		
-		$result = $vatService->checkVatBy($data['taxvat']);
-		
-		if ($result instanceof Egovs_Vies_Model_Webservice_Types_CheckVatResponse) {
-			return $result->validateWith($data, $errors);
-		}
-		
-		return false;
+		return $result->getIsValid();
 	}
 
 

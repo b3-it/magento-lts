@@ -1,6 +1,12 @@
 <?php
 /**
- * Used in creating options for Yes|No|Specified config value selection
+ * Source Model für Ja/Nein/Irrelevant
+ *
+ * @category	Egovs
+ * @package		Egovs_Vies
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2011 - 2015 B3 IT Systeme GmbH
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  */
 class Egovs_Vies_Model_Adminhtml_System_Config_Source_Yesnocustom

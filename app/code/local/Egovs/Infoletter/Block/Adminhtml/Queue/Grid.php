@@ -81,7 +81,14 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Grid extends Mage_Adminhtml_Block_W
                 		'caption'   => Mage::helper('infoletter')->__('Send'),
                 		'url'       => array('base'=> '*/*/send'),
                 		'field'     => 'id'
-                	)
+                	),
+                		
+                	array(
+                				'caption'   => Mage::helper('infoletter')->__('Preview'),
+                				'url'       => array('base'=> '*/*/preview'),
+                				'field'     => 'id',
+                				'popup'   => true,
+                		)
                 ),
                 'filter'    => false,
                 'sortable'  => false,
@@ -95,36 +102,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Grid extends Mage_Adminhtml_Block_W
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('queue_id');
-        $this->getMassactionBlock()->setFormFieldName('queue');
-
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('infoletter')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('infoletter')->__('Are you sure?')
-        ));
-
-        $statuses = Mage::getSingleton('infoletter/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('infoletter')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('infoletter')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
-        return $this;
-    }
-
+ 
   public function getRowUrl($row)
   {
       return $this->getUrl('*/*/edit', array('id' => $row->getId()));

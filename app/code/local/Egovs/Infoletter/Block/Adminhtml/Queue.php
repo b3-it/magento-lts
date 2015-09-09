@@ -18,7 +18,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue extends Mage_Adminhtml_Block_Widget
 	  {
 	    $this->_controller = 'adminhtml_queue';
 	    $this->_blockGroup = 'infoletter';
-	    $this->_headerText = Mage::helper('infoletter')->__('Item Manager');
+	    $this->_headerText = Mage::helper('infoletter')->__('Information Letter');
 	    $this->_addButtonLabel = Mage::helper('infoletter')->__('Add Item');
 	    parent::__construct();
 	  }
