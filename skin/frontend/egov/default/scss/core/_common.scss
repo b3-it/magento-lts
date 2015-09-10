@@ -116,27 +116,25 @@ h6, .h6 { @include h6; }
 }
 
 .availability {
+    font-size: $global-fontsize-big;
     margin-bottom: 0;
-    font-size: $f-size-s;
-    text-transform: uppercase;
-}
 
-.availability .label {
-    display: none;
-}
+    .label {
+         font-size: $global-fontsize;
+    }
 
-.availability.in-stock {
-    color: $c-success;
-}
+    .in-stock {
+        color: $global-instock-color;
+    }
 
-.availability.available-soon,
-.availability.out-of-stock {
-    color: $c-danger;
+    .available-soon, .out-of-stock {
+        color: $global-available-color;
+    }
 }
 
 .availability-only {
-    color: $c-danger;
-    margin-bottom: $box-spacing;
+    color: $global-available-color;
+    margin-bottom: $global-boxmargin;
 }
 
 p.note-msg {
@@ -295,7 +293,7 @@ body:not(.customer-account) .block:first-child .block-title {
                 margin-bottom: 0;
 
                 > strong {
-                    @include accordionDtBase('right', $c-module-border);
+                    @include accordionDtBase('right', $global-border-color);
                     display: block;
                     width: 100%;
                     cursor: pointer;
@@ -304,7 +302,7 @@ body:not(.customer-account) .block:first-child .block-title {
 
                 &.active {
                     > strong {
-                        @include accordionDtBase('down', $c-module-border);
+                        @include accordionDtBase('down', $global-border-color);
                     }
                 }
             }
@@ -312,15 +310,15 @@ body:not(.customer-account) .block:first-child .block-title {
             .block-content {
                 padding: $box-spacing;
                 margin-top: 0;
-                border-width: 0 1px;
+                border-width: 0 $global-box-border;
                 border-style: solid;
-                border-color: $c-module-border;
+                border-color: $global-border-color;
             }
         }
         // This selector is highly fickle, because if a div gets added beneath the last normal block in a sidebar,
         // it will break. However it is the simplest solution to applying this trivial style.
         .block:last-of-type {
-            border-bottom: 1px solid $c-module-border;
+            border-bottom: $global-box-border solid $global-border-color;
         }
     }
 }
@@ -390,14 +388,14 @@ div.block-reorder {
 
         strong {
             font-weight: 400;
-            color: $c-action;
+            color: $global-linkcolor;
         }
 
         a {
-            color: $c-text;
+            color: $global-fontcolor-dark;
 
             &:hover {
-                color: $c-action;
+                color: $global-linkcolor;
             }
         }
     }
@@ -437,9 +435,9 @@ div.block-reorder {
     background-color: $global-button-color;
     background-image: -moz-linear-gradient(center top , $global-button-gradient-1, $global-button-gradient-2, $global-button-color 100%);
     background-size: 100% auto;
-    border: 1px solid $global-border-color;
+    border: $global-box-border solid $global-border-color;
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: $global-btn-padding-v $global-btn-padding-h;
 
     &:hover {
         background: $global-button-hovercolor $global-repeat-scroll;
@@ -457,7 +455,7 @@ div.block-reorder {
 a.button {
     color: $global-fontcolor-dark;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: $global-btn-padding-v $global-btn-padding-h;
 }
 
 a.button:hover {
@@ -1377,13 +1375,14 @@ a.button:hover {
 }
 
 .price-box .price {
-    color: $global-fontcolor-dark;
+    color: $global-price-normal-color;
     font-size: $global-fontsize;
 }
 
 .price-box .price,
 .price {
     font-family: $base-font-family;
+    color: $global-price-normal-color;
 }
 
 .price-box .price-label {
@@ -1427,11 +1426,11 @@ a.button:hover {
 }
 
 .price-box .special-price {
-    color: $global-footer-fontcolor;
+    color: $global-price-special-color;
     padding-left: 1em;
 
     .price-label {
-        color: #D84D3C;
+        color: $global-price-special-color;
     }
 }
 
@@ -1458,11 +1457,11 @@ span.weee {
     display: inline-block;
     padding: 4px 8px;
     background: #FBF4DE;
-    border: 1px solid #E2D4C7;
-    margin-top: $element-spacing;
+    border: $global-box-border solid $global-border-color;
+    margin-top: $global-boxmargin;
 
     li {
-        font-size: $f-size-xs;
+        font-size: $global-fontsize-small;
     }
     .benefit {
         font-style: italic;
