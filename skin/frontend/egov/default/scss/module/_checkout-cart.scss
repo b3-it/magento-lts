@@ -52,6 +52,20 @@
 }
 
 .checkout-cart-index {
+    .main {
+        left: -8px;
+    }
+
+    .cart-empty {
+        border: $global-box-border solid $global-border-color;
+        padding: $golbal-msgpadding;
+        background-color: $global-box-title-backgroundcolor;
+
+        p:first-of-type {
+            margin-bottom: $global-listmargin;
+        }
+    }
+
     #postcode {
     }
 
