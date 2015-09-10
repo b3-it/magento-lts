@@ -11,6 +11,14 @@
 
 .cart-table {
     width: 100%;
+
+    thead th, tbody td {
+        padding: $global-tdpadding;
+    }
+
+    td.last {
+        padding: 0px;
+    }
 }
 
 .cart .button {
@@ -254,14 +262,15 @@
     @extend .egov-base-table;
 
     h2 {
-        color: $c-h2;
-        font-size: $f-size;
+        color: $global-h2-color;
+        font-size: $global-fontsize;
         font-weight: 600;
         margin-bottom: 0;
     }
 
     .product-cart-info {
-        padding-left: 5px;
+        padding-left: $global-tdpadding;
+        text-align: left !important;
     }
 
     tr {
@@ -273,7 +282,7 @@
         }
 
         td {
-            padding-top: 5px;
+            padding-top: $global-tdpadding !important;
         }
 
         tr > td:after {

@@ -8,9 +8,25 @@
 .mp-checkout {
     text-align: left;
 
+    .main-container {
+        left: -8px;
+    }
+
+    .multiple-checkout {
+        width: 105% !important;
+
+        #review-buttons-container {
+            width: 95%;
+        }
+    }
+
     .col-1, .col-2, h3, h4 {
         border: 0px !important;
         background-color: transparent !important;
+    }
+
+    div.error-msg {
+        width: 85%;
     }
 
     ul.checkout-progress {
@@ -34,7 +50,6 @@
             color: $global-fontcolor-dark;
             font-weight: bold;
         }
-
     }
 
     fieldset {
@@ -87,6 +102,9 @@
     }
 
     .col2-set {
+        width: 95%;
+        border-bottom: $global-box-border solid $global-border-color;
+
         div.col-1, div.col-2 {
             @extend .block;
             vertical-align: top;
@@ -114,26 +132,45 @@
     }
 
     .col1-layout {
-        .main {
-            position: relative;
-            top: 15px;
+        .multiple-checkout {
+            width: 100% !important;
         }
     }
 
     .col1-wide {
         display: block;
+        width: 95%;
 
-       #checkout-review-table {
+        #checkout-review-table {
             @extend .egov-base-table;
             margin-top: 20px;
 
-            td:nth-child(2), td:nth-child(3),
-            td:nth-child(5), td:nth-child(6) {
-                text-align: right;
+            thead th, tbody td {
+                padding: $global-tdpadding;
             }
 
-            td:nth-child(5), td:nth-child(6) {
-                font-weight: bold;
+            thead {
+                th:first-child {
+                    border-radius: 3px 0px 0px 0px;
+                    border-left-width: 0px !important;
+                    border-left-style: none !important;
+                }
+
+                th:last-child {
+                    border-radius: 0px 3px 0px 0px;
+                    border-right-width: 0px !important;
+                    border-right-style: none !important;
+                }
+
+
+                td:nth-child(2), td:nth-child(3),
+                td:nth-child(5), td:nth-child(6) {
+                    text-align: right;
+                }
+
+                td:nth-child(5), td:nth-child(6) {
+                    font-weight: bold;
+                }
             }
         }
 
@@ -144,7 +181,7 @@
 
     p.grand-total {
         display: inline-block;
-        width: 100%;
+        width: 95%;
         text-align: right;
         margin-top: 20px;
         font-size: 1em;
@@ -160,6 +197,12 @@
             margin-left: 10px;
             font-weight: bold;
         }
+    }
+}
+
+.egovs-checkout-multipage-overview {
+    .main-container {
+        left: 0px;
     }
 }
 
