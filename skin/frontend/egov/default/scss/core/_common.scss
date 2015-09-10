@@ -1854,25 +1854,24 @@ $toolbar-icon-padding-offset: 8px;
 .pages .current {
     display: inline-block;
     border: 0;
-    font-size: $f-size-s;
+    font-size: $global-fontsize-big;
     text-align: center;
-    text-transform: uppercase;
     vertical-align: middle;
     white-space: nowrap;
     line-height: 30px;
     width: 25px;
     height: 30px;
     padding: 0;
-    color: $c-action;
-    font-family: $f-stack-sans;
+    color: $global-linkcolor;
+    font-family: $base-font-family;
 }
 
 .pages .current,
 .pages .current:hover {
-    color: $c-text;
-    border: 1px solid $c-module-border;
+    color: $global-linkcolor-hover;
+    border: 1px solid $global-border-color;
     width: 30px;
-    background-color: #FFFFFF;
+    background-color: $global-wrapper-color;
     cursor: default;
 }
 
@@ -1886,13 +1885,13 @@ $toolbar-icon-padding-offset: 8px;
     position: relative;
 
     &:hover {
-        border: 1px solid $c-action;
+        border: 1px solid $global-linkcolor;
     }
 }
 
 .pages .next {
     &:before {
-        @include triangle(right, 4px, $c-action);
+        @include triangle(right, 4px, $global-linkcolor);
         top: 50%;
         margin-top: -3px;
         left: 50%;
@@ -1905,7 +1904,7 @@ $toolbar-icon-padding-offset: 8px;
 
 .pages .previous {
     &:before {
-        @include triangle(left, 4px, $c-action);
+        @include triangle(left, 4px, $global-linkcolor);
         top: 50%;
         margin-top: -3px;
         left: 50%;
