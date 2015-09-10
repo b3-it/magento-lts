@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <verteiler_adminhtml_verteiler_index>
+        <reference name="content">
+            <block type="verteiler/adminhtml_verteiler" name="verteiler" />
+        </reference>
+    </verteiler_adminhtml_verteiler_index>
+    
+  <verteiler_adminhtml_verteiler_customer>
+        <block type="core/text_list" name="root" output="toHtml">
+          <block type="verteiler/adminhtml_verteiler_edit_tab_customer_grid" name="customer.grid"/>
+           <block type="verteiler/adminhtml_widget_grid_serializer" name="grid_serializer">
+               <reference name="grid_serializer">
+                   <action method="initSerializerBlock">
+                       <grid_block_name>customer.grid</grid_block_name>
+                       <data_callback>getSelectedCustomer</data_callback>
+                       <hidden_input_name>all_selected</hidden_input_name>
+                       <reload_param_name>customer_set</reload_param_name>
+                   </action>
+                   <action method="addColumnInputName">
+                       <input_name>dummy</input_name>
+                   </action>                  
+               </reference>
+           </block>
+       </block>
+    </verteiler_adminhtml_verteiler_customer>
+    <verteiler_adminhtml_verteiler_customergrid>
+     	 <block type="core/text_list" name="root" output="toHtml">
+            <block type="verteiler/adminhtml_verteiler_edit_tab_customer_grid" name="customer.grid"/>
+        </block>
+     </verteiler_adminhtml_verteiler_customergrid>
+    
+    
+</layout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <customer>
+            <groups>
+                <create_account>
+                	<fields>
+                		<viv_domestic_group translate="label">
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </viv_domestic_group>
+                        <viv_intra_union_group translate="label">
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </viv_intra_union_group>
+                        <viv_invalid_group translate="label">
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </viv_invalid_group>
+                	</fields>
+                </create_account>
+            </groups>
+        </customer>
+    </sections>
+</config>

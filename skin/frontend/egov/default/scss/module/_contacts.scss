@@ -10,9 +10,13 @@
  * ============================================ */
 
 .contacts-index-index {
+    .main-container {
+        position: relative;
+        left: -8px;
+        top: -35px;
+    }
 
     h1 {
-        border: none;
     }
 
     ul.form-list {

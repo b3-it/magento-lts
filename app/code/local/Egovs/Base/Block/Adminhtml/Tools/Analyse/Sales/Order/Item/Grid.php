@@ -30,7 +30,7 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         $this->setCollection($collection);
         
        	$collection->getSelect()
-       	->join(array('order'=>'sales_flat_order'),'main_table.order_id = order.entity_id',array('increment_id'=>'increment_id','orderstatus'=>'status'));
+       	->join(array('order'=>'sales_flat_order'),'main_table.order_id = order.entity_id',array('increment_id'=>'increment_id','orderstatus'=>'status','customer_id','customer_email'));
        	//->join(array('quote_adr'=>'sales_flat_quote_address'),'main_table.quote_id=quote_adr.quote_id AND length(applied_taxes) > 8',array('applied_taxes'=>'applied_taxes'));
         
         //die($collection->getSelect()->__toString());
@@ -67,7 +67,7 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         $this->addColumn('sku', array(
         		'header' => Mage::helper('egovsbase')->__('sku'),
         		'index' => 'sku',
-        		//'width' => '100px',
+        		'width' => '100px',
         ));
         
         $this->addColumn('name', array(
@@ -75,6 +75,21 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         		'index' => 'name',
         		//'width' => '100px',
         ));
+        
+        
+        $this->addColumn('customer_id', array(
+        		'header' => Mage::helper('egovsbase')->__('Customer#'),
+        		'index' => 'customer_id',
+        		'width' => '100px',
+        ));
+        
+        $this->addColumn('customer_email', array(
+        		'header' => Mage::helper('egovsbase')->__('Customer Email'),
+        		'index' => 'customer_email',
+        		//'width' => '100px',
+        ));
+        
+        
         
         $this->addColumn('qty_ordered', array(
         		'header' => Mage::helper('egovsbase')->__('Qty'),
@@ -132,6 +147,7 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         $this->addColumn('status', array(
             'header' => Mage::helper('sales')->__('Status'),
             'index' => 'orderstatus',
+            'filter_index' => 'status',
             'type'  => 'options',
             'width' => '70px',
             'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
@@ -146,7 +162,16 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         return parent::_prepareColumns();
     }
 
+    protected function _prepareMassaction() {
+    	$this->setMassactionIdField('entity_id');
+    	$this->getMassactionBlock()->setFormFieldName('orderitems_ids');
     
+
+    
+    	Mage::dispatchEvent('adminhtml_sales_orderitem_grid_massaction_prepare_after', array('grid' => $this, 'massaction_block' =>  $this->getMassactionBlock() ));
+    
+    	return $this;
+    }
   
 
     public function getGridUrl()

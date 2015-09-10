@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">^
+    
+       
+    <adminhtml_catalog_product_edit>
+        <reference name="product_tabs">
+            <block type="extstock/adminhtml_catalog_product_edit_tab_extstock" name="tab_extstock" />					
+            <action method="addTabAfter"><name>extstock</name><block>tab_extstock</block><after>inventory</after></action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+    
+    
+    <adminhtml_extstock_extstock_index>
+        <reference name="content">
+            <block type="extstock/adminhtml_extstock" name="extstock" />
+        </reference>
+    </adminhtml_extstock_extstock_index>
+    <adminhtml_extstock_extstocklist_index>
+        <reference name="content">
+            <block type="extstock/adminhtml_extstocklist" name="extstocklist" />
+        </reference>
+    </adminhtml_extstock_extstocklist_index>
+     <adminhtml_extstock_stockorder_index>
+        <reference name="content">
+            <block type="extstock/adminhtml_stockorder" name="stockorder" />
+        </reference>
+    </adminhtml_extstock_stockorder_index>
+    <adminhtml_extstock_warning_index>
+    	<reference name="head">
+			<action method="addJs"><script>slpb/adminhtml/slpb_grid.js</script></action>
+		</reference>
+       
+    </adminhtml_extstock_warning_index>
+       <adminhtml_extstock_journal_index>
+    	<reference name="head">
+			<action method="addJs"><script>slpb/adminhtml/slpb_grid.js</script></action>
+		</reference>       
+    </adminhtml_extstock_journal_index>
+</layout>

@@ -8,12 +8,11 @@
 .catalog-seo-sitemap-category {
     .main-container {
         position: relative;
-        left: -10px;
         top: -35px;
     }
 
     .page-sitemap {
-        width: 97%;
+        width: $global-content-3col-percent;
 
         div.pager {
             width: auto;

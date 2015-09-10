@@ -58,6 +58,17 @@ input[type="password"]:active, input[type="tel"]:active, select:active {
     border-color: $global-lightcolor;
 }
 
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    top: 1px;
+    left: 2px;
+    margin-right: $global-radio-checkback-spacing;
+}
+
+input[type="radio"] {
+    margin-right: $global-radio-checkback-spacing - 3;
+}
+
 a {
     color: $global-linkcolor;
     text-decoration: none;
@@ -105,27 +116,34 @@ h6, .h6 { @include h6; }
 }
 
 .availability {
+    font-size: $global-fontsize-big;
     margin-bottom: 0;
-    font-size: $f-size-s;
-    text-transform: uppercase;
-}
 
-.availability .label {
-    display: none;
-}
+    .label {
+         font-size: $global-fontsize;
+    }
 
-.availability.in-stock {
-    color: $c-success;
-}
+    .in-stock {
+        color: $global-instock-color;
+    }
 
-.availability.available-soon,
-.availability.out-of-stock {
-    color: $c-danger;
+    .available-soon, .out-of-stock {
+        color: $global-available-color;
+    }
 }
 
 .availability-only {
-    color: $c-danger;
-    margin-bottom: $box-spacing;
+    color: $global-available-color;
+    margin-bottom: $global-boxmargin;
+}
+
+p.note-msg {
+    display: block;
+    border-width: $global-box-border;
+    border-style: solid;
+    border-color: $global-border-color;
+    padding: $golbal-msgpadding;
+    background-color: $global-border-color-light;
 }
 
 /* -------------------------------------------- *
@@ -137,6 +155,11 @@ h6, .h6 { @include h6; }
 .product-name h1,
 .product-name .h1 {
     @include pageTitle;
+}
+
+.page-title h1,
+.page-title h2 {
+    border-bottom: $global-box-border solid $global-linkcolor;
 }
 
 /* -------------------------------------------- *
@@ -270,7 +293,7 @@ body:not(.customer-account) .block:first-child .block-title {
                 margin-bottom: 0;
 
                 > strong {
-                    @include accordionDtBase('right', $c-module-border);
+                    @include accordionDtBase('right', $global-border-color);
                     display: block;
                     width: 100%;
                     cursor: pointer;
@@ -279,7 +302,7 @@ body:not(.customer-account) .block:first-child .block-title {
 
                 &.active {
                     > strong {
-                        @include accordionDtBase('down', $c-module-border);
+                        @include accordionDtBase('down', $global-border-color);
                     }
                 }
             }
@@ -287,15 +310,15 @@ body:not(.customer-account) .block:first-child .block-title {
             .block-content {
                 padding: $box-spacing;
                 margin-top: 0;
-                border-width: 0 1px;
+                border-width: 0 $global-box-border;
                 border-style: solid;
-                border-color: $c-module-border;
+                border-color: $global-border-color;
             }
         }
         // This selector is highly fickle, because if a div gets added beneath the last normal block in a sidebar,
         // it will break. However it is the simplest solution to applying this trivial style.
         .block:last-of-type {
-            border-bottom: 1px solid $c-module-border;
+            border-bottom: $global-box-border solid $global-border-color;
         }
     }
 }
@@ -349,11 +372,6 @@ div.block-reorder {
             float: left;
         }
     }
-
-    p.product-name {
-        display: inline-block;
-        margin-bottom: 0;
-    }
 }
 
 
@@ -370,14 +388,14 @@ div.block-reorder {
 
         strong {
             font-weight: 400;
-            color: $c-action;
+            color: $global-linkcolor;
         }
 
         a {
-            color: $c-text;
+            color: $global-fontcolor-dark;
 
             &:hover {
-                color: $c-action;
+                color: $global-linkcolor;
             }
         }
     }
@@ -417,9 +435,9 @@ div.block-reorder {
     background-color: $global-button-color;
     background-image: -moz-linear-gradient(center top , $global-button-gradient-1, $global-button-gradient-2, $global-button-color 100%);
     background-size: 100% auto;
-    border: 1px solid $global-border-color;
+    border: $global-box-border solid $global-border-color;
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: $global-btn-padding-v $global-btn-padding-h;
 
     &:hover {
         background: $global-button-hovercolor $global-repeat-scroll;
@@ -437,7 +455,7 @@ div.block-reorder {
 a.button {
     color: $global-fontcolor-dark;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: $global-btn-padding-v $global-btn-padding-h;
 }
 
 a.button:hover {
@@ -644,6 +662,7 @@ a.button:hover {
     left: $global-welcome-left;
     top: -10px;
     color: $global-fontcolor-light;
+    width: 70%;
 }
 
 .breadcrumbs li {
@@ -688,7 +707,7 @@ a.button:hover {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 1px solid $c-module-border-light;
+    border: $global-box-border solid $global-border-color;
     text-align: center;
     /* Hide text */
     font: 0/0 a;
@@ -697,24 +716,24 @@ a.button:hover {
     position: relative;
 
     &:hover {
-        background-color: $c-action;
-        border-color: $c-action;
+        background-color: $global-button-color;
+        border-color: $global-border-color;
     }
 }
 
 .btn-remove {
     &:after {
         content: 'X';
-        color: $c-action;
+        color: $global-linkcolor;
         height: 20px;
         line-height: 20px;
         width: 100%;
         font-size: 10px;
-        font-family: Arial, $f-stack-sans;
+        font-family: $base-font-family;
         font-weight: bold;
     }
     &:hover:after {
-        color: #FFFFFF;
+        color: $global-linkcolor;
         text-decoration: none;
     }
 }
@@ -863,23 +882,16 @@ a.button:hover {
 }
 
 .col-main {
-    width: percentage($global-content-width/$global-fullpage-width);
+    width: 100%;
 
     .std {
-        width: $global-content-width;
-        padding-bottom: $global-content-bottom-padding;
-        margin-right: $global-content-marginright;
-        border-bottom-width: $global-content-bottom-bordersize;
-        border-bottom-style: solid;
-        border-bottom-color: $global-content-bottom-bordercolor;
-
         margin: 0px;
     }
 }
 
 .col1-layout {
     .col-main {
-        padding-left: 0; /* Remove the 15px padding */
+        padding-left: 0;
         background-image: url($global-content-top-image);
         background-repeat: no-repeat;
         background-color: $global-content-background;
@@ -892,8 +904,8 @@ a.button:hover {
         width: auto;
         margin-top: 4px !important;
 
-        .std {
-            width: $global-fullpage-width - $global-content-marginright - $global-content-rightspace;
+        .std, .page-title {
+            width: $global-content-1col-percent;
         }
 
         table {
@@ -905,19 +917,23 @@ a.button:hover {
             }
         }
     }
+
+    p.note-msg {
+        width: 100%;
+    }
 }
 
 .col2-left-layout {
     .main {
         position: relative;
-        top: 20px;
+        top: 5px;
     }
 
     .col-left {
-        margin-right: $global-leftcol-marginright;
+        margin-right: $global-leftcol-rightmargin-percent;
         float: left;
         position: relative;
-        width: $global-leftcol-width;
+        width: $global-leftcol-percent;
     }
 
     .col-main {
@@ -927,19 +943,23 @@ a.button:hover {
         background-position: 0px -3px;
         background-size: 100% auto;
         overflow: hidden;
-        width: $global-fullpage-width - $global-leftcol-width - $global-content-rightspace;
-        padding-left: $global-content-paddingleft;
+        width: $global-content-2col-left-percent;
+        padding-left: $global-content-leftpadding-percent;
         padding-top: $global-content-paddingtop;
-        padding-right: 20px;
+        padding-right: $global-rightcol-rightmargin-percent;
+    }
+
+    p.note-msg {
+        width: $global-content-2col-left-percent;
     }
 }
 
 .col2-right-layout {
 	  .col-right {
-        margin-right: $global-rightcol-marginright;
+        margin-right: $global-rightcol-rightmargin-percent;
         float: right;
         position: relative;
-        width: $global-rightcol-width;
+        width: $global-rightcol-percent;
         margin-top: $global-rightcol-margintop;
     }
     .col-main {
@@ -951,12 +971,16 @@ a.button:hover {
         background-size: 100% auto;
         overflow: hidden;
         width: 100%;
-        padding-left: $global-content-paddingleft;
+        padding-left: $global-content-leftpadding-percent;
         padding-top: $global-content-paddingtop;
 
         .std {
-            width: $global-fullpage-width - $global-content-marginright - $global-rightcol-width - $global-rightcol-marginright;
+            width: $global-content-2col-right-percent;
         }
+    }
+
+    p.note-msg {
+        width: 100%;
     }
 }
 
@@ -967,9 +991,9 @@ a.button:hover {
         top: 4px;
 
         .col-left {
-            margin-right: $global-leftcol-marginright;
+            margin-right: $global-leftcol-rightmargin-percent;
             float: left;
-            width: $global-leftcol-width;
+            width: $global-leftcol-percent;
         }
 
         .col-main {
@@ -979,41 +1003,43 @@ a.button:hover {
             background-position: 0px -3px;
             background-size: 100% auto;
             overflow: hidden;
-            width: $global-fullpage-width - $global-leftcol-width - $global-content-rightspace;
+            width: $global-content-2col-left-percent;
             padding-top: $global-content-paddingtop;
-            padding-left: $global-content-paddingleft;
+            padding-left: $global-content-leftpadding-percent;
             padding-right: 5px;
+
+            .std {
+                width: $global-content-3col-percent;
+            }
         }
 
         .col-right {
             float: right;
-            width: $global-rightcol-width;
-            margin-right: $global-rightcol-marginright;
+            width: $global-rightcol-3col-percent;
+            margin-right: $global-rightcol-rightmargin-percent;
             padding: 0px;
             margin-top: $global-rightcol-margintop;
+            /*margin-top: 16px;*/
+        }
+
+        p.note-msg {
+            width: $global-content-3col-percent;
         }
     }
 }
 
 @include bp(max-width, 1000px) {
     .col3-layout {
-        .col-right {
-            float: left;
-            clear: left;
-            padding-left: 0;
-            padding-right: 10px;
-            width: percentage($global-rightcol-width/$global-fullpage-width);
-        }
-
         .col-wrapper {
-            float: right;
             width: 100%;
 
-            .col-main {
-                float: right;
+            .col-left {
             }
 
-            .col-left {
+            .col-main {
+            }
+
+            .col-right {
             }
         }
     }
@@ -1349,13 +1375,14 @@ a.button:hover {
 }
 
 .price-box .price {
-    color: $global-fontcolor-dark;
+    color: $global-price-normal-color;
     font-size: $global-fontsize;
 }
 
 .price-box .price,
 .price {
     font-family: $base-font-family;
+    color: $global-price-normal-color;
 }
 
 .price-box .price-label {
@@ -1399,11 +1426,11 @@ a.button:hover {
 }
 
 .price-box .special-price {
-    color: $global-footer-fontcolor;
+    color: $global-price-special-color;
     padding-left: 1em;
 
     .price-label {
-        color: #D84D3C;
+        color: $global-price-special-color;
     }
 }
 
@@ -1430,11 +1457,11 @@ span.weee {
     display: inline-block;
     padding: 4px 8px;
     background: #FBF4DE;
-    border: 1px solid #E2D4C7;
-    margin-top: $element-spacing;
+    border: $global-box-border solid $global-border-color;
+    margin-top: $global-boxmargin;
 
     li {
-        font-size: $f-size-xs;
+        font-size: $global-fontsize-small;
     }
     .benefit {
         font-style: italic;

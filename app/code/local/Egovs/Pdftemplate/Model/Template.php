@@ -42,21 +42,22 @@ class Egovs_Pdftemplate_Model_Template extends Mage_Core_Model_Abstract
 	 *
 	 * @return array
 	 */
-	public function toOptionArray()
+	public function toOptionArray($type = null)
 	{
+		/* @var $collection Egovs_Pdftemplate_Model_Mysql4_Template_Collection */
 		$collection = Mage::getSingleton('pdftemplate/template')->getCollection();
-		$collection->getSelect()->where('status='.Egovs_Pdftemplate_Model_Status::STATUS_ENABLED);
+		$collection->addFieldToFilter('status', Egovs_Pdftemplate_Model_Status::STATUS_ENABLED);
+		if ($type) {
+			$collection->addFieldToFilter('type', $type);
+		}
 		 
 		$res = array();
 		 
 		$res[] = array('value' => '0', 'label'=> Mage::helper('adminhtml')->__('-- Not Selected --'));
-		foreach($collection->getItems() as $item)
-		{
+		foreach ($collection->getItems() as $item) {
 			$res[] = array('value' => $item->getId(), 'label'=>$item->getTitle());
 		}
-
-		 
+		
 		return $res;
-
 	}
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_infoletter_queue_index>
+        <reference name="content">
+            <block type="infoletter/adminhtml_queue" name="infoletter" />       
+        </reference>
+    </adminhtml_infoletter_queue_index>
+    
+    <adminhtml_infoletter_queue_edit>
+        <reference name="head">
+         <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
+        </reference>
+    </adminhtml_infoletter_queue_edit>
+    
+    <adminhtml_infoletter_queue_preview>
+        <reference name="root">
+            <action method="setTemplate"><template>egovs/infoletter/preview.phtml</template></action>
+            <block type="infoletter/adminhtml_preview" name="preview_form" />
+        </reference>
+    </adminhtml_infoletter_queue_preview>
+   
+ 
+</layout>

@@ -30,6 +30,7 @@
         max-width: $global-fullpage-width;
         min-width: $global-min-width;
         position: relative;
+        left: -8px;
         margin: 0px auto;
     }
 
@@ -69,15 +70,8 @@
  * ============================================ */
 
 .header-language-background {
-    float: left;
-    position: absolute;
-
-    padding: $gap;
-    background-color: $c-action;
-    text-transform: uppercase;
 
     .header-language-container {
-        max-width: $max-content-width;
         margin-left: auto;
         margin-right: auto;
     }
@@ -99,8 +93,9 @@
 
 .page-header-container .store-language-container {
     float: right;
-    max-width: 35%;
-    padding: 13px 15px 10px 10px;
+    position: relative;
+    right: -3px;
+    top: 20px;
 
     label {
         display: none;

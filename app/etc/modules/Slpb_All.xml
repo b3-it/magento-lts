@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Slpb_Checkout>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Egovs_Checkout />
+            </depends>
+        </Slpb_Checkout>
+		 <Slpb_Customer>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Slpb_Customer>
+        <Slpb_Extstock>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Slpb_Extstock>
+        <Slpb_Product>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Slpb_Product>
+        <Slpb_Shipping>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Slpb_Shipping>
+		<Slpb_Verteiler>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Slpb_Verteiler>
+    </modules>
+</config>

@@ -11,7 +11,7 @@
 
 @mixin h1 {
     margin: 0;
-    margin-bottom: 0.7em;
+    /* margin-bottom: 0.7em; */  // Deaktiviert, damit die Welcome-Schrift korrekt sitzt
     color: $global-h1-color;
     font-family: $global-headline-rotis;
     font-size: $global-h1-size;
@@ -87,7 +87,7 @@
 @mixin pageTitle() {
     font-size: 24px;
     font-weight: 600;
-    border-bottom: 1px solid $global-border-color;
+    border-bottom: $global-box-border solid $global-border-color;
     padding-bottom: 3px;
     margin-bottom: 15px;
 }

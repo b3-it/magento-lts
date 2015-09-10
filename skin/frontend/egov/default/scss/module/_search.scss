@@ -71,17 +71,17 @@
         margin-top: 5px;
     }
 
-    .page-title {
-        width: 98%;
+    .page-title, .buttons-set {
+        width: $global-content-2col-right-percent;
     }
 }
 
 .advanced-search {
-    width: $global-adv-search-width;
+    width: $global-content-2col-right-percent;
 
     #advanced-search-list {
         input, select {
-            width: 95%;
+            width: 100%;
             margin: 0px;
         }
 
@@ -96,7 +96,7 @@
 
     select.multiselect {
         option {
-            border-bottom: 1px solid $c-module-border-light;
+            border-bottom: 1px solid $global-border-color-light;
             padding: 2px 5px;
         }
     }

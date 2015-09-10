@@ -63,13 +63,13 @@
     }
 
     .box {
-        border: 1px solid $global-lightcolor;
+        /*border: 1px solid $global-lightcolor;*/
         margin: 0px;
         width: 90%;
 
         .box-title {
-            background-color: $global-lightcolor-hover;
-            border-bottom: 3px solid $global-lightcolor;
+            /*background-color: $global-lightcolor-hover;
+            border-bottom: 3px solid $global-lightcolor;*/
             padding: 0.2em 0 0em 0.6em;
             color: $global-fontcolor-dark;
 
@@ -132,22 +132,6 @@
 
         select {
             width: 89%;
-        }
-
-        select,
-        input[type="tel"] {
-            border: 1px solid $global-wrapper-color;
-            box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
-            margin-bottom: 16px;
-            outline: medium none;
-            padding: 3px 6px;
-            border-radius: 3px;
-        }
-
-        select:hover, select:active,
-        input[type="tel"]:hover, input[type="tel"]:active {
-            background-color: $global-lightcolor-hover;
-            border-color: $global-lightcolor;
         }
     }
 
@@ -225,13 +209,13 @@
 }
 
 .block-cart {
-    margin-top: 20px;
+    margin-bottom: $global-boxmargin;
 }
 
 .addresses-primary,
 .addresses-additional {
     .box {
-        margin-bottom: 20px;
+        margin-bottom: $global-boxmargin;
 
         h3 {
             font-size: $global-h3-size;
