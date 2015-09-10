@@ -163,4 +163,26 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
         $this->getLayout()->getBlock('preview_form')->setFormData($model);
         $this->renderLayout();
     }
+    
+    public function massDeleteRecipientAction() {
+    	$blocksIds = $this->getRequest()->getParam('recipients');
+    	if(!is_array($blocksIds)) {
+    		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
+    	} else {
+    		try {
+    			foreach ($blocksIds as $blocksId) {
+    				$pdftemplate = Mage::getModel('infoletter/recipient')->load($blocksId);
+    				$pdftemplate->delete();
+    			}
+    			Mage::getSingleton('adminhtml/session')->addSuccess(
+    					Mage::helper('adminhtml')->__(
+    							'Total of %d record(s) were successfully deleted', count($blocksIds)
+    					)
+    			);
+    		} catch (Exception $e) {
+    			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+    		}
+    	}
+    	$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+    }
 }

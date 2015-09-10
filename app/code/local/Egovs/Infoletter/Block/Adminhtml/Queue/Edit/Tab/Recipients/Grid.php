@@ -88,5 +88,24 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
     }
     
  
+    protected function _prepareMassaction()
+    {
+    	$model = Mage::registry('queue_data') ;
+    	
+    	$readonly = $model->getStatus() != Egovs_Infoletter_Model_Status::STATUS_NEW;
+    	if(!$readonly)
+    	{
+	    	$this->setMassactionIdField('recipient_id');
+	    	$this->getMassactionBlock()->setFormFieldName('recipients');
+	    
+	    	$this->getMassactionBlock()->addItem('delete', array(
+	    			'label'    => Mage::helper('infoletter')->__('Delete'),
+	    			'url'      => $this->getUrl('*/*/massDeleteRecipient'),
+	    			'confirm'  => Mage::helper('infoletter')->__('Are you sure?')
+	    	));
+    	}
+    	
+    	return $this;
+    }
 
 }
