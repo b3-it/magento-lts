@@ -20,29 +20,40 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit extends Mage_Adminhtml_Block_W
         $this->_blockGroup = 'infoletter';
         $this->_controller = 'adminhtml_queue';
         
+        $model = Mage::registry('queue_data') ;
+        
+        $readonly = $model->getStatus() != Egovs_Infoletter_Model_Status::STATUS_NEW;
+        
         $this->_updateButton('save', 'label', Mage::helper('infoletter')->__('Save Item'));
         $this->_updateButton('delete', 'label', Mage::helper('infoletter')->__('Delete Item'));
 		
-			
-        $this->_addButton('saveandcontinue', array(
-            'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
-            'onclick'   => 'saveAndContinueEdit()',
-            'class'     => 'save',
-        ), -100);
-
-        $this->_formScripts[] = "
-            function toggleEditor() {
-                if (tinyMCE.getInstanceById('queue_content') == null) {
-                    tinyMCE.execCommand('mceAddControl', false, 'queue_content');
-                } else {
-                    tinyMCE.execCommand('mceRemoveControl', false, 'queue_content');
-                }
-            }
-
-            function saveAndContinueEdit(){
-                editForm.submit($('edit_form').action+'back/edit/');
-            }
-        ";
+        if(!$readonly)
+        {	
+	        $this->_addButton('saveandcontinue', array(
+	            'label'     => Mage::helper('infoletter')->__('Save And Continue Edit'),
+	            'onclick'   => 'saveAndContinueEdit()',
+	            'class'     => 'save',
+	        ), -100);
+	
+	        $this->_formScripts[] = "
+	            function toggleEditor() {
+	                if (tinyMCE.getInstanceById('queue_content') == null) {
+	                    tinyMCE.execCommand('mceAddControl', false, 'queue_content');
+	                } else {
+	                    tinyMCE.execCommand('mceRemoveControl', false, 'queue_content');
+	                }
+	            }
+	
+	            function saveAndContinueEdit(){
+	                editForm.submit($('edit_form').action+'back/edit/');
+	            }
+	        ";
+        }
+        else
+        {
+        	$this->removeButton('save');
+        	$this->removeButton('delete');
+        }
     }
 
     public function getHeaderText()

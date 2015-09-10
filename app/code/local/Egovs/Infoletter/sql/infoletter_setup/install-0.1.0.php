@@ -26,6 +26,9 @@ $table = $installer->getConnection()
 		->addColumn('status', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
 				'unsigned'  => true,
 		), 'Status')
+		->addColumn('store_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+				'unsigned'  => true,
+		), 'Store')
 		->addColumn('message_body_hash', Varien_Db_Ddl_Table::TYPE_TEXT, 64, array(
 				'nullable'  => false,
 		), 'Message Body Hash')

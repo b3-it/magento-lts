@@ -187,6 +187,13 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
     	$variables['this'] = $this;
    
     
+
+    	if (Mage::app()->isSingleStoreMode()) {
+    		$processor->setStoreId(Mage::app()->getStore());
+    	} else {
+    		$processor->setStoreId($this->getStoreId());
+    	}
+    	
     	$processor
     	//->setTemplateProcessor(array($this, 'getTemplateByConfigPath'))
     	//->setIncludeProcessor(array($this, 'getInclude'))
