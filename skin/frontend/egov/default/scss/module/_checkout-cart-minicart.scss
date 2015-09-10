@@ -155,9 +155,9 @@
     }
 
     .subtotal {
-        background-color: #DDDDDD;
-        line-height: 2em;
-        padding-right: 10px;
+        background-color: $global-minicart-background;
+        line-height: $global-minicart-lineheight;
+        padding-right: $global-boxpadding * 2;
 
         .label {
             color: $global-fontcolor-dark;
@@ -177,7 +177,7 @@
         text-align: center;
 
         a.button {
-            padding: 5px 10px;
+            padding: $global-btn-padding-v $global-btn-padding-h;
         }
 
         .checkout-button {
@@ -200,7 +200,7 @@
 
     #minicart-error-message {
         text-align: center;
-        color: red;
+        color: $global-warning-color;
         display: none;
     }
 
@@ -231,10 +231,10 @@ div.block-cart {
     #cart-sidebar {
         li.item {
             border-bottom-color: $global-border-color;
-            border-bottom-width: 1px;
+            border-bottom-width: $global-box-border;
             border-bottom-style: solid;
-            margin-bottom: 5px;
-            padding-bottom: 5px;
+            margin-bottom: $global-boxpadding;
+            padding-bottom: $global-boxpadding;
 
             .product-details {
                 .btn_edit {
