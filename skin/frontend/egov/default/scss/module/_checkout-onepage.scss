@@ -15,8 +15,8 @@
 
 .checkout-onepage-index {
     .main-container {
-        top: -27px;
-        left: -13px;
+        top: -32px;
+        left: -5px;
     }
 
     .col-main {
@@ -72,7 +72,6 @@
     .checkout-onepage-index {
         .col-main {
             float: left;
-            _width: percentage(660px/960px);
             padding-right: 20px;
         }
 
@@ -445,6 +444,29 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
 /* review step */
 #checkout-review-table {
     @extend .egov-base-table;
+    text-align: left;
+
+    thead th, tbody td {
+        padding: $global-tdpadding;
+    }
+
+    thead {
+        .first th:first-child {
+            border-radius: 3px 0px 0px 0px;
+            border-left-width: 0px !important;
+            border-left-style: none !important;
+        }
+
+        .first th:last-child {
+            border-radius: 0px 3px 0px 0px;
+            border-right-width: 0px !important;
+            border-right-style: none !important;
+        }
+
+        .last th {
+            padding: $global-tdpadding 0px;
+        }
+    }
 
     .btn-remove {
         img {

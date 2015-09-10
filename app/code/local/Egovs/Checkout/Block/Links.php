@@ -64,10 +64,10 @@ class Egovs_Checkout_Block_Links extends Mage_Core_Block_Template
      */
     public function addCheckoutLink()
     {
-      
+
         if ($parentBlock = $this->getParentBlock()) {
             $text = $this->__('Checkout');
-            $parentBlock->addLink($text, 'egovs_checkout/multipagegg/', $text, true, array(), 60, null, 'class="top-link-checkout"');
+            $parentBlock->addLink($text, 'egovs_checkout/multipage/', $text, true, array(), 60, null, 'class="top-link-checkout"');
         }
         return $this;
     }

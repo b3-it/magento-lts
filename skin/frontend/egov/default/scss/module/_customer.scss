@@ -555,6 +555,15 @@ body.customer-account {
 #my-orders-table {
     @extend .egov-base-table;
 
+    thead th, tbody td {
+        text-align: left !important;
+        padding: $global-tdpadding;
+    }
+
+    td.last {
+        padding: 0px;
+    }
+
     .option-label {
         margin-left: $box-spacing;
         font-weight: 600;

@@ -16,13 +16,13 @@
     }
 
     thead {
-        th:first-child {
+        .first th:first-child {
             border-radius: 3px 0px 0px 0px;
             border-left-width: 0px !important;
             border-left-style: none !important;
         }
 
-        th:last-child {
+        .first th:last-child {
             border-radius: 0px 3px 0px 0px;
             border-right-width: 0px !important;
             border-right-style: none !important;

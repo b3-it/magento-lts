@@ -92,9 +92,7 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 		$customerAddress = $observer->getCustomerAddress();
 		$customer = $customerAddress->getCustomer();
 	
-		if (!Mage::helper('customer/address')->isVatValidationEnabled($customer->getStore())
-				|| Mage::registry(self::VIV_PROCESSED_FLAG)
-				|| !$this->_canProcessAddress($customerAddress)
+		if (Mage::registry(self::VIV_PROCESSED_FLAG) || !$this->_canProcessAddress($customerAddress)
 		) {
 			return;
 		}
@@ -105,7 +103,8 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			/* @var $customerHelper Mage_Customer_Helper_Data */
 			$customerHelper = Mage::helper('customer');
 	
-			if ($customerAddress->getVatId() == ''
+			if (!Mage::helper('customer/address')->isVatValidationEnabled($customer->getStore())
+					|| $customerAddress->getVatId() == ''
 					|| !Mage::helper('core')->isCountryInEU($customerAddress->getCountry()))
 			{
 				$data = $customerAddress->getData();
