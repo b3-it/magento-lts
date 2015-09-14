@@ -97,6 +97,12 @@
     }
 }
 
+.egov-default-message {
+    border: $global-box-border solid $global-border-color;
+    padding: $golbal-msgpadding;
+    background-color: $global-box-title-backgroundcolor;
+}
+
 .egov-float-left {
     float: left !important;
 }

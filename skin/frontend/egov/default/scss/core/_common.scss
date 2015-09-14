@@ -1898,7 +1898,7 @@ $toolbar-icon-padding-offset: 8px;
         margin-left: -2px;
     }
     &:hover:before {
-        @include triangle(right, 4px, $c-stimulus);
+        @include triangle(right, 4px, $global-linkcolor);
     }
 }
 
@@ -1911,7 +1911,7 @@ $toolbar-icon-padding-offset: 8px;
         margin-left: -2px;
     }
     &:hover:before {
-        @include triangle(left, 4px, $c-stimulus);
+        @include triangle(left, 4px, $global-linkcolor);
     }
 }
 

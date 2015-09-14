@@ -38,9 +38,7 @@
 .cart-forms .discount,
 .cart-forms .giftcard,
 .cart-forms .shipping {
-    padding: $box-spacing;
-    background-color: $global-checkout-total-background;
-    border: 1px solid $global-checkout-total-border;
+    @extend .egov-default-message
 }
 
 .cart-table,
@@ -57,9 +55,7 @@
     }
 
     .cart-empty {
-        border: $global-box-border solid $global-border-color;
-        padding: $golbal-msgpadding;
-        background-color: $global-box-title-backgroundcolor;
+        @extend .egov-default-message;
 
         p:first-of-type {
             margin-bottom: $global-listmargin;
@@ -269,6 +265,12 @@
     button.egov-float-left {
         margin-left:0px;
         margin-right:10px;
+    }
+
+    .product-cart-info {
+        .item-options{
+            font-size: $global-fontsize-small;
+        }
     }
 }
 
