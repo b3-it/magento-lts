@@ -161,7 +161,7 @@
 
         // Hide all sub-menus
         li.level0 ul {
-            display: none;
+            _display: none;
         }
 
         // Indent sub-menus
@@ -238,7 +238,7 @@
             z-index: 10;
             width: $global-category-width;
             padding: $global-subcat-paddingtop $global-subcat-paddingright $global-subcat-paddingbottom $global-subcat-paddingleft;
-            display: none; /* Hide until displayed. */
+            _display: none; /* Hide until displayed. */
 
             li {
                 background: $global-wrapper-color $global-repeat-scroll;
