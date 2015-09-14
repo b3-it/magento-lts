@@ -10,70 +10,60 @@
  * ============================================ */
 
 #wishlist-table {
+    @extend .egov-base-table;
+
     th {
         text-align: center;
+        padding: $global-tdpadding;
+    }
+
+    td:nth-child(2) {
+        text-align: left !important;
     }
 
     &.clean-table {
-        font-family: $f-stack-special;
-        font-size: $f-size-xs;
-        text-transform: uppercase;
+        font-family: $base-font-family;
+        font-size: $global-fontsize;
         width: 100%;
 
-        th {
-            border-bottom: 1px solid $c-table-border;
-        }
-
         td {
-            padding: 15px;
+            padding: $global-tdpadding;
             vertical-align: top;
         }
+    }
 
-        thead th {
-            font-family: $f-stack-special;
-            font-size: $f-size-xs;
-            text-transform: uppercase;
+    .product-image {
+        img {
+            max-width: 80px !important;
+            height: auto !important;
         }
     }
 
     .product-name {
-        font-size: $f-size-xl;
-        font-family: $f-stack-special;
+        font-size: $global-fontsize-big;
+        font-family: $base-font-family;
         margin-bottom: 0;
 
         a {
-            color: $c-link;
+            color: $global-linkcolor;
         }
     }
 
     .wishlist-sku {
-        font-size: $f-size-xxs;
-        font-family: $f-stack-special;
+        font-size: $global-fontsize-small;
+        font-family: $base-font-family;
         margin: 5px 0;
     }
 
     textarea {
-        border: 1px solid $c-input-border;
+        border: $global-box-border solid $global-border-color;
         width: 100%;
         height: 45px;
-        font-size: $f-size-xxs;
-        font-family: $f-stack-special;
-
-        &::-webkit-input-placeholder {
-            text-transform: uppercase;
-        }
-        &:-moz-placeholder {
-            text-transform: uppercase;
-        }
-        &::-moz-placeholder {
-            text-transform: uppercase;
-        }
-        &:-ms-input-placeholder {
-            text-transform: uppercase;
-        }
+        font-size: $global-fontsize-small;
+        font-family: $base-font-family;
 
         &:focus {
-            border: 1px solid $c-input-border-focus;
+            border: $global-box-border solid $global-border-color;
         }
     }
 
@@ -83,7 +73,7 @@
         padding-top: 5px;
 
         .button {
-            font-size: $f-size-xxs;
+            font-size: $global-fontsize-small;
             padding: 3px 5px;
         }
     }
@@ -94,7 +84,7 @@
 
     td {
         &.customer-wishlist-item-image {
-            width: 113px;
+            width: 80px;
         }
 
         &.customer-wishlist-item-quantity {
@@ -107,13 +97,12 @@
         }
 
         &.customer-wishlist-item-cart {
-            width: 150px;
+            width: 110px;
 
             .button {
-                font-size: $f-size-xs;
+                font-size: $global-fontsize-small;
                 margin-bottom: $gap;
                 padding: 3px 5px;
-                width: 100%;
             }
 
             .truncated {
@@ -135,6 +124,12 @@
 
         &.customer-wishlist-item-remove {
             width: 20px;
+            padding: 0px !important;
+
+            a {
+                font-size: 1.5em;
+                margin: $global-boxpadding;
+            }
         }
 
         .button,
@@ -145,11 +140,11 @@
     }
 
     .price-box {
-        font-family: $f-stack-special;
-        font-size: $f-size-xs;
+        font-family: $base-font-family;
+        font-size: $global-fontsize-small;
 
         .price {
-            color: $c-text;
+            color: $global-price-normal-color;
         }
     }
 
