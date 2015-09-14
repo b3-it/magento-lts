@@ -51,6 +51,10 @@
         }
     }
 
+    #customer-tag-list {
+        margin: $global-boxmargin 0px;
+    }
+
     .buttons-set {
         a {
             @extend .button;

@@ -40,7 +40,8 @@ class Egovs_Extnewsletter_Block_Adminhtml_Issue_Edit_Form extends Mage_Adminhtml
      $value = Mage::getModel('core/store')->getCollection()->toOptionArray();
 	 $value[] = array('value'=>0,'label'=>Mage::helper('extnewsletter')->__('All'));
 	 $stores = new Varien_Object(array('values' => $value));
-	 Mage::dispatchEvent('extnewsletter_issue_block_stores_load', array('stores' => $stores));
+	
+	 Mage::dispatchEvent('egovs_adminhtlm_block_stores_load', array('stores' => $stores));
 	 $value = $stores->getValues();
      $fieldset->addField('store_id', 'select', array(
           'label'     => Mage::helper('extnewsletter')->__('Store'),

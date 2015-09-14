@@ -16,23 +16,22 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <?php if ($this->hasProductUrl()):?>
             <a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image">
         <?php endif;?>
-            <img src="<?php echo $this->getProductThumbnail()->resize(180); ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+                <img src="<?php echo $this->getProductThumbnail()->resize(180); ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
         <?php if ($this->hasProductUrl()):?>
             </a>
         <?php endif;?>
 
         <ul class="cart-links">
-            <?php if ($isVisibleProduct): ?>
-                <li>
-                    <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item parameters')) ?>"><?php echo $this->__('Edit') ?></a>
-                </li>
-            <?php endif ?>
-
-            <?php if ($this->helper('wishlist')->isAllowInCart() && $isVisibleProduct) : ?>
-                <li>
-                    <a href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" class="link-wishlist use-ajax"><?php echo $this->__('Move to wishlist'); ?></a>
-                </li>
-            <?php endif ?>
+        <?php if ($isVisibleProduct): ?>
+            <li>
+                <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item parameters')) ?>"><?php echo $this->__('Edit') ?></a>
+            </li>
+        <?php endif ?>
+         <?php if ($this->helper('wishlist')->isAllowInCart() && $isVisibleProduct) : ?>
+            <li>
+                <a href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" class="link-wishlist use-ajax"><?php echo $this->__('Move to wishlist'); ?></a>
+            </li>
+        <?php endif ?>
         </ul>
     </td>
 
