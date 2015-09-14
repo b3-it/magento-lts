@@ -42,25 +42,19 @@
 
     .welcome-header {
         height: $global-welcome-header;
+        width: 50%;
+        position: absolute;
+        top: $global-welcome-top;
+        left: $global-welcome-left;
 
         h1 {
             color: $global-fontcolor-light;
     	  }
 
         .welcome-msg {
-            position: relative;
-            left: $global-welcome-left;
-            top: $global-welcome-top;
-            width: 50%;
             z-index: 99;
             color: $global-fontcolor-light;
-        }
-
-        .header-position {
-            position: relative;
-            left: $global-h1-left;
-            top: $global-h1-top;
-            width: 50%;
+            margin-top: 15px;
         }
     }
 }
