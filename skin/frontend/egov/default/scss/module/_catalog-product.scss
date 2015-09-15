@@ -37,11 +37,15 @@
 }
 
 .col3-layout {
-    .category-products, .category-title, .product-view {
+	.category-products, .product-view {
         width: $global-content-3col-percent;
     }
+    .product-name {
+    	width: $global-maincol-title-percent;
+	}
 
     .product-view {
+    	margin-top: 50px;
         .tab-content {
             .std {
                 width: 100%;

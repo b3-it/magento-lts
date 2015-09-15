@@ -149,6 +149,9 @@ p.note-msg {
 /* -------------------------------------------- *
  * Page Titles
  */
+.col3-layout .page-title {
+	width: $global-maincol-title-percent;
+}
 
 .page-title h1,
 .page-title h2,

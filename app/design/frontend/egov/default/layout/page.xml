@@ -36,6 +36,9 @@
                 <action method="addJs"><script>mage/translate.js</script></action>
                 <action method="addJs"><script>mage/cookies.js</script></action>
 
+                <!-- added jQuery-Egov-Funktions -->
+                <action method="addJs"><script>egovs/jquery.egov.js</script></action>
+
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
 
                 <!-- Add vendor dependencies -->
@@ -94,7 +97,7 @@
             <block type="core/text_list" name="left_first" as="left_first" translate="label">
                 <label>Left Column First (shows above main column on smaller screens)</label>
             </block>
-          
+
 
             <block type="core/text_list" name="left" as="left" translate="label">
                 <label>Left Column</label>

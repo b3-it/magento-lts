@@ -75,7 +75,7 @@ $global-content-marginright : 32px;
 $global-rightcol-marginright: 26px;
 $global-rightcol-width      : 230px;
 
-$global-rightcol-margintop : 32px;
+$global-rightcol-margintop : 62px;
 $global-content-paddingtop : 20px;
 
 // Berechnung aller Breiten in Prozent
@@ -109,10 +109,17 @@ $global-content-2col-left-percent : 100 - $global-left-col-percent;
 $global-content-2col-right-percent: 100 - $global-right-col-percent;
 $global-content-3col-percent      : 100 - $global-right-3col-percent;
 
+// Breite Maincol (std + col right)
+$global-maincol-width-fixed   : $global-fullpage-width - $global-left-col-fixed;
+$global-maincol-width-percent : 100 - $global-left-col-percent;
+$global-maincol-title-fixed : $global-maincol-width-fixed - $global-rightcol-marginright;
+$global-maincol-title-percent : percentage( $global-maincol-title-fixed / $global-maincol-width-fixed);
+
 $blobal-blockcontent-marginleft  : 5px;
 $blobal-blockcontent-marginright : 5px;
 $blobal-blockcontent-margintop   : 5px;
 $blobal-blockcontent-marginbottom: 5px;
+
 
 $global-footer-lineheight: 2em;
 $global-footer-fontsize: 1em;
