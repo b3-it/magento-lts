@@ -1,6 +1,6 @@
 ﻿var eGovMenu = {
     'init': function(element) {
-        $j(element + ' li>a').click(function(e) {
+        $j(element + ' li > a').click(function(e) {
             e.preventDefault();
             if( $j(this).parent().find('ul').length > 0 ) {
                 eGovMenu.toggleMenu( $j(this).next() );

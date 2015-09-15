@@ -94,8 +94,16 @@
 .nav-primary {
     box-shadow: 0 1px 2px 1px $global-text-shadow;
     border-radius: 4px 4px 0 0;
-    border: 1px solid $global-lightcolor;
+    border: $global-box-border solid $global-lightcolor;
     font-size: $global-category-fontsize;
+
+    .egov-catalog-title {
+        a, a:hover {
+            cursor: text;
+            text-decoration: none;
+            background-image: none;
+        }
+    }
 
     a {
         text-decoration: none;
@@ -104,16 +112,7 @@
     }
 
     li.level0 {
-        *zoom: 1;
-        filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
-        /* Für IE9/IE10 Filter entfernen */
-        background-image: url($global-category-image);
-        background-size: 100%;
-        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));
-        background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-        background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-        background-image: -o-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-        background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        @extend .egov-navigation-background;
     }
 
     li {
@@ -125,10 +124,7 @@
         background-size: 100% auto;
 
         a {
-            padding: 13px 25px 9px 13px;
-            background: $global-content-background url($global-category-arrow-right) $global-norepeat-scroll 95% 55%;
-            line-height: $global-category-lineheight;
-            text-shadow: $global-category-textshadow;
+            @extend .egov-navigation-link;
         }
     }
 
@@ -143,7 +139,6 @@
 }
 
 .nav-primary li.level0 > a {
-    text-transform: uppercase;
 }
 
 /* ============================================ *
