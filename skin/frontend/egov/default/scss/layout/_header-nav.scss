@@ -238,7 +238,7 @@
             z-index: 10;
             width: $global-category-width;
             padding: $global-subcat-paddingtop $global-subcat-paddingright $global-subcat-paddingbottom $global-subcat-paddingleft;
-            _display: none; /* Hide until displayed. */
+            display: none; /* Hide until displayed. */
 
             li {
                 background: $global-wrapper-color $global-repeat-scroll;

@@ -10,10 +10,18 @@
 <?php $_menu = $this->getHtml('level-top') ?>
 
 <?php if($_menu): ?>
-    <!--<nav id="nav">-->
-    <nav id="">
-        <ol class="nav-primary">
-            <?php echo $_menu ?>
-        </ol>
-    </nav>
+<nav id="egov-nav">
+    <ol class="nav-primary">
+        <li id="egov-catalog-title" class="level0 egov-catalog-title">
+            <a class="level0" href="javascript:void(0);">
+                <?php echo $this->__('Category'); ?>
+            </a>
+        </li>
+
+        <?php echo $_menu ?>
+    </ol>
+</nav>
+<script type="text/javascript">
+    eGovMenu.init('#egov-nav');
+</script>
 <?php endif ?>
