@@ -10,7 +10,7 @@
     <ol>
         <li class="account-block-title">
             <a href="javascript:void(0);"><?php echo $this->__('My Account'); ?></a>
-            <ul style="display:none;">
+            <ul id="customer-account-navigation" style="display:none;">
             <?php $_links = $this->getLinks(); ?>
             <?php $_index = 1; ?>
             <?php $_count = count($_links); ?>
@@ -31,5 +31,5 @@
     </ol>
 </nav>
 <script type="text/javascript">
-    eGovMenu.init('#customer-account-menu');
+    $j('#customer-account-menu').eGovMenu();
 </script>
