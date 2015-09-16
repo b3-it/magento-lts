@@ -50,7 +50,7 @@
 
             for ( var i = 0; i < anz; i++ ) {
                 var sub = arr[i].split(':');
-                $j('#' + sub[0]).css('dsplay', sub[1]);
+                $j('#' + sub[0]).css('display', sub[1]);
             }
         }
     }
