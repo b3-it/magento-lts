@@ -57,7 +57,7 @@
 @include bp(max-width, $bp-medium) {
 
     #header-nav {
-        padding: 5px 0;
+        _padding: 5px 0;
     }
 
 }
@@ -67,9 +67,9 @@
 @include bp(min-width, $bp-medium + 1) {
 
     #header-nav {
-        display: block;
-        position: relative;
-        padding-top: $global-category-top-padding;
+        _display: block;
+        _position: relative;
+        _padding-top: $global-category-top-padding;
     }
 
 }

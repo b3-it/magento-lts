@@ -161,14 +161,14 @@
         top: 45%;
         z-index: 9999;
 
-        img {
-            float: left;
-            padding-right: 20px;
+        #loading-spinner {
+            margin-right: 10px;
+            font-size: 2em;
         }
 
         #loading-msg {
             position: relative;
-            top: 10px;
+            top: -3px;
         }
     }
 }
