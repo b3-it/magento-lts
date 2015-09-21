@@ -782,10 +782,13 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				$taxKeys = array_merge($taxKeys, $tax);
 			}
 			unset($taxKeysByQuoteItemId[$item->getQuoteItemId()]);
-			if (!empty($href)) {
-				$href .= ';';
+			if(count($taxKeys)> 0)
+			{
+				if (!empty($href)) {
+					$href .= ';';
+				}
+				$href .= sprintf('STS=%s', implode(';', $taxKeys));
 			}
-			$href .= sprintf('STS=%s', implode(';', $taxKeys));
 			
 			/*
 			 * HIDDEN TAX AMOUNT ist der Steuerbetrag des Rabatts
