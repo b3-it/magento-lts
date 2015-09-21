@@ -14,7 +14,9 @@ $html = '';
 
 $children = $menuTree->getChildren();
 $parentLevel = $menuTree->getLevel();
-$childLevel = is_null($parentLevel) ? 0 : $parentLevel + 1;
+$childLevel = is_null($parentLevel) ? 1 : $parentLevel + 1;
+
+$show_all_link = FALSE;
 
 $counter = 1;
 $childrenCount = $children->count();
@@ -46,11 +48,15 @@ foreach ($children as $child) {
 
     if (!empty($_hasChildren)) {
         $html .= '<ul id="sub-' . $url_id . '" class="level'. $childLevel .'">';
-        $html .=     '<li class="level'. $nextChildLevel .' view-all">';
-        $html .=         '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
-        $html .=             $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
-        $html .=         '</a>';
-        $html .=     '</li>';
+
+        if ($show_all_link == TRUE) {
+            $html .=     '<li class="level'. $nextChildLevel .' view-all">';
+            $html .=         '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
+            $html .=             $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
+            $html .=         '</a>';
+            $html .=     '</li>';
+        }
+
         $html .=     $this->render($child, $childrenWrapClass);
         $html .= '</ul>';
     }
