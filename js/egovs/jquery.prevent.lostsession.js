@@ -5,14 +5,15 @@
             // Abfrage sichert die Klick-Navigation(en) gegen den Layer ab
             if ( ($j(this).parent().get(0).tagName != 'LI') &&
                  ($j(this).next().get(0).tagName != 'UL') &&
-                 ($j(this).next().get(0).id != 'header-cart') &&     // Link des Header-Warenkorb
-                 (!$j(this)[0].hasAttribute('data-target-element'))  // Link zum Benutzer-Menü
+                 ($j(this).next().get(0).id != 'header-cart') &&       // Link des Header-Warenkorb
+                 (!$j(this)[0].hasAttribute('data-target-element'))    // Link zum Benutzer-Menü
                ) {
                 $j('#loading-mask').toggle();
             }
         }
         else {
-            if ( !$j(this).hasClass('skip-link-close') ) {     // Schließen-Button im Header-Warenkorb
+            if ( !$j(this).hasClass('skip-link-close')          // Schließen-Button im Header-Warenkorb
+               ) {
                 $j('#loading-mask').toggle();
             }
         }
@@ -20,6 +21,9 @@
 
     // Loading-Layer beim Button auf Link sichtbar machen
     $j('button').click(function(){
-        $j('#loading-mask').toggle();
+        if ( !$j(this).hasClass('btn-cart')
+           ) {
+            $j('#loading-mask').toggle();
+        }
     });
 });

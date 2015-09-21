@@ -57,7 +57,6 @@
 @include bp(max-width, $bp-medium) {
 
     #header-nav {
-        _padding: 5px 0;
     }
 
 }
@@ -67,9 +66,6 @@
 @include bp(min-width, $bp-medium + 1) {
 
     #header-nav {
-        _display: block;
-        _position: relative;
-        _padding-top: $global-category-top-padding;
     }
 
 }
@@ -97,11 +93,14 @@
     border: $global-box-border solid $global-lightcolor;
     font-size: $global-category-fontsize;
 
+    ul {
+        list-style-type: none;
+    }
+
     .egov-catalog-title {
         a, a:hover {
-            cursor: text;
+            cursor: pointer;
             text-decoration: none;
-            background-image: none;
         }
     }
 
@@ -156,7 +155,6 @@
 
         // Hide all sub-menus
         li.level0 ul {
-            _display: none;
         }
 
         // Indent sub-menus
@@ -169,21 +167,21 @@
         }
 
         li.parent > a:after {
-            @include triangle(right, 5px, #ccc);
-            top: 50%;
-            left: 10px;
-            right: auto;
-            margin-top: -5px;
+    //        @include triangle(right, 5px, #ccc);
+    //        top: 50%;
+    //        left: 10px;
+    //        right: auto;
+    //        margin-top: -5px;
         }
 
         // Menu active states
         li.parent.sub-menu-active > a:after,
         li.parent.menu-active > a:after {
-            @include triangle(down, 5px, #ccc);
-            top: 50%;
-            left: 10px;
-            right: auto;
-            margin-top: -5px;
+    //        @include triangle(down, 5px, #ccc);
+    //        top: 50%;
+    //        left: 10px;
+    //        right: auto;
+    //        margin-top: -5px;
         }
 
         li.menu-active > a,
@@ -226,12 +224,12 @@
 
         /* Default styles for 1+ drop-down menus */
         li.level0 ul {
-            @include menu;
+            //@include menu;
             position: relative;
             left: $global-subcat-left;
             top: $global-subcat-top;
             z-index: 10;
-            width: $global-category-width;
+            width: auto;
             padding: $global-subcat-paddingtop $global-subcat-paddingright $global-subcat-paddingbottom $global-subcat-paddingleft;
             display: none; /* Hide until displayed. */
 
@@ -250,8 +248,6 @@
 
         /* Level 2+ */
         li.level1 ul {
-            left: 60px;
-            top: 15px;
         }
 
         /* Class for js to add briefly to evaluate element positioning. */
@@ -277,10 +273,10 @@
             position: relative;
 
             &:after {
-                @include triangle(right, 4px, #ccc);
-                right: 5px;
-                top: 50%;
-                margin-top: -3px;
+            //    @include triangle(right, 4px, #ccc);
+            //    right: 5px;
+            //    top: 50%;
+            //    margin-top: -3px;
             }
         }
     }

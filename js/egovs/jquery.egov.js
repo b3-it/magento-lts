@@ -39,12 +39,20 @@
                 e.preventDefault();
                 if( $j(this).parent().find(defaults.DOMElement).length > 0 ) {
                     toggleMenu( $j(this).next() );
+                    changeGrafic ( $j(this) );
+// Hier muß eine Klasse rein, welche den Pfeil nach unten dreht!
                     getStatus(from);
                 }
                 else {
                     openURL( $j(this).attr('href') );
                 }
             });
+        }
+
+        /*
+         *  Menü-Punk bekommt eine zusätzliche Klasse
+         */
+        changeGrafic = function(target) {
         }
 
         /*
