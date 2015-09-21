@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magento.com so we can send you a copy immediately.
+ * to license@magentocommerce.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
@@ -53,6 +53,18 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             return $this;
         }
 
+        
+
+        /**
+         * Filter all input data in frontend
+         */
+        Egovs_Base_Model_Security_Filter::start();
+        
+        if (isset($_SESSION)) {
+        	return $this;
+        }
+        
+        
         // getSessionSaveMethod has to return correct version of handler in any case
         $moduleName = $this->getSessionSaveMethod();
         switch ($moduleName) {
@@ -130,6 +142,27 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             session_cache_limiter((string)$sessionCacheLimiter);
         }
 
+        //egovs
+        //check if cookie is valid    
+        if(isset($_COOKIE[$sessionName]))
+        {
+	        $key = $_COOKIE[$sessionName];
+	        if((strlen($key) > 128) || (!preg_match('#^[0-9a-zA-Z,-]+$#', $key)))
+	        {
+	        	
+	        	$ip =  $_SERVER['REMOTE_ADDR'];
+	        	$msg = "Security Alert: Cookie: $_COOKIE[$sessionName] Ip:$ip";
+	        	Mage::log($msg, Zend_Log::ALERT, '');
+	        	session_unset();
+				$_SESSION = array();
+				$_COOKIE = array();
+				$this->getCookie()->delete($sessionName);
+				$this->regenerateSessionId();
+				
+	        }
+        }
+        
+        
         session_start();
 
         if (Mage::app()->getFrontController()->getRequest()->isSecure() && empty($cookieParams['secure'])) {
@@ -156,6 +189,28 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             }
         }
 
+        
+        if (!Mage::app()->getStore()->isAdmin() && //regenerate ID not at BE -> flashupload
+        		!$this->getControllerActionFlag('no_regenerate_id')
+        ) {
+        	if(isset($_SESSION['regenerate_time'])) {
+        		if (microtime(true) - $_SESSION['regenerate_time'] > 10.1 ) {
+        			$this->_revalidateCookie();
+        			$this->getCookie()->delete($sessionName);
+        			$this->regenerateSessionId();
+        		}
+        	} else {
+        		$this->getCookie()->delete($sessionName);
+        		$this->regenerateSessionId();
+        	}
+        	 
+        	$_SESSION['regenerate_time'] = microtime(true);
+        }
+        else {
+        	$this->_revalidateCookie();
+        }
+        
+        
         /**
         * Renew cookie expiration time if session id did not change
         */
@@ -199,6 +254,24 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         return Mage::getSingleton('core/cookie');
     }
 
+    protected function _revalidateCookie() {
+    	if (!$this->getCookie()->getLifetime()) {
+    		return $this;
+    	}
+    	 
+    	//201200201::Frank Rochlitzer
+    	//bei jedem Request das Cookieverfallsdatum erneuern
+    	if (!headers_sent()) {
+    		$name = $this->getSessionName();
+    		$value = $this->getSessionId();
+    		if ($value !== false) {
+    			$this->getCookie()->set($name, $value);
+    		}
+    	}
+    	 
+    	return $this;
+    }
+    
     /**
      * Revalidate cookie
      * @deprecated after 1.4 cookie renew moved to session start method
@@ -401,6 +474,8 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         else {
             if (!$this->_validate()) {
                 $this->getCookie()->delete(session_name());
+                $_SESSION = array();
+                session_destroy();
                 // throw core session exception
                 throw new Mage_Core_Model_Session_Exception('');
             }
@@ -489,7 +564,25 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
      */
     public function regenerateSessionId()
     {
+    	$this->setLastSessionId($this->getSessionId());
         session_regenerate_id(true);
         return $this;
     }
+    
+    
+    private function getControllerActionFlag($flag = 'no_regenerate_id')
+    {
+    	$cntr = Mage::app()->getFrontController();
+    	if ($cntr instanceof Mage_Core_Controller_Varien_Front) {
+    		/* @var $cntr Mage_Core_Controller_Varien_Front */
+    		$cntr = $cntr->getAction();
+    	}
+    	if (!$cntr) {
+    		$cntr = new Varien_Object();
+    	}
+    	
+    	return $cntr->getFlag('', $flag);
+    }
+    
+    
 }
