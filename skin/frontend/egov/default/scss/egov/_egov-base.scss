@@ -16,13 +16,13 @@
     }
 
     thead {
-        th:first-child {
+        .first th:first-child {
             border-radius: 3px 0px 0px 0px;
             border-left-width: 0px !important;
             border-left-style: none !important;
         }
 
-        th:last-child {
+        .first th:last-child {
             border-radius: 0px 3px 0px 0px;
             border-right-width: 0px !important;
             border-right-style: none !important;
@@ -97,6 +97,34 @@
     }
 }
 
+.egov-default-message {
+    border: $global-box-border solid $global-border-color;
+    padding: $golbal-msgpadding;
+    background-color: $global-box-title-backgroundcolor;
+}
+
+.egov-navigation-background {
+    *zoom: 1;
+    /* Für IE9/IE10 Filter entfernen */
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
+
+    background-image: url($global-category-image);
+    background-size: 100% auto;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));
+    background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: -o-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+}
+
+.egov-navigation-link {
+    width: 100%;
+    padding: 13px 25px 9px 13px;
+    background: $global-content-background url($global-category-arrow-right) $global-norepeat-scroll 95% 55%;
+    line-height: $global-category-lineheight;
+    text-shadow: $global-category-textshadow;
+}
+
 .egov-float-left {
     float: left !important;
 }
@@ -133,14 +161,14 @@
         top: 45%;
         z-index: 9999;
 
-        img {
-            float: left;
-            padding-right: 20px;
+        #loading-spinner {
+            margin-right: 10px;
+            font-size: 2em;
         }
 
         #loading-msg {
             position: relative;
-            top: 10px;
+            top: -3px;
         }
     }
 }

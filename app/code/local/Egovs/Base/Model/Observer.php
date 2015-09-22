@@ -12,7 +12,7 @@ class Egovs_Base_Model_Observer
         $html      = $transport->getHtml();
         $fileName  = $observer->getBlock()->getTemplateFile();
 
-        // Da im BE nichts ge�ndert werden soll, ist der Wert dann FALSE
+        // Da im BE nichts geändert werden soll, ist der Wert dann FALSE
         if ( (strpos($fileName, 'adminhtml') !== false) OR ($fileName == '') ) {
             return;
         }
@@ -29,7 +29,7 @@ class Egovs_Base_Model_Observer
                        'MIAS'   => 'Mehrwertsteuer-Informationsaustauschsystem',
                        //'' => '',
 
-                       // Allgemiene Abk�rzungen der Deutschen Bank
+                       // Allgemiene Abkürzungen der Deutschen Bank
                        //'ann.'       => 'annualisiert',
                        //'BaFin'      => 'Bundesanstalt f&uuml;r Finanzdienstleistungsaufsicht',
                        //'BDA'        => 'Bundesvereinigung der Arbeitgeberverb&auml;nde',

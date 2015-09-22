@@ -98,11 +98,40 @@
     }
 }
 
+.customer-account-edit {
+    .scaffold-form{
+        div.fieldset {
+            vertical-align: top;
+            display: inline-block;
+            float: none;
+
+            h2 {
+                width: 90% !important;
+                border-bottom-width: $global-box-border;
+                border-bottom-style: solid;
+                border-bottom-color: $global-border-color;
+            }
+        }
+
+        ul.form-list {
+            margin-bottom: $global-boxmargin;
+
+            input {
+                width: 90%;
+            }
+
+            input[type="checkbox"] {
+                width: auto;
+            }
+        }
+    }
+}
+
 .opc #opc-login p:not(.required) {
     font-style: italic;
-    font-family: $f-stack-serif;
-    font-size: $f-size-s;
-    color: $c-text-gray;
+    font-family: $base-font-family;
+    font-size: $global-fontsize-small;
+    color: $global-fontcolor-dark;
 }
 
 .remember-me-box {
@@ -170,6 +199,19 @@
  * ============================================ */
 body.customer-account {
 
+    .col2-left-layout {
+        .col-left {
+            top: 0px;
+
+            .block-compare {
+                margin-top: $global-boxmargin;
+            }
+        }
+        .col-left-first {
+            margin-top: -15px;
+        }
+    }
+
 
     .my-account {
         .dashboard {
@@ -223,6 +265,30 @@ body.customer-account {
         .fieldset {
             margin-top: $trim;
             margin-bottom: $trim;
+        }
+
+        #wishlist-view-form {
+            .fieldset {
+                margin-top: 0px;
+            }
+        }
+
+        .billing-agreements > p, #recurring-profiles-empty,
+        #review-list-empty, #customer-tag-list-empty,
+        #customer-token-list-empty, #customer-download-list-empty {
+            @extend .egov-default-message;
+        }
+
+        #my-downloadable-products-table {
+            @extend .egov-base-table;
+
+            th, td {
+                padding: $global-tdpadding $global-tdpadding !important;
+            }
+
+            tbody td:nth-child(3) {
+                text-align: left !important;
+            }
         }
     }
 
@@ -555,6 +621,15 @@ body.customer-account {
 #my-orders-table {
     @extend .egov-base-table;
 
+    thead th, tbody td {
+        text-align: left !important;
+        padding: $global-tdpadding;
+    }
+
+    td.last {
+        padding: 0px;
+    }
+
     .option-label {
         margin-left: $box-spacing;
         font-weight: 600;
@@ -876,7 +951,6 @@ body.newsletter-manage-index .my-account {
     }
 
     .form-list {
-        border-top: 1px solid $c-fieldset-border-light;
-        padding-top: $gap;
+        padding-top: $golbal-msgpadding;
     }
 }

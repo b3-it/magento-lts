@@ -17,8 +17,10 @@ app/etc/modules/Magento_Debug.xml
 
 # Media-Content
 media/catalog/product
-media/tmp
 media/catalog/product
+media/downloadable
+media/egovs_productfile
+media/tmp
 
 # Working-Data
 var/backups
@@ -34,5 +36,6 @@ var/resource_config.json
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
+
 /app/etc_dwd
 /app/etc_stala

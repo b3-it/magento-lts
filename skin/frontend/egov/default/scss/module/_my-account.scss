@@ -39,6 +39,29 @@
         }
     }
 
+    .my-wishlist {
+        .fieldset {
+            width: 100%;
+
+            .wishlist-empty {
+                border: $global-box-border solid $global-border-color;
+                padding: $golbal-msgpadding;
+                background-color: $global-box-title-backgroundcolor;
+            }
+        }
+    }
+
+    #customer-tag-list {
+        margin: $global-boxmargin 0px;
+    }
+
+    .buttons-set {
+        a {
+            @extend .button;
+            padding: $global-btn-padding-v $global-btn-padding-h;
+        }
+    }
+
     .addresses-list {
         font-family: $base-font-family;
     }
@@ -146,22 +169,14 @@
     }
 }
 
-.block-account {
-    border: 1px solid $global-lightcolor;
+#customer-account-menu {
+    box-shadow: 0 1px 2px 1px $global-text-shadow;
+    border: $global-box-border solid $global-lightcolor;
     border-radius: 4px 4px 0 0;
-    margin-bottom: 15px;
+    margin-bottom: $global-boxmargin;
 
     .account-block-title {
-        *zoom: 1;
-        filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
-        /* Für IE9/IE10 Filter entfernen */
-        background-image: url($global-category-image);
-        background-size: 100% auto;
-        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));
-        background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-        background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-        background-image: -o-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-        background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+        @extend .egov-navigation-background;
 
         background-color: $global-category-item-color;
 
@@ -169,53 +184,47 @@
         padding: 0px;
         cursor: pointer;
 
-        span {
+        > a {
+            @extend .egov-navigation-link;
+
             color: $global-category-font-color;
             font-family: $base-font-family;
             font-size: $global-category-fontsize;
             display: inline-block;
-            width: 100%;
-            padding: 13px 25px 9px 13px;
-            background: $global-content-background url($global-category-arrow-right) $global-norepeat-scroll 95% 55%;
-            line-height: $global-category-lineheight;
-            text-shadow: $global-category-textshadow;
         }
     }
 
-    .block-content {
+    ul {
         margin: 0px;
         padding: 0px;
+        border: 1px solid $global-lightcolor;
 
-        ul {
-            border: 1px solid $global-lightcolor;
+        li {
+            background: $global-wrapper-color $global-repeat-scroll;
+            border-top: 1px solid $global-subcat-bordercolor;
+            padding: 0 0 0 14px;
+            margin: 0px;
 
-            li {
-                background: $global-wrapper-color $global-repeat-scroll;
-                border-top: 1px solid $global-subcat-bordercolor;
-                padding: 0 0 0 14px;
-                margin: 0px;
+            strong, a:hover, a:active {
+                color: $global-linkcolor-active;
+            }
 
-                strong, a:hover, a:active {
-                    color: $global-linkcolor-active;
-                }
-
-                a {
-                    padding: 10px 12px 10px 14px;
-                    display: block;
-                }
+            a {
+                padding: 10px 12px 10px 14px;
+                display: block;
             }
         }
     }
 }
 
 .block-cart {
-    margin-top: 20px;
+    margin-bottom: $global-boxmargin;
 }
 
 .addresses-primary,
 .addresses-additional {
     .box {
-        margin-bottom: 20px;
+        margin-bottom: $global-boxmargin;
 
         h3 {
             font-size: $global-h3-size;
@@ -227,8 +236,16 @@
 .wishlist-index-index,
 .customer-account-index {
     .col2-left-layout {
+        top: -35px;
+
         .col-left {
             top: -15px;
         }
+    }
+}
+
+.wishlist-index-index {
+    .col2-left-layout {
+        left: -8px;
     }
 }

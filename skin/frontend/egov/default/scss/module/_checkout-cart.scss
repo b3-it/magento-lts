@@ -11,6 +11,14 @@
 
 .cart-table {
     width: 100%;
+
+    thead th, tbody td {
+        padding: $global-tdpadding;
+    }
+
+    td.last {
+        padding: 0px;
+    }
 }
 
 .cart .button {
@@ -30,9 +38,7 @@
 .cart-forms .discount,
 .cart-forms .giftcard,
 .cart-forms .shipping {
-    padding: $box-spacing;
-    background-color: $global-checkout-total-background;
-    border: 1px solid $global-checkout-total-border;
+    @extend .egov-default-message
 }
 
 .cart-table,
@@ -44,6 +50,18 @@
 }
 
 .checkout-cart-index {
+    .main {
+        left: -8px;
+    }
+
+    .cart-empty {
+        @extend .egov-default-message;
+
+        p:first-of-type {
+            margin-bottom: $global-listmargin;
+        }
+    }
+
     #postcode {
     }
 
@@ -248,20 +266,27 @@
         margin-left:0px;
         margin-right:10px;
     }
+
+    .product-cart-info {
+        .item-options{
+            font-size: $global-fontsize-small;
+        }
+    }
 }
 
 .cart-table {
     @extend .egov-base-table;
 
     h2 {
-        color: $c-h2;
-        font-size: $f-size;
+        color: $global-h2-color;
+        font-size: $global-fontsize;
         font-weight: 600;
         margin-bottom: 0;
     }
 
     .product-cart-info {
-        padding-left: 5px;
+        padding-left: $global-tdpadding;
+        text-align: left !important;
     }
 
     tr {
@@ -273,7 +298,7 @@
         }
 
         td {
-            padding-top: 5px;
+            padding-top: $global-tdpadding !important;
         }
 
         tr > td:after {

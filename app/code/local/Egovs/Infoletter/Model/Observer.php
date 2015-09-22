@@ -27,7 +27,7 @@ class Egovs_Infoletter_Model_Observer extends Mage_Core_Model_Abstract
 			{
 				$mblock = $observer->getMassactionBlock();
 				$mblock->addItem('infoletter_queue', array(
-						'label'=> Mage::helper('infoletter')->__('Subscribe to Queue'),
+						'label'=> Mage::helper('infoletter')->__('Add to Infoletter'),
 						'url'  => $url,
 						'additional' => array(
 								'visibility' => array(
@@ -58,7 +58,7 @@ class Egovs_Infoletter_Model_Observer extends Mage_Core_Model_Abstract
 		
 				$mblock = $observer->getMassactionBlock();
 				$mblock->addItem('infoletter_queue', array(
-						'label'=> Mage::helper('infoletter')->__('Subscribe to Queue'),
+						'label'=> Mage::helper('infoletter')->__('Add to Infoletter'),
 						'url'  => $url,
 						'additional' => array(
 								'visibility' => array(
@@ -86,7 +86,7 @@ class Egovs_Infoletter_Model_Observer extends Mage_Core_Model_Abstract
 		
 				$mblock = $observer->getMassactionBlock();
 				$mblock->addItem('infoletter_queue', array(
-						'label'=> Mage::helper('infoletter')->__('Subscribe to Queue'),
+						'label'=> Mage::helper('infoletter')->__('Add to Infoletter'),
 						'url'  => $url,
 						'additional' => array(
 								'visibility' => array(

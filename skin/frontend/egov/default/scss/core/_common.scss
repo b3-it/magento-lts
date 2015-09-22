@@ -116,32 +116,42 @@ h6, .h6 { @include h6; }
 }
 
 .availability {
+    font-size: $global-fontsize-big;
     margin-bottom: 0;
-    font-size: $f-size-s;
-    text-transform: uppercase;
-}
 
-.availability .label {
-    display: none;
-}
+    .label {
+         font-size: $global-fontsize;
+    }
 
-.availability.in-stock {
-    color: $c-success;
-}
+    .in-stock {
+        color: $global-instock-color;
+    }
 
-.availability.available-soon,
-.availability.out-of-stock {
-    color: $c-danger;
+    .available-soon, .out-of-stock {
+        color: $global-available-color;
+    }
 }
 
 .availability-only {
-    color: $c-danger;
-    margin-bottom: $box-spacing;
+    color: $global-available-color;
+    margin-bottom: $global-boxmargin;
+}
+
+p.note-msg {
+    display: block;
+    border-width: $global-box-border;
+    border-style: solid;
+    border-color: $global-border-color;
+    padding: $golbal-msgpadding;
+    background-color: $global-border-color-light;
 }
 
 /* -------------------------------------------- *
  * Page Titles
  */
+.col3-layout .page-title {
+	width: $global-maincol-title-percent;
+}
 
 .page-title h1,
 .page-title h2,
@@ -152,7 +162,7 @@ h6, .h6 { @include h6; }
 
 .page-title h1,
 .page-title h2 {
-    border-bottom: 1px solid $global-linkcolor;
+    border-bottom: $global-box-border solid $global-linkcolor;
 }
 
 /* -------------------------------------------- *
@@ -286,7 +296,7 @@ body:not(.customer-account) .block:first-child .block-title {
                 margin-bottom: 0;
 
                 > strong {
-                    @include accordionDtBase('right', $c-module-border);
+                    @include accordionDtBase('right', $global-border-color);
                     display: block;
                     width: 100%;
                     cursor: pointer;
@@ -295,7 +305,7 @@ body:not(.customer-account) .block:first-child .block-title {
 
                 &.active {
                     > strong {
-                        @include accordionDtBase('down', $c-module-border);
+                        @include accordionDtBase('down', $global-border-color);
                     }
                 }
             }
@@ -303,15 +313,15 @@ body:not(.customer-account) .block:first-child .block-title {
             .block-content {
                 padding: $box-spacing;
                 margin-top: 0;
-                border-width: 0 1px;
+                border-width: 0 $global-box-border;
                 border-style: solid;
-                border-color: $c-module-border;
+                border-color: $global-border-color;
             }
         }
         // This selector is highly fickle, because if a div gets added beneath the last normal block in a sidebar,
         // it will break. However it is the simplest solution to applying this trivial style.
         .block:last-of-type {
-            border-bottom: 1px solid $c-module-border;
+            border-bottom: $global-box-border solid $global-border-color;
         }
     }
 }
@@ -381,14 +391,14 @@ div.block-reorder {
 
         strong {
             font-weight: 400;
-            color: $c-action;
+            color: $global-linkcolor;
         }
 
         a {
-            color: $c-text;
+            color: $global-fontcolor-dark;
 
             &:hover {
-                color: $c-action;
+                color: $global-linkcolor;
             }
         }
     }
@@ -428,9 +438,9 @@ div.block-reorder {
     background-color: $global-button-color;
     background-image: -moz-linear-gradient(center top , $global-button-gradient-1, $global-button-gradient-2, $global-button-color 100%);
     background-size: 100% auto;
-    border: 1px solid $global-border-color;
+    border: $global-box-border solid $global-border-color;
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: $global-btn-padding-v $global-btn-padding-h;
 
     &:hover {
         background: $global-button-hovercolor $global-repeat-scroll;
@@ -448,7 +458,7 @@ div.block-reorder {
 a.button {
     color: $global-fontcolor-dark;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: $global-btn-padding-v $global-btn-padding-h;
 }
 
 a.button:hover {
@@ -655,6 +665,7 @@ a.button:hover {
     left: $global-welcome-left;
     top: -10px;
     color: $global-fontcolor-light;
+    width: 70%;
 }
 
 .breadcrumbs li {
@@ -699,7 +710,7 @@ a.button:hover {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 1px solid $c-module-border-light;
+    border: $global-box-border solid $global-border-color;
     text-align: center;
     /* Hide text */
     font: 0/0 a;
@@ -708,24 +719,24 @@ a.button:hover {
     position: relative;
 
     &:hover {
-        background-color: $c-action;
-        border-color: $c-action;
+        background-color: $global-button-color;
+        border-color: $global-border-color;
     }
 }
 
 .btn-remove {
     &:after {
         content: 'X';
-        color: $c-action;
+        color: $global-linkcolor;
         height: 20px;
         line-height: 20px;
         width: 100%;
         font-size: 10px;
-        font-family: Arial, $f-stack-sans;
+        font-family: $base-font-family;
         font-weight: bold;
     }
     &:hover:after {
-        color: #FFFFFF;
+        color: $global-linkcolor;
         text-decoration: none;
     }
 }
@@ -909,12 +920,16 @@ a.button:hover {
             }
         }
     }
+
+    p.note-msg {
+        width: 100%;
+    }
 }
 
 .col2-left-layout {
     .main {
         position: relative;
-        top: 20px;
+        top: 5px;
     }
 
     .col-left {
@@ -935,6 +950,10 @@ a.button:hover {
         padding-left: $global-content-leftpadding-percent;
         padding-top: $global-content-paddingtop;
         padding-right: $global-rightcol-rightmargin-percent;
+    }
+
+    p.note-msg {
+        width: $global-content-2col-left-percent;
     }
 }
 
@@ -961,6 +980,10 @@ a.button:hover {
         .std {
             width: $global-content-2col-right-percent;
         }
+    }
+
+    p.note-msg {
+        width: 100%;
     }
 }
 
@@ -999,6 +1022,11 @@ a.button:hover {
             margin-right: $global-rightcol-rightmargin-percent;
             padding: 0px;
             margin-top: $global-rightcol-margintop;
+            /*margin-top: 16px;*/
+        }
+
+        p.note-msg {
+            width: $global-content-3col-percent;
         }
     }
 }
@@ -1350,13 +1378,14 @@ a.button:hover {
 }
 
 .price-box .price {
-    color: $global-fontcolor-dark;
+    color: $global-price-normal-color;
     font-size: $global-fontsize;
 }
 
 .price-box .price,
 .price {
     font-family: $base-font-family;
+    color: $global-price-normal-color;
 }
 
 .price-box .price-label {
@@ -1400,11 +1429,11 @@ a.button:hover {
 }
 
 .price-box .special-price {
-    color: $global-footer-fontcolor;
+    color: $global-price-special-color;
     padding-left: 1em;
 
     .price-label {
-        color: #D84D3C;
+        color: $global-price-special-color;
     }
 }
 
@@ -1431,11 +1460,11 @@ span.weee {
     display: inline-block;
     padding: 4px 8px;
     background: #FBF4DE;
-    border: 1px solid #E2D4C7;
-    margin-top: $element-spacing;
+    border: $global-box-border solid $global-border-color;
+    margin-top: $global-boxmargin;
 
     li {
-        font-size: $f-size-xs;
+        font-size: $global-fontsize-small;
     }
     .benefit {
         font-style: italic;
@@ -1828,25 +1857,24 @@ $toolbar-icon-padding-offset: 8px;
 .pages .current {
     display: inline-block;
     border: 0;
-    font-size: $f-size-s;
+    font-size: $global-fontsize-big;
     text-align: center;
-    text-transform: uppercase;
     vertical-align: middle;
     white-space: nowrap;
     line-height: 30px;
     width: 25px;
     height: 30px;
     padding: 0;
-    color: $c-action;
-    font-family: $f-stack-sans;
+    color: $global-linkcolor;
+    font-family: $base-font-family;
 }
 
 .pages .current,
 .pages .current:hover {
-    color: $c-text;
-    border: 1px solid $c-module-border;
+    color: $global-linkcolor-hover;
+    border: 1px solid $global-border-color;
     width: 30px;
-    background-color: #FFFFFF;
+    background-color: $global-wrapper-color;
     cursor: default;
 }
 
@@ -1860,33 +1888,33 @@ $toolbar-icon-padding-offset: 8px;
     position: relative;
 
     &:hover {
-        border: 1px solid $c-action;
+        border: 1px solid $global-linkcolor;
     }
 }
 
 .pages .next {
     &:before {
-        @include triangle(right, 4px, $c-action);
+        @include triangle(right, 4px, $global-linkcolor);
         top: 50%;
         margin-top: -3px;
         left: 50%;
         margin-left: -2px;
     }
     &:hover:before {
-        @include triangle(right, 4px, $c-stimulus);
+        @include triangle(right, 4px, $global-linkcolor);
     }
 }
 
 .pages .previous {
     &:before {
-        @include triangle(left, 4px, $c-action);
+        @include triangle(left, 4px, $global-linkcolor);
         top: 50%;
         margin-top: -3px;
         left: 50%;
         margin-left: -2px;
     }
     &:hover:before {
-        @include triangle(left, 4px, $c-stimulus);
+        @include triangle(left, 4px, $global-linkcolor);
     }
 }
 

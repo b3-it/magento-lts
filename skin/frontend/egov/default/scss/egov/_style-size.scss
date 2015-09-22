@@ -20,6 +20,9 @@ $global-boxmargin: 20px;
 $global-boxpadding: 5px;
 $global-tdpadding: 5px;
 $global-listmargin: 15px;
+$golbal-msgpadding: 20px;
+$global-btn-padding-h: 10px;
+$global-btn-padding-v: 5px;
 
 $global-logo-width: 225px;
 $global-logo-height: 35px;
@@ -41,6 +44,8 @@ $global-h1-top: 10px;
 $global-box-border: 1px;
 $global-box-border-bottom: 3px;
 
+$global-minicart-lineheight: 2em;
+
 $global-checkout-borderwidth: 1px;
 $global-checkout-marginright: 25px;
 $global-checkout-button-margin: 30px;
@@ -54,8 +59,8 @@ $global-checkout-op-number: 26px;
 $global-header-height: 200px;
 
 $global-welcome-header: 70px;
-$global-welcome-left: 281px;
-$global-welcome-top: 20px;
+$global-welcome-left: 280px;
+$global-welcome-top: 70px;
 
 $global-message-margintop: 20px;
 $global-message-marginbottom: 20px;
@@ -70,7 +75,7 @@ $global-content-marginright : 32px;
 $global-rightcol-marginright: 26px;
 $global-rightcol-width      : 230px;
 
-$global-rightcol-margintop : 32px;
+$global-rightcol-margintop : 62px;
 $global-content-paddingtop : 20px;
 
 // Berechnung aller Breiten in Prozent
@@ -104,10 +109,17 @@ $global-content-2col-left-percent : 100 - $global-left-col-percent;
 $global-content-2col-right-percent: 100 - $global-right-col-percent;
 $global-content-3col-percent      : 100 - $global-right-3col-percent;
 
+// Breite Maincol (std + col right)
+$global-maincol-width-fixed   : $global-fullpage-width - $global-left-col-fixed;
+$global-maincol-width-percent : 100 - $global-left-col-percent;
+$global-maincol-title-fixed : $global-maincol-width-fixed - $global-rightcol-marginright;
+$global-maincol-title-percent : percentage( $global-maincol-title-fixed / $global-maincol-width-fixed);
+
 $blobal-blockcontent-marginleft  : 5px;
 $blobal-blockcontent-marginright : 5px;
 $blobal-blockcontent-margintop   : 5px;
 $blobal-blockcontent-marginbottom: 5px;
+
 
 $global-footer-lineheight: 2em;
 $global-footer-fontsize: 1em;
@@ -118,7 +130,7 @@ $global-footer-linkswidth: 53em;
 
 $global-min-width: 60em;
 
-$global-content-top-position: -50px;
+$global-content-top-position: -35px;
 $global-content-top-padding: 1em;
 $global-content-bottom-padding: 60px;
 $global-content-bottom-bordersize: 1px;
@@ -138,3 +150,10 @@ $global-subcat-paddingtop: 0px;
 $global-subcat-paddingbottom: 0px;
 $global-subcat-paddingleft: 0px;
 $global-subcat-paddingright: 0px;
+
+$global-product-spacing: 20px;
+$global-product-grid-action-height: 85px;
+$global-product-list-imagesize: 25%;
+$global-product-list-desc_height: 63%;
+$global-product-list-button-width: 45%;
+$global-product-list-price-width: 48%;

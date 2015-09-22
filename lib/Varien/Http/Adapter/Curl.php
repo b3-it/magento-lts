@@ -91,6 +91,21 @@ class Varien_Http_Adapter_Curl implements Zend_Http_Client_Adapter_Interface
                 curl_setopt($this->_getResource(), $this->_allowedParams[$param], $this->_config[$param]);
             }
         }
+        
+        $proxyUserPass = '';
+        if (isset($this->_config['proxy_user'])) {
+        	$proxyUserPass = $this->_config['proxy_user'].':';
+        }
+        if (isset($this->_config['proxy_pass'])) {
+        	if (empty($proxyUserPass)) {
+        		$proxyUserPass = ':';
+        	}
+        	$proxyUserPass .= $this->_config['proxy_pass'];
+        }
+        if (!empty($proxyUserPass)) {
+        	curl_setopt ($this->_getResource(), CURLOPT_PROXYUSERPWD, $proxyUserPass);
+        }
+        
         return $this;
     }
 

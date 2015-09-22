@@ -7,6 +7,7 @@
     </adminhtml_infoletter_queue_index>
     
     <adminhtml_infoletter_queue_edit>
+    	<update handle="editor"/>
         <reference name="head">
          <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
             <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>

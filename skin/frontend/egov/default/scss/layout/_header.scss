@@ -30,6 +30,7 @@
         max-width: $global-fullpage-width;
         min-width: $global-min-width;
         position: relative;
+        left: -8px;
         margin: 0px auto;
     }
 
@@ -41,25 +42,19 @@
 
     .welcome-header {
         height: $global-welcome-header;
+        width: 50%;
+        position: absolute;
+        top: $global-welcome-top;
+        left: $global-welcome-left;
 
         h1 {
             color: $global-fontcolor-light;
     	  }
 
         .welcome-msg {
-            position: relative;
-            left: $global-welcome-left;
-            top: $global-welcome-top;
-            width: 50%;
             z-index: 99;
             color: $global-fontcolor-light;
-        }
-
-        .header-position {
-            position: relative;
-            left: $global-h1-left;
-            top: $global-h1-top;
-            width: 50%;
+            margin-top: 15px;
         }
     }
 }
@@ -69,15 +64,8 @@
  * ============================================ */
 
 .header-language-background {
-    float: left;
-    position: absolute;
-
-    padding: $gap;
-    background-color: $c-action;
-    text-transform: uppercase;
 
     .header-language-container {
-        max-width: $max-content-width;
         margin-left: auto;
         margin-right: auto;
     }
@@ -99,8 +87,9 @@
 
 .page-header-container .store-language-container {
     float: right;
-    max-width: 35%;
-    padding: 13px 15px 10px 10px;
+    position: relative;
+    right: -3px;
+    top: 20px;
 
     label {
         display: none;

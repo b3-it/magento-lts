@@ -17,52 +17,78 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
       $form = new Varien_Data_Form();
       $this->setForm($form);
       $fieldset = $form->addFieldset('queue_form', array('legend'=>Mage::helper('infoletter')->__('Queue information')));
-     
+      $model = Mage::registry('queue_data') ;
+      
+      $readonly = $model->getStatus() != Egovs_Infoletter_Model_Status::STATUS_NEW;
+      
       $fieldset->addField('title', 'text', array(
           'label'     => Mage::helper('infoletter')->__('Name'),
           'class'     => 'required-entry',
-          'required'  => true,
+          'required'  => !$readonly,
           'name'      => 'title',
+      	  //'readonly' => $readonly,
+      	  'disabled' => $readonly,
       ));
       
       $fieldset->addField('sender_name', 'text', array(
       		'label'     => Mage::helper('infoletter')->__('Sender Name'),
       		'class'     => 'required-entry',
-      		'required'  => true,
+      		'required'  => !$readonly,
       		'name'      => 'sender_name',
+      		//'readonly' => $readonly,
+      		'disabled' => $readonly,
       ));
       
       $fieldset->addField('sender_email', 'text', array(
       		'label'     => Mage::helper('infoletter')->__('Sender Email'),
       		'class'     => 'required-entry',
-      		'required'  => true,
+      		'required'  => !$readonly,
       		'name'      => 'sender_email',
+      		//'readonly' => $readonly,
+      		'disabled' => $readonly,
       ));
       
       $fieldset->addField('message_subject', 'text', array(
       		'label'     => Mage::helper('infoletter')->__('Subject'),
       		'class'     => 'required-entry',
-      		'required'  => true,
+      		'required'  => !$readonly,
       		'name'      => 'message_subject',
+      		'//readonly' => $readonly,
+      		'disabled' => $readonly,
       ));
-
+      
+      $value = Mage::getModel('core/store')->getCollection()->toOptionArray();
+      $value[] = array('value'=>0,'label'=>Mage::helper('infoletter')->__('All'));
+      $stores = new Varien_Object(array('values' => $value));
+      Mage::dispatchEvent('egovs_adminhtlm_block_stores_load', array('stores' => $stores));
+      $value = $stores->getValues();
+      $fieldset->addField('store_id', 'select', array(
+      		'label'     => Mage::helper('infoletter')->__('Store'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		//'readonly' => $readonly,
+      		'disabled' => $readonly,
+      		'name'      => 'store_id',
+      		'values'	 => $value,
+      ));
       
  		
       $fieldset->addField('status', 'select', array(
           'label'     => Mage::helper('infoletter')->__('Status'),
           'name'      => 'status',
           'values'    => Egovs_Infoletter_Model_Status::getAllOptions(),
+      	  'readonly' => true,
       	  'disabled' => true,
-      	  'class'	=> 'readonly' 	
       ));
      
-      $model = Mage::registry('queue_data') ;
+      
       
       
       $widgetFilters = array('is_email_compatible' => 1);
       $wysiwygConfig = Mage::getSingleton('cms/wysiwyg_config')->getConfig(array('widget_filters' => $widgetFilters));
      
       $wysiwygConfig->setEnabled(true);
+
       $wysiwygConfig->setAddWidgets(false);
       $wysiwygConfig->setAddVariables(true);
       $wysiwygConfig->setAddImages(false);
@@ -71,24 +97,28 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
       		'name'      => 'message_body',
       		'label'     => Mage::helper('infoletter')->__('Message Body Html'),
       		'title'     => Mage::helper('infoletter')->__('Message Body Html'),
-      		'required'  => true,
+      		'required'  => !$readonly,
       		'state'     => 'html',
       		'style'     => 'height:36em;',
       		'value'     => $model->getMessageBody(),
       		'config'    => $wysiwygConfig,
       		//'use_container' =>false,
+      		//'readonly' => $readonly,
+      		'disabled' => $readonly,
       ));
       
       $fieldset->addField('message_body_plain', 'editor', array(
       		'name'      => 'message_body_plain',
       		'label'     => Mage::helper('infoletter')->__('Message Body Plain'),
       		'title'     => Mage::helper('infoletter')->__('Message Body Plain'),
-      		'required'  => true,
+      		//'required'  => true,
       		//'state'     => 'html',
       		'style'     => 'height:36em;',
       		'value'     => $model->getMessageBodyPlain(),
       		//'config'    => $wysiwygConfig,
       		//'use_container' =>false,
+      		//'readonly' => $readonly,
+      		'disabled' => $readonly,
       ));
       
      

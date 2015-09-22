@@ -6,11 +6,6 @@
 //
 
 
-.category-products, .category-title {
-    width: $global-content-3col-percent;
-    float: left;
-}
-
 .category-products {
     position: relative;
     top: -18px;
@@ -23,24 +18,41 @@
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
+.col1-layout {
+    .category-products, .category-title, .product-view {
+        width: $global-content-1col-percent;
+	  }
+}
+
 .col2-left-layout {
-	.category-products, .category-title {
-		width: $global-content-2col-left-width;
-	}
+    .category-products, .category-title, .product-view {
+        width: 100%;
+	  }
 }
 
 .col2-right-layout {
-	.category-products, .category-title {
-		width: $global-content-2col-right-width;
-	}
+    .category-products, .category-title, .product-view {
+        width: $global-content-2col-right-width;
+	  }
 }
 
 .col3-layout {
+	.category-products, .product-view {
+        width: $global-content-3col-percent;
+    }
+    .product-name {
+    	width: $global-maincol-title-percent;
+	}
+
     .product-view {
-        width: $global-content-width;
+    	margin-top: 50px;
+        .tab-content {
+            .std {
+                width: 100%;
+            }
+        }
     }
 }
-
 
 .product-view {
 
@@ -80,11 +92,12 @@
     }
 
     .product-name {
+        border-bottom: $global-box-border solid $global-linkcolor;
         margin-bottom: 10px;
 
         .h1 {
             color: $global-h1-color;
-            border: 0;
+            border: 0px;
         }
     }
 
@@ -137,10 +150,6 @@
             margin-bottom: 8px;
         }
 
-        .availability {
-            font-size: $f-size-xl;
-        }
-
         .price-box {
             margin-top: 0;
 
@@ -154,7 +163,7 @@
             .regular-price .price,
             .special-price .price,
             .full-product-price .price {
-                color: $global-linkcolor;
+                color: $global-price-normal-color;
                 font-size: 24px;
             }
 
@@ -184,7 +193,9 @@
                 }
 
                 .price {
-                    font-size: 20px;
+                    color: $global-price-normal-color;
+                    font-size: $global-fontsize-big;
+                    font-weight: bold;
                 }
             }
 
@@ -202,7 +213,6 @@
     }
 
     .add-to-cart-wrapper {
-        clear: right;
     }
 
     .block-related {
@@ -220,11 +230,11 @@
                 .price-excluding-tax,
                 .price-including-tax {
                     .label {
-                        font-size: $f-size-l;
+                        font-size: $global-fontsize;
                     }
 
                     .price {
-                        font-size: $f-size-xxl;
+                        font-size: $global-fontsize-big;
                     }
                 }
             }
@@ -237,7 +247,6 @@
         .add-to-cart-wrapper {
             float: none;
             width: 100%;
-            clear: both;
         }
 
         .product-shop {
@@ -245,11 +254,11 @@
                 .price-excluding-tax,
                 .price-including-tax {
                     .label {
-                        font-size: $f-size-xl;
+                        font-size: $global-fontsize;
                     }
 
                     .price {
-                        font-size: 20px;
+                        font-size: $global-fontsize-big;
                     }
                 }
             }
@@ -340,7 +349,7 @@
 
 .no-touch .product-image-thumbs {
     a:hover {
-        border-color: darken($c-module-border-light, 15%);
+        border-color: darken($global-border-color-light, 15%);
     }
 }
 
@@ -373,6 +382,8 @@
         padding-bottom: 3px;
         margin-bottom: 10px;
         border-bottom: 1px solid $global-border-color;
+        display: inline-block;
+        width: 100%;
     }
 
     .add-to-cart-buttons {
@@ -489,10 +500,9 @@
 }
 
 .product-view .add-to-links {
-    clear: both;
-    margin-top: 0px;
-    margin-right: 15px;
-    float: left;
+//    clear: both;
+    margin: 0px;
+    display: inline-block;
 
     &:after {
         @include clearfix;
@@ -505,7 +515,7 @@
     a {
         padding: 2px 7px 2px 0px;
         margin-left: 7px;
-        border-right: 1px solid $c-module-border;
+        border-right: $global-box-border solid $global-border-color;
     }
 
     li:first-child a {
@@ -641,12 +651,21 @@
 }
 
 #product-attribute-specs-table {
-    max-width: $max-std-formatted-width;
-    border: 1px solid $global-border-color;
+    width: 100%;
+    empty-cells: show;
+    border-collapse: collapse;
+    border-spacing: 0px;
+
+    th, td {
+        border-width: $global-box-border;
+        border-style: solid;
+        border-color: $global-border-color;
+        padding: 5px;
+        white-space: nowrap;
+    }
 
     th {
-        border-right: 1px solid $global-border-color;
-        border-bottom: 1px solid $global-border-color;
+        background-color: $global-lightcolor;
     }
 }
 
@@ -655,10 +674,10 @@
  */
 
 .grouped-items-table-wrapper {
-    border: solid 1px $global-border-color;
+    border: $global-box-border solid $global-border-color;
     width: 100%;
     padding: $box-spacing;
-    margin-bottom: 15px;
+    margin-bottom: $global-boxmargin;
 
     tbody tr:last-child td {
         border-bottom: none;
@@ -670,8 +689,8 @@
 
 .grouped-items-table {
     .name-wrapper {
-        color: $c-text-primary;
-        font-family: $f-stack-special;
+        color: $global-fontcolor-dark;
+        font-family: $base-font-family;
     }
 
     .qty-wrapper {
@@ -704,7 +723,7 @@
     width: 100%;
     margin: 10px 0 0;
     padding: 10px 15px 15px;
-    border: 1px solid $c-fieldset-border;
+    border: $global-box-border solid $global-border-color;
     clear: both;
     position: relative;
 }
@@ -753,7 +772,7 @@
 .product-options dd {
     padding: 0 0 10px 0;
     margin: 0 0 5px;
-    border-bottom: 1px solid $c-fieldset-border-light;
+    border-bottom: $global-box-border solid $global-border-color;
 }
 
 .product-options dl.last dd.last {
@@ -819,13 +838,13 @@
 
 .product-options p.note {
     margin: 0;
-    font-size: $f-size-xxs;
+    font-size: $global-fontsize-small;
 }
 
 .product-options-bottom {
     background-color: $c-module-background;
     padding: 15px 20px;
-    border: 1px solid $c-fieldset-border;
+    border: $global-box-border solid $global-border-color;
     border-top: 0;
     margin-bottom: $box-spacing;
 }
@@ -849,7 +868,7 @@
         text-align: right;
         padding-bottom: $gap / 2;
         margin-bottom: $gap;
-        border-bottom: 1px solid $c-fieldset-border;
+        border-bottom: $global-box-border solid $global-border-color;
     }
 }
 
@@ -860,7 +879,7 @@
 
 .product-options-bottom .tier-prices .price,
 .product-options-bottom .tier-prices .benefit {
-    color: $c-text;
+    color: $global-price-normal-color;
 }
 
 /* "display: none" should be removed if products on site have a long list of product options and those product options */
@@ -939,9 +958,9 @@
 
             &:first-child {
                 margin-left: 0;
-                font-size: $f-size-xl;
-                padding-right: 5px;
-                padding-left: 5px;
+                font-size: $global-fontsize-big;
+                padding-right: $global-boxpadding;
+                padding-left: $global-boxpadding;
             }
         }
         &:after {

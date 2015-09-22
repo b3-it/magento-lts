@@ -87,35 +87,18 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					/* Starting upload */
-					$uploader = new Varien_File_Uploader('filename');
-
-					// Any extention would work
-	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-					$uploader->setAllowRenameFiles(false);
-
-					// Set the file upload mode
-					// false -> get the file directly in the specified folder
-					// true -> get the file in the product like folders
-					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
-
-					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS ;
-					$uploader->save($path, $_FILES['filename']['name'] );
-
-				} catch (Exception $e) {
-
-		        }
-
-		        //this way the name is saved in DB
-	  			$data['filename'] = $_FILES['filename']['name'];
-			}
-
+			
 
 			$model = Mage::getModel('infoletter/queue');
+			
+			foreach($data as $k => $v)
+			{
+				if(empty($v))
+				{
+					unset($data[$k]);
+				}
+			}
+			
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 
@@ -179,5 +162,27 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
        
         $this->getLayout()->getBlock('preview_form')->setFormData($model);
         $this->renderLayout();
+    }
+    
+    public function massDeleteRecipientAction() {
+    	$blocksIds = $this->getRequest()->getParam('recipients');
+    	if(!is_array($blocksIds)) {
+    		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
+    	} else {
+    		try {
+    			foreach ($blocksIds as $blocksId) {
+    				$pdftemplate = Mage::getModel('infoletter/recipient')->load($blocksId);
+    				$pdftemplate->delete();
+    			}
+    			Mage::getSingleton('adminhtml/session')->addSuccess(
+    					Mage::helper('adminhtml')->__(
+    							'Total of %d record(s) were successfully deleted', count($blocksIds)
+    					)
+    			);
+    		} catch (Exception $e) {
+    			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+    		}
+    	}
+    	$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
     }
 }
