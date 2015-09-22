@@ -36,9 +36,19 @@ foreach ($children as $child) {
     $outermostClassCode = 'level'. $childLevel;
     $_hasChildren = ($child->hasChildren()) ? 'has-children' : '';
 
+    if ( $childLevel == 1 ) {
+        // First Level => Arrow append
+        $_cssAppend = ' egov_arrow_main_closed';
+    }
+    else {
+        // First Level => Arrow first
+        $_cssAppend = ' egov_arrow_sub_closed';
+    }
+
     $html .= '<li id="' . $url_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';
 
-    $html .= '<a href="'. $child->getUrl() .'" class="'. $outermostClassCode .' '. $_hasChildren .'">'. $this->escapeHtml($this->__($child->getName())) .'</a>';
+    $html .= '<a href="'. $child->getUrl() .'" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
+             $this->escapeHtml($this->__($child->getName())) .'</a>';
 
     if (!empty($childrenWrapClass)) {
         $html .= '<div class="'. $childrenWrapClass .'">';
@@ -50,11 +60,11 @@ foreach ($children as $child) {
         $html .= '<ul id="sub-' . $url_id . '" class="level'. $childLevel .'">';
 
         if ($show_all_link == TRUE) {
-            $html .=     '<li class="level'. $nextChildLevel .' view-all">';
-            $html .=         '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
-            $html .=             $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
-            $html .=         '</a>';
-            $html .=     '</li>';
+            $html .= '<li class="level'. $nextChildLevel .' view-all">';
+            $html .=     '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
+            $html .=         $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
+            $html .=     '</a>';
+            $html .= '</li>';
         }
 
         $html .=     $this->render($child, $childrenWrapClass);

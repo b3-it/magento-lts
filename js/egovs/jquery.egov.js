@@ -24,6 +24,9 @@
         var elem = $j(element), element = element;
         var from = $j(element).attr('id');
 
+        var cssClasses = ["main_open", "main_closed", "sub_open", "sub_closed"];
+        var oldClass = '';
+
         /*
          * Initial-Function
          *
@@ -39,8 +42,7 @@
                 e.preventDefault();
                 if( $j(this).parent().find(defaults.DOMElement).length > 0 ) {
                     toggleMenu( $j(this).next() );
-                    changeGrafic ( $j(this) );
-// Hier muß eine Klasse rein, welche den Pfeil nach unten dreht!
+                    changeGrafic ( $j(this), $j(this).next() );
                     getStatus(from);
                 }
                 else {
@@ -52,7 +54,31 @@
         /*
          *  Menü-Punk bekommt eine zusätzliche Klasse
          */
-        changeGrafic = function(target) {
+        changeGrafic = function(target, element) {
+            var status = element.css('display');
+            removeClass(target);
+            var alt = oldClass.split('_');
+
+            if ( status == 'block' ) {
+                target.addClass('egov_arrow_' + alt[2] + '_open');
+            }
+            else {
+                target.addClass('egov_arrow_' + alt[2] + '_closed');
+            }
+        }
+
+        /*
+         *  Entfernen der entsprechenden Klassen-Namen
+         */
+        removeClass = function(target) {
+            var name = '';
+            $j.each(cssClasses, function(key, value){
+                name = 'egov_arrow_' + value;
+                if ( target.hasClass(name) ) {
+                    target.removeClass(name);
+                    oldClass = name;
+                }
+            });
         }
 
         /*
@@ -92,7 +118,11 @@
 
             for ( var i = 0; i < anz; i++ ) {
                 var sub = arr[i].split(defaults.RecordCombine);
-                $j('#' + sub[0]).css('display', sub[1]);
+
+                if ( sub[0] != 'undefined' ) {
+                    $j('#' + sub[0]).css('display', sub[1]);
+                    changeGrafic( $j('#' + sub[0]).prev(), $j('#' + sub[0]) );
+                }
             }
         }
 
