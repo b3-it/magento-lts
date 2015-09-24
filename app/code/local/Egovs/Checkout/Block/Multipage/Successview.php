@@ -86,6 +86,11 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 		return false;
 	}
 	
+	/**
+	 * Liefert die Rechnungsadresse
+	 * 
+	 * @return Mage_Sales_Model_Quote_Address
+	 */
 	public function getBillingAddress() {
 		return $this->getQuote ()->getBillingAddress ();
 	}
