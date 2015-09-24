@@ -77,7 +77,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 	/**
 	 * Retrieve info block name
 	 *
-	 * @return unknown
+	 * @return string|false
 	 */
 	protected function _getInfoBlockName() {
 		if ($info = $this->getPaymentInfo ()) {
