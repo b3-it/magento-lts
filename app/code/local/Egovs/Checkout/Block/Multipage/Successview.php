@@ -95,6 +95,11 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 		return $this->getQuote ()->getBillingAddress ();
 	}
 	
+	/**
+	 * Zahlinformationen ausgeben
+	 * 
+	 * @return string
+	 */
 	public function getPaymentHtml() {
 		return $this->getChildHtml('payment_info');
 	}
