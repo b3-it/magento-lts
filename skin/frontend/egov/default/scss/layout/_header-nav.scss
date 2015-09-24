@@ -224,19 +224,27 @@
 
         /* Default styles for 1+ drop-down menus */
         li.level0 ul {
-            //@include menu;
             position: relative;
             left: $global-subcat-left;
             top: $global-subcat-top;
             z-index: 10;
             width: auto;
-            padding: $global-subcat-paddingtop $global-subcat-paddingright $global-subcat-paddingbottom $global-subcat-paddingleft;
+
+            padding-top: $global-subcat-paddingtop;
+            padding-right: $global-subcat-paddingright;
+            padding-bottom: $global-subcat-paddingbottom;
+            padding-left: $global-subcat-paddingleft;
+
             display: none; /* Hide until displayed. */
 
             li {
                 background: $global-wrapper-color $global-repeat-scroll;
                 border-top: $global-box-border solid $global-subcat-bordercolor;
-                padding: 0 0 0 14px;
+
+                padding-left: $global-navigation-padding-left;
+                padding-right: $global-navigation-padding-right;
+                padding-bottom: $global-navigation-padding-bottom;
+                padding-top: $global-navigation-padding-top;
 
                 a {
                     padding: 10px 12px 10px 14px;
