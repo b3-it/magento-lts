@@ -272,13 +272,6 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 		$address->implodeStreetAddress ();
 		
 		if (! $this->getQuote ()->getCustomerId () && Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER == $this->getQuote ()->getCheckoutMethod ()) {
-			$baseAddressTmp = clone $address;
-			$baseAddressTmp->unsAddressId ()->unsAddressType();
-			$baseAddress = $this->getQuote()->getBaseAddress();
-			if ($baseAddress) {
-				$baseAddress->addData($baseAddressTmp->getData());
-			}
-			
 			if ($this->_customerEmailExists ( $address->getEmail (), Mage::app ()->getWebsite ()->getId () )) {
 				$tmp = Mage::helper ( 'checkout' )->__ ( 'There is already a customer registered using this email address' ) . '<br/>';
 				$tmp .= '<a href="' . Mage::helper ( 'mpcheckout' )->getLoginUrl () . '">' . Mage::helper ( 'checkout' )->__ ( 'Do you can login here.' ) . '</a><br/>';
@@ -319,6 +312,20 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 		}
 		
 		$this->_processValidateCustomer ( $address );
+		
+		/*
+		 * 20150924::Frank Rochlitzer
+		 * Stammadresse für Gäste und neu zu registrienden Kunden setzen!
+		 */
+		if (!$customerAddressId && !$this->getQuote()->getCustomerId()) {
+			$baseAddress = $this->getQuote()->getBaseAddress();
+			if ($baseAddress) {
+				$baseAddressTmp = clone $address;
+				$baseAddressTmp->unsAddressId ()->unsAddressType();
+				$baseAddress->addData($baseAddressTmp->getData());
+			}
+		}
+		
 		
 		$this->getQuote ()->collectTotals ();
 		$this->getQuote ()->save ();
@@ -763,6 +770,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 	            if (!$this->getQuote()->isAllowedGuestCheckout()) {
 	                Mage::throwException(Mage::helper('checkout')->__('Sorry, guest checkout is not enabled. Please try again or contact store owner.'));
 	            }
+	            Mage::helper('core')->copyFieldset('customer_account', 'to_quote', $billing, $this->getQuote());
 	            $this->getQuote()->setCustomerId(null)
 	                ->setCustomerEmail($billing->getEmail())
 	                ->setCustomerIsGuest(true)
