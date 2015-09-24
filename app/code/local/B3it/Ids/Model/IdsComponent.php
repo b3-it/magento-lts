@@ -130,6 +130,44 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			}
 	}
 	
+	private function mail($result, $reaction)
+	{
+	
+		$ip = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
+		$_SERVER['SERVER_ADDR'] :
+		(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
+				$_SERVER['HTTP_X_FORWARDED_FOR'] :
+				'127.0.0.1');
+	
+		
+		$msg = array();
+		$msg[] ="IP: ".$ip; 
+		
+		foreach ($result as $event) {
+			$data = array(
+					'name'      => $event->getName(),
+					'value'     => mysql_escape_string(stripslashes($event->getValue())),
+					'page'      => $_SERVER['REQUEST_URI'],
+					//'userid'    => $user,
+					'session'   => session_id() ? session_id() : '0',
+					'ip'        => $ip,
+					'reaction'  => implode(', ',$reaction),
+					//'impact'    => $result->getImpact()
+					'impact'    => $event->getImpact()
+			);
+			$msg[] = 'page' .$_SERVER['REQUEST_URI'];
+			$msg[] = 'reaction' .implode(', ',$reaction);
+			
+			$msg = impolde(', ',$msg);
+			$this->sendMailToAdmin($msg);
+		}
+			
+			
+		if(isset($reaction['deny'])){
+			Mage::log("DENY : ".$ip,Zend_Log::ALERT,"ids.log",true);
+		}
+	}
+	
 	
 	private function react($result)
 	{
@@ -153,6 +191,63 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 		} 
 		
 		return $res;
+	}
+	
+	public function sendMailToAdmin($body, $subject="IDS Alert") 
+	{
+		
+			$mailTo = $this->getAdminMail();
+			$mailTo = explode(';', $mailTo);
+			/* @var $mail Mage_Core_Model_Email */
+			$mail = Mage::getModel('core/email');
+			$shopName = Mage::getStoreConfig('general/imprint/shop_name');
+			$body = sprintf("Shop Name: %s\nWebsite: %s\n\n%s", $shopName, Mage::getBaseUrl(), $body);
+			$mail->setBody($body);
+			$mailFrom = $this->getGeneralContact($module);
+			$mail->setFromEmail($mailFrom['mail']);
+			$mail->setFromName($mailFrom['name']);
+			$mail->setToEmail($mailTo);
+	
+			
+			$mail->setSubject($subject);
+			try {
+				$mail->send();
+			}
+			catch(Exception $ex) {
+				$error = Mage::helper($module)->__('Unable to send email.');
+	
+				if (isset($ex)) {
+					Mage::log($error.": {$ex->getTraceAsString()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				} else {
+					Mage::log($error, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				}
+	
+				//TODO: Im Frontend sollte diese Meldung nicht zu sehen sein!
+				//Mage::getSingleton('core/session')->addError($error);
+			}
+	}
+	
+	private function getGeneralContact() {
+		/* Sender Name */
+		$name = Mage::getStoreConfig('trans_email/ident_general/name');
+		if (strlen($name) < 1) {
+			$name = 'Shop';
+		}
+		/* Sender Email */
+		$mail = Mage::getStoreConfig('trans_email/ident_general/email');
+		if (strlen($mail) < 1) {
+			$mail = 'dummy@shop.de';
+		}
+	
+		return array('name' => $name, 'mail' => $mail);
+	}
+	
+	private  function getAdminMail() {
+		$mail = Mage::getStoreConfig('trans_email/ident_admin/email');
+		if (strlen($mail) > 0) {
+			return $mail;
+		}
+		return  Mage::getStoreConfig('trans_email/ident_support/email');
 	}
 
 }
