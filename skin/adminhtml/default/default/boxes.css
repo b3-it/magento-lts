@@ -346,7 +346,7 @@ label.inline                            { float:none !important; width:auto !imp
 
 /* Form Elements */
 input.input-text,textarea,select { border-width:1px; border-style:solid; border-color:#aaa #c8c8c8 #c8c8c8 #aaa; background:#fff; font:12px arial, helvetica, sans-serif; }
-select { min-height:17px; /* to set the height for empty selects */ min-width:250px; }
+select { min-height:17px; /* to set the height for empty selects */ }
 input.input-text,textarea       { padding:2px; }
 input.qty                       { width:40px !important; }
 input.item-qty                  { width:22px !important; }
