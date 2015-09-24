@@ -59,6 +59,11 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 		return $this;
 	}
 	
+	/**
+	 * Aktuelle Order laden
+	 * 
+	 * @return Mage_Sales_Model_Order
+	 */
 	protected function _getOrder() {
 		if (is_null($this->_order)) {
 			$lastOrderId = Mage::getSingleton ('checkout/session')->getLastOrderId();
