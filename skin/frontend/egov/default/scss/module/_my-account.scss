@@ -170,9 +170,7 @@
 }
 
 #customer-account-menu {
-    box-shadow: 0 1px 2px 1px $global-text-shadow;
-    border: $global-box-border solid $global-lightcolor;
-    border-radius: 4px 4px 0 0;
+    @extend .egov-navheader-base;
     margin-bottom: $global-boxmargin;
 
     .account-block-title {
@@ -185,7 +183,7 @@
         cursor: pointer;
 
         > a {
-            @extend .egov-navigation-link;
+            @extend .egov-navigation-base;
 
             color: $global-category-font-color;
             font-family: $base-font-family;

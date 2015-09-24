@@ -1,9 +1,14 @@
 ﻿$j(document).ready(function(){
     // Loading-Layer beim Klicken auf Link sichtbar machen
     $j('a').click(function(){
-        var debug = $j(this).attr('id').slice(0, 2);
+        if ( $j(this).attr('id') !== undefined ) {
+            var debug = $j(this).attr('id').slice(0, 2);
+        }
+        else {
+            var debug = '';
+        }
 
-        if ( debug != 'dj' ) {
+        if ( debug != 'dj' && debug != 'eg' ) {
             if ( $j(this).next().size() > 0 ) {
                 // Abfrage sichert ungewollte Klicks gegen den Layer ab
                 if ( ($j(this).parent().get(0).tagName != 'LI') &&
