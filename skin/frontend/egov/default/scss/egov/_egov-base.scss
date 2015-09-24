@@ -17,13 +17,13 @@
 
     thead {
         .first th:first-child {
-            border-radius: 3px 0px 0px 0px;
+            border-radius: $global-radius 0px 0px 0px;
             border-left-width: 0px !important;
             border-left-style: none !important;
         }
 
         .first th:last-child {
-            border-radius: 0px 3px 0px 0px;
+            border-radius: 0px $global-radius 0px 0px;
             border-right-width: 0px !important;
             border-right-style: none !important;
         }
@@ -117,12 +117,33 @@
     background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
 }
 
-.egov-navigation-link {
+.egov-navheader-base {
+    box-shadow: 0 1px 2px 1px $global-text-shadow;
+    border-radius: $global-radius $global-radius 0 0;
+    border: $global-box-border solid $global-lightcolor;
+    font-size: $global-category-fontsize;
+}
+
+// Wechselnde Pfeile in den Navigationen
+.egov-navigation-base {
     width: 100%;
     padding: 13px 25px 9px 13px;
-    background: $global-content-background url($global-category-arrow-right) $global-norepeat-scroll 95% 55%;
     line-height: $global-category-lineheight;
     text-shadow: $global-category-textshadow;
+}
+.egov-arrow-main-closed {
+    @extend .egov-navigation-base;
+   background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
+}
+.egov-arrow-main-open {
+    @extend .egov-navigation-base;
+    background: $global-content-background url($global-category-arrow-full-down) $global-norepeat-scroll 95% 55%;
+}
+.egov-arrow-sub-closed {
+    background: $global-content-background url($global-category-arrow-light-right) $global-norepeat-scroll 2% 50%;
+}
+.egov-arrow-sub-open {
+    background: $global-content-background url($global-category-arrow-light-down) $global-norepeat-scroll 2% 50%;
 }
 
 .egov-float-left {

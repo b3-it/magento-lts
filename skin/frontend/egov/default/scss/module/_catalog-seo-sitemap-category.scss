@@ -22,7 +22,7 @@
             list-style-type: none;
 
             a:before {
-                content: url($global-category-arrow-right);
+                content: url($global-category-arrow-full-right);
                 margin-right: $fa-icon-margin + 3;
             }
         }

@@ -24,7 +24,7 @@
         var elem = $j(element), element = element;
         var from = $j(element).attr('id');
 
-        var cssClasses = ["main_open", "main_closed", "sub_open", "sub_closed"];
+        var cssClasses = ["main-open", "main-closed", "sub-open", "sub-closed"];
         var oldClass = '';
 
         /*
@@ -42,8 +42,8 @@
                 e.preventDefault();
                 if( $j(this).parent().find(defaults.DOMElement).length > 0 ) {
                     toggleMenu( $j(this).next() );
-                    changeGrafic ( $j(this), $j(this).next() );
-                    getStatus(from);
+                    changeGrafic( $j(this), $j(this).next() );
+                    getStatus( from );
                 }
                 else {
                     openURL( $j(this).attr('href') );
@@ -57,13 +57,13 @@
         changeGrafic = function(target, element) {
             var status = element.css('display');
             removeClass(target);
-            var alt = oldClass.split('_');
+            var alt = oldClass.split('-');
 
             if ( status == 'block' ) {
-                target.addClass('egov_arrow_' + alt[2] + '_open');
+                target.addClass('egov-arrow-' + alt[2] + '-open');
             }
             else {
-                target.addClass('egov_arrow_' + alt[2] + '_closed');
+                target.addClass('egov-arrow-' + alt[2] + '-closed');
             }
         }
 
@@ -72,8 +72,17 @@
          */
         removeClass = function(target) {
             var name = '';
+
+            // "undefined"-Klassen entfernen falls vorhanden -- woher die kommen ist bisher unbekannt
+            if ( target.hasClass('egov-arrow-undefined-open') ) {
+                target.removeClass('egov-arrow-undefined-open');
+            }
+            if ( target.hasClass('egov-arrow-undefined-closed') ) {
+                target.removeClass('egov-arrow-undefined-closed');
+            }
+
             $j.each(cssClasses, function(key, value){
-                name = 'egov_arrow_' + value;
+                name = 'egov-arrow-' + value;
                 if ( target.hasClass(name) ) {
                     target.removeClass(name);
                     oldClass = name;

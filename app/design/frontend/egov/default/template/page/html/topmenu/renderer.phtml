@@ -14,6 +14,8 @@ $html = '';
 
 $children = $menuTree->getChildren();
 $parentLevel = $menuTree->getLevel();
+
+// Anpassen der Start-Ebene, da die Kategorie-Nav eine Hard geschrieben Ober-Navigation hat
 $childLevel = is_null($parentLevel) ? 1 : $parentLevel + 1;
 
 $show_all_link = FALSE;
@@ -38,11 +40,11 @@ foreach ($children as $child) {
 
     if ( $childLevel == 1 ) {
         // First Level => Arrow append
-        $_cssAppend = ' egov_arrow_main_closed';
+        $_cssAppend = ' egov-arrow-main-closed';
     }
     else {
         // First Level => Arrow first
-        $_cssAppend = ' egov_arrow_sub_closed';
+        $_cssAppend = ' egov-arrow-sub-closed';
     }
 
     $html .= '<li id="' . $url_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';

@@ -88,10 +88,7 @@
  * ============================================ */
 
 .nav-primary {
-    box-shadow: 0 1px 2px 1px $global-text-shadow;
-    border-radius: 4px 4px 0 0;
-    border: $global-box-border solid $global-lightcolor;
-    font-size: $global-category-fontsize;
+    @extend .egov-navheader-base;
 
     ul {
         list-style-type: none;
@@ -106,12 +103,16 @@
 
     a {
         text-decoration: none;
-        color: $global-category-font-color;
+        color: $global-linkcolor;
         font-family: $base-font-family;
     }
 
     li.level0 {
         @extend .egov-navigation-background;
+    }
+
+    a.level0 {
+        @extend .egov-navigation-base;
     }
 
     li {
@@ -121,10 +122,9 @@
 
         background-color: $global-category-item-color;
         background-size: 100% auto;
+    }
 
-        a {
-            @extend .egov-navigation-link;
-        }
+    li.active {
     }
 
     li.level1 a {
@@ -235,7 +235,7 @@
 
             li {
                 background: $global-wrapper-color $global-repeat-scroll;
-                border-top: 1px solid $global-subcat-bordercolor;
+                border-top: $global-box-border solid $global-subcat-bordercolor;
                 padding: 0 0 0 14px;
 
                 a {

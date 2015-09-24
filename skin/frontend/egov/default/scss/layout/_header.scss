@@ -198,9 +198,8 @@
     position: relative;
     float: left;
     width: 20%;
-    height: 44px;
-    background: #FFFFFF;
-    color: $c-text;
+    background: $global-wrapper-color;
+    color: $global-linkcolor;
     line-height: 42px;
     text-align: center;
 }
@@ -209,6 +208,7 @@ a.skip-link {
     text-decoration: none;
 }
 
+.skip-egov:hover,
 .skip-link:not(.skip-active):hover {
     opacity: 0.8;
 }
