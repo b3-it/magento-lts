@@ -48,5 +48,13 @@ $installer->run("
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
 
+$dir = Mage::getBaseDir().DS.'var'.DS.'ids';
+
+if(!file_exists($dir))
+{
+	mkdir($dir);
+}
+
+
 
 $installer->endSetup();
