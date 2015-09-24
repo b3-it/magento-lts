@@ -57,12 +57,15 @@ class Egovs_Pdftemplate_Model_Blocks extends Mage_Core_Model_Abstract
 	    	foreach($collection->getItems() as $item)
 	    	{
 	    		$taxes = $item->getAppliedTaxes();
-	    		foreach ($taxes as $tax)
+	    		if(is_array($taxes))
 	    		{
-		    		foreach($tax['rates'] as $rate )
+		    		foreach ($taxes as $tax)
 		    		{
-		    			$rule = $rate['rule_id'];
-		    			$res[$rule] = $rule;
+			    		foreach($tax['rates'] as $rate )
+			    		{
+			    			$rule = $rate['rule_id'];
+			    			$res[$rule] = $rule;
+			    		}
 		    		}
 	    		}
 	    	}
