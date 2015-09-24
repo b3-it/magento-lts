@@ -19,20 +19,23 @@ class Egovs_Base_Model_Checkout_Observer
 		/* @var $convertQuote Mage_Sales_Model_Convert_Quote */
 		//$order = Mage::getModel('sales/order');
 		if ($quote->hasVirtualItems()) {
-			$address = $convertQuote->addressToOrderAddress($quote->getBaseAddress());
-			/* @var $order Mage_Sales_Model_Order */
-			$oldAddress = false;
-			foreach ($order->getAddressesCollection() as $oldAddress) {
-				if ($oldAddress->getAddressType()=='base_address' && !$oldAddress->isDeleted()) {
-					break;
-				}
+			//TODO: geht nur mit germantax sonst ist base address leer
+			if ($quote->getBaseAddress()) {
+				$address = $convertQuote->addressToOrderAddress($quote->getBaseAddress());
+				/* @var $order Mage_Sales_Model_Order */
 				$oldAddress = false;
+				foreach ($order->getAddressesCollection() as $oldAddress) {
+					if ($oldAddress->getAddressType() == 'base_address' && !$oldAddress->isDeleted()) {
+						break;
+					}
+					$oldAddress = false;
+				}
+					
+				if (!empty($oldAddress)) {
+					$address->setId($oldAddress->getId());
+				}
+				$order->addAddress($address->setAddressType('base_address'));
 			}
-			
-			if (!empty($oldAddress)) {
-				$address->setId($oldAddress->getId());
-			}
-			$order->addAddress($address->setAddressType('base_address'));
 		}
 	}
 }
