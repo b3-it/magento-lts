@@ -53,7 +53,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			$path = explode('/', trim($data->getRequest()->getPathInfo(), '/'));
 			
 			$request = array(
-					'REQUEST' => $_REQUEST,
+					//'REQUEST' => $_REQUEST,
 					'GET' => $_GET,
 					'POST' => $_POST,
 					'COOKIE' => $_COOKIE,
