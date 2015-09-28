@@ -38,7 +38,7 @@
 
                 <!-- added jQuery-Egov-Funktions -->
                 <action method="addJs"><script>egovs/jquery.egov.js</script></action>
-                <action method="addJs"><script>egovs/jquery.prevent.lostsession.js</script></action>
+                <!--  <action method="addJs"><script>egovs/jquery.prevent.lostsession.js</script></action>-->
 
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
 
