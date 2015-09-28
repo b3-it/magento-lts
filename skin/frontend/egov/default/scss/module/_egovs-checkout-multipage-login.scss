@@ -1,0 +1,77 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.egovs-checkout-multipage-login {
+
+    .col2-set {
+        width: 100%;
+        border-bottom: 0px;
+
+        ul {
+            li {
+                input[type="radio"], label {
+                    width: auto;
+                }
+
+                input[type="text"], input[type="password"] {
+                    width: 90%;
+                    max-width: 90%;
+                }
+            }
+        }
+
+        div.col-1, div.col-2 {
+            width: 48%;
+            height: 30em;
+        }
+
+        .content {
+            padding: 0px !important;
+
+            p {
+                margin: 10px 0px;
+            }
+
+            .securityLabel {
+                padding: 5px;
+
+                img {
+                    float: right;
+                    position: relative;
+                    top: 20px;
+                }
+            }
+
+            .required {
+                color: $global-available-color;
+            }
+        }
+
+        .button {
+            padding: 6px;
+        }
+
+        .buttons-set {
+            border-top: 0px;
+            right: 5px;
+        }
+
+        .button-recovery {
+            left: 10px;
+            margin-bottom: 1px;
+
+            a.button {
+                padding: 8px 6px 6px 6px;
+            }
+        }
+
+        button.button {
+            min-width: auto;
+            width: 120px;
+        }
+    }
+}
