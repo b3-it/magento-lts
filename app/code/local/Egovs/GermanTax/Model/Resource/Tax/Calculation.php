@@ -61,7 +61,7 @@ class Egovs_GermanTax_Model_Resource_Tax_Calculation extends Mage_Tax_Model_Reso
 				->join(
 					array('rule' => $this->getTable('tax/tax_calculation_rule')),
 					$ruleTableAliasName . ' = main_table.tax_calculation_rule_id',
-					array('rule.priority', 'rule.position', 'rule.valid_taxvat', 'tax_key' => 'rule.taxkey')
+					array('rule.priority', 'rule.position', 'rule.calculate_subtotal','rule.valid_taxvat', 'tax_key' => 'rule.taxkey')
 				);
 
 				$select->join(

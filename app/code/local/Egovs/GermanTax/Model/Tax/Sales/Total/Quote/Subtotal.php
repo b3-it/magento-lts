@@ -47,8 +47,20 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Subtotal extends Mage_Tax_Mode
 	 */
 	protected function _addSubtotalAmount(Mage_Sales_Model_Quote_Address $address, $item)
 	{
-		$address->setTotalAmount('subtotal', $address->getTotalAmount('subtotal')+$item->getRowTotal());
-		$address->setBaseTotalAmount('subtotal', $address->getBaseTotalAmount('subtotal')+$item->getBaseRowTotal());
+		
+		if ($this->_config->priceIncludesTax($this->_store)) {
+			$subTotal = $item->getRowTotalInclTax() - $item->getRowTax();
+			$baseSubTotal = $item->getBaseRowTotalInclTax() - $item->getBaseRowTax();
+			$address->setTotalAmount('subtotal', $address->getTotalAmount('subtotal') + $subTotal);
+			$address->setBaseTotalAmount('subtotal', $address->getBaseTotalAmount('subtotal') + $baseSubTotal);
+		} else {
+			$address->setTotalAmount('subtotal',
+					$address->getTotalAmount('subtotal') + $item->getRowTotal()
+			);
+			$address->setBaseTotalAmount('subtotal',
+					$address->getBaseTotalAmount('subtotal') + $item->getBaseRowTotal());
+		}
+			
 		$address->setSubtotalInclTax($address->getSubtotalInclTax()+$item->getStore()->roundPrice($item->getRowTotalInclTax()));
 		$address->setBaseSubtotalInclTax($address->getBaseSubtotalInclTax()+$item->getStore()->roundPrice($item->getBaseRowTotalInclTax()));
 		return $this;

@@ -218,5 +218,10 @@
         </sales>
     </global>
     <default>
+    <tax>
+    	<calculation>
+    		<cross_border_trade_enabled>1</cross_border_trade_enabled>
+    	</calculation>
+    </tax>
     </default>
 </config>
