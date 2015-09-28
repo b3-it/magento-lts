@@ -27,11 +27,14 @@
     ; define which fields contain JSON data and should be treated as such
     ; for fewer false positives (new in PHPIDS 0.5.3)
     ;json[]          = POST.__jsondata
-
+	json[]          = POST.product.media_gallery.values;
+	json[]          = POST.product.media_gallery.images;
+	
     ; define which fields shouldn't be monitored (a[b]=c should be referenced via a.b)
-    exceptions[]    = GET.__utmz
-    exceptions[]    = GET.__utmc
+    ;exceptions[]    = GET.__utmz
+    ;exceptions[]    = GET.__utmc
 
+    ;exceptions[]    = POST.product.media_gallery.images;
     ; you can use regular expressions for wildcard exceptions - example: /.*foo/i
 
 [Caching]
