@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * SEPA Lastschriftverfahren Info-Block
+ *
+ * @category	Egovs
+ * @package    	Egovs_SepaDebit
+ * @author		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
+ * @copyright	Copyright (c) 2013 EDV Beratung Hempel
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+
+?>
+<div>
+    <?php echo $this->getMethod()->getTitle() ?><br />
+	<div>
+		<div style="font-style: italic;"><?php echo $this->__('Account info'); ?></div>
+	    <table>
+	        <tbody>
+	        <?php if ($this->getAccountName()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Account holder') . '</label>:</td><td>' . $this->getAccountName() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getIban()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('IBAN') . '</label>:</td><td>' . $this->getIban() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getBic()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('BIC') . '</label>:</td><td>' . $this->getBic() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getAccountBankname()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Bank name') . '</label>:</td><td>' . $this->getAccountBankname() . '</td></tr>'; ?>
+	        <?php endif; ?>
+		        <tr>
+		        	<td colspan="2">
+		        		<div>
+							<a href="<?php echo $this->getMandateDownloadUrl() ?>" target="_blank"><?php echo $this->__('View used mandate')?></a>
+						</div>
+					</td>
+				</tr>
+	        </tbody>
+	    </table>
+	</div>
+    <?php if ($this->getMethod()->getEmailSettings()): ?>
+    	<?php echo $this->getMethod()->getEmailSettings(); ?>
+    	<br /><br />
+    <?php endif; ?>
+</div>

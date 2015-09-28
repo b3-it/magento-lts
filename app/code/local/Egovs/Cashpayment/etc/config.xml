@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+       <Egovs_Cashpayment>
+	      <!-- declare module's version information for database updates -->
+          <version>2.0.0.0</version>
+       </Egovs_Cashpayment>
+    </modules>
+    <global>
+        <helpers>
+            <cashpayment>
+                <class>Egovs_Cashpayment_Helper</class>
+            </cashpayment>
+        </helpers>
+		<!-- IMPORTANT: if you use your own namespace (i.e. CompanyName) you also have to declare blocks group for new module. See topic: http://www.magentocommerce.com/boards/viewthread/22416/#t102732 -->
+	    <blocks>
+	        <cashpayment>
+	            <class>Egovs_Cashpayment_Block</class>
+	        </cashpayment>
+	    </blocks>
+
+		<!-- declare model group for new module -->
+        <models>
+			<!-- model group alias to be used in Mage::getModel('cashpayment/...') -->
+            <cashpayment>
+				<!-- base class name for the model group -->
+                <class>Egovs_Cashpayment_Model</class>
+            </cashpayment>
+        </models>
+
+		<!-- declare resource setup for new module -->
+        <resources>
+			<!-- resource identifier -->
+            <cashpayment_setup>
+				<!-- specify that this resource is a setup resource and used for upgrades -->
+                <setup>
+					<!-- which module to look for install/upgrade files in -->
+                    <module>Egovs_Cashpayment</module>
+                </setup>
+				<!-- specify database connection for this resource -->
+                <connection>
+					<!-- do not create new connection, use predefined core setup connection -->
+                    <use>core_setup</use>
+                </connection>
+            </cashpayment_setup>
+            <cashpayment_write>
+                <connection>
+                  <use>core_write</use>
+                </connection>
+            </cashpayment_write>
+            <cashpayment_read>
+               <connection>
+                <use>core_read</use>
+              </connection>
+            </cashpayment_read>
+        </resources>
+    </global>
+
+	<!-- declare default configuration values for this module -->
+    <default>
+		<!-- 'payment' configuration section (tab) -->
+        <payment>
+			<!-- 'newmodule' configuration group (fieldset) -->
+            <cashpayment>
+				<!-- by default this payment method is inactive -->
+                <active>0</active>
+				<!-- model to handle logic for this payment method -->
+                <model>cashpayment/paymentLogic</model>
+				<!-- order status for new orders paid by this payment method -->
+                <order_status>pending</order_status>
+				<!-- default title for payment checkout page and order view page -->
+                <title>Barzahlung bei Abholung</title>
+				<!-- Disable this to force State NEW and Status PENDING -->
+				<!-- <payment_action>authorize</payment_action>  -->
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+            </cashpayment>
+         </payment>
+    </default>
+    <adminhtml>       
+        <translate>
+            <modules>
+                <Egovs_Cashpayment>
+                    <files>
+                        <default>Egovs_Cashpayment.csv</default>
+                    </files>
+                </Egovs_Cashpayment>
+            </modules>
+        </translate>
+    </adminhtml> 
+    <frontend>       
+        <translate>
+            <modules>
+                <Egovs_Cashpayment>
+                    <files>
+                        <default>Egovs_Cashpayment.csv</default>
+                    </files>
+                </Egovs_Cashpayment>
+            </modules>
+        </translate>        
+    </frontend> 
+</config>

@@ -1,0 +1,28 @@
+<?php
+/**
+ * SEPA Lastschriftverfahren Form-Block
+ * 
+ * @category	Egovs
+ * @package    	Egovs_SepaDebit
+ * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2014-15 B3 IT Systeme GmbH
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+?>
+
+<?php 
+$accountOwner = $this->getInfo()->getMethodInstance()->getAccountName();
+$accountIban = $this->getInfo()->getMethodInstance()->getIban();
+$accountBic = $this->getInfo()->getMethodInstance()->getBic();
+$accountBankname = $this->getInfo()->getMethodInstance()->getAccountBankname();
+?>
+
+<?php echo $this->getMethod()->getTitle() ?>
+{{pdf_row_separator}}
+Kontoinhaber: <?php echo $this->htmlEscape($accountOwner) ?>
+{{pdf_row_separator}}
+IBAN: <?php echo $this->htmlEscape($accountIban) ?>
+{{pdf_row_separator}}
+BIC: <?php echo $this->htmlEscape($accountBic) ?>
+{{pdf_row_separator}}
+Kreditinstitut: <?php echo $this->htmlEscape($accountBankname) ?>

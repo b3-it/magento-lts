@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @package    Egovs_Debit
+ * @copyright  Copyright (c) 2009 ITABS GbR - Rouven Alexander Rieker
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+
+<config>
+	<modules>
+		<Egovs_Debit>            
+            <version>2.0.0.0</version>
+        </Egovs_Debit>
+	</modules>
+    <global>
+        <models>
+            <debit>
+                <class>Egovs_Debit_Model</class>
+            </debit>
+        </models>
+        <blocks>
+	        <debit>
+	            <class>Egovs_Debit_Block</class>
+	        </debit>
+	    </blocks>
+        <resources>
+            <debit_write>
+                <use>core_write</use>
+            </debit_write>
+            <debit_read>
+                <use>core_read</use>
+            </debit_read>
+        </resources>
+        <helpers>
+			<debit>
+				<class>Egovs_Debit_Helper</class>
+			</debit>
+		</helpers>
+    </global>
+    <default>
+        <payment>
+            <debit>
+                <active>0</active>
+                <model>debit/debit</model>
+                <sendmail>0</sendmail>
+                <sendmail_crypt>1</sendmail_crypt>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Lastschrift mit elektronischer Einzugsermächtigung</title>
+                <allowspecific>0</allowspecific>
+                <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
+                <delete_customer_after_transaction>1</delete_customer_after_transaction>
+            </debit>
+         </payment>
+    </default>
+    <adminhtml>       
+        <translate>
+            <modules>
+                <Egovs_Debit>
+                    <files>
+                        <default>Egovs_Debit.csv</default>
+                    </files>
+                </Egovs_Debit>
+            </modules>
+        </translate>
+    </adminhtml> 
+    <frontend>       
+        <translate>
+            <modules>
+                <Egovs_Debit>
+                    <files>
+                        <default>Egovs_Debit.csv</default>
+                    </files>
+                </Egovs_Debit>
+            </modules>
+        </translate>        
+    </frontend> 
+</config>

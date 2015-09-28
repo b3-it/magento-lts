@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * SEPA Lastschriftverfahren Info-Block
+ * 
+ * @category	Egovs
+ * @package    	Egovs_SepaDebit
+ * @author		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
+ * @copyright	Copyright (c) 2013 EDV Beratung Hempel
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+
+?>
+<div>
+    <?php echo $this->getMethod()->getTitle() ?><br />
+	<div>
+		<div style="font-style: italic;"><?php echo $this->__('Account info'); ?></div>
+	    <table>
+	        <tbody>
+	        <?php if ($this->getDebitorFirstName()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Debitor Firstname') . '</label>:</td><td>' . $this->getDebitorFirstName() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getDebitorSurName()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Debitor Surname') . '</label>:</td><td>' . $this->getDebitorSurName() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        
+	        <?php if ($this->getDebitorStreet()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Debitor Street') . '</label>:</td><td>' . $this->getDebitorStreet() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getDebitorCity()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Debitor City') . '</label>:</td><td>' . $this->getDebitorCity() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        
+	        <?php if ($this->getDebitorZip()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Debitor ZIP') . '</label>:</td><td>' . $this->getDebitorZip() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        
+	        <?php if ($this->getDebitorPostofficeBox()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Debitor Postbox') . '</label>:</td><td>' . $this->getDebitorPostofficeBox() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        
+	         <?php if ($this->getDebitorCountry()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Debitor Country') . '</label>:</td><td>' . $this->getDebitorCountry() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        
+	        <?php if ($this->getIban()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('IBAN') . '</label>:</td><td>' . $this->getIban() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getBic()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('BIC') . '</label>:</td><td>' . $this->getBic() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getAccountBankname()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Bank name') . '</label>:</td><td>' . $this->getAccountBankname() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        
+	        <?php if($this->getAccountholderDiffers()):?>
+	        
+		        <?php if ($this->getAccountholderFirstname()): ?>
+		            <?php echo '<tr><td><label>' . $this->__('account holder name/company authorised signatory') . '</label>:</td><td>' . $this->getAccountholderFirstname() . '</td></tr>'; ?>
+		        <?php endif; ?>
+		        
+		         <?php if ($this->getAccountholderSurname()): ?>
+		            <?php echo '<tr><td><label>' . $this->__('account holder surname/company name') . '</label>:</td><td>' . $this->getAccountholderSurname() . '</td></tr>'; ?>
+		        <?php endif; ?>
+		        
+		        <?php if ($this->getAccountholderStreet()): ?>
+		            <?php echo '<tr><td><label>' . $this->__('account holder street') . '</label>:</td><td>' . $this->getAccountholderStreet() . '</td></tr>'; ?>
+		        <?php endif; ?>
+		        
+		         <?php if ($this->getAccountholderCity()): ?>
+		            <?php echo '<tr><td><label>' . $this->__('account holder city') . '</label>:</td><td>' . $this->getAccountholderCity() . '</td></tr>'; ?>
+		        <?php endif; ?>
+		        
+		        
+		         <?php if ($this->getAccountholderZip()): ?>
+		            <?php echo '<tr><td><label>' . $this->__('account holder zip') . '</label>:</td><td>' . $this->getAccountholderZip() . '</td></tr>'; ?>
+		        <?php endif; ?>
+		        
+		         <?php if ($this->getAccountholderCountry()): ?>
+		            <?php echo '<tr><td><label>' . $this->__('account holder land') . '</label>:</td><td>' . $this->getAccountholderCountry() . '</td></tr>'; ?>
+		        <?php endif; ?>
+		        
+		         <?php if ($this->getAccountholderPostofficeBox()): ?>
+		            <?php echo '<tr><td><label>' . $this->__('Accountholder Postbox') . '</label>:</td><td>' . $this->getAccountholderPostofficeBox() . '</td></tr>'; ?>
+		        <?php endif; ?>
+	        <?php endif;?>
+	        <?php if(($this->getMandate() !== null) && ($this->getMandate()->getStatus() == Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_AUFUNTERSCHRIFTWARTEND)):?>
+		        <tr>
+		        	<td colspan="2">
+		        		<div>
+							<a href="<?php echo $this->getMandateDownloadUrl() ?>" target="_blank"><?php echo $this->__('View mandate')?></a>
+						</div>
+					</td>
+				</tr>
+				<?php endif;?>
+	        </tbody>
+	    </table>
+	</div>
+    <?php if ($this->getMethod()->getEmailSettings()): ?>
+    	<?php echo $this->getMethod()->getEmailSettings(); ?>
+    	<br /><br />
+    <?php endif; ?>
+    
+    <?php if ($this->getMethod()->getCustomText()): ?>
+        <?php echo $this->getMethod()->getCustomText() ?><br />
+    <?php endif; ?>
+</div>

@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * Infoblock für Zahlungen per Vorkasse
+ *
+ * @category   	Egovs
+ * @package    	Egovs_BankPayment
+ * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
+ * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
+ * @copyright  	Copyright (c) 2011-2013 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @copyright  	Copyright (c) 2011 TRW-NET - http://www.trw-net.de
+ * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ *
+ * @see Mage_Payment_Block_Info
+ */
+/* @var $this Egovs_Debit_Block_Info */
+
+?>
+<div>
+    <?php echo $this->getMethod()->getTitle() ?><br />
+	<div>
+		<div style="font-style: italic;"><?php echo $this->__('Account info'); ?></div>
+	    <table>
+	        <tbody>
+	        <?php if ($this->getAccountName()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Account holder') . '</label>:</td><td>' . $this->getAccountName() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getAccountNumber()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Account number') . '</label>:</td><td>' . $this->getAccountNumber() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getAccountBLZ()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Sort code') . '</label>:</td><td>' . $this->getAccountBLZ() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        <?php if ($this->getAccountBankname()): ?>
+	            <?php echo '<tr><td><label>' . $this->__('Bank name') . '</label>:</td><td>' . $this->getAccountBankname() . '</td></tr>'; ?>
+	        <?php endif; ?>
+	        </tbody>
+	    </table>
+	</div>
+    <?php if ($this->getMethod()->getEmailSettings()): ?>
+    	<?php echo $this->getMethod()->getEmailSettings(); ?>
+    	<br /><br />
+    <?php endif; ?>
+    
+    <?php if ($this->getMethod()->getCustomText()): ?>
+        <?php echo $this->getMethod()->getCustomText() ?><br />
+    <?php endif; ?>
+</div>
