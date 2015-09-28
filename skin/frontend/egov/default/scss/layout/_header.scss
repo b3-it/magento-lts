@@ -49,12 +49,15 @@
 
         h1 {
             color: $global-fontcolor-light;
+            max-width: 60%;
+            display: inline-block;
     	  }
 
         .welcome-msg {
-            z-index: 99;
             color: $global-fontcolor-light;
-            margin-top: 15px;
+            display: inline-block;
+            height: 1em;
+            margin-left: $global-boxmargin;
         }
     }
 }

@@ -16,6 +16,13 @@
 @import "compass/css3";
 
 // ----------------------------------------------
+// EGOV-Definitionen (Maße und Variablen)
+@import "egov/fontbase";
+@import "egov/style-size";
+@import "egov/style-images";
+@import "egov/style-colors";
+
+// ----------------------------------------------
 // Vars
 
 @import "var";

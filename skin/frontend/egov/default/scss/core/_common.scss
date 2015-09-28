@@ -661,11 +661,7 @@ a.button:hover {
 .breadcrumbs {
     overflow: hidden;
     margin: 0px;
-    position: relative;
-    left: $global-welcome-left - 8;
-    top: -10px;
     color: $global-fontcolor-light;
-    width: 70%;
 }
 
 .breadcrumbs li {
@@ -817,7 +813,7 @@ a.button:hover {
 .main-container {
     max-width: $global-fullpage-width;
     position: relative;
-    top: $global-content-top-position;
+    top: $global-cms-top-position;
 }
 
 .footer-container {
