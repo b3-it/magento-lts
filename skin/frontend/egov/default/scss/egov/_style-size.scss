@@ -71,8 +71,8 @@ $global-checkout-op-number: 26px;
 $global-header-height: 200px;
 
 $global-welcome-header: 70px;
-$global-welcome-left: 280px;
-$global-welcome-top: 70px;
+$global-welcome-left: 295px;
+$global-welcome-top: 65px;
 
 $global-message-margintop: 20px;
 $global-message-marginbottom: 20px;
@@ -142,10 +142,12 @@ $global-footer-linkswidth: 53em;
 
 $global-min-width: 60em;
 
-$global-content-top-position: -35px;
+$global-content-top-position: -65px;
 $global-content-top-padding: 1em;
 $global-content-bottom-padding: 60px;
 $global-content-bottom-bordersize: 1px;
+
+$global-cms-top-position: $global-content-top-position + 15;
 
 $global-category-width: 225px;
 $global-category-top-padding: 70px;

@@ -10,12 +10,12 @@
          * Plugin default options
          */
         var defaults = {
-            SearchElement: 'UL',                     // DOM-Tag welcher durchsucht werden soll (Großbuchstaben)
-            DOMElement   : 'ul',                     // DOM-Tag welcher durchsucht werden soll (Kleinbuchstaben)
-            RecordSpacer : ';',                      // Trennzeichen zwischen den einzelnen Einträgen des DOM
-            RecordCombine: ':',                      // Trennzeichen zwischen DOM-ID und Element-Status
-            CookiePostfix: '_status',                // Zeichenkette, welche zusätzlich als Cookie-Bezeichner verwendet wird
-            ExpireDate   : 1 * 1000 * 60 * 60 * 24   // This time is for One Day Means 24 hour 1=day 1000=1sec 60*60=1hour 24=no of hour.
+            SearchElement: 'UL',                 // DOM-Tag welcher durchsucht werden soll (Großbuchstaben)
+            DOMElement   : 'ul',                 // DOM-Tag welcher durchsucht werden soll (Kleinbuchstaben)
+            RecordSpacer : ';',                  // Trennzeichen zwischen den einzelnen Einträgen des DOM
+            RecordCombine: ':',                  // Trennzeichen zwischen DOM-ID und Element-Status
+            CookiePostfix: '_status',            // Zeichenkette, welche zusätzlich als Cookie-Bezeichner verwendet wird
+            ExpireDate   : 1000 * 60 * 60 * 24   // This time is for One Day Means 24 hour 1=day 1000=1sec 60*60=1hour 24=no of hour.
         };
 
         this.settings = {}

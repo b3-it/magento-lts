@@ -18,7 +18,7 @@ $parentLevel = $menuTree->getLevel();
 // Anpassen der Start-Ebene, da die Kategorie-Nav eine Hard geschrieben Ober-Navigation hat
 $childLevel = is_null($parentLevel) ? 1 : $parentLevel + 1;
 
-$show_all_link = FALSE;
+$show_all_link = TRUE;
 
 $counter = 1;
 $childrenCount = $children->count();
@@ -49,7 +49,7 @@ foreach ($children as $child) {
 
     $html .= '<li id="' . $url_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';
 
-    $html .= '<a href="'. $child->getUrl() .'" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
+    $html .= '<a href="'. $child->getUrl() .'" data-category-count="" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
              $this->escapeHtml($this->__($child->getName())) .'</a>';
 
     if (!empty($childrenWrapClass)) {

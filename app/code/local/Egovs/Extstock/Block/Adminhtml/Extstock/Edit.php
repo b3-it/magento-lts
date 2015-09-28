@@ -39,9 +39,9 @@ class Egovs_Extstock_Block_Adminhtml_Extstock_Edit extends Mage_Adminhtml_Block_
     {
     	if($this->getIsCalledFromProduct())
     	{
-    		return $this->getUrl('adminhtml/extstock_extstock/save_product');
+    		return $this->getUrl('adminhtml/extstock_extstock/save_product',array('id'=>$this->getRequest()->getParam('id')));
     	}
-    	return $this->getUrl('adminhtml/extstock_extstock/save');
+    	return $this->getUrl('adminhtml/extstock_extstock/save',array('id'=>$this->getRequest()->getParam('id')));
     }
     
     

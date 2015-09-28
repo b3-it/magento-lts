@@ -1,4 +1,8 @@
-﻿$j(document).ready(function(){
+﻿function toggle_loading_layer() {
+    $j('#loading-mask').fadeIn();
+}
+
+$j(document).ready(function(){
     // Loading-Layer beim Klicken auf Link sichtbar machen
     $j('a').click(function(){
         if ( $j(this).attr('id') !== undefined ) {
@@ -16,13 +20,13 @@
                      ($j(this).next().get(0).id != 'header-cart') &&       // Link des Header-Warenkorb
                      (!$j(this)[0].hasAttribute('data-target-element'))    // Link zum Benutzer-Menü
                    ) {
-                    $j('#loading-mask').toggle();
+                    toggle_loading_layer();
                 }
             }
             else {
                 if ( !$j(this).hasClass('skip-link-close')          // Schließen-Button im Header-Warenkorb
                    ) {
-                    $j('#loading-mask').toggle();
+                    toggle_loading_layer();
                 }
             }
         }
@@ -32,7 +36,7 @@
     $j('button').click(function(){
         if ( !$j(this).hasClass('btn-cart')
            ) {
-            $j('#loading-mask').toggle();
+            toggle_loading_layer();
         }
     });
 });

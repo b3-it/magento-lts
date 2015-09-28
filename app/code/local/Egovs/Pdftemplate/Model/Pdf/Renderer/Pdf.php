@@ -11,7 +11,7 @@
  */
 
 set_include_path(get_include_path().PS.Mage::getBaseDir('lib').DS.'tcpdf');
-require_once(Mage::getBaseDir('lib').DS.'tcpdf'.DS.'config'.DS.'lang'.DS.'eng.php');
+//require_once(Mage::getBaseDir('lib').DS.'tcpdf'.DS.'config'.DS.'lang'.DS.'eng.php');
 require_once('tcpdf.php');
 
 class Egovs_Pdftemplate_Model_Pdf_Renderer_Pdf extends TCPDF

@@ -220,7 +220,7 @@ class Egovs_Extstock_Adminhtml_Extstock_ExtstockController extends Mage_Adminhtm
 			
 			$data = $model->setQuantity($data);
 			
-			$id = $this->getRequest()->getParam('product_id');
+			$id = $this->getRequest()->getParam('id');
 			$model->setData($data)
 				  ->setId($id);
 			

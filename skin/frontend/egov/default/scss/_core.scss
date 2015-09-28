@@ -17,10 +17,8 @@
 
 // ----------------------------------------------
 // EGOV-Definitionen
-@import "egov/fontbase";
-@import "egov/style-size";
-@import "egov/style-images";
-@import "egov/style-colors";
+//    ACHTUNG!!!
+//    Variablen werden in "_framework.scss" eingebunden
 @import "egov/bitv";
 @import "egov/video";
 @import "egov/egov-base";
@@ -68,6 +66,7 @@
 @import "module/customer";
 @import "module/customer-account-forgotpassword";
 @import "module/contacts";
+@import "module/egovs-checkout-multipage-login";
 @import "module/paypal";
 @import "module/review";
 @import "module/slideshow";
