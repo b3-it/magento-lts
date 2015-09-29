@@ -51,7 +51,7 @@ class Egovs_Paymentbase_Model_System_Config_Backend_SyncBankAccountData extends 
         	}
         }         
 		
-        if ($this->getField() == 'auto_sync_epaybl_data_now') {
+        if ($this->getField() == 'auto_sync_epaybl_data') {
 	        //Am Ende muss es immer deaktiviert sein
 	        $this->setValue(false);
         }
