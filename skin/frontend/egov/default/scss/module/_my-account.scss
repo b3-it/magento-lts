@@ -64,6 +64,11 @@
 
     .addresses-list {
         font-family: $base-font-family;
+
+        .box-title, .box-content {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
     }
 
     .page-title {
