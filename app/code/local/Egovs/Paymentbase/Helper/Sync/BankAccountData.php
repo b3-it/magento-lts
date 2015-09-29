@@ -57,12 +57,14 @@ class Egovs_Paymentbase_Helper_Sync_BankAccountData extends Mage_Core_Helper_Abs
 			->load(self::CONFIG_PATH_IMPRINT_IBAN, 'path')
 		;
 		$imprint->setValue($_bankVerbindung->bankverbindung->getIban())
+			->setPath(self::CONFIG_PATH_IMPRINT_IBAN)
 			->save();
 		
 		$imprint = Mage::getModel('core/config_data')
 			->load(self::CONFIG_PATH_IMPRINT_BIC, 'path')
 		;
 		$imprint->setValue($_bankVerbindung->bankverbindung->getBic())
+			->setPath(self::CONFIG_PATH_IMPRINT_BIC)
 			->save();
 		
 		$imprint = Mage::getModel('core/config_data')
@@ -70,27 +72,32 @@ class Egovs_Paymentbase_Helper_Sync_BankAccountData extends Mage_Core_Helper_Abs
 		;
 		if (!$_bankVerbindung->bank->getBankname()) {
 			$imprint->setValue($_bankVerbindung->bankverbindung->getBankname(false))
+				->setPath(self::CONFIG_PATH_IMPRINT_BANK_NAME)
 				->save();
 		} else {
 			$imprint->setValue($_bankVerbindung->bank->getBankname())
+				->setPath(self::CONFIG_PATH_IMPRINT_BANK_NAME)
 				->save();
 		}
 		$imprint = Mage::getModel('core/config_data')
 			->load(self::CONFIG_PATH_IMPRINT_BANK_ACCOUNT_OWNER, 'path')
 		;
 		$imprint->setValue($_bankVerbindung->bankverbindung->kontoinhaber)
+			->setPath(self::CONFIG_PATH_IMPRINT_BANK_ACCOUNT_OWNER)
 			->save();
 		
 		$imprint = Mage::getModel('core/config_data')
 			->load(self::CONFIG_PATH_IMPRINT_BANK_ACCOUNT, 'path')
 		;
 		$imprint->setValue($_bankVerbindung->bankverbindung->kontoNr)
+			->setPath(self::CONFIG_PATH_IMPRINT_BANK_ACCOUNT)
 			->save();
 		
 		$imprint = Mage::getModel('core/config_data')
 			->load(self::CONFIG_PATH_IMPRINT_BANK_BLZ, 'path')
 		;
 		$imprint->setValue($_bankVerbindung->bankverbindung->BLZ)
+			->setPath(self::CONFIG_PATH_IMPRINT_BANK_BLZ)
 			->save();
 		
 		$configPaths = array(

@@ -611,7 +611,7 @@ class Mage_Core_Model_Locale
                  * http://framework.zend.com/issues/browse/ZF-10038
                  * zend team is not going to change it behaviour in the near time
                  */
-                $currencyObject = new Zend_Currency($currency);
+                $currencyObject = new Zend_Currency($currency,'de_DE');
                 $options['name'] = $currency;
                 $options['currency'] = $currency;
                 $options['symbol'] = $currency;

@@ -1962,7 +1962,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getHaushaltsparameter($id)
     {
-    	$obj = Mage::getModel('paymentbase/haushaltsparamter')->load(id);
+    	$obj = Mage::getModel('paymentbase/haushaltsparameter')->load($id);
     	if($obj)
     	{
     		return $obj->getValue();
