@@ -955,11 +955,11 @@ a.button:hover {
 
 .col2-right-layout {
 	  .col-right {
-        margin-right: $global-rightcol-rightmargin-percent;
-        float: right;
+        right: $global-rightcol-rightmargin-percent;
+        _float: right;
         position: relative;
         width: $global-rightcol-percent;
-        margin-top: $global-rightcol-margintop;
+        top: $global-rightcol-margintop;
     }
     .col-main {
         padding-left: 0; /* Remove the 15px padding */
@@ -1013,12 +1013,12 @@ a.button:hover {
         }
 
         .col-right {
-            float: right;
+            _float: right;
             width: $global-rightcol-3col-percent;
-            margin-right: $global-rightcol-rightmargin-percent;
+            right: $global-rightcol-rightmargin-percent;
             padding: 0px;
-            margin-top: $global-rightcol-margintop;
-            /*margin-top: 16px;*/
+            position: relative;
+            top: $global-rightcol-margintop;
         }
 
         p.note-msg {
