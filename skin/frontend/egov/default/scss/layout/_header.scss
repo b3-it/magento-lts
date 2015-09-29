@@ -42,22 +42,21 @@
 
     .welcome-header {
         height: $global-welcome-header;
-        width: 50%;
+        width: 69%;
         position: absolute;
         top: $global-welcome-top;
         left: $global-welcome-left;
 
         h1 {
             color: $global-fontcolor-light;
-            max-width: 60%;
-            display: inline-block;
+            display: block;
     	  }
 
         .welcome-msg {
             color: $global-fontcolor-light;
-            display: inline-block;
+            display: block;
             height: 1em;
-            margin-left: $global-boxmargin;
+            margin-top: 12px;
         }
     }
 }
@@ -91,8 +90,8 @@
 .page-header-container .store-language-container {
     float: right;
     position: relative;
-    right: -3px;
-    top: 20px;
+    right: -6px;
+    top: 40px;
 
     label {
         display: none;

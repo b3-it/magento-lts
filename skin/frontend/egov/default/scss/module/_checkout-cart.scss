@@ -31,10 +31,11 @@
     float: right;
     clear: right;
     width: 40%;
-    padding-left: $box-spacing-large;
+    padding-left: $global-boxmargin;
 }
 
 .cart-totals,
+.cart-coupon,
 .cart-forms .discount,
 .cart-forms .giftcard,
 .cart-forms .shipping {
@@ -43,10 +44,12 @@
 
 .cart-table,
 .cart-totals,
+.cart-coupon,
 .cart-forms .discount,
 .cart-forms .giftcard,
 .cart-forms .shipping {
-    margin-bottom: $box-spacing-large;
+    margin-bottom: $global-boxmargin;
+    padding: $global-boxpadding-large;
 }
 
 .checkout-cart-index {
@@ -717,6 +720,16 @@
         }
     }
 
+    .shipping-form {
+        .buttons-set {
+            text-align: right;
+
+            button {
+                float: right !important;
+            }
+        }
+    }
+
     #co-shipping-method-form .buttons-set .button {
         float: left;
         margin-left: 0;
@@ -733,7 +746,6 @@
 }
 
 @include bp(max-width, $bp-medium) {
-
     .shipping .shipping-form .form-list > li {
         width: 100%;
         float: none;

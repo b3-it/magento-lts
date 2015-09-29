@@ -130,6 +130,14 @@
     margin: $fa-icon-margin;
 }
 
+// Icon für Drucken in der Bestellansicht des Benutzerkontos (Drucker)
+.egov-print {
+    @extend .fa;
+    @extend .fa-print;
+    font-size: $global-fontsize;
+    margin: $fa-icon-margin;
+}
+
 // Icon für Details in der Bestellübersicht (Auge)
 .egov-view {
     @extend .fa;

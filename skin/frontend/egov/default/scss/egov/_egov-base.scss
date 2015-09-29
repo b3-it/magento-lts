@@ -77,7 +77,8 @@
     border-collapse: collapse;
     margin-top: 10px;
 
-    tbody td {
+    tbody td,
+    tfoot td {
         background-color: $global-checkout-total-background;
         color: $global-fontcolor-dark;
         border-color: $global-checkout-tableborder;
@@ -97,7 +98,14 @@
     }
 }
 
+.egov-radius {
+    -webkit-border-radius: $global-radius;
+    -moz-border-radius: $global-radius;
+    border-radius: $global-radius;
+}
+
 .egov-default-message {
+    @extend .egov-radius;
     border: $global-box-border solid $global-border-color;
     padding: $golbal-msgpadding;
     background-color: $global-box-title-backgroundcolor;
@@ -183,9 +191,7 @@
         top: 45%;
         z-index: 9999;
 
-        -webkit-border-radius: $global-radius;
-        -moz-border-radius: $global-radius;
-        border-radius: $global-radius;
+        @extend .egov-radius;
 
         -webkit-box-shadow: 10px 10px 16px -1px rgba(0,0,0,0.75);
         -moz-box-shadow: 10px 10px 16px -1px rgba(0,0,0,0.75);

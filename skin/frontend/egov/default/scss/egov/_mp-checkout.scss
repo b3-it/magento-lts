@@ -9,10 +9,13 @@
     text-align: left;
 
     .multiple-checkout {
-        width: 105% !important;
-
-        #review-buttons-container {
-            width: 95%;
+        .col-2 {
+            > div {
+                margin: 5px 0px 10px 10px;
+            }
+            > fieldset.form-list {
+                margin-left: 0px;
+            }
         }
     }
 
@@ -91,15 +94,9 @@
             font-weight: bold;
             font-size: $global-checkout-success-order-number;
         }
-
-        .multiple-checkout, .buttons-set {
-            width: 96%;
-        }
     }
 
     .col2-set {
-        width: 95%;
-        border-bottom: $global-box-border solid $global-border-color;
 
         div.col-1, div.col-2 {
             @extend .block;
@@ -135,7 +132,6 @@
 
     .col1-wide {
         display: block;
-        width: 95%;
 
         #checkout-review-table {
             @extend .egov-base-table;
@@ -177,7 +173,6 @@
 
     p.grand-total {
         display: inline-block;
-        width: 95%;
         text-align: right;
         margin-top: 20px;
         font-size: 1em;
@@ -199,6 +194,15 @@
 .egovs-checkout-multipage-overview {
     .main-container {
         left: 0px;
+
+        .multiple-checkout {
+            .col-1 {
+                h4, address {
+                    margin: 0px;
+                    padding: 0px;
+                }
+            }
+        }
     }
 }
 

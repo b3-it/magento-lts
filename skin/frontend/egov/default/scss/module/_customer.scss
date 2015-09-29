@@ -516,10 +516,9 @@ body.customer-account {
  * ============================================ */
 
 .order-info {
-    padding-bottom: $box-spacing;
-    border-bottom: 1px solid $c-module-border-light;
+    padding: $global-boxpadding;
+    border:$global-box-border solid $global-border-color;
     width: 100%;
-    margin-bottom: $trim;
 
     dt,
     dd,
@@ -529,14 +528,13 @@ body.customer-account {
     }
 
     dt {
-        margin-right: ($box-spacing*2);
+        font-weight: bold;
     }
 
     li {
         margin: 0 0 0 ($box-spacing*2);
 
         &.current {
-            font-weight: 600;
         }
 
         &:first-child {
@@ -546,17 +544,15 @@ body.customer-account {
 }
 
 .order-date {
-    font-family: $f-stack-special;
-    text-transform: uppercase;
+    font-family: $base-font-family;
 }
 
 .order-info-box {
-    margin-bottom: 40px;
-    margin-top: 20px;
+    margin: $global-boxmargin 0px;
 
     + .order-info-box {
-        padding-bottom: 40px;
-        border-bottom: 1px solid $c-module-border-light;
+        padding-bottom: $global-boxpadding-large;
+        border-bottom: $global-box-border solid $global-border-color;
     }
 
     .col-1 {
@@ -576,15 +572,12 @@ body.customer-account {
     }
 
     .box-title {
-        width: 150px;
-        padding-right: $box-spacing;
-        float: left;
+        padding: 0px !important;
+        margin: 0px !important;
 
         h2 {
-            font-size: $f-size;
-            font-family: $f-stack-special;
             font-weight: bold;
-            line-height: 1.5;
+            line-height: $global-fontsize-big;
 
             &:after {
                 content: ':';
@@ -593,32 +586,30 @@ body.customer-account {
     }
 
     .box-content {
-        float: left;
-        font-family: $f-stack-serif;
+        padding: 0px !important;
+        margin: 0px !important;
 
         td,
         th {
-            font-family: $f-stack-serif;
-            line-height: 1.3;
+            line-height: $global-fontsize-big;
         }
 
         th {
-            padding-top: $box-spacing;
+            padding-top: $global-boxpadding-large;
         }
 
         td {
-            padding-left: $trim-small;
+            padding-left: $global-tdpadding;
         }
 
         strong {
-            font-family: $f-stack-special;
             font-weight: normal;
-            text-transform: uppercase;
         }
     }
 }
 
 #my-orders-table {
+    @extend .egov-base-totals;
     @extend .egov-base-table;
 
     thead th, tbody td {
@@ -626,8 +617,12 @@ body.customer-account {
         padding: $global-tdpadding;
     }
 
+    tbody td {
+        background-color: $global-checkout-tdbackground;
+    }
+
     td.last {
-        padding: 0px;
+        text-align: right !important;
     }
 
     .option-label {
