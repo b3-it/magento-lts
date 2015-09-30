@@ -28,7 +28,8 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 	 * @return string URL
 	 */
 	public function getProductFileUrl() {
-		return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->helper('productfile')->getProductFileUploadDirectory().DS.$this->getProductFile();
+		$url =  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->helper('productfile')->getProductFileUploadDirectory()."/".$this->getProductFile();
+		return $url;
 	}
 	/**
 	 * Liefert die URL zum Bild der Beschreibungsdatei
@@ -36,7 +37,8 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 	 * @return string URL
 	 */
 	public function getProductImageUrl() {
-		return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->helper('productfile')->getProductFileUploadDirectory().DS.$this->getProductImage();
+		$url =   Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->helper('productfile')->getProductFileUploadDirectory()."/".trim($this->getProductImage());
+		return $url;
 	}
 	/**
 	 * Prüft ob die Beschreibungsdatei vorhanden ist
@@ -49,6 +51,20 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 			return true;
 		}
 		
+		return false;
+	}
+	
+	/**
+	 * Prüft ob ein Bild der Beschreibungsdatei vorhanden ist
+	 *
+	 * @return boolean
+	 */
+	public function existsProductImage() {
+		$path = Mage::getBaseDir('media') . DS . $this->helper('productfile')->getProductFileUploadDirectory() . DS;
+		if (file_exists($path . $this->getProductImage()) && !is_dir($path . $this->getProductImage())) {
+			return true;
+		}
+	
 		return false;
 	}
 	
@@ -112,7 +128,7 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 				'label'     	=> $this->__('Product file image upload'),
 				'name'      	=> Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE,
 				'note'			=> $this->__('Allowed file types') . ": " . $this->helper('productfile')->getFormattedProductImageAllowedExtensions(),
-				'image'			=> $this->getProductImageUrl(),
+				'image'			=> $this->existsProductImage() ? $this->getProductImageUrl(): false,
 		));
 		$element->setRenderer(
 				$this->getLayout()->createBlock('productfile/adminhtml_widget_form_renderer_fieldset_elementfile')
