@@ -29,6 +29,7 @@
     ;json[]          = POST.__jsondata
 	json[]          = POST.product.media_gallery.values;
 	json[]          = POST.product.media_gallery.images;
+	json[]          = POST.groups.payplace.fields.merchant_name.value;
 	
     ; define which fields shouldn't be monitored (a[b]=c should be referenced via a.b)
     ;exceptions[]    = GET.__utmz

@@ -420,14 +420,14 @@ class Monitor
         $decodedKey   = json_decode($key);
         $decodedValue = json_decode($value);
 
-        if ($decodedValue && is_array($decodedValue) || is_object($decodedValue)) {
+        if (isset($decodedValue) && is_array($decodedValue) || is_object($decodedValue)) {
             array_walk_recursive($decodedValue, array($this, 'jsonConcatContents'));
             $value = $this->tmpJsonString;
         } else {
             $this->tmpJsonString .=  " " . $decodedValue . "\n";
         }
 
-        if ($decodedKey && is_array($decodedKey) || is_object($decodedKey)) {
+        if (isset($decodedKey) && is_array($decodedKey) || is_object($decodedKey)) {
             array_walk_recursive($decodedKey, array($this, 'jsonConcatContents'));
             $key = $this->tmpJsonString;
         } else {
