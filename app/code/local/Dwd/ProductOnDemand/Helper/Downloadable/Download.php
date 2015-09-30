@@ -37,7 +37,17 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 					
 					$hostname = $urlProp['host'];
 					if (strtolower($urlProp['scheme'] == 'https')) {
-						$_baseUrl = 'tls://'.$urlProp['host'];
+						/*
+						 * 20150929::Frank Rochlitzer
+						 * PHP < 5.6 unterstützt TLS > 1.0 nur über SSL Transport!
+						 * Der TLS Transport untersützt nur TLSv1.0
+						 * @see https://bugs.php.net/bug.php?id=65329
+						 */
+						if (version_compare(phpversion(), '5.6.0', '<')===true) {
+							$_baseUrl = 'ssl://'.$urlProp['host'];
+						} else {
+							$_baseUrl = 'tls://'.$urlProp['host'];
+						}
 						$port = 443;
 					} else {
 						$_baseUrl = $urlProp['host'];
@@ -62,14 +72,31 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 						$_verifyPeer = Mage::getStoreConfigFlag('catalog/dwd_pod/verfiy_peer');
 						if (strtolower($urlProp['scheme'] == 'https') && $_verifyPeer) {
 							
+							if (version_compare(phpversion(), '5.6.0', '<')===true) {
 							$context = stream_context_create(
 									array(
 										'ssl' => array(
 												'verify_peer' => $_verifyPeer,
 												'capath' => Mage::getStoreConfig('catalog/dwd_pod/ca_path'),
+												'disable_compression' => true,
 										)
-								)
-							);
+									)
+								);
+							} else {
+								//@see https://wiki.php.net/rfc/improved-tls-defaults
+								$context = stream_context_create(
+										array(
+												'ssl' => array(
+														'verify_peer' => $_verifyPeer,
+														'capath' => Mage::getStoreConfig('catalog/dwd_pod/ca_path'),
+														'disable_compression' => true,
+														'capture_session_meta' => TRUE,
+														'crypto_method' => STREAM_CRYPTO_METHOD_TLS_CLIENT,
+														"honor_cipher_order"    => TRUE,
+												)
+										)
+								);
+							}
 							$this->_handle = stream_socket_client($_baseUrl, $errno, $errstr, ini_get("default_socket_timeout"), STREAM_CLIENT_CONNECT, $context);
 						} else {
 							$this->_handle = stream_socket_client($_baseUrl, $errno, $errstr);
