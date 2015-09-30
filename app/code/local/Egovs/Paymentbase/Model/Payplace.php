@@ -42,6 +42,39 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 	 * @var unknown_type
 	 */
 	protected $_errors = array();
+	
+	/**
+	 * eShopTAN
+	 * 
+	 * @var string
+	 */
+	protected $_eShopTan = '';
+	
+	/**
+	 * Liefert eine eShopTan
+	 * 
+	 * Die TAN ist base16 kodiert und ist maximal 17 Zeichen lang.
+	 * 
+	 * @return string
+	 */
+	protected function _geteShopTan() {
+		if (empty($this->_eShopTan)) {
+			$orderId = (int)$this->_getOrder()->getId();
+			$mandant = $this->_getMandantNr();
+			
+			$mandant = strtoupper($mandant);
+			$length = strlen($mandant);
+			$ord = 0;
+			for ($i = 0; $i < $length; $i++) {
+				$ord += max(0, (int)ord($mandant[$i]) - 48);
+			}
+			
+			$tan = $orderId + time() + $ord;
+			$tan = base_convert($tan, 10, 16);
+			$this->_eShopTan = substr($tan, 0, 17);
+		}
+		return $this->_eShopTan;
+	}
 	/**
      * Return true if the method can be used at this time
      * 
@@ -236,7 +269,9 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 			// Kennzeichen Mahnverfahren aus Konfiguration
 			$this->getKennzeichenMahnverfahren($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal()),
 			// Kassenzeichen wird normalerweise vom ePayment-Server generiert
-			$this->_getKassenzeichen()
+			$this->_getKassenzeichen(),
+			//eShopTAN
+			$this->_geteShopTan()
 		);
 	
 		Mage::log("{$this->getCode()}::pre::objSOAPClientBfF->anlegenKassenzeichen(" . var_export($this->_getMandantNr(), true) . ", " . var_export($this->_getECustomerId(), true) . ", " . var_export($objBuchungsliste, true) . ", null, null, $type)", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
@@ -374,8 +409,10 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 		$_formServiceRequest = new Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Request();
 		$this->_xmlApiRequest->setFormServiceRequest($_formServiceRequest);
 		$_formServiceRequest->setMerchantId($this->getMerchantId());
+		//Order ID muss mit übertragen werden um im Callback die Richtige Order zu laden
+		$_formServiceRequest->setAdditionalData($this->_getOrder()->getId());
 		//Muss eindeutig und unique sein --> daher sollte hier nicht das Kassenzeichen genommen werden Zahlpartnerkonten!!
-		$_formServiceRequest->setEventExtId($this->_getOrder()->getId());
+		$_formServiceRequest->setEventExtId($this->_geteShopTan());
 		$_formServiceRequest->setBasketId($this->_getBewirtschafterNr().'/'.$this->getInfoInstance()->getKassenzeichen());
 		$_formServiceRequest->setCurrency($this->_getOrder()->getBaseCurrencyCode());
 		//Amount in Cent bei EUR
@@ -473,6 +510,12 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 				return $_error;
 			}
 			
+			switch ($_paymentResponse->getRc()) {
+				//Vorgangsnummer schon vergeben. (108/ )
+				case '3110':
+					Mage::getSingleton('checkout/session')->addError(Mage::helper('payplacepaypage')->__('eShopTAN already in use. Please try again.'));
+					break;
+			}
 			$msg = sprintf("{$this->getCode()}::REFID:%s\nrc:%s message:%s", $_xmlApiResponse->getRef(), $_paymentResponse->getRc(), $_paymentResponse->getMessage());
 			Mage::log($msg, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			return $_error;
