@@ -66,7 +66,8 @@
 
     .col2-left-layout {
         .col-main {
-            .display-both-prices {
+            .display-both-prices,
+            .display-single-price  {
                 /* Abstand bei Warenkorb-Anzeige entfernen (-BoxMargin) */
                 position: relative;
                 top: 0 - $global-boxmargin;
@@ -104,7 +105,7 @@
     }
 }
 
-.display-both-prices {
+.display-both-prices, .display-single-price {
     @include oneColumnCartItems;
 }
 
