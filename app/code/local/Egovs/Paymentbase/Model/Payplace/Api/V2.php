@@ -31,7 +31,7 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 				$this->_fault('basket_id_invalid');
 			}
 			
-			$orderId = intval($_payplaceCallbackRequest->getPaymentResponse()->getEventExtId());
+			$orderId = intval($_payplaceCallbackRequest->getPaymentResponse()->getAdditionalData());
 			if (empty($orderId)) {
 				$this->_fault('order_not_found');
 			}
@@ -102,9 +102,8 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 					}
 					
 					// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
-					$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
 					$objResult = null;
-					for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && $objResult->istOk != true; $i++) {
+					for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!isset($objResult->istOk) || $objResult->istOk != true); $i++) {
 						$this->_log(sprintf("NOTIFY_ACTION:Try %s to activate kassenzeichen...", $i+1));
 						try {
 							//Aktiviert z. B. das Kassenzeichen
@@ -158,19 +157,10 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 					$this->_log("Order is valid, preparing invoice...");
 					$invoicable = true;
 				
-					//$order->getPayment()->setData('saferpay_transaction_id', $idp->getAttribute('ID'));
-					//$paymentInst->setTransactionId($idp->getAttribute('ID'));
-				
-					if (version_compare(Mage::getVersion(), '1.4.1', '<')) {
-						//Magento 1.3
-						$orderState = $order->getIsVirtual()
-						? Mage_Sales_Model_Order::STATE_COMPLETE
-						: Mage_Sales_Model_Order::STATE_PROCESSING;
-					} else {
 						//STATE_COMPLETE ist in Magento 1.6 geschützt
 						//wird für Virtuelle Produkte aber automatisch gesetzt
 						$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
-					}
+					
 					$order->setState($orderState);
 				
 					$orderStatus = Mage::getStoreConfig("payment/".$this->_module."/order_status");

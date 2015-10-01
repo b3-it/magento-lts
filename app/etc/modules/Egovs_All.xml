@@ -111,7 +111,7 @@
             </depends>
         </Egovs_Freepayment>
         <Egovs_Giropay>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />
@@ -126,10 +126,6 @@
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_GermanTax>
-        <Egovs_Herausgeberbox>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Egovs_Herausgeberbox>
         <Egovs_Informationservice>
             <active>true</active>
             <codePool>local</codePool>
@@ -171,7 +167,7 @@
             <codePool>local</codePool>
         </Egovs_Ready>
         <Egovs_Saferpay>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />

@@ -54,10 +54,12 @@ function setPostcodeOptional(zipElement, country) {
         while (zipElement.hasClassName('required-entry')) {
             zipElement.removeClassName('required-entry');
         }
-        zipElement.up(1).down('label > span.required').hide();
+        var zipElementLabel = zipElement.up(1).down('label > span.required');
+        if(zipElement) zipElement.hide();
     } else {
         zipElement.addClassName('required-entry');
-        zipElement.up(1).down('label > span.required').show();
+        var zipElementLabel = zipElement.up(1).down('label > span.required');
+        if(zipElement) zipElement.show();
     }
 }
 

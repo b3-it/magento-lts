@@ -96,10 +96,12 @@ class Dwd_ConfigurableDownloadable_Block_Adminhtml_Widget_Grid_Column_Renderer_D
             unset($action['confirm']);
         }
 
+        $fileinfo = $action['file_info'];
+        if(isset($action['file_info'])){ unset($action['file_info']);}
         $actionAttributes->setData($action);
         $html = '<a ' . $actionAttributes->serialize() . '>' . $actionCaption . '</a>';
-        if (isset($action['file_info'])) {
-        	$html .= " ({$action['file_info']['size']})";
+        if (isset($fileinfo)) {
+        	$html .= " ({$fileinfo['size']})";
         }
         return $html;
 	}
