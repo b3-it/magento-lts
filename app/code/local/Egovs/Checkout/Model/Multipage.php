@@ -347,6 +347,9 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 	 * @return true|array
 	 */
 	protected function _processValidateCustomer(Mage_Sales_Model_Quote_Address $address) {
+		/* @var $customerForm Mage_Customer_Model_Form */
+		$customerForm = Mage::getModel('customer/form');
+				
 		// set customer date of birth for further usage
 		$dob = '';
 		if ($address->getDob ()) {
@@ -380,25 +383,28 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 		
 		// invoke customer model, if it is registering
 		if (Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER == $this->getQuote ()->getCheckoutMethod ()) {
-			// set customer password hash for further usage
+			$customerForm->setFormCode('checkout_register')
+				->setIsAjaxRequest(Mage::app()->getRequest()->isAjax())
+			;
 			$customer = Mage::getModel ( 'customer/customer' );
+			$customerForm->setEntity($customer);
+			$customerRequest = $customerForm->prepareRequest($address->getData());
+			$customerData = $customerForm->extractData($customerRequest);
+			// set customer password hash for further usage
 			$this->getQuote ()->setPasswordHash ( $customer->encryptPassword ( $address->getCustomerPassword () ) );
 			
-			// validate customer
-			foreach ( 
-					array (
-					'firstname' => 'firstname',
-					'lastname' => 'lastname',
-					'email' => 'email',
-					'password' => 'customer_password',
-					'confirmation' => 'confirm_password',
-					'taxvat' => 'taxvat' 
-			) as $key => $dataKey ) {
-				$customer->setData ( $key, $address->getData ( $dataKey ) );
+			$customerErrors = $customerForm->validateData($customerData);
+			if ($customerErrors !== true) {
+				$message = implode(', ', $customerErrors);
+				Mage::throwException($message);
 			}
-			if ($dob) {
-				$customer->setDob ( $dob );
-			}
+			
+			$customerForm->compactData($customerData);
+			
+			// set customer password
+			$customer->setPassword($customerRequest->getParam('customer_password'));
+			$customer->setPasswordConfirmation($customerRequest->getParam('confirm_password'));
+			
 			$validationResult = $customer->validate ();
 			
 			if (true !== $validationResult && is_array ( $validationResult )) {

@@ -36,10 +36,11 @@
 <!--Sprungziel Tastatursteuerung -->
 <div id="jumptarget<?php echo $this->getNameInLayout();?>">
 
+<form id="co-billing-form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
+
 <div class="page-title title-buttons">
     <h1><?php echo $this->__('Enter New Address') ?></h1>
 </div>
-<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
     <fieldset>
     <legend><?php echo $this->__('New Address') ?></legend>
     <ul class="form-list group-select">
@@ -186,7 +187,7 @@
 	                        <input type="password" name="billing[customer_password]" id="billing:customer_password" title="<?php echo $this->__('Password') ?>" class="input-text required-entry validate-password" autocomplete="off" /></div>
 	                    <div class="input-box">
 	                        <label for="billing:confirm_password"><?php echo $this->__('Confirm Password') ?> <span class="required">*</span></label><br />
-	                        <input type="password" name="billing[confirm_password]" title="<?php echo $this->__('Confirm Password') ?>" id="billing:confirm_password" class="input-text required-entry validate-password" autocomplete="off" />
+	                        <input type="password" name="billing[confirm_password]" title="<?php echo $this->__('Confirm Password') ?>" id="billing:confirm_password" class="input-text required-entry validate-cpassword" autocomplete="off" />
 	                    </div>
 	                </li>
 	     <?php endif ?>
@@ -224,3 +225,8 @@
  	</fieldset>
  </div>
 </form>
+<script type="text/javascript">
+//<![CDATA[
+    var billingForm = new VarienForm('co-billing-form');
+//]]>
+</script>
