@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+
+<config>
+   <sections>
+        <payment>
+            <groups>
+                <saferpay translate="label" module="saferpay">
+                    <label>Kreditkarte per Saferpay</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1020</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <account_id translate="label">
+                            <label>Saferpay Account ID</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Your Saferpay Account-ID.</comment>
+                        </account_id>
+                        <description translate="label">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </description>
+                        <providerset translate="label">
+                            <label>Providerset</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>201</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Geben Sie hier die Provider an, die zur Verfügung stehen sollen, z. B. "102,104" für Visa und Mastercard. Beachten Sie bitte dazu die Saferpay-Dokumentation.</comment>
+                        </providerset>
+                        <payernote translate="label">
+                            <label>Hinweis für Käufer</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Geben Sie hier den Hinweis für den Käufer ein (PAYERNOTE), z. B. [www.slpb.de][Dresden]. Beachten Sie bitte dazu die Saferpay-Dokumentation (Special Features).</comment>
+                        </payernote>
+                        <cvc translate="label">
+                            <label>CVC</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>290</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Abfrage der Kartenprüfnummer</comment>
+                        </cvc>
+                        <karteninhaber translate="label">
+                            <label>Karteninhaber</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>291</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Abfrage des Karteninhabernamens</comment>
+                        </karteninhaber>
+                        <autoclose translate="label">
+                            <label>Autoclose</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Nach wie viel Sekunden soll automatisch weitergeleitet werden? (0 = sofort)</comment>
+                        </autoclose>
+                        <address translate="label">
+                            <label>Address</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>paymentbase/system_config_source_saferpayaddress</source_model>
+                            <sort_order>301</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Verwendung nicht empfohlen. Bitte nur angeben, wenn entsprechend Saferpay-Dokumentation gewünscht.</comment>
+                        </address>
+                        <langid translate="label">
+                            <label>LangID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>302</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Standard-Sprache, z. B. de; wenn leer, wird Browser-Sprache genutzt (empfohlen)</comment>
+                        </langid>
+                        <showlanguages translate="label">
+                            <label>Showlanguages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>303</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Soll eine Sprachauswahl angezeigt werden?</comment>
+                        </showlanguages>
+                        <agburl translate="label">
+                            <label>AGBUrl</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>304</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Verwendung nicht empfohlen. Angabe der URL zu den AGB.</comment>
+                        </agburl>
+                        <agbcheckboxactive translate="label">
+                            <label>AGBCheckBoxActive</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>305</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Verwendung nicht empfohlen. Angabe, ob AGB verpflichtend bestätigt werden müssen.</comment>
+                        </agbcheckboxactive>
+						<vtconfig translate="label">
+                            <label>VTConfig</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>306</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Angabe der Saferpay-Konfiguration.</comment>
+                        </vtconfig>
+                        <headfontactivecolor translate="label">
+                            <label>HEADFONTACTIVECOLOR</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>307</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Farbe des aktiven Tabs in der Verlaufsanzeige des VT, z. B. #CCCCCC</comment>
+                        </headfontactivecolor>
+                        <headfontinactivecolor translate="label">
+                            <label>HEADFONTINACTIVECOLOR</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>308</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Farbe der inaktiven Tabs in der Verlaufsanzeige des VT</comment>
+                        </headfontinactivecolor>
+                        <debug_flag translate="label">
+                            <label>Debug Flag</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </debug_flag>
+                        <!--Wird nicht mehr benötigt, der initiale State ist immer STATE_PENDING_PAYMENT
+                        <order_status translate="label">
+                            <label>New order status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status_processing</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_status>-->
+                        <allowspecific translate="label">
+                            <label>Payment from applicable countries</label>
+                            <frontend_type>allowspecific</frontend_type>
+                            <sort_order>90</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Payment from Specific countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>100</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </specificcountry>
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_order>
+                        <min_order_total translate="label">
+                            <label>Mindestbestellwert</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>980</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </min_order_total>
+                        <max_order_total translate="label">
+                            <label>Höchstbestellwert</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>981</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_order_total>
+                        <cancel_order_after_active translate="label" module="paymentbase">
+                            <label>Cancel order after active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>985</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Activates the automatic cancelling of the order after a timeout</comment>
+                        </cancel_order_after_active>
+                        <cancel_order_after translate="label" module="paymentbase">
+                            <label>Cancel order after</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>986</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>The timeout for automatic cancelling in minutes</comment>
+                        </cancel_order_after>
+                        <delete_customer_after_transaction translate="label" module="paymentbase">
+                            <label>Delete customer after payment transaction</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If active the customer will be deleted after every payment transaction on the ePayBL server</comment>
+                        </delete_customer_after_transaction>
+                   </fields>
+                </saferpay>
+            </groups>
+        </payment>
+    </sections>
+</config>
