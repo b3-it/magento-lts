@@ -34,7 +34,7 @@
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <!--Sprungziel Tastatursteuerung -->
 
-<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+<form id="co-billing-form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
 <div class="page-title title-buttons">
     <h2><?php echo $this->__('Enter New Address') ?></h2>
 </div>
@@ -223,3 +223,8 @@
  	</fieldset>
  </div>
 </form>
+<script type="text/javascript">
+//<![CDATA[
+    var billingForm = new VarienForm('co-billing-form');
+//]]>
+</script>
