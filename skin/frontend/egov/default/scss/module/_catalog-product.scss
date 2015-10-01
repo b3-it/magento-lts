@@ -25,13 +25,7 @@
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
-.col1-layout {
-    .category-products, .category-title, .product-view {
-        width: $global-content-1col-percent;
-	  }
-}
-
-.col2-left-layout {
+.col1-layout, .col2-left-layout {
     .category-products, .category-title, .product-view {
         width: 100%;
 	  }

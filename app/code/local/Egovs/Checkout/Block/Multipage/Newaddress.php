@@ -119,13 +119,12 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
     
  
     
- 	public function getFieldRequiredHtml($name,$method = null)
-    {
-    	if($method == null) {
+ 	public function getFieldRequiredHtml($name, $method = null) {
+    	if ($method == null) {
     		$method = $this->getQuote()->getCheckoutMethod();
     	}
     	$requiredHtml = '<span class="required">*</span>'; 
-    	if($this->isFieldRequired($name, $method)) {
+    	if ($this->isFieldRequired($name, $method)) {
     		return $requiredHtml;
     	}
     	if (!$this->getQuote()->isVirtual()) {
@@ -139,7 +138,26 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
     	return '';
     }
     
- 	public function isFieldVisible($key,$method = null)
+    public function getFieldRequiredClass($name, $method = null) {
+    	if ($method == null) {
+    		$method = $this->getQuote()->getCheckoutMethod();
+    	}
+    	$requiredHtml = 'required-entry';
+    	if ($this->isFieldRequired($name, $method)) {
+    		return $requiredHtml;
+    	}
+    	if (!$this->getQuote()->isVirtual()) {
+    		/* @var $addrValidator Egovs_Checkout_Model_Validateadr */
+    		$addrValidator = Mage::getSingleton('mpcheckout/validateadr');
+    		$omit = array('company', 'fax', 'telephone', 'region');
+    		if (!in_array($name, $omit) && !$addrValidator->validateShippingAddressField($name, null)) {
+    			return $requiredHtml;
+    		}
+    	}
+    	return '';
+    }
+    
+ 	public function isFieldVisible($key, $method = null)
  	{
  		$ship = false;
  		if($this->isUsedForShipping()) {
