@@ -4,7 +4,7 @@ error_reporting( E_ALL ^ E_NOTICE );
 $script           = str_replace('\\', '/', $_SERVER['PHP_SELF']);
 $test_mode        = FALSE;                                     // Im Test-Modus werden _new-Dateien erzeugt, um die Originale nicht zu ver㭤ern
 $view_only        = ( isset($_GET['edit']) ? FALSE : TRUE );   // Alle Script-Aktionen abschalten
-$sub              = array('/lib/egovs', '\lib\egovs');
+$sub              = array('/lib/egovs', '\lib\egovs', '/lib/Egovs', '\lib\Egovs');
 $base             = str_replace( $sub, '', dirname(__FILE__) );
 $base_modules_xml = $base . '/app/etc/modules/';
 $local_xml        = $base . '/app/etc/local.xml';
