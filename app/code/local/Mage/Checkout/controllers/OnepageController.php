@@ -247,6 +247,7 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
      */
     public function progressAction()
     {
+    	$this->setFlag('', 'no_regenerate_id', true);
         // previous step should never be null. We always start with billing and go forward
         $prevStep = $this->getRequest()->getParam('prevStep', false);
 
