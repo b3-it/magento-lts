@@ -335,7 +335,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 	    	if ($order->getId() && $order->canCancel()) {
 	        	$order->cancel();
 	        }
-	        
+	        $msg = "Can't validate Saferpay message or message was invalid!";
 	        $order->addStatusToHistory($order->getState(), Mage::helper($module)->__($msg));
 	        $order->save();
         }
@@ -706,7 +706,8 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
         
         // $data contains an xml element, so create an xml object of it
         $dom = new DOMDocument();
-        if (!$dom->loadXML($data)) {
+        if (empty($data) || !$dom->loadXML($data)) {
+        	Mage::log(sprintf("Saferpay data was empty or invalid!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
         	return false;
         }
         

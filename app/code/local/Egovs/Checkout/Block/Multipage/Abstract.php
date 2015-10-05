@@ -154,12 +154,50 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
     	return ($this->helper('mpcheckout/config')->isFieldRequired($key,$method));
     }
     
- 	public function getFieldRequiredHtml($name,$method = null)
-    {
-    	if($method == null) $method = $this->getQuote()->getCheckoutMethod();
-    	if($this->isFieldRequired($name,$method))
-    	{
-    		return '<span class="required">*</span>';
+    /**
+     * Liefert in Abhängigkeit des Pflicht-Flags das entsprechende HTML zurück
+     * 
+     * @param string $name
+     * @param string $method
+     * 
+     * @return string
+     */
+ 	public function getFieldRequiredHtml($name, $method = null) {
+    	$html = '<span class="required">*</span>';
+    	return $this->_getRequiredHtml($html, $name, $method);
+    }
+    
+    /**
+     * Liefert in Abhängigkeit des Pflicht-Flags die entsprechende CLASS zurück
+     *
+     * @param string $name
+     * @param string $method
+     *
+     * @return string
+     */
+    public function getFieldRequiredClass($name, $method = null) {
+    	$html = 'required-entry';
+    	return $this->_getRequiredHtml($html, $name, $method);
+    }
+    
+    /**
+     * Prüft ob das Feld pflicht ist.
+     * 
+     * @param string $html
+     * @param string $name
+     * @param string $method
+     * 
+     * @return string
+     */
+    protected function _getRequiredHtml($html, $name, $method = null) {
+    	if (!$html) {
+    		$html = '';
+    	}
+    	if ($method == null) {
+    		$method = $this->getQuote()->getCheckoutMethod();
+    	}
+    	if ($this->isFieldRequired($name, $method)) {
+    		return $html;
     	}
     	return '';
     }

@@ -565,7 +565,14 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     public function regenerateSessionId()
     {
     	$this->setLastSessionId($this->getSessionId());
-        session_regenerate_id(true);
+    	try
+    	{
+        	session_regenerate_id(true);
+    	}
+    	catch(Exception $ex)
+    	{
+    		
+    	}
         return $this;
     }
     
