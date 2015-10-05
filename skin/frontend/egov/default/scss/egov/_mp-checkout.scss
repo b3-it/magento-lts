@@ -191,6 +191,10 @@
     }
 }
 
+.egovs-checkout-multipage-newaddress {
+    @include new_address;
+}
+
 .egovs-checkout-multipage-overview {
     .main-container {
         left: 0px;

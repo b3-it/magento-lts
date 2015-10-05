@@ -120,48 +120,7 @@
         }
     }
 
-    form {
-        .form-list {
-            li {
-                label {
-                    font-weight: bold;
-                }
-
-                .column-left, .column-right {
-                    width: 47%;
-                    float: left;
-                }
-            }
-        }
-
-        .required {
-
-            em {
-                color: $global-warning-color;
-                margin-right: 5px;
-            }
-        }
-
-        .back-button {
-            float: left;
-        }
-
-        .fieldset {
-            width: 48%;
-            float: left;
-            height: auto;
-            margin-bottom: 30px;
-        }
-
-        input[type="text"],
-        input[type="tel"] {
-            width: 90%;
-        }
-
-        select {
-            width: 89%;
-        }
-    }
+    @include new_address;
 
     .spacer {
         display: inline-block;
