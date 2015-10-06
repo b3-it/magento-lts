@@ -69,6 +69,17 @@
             margin: 0px !important;
             padding: 0px !important;
         }
+
+        .locked_address_text {
+            display: block;
+
+            > span {
+                font-family: $base-font-family;
+                color: $global-warning-color;
+                font-size: $global-fontsize-small;
+                font-weight: bold;
+            }
+        }
     }
 
     .page-title {

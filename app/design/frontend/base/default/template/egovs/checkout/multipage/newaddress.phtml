@@ -70,6 +70,15 @@
 		    		        <?php endif; ?>
 		    		        </div>
 		    		    </li>
+
+            <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
+		    		<?php if ($_dob->isEnabled()): ?>
+		    		    <li class="fields">
+		    		        <?php echo $_dob->setDate($this->getQuote()->getCustomerDob())
+		    		                        ->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+		    		    </li>
+		    		<?php endif; ?>
+
 		    		    <li class="fields">
 		    		        <div class="field name-firstname">
 		    		            <label for="firstname">
@@ -100,6 +109,15 @@
             <h2 class="legend">&nbsp;</h2>
             <ul class="form-list">
                 <li class="fields dummy"></li>
+
+		    		<?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
+		    		<?php if ($_taxvat->isEnabled()): ?>
+		    		    <li class="fields">
+		    		        <?php echo $_taxvat->setTaxvat($this->getQuote()->getCustomerTaxvat())
+		    		                           ->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+		    		    </li>
+		    		<?php endif ?>
+
                 <li class="fields">
                     <div class="field name-lastname">
                         <label for="lastname">
@@ -278,7 +296,7 @@
 		    		  <?php if ($this->canShip()): ?>
 		    		    <li class="fields" id="new-address-use-for-shipping">
 		    		        <div class="field">
-		    		            <input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1"<?php if ($this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?> class="radio" />
+		    		            <input tabindex="17" type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1"<?php if ($this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?> class="radio" />
 		    		            <label for="billing:use_for_shipping_yes">
 		    		                <?php echo  $this->__('Ship to this address') ?>
 		    		            </label>
@@ -286,7 +304,7 @@
 		    		    </li>
 		    		    <li class="fields" id="new-address-use-for-shipping-no">
 		    		        <div class="field">
-		    		            <input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_no" value="0"<?php if (!$this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?> class="radio" />
+		    		            <input tabindex="18" type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_no" value="0"<?php if (!$this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?> class="radio" />
 		    		            <label for="billing:use_for_shipping_no">
 		    		                <?php echo $this->__('Ship to different address') ?>
 		    		            </label>
@@ -295,7 +313,7 @@
   	            <?php if($this->isStorePickupAvailable()):?>
 		    		    <li class="fields" id="new-address-use-for-shipping-option">
 		    		        <div class="field">
-		    		            <input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_option" value="2"<?php if ($this->isStorePickup()) {?> checked="checked"<?php }?>  class="radio" />
+		    		            <input tabindex="19" type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_option" value="2"<?php if ($this->isStorePickup()) {?> checked="checked"<?php }?>  class="radio" />
 		    		            <label for="billing:use_for_shipping_option">
 		    		                <?php echo $this->__('Store Pickup') ?>
 		    		            </label>
@@ -303,6 +321,19 @@
 		    		    </li>
 		    		    <?php endif; ?>
 		    		  <?php endif; ?>
+
+		    		  <?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()):?>
+		    		    <li class="fields">
+		    		        <div class="field">
+		    		            <input tabindex="20" type="checkbox" name="billing[save_in_address_book]" value="1" title="<?php echo $this->__('Save in address book') ?>" id="billing:save_in_address_book" onchange="shipping.setSameAsBilling(false);"<?php if ($this->getAddress()->getSaveInAddressBook()):?> checked="checked"<?php endif;?> class="checkbox" />
+		    		            <input type="hidden" name="billing[save_in_address_book]" value="1" />
+		    		            <label for="billing:save_in_address_book">
+		    		                <?php echo $this->__('Save in address book') ?>
+		    		            </label>
+		    		        </div>
+		    		    </li>
+		    		  <?php endif ?>
+
             </ul>
         </div>
 
@@ -311,13 +342,13 @@
     <p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
     <div class="buttons-set">
-        <a class="back-link egovslistbutton" href="<?php echo $this->getBackUrl() ?>">
+        <a class="back-link egovslistbutton" href="<?php echo $this->getBackUrl() ?>" tabindex="21">
             <span><?php echo $this->__('Back') ?></span>
         </a>
-        <a class="break-link egovslistbutton" href="<?php echo $this->getUrl() ?>">
+        <a class="break-link egovslistbutton" href="<?php echo $this->getUrl() ?>" tabindex="22">
             <span><?php echo $this->__('Continue Shopping') ?></span>
         </a>
-        <button  class="button" type="submit">
+        <button  class="button" type="submit" tabindex="23">
             <span><?php echo $this->__('Continue') ?></span>
         </button>
     </div>
