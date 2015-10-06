@@ -51,13 +51,15 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                     <?php echo $this->__('Base Address')?>
 
                     <span class="spacer"> | </span>
-                    <?php if(!$this->rejectAddressEditing($_pAddress)):?>
+                  <?php if(!$this->rejectAddressEditing($_pAddress)):?>
                     <a class="egov-pencile" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>" alt="<?php echo $this->__('Edit Base Address'); ?>" title="<?php echo $this->__('Edit Base Address'); ?>"> </a>
-                    <?php else: ?>
+                  <?php else: ?>
                     <span class="locked_address_text egov-password">
-                        <?php echo $this->getLockedAddressText();?>
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
                     </span>
-                    <?php endif;?>
+                  <?php endif;?>
 
                     <br />
                     <?php if($billingIsBase) echo $this->__('Default Billing Address');?><br />
@@ -79,14 +81,16 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                     <?php echo $this->__('Default Billing Address') ?>
 
                     <span class="spacer"> | </span>
-                    <?php if(!$this->rejectAddressEditing($_pAddress)):?>
+                  <?php if(!$this->rejectAddressEditing($_pAddress)):?>
                     <?php if(!$shippingIsBilling) $_link_text = $this->__('Change Billing Address'); else $_link_text = $this->__('Change Default Address'); ?>
                     <a class="egov-pencile" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>" alt="<?php echo $_link_text; ?>" title="<?php echo $_link_text; ?>"> </a>
-                    <?php else: ?>
+                  <?php else: ?>
                     <span class="locked_address_text egov-password">
-                        <?php echo $this->getLockedAddressText();?>
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
                     </span>
-                    <?php endif;?>
+                  <?php endif;?>
 
                     <br />
                     <?php if($shippingIsBilling) echo $this->__('Default Shipping Address') ?>
@@ -120,13 +124,15 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                     <?php echo $this->__('Default Shipping Address') ?>
 
                     <span class="spacer"> | </span>
-                    <?php if(!$this->rejectAddressEditing($_pAddress)):?>
+                  <?php if(!$this->rejectAddressEditing($_pAddress)):?>
                     <a class="egov-pencile" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>" alt="<?php echo $this->__('Edit Base Address'); ?>" title="<?php echo $this->__('Edit Base Address'); ?>"> </a>
-                    <?php else: ?>
+                  <?php else: ?>
                     <span class="locked_address_text egov-password">
-                        <?php echo $this->getLockedAddressText();?>
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
                     </span>
-                    <?php endif;?>
+                  <?php endif;?>
 
                 </h3>
             </div>

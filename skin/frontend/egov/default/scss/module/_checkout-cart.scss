@@ -53,6 +53,17 @@
 }
 
 .checkout-cart-index {
+    .btn-proceed-checkout {
+        width: 100%;
+        padding: 10px;
+
+        #proceed-button-first {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: $global-fontsize-big;
+        }
+    }
+
     .cart-empty {
         @extend .egov-default-message;
 

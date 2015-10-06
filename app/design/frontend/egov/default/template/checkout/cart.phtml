@@ -122,14 +122,18 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
         <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
     </div>
     <div class="cart-totals-wrapper">
-        <div class="cart-totals">
+        <!--Sprungziel Tastatursteuerung -->
+        <div class="cart-totals" id="jumptarget<?php echo $this->getNameInLayout();?>">
             <?php echo $this->getChildHtml('totals'); ?>
             <?php if(!$this->hasError()): ?>
             <button class="button btn-proceed-checkout btn-checkout"
                     onclick="window.location=' <?php echo $this->helper('mpcheckout/url')->getCheckoutUrl()?>';"
                     title="<?php echo $this->__('Proceed to checkout'); ?>"
                     type="button">
-                <?php echo $this->__('Proceed to checkout'); ?>
+                <div id="proceed-button-first">
+                    <?php echo $this->__('Order now'); ?>
+                </div>
+                (<?php echo $this->__('Checkout'); ?>)
             </button>
             <?php endif; ?>
         </div>

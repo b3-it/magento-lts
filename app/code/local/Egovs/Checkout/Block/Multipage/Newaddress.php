@@ -33,7 +33,7 @@
 class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Multipage_Abstract
 {
     private $_address = null;
-    
+
     /**
      * Retrieve multipage checkout model
      *
@@ -85,9 +85,9 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
         }
         return $options;
     }
-    
+
     function getAddress() {
-    
+
     	if($this->_address != null) return $this->_address;
     	$res = null;
         if (!$this->isCustomerLoggedIn()) {
@@ -97,66 +97,59 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
             if($res['prefix'] == '') $res['prefix'] = $this->getQuote()->getCustomer()->getPrefix();
             if($res['firstname'] == '') $res['firstname'] = $this->getQuote()->getCustomer()->getFirstname();
             if($res['lastname'] == '') $res['lastname'] = $this->getQuote()->getCustomer()->getLastname();
-            
+
         }
-        
+
         $postdata = Mage::getSingleton('customer/session')->getData('addresspostdata');
         if(($postdata != null) && is_array($postdata))
         {
 	        $keys = array_keys($postdata);
 	        foreach ($keys as $key)
 	        {
-	        	//if($res->getData($key)== null) 
+	        	//if($res->getData($key)== null)
 	        	$res->setData($key,$postdata[$key]);
 	        }
         }
         Mage::getSingleton('customer/session')->unsetData('addresspostdata');
         $this->_address = $res;
-        
+
         return $res;
     }
-    
-    
- 
-    
- 	public function getFieldRequiredHtml($name, $method = null) {
-    	if ($method == null) {
-    		$method = $this->getQuote()->getCheckoutMethod();
-    	}
-    	$requiredHtml = '<span class="required">*</span>'; 
-    	if ($this->isFieldRequired($name, $method)) {
-    		return $requiredHtml;
-    	}
-    	if (!$this->getQuote()->isVirtual()) {
-    		/* @var $addrValidator Egovs_Checkout_Model_Validateadr */
-    		$addrValidator = Mage::getSingleton('mpcheckout/validateadr');
-    		$omit = array('company', 'fax', 'telephone', 'region');
-    		if (!in_array($name, $omit) && !$addrValidator->validateShippingAddressField($name, null)) {
-    			return $requiredHtml;
-    		}
-    	}
-    	return '';
+
+    public function getFieldRequiredHtml($name, $method = null) {
+        return $this->getFieldRequired($name, $method, 'html');
     }
-    
+
     public function getFieldRequiredClass($name, $method = null) {
-    	if ($method == null) {
-    		$method = $this->getQuote()->getCheckoutMethod();
-    	}
-    	$requiredHtml = 'required-entry';
-    	if ($this->isFieldRequired($name, $method)) {
-    		return $requiredHtml;
-    	}
-    	if (!$this->getQuote()->isVirtual()) {
-    		/* @var $addrValidator Egovs_Checkout_Model_Validateadr */
-    		$addrValidator = Mage::getSingleton('mpcheckout/validateadr');
-    		$omit = array('company', 'fax', 'telephone', 'region');
-    		if (!in_array($name, $omit) && !$addrValidator->validateShippingAddressField($name, null)) {
-    			return $requiredHtml;
-    		}
-    	}
-    	return '';
+        return $this->getFieldRequired($name, $method, 'class');
     }
-    
+
+    private function getFieldRequired($name, $method = null, $return = 'html') {
+        if ( $return == 'html' ) {
+            $requiredHtml = '<span class="required">*</span>';
+        }
+        elseif ( $return == 'class' ) {
+            $requiredHtml = 'required-entry';
+        }
+
+        if ($method == null) {
+    		    $method = $this->getQuote()->getCheckoutMethod();
+    	  }
+
+        if ($this->isFieldRequired($name, $method)) {
+            return $requiredHtml;
+        }
+        if (!$this->getQuote()->isVirtual()) {
+            /* @var $addrValidator Egovs_Checkout_Model_Validateadr */
+            $addrValidator = Mage::getSingleton('mpcheckout/validateadr');
+            $omit = array('company', 'fax', 'telephone', 'region');
+            if (!in_array($name, $omit) && !$addrValidator->validateShippingAddressField($name, null)) {
+                return $requiredHtml;
+            }
+        }
+        return '';
+    }
+
  	public function isFieldVisible($key, $method = null)
  	{
  		$ship = false;
@@ -164,9 +157,9 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
  		 	$ship =	parent::isFieldVisible($key,'shipping');
  		}
  		return (parent::isFieldVisible($key) || $ship);
- 		
+
  	}
-    
+
  	public function isAdditionalCompanyVisible()
  	{
   			$method = $this->getQuote()->getCheckoutMethod();
@@ -182,36 +175,36 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
 	    	{
 	    		$key = 'checkout/registerrequired/additionalcompany';
 	    	}
-	    	
+
 	    	$res = Mage::getStoreConfig($key);
 	    	return isset ($res) ?  $res : false;
- 		
+
  	}
- 	
- 	
+
+
  	private function isUsedForShipping()
  	{
- 		
+
  		$data = Mage::getSingleton('customer/session')->getData('use_for_shipping');
  		if (isset($data) && $data == 1) return true;
- 		
+
  		return false;
  	}
- 	
+
  	public function isStorePickup()
  	{
  		$data = Mage::getSingleton('customer/session')->getData('use_for_shipping');
  		if (isset($data) && $data == 2) return true;
- 		
+
  		return false;
  	}
-    
-    
+
+
     public function getBillingtext()
     {
     	return Mage::getModel('mpcheckout/adrtext')->getBillingtext();
     }
-    
+
    public function isGuest()
     {
         return ($this->getCheckout()->getCheckoutMethod() === 'guest');

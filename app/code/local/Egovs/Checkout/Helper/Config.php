@@ -1,10 +1,11 @@
 <?php
 class Egovs_Checkout_Helper_Config extends Mage_Core_Helper_Abstract
 {
-	protected $_guestconfig;
-	protected $_registerconfig;
-	protected $_shippingconfig;
-	
+    protected $_guestconfig;
+    protected $_registerconfig;
+    protected $_shippingconfig;
+    protected $_shipping_required = array('firstname','lastname','street','city','postcode','country_id');
+
 	  public function getConfig($key, $CheckoutMethod)
 	    {
 	    	if(Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST == $CheckoutMethod)
@@ -16,12 +17,10 @@ class Egovs_Checkout_Helper_Config extends Mage_Core_Helper_Abstract
 	    	}
 	    	elseif ('shipping' == $CheckoutMethod)
 	    	{
-	    		if($key == 'firstname') return true;
-	    		if($key == 'lastname') return true;
-	    		if($key == 'street') return true;
-	    		if($key == 'city') return true;
-	    		if($key == 'postcode') return true;
-	    		if($key == 'country_id') return true;
+	    	    if (in_array($key, $this->_shipping_required)) {
+	    	        return true;
+	    	    }
+
 		        if (is_null($this->_shippingconfig)) {
 		            $this->_shippingconfig = Mage::getStoreConfig('checkout/shippingrequired');
 		        }
@@ -29,16 +28,16 @@ class Egovs_Checkout_Helper_Config extends Mage_Core_Helper_Abstract
 	    	}
 	    	else
 	    	{
-	    		
+
 	    		if(($key == 'email') && ($CheckoutMethod != 'login_in')) return 'req';
 		        if (is_null($this->_registerconfig)) {
 		            $this->_registerconfig = Mage::getStoreConfig('checkout/registerrequired');
 		        }
-		        
+
 		        return isset($this->_registerconfig[$key]) ? $this->_registerconfig[$key] : '';
 	    	}
 	    }
-	    
+
  	public function isFieldRequired($key, $CheckoutMethod)
     {
     	return ($this->getConfig($key, $CheckoutMethod) == 'req');

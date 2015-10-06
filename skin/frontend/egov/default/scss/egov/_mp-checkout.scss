@@ -176,6 +176,7 @@
         text-align: right;
         margin-top: 20px;
         font-size: 1em;
+        width: 100%;
 
         big {
             font-weight: bold;
@@ -189,6 +190,11 @@
             font-weight: bold;
         }
     }
+}
+
+.egovs-checkout-multipage-newaddress,
+.egovs-checkout-multipage-newshipping {
+    @include new_address;
 }
 
 .egovs-checkout-multipage-overview {

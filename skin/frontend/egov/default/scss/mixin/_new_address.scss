@@ -1,0 +1,135 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// =============================================
+// Mixin - New Address (My-Account, Checkout)
+// =============================================
+
+@mixin new_address {
+    form {
+        .half-space {
+            margin: 10px 0px !important;
+        }
+        .no-space {
+            margin: 0px !important;
+        }
+
+        .form-list {
+            li {
+                label {
+                    font-weight: bold;
+                }
+
+                .column-left {
+                    margin-right: 9px;
+                }
+
+                .column-left, .column-right {
+                    width: 47%;
+                    float: left;
+                }
+            }
+
+            li.dummy {
+                height: 57px;
+            }
+        }
+
+        .zip-city {
+            > div {
+                display: inline-block;
+            }
+            div.zip-field {
+                width: 30%;
+            }
+            div.city-field {
+                width: 67%;
+            }
+        }
+
+        span.required,
+        p.required,
+        div.validation-advice {
+            color: $global-warning-color;
+            margin-right: 5px;
+        }
+
+        div.validation-advice {
+            position: relative;
+            top: -15px;
+        }
+
+        .back-button {
+            float: left;
+        }
+
+        .fieldset {
+            width: 48%;
+            vertical-align: top;
+            height: auto;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .wide {
+            width: 99%;
+
+            li {
+                display: inline-block;
+                width: 33%;
+            }
+
+            li.street-field {
+                width: 100%;
+            }
+        }
+
+        .options {
+            width: 100%;
+            margin: 0px 0px 15px 0px !important;
+
+            li {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="password"] {
+            width: 95%;
+        }
+
+        select {
+            width: 94%;
+        }
+
+        .street-field {
+            margin-bottom: 12px;
+
+            input[type="text"] {
+                margin-bottom: 4px;
+            }
+        }
+
+        li.fullwide {
+            width: 100%;
+        }
+
+        .customer-name-middlename {
+            width: 100%;
+
+            div.field {
+                width: 48%;
+                vertical-align: top;
+                height: auto;
+                display: inline-block;
+            }
+        }
+    }
+
+}

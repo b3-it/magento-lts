@@ -39,7 +39,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
     protected $_regionCollection;
     protected $_addressesCollection;
 
-	
+
     /**
      * Retrieve multishipping checkout model
      *
@@ -49,8 +49,8 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
     {
         return Mage::getSingleton('mpcheckout/multipage');
     }
-    
-    
+
+
    public function getCountryHtmlSelect($type)
     {
         $countryId = $this->getAddress()->getCountryId();
@@ -64,11 +64,11 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
             ->setClass('validate-select')
             ->setValue($countryId)
             ->setOptions($this->getCountryOptions());
-        
+
 
         return $select->getHtml();
     }
-    
+
    public function getCountryOptions()
     {
         $options    = false;
@@ -89,7 +89,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return $options;
     }
-    
+
    public function getCountryCollection()
     {
         if (!$this->_countryCollection) {
@@ -98,12 +98,12 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return $this->_countryCollection;
     }
-    
+
   public function customerHasAddresses()
     {
         return count($this->getCustomer()->getAddresses());
     }
-    
+
     public function getRegionCollection()
     {
         if (!$this->_regionCollection) {
@@ -113,7 +113,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return $this->_regionCollection;
     }
-    
+
     public function getRegionCollectionAsOptionArray()
     {
     	$collection = $this->getRegionCollection();
@@ -129,7 +129,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return $options;
     }
-    
+
     public function getRegionHtmlSelect($type)
     {
         $select = $this->getLayout()->createBlock('core/html_select')
@@ -142,31 +142,30 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
 
         return $select->getHtml();
     }
-    
- 
-    
- 
-   
+
+
+
+
+
     public function isFieldRequired($key,$method = null)
     {
     	if($method == null) $method = $this->getQuote()->getCheckoutMethod();
-    	
     	return ($this->helper('mpcheckout/config')->isFieldRequired($key,$method));
     }
-    
+
     /**
      * Liefert in Abhängigkeit des Pflicht-Flags das entsprechende HTML zurück
-     * 
+     *
      * @param string $name
      * @param string $method
-     * 
+     *
      * @return string
      */
  	public function getFieldRequiredHtml($name, $method = null) {
     	$html = '<span class="required">*</span>';
     	return $this->_getRequiredHtml($html, $name, $method);
     }
-    
+
     /**
      * Liefert in Abhängigkeit des Pflicht-Flags die entsprechende CLASS zurück
      *
@@ -179,14 +178,14 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
     	$html = 'required-entry';
     	return $this->_getRequiredHtml($html, $name, $method);
     }
-    
+
     /**
      * Prüft ob das Feld pflicht ist.
-     * 
+     *
      * @param string $html
      * @param string $name
      * @param string $method
-     * 
+     *
      * @return string
      */
     protected function _getRequiredHtml($html, $name, $method = null) {
@@ -201,16 +200,16 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
     	}
     	return '';
     }
-    
+
  	public function isFieldVisible($key,$method = null)
  	{
  		if($method == null) $method = $this->getQuote()->getCheckoutMethod();
  		return ($this->helper('mpcheckout/config')->getConfig($key,$method) != '');
- 		
- 	}
-    
 
- 	
+ 	}
+
+
+
     public function getPrefixOptions()
     {
         $options = trim($this->helper('customer/address')->getConfig('prefix_options'));
@@ -223,10 +222,10 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return $options;
     }
-    
+
     public function getAddressesHtmlSelect($type)
     {
-		
+
         if ($this->isCustomerLoggedIn()) {
             $options = array();
             $helper = Mage::helper('mpcheckout/Addressformat');
@@ -257,7 +256,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
                 ->setId($type.'-address-select')
                 ->setClass('address-select');
                 //->setExtraParams('onchange="'.$type.'.newAddress(!this.value)"')
-            if(isset($addressId)){ 
+            if(isset($addressId)){
             	$select->setValue($addressId)
                 	->setOptions($options);
             }
@@ -267,12 +266,12 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return '';
     }
-    
+
     public function isCustomerLoggedIn()
     {
         return Mage::getSingleton('customer/session')->isLoggedIn();
     }
-    
+
         /**
      * Get logged in customer
      *
@@ -285,7 +284,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return $this->_customer;
     }
-    
+
   /**
      * Retrieve sales quote model
      *
@@ -298,7 +297,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return $this->_quote;
     }
-    
+
     public function isUseBillingAddressForShipping()
     {
         if (($this->getQuote()->getIsVirtual())
@@ -307,12 +306,12 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         }
         return true;
     }
-    
-    
+
+
     public function isStorePickupAvailable()
     {
     	if (Mage::getStoreConfig('carriers/storepickup/active'))
 	            return true;
-	   return false; 
+	   return false;
     }
 }
