@@ -123,10 +123,13 @@ $global-content-2col-right-percent: 100 - $global-right-col-percent;
 $global-content-3col-percent      : 100 - $global-right-3col-percent;
 
 // Breite Maincol (std + col right)
-$global-maincol-width-fixed   : $global-fullpage-width - $global-left-col-fixed;
-$global-maincol-width-percent : 100 - $global-left-col-percent;
-$global-maincol-title-fixed : $global-maincol-width-fixed - $global-rightcol-marginright;
-$global-maincol-title-percent : percentage( $global-maincol-title-fixed / $global-maincol-width-fixed);
+$global-maincol-width-fixed  : $global-fullpage-width - $global-left-col-fixed;
+$global-maincol-width-percent: 100 - $global-left-col-percent;
+$global-maincol-title-fixed  : $global-maincol-width-fixed - $global-rightcol-marginright;
+$global-maincol-title-percent: percentage( $global-maincol-title-fixed / $global-maincol-width-fixed);
+
+//One-Page-Checkout - Breiten in Prozent
+$onepage-content-width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
 
 $blobal-blockcontent-marginleft  : 5px;
 $blobal-blockcontent-marginright : 5px;
