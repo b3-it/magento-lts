@@ -904,7 +904,7 @@ a.button:hover {
         width: auto;
         margin-top: 4px !important;
 
-        .std, .page-title {
+        .std /*, .page-title*/ {
             width: $global-content-1col-percent;
         }
 
