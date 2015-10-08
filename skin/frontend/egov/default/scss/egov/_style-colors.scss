@@ -51,13 +51,16 @@ $global-warning-color: #FF0000;
 
 $global-text-shadow: rgba(0, 0, 0, 0.3);
 
-$global-rgba-1: rgba(224, 230, 215, 0.9);
-$global-rgba-2: rgba(193, 208, 187, 0.97);
+$global-rgba-1: rgba(147, 189, 130, 0.9); //rgba(224, 230, 215, 0.9);
+$global-rgba-2: rgba(89, 129, 76, 0.9);   //rgba(193, 208, 187, 0.97);
 
-$global-button-color: #F0F6E7;
-$global-button-hovercolor: #F0F6E7;
+$global-button-color: rgba(147, 189, 130, 0.9); //#F0F6E7;
+$global-button-hovercolor: rgb(150, 187, 134);  //#F0F6E7;
 $global-button-gradient-1: $global-rgba-1 0%;
 $global-button-gradient-2: $global-rgba-2 66%;
+
+$global-footer-backgroundcolor: #F0F6E7;
+$global-footer-fontcolor: #4D4D4D;
 
 $global-header-gradientcolor-1: #7EAA6F;
 $global-header-gradientcolor-2: $global-linkcolor;
@@ -79,9 +82,6 @@ $global-subcat-bordercolor: #F4EEE3;
 
 $global-content-background: rgba(0, 0, 0, 0);
 $global-content-bottom-bordercolor: #F0F6E7;
-
-$global-footer-fontcolor: #4D4D4D;
-$global-footer-backgroundcolor: $global-button-hovercolor;
 
 $global-input-bordercolor: #CDCDCD;
 $global-sorter-bordercolor: #CDCDCD;

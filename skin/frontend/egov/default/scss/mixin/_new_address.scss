@@ -18,6 +18,17 @@
             margin: 0px !important;
         }
 
+        #billing-new-address-form {
+            width: 100%;
+        }
+
+        #register-customer-password {
+            div {
+                width: 48%;
+                display: inline-block;
+            }
+        }
+
         .form-list {
             li {
                 label {
@@ -78,10 +89,10 @@
         .wide {
             width: 99%;
 
-            li {
-                display: inline-block;
-                width: 33%;
-            }
+            //li {
+            //    display: inline-block;
+            //    width: 33%;
+            //}
 
             li.street-field {
                 width: 100%;
@@ -100,7 +111,8 @@
 
         input[type="text"],
         input[type="tel"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="email"] {
             width: 95%;
         }
 

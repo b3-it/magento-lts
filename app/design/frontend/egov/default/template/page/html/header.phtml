@@ -13,6 +13,13 @@
 
 <?php echo $this->getChildHtml('bitvmenu') ?>
 
+
+<div class="store-language-container">
+    <?php echo $this->getChildHtml('store_language') ?>
+</div>
+<?php echo $this->getChildHtml('currency_switcher') ?>
+
+
 <header id="header" class="page-header">
 
     <?php echo $this->getChildHtml('loadingMask') ?>
@@ -25,16 +32,7 @@
 
         <?php // In order for the language switcher to display next to logo on smaller viewports, it will be moved here.
               // See app.js for details ?>
-        <div class="store-language-container">
-            <div class="header-language-background">
-                <div class="header-language-container">
-                    <div class="store-language-container">
-                        <?php echo $this->getChildHtml('store_language') ?>
-                    </div>
-                    <?php echo $this->getChildHtml('currency_switcher') ?>
-                </div>
-            </div>
-        </div>
+        <div class="store-language-container"></div>
 
         <!-- Skip Links -->
 

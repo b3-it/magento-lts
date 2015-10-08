@@ -54,9 +54,10 @@
  * Nav - Skip Content
  * ============================================ */
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, 785px) {
 
-    #header-nav {
+    #egov-nav {
+        display: none;
     }
 
 }

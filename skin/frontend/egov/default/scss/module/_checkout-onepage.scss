@@ -68,6 +68,10 @@
     }
 }
 
+#checkout-step-billing {
+    @include new_address;
+}
+
 @include bp(min-width, $bp-large+1) {
     .checkout-onepage-index {
         .col-main {

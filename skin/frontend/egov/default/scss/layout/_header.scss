@@ -193,6 +193,43 @@
 
 }
 
+@include bp(max-width, 785px) {
+    .page-header-container {
+        background-color: $global-header-gradientcolor-2;
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center -30px;
+
+        .store-language-container {
+            top: 5px;
+            right: 5px;
+        }
+
+        .logo {
+            top: 10px;
+            left: 10px;
+        }
+    }
+
+    .skip-links {
+        position: relative;
+        top: 40px;
+
+        .skip-egov {
+            display: none;
+        }
+
+        .welcome-header {
+            left: 150px;
+            z-index: 99;
+        }
+    }
+
+    .main-container {
+        top: 30px !important;
+    }
+}
+
 /* -------------------------------------------- *
  * Skip - Link
  */
@@ -351,6 +388,11 @@ a.skip-link {
 
     @include bp(max-width, $bp-medium) {
         position: static;
+    }
+
+    @include bp(max-width, 900px) {
+        right: 0;
+        width: 100%;
     }
 }
 
