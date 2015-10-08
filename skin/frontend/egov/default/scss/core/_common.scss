@@ -817,10 +817,10 @@ a.button:hover {
 }
 
 .footer-container {
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
+    box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
     height: $global-footer-height;
     line-height: $global-footer-lineheight;
-    background: $global-footer-backgroundcolor $global-repeat-scroll;
+    background-color: $global-footer-backgroundcolor;
     width: 100%;
 }
 
@@ -904,7 +904,7 @@ a.button:hover {
         width: auto;
         margin-top: 4px !important;
 
-        .std, .page-title {
+        .std /*, .page-title*/ {
             width: $global-content-1col-percent;
         }
 
@@ -1940,7 +1940,6 @@ $toolbar-icon-padding-offset: 8px;
 
         .pager {
             float: left;
-            clear: both;
 
             .pages {
                 float: left;
@@ -1948,7 +1947,6 @@ $toolbar-icon-padding-offset: 8px;
             }
 
             .count-container {
-                float: right;
             }
         }
     }
@@ -1966,7 +1964,6 @@ $toolbar-icon-padding-offset: 8px;
 
         .pager {
             float: left;
-            clear: both;
 
             .pages {
                 float: left;
@@ -1974,7 +1971,6 @@ $toolbar-icon-padding-offset: 8px;
             }
 
             .count-container {
-                float: right;
             }
         }
     }

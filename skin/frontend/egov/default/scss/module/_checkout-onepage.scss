@@ -9,14 +9,14 @@
  * Checkout - One Page
  * ============================================ */
 
-.checkout-onepage-index .col-left {
-    display: none;
-}
-
 .checkout-onepage-index {
-    .main-container {
-        top: -32px;
-        left: -5px;
+
+    .egov-account-login {
+        margin-top: 10px;
+    }
+
+    .col-left {
+        display: none;
     }
 
     .col-main {
@@ -24,7 +24,7 @@
         float: none;
 
         .page-title {
-            width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
+            width: $onepage-content-width;
         }
 
         p.required {
@@ -34,7 +34,7 @@
         }
 
         #checkoutSteps {
-            width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
+            width: $onepage-content-width;
             display: inline-block;
         }
     }
@@ -66,6 +66,10 @@
             }
         }
     }
+}
+
+#checkout-step-billing {
+    @include new_address;
 }
 
 @include bp(min-width, $bp-large+1) {
@@ -195,34 +199,6 @@
     font-weight: 500;
 }
 
-.opc .buttons-set {
-    text-align: left;
-
-    button.button {
-        float: left;
-        margin-left: 0;
-        margin-right: $gap;
-        margin-bottom: 0;
-    }
-    p.required {
-        float: right;
-        margin-left: 5px;
-        margin-bottom: 0;
-    }
-    .back-link {
-        float: right;
-        margin: 0;
-    }
-    a {
-        @extend .button;
-
-        small {
-            position: relative;
-            top: -3px;
-        }
-    }
-}
-
 @include bp(max-width, $bp-xsmall) {
     .opc,
     .paypal-express-review {
@@ -260,6 +236,11 @@
  * It is limited to larger viewports since smaller devices are inherently going to be focused solely on the
  * "Checkout Method" step.
  */
+.opc-firststep-login {
+    #checkout-step-login {
+        @include egov_loginform;
+    }
+}
 
 .opc.opc-firststep-login .section:not(#opc-login) .step-title,
 .opc-block-progress-step-login {

@@ -127,13 +127,6 @@
     }
 }
 
-.opc #opc-login p:not(.required) {
-    font-style: italic;
-    font-family: $base-font-family;
-    font-size: $global-fontsize-small;
-    color: $global-fontcolor-dark;
-}
-
 .remember-me-box {
     a.hide {
         display: none;
