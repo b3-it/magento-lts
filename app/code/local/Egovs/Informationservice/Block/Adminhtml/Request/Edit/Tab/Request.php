@@ -368,7 +368,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Edit_Tab_Request extends 
             //<![CDATA[
  				function createProduct()
  				{
- 					new Ajax.Updater('product_request_form', '".$this->getUrl('*/adminhtml_product/create')."', {
+ 					new Ajax.Updater('product_request_form', '".$this->getUrl('adminhtml/informationservice_product/create')."', {
 					  parameters: { result_master: \$F('result_master'), 
 					  	result_titel: \$F('result_titel'),
 					  	result_price: \$F('result_price')
