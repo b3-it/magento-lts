@@ -1,0 +1,121 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Egovs_PayplaceGiropay>
+			<version>0.1.0.0</version>
+		</Egovs_PayplaceGiropay>
+	</modules>
+	<global>
+		<blocks>
+			<payplacegiropay>
+				<class>Egovs_PayplaceGiropay_Block</class>
+			</payplacegiropay>
+		</blocks>
+		<models>
+			<payplacegiropay>
+				<class>Egovs_PayplaceGiropay_Model</class>
+				<resourceModel>payplacegiropay_resource</resourceModel>
+			</payplacegiropay>
+			<payplacegiropay_resource>
+				<class>Egovs_PayplaceGiropay_Model_Resource</class>
+				<entities>
+				</entities>
+			</payplacegiropay_resource>
+		</models>
+		<resources>
+			<payplacegiropay_setup>
+				<setup>
+					<module>Egovs_PayplaceGiropay</module>
+					<class>Egovs_Paymentbase_Model_Resource_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</payplacegiropay_setup>
+			<payplacegiropay_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</payplacegiropay_write>
+			<payplacegiropay_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</payplacegiropay_read>
+		</resources>
+		<helpers>
+			<payplacegiropay>
+				<class>Egovs_PayplaceGiropay_Helper</class>
+			</payplacegiropay>
+		</helpers>
+		
+		<events>
+        </events>
+
+		<fieldsets>
+		</fieldsets>
+	</global>
+	
+	<adminhtml>
+		<translate>
+			<modules>
+				<Egovs_PayplaceGiropay>
+					<files>
+						<default>Egovs_PayplaceGiropay.csv</default>
+					</files>
+				</Egovs_PayplaceGiropay>
+			</modules>
+		</translate>
+	</adminhtml>
+	
+    <frontend>
+    	<secure_url>
+    		<payplacegiropay>/payplacegiropay/payplacegiropay</payplacegiropay>
+    	</secure_url>
+    	<routers>
+    		<payplacegiropay>
+    			<use>standard</use>
+    			<args>
+    				<module>Egovs_PayplaceGiropay</module>
+    				<frontName>payplacegiropay</frontName>
+    			</args>
+    		</payplacegiropay>
+    	</routers>
+        <translate>
+            <modules>
+            	<Egovs_PayplaceGiropay>
+                    <files>
+                    	<default>Egovs_PayplaceGiropay.csv</default>
+                    </files>
+            	</Egovs_PayplaceGiropay>
+            </modules>
+        </translate>        
+    </frontend>
+	
+	<default>
+		<payment>
+			<payplacegiropay>
+				<active>0</active>
+				<model>payplacegiropay/giropay</model>
+				<order_status>pending_payment</order_status>
+				<!-- 
+					Mit "egovs_pending_bankpayment" werden automatisch Rechnungen erstellt.
+					Mit "authorize" wird die Bestellung ohne automatische Rechnung erstellt.
+				 -->
+				<payment_action>authorize</payment_action>
+				<title>Payplace Giropay</title>
+				<allowspecific>0</allowspecific>
+				<!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
+				<delete_customer_after_transaction>1</delete_customer_after_transaction>
+				<cancel_order_after_active>1</cancel_order_after_active>
+				<cancel_order_after>30</cancel_order_after>
+				<group>epaybl</group>
+			</payplacegiropay>
+		</payment>
+		<api>
+			<config>
+				<compliance_wsi>1</compliance_wsi>
+			</config>
+		</api>
+	</default>
+</config>

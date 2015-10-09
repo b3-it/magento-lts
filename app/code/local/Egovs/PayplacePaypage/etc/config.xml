@@ -1,0 +1,123 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Egovs_PayplacePaypage>
+			<version>0.1.0.0</version>
+		</Egovs_PayplacePaypage>
+	</modules>
+	<global>
+		<blocks>
+			<payplacepaypage>
+	            <class>Egovs_PayplacePaypage_Block</class>
+	        </payplacepaypage>
+		</blocks>
+		<models>
+			<payplacepaypage>
+				<class>Egovs_PayplacePaypage_Model</class>
+				<resourceModel>payplacepaypage_resource</resourceModel>
+			</payplacepaypage>
+			<payplacepaypage_resource>
+				<class>Egovs_PayplacePaypage_Model_Resource</class>
+				<entities>
+				</entities>
+			</payplacepaypage_resource>
+		</models>
+		<resources>
+			<payplacepaypage_setup>
+				<setup>
+					<module>Egovs_PayplacePaypage</module>
+					<class>Egovs_Paymentbase_Model_Resource_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</payplacepaypage_setup>
+			<payplacepaypage_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</payplacepaypage_write>
+			<payplacepaypage_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</payplacepaypage_read>
+		</resources>
+		<helpers>
+			<payplacepaypage>
+				<class>Egovs_PayplacePaypage_Helper</class>
+			</payplacepaypage>
+		</helpers>
+		
+		<events>
+        </events>
+
+		<fieldsets>
+		</fieldsets>
+	</global>
+	
+	<adminhtml>
+		<translate>
+			<modules>
+				<Egovs_PayplacePaypage>
+					<files>
+						<default>Egovs_PayplacePaypage.csv</default>
+					</files>
+				</Egovs_PayplacePaypage>
+			</modules>
+		</translate>
+	</adminhtml>
+	
+    <frontend>
+    	<secure_url>
+    		<payplacepaypage>/payplacepaypage/payplacepaypage</payplacepaypage>
+    	</secure_url>
+    	<routers>
+    		<payplacepaypage>
+    			<use>standard</use>
+    			<args>
+    				<module>Egovs_PayplacePaypage</module>
+    				<frontName>payplacepaypage</frontName>
+    			</args>
+    		</payplacepaypage>
+    	</routers>
+        <translate>
+            <modules>
+            	<Egovs_PayplacePaypage>
+                    <files>
+                    	<default>Egovs_PayplacePaypage.csv</default>
+                    </files>
+            	</Egovs_PayplacePaypage>
+            </modules>
+        </translate>        
+    </frontend>
+	
+	<default>
+		<payment>
+			<payplacepaypage>
+				<active>0</active>
+				<model>payplacepaypage/paypage</model>
+				<order_status>pending_payment</order_status>
+				<!-- 
+					Mit "egovs_pending_bankpayment" werden automatisch Rechnungen erstellt.
+					Mit "authorize" wird die Bestellung ohne automatische Rechnung erstellt.
+				 -->
+				<payment_action>authorize</payment_action>
+				<title>Payplace Paypage</title>
+				<allowspecific>0</allowspecific>
+				<min_order_total>10</min_order_total>
+				<use_preauthorization>1</use_preauthorization>
+				<!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
+				<delete_customer_after_transaction>1</delete_customer_after_transaction>
+				<cancel_order_after_active>1</cancel_order_after_active>
+				<cancel_order_after>30</cancel_order_after>
+				<group>epaybl</group>
+			</payplacepaypage>
+		</payment>
+		<api>
+			<config>
+				<compliance_wsi>1</compliance_wsi>
+			</config>
+		</api>
+	</default>
+</config>

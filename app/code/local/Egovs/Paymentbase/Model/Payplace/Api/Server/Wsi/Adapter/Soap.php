@@ -22,7 +22,14 @@ class Egovs_Paymentbase_Model_Payplace_Api_Server_Wsi_Adapter_Soap extends Mage_
 	protected function _instantiateServer()
 	{
 		$apiConfigCharset = Mage::getStoreConfig('api/config/charset');
-		ini_set('soap.wsdl_cache_enabled', '0');
+		$wsdlCacheEnabled = (bool) Mage::getStoreConfig('api/config/wsdl_cache_enabled');
+	
+		if ($wsdlCacheEnabled) {
+			ini_set('soap.wsdl_cache_enabled', '1');
+		} else {
+			ini_set('soap.wsdl_cache_enabled', '0');
+		}
+	
 		$tries = 0;
 		do {
 			$retry = false;
@@ -30,13 +37,15 @@ class Egovs_Paymentbase_Model_Payplace_Api_Server_Wsi_Adapter_Soap extends Mage_
 				$options = array('encoding' => $apiConfigCharset, 'classmap' => Egovs_Paymentbase_Model_Payplace_ClassMap::classMap());
 				$this->_soap = new Zend_Soap_Server($this->getWsdlUrl(array("wsdl" => 1)), $options);
 			} catch (SoapFault $e) {
-				if (false !== strpos($e->getMessage(), "can't import schema from 'http://schemas.xmlsoap.org/soap/encoding/'")) {
-					$retry = true;
-					sleep(1);
-				} else {
-					throw $e;
-				}
-				$tries++;
+				if (false !== strpos($e->getMessage(),
+						"can't import schema from 'http://schemas.xmlsoap.org/soap/encoding/'")
+						) {
+							$retry = true;
+							sleep(1);
+						} else {
+							throw $e;
+						}
+						$tries++;
 			}
 		} while ($retry && $tries < 5);
 		use_soap_error_handler(false);
@@ -47,76 +56,14 @@ class Egovs_Paymentbase_Model_Payplace_Api_Server_Wsi_Adapter_Soap extends Mage_
 	}
 	
 	/**
-	 * Run webservice
+	 * Get wsdl config
 	 *
-	 * @param Mage_Api_Controller_Action $controller
-	 * @return Mage_Api_Model_Server_Adapter_Soap
+	 * @return Mage_Api_Model_Wsdl_Config
 	 */
-	public function run()
-	{
-		$apiConfigCharset = Mage::getStoreConfig("api/config/charset");
-	
-		if ($this->getController()->getRequest()->getParam('wsdl') !== null) {
-			$wsdlConfig = Mage::getModel('paymentbase/payplace_api_wsdl_config');
-			$wsdlConfig->setHandler($this->getHandler())
-				->init();
-			$this->getController()->getResponse()
-				->clearHeaders()
-				->setHeader('Content-Type','text/xml; charset='.$apiConfigCharset)
-				->setBody(
-						preg_replace(
-								'/(\>\<)/i',
-								">\n<",
-								str_replace(
-										'<soap:operation soapAction=""></soap:operation>',
-										"<soap:operation soapAction=\"\" />\n",
-										str_replace(
-												'<soap:body use="literal"></soap:body>',
-												"<soap:body use=\"literal\" />\n",
-												preg_replace(
-														'/<\?xml version="([^\"]+)"([^\>]+)>/i',
-														'<?xml version="$1" encoding="'.$apiConfigCharset.'"?>',
-														$wsdlConfig->getWsdlContent()
-												)
-										)
-								)
-						)
-				)
-			;
-		} else {
-			try {
-				$this->_instantiateServer();
-	
-				$this->getController()->getResponse()
-					->clearHeaders()
-					->setHeader('Content-Type','text/xml; charset='.$apiConfigCharset)
-					->setBody(
-							preg_replace(
-									'/(\>\<)/i',
-									">\n<",
-									str_replace(
-											'<soap:operation soapAction=""></soap:operation>',
-											"<soap:operation soapAction=\"\" />\n",
-											str_replace(
-													'<soap:body use="literal"></soap:body>',
-													"<soap:body use=\"literal\" />\n",
-													preg_replace(
-															'/<\?xml version="([^\"]+)"([^\>]+)>/i',
-															'<?xml version="$1" encoding="'.$apiConfigCharset.'"?>',
-															$this->_soap->handle()
-													)
-											)
-									)
-							)
-					)
-				;
-			} catch( Zend_Soap_Server_Exception $e ) {
-				$this->fault( $e->getCode(), $e->getMessage() );
-			} catch( Exception $e ) {
-				$this->fault( $e->getCode(), $e->getMessage() );
-			}
-		}
-	
-		return $this;
+	protected function _getWsdlConfig() {
+		$wsdlConfig = Mage::getModel('paymentbase/payplace_api_wsdl_config');
+		$wsdlConfig->setHandler($this->getHandler())
+			->init();
+		return $wsdlConfig;
 	}
 }
