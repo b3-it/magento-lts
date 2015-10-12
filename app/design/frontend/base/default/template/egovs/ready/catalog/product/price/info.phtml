@@ -46,5 +46,7 @@
         <span class="tax-details"><?php echo $this->__( 'Excl. %s Tax', $this->getFormattedTaxRate() ) ?></span>
     <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX ): ?>
         <span class="tax-details"><?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?></span>
+ <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
+        <span class="tax-details"><?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?></span>    
     <?php endif ?>
 <?php endif ?>
