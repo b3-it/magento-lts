@@ -15,7 +15,7 @@ require_once "Mage/Adminhtml/controllers/Sales/OrderController.php";
  *
  * @see Mage_Adminhtml_Sales_OrderController
  */
-class Egovs_Extsalesorder_Adminhtml_Sales_OrderController extends Mage_Adminhtml_Sales_OrderController
+class Egovs_Extsalesorder_Adminhtml_Extsalesorder_Sales_OrderController extends Mage_Adminhtml_Sales_OrderController
 {
 	/**
 	 * Slpb Rückläufer-Action
