@@ -111,6 +111,7 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 				'label' => Mage::helper ( 'informationservice' )->__ ( 'Comment' ),
 				'name' => 'task[title]',
 				'readonly' => true,
+				'disabled' => true,
 		)
 		 );
 		
@@ -121,6 +122,7 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 				'name' => 'task[newstatus]',
 				'values' => $status->getOptionArray (),
 				'readonly' => true,
+				'disabled' => true,
 		) );
 		
 		$fieldset->addField ( 'content', 'editor', array (
@@ -130,6 +132,7 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 				'style' => 'width:700px; height:200px;',
 				'wysiwyg' => false ,
 				'readonly' => true,
+				'disabled' => true,
 		) );
 		
 		$fieldset->addField ( 'owner_id', 'select', array (
@@ -137,6 +140,7 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 				'name' => 'task[owner_id]',
 				'values' => Mage::helper ( 'informationservice' )->getUsernamesAsOptionArray (),
 				'readonly' => true,
+				'disabled' => true,
 		) );
 		
 		if (! isset ( $data ['user_id'] )) {
@@ -145,6 +149,7 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 					'value' => Mage::getSingleton ( 'admin/session' )->getUser ()->getId (),
 					'name' => 'task[user_id]',
 					'readonly' => true,
+					'disabled' => true,
 			) );
 		}
 		
@@ -152,12 +157,14 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 				'label' => Mage::helper ( 'informationservice' )->__ ( 'Cost' ),
 				'name' => 'task[cost]',
 				'readonly' => true,
+				'disabled' => true,
 		) );
 		
 		$fieldset->addField ( 'email_send', 'checkbox', array (
 				'label' => Mage::helper ( 'informationservice' )->__ ( 'Send Status to Customer' ),
 				'name' => 'task[email_send]',
 				'readonly' => true,
+				'disabled' => true,
 		) );
 		
 		$form->setValues ( $data );
