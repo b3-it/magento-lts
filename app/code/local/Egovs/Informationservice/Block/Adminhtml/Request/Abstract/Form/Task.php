@@ -5,24 +5,27 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 		if (!$this->getForm()) {
 			$form = new Varien_Data_Form ();
 			$this->setForm ( $form );
+		} else {
+			$form = $this->getForm();
 		}
 		
 		if (!$this->getIsDisabled()) {
 			// edit mode
-			$this->_prepareEdit ( $form );
+			$this->_prepareEdit ();
 		} else {
 			// view mode
 			$id = $this->getRequest ()->getParam ( 'id' );
 			$task = Mage::getModel ( 'informationservice/task' )->load ( $id );
 			$data = $task->getData ();
 			
-			$this->_prepareView ( $form, $data );
+			$this->_prepareView ($data);
 		}
 		
 		return parent::_prepareForm ();
 	}
 	
-	protected function _prepareEdit($form) {
+	protected function _prepareEdit() {
+		$form = $this->getForm();
 		$fieldset = $form->addFieldset ( 'task_form', array (
 				'legend' => Mage::helper ( 'informationservice' )->__ ( 'Task Description' ) 
 		) );
@@ -97,7 +100,9 @@ abstract class Egovs_Informationservice_Block_Adminhtml_Request_Abstract_Form_Ta
 			$form->getElement ( 'newstatus' )->setValue ( $status );
 		}
 	}
-	protected function _prepareView($form, $data) {
+	protected function _prepareView($data) {
+		$form = $this->getForm();
+		
 		$fieldset = $form->addFieldset ( 'task_form', array (
 				'legend' => Mage::helper ( 'informationservice' )->__ ( 'Item information' ) 
 		) );
