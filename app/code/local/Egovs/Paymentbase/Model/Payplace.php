@@ -480,11 +480,13 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 		if ($payplaceSoapApi->process($this->_xmlApiRequest) === false) {
 			//TODO Fehlerbehebung
 			$error = $payplaceSoapApi->getLastError();
-			if (isset($error[0])) {
-				Mage::logException($error[0]);
+			$error = array_pop($error);
+			if ($error instanceof SoapFault) {
+				Mage::logException($error);
 			}
 			$_lastRequest = $payplaceSoapApi->getLastRequest();
-			Mage::log(sprintf("%s::XML Request:\n%s", $this->getCode(), $_lastRequest), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+			$_lastResponse = $payplaceSoapApi->getLastResponse();
+			Mage::log(sprintf("%s::XML Request:\n%s\nXML Response:\n%s", $this->getCode(), $_lastRequest, $_lastResponse), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			return $_error;
 		} elseif ($this->getDebugFlag()) {
 			$_lastRequest = $payplaceSoapApi->getLastRequest();
