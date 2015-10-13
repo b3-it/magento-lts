@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <IfModule mod_authz_host.c>
 	<IfModule !mod_authz_core.c>
 	    #Apache 2.2
@@ -9,3 +10,7 @@
 		  Require all denied
 	</IfModule>
 </IfModule>
+=======
+Order deny,allow
+Deny from all
+>>>>>>> a4f8da5179d012b5df9bd1a1506a91c67d99ebf0

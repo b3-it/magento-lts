@@ -26,8 +26,9 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_Creditmemo_Items_Renderer_
 	 *
 	 * @return boolean
 	 */
-	public function canEditQty()
+	public function xcanEditQty()
 	{
+		
 		$canEditQty = parent::canEditQty();
 		
 		$item = $this->getItem();
@@ -39,6 +40,25 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_Creditmemo_Items_Renderer_
 			return $canEditQty & true;
 		}
 		 
+		return false;
+	}
+	
+	/**
+	 * Check if item is shipped
+	 *
+	 * @return boolean
+	 */
+	public function isShipped()
+	{
+		$item = $this->getItem();
+	
+		if (!$item)
+			return false;
+			
+		if ($item->getOrderItem()->getQtyShipped() > 0) {
+			return true;
+		}
+			
 		return false;
 	}
 }

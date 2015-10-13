@@ -1,0 +1,57 @@
+"Change your PIN (Debit Payment)","Pin ändern (Lastschrift)"
+"Debit PIN","Lastschrift mit PIN"
+"Please enter your PIN","Bitte PIN eingeben"
+"Bank account number","Kontonummer"
+"Would be automatically filled.","Wird automatisch ausgefüllt."
+"Bank name","Bankname"
+"Bank identification number","Bankleitzahl"
+"Missing Customer","Konnte Nutzer nicht finden"
+"Missing Address","Fehlende Benutzer Adresse"
+"Register for Debit Payment (PIN)","Für Lastschrift mit <acronym title='Pers&ouml;nliche Identifikationsnummer' lang='de' xml:lang='de'>PIN</acronym> registrieren"
+"Change PIN (Debit Payment)", "<acronym title='Pers&ouml;nliche Identifikationsnummer' lang='de' xml:lang='de'>PIN</acronym> ändern (Lastschrift)"
+"ERROR_DEBIT_ENTRY_SOAP","Es ist ein Fehler aufgetreten! Bitte probieren Sie es in wenigen Minuten nocheinmal!"
+"ERROR_DEBIT_ENTRY_PIN_INCORRECT","Pinfehler: Die von Ihnen eingegebene <acronym title='Pers&ouml;nliche Identifikationsnummer' lang='de' xml:lang='de'>PIN</acronym> ist nicht korrekt."
+"ERROR_DEBIT_ENTRY_PIN_NOT_ACTIVE","Das Zahlverfahren ist nicht aktiv. Bitte prüfen Sie Ihre Registrierungsdaten."
+"ERROR_DEBIT_ENTRY_12H","Die Bankverbindung ist für die kommenden 12 Stunden gesperrt. Zahlungen per Lastschrift sind in dieser Zeit nicht möglich."
+"ERROR_DEBIT_ENTRY_INITIAL","Sie nutzen noch die initiale <acronym title='Pers&ouml;nliche Identifikationsnummer' lang='de' xml:lang='de'>PIN</acronym>. Bitte ändern Sie Ihre <acronym title='Pers&ouml;nliche Identifikationsnummer' lang='de' xml:lang='de'>PIN</acronym> mindestens einmal, bevor Sie sie zur Zahlung verwenden."
+"ERROR_DEBIT_ENTRY_NOTREADY","Das Zahlverfahren ist nicht verfügbar."
+"ERROR_DEBIT_ENTRY_PIN_-9999","Es ist ein interner Serverfehler aufgetreten, bitte versuchen Sie es zu einem späteren Zeitpunkt erneut"
+"ERROR_DEBIT_ENTRY_PIN_-999989","Bei der Zahlung ist ein Fehler aufgetreten. Bitte nutzen Sie vorläuig ein anderes Zahlverfahren."
+"ERROR_DEBIT_ENTRY_PIN_+0000","Sie sind für das Zahlverfahren registriert!"
+"ERROR_DEBIT_ENTRY_PIN_-0199","Sie sind für das Zahlverfahren nicht registriert!"
+"ERROR_DEBIT_ENTRY_PIN_-0405","Die alte PIN ist nicht korrekt! Bitte überprüfen Sie ihre Eingaben."
+"Egovs_DebitPIN::TEXT_PROCESS_ERROR_STANDARD","Es ist ein Fehler aufgetreten! Bitte probieren Sie es in wenigen Minuten noch einmal!"
+"TEXT_PROCESS_ERROR_STANDARD","Es ist ein Fehler aufgetreten! Bitte probieren Sie es in wenigen Minuten noch einmal!"
+"TEXT_PROCESS_ERROR_STANDARD_99989","Abwicklung auf Grund eines technischen Problems fehlgeschlagen - versuchen Sie es in ein paar Minuten noch einmal. Falls die Abwicklung weiterhin fehlschlägt, wenden Sie sich bitte an unseren Service: %s"
+"TEXT_PROCESS_ERROR_99989","Abwicklung auf Grund eines technischen Problems fehlgeschlagen - versuchen Sie es in ein paar Minuten noch einmal. Falls die Abwicklung weiterhin fehlschlägt, wenden Sie sich bitte an unseren Service: %s"
+"ONE_OF_PINS_TOO_SHORT_OR_TOO_LONG","Die PIN sollte genau 4 Stellen enthalten!"
+"NEW_AND_NEW_WDH_NOT_EQUAL","Die Wiederholung entspricht nicht der PIN. Bitte geben Sie die neue PIN zweimal gleich ein."
+"Register Now","Jetzt registrieren"
+"Account info","Bankverbindung"
+"Account number","Kontonummer"
+"Debit PIN Registration Success","Erfolgreiche Registrierung für Lastschrift mit PIN"
+"You were successfully registered for Debit Payment (PIN)","Sie wurden erfolgreich für Lastschrift mit PIN registriert"
+
+"ERFOLGREICH_REGISTRIERT","Sie wurden erfolgreich für die Zahlung per Lastschrift registriert. Um mit der Anmeldung fortzufahren, drucken Sie bitte das unten angegebene Formular aus und senden dieses korrekt ausgefüllt zu uns. Sie erteilen uns damit die schriftliche Einzugsermächtigung.<br><br>"
+"KUNDENNUMMER_ANGEBEN","Bitte geben Sie im Formular folgende Kundennummer an:"
+"ERKLAERUNG_VERFAHREN","Das 'Lastschriftverfahren mit schriftlicher Einzugsermächtigung' zählt zu den sichersten Zahlverfahren.<br> Nach der Registrierung erhalten Sie von uns eine PIN, die Sie einfach bei Ihrem Einkauf in unserem Shop angeben. Der Gesamtbetrag wird dann automatisch von Ihrem Konto eingezogen.<br><br>
+						<b>Beschreibung des Vorgangs</b><br></br>
+						<ul>
+							<li>Zuerst müssen Sie sich für das Zahlverfahren registrieren. Klicken Sie dazu bitte unten auf den <b>Button 'Anmelden'</b>.</li>
+							<li>Nach erfolgreicher Aktivierung wird Ihnen ein Formular PDF-Dokument zum Download angezeigt. Drucken Sie dieses bitte aus. Füllen Sie dann das <b>Anmeldeformular</b> mit den benötigten Informationen aus. Dies sind insbesondere Ihr Name, Anschrift, Ihre Bankverbindung und Ihre Kundennummer. Die Kundennummer wird Ihnen nach der Anmeldung angezeigt.</li>
+							<li>Das ausgefüllte Formular schicken Sie anschließend <b>per Post</b> zu uns.</li>
+							<li>Sobald wir das korrekt ausgefüllte Anmeldeformular erhalten haben, speichern wir Ihre Bankverbindung. Anschließend generieren wir für Sie eine <b>PIN</b>, welche wir per Post an Sie senden.</li>
+							<li>Bei der ersten Benutzung der PIN muss diese von Ihnen <b>geändert</b> werden.</li>
+							<li>Danach können Sie unter Angabe der PIN in unserem Webshop <b>bezahlen</b>. Der jeweils fällige Betrag wird dann <b>automatisch von Ihrem Konto eingezogen</b>.</li>
+						</ul>"
+"KEINE_ADRESSE","Sie können sich leider nicht für das Lastschriftverfahren mit PIN anmelden, weil sie keine oder keine vollständige Adresse im System hinterlegt haben."						
+"ENTER_OLD_PIN","Bitte geben Sie hier Ihre alte PIN an:"
+"ENTER_NEW_PIN","Bitte geben Sie hier Ihre neue PIN an:"
+"REPEAT_NEW_PIN","Bitte wiederholen Sie hier Ihre neue PIN:"
+"PIN successfully changed","PIN erfolgreich geändert"
+"You successfully changed your PIN (Debit Payment)","Sie haben Ihre PIN erfolgreich geändert (Lastschrift mit schriftlicher Einzugsermächtigung)"
+"REGISTER_FIRST","Sie können Ihre PIN erst ändern, wenn Sie sich für das Lastschriftverfahren registriert haben.<br><br>Um sich für das Lastschriftverfahren mit PIN zu registrieren, klicken Sie bitte"
+"PIN_REGISTRATION_SUCCESSFULL","Sie wurden erfolgreich für die Zahlung per Lastschrift registriert. Um mit der Anmeldung fortzufahren, drucken Sie bitte das unten angegebene Formular aus und senden dieses korrekt ausgefüllt zu uns. Sie erteilen uns damit die schriftliche Einzugsermächtigung.<br><br>Download: "
+"REGISTRATION_DOCUMENT","Anmeldeformular"
+
+					

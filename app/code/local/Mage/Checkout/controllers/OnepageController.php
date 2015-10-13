@@ -368,6 +368,7 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
      */
     public function saveMethodAction()
     {
+    	$this->setFlag('', 'no_regenerate_id', true);
         if ($this->_expireAjax()) {
             return;
         }
