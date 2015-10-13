@@ -14,7 +14,7 @@
 <?php echo $this->getChildHtml('bitvmenu') ?>
 
 
-<div class="store-language-container">
+<div id="big-view-switcher" class="store-language-container">
     <?php echo $this->getChildHtml('store_language') ?>
 </div>
 <?php echo $this->getChildHtml('currency_switcher') ?>
@@ -32,7 +32,7 @@
 
         <?php // In order for the language switcher to display next to logo on smaller viewports, it will be moved here.
               // See app.js for details ?>
-        <div class="store-language-container"></div>
+        <div id="small-view-switcher" class="store-language-container"></div>
 
         <!-- Skip Links -->
 

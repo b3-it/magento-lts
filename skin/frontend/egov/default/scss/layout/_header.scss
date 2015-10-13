@@ -30,7 +30,6 @@
         max-width: $global-fullpage-width;
         min-width: $global-min-width;
         position: relative;
-        left: -8px;
         margin: 0px auto;
     }
 
@@ -61,6 +60,49 @@
     }
 }
 
+@include bp(max-width, 910px) {
+    .page-header {
+        .welcome-header {
+            left: $global-welcome-left - 50;
+        }
+    }
+}
+
+@include bp(max-width, 790px) {
+    .page-header {
+        .welcome-header {
+            left: $global-welcome-left - 100;
+        }
+    }
+}
+
+@include bp(max-width, 750px) {
+    .page-header {
+        .welcome-header {
+            left: $global-welcome-left - 150;
+            width: auto;
+        }
+    }
+}
+
+@include bp(max-width, 630px) {
+    .page-header {
+        .welcome-header {
+            left: 70px;
+            width: auto;
+        }
+    }
+}
+
+@include bp(max-width, 510px) {
+    .page-header {
+        .welcome-header {
+            left: 20px;
+            width: auto;
+        }
+    }
+}
+
 /* ============================================ *
  * Language switcher + welcome message
  * ============================================ */
@@ -87,11 +129,11 @@
     }
 }
 
-.page-header-container .store-language-container {
+.store-language-container {
     float: right;
     position: relative;
-    right: -6px;
-    top: 40px;
+    right: 6px;
+    top: 90px;
     z-index: 999;
 
     label {
@@ -103,19 +145,19 @@
 }
 
 @include bp(max-width, $bp-xsmall) {
-    .page-header-container .store-language-container {
+    .store-language-container {
         padding-top: 8px;
 
         select {
             // Setting this font-size will causing zooming on iOs devices, but it keeps header more tidy
-            font-size: $f-size-xs;
+            font-size: $global-fontsize-small;
         }
     }
 }
 
 .header-language-background,
 .header-language-background a {
-    color: $c-text-white;
+    color: $global-fontcolor-light;
 }
 
 @include bp(max-width, $bp-medium) {
