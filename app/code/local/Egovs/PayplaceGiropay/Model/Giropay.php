@@ -75,7 +75,7 @@ class Egovs_PayplaceGiropay_Model_Giropay extends Egovs_Paymentbase_Model_Paypla
 	 * @see Egovs_Paymentbase_Model_Payplace::initPayplacePayment
 	 */
 	protected function _initPayplacePayment() {
-		if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/payernote")) <= 0) {
+		if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/additional_note")) <= 0) {
 			//Wenn Payernote nicht gefüllt ist
 			if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/description")) <= 0) {
 				//Wenn Description nicht gefüllt
@@ -88,7 +88,7 @@ class Egovs_PayplaceGiropay_Model_Giropay extends Egovs_Paymentbase_Model_Paypla
 				$desc = Mage::getStoreConfig("payment/{$this->getCode()}/description");
 			}
 		} else {
-			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/payernote");
+			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/additional_note");
 		}
 		$_formServiceRequest = $this->_xmlApiRequest->getFormServiceRequest();
 		//Taucht nirgends auf
