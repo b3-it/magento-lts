@@ -412,6 +412,8 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 		//Order ID muss mit übertragen werden um im Callback die Richtige Order zu laden
 		$_formServiceRequest->setAdditionalData($this->_getOrder()->getId());
 		//Muss eindeutig und unique sein --> daher sollte hier nicht das Kassenzeichen genommen werden Zahlpartnerkonten!!
+		//Für Kreditkarten wird base16 string genutzt
+		//Für Giropay OrderID
 		$_formServiceRequest->setEventExtId($this->_geteShopTan());
 		$_formServiceRequest->setBasketId($this->_getBewirtschafterNr().'/'.$this->getInfoInstance()->getKassenzeichen());
 		$_formServiceRequest->setCurrency($this->_getOrder()->getBaseCurrencyCode());

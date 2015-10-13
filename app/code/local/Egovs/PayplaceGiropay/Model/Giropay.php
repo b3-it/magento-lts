@@ -91,7 +91,8 @@ class Egovs_PayplaceGiropay_Model_Giropay extends Egovs_Paymentbase_Model_Paypla
 			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/payernote");
 		}
 		$_formServiceRequest = $this->_xmlApiRequest->getFormServiceRequest();
-		$_formServiceRequest->setAdditionalData($desc);
+		//Taucht nirgends auf
+		//$_formServiceRequest->setAdditionalData($desc);
 		$_formServiceRequest->setAction(Egovs_Paymentbase_Model_Payplace_Enum_Action::VALUE_PAYMENT);
 		$_bankAccount = new Egovs_Paymentbase_Model_Payplace_Types_BankAccount();
 		$_formServiceRequest->setBankAccount($_bankAccount);
@@ -104,6 +105,22 @@ class Egovs_PayplaceGiropay_Model_Giropay extends Egovs_Paymentbase_Model_Paypla
 		$_giropayData->setMerchantSubId($_merchantSubId);
 		
 		$_formServiceRequest->setKind(Egovs_Paymentbase_Model_Payplace_Enum_KindEnum::VALUE_GIROPAY);
+	}
+	
+	/**
+	 * Liefert eine eShopTan
+	 *
+	 * Die TAN besteht bei giropay nur aus der OrderId.
+	 *
+	 * @return string
+	 */
+	protected function _geteShopTan() {
+		if (empty($this->_eShopTan)) {
+			$orderId = (int)$this->_getOrder()->getId();
+			
+			$this->_eShopTan = $orderId;
+		}
+		return $this->_eShopTan;
 	}
 	
 	public function aktiviereKassenzeichen($wId, $refId, $providerId) {
