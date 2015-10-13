@@ -25,7 +25,7 @@
 
 // ---------------------------------------------
 
-@include bp(min-width, $bp-medium + 1) {
+@include bp(min-width, 911px) {
 
     .skip-search {
         display: none;
@@ -58,7 +58,15 @@
 
 @include bp(max-width, 910px) {
     #header-search {
-        display: none;
+        top: 45px;
+        width: 215px;
+        height: 28px;
+        background-color: transparent;
+
+        &:not(.skip-active) {
+            display: none;
+        }
+
     }
 }
 

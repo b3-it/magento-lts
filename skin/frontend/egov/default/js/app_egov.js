@@ -1,7 +1,9 @@
 ﻿var egov_break = {
     lngSwitch: 760,    // Store-Language Switcher
     welcome  : 785,    // Welcome
-    navbar   : 785     // Navigation
+    navbar   : 785,    // Navigation
+    rightCol : 1000,   // Rechte Maginal-Spalte
+    topSearch: 911     // Suchen-Leiste im Header
 }
 
 $j(document).ready(function () {
@@ -28,7 +30,7 @@ $j(document).ready(function () {
 
     // Rechte Seitenspalte im 3-Spalten-Layout
     if ($j('.main-container.col3-layout').length > 0) {
-        enquire.register('screen and (max-width: 1000px)', {
+        enquire.register('screen and (max-width: ' + egov_break.rightCol + 'px)', {
             match: function () {
                 var rightColumn = $j('.col-right');
                 var colWrapper = $j('.col-main');
@@ -80,10 +82,30 @@ $j(document).ready(function () {
             match: function() {
                 // in Mobil-Container schieben
                 $j('.nav-primary').appendTo( $j('#header-nav') );
+
+                $j('#egov-nav').attr('id', 'egov-nav_old');
+                $j('#header-nav').attr('id', 'egov-nav');
+                $j('.skip-nav').attr('href', '#egov-nav');
             },
             unmatch: function() {
                 // zurück an Ursprung
-                $j('.nav-primary').appendTo( $j('#egov-nav') );
+                $j('.nav-primary').appendTo( $j('#egov-nav_old') );
+
+                $j('#egov-nav').attr('id', 'header-nav');
+                $j('#egov-nav_old').attr('id', 'egov-nav');
+                $j('.skip-nav').attr('href', '#header-nav');
+            }
+        });
+    }
+
+    // Umlegen des Suchen-Buttons
+    if ( $j('.skip-search').length > 0 ) {
+        enquire.register('screen and (max-width: ' + egov_break.topSearch + 'px)', {
+            match: function() {
+                $j('.skip-search').prependTo( $j('.account-cart-wrapper') );
+            },
+            unmatch: function() {
+                $j('.skip-search').appendTo( $j('.skip-links') );
             }
         });
     }
