@@ -34,6 +34,7 @@
         @include loadingOverlay();
         clear: both;
         position: relative;
+        background-color: $global-minicart-background;
     }
 
     .block-cart {
@@ -285,6 +286,8 @@ div.block-cart {
             }
         }
         .minicart-wrapper {
+            z-index: 999;
+
             &:before {
                 background-color: #EDEDED;
             }

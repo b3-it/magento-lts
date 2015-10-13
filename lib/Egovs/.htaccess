@@ -5,8 +5,8 @@
 	    deny from all
     </IfModule>
     <IfModule mod_authz_core.c>
-        #Apache 2.3+
-		Require all denied
+      #Apache 2.3+
+		  Require all denied
 	</IfModule>
 </IfModule>
 

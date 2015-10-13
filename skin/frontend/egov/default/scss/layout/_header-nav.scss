@@ -54,21 +54,23 @@
  * Nav - Skip Content
  * ============================================ */
 
-@include bp(max-width, 785px) {
-
-    #egov-nav {
-        display: none;
-    }
-
-}
-
 // ---------------------------------------------
 
 @include bp(min-width, $bp-medium + 1) {
-
     #header-nav {
     }
+}
 
+@include bp(max-width, $bp-medium) {
+    #egov-nav {
+        position: relative;
+        top: 35px;
+
+        a {
+            display: block;
+            width: auto;
+        }
+    }
 }
 
 /* ============================================ *
