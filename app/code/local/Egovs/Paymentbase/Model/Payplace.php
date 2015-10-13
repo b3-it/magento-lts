@@ -271,7 +271,7 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 			// Kassenzeichen wird normalerweise vom ePayment-Server generiert
 			$this->_getKassenzeichen(),
 			//eShopTAN
-			$this->_geteShopTan()
+			$this->getCode() == 'payplacepaypage' ? $this->_geteShopTan() : null
 		);
 	
 		Mage::log("{$this->getCode()}::pre::objSOAPClientBfF->anlegenKassenzeichen(" . var_export($this->_getMandantNr(), true) . ", " . var_export($this->_getECustomerId(), true) . ", " . var_export($objBuchungsliste, true) . ", null, null, $type)", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);

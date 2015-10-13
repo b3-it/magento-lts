@@ -104,7 +104,7 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 		} else {
 			$_formServiceRequest->setAction(Egovs_Paymentbase_Model_Payplace_Enum_Action::VALUE_AUTHORIZATION);
 		}
-		$_formServiceRequest->setAdditionalNote($desc);
+		$_formServiceRequest->setAdditionalNote(substr($desc, 0, 25));
 		$_formServiceRequest->setKind(Egovs_Paymentbase_Model_Payplace_Enum_KindEnum::VALUE_CREDITCARD);
 		//$_formServiceRequest->giropayData = null;
 	}
