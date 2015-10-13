@@ -74,11 +74,11 @@
             left: $global-welcome-left - 50;
         }
         @include bp(max-width, 790px) {
-            left: $global-welcome-left - 120;
-            top: 40px;
+            left: $global-welcome-left - 90;
+            top: 70px;
         }
-        @include bp(max-width, 750px) {
-            left: $global-welcome-left - 170;
+        @include bp(max-width, 770px) {
+            left: $global-welcome-left - 120;
             top: 30px;
             width: auto;
         }

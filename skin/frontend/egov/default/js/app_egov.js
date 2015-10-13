@@ -83,6 +83,7 @@ $j(document).ready(function () {
                 // in Mobil-Container schieben
                 $j('.nav-primary').appendTo( $j('#header-nav') );
 
+                // Damit die Navigation funktioniert, muss der Container "umbenannt" werden
                 $j('#egov-nav').attr('id', 'egov-nav_old');
                 $j('#header-nav').attr('id', 'egov-nav');
                 $j('.skip-nav').attr('href', '#egov-nav');
@@ -91,6 +92,7 @@ $j(document).ready(function () {
                 // zurück an Ursprung
                 $j('.nav-primary').appendTo( $j('#egov-nav_old') );
 
+                // Ursprüngliche Benennung wieder herstellen
                 $j('#egov-nav').attr('id', 'header-nav');
                 $j('#egov-nav_old').attr('id', 'egov-nav');
                 $j('.skip-nav').attr('href', '#header-nav');

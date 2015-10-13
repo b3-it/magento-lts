@@ -246,3 +246,25 @@
         }
     }
 }
+
+@include bp(max-width, 600px) {
+    .footer {
+        min-width: auto;
+        width: 100%;
+        padding-top: 15px;
+
+        .links {
+            width: 100%;
+
+            .block-title {
+                width: 20%;
+            }
+        }
+    }
+}
+
+@include bp(max-width, 770px) {
+    .footer-container {
+        top: 50px;
+    }
+}
