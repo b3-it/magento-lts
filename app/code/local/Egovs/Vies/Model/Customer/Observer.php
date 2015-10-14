@@ -209,7 +209,7 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 		
 		$availableCountries = Mage::getSingleton('adminhtml/system_config_source_country')->toOptionArray(true);
 		foreach ($availableCountries as $key => $countryOption) {
-			if (!Mage::helper('core')->isCountryInEU($countryOption['value'])) {
+			if (!Mage::helper('core')->isCountryInEU($countryOption['value']) || ($countryOption['value'] == Mage::getStoreConfig("general/country/default"))) {
 				continue;
 			}
 			
@@ -219,7 +219,7 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 		$selectedCountries = $assignedCountries->getSelectedCountriesArray($customerGroup);
 		$selectEu = false;
 		foreach ($selectedCountries as $key => $countryOption) {
-			if (!Mage::helper('core')->isCountryInEU($countryOption)) {
+			if (!Mage::helper('core')->isCountryInEU($countryOption) || ($countryOption['value'] == Mage::getStoreConfig("general/country/default"))) {
 				continue;
 			}
 			$selectEu = true;
