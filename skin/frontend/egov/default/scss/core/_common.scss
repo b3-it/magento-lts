@@ -42,7 +42,7 @@ textarea {
 }
 
 button {
-    color: $global-fontcolor-light;
+    color: $global-button-font-color;
 }
 
 textarea, input[type="text"], input[type="email"],
@@ -241,7 +241,6 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-right: $blobal-blockcontent-marginright;
 
     input {
-        _width: 100%;
     }
 
     input[type="text"], input[type="email"] {
@@ -460,13 +459,13 @@ div.block-reorder {
 }
 
 a.button {
-    color: $global-fontcolor-dark;
+    color: $global-button-font-color;
     text-decoration: none;
     padding: $global-btn-padding-v $global-btn-padding-h;
 }
 
 a.button:hover {
-    color: $global-fontcolor-dark;
+    color: $global-button-font-color;
 }
 
 /* Disabled - class for anchor, state for form elements */
@@ -487,8 +486,8 @@ a.button:hover {
 // Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
 // extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
 @mixin touch-button {
-    color: $global-fontcolor-dark;
-    background-color: $c-module-background;
+    color: $global-button-font-color;
+    background-color: $global-lightcolor;
     padding: 5px 10px;
 }
 
@@ -512,7 +511,7 @@ a.button:hover {
     text-decoration: underline;
     text-transform: uppercase;
     display: inline-block;
-    color: $global-fontcolor-dark;
+    color: $global-button-font-color;
     font-family: $base-font-family;
 
     &:hover {

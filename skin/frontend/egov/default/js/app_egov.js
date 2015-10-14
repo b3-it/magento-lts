@@ -1,4 +1,5 @@
-﻿var egov_break = {
+﻿// Definieren der Break-Points für JavaScript-Aktionen
+var egov_break = {
     lngSwitch: 760,    // Store-Language Switcher
     welcome  : 785,    // Welcome
     navbar   : 785,    // Navigation
@@ -83,7 +84,8 @@ $j(document).ready(function () {
                 // in Mobil-Container schieben
                 $j('.nav-primary').appendTo( $j('#header-nav') );
 
-                // Damit die Navigation funktioniert, muss der Container "umbenannt" werden
+                // Damit die Navigation funktioniert, müssen die
+                // Container 'egov-nav' und 'header-nav' "umbenannt" werden
                 $j('#egov-nav').attr('id', 'egov-nav_old');
                 $j('#header-nav').attr('id', 'egov-nav');
                 $j('.skip-nav').attr('href', '#egov-nav');
