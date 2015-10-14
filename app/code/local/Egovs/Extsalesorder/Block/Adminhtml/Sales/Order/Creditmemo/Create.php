@@ -76,6 +76,6 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_Creditmemo_Create extends 
      * @see Mage_Adminhtml_Block_Widget_Form_Container::getBackUrl()
      */
     public function getBackUrl() {
-        return $this->getUrl('adminhtml/sales_order/view', array('order_id'=>$this->getCreditmemo()->getOrderId()));
+        return $this->getUrl('adminhtml/extsalesorder_sales_order/view', array('order_id'=>$this->getCreditmemo()->getOrderId()));
     }
 }

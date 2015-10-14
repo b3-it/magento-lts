@@ -271,7 +271,7 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 			// Kassenzeichen wird normalerweise vom ePayment-Server generiert
 			$this->_getKassenzeichen(),
 			//eShopTAN
-			$this->_geteShopTan()
+			$this->getCode() == 'payplacepaypage' ? $this->_geteShopTan() : null
 		);
 	
 		Mage::log("{$this->getCode()}::pre::objSOAPClientBfF->anlegenKassenzeichen(" . var_export($this->_getMandantNr(), true) . ", " . var_export($this->_getECustomerId(), true) . ", " . var_export($objBuchungsliste, true) . ", null, null, $type)", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
@@ -412,6 +412,8 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 		//Order ID muss mit übertragen werden um im Callback die Richtige Order zu laden
 		$_formServiceRequest->setAdditionalData($this->_getOrder()->getId());
 		//Muss eindeutig und unique sein --> daher sollte hier nicht das Kassenzeichen genommen werden Zahlpartnerkonten!!
+		//Für Kreditkarten wird base16 string genutzt
+		//Für Giropay OrderID
 		$_formServiceRequest->setEventExtId($this->_geteShopTan());
 		$_formServiceRequest->setBasketId($this->_getBewirtschafterNr().'/'.$this->getInfoInstance()->getKassenzeichen());
 		$_formServiceRequest->setCurrency($this->_getOrder()->getBaseCurrencyCode());
@@ -478,11 +480,13 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 		if ($payplaceSoapApi->process($this->_xmlApiRequest) === false) {
 			//TODO Fehlerbehebung
 			$error = $payplaceSoapApi->getLastError();
-			if (isset($error[0])) {
-				Mage::logException($error[0]);
+			$error = array_pop($error);
+			if ($error instanceof SoapFault) {
+				Mage::logException($error);
 			}
 			$_lastRequest = $payplaceSoapApi->getLastRequest();
-			Mage::log(sprintf("%s::XML Request:\n%s", $this->getCode(), $_lastRequest), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+			$_lastResponse = $payplaceSoapApi->getLastResponse();
+			Mage::log(sprintf("%s::XML Request:\n%s\nXML Response:\n%s", $this->getCode(), $_lastRequest, $_lastResponse), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			return $_error;
 		} elseif ($this->getDebugFlag()) {
 			$_lastRequest = $payplaceSoapApi->getLastRequest();

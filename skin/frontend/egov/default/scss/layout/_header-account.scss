@@ -53,6 +53,10 @@
         right: 350px;
         width: 200px;
         opacity: 0.9;
+
+        @include bp(max-width, 911px) {
+            right: 230px;
+        }
     }
 
     #header-account a,

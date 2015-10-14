@@ -64,15 +64,13 @@
     z-index: 5;
     width: 22px;
     height: 22px;
-    background: rgba($c-action, 0.9);
+    background: rgba($global-linkcolor, 0.9);
     color: $global-fontcolor-light;
-    font-size: $f-size-xxs;
-    line-height: 22px;
+    line-height: 24px;
     text-align: center;
-    font-family: $f-stack-sans;
 }
 .skip-link.skip-active .count {
-    color: white;
+    color: $global-fontcolor-light;
 }
 
 // Using extra .skip-link selector to increase specificity

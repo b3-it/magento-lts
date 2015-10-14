@@ -41,6 +41,10 @@ textarea {
     line-height: $global-lineheight;
 }
 
+button {
+    color: $global-fontcolor-light;
+}
+
 textarea, input[type="text"], input[type="email"],
 input[type="password"], input[type="tel"], select {
     border: 1px solid $global-wrapper-color;

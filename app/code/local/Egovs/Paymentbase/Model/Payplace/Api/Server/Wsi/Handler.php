@@ -65,7 +65,7 @@ class Egovs_Paymentbase_Model_Payplace_Api_Server_Wsi_Handler extends Mage_Api_M
 			$pName = $parameter->getName();
 			if (is_object($args)) {
 				$_class = $parameter->getClass();
-				if (!_class) {
+				if (!$_class) {
 					continue;
 				}
 				$_class = $_class->getName();
