@@ -26,32 +26,32 @@ require_once(Mage::getBaseDir('lib').DS.'IDS'.DS.'Monitor.php');
 
 class B3it_Ids_Model_IdsComponent extends Varien_Object
 {
-	
+
 	private $threshold = array(
 			'log'      => 3,
 			'mail'     => 9,
 			'deny'     => 81
 	);
-	
-	
+
+
 	public function detect($data)
 	{
-		
+
 		$init = Init::init(Mage::getBaseDir('lib').DS.'IDS' . '/Config/Config.ini.php');
 		if($init)
 		{
 			$init->config['General']['base_path'] = Mage::getBaseDir('lib').DS.'IDS'.DS ;
 			$init->config['General']['filter_path'] = Mage::getBaseDir('lib').DS.'ids'.DS.'default_filter.xml' ;
 			$init->config['General']['tmp_path'] = Mage::getBaseDir('var').DS.'ids'.DS ;
-			
+
 			$init->config['General']['use_base_path'] = false;
-			
+
 			$init->config['Caching']['caching'] = 'none';
 			/*Mage_Core_Controller_Request_Http */
 			$rq = $data->getRequest();
-			
+
 			$path = explode('/', trim($data->getRequest()->getPathInfo(), '/'));
-			
+
 			$request = array(
 					//'REQUEST' => $_REQUEST,
 					'GET' => $_GET,
@@ -59,15 +59,15 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 					'COOKIE' => $_COOKIE,
 					'PATH' => $path
 			);
-			
-			
-			$ids = new Monitor($init);			
+
+
+			$ids = new Monitor($init);
 			$result = $ids->run($request);
-			
+
 			if($result)
 			{
 				if (!$result->isEmpty()) {
-					
+
 					//echo $result;
 					$reaction = $this->react($result);
 					if(isset($reaction['log'])){
@@ -77,26 +77,26 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 						$this->mail($result,$reaction);
 					}
 					if(isset($reaction['deny'])){
-						
-						die('Deny4You');
+						// http://pc-rene.b3-it.local/magento/magento_19/index.php/admin/system_config/save/section/customer/key/1acce3ae024596f781a43cab05ff4a2b/
+						//die('Deny4You');
 					}
-			}	
+			}
 			}
 		}
-			
+
 	}
-	
-	
-	
+
+
+
 	private function log($result, $reaction)
 	{
-		
+
 			$ip = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
 			$_SERVER['SERVER_ADDR'] :
 			(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
 					$_SERVER['HTTP_X_FORWARDED_FOR'] :
 					'127.0.0.1');
-				
+
 			foreach ($result as $event) {
 				$data = array(
 						'name'      => $event->getName(),
@@ -120,29 +120,29 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 					$idsfilter->setTags(implode(', ', $filter->getTags()));
 					$idsfilter->setRuleId($filter->getId());
 					$idsfilter->save();
-						
+
 				}
 			}
-			
-			
-			if(isset($reaction['deny'])){		
+
+
+			if(isset($reaction['deny'])){
 				Mage::log("DENY : ".$ip,Zend_Log::ALERT,"ids.log",true);
 			}
 	}
-	
+
 	private function mail($result, $reaction)
 	{
-	
+
 		$ip = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
 		$_SERVER['SERVER_ADDR'] :
 		(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
 				$_SERVER['HTTP_X_FORWARDED_FOR'] :
 				'127.0.0.1');
-	
-		
+
+
 		$msg = array();
-		$msg[] ="IP: ".$ip; 
-		
+		$msg[] ="IP: ".$ip;
+
 		foreach ($result as $event) {
 			$data = array(
 					'name'      => $event->getName(),
@@ -157,25 +157,25 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			);
 			$msg[] = 'page' .$_SERVER['REQUEST_URI'];
 			$msg[] = 'reaction' .implode(', ',$reaction);
-			
+
 			$msg = impolde(', ',$msg);
 			$this->sendMailToAdmin($msg);
 		}
-			
-			
+
+
 		if(isset($reaction['deny'])){
 			Mage::log("DENY : ".$ip,Zend_Log::ALERT,"ids.log",true);
 		}
 	}
-	
-	
+
+
 	private function react($result)
 	{
 		$res = array();
-	
+
 		$impact = $result->getImpact();
-		
-		
+
+
 		if ($impact >= $this->threshold['deny']) {
 			$res['log'] = 'log';
 			$res['email'] = 'email';
@@ -188,14 +188,14 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 		} elseif ($impact >= $this->threshold['log']) {
 			$res['log'] = 'log';
 			return $res;
-		} 
-		
+		}
+
 		return $res;
 	}
-	
-	public function sendMailToAdmin($body, $subject="IDS Alert") 
+
+	public function sendMailToAdmin($body, $subject="IDS Alert")
 	{
-		
+
 			$mailTo = $this->getAdminMail();
 			$mailTo = explode(';', $mailTo);
 			/* @var $mail Mage_Core_Model_Email */
@@ -207,26 +207,26 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			$mail->setFromEmail($mailFrom['mail']);
 			$mail->setFromName($mailFrom['name']);
 			$mail->setToEmail($mailTo);
-	
-			
+
+
 			$mail->setSubject($subject);
 			try {
 				$mail->send();
 			}
 			catch(Exception $ex) {
 				$error = Mage::helper($module)->__('Unable to send email.');
-	
+
 				if (isset($ex)) {
 					Mage::log($error.": {$ex->getTraceAsString()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				} else {
 					Mage::log($error, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				}
-	
+
 				//TODO: Im Frontend sollte diese Meldung nicht zu sehen sein!
 				//Mage::getSingleton('core/session')->addError($error);
 			}
 	}
-	
+
 	private function getGeneralContact() {
 		/* Sender Name */
 		$name = Mage::getStoreConfig('trans_email/ident_general/name');
@@ -238,10 +238,10 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 		if (strlen($mail) < 1) {
 			$mail = 'dummy@shop.de';
 		}
-	
+
 		return array('name' => $name, 'mail' => $mail);
 	}
-	
+
 	private  function getAdminMail() {
 		$mail = Mage::getStoreConfig('trans_email/ident_admin/email');
 		if (strlen($mail) > 0) {
