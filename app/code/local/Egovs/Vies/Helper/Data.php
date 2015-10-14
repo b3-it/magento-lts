@@ -90,4 +90,18 @@ class Egovs_Vies_Helper_Data extends Mage_Customer_Helper_Data {
 	
 		return null;
 	}
+
+	public function getEuCountries($exludeDefaultCountry = true)
+	{
+		$euCountries = explode(',', Mage::getStoreConfig(Mage_Core_Helper_Data::XML_PATH_EU_COUNTRIES_LIST, 0));
+		
+		if($exludeDefaultCountry)
+		{
+			$default = Mage::getStoreConfig("general/country/default");
+			$euCountries = array_diff($euCountries, array($default));
+		}
+		
+		return $euCountries;
+	}
+
 }

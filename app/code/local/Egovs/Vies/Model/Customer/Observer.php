@@ -207,9 +207,10 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 				)
 		);
 		
+		$euCountries = Mage::helper('egovsvies')->getEuCountries();
 		$availableCountries = Mage::getSingleton('adminhtml/system_config_source_country')->toOptionArray(true);
 		foreach ($availableCountries as $key => $countryOption) {
-			if (!Mage::helper('core')->isCountryInEU($countryOption['value']) || ($countryOption['value'] == Mage::getStoreConfig("general/country/default"))) {
+			if (array_search($countryOption['value'], $euCountries) === false) {
 				continue;
 			}
 			
@@ -219,7 +220,7 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 		$selectedCountries = $assignedCountries->getSelectedCountriesArray($customerGroup);
 		$selectEu = false;
 		foreach ($selectedCountries as $key => $countryOption) {
-			if (!Mage::helper('core')->isCountryInEU($countryOption) || ($countryOption['value'] == Mage::getStoreConfig("general/country/default"))) {
+			if (array_search($countryOption, $euCountries) === false) {
 				continue;
 			}
 			$selectEu = true;
