@@ -1,0 +1,76 @@
+<?php
+/**
+ * SEPA Lastschriftverfahren Form-Block
+ *
+ * @category	Egovs
+ * @package    	Egovs_PayplaceGiropay
+ * @name       	Egovs_PayplaceGiropay_Block_Redirect
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2014 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+/* @var $this Egovs_PayplaceGiropay_Block_Form */
+?>
+<fieldset class="form-list">
+    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
+		<li>
+            <div class="input-box">
+                <label for="bic"><?php echo $this->__('BIC') ?> <span class="required">*</span></label><br />
+                <input type="text" id="bic" name="payment[cc_type]" title="<?php echo $this->__('BIC') ?>" class="input-text required-entry validate-alphanum validate-debit-bic" value="" />
+            </div>
+		</li>
+	</ul>
+</fieldset>
+<script type="text/javascript">
+<!--
+	/*
+	 * http://stackoverflow.com/questions/15027613/magento-prototype-custom-validation
+	 */
+	var lngg = 1;
+	var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
+	var iban = "";
+	var bic = ""
+	if(Validation) {
+		Validation.addAllThese([
+			['validate-debit-bic', '<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>', function(v, r) {
+				if (v.length != 8 && v.length != 11) {
+					return false;
+				}
+				if (v && v.length > 0) {
+					bic = v.trim().toUpperCase();
+				} else {
+					bic = "";
+				}
+				return true;
+			}],
+			['validate-debit-iban', '<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>', function(v, r) {
+				if (v && v.length > 0) {
+					v = v.trim().toUpperCase();
+				}
+				res = checkibancore(v);
+				if (res == 0) {
+					return false;
+				}
+				iban = v;
+				return true;
+			}],
+			['validate-debit-iban-bic-match', '<?php echo Mage::helper('paymentbase')->__('BIC does not fit IBAN.') ?>', function(v, r) {
+				if (iban && iban.length > 1 && bic && bic.length > 4) {
+					if (iban[0] == bic[4] && iban[1] == bic[5]) {
+						return true;
+					}
+				}
+				return false;
+			}],
+			['validate-alphanum_ws', '<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>', function(v) {
+                return Validation.get('IsEmpty').test(v) ||  /^[a-zA-Z0-9 ]+$/.test(v) /*!/\W/.test(v)*/
+            }],
+		])
+	}
+//-->
+</script>
+<script type="text/javascript">
+<!--
+	var sepaDebitForm = new VarienForm('multishipping-billing-form');
+//-->
+</script>
