@@ -10,7 +10,7 @@
             </depends>
         </Sid_Checkout>
         <Sid_Framecontract>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Sid_Framecontract>
         <Sid_Report>

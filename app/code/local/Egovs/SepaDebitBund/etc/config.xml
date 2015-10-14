@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @package    Egovs_SepaDebitBund
+ * @copyright  Copyright (c) 2013 EDV Beratung Hempel
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+
+<config>
+	<modules>
+		<Egovs_SepaDebitBund>            
+            <version>2.0.0.0</version>
+        </Egovs_SepaDebitBund>
+	</modules>
+    <global>
+        <models>
+            <sepadebitbund>
+                <class>Egovs_SepaDebitBund_Model</class>
+            </sepadebitbund>
+        </models>
+        <blocks>
+	        <sepadebitbund>
+	            <class>Egovs_SepaDebitBund_Block</class>
+	        </sepadebitbund>
+	    </blocks>
+        <resources>
+            <sepadebitbund_write>
+                <use>core_write</use>
+            </sepadebitbund_write>
+            <sepadebitbund_read>
+                <use>core_read</use>
+            </sepadebitbund_read>
+        </resources>
+        <helpers>
+			<sepadebitbund>
+				<class>Egovs_SepaDebitBund_Helper</class>
+			</sepadebitbund>
+		</helpers>
+        <payment>
+            <groups>
+                <epaybl>ePayBL Payment Methods</epaybl>
+            </groups>
+        </payment>
+    </global>
+    <default>
+        <payment>
+            <sepadebitbund>
+                <active>0</active>
+                <model>sepadebitbund/sepadebitbund</model>
+                <order_status>processing</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>SEPA direct debit (Bund)</title>
+                <allowspecific>0</allowspecific>
+                <!-- Interne Mandatsverwaltung nutzen -->
+                <type_management_mandate>0</type_management_mandate>
+                <validate_bic_iban_with_epaybl>0</validate_bic_iban_with_epaybl>
+                <delete_customer_after_transaction>0</delete_customer_after_transaction>
+                <include_personal_data>1</include_personal_data>
+                <group>epaybl</group>
+                <customtext>
+Ich ermächtige die zuständige Bundeskasse, Zahlungen von meinem Konto mittels Lastschrift einzuziehen.
+Zugleich weise ich mein Kreditinstitut an, die von der Bundeskasse auf mein Konto gezogenen Lastschriften einzulösen.
+Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen.
+Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Ich bin damit einverstanden, dass zur Erleichterung des Zahlungsverkehrs,
+die grundsätzlich 14-tägige Frist für die Information vor Einzug einer fälligen Zahlung bis auf einen Tag vor Belastung verkürzt werden kann.
+                </customtext>
+            </sepadebitbund>
+         </payment>
+    </default>
+    <adminhtml>
+        <events>
+            <customer_save_after>
+                <observers>
+                    <paymentbase>
+                        <type>singleton</type>
+                        <class>Egovs_SepaDebitBund_Model_Observer</class>
+                        <method>doMandateDeleteFromPlatform</method>
+                    </paymentbase>
+                </observers>
+            </customer_save_after>
+        </events>
+        <translate>
+            <modules>
+                <Egovs_SepaDebitBund>
+                    <files>
+                        <default>Egovs_SepaDebitBund.csv</default>
+                    </files>
+                </Egovs_SepaDebitBund>
+            </modules>
+        </translate>
+    </adminhtml> 
+    <frontend>       
+        <translate>
+            <modules>
+                <Egovs_SepaDebitBund>
+                    <files>
+                        <default>Egovs_SepaDebitBund.csv</default>
+                    </files>
+                </Egovs_SepaDebitBund>
+            </modules>
+        </translate>   
+        <layout>
+            <updates>
+                <sepadebitbund>
+                    <file>sepadebitbund.xml</file>
+                </sepadebitbund>
+            </updates>
+        </layout>
+        <routers>
+            <sepadebitbund>
+                <use>standard</use>
+                <args>
+                    <module>Egovs_SepaDebitBund</module>
+                    <frontName>sepadebitbund</frontName>
+                </args>
+            </sepadebitbund>
+        </routers>
+    </frontend> 
+</config>
