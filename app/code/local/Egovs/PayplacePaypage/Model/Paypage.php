@@ -83,7 +83,7 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 	 * @see Egovs_Paymentbase_Model_Payplace::initPayplacePayment
 	 */
 	protected function _initPayplacePayment() {
-		if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/payernote")) <= 0) {
+		if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/additional_note")) <= 0) {
 			//Wenn Payernote nicht gefüllt ist
 			if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/description")) <= 0) {
 				//Wenn Description nicht gefüllt
@@ -96,7 +96,7 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 				$desc = Mage::getStoreConfig("payment/{$this->getCode()}/description");
 			}
 		} else {
-			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/payernote");
+			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/additional_note");
 		}
 		$_formServiceRequest = $this->_xmlApiRequest->getFormServiceRequest();
 		if ($this->usePreAuthorization()) {
@@ -104,7 +104,7 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 		} else {
 			$_formServiceRequest->setAction(Egovs_Paymentbase_Model_Payplace_Enum_Action::VALUE_AUTHORIZATION);
 		}
-		$_formServiceRequest->setAdditionalNote($desc);
+		$_formServiceRequest->setAdditionalNote(substr($desc, 0, 25));
 		$_formServiceRequest->setKind(Egovs_Paymentbase_Model_Payplace_Enum_KindEnum::VALUE_CREDITCARD);
 		//$_formServiceRequest->giropayData = null;
 	}

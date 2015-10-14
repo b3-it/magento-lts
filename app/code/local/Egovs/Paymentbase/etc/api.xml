@@ -50,10 +50,13 @@
                         <!-- we cannot know all the errors that can appear, their details can be found in error message for call -->
                         <message>Invalid data. Details in error message.</message>
                     </data_invalid>
+                    <order_id_invalid>
+                        <code>1010</code >
+                        <message>Order ID invalid</message>
+                    </order_id_invalid>
                     <order_not_found>
                         <code>1000</code >
-                        <!-- we cannot know all the errors that can appear, their details can be found in error message for call -->
-                        <message>No order available</message>
+                        <message>No order available or order not found</message>
                     </order_not_found>
                     <basket_id_invalid>
                         <code>110</code>
