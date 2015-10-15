@@ -821,10 +821,11 @@ a.button:hover {
 
 .footer-container {
     box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
-    height: $global-footer-height;
+    min-height: $global-footer-height;
     line-height: $global-footer-lineheight;
     background-color: $global-footer-backgroundcolor;
     width: 100%;
+    padding-top: 0px;
 }
 
 .main-container,
@@ -838,17 +839,6 @@ a.button:hover {
     &:after {
         @include clearfix;
     }
-}
-
-@include bp(min-width, 480px) {
-
-    .main-container,
-    .footer-container {
-    }
-}
-
-.footer-container {
-    padding-top: 0px;
 }
 
 /* -------------------------------------------- *
