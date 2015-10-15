@@ -41,6 +41,10 @@ textarea {
     line-height: $global-lineheight;
 }
 
+button {
+    color: $global-button-font-color;
+}
+
 textarea, input[type="text"], input[type="email"],
 input[type="password"], input[type="tel"], select {
     border: 1px solid $global-wrapper-color;
@@ -237,7 +241,6 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-right: $blobal-blockcontent-marginright;
 
     input {
-        _width: 100%;
     }
 
     input[type="text"], input[type="email"] {
@@ -456,13 +459,13 @@ div.block-reorder {
 }
 
 a.button {
-    color: $global-fontcolor-dark;
+    color: $global-button-font-color;
     text-decoration: none;
     padding: $global-btn-padding-v $global-btn-padding-h;
 }
 
 a.button:hover {
-    color: $global-fontcolor-dark;
+    color: $global-button-font-color;
 }
 
 /* Disabled - class for anchor, state for form elements */
@@ -483,8 +486,8 @@ a.button:hover {
 // Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
 // extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
 @mixin touch-button {
-    color: $global-fontcolor-dark;
-    background-color: $c-module-background;
+    color: $global-button-font-color;
+    background-color: $global-lightcolor;
     padding: 5px 10px;
 }
 
@@ -508,7 +511,7 @@ a.button:hover {
     text-decoration: underline;
     text-transform: uppercase;
     display: inline-block;
-    color: $global-fontcolor-dark;
+    color: $global-button-font-color;
     font-family: $base-font-family;
 
     &:hover {
@@ -818,10 +821,11 @@ a.button:hover {
 
 .footer-container {
     box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
-    height: $global-footer-height;
+    min-height: $global-footer-height;
     line-height: $global-footer-lineheight;
     background-color: $global-footer-backgroundcolor;
     width: 100%;
+    padding-top: 0px;
 }
 
 .main-container,
@@ -835,17 +839,6 @@ a.button:hover {
     &:after {
         @include clearfix;
     }
-}
-
-@include bp(min-width, 480px) {
-
-    .main-container,
-    .footer-container {
-    }
-}
-
-.footer-container {
-    padding-top: 0px;
 }
 
 /* -------------------------------------------- *

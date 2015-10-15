@@ -93,7 +93,7 @@
             <codePool>local</codePool>
         </Egovs_Extreport>
         <Egovs_Extsalesorder>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <xdepends>
                 <Egovs_Paymentbase />
@@ -179,7 +179,7 @@
             <codePool>local</codePool>
         </Egovs_Search>
         <Egovs_Shipment>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Shipment>
         <Egovs_ShippingTax>

@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @package    Egovs_Debit
+ * @copyright  Copyright (c) 2009 ITABS GbR - Rouven Alexander Rieker
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+
+<config>
+   <sections>
+        <payment>
+            <groups>
+                <sepadebitbund translate="label" module="sepadebitbund">
+                    <label>SEPA direct debit (Bund)</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2040</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <creditor_id translate="label">
+                            <label>Creditor ID</label>
+                            <frontend_type>text</frontend_type>
+                            <!--<source_model>sepadebitbund/system_config_source_creditorid</source_model>-->
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry validate-length maximum-length-35</validate>
+                        </creditor_id>
+                        <mandate_pdf_template translate="label">
+                            <label>Mandate PDF Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdftemplate/system_config_source_templates</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </mandate_pdf_template>
+                        <type_management_mandate translate="label comment" module="paymentbase">
+                            <label>Type of the management mandate</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sepadebitbund/adminhtml_system_config_source_management</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>The type can be internal or external</comment>
+                        </type_management_mandate>
+                        <allow_ooff translate="label comment">
+                            <label>Allow one off mandates</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Allow one off mandates for this shop?</comment>
+                        </allow_ooff>
+                        <order_status translate="label">
+                            <label>New order status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status_processing</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_status>
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_order>
+                        <allowspecific translate="label">
+                            <label>Payment from applicable countries</label>
+                            <frontend_type>allowspecific</frontend_type>
+                            <sort_order>7</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Payment from Specific countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>8</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </specificcountry>
+                        <customtext translate="label">
+                            <label>Custom text for mandate formular</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customtext>
+                        <min_order_total translate="label">
+                            <label>Mindestbestellwert</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>98</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </min_order_total>
+                        <max_order_total translate="label">
+                            <label>Höchstbestellwert</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>99</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_order_total>
+                        <agree_text translate="label">
+                            <label>Text für Zustimmung zum Bankeinzug</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </agree_text>
+                        <validate_bic_iban_with_epaybl translate="label comment">
+                            <label>Validate BIC and IBAN with ePayBL</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If active the BIC and IBAN will be validated with the ePayBL service</comment>
+                        </validate_bic_iban_with_epaybl>
+                        <!--<is_debug translate="label">
+                            <label>Debug</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </is_debug>-->
+                        <delete_customer_after_transaction translate="label" module="paymentbase">
+                            <label>Delete customer after payment transaction</label>
+                            <frontend_type>hidden</frontend_type>
+                            <sort_order>1020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>The customer will not be deleted after every payment transaction on the ePayBL server</comment>
+                        </delete_customer_after_transaction>
+                        <include_personal_data translate="label">
+                            <label>Include personal data</label>
+                            <frontend_type>hidden</frontend_type>
+                            <value>1</value>
+                            <sort_order>1030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Always send personal data to ePayBL</comment>
+                        </include_personal_data>
+                    </fields>
+                </sepadebitbund>
+            </groups>
+        </payment>
+    </sections>
+</config>

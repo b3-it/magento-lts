@@ -146,7 +146,7 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_View extends Mage_Adminhtm
      * @return string
      */
 	public function getSpecialCancelUrl() {
-        return $this->getUrl('*/*/speccancel');
+        return $this->getUrl('adminhtml/extsalesorder_sales_order/speccancel');
     }
     
     /**
@@ -155,6 +155,6 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_View extends Mage_Adminhtm
      * @return string
      */
     public function getSpecialCreditmemoUrl() {
-    	return $this->getUrl('adminhtml/extsalesorder_sales_order_creditmemo/start', array('_current'=>true));
+    	return $this->getUrl('adminhtml/extsalesorder_creditmemo/start', array('_current'=>true));
     }
 }

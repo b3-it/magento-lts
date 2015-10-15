@@ -4,6 +4,17 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 	protected $_module = "payplace";
 	
 	/**
+	 * Dispatches fault
+	 *
+	 * @param string $code
+	 */
+	protected function _fault($code, $customMessage=null) {
+		$apiException = new Mage_Api_Exception($code, $customMessage);
+		Mage::logException($apiException);
+		throw $apiException;
+	}
+	
+	/**
 	 * Method to call the operation originally named notify
 	 * 
 	 * @param Egovs_Paymentbase_Model_Payplace_Types_Callback_Request $_payplaceStructCallbackRequest
@@ -31,10 +42,14 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 				$this->_fault('basket_id_invalid');
 			}
 			
-			$orderId = intval($_payplaceCallbackRequest->getPaymentResponse()->getAdditionalData());
-			if (empty($orderId)) {
-				$this->_fault('order_not_found');
+			$orderId = $_payplaceCallbackRequest->getPaymentResponse()->getAdditionalData();
+			if (!is_numeric($orderId)) {
+				$orderId = $_payplaceCallbackRequest->getPaymentResponse()->getEventExtId();
 			}
+			if (empty($orderId) || !is_numeric($orderId)) {
+				$this->_fault('order_id_invalid');
+			}
+			$orderId = intval($orderId);
 			
 			/* @var $order Mage_Sales_Model_Order */
 			$order = Mage::getModel('sales/order')->load($orderId);

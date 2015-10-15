@@ -13,36 +13,30 @@
  * Footer
  */
 
+#footer-wrapper {
+    clear: both;
+    margin: 0px auto;
+    max-width: $global-fullpage-width;
+}
+
 .footer,
 .footer button {
     font-family: $base-font-family;
 }
 
 .footer {
-    clear: both;
-    margin: 0px auto;
-    max-width: $global-fullpage-width;
-    min-width: $global-min-width;
-    padding-top: $global-footer-top-padding;
+    margin-left: $global-footer-horizontal-margin;
+    margin-right: $global-footer-horizontal-margin;
 
     a {
         border-bottom: 1px dotted $global-footer-fontcolor;
         color: $global-footer-fontcolor;
-        white-space: nowrap;
-        margin-right: 1em;
         font-size: $global-footer-fontsize;
         line-height: $global-footer-lineheight;
     }
 
-    @include bp(max-width, $bp-xsmall) {
-        padding-top: $trim-small;
-    }
-
     .block-title {
         margin: 0 2em 0 0;
-        text-align: right;
-        width: 20.5em;
-        float: left;
         padding-top: 0px;
         border-top: 0px;
     }
@@ -59,30 +53,29 @@
 
     .copyright {
         width: auto;
-        float: right;
         position: relative;
-        top: 10px;
+        top: -5px;
     }
 
     .links {
-        display: block;
-        padding-top: 0.8em;
+        display: inline-block;
+        vertical-align: top;
         font-size: $global-footer-fontsize;
         overflow: hidden;
         line-height: $global-footer-lineheight;
+        width: $global-footer-links-width;
+        text-align: left;
+        padding-top: $global-footer-links-top;
 
         li {
-            float: left;
             line-height: $global-footer-lineheight;
         }
 
         a {
             color: $global-footer-fontcolor;
-            border-bottom-width: 1px;
+            border-bottom-width: $global-box-border;
             border-bottom-style: dotted;
             border-bottom-color: $global-footer-fontcolor;
-            margin-right: 1em;
-            white-space: nowrap;
 
             &:hover {
                 border-bottom-style: solid;
@@ -90,16 +83,16 @@
         }
     }
 
-    .block-subscribe {
-        float: right;
-        width: 320px;
-        margin-bottom: $trim;
-        font-size: $f-size-xs;
-    }
-
-    .form-subscribe-header {
-        display: none;
-    }
+    //.block-subscribe {
+    //    float: right;
+    //    width: 320px;
+    //    margin-bottom: $trim;
+    //    font-size: $f-size-xs;
+    //}
+    //
+    //.form-subscribe-header {
+    //    display: none;
+    //}
 
     /* -------------------------------------------- *
      * Social icons
@@ -195,28 +188,22 @@
 
     address {
         text-align: right;
-        font-size: $f-size-xxs;
+        font-size: $global-fontsize-small;
     }
 
-    @include bp(max-width, $bp-xlarge) {
-        $links-trim: percentage(30px / 960px);
-        $links-width: (100 - ($links-trim * 3)) / 4;
-
-        .links {
-            padding-right: 0;
-            margin-right: $links-trim;
-        }
-
-        .links:nth-child(4) {
-            margin-right: 0;
-        }
-
-        .block-subscribe {
-            clear: both;
-            float: none;
-            margin: 0 auto $trim auto;
-        }
-    }
+    //@include bp(max-width, $bp-xlarge) {
+    //    .links {
+    //    }
+    //
+    //    .links:nth-child(4) {
+    //    }
+    //
+    //    .block-subscribe {
+    //        clear: both;
+    //        float: none;
+    //        margin: 0 auto $trim auto;
+    //    }
+    //}
 
     @include bp(max-width, $bp-medium) {
         .form-language,
@@ -225,24 +212,30 @@
         }
     }
 
-    @include bp(max-width, $bp-small) {
-        $links-trim: percentage(15px / 480px);
-        $links-width: (100 - $links-trim) / 2;
+    //@include bp(max-width, $bp-small) {
+    //    $links-trim: percentage(15px / 480px);
+    //    $links-width: (100 - $links-trim) / 2;
+    //
+    //    .links {
+    //        width: $links-width;
+    //        margin-right: 0;
+    //    }
+    //
+    //    .links:nth-child(odd) {
+    //        margin-right: $links-trim;
+    //        clear: both;
+    //    }
+    //
+    //    .block-subscribe {
+    //        clear: both;
+    //        float: left;
+    //        width: 100%;
+    //    }
+    //}
+}
 
-        .links {
-            width: $links-width;
-            margin-right: 0;
-        }
-
-        .links:nth-child(odd) {
-            margin-right: $links-trim;
-            clear: both;
-        }
-
-        .block-subscribe {
-            clear: both;
-            float: left;
-            width: 100%;
-        }
+@include bp(max-width, 770px) {
+    .footer-container {
+        top: 50px;
     }
 }

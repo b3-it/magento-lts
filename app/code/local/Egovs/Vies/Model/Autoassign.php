@@ -106,7 +106,7 @@ class Egovs_Vies_Model_Autoassign extends Mage_Core_Model_Abstract
 		 * Für Anzeige werden EU-Länder aus Liste gefilter und durch einen Eintrag EU ersetzt.
 		 * Dies muss hier wieder rückgängig gemacht werden.
 		 */
-		$euCountries = explode(',', Mage::getStoreConfig(Mage_Core_Helper_Data::XML_PATH_EU_COUNTRIES_LIST, $storeId));
+		$euCountries = Mage::helper('egovsvies')->getEuCountries();
 		if (($key = array_search('EU', $countriesToAssign)) !== false) {
 			unset($countriesToAssign[$key]);
 			$countriesToAssign = array_merge($countriesToAssign, $euCountries);

@@ -96,12 +96,12 @@
 
 		<adminhtml_extsalesorder_creditmemo_new>
 				<reference name="content">
-						<block type="specialordercancel/adminhtml_sales_order_creditmemo_create" name="sales_creditmemo_create">
+						<block type="extsalesorder/adminhtml_sales_order_creditmemo_create" name="sales_creditmemo_create">
 								<block type="adminhtml/sales_order_creditmemo_create_form" name="form" template="sales/order/creditmemo/create/form.phtml">
 										<block type="adminhtml/sales_order_view_info" name="order_info" template="sales/order/view/info.phtml"></block>
 										<block type="adminhtml/sales_order_payment" name="order_payment"></block>
-										<block type="specialordercancel/adminhtml_sales_order_creditmemo_create_items" name="order_items" template="egovs/specialordercancel/sales/order/creditmemo/create/items.phtml">
-												<action method="addItemRender"><type>default</type><block>specialordercancel/adminhtml_sales_order_creditmemo_items_renderer_default</block><template>egovs/specialordercancel/sales/order/creditmemo/create/items/renderer/default.phtml</template></action>
+										<block type="extsalesorder/adminhtml_sales_order_creditmemo_create_items" name="order_items" template="egovs/extsalesorder/sales/order/creditmemo/create/items.phtml">
+												<action method="addItemRender"><type>default</type><block>extsalesorder/adminhtml_sales_order_creditmemo_items_renderer_default</block><template>egovs/extsalesorder/sales/order/creditmemo/create/items/renderer/default.phtml</template></action>
 												<action method="addColumnRender"><column>qty</column><block>adminhtml/sales_items_column_qty</block><template>sales/items/column/qty.phtml</template></action>
 												<action method="addColumnRender"><column>name</column><block>adminhtml/sales_items_column_name</block><template>sales/items/column/name.phtml</template></action>
 												<action method="addColumnRender"><column>name</column><block>adminhtml/sales_items_column_name_grouped</block><template>sales/items/column/name.phtml</template><type>grouped</type></action>
@@ -122,7 +122,7 @@
 		</adminhtml_extsalesorder_creditmemo_new>
 
 		<adminhtml_extsalesorder_creditmemo_updateqty>
-				<block type="specialordercancel/adminhtml_sales_order_creditmemo_create_items" name="order_items" template="egovs/specialordercancel/sales/order/creditmemo/create/items.phtml">
+				<block type="extsalesorder/adminhtml_sales_order_creditmemo_create_items" name="order_items" template="egovs/extsalesorder/sales/order/creditmemo/create/items.phtml">
 						<action method="addItemRender"><type>default</type><block>adminhtml/sales_items_renderer_default</block><template>sales/order/creditmemo/create/items/renderer/default.phtml</template></action>
 						<action method="addColumnRender"><column>qty</column><block>adminhtml/sales_items_column_qty</block><template>sales/items/column/qty.phtml</template></action>
 						<action method="addColumnRender"><column>name</column><block>adminhtml/sales_items_column_name</block><template>sales/items/column/name.phtml</template></action>
@@ -140,6 +140,11 @@
 				</block>
 		</adminhtml_extsalesorder_creditmemo_updateqty>
 
-
+		<adminhtml_extsalesorder_sales_order_view>
+			<update handle="adminhtml_sales_order_view" /> 
+		</adminhtml_extsalesorder_sales_order_view>
+		<adminhtml_extsalesorder_sales_order_index>
+			<update handle="add_order_grid_column_handle" />
+		</adminhtml_extsalesorder_sales_order_index>
 
 </layout>

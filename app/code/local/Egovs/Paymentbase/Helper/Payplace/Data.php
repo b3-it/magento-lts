@@ -25,7 +25,10 @@ class Egovs_Paymentbase_Helper_Payplace_Data extends Mage_Core_Helper_Abstract
 			->setUseSession(false)
 		;
 	
-		$wsdlUrl = ($params !== null)? $urlModel->getUrl('*/*/*', $params) : $urlModel->getUrl('*/*/*');
+		$wsdlUrl = ($params !== null)
+				? $urlModel->getUrl('*/*/*', array('_current' => true, '_query' => $params))
+				: $urlModel->getUrl('*/*/*')
+		;
 		$_parsedUrl = parse_url($wsdlUrl);
 		
 		if( $withAuth ) {

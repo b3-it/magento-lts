@@ -1,0 +1,7 @@
+"Payplace Merchant Sub ID","Payplace Händler-SubID"
+"Your Payplace Merchant Sub ID (4 Numbers)","Ihre Payplace Händler-SubID (4Stellige Zahl)"
+"Customer was redirected to Payplace.","Kunde wurde zu Payplace weitergeleitet."
+"TEXT_PROCESS_ERROR_NOGIROPAY","Giropay steht für die angegebene Bankverbindung nicht zur Verfügung"
+"TEXT_PROCESS_ERROR_INVALID_BIC","Die angegebene BIC ist für Giropay ungültig!"
+"TEXT_PROCESS_ERROR_MISSING_BIC","Es wurde keine BIC angegeben!"
+"Payment session has expired.","Das Zeitfenster zum Bezahlen ist abgelaufen."

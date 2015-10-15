@@ -130,18 +130,22 @@
     border-radius: $global-radius $global-radius 0 0;
     border: $global-box-border solid $global-lightcolor;
     font-size: $global-category-fontsize;
+
+    li, a {
+        line-height: $global-navigation-line-height;
+    }
 }
 
 // Wechselnde Pfeile in den Navigationen
 .egov-navigation-base {
     width: 100%;
     padding: 13px 25px 9px 13px;
-    line-height: $global-category-lineheight;
+    line-height: $global-navigation-line-height;
     text-shadow: $global-category-textshadow;
 }
 .egov-arrow-main-closed {
     @extend .egov-navigation-base;
-   background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
+    background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
 }
 .egov-arrow-main-open {
     @extend .egov-navigation-base;

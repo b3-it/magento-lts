@@ -43,7 +43,7 @@
                 if( $j(this).parent().find(defaults.DOMElement).length > 0 ) {
                     toggleMenu( $j(this).next() );
                     changeGrafic( $j(this), $j(this).next() );
-                    getStatus( from );
+                    getStatus(from);
                 }
                 else {
                     openURL( $j(this).attr('href') );
