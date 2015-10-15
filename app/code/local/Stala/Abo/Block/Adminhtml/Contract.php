@@ -3,8 +3,8 @@ class Stala_Abo_Block_Adminhtml_Contract extends Mage_Adminhtml_Block_Widget_Gri
 {
   public function __construct()
   {
-    $this->_controller = 'adminhtml_contract';
-    $this->_blockGroup = 'stalaabo';
+    $this->_controller = 'stalaabo_contract';
+    //$this->_blockGroup = 'stalaabo';
     $this->_headerText = Mage::helper('stalaabo')->__('Subscription Contract Positions Manager');
     $this->_addButtonLabel = Mage::helper('stalaabo')->__('Add Subscription Contract');
     parent::__construct();

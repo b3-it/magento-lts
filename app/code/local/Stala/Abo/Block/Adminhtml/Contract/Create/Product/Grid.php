@@ -88,7 +88,7 @@ class Stala_Abo_Block_Adminhtml_Contract_Create_Product_Grid extends Mage_Adminh
                 'width'     => '100',
                 'type'      => 'action',
                 'getter'    => 'getId',
-            	'renderer' => 'stalaabo/adminhtml_contract_create_product_renderer_useit',
+            	'renderer' => 'adminhtml/stalaabo_contract_create_product_renderer_useit',
                 'filter'    => false,
                 'sortable'  => false,
                 'index'     => 'stores',

@@ -37,8 +37,8 @@ class Stala_Abo_Block_Adminhtml_Contract_Customer extends Mage_Adminhtml_Block_W
 
   public function __construct()
   {
-    $this->_controller = 'adminhtml_contract_customer';
-    $this->_blockGroup = 'stalaabo';
+    $this->_controller = 'stalaabo_contract_customer';
+   // $this->_blockGroup = 'stalaabo';
     $this->_headerText = Mage::helper('informationservice')->__('Item Manager');
     $this->_addButtonLabel = Mage::helper('customer')->__('Add New Customer');
     //$this->removeButton('add');

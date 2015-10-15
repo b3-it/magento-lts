@@ -2,8 +2,8 @@
 
 class Stala_Abo_Block_Adminhtml_Contract_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
-	protected $_blockGroup = 'stalaabo';
-	protected $_controller = 'adminhtml_contract';
+	//protected $_blockGroup = 'stalaabo';
+	protected $_controller = 'stalaabo_contract';
 
 	public function __construct()
 	{
