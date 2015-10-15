@@ -250,7 +250,7 @@ class Stala_Abo_Block_Adminhtml_Contract_Grid extends Mage_Adminhtml_Block_Widge
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('stalaabo')->__('View'),
-                        'url'       => array('base'=> '/adminhtml_contract/edit','params'=>array('origin'=>'customer','customer_id'=>$this->getCustomerId())),
+                        'url'       => array('base'=> '/adminhtml/stalaabo_contract/edit','params'=>array('origin'=>'customer','customer_id'=>$this->getCustomerId())),
                         'field'     => 'id'
                     )
                 ),
@@ -272,7 +272,7 @@ class Stala_Abo_Block_Adminhtml_Contract_Grid extends Mage_Adminhtml_Block_Widge
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('stalaabo')->__('View'),
-                        'url'       => array('base'=> '/adminhtml_contract/edit'),
+                        'url'       => array('base'=> '/adminhtml/stalaabo_contract/edit'),
                         'field'     => 'id'
                     )
                 ),

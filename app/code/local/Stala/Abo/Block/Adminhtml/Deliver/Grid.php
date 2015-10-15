@@ -228,7 +228,7 @@ class Stala_Abo_Block_Adminhtml_Deliver_Grid extends Mage_Adminhtml_Block_Widget
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('stalaabo')->__('View'),
-                        'url'       => array('base'=> '/adminhtml_contract/edit','params'=>array('origin'=>'deliver')),
+                        'url'       => array('base'=> '/adminhtml/stalaabo_contract/edit','params'=>array('origin'=>'deliver')),
                         'field'     => 'id'
                     )
                 ),

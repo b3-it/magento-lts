@@ -170,7 +170,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('stalaabo')->__('View'),
-                        'url'       => array('base'=> '/adminhtml_contract/edit','params'=>array('origin'=>'delivered')),
+                        'url'       => array('base'=> '/adminhtml/stalaabo_contract/edit','params'=>array('origin'=>'delivered')),
                         'field'     => 'id'
                     )
                 ),
@@ -189,7 +189,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('stalaabo')->__('Storno'),
-                        'url'       => array('base'=> '/adminhtml_delivered/storno'),
+                        'url'       => array('base'=> '/adminhtml/stalaabo_delivered/storno'),
                         'field'     => 'abo_delivered_id'
                     )
                 ),
