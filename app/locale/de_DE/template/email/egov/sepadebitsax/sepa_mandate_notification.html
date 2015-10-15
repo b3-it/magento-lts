@@ -1,0 +1,56 @@
+<!--@subject Ihre SEPA Lastschrift @-->
+<!--@vars
+{"store url=""":"Store Url",
+"skin url="images/logo_email.gif" _area="frontend"":"Email Logo Image",
+"htmlescape var=$customer.name":"Customer Name"
+"}
+@-->
+
+<!--@styles
+    body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+    a { color:#1E7EC8; }
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <table cellspacing="0" cellpadding="0" border="0" width="98%" style="margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+        <tr>
+            <td align="center" valign="top"><!-- [ header starts here] -->
+            <table cellspacing="0" cellpadding="0" border="0" width="650">
+                <tr>
+                    <td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/logo_email.gif" _area="frontend"}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>
+                </tr>
+            </table><!-- [ middle starts here] -->
+            <table cellspacing="0" cellpadding="0" border="0" width="650">
+                <tr>
+                    <td valign="top">
+                    <p>
+
+                        Sehr geehrte Kundin,
+                        <br/>
+                        Sehr geehrter Kunde,
+                        <br/>
+                        <br/>
+                        bezugnehmend auf Ihren Einkauf mit der Bestellnummer  {{var order.increment_id}} informieren wir Sie über den Lastschrift-Einzugstermin.
+
+                        Die Forderung von  {{var betrag}}  ziehen wir mit der SEPA-Lastschrift zum Mandat {{var mandate_reference}} zu der
+                        Gläubiger-Identifikationsnummer  {{var glaeubiger_id}} von Ihrem Konto IBAN  {{var iban}}{{if bic}} und BIC  {{var bic}}{{/if}} zum {{var faellig}} ein.
+                        <br/>
+                        Fällt der Fälligkeitstag auf einen Feiertag oder ein Wochenende, verschiebt sich der Fälligkeitstag auf den nächsten Werktag. Um einen reibungslosen Ablauf zu unterstützen, bitten wir Sie, für Kontodeckung zu sorgen.
+                        Bei Rückfragen zu Ihrem Einkauf wenden Sie sich bitte an folgende Adresse {{config path="trans_email/ident_general/email"}}.
+                        <br/>
+                        Bitte beachten Sie den Anhang!
+                        <br/>
+                        Vielen Dank
+                        <br/>
+                        Ihr {{config path="general/store_information/name"}}
+                    </p></td>
+                </tr>
+            </table></td>
+        </tr>
+    </table>
+</div>
+
+{{template config_path="design/email/footer"}}

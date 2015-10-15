@@ -3,7 +3,7 @@
     <!-- Egovs_ShippingTax muss deaktiviert sein! -->
     <modules>
         <Egovs_GermanTax>
-            <version>0.1.1</version>
+            <version>2.0.0.0</version>
         </Egovs_GermanTax>
     </modules>
     <frontend>

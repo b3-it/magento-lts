@@ -6,8 +6,8 @@
  * @category   	Egovs
  * @package    	Egovs_GermanTax
  * @name       	Egovs_GermanTax_Helper_Data
- * @author 		Holger K�gel <hkoegel@edv-beratung-hempel.de>
- * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2014 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_GermanTax_Helper_Setup extends Mage_Tax_Helper_Data
