@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <action method="addTab">
+                <name>sepa_sax</name>
+                <block>sepadebitsax/adminhtml_customer_edit_tab_sepa</block>
+            </action>
+        </reference>
+    </adminhtml_customer_edit>
+</layout>
