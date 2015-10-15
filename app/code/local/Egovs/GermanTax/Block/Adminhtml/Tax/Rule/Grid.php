@@ -13,8 +13,6 @@ class Egovs_GermanTax_Block_Adminhtml_Tax_Rule_Grid extends Mage_Adminhtml_Block
 
     protected function _prepareColumns()
     {
-    	parent::_prepareColumns();
-    	
     	$opt = Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray();
         
         $this->addColumnAfter('valid_taxvat',
@@ -32,7 +30,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tax_Rule_Grid extends Mage_Adminhtml_Block
         		'product_tax_classes'
         );
 
-        return $this;
+        return parent::_prepareColumns();
     }
 
  
