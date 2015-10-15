@@ -130,6 +130,21 @@
 
         li.fullwide {
             width: 100%;
+
+            .customer-name-prefix {
+                div.field {
+                    display: inline-block;
+                    width: 48%;
+                }
+
+                div.name-prefix {
+                    display: block;
+                }
+            }
+        }
+
+        li.halfwide {
+            width: 48%;
         }
 
         .customer-name-middlename {

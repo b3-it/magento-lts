@@ -165,25 +165,10 @@
 }
 
 .customer-account-create {
-    .buttons-set {
-        max-width: 455px;
-    }
-
-    .fieldset,
-    .buttons-set {
-        margin-left: $trim;
-
-        @include bp(max-width, $bp-xsmall) {
-            margin-left: 0;
-        }
-    }
+    @include new_address;
 
     .fieldset .hidden {
         display: none;
-    }
-
-    #remember-me-popup {
-        max-width: 455px;
     }
 }
 
