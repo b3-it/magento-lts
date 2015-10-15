@@ -1,4 +1,13 @@
 <?php
+/**
+ * Tax
+ *
+ * @category	Egovs
+ * @package		Egovs_GermanTax
+ * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2014 - 2015 B3 IT Systeme GmbH
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class Egovs_GermanTax_Model_Resource_Tax_Calculation extends Mage_Tax_Model_Resource_Calculation
 {
 	/**
@@ -61,10 +70,9 @@ class Egovs_GermanTax_Model_Resource_Tax_Calculation extends Mage_Tax_Model_Reso
 				->join(
 					array('rule' => $this->getTable('tax/tax_calculation_rule')),
 					$ruleTableAliasName . ' = main_table.tax_calculation_rule_id',
-					array('rule.priority', 'rule.position', 'rule.calculate_subtotal','rule.valid_taxvat', 'tax_key' => 'rule.taxkey')
+					array('rule.priority', 'rule.position', 'rule.calculate_subtotal', 'rule.valid_taxvat', 'tax_key' => 'rule.taxkey')
 				);
-
-				$select->join(
+			$select->join(
 					array('rate'=>$this->getTable('tax/tax_calculation_rate')),
 					'rate.tax_calculation_rate_id = main_table.tax_calculation_rate_id',
 					array(
@@ -75,20 +83,19 @@ class Egovs_GermanTax_Model_Resource_Tax_Calculation extends Mage_Tax_Model_Reso
 						'rate.tax_calculation_rate_id',
 						'rate.code'
 					)
-				)
-				->joinLeft(
+				)->joinLeft(
 					array('title_table' => $this->getTable('tax/tax_calculation_rate_title')),
 					"rate.tax_calculation_rate_id = title_table.tax_calculation_rate_id "
 					. "AND title_table.store_id = '{$storeId}'",
 					array('title' => $ifnullTitleValue)
-				)
-				->where('rate.tax_country_id = ?', $countryId)
-				->where("rate.tax_region_id IN(?)", array(0, (int)$regionId));
-				if ($taxvat) {
-					$select->where('rule.valid_taxvat = 1');
-				} else {
-					$select->where('rule.valid_taxvat = 0');
-				}
+				)->where('rate.tax_country_id = ?', $countryId)
+				->where("rate.tax_region_id IN(?)", array(0, (int)$regionId)
+			);
+			if ($taxvat) {
+				$select->where('rule.valid_taxvat = 1');
+			} else {
+				$select->where('rule.valid_taxvat = 0');
+			}
 			//die($select->assemble());				
 			$postcodeIsNumeric = is_numeric($postcode);
 			$postcodeIsRange = is_string($postcode) && preg_match('/^(.+)-(.+)$/', $postcode, $matches);
@@ -152,121 +159,124 @@ class Egovs_GermanTax_Model_Resource_Tax_Calculation extends Mage_Tax_Model_Reso
 	 * 
 	 * @return array
 	 */
-	public function getCalculationProcess($request, $rates = null)
-	{
-		if (is_null($rates)) {
-			$rates = $this->_getRates($request);
-		}
-	
-		$result = array();
-		$row = array();
-		$ids = array();
-		$currentRate = 0;
-		$totalPercent = 0;
-		$countedRates = count($rates);
-		
-		$taxvatRates = array();
-		
-		for ($i = 0; $i < $countedRates; $i++) {
-			$rate = $rates[$i];
-			
-			$taxvatRate = null;
-			if ($request && $request->getTaxvat()) {
-				if (isset($rate['valid_taxvat']) && 1 == $rate['valid_taxvat']) {
-					$taxvatRate = array(
-							'index' => $i,
-							'priority' => $rate['priority'],
-							'tax_country_id' => $rate['tax_country_id'],
-							'tax_region_id' => $rate['tax_region_id'],
-							'tax_postcode' => $rate['tax_region_id'],
-							//'product_tax_class_id' kann in SQL-Abfrage auch Array sein!
-							'product_tax_class_id' => $rate['product_tax_class_id'],
-					);
-					$taxvatRates[] = $taxvatRate;
-				} elseif (isset($rate['valid_taxvat']) && 0 == $rate['valid_taxvat']) {
-					continue;
-				} else {
-					foreach ($taxvatRates as $tvr) {
-						if ($tvr['priority'] == $rate['priority']
-							&& $tvr['product_tax_class_id'] == $rate['product_tax_class_id']
-							&& $tvr['tax_country_id'] == $rate['tax_country_id']
-							&& $tvr['tax_region_id'] == $rate['tax_region_id']
-							&& $tvr['tax_postcode'] == $rate['tax_postcode']
-						) {
-							//Entsprechende Steuer wurde bereits behandelt!
-							continue 2;
-						}
-					}
-				}
-			}
-			
-			$value = (isset($rate['value']) ? $rate['value'] : $rate['percent'])*1;
-	
-			$oneRate = array(
-					'code'=>$rate['code'],
-					'title'=>$rate['title'],
-					'percent'=>$value,
-					'position'=>$rate['position'],
-					'priority'=>$rate['priority'],
-			);
-			
-			
-			if (isset($rate['tax_calculation_rule_id'])) {
-				$oneRate['rule_id'] = $rate['tax_calculation_rule_id'];
-			}
-			
-			if (isset($rate['tax_key'])) {
-				$oneRate['tax_key'] = $rate['tax_key'];
-			}
-	
-			if (isset($rate['hidden'])) {
-				$row['hidden'] = $rate['hidden'];
-			}
-	
-			if (isset($rate['amount'])) {
-				$row['amount'] = $rate['amount'];
-			}
-	
-			if (isset($rate['base_amount'])) {
-				$row['base_amount'] = $rate['base_amount'];
-			}
-			if (isset($rate['base_real_amount'])) {
-				$row['base_real_amount'] = $rate['base_real_amount'];
-			}
-			$row['rates'][] = $oneRate;
-	
-			if (isset($rates[$i+1]['tax_calculation_rule_id'])) {
-				$rule = $rate['tax_calculation_rule_id'];
-			}
-			$priority = $rate['priority'];
-			$ids[] = $rate['code'];
-	
-			if (isset($rates[$i+1]['tax_calculation_rule_id'])) {
-				while (isset($rates[$i+1]) && $rates[$i+1]['tax_calculation_rule_id'] == $rule) {
-					$i++;
-				}
-			}
-	
-			$currentRate += $value;
-	
-			if (isset($rates[$i+1]) && $rates[$i+1]['priority'] != $priority) {
-				$taxvatRates = array();
-			}
-			
-			if (!isset($rates[$i+1]) || $rates[$i+1]['priority'] != $priority
-				|| (isset($rates[$i+1]['process']) && $rates[$i+1]['process'] != $rate['process'])
-			) {
-				$row['percent'] = (100+$totalPercent)*($currentRate/100);
-				$row['id'] = implode($ids);
-				$result[] = $row;
-				$row = array();
-				$ids = array();
-				
-				$totalPercent += (100+$totalPercent)*($currentRate/100);
-				$currentRate = 0;
-			}
-		}
-	
-		return $result;
-	}
+public function getCalculationProcess($request, $rates = null)
+    {
+        if (is_null($rates)) {
+            $rates = $this->_getRates($request);
+        }
+
+        $result = array();
+        $row = array();
+        $ids = array();
+        $currentRate = 0;
+        $totalPercent = 0;
+        $countedRates = count($rates);
+        
+        $taxvatRates = array();
+        
+        for ($i = 0; $i < $countedRates; $i++) {
+            $rate = $rates[$i];
+            
+            $taxvatRate = null;
+            if ($request && $request->getTaxvat()) {
+            	if (isset($rate['valid_taxvat']) && 1 == $rate['valid_taxvat']) {
+            		$taxvatRate = array(
+            				'index' => $i,
+            				'priority' => $rate['priority'],
+            				'tax_country_id' => $rate['tax_country_id'],
+            				'tax_region_id' => $rate['tax_region_id'],
+            				'tax_postcode' => $rate['tax_region_id'],
+            				//'product_tax_class_id' kann in SQL-Abfrage auch Array sein!
+            				'product_tax_class_id' => $rate['product_tax_class_id'],
+            		);
+            		$taxvatRates[] = $taxvatRate;
+            	} elseif (isset($rate['valid_taxvat']) && 0 == $rate['valid_taxvat']) {
+            		continue;
+            	} else {
+            		foreach ($taxvatRates as $tvr) {
+            			if ($tvr['priority'] == $rate['priority']
+            					&& $tvr['product_tax_class_id'] == $rate['product_tax_class_id']
+            					&& $tvr['tax_country_id'] == $rate['tax_country_id']
+            					&& $tvr['tax_region_id'] == $rate['tax_region_id']
+            					&& $tvr['tax_postcode'] == $rate['tax_postcode']
+            			) {
+            				//Entsprechende Steuer wurde bereits behandelt!
+            				continue 2;
+            			}
+            		}
+            	}
+            }
+            
+            $value = (isset($rate['value']) ? $rate['value'] : $rate['percent']) * 1;
+
+            $oneRate = array(
+                'code' => $rate['code'],
+                'title' => $rate['title'],
+                'percent' => $value,
+                'position' => $rate['position'],
+                'priority' => $rate['priority'],
+            );
+            if (isset($rate['tax_calculation_rule_id'])) {
+                $oneRate['rule_id'] = $rate['tax_calculation_rule_id'];
+            }
+            
+            if (isset($rate['tax_key'])) {
+            	$oneRate['tax_key'] = $rate['tax_key'];
+            }
+
+            if (isset($rate['hidden'])) {
+                $row['hidden'] = $rate['hidden'];
+            }
+
+            if (isset($rate['amount'])) {
+                $row['amount'] = $rate['amount'];
+            }
+
+            if (isset($rate['base_amount'])) {
+                $row['base_amount'] = $rate['base_amount'];
+            }
+            if (isset($rate['base_real_amount'])) {
+                $row['base_real_amount'] = $rate['base_real_amount'];
+            }
+            $row['rates'][] = $oneRate;
+
+            if (isset($rates[$i + 1]['tax_calculation_rule_id'])) {
+                $rule = $rate['tax_calculation_rule_id'];
+            }
+            $priority = $rate['priority'];
+            $ids[] = $rate['code'];
+
+            if (isset($rates[$i + 1]['tax_calculation_rule_id'])) {
+                while (isset($rates[$i + 1]) && $rates[$i + 1]['tax_calculation_rule_id'] == $rule) {
+                    $i++;
+                }
+            }
+
+            $currentRate += $value;
+
+            if (isset($rates[$i+1]) && $rates[$i+1]['priority'] != $priority) {
+            	$taxvatRates = array();
+            }
+            
+            if (!isset($rates[$i + 1]) || $rates[$i + 1]['priority'] != $priority
+                || (isset($rates[$i + 1]['process']) && $rates[$i + 1]['process'] != $rate['process'])
+            ) {
+                if (!empty($rates[$i]['calculate_subtotal'])) {
+                    $row['percent'] = $currentRate;
+                    $totalPercent += $currentRate;
+                } else {
+                    $row['percent'] = $this->_collectPercent($totalPercent, $currentRate);
+                    $totalPercent += $row['percent'];
+                }
+                $row['id'] = implode($ids);
+                $result[] = $row;
+                $row = array();
+                $ids = array();
+
+                $currentRate = 0;
+            }
+        }
+
+        return $result;
+    }
 }

@@ -8,7 +8,7 @@
  * @category	Egovs
  * @package		Egovs_GermanTax
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
- * @copyright	Copyright (c) 2014 B3 IT Systeme GmbH <www.b3-it.de> 
+ * @copyright	Copyright (c) 2014 - 2015 B3 IT Systeme GmbH <www.b3-it.de> 
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_GermanTax_Model_Tax_Observer

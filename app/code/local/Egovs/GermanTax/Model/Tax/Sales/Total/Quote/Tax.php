@@ -1,4 +1,13 @@
 <?php
+/**
+ * Tax
+ *
+ * @category	Egovs
+ * @package		Egovs_GermanTax
+ * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2014 - 2015 B3 IT Systeme GmbH
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sales_Total_Quote_Tax
 {
 	/**
@@ -19,70 +28,30 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sal
 	 * 
 	 * @return  Mage_Tax_Model_Sales_Total_Quote
 	 */
-	protected function _calculateShippingTax(Mage_Sales_Model_Quote_Address $address, $taxRateRequest) {
-		$shippingTaxClass = Mage::getSingleton('germantax/calculation')->getShippingTaxClass($this->_config->getShippingTaxClass($this->_store), $address);
+	protected function _calculateShippingTax(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
+	{
+        $shippingTaxClass = Mage::getSingleton('germantax/calculation')->getShippingTaxClass($this->_config->getShippingTaxClass($this->_store), $address);
 		$taxRateRequest->setProductClassId($shippingTaxClass);
-		$rate           = $this->_calculator->getRate($taxRateRequest);
-		$inclTax        = $address->getIsShippingInclTax();
-		$shipping       = $address->getShippingTaxable();
-		$baseShipping   = $address->getBaseShippingTaxable();
-		$rateKey        = (string)$rate;
-	
-		$hiddenTax      = null;
-		$baseHiddenTax  = null;
-		switch ($this->_helper->getCalculationSequence($this->_store)) {
-			case Mage_Tax_Model_Calculation::CALC_TAX_BEFORE_DISCOUNT_ON_EXCL:
-			case Mage_Tax_Model_Calculation::CALC_TAX_BEFORE_DISCOUNT_ON_INCL:
-				$tax        = $this->_calculator->calcTaxAmount($shipping, $rate, $inclTax, false);
-				$baseTax    = $this->_calculator->calcTaxAmount($baseShipping, $rate, $inclTax, false);
-				break;
-			case Mage_Tax_Model_Calculation::CALC_TAX_AFTER_DISCOUNT_ON_EXCL:
-			case Mage_Tax_Model_Calculation::CALC_TAX_AFTER_DISCOUNT_ON_INCL:
-				$discountAmount     = $address->getShippingDiscountAmount();
-				$baseDiscountAmount = $address->getBaseShippingDiscountAmount();
-				$tax = $this->_calculator->calcTaxAmount(
-						$shipping - $discountAmount,
-						$rate,
-						$inclTax,
-						false
-				);
-				$baseTax = $this->_calculator->calcTaxAmount(
-						$baseShipping - $baseDiscountAmount,
-						$rate,
-						$inclTax,
-						false
-				);
-				break;
-		}
-	
-		if ($this->_config->getAlgorithm($this->_store) == Mage_Tax_Model_Calculation::CALC_TOTAL_BASE) {
-			$tax        = $this->_deltaRound($tax, $rate, $inclTax);
-			$baseTax    = $this->_deltaRound($baseTax, $rate, $inclTax, 'base');
-		} else {
-			$tax        = $this->_calculator->round($tax);
-			$baseTax    = $this->_calculator->round($baseTax);
-		}
-	
-		if ($inclTax && !empty($discountAmount)) {
-			$hiddenTax      = $this->_calculator->calcTaxAmount($discountAmount, $rate, $inclTax, false);
-			$baseHiddenTax  = $this->_calculator->calcTaxAmount($baseDiscountAmount, $rate, $inclTax, false);
-			$this->_hiddenTaxes[] = array(
-					'rate_key'   => $rateKey,
-					'value'      => $hiddenTax,
-					'base_value' => $baseHiddenTax,
-					'incl_tax'   => $inclTax,
-			);
-		}
-	
-		$this->_addAmount(max(0, $tax));
-		$this->_addBaseAmount(max(0, $baseTax));
-		$address->setShippingTaxAmount(max(0, $tax));
-		$address->setBaseShippingTaxAmount(max(0, $baseTax));
-		$applied = $this->_calculator->getAppliedRates($taxRateRequest);
-		$this->_saveAppliedTaxes($address, $applied, $tax, $baseTax, $rate);
-	
-		return $this;
-	}
+		
+        $rate = $this->_calculator->getRate($taxRateRequest);
+        $inclTax = $address->getIsShippingInclTax();
+
+        $address->setShippingTaxAmount(0);
+        $address->setBaseShippingTaxAmount(0);
+        $address->setShippingHiddenTaxAmount(0);
+        $address->setBaseShippingHiddenTaxAmount(0);
+        $appliedRates = $this->_calculator->getAppliedRates($taxRateRequest);
+        if ($inclTax) {
+            $this->_calculateShippingTaxByRate($address, $rate, $appliedRates);
+        } else {
+            foreach ($appliedRates as $appliedRate) {
+                $taxRate = $appliedRate['percent'];
+                $taxId = $appliedRate['id'];
+                $this->_calculateShippingTaxByRate($address, $taxRate, array($appliedRate), $taxId);
+            }
+        }
+        return $this;
+    }
 	
 	/**
 	 * Calculate address tax amount based on one unit price and tax amount
@@ -91,68 +60,38 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sal
 	 * @return  Mage_Tax_Model_Sales_Total_Quote
 	 */
 	protected function _unitBaseCalculation(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
-	{
-		$items = $this->_getAddressItems($address);
-		$itemTaxGroups  = array();
-		foreach ($items as $item) {
-			if ($item->getParentItem()) {
-				continue;
-			}
-	
-			if ($item->getHasChildren() && $item->isChildrenCalculated()) {
-				foreach ($item->getChildren() as $child) {
-					$taxRateRequest->setIsVirtual($child->getProduct()->getIsVirtual());
-					
-					$taxRateRequest->setProductClassId($child->getProduct()->getTaxClassId());
-					
-					$rate = $this->_calculator->getRate($taxRateRequest);
-					$this->_calcUnitTaxAmount($child, $rate);
-					$this->_addAmount($child->getTaxAmount());
-					$this->_addBaseAmount($child->getBaseTaxAmount());
-					$applied = $this->_calculator->getAppliedRates($taxRateRequest);
-					if ($rate > 0) {
-						$itemTaxGroups[$child->getId()] = $applied;
-					}
-					$this->_saveAppliedTaxes(
-							$address,
-							$applied,
-							$child->getTaxAmount(),
-							$child->getBaseTaxAmount(),
-							$rate
-					);
-					$child->setTaxRates($applied);
-				}
-				$this->_recalculateParent($item);
-			}
-			else {
-				$taxRateRequest->setIsVirtual($item->getProduct()->getIsVirtual());
-				
-				$taxRateRequest->setProductClassId($item->getProduct()->getTaxClassId());
-				
-				$rate = $this->_calculator->getRate($taxRateRequest);
-				$this->_calcUnitTaxAmount($item, $rate);
-				$this->_addAmount($item->getTaxAmount());
-				$this->_addBaseAmount($item->getBaseTaxAmount());
-				$applied = $this->_calculator->getAppliedRates($taxRateRequest);
-				if ($rate > 0) {
-					$itemTaxGroups[$item->getId()] = $applied;
-				}
-				$this->_saveAppliedTaxes(
-						$address,
-						$applied,
-						$item->getTaxAmount(),
-						$item->getBaseTaxAmount(),
-						$rate
-				);
-				$item->setTaxRates($applied);
-			}
-		}
-		if ($address->getQuote()->getTaxesForItems()) {
-			$itemTaxGroups += $address->getQuote()->getTaxesForItems();
-		}
-		$address->getQuote()->setTaxesForItems($itemTaxGroups);
-		return $this;
-	}
+    {
+        $items = $this->_getAddressItems($address);
+        $itemTaxGroups = array();
+        $store = $address->getQuote()->getStore();
+        $catalogPriceInclTax = $this->_config->priceIncludesTax($store);
+
+        foreach ($items as $item) {
+            if ($item->getParentItem()) {
+                continue;
+            }
+
+            if ($item->getHasChildren() && $item->isChildrenCalculated()) {
+                foreach ($item->getChildren() as $child) {
+                	$taxRateRequest->setIsVirtual($child->getProduct()->getIsVirtual());
+                	
+                    $this->_unitBaseProcessItemTax(
+                        $address, $child, $taxRateRequest, $itemTaxGroups, $catalogPriceInclTax);
+                }
+                $this->_recalculateParent($item);
+            } else {
+            	$taxRateRequest->setIsVirtual($item->getProduct()->getIsVirtual());
+            	
+                $this->_unitBaseProcessItemTax(
+                    $address, $item, $taxRateRequest, $itemTaxGroups, $catalogPriceInclTax);
+            }
+        }
+        if ($address->getQuote()->getTaxesForItems()) {
+            $itemTaxGroups += $address->getQuote()->getTaxesForItems();
+        }
+        $address->getQuote()->setTaxesForItems($itemTaxGroups);
+        return $this;
+    }
 	
 	/**
 	 * Calculate address total tax based on row total
@@ -162,66 +101,38 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sal
 	 * @return  Mage_Tax_Model_Sales_Total_Quote
 	 */
 	protected function _rowBaseCalculation(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
-	{
-		$items = $this->_getAddressItems($address);
-		$itemTaxGroups  = array();
-		foreach ($items as $item) {
-			if ($item->getParentItem()) {
-				continue;
-			}
-			if ($item->getHasChildren() && $item->isChildrenCalculated()) {
-				foreach ($item->getChildren() as $child) {
-					$taxRateRequest->setIsVirtual($child->getProduct()->getIsVirtual());
-					
-					$taxRateRequest->setProductClassId($child->getProduct()->getTaxClassId());
-					
-					$rate = $this->_calculator->getRate($taxRateRequest);
-					$this->_calcRowTaxAmount($child, $rate);
-					$this->_addAmount($child->getTaxAmount());
-					$this->_addBaseAmount($child->getBaseTaxAmount());
-					$applied = $this->_calculator->getAppliedRates($taxRateRequest);
-					if ($rate > 0) {
-						$itemTaxGroups[$child->getId()] = $applied;
-					}
-					$this->_saveAppliedTaxes(
-							$address,
-							$applied,
-							$child->getTaxAmount(),
-							$child->getBaseTaxAmount(),
-							$rate
-					);
-				}
-				$this->_recalculateParent($item);
-			}
-			else {
-				$taxRateRequest->setIsVirtual($item->getProduct()->getIsVirtual());
-				
-				$taxRateRequest->setProductClassId($item->getProduct()->getTaxClassId());
-				
-				$rate = $this->_calculator->getRate($taxRateRequest);
-				$this->_calcRowTaxAmount($item, $rate);
-				$this->_addAmount($item->getTaxAmount());
-				$this->_addBaseAmount($item->getBaseTaxAmount());
-				$applied = $this->_calculator->getAppliedRates($taxRateRequest);
-				if ($rate > 0) {
-					$itemTaxGroups[$item->getId()] = $applied;
-				}
-				$this->_saveAppliedTaxes(
-						$address,
-						$applied,
-						$item->getTaxAmount(),
-						$item->getBaseTaxAmount(),
-						$rate
-				);
-			}
-		}
-	
-		if ($address->getQuote()->getTaxesForItems()) {
-			$itemTaxGroups += $address->getQuote()->getTaxesForItems();
-		}
-		$address->getQuote()->setTaxesForItems($itemTaxGroups);
-		return $this;
-	}
+    {
+        $items = $this->_getAddressItems($address);
+        $itemTaxGroups = array();
+        $store = $address->getQuote()->getStore();
+        $catalogPriceInclTax = $this->_config->priceIncludesTax($store);
+
+        foreach ($items as $item) {
+            if ($item->getParentItem()) {
+                continue;
+            }
+            if ($item->getHasChildren() && $item->isChildrenCalculated()) {
+                foreach ($item->getChildren() as $child) {
+                	$taxRateRequest->setIsVirtual($child->getProduct()->getIsVirtual());
+                	
+                    $this->_rowBaseProcessItemTax(
+                        $address, $child, $taxRateRequest, $itemTaxGroups, $catalogPriceInclTax);
+                }
+                $this->_recalculateParent($item);
+            } else {
+            	$taxRateRequest->setIsVirtual($item->getProduct()->getIsVirtual());
+            	
+                $this->_rowBaseProcessItemTax(
+                    $address, $item, $taxRateRequest, $itemTaxGroups, $catalogPriceInclTax);
+            }
+        }
+
+        if ($address->getQuote()->getTaxesForItems()) {
+            $itemTaxGroups += $address->getQuote()->getTaxesForItems();
+        }
+        $address->getQuote()->setTaxesForItems($itemTaxGroups);
+        return $this;
+    }
 	
 	/**
 	 * Calculate address total tax based on address subtotal
@@ -231,61 +142,117 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sal
 	 * @return  Mage_Tax_Model_Sales_Total_Quote
 	 */
 	protected function _totalBaseCalculation(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
-	{
-		$items          = $this->_getAddressItems($address);
-		$store          = $address->getQuote()->getStore();
-		$taxGroups      = array();
-		$itemTaxGroups  = array();
-	
-		$inclTax = false;
-		foreach ($items as $item) {
-			if ($item->getParentItem()) {
-				continue;
-			}
-	
-			if ($item->getHasChildren() && $item->isChildrenCalculated()) {
-				foreach ($item->getChildren() as $child) {
-					$taxRateRequest->setIsVirtual($child->getProduct()->getIsVirtual());
-					
-					$taxRateRequest->setProductClassId($child->getProduct()->getTaxClassId());
-					$rate = $this->_calculator->getRate($taxRateRequest);
-					$applied_rates = $this->_calculator->getAppliedRates($taxRateRequest);
-					$taxGroups[(string)$rate]['applied_rates'] = $applied_rates;
-					$this->_aggregateTaxPerRate($child, $rate, $taxGroups);
-					$inclTax = $child->getIsPriceInclTax();
-					if ($rate > 0) {
-						$itemTaxGroups[$child->getId()] = $applied_rates;
-					}
-				}
-				$this->_recalculateParent($item);
-			} else {
-				$taxRateRequest->setIsVirtual($item->getProduct()->getIsVirtual());
-				
-				$taxRateRequest->setProductClassId($item->getProduct()->getTaxClassId());
-				$rate = $this->_calculator->getRate($taxRateRequest);
-				$applied_rates = $this->_calculator->getAppliedRates($taxRateRequest);
-				$taxGroups[(string)$rate]['applied_rates'] = $applied_rates;
-				$this->_aggregateTaxPerRate($item, $rate, $taxGroups);
-				$inclTax = $item->getIsPriceInclTax();
-				if ($rate > 0) {
-					$itemTaxGroups[$item->getId()] = $applied_rates;
-				}
-			}
-		}
-	
-		if ($address->getQuote()->getTaxesForItems()) {
-			$itemTaxGroups += $address->getQuote()->getTaxesForItems();
-		}
-		$address->getQuote()->setTaxesForItems($itemTaxGroups);
-	
-		foreach ($taxGroups as $rateKey => $data) {
-			$rate = (float) $rateKey;
-			$totalTax = $this->_calculator->calcTaxAmount(array_sum($data['totals']), $rate, $inclTax);
-			$baseTotalTax = $this->_calculator->calcTaxAmount(array_sum($data['base_totals']), $rate, $inclTax);
-			$this->_addAmount($totalTax);
-			$this->_addBaseAmount($baseTotalTax);
-			$this->_saveAppliedTaxes($address, $data['applied_rates'], $totalTax, $baseTotalTax, $rate);
-		}
-		return $this;
-	}
+    {
+        $items = $this->_getAddressItems($address);
+        $store = $address->getQuote()->getStore();
+        $taxGroups = array();
+        $itemTaxGroups = array();
+        $catalogPriceInclTax = $this->_config->priceIncludesTax($store);
+
+        foreach ($items as $item) {
+            if ($item->getParentItem()) {
+                continue;
+            }
+
+            if ($item->getHasChildren() && $item->isChildrenCalculated()) {
+                foreach ($item->getChildren() as $child) {
+                	$taxRateRequest->setIsVirtual($child->getProduct()->getIsVirtual());
+                	
+                    $this->_totalBaseProcessItemTax(
+                        $child, $taxRateRequest, $taxGroups, $itemTaxGroups, $catalogPriceInclTax);
+                }
+                $this->_recalculateParent($item);
+            } else {
+            	$taxRateRequest->setIsVirtual($item->getProduct()->getIsVirtual());
+            	
+                $this->_totalBaseProcessItemTax(
+                    $item, $taxRateRequest, $taxGroups, $itemTaxGroups, $catalogPriceInclTax);
+            }
+        }
+
+        if ($address->getQuote()->getTaxesForItems()) {
+            $itemTaxGroups += $address->getQuote()->getTaxesForItems();
+        }
+        $address->getQuote()->setTaxesForItems($itemTaxGroups);
+
+        foreach ($taxGroups as $taxId => $data) {
+            if ($catalogPriceInclTax) {
+                $rate = (float)$taxId;
+            } else {
+                $rate = $data['applied_rates'][0]['percent'];
+            }
+
+            $inclTax = $data['incl_tax'];
+
+            $totalTax = array_sum($data['tax']);
+            $baseTotalTax = array_sum($data['base_tax']);
+            $this->_addAmount($totalTax);
+            $this->_addBaseAmount($baseTotalTax);
+            $totalTaxRounded = $this->_calculator->round($totalTax);
+            $baseTotalTaxRounded = $this->_calculator->round($totalTaxRounded);
+            $this->_saveAppliedTaxes($address, $data['applied_rates'], $totalTaxRounded, $baseTotalTaxRounded, $rate);
+        }
+        return $this;
+    }
+    
+    /**
+     * Collect applied tax rates information on address level
+     *
+     * @param   Mage_Sales_Model_Quote_Address $address
+     * @param   array $applied
+     * @param   float $amount
+     * @param   float $baseAmount
+     * @param   float $rate
+     */
+    protected function _saveAppliedTaxes(Mage_Sales_Model_Quote_Address $address,
+    		$applied, $amount, $baseAmount, $rate)
+    {
+    	$previouslyAppliedTaxes = $address->getAppliedTaxes();
+    	$process = count($previouslyAppliedTaxes);
+    
+    	foreach ($applied as $row) {
+    		if ($row['percent'] == 0) {
+    			//continue;
+    		}
+    		if (!isset($previouslyAppliedTaxes[$row['id']])) {
+    			$row['process'] = $process;
+    			$row['amount'] = 0;
+    			$row['base_amount'] = 0;
+    			$previouslyAppliedTaxes[$row['id']] = $row;
+    		} else {
+            	foreach ($row['rates'] as $_rate) {
+            		foreach ($previouslyAppliedTaxes[$row['id']]['rates'] as $_prevRate) {
+            			if ($_prevRate['rule_id'] == $_rate['rule_id']) {
+            				continue 2;
+            			}
+            		}
+            		$previouslyAppliedTaxes[$row['id']]['rates'][] = $_rate;
+            	}
+            }
+    
+    		if (!is_null($row['percent'])) {
+    			$row['percent'] = $row['percent'] ? $row['percent'] : 1;
+    			$rate = $rate ? $rate : 1;
+    
+    			$appliedAmount = $amount / $rate * $row['percent'];
+    			$baseAppliedAmount = $baseAmount / $rate * $row['percent'];
+    		} else {
+    			$appliedAmount = 0;
+    			$baseAppliedAmount = 0;
+    			foreach ($row['rates'] as $rate) {
+    				$appliedAmount += $rate['amount'];
+    				$baseAppliedAmount += $rate['base_amount'];
+    			}
+    		}
+    
+    
+    		if ($appliedAmount || $previouslyAppliedTaxes[$row['id']]['amount'] >= 0) {
+    			$previouslyAppliedTaxes[$row['id']]['amount'] += $appliedAmount;
+    			$previouslyAppliedTaxes[$row['id']]['base_amount'] += $baseAppliedAmount;
+    		} else {
+    			unset($previouslyAppliedTaxes[$row['id']]);
+    		}
+    	}
+    	$address->setAppliedTaxes($previouslyAppliedTaxes);
+    }
 }
