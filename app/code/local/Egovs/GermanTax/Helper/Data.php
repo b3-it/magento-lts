@@ -38,8 +38,11 @@ class Egovs_GermanTax_Helper_Data extends Mage_Tax_Helper_Data
 	 * @param   bool $priceIncludesTax flag what price parameter contain tax
 	 * @return  float
 	 */
+
+	
+
 	public function getPrice($product, $price, $includingTax = null, $shippingAddress = null, $billingAddress = null,
-			$ctc = null, $store = null, $priceIncludesTax = null
+			$ctc = null, $store = null, $priceIncludesTax = null, $roundPrice = true
 	) {
 		if (!$price) {
 			return $price;
@@ -141,6 +144,10 @@ class Egovs_GermanTax_Helper_Data extends Mage_Tax_Helper_Data
 				}
 			}
 		}
-		return $store->roundPrice($price);
+		if ($roundPrice) {
+            return $store->roundPrice($price);
+        } else {
+            return $price;
+        }
 	}
 }
