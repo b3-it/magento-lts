@@ -38,7 +38,7 @@ class Stala_Abo_Block_Adminhtml_Contract_Create_Product extends Mage_Adminhtml_B
     {
         $this->setId('abo_contract_create_product');
         $this->_controller = 'adminhtml_contract_create_product';
-    	$this->_blockGroup = 'stalaabo';
+        $this->_blockGroup = 'stalaabo';
     	$this->_headerText = Mage::helper('informationservice')->__('Item Manager');
     	parent::__construct();
     }

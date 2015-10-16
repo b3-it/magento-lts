@@ -40,6 +40,9 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
      * @var array
      */
     protected $_sessionHosts = array();
+    
+    
+    private $_SessionIsRegenerated = false;
 
     /**
      * Configure and start session
@@ -171,7 +174,8 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             if (isset($_SESSION[self::SECURE_COOKIE_CHECK_KEY])
                 && $_SESSION[self::SECURE_COOKIE_CHECK_KEY] !== md5($cookie->get($secureCookieName))
             ) {
-                session_regenerate_id(false);
+                //session_regenerate_id(false);
+                $this->regenerateSessionId();
                 $sessionHosts = $this->getSessionHosts();
                 $currentCookieDomain = $cookie->getDomain();
                 foreach (array_keys($sessionHosts) as $host) {
@@ -193,14 +197,15 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         if (!Mage::app()->getStore()->isAdmin() && //regenerate ID not at BE -> flashupload
         		!$this->getControllerActionFlag('no_regenerate_id')
         ) {
+        	
         	if(isset($_SESSION['regenerate_time'])) {
         		if (microtime(true) - $_SESSION['regenerate_time'] > 10.1 ) {
         			$this->_revalidateCookie();
-        			$this->getCookie()->delete($sessionName);
+        			$cookie->delete($sessionName);
         			$this->regenerateSessionId();
         		}
         	} else {
-        		$this->getCookie()->delete($sessionName);
+        		$cookie->delete($sessionName);
         		$this->regenerateSessionId();
         	}
         	 
@@ -564,15 +569,19 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
      */
     public function regenerateSessionId()
     {
-    	$this->setLastSessionId($this->getSessionId());
-    	try
+    	if(!$this->_SessionIsRegenerated)
     	{
-        	session_regenerate_id(true);
+	    	$this->setLastSessionId($this->getSessionId());
+	    	try
+	    	{
+	        	session_regenerate_id(false);
+	    	}
+	    	catch(Exception $ex)
+	    	{
+	    		
+	    	}
     	}
-    	catch(Exception $ex)
-    	{
-    		
-    	}
+    	$this->_SessionIsRegenerated = true;
         return $this;
     }
     

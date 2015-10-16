@@ -1,4 +1,13 @@
 <?php
+/**
+ * Tax
+ *
+ * @category	Egovs
+ * @package		Egovs_GermanTax
+ * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2014 - 2015 B3 IT Systeme GmbH
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class Egovs_GermanTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
 {
 	protected function _construct()
@@ -36,7 +45,7 @@ class Egovs_GermanTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
      * @param   null|int $store
      * @return  Varien_Object
      */
-    public function getRateRequest(
+public function getRateRequest(
         $shippingAddress = null,
         $billingAddress = null,
         $customerTaxClass = null,
@@ -45,19 +54,20 @@ class Egovs_GermanTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
         if ($shippingAddress === false && $billingAddress === false && $customerTaxClass === false) {
             return $this->getRateOriginRequest($store);
         }
-        $address    = new Varien_Object();
-        $customer   = $this->getCustomer();
-        $basedOn    = Mage::getStoreConfig(Mage_Tax_Model_Config::CONFIG_XML_PATH_BASED_ON, $store);
+        $address = new Varien_Object();
+        $customer = $this->getCustomer();
+        $basedOn = Mage::getStoreConfig(Mage_Tax_Model_Config::CONFIG_XML_PATH_BASED_ON, $store);
 
         if (($shippingAddress === false && $basedOn == 'shipping')
-            || ($billingAddress === false && $basedOn == 'billing')) {
+            || ($billingAddress === false && $basedOn == 'billing')
+        ) {
             $basedOn = 'default';
         } else {
             if ((($billingAddress === false || is_null($billingAddress) || !$billingAddress->getCountryId())
                 && $basedOn == 'billing')
                 || (($shippingAddress === false || is_null($shippingAddress) || !$shippingAddress->getCountryId())
-                && $basedOn == 'shipping')
-            ){
+                    && $basedOn == 'shipping')
+            ) {
                 if ($customer) {
                     $defBilling = $customer->getDefaultBillingAddress();
                     $defShipping = $customer->getDefaultShippingAddress();
@@ -88,19 +98,20 @@ class Egovs_GermanTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
             case 'default':
                 $address
                     ->setCountryId(Mage::getStoreConfig(
-                        Mage_Tax_Model_Config::CONFIG_XML_PATH_DEFAULT_COUNTRY,
-                        $store))
+                    Mage_Tax_Model_Config::CONFIG_XML_PATH_DEFAULT_COUNTRY,
+                    $store))
                     ->setRegionId(Mage::getStoreConfig(Mage_Tax_Model_Config::CONFIG_XML_PATH_DEFAULT_REGION, $store))
                     ->setPostcode(Mage::getStoreConfig(
-                        Mage_Tax_Model_Config::CONFIG_XML_PATH_DEFAULT_POSTCODE,
-                        $store));
+                    Mage_Tax_Model_Config::CONFIG_XML_PATH_DEFAULT_POSTCODE,
+                    $store));
                 break;
         }
 
         if (is_null($customerTaxClass) && $customer) {
             $customerTaxClass = $customer->getTaxClassId();
         } elseif (($customerTaxClass === false) || !$customer) {
-            $customerTaxClass = $this->getDefaultCustomerTaxClass($store);
+            $customerTaxClass = Mage::getModel('customer/group')
+                    ->getTaxClassId(Mage_Customer_Model_Group::NOT_LOGGED_IN_ID);
         }
 
         $request = new Varien_Object();
@@ -110,7 +121,7 @@ class Egovs_GermanTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
             ->setPostcode($address->getPostcode())
             ->setStore($store)
             ->setCustomerClassId($customerTaxClass)
-        	->setTaxvat($address->getTaxvat() ? 1 : 0)
+            ->setTaxvat($address->getTaxvat() ? 1 : 0)
         ;
         return $request;
     }

@@ -84,7 +84,11 @@ class Egovs_Doc_Adminhtml_Doc_DocController extends Mage_Adminhtml_Controller_ac
 					// We set media as the upload dir
 					$saveAs = $model->getFileIdentId().$_FILES['upfilename']['name'] ;
 					$path = Mage::getBaseDir('media') . DS . 'doc' . DS;
-					$uploader->save($path, $saveAs );
+					$res = $uploader->save($path, $saveAs );
+					if(is_array($res))
+					{
+						$saveAs = $res['file'];
+					}
 					
 				} catch (Exception $e) {
 		      
