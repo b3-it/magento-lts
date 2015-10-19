@@ -65,7 +65,7 @@
 				<observers>
         			<specialordercancel>
         				<type>singleton</type>
-        				<class>Egovs_Specialordercancel_Model_Observer</class>
+        				<class>Egovs_Extsalesorder_Model_Sales_Observer</class>
         				<method>onAdminhtmlSalesOrderCreditmemoRegisterBefore</method>
         			</specialordercancel>
         		</observers>

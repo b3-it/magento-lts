@@ -155,7 +155,7 @@ class Egovs_Extstock_Model_Observer extends Mage_Core_Model_Abstract
         	$orderItem = $item->getOrderItem();
         	if (isset($backToStock[$orderItem->getId()]))
         	{
-				//$this->_salesOrderItemCancelRefund($orderItem, true);
+				$this->_salesOrderItemCancelRefund($orderItem, true);
         	}
         }
         return $this;
