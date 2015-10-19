@@ -167,6 +167,14 @@
 .customer-account-create {
     @include new_address;
 
+    .col2-left-layout {
+        .account-create {
+            // Position korrigieren
+            position: relative;
+            top: -23px;
+        }
+    }
+
     .fieldset .hidden {
         display: none;
     }

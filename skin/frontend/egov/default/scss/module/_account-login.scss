@@ -77,9 +77,14 @@
         float: right;
     }
 
-    .button {
+    button.button {
         padding: 5px 6px;
-        width: 170px;
+        width: 140px;
+    }
+
+    a.button {
+        padding: 6px 6px;
+        width: 140px;
     }
 
     .button-recovery{

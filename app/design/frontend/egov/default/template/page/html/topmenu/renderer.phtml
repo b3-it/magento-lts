@@ -32,8 +32,9 @@ foreach ($children as $child) {
     $child->setIsLast($counter == $childrenCount);
     $child->setPositionClass($itemPositionClassPrefix . $counter);
 
-    $url_id = strtolower( basename( $child->getName() ) );
-    $url_id = str_replace(array(' '), '-', $url_id);
+    $file_name = $child->getUrl();
+    $file_info = pathinfo($file_name);
+    $file_id   = strtolower( basename( $file_name, '.' . $file_info['extension'] ) );
 
     $outermostClassCode = 'level'. $childLevel;
     $_hasChildren = ($child->hasChildren()) ? 'has-children' : '';
@@ -47,7 +48,7 @@ foreach ($children as $child) {
         $_cssAppend = ' egov-arrow-sub-closed';
     }
 
-    $html .= '<li id="' . $url_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';
+    $html .= '<li id="' . $file_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';
 
     $html .= '<a href="'. $child->getUrl() .'" data-category-count="" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
              $this->escapeHtml($this->__($child->getName())) .'</a>';
@@ -59,10 +60,10 @@ foreach ($children as $child) {
     $nextChildLevel = $childLevel + 1;
 
     if (!empty($_hasChildren)) {
-        $html .= '<ul id="sub-' . $url_id . '" class="level'. $childLevel .'">';
+        $html .= '<ul id="sub-' . $file_id . '" class="level'. $childLevel .'">';
 
         if ($show_all_link == TRUE) {
-            $html .= '<li class="level'. $nextChildLevel .' view-all">';
+            $html .= '<li id="all-' . $file_id . '" class="level'. $nextChildLevel .' view-all">';
             $html .=     '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
             $html .=         $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
             $html .=     '</a>';

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-    	<Egovs_Import>
+        <Egovs_Import>
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Import>
@@ -95,9 +95,6 @@
         <Egovs_Extsalesorder>
             <active>true</active>
             <codePool>local</codePool>
-            <xdepends>
-                <Egovs_Paymentbase />
-            </xdepends>
         </Egovs_Extsalesorder>
         <Egovs_Extstock>
             <active>true</active>
@@ -130,7 +127,7 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Informationservice>
-         <Egovs_Maintenance>
+        <Egovs_Maintenance>
             <active>false</active>
             <codePool>local</codePool>
         </Egovs_Maintenance>
@@ -198,7 +195,7 @@
             <codePool>local</codePool>
         </Egovs_Video>
         <Egovs_Vies>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Egovs_Vies>
         <Egovs_Zahlpartnerkonten>
