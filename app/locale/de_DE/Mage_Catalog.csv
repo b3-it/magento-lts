@@ -898,3 +898,7 @@
 "Used in Product Listing","Im Produkt-Listing verwendet"
 "Will opened in new Window","Wird in neuem Fenster geöffnen"
 "ePayBL Settings","ePayBL Einstellungen"
+"Excl. %s Tax","zzgl. %s Steuern"
+"excl. <a href="%s">Shipping Cost</a>","zzgl. <a href="%s">Versandkosten</a>"
+"Incl. %s Tax","inkl. %s Steuern"
+"incl. <a href="%s">Shipping Cost</a>excl. <a href="%s">Shipping Cost</a>","inkl. <a href="%s">Versandkosten</a>"
