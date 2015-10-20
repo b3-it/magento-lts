@@ -1,4 +1,12 @@
-﻿// Definieren der Break-Points für JavaScript-Aktionen
+﻿// Allgemeine JS-Funktionen
+function setTabIndex(arr)
+{
+    $j.each(arr, function(element, tabindex){
+        $j('#' + element).attr('tabindex', tabindex);
+    });
+}
+
+// Definieren der Break-Points für JavaScript-Aktionen
 var egov_break = {
     lngSwitch: 760,    // Store-Language Switcher
     welcome  : 785,    // Welcome
@@ -113,5 +121,4 @@ $j(document).ready(function () {
             }
         });
     }
-
 });

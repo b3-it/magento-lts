@@ -110,6 +110,11 @@
             }
         }
 
+        .full-wide {
+            width: 100%;
+            margin: 0px 0px 10px 0px;
+        }
+
         div.col-1 {
             margin-right: $global-checkout-marginright;
         }
@@ -121,6 +126,50 @@
         address, fieldset, p,
         .overview_shipping, .successview_shipping {
             margin: 5px 0px 10px 10px;
+        }
+    }
+
+    .sepa-details {
+        li.single-line {
+            display: block;
+            width: 100%;
+        }
+        li.double-line {
+            float: left;
+            width: 48%;
+            margin-right: 15px;
+        }
+        li {
+            float: left;
+            width: 48%;
+
+            label {
+                width: 100%;
+            }
+        }
+
+        input[type="text"] {
+            width: 95%;
+        }
+
+        .option-field {
+            input[type="radio"] {
+                display: inline-block;
+                margin-right: 10px;
+            }
+            label {
+                display: inline-block;
+            }
+        }
+
+        #custom_accountholder_box {
+            float: left;
+            width: 48%;
+            margin-right: 15px;
+        }
+        #debitor_box {
+            float: left;
+            width: auto;
         }
     }
 

@@ -11,9 +11,9 @@
 /* @var $this Egovs_SepaDebitSax_Block_Form */
 ?>
 
-<fieldset class="form-list" style="min-width:660px;">
+<fieldset class="form-list">
     <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
-        <li>
+        <li class="single-line">
             <div class="input-box">
                 <?php if ($this->getMethod()->getCustomText()): ?>
                     <?php echo $this->getMethod()->getCustomText() ?><br />
@@ -21,20 +21,20 @@
             </div>
         </li>
 
-        <li>
+        <li class="double-line">
             <div class="input-box">
-                <label for="iban"><?php echo $this->__('IBAN') ?> <span class="required">*</span></label><br />
+                <label for="iban"><span class="required">*</span><?php echo $this->__('IBAN') ?> </label>
                 <input type="text" id="iban" name="payment[cc_number]" title="<?php echo $this->__('IBAN') ?>" class="input-text required-entry validate-debit-iban" value="<?php echo $this->getIban()?>" />
             </div>
         </li>
         <li>
             <div class="input-box">
-                <label for="bic"><?php echo $this->__('BIC') ?> <?php if (!$this->getIbanOnly()) echo '<span class="required">*</span>'; ?></label><br />
+                <label for="bic"><?php if (!$this->getIbanOnly()) echo '<span class="required">*</span>'; ?><?php echo $this->__('BIC') ?></label>
                 <input type="text" id="bic" name="payment[cc_type]" title="<?php echo $this->__('BIC') ?>" class="input-text <?php if (!$this->getIbanOnly()) echo "required-entry"; ?> validate-alphanum validate-debit-bic" value="<?php echo $this->getBic()?>" />
             </div>
         </li>
 
-        <li>
+        <li class="single-line">
             <div class="input-box">
                 <label for="custom_owner"><?php echo $this->__('Debitor differs from banking account holder?') ?> </label>
                 <?php if($this->getAccountholderDiffers()):?>
@@ -45,39 +45,39 @@
             </div>
         </li>
 
-        <li>
-            <div id="custom_accountholder_box" style="float:left;">
-                <div class="block" style="width:277px; height:340px; margin-right:10px;">
+        <li class="single-line">
+            <div id="custom_accountholder_box">
+                <div class="block">
 	                  <div class="block-title">
 	                      <h2><?php echo $this->__('Deviation account holder'); ?></h2>
 	                  </div>
 	                  <div class="block-content">
                         <div class="input-box">
-                            <label for="custom_accountholder_name"><?php echo $this->__('account holder name/company authorised signatory') ?> <span class="required">*</span></label><br />
+                            <label for="custom_accountholder_name"><span class="required">*</span><?php echo $this->__('account holder name/company authorised signatory') ?></label>
                             <input type="text" id="custom_accountholder_name" name="payment[additional_information][custom_accountholder_name]" title="<?php echo $this->__('account holder name/company name') ?>" class="input-text required-entry" value="<?php echo $this->getAccountholderFirstName()?>" maxlength="23" />
                         </div>
                         <div class="input-box">
-                            <label for="custom_accountholder_surname"><?php echo $this->__('account holder surname/company name') ?> <span class="required">*</span></label><br />
+                            <label for="custom_accountholder_surname"><span class="required">*</span><?php echo $this->__('account holder surname/company name') ?></label>
                             <input type="text" id="custom_accountholder_surname" name="payment[additional_information][custom_accountholder_surname]" title="<?php echo $this->__('account holder surname/company authorised signatory') ?>" class="input-text required-entry" value="<?php echo $this->getAccountholderSurname()?>" maxlength="23" />
                         </div>
                         <div class="input-box">
-                            <label for="custom_accountholder_street"><?php echo $this->__('account holder street') ?> <span class="required">*</span></label><br />
+                            <label for="custom_accountholder_street"><span class="required">*</span><?php echo $this->__('account holder street') ?></label>
                             <input type="text" id="custom_accountholder_street" name="payment[additional_information][custom_accountholder_street]" title="<?php echo $this->__('account holder street') ?>" class="input-text required-entry" value="<?php echo $this->getAccountholderStreet()?>" />
                         </div>
                         <div class="input-box">
-                            <label for="custom_accountholder_city"><?php echo $this->__('account holder city') ?> <span class="required">*</span></label><br />
+                            <label for="custom_accountholder_city"><span class="required">*</span><?php echo $this->__('account holder city') ?></label>
                             <input type="text" id="custom_accountholder_city" name="payment[additional_information][custom_accountholder_city]" title="<?php echo $this->__('account holder city') ?>" class="input-text required-entry" value="<?php echo $this->getAccountholderCity()?>" />
                         </div>
                         <div class="input-box">
-                            <label for="custom_accountholder_zip"><?php echo $this->__('account holder zip') ?> <span class="required">*</span></label><br />
+                            <label for="custom_accountholder_zip"><span class="required">*</span><?php echo $this->__('account holder zip') ?></label>
                             <input type="text" id="custom_accountholder_zip" name="payment[additional_information][custom_accountholder_zip]" title="<?php echo $this->__('account holder zip') ?>" class="input-text required-entry" value="<?php echo $this->getAccountholderZip()?>" />
                         </div>
             	          <div class="input-box">
-	                              <label for="custom_accountholder_postbox"><?php echo $this->__('account holder postbox') ?> </label><br />
+	                              <label for="custom_accountholder_postbox"><?php echo $this->__('account holder postbox') ?></label>
 	                              <input type="text" id="custom_accountholder_postbox" name="payment[additional_information][custom_accountholder_postbox]]" class="input-text" value="<?php echo $this->getAccountholderPostofficeBox()?>" />
 	                      </div>
                         <div class="input-box">
-                            <label for="custom_accountholder_land"><?php echo $this->__('account holder land') ?> <span class="required">*</span></label><br />
+                            <label for="custom_accountholder_land"><span class="required">*</span><?php echo $this->__('account holder land') ?></label>
                             <?php //echo $this->getCountriesHtmlSelect('custom_accountholder_land', 'payment[additional_information][custom_accountholder_land]'); ?>
                             <input type="text" id="custom_accountholder_land" name="payment[additional_information][custom_accountholder_land]" class="input-text" value="<?php echo $this->getAccountholderCountry()?>" />
                         </div>
@@ -85,38 +85,38 @@
 	              </div>
             </div>
 
-            <div id="debitor_box" style="float:left;">
-                <div class="block" style="width:277px; height:360px;">
+            <div id="debitor_box">
+                <div class="block">
 	                  <div class="block-title">
 	                      <h2><?php echo $this->__('Details Debitor'); ?></h2>
 	                  </div>
 	                  <div class="block-content">
             	          <div class="input-box">
-	                          <label for="debitor_firstname"><?php echo $this->__('Debitor Firstname/company authorised signatory') ?> <span class="required">*</span></label><br />
+	                          <label for="debitor_firstname"><span class="required">*</span><?php echo $this->__('Debitor Firstname/company authorised signatory') ?> </label>
 	                          <input type="text" id="debitor_firstname" name="payment[additional_information][debitor_firstname]" class="input-text required-entry" value="<?php echo $this->getDebitorFirstName()?>" />
 	                      </div>
             	          <div class="input-box">
-	                          <label for="debitor_surname"><?php echo $this->__('Debitor Surname/company name') ?> <span class="required">*</span></label><br />
+	                          <label for="debitor_surname"><span class="required">*</span><?php echo $this->__('Debitor Surname/company name') ?> </label>
 	                          <input type="text" id="debitor_surname" name="payment[additional_information][debitor_surname]" class="input-text required-entry" value="<?php echo $this->getDebitorSurName()?>" />
 	                      </div>
             	          <div class="input-box">
-	                          <label for="debitor_street"><?php echo $this->__('Debitor Street') ?><span class="required">*</span> </label><br />
+	                          <label for="debitor_street"><span class="required">*</span><?php echo $this->__('Debitor Street') ?> </label>
 	                          <input type="text" id="debitor_street" name="payment[additional_information][debitor_street]" class="input-text required-entry" value="<?php echo $this->getDebitorStreet()?>" />
 	                      </div>
             	          <div class="input-box">
-	                          <label for="debitor_city"><?php echo $this->__('Debitor City') ?> <span class="required">*</span></label><br />
+	                          <label for="debitor_city"><span class="required">*</span><?php echo $this->__('Debitor City') ?> </label>
 	                          <input type="text" id="debitor_city" name="payment[additional_information][debitor_city]" class="input-text required-entry" value="<?php echo $this->getDebitorCity()?>" />
 	                      </div>
 	                      <div class="input-box">
-	                          <label for="debitor_zip"><?php echo $this->__('Debitor ZIP') ?> <span class="required">*</span></label><br />
+	                          <label for="debitor_zip"><span class="required">*</span><?php echo $this->__('Debitor ZIP') ?> </label>
 	                          <input type="text" id="debitor_zip" name="payment[additional_information][debitor_zip]" class="input-text required-entry" value="<?php echo $this->getDebitorZip()?>" />
 	                      </div>
 	                      <div class="input-box">
-	                          <label for="debitor_postbox"><?php echo $this->__('Debitor Postbox') ?> </label><br />
+	                          <label for="debitor_postbox"><?php echo $this->__('Debitor Postbox') ?> </label>
 	                          <input type="text" id="debitor_postbox" name="payment[additional_information][debitor_postbox]" class="input-text" value="<?php echo $this->getDebitorPostofficeBox()?>" />
 	                      </div>
 	                      <div class="input-box">
-	                          <label for="debitor_country"><?php echo $this->__('Debitor Country') ?> <span class="required">*</span></label><br />
+	                          <label for="debitor_country"><span class="required">*</span><?php echo $this->__('Debitor Country') ?> </label>
 	                          <?php //echo $this->getCountriesHtmlSelectValue('debitor_country', 'payment[additional_information][debitor_country]', $this->getDebitorCountry()); ?>
 	                          <input type="text" id="debitor_country" name="payment[additional_information][debitor_country]" class="input-text" value="<?php echo $this->getDebitorCountry()?>" />
 	                      </div>
@@ -125,28 +125,30 @@
             </div>
         </li>
 
-		<!-- <li>
+		    <!--
+		    <li>
             <div class="input-box">
-                <label for="abweichender_kontoinhaber"><?php echo $this->__('Deviation from account holder') ?> </label><br />
+                <label for="abweichender_kontoinhaber"><?php echo $this->__('Deviation from account holder') ?> </label>
                 <input type="text" id="abweichender_kontoinhaber" name="payment[additional_information][abweichender_kontoinhaber]" title="<?php echo $this->__('Deviation from account holder') ?>" class="input-text " value="" />
             </div>
-		</li> -->
+		    </li>
+		    -->
 
-		<li>
-            <div class="input-box">
+		    <li class="single-line">
+            <div class="input-box option-field">
+                <input type="radio" id="sequence_type_frst" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate multiple times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_FRST ?>" checked="checked" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?>/>
                 <label for="sequence_type_frst"><?php echo $this->__('Use mandate multiple times') ?> </label>
-                <input type="radio" style="width: 25px; float: right" id="sequence_type_frst" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate multiple times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_FRST ?>" checked="checked" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?>/>
             </div>
             <br />
-            <div class="input-box">
+            <div class="input-box option-field">
+                <input type="radio" id="sequence_type_ooff" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate one times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF ?>" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?> />
                 <label for="sequence_type_ooff"><?php echo $this->__('Use mandate one times') ?> </label>
-                <input type="radio" style="width: 25px; float: right" id="sequence_type_ooff" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate one times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF ?>" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?> />
             </div>
-		</li>
-		<li>
-			<div><?php echo $this->getAgreementText(); ?></div>
-		</li>
-	</ul>
+		    </li>
+		    <li>
+			      <div><?php echo $this->getAgreementText(); ?></div>
+		    </li>
+	  </ul>
 		<?php if ($this->getMethod()->getEmailSettings()): ?>
     	<?php echo $this->getMethod()->getEmailSettings(); ?>
     	<br /><br />
@@ -191,8 +193,13 @@
 	var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
 function toggleFields(element) {
-	$('custom_accountholder_box').toggle();
-	$('account_holder').toggle();
+    if ( $j('#custom_owner').prop('checked') ) {
+        $j('#debitor_box').css('width', '48%');
+    }
+    else {
+        $j('#debitor_box').css('width', '100%');
+    }
+    $j('#custom_accountholder_box').toggle();
 }
 
 document.observe("dom:loaded", function() {

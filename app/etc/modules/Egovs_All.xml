@@ -76,6 +76,14 @@
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_SepaDebitBund>
+        <Egovs_SepaDebitSax>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_SepaDebitSax>
         <Egovs_Doc>
             <active>true</active>
             <codePool>local</codePool>
