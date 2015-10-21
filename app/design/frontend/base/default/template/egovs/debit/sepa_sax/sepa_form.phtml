@@ -36,12 +36,12 @@
 
         <li class="single-line">
             <div class="input-box">
-                <label for="custom_owner"><?php echo $this->__('Debitor differs from banking account holder?') ?> </label>
                 <?php if($this->getAccountholderDiffers()):?>
                 	<input type="checkbox" id="custom_owner" name="payment[additional_information][custom_owner]" checked="checked" onchange="toggleFields(this)"/>
                 <?php else :?>
                 	<input type="checkbox" id="custom_owner" name="payment[additional_information][custom_owner]"  onchange="toggleFields(this)"/>
                 <?php endif;?>
+                <label for="custom_owner"><?php echo $this->__('Debitor differs from banking account holder?') ?> </label>
             </div>
         </li>
 
@@ -134,20 +134,21 @@
 		    </li>
 		    -->
 
-		    <li class="single-line">
+		    <li class="single-line option-line">
             <div class="input-box option-field">
                 <input type="radio" id="sequence_type_frst" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate multiple times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_FRST ?>" checked="checked" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?>/>
                 <label for="sequence_type_frst"><?php echo $this->__('Use mandate multiple times') ?> </label>
             </div>
-            <br />
             <div class="input-box option-field">
                 <input type="radio" id="sequence_type_ooff" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate one times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF ?>" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?> />
                 <label for="sequence_type_ooff"><?php echo $this->__('Use mandate one times') ?> </label>
             </div>
 		    </li>
+		  <?php if(strlen($this->getAgreementText())): ?>
 		    <li>
 			      <div><?php echo $this->getAgreementText(); ?></div>
 		    </li>
+		  <?php endif ?>
 	  </ul>
 		<?php if ($this->getMethod()->getEmailSettings()): ?>
     	<?php echo $this->getMethod()->getEmailSettings(); ?>
@@ -158,6 +159,8 @@
         <?php echo $this->getMethod()->getCustomText() ?><br />
     <?php endif; ?>
 </fieldset>
+
+<p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
 <script type="text/javascript">
 <!--

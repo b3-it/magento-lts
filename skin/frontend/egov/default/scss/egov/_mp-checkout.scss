@@ -145,7 +145,14 @@
 
             label {
                 width: 100%;
+                display: inline;
             }
+        }
+
+        p.required,
+        span.required {
+            margin-right: 5px;
+            color: $global-warning-color;
         }
 
         input[type="text"] {
@@ -155,11 +162,14 @@
         .option-field {
             input[type="radio"] {
                 display: inline-block;
-                margin-right: 10px;
             }
             label {
-                display: inline-block;
+                display: inline;
             }
+        }
+
+        .option-line {
+            margin-top: 10px;
         }
 
         #custom_accountholder_box {
