@@ -84,43 +84,11 @@
                     <?php endif ?>
                     </div>
                 </li>
-            </ul>
-        </div>
-
-        <div class="fieldset half-space">
-            <ul class="form-list">
               <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
               <?php if ($_taxvat->isEnabled()): ?>
-                <li class="fields">
+                <li class="fields halfwide">
                     <?php echo $_taxvat->setTaxvat($this->getFormData()->getTaxvat())->toHtml() ?>
                 </li>
-              <?php endif ?>
-              <?php if($this->isFieldVisible('telephone')):?>
-                <li class="fields">
-                    <div class="field">
-                        <label for="telephone">
-                            <?php echo $this->getFieldRequiredHtml('telephone')?>
-                            <?php echo $this->__('Telephone') ?>
-                        </label>
-                        <input tabindex="8" type="tel" name="telephone" id="telephone" value="<?php echo $this->escapeHtml($this->getFormData()->getTelephone()) ?>" title="<?php echo $this->quoteEscape($this->__('Telephone')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" />
-                    </div>
-                </li>
-              <?php endif ?>
-            </ul>
-        </div>
-        <div class="fieldset half-space">
-            <ul class="form-list">
-                <li class="dummy">&nbsp;</li>
-              <?php if($this->isFieldVisible('fax')):?>
-                <li class="fields">
-	                  <div class="field">
-	                      <label for="fax">
-	                          <?php echo $this->getFieldRequiredHtml('fax')?>
-	                          <?php echo $this->__('Fax') ?>
-	                      </label>
-	                      <input tabindex="9" type="text" name="fax" id="fax" value="<?php echo $this->htmlEscape($this->getFormData()->getFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text <?php if ($this->isFieldRequired('fax')):?>required-entry<?php endif;?>" maxlength="32"/>
-	                  </div>
-	              </li>
               <?php endif ?>
             </ul>
         </div>
@@ -134,10 +102,10 @@
                             <?php echo $this->getFieldRequiredHtml('street')?>
                             <?php echo $this->__('Street Address') ?>
                         </label>
-                        <input tabindex="10" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet(0)) ?>" title="<?php echo $this->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" />
+                        <input tabindex="8" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet(0)) ?>" title="<?php echo $this->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" />
                       <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
                       <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
-                        <input tabindex="11" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet($_i - 1)) ?>" title="<?php echo $this->quoteEscape($this->__('Street Address %s', $_i)) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" />
+                        <input tabindex="8" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getFormData()->getStreet($_i - 1)) ?>" title="<?php echo $this->quoteEscape($this->__('Street Address %s', $_i)) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" />
                       <?php endfor; ?>
                     </div>
                 </li>
@@ -153,7 +121,7 @@
                             <?php echo $this->getFieldRequiredHtml('postcode')?>
                             <?php echo $this->__('Zip/Postal Code') ?>
                         </label>
-                        <input tabindex="12" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->quoteEscape($this->__('Zip/Postal Code')) ?>" id="zip" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                        <input tabindex="9" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->quoteEscape($this->__('Zip/Postal Code')) ?>" id="zip" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
                     </div>
                 </li>
               <?php endif; ?>
@@ -164,7 +132,7 @@
                             <?php echo $this->getFieldRequiredHtml('region')?>
                             <?php echo $this->__('State/Province') ?>
                         </label>
-                        <select tabindex="14" id="region_id" name="region_id" title="<?php echo $this->quoteEscape($this->__('State/Province')) ?>" class="validate-select" style="display:none;">
+                        <select tabindex="11" id="region_id" name="region_id" title="<?php echo $this->quoteEscape($this->__('State/Province')) ?>" class="validate-select" style="display:none;">
                             <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
                         </select>
                         <script type="text/javascript">
@@ -176,6 +144,17 @@
                     </div>
                 </li>
               <?php endif; ?>
+              <?php if($this->isFieldVisible('telephone')):?>
+                <li class="fields">
+                    <div class="field">
+                        <label for="telephone">
+                            <?php echo $this->getFieldRequiredHtml('telephone')?>
+                            <?php echo $this->__('Telephone') ?>
+                        </label>
+                        <input tabindex="13" type="tel" name="telephone" id="telephone" value="<?php echo $this->escapeHtml($this->getFormData()->getTelephone()) ?>" title="<?php echo $this->quoteEscape($this->__('Telephone')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" />
+                    </div>
+                </li>
+              <?php endif ?>
             </ul>
         </div>
         <div class="fieldset half-space">
@@ -187,7 +166,7 @@
                             <?php echo $this->getFieldRequiredHtml('city')?>
                             <?php echo $this->__('City') ?>
                         </label>
-                        <input tabindex="13" type="text" name="city" value="<?php echo $this->escapeHtml($this->getFormData()->getCity()) ?>" title="<?php echo $this->quoteEscape($this->__('City')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                        <input tabindex="10" type="text" name="city" value="<?php echo $this->escapeHtml($this->getFormData()->getCity()) ?>" title="<?php echo $this->quoteEscape($this->__('City')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
                     </div>
                 </li>
               <?php endif; ?>
@@ -202,6 +181,17 @@
                     </div>
                 </li>
               <?php endif; ?>
+              <?php if($this->isFieldVisible('fax')):?>
+                <li class="fields">
+	                  <div class="field">
+	                      <label for="fax">
+	                          <?php echo $this->getFieldRequiredHtml('fax')?>
+	                          <?php echo $this->__('Fax') ?>
+	                      </label>
+	                      <input tabindex="14" type="text" name="fax" id="fax" value="<?php echo $this->htmlEscape($this->getFormData()->getFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text <?php if ($this->isFieldRequired('fax')):?>required-entry<?php endif;?>" maxlength="32"/>
+	                  </div>
+	              </li>
+              <?php endif ?>
             </ul>
         </div>
       <?php else: ?>
@@ -233,7 +223,7 @@
                             <span class="required">*</span>
                             <?php echo $this->__('Password') ?>
                         </label>
-                        <input tabindex="16" type="password" name="password" id="password" title="<?php echo $this->quoteEscape($this->__('Password')) ?>" class="input-text required-entry validate-password" />
+                        <input tabindex="15" type="password" name="password" id="password" title="<?php echo $this->quoteEscape($this->__('Password')) ?>" class="input-text required-entry validate-password" />
                     </div>
                 </li>
             </ul>
@@ -246,7 +236,7 @@
                             <span class="required">*</span>
                             <?php echo $this->__('Confirm Password') ?>
                         </label>
-                        <input tabindex="17" type="password" name="confirmation" title="<?php echo $this->quoteEscape($this->__('Confirm Password')) ?>" id="confirmation" class="input-text required-entry validate-cpassword" />
+                        <input tabindex="16" type="password" name="confirmation" title="<?php echo $this->quoteEscape($this->__('Confirm Password')) ?>" id="confirmation" class="input-text required-entry validate-cpassword" />
                     </div>
                 </li>
             </ul>
@@ -258,7 +248,7 @@
               <?php if ($this->isNewsletterEnabled()): ?>
                 <li class="fields">
                     <div class="field">
-                        <input tabindex="18" type="checkbox" name="is_subscribed" title="<?php echo $this->quoteEscape($this->__('Sign Up for Newsletter')) ?>" value="1" id="is_subscribed"<?php if($this->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox" />
+                        <input tabindex="17" type="checkbox" name="is_subscribed" title="<?php echo $this->quoteEscape($this->__('Sign Up for Newsletter')) ?>" value="1" id="is_subscribed"<?php if($this->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox" />
                         <label for="is_subscribed"><?php echo $this->__('Sign Up for Newsletter') ?></label>
                     </div>
                 </li>
@@ -275,11 +265,11 @@
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
         <div class="buttons-set">
-            <button tabindex="19" class="button back-button" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
+            <button tabindex="18" class="button back-button" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
                 <small>&laquo; </small>
                 <?php echo $this->__('Back') ?>
             </button>
-            <button tabindex="20" class="button" type="submit" title="<?php echo $this->quoteEscape($this->__('Register')) ?>">
+            <button tabindex="19" class="button" type="submit" title="<?php echo $this->quoteEscape($this->__('Register')) ?>">
                 <?php echo $this->__('Register') ?>
             </button>
         </div>
@@ -291,7 +281,7 @@
         new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
         <?php endif; ?>
 
-        var TabData = {'prefix': 1, 'firstname': 2, 'middlename': 3, 'lastname': 4, 'taxvat': 7, 'country': 15};
+        var TabData = {'prefix': 1, 'firstname': 2, 'middlename': 3, 'lastname': 4, 'taxvat': 7, 'country': 12};
         setTabIndex(TabData);
 
         $j(document).ready(function(){
