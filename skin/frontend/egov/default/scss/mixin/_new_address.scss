@@ -29,8 +29,21 @@
             }
         }
 
+        #birthday-box, #gender-box {
+            width: 48%;
+            display: inline-block;
+            float: left;
+            margin-bottom: 10px;
+
+            input[type="text"] {
+                margin: 0px;
+            }
+        }
+
         .form-list {
             li {
+                vertical-align: top;
+
                 label {
                     font-weight: bold;
                 }

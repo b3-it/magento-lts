@@ -17,36 +17,36 @@ class Egovs_Base_Block_Customer_Form_Register extends Mage_Customer_Block_Form_R
 			$helper = $this->helper('mpcheckout/config');
 		} catch (Exception $e) {
 		}
-		
+
 		if (is_null($helper)) {
 			return false;
 		}
-		 
+
 		return ($helper->isFieldRequired($key, 'register'));
 	}
-	
+
 	public function getFieldRequiredHtml($name) {
 		if($this->isFieldRequired($name)) {
 			return '<span class="required">*</span>';
 		}
 		return '';
 	}
-	
+
 	public function isFieldVisible($key) {
 		$helper = null;
 		try {
 			$helper = $this->helper('mpcheckout/config');
 		} catch (Exception $e) {
 		}
-		
+
 		if (is_null($helper)) {
 			return true;
 		}
-		
+
 		return ($helper->getConfig($key, 'register') != '');
-			
+
 	}
-	
+
 	public function getCountryHtmlSelect($defValue=null, $name='country_id', $id='country', $title='Country') {
 		Varien_Profiler::start('TEST: '.__METHOD__);
 		if (is_null($defValue)) {
@@ -69,7 +69,7 @@ class Egovs_Base_Block_Customer_Form_Register extends Mage_Customer_Block_Form_R
 			->setValue($defValue)
 			->setOptions($options)
 			->getHtml();
-	
+
 		Varien_Profiler::stop('TEST: '.__METHOD__);
 		return $html;
 	}
