@@ -11,7 +11,7 @@
  *
  * @see app/design/frontend/base/default/template/customer/form/register.phtml
  */
-/** @var $this Mage_Customer_Block_Form_Register */
+/* @var $this Egovs_Base_Block_Customer_Form_Register */
 ?>
 <div class="account-create">
     <div class="page-title">
@@ -84,12 +84,17 @@
                     <?php endif ?>
                     </div>
                 </li>
-              <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
-              <?php if ($_taxvat->isEnabled()): ?>
-                <li class="fields halfwide">
-                    <?php echo $_taxvat->setTaxvat($this->getFormData()->getTaxvat())->toHtml() ?>
-                </li>
-              <?php endif ?>
+              <?php if ($this->isFieldVisible('taxvat') && $this->helper('customer/address')->isVatAttributeVisible()) : ?>
+				<li class="wide">
+					<label for="vat_id">
+						<?php echo $this->getFieldRequiredHtml('taxvat')?>
+						<?php echo $this->__('VAT Number') ?>
+					</label>
+					<div class="input-box">
+						<input type="text" name="vat_id" value="<?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('VAT Number')) ?>" id="vat_id" class="input-text <?php echo $this->isFieldRequired("taxvat") ? "required-entry" : ""?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
+					</div>
+				</li>
+				<?php endif; ?>
             </ul>
         </div>
 
