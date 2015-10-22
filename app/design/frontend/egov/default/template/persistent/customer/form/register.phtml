@@ -13,6 +13,9 @@
  */
 /* @var $this Egovs_Base_Block_Customer_Form_Register */
 ?>
+<!--Sprungziel Tastatursteuerung -->
+<div id="jumptarget<?php echo $this->getNameInLayout();?>"></div>
+
 <div class="account-create">
     <div class="page-title">
         <h1><?php echo $this->__('Create an Account') ?></h1>
@@ -285,9 +288,6 @@
             </button>
         </div>
     </form>
-<?php
-var_dump($this->helper('directory')->getRegionJson());
-?>
 
     <script type="text/javascript">
         var dataForm = new VarienForm('form-validate', true);

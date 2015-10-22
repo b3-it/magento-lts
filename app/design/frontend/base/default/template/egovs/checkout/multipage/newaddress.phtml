@@ -16,147 +16,116 @@
 <!--Sprungziel Tastatursteuerung -->
 <div id="jumptarget<?php echo $this->getNameInLayout();?>"></div>
 
-<div class="page-title title-buttons">
-    <h1><?php echo $this->__('Enter New Address') ?></h1>
-</div>
-<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
-    <input type="hidden" name="billing[address_id]" value="new" id="billing:address_id" />
-<?php if (!$this->canShip()): ?>
-    <input type="hidden" name="billing[use_for_shipping]" value="1" />
-<?php endif; ?>
-    <div>
-        <div class="fieldset">
-            <h2 class="legend"><?php echo $this->__('New Address') ?></h2>
+<div class="checkout-newaddress">
+    <div class="page-title title-buttons">
+        <h1><?php echo $this->__('Enter New Address') ?></h1>
+    </div>
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
+        <input type="hidden" name="billing[address_id]" value="new" id="billing:address_id" />
+    <?php if (!$this->canShip()): ?>
+        <input type="hidden" name="billing[use_for_shipping]" value="1" />
+    <?php endif; ?>
+
+        <div class="fieldset wide no-space">
             <ul class="form-list">
-                <li class="fields">
+                <li class="fields fullwide">
                     <?php echo $this->getBillingtext()?>
                 </li>
-                <li class="fields">
-                    <div class="field name-firstname">
-                        <label for="prefix">
-                            <?php echo $this->getFieldRequiredHtml('prefix')?>
-                            <?php echo $this->__('Prefix') ?>
-                        </label>
-                    <?php if(count($this->getPrefixOptions())): ?>
-                        <select tabindex="1" id="prefix" name="billing[prefix]" title="<?php echo $this->__('Prefix') ?>">
-		    		            <?php foreach ($this->getPrefixOptions() as $_option): ?>
-		    		                <option value="<?php echo $_option?>" <?php if ($this->getAddress()->getPrefix()==$_option) { echo 'selected="selected"'; } ?>><?php echo $this->__($_option)?></option>
-		    		            <?php endforeach ?>
-		    		            </select>
-		    		        <?php else: ?>
-		    		            <div class="input-box">
-                            <input tabindex="1" type="text" id="billing:prefix" name="billing[prefix]" value="<?php echo $this->htmlEscape($this->getAddress()->getPrefix()) ?>" title="<?php echo $this->__('Prefix') ?>" class="input-text " maxlength="27" />
+                <li class="fields fullwide">
+                    <div class="customer-name-prefix">
+                        <div class="field name-prefix">
+                            <label for="prefix">
+                                <?php echo $this->getFieldRequiredHtml('prefix')?>
+                                <?php echo $this->__('Prefix') ?>
+                            </label>
+                          <?php if(count($this->getPrefixOptions())): ?>
+                            <select tabindex="1" id="prefix" name="billing[prefix]" title="<?php echo $this->__('Prefix') ?>">
+		    		                  <?php foreach ($this->getPrefixOptions() as $_option): ?>
+		    		                    <option value="<?php echo $_option?>" <?php if ($this->getAddress()->getPrefix()==$_option) { echo 'selected="selected"'; } ?>><?php echo $this->__($_option)?></option>
+		    		                  <?php endforeach ?>
+		    		                </select>
+		    		              <?php else: ?>
+		    		                <div class="input-box">
+                                <input tabindex="1" type="text" id="billing:prefix" name="billing[prefix]" value="<?php echo $this->htmlEscape($this->getAddress()->getPrefix()) ?>" title="<?php echo $this->__('Prefix') ?>" class="input-text " maxlength="27" />
+                            </div>
+		    		              <?php endif; ?>
                         </div>
-		    		        <?php endif; ?>
-		    		        </div>
-		    		    </li>
-
-            <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
-		    		<?php if ($_dob->isEnabled()): ?>
-		    		    <li class="fields">
-		    		        <?php echo $_dob->setDate($this->getQuote()->getCustomerDob())
-		    		                        ->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
-		    		    </li>
-		    		<?php endif; ?>
-
-		    		    <li class="fields">
-		    		        <div class="field name-firstname">
-		    		            <label for="firstname">
-		    		                <?php echo $this->getFieldRequiredHtml('firstname')?>
-		    		                <?php echo $this->__('First Name') ?>
-		    		            </label>
-		    		            <div class="input-box">
+		    		            <div class="field name-firstname">
+		    		                <label for="firstname">
+		    		                    <?php echo $this->getFieldRequiredHtml('firstname')?>
+		    		                    <?php echo $this->__('First Name') ?>
+		    		                </label>
                             <input tabindex="2" type="text" id="billing:firstname" name="billing[firstname]" value="<?php echo $this->htmlEscape($this->getAddress()->getFirstname()) ?>" title="<?php echo $this->__('First Name') ?>" class="input-text " maxlength="27" />
                         </div>
-                    </div>
-                </li>
+                        <div class="field name-lastname">
+                            <label for="lastname">
+                                <?php echo $this->getFieldRequiredHtml('lastname')?>
+                                <?php echo $this->__('Last Name') ?>
+                            </label>
+                            <div class="input-box">
+                                <input tabindex="4" type="text" id="billing:lastname" name="billing[lastname]" value="<?php echo $this->htmlEscape($this->getAddress()->getLastname()) ?>" title="<?php echo $this->__('Last Name') ?>" class="input-text" maxlength="27" />
+                            </div>
+                        </div>
+		    		        </div>
+		    		    </li>
               <?php if(!$this->isCustomerLoggedIn() AND $this->isFieldVisible('email')):?>
-                <li class="fields">
+                <li class="fields halfwide">
                     <div class="field validate-email ">
                         <label for="email">
                             <?php echo $this->getFieldRequiredHtml('email')?>
                             <?php echo $this->__('Email Address') ?>
                         </label>
-                        <div class="input-box">
-                            <input tabindex="4" type="text" id="billing:email" name="billing[email]" value="<?php echo $this->htmlEscape($this->getAddress()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry" maxlength="64" />
-                        </div>
+                        <input tabindex="5" type="text" id="billing:email" name="billing[email]" value="<?php echo $this->htmlEscape($this->getAddress()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry" maxlength="64" />
                     </div>
                 </li>
               <?php endif ?>
-            </ul>
-        </div>
-        <div class="fieldset">
-            <h2 class="legend">&nbsp;</h2>
-            <ul class="form-list">
-                <li class="fields dummy"></li>
-
-		    		<?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
-		    		<?php if ($_taxvat->isEnabled()): ?>
-		    		    <li class="fields">
-		    		        <?php echo $_taxvat->setTaxvat($this->getQuote()->getCustomerTaxvat())
-		    		                           ->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+              <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
+		    		  <?php if ($_dob->isEnabled()): ?>
+		    		    <li class="fields fullwide">
+		    		        <?php echo $_dob->setDate($this->getQuote()->getCustomerDob())
+		    		                        ->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
 		    		    </li>
-		    		<?php endif ?>
+		    		  <?php endif; ?>
 
-                <li class="fields">
-                    <div class="field name-lastname">
-                        <label for="lastname">
-                            <?php echo $this->getFieldRequiredHtml('lastname')?>
-                            <?php echo $this->__('Last Name') ?>
-                        </label>
-                        <div class="input-box">
-                            <input tabindex="3" type="text" id="billing:lastname" name="billing[lastname]" value="<?php echo $this->htmlEscape($this->getAddress()->getLastname()) ?>" title="<?php echo $this->__('Last Name') ?>" class="input-text" maxlength="27" />
-                        </div>
-                    </div>
               <?php if(!$this->isCustomerLoggedIn() AND $this->isFieldVisible('company')):?>
-                <li class="fields">
+                <li class="fields fullwide">
                     <div class="field name-company">
                         <label for="company">
                             <?php echo $this->getFieldRequiredHtml('company')?>
                             <?php echo $this->__('Company') ?>
                         </label>
-                        <div class="input-box">
-                            <input tabindex="5" type="text" id="billing:company" name="billing[company]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text" maxlength="27" />
-                        </div>
+                        <input tabindex="6" type="text" id="billing:company" name="billing[company]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text" maxlength="27" />
+                      <?php if($this->isAdditionalCompanyVisible()):?>
+                        <input tabindex="6" type="text" id="billing:company2" name="billing[company2]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany2()) ?>" title="<?php echo $this->__('Company 2') ?>" class="input-text" maxlength="27" />
+                        <input tabindex="6" type="text" id="billing:company3" name="billing[company3]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany3()) ?>" title="<?php echo $this->__('Company 3') ?>" class="input-text" maxlength="27" />
+                      <?php endif; ?>
                     </div>
-                  <?php if($this->isAdditionalCompanyVisible()):?>
-                    <div class="field name-company">
-                        <label for="company2">
-                            <?php echo $this->getFieldRequiredHtml('company 2')?>
-                            <?php echo $this->__('Company 2') ?>
-                        </label>
-                        <div class="input-box">
-                            <input tabindex="5" type="text" id="billing:company2" name="billing[company2]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany2()) ?>" title="<?php echo $this->__('Company 2') ?>" class="input-text" maxlength="27" />
-                        </div>
-                    </div>
-                    <div class="field name-company">
-                        <label for="company3">
-                            <?php echo $this->getFieldRequiredHtml('company 3')?>
-                            <?php echo $this->__('Company 3') ?>
-                        </label>
-                        <div class="input-box">
-                            <input tabindex="5" type="text" id="billing:company3" name="billing[company3]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany3()) ?>" title="<?php echo $this->__('Company 3') ?>" class="input-text" maxlength="27" />
-                        </div>
-                    </div>
-                  <?php endif ?>
                 </li>
-              <?php endif ?>
-                </li>
-            </ul>
-        </div>
+              <?php endif; ?>
 
-        <div class="fieldset wide">
-            <ul class="form-list">
+  		    		<?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
+	  	    		<?php if ($_taxvat->isEnabled()): ?>
+                <li class="fields halfwide">
+                    <div class="field">
+                        <label for="vat_id">
+                            <?php echo $this->getFieldRequiredHtml('taxvat')?>
+                            <?php echo $this->__('VAT Number') ?>
+                        </label>
+                        <input tabindex="7" type="text" name="vat_id" value="<?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('VAT Number')) ?>" id="vat_id" class="input-text <?php echo $this->isFieldRequired("taxvat") ? 'required-entry' : ''?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
+                    </div>
+                </li>
+				      <?php endif; ?>
+
               <?php if($this->isFieldVisible('street')):?>
-                <li class="fields street-field">
+                <li class="fields fullwide">
                     <div class="field">
                         <label for="billing:street1">
                             <?php echo $this->getFieldRequiredHtml('street')?>
                             <?php echo $this->__('Street Address') ?>
                         </label>
-	                      <input tabindex="6" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text required-entry" maxlength="22" />
+	                      <input tabindex="8" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text required-entry" maxlength="22" />
                     <?php for ($_i=1, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
-		    		            <input tabindex="6" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet($_i+1)) ?>" class="input-text" maxlength="21" />
+		    		            <input tabindex="8" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet($_i+1)) ?>" class="input-text" maxlength="21" />
 		                <?php endfor ?>
                     </div>
 		    		    </li>
@@ -164,7 +133,7 @@
             </ul>
         </div>
 
-        <div class="fieldset">
+        <div class="fieldset half-space">
             <ul class="form-list">
       		    <?php if($this->isFieldVisible('postcode')):?>
 		    		    <li class="fields">
@@ -173,7 +142,7 @@
 		    		                <?php echo $this->getFieldRequiredHtml('postcode')?>
 		    		                <?php echo $this->__('Zip/Postal Code') ?>
 		    		            </label>
-		    		            <input tabindex="7" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" maxlength="10" />
+		    		            <input tabindex="9" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" maxlength="10" />
 		    		        </div>
 		    		    </li>
 	    		    <?php endif ?>
@@ -199,26 +168,9 @@
                     </div>
                 </li>
               <?php endif ?>
-            <?php if(!$this->isCustomerLoggedIn()): ?>
-              <?php if (!$this->isGuest()): ?>
-                <?php if (!$this->isGuest()): ?>
-                <li class="fields" id="register-customer-password">
-		    		        <div class="field">
-		    		            <!-- Autocomplete-Bug von Firefox verhindern -> sonst wird ZIP als Username verwendet. -->
-		    		            <input type="text" name="username" value="-" style="display: none"/>
-		    		            <label for="billing:customer_password">
-		    		                <span class="required">*</span>
-		    		                <?php echo $this->__('Password') ?>
-		    		            </label>
-		    		            <input tabindex="15" type="password" name="billing[customer_password]" id="billing:customer_password" title="<?php echo $this->__('Password') ?>" class="input-text required-entry validate-password" autocomplete="off" />
-		    		        </div>
-		    		    </li>
-                <?php endif ?>
-              <?php endif ?>
-            <?php endif ?>
             </ul>
         </div>
-        <div class="fieldset">
+        <div class="fieldset half-space">
             <ul class="form-list">
 		    		  <?php if($this->isFieldVisible('city')):?>
 		    		    <li class="fields">
@@ -227,7 +179,7 @@
 		    		                <?php echo $this->getFieldRequiredHtml('city')?>
 		    		                <?php echo $this->__('City') ?>
 		    		            </label>
-		    		            <input tabindex="8" type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="billing:city" maxlength="22" />
+		    		            <input tabindex="10" type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="billing:city" maxlength="22" />
 		    		        </div>
 		    		    </li>
 		    		  <?php endif ?>
@@ -253,10 +205,29 @@
                     </div>
                 </li>
               <?php endif ?>
+             </ul>
+        </div>
+
+        <div class="fieldset half-space">
+            <ul class="form-list">
             <?php if(!$this->isCustomerLoggedIn()): ?>
               <?php if (!$this->isGuest()): ?>
-                <?php if (!$this->isGuest()): ?>
-                <li class="fields" id="register-customer-password">
+                <li class="fields">
+		    		        <div class="field">
+		    		            <!-- Autocomplete-Bug von Firefox verhindern -> sonst wird ZIP als Username verwendet. -->
+		    		            <input type="text" name="username" value="-" style="display: none"/>
+		    		            <label for="billing:customer_password">
+		    		                <span class="required">*</span>
+		    		                <?php echo $this->__('Password') ?>
+		    		            </label>
+		    		            <input tabindex="15" type="password" name="billing[customer_password]" id="billing:customer_password" title="<?php echo $this->__('Password') ?>" class="input-text required-entry validate-password" autocomplete="off" />
+		    		        </div>
+		    		    </li>
+            </ul>
+        </div>
+        <div class="fieldset half-space">
+            <ul class="form-list">
+                <li class="fields">
 		    		        <div class="field">
 		    		            <label for="billing:confirm_password">
 		    		                <span class="required">*</span>
@@ -265,7 +236,6 @@
 	                      <input tabindex="16" type="password" name="billing[confirm_password]" title="<?php echo $this->__('Confirm Password') ?>" id="billing:confirm_password" class="input-text required-entry validate-cpassword" autocomplete="off" />
 		    		        </div>
 		    		    </li>
-                <?php endif ?>
               <?php endif ?>
             <?php endif ?>
             </ul>
@@ -339,7 +309,12 @@
 //<![CDATA[
     var billingForm = new VarienForm('co-billing-form');
 
-    $j('#block-region select').attr("tabindex","11");
-    $j('#block-country select').attr("tabindex","12");
+    var TabData = {'block-region select': 11, 'block-country select': 12};
+    setTabIndex(TabData);
+
+    $j(document).ready(function(){
+        $j('.name-firstname input').focus();
+    });
+
 //]]>
 </script>
