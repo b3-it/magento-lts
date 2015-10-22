@@ -129,7 +129,8 @@ class Egovs_Doc_Block_Adminhtml_Doc_Grid extends Mage_Adminhtml_Block_Widget_Gri
         						array(
         								'caption'   => Mage::helper('egovs_doc')->__('View'),
         								'url'       => array('base'=> '*/*/download'),
-        								'field'     => 'id'
+        								'field'     => 'id',
+        								'target' 	=> 'new'
         						)
         				),
         				'filter'    => false,
@@ -147,7 +148,7 @@ class Egovs_Doc_Block_Adminhtml_Doc_Grid extends Mage_Adminhtml_Block_Widget_Gri
   
   public function getRowUrl($row)
   {
-      return $this->getUrl('*/*/download', array('id' => $row->getId()));
+      return $this->getUrl('*/*/edit', array('id' => $row->getId()));
   }
 
 }
