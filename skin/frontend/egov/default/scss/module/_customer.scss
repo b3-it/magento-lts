@@ -594,7 +594,8 @@ body.customer-account {
     }
 }
 
-#my-orders-table {
+#my-orders-table,
+.order-details > table {
     @extend .egov-base-totals;
     @extend .egov-base-table;
 
