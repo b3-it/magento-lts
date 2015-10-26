@@ -38,7 +38,7 @@ class Slpb_Product_Block_Adminhtml_Pickup_Renderer_Deliver extends Mage_Adminhtm
     	if($row->getMissingItems() == null)
     	{
 	        $this->getColumn()->setActions(array(array(
-	            'url'     => $this->getUrl('slpbproduct/adminhtml_pickup/view', 
+	            'url'     => $this->getUrl('adminhtml/slpbproduct_pickup/view', 
 	        					array(
 	        							//'qty' => htmlentities(urlencode($row->getDefaultOrderQty())),
 	        							'order_id' => htmlentities(urlencode($row->getEntityId())),

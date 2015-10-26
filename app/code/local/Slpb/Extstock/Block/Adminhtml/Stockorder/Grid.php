@@ -87,7 +87,7 @@ class Slpb_Extstock_Block_Adminhtml_Stockorder_Grid extends Mage_Adminhtml_Block
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('adminhtml')->__('Print'),
-                        'url'       => array('base'=> '*/adminhtml_ordersheet/print'),
+                        'url'       => array('base'=> 'adminhtml/extstock_ordersheet/print'),
                         'field'     => 'lieferid'
                     )
                 ),
@@ -122,7 +122,7 @@ class Slpb_Extstock_Block_Adminhtml_Stockorder_Grid extends Mage_Adminhtml_Block
 
   public function getRowUrl($row)
   {
-      return $this->getUrl('*/adminhtml_ordersheet/index', array('lieferid' => $row->getId()));
+      return $this->getUrl('adminhtml/extstock_ordersheet/index', array('lieferid' => $row->getId()));
   }
 
 }
