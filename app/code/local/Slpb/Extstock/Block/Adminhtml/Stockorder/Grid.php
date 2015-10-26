@@ -33,11 +33,6 @@ class Slpb_Extstock_Block_Adminhtml_Stockorder_Grid extends Mage_Adminhtml_Block
           'index'     => 'user',
       ));
       
-      $this->addColumn('user', array(
-          'header'    => Mage::helper('extstock')->__('User'),
-          'align'     =>'left',
-          'index'     => 'user',
-      ));
       
      $this->addColumn('date_ordered', array(
 	          'header'  => Mage::helper('extstock')->__('Order Date'),
