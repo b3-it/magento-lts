@@ -1073,6 +1073,59 @@ div.block-reorder {
     font-weight: bold;
 }
 
+/* -------------------------------------------- *
+ * Messages
+ */
+
+.messages {
+    margin-top: $global-message-margintop;
+    margin-bottom: $global-message-marginbottom;
+}
+
+.messages li li {
+    position: relative;
+    margin-bottom: 5px;
+    padding: 7px 10px 7px 20px;
+    background: $c-module-background;
+    font-size: $f-size-l;
+}
+
+.messages li li:before {
+    top: 50%;
+    left: 0;
+    margin-top: -6px;
+}
+
+.messages .error-msg li {
+    color: $c-black;
+    border-left: 5px solid $c-danger;
+    background-color: $c-danger-background;
+}
+
+.messages .error-msg li:before {
+    @include triangle(right, 6px, $c-danger);
+}
+
+.messages .notice-msg li {
+    color: $c-black;
+    border-left: 5px solid $c-warn;
+    background-color: $c-warn-background;
+}
+
+.messages .notice-msg li:before {
+    @include triangle(right, 6px, $c-warn);
+}
+
+.messages .success-msg li {
+    color: $c-black;
+    border-left: 5px solid $c-success;
+    background-color: $c-success-background;
+}
+
+.messages .success-msg li:before {
+    @include triangle(right, 6px, $c-success);
+}
+
 // ---------------------------------------------
 
 @include bp(min-width, 915px) {

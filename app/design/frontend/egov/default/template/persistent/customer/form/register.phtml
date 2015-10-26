@@ -135,7 +135,7 @@
                             <?php echo $this->getFieldRequiredHtml('postcode')?>
                             <?php echo $this->__('Zip/Postal Code') ?>
                         </label>
-                        <input tabindex="9" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->quoteEscape($this->__('Zip/Postal Code')) ?>" id="zip" class="input-text validate-zip-international <?php echo $this->isFieldRequired('postcode') ? 'required-entry' : ''?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                        <input tabindex="9" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->quoteEscape($this->__('Zip/Postal Code')) ?>" id="zip" class="input-text validate-zip-international <?php echo $this->isFieldRequired('postcode') ? 'required-entry' : 'egov'?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
                     </div>
                 </li>
               <?php endif; ?>
