@@ -50,9 +50,10 @@ class Mage_ConfigurableSwatches_Model_System_Config_Source_Catalog_Product_Confi
                 ->setOrder('frontend_label', Varien_Data_Collection::SORT_ORDER_ASC);
 
             $this->_attributes = array();
+            $helper = Mage::helper('configurableswatches');
             foreach ($attrCollection as $attribute) {
                 $this->_attributes[] = array(
-                    'label' => $attribute->getFrontendLabel(),
+                    'label' => $helper->__($attribute->getFrontendLabel()),
                     'value' => $attribute->getId(),
                 );
             }
