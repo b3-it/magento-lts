@@ -41,7 +41,7 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
 	      	"value" => $mandateid
 	      ));
 	      
-	      $link = $this->getUrl("sepadebitsax/adminhtml_mandate/link",array("mandateid"=>$mandateid ));
+	      $link = $this->getUrl("adminhtml/sepadebitsax_mandate/link",array("mandateid"=>$mandateid ));
 	      
 	      $fieldset->addField('sepa_mandate_link', 'link', array(
 	          'label'     => Mage::helper('sepadebitsax')->__('Pdf'),
