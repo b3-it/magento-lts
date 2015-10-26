@@ -59,7 +59,7 @@ class Egovs_Base_Block_Customer_Address_Book extends Mage_Customer_Block_Address
 		 		{
 		 			return true;
 		 		}
-			 	if($customer->getData('use_group_autoassignment') != 1)
+			 	if($customer->getData('disable_auto_group_change') == 1)
 			 	{
 			 		return true;
 			 	}
@@ -74,4 +74,25 @@ class Egovs_Base_Block_Customer_Address_Book extends Mage_Customer_Block_Address
 	{
 		return $this->__('This address is used by additional service. For changeing contact our customer service please!');
 	}
+	
+	
+	public function getAdditionalAddresses()
+	{
+
+		$addresses = $this->getCustomer()->getAdditionalAddresses();
+		$base = $this->getCustomer()->getBaseAddress();
+		if($base)
+		{
+			foreach($addresses as $key => $adr)
+			{
+				if($base == $adr->getId())
+				{
+					unset($addresses[$key]);
+				}
+			}
+		}
+		
+		return empty($addresses) ? false : $addresses;
+	}
+	
 }

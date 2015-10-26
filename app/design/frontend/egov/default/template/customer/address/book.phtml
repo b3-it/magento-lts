@@ -49,7 +49,8 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
             <div class="box-title">
                 <h3>
                     <?php echo $this->__('Base Address')?>
-
+                    <?php if($billingIsBase) echo "<br />".$this->__('Default Billing Address');?>
+                    <?php if($shippingIsBase) echo "<br />".$this->__('Default Shipping Address') ?>
                     <span class="spacer"> | </span>
                   <?php if(!$this->rejectAddressEditing($_pAddress)):?>
                     <a class="egov-pencile" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>" alt="<?php echo $this->__('Edit Base Address'); ?>" title="<?php echo $this->__('Edit Base Address'); ?>"> </a>
@@ -61,9 +62,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                     </span>
                   <?php endif;?>
 
-                    <br />
-                    <?php if($billingIsBase) echo $this->__('Default Billing Address');?><br />
-                    <?php if($shippingIsBase) echo $this->__('Default Shipping Address') ?>
+                   
                 </h3>
             </div>
             <div class="box-content">
@@ -79,7 +78,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
             <div class="box-title">
                 <h3>
                     <?php echo $this->__('Default Billing Address') ?>
-
+					<?php if($shippingIsBilling) echo "<br />" . $this->__('Default Shipping Address') ?>
                     <span class="spacer"> | </span>
                   <?php if(!$this->rejectAddressEditing($_pAddress)):?>
                     <?php if(!$shippingIsBilling) $_link_text = $this->__('Change Billing Address'); else $_link_text = $this->__('Change Default Address'); ?>
@@ -91,9 +90,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                         </span>
                     </span>
                   <?php endif;?>
-
-                    <br />
-                    <?php if($shippingIsBilling) echo $this->__('Default Shipping Address') ?>
+                    
                 </h3>
             </div>
             <div class="box-content">
@@ -103,21 +100,8 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
             </div>
         </div>
         <?php endif;?>
-
-        <?php if(($_pAddress = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()) && !$shippingIsBase  && !$shippingIsBilling): ?>
-        <div class="box">
-            <div class="box-title">
-                <h3>
-                    <?php echo $this->__('Default Billing Address') ?>
-                </h3>
-            </div>
-            <div class="box-content">
-                <?php echo $this->__('You have no default billing address in your address book.') ?>
-            </div>
-        </div>
-        <?php endif ?>
-
-        <?php if($_pAddress = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()): ?>
+        
+        <?php if(($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()) && !$shippingIsBase  && !$shippingIsBilling): ?>
         <div class="box">
             <div class="box-title">
                 <h3>
@@ -157,7 +141,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
         </div>
         <?php endif ?>
 
-        <?php if((!Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()) &&  !!$shippingIsBase  && !$shippingIsBilling): ?>
+        <?php if((!Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()) &&  !$shippingIsBase  && !$shippingIsBilling): ?>
         <div class="box">
             <div class="box-title">
                 <h3>
