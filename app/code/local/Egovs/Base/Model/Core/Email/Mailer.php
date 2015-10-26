@@ -50,7 +50,15 @@ class Egovs_Base_Model_Core_Email_Mailer extends Mage_Core_Model_Email_Template_
         // Send all emails from corresponding list
         while (!empty($this->_emailInfos)) {
             $emailInfo = array_pop($this->_emailInfos);
-            $emailTemplate->load($this->getTemplateId());
+            
+            if (is_numeric($this->getTemplateId())) {
+            	$emailTemplate->load($this->getTemplateId());
+            }
+            else
+            {
+            	$localeCode = Mage::getStoreConfig('general/locale/code', $storeId);
+            	$emailTemplate->loadDefault($this->getTemplateId(), $localeCode);
+            }
             // Handle "Bcc" recepients of the current email
             $emailTemplate->addBcc($emailInfo->getBccEmails());
             // Set required design parameters and delegate email sending to Mage_Core_Model_Email_Template
