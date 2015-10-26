@@ -161,7 +161,7 @@ class Slpb_Extstock_Block_Adminhtml_Journal_Grid extends Mage_Adminhtml_Block_Wi
 		
 		$this->getMassactionBlock()->addItem('movement', array(
 				'label'    => Mage::helper('extstock')->__('Switch to Delivered'),
-				'url'      => $this->getUrl('*/adminhtml_journal/massDelivered'),
+				'url'      => $this->getUrl('adminhtml/extstock_journal/massDelivered'),
 				
 		));
 		
@@ -176,7 +176,7 @@ class Slpb_Extstock_Block_Adminhtml_Journal_Grid extends Mage_Adminhtml_Block_Wi
 
 	public function getThisUrl($action)
 	{
-		return 'extstock/adminhtml_journal/'.$action;
+		return 'adminhtml/extstock_journal/'.$action;
 	}
 	
 	/**
