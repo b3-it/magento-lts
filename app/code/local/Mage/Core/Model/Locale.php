@@ -36,7 +36,7 @@ class Mage_Core_Model_Locale
      */
     const DEFAULT_LOCALE    = 'de_DE';
     const DEFAULT_TIMEZONE  = 'UTC';
-    const DEFAULT_CURRENCY  = 'USD';
+    const DEFAULT_CURRENCY  = 'EUR';
 
     /**
      * XML path constants
@@ -611,7 +611,7 @@ class Mage_Core_Model_Locale
                  * http://framework.zend.com/issues/browse/ZF-10038
                  * zend team is not going to change it behaviour in the near time
                  */
-                $currencyObject = new Zend_Currency($currency,'de_DE');
+                $currencyObject = new Zend_Currency($currency, self::DEFAULT_LOCALE);
                 $options['name'] = $currency;
                 $options['currency'] = $currency;
                 $options['symbol'] = $currency;
