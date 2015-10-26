@@ -49,23 +49,25 @@ $global-mp-checkout-inactive: #8F8F8F;
 
 $global-message-background: #F0F6E7;
 
-$global-warning-color: #FF0000;
-$global-warning-background: #FFC1C1;
-$global-notice-color: #FF0000;
-$global-notice-background: #FFC1C1;
+$global-warning-color: #DF280A;
+$global-warning-background: #FAEBE7;
+$global-notice-color: #DF280A;
+$global-notice-background: #FAEBE7;
 $global-success-color: #59814C;
-$global-success-background: #F0F6E7;
+$global-success-background: #EFF5EA;
 
 $global-text-shadow: rgba(0, 0, 0, 0.3);
 
-$global-rgba-1: rgba(147, 189, 130, 0.9); //rgba(224, 230, 215, 0.9);
-$global-rgba-2: rgba(89, 129, 76, 0.9);   //rgba(193, 208, 187, 0.97);
-
-$global-button-font-color: #FFFFFF;
-$global-button-color: rgba(147, 189, 130, 0.9); //#F0F6E7;
-$global-button-hovercolor: rgb(150, 187, 134);  //#F0F6E7;
+$global-rgba-1: rgba(239, 242, 234, 0.6);
+$global-rgba-2: rgba(205, 218, 201, 0.65);
+// 2015-10-16 Anpassung der Buttons (Farbe und Gradient)
+$global-button-font-color: #000000;
+$global-button-font-hover-color: #000000;
+$global-button-color: #F0F6E7;
+$global-button-hovercolor: #FFFFFF;
+$global-button-gradient: 50%;
 $global-button-gradient-1: $global-rgba-1 0%;
-$global-button-gradient-2: $global-rgba-2 66%;
+$global-button-gradient-2: $global-rgba-2 $global-button-gradient;
 
 $global-footer-backgroundcolor: #F0F6E7;
 $global-footer-fontcolor: #4D4D4D;
