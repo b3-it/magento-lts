@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Egovs_Base>
-			<version>0.1.18</version>
+			<version>2.0.0.0</version>
 		</Egovs_Base>
 	</modules>
 	<admin>
@@ -266,6 +266,11 @@
 			<egovsbase>
 				<class>Egovs_Base_Helper</class>
 			</egovsbase>
+			<customer>
+			    <rewrite>
+			        <data>Egovs_Base_Helper_Customer_Data</data>
+			    </rewrite>
+			</customer>
 		</helpers>
 		<resources>
 			<egovsbase_setup>
