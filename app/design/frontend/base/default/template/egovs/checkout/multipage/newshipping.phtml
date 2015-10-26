@@ -1,30 +1,11 @@
 <?php
 /**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category   design_blank
- * @package    Mage
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
- * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
-?>
-<?php
+
 /**
  * Multishipping checkout shipping template
  *
@@ -47,72 +28,46 @@
                                     ->setFieldParams('onchange="shipping.setSameAsBilling(false)"')->toHtml();
                     ?>
                 </li>
-            </ul>
-        </div>
-
-        <div class="fieldset">
-            <ul class="form-list">
-              <?php if($this->isFieldVisible('company')):?>
-                <li class="fields">
-                    <div class="input-box">
-                        <label for="shipping:company">
-                            <?php echo $this->__('Company') ?><?php echo $this->getFieldRequiredHtml('company')?>
-                        </label>
-                        <input tabindex="4" type="text" id="shipping:company" name="shipping[company]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text" onchange="shipping.setSameAsBilling(false);" />
-                    </div>
-                </li>
-              <?php endif ?>
-
-             	<?php if($this->isFieldVisible('telephone')):?>
-                <li class="fields">
-                    <div class="input-box">
-                        <label for="shipping:telephone">
-                            <?php echo $this->getFieldRequiredHtml('telephone')?>
-                            <?php echo $this->__('Telephone') ?>
-                        </label>
-                        <input tabindex="6" type="text" name="shipping[telephone]" value="<?php echo $this->htmlEscape($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text required-entry" id="shipping:telephone" onchange="shipping.setSameAsBilling(false);" />
-                    </div>
-                </li>
-              <?php endif?>
 
               <?php if(false): ?>
-                <li class="fields">
+                <li class="fields halfwide">
                     <div class="input-box">
                         <label for="shipping:email">
                             <span class="required">*</span>
                             <?php echo $this->__('Email Address') ?>
                         </label>
-                        <input tabindex="8" type="text" name="shipping[email]" id="shipping:email" value="<?php echo $this->htmlEscape($this->getAddress()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
+                        <input tabindex="5" type="text" name="shipping[email]" id="shipping:email" value="<?php echo $this->htmlEscape($this->getAddress()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
                     </div>
                 </li>
               <?php endif ?>
             </ul>
         </div>
-        <div class="fieldset">
+
+        <div class="fieldset wide no-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('company')):?>
                 <li class="fields">
                     <div class="input-box">
+                        <label for="shipping:company">
+                            <?php echo $this->getFieldRequiredHtml('company')?>
+                            <?php echo $this->__('Company') ?>
+                        </label>
+                        <input tabindex="6" type="text" id="shipping:company" name="shipping[company]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text <?php echo $this->isFieldRequired('company') ? 'required-entry' : ''?>" onchange="shipping.setSameAsBilling(false);" />
+                    </div>
+                </li>
+              <?php endif ?>
+
+              <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
+                <li class="fields halfwide">
+                    <div class="input-box">
                         <label for="shipping:taxvat">
+                            <?php echo $this->getFieldRequiredHtml('taxvat')?>
                             <?php echo $this->__('Taxvat') ?>
                         </label>
-                        <input tabindex="5" type="text" id="shipping:taxvat" name="shipping[taxvat]" value="<?php echo $this->htmlEscape($this->getAddress()->getTaxvat()) ?>" title="<?php echo $this->__('Taxvat') ?>" class="input-text" onchange="shipping.setSameAsBilling(false);" />
+                        <input tabindex="7" type="text" id="shipping:taxvat" name="shipping[taxvat]" value="<?php echo $this->htmlEscape($this->getAddress()->getTaxvat()) ?>" title="<?php echo $this->__('Taxvat') ?>" class="input-text <?php echo $this->isFieldRequired("taxvat") ? 'required-entry' : ''?>" onchange="shipping.setSameAsBilling(false);" />
                     </div>
                 </li>
               <?php endif ?>
-
-              <?php if($this->isFieldVisible('fax')):?>
-                <li class="fields">
-                    <div class="input-box">
-                        <label for="shipping:fax">
-                            <?php echo $this->getFieldRequiredHtml('fax')?>
-                            <?php echo $this->__('Fax') ?>
-                        </label>
-                        <input tabindex="7" type="text" name="shipping[fax]" value="<?php echo $this->htmlEscape($this->getAddress()->getFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text" id="shipping:fax" onchange="shipping.setSameAsBilling(false);" />
-                    </div>
-                </li>
-              <?php endif ?>
-
             </ul>
         </div>
 
@@ -125,58 +80,88 @@
                             <?php echo $this->getFieldRequiredHtml('street')?>
                             <?php echo $this->__('Street Address') ?>
                         </label>
-	                      <input tabindex="9" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text required-entry" maxlength="22" />
+	                      <input tabindex="8" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text <?php echo $this->isFieldRequired('street') ? 'required-entry' : ''?>" maxlength="22" />
                     <?php for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
-		    		            <input tabindex="10" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet($_i+1)) ?>" class="input-text" maxlength="21" />
+		    		            <input tabindex="8" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet($_i+1)) ?>" class="input-text" maxlength="21" />
 		                <?php endfor ?>
                     </div>
 		    		    </li>
-              <?php endif ?>
+              <?php endif; ?>
             </ul>
         </div>
 
         <div class="fieldset">
             <ul class="form-list">
+              <?php if($this->isFieldVisible('postcode')):?>
                 <li class="fields">
                     <div class="input-box">
                         <label for="shipping:postcode">
-                            <span class="required">*</span>
+                            <?php echo $this->getFieldRequiredHtml('postcode')?>
                             <?php echo $this->__('Zip/Postal Code') ?>
                         </label>
-                        <input tabindex="11" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="shipping[postcode]" id="shipping:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" onchange="shipping.setSameAsBilling(false);" />
+                        <input tabindex="9" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="shipping[postcode]" id="shipping:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international <?php echo $this->isFieldRequired('postcode') ? 'required-entry' : ''?>" onchange="shipping.setSameAsBilling(false);" />
                     </div>
                 </li>
+              <?php endif; ?>
+              <?php if($this->isFieldVisible('region')):?>
                 <li class="fields">
                     <div class="input-box" id="block-region">
                         <label for="shipping:region">
-                            <span class="required">*</span>
+                            <?php echo $this->getFieldRequiredHtml('region')?>
                             <?php echo $this->__('State/Province') ?>
                         </label>
                         <?php echo $this->getRegionHtmlSelect('shipping') ?>
                     </div>
                 </li>
+              <?php endif; ?>
+             	<?php if($this->isFieldVisible('telephone')):?>
+                <li class="fields">
+                    <div class="input-box">
+                        <label for="shipping:telephone">
+                            <?php echo $this->getFieldRequiredHtml('telephone')?>
+                            <?php echo $this->__('Telephone') ?>
+                        </label>
+                        <input tabindex="13" type="text" name="shipping[telephone]" value="<?php echo $this->htmlEscape($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo $this->isFieldRequired('telephone') ? 'required-entry' : ''?>" id="shipping:telephone" onchange="shipping.setSameAsBilling(false);" />
+                    </div>
+                </li>
+              <?php endif; ?>
             </ul>
         </div>
         <div class="fieldset">
             <ul class="form-list">
+              <?php if($this->isFieldVisible('city')):?>
                 <li class="fields">
                     <div class="input-box">
                         <label for="shipping:city">
-                            <span class="required">*</span>
+                            <?php echo $this->getFieldRequiredHtml('city')?>
                             <?php echo $this->__('City') ?>
                         </label>
-                        <input tabindex="12" type="text" title="<?php echo $this->__('City') ?>" name="shipping[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="shipping:city" onchange="shipping.setSameAsBilling(false);" />
+                        <input tabindex="10" type="text" title="<?php echo $this->__('City') ?>" name="shipping[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text <?php echo $this->isFieldRequired('city') ? 'required-entry' : ''?>" id="shipping:city" onchange="shipping.setSameAsBilling(false);" />
                     </div>
                 </li>
+              <?php endif; ?>
+              <?php if($this->isFieldVisible('country_id')):?>
                 <li class="fields">
                     <div class="input-box" id="block-country">
                         <label for="shipping:country_id">
-                            <span class="required">*</span>
+                            <?php echo $this->getFieldRequiredHtml('country_id')?>
                             <?php echo $this->__('Country') ?>
                         </label>
                         <?php echo $this->getCountryHtmlSelect('shipping') ?>
                     </div>
                 </li>
+              <?php endif; ?>
+              <?php if($this->isFieldVisible('fax')):?>
+                <li class="fields">
+                    <div class="input-box">
+                        <label for="shipping:fax">
+                            <?php echo $this->getFieldRequiredHtml('fax')?>
+                            <?php echo $this->__('Fax') ?>
+                        </label>
+                        <input tabindex="14" type="text" name="shipping[fax]" value="<?php echo $this->htmlEscape($this->getAddress()->getFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text <?php echo $this->isFieldRequired('fax') ? 'required-entry' : ''?>" id="shipping:fax" onchange="shipping.setSameAsBilling(false);" />
+                    </div>
+                </li>
+              <?php endif ?>
             </ul>
         </div>
 
@@ -213,11 +198,12 @@
 
 <script type="text/javascript">
 //<![CDATA[
-    $j('.name-firstname input').attr('tabindex','1');
-    $j('.name-middlename input').attr('tabindex','2');
-    $j('.name-lastname input').attr('tabindex','3');
+    var TabData = {'name-prefix select': 1, 'name-firstname input': 2, 'name-middlename input': 3,
+                   'name-lastname input': 4, 'block-region select': 11, 'block-country select': 12};
+    setTabIndex(TabData);
 
-    $j('#block-region select').attr("tabindex","13");
-    $j('#block-country select').attr("tabindex","14");
+    $j(document).ready(function(){
+        $j('#name-firstname input').focus();
+    });
 //]]>
 </script>

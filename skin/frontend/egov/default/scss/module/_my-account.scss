@@ -70,15 +70,11 @@
             padding: 0px !important;
         }
 
-        .locked_address_text {
-            display: block;
-
-            > span {
-                font-family: $base-font-family;
-                color: $global-warning-color;
-                font-size: $global-fontsize-small;
-                font-weight: bold;
-            }
+        div.locked_info {
+            font-family: $base-font-family;
+            color: $global-warning-color;
+            font-size: $global-fontsize-small;
+            font-weight: bold;
         }
     }
 
@@ -182,7 +178,10 @@
             }
 
             a {
-                padding: 10px 12px 10px 14px;
+                padding-top: $global-navigation-link-padding-top;
+                padding-right: $global-navigation-link-padding-right;
+                padding-bottom: $global-navigation-link-padding-bottom;
+                padding-left: $global-navigation-link-padding-left;
                 display: block;
             }
         }
