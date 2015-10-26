@@ -23,7 +23,16 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
       }
       else
       {
+      	try {
+      		$mandate = $model->getMandate($mandateid);
+      	}
+      	catch (Exception $ex)
+      	{
+      		$this->getMessagesBlock()->addError($ex);
+      	}
       	
+      	if($mandate)
+      	{
 	      $fieldset->addField('sepa_mandate_id', 'text', array(
 	          'label'     => Mage::helper('sepadebitsax')->__('SEPA Mandate Id'),
 	          'class'     => 'readonly',
@@ -260,7 +269,7 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
 	      			"value" =>$adr->Postfach,
 	      	));
 	      	 
-	      	
+	      }
 	      	
 	      	
 	      }
