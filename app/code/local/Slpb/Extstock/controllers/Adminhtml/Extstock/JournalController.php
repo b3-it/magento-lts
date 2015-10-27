@@ -287,7 +287,7 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             }
         }
-        $this->_redirect('*/*/index');
+        $this->_redirect('adminhtml/extstock_journal/index');
     }
 	
 

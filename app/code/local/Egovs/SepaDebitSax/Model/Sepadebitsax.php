@@ -404,10 +404,13 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			$ref = $customer->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID);
 			if ($ref) {
 				$mandate = $this->_getMandate($ref);
-				if (($mandate->getMandatStatus() == Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_AUFFREIGABEWARTEND ) 
-					|| ($mandate->getMandatStatus() == Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_AUFUNTERSCHRIFTWARTEND)
-				) {
-					Mage::throwException(Mage::helper('sepadebitsax')->__('Your SEPA Mandate is still waiting for signig!'));	
+				if($mandate)
+				{
+					if (($mandate->getMandatStatus() == Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_AUFFREIGABEWARTEND ) 
+						|| ($mandate->getMandatStatus() == Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_AUFUNTERSCHRIFTWARTEND)
+					) {
+						Mage::throwException(Mage::helper('sepadebitsax')->__('Your SEPA Mandate is still waiting for signig!'));	
+					}
 				}
 			}
 		}

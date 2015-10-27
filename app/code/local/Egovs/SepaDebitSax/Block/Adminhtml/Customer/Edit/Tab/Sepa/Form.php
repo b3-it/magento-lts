@@ -23,7 +23,16 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
       }
       else
       {
+      	try {
+      		$mandate = $model->getMandate($mandateid);
+      	}
+      	catch (Exception $ex)
+      	{
+      		$this->getMessagesBlock()->addError($ex);
+      	}
       	
+      	if($mandate)
+      	{
 	      $fieldset->addField('sepa_mandate_id', 'text', array(
 	          'label'     => Mage::helper('sepadebitsax')->__('SEPA Mandate Id'),
 	          'class'     => 'readonly',
@@ -32,7 +41,7 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
 	      	"value" => $mandateid
 	      ));
 	      
-	      $link = $this->getUrl("sepadebitsax/adminhtml_mandate/link",array("mandateid"=>$mandateid ));
+	      $link = $this->getUrl("adminhtml/sepadebitsax_mandate/link",array("mandateid"=>$mandateid ));
 	      
 	      $fieldset->addField('sepa_mandate_link', 'link', array(
 	          'label'     => Mage::helper('sepadebitsax')->__('Pdf'),
@@ -260,7 +269,7 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
 	      			"value" =>$adr->Postfach,
 	      	));
 	      	 
-	      	
+	      }
 	      	
 	      	
 	      }
