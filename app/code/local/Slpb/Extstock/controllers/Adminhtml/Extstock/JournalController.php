@@ -242,7 +242,8 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
 		$journals = explode(',',$params['journal_keys']);
 		$amounts = explode(',',$params['amount_to_order']);
 
-		
+		try
+		{
 			for($i = 0; $i < count($journals);$i++)
 			{
 				$journal = $journals[$i];	
@@ -258,7 +259,9 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
 					$model->save();
 				}
 			}
-		
+		} catch (Exception $e) {
+			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+		}
 		$this->_redirect('*/*/index');
 	}
 	
