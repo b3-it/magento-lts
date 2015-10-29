@@ -247,7 +247,7 @@ class Slpb_Extstock_Block_Adminhtml_Warning_Grid extends Mage_Adminhtml_Block_Wi
 		
 		$this->getMassactionBlock()->addItem('movement', array(
 				'label'    => Mage::helper('extstock')->__('Warnings Per Stock'),
-				'url'      => $this->getUrl('*/adminhtml_warning/movement'),
+				'url'      => $this->getUrl('adminhtml/extstock_warning/movement'),
 				// 'complete' =>  "setLocation('".$this->getUrl('*/*/*')."');",
 				'useajax'	=> true,
 				//'onclick'	=> 'setLocation()'
@@ -287,7 +287,7 @@ class Slpb_Extstock_Block_Adminhtml_Warning_Grid extends Mage_Adminhtml_Block_Wi
 	}
 
 	public function getThisUrl($action) {
-		return 'extstock/adminhtml_warning/'.$action;
+		return 'adminhtml/extstock_warning/'.$action;
 	}
 
 	/**
