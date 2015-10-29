@@ -242,21 +242,25 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
 		$journals = explode(',',$params['journal_keys']);
 		$amounts = explode(',',$params['amount_to_order']);
 
-		
-		for($i = 0; $i < count($journals);$i++)
+		try
 		{
-			$journal = $journals[$i];	
-			$amount = $amounts[$i];
-	
-			if(in_array($journal,$journal_ids))
+			for($i = 0; $i < count($journals);$i++)
 			{
-				$model = Mage::getModel('extstock/journal')->load($journal);
-				$model->setData('qty',$amount);
-				$model->setData('status',Slpb_Extstock_Model_Journal::STATUS_DELIVERED);
-				$model->setData('date_delivered',now());
-				$this->move($model);
-				$model->save();
+				$journal = $journals[$i];	
+				$amount = $amounts[$i];
+		
+				if(in_array($journal,$journal_ids))
+				{
+					$model = Mage::getModel('extstock/journal')->load($journal);
+					$model->setData('qty',$amount);
+					$model->setData('status',Slpb_Extstock_Model_Journal::STATUS_DELIVERED);
+					$model->setData('date_delivered',now());
+					$this->move($model);
+					$model->save();
+				}
 			}
+		} catch (Exception $e) {
+			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
 		}
 		$this->_redirect('*/*/index');
 	}
