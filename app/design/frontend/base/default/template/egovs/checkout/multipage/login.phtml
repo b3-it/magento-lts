@@ -79,6 +79,7 @@
 
 		<div class="col-2 registered-users">
 		    <form id="login-form" class="scaffold-form" action="<?php echo $this->getPostAction() ?>" method="post">
+		    <?php echo $this->getBlockHtml('formkey'); ?>
 		        <h2><?php echo $this->__('Login') ?></h2>
 		        <div class="content">
 		            <div class="securityLabel">
