@@ -14,7 +14,7 @@ class Slpb_Extstock_Block_Adminhtml_Ordersheet extends Mage_Adminhtml_Block_Widg
 		
 		$this->_addButton('back', array(
             'label'     => Mage::helper('adminhtml')->__('Back'),
-            'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_stockorder/index') . '\')',
+            'onclick'   => 'setLocation(\'' . $this->getUrl('adminhtml/extstock_stockorder/index') . '\')',
             'class'     => 'back',
         ), -1);
 

@@ -97,15 +97,10 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
    	protected function _applyCategory($cats)
      {
      	parent::_applyProductLimitations();
-     	if( isset($this->_productLimitationFilters['category']))
+     	$cats = array_filter($cats);
+     	if( isset($this->_productLimitationFilters['category']) && (count($cats) > 0))
      	{
-     		$crit = '(';
-     		for($i = 0; $i < count($cats); $i++)
-     		{
-     			$crit .= $cats[$i];
-     			if($i < (count($cats) - 1)) $crit .=','; 
-     		}
-     		$crit .= ')';
+     		$crit = '('. implode(',',$cats).')';  		
      		
 	     	if(($this->_categoryApplied === false))
 	     	{
@@ -126,13 +121,19 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
     public function getSelectCountSql()
     {
     	
-    	$helper = Mage::helper('groupscatalog');
-    	if($helper)
-    	{
-    		$helper->addGroupsFilterToProductCollection($this);
-    	}
+    	
     	$this->_applyProductLimitations();
         $countSelect = clone $this->getSelect();
+        
+        
+        $helper = Mage::helper('netzarbeiter_groupscatalog2');
+        if($helper)
+        {
+        	Mage::getResourceSingleton('netzarbeiter_groupscatalog2/filter')
+        	->addGroupsCatalogProductFilterToSelect($countSelect, $this->getCustomerGroupId(), $this->getStoreId());
+        	
+        }
+        
         $countSelect->reset(Zend_Db_Select::ORDER);
         $countSelect->reset(Zend_Db_Select::LIMIT_COUNT);
         $countSelect->reset(Zend_Db_Select::LIMIT_OFFSET);
@@ -141,6 +142,11 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
         $countSelect->from('', 'COUNT(*)');
 		//die( $countSelect->__toString()); 
         return $countSelect;
+    }
+    
+    public function getCustomerGroupId()
+    {
+    	return Mage::getSingleton('customer/session')->getCustomerGroupId();
     }
     
 }
