@@ -619,7 +619,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 		//preg_match_all("|{{items}}(.*){{items}}|U",$html, $line, PREG_SET_ORDER);
 		preg_match_all("|{{items(.*)}}(.*){{items}}|U",$html, $line, PREG_SET_ORDER);
 
-		$showChilds = (trim($line[0][1]) == 'include_childs');
+		$showChilds = (count($line) > 0 ) && (trim($line[0][1]) == 'include_childs');
 		
 		$linehtml ="";
 		$odd = true;

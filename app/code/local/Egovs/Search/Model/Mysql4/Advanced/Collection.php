@@ -97,15 +97,10 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
    	protected function _applyCategory($cats)
      {
      	parent::_applyProductLimitations();
-     	if( isset($this->_productLimitationFilters['category']))
+     	$cats = array_filter($cats);
+     	if( isset($this->_productLimitationFilters['category']) && (count($cats) > 0))
      	{
-     		$crit = '(';
-     		for($i = 0; $i < count($cats); $i++)
-     		{
-     			$crit .= $cats[$i];
-     			if($i < (count($cats) - 1)) $crit .=','; 
-     		}
-     		$crit .= ')';
+     		$crit = '('. implode(',',$cats).')';  		
      		
 	     	if(($this->_categoryApplied === false))
 	     	{
