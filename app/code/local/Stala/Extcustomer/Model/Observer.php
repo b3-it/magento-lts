@@ -25,7 +25,7 @@ class Stala_Extcustomer_Model_Observer extends Mage_Core_Model_Abstract
 		Mage::log("extcustomer::sales_quote_remove_item event raised", Zend_Log::DEBUG, Stala_Helper::LOG_FILE);
 		
 		/* @var $quoteItem Mage_Sales_Model_Quote_Item */
-		$quoteItem = $observer->getQuoteItem();
+		$quoteItem = $observer->getItem();
 		//Item ist noch nicht gepeichert!
 		if (is_null($quoteItem) || $quoteItem->getId() < 1)
 			return $this;
