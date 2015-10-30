@@ -246,14 +246,14 @@
                     </checkout_allow_guest>
                 </observers>
             </checkout_allow_guest>
-            <sales_quote_remove_item>
+            <sales_quote_item_delete_after>
                 <observers>
                     <cart_remove_unique_pod_data>
                         <class>prondemand/product_observer</class>
                         <method>removeUniquePodData</method>
                     </cart_remove_unique_pod_data>
                 </observers>
-            </sales_quote_remove_item>
+            </sales_quote_item_delete_after>
         </events>
         
     </frontend>
