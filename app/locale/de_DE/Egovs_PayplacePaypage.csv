@@ -1,2 +1,6 @@
 "Customer was redirected to Payplace.","Kunde wurde zu Payplace weitergeleitet."
 "Payment session has expired.","Das Zeitfenster zum Bezahlen ist abgelaufen."
+"TEXT_PROCESS_ERROR_-0530","Es ist ein interner Fehler aufgetreten. Bitte versuchen Sie es in wenigen Minuten noch einmal."
+"TEXT_PROCESS_ERROR_-0531","Es ist ein interner Fehler aufgetreten. Bitte versuchen Sie es in wenigen Minuten noch einmal."
+"Use pre-authorization","Pre-Autorisierung verwenden"
+"If yes pre-authorization is used, otherwise authorization is used.","Ja nutzt Pre-Autorisierung, sonst wird Autorisierung verwendet."
