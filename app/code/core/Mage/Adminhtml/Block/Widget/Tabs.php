@@ -46,6 +46,13 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
      * @var string
      */
     protected $_activeTab = null;
+    
+    /**
+     * Enthält die aktuelle Ebene des Tree
+     * 
+     * @var int
+     */
+    protected $_treeLevel = 0;
 
     /**
      * Destination HTML element id
@@ -240,7 +247,9 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
         		if (isset($tree[$keyAfter])) {
         			$tree[$keyAfter][$key] = $tab;
         			$_sTree = array($key => array());
+        			$this->_treeLevel++;
         			$this->_buildDependsTabsTree($temp, $keys, $_sTree);
+        			$this->_treeLevel--;
         			if (!empty($_sTree[$key])) {
         				$tree[$keyAfter][$key] = array($key => $tab);
         				$tree[$keyAfter][$key] = array_merge($tree[$keyAfter][$key], $_sTree[$key]);
@@ -251,6 +260,11 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
 	        		continue;
         		}
         	} else {
+        		if ($this->_treeLevel > 0) {
+        			//push
+        			$keys[] = $key;
+        			break;
+        		}
         		$tree[$key] = array($key => $tab);
         	}
         	unset($temp[$key]);
