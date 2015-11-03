@@ -295,7 +295,7 @@ class Slpb_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_W
 	
 	public function getThisUrl($action)
 	{
-		return 'extstock/adminhtml_extstock/'.$action;
+		return 'adminhtml/extstock_extstock/'.$action;
 	}
 	
 	/**
