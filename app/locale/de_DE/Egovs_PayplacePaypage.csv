@@ -4,3 +4,5 @@
 "TEXT_PROCESS_ERROR_-0531","Es ist ein interner Fehler aufgetreten. Bitte versuchen Sie es in wenigen Minuten noch einmal."
 "Use pre-authorization","Pre-Autorisierung verwenden"
 "If yes pre-authorization is used, otherwise authorization is used.","Ja nutzt Pre-Autorisierung, sonst wird Autorisierung verwendet."
+"There was an error at Payplace Payment. Customers payment was not valid.","Bei der Payplace-Zahlung ist ein Fehler aufgetreten. Die Zahlung des Kunden ist nicht gültig."
+"Customer canceled Payplace payment or an error occured.","Der Kunden hat die Payplace-Zahlung storniert oder es ist ein Fehler aufgetreten."
