@@ -16,7 +16,8 @@
 <?php
     $_productCollection=$this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
-    $limit = 35;
+    $name_limit = 30;
+    $sku_limit = 24;
     $desc_limit = 110;
     $_imgSize_list = 300;
     $_imgSize_grid = 210;
@@ -78,8 +79,8 @@
                     $_productNameStripped = $this->stripTags($_product->getName(), null, true);
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
 
-                    if ( strlen($_productName) > $limit ) {
-                        $_productName = substr($_productName, 0, $limit) . '...';
+                    if ( strlen($_productName) > $name_limit ) {
+                        $_productName = substr($_productName, 0, $name_limit) . '...';
                     }
                     ?>
                     <h2 class="product-name">
@@ -88,7 +89,14 @@
                         </a>
                     </h2>
                     <div class="product_sku">
-                        <?php echo $this->__('Sku').': '.$this->htmlEscape($_product->getSku()); ?>
+                        <?php
+                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+
+                        if ( strlen($_sku) > $sku_limit ) {
+                            $_sku = substr($_sku, 0, $sku_limit) . '...';
+                        }
+                        echo $this->__('Sku').': <span title="'.$_sku_full.'">'.$_sku.'</span>';
+                        ?>
                     </div>
                     <div class="desc std">
                         <?php
@@ -170,8 +178,8 @@
                     <?php
                     $_productNameStripped = $this->stripTags($_product->getName(), null, true);
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
-                    if ( strlen($_productName) > $limit ) {
-                        $_productName = substr($_productName, 0, $limit) . '...';
+                    if ( strlen($_productName) > $name_limit ) {
+                        $_productName = substr($_productName, 0, $name_limit) . '...';
                     }
                     ?>
                     <h2 class="product-name">
@@ -180,7 +188,14 @@
                         </a>
                     </h2>
                     <div class="product_sku">
-                        <?php echo $this->__('Sku').': '.$this->htmlEscape($_product->getSku()); ?>
+                        <?php
+                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+
+                        if ( strlen($_sku) > $sku_limit ) {
+                            $_sku = substr($_sku, 0, $sku_limit) . '...';
+                        }
+                        echo $this->__('Sku').': <span title="'.$_sku_full.'">'.$_sku.'</span>';
+                        ?>
                     </div>
                     <?php
                     // Provides extra blocks on which to hang some features for products in the list

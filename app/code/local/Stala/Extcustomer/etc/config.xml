@@ -156,7 +156,7 @@
         </fieldsets>
         
         <events>
-        	<sales_quote_remove_item>
+        	<sales_quote_item_delete_after>
         		<observers>
         			<stala_extcustomer_observer>
         				<type>singleton</type>
@@ -164,7 +164,7 @@
         				<method>onSalesQuoteRemoveItem</method>
         			</stala_extcustomer_observer>
         		</observers>
-        	</sales_quote_remove_item>
+        	</sales_quote_item_delete_after>
         	<sales_quote_delete_before>
         		<observers>
         			<stala_extcustomer_observer>

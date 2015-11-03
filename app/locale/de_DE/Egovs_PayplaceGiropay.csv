@@ -5,3 +5,5 @@
 "TEXT_PROCESS_ERROR_INVALID_BIC","Die angegebene BIC ist für Giropay ungültig!"
 "TEXT_PROCESS_ERROR_MISSING_BIC","Es wurde keine BIC angegeben!"
 "Payment session has expired.","Das Zeitfenster zum Bezahlen ist abgelaufen."
+"There was an error at Payplace Payment. Customers payment was not valid.","Bei der Payplace-Zahlung ist ein Fehler aufgetreten. Die Zahlung des Kunden ist nicht gültig."
+"Customer canceled Payplace payment or an error occured.","Der Kunden hat die Payplace-Zahlung storniert oder es ist ein Fehler aufgetreten."

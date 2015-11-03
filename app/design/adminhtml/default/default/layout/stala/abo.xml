@@ -5,7 +5,7 @@
             <action method="addTabAfter">
                 <name>customer_edit_tab_abo</name>
                 <block>stalaabo/adminhtml_customer_edit_tabs_abotab</block>
-                <after>freecopies_report</after>
+                <after>addresses</after>
             </action>
         </reference>
     </adminhtml_customer_edit>

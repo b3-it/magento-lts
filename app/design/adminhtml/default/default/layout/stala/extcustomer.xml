@@ -54,7 +54,7 @@
 			<action method="addTabAfter">
 				<name>freecopies</name>
 				<block>tab_freecopies</block>
-				<after>account</after>
+				<after>addresses</after>
 			</action>
 			<block type="extcustomer/adminhtml_customer_tabs_freecopiesreporttab" name="tab_freecopies_report">
 				<!-- Mit der action Methode können beliebige Funktionen aufgerufen werden. -->
@@ -71,13 +71,13 @@
             <action method="addTabAfter">
             	<name>customer_edit_tab_parentcustomer</name>
             	<block>extcustomer/adminhtml_customer_tabs_parentcustomertab</block>
-            	<after>freecopies_report</after>
+            	<after>customer_edit_tab_abo</after>
             </action>
             
             <action method="addTabAfter">
             	<name>customer_edit_tab_childcustomer</name>
             	<block>extcustomer/adminhtml_customer_tabs_childcustomertab</block>
-            	<after>customer_edit_tab_parentcustomer</after>
+            	<after>customer_edit_tab_abo</after>
             </action>
 
 			<!-- Macht Tabs voneinander abhängig (betrifft rendering) -->

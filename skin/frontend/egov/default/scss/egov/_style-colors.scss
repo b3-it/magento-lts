@@ -69,6 +69,11 @@ $global-button-gradient: 50%;                                          // Höhe 
 $global-button-gradient-1: $global-rgba-1 0%;                          // Startwert des Gradienten
 $global-button-gradient-2: $global-rgba-2 $global-button-gradient;     // Endwert des Gradienten
 
+$global-button-color-boxed: #59814C;                                   // Hintergrundfarbe für Buttons innerhalb von Boxen im Checkout
+$global-button-font-boxed: #FFFFFF;                                    // Schriftfarbe für Buttons innerhalb von Boxen im Checkout
+$global-button-rgba-1: rgba(143, 182, 116, 0.6);                       // Erste Farbe für Buttons innerhalb von Boxen im Checkout
+$global-button-rgba-2: rgba(138, 174, 108, 0.65);                      // Zweite Farbe für Buttons innerhalb von Boxen im Checkout
+
 $global-footer-backgroundcolor: #F0F6E7;                               // Hintergrundfarbe des Footers
 $global-footer-fontcolor: #4D4D4D;                                     // Schriftfarbe des Footers
 
