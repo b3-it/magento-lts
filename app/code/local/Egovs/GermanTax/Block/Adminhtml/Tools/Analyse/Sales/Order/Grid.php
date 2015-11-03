@@ -88,7 +88,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
         		'align'     =>'left',
         		'width'     => '150px',
         		'index'     => 'shipping_name',
-        		'filter_index'=> "concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.taxvat)",
+        		'filter_condition_callback' => array($this, '_filterShippingNameCondition'),
         ));
         
     
@@ -100,7 +100,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
         		'align'     =>'left',
         		'width'     => '150px',
         		'index'     => 'base_name',
-        		'filter_index'=> "concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.taxvat)",
+        		'filter_condition_callback' => array($this, '_filterBaseNameCondition'),
         ));
         
         
@@ -179,6 +179,39 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
         return parent::_prepareColumns();
     }
 
+    /**
+     * FilterIndex Shipping Name
+     *
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+     * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+     *
+     * @return void
+     */
+    protected function _filterShippingNameCondition($collection, $column) {
+    	if (!$value = $column->getFilter()->getValue()) {
+    		return;
+    	}
+    	$table = $collection->getTable("sales/order");
+    	$condition = "(concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.taxvat) like ?";
+    	$collection->getSelect()->where($condition, "%$value%");
+    }
+    
+    /**
+     * FilterIndex Base Name
+     *
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+     * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+     *
+     * @return void
+     */
+    protected function _filterBaseNameCondition($collection, $column) {
+    	if (!$value = $column->getFilter()->getValue()) {
+    		return;
+    	}
+    	$table = $collection->getTable("sales/order");
+    	$condition = "concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.taxvat) like ?";
+    	$collection->getSelect()->where($condition, "%$value%");
+    }
     
     protected function _afterLoadCollection()
     {

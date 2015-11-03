@@ -22,8 +22,8 @@ class Egovs_Doc_Block_Adminhtml_Doc_Edit_Tabs extends Mage_Adminhtml_Block_Widge
   protected function _beforeToHtml()
   {
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('egovs_doc')->__('Documentdetails'),
-          'title'     => Mage::helper('egovs_doc')->__('Documentdetails'),
+          'label'     => Mage::helper('egovs_doc')->__('Details'),
+          'title'     => Mage::helper('egovs_doc')->__('Details'),
           'content'   => $this->getLayout()->createBlock('egovs_doc/adminhtml_doc_edit_tab_form')->toHtml(),
       ));
      

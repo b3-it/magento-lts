@@ -17,7 +17,7 @@ class Stala_CustomerReports_Block_Adminhtml_Report_Sales_Revenue_Grid extends Eg
                 'index' => 'customer_group_id',
              	'type'  => 'options',
                 'options' => $this->_getCustomerGroupsAsOptionArray(),
-            	'filter_index' => '`customer`.`group_id`',
+            	'filter_index' => 'customer.group_id',
         ));
 	}
     

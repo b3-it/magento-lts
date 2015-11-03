@@ -140,7 +140,8 @@ class Slpb_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_W
 	          'align'     =>'right',
 	      	  'width'     => '40px',	
 	          'index'     => 'bestellwert',
-			  'filter_index'=>'(quantity_ordered * price)'	
+			 'filter_condition_callback' => array($this, '_filterBestellwertCondition'),
+			 
 			));
 	/*
 			$this->addColumn('lagerwert', array(
@@ -275,6 +276,23 @@ class Slpb_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_W
 		return $this;
 	}
 
+	/**
+	 *
+	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+	 *
+	 * @return void
+	 */
+	protected function _filterBestellwertCondition($collection, $column) {
+		if (!$value = $column->getFilter()->getValue()) {
+			return;
+		}
+	
+		$condition = '(quantity_ordered * price) = ?';
+		$collection->getSelect()->where($condition, $value);
+	}
+	
+	
 	public function getThisUrl($action)
 	{
 		return 'extstock/adminhtml_extstock/'.$action;

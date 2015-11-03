@@ -221,8 +221,8 @@ class Stala_Extcustomer_Block_Adminhtml_Product_Tabs_Freecopies_Grid extends Mag
 
 		$crossFreecopies->useCrossFreecopiesLinks();
 		$collection = $crossFreecopies->getLinkCollection();
-		$collection->addFieldToFilter('`product_id`',$this->_getProduct()->getId());
-		$collection->addFieldToFilter('`link_type_id`',$crossFreecopies->getLinkTypeId());
+		$collection->addFieldToFilter('product_id',$this->_getProduct()->getId());
+		$collection->addFieldToFilter('link_type_id',$crossFreecopies->getLinkTypeId());
 
 		foreach ($collection->getItems() as $linkedProduct) {
 			////hier muss dummy input Feld stehen, sonst spinnt JS

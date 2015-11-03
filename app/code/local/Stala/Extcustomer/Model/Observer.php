@@ -402,7 +402,7 @@ class Stala_Extcustomer_Model_Observer extends Mage_Core_Model_Abstract
 			$collection = Mage::getResourceModel('extcustomer/freecopies_collection')
 								->addFieldToFilter('product_id', array('nin' => count($keys) > 0 ? $keys : array(-1)))
 								->addFieldToFilter('customer_id', $customer->getId())
-								->addFieldToFilter('`option`', Stala_Extcustomer_Helper_Data::OPTION_INDIVIDUAL)
+								->addFieldToFilter('option', Stala_Extcustomer_Helper_Data::OPTION_INDIVIDUAL)
 			;
 			
 			foreach ($collection->getItems() as $item) {
@@ -425,7 +425,7 @@ class Stala_Extcustomer_Model_Observer extends Mage_Core_Model_Abstract
 				$collection = Mage::getResourceModel('extcustomer/freecopies_collection')
 									->addFieldToFilter('product_id', array('in' => count($keys) > 0 ? $keys : array(-1)))
 									->addFieldToFilter('customer_id', $customer->getId())
-									->addFieldToFilter('`option`', Stala_Extcustomer_Helper_Data::OPTION_GLOBAL)
+									->addFieldToFilter('option', Stala_Extcustomer_Helper_Data::OPTION_GLOBAL)
 				;
 				
 				$collection->walk('delete');
