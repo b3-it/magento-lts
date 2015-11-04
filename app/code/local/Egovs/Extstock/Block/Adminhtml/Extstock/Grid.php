@@ -129,7 +129,7 @@ class Egovs_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_
 	          'align'     =>'right',
 	      	  'width'     => '40px',	
 	          'index'     => 'bestellwert',
-			  'filter_index'=>'(quantity_ordered * price)'	
+			  'filter_condition_callback' => array($this, '_filterBestellwertCondition'),
 			));
 	/*
 			$this->addColumn('lagerwert', array(
@@ -259,6 +259,15 @@ class Egovs_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_
 		return 'adminhtml/extstock_extstock/'.$action;
 	}
 	*/
+	protected function _filterBestellwertCondition($collection, $column) {
+		if (!$value = $column->getFilter()->getValue()) {
+			return;
+		}
+	
+		$condition = '(quantity_ordered * price) = ?';
+		$collection->getSelect()->where($condition, $value);
+	}
+	
 	/**
 	 * Wichtig für Ajax
 	 */ 

@@ -7,15 +7,6 @@
     </modules>
     <admin>
         <routers>
-			<slpbcustomer>
-				<use>admin</use>
-				<args>
-					<module>Slpb_Customer</module>
-					<frontName>slpbcustomer</frontName>
-				</args>
-			</slpbcustomer>
-        </routers>
-        <routers>
 			<adminhtml>	
 				<args>
 					<modules>

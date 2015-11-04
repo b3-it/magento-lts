@@ -61,7 +61,8 @@ class Slpb_Extstock_Block_Adminhtml_Detail_Grid extends Mage_Adminhtml_Block_Wid
 	          'width'   => '50px',
 			  'type'	=> 'number',
 	          'index'   => 'qty',
-			  'filter_index'=>'sum(main_table.sum_qty)'
+			  'filter_condition_callback' => array($this, '_filterQtyCondition'),
+			  
 			));
 		
 
@@ -84,6 +85,24 @@ class Slpb_Extstock_Block_Adminhtml_Detail_Grid extends Mage_Adminhtml_Block_Wid
 		return parent::_prepareColumns();
 	}
 
+	
+	/**
+	 *
+	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+	 *
+	 * @return void
+	 */
+	protected function _filterQtyCondition($collection, $column) {
+		if (!$value = $column->getFilter()->getValue()) {
+			return;
+		}
+	
+		$condition = 'sum(main_table.sum_qty) = ?';
+		$collection->getSelect()->where($condition, $value);
+	}
+	
+	
   	protected function _addColumnFilterToCollection($column)
     {
         if ($this->getCollection()) {

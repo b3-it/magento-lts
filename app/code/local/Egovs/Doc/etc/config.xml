@@ -77,6 +77,15 @@
 		    		    </egovs_doc>
 		    	  </updates>
 		    </layout>
+		<translate>
+			<modules>
+				<Egovs_Doc>
+					<files>
+						<default>Egovs_Doc.csv</default>
+					</files>
+				</Egovs_Doc>
+			</modules>
+		</translate>
     </adminhtml>
     <global>
         <models>

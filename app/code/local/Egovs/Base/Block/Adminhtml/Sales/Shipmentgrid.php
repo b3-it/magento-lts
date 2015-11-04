@@ -109,7 +109,7 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
           'align'     =>'left',
      	  //'width'     => '150px',
           'index'     => 'shipping_company',
-     	  'filter_index' =>  'CONCAT(COALESCE(company, ""), " ", COALESCE(company2, "")," ", COALESCE(company3, ""))'
+     	  'filter_condition_callback' => array($this, '_filterShippingCompanyCondition'),
       ));
 
       
@@ -118,7 +118,7 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
           'align'     =>'left',
     	  'width'     => '150px',
           'index'     => 'shipping_name',
-    	  'filter_index' => 'CONCAT(COALESCE(firstname, ""), " ", COALESCE(lastname, ""))',	
+    	  'filter_condition_callback' => array($this, '_filterShippingNameCondition'),
       ));
       
        
@@ -200,6 +200,47 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
      *
      * @return string
      */
+    protected function _filterShippingCompanyCondition($collection, $column) {
+    	if (!$value = $column->getFilter()->getValue()) {
+    		return;
+    	}
+    
+    	$condition = 'CONCAT(COALESCE(company, ""), " ", COALESCE(company2, "")," ", COALESCE(company3, "")) like ?';
+    	$collection->getSelect()->where($condition, "%$value%");
+    
+    }
+    	/**
+    	 *
+    	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+    	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+    	 *
+    	 * @return void
+    	*/
+    	protected function _filterShippingNameCondition($collection, $column) {
+    		if (!$value = $column->getFilter()->getValue()) {
+    			return;
+    		}
+    
+    		$condition = 'CONCAT(COALESCE(firstname, ""), " ", COALESCE(lastname, "")) like ?';
+    		$collection->getSelect()->where($condition, "%$value%");
+    	}
+    
+    	/**
+    	 *
+    	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+    	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+    	 *
+    	 * @return void
+    	 */
+    	protected function _filterShippingAddressCondition($collection, $column) {
+    		if (!$value = $column->getFilter()->getValue()) {
+    			return;
+    		}
+    
+    		$condition = 'CONCAT(COALESCE(street, ""), " ", COALESCE(city, "")," ", COALESCE(postcode, "")) like ?';
+    		$collection->getSelect()->where($condition, "%$value%");
+    	}
+    
     public function getGridUrl()
     {
         return $this->getUrl('*/*/*', array('_current' => true));

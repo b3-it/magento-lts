@@ -111,7 +111,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
           'align'     =>'left',
      	  //'width'     => '150px',
           'index'     => 'shipping_company',
-     'filter_index'=> "concat(COALESCE(shipping_customer_company.value, ''), ' ', COALESCE(shipping_customer_company2.value, ''), ' ', COALESCE(shipping_customer_company3.value, ''))",
+     	  'filter_condition_callback' => array($this, '_filterShippingCompanyCondition'),
       ));
 
       
@@ -120,7 +120,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
           'align'     =>'left',
     	  'width'     => '150px',
           'index'     => 'shipping_name',
-    	  'filter_index'=> "concat(COALESCE(shipping_customer_firstname.value, ''), ' ', COALESCE(shipping_customer_lastname.value, ''))",
+    	  'filter_condition_callback' => array($this, '_filterShippingNameCondition'),
       ));
       
        
@@ -129,7 +129,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
           'align'     =>'left',
      	  'width'     => '150px',
           'index'     => 'shipping_address',
-          'filter_index'=> "concat(COALESCE(shipping_customer_street.value, ''), ' ', COALESCE(shipping_customer_city.value, ''), ' ', COALESCE(shipping_customer_postcode.value, ''))",
+      	  'filter_condition_callback' => array($this, '_filterShippingaddressCondition'),
       ));
       
       
@@ -140,7 +140,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
           'align'     =>'left',
      	  //'width'     => '150px',
           'index'     => 'billing_company',
-     	  'filter_index'=> "concat(COALESCE(billing_customer_company.value, ''), ' ', COALESCE(billing_customer_company2.value, ''), ' ', COALESCE(billing_customer_company3.value, ''))",
+          'filter_condition_callback' => array($this, '_filterBillingCompanyCondition'),
       ));
 
       
@@ -149,7 +149,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
           'align'     =>'left',
     	  'width'     => '150px',
           'index'     => 'billing_name',
-    	  'filter_index'=> "concat(COALESCE(billing_customer_firstname.value, ''), ' ', COALESCE(billing_customer_lastname.value, ''))",
+    	  'filter_condition_callback' => array($this, '_filterBillingNameCondition'),
       ));
       
       
@@ -158,7 +158,7 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
           'align'     =>'left',
      	  'width'     => '150px',
           'index'     => 'billing_address',
-     	  'filter_index'=> "concat(COALESCE(billing_customer_street.value, ''), ' ', COALESCE(billing_customer_city.value, ''), ' ', COALESCE(billing_customer_postcode.value, ''))",
+     	  'filter_condition_callback' => array($this, '_filterBillingaddressCondition'),
       ));
       
       $this->addColumn('action',
@@ -205,6 +205,107 @@ class Stala_Abo_Block_Adminhtml_Delivered_Grid extends Mage_Adminhtml_Block_Widg
       return parent::_prepareColumns();
   }
 
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterShippingCompanyCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "concat(COALESCE(shipping_customer_company.value, ''), ' ', COALESCE(shipping_customer_company2.value, ''), ' ', COALESCE(shipping_customer_company3.value, '')) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterShippingNameCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "concat(COALESCE(shipping_customer_firstname.value, ''), ' ', COALESCE(shipping_customer_lastname.value, '')) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterShippingaddressCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "concat(COALESCE(shipping_customer_street.value, ''), ' ', COALESCE(shipping_customer_city.value, ''), ' ', COALESCE(shipping_customer_postcode.value, '')) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterBillingCompanyCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "concat(COALESCE(billing_customer_company.value, ''), ' ', COALESCE(billing_customer_company2.value, ''), ' ', COALESCE(billing_customer_company3.value, '')) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterBillingNameCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "concat(COALESCE(billing_customer_firstname.value, ''), ' ', COALESCE(billing_customer_lastname.value, '')) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterBillingaddressCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "concat(COALESCE(billing_customer_street.value, ''), ' ', COALESCE(billing_customer_city.value,''), ' ', COALESCE(billing_customer_postcode.value, '')) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  
+  
+  
+  
+  
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('abo_deliver_id');

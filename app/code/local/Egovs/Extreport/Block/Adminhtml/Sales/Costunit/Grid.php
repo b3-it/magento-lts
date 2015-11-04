@@ -205,7 +205,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 					array(
 							'header'=> Mage::helper('extreport')->__('Cost unit'),
 							'index' => 'kostenstelle',
-							'filter_index' => sprintf('_left_%s.`value`', $kostenstelle->getAttributeCode())
+							'filter_index' => sprintf('_left_%s.value', $kostenstelle->getAttributeCode())
 					)
 			);
 		}
@@ -216,7 +216,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 					array(
 							'header'=> Mage::helper('extreport')->__('Cost object'),
 							'index' => 'kostentraeger',
-							'filter_index' => sprintf('_left_%s.`value`', $kostentraeger->getAttributeCode())
+							'filter_index' => sprintf('_left_%s.value', $kostentraeger->getAttributeCode())
 					)
 			);
 		}
@@ -225,7 +225,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 				array(
 						'header'=> Mage::helper('extreport')->__('Haushaltsstelle'),
 						'index' => 'haushaltsstelle',
-						'filter_index' => sprintf('_left_%s.`value`', $catalog->getAttribute('haushaltsstelle')->getAttributeCode()),
+						'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('haushaltsstelle')->getAttributeCode()),
 				)
 		);
 		
@@ -233,7 +233,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 				array(
 						'header'=> Mage::helper('extreport')->__('Object number'),
 						'index' => 'objektnummer',
-						'filter_index' => sprintf('_left_%s.`value`', $catalog->getAttribute('objektnummer')->getAttributeCode()),
+						'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('objektnummer')->getAttributeCode()),
 				)
 		);
 		
@@ -241,7 +241,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 				array(
 						'header'=> Mage::helper('extreport')->__('Object number VAT'),
 						'index' => 'objektnummer_mwst',
-						'filter_index' => sprintf('_left_%s.`value`', $catalog->getAttribute('objektnummer_mwst')->getAttributeCode()),
+						'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('objektnummer_mwst')->getAttributeCode()),
 				)
 		);
 

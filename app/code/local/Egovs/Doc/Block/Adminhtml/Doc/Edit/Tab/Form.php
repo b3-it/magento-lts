@@ -14,7 +14,7 @@ class Egovs_Doc_Block_Adminhtml_Doc_Edit_Tab_Form extends Mage_Adminhtml_Block_W
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('doc_form', array('legend'=>Mage::helper('egovs_doc')->__('Documentdetails')));
+      $fieldset = $form->addFieldset('doc_form', array('legend'=>Mage::helper('egovs_doc')->__('Details of Document')));
      
       $fieldset->addField('title', 'text', array(
           'label'     => Mage::helper('egovs_doc')->__('Title'),

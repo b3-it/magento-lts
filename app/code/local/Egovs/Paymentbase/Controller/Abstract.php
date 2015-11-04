@@ -708,9 +708,10 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
         $dom = new DOMDocument();
         if (empty($data) || !$dom->loadXML($data)) {
         	Mage::log(sprintf("Saferpay data was empty or invalid!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+        	Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         	return false;
         }
-        
+        Mage::log(sprintf("$module::... _checkReturnedMessage with valid DATA called:\r\n%s...", $data), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         $idp = $dom->getElementsByTagName('IDP')->item(0);
         $this->_saferpayIDP = $idp;
         

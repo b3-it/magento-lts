@@ -91,7 +91,6 @@ class Slpb_Extstock_Block_Adminhtml_Warning_Grid extends Mage_Adminhtml_Block_Wi
 				'width'   => '50px',
 				'type'	=> 'number',
 				'index'   => 'qty',
-				'filter_index'=>'sum(main_table.sum_qty)',
 				'filter_condition_callback' => array($this, '_filterQtyCondition'),
 		));
 			

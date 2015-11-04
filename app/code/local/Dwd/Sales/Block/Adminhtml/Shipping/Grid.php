@@ -82,7 +82,7 @@ class Dwd_Sales_Block_Adminhtml_Shipping_Grid extends Mage_Adminhtml_Block_Widge
           //'align'     =>'left',
          'width'     => '100px',
           'index'     => 'shipping_name',
-      	'filter_index'     => 'CONCAT(COALESCE(shipping_address.firstname, ""), " ", COALESCE(shipping_address.lastname, ""))',
+      	  'filter_condition_callback' => array($this, '_filterShippingNameCondition'),
       		'renderer'	=> 'dwdsales/adminhtml_widget_grid_column_renderer_plaintext'
       ));
       
@@ -100,7 +100,7 @@ class Dwd_Sales_Block_Adminhtml_Shipping_Grid extends Mage_Adminhtml_Block_Widge
           //'align'     =>'left',
          'width'     => '200px',
          'index'     => 'shipping_adr',
-      	'filter_index' => 'CONCAT(COALESCE(shipping_address.street, ""), " ", COALESCE(shipping_address.city, ""), " ", COALESCE(shipping_address.postcode, ""))',
+      		'filter_condition_callback' => array($this, '_filterShippingAddressCondition'),
       		'renderer'	=> 'dwdsales/adminhtml_widget_grid_column_renderer_plaintext'
       ));
       
@@ -151,6 +151,41 @@ class Dwd_Sales_Block_Adminhtml_Shipping_Grid extends Mage_Adminhtml_Block_Widge
       return parent::_prepareColumns();
   }
 
+  
+  /**
+   * Filter fÃ¼r Titel
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterShippingNameCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+
+  	$condition = 'CONCAT(COALESCE(shipping_address.firstname, ""), " ", COALESCE(shipping_address.lastname, "")) like ?';
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * Filter fÃ¼r Titel
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterShippingAddressCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  
+  	$condition = 'CONCAT(COALESCE(shipping_address.street, ""), " ", COALESCE(shipping_address.city, ""), " ", COALESCE(shipping_address.postcode, "")) like ?';
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
   
 
   public function xgetRowUrl($row)
