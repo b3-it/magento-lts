@@ -28,14 +28,29 @@
     ; for fewer false positives (new in PHPIDS 0.5.3)
     ;json[]          = POST.__jsondata
 	json[]          = POST.product.media_gallery.values;
+	json[]          = REQUEST.product.media_gallery.values;
 	json[]          = POST.product.media_gallery.images;
+	json[]          = REQUEST.product.media_gallery.images;
 	json[]          = POST.groups.payplace.fields.merchant_name.value;
+	json[]          = REQUEST.groups.payplace.fields.merchant_name.value;
+	
+	
 	
     ; define which fields shouldn't be monitored (a[b]=c should be referenced via a.b)
     ;exceptions[]    = GET.__utmz
     ;exceptions[]    = GET.__utmc
 
-    ;exceptions[]    = POST.product.media_gallery.images;
+
+    exceptions[]    = POST.groups.address_templates.fields.html.value;
+	exceptions[]    = POST.groups.address_templates.fields.js_template.value;
+	exceptions[]    = POST.groups.address_templates.fields.oneline.value;
+	exceptions[]    = POST.groups.address_templates.fields.pdf.value;
+	exceptions[]    = POST.groups.address_templates.fields.text.value;
+	exceptions[]    = REQUEST.groups.address_templates.fields.html.value;
+	exceptions[]    = REQUEST.groups.address_templates.fields.js_template.value;
+	exceptions[]    = REQUEST.groups.address_templates.fields.oneline.value;
+	exceptions[]    = REQUEST.groups.address_templates.fields.pdf.value;
+	exceptions[]    = REQUEST.groups.address_templates.fields.text.value;
     ; you can use regular expressions for wildcard exceptions - example: /.*foo/i
 
 [Caching]
