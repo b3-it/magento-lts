@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-	    <B3it_Admin>
-           <active>false</active>
-           <codePool>local</codePool>     	    	
-	    </B3it_Admin>
-        <B3it_Ids>
+        <B3it_Admin>
             <active>false</active>
-            <codePool>local</codePool>          
+            <codePool>local</codePool>
+        </B3it_Admin>
+        <B3it_Ids>
+            <active>true</active>
+            <codePool>local</codePool>
         </B3it_Ids>
     </modules>
 </config>

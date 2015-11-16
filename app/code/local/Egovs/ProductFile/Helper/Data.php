@@ -18,16 +18,16 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	const PRODUCT_IMAGE 			= 'productimage';
 	const PRODUCT_FILE_DESCRIPTION 	= 'productdescription';
 	const PRODUCT_DELETE_FILE		= 'deleteproductfile';
-	
+
 	/**
 	 * Liefert die Thumbnail Bild-URL zu einem Bild
-	 * 
+	 *
 	 * @param string $image Dateiname des Bildes
-	 * 
+	 *
 	 * @return string URL zu Thumbnail
 	 */
 	public function getThumbnailProductImageUrl($image) {
-		$url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $this->getProductFileUploadDirectory() . "/";
+	    $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $this->getProductFileUploadDirectory() . "/";
     	$path = Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS;
     	$resizedPath = $path . "resized" . DS . $image;
     	$resizedUrl = $url . "resized/" . $image;
@@ -43,17 +43,17 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 			if ($imageObj->getOriginalWidth() > $width || $imageObj->getOriginalHeight() > $width) {
 				$imageObj->resize($width, $width);
 			}
-			$imageObj->save($resizedPath);	
+			$imageObj->save($resizedPath);
     	}
 		return $resizedUrl;
 	}
 
 	/**
 	 * Fügt eine Nummer zu schon existierenden Dateien hinzu
-	 * 
+	 *
 	 * @param string $filename   Dateiname
 	 * @param string $target_dir Ziel-Pfad
-	 * 
+	 *
 	 * @return string Dateiname
 	 */
 	public function getUniqueFilename($filename, $target_dir) {
@@ -70,35 +70,35 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 
 	/**
 	 * Gibt den Typ zurück
-	 * 
+	 *
 	 * Der Typ ist die Dateiendung
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getProductFileType() {
 		return strtoupper(substr($this->getProductFileFullName(), (strrpos($this->getProductFileFullName(), '.')+1)));
 	}
-	
+
 	/**
 	 * Gibt den Typ zurück
 	 *
 	 * Der Typ ist die Dateiendung
-	 * 
+	 *
 	 * @param string $filename Dateiname
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getFileType($filename) {
 		return strtolower(substr($filename, (strrpos($filename, '.')+1)));
 	}
-	
+
 	/**
 	 * Validiert die Beschreibungsdatei anhand des Typs.
-	 * 
+	 *
 	 * @param string $filename Dateiname
-	 * 
+	 *
 	 * @return boolean
-	 * 
+	 *
 	 * @see Egovs_ProductFile_Helper_Data::getFileType
 	 */
 	public function isValidProductFile($filename) {
@@ -109,7 +109,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Validiert die Beschreibungsdatei anhand des Typs.
 	 *
@@ -126,11 +126,11 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 			if (strtolower($ext) == $fileext) return true;
 		}
 		return false;
-	}	
+	}
 
 	/**
 	 * Liefert die Größe der Beschreibungsdatei formatiert als Bytes/KB/MB zurück
-	 * 
+	 *
 	 * @return float
 	 */
 	public function getProductFileSize() {
@@ -139,9 +139,9 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 
 	/**
 	 * Formatiert die Größe als Bytes/KB/MB im 2 stelligen Format
-	 * 
+	 *
 	 * @param integer $size Größe in Bytes
-	 * 
+	 *
 	 * @return float
 	 */
 	public function getFormatBytes($size) {
@@ -149,12 +149,12 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 		for ($i = 0; $size >= 1024 && $i < 4; $i++) $size /= 1024;
 		return round($size, 2).$units[$i];
 	}
-	
+
 	/**
 	 * Parsed eine String-Byte-Angabe in Integer
-	 * 
+	 *
 	 * @param string $size Größe in B/KB/MB/GB
-	 * 
+	 *
 	 * @return integer Größe in Bytes
 	 */
 	public function getBytes($size) {
@@ -168,7 +168,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 
 	/**
 	 * Liefert den Dateinamen samt kompletten Pfad zur Beschreibungsdatei
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getProductFileFullName() {
@@ -178,7 +178,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 
 	/**
 	 * Gibt die erlaubten Erweiterungen für Bewschreibungsdateien aus der Konfiguration zurück
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getProductFileAllowedExtensions() {
@@ -202,7 +202,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 * Gibt die erlaubten Erweiterungen formatiert zurück
 	 *
 	 * @return array
-	 * 
+	 *
 	 * @see Egovs_ProductFile_Helper_Data::getProductFileAllowedExtensions
 	 */
 	public function getFormattedProductFileAllowedExtensions() {
@@ -227,7 +227,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 
 	/**
 	 * Liefert das File-Upload-Verzeichnis für Beschreibungsdateien aus der Konfiguration
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getProductFileUploadDirectory() {
@@ -235,7 +235,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 	/**
 	 * Liefert die Größe für Bilder zu Beschreibungsdateien aus der Konfiguration
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getProductFileImageWidth() {
