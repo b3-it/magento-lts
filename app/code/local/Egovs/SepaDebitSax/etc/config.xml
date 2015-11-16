@@ -126,11 +126,12 @@
                 <validate_bic_iban_with_epaybl>0</validate_bic_iban_with_epaybl>
                 <delete_customer_after_transaction>0</delete_customer_after_transaction>
                 <include_personal_data>1</include_personal_data>
+                <group>epaybl</group>
                 <agent_id>Webshop</agent_id>
                 <allow_ooff>1</allow_ooff>
                 <mandate_template>sepa_mandate_email_template</mandate_template>
                 <notification_template>sepa_mandate_notification_email_template</notification_template>
-                <mandate_amendment_template>sepa_mandate_amendment_email_template</mandate_amendment_template>
+                <mandate_amendment_template>sepa_mandate_amendment_email_template</mandate_amendment_template>                
             </sepadebitsax>
         </payment>
     </default>
