@@ -39,31 +39,35 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
         $_product = $this->__getProduct();
 
         $_fname = $_product->getProductfile();
-        $_descr = Mage::helper('core')->escapeHtml($_product->getProductfiledescription());
-
         $_file  = $this->__getFullURL() . '/' . $_fname;
 
-        $_fsize = Mage::helper('productfile')->getFormatBytes( filesize($this->__getFullPath() . DS . $_fname) );
-        $_image = Mage::helper('productfile')->getThumbnailProductImageUrl($_product->getProductimage());
+        if ( is_file($_file) ) {
+            $_descr = Mage::helper('core')->escapeHtml($_product->getProductfiledescription());
+            $_fsize = Mage::helper('productfile')->getFormatBytes( filesize($this->__getFullPath() . DS . $_fname) );
+            $_image = Mage::helper('productfile')->getThumbnailProductImageUrl($_product->getProductimage());
 
-        $_img_descr = Mage::helper('productfile')->__('ProductFile description');
+            $_img_descr = Mage::helper('productfile')->__('ProductFile description');
 
-        $html = array();
+            $html = array();
 
-        $html[] = '<img src="' . $_image . '" alt="' . $_img_descr . '" title="' . $_img_descr . '" />';
-        $html[] = '<div id="egov-productfile" class="egov-productfile-block">';
+            $html[] = '<img src="' . $_image . '" alt="' . $_img_descr . '" title="' . $_img_descr . '" />';
+            $html[] = '<div id="egov-productfile" class="egov-productfile-block">';
 
-        if ( strlen($_descr) ) {
-            $html[] = '  <div id="egov-productfile-description">';
-            $html[] = '    ' . $_descr;
-            $html[] = '  </div>';
+            if ( strlen($_descr) ) {
+                $html[] = '  <div id="egov-productfile-description">';
+                $html[] = '    ' . $_descr;
+                $html[] = '  </div>';
+            }
+
+            $html[] = '  <a href="' . $_file . '" target="_blank">' . $_fname . '</a>';
+            $html[] = '  <span>(' . $_fsize . ')</span>';
+            $html[] = '</div>';
+
+            return implode("\n", $html);
         }
-
-        $html[] = '  <a href="' . $_file . '" target="_blank">' . $_fname . '</a>';
-        $html[] = '  <span>(' . $_fsize . ')</span>';
-        $html[] = '</div>';
-
-        return implode("\n", $html);
+        else {
+            return;
+        }
     }
 
     /**
