@@ -34,22 +34,22 @@
         </translate>
     </frontend>
     <admin>
-        <routers>
-			<germantax>
-				<use>admin</use>
+         <routers>
+			<adminhtml>
 				<args>
-					<module>Egovs_GermanTax</module>
-					<frontName>germantax</frontName>
+					<modules>
+						<Egovs_GermanTax_Adminhtml before="Mage_Adminhtml">Egovs_GermanTax_Adminhtml</Egovs_GermanTax_Adminhtml>
+					</modules>
 				</args>
-			</germantax>
-        </routers>
+			</adminhtml>
+		</routers>
     </admin>
     <adminhtml>
 		
 		<layout>
 			<updates>
 				<germantax>
-					<file>egovs_germantax.xml</file>
+					<file>egovs/germantax.xml</file>
 				</germantax>
 			</updates>
 		</layout>
@@ -74,7 +74,7 @@
                                     <germantax_order_tax_rule module="germantax">
                                         <title>Bestellungen mit Steuerregel</title>
                                         <sort_order>20</sort_order>
-                                        <action>germantax/adminhtml_tools_analyse_sales_order/</action>
+                                        <action>adminhtml/germantax_tools_analyse_sales_order/</action>
                                     </germantax_order_tax_rule>    
                                     
                                 </children>
