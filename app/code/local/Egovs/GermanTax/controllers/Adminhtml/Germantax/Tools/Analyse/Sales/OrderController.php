@@ -9,7 +9,7 @@
  * @copyright	Copyright (c) 2014 - 2015 B3 IT Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_GermanTax_Adminhtml_Tools_Analyse_Sales_OrderController extends Mage_Adminhtml_Controller_Action
+class Egovs_GermanTax_Adminhtml_Germantax_Tools_Analyse_Sales_OrderController extends Mage_Adminhtml_Controller_Action
 {
 
     /**
