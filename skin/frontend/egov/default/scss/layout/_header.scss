@@ -53,6 +53,10 @@
     .welcome-header {
         top: $global-welcome-header-top + $global-logo-height !important;
     }
+
+    #egov-nav, #header-account {
+        top: 35px + $global-logo-height !important;
+    }
 }
 
 .header-language-container,
@@ -312,14 +316,6 @@ a.skip-link {
         float: right;
         position: relative;
         top: -5px;
-    }
-    #header-search {
-        position: absolute;
-        right: 0px !important;
-        top: 150px !important;
-        padding: 0px !important;
-        z-index: 99;
-
     }
 
     .skip-link {
