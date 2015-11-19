@@ -29,7 +29,12 @@
                     <td class="email-heading">
                         <h1>Hallo {{htmlescape var=$order.getCustomerName()}},</h1>
                         <p>vielen Dank für Ihre Bestellung bei {{var store.getFrontendName()}}.
+                        {{depend order.getIsNotVirtual()}}
                             Sobald Ihre Sendung verschickt wurde, erhalten Sie per E-Mail weitere Informationen zur Sendungsverfolgung.
+                        {{/depend}}
+                        {{depend order.getIsVirtual()}}
+                            Nach Zahlungseingang stehen die Dateien in Ihrem Kundenkonto zum Download bereit.
+                        {{/depend}}
                             Sie können den aktuellen Status Ihrer Bestellung jederzeit in <a href="{{store url="customer/account/"}}">Ihrem Benutzerkonto</a> einsehen.
                             Nachfolgend finden Sie Ihre Bestellbestätigung.</p>
                     </td>
