@@ -14,3 +14,5 @@
 "Unlock accounts","Konten entsperren"
 "Last Login: %s","Letzter Login: %s"
 "Last Login: %s<br/>Last Failed Login: %s","Letzter Login: %s<br/>Letzter fehlgeschlagener Login: %s"
+"Taxvat","USt-ID"
+"Admin routing compatibility mode for extensions","Routing Kompatibilitätsmodus für Erweiterungen"
