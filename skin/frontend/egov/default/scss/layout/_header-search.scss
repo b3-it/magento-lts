@@ -43,30 +43,43 @@
 
 // ---------------------------------------------
 
+#header-search {
+    position: absolute;
+    background-color: transparent;
+    width: 215px;
+    top: 150px;
+    padding: 0px !important;
+    z-index: 99;
+    right: 0;
+    height: 28px;
+}
+
+
 @include bp(min-width, $bp-medium + 1) {
 
     #header-search {
         display: block; // Force visibility
-        position: absolute;
-        top: 14px;
+        top: 15px;
         right: 0;
         width: 24%;
         padding: 0;
     }
-
 }
 
-@include bp(max-width, 910px) {
+@include bp(max-width, 785px) {
     #header-search {
-        top: 45px;
-        width: 215px;
-        height: 28px;
-        background-color: transparent;
+        top: 150px + $global-logo-height;
+    }
+}
 
+@include bp(min-width, 910px) {
+    #header-search {
+        top: 15px;
+/*
         &:not(.skip-active) {
             display: none;
         }
-
+*/
     }
 }
 

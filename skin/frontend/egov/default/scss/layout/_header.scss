@@ -38,12 +38,24 @@
 
 @include bp(max-width, 785px) {
     .page-header-container {
-        height: 110px;
+        height: 110px + $global-logo-height;
     }
 
     .skip-links {
         position: relative;
-        top: 40px;
+        top: 40px + $global-logo-height;
+    }
+
+    .store-language-container {
+        top: 40px + $global-logo-height !important;
+    }
+
+    .welcome-header {
+        top: $global-welcome-header-top + $global-logo-height !important;
+    }
+
+    #egov-nav, #header-account {
+        top: 35px + $global-logo-height !important;
     }
 }
 
@@ -235,7 +247,7 @@
         background-color: $global-header-gradientcolor-2;
         background-image: url($global-header-background-image);
         background-repeat: no-repeat;
-        background-position: center -30px;
+        background-position: center 0px;
 
         .store-language-container {
             top: 45px;
@@ -304,14 +316,6 @@ a.skip-link {
         float: right;
         position: relative;
         top: -5px;
-    }
-    #header-search {
-        position: absolute;
-        right: 0px !important;
-        top: 150px !important;
-        padding: 0px !important;
-        z-index: 99;
-
     }
 
     .skip-link {
