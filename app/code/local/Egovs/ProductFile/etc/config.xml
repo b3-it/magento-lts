@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Egovs_ProductFile>
-			<version>0.1.2</version>
+			<version>2.0.1.0</version>
 		</Egovs_ProductFile>
 	</modules>
 	<global>
@@ -57,7 +57,7 @@
 			<updates>
 				<productfile>
 					<file>egovs/productfile.xml</file>
-				</productfile>					
+				</productfile>
 			</updates>
 		</layout>
 	</frontend>
@@ -86,7 +86,7 @@
 			<updates>
 				<productfile>
 					<file>egovs_productfile.xml</file>
-				</productfile>					
+				</productfile>
 			</updates>
 		</layout>
 	</adminhtml>

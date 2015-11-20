@@ -123,7 +123,7 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Freecopies_Grid extends Ma
 	        'name'      	=> 'in_products',
 	        'values'    	=> $this->_getSelectedProducts(),
 	        'align'     	=> 'center',
-    		'filter_index' 	=> '`catalog/product`.entity_id',
+    		'filter_index' 	=> 'catalog/product.entity_id',
 	        'index'     	=> $index,
 	        'width'			=> '90px'
         ));
@@ -134,7 +134,7 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Freecopies_Grid extends Ma
             'sortable'  	=> true,
             'width'     	=> '60px',
         	'editable'		=> false,
-        	'filter_index' 	=> '`catalog/product`.entity_id',
+        	'filter_index' 	=> 'catalog/product.entity_id',
             'index'     	=> $index
         ));
         
@@ -221,7 +221,7 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Freecopies_Grid extends Ma
     		/* @var $collection Stala_Extcustomer_Model_Mysql4_Freecopies_Collection */
     		$collection = Mage::getModel('extcustomer/freecopies')->getCollection();
     		$collection->addFilterByCustomerId($this->_getCustomer()->getId());
-			$collection->addFieldToFilter('`option`',Stala_Extcustomer_Helper_Data::OPTION_INDIVIDUAL);
+			$collection->addFieldToFilter('option',Stala_Extcustomer_Helper_Data::OPTION_INDIVIDUAL);
 
 			foreach ($collection->getItems() as $freecopy) {
 				$freecopies[$freecopy->getProductId()] = array('freecopies' => $freecopy->getFreecopies(false));

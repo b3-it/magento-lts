@@ -44,6 +44,23 @@ class Dwd_Abo_Block_Adminhtml_Abo_Grid extends Mage_Adminhtml_Block_Widget_Grid
 		return parent::_prepareCollection();
 	}
 
+	/**
+	 * FilterIndex
+	 *
+	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+	 *
+	 * @return void
+	 */
+	protected function _filterFirstOrderIncrementIdCondition($collection, $column) {
+		if (!$value = $column->getFilter()->getValue()) {
+			return;
+		}
+		$table = $collection->getTable("sales/order");
+		$condition = "(SELECT increment_id from $table where $table.entity_id=main_table.first_order_id) like ?";
+		$collection->getSelect()->where($condition, "%$value%");
+	}
+
 	protected function _prepareColumns()
 	{
 		$this->addColumn('abo_id', array(
@@ -59,7 +76,7 @@ class Dwd_Abo_Block_Adminhtml_Abo_Grid extends Mage_Adminhtml_Block_Widget_Grid
 				'align'     =>'left',
 				'index'     => 'first_order_increment_id',
 				'width'     => '150px',
-				'filter_index' => '(SELECT increment_id from sales_flat_order where sales_flat_order.entity_id=main_table.first_order_id)',
+				'filter_condition_callback' => array($this, '_filterFirstOrderIncrementIdCondition'),
 
 				'link_index' => 'first_order_id',
 				'link_param' =>'order_id',
@@ -206,7 +223,7 @@ class Dwd_Abo_Block_Adminhtml_Abo_Grid extends Mage_Adminhtml_Block_Widget_Grid
 
 								array(
 										'caption'   => Mage::helper('dwd_abo')->__('Change Station'),
-										'url'       => array('base'=> 'dwd_icd/adminhtml_orderitem/edit','params'=>array('back_url'=>'abo')),
+										'url'       => array('base'=> 'adminhtml/icd_orderitem/edit','params'=>array('back_url'=>'abo')),
 										'field'     => 'id'
 								)
 						),

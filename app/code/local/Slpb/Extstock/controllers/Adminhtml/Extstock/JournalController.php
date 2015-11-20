@@ -218,7 +218,7 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
 		$rest = Mage::getModel('extstock/extstock')->moveQuantity($product_id, $qty, $from_stock_id, $to_stock_id, $journal_id);
 		if($rest > 0)
 		{
-			Mage::getSingleton('adminhtml/session')->addError("Konnte $rest nicht umbuchen")."( ProductId ".$product_id .")";
+			Mage::getSingleton('adminhtml/session')->addError("Konnte $rest nicht umbuchen ( ProductId: $product_id )");
 			Mage::log("extstock::move Rest=". $rest . " ProductId=". $product_id, Zend_log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 		}
 	}
@@ -242,21 +242,25 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
 		$journals = explode(',',$params['journal_keys']);
 		$amounts = explode(',',$params['amount_to_order']);
 
-		
-		for($i = 0; $i < count($journals);$i++)
+		try
 		{
-			$journal = $journals[$i];	
-			$amount = $amounts[$i];
-	
-			if(in_array($journal,$journal_ids))
+			for($i = 0; $i < count($journals);$i++)
 			{
-				$model = Mage::getModel('extstock/journal')->load($journal);
-				$model->setData('qty',$amount);
-				$model->setData('status',Slpb_Extstock_Model_Journal::STATUS_DELIVERED);
-				$model->setData('date_delivered',now());
-				$this->move($model);
-				$model->save();
+				$journal = $journals[$i];	
+				$amount = $amounts[$i];
+		
+				if(in_array($journal,$journal_ids))
+				{
+					$model = Mage::getModel('extstock/journal')->load($journal);
+					$model->setData('qty',$amount);
+					$model->setData('status',Slpb_Extstock_Model_Journal::STATUS_DELIVERED);
+					$model->setData('date_delivered',now());
+					$this->move($model);
+					$model->save();
+				}
 			}
+		} catch (Exception $e) {
+			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
 		}
 		$this->_redirect('*/*/index');
 	}
@@ -287,7 +291,7 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             }
         }
-        $this->_redirect('*/*/index');
+        $this->_redirect('adminhtml/extstock_journal/index');
     }
 	
 

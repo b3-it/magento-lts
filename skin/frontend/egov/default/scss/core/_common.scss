@@ -189,7 +189,10 @@ p.note-msg {
     .block-title {
         background-color: $global-box-title-backgroundcolor;
         border-bottom: $global-box-border-bottom solid $global-box-bordercolor;
-        padding: 0.2em 0 0.3em 0.6em;
+        padding-top: $global-box-title-padding-top;
+        padding-right: $global-box-title-padding-right;
+        padding-bottom: $global-box-title-padding-bottom;
+        padding-left: $global-box-title-padding-left;
         color: $global-fontcolor-dark;
         font-weight: normal;
         font-size: $global-fontsize-big;
@@ -429,131 +432,6 @@ div.block-reorder {
 
 .sidebar .actions button.button {
     white-space: normal;
-}
-
-/* Primary Buttons */
-
-.button,
-.cart-table .product-cart-actions .button,
-#co-shipping-method-form .buttons-set .button,
-.footer .button {
-
-    background-color: $global-button-color;
-    background-image: -moz-linear-gradient(center top , $global-button-gradient-1, $global-button-gradient-2, $global-button-color 100%);
-    background-size: 100% auto;
-    border: $global-box-border solid $global-border-color;
-    border-radius: 3px;
-    padding: $global-btn-padding-v $global-btn-padding-h;
-
-    &:hover {
-        background: $global-button-hovercolor $global-repeat-scroll;
-        cursor: pointer;
-    }
-    &:active {
-        background: $global-button-hovercolor $global-repeat-scroll;
-    }
-    &:focus {
-        background-color: $global-button-hovercolor $global-repeat-scroll;
-        outline: none;
-    }
-}
-
-a.button {
-    color: $global-button-font-color;
-    text-decoration: none;
-    padding: $global-btn-padding-v $global-btn-padding-h;
-}
-
-a.button:hover {
-    color: $global-button-font-color;
-}
-
-/* Disabled - class for anchor, state for form elements */
-.button.disabled,
-.button:disabled {
-    background: $global-lightcolor;
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-/* Adjacent buttons */
-.button + .button {
-    margin-left: 5px;
-}
-
-// This mixin gets applied to elements that are only buttons on smartphones (or sometimes tablets), such as layered
-// nav links or checkbox labels.
-// Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
-// extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
-@mixin touch-button {
-    color: $global-button-font-color;
-    background-color: $global-lightcolor;
-    padding: 5px 10px;
-}
-
-.button2 {
-    border: 0;
-    padding: 0 5px;
-    margin: 0;
-    background: transparent;
-    cursor: pointer;
-    vertical-align: middle;
-}
-
-.button2:focus {
-    outline: none;
-}
-
-.button2 span,
-.button2 span span {
-    line-height: 30px;
-    height: 30px;
-    text-decoration: underline;
-    text-transform: uppercase;
-    display: inline-block;
-    color: $global-button-font-color;
-    font-family: $base-font-family;
-
-    &:hover {
-        text-decoration: none;
-        color: $c-stimulus;
-    }
-}
-
-@include bp(max-width, $bp-medium) {
-    .col2-set .buttons-set {
-        .button,
-        .button2 {
-            float: none;
-            width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-        }
-        .back-link {
-            display: none;
-        }
-        .required {
-            display: none;
-        }
-    }
-}
-
-@include bp(max-width, $bp-xsmall) {
-    .buttons-set {
-        .button {
-            float: none;
-            width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: $element-spacing;
-        }
-        .back-link {
-            display: none;
-        }
-        .required {
-            display: none;
-        }
-    }
 }
 
 /* -------------------------------------------- *

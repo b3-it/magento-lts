@@ -59,6 +59,23 @@ class Dwd_Ibewi_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_Widge
  
   }
 
+  /**
+   * Filter fÃ¼r Titel
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterCompanyCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+
+  	$condition = "trim(concat(COALESCE(company,''),' ',COALESCE(company2,''), ' ',COALESCE(company3,''))) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
   protected function _prepareColumns()
   {
   	  $this->addColumn('ibewi_order_increment_id', array(
@@ -158,7 +175,7 @@ class Dwd_Ibewi_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_Widge
           'header'    =>'Firma',
           'width'     => '50px',
           'index'     => 'ebewi_company',
-     'filter_index' => "trim(concat(COALESCE(company,''),' ',COALESCE(company2,''), ' ',COALESCE(company3,'')))",
+    		'filter_condition_callback' => array($this, '_filterCompanyCondition'),
      		'renderer'	=> 'ibewi/adminhtml_widget_grid_column_renderer_plaintext'
       ));
       

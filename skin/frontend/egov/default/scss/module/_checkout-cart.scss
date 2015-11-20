@@ -83,6 +83,24 @@
                 position: relative;
                 top: 0 - $global-boxmargin;
             }
+
+            .cart {
+                .cart-totals-wrapper, .shipping {
+                    .button {
+                        background-color: $global-button-color-boxed;
+                        color: $global-button-font-boxed;
+                        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-button-rgba-1), color-stop($global-button-gradient, $global-button-rgba-2), color-stop(100%, $global-button-color-boxed));
+                        background-image: -webkit-linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
+                        background-image: -moz-linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
+                        background-image: -o-linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
+                        background-image: linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
+
+                        &:hover, &:active {
+                            border-color: $global-button-color-boxed;
+                        }
+                    }
+                }
+            }
         }
     }
 }

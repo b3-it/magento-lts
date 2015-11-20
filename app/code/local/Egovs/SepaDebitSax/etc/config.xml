@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Magento
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Open Software License (OSL 3.0)
+* that is available through the world-wide-web at this URL:
+* http://opensource.org/licenses/osl-3.0.php
+*
+* @package    Egovs_SepaDebitSax
+* @copyright  Copyright (c) 2013 EDV Beratung Hempel
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+
+<config>
+    <modules>
+        <Egovs_SepaDebitSax>
+            <version>2.0.0.0</version>
+        </Egovs_SepaDebitSax>
+    </modules>
+    <global>
+        <models>
+            <sepadebitsax>
+                <class>Egovs_SepaDebitSax_Model</class>
+            </sepadebitsax>
+        </models>
+        
+        <blocks>
+            <sepadebitsax>
+                <class>Egovs_SepaDebitSax_Block</class>
+            </sepadebitsax>
+        </blocks>
+        
+        <resources>
+            <sepadebitsax_setup>
+                <setup>
+                    <module>Egovs_SepaDebitSax</module>
+                    <class>Egovs_Paymentbase_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </sepadebitsax_setup>
+            <sepadebitsax_write>
+                <use>core_write</use>
+            </sepadebitsax_write>
+            <sepadebitsax_read>
+                <use>core_read</use>
+            </sepadebitsax_read>
+        </resources>
+        
+        <helpers>
+            <sepadebitsax>
+                <class>Egovs_SepaDebitSax_Helper</class>
+            </sepadebitsax>
+        </helpers>
+        
+        <events>
+            <customer_save_before>
+                <observers>
+                    <sepadebitsax_save>
+                        <type>singleton</type>
+                        <class>sepadebitsax/observer</class>
+                        <method>doRemoveMandateReference</method>
+                    </sepadebitsax_save>
+                </observers>
+            </customer_save_before>
+            <customer_delete_after>
+                <observers>
+                    <sepadebitsax_delete>
+                        <type>singleton</type>
+                        <class>sepadebitsax/observer</class>
+                        <method>doRemoveMandateReferenceOnDelete</method>
+                    </sepadebitsax_delete>
+                </observers>
+            </customer_delete_after>
+        </events>
+        
+        <template>
+            <email>
+                <sepa_mandate_email_template translate="label" module="sepadebitsax">
+                    <label>Your SEPA Mandate</label>
+                    <file>egov/sepadebitsax/sepa_mandate.html</file>
+                    <type>html</type>
+                </sepa_mandate_email_template>
+                <sepa_mandate_notification_email_template translate="label" module="sepadebitsax">
+                    <label>SEPA Debit Notification</label>
+                    <file>egov/sepadebitsax/sepa_mandate_notification.html</file>
+                    <type>html</type>
+                </sepa_mandate_notification_email_template>
+                <sepa_mandate_amendment_email_template translate="label" module="sepadebitsax">
+                    <label>SEPA Debit Amendment</label>
+                    <file>egov/sepadebitsax/sepa_mandate_amendment.html</file>
+                    <type>html</type>
+                </sepa_mandate_amendment_email_template>
+            </email>
+        </template>
+    </global>
+    <crontab>
+        <jobs>
+            <sepadebitsax_sync>
+                <schedule>
+                    <cron_expr>55 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sepadebitsax/cron::runSync</model>
+                </run>
+            </sepadebitsax_sync>
+        </jobs>
+    </crontab>
+    <default>
+        <payment>
+            <sepadebitsax>
+                <active>0</active>
+                <model>sepadebitsax/sepadebitsax</model>
+                <order_status>pending_bankpayment</order_status>
+                <payment_action>authorize</payment_action>
+                <paywithinxdays>14</paywithinxdays>
+                <title>SEPA direct debit (Sachsen)</title>
+                <allowspecific>0</allowspecific>
+                <!-- Interne Mandatsverwaltung nutzen -->
+                <type_management_mandate>1</type_management_mandate>
+                <validate_bic_iban_with_epaybl>0</validate_bic_iban_with_epaybl>
+                <delete_customer_after_transaction>0</delete_customer_after_transaction>
+                <include_personal_data>1</include_personal_data>
+                <agent_id>Webshop</agent_id>
+                <allow_ooff>1</allow_ooff>
+                <mandate_template>sepa_mandate_email_template</mandate_template>
+                <notification_template>sepa_mandate_notification_email_template</notification_template>
+                <mandate_amendment_template>sepa_mandate_amendment_email_template</mandate_amendment_template>
+            </sepadebitsax>
+        </payment>
+    </default>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Egovs_SepaDebitSax>
+                    <files>
+                        <default>Egovs_SepaDebitSax.csv</default>
+                    </files>
+                </Egovs_SepaDebitSax>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <sepadebitsax>
+                    <file>egovs/sepadebitsax.xml</file>
+                </sepadebitsax>
+            </updates>
+        </layout>
+        <!--
+        <menu>
+            <sales>
+                <children>
+                    <sepadebitsax module="sepadebitsax">
+                        <title>Sepa</title>
+                        <sort_order>1</sort_order>
+                        <children>
+                            <icd_account module="sepadebitsax">
+                                <title>Abholen</title>
+                                <sort_order>20</sort_order>
+                                <action>adminhtml/sepadebitsax_mandate/sync</action>
+                            </icd_account>
+                        </children>
+                    </sepadebitsax>
+                </children>
+            </sales>
+        </menu>
+        -->
+        <menu>
+            <system translate="title" module="adminhtml">
+                <children>
+                    <tools translate="title">
+                        <children>
+                            <sepadebitsax_fetch module="sepadebitsax">
+                                <title>Neue SEPA Mandate verarbeiten</title>
+                                <sort_order>20</sort_order>
+                                <action>adminhtml/sepadebitsax_mandate/sync</action>
+                            </sepadebitsax_fetch>
+                        </children>
+                    </tools>
+                </children>
+            </system>
+        </menu>
+    </adminhtml>
+    
+    <admin>
+        <routers>
+            <adminhtml> 
+                <args>
+                    <modules>
+                        <Egovs_SepaDebitSax_Adminhtml after="Mage_Adminhtml">Egovs_SepaDebitSax_Adminhtml</Egovs_SepaDebitSax_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    
+    <frontend>
+        <translate>
+            <modules>
+                <Egovs_SepaDebitSax>
+                    <files>
+                        <default>Egovs_SepaDebitSax.csv</default>
+                    </files>
+                </Egovs_SepaDebitSax>
+            </modules>
+        </translate>
+        <routers>
+            <sepadebitsax>
+                <use>standard</use>
+                <args>
+                    <module>Egovs_SepaDebitSax</module>
+                    <frontName>sepadebitsax</frontName>
+                </args>
+            </sepadebitsax>
+        </routers>
+    </frontend>
+</config>

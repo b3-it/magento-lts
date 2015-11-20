@@ -100,7 +100,7 @@ class Slpb_Extstock_Adminhtml_Extstock_WarningController extends Slpb_Extstock_C
 		}
 		$this->saveMovement($move);
 		
-		$this->_redirect('*/adminhtml_ordersheet/index',array('lieferid'=>$this->_StockOrderId));
+		$this->_redirect('adminhtml/extstock_ordersheet/index',array('lieferid'=>$this->_StockOrderId));
 	}
 	
 	

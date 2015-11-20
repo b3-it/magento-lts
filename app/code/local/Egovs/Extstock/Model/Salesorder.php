@@ -182,6 +182,7 @@ class Egovs_Extstock_Model_Salesorder extends Mage_Core_Model_Abstract
 					continue;
 				}
 				
+				/* @var $extItem Egovs_Extstock_Model_Extstock */
 				$extItem = $extstock->getItemById($item->getExtstockID());
 				
 				//Kommt sonst zu doppelten Stornierungen! -->eigentlich seit 01.03.2010 veraltet!
@@ -228,6 +229,8 @@ class Egovs_Extstock_Model_Salesorder extends Mage_Core_Model_Abstract
 						$backToStock = 0;
 					}
 				}
+				// magento lagermenge setzten überspringen
+				$extItem->setOmitMagentoStockUpdate(true);
 				$extItem->save(true);
 			}
 			//Verursacht Fehler: da das Element am ende irgendwie leer ist??? -->jedes element einzeln speichern!!

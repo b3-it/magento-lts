@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_Ready>
-            <version>0.1.1.0</version>
+            <version>0.1.2.0</version>
         </Egovs_Ready>
     </modules>
 
@@ -11,6 +11,9 @@
             <egovsready>
                 <class>Egovs_Ready_Block</class>
             </egovsready>
+            <imprint>
+                <class>Egovs_Ready_Block_Imprint</class>
+            </imprint>
         </blocks>
         <helpers>
             <egovsready>
@@ -26,7 +29,7 @@
             <egovsready_setup>
                 <setup>
                     <module>Egovs_Ready</module>
-                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                    <class>Egovs_Ready_Model_Setup</class>
                 </setup>
             </egovsready_setup>
         </resources>
@@ -83,5 +86,10 @@
                 <default>DE</default>
             </country>
         </general>
+	        <sendfriend>
+	        	<email>
+	        	<enabled>false</enabled>
+	        	</email>
+	        </sendfriend>
     </default>
 </config>

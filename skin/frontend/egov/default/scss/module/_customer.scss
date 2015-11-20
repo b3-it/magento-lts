@@ -165,25 +165,18 @@
 }
 
 .customer-account-create {
-    .buttons-set {
-        max-width: 455px;
-    }
+    @include new_address;
 
-    .fieldset,
-    .buttons-set {
-        margin-left: $trim;
-
-        @include bp(max-width, $bp-xsmall) {
-            margin-left: 0;
+    .col2-left-layout {
+        .account-create {
+            // Position korrigieren
+            position: relative;
+            top: -23px;
         }
     }
 
     .fieldset .hidden {
         display: none;
-    }
-
-    #remember-me-popup {
-        max-width: 455px;
     }
 }
 
@@ -601,7 +594,8 @@ body.customer-account {
     }
 }
 
-#my-orders-table {
+#my-orders-table,
+.order-details > table {
     @extend .egov-base-totals;
     @extend .egov-base-table;
 

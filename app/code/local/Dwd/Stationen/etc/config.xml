@@ -6,13 +6,15 @@
         </Dwd_Stationen>
     </modules>
     <frontend>
-        <stationen_front>
+        <routers>
+            <stationen_front>
                 <use>standard</use>
                 <args>
                     <module>Dwd_Stationen</module>
                     <frontName>fstationen</frontName>
                 </args>
-        </stationen_front>
+            </stationen_front>
+        </routers>
         <translate>
             <modules>
                 <Dwd_Stationen>

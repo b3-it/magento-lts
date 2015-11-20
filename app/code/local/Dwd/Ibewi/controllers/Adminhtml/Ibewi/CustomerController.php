@@ -31,7 +31,7 @@ class Dwd_Ibewi_Adminhtml_Ibewi_CustomerController extends Dwd_Ibewi_Controller_
 		catch(Exception $ex)
 		{
 			Mage::getSingleton('adminhtml/session')->addError($ex->getMessage());
-			$this->_redirect('*/*/');
+			$this->_redirect('adminhtml/');
 		}
 	}
 

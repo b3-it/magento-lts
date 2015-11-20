@@ -2,7 +2,11 @@
 <layout>
     <adminhtml_customer_edit>
         <reference name="customer_edit_tabs">
-            <action method="addTab"><name>customer_edit_tab_abo</name><block>stalaabo/adminhtml_customer_edit_tabs_abotab</block></action>
+            <action method="addTabAfter">
+                <name>customer_edit_tab_abo</name>
+                <block>stalaabo/adminhtml_customer_edit_tabs_abotab</block>
+                <after>addresses</after>
+            </action>
         </reference>
     </adminhtml_customer_edit>
 </layout>

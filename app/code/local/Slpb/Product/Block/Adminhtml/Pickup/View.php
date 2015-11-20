@@ -70,12 +70,12 @@ class Slpb_Product_Block_Adminhtml_Pickup_View extends Mage_Adminhtml_Block_Widg
     
     public function getFormActionUrl()
     {
-    	return  $this->getUrl('slpbproduct/adminhtml_pickup/deliver',array('order_id' => $this->getOrder()->getId()));
+    	return  $this->getUrl('adminhtml/slpbproduct_pickup/deliver',array('order_id' => $this->getOrder()->getId()));
     }
     
  	public function getBackUrl()
     {
-    	return  $this->getUrl('slpbproduct/adminhtml_pickup/index');
+    	return  $this->getUrl('adminhtml/slpbproduct_pickup/index');
     }
     
 

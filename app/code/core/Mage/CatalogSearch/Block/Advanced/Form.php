@@ -67,7 +67,8 @@ class Mage_CatalogSearch_Block_Advanced_Form extends Mage_Core_Block_Template
      */
     public function getAttributeLabel($attribute)
     {
-        return $attribute->getStoreLabel();
+    	$helper = Mage::helper('catalogsearch');
+        return $helper->__($attribute->getStoreLabel());
     }
 
     /**
@@ -207,7 +208,8 @@ class Mage_CatalogSearch_Block_Advanced_Form extends Mage_Core_Block_Template
             $extra = 'multiple="multiple" size="4"';
             $name.= '[]';
         }
-        else {
+        //else 
+        {
             array_unshift($options, array('value'=>'', 'label'=>Mage::helper('catalogsearch')->__('All')));
         }
 

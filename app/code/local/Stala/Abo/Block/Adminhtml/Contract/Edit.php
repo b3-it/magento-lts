@@ -23,7 +23,7 @@ class Stala_Abo_Block_Adminhtml_Contract_Edit extends Mage_Adminhtml_Block_Widge
 			}
 			else
 			{
-				$url = "/adminhtml_".$origin."/index/";
+				$url = "adminhtml/stalaabo_".$origin."/index/";
 				$this->_updateButton('back', 'onclick',"setLocation('{$this->getUrl($url)}')");
 			}
 		}

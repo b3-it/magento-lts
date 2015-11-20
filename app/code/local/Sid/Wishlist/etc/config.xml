@@ -111,15 +111,15 @@
             </sidwishlist>
         </helpers>
         <events>
-            <sales_quote_remove_item>
+            <sales_quote_item_delete_after>
                 <observers>
                     <sid_wishlist_remove_item>
                         <type>singleton</type>
-                        <class>Sid_Wishlist_Model_Quote_Observer</class>
+                        <class>sidwishlist/quote_observer</class>
                         <method>onQuoteItemRemove</method>
                     </sid_wishlist_remove_item>
                 </observers>
-            </sales_quote_remove_item>
+            </sales_quote_item_delete_after>
         </events>
     </global>
     <default>

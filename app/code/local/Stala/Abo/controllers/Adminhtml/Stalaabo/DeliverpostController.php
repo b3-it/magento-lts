@@ -229,7 +229,7 @@ class Stala_Abo_Adminhtml_Stalaabo_DeliverpostController extends Egovs_Base_Cont
     	$customer = Mage::getModel('customer/customer')->load($item->getCustomerId());
     	$order->setPrintnote1($customer->getAboPrintNote1());
         $order->setPrintnote2($customer->getAboPrintNote2());
-    	
+        $order->setCustomerGroupId($customer->getGroupId());
     	$obj->setOrder($order);
     	
     	$this->addItemToShippment($obj,$item);

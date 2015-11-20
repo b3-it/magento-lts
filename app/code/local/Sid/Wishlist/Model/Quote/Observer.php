@@ -23,7 +23,7 @@ class Sid_Wishlist_Model_Quote_Observer extends Mage_Core_Model_Abstract
 	protected $_expireQuotesFilterFields = array();
 	
 	public function onQuoteItemRemove($observer) {
-		$salesQuoteItem = $observer->getQuoteItem();
+		$salesQuoteItem = $observer->getItem();
 		
 		if (!$salesQuoteItem || $salesQuoteItem->getId() == $this->_lastItemId) {
 			return;

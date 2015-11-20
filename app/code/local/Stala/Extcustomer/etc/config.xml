@@ -57,15 +57,6 @@
         			</stala_extcustomer_observer>
         		</observers>
         	</adminhtml_customer_prepare_save>
-			<adminhtml_block_customer_edit_tabs>
-				<observers>
-					<egovs_extcustomer_injectTabs>
-						<type>singleton</type>
-						<class>extcustomer/customer_observer</class>
-						<method>injectTabs</method>
-					</egovs_extcustomer_injectTabs>
-				</observers>
-			</adminhtml_block_customer_edit_tabs>
 			<adminhtml_customer_prepare_save>
 				<observers>
 					<egovs_extcustomer_copyAdr>
@@ -85,6 +76,7 @@
         		</observers>
         	</catalog_product_prepare_save>
 		</events>
+		
 		<translate>
 			<modules>
 				<Stala_Extcustomer>
@@ -94,36 +86,7 @@
 				</Stala_Extcustomer>
 			</modules>
 		</translate>
-    <!-- 
-		<menu>
-			<extcustomer module="extcustomer">
-				<title>Extcustomer</title>
-				<sort_order>71</sort_order>               
-				<children>
-					<items module="extcustomer">
-						<title>Manage Items</title>
-						<sort_order>0</sort_order>
-						<action>extcustomer/adminhtml_parentcustomer</action>
-					</items>
-				</children>
-			</extcustomer>
-		</menu>
-		<acl>
-			<resources>
-				<all>
-					<title>Allow Everything</title>
-				</all>
-				<admin>
-					<children>
-						<Stala_Extcustomer>
-							<title>Extcustomer Module</title>
-							<sort_order>10</sort_order>
-						</Stala_Extcustomer>
-					</children>
-				</admin>
-			</resources>
-		</acl>
-		-->
+		
 		<layout>
 			<updates>
 				<extcustomer>
@@ -193,7 +156,7 @@
         </fieldsets>
         
         <events>
-        	<sales_quote_remove_item>
+        	<sales_quote_item_delete_after>
         		<observers>
         			<stala_extcustomer_observer>
         				<type>singleton</type>
@@ -201,7 +164,7 @@
         				<method>onSalesQuoteRemoveItem</method>
         			</stala_extcustomer_observer>
         		</observers>
-        	</sales_quote_remove_item>
+        	</sales_quote_item_delete_after>
         	<sales_quote_delete_before>
         		<observers>
         			<stala_extcustomer_observer>

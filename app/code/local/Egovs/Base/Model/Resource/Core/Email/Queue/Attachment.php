@@ -24,7 +24,7 @@ class Egovs_Base_Model_Resource_Core_Email_Queue_Attachment extends Mage_Core_Mo
     	return parent::_beforeSave($object);
     }
     
-    protected function _afterLoad($object)
+    protected function _afterLoad(Mage_Core_Model_Abstract $object)
     {
     	$bin = hex2bin($object->getBody());
     	$object->setBody($bin);

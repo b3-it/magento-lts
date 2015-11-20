@@ -53,6 +53,7 @@
 //  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
+@import "module/buttons";
 @import "module/product-list";
 @import "module/catalog-product";
 @import "module/catalog-msrp";
@@ -69,6 +70,7 @@
 @import "module/egovs-checkout-multipage-login";
 @import "module/paypal";
 @import "module/review";
+@import "module/sales-order-print";
 @import "module/slideshow";
 @import "module/wishlist";
 @import "module/checkout-cart-minicart";

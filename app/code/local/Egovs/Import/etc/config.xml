@@ -8,15 +8,6 @@
  
     <admin>
         <routers>
-			<import>
-				<use>admin</use>
-				<args>
-					<module>Egovs_Import</module>
-					<frontName>import</frontName>
-				</args>
-			</import>
-        </routers>
-        <routers>
 			<adminhtml>	
 				<args>
 					<modules>

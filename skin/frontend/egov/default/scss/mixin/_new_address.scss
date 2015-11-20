@@ -29,8 +29,21 @@
             }
         }
 
+        #birthday-box, #gender-box {
+            width: 48%;
+            display: inline-block;
+            float: left;
+            margin-bottom: 10px;
+
+            input[type="text"] {
+                margin: 0px;
+            }
+        }
+
         .form-list {
             li {
+                vertical-align: top;
+
                 label {
                     font-weight: bold;
                 }
@@ -69,6 +82,12 @@
             margin-right: 5px;
         }
 
+        select.validation-failed,
+        input.validation-failed {
+            border-color: $global-warning-color;
+            opacity: 0.5;
+        }
+
         div.validation-advice {
             position: relative;
             top: -15px;
@@ -88,11 +107,6 @@
 
         .wide {
             width: 99%;
-
-            //li {
-            //    display: inline-block;
-            //    width: 33%;
-            //}
 
             li.street-field {
                 width: 100%;
@@ -130,6 +144,22 @@
 
         li.fullwide {
             width: 100%;
+
+            .customer-name,
+            .customer-name-prefix {
+                div.field {
+                    display: inline-block;
+                    width: 48%;
+                }
+
+                div.name-prefix {
+                    display: block;
+                }
+            }
+        }
+
+        li.halfwide {
+            width: 48%;
         }
 
         .customer-name-middlename {
