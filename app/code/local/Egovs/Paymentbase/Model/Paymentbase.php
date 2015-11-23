@@ -267,8 +267,8 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     		$quotedParentId = $collection->getConnection()->quoteIdentifier('parent_id');
     		$quotedMethod = $collection->getConnection()->quoteIdentifier('method');
     		$quotedOrderId = $collection->getConnection()->quoteIdentifier('order_id');
-    		$collection->addFieldToFilter($collection->getConnection()->quoteIdentifier('order_id'), array('gt' => '0'))
-    			->addFieldToFilter($collection->getConnection()->quoteIdentifier('state'), Mage_Sales_Model_Order_Invoice::STATE_OPEN)
+    		$collection->addFieldToFilter('order_id', array('gt' => '0'))
+    			->addFieldToFilter('state', Mage_Sales_Model_Order_Invoice::STATE_OPEN)
     		;
     		$collection
     			->join('sales/order_payment', $collection->getConnection()->quoteInto("$quotedParentId=$quotedOrderId AND $quotedMethod IN (?)", array('openaccount', 'bankpayment')), 'method')
