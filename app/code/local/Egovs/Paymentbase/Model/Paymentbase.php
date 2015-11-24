@@ -127,15 +127,28 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 			//Wenn Kassenzeichen verfügbar
 			if (!empty($kzeichen)) {
 				$this->setKassenzeichenInfo($this->_lesenKassenzeichenInfo($kzeichen));
-
-				if ($this->hasKassenzeichenInfo() && $this->getKassenzeichenInfo()->ergebnis->istOk == false) {
-					$msg = sprintf(
-							"%s; Error code: %s",
-							$this->getKassenzeichenInfo()->ergebnis->langText,
-							$this->getKassenzeichenInfo()->ergebnis->code
-					);
-					if (!array_key_exists($this->getKassenzeichenInfo()->ergebnis->code, $errors)) {
-						$errors[$this->getKassenzeichenInfo()->ergebnis->code] = $msg;
+				
+				$kInfo = $this->getKassenzeichenInfo();
+				if ($kInfo instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis) {
+					if ($kInfo->ergebnis->istOk == false) {
+						$msg = sprintf(
+								"%s; Error code: %s",
+								$this->getKassenzeichenInfo()->ergebnis->langText,
+								$this->getKassenzeichenInfo()->ergebnis->code
+						);
+						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->code])) {
+							$errors[$this->getKassenzeichenInfo()->ergebnis->code] = $msg;
+							Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+							Mage::getSingleton('adminhtml/session')->addError($msg);
+						}
+						$this->unsKassenzeichenInfo();
+					} else {
+						//Alles OK Kassenzeichen wurde abgerufen
+						$kassenzeichenCount++;
+					}
+				} else {
+					if (!isset($errors[-9999])) {
+						$errors[-9999] = Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_STANDARD');
 						Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 						Mage::getSingleton('adminhtml/session')->addError($msg);
 					}
@@ -144,8 +157,6 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 			} else {
 				$this->unsKassenzeichenInfo();
 			}
-			
-			$kassenzeichenCount++;
 			
 			$this->_processIncomingPayments();
 		}
@@ -171,7 +182,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
      */
     protected function _processIncomingPayments() {
     	//Wenn Rechnung bezahlt wurde
-    	if ($this->hasKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo <= 0.0) {
+    	if ($this->getKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo <= 0.0) {
     		if ($this->getKassenzeichenInfo()->saldo < 0.0 && $this->_notBalanced <= self::MAX_UNBALANCED) {
     			Mage::getSingleton('adminhtml/session')->addNotice(
     				Mage::helper('paymentbase')->__('The balance of invoice #%s for order #%s is %s', $this->getInvoice()->getIncrementId(), $this->_getOrder()->getIncrementId(), $this->getKassenzeichenInfo()->saldo)
@@ -200,7 +211,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     		$this->_getOrder()->save();
     		$this->_paidKassenzeichen++;
     		$this->_grantedKassenzeichen[] = $this->_getKassenzeichen();
-    	} elseif ($this->hasKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo > 0.0 && $this->getKassenzeichenInfo()->saldo < $this->_getOrder()->getBaseGrandTotal()) {
+    	} elseif ($this->getKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo > 0.0 && $this->getKassenzeichenInfo()->saldo < $this->_getOrder()->getBaseGrandTotal()) {
     		//Nur für Teilzahlungen
     		if ($this->_notBalanced <= self::MAX_UNBALANCED) {
     			Mage::getSingleton('adminhtml/session')->addNotice(

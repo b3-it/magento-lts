@@ -164,6 +164,7 @@
 "Bank account data synchronization with ePayBL is not enabled. Please enable it under Payments/ePayBL Settings","Die Synchronisation der Bankdaten mit der ePayBL ist nicht aktiviert! Es muss erst unter Zahlarten/ePayBL Einstellungen aktiviert werden."
 
 "TEXT_PROCESS_ERROR_STANDARD_99989","Abwicklung auf Grund eines technischen Problems fehlgeschlagen - versuchen Sie es in ein paar Minuten noch einmal. Falls die Abwicklung weiterhin fehlschlägt, wenden Sie sich bitte an unseren Service: %s"
+"TEXT_PROCESS_ERROR_-9999","Abwicklung auf Grund eines technischen Problems fehlgeschlagen - versuchen Sie es in ein paar Minuten noch einmal. Falls die Abwicklung weiterhin fehlschlägt, wenden Sie sich bitte an unseren Service: %s"
 "TEXT_PROCESS_ERROR_-0611","Abwicklung auf Grund eines Konfigurationsproblems fehlgeschlagen. Der Support wurde informiert, wenn Sie noch Fragen haben wenden Sie sich bitte an unseren Service: %s"
 "TEXT_PROCESS_ERROR:UNKNOWN CURL ERROR","Abwicklung auf Grund eines technischen Problems fehlgeschlagen - versuchen Sie es in ein paar Minuten noch einmal. Falls die Abwicklung weiterhin fehlschlägt, wenden Sie sich bitte an unseren Service: %s"
 "TEXT_PROCESS_ERROR:UNKNOWN SOAP ERROR","Abwicklung auf Grund eines technischen Problems fehlgeschlagen - versuchen Sie es in ein paar Minuten noch einmal. Falls die Abwicklung weiterhin fehlschlägt, wenden Sie sich bitte an unseren Service: %s"
