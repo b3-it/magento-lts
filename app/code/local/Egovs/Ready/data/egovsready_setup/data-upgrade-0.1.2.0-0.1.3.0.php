@@ -30,10 +30,10 @@ $installer = $this;
 $installer->startSetup();
 
 $statusCollection = Mage::getModel('sales/order_status')->getCollection();
-$helper = Mage::helper('sales');
+$helper = Mage::helper('egovsready');
 
 foreach ( $statusCollection AS $status ) {
-    $status->setLabel( $helper->__($status->getLabel()));
+    $status->setLabel( $helper->__('sales',$status->getLabel()));
 }
 
 $statusCollection->save();

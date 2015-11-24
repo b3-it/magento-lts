@@ -28,4 +28,43 @@ class Egovs_Ready_Helper_Data extends Mage_Core_Helper_Data
 	
 		return Mage::helper('cms/page')->getPageUrl($cmsPage->getId());
 	}
+	
+	
+	
+	protected $_translator = null;
+	
+	/**
+	 * Translate
+	 *
+	 * Es werden mindestens 2 Parameter erwartet, der erste gibt das Modul an (z. B. 'sales'), der zweite den zu übersetzenden String.
+	 *
+	 * @return string
+	 */
+	public function __() {
+		$args = func_get_args();
+		if (isset($args[0]) && is_array($args[0]) && count($args) == 1) {
+			$args = $args[0];
+		}
+		if (isset($args[0]) && is_array($args[0]) && count($args) > 1) {
+			Mage::throwException('egovslocale::If the first parameter is an array, there is only one parameter allowed!');
+		}
+		if (count($args) < 2) {
+			Mage::throwException('egovslocale::It reuqires at least 2 arguments.');
+		}
+		if (isset($args[0])) {
+			$helper = Mage::helper($args[0]);
+			$class = get_class($helper);
+			$moduleName = substr($class, 0, strpos($class, '_Helper'));
+			unset($args[0]);
+		}
+		$expr = new Mage_Core_Model_Translate_Expr(array_shift($args), $moduleName);
+		array_unshift($args, $expr);
+	
+		if (!$this->_translator) {
+			$this->_translator = Mage::app()->getTranslator()->init('adminhtml', true);
+		}
+	
+		return $this->_translator->translate($args);
+	}
+	
 }
