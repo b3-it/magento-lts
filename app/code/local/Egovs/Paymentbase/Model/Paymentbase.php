@@ -148,7 +148,8 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 					}
 				} else {
 					if (!isset($errors[-9999])) {
-						$errors[-9999] = Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_STANDARD');
+						$msg = Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_STANDARD');
+						$errors[-9999] = $msg;
 						Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 						Mage::getSingleton('adminhtml/session')->addError($msg);
 					}

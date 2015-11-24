@@ -1527,6 +1527,20 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
 			$arrResult->ergebnis->langText = $e->getMessage();
 			$arrResult->ergebnis->code = -9999;
 		}
+		
+		if ($arrResult instanceof SoapFault) {
+			$e = $arrResult;
+			/* @var $arrResult Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis */
+			$arrResult = Mage::getModel('paymentbase/webservice_types_response_kassenzeichenInfoErgebnis');
+			$arrResult->ergebnis = Mage::getModel('paymentbase/webservice_types_response_ergebnis');
+			$arrResult->ergebnis->istOK = false;
+			$arrResult->ergebnis->langText = $e->getMessage();
+			if ($e->getCode()) {
+				$arrResult->ergebnis->code = $e->getCode();
+			} else {
+				$arrResult->ergebnis->code = -9999;
+			}
+		}
 
 		// wenn SOAP-Fehler
 		if (!$arrResult || !is_object($arrResult)) {
