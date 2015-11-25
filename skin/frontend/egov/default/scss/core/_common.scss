@@ -831,6 +831,7 @@ div.block-reorder {
         position: relative;
         width: $global-rightcol-percent;
         top: $global-rightcol-margintop;
+        margin-bottom: $global-rightcol-margintop;
     }
     .col-main {
         padding-left: 0; /* Remove the 15px padding */
@@ -889,6 +890,7 @@ div.block-reorder {
             padding: 0px;
             position: relative;
             top: $global-rightcol-margintop;
+            margin-bottom: $global-rightcol-margintop;
         }
 
         p.note-msg {
