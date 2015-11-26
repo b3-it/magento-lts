@@ -33,7 +33,7 @@ $statusCollection = Mage::getModel('sales/order_status')->getCollection();
 $helper = Mage::helper('egovsready');
 
 foreach ( $statusCollection AS $status ) {
-    $status->setLabel( $helper->__('sales',$status->getLabel()));
+    $status->setLabel( $helper->_translate('sales',$status->getLabel()));
 }
 
 $statusCollection->save();
