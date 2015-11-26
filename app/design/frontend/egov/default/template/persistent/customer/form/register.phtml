@@ -25,6 +25,7 @@
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate" class="scaffold-form" enctype="multipart/form-data" autocomplete="off">
         <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
         <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+        <?php echo $this->getBlockHtml('formkey'); ?>
 
         <p class="form-instructions">
             <?php echo $this->__('Please enter the following information to create your account.') ?>
