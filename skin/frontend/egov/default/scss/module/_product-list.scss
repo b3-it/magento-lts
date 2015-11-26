@@ -41,7 +41,8 @@ p.product-name {
     font-family: $base-font-family;
     font-weight: bold;
     line-height: $global-lineheight;
-    height: $global-lineheight * 2;
+    max-height: $global-lineheight * 2.8;
+    height: auto;
 
     a {
         color: $global-linkcolor;

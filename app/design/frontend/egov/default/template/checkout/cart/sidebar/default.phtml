@@ -6,6 +6,10 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
+$max_title_length = 55;
+
+$_thumbnail_width = 50;
+$_thumbnail_height = 50;
 
 $_item = $this->getItem();
 $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
@@ -14,11 +18,11 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 <li class="item">
     <?php if ($this->hasProductUrl()): ?>
         <a href="<?php echo $this->getProductUrl()?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image">
-            <img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+            <img src="<?php echo $this->getProductThumbnail()->resize($_thumbnail_width, $_thumbnail_height)->setWatermarkSize('30x10'); ?>" width="<?php echo $_thumbnail_width; ?>" height="<?php echo $_thumbnail_height; ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
         </a>
     <?php else: ?>
         <span class="product-image">
-            <img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+            <img src="<?php echo $this->getProductThumbnail()->resize($_thumbnail_width, $_thumbnail_height)->setWatermarkSize('30x10'); ?>" width="<?php echo $_thumbnail_width; ?>" height="<?php echo $_thumbnail_height; ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
         </span>
     <?php endif; ?>
     <div class="product-details">
@@ -28,7 +32,13 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <?php if ($this->hasProductUrl()): ?>
             <a href="<?php echo $this->getProductUrl() ?>">
         <?php endif; ?>
-                <?php echo $this->escapeHtml($this->getProductName()) ?>
+                <?php
+                    $_product_full = $_product_title = $this->escapeHtml($this->getProductName());
+                    if ( strlen($_product_title) > $max_title_length ) {
+                        $_product_title = substr($_product_title, 0, ($max_title_length - 3) ) . '...';
+                    }
+                    echo '<span title="' . $_product_full . '">' . $_product_title . '</span>';
+                ?>
         <?php if ($this->hasProductUrl()): ?>
             </a>
         <?php endif; ?>
