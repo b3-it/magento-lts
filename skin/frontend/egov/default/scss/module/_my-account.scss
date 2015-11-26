@@ -191,6 +191,12 @@
 
 .block-cart {
     margin-bottom: $global-boxmargin;
+    background-color: $global-sidebar-cart-background;
+}
+
+.sidebar > .block-cart:first-child {
+    position: relative;
+    top: $global-sidebar-cart-top;
 }
 
 .addresses-primary,
