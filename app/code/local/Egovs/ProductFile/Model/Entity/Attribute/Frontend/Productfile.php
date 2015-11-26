@@ -35,7 +35,7 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
      *
      * @return string
      */
-    public function getValue() {
+    public function getValue(Varien_Object $object) {
         $_product = $this->__getProduct();
 
         $_fname = $_product->getProductfile();

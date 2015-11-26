@@ -40,7 +40,7 @@ class Egovs_Ready_Helper_Data extends Mage_Core_Helper_Data
 	 *
 	 * @return string
 	 */
-	public function __() {
+	public function _translate() {
 		$args = func_get_args();
 		if (isset($args[0]) && is_array($args[0]) && count($args) == 1) {
 			$args = $args[0];
