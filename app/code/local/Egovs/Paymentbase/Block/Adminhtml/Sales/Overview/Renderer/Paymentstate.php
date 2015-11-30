@@ -36,10 +36,10 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_Overview_Renderer_Paymentstate ext
                 return implode(', ', $res);
             } elseif (isset($options[$value])) {
             	if ($value == Mage_Sales_Model_Order_Invoice::STATE_PAID) {
-                	return '<div style="color:green;">'.$options[$value].'</div>';
+                	return '<div class="balanced">'.$options[$value].'</div>';
             	}
 	            if ($value == Mage_Sales_Model_Order_Invoice::STATE_OPEN) {
-	                	return '<div style="color:red;">'.$options[$value].'</div>';
+	                	return '<div class="unbalanced">'.$options[$value].'</div>';
 	            }
             } elseif (in_array($value, $options)) {
                 return $value;

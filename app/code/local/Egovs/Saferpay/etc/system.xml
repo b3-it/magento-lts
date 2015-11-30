@@ -54,7 +54,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                            <comment>Geben Sie hier die Provider an, die zur Verfügung stehen sollen, z. B. "102,104" für Visa und Mastercard. Beachten Sie bitte dazu die Saferpay-Dokumentation.</comment>
+                            <comment>Geben Sie hier die Zahlungsmittel an, die zur Verfügung stehen sollen, z. B. "1,2" für Mastercard und Visa. Beachten Sie bitte dazu die Saferpay-Dokumentation.</comment>
                         </providerset>
                         <payernote translate="label">
                             <label>Hinweis für Käufer</label>
@@ -65,16 +65,6 @@
                             <show_in_store>0</show_in_store>
                             <comment>Geben Sie hier den Hinweis für den Käufer ein (PAYERNOTE), z. B. [www.slpb.de][Dresden]. Beachten Sie bitte dazu die Saferpay-Dokumentation (Special Features).</comment>
                         </payernote>
-                        <cvc translate="label">
-                            <label>CVC</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>290</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>Abfrage der Kartenprüfnummer</comment>
-                        </cvc>
                         <karteninhaber translate="label">
                             <label>Karteninhaber</label>
                             <frontend_type>select</frontend_type>
@@ -151,24 +141,6 @@
                             <show_in_store>0</show_in_store>
                             <comment>Angabe der Saferpay-Konfiguration.</comment>
                         </vtconfig>
-                        <headfontactivecolor translate="label">
-                            <label>HEADFONTACTIVECOLOR</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>307</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>Farbe des aktiven Tabs in der Verlaufsanzeige des VT, z. B. #CCCCCC</comment>
-                        </headfontactivecolor>
-                        <headfontinactivecolor translate="label">
-                            <label>HEADFONTINACTIVECOLOR</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>308</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>Farbe der inaktiven Tabs in der Verlaufsanzeige des VT</comment>
-                        </headfontinactivecolor>
                         <debug_flag translate="label">
                             <label>Debug Flag</label>
                             <frontend_type>select</frontend_type>
