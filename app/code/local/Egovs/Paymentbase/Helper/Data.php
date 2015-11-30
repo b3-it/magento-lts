@@ -84,6 +84,14 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @var array
 	 */
 	protected $_omitMailToAdmin = array();
+	
+
+	/**
+	 * Bezeichnung für Zahlmodul
+	 *
+	 * @var string
+	 */
+	protected $_code = 'paymentbase';
 
 	/**
 	 * Prüft ob $result in der Ausnahmeliste zum Senden von Admin-Mails enthalten ist
@@ -117,6 +125,32 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		return false;
 	}
+	
+   /**
+    *  Liefert die Saferpay Service URL
+	*
+	* @return string | https://www.saferpay.com/hosting/
+	*/
+	public function getSaferpayServiceUrl() {
+		$_url = Mage::getStoreConfig("payment_services/saferpay/service_url");
+		$_urlParts = parse_url($_url);
+	
+		if ($_urlParts === false || empty($_url)) {
+			return "https://www.saferpay.com/hosting/";
+		}
+		if (isset($_urlParts['port'])) {
+			$_url = sprintf("%s://%s:%s/%s", $_urlParts['scheme'], $_urlParts['host'], $_urlParts['port'], $_urlParts['path']);
+		} else {
+			$_url = sprintf("%s://%s/%s", $_urlParts['scheme'], $_urlParts['host'], $_urlParts['path']);
+		}
+	
+		if (strripos($_url, '/') != strlen($_url) - 1) {
+			$_url += '/';
+		}
+	
+		return $_url;
+	}
+	
 	
 	/**
 	 * Gibt die Ausnahmeliste zum Senden von Admin-Mails zurück
