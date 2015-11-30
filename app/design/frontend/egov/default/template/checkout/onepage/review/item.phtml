@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Magento
  *
@@ -24,12 +24,12 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 $_item = $this->getItem();
-$_thumbnail = $this->getProductThumbnail();
+$_thumbnail = $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10');
 $_productname = $this->escapeHtml($this->getProductName());
 ?>
 <tr>
     <td>
-        <img class="overview-product-image" src="<?php echo $_thumbnail; ?>" alt="<?php echo $_productname; ?>" title="<?php echo $_productname; ?>" />
+        <img class="checkout-product-image" src="<?php echo $_thumbnail; ?>" alt="<?php echo $_productname; ?>" title="<?php echo $_productname; ?>" />
         <h3 class="product-name"><?php echo $_productname; ?></h3>
         <?php if ($_options = $this->getOptionList()):?>
         <dl class="item-options">
