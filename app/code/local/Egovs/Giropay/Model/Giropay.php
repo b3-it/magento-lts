@@ -85,14 +85,6 @@ class Egovs_Giropay_Model_Giropay extends Egovs_Paymentbase_Model_Saferpay
 	 * @see Egovs_Paymentbase_Model_Saferpay::getSaferpayUrl()
 	 */
 	protected function _getSaferpayUrl() {
-		/*
-		 * 20130403::Frank Rochlitzer
-		* URL Encode findet in Egovs_Paymentbase_Model_Curl::getResponse statt siehe #1582 ZVM844
-		*/
-		Mage::getStoreConfig("payment/{$this->getCode()}/providerset")
-			? $this->_fieldsArr ['PROVIDERSET'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/providerset"))
-			: $this->_fieldsArr ['PROVIDERSET'] = '631'
-		;
 	}
 	
 	public function getInfoBlockType() {

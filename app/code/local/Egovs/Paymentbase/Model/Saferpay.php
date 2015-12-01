@@ -384,14 +384,31 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
         $this->_fieldsArr ['ALLOWCOLLECT'] = 'no';
 		$this->_fieldsArr ['DELIVERY'] = 'no';
 		
-		Mage::getStoreConfig("payment/{$this->getCode()}/providerset")
-			? $this->_fieldsArr ['PROVIDERSET'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/providerset"))
-			: $this->_fieldsArr ['PROVIDERSET'] = ''
-		;
+		$providerset = Mage::getStoreConfig("payment/{$this->getCode()}/providerset");
+		if ($providerset) {
+			if (strpos($providerset, '102') !== false
+				|| strpos($providerset, '104') !== false
+				|| strpos($providerset, '631') !== false
+				|| strpos($providerset, '1341') !== false
+				|| strpos($providerset, '90') !== false
+				|| strpos($providerset, '634') !== false)
+			{
+				//Visa
+				$providerset = str_replace(102, 2, $providerset);
+				//Master
+				$providerset = str_replace(104, 1, $providerset);
+				//Giropay
+				$providerset = str_replace(631, 17, $providerset);
+				$providerset = str_replace(1341, 17, $providerset);
+				//Testkarte
+				$providerset = str_replace(90, 6, $providerset);
+				$providerset = str_replace(634, 6, $providerset);
+			}
+		}
 		
-		Mage::getStoreConfig("payment/{$this->getCode()}/cvc")
-			? $this->_fieldsArr ['CCCVC'] = 'yes'
-			: $this->_fieldsArr ['CCCVC'] = 'no'
+		$providerset
+			? $this->_fieldsArr ['PAYMENTMETHODS'] = htmlentities($providerset)
+			: $this->_fieldsArr ['PAYMENTMETHODS'] = ''
 		;
 		Mage::getStoreConfig("payment/{$this->getCode()}/karteninhaber")
 			? $this->_fieldsArr ['CCNAME'] = '"yes"'
@@ -418,12 +435,12 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 			: $this->_fieldsArr ['SHOWLANGUAGES'] = 'no'
 		;
 		Mage::getStoreConfig("payment/{$this->getCode()}/agburl")
-			? $this->_fieldsArr ['AGBURL'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/agburl"))
-			: $this->_fieldsArr ['AGBURL'] = ''
+			? $this->_fieldsArr ['TERMSURL'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/agburl"))
+			: $this->_fieldsArr ['TERMSURL'] = ''
 		;
 		Mage::getStoreConfig("payment/{$this->getCode()}/agbcheckboxactive")
-			? $this->_fieldsArr ['AGBCHECKBOXACTIVE'] = 'yes'
-			: $this->_fieldsArr ['AGBCHECKBOXACTIVE'] = 'no'
+			? $this->_fieldsArr ['TERMSCHECKBOXACTIVE'] = 'yes'
+			: $this->_fieldsArr ['TERMSCHECKBOXACTIVE'] = 'no'
 		;
 		
 		Mage::getStoreConfig("payment/{$this->getCode()}/vtconfig")
@@ -433,9 +450,6 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 		
 		$this->_fieldsArr ['AUTOCLOSE'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/autoclose"));
 		$this->_fieldsArr ['ORDERID'] = '"'.$this->_getBewirtschafterNr().'/'.$this->getInfoInstance()->getKassenzeichen().'"'; //ORDERID eigentlich OPTIONAL und max 12 Zeichen lang
-		
-		$this->_fieldsArr ['HEADFONTACTIVECOLOR'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/headfontactivecolor"));
-		$this->_fieldsArr ['HEADFONTINACTIVECOLOR'] = htmlentities(Mage::getStoreConfig ("payment/{$this->getCode()}/headfontinactivecolor"));
 		
 		//Call to the implementation method for childrens
 		$this->_getSaferPayUrl();
@@ -453,7 +467,9 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 			Mage::log(sprintf('%s::debug: %s', $this->getCode(), $request), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 			//$this->_fieldsArr ['saferpayOption1'] = $this->_fieldsArr ['ORDERID'];
 		}
-        $url = Egovs_Paymentbase_Model_Curl::getResponse("https://www.saferpay.com/hosting/CreatePayInit.asp", $this->_fieldsArr);
+       	
+		$url = Mage::helper($this->getCode())->getSaferpayServiceUrl() . 'CreatePayInit.asp';
+        $url = Egovs_Paymentbase_Model_Curl::getResponse($url, $this->_fieldsArr);
        	
 		return $url;
 	}

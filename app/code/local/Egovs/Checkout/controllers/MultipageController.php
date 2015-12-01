@@ -297,7 +297,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     			}
     			$result = $this->_getCheckout()->saveBilling($data, $customerAddressId);
     			if ($result !== true) {
-    				Mage::getSingleton('checkout/session')->addMessage($result);
+    				Mage::getSingleton('checkout/session')->addError($result);
     				$this->_redirect('*/*/newaddress', array('_secure'=>true));
     				return;
     			}

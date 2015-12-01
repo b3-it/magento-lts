@@ -86,24 +86,5 @@ class Egovs_Saferpay_Model_Saferpay extends Egovs_Paymentbase_Model_Saferpay
 	 * @see Egovs_Paymentbase_Model_Saferpay::getSaferpayUrl()
 	 */
 	protected function _getSaferpayUrl() {
-		/*
-		 * 20130403::Frank Rochlitzer
-		 * URL Encode findet in Egovs_Paymentbase_Model_Curl::getResponse statt siehe #1582 ZVM844
-		 */
-		
-		/*
-		 * Nur Visa und Mastercard
-		 */		
-		Mage::getStoreConfig("payment/{$this->getCode()}/providerset")
-			? $this->_fieldsArr ['PROVIDERSET'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/providerset"))
-			: $this->_fieldsArr ['PROVIDERSET'] = '102,104'
-		;
-		if ($this->getDebug()) {
-			//Test-Kreditkartenprovider
-			Mage::getStoreConfig("payment/{$this->getCode()}/providerset")
-				? $this->_fieldsArr ['PROVIDERSET'] = htmlentities(Mage::getStoreConfig("payment/{$this->getCode()}/providerset"))
-				: $this->_fieldsArr ['PROVIDERSET'] = '90'
-			;
-		}
 	}
 }
