@@ -59,6 +59,14 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 	 */
 	protected function _geteShopTan() {
 		if (empty($this->_eShopTan)) {
+			/*
+			 * 20151201::Frank Rochlitzer
+			 * #2327 Unterschiedliche eShopTANs bei Payplace 
+			 */
+			if (($eShopTAN = $this->_getOrder()->getPayment()->getAdditionalInformation('eshop_tan'))) {
+				$this->_eShopTan = $eShopTAN;
+				return $this->_eShopTan;
+			}
 			$orderId = (int)$this->_getOrder()->getId();
 			$mandant = $this->_getMandantNr();
 			
@@ -72,6 +80,7 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 			$tan = $orderId + time() + $ord;
 			$tan = base_convert($tan, 10, 16);
 			$this->_eShopTan = substr($tan, 0, 17);
+			$this->_getOrder()->getPayment()->setAdditionalInformation('eshop_tan', $this->_eShopTan);
 		}
 		return $this->_eShopTan;
 	}
@@ -278,19 +287,7 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 	
 		$objResult = null;
 		$buchungsListeParameter = $this->getBuchungsListeParameter($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal());
-		/*
-		 * Aus ePayBL FSpec v16 Final Payplace
-		 * Um die Nachbearbeitung von Kreditkartenzahlungen sicherzustellen, ist es notwendig, 
-		 * dass die Art der Kreditkartentransaktion an der Buchungsliste gespeichert wird. 
-		 * Dazu wird beim Anlegen eines Kassenzeichens via Webservice bzw. nach der Zahlverfahrensauswahl
-		 * ein Buchungslistenparameter „ppCCaction“ mit dem Wert „preauthorization“ für die Buchungsliste
-		 * in der Datenbank gespeichert, wenn am Bewirtschafter die Option „Payplace-Buchung in zwei Schritten“
-		 * aktiviert ist. Ist die Option nicht aktiviert der Buchungslistenparameter „ppCCaction“
-		 * mit dem Wert „authorization“ für die Buchungsliste  in der Datenbank gespeichert.
-		 * 
-		 * TODO Muss mit Aufruf in xmlApiRequest übereinstimmen
-		 */
-		$buchungsListeParameter['ppCCaction'] = Egovs_Paymentbase_Model_Payplace_Enum_Action::VALUE_AUTHORIZATION;
+		
 		try {
 			$objResult = $this->_getSoapClient()->anlegenKassenzeichenMitZahlverfahrenlisteMitBLP(
 					$this->_getECustomerId(),
@@ -310,6 +307,34 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 //		Mage::log("{$this->getCode()}::post::objSOAPClientBfF->anlegenKassenzeichen(" . var_export($this->_getMandantNr(), true) . ", " . var_export($this->_getECustomerId(), true) . ", " . var_export($objResult->buchungsListe, true) . ", null, null, $saferpay_type)", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		
 		return $objResult->buchungsListe->kassenzeichen;
+	}
+	
+	/**
+	 * Liefert ein assoziatives Array mit Buchungslistenparametern
+	 *
+	 * @param Mage_Sales_Model_Order_Payment $payment Payment
+	 * @param float                          $amount  Betrag
+	 *
+	 * @return array
+	 */
+	public function getBuchungsListeParameter($payment, $amount) {
+		$buchungsListeParameter = parent::getBuchungsListeParameter($payment, $amount);
+		
+		/*
+		 * Aus ePayBL FSpec v16 Final Payplace
+		 * Um die Nachbearbeitung von Kreditkartenzahlungen sicherzustellen, ist es notwendig,
+		 * dass die Art der Kreditkartentransaktion an der Buchungsliste gespeichert wird.
+		 * Dazu wird beim Anlegen eines Kassenzeichens via Webservice bzw. nach der Zahlverfahrensauswahl
+		 * ein Buchungslistenparameter „ppCCaction“ mit dem Wert „preauthorization“ für die Buchungsliste
+		 * in der Datenbank gespeichert, wenn am Bewirtschafter die Option „Payplace-Buchung in zwei Schritten“
+		 * aktiviert ist. Ist die Option nicht aktiviert der Buchungslistenparameter „ppCCaction“
+		 * mit dem Wert „authorization“ für die Buchungsliste  in der Datenbank gespeichert.
+		 *
+		 * TODO Muss mit Aufruf in xmlApiRequest übereinstimmen
+		 */
+		$buchungsListeParameter['ppCCaction'] = Egovs_Paymentbase_Model_Payplace_Enum_Action::VALUE_AUTHORIZATION;
+		
+		return $buchungsListeParameter;
 	}
 	
 	/**
