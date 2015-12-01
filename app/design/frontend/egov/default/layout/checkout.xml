@@ -34,6 +34,10 @@ Default layout, loads most of the pages
 
     <default>
 
+        <reference name="head">
+            <action method="addJs"><script>egovs/sepa/checkiban.js</script></action>
+        </reference>
+
         <!-- Mage_Checkout -->
         <reference name="top.links">
             <block type="checkout/links" name="checkout_cart_link">
@@ -113,8 +117,8 @@ Default layout, loads most of the pages
                 <block type="core/text_list" name="checkout.cart.extra" translate="label">
                     <label>Checkout Forms Extra</label>
                 </block>
-                
-                
+
+
                 <!-- <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/> -->
                 <block type="egovsshipment/cart_shipping" name="checkout.cart.shipping" as="shipping" template="egovs/shippment/cart/shipping.phtml"/>
                 <block type="core/text_list" name="checkout.cart.widget" as="checkout_cart_widget" translate="label">

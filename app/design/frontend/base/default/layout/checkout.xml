@@ -34,6 +34,10 @@ Default layout, loads most of the pages
 
     <default>
 
+        <reference name="head">
+            <action method="addJs"><script>egovs/sepa/checkiban.js</script></action>
+        </reference>
+
         <!-- Mage_Checkout -->
         <reference name="top.links">
             <block type="checkout/links" name="checkout_cart_link">
@@ -394,16 +398,16 @@ One page checkout main layout
     </checkout_onepage_progress_shipping_method>
 
     <checkout_onepage_progress_payment>
-    <!-- Mage_Checkout -->
-    <remove name="right"/>
-    <remove name="left"/>
+        <!-- Mage_Checkout -->
+        <remove name="right"/>
+        <remove name="left"/>
 
-    <block type="checkout/onepage_progress" name="root" output="toHtml" template="checkout/onepage/progress/payment.phtml">
-        <block type="checkout/onepage_payment_info" name="payment_info">
+        <block type="checkout/onepage_progress" name="root" output="toHtml" template="checkout/onepage/progress/payment.phtml">
+            <block type="checkout/onepage_payment_info" name="payment_info">
+                <action method="setInfoTemplate"><method></method><template></template></action>
+            </block>
             <action method="setInfoTemplate"><method></method><template></template></action>
         </block>
-        <action method="setInfoTemplate"><method></method><template></template></action>
-    </block>
     </checkout_onepage_progress_payment>
 
 <!-- end individual progress blocks -->

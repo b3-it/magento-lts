@@ -163,8 +163,19 @@
 <p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
 <script type="text/javascript">
+<<<<<<< Updated upstream
 //<![CDATA[
 	alert('hallo');
+=======
+var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
+</script>
+
+<script type="text/javascript">
+<!--
+	/*
+	 * http://stackoverflow.com/questions/15027613/magento-prototype-custom-validation
+	 */
+>>>>>>> Stashed changes
 	var lngg = 1;
 	var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
 	if(Validation) {
@@ -188,8 +199,8 @@
  * http://www.tbg5-finance.org/?ibandocs.shtml
  */
 ?>
-<script charset="utf-8" src="<?php echo Mage::getBaseUrl('js').'egovs/sepa'?>/checkiban.js" type="text/javascript"></script>
 <script type="text/javascript">
+<<<<<<< Updated upstream
 //<![CDATA[
 	var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
@@ -209,10 +220,42 @@
 		toggleFields(null);
 	});
 //]]>
+=======
+<!--
+var sepaDebitForm = new VarienForm('multishipping-billing-form');
+
+function toggleFields() {
+    if ( $j('#custom_owner').prop('checked') ) {
+        $j('#debitor_box').css('width', '48%');
+    }
+    else {
+        $j('#debitor_box').css('width', '100%');
+    }
+    $j('#custom_accountholder_box').toggle();
+}
+
+if ( $j('body').hasClass('checkout-onepage-index') ) {
+    // OnePage Checkout
+    if ( $j('#opc-payment').hasClass('active') && $j('#p_method_sepadebitsax').length ) {
+        if ( $j('#p_method_sepadebitsax').prop('checked') ) {
+            toggleFields();
+        }
+        else {
+            $j('ul#payment_form_sepadebitsax').css('display', 'none');
+        }
+alert('start');
+    }
+}
+
+document.observe("dom:loaded", function() {
+	toggleFields();
+});
+//-->
+>>>>>>> Stashed changes
 </script>
 
  <?php if($this->getAccountholderDiffers()):?>
 	                	<script type="text/javascript">
-	                	toggleFields(this);
+	                	toggleFields();
 	                	</script>
 	                <?php endif;?>
