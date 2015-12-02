@@ -12,7 +12,13 @@
 ?>
 
 <fieldset class="form-list">
-    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
+<?php if(Mage::getStoreConfig('checkout/options/checkout_type') == Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE):?>
+	<ul id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;" >
+<?php else:?>
+	<ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
+<?php endif;?>
+
+   
         <li class="single-line">
             <div class="input-box">
                 <?php if ($this->getMethod()->getCustomText()): ?>
@@ -162,9 +168,10 @@
 
 <p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
+
 <script type="text/javascript">
 //<![CDATA[
-	alert('hallo');
+	
 	var lngg = 1;
 	var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
 	if(Validation) {
@@ -188,31 +195,53 @@
  * http://www.tbg5-finance.org/?ibandocs.shtml
  */
 ?>
-<script charset="utf-8" src="<?php echo Mage::getBaseUrl('js').'egovs/sepa'?>/checkiban.js" type="text/javascript"></script>
-<script type="text/javascript">
+
+<?php if(Mage::getStoreConfig('checkout/options/checkout_type') == Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE):?>
+	<script type="text/javascript">
 //<![CDATA[
-	var sepaDebitForm = new VarienForm('multishipping-billing-form');
+	//var sepaDebitForm = new VarienForm('multishipping-billing-form');
+
+	function toggleFields(element) {
+	    if ( $j('#custom_owner').prop('checked') ) {
+	     
+	        $j('#custom_accountholder_box').toggle(true);
+	    }
+	    else {
+	       
+	        $j('#custom_accountholder_box').toggle(false);
+	    }
+	   
+	}
+	
+	Event.observe('custom_owner', 'change', toggleFields);
+
+	toggleFields(null);
+	
+//]]>
+</script>
+<?php else:?>
+	<script type="text/javascript">
+//<![CDATA[
+	//var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
 	function toggleFields(element) {
 	    if ( $j('#custom_owner').prop('checked') ) {
 	        $j('#debitor_box').css('width', '48%');
+	        $j('#custom_accountholder_box').toggle(true);
 	    }
 	    else {
 	        $j('#debitor_box').css('width', '100%');
+	        $j('#custom_accountholder_box').toggle(false);
 	    }
-	    $j('#custom_accountholder_box').toggle();
+	   
 	}
 	
 	Event.observe('custom_owner', 'change', toggleFields);
+
+	toggleFields(null);
 	
-	document.observe("dom:loaded", function() {
-		toggleFields(null);
-	});
 //]]>
 </script>
+<?php endif;?>
 
- <?php if($this->getAccountholderDiffers()):?>
-	                	<script type="text/javascript">
-	                	toggleFields(this);
-	                	</script>
-	                <?php endif;?>
+ 

@@ -147,7 +147,7 @@
 </div>
 <?php endif;?>
 <script type="text/javascript">
-<!--
+//<![CDATA[
 	/*
 	 * http://stackoverflow.com/questions/15027613/magento-prototype-custom-validation
 	 */
@@ -192,17 +192,17 @@
             }],
 		])
 	}
-//-->
+//]]>
 </script>
 <?php
 /*
  * http://www.tbg5-finance.org/?ibandocs.shtml
  */
 ?>
-<script charset="utf-8" src="<?php echo Mage::getBaseUrl('js').'egovs/sepa'?>/checkiban.js" type="text/javascript"></script>
+
 <script type="text/javascript">
-<!--
-	var sepaDebitForm = new VarienForm('multishipping-billing-form');
+//<![CDATA[
+	//var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
 function toggleFields(element) {
 	$('custom_accountholder_surname').up('li').toggle();
@@ -217,5 +217,5 @@ function toggleFields(element) {
 document.observe("dom:loaded", function() {
 	toggleFields(null);
 });
-//-->
+//]]>
 </script>
