@@ -1,6 +1,6 @@
 <?php
 
-class Egovs_SepaDebitSax_Adminhtml_SepaDebitSax_MandateController extends Mage_Adminhtml_Controller_Action
+class Egovs_SepaDebitSax_Adminhtml_Sepadebitsax_MandateController extends Mage_Adminhtml_Controller_Action
 {
 
     /**
