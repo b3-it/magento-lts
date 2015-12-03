@@ -15,9 +15,8 @@
  * 
  * @category   	Egovs
  * @package    	Egovs_Base
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
- * @copyright  	Copyright (c) 2011 TRW-NET - http://www.trw-net.de
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2011-2015 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  * @see 		Egovs_Base_Model_Security_Observer::__call()
  *
@@ -207,7 +206,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 	}
 	
 	/**
-	 * Nötig da {@link Mage_Core_Model_App::__callObserverMethod} mehtod_exists verwendet
+	 * Nötig da {@link Mage_Core_Model_App::__callObserverMethod} method_exists verwendet
 	 * 
 	 * @param unknown $observer Observer
 	 * 
@@ -403,7 +402,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 		$origData = $source->getOrigData();
 		$className = get_class($source);
 		if ($source instanceof Mage_Customer_Model_Address && !empty($id) && !empty($origData)) {
-			if (array_key_exists($className, $this->_cached)) {
+			if (isset($this->_cached[$className])) {
 				//Type bereits vorhanden
 				$this->_cached[$className][$source->getId()] = $source->getData();
 			} else {
@@ -411,7 +410,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 				$this->_cached[$className] = array($source->getId() => $source->getData());
 			}
 		} elseif ($source instanceof Mage_Customer_Model_Address && !empty($id) && empty($origData)) {
-			if (array_key_exists($className, $this->_cached) && array_key_exists($source->getId(), $this->_cached[$className])) {
+			if (isset($this->_cached[$className]) && isset($this->_cached[$className][$source->getId()])) {
 				$origData = $this->_cached[$className][$source->getId()];
 				//Objekt mit alten Daten füttern
 				$tmpData = $source->getData();
@@ -447,9 +446,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 			return;
 		}
 
-		if (count($diff) == 1 && array_key_exists('updated_at', $diff)
-			|| empty($diff)
-		) {
+		if (count($diff) == 1 && isset($diff['updated_at']) || empty($diff)) {
 			return;
 		}
 		
@@ -519,10 +516,10 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 			if ($key != '_cache_editable_attributes') {
 				$origValue = '';
 				$newValue = '';
-				if (key_exists($key, $old)) {
+				if (isset($old[$key])) {
 					$origValue  = $old[$key];
 				}
-				if (key_exists($key, $new)) {
+				if (isset($new[$key])) {
 					$newValue = $new[$key];
 				}
 				
@@ -540,6 +537,8 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 						if ($this->_conditionalExcludeKey($key, $origValue, $newValue, $level)) {
 							continue;
 						}
+						
+						$this->_conditionalProcessKeyValue($key, $origValue, $newValue, $level);
 						
 						if (strpos($key, 'discount_quota') === 0) {
 							//Preis wieder in float umwandeln
@@ -580,11 +579,25 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 			|| $key == 'is_saved'
 			|| $key == 'customer_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
 			|| $key == 'store_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
+			|| $key == 'new_password'
+			|| $key == 'form_key'
 		) {
 			return true;
 		}
 		
 		return false;
+	}
+	
+	protected function _conditionalProcessKeyValue($key, &$origValue, &$newValue, $level = 0) {
+		if ($origValue == $newValue) {
+			return;
+		}
+		switch ($key) {
+			case 'password':
+			case 'new_password':
+				$origValue = '*********';
+				$newValue = $origValue.'**';
+		}
 	}
 	
 	protected function _truncate($origValue) {
