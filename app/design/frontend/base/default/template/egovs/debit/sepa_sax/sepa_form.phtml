@@ -12,7 +12,13 @@
 ?>
 
 <fieldset class="form-list">
-    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
+<?php if(Mage::getStoreConfig('checkout/options/checkout_type') == Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE):?>
+	<ul id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;" >
+<?php else:?>
+	<ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
+<?php endif;?>
+
+
         <li class="single-line">
             <div class="input-box">
                 <?php if ($this->getMethod()->getCustomText()): ?>
@@ -189,6 +195,7 @@ document.observe("dom:loaded", function() {
 });
 //]]>
 </script>
+<?php endif;?>
 
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>egovs/sepa/checkiban.js"></script>
 

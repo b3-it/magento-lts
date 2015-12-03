@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+	 <checkout_onepage_index translate="label">
+        <reference name="head">
+            <action method="addJs"><script>egovs/sepa/de.js</script></action>
+            <action method="addJs"><script>egovs/sepa/checkiban.js</script></action>
+        </reference>
+    </checkout_onepage_index> 
+    <egovs_checkout_multipage_billingdetails translate="label">
+        <reference name="head">
+            <action method="addJs"><script>egovs/sepa/de.js</script></action>
+            <action method="addJs"><script>egovs/sepa/checkiban.js</script></action>
+        </reference>
+    </egovs_checkout_multipage_billingdetails> 
+</layout>

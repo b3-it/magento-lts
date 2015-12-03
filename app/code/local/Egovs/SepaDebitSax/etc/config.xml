@@ -219,5 +219,12 @@
                 </args>
             </sepadebitsax>
         </routers>
+         <layout>
+            <updates>
+                <sepadebitsax>
+                    <file>egovs/sepadebitsax.xml</file>
+                </sepadebitsax>
+            </updates>
+        </layout>
     </frontend>
 </config>

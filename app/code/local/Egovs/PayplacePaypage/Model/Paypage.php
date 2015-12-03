@@ -121,4 +121,34 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 	public function usePreAuthorization() {
 		return Mage::getStoreConfigFlag('payment/payplacepaypage/use_preauthorization');
 	}
+	
+	/**
+	 * Liefert ein assoziatives Array mit Buchungslistenparametern
+	 *
+	 * @param Mage_Sales_Model_Order_Payment $payment Payment
+	 * @param float                          $amount  Betrag
+	 *
+	 * @return array
+	 */
+	public function getBuchungsListeParameter($payment, $amount) {
+		$buchungsListeParameter = Egovs_Paymentbase_Model_Abstract::getBuchungsListeParameter($payment, $amount);
+		
+		/*
+		 * Aus ePayBL FSpec v16 Final Payplace
+		 * Um die Nachbearbeitung von Kreditkartenzahlungen sicherzustellen, ist es notwendig,
+		 * dass die Art der Kreditkartentransaktion an der Buchungsliste gespeichert wird.
+		 * Dazu wird beim Anlegen eines Kassenzeichens via Webservice bzw. nach der Zahlverfahrensauswahl
+		 * ein Buchungslistenparameter „ppCCaction“ mit dem Wert „preauthorization“ für die Buchungsliste
+		 * in der Datenbank gespeichert, wenn am Bewirtschafter die Option „Payplace-Buchung in zwei Schritten“
+		 * aktiviert ist. Ist die Option nicht aktiviert der Buchungslistenparameter „ppCCaction“
+		 * mit dem Wert „authorization“ für die Buchungsliste  in der Datenbank gespeichert.
+		 *
+		 * TODO Muss mit Aufruf in xmlApiRequest übereinstimmen
+		 */
+		$buchungsListeParameter['ppCCaction'] = $this->usePreAuthorization()
+			? Egovs_Paymentbase_Model_Payplace_Enum_Action::VALUE_PREAUTHORIZATION
+			: Egovs_Paymentbase_Model_Payplace_Enum_Action::VALUE_AUTHORIZATION;
+		
+		return $buchungsListeParameter;
+	}
 }
