@@ -38,7 +38,6 @@ function opcToggle() {
  * http://blog.baobaz.com/en/blog/custom-javascript-form-validators
  * app/design/frontend/base/default/template/egovs/debit/sepa_sax
  */
-var lngg = 1;
 
 if(Validation) {
     Validation.addAllThese([

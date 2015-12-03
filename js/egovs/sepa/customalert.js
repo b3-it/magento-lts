@@ -9,11 +9,11 @@ var ALERT_TITLE = "Message                                                      
 var ALERT_BUTTON_TEXT = "OK";
 var ALERT_QUEUE = new Array();
 
-var myStyle = document.createElement("link");
-myStyle.setAttribute("rel", "stylesheet");
-myStyle.setAttribute("type", "text/css");
-myStyle.setAttribute("href", "http://www.tbg5-finance.org/customalert.css");
-document.getElementsByTagName("head")[0].appendChild(myStyle);
+//var myStyle = document.createElement("link");
+//myStyle.setAttribute("rel", "stylesheet");
+//myStyle.setAttribute("type", "text/css");
+//myStyle.setAttribute("href", "http://www.tbg5-finance.org/customalert.css");
+//document.getElementsByTagName("head")[0].appendChild(myStyle);
 
 function createCustomAlert(ALERT_TEXT) {
 	ALERT_QUEUE.push(prepareCustomAlert(ALERT_TEXT));
@@ -30,7 +30,7 @@ function createCustomAlert(ALERT_TEXT) {
 	alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
 	alertTitle = alertObj.appendChild(d.createElement("h1"));
 	alertTitle.appendChild(d.createTextNode(ALERT_TITLE));
-	alertTitle.onmousedown = function() { 
+	alertTitle.onmousedown = function() {
 		dragstart('alertbox');
 		return; }
 	alertMsg = alertObj.appendChild(d.createElement("p"));
@@ -62,5 +62,5 @@ function prepareCustomAlert(text) {
 	return newtext;}
 
 if(document.getElementById) {
-	window.alert = function(text) { 
+	window.alert = function(text) {
 		createCustomAlert(text); }}

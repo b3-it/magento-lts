@@ -9,15 +9,17 @@
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 /* @var $this Egovs_SepaDebitSax_Block_Form */
+
+if(Mage::getStoreConfig('checkout/options/checkout_type') == Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE) {
+    $ul_status = ' style="display:none;"';
+}
+else {
+    $ul_status = '';
+}
 ?>
 
 <fieldset class="form-list">
-<?php if(Mage::getStoreConfig('checkout/options/checkout_type') == Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE):?>
-    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;" >
-<?php else:?>
-    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
-<?php endif;?>
-
+    <ul id="payment_form_<?php echo $this->getMethodCode() ?>"<?php echo $ul_status; ?>>
         <li class="single-line">
             <div class="input-box">
                 <?php if ($this->getMethod()->getCustomText()): ?>
