@@ -338,7 +338,6 @@
 					<paymentparams module="paymentbase">
 						<title>ePayment Parameter</title>
 						<sort_order>100</sort_order>
-						<action>paymentbase/paymentbase_localparams</action>
 						<children>
 							<haushaltsparameter module="paymentbase">
 								<title>Define Haushaltsparameter</title>
