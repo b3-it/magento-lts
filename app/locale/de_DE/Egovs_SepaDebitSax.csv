@@ -115,3 +115,6 @@
 "Payment from applicable countries","Zahlungen aus entsprechenden Ländern"
 "Payment from Specific countries","Zahlungen aus bestimmten Ländern"
 "SEPA Mandate ID","SEPA Mandats ID"
+"Support IBAN only","IBAN Only verwenden"
+"Successfully synchronized SEPA mandates","SEPA Mandate erfolgreich synchronisiert"
+"An error occured while synchronizing SEPA mandates: %s","Es ist ein Fehler beim Abgleich der SEPA Mandate aufgetreten: %s"

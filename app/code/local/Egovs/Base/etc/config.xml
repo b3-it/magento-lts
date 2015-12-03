@@ -54,7 +54,7 @@
 						</cache>
 
 						<apc_cache translate="title">
-							<title>Clear APC Cache</title>
+							<title>Reset APC/Zend Cache</title>
 							<sort_order>100</sort_order>
 							<action>adminhtml/system_cache</action>
 						</apc_cache>

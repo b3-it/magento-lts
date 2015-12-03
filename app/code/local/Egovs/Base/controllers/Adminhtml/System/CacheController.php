@@ -3,16 +3,27 @@ class Egovs_Base_Adminhtml_System_CacheController extends Mage_Adminhtml_Control
 {
     public function indexAction()
     {
-        if ( function_exists('apc_clear_cache') ) {
-            apc_clear_cache();
-            apc_clear_cache('user');
-            apc_clear_cache('opcode');
-
-            $this->_getSession()->addSuccess($this->__('APC Cache cleared!'));
-        }
-        else {
-            $this->_getSession()->addError($this->__('APC not installed!'));
-        }
-        $this->_redirect('adminhtml/index');
+    	$isApc = function_exists('apc_clear_cache');
+    	$isZendOpCache = function_exists('opcache_reset');
+    	if ($isApc || $isZendOpCache) {
+	        if ( $isApc ) {
+	            apc_clear_cache();
+	            apc_clear_cache('user');
+	            apc_clear_cache('opcode');
+	
+	            $this->_getSession()->addSuccess($this->__('APC Cache cleared!'));
+	        }
+	        
+	        if ( $isZendOpCache ) {
+	        	opcache_reset();
+	        
+	        	$this->_getSession()->addSuccess($this->__('Zend OPCache cleared!'));
+	        }
+    	}
+    	
+    	if (!$isApc && !$isZendOpCache) {
+    		$this->_getSession()->addError($this->__('No Cache to clear available!'));
+    	}
+        $this->_redirectReferer();
     }
 }
