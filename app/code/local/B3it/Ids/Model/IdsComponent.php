@@ -15,13 +15,12 @@
  */
 
 
-set_include_path(get_include_path().PS.Mage::getBaseDir('lib').DS.'IDS');
 
 use IDS\Init;
 use IDS\Monitor;
 
-require_once(Mage::getBaseDir('lib').DS.'IDS'.DS.'Init.php');
-require_once(Mage::getBaseDir('lib').DS.'IDS'.DS.'Monitor.php');
+require_once('IDS'.DS.'Init.php');
+require_once('IDS'.DS.'Monitor.php');
 //require_once('tcpdf.php');
 
 class B3it_Ids_Model_IdsComponent extends Varien_Object
@@ -41,7 +40,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 		if($init)
 		{
 			$init->config['General']['base_path'] = Mage::getBaseDir('lib').DS.'IDS'.DS ;
-			$init->config['General']['filter_path'] = Mage::getBaseDir('lib').DS.'ids'.DS.'default_filter.xml' ;
+			$init->config['General']['filter_path'] = Mage::getBaseDir('lib').DS.'IDS'.DS.'default_filter.xml' ;
 			$init->config['General']['tmp_path'] = Mage::getBaseDir('var').DS.'ids'.DS ;
 			
 			$init->config['General']['use_base_path'] = false;

@@ -87,6 +87,7 @@ class Varien_Autoload
         if ($this->_isIncludePathDefined) {
             $classFile =  COMPILER_INCLUDE_PATH . DIRECTORY_SEPARATOR . $class;
         } else {
+        	$class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
             $classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $class)));
         }
         $classFile.= '.php';
