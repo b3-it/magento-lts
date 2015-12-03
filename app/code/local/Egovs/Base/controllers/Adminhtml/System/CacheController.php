@@ -13,6 +13,6 @@ class Egovs_Base_Adminhtml_System_CacheController extends Mage_Adminhtml_Control
         else {
             $this->_getSession()->addError($this->__('APC not installed!'));
         }
-        $this->_redirect('adminhtml/index');
+        $this->_redirectReferer();
     }
 }
