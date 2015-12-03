@@ -6,7 +6,7 @@
             <codePool>local</codePool>
         </B3it_Admin>
         <B3it_Ids>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </B3it_Ids>
     </modules>

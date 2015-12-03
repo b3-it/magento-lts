@@ -49,7 +49,7 @@ textarea, input[type="text"], input[type="email"],
 input[type="password"], input[type="tel"], select {
     border: 1px solid $global-wrapper-color;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
-    margin-bottom: 16px;
+    margin-bottom: $global-element-magrin-bottom;
     outline: medium none;
     padding: 3px 6px;
     border-radius: 3px;

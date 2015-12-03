@@ -61,6 +61,13 @@
             h3 {
                 margin: 0px;
                 padding: 0px;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            .checkout-product-image {
+                display: inline-block;
+                margin-right: $fa-icon-margin;
             }
         }
 

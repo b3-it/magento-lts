@@ -18,7 +18,7 @@
 	<ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
 <?php endif;?>
 
-   
+
         <li class="single-line">
             <div class="input-box">
                 <?php if ($this->getMethod()->getCustomText()): ?>
@@ -42,17 +42,25 @@
 
         <li class="single-line">
             <div class="input-box">
-                <?php if($this->getAccountholderDiffers()):?>
-                	<input type="checkbox" id="custom_owner" name="payment[additional_information][custom_owner]" checked="checked" />
-                <?php else :?>
-                	<input type="checkbox" id="custom_owner" name="payment[additional_information][custom_owner]" />
-                <?php endif;?>
+                <?php
+                  if($this->getAccountholderDiffers()) {
+                      $checked = ' checked="checked"';
+                  }
+                  else {
+                      $checked = '';
+                  }
+                ?>
+                <input type="checkbox"
+                       id="custom_owner"
+                       name="payment[additional_information][custom_owner]"
+                       onclick="toggleFields();"
+                       <?php echo $checked; ?> />
                 <label for="custom_owner"><?php echo $this->__('Debitor differs from banking account holder?') ?> </label>
             </div>
         </li>
 
         <li class="single-line">
-            <div id="custom_accountholder_box">
+            <div id="custom-accountholder-box">
                 <div class="block">
 	                  <div class="block-title">
 	                      <h2><?php echo $this->__('Deviation account holder'); ?></h2>
@@ -91,7 +99,7 @@
 	              </div>
             </div>
 
-            <div id="debitor_box">
+            <div id="debitor-box">
                 <div class="block">
 	                  <div class="block-title">
 	                      <h2><?php echo $this->__('Details Debitor'); ?></h2>
@@ -168,80 +176,33 @@
 
 <p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
-
 <script type="text/javascript">
 //<![CDATA[
-	
-	var lngg = 1;
-	var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
-	if(Validation) {
-		Validation.addAllThese([
-			['validate-debit-bic', '<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>', function(v, r) {
-				return v.length == 8 || v.length == 11 || v.length == 0;
-			}],
-			['validate-debit-iban', '<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>', function(v, r) {
-				res = checkibancore(v);
-				return res == 0 ? false : true;
-			}],
-			['validate-alphanum_ws', '<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>', function(v) {
-                return Validation.get('IsEmpty').test(v) ||  /^[a-zA-Z0-9 ]+$/.test(v) /*!/\W/.test(v)*/
-            }],
-		])
-	}
-//]]>
-</script>
-<?php
-/*
- * http://www.tbg5-finance.org/?ibandocs.shtml
- */
-?>
+var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
+Translator.add('BIC must be either 8 or 11 characters long','<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>');
+Translator.add('IBAN not valid.','<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>');
+Translator.add('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.','<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>');
 
-<?php if(Mage::getStoreConfig('checkout/options/checkout_type') == Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE):?>
-	<script type="text/javascript">
-//<![CDATA[
-	//var sepaDebitForm = new VarienForm('multishipping-billing-form');
+// http://www.tbg5-finance.org/?ibandocs.shtml
+var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
-	function toggleFields(element) {
-	    if ( $j('#custom_owner').prop('checked') ) {
-	     
-	        $j('#custom_accountholder_box').toggle(true);
-	    }
-	    else {
-	       
-	        $j('#custom_accountholder_box').toggle(false);
-	    }
-	   
-	}
-	
-	Event.observe('custom_owner', 'change', toggleFields);
+$j(document).ready(function(){
+	opcToggle();
+});
 
-	toggleFields(null);
-	
-//]]>
-</script>
-<?php else:?>
-	<script type="text/javascript">
-//<![CDATA[
-	//var sepaDebitForm = new VarienForm('multishipping-billing-form');
-
-	function toggleFields(element) {
-	    if ( $j('#custom_owner').prop('checked') ) {
-	        $j('#debitor_box').css('width', '48%');
-	        $j('#custom_accountholder_box').toggle(true);
-	    }
-	    else {
-	        $j('#debitor_box').css('width', '100%');
-	        $j('#custom_accountholder_box').toggle(false);
-	    }
-	   
-	}
-	
-	Event.observe('custom_owner', 'change', toggleFields);
-
-	toggleFields(null);
-	
+document.observe("dom:loaded", function() {
+	toggleFields();
+});
 //]]>
 </script>
 <?php endif;?>
 
- 
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>egovs/sepa/checkiban.js"></script>
+
+<?php if($this->getAccountholderDiffers()):?>
+	                	<script type="text/javascript">
+	                	//<![CDATA[
+	                	  toggleFields();
+	                	//]]>
+	                	</script>
+<?php endif;?>
