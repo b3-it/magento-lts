@@ -47,7 +47,7 @@ class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract
 	 */
 	public function onSalesOrderGridMassaction($observer)
 	{
-		$url =  Mage::getModel('core/url')->getUrl('extnewsletter/adminhtml_issue/massaction4orders');
+		$url =  Mage::getModel('core/url')->getUrl('adminhtml/extnewsletter_issue/massaction4orders');
 		
 		$issues = array();
 		$collection = Mage::getModel('extnewsletter/issue')->getCollection();
@@ -80,7 +80,7 @@ class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract
 	 */
 	public function onCustomerGridMassaction($observer)
 	{
-		$url =  Mage::getModel('core/url')->getUrl('extnewsletter/adminhtml_issue/massaction4customers');
+		$url =  Mage::getModel('core/url')->getUrl('adminhtml/extnewsletter_issue/massaction4customers');
 		
 		$issues = array();
 		$collection = Mage::getModel('extnewsletter/issue')->getCollection();

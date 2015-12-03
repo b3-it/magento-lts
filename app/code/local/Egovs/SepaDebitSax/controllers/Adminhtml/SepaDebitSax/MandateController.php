@@ -1,6 +1,6 @@
 <?php
 
-class Egovs_SepaDebitSax_Adminhtml_SepaDebitSax_MandateController extends Mage_Adminhtml_Controller_action
+class Egovs_SepaDebitSax_Adminhtml_SepaDebitSax_MandateController extends Mage_Adminhtml_Controller_Action
 {
 
     /**
@@ -70,8 +70,15 @@ class Egovs_SepaDebitSax_Adminhtml_SepaDebitSax_MandateController extends Mage_A
     
     public function syncAction()
     {
-    	$m = Mage::getModel('sepadebitsax/cron');
-    	$m->syncAll();
+    	try {
+	    	$m = Mage::getModel('sepadebitsax/cron');
+	    	$m->syncAll();
+    	
+    		$this->_getSession()->addSuccess($this->__('Successfully synchronized SEPA mandates'));
+    	} catch (Exception $e) {
+    		$this->_getSession()->addError($this->__('An error occured while synchronizing SEPA mandates: %s', $e->getMessage()));
+    	}
+    	$this->_redirectReferer();
     }
     
     protected function _isAllowed() {

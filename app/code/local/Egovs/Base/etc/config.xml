@@ -54,9 +54,9 @@
 						</cache>
 
 						<apc_cache translate="title">
-							<title>Clear APC Cache</title>
+							<title>Reset APC/Zend Cache</title>
 							<sort_order>100</sort_order>
-							<action>egovsbase/adminhtml_system_cache</action>
+							<action>adminhtml/system_cache</action>
 						</apc_cache>
 					</children>
 					</cache>
@@ -561,6 +561,9 @@ T: {{var telephone}}
 				<mode_int>0</mode_int>
 				<mode_prod>0</mode_prod>
 			</design>
+			<security>
+				<extensions_compatibility_mode>0</extensions_compatibility_mode>
+			</security>
 		</admin>
 		<web>
 			<session>

@@ -111,7 +111,7 @@ die grundsätzlich 14-tägige Frist für die Information vor Einzug einer fälli
         <layout>
             <updates>
                 <sepadebitbund>
-                    <file>sepadebitbund.xml</file>
+                    <file>egovs/sepadebitbund.xml</file>
                 </sepadebitbund>
             </updates>
         </layout>

@@ -38,7 +38,7 @@ class Dwd_Stationen_Adminhtml_Stationen_ImportController extends Mage_Adminhtml_
 				else
 				{
 					Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('stationen')->__('%s Items are successfully processed!',$total));
-					$this->_redirect('*/adminhtml_stationen/index');
+					$this->_redirect('*/stationen_stationen/index');
 				}
 				
 				return;

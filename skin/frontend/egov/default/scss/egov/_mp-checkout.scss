@@ -155,6 +155,15 @@
             color: $global-warning-color;
         }
 
+        div.validation-advice {
+            color: $global-warning-color;
+            margin-bottom: $global-element-magrin-bottom;
+        }
+
+        input.validation-failed {
+            margin-bottom: 0px;
+        }
+
         input[type="text"] {
             width: 95%;
         }

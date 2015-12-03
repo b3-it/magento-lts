@@ -112,6 +112,27 @@
     }
 }
 
+.opc .section .back-link a {
+    @extend .button;
+    padding: 3px 15px !important;
+    position: relative;
+    top: -5px;
+
+    small{
+        position: relative;
+        top: -3px;
+    }
+}
+
+.opc .opc-payment ul#payment_form_sepadebitsax {
+    div#debitor_box,
+    div#custom_accountholder_box {
+        max-width: 48%;
+        display: inline-block;
+        width: auto;
+    }
+}
+
 .opc .section.allow:not(.active) .step-title {
     cursor: pointer;
 }
