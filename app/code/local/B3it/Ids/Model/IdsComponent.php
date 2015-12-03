@@ -15,13 +15,12 @@
  */
 
 
-set_include_path(get_include_path().PS.Mage::getBaseDir('lib').DS.'IDS');
 
 use IDS\Init;
 use IDS\Monitor;
 
-require_once(Mage::getBaseDir('lib').DS.'IDS'.DS.'Init.php');
-require_once(Mage::getBaseDir('lib').DS.'IDS'.DS.'Monitor.php');
+require_once('IDS'.DS.'Init.php');
+require_once('IDS'.DS.'Monitor.php');
 //require_once('tcpdf.php');
 
 class B3it_Ids_Model_IdsComponent extends Varien_Object
