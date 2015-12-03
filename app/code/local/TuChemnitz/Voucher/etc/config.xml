@@ -249,7 +249,7 @@
                     <cron_expr> 0 5 * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>tuc_voucher/cron::disableOutdated</model>
+                    <model>tucvoucher/cron::disableOutdated</model>
                 </run>
             </tuc_voucher_disable>
         </jobs>
