@@ -1,6 +1,7 @@
 ﻿function toggleFields() {
     if ( $j('#custom-owner').prop('checked') ) {
         $j('#debitor-box').css('width', '48%');
+        $j('#custom-accountholder-box').css('width', '48%');
     }
     else {
         $j('#debitor-box').css('width', '100%');

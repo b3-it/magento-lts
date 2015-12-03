@@ -19,6 +19,11 @@
         }
     }
 
+    #custom-accountholder-box,
+    #debitor-box {
+        display: inline-block;
+    }
+
     .col-1, .col-2, h3, h4 {
         border: 0px !important;
         background-color: transparent !important;
