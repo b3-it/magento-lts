@@ -26,6 +26,19 @@
 
     DirectoryIndex index.php
 
+
+############################################
+## http://www.html-seminar.de/html-5-video.htm
+## Adden Video-Support
+
+    AddType video/mp4 .mp4
+    AddType video/x-m4v .m4v
+    AddType video/webm .webm
+    AddType audio/webm .weba
+    AddType video/ogg .ogm
+    AddType video/ogg .ogv
+    AddType video/ogg .ogg
+
 <IfModule mod_php5.c>
 
 ############################################
@@ -197,7 +210,7 @@
 	    Order allow,deny
 	    Allow from all
     </IfModule>
-    
+
     <IfModule mod_authz_core.c>
 	    #Apache 2.3+
 		Require all granted

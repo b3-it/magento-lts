@@ -41,17 +41,40 @@
 <div class="more-views">
     <h2><?php echo $this->__('More Views') ?></h2>
     <ul class="product-image-thumbs">
-    <?php $i=0; foreach ($this->getGalleryImages() as $_image): ?>
+    <?php
+      $js_url      = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS);
+      $media_url   = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);
+      $types_flash = array('flv', 'avi');
+      $types_html5 = array('ogg', 'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a');
+      $i = 0;
+
+      $thumb_width  = 300;  // Breite des Vorschaubildes für Videos
+      $thumb_height = 200;  // Höhe des Vorschaubildes für Video
+      $pre_image    = 75;   // Größe des Vorschaubildes für normale Bilder
+
+      foreach ($this->getGalleryImages() as $_image): ?>
         <?php if ($this->isGalleryImageVisible($_image)): ?>
         <?php
-            $image_path  = $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(75);
-            $file_name   = $_image->getFile();
-            $full_url    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "catalog/product" . $file_name;
-            $js_url      = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS);
-            $file_label  = $this->escapeHtml($_image->getLabel());
-            $file_info   = pathinfo($file_name);
-            $types_flash = array('flv', 'avi');
-            $types_html5 = array('ogg', 'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a');
+            if ( !strlen($image_thumb) ) {
+                $image_thumb = $this->helper('catalog/image')->init(
+                                   $this->getProduct(),
+                                   'thumbnail',
+                                   $_image->getFile()
+                               )->resize($pre_image);
+            }
+
+            if ( !strlen($image_path) ) {
+                $image_path  = $this->helper('catalog/image')->init(
+                                   $this->getProduct(),
+                                   'thumbnail',
+                                   $_image->getFile()
+                               )->resize($thumb_width, $thumb_height);
+            }
+
+            $file_name  = $_image->getFile();
+            $full_url   = $media_url . "catalog/product" . $file_name;
+            $file_label = $this->escapeHtml($_image->getLabel());
+            $file_info  = pathinfo($file_name);
         ?>
         <li>
             <?php
@@ -61,9 +84,9 @@
                     type="application/x-shockwave-flash"
                     data="<?php echo $js_url; ?>flash/player_flv.swf"
                     class="egov-product-flash"
-                    width="300"
-                    height="200">
-                <param name="movie" value="<?php $js_url; ?>flash/player_flv.swf" />
+                    width="<?php echo $thumb_width; ?>"
+                    height="<?php echo $thumb_height; ?>">
+                <param name="movie" value="<?php echo $js_url; ?>flash/player_flv.swf" />
                 <param name="wmode" value="transparent" />
                 <param name="quality" value="high" />
                 <param name="allowFullScreen" value="true" />
@@ -71,12 +94,20 @@
                 <param name="flashvars" value="flv=<?php echo $full_url; ?>" />
             </object>
             <?php elseif ( in_array($file_info['extension'], $types_html5) ): ?>
-            <video id="egov_product_video_<?php echo $i; ?>" class="egov-product-video" controls preload="auto" poster="<?php echo $image_path; ?>">
-                <source src="<?php echo $full_url; ?>" type="video/<?php echo $file_info['extension']; ?>">
+            <video id="egov_product_video_<?php echo $i; ?>"
+                   width="<?php echo $thumb_width; ?>"
+                   height="<?php echo $thumb_height; ?>"
+                   class="egov-product-video"
+                   controls="true"
+                   autobuffer="true"
+                   preload="auto"
+                   poster="<?php echo $image_path; ?>">
+                <source src="<?php echo $full_url; ?>"
+                        type='video/<?php echo $file_info['extension']; ?>' />
             </video>
             <?php else: ?>
             <a class="thumb-link egov-product-image" href="javascript:void(0);" title="<?php echo $file_label ?>" data-image-index="<?php echo $i; ?>">
-                <img src="<?php echo $image_path; ?>" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" />
+                <img src="<?php echo $image_thumb; ?>" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" />
             </a>
             <?php endif; ?>
         </li>
