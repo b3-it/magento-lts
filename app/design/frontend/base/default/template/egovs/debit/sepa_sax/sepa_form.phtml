@@ -34,7 +34,7 @@ else {
                 <input type="text" id="iban" name="payment[cc_number]" title="<?php echo $this->__('IBAN') ?>" class="input-text required-entry validate-debit-iban" value="<?php echo $this->getIban()?>" />
             </div>
         </li>
-        <li>
+        <li class="double-line no-right-space">
             <div class="input-box">
                 <label for="bic"><?php if (!$this->getIbanOnly()) echo '<span class="required">*</span>'; ?><?php echo $this->__('BIC') ?></label>
                 <input type="text" id="bic" name="payment[cc_type]" title="<?php echo $this->__('BIC') ?>" class="input-text <?php if (!$this->getIbanOnly()) echo "required-entry"; ?> validate-alphanum validate-debit-bic" value="<?php echo $this->getBic()?>" />
@@ -161,9 +161,14 @@ else {
 		    </li>
 		  <?php if(strlen($this->getAgreementText())): ?>
 		    <li>
-			      <div><?php echo $this->getAgreementText(); ?></div>
+			      <div id="sepa-agreement-text">
+			          <?php echo $this->getAgreementText(); ?>
+			      </div>
 		    </li>
 		  <?php endif ?>
+        <p class="required">
+            <?php echo $this->__('* Required Fields') ?>
+        </p>
 	  </ul>
 		<?php if ($this->getMethod()->getEmailSettings()): ?>
     	<?php echo $this->getMethod()->getEmailSettings(); ?>
@@ -175,11 +180,8 @@ else {
     <?php endif; ?>
 </fieldset>
 
-<p class="required"><?php echo $this->__('* Required Fields') ?></p>
-
 <script type="text/javascript">
 //<![CDATA[
-var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
 Translator.add('BIC must be either 8 or 11 characters long','<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>');
 Translator.add('IBAN not valid.','<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>');
 Translator.add('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.','<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>');
@@ -198,9 +200,9 @@ document.observe("dom:loaded", function() {
 </script>
 
 <?php if($this->getAccountholderDiffers()):?>
-	                	<script type="text/javascript">
-	                	//<![CDATA[
-	                	  toggleFields();
-	                	//]]>
-	                	</script>
+<script type="text/javascript">
+//<![CDATA[
+    toggleFields();
+//]]>
+</script>
 <?php endif;?>

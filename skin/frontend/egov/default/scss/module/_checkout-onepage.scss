@@ -19,6 +19,52 @@
         display: none;
     }
 
+    #custom-accountholder-box,
+    #debitor-box {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    #custom-accountholder-box {
+        margin-right: $global-checkout-op-boxmargin;
+    }
+
+    #payment_form_sepadebitsax {
+        input[type="text"] {
+            width: 99%;
+        }
+        li.single-line {
+            display: block;
+            width: 100%;
+        }
+        li.double-line {
+            display: inline-block;
+            width: 48%;
+            margin-right: $global-checkout-op-boxmargin;
+        }
+        li.no-right-space {
+            margin-right: 0px;
+        }
+
+        div.validation-advice,
+        .required {
+            color: $global-warning-color;
+        }
+
+        span.required {
+            margin-right: 5px;
+        }
+
+        .validation-failed {
+            border-color: $global-warning-color;
+            margin-bottom: 5px;
+        }
+
+        div.validation-advice {
+            margin-bottom: $global-element-magrin-bottom;
+        }
+    }
+
     .col-main {
         width: 100%;
         float: none;
@@ -212,8 +258,8 @@
 }
 
 .opc select {
-    max-width: 365px;
-    width: 100%;
+    max-width: 95%;
+    width: auto;
 }
 
 .opc h3 {
@@ -498,7 +544,11 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
         margin-right: 10px;
     }
     .f-left {
-        float: right;
+        float: left;
+
+        a {
+            @extend .button;
+        }
     }
 }
 

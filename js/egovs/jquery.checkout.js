@@ -22,7 +22,8 @@ function opcToggle() {
 
             if ( $j('#custom-owner').prop('checked') ) {
                 $j('#debitor-box').css('width', '48%');
-                $j('#custom-accountholder-box').css('display', 'inline-block');
+                $j('#custom-accountholder-box').css('width', '48%');
+                //$j('#custom-accountholder-box').css('display', 'inline-block');
             }
             else {
                 $j('#debitor-box').css('width', '100%');

@@ -214,7 +214,12 @@ function checkibancore(iban) {
 					alert(getstructurealert(ilbc[ctck+ctcnt*2],iban)+"\n\n"+altxt[1]); // no, alert and exit
 					return "0"; }
 				else { // yes, continue
-					return iban.ISO13616Prepare().ISO7064Mod97_10(); }}}}} // calculate and return the remainer
+					return iban.ISO13616Prepare().ISO7064Mod97_10();
+				}
+			}
+		}
+	}
+} // calculate and return the remainer
 // perform the check
 function checkiban(iban) {
 	if (checkibancore(iban) == "1") { alert(altxt[8]); } // and prompt result
@@ -249,7 +254,8 @@ function testpart(pattern,kind) {
 	if (((pattern.substr(1,2)*1) > 1) && (kind != "reverse")) {
 		testpattern += "{"+String(pattern.substr(1,2)*1)+"}"; }
 	testpattern += ")";
-	return testpattern; }
+	return testpattern;
+}
 function getstructurealert(structure,iban) {
 	any = -2;
 	structure = "B04" + structure;
@@ -279,14 +285,18 @@ function getstructurealert(structure,iban) {
 			var ibanparts = iban.match(failpattern);
 			result += ibanparts[i+1]+" "; }}
 	result = result.replace(/||/g, "");
-	return result;}
+	return result;
+}
 // some convenience for web page
 function langsel() { document.write(lngsel); } //language selector
 function lginfo() {
 	if (is_ident(false,lngc.in_array(hlc.substr(1,2)))) {
-		document.write("<BR><small>"+hlc+" currently not translated, like to translate?</small>"); }}
+		document.write("<BR><small>"+hlc+" currently not translated, like to translate?</small>");
+	}
+}
 function rwt(tnum) {
-	document.write(wptxt[tnum]); } //web page text by number
+	document.write(wptxt[tnum]);
+} //web page text by number
 function rwt2(pos) {
 	var eu_260 = 'http://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:32012R0260';
 	var eu_924 = 'http://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1449153295357&uri=CELEX:32009R0924';
@@ -359,10 +369,16 @@ function listcountriesnew(columni,llngg,flag,ipath) {
 		if (document.dlang.mlang) {
 			for (var i = 1; i <= document.dlang.mlang.length; i++) {
 				if (document.dlang.mlang[i-1].value==lngg) {
-					document.dlang.mlang[i-1].selected=true; }}}}}
+					document.dlang.mlang[i-1].selected=true;
+				}
+			}
+		}
+	}
+}
 // some convenience for additional explanations
 function doexplain(llngg) {
-	document.write(xpltxt); }
+	document.write(xpltxt);
+}
 
 // load languagefile
 function llanguagefile(language) {
