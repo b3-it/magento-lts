@@ -31,30 +31,36 @@
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
             </div>
 
-            <div class="product-img-box">
-                <div class="product-name">
-                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+            <div>
+                <div class="product-img-box">
+                    <div class="product-name">
+                        <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h1>
+                    </div>
+                    <?php echo $this->getChildHtml('thumbnail'); ?>
                 </div>
-                <?php echo $this->getChildHtml('media') ?>
+
+                <div class="product-shop">
+                    <div class="product-sku">
+                        <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+                    </div>
+                    <div class="price-info">
+                        <?php echo $this->getPriceHtml($_product); ?>
+                        <?php echo $this->getChildHtml('bundle_prices'); ?>
+                        <?php echo $this->getTierPriceHtml(); ?>
+                    </div>
+
+                    <div class="extra-info">
+                        <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>
+                        <?php echo $this->getChildHtml('product_type_availability'); ?>
+                    </div>
+
+                    <?php echo $this->getChildHtml('alert_urls'); ?>
+                </div>
             </div>
 
-            <div class="product-shop">
-                <div class="product-sku">
-                    <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
-                </div>
-                <div class="price-info">
-                    <?php echo $this->getPriceHtml($_product); ?>
-                    <?php echo $this->getChildHtml('bundle_prices') ?>
-                    <?php echo $this->getTierPriceHtml() ?>
-                </div>
+            <?php echo $this->getChildHtml('media'); ?>
 
-                <div class="extra-info">
-                    <?php echo $this->getReviewsSummaryHtml($_product, 'default', false)?>
-                    <?php echo $this->getChildHtml('product_type_availability'); ?>
-                </div>
-
-                <?php echo $this->getChildHtml('alert_urls') ?>
-
+            <div class="product-additional-information">
                 <?php if ($_product->getShortDescription()):?>
                     <div class="short-description">
                         <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
@@ -66,7 +72,6 @@
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
                 <?php endif;?>
-
             </div>
 
             <div class="add-to-cart-wrapper">
@@ -159,12 +164,6 @@
                 <div class="tab-content"><?php echo $html ?></div>
             </dd>
           <?php endforeach;?>
-<!--
-            <dt class="tab"><span>Beschreibung</span></dt>
-            <dd class="tab-container">
-                <div class="tab-content"><?php echo $this->getChildHtml('descriptionfile') ?></div>
-            </dd>
--->
         </dl>
       <?php endif; ?>
     </div>

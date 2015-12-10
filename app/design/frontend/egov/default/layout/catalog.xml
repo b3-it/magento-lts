@@ -180,10 +180,16 @@ Product view
             <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/><!--<if/><condition>can_load_calendar_js</condition>--></action>
             <action method="addItem"><type>js</type><name>calendar/calendar.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
             <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
+
+            <block type="page/html_head" output="toHtml" name="silver_track" template="catalog/product/view/head_silver_track.phtml" />
         </reference>
+
         <reference name="content">
             <block type="catalog/product_view" name="product.info" template="catalog/product/view.phtml">
 
+                <block type="catalog/product_view_media" name="product.info.thumbnail" as="thumbnail" template="catalog/product/view/thumbnail.phtml">
+                    <block type="core/text_list" name="product.info.thumbnail.after" as="after" />
+                </block>
                 <block type="catalog/product_view_media" name="product.info.media" as="media" template="catalog/product/view/media.phtml">
                     <block type="core/text_list" name="product.info.media.after" as="after" />
                 </block>

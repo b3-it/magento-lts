@@ -18,34 +18,47 @@ a { color:#1E7EC8; }
 <div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
     <table cellspacing="0" cellpadding="0" border="0" width="98%" style="margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
         <tr>
-            <td align="center" valign="top"><!-- [ header starts here] -->
-            <table cellspacing="0" cellpadding="0" border="0" width="650">
-                <tr>
-                    <td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/logo_email.gif" _area="frontend"}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>
-                </tr>
-            </table><!-- [ middle starts here] -->
-            <table cellspacing="0" cellpadding="0" border="0" width="650">
-                <tr>
-                    <td valign="top">
-                    <p>
-                        Sehr geehrte Kundin,
-                        <br/>
-                        Sehr geehrter Kunde,
-                        <br/>
-                        <br/>
-                        aufgrund Ihrer erteilten Zustimmung zum Lastschriftverfahren im {{config path="general/store_information/name"}}, erhalten Sie im Anhang zu dieser E-Mail das nötige SEPA-Mandat.
-                        <br/>
+            <td align="center" valign="top">
+                <!-- [ header starts here] -->
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td valign="top">
+                            <a href="{{store url=""}}">
+                                <img src="{{skin url="images/logo_email.gif" _area="frontend"}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <!-- [ middle starts here] -->
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td valign="top">
+                            <p>
+                                Sehr geehrte Kundin,
+                                <br/>
+                                Sehr geehrter Kunde,
+                                <br/>
+                                <br/>
+                                aufgrund Ihrer erteilten Zustimmung zum Lastschriftverfahren im
+                                {{config path="general/store_information/name"}}, erhalten Sie
+                                im Anhang zu dieser E-Mail das nötige SEPA-Mandat.
+                                <br/>
 
-                        <strong> Erst wenn Ihr unterschriebenes Originalmandat vorliegt, kann Ihre Bestellung weiter bearbeitet werden.
-                        <br/>
-                        {{block type="egovsbase/email_config" path="payment/sepadebitsax/adr_mandatsverwaltung" }} </strong>
-                        <br/>
-                        Vielen Dank
-                        <br/>
-                        Ihr {{config path="general/store_information/name"}}
-                    </p></td>
-                </tr>
-            </table></td>
+                                <strong>
+                                    Erst wenn Ihr unterschriebenes Originalmandat vorliegt,
+                                    kann Ihre Bestellung weiter bearbeitet werden.
+                                    <br/>
+                                    {{block type="egovsbase/email_config" path="payment/sepadebitsax/adr_mandatsverwaltung" }}
+                                </strong>
+                                <br/>
+                                Vielen Dank
+                                <br/>
+                                Ihr {{config path="general/store_information/name"}}
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </table>
 </div>
