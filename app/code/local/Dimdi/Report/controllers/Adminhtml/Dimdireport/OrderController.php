@@ -16,7 +16,7 @@ class Dimdi_Report_Adminhtml_Dimdireport_OrderController extends Dimdi_Report_Co
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('report/dimdireport')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Report'), Mage::helper('dimdireport')->__('Rechnungen'));
 		
 		return $this;
 	}   

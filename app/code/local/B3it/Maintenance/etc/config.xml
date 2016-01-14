@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<modules>
+		<B3it_Maintenance>
+			<version>2.0.0.0</version>
+		</B3it_Maintenance>
+	</modules>
+	<admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <B3it_Maintenance before="Mage_Adminhtml">B3it_Maintenance_Adminhtml</B3it_Maintenance>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+	<adminhtml>
+		<translate>
+			<modules>
+				<B3it_Maintenance>
+					<files>
+						<default>B3it_Maintenance.csv</default>
+					</files>
+				</B3it_Maintenance>
+			</modules>
+		</translate>
+			<menu>
+		        <report>
+		    		<children>
+		    		    <maintenance module="b3it_maintenance">
+		    				<title>Show Offline Stores</title>
+		    				<sort_order>100</sort_order>
+		    				<action>adminhtml/offline</action>
+		    			</maintenance>
+		    		</children>
+		        </report>	        
+		    </menu>
+		    <layout>
+            <updates>
+                <maintenance>
+                    <file>b3it/maintenance.xml</file>
+                </maintenance>
+            </updates>
+        </layout>
+	</adminhtml>
+	 
+	<global>
+		
+		<helpers>
+			<b3it_maintenance>
+				<class>B3it_Maintenance_Helper</class>
+			</b3it_maintenance>
+		</helpers>
+		<blocks>
+            <maintenance>
+                <class>B3it_Maintenance_Block</class>
+            </maintenance>
+        </blocks>
+		<models>
+			<maintenance>
+				<class>B3it_Maintenance_Model</class>
+				<resourceModel>maintenance_resource</resourceModel>
+			</maintenance>
+			<maintenance_resource>
+				 <class>B3it_Maintenance_Model_Resource</class>
+				 <entities>
+					  <log>
+							<table>maintenance_log</table>
+					  </log>
+					  <offline>
+							<table>maintenance_offline</table>
+					  </offline>
+				 </entities>
+			</maintenance_resource>
+		</models>
+		  
+		<resources>
+			<maintenance_setup>
+         	<setup>
+				<module>B3it_Maintenance</module>
+			</setup>
+            <connection>
+            	<use>core_setup</use>
+            </connection>
+         </maintenance_setup>
+			<maintenance_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</maintenance_read>
+			<maintenance_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</maintenance_write>
+		</resources>
+	
+		<events>
+			<controller_front_init_before>
+				<observers>
+					<maintenance>
+						<class>B3it_Maintenance_Controller_OfflineRouter</class>
+						<method>addOfflineRouter</method>
+					</maintenance>
+				</observers>
+			</controller_front_init_before>
+		</events>
+	</global>
+
+</config>
