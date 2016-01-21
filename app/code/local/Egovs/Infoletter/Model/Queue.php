@@ -66,7 +66,7 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
     	/** @var $collection Mage_Core_Model_Resource_Email_Queue_Collection */
     	$collection = Mage::getModel('infoletter/recipient')->getCollection();
     	$collection->getSelect()
-    	->where("message_id=".$this->getMessageId())
+    	->where("message_id=?", intval($this->getMessageId()))
     	->where("status=".Egovs_Infoletter_Model_Recipientstatus::STATUS_UNSEND);
     	$collection->setPageSize(self::RECIPIENTS_LIMIT_PER_CRON_RUN)
     	->setCurPage(1)

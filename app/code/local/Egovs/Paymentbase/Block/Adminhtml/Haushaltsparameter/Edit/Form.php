@@ -103,7 +103,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 			return array();
 		}
 		$collection = Mage::getModel('paymentbase/haushaltsparameter_objektnummerhhstelle')->getCollection();
-		$collection->getSelect()->where('objektnummer='.Mage::registry('haushaltsparameter_data')->getId());
+		$collection->getSelect()->where('objektnummer=?',Mage::registry('haushaltsparameter_data')->getId());
 
 		$res = array();
 		foreach ($collection->getItems() as $item) {

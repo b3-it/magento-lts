@@ -34,6 +34,7 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
     
  	public function setOrder($attribute, $dir='desc')
     {
+    	$dir = $dir =='desc'? 'desc' : 'asc';
         if ($attribute == 'relevance') {
             $this->getSelect()->order("relevance {$dir}");
         }
@@ -107,7 +108,7 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
 		     	$this->getSelect()
 		     	//$select->where('e.entity_id in (SELECT product FROM cataloginventory_stock_item_parent_merged group by product)');
 		     		->join(array('cat'=>'catalog_category_product'),'e.entity_id = cat.product_id',array()) 
-		     		->where('cat.category_id in '. $crit);
+		     		->where('cat.category_id in ?', $crit);
 	     	}
 	     	$this->_categoryApplied = true; 
      	}

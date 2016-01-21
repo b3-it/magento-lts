@@ -23,7 +23,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
       {
       	 $queueid = Mage::registry('queue_data')->getMessageId();
       }
-      $collection->getSelect()->where("message_id=".$queueid);
+      $collection->getSelect()->where("message_id=?", intval($queueid));
      
       		;
       $this->setCollection($collection);

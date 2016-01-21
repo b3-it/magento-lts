@@ -113,11 +113,13 @@ class Egovs_Search_Model_Mysql4_Soundex_Collection extends Mage_Core_Model_Mysql
     
     public function removeProductById($id, $storeid = null)
     {
-    	if(($id+0) > 0)
+    	$id = intval($id);
+    	$storeid = intval($storeid);
+    	if($id > 0)
      	{
 	     	$sql = "delete from ". $this->getTable('egovssearch/soundex');
 	     	$sql .= " where product_id=".$id;
-	     	if($storeid != null) $sql .= " AND store_id=". $storeid;
+	     	if($storeid > 0) $sql .= " AND store_id=". $storeid;
 	     	//$select = $this->getSelect();
 	     	$result = $this->_conn->query($sql);
 			
@@ -126,13 +128,11 @@ class Egovs_Search_Model_Mysql4_Soundex_Collection extends Mage_Core_Model_Mysql
     
     public function removeAllProducts()
     {
-    	if(($id+0) > 0)
-     	{
 	     	$sql = "delete from ". $this->getTable('egovssearch/soundex');
 	     	
 	     	$result = $this->_conn->query($sql);
 			
-     	}
+
     }
     
     

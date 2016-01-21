@@ -74,7 +74,7 @@ class Egovs_Pdftemplate_Adminhtml_Pdftemplate_TemplateController extends Mage_Ad
 		{
 			$collection = Mage::getModel('pdftemplate/section')->getCollection();
 			$collection->getSelect()
-				->where('pdftemplate_template_id='.$id)
+				->where('pdftemplate_template_id=?',intval($id))
 				->order('position');
 			
 			foreach($collection->getItems() as $item)

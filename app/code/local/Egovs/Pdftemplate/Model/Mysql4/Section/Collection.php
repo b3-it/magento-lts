@@ -12,7 +12,7 @@ class Egovs_Pdftemplate_Model_Mysql4_Section_Collection extends Mage_Core_Model_
     {
     	$id = intval($id);
     	$this->getSelect()
-    		->where('pdftemplate_template_id ='.$id);
+    		->where('pdftemplate_template_id =?', intval($id));
     	
     	$res = array();
     	foreach ($this->getItems()as $item) 

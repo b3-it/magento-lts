@@ -39,10 +39,10 @@ class Egovs_Paymentbase_Model_Localparams extends Mage_Core_Model_Abstract
     	$collection->addParams();
     	//Oberste Priorität Kundengruppe + Bezahlmodul
     	$collection->getSelect()
-    		->where('customer_group_id ='.$customerGroupID)
-    		->where("payment_method = '".$paymentMethod."'")
-    		->where('lower <= '. $amount)
-    		->where('upper > '. $amount)
+    		->where('customer_group_id =?',$customerGroupID)
+    		->where("payment_method = ?", $paymentMethod)
+    		->where('lower <= ?', $amount)
+    		->where('upper > ?', $amount)
     		->where('`status` = 1')
     	;
     	foreach ($collection->getItems() as $item) {
@@ -54,8 +54,8 @@ class Egovs_Paymentbase_Model_Localparams extends Mage_Core_Model_Abstract
     		->getSelect()->reset(Zend_Db_Select::WHERE)
 	    	->where('customer_group_id ='.$customerGroupID)
 	    	->where("payment_method = 'all'")
-	    	->where('lower <= '. $amount)
-	    	->where('upper > '. $amount)
+	    	->where('lower <= ?', $amount)
+	    	->where('upper > ?', $amount)
 	    	->where('`status` = 1')
     	;
     	foreach ($collection->getItems() as $item) {
@@ -70,8 +70,8 @@ class Egovs_Paymentbase_Model_Localparams extends Mage_Core_Model_Abstract
     		->getSelect()->reset(Zend_Db_Select::WHERE)
     		->where('customer_group_id = -1')
     		->where("payment_method = '".$paymentMethod."'")
-	    	->where('lower <= '. $amount)
-	    	->where('upper > '. $amount)
+	    	->where('lower <= ?', $amount)
+	    	->where('upper > ?', $amount)
 	    	->where('`status` = 1')
     	;
     	foreach ($collection->getItems() as $item) {
@@ -87,8 +87,8 @@ class Egovs_Paymentbase_Model_Localparams extends Mage_Core_Model_Abstract
     		->getSelect()->reset(Zend_Db_Select::WHERE)
     		->where('customer_group_id = -1')
     		->where("payment_method = 'all'")
-	    	->where('lower <= '. $amount)
-	    	->where('upper > '. $amount)
+	    	->where('lower <= ?', $amount)
+	    	->where('upper > ?', $amount)
 	    	->where('`status` = 1')
     	;
     	foreach ($collection->getItems() as $item) {

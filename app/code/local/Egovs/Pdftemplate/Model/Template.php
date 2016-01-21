@@ -22,7 +22,7 @@ class Egovs_Pdftemplate_Model_Template extends Mage_Core_Model_Abstract
 	{
 		$collection = Mage::getModel('pdftemplate/section')->getCollection();
 		$collection->getSelect()
-		->where('pdftemplate_template_id='.$this->getId())
+		->where('pdftemplate_template_id=?', intval($this->getId()))
 		->order('position');
 
 		$this->unsetData('pdftemplate_template_id')->save();

@@ -26,8 +26,8 @@ class Egovs_Paymentbase_Model_Search_Kassenzeichen extends Varien_Object
         $collection = Mage::getResourceModel('sales/order_collection');
         $collection->getSelect()
         	->join(array('payment'=>'sales_flat_order_payment'), 'payment.parent_id=main_table.entity_id')
-        	->where("kassenzeichen like '%".$this->getQuery()."%'")
-        	->orwhere("saferpay_transaction_id like '%".$this->getQuery()."%'");
+        	->where("kassenzeichen like ?", '%'.$this->getQuery().'%')
+        	->orwhere("saferpay_transaction_id like ?",'%'.$this->getQuery().'%');
 //die($collection->getSelect()->__toString());
         foreach ($collection->getItems() as $order) {
             $arr[] = array(

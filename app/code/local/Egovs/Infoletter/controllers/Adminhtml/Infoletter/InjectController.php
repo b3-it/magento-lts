@@ -14,7 +14,7 @@ class Egovs_Infoletter_Adminhtml_Infoletter_InjectController extends Mage_Adminh
 	
 			$collection = Mage::getModel('sales/order')->getCollection();
 			$collection->getSelect()
-			->where('entity_id IN ('.$Ids.')');
+			->where('entity_id IN (?)',$Ids);
 			foreach($collection->getItems() as $item)
 			{
 				//$custommers[$item->getCustomerId()] = $item->getCustomerId();
@@ -120,7 +120,7 @@ class Egovs_Infoletter_Adminhtml_Infoletter_InjectController extends Mage_Adminh
 		if($queue && ($queue->getStatus() ==  Egovs_Infoletter_Model_Status::STATUS_NEW))
 		{
 			$collection = Mage::getModel('infoletter/recipient')->getCollection();
-			$collection->getSelect()->where("message_id=".$queue->getId());
+			$collection->getSelect()->where("message_id=?", intval($queue->getId()));
 			$exiting = array();
 			foreach ($collection->getItems() as $recipient)
 			{

@@ -56,8 +56,8 @@ class Egovs_Informationservice_Model_Observer extends Mage_Core_Model_Abstract {
 		);
 		*/
 		$collection->getSelect()
-			->where('owner_id='.(int) $adminUser->getId())
-			->orWhere('user_id='.(int) $adminUser->getId());
+			->where('owner_id= ?', intval($adminUser->getId()))
+			->orWhere('user_id=?', intval($adminUser->getId()));
 		
 		Mage::log(sprintf("adminUserBeforeDelete::SQL:\n%s", $collection->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		

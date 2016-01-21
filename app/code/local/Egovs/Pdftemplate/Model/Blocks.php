@@ -22,7 +22,7 @@ class Egovs_Pdftemplate_Model_Blocks extends Mage_Core_Model_Abstract
     {
     	$res = '';
     	$collection= $this->getCollection();
-    	$collection->getSelect()->where("ident='".$ident."' AND status=".Egovs_Pdftemplate_Model_Blocks_Status::STATUS_ENABLED);
+    	$collection->getSelect()->where("ident= ? AND status=".Egovs_Pdftemplate_Model_Blocks_Status::STATUS_ENABLED, $ident);
     	
     	$payment = $data->getOrder()->getPayment()->getMethod();
     	$shippment = $data->getOrder()->getShippingMethod();
@@ -53,7 +53,7 @@ class Egovs_Pdftemplate_Model_Blocks extends Mage_Core_Model_Abstract
     	if($id)
     	{
 	    	$collection = Mage::getModel('sales/quote_address')->getCollection();
-	    	$collection->getSelect()->where('quote_id='.$id);
+	    	$collection->getSelect()->where('quote_id= ?', intval($id));
 	    	foreach($collection->getItems() as $item)
 	    	{
 	    		$taxes = $item->getAppliedTaxes();

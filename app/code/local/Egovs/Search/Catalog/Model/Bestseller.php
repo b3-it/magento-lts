@@ -257,7 +257,7 @@ class Egovs_Search_Catalog_Model_Bestseller extends Varien_Object
     	$collection->getSelect()
     		->joinLeft( array('best' => 'sales_flat_order_item'), 'best.product_id=e.entity_id', array('ordered_qty' => 'sum(qty_ordered)'))
     		->group('best.product_id')
-    		->order('ordered_qty ' . $dir);
+    		->order('ordered_qty ?', $dir);
     		//die($collection->getSelect()->__toString());
         return $this;
     }

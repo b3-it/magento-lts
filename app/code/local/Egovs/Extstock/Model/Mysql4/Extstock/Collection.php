@@ -116,6 +116,7 @@ class Egovs_Extstock_Model_Mysql4_Extstock_Collection extends Mage_Core_Model_My
 			return false;
 		}
 			
+		$product_id = intval($product_id);
 		$sql = "SELECT extstock_id,quantity FROM ".$this->getTable("extstock")." WHERE quantity > 0 AND product_id=".$product_id." ORDER BY `date_ordered`, `extstock_id`";
 		$data = $this->getConnection()->fetchAll($sql);
 
