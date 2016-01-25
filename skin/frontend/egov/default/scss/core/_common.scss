@@ -99,9 +99,11 @@ ul {
  * Default-Active marking
  * ============================================ */
 :active, :focus {
-    border-width: 1px !important;
+    border-width: $global-active-border !important;
     border-style: solid !important;
     border-color: $global-active-color !important;
+
+    outline: $global-active-border solid $global-active-color !important;
 }
 
 /* ============================================ *
