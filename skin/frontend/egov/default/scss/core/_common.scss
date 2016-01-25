@@ -98,7 +98,7 @@ ul {
 /* ============================================ *
  * Default-Active marking
  * ============================================ */
-:active {
+:active, :focus {
     border-width: 1px !important;
     border-style: solid !important;
     border-color: $global-active-color !important;
