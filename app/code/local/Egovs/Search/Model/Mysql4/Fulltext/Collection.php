@@ -127,6 +127,7 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
      */
     public function setOrder($attribute, $dir='desc')
     {
+    	$dir = $dir =='desc'? 'desc' : 'asc';
         if ($attribute == 'relevance') {
             //$this->getSelect()->order("relevance {$dir}");
         }

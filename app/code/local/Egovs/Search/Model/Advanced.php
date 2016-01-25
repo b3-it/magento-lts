@@ -42,6 +42,8 @@ class Egovs_Search_Model_Advanced  extends Mage_CatalogSearch_Model_Advanced
      */
 	public function addFilters($values)
 	{
+		//sanitize
+		$values = $this->_sanitizeValues($values);
 		$avail = null;
 		if(isset($values['search_available_in_stock'])) 
 		{
@@ -120,6 +122,9 @@ class Egovs_Search_Model_Advanced  extends Mage_CatalogSearch_Model_Advanced
      */
     private function _addFilters($values)
     {
+    	//sanitize
+    	$values = $this->_sanitizeValues($values);
+    	
         $attributes = $this->getAttributes();
         $allConditions = array();
         $filteredAttributes = array();
@@ -205,4 +210,26 @@ class Egovs_Search_Model_Advanced  extends Mage_CatalogSearch_Model_Advanced
         return $this;
     }
   
+    
+    private function _sanitizeValues($values)
+    {
+    	//sanitize
+    	$conn = Mage::getSingleton('core/resource')->getConnection('default_write');
+    	foreach($values as $k=>$v)
+    	{
+    		if(isset($values[$k]))
+    			if(is_array($values[$k]))
+    			{
+    				$values[$k] = $this->_sanitizeValues($values[$k]);
+    			}
+    			else if(strlen($v) > 0)
+    			{
+    				$values[$k] = $conn->quote($v);
+    				$values[$k] = trim($values[$k],"'");
+    			}
+    	}
+    	
+    	return $values;
+    }
+    
 }

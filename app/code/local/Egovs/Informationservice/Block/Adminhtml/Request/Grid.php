@@ -38,7 +38,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Grid extends Mage_Adminht
 		//$customer_id = $this->getRequest()->getParam('customer_id');
 		if ($this->_customerId != null) {
 			$customerId = intval($this->_customerId);
-			$collection->getSelect()->where('customer_id='.$customerId);
+			$collection->getSelect()->where('customer_id=?',intval($customerId));
 			$this->_customermode = true;
 		} else {
 			$eav = Mage::getResourceModel('eav/entity_attribute');
@@ -203,7 +203,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Grid extends Mage_Adminht
 				$filter = $column->getFilter()->getValue();
 				$select = $this->getCollection()->getSelect();
 				$select->where("concat(IFNULL(customer_company.value,''),' ', IFNULL(customer_firstname.value,''),' ',IFNULL(customer_lastname.value,''))
-						like '%".$filter."%'");
+						like ?",'%'.$filter.'%');
 
 				return $this;
 			}

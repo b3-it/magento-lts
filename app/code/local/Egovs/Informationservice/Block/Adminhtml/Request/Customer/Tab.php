@@ -108,7 +108,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Customer_Tab
 		$collection->addAttributeToSelect('city');
 		$collection->addAttributeToSelect('postcode');
 		$collection->getSelect()
-			->where('parent_id='.intval($customer_id))
+			->where('parent_id= ?',intval($customer_id))
 			->where('(entity_id  in (select address_id from '.$collection->getTable('informationservice_request').'))');
 		//die($collection->getSelect()->__toString());
 		
@@ -134,7 +134,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Customer_Tab
 			if(!$block->AddressEditingIsDenied)
 			{
 				$collection = Mage::getModel('informationservice/request')->getCollection();
-				$collection->getSelect()->where('address_id='.$address_id);
+				$collection->getSelect()->where('address_id=?', intval($address_id));
 				//echo ($collection->getSelect()->__toString());
 				if(count($collection->getItems()) > 0)
 				{

@@ -26,7 +26,7 @@ class Egovs_Paymentbase_Model_Search_Sepa extends Varien_Object
         $collection = Mage::getResourceModel('sales/order_collection');
         $collection->getSelect()
         	->join(array('payment'=>'sales_flat_order_payment'), 'payment.parent_id=main_table.entity_id')
-        	->where("sepa_mandate_id like '%".$this->getQuery()."%'");
+        	->where("sepa_mandate_id like ?",'%'.$this->getQuery().'%');
 //die($collection->getSelect()->__toString());
         foreach ($collection->getItems() as $order) {
             $arr[] = array(
@@ -45,7 +45,7 @@ class Egovs_Paymentbase_Model_Search_Sepa extends Varien_Object
         $collection->getSelect()
         ->join(array('customer'=>'customer_entity'), 'customer.entity_id=main_table.customer_id',array('email'))
         ->distinct()
-        ->where("sepa_mandate_id like '%".$this->getQuery()."%'");
+        ->where("sepa_mandate_id like ?",'%'.$this->getQuery().'%');
         //die($collection->getSelect()->__toString());
         foreach ($collection->getItems() as $history) {
         	$arr[] = array(

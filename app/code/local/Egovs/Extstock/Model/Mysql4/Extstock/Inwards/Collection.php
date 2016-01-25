@@ -35,7 +35,8 @@ class Egovs_Extstock_Model_Mysql4_Extstock_Inwards_Collection extends Egovs_Exts
 	protected function _joinFields($from = '', $to = '')
     {
         $this->getSelect()
-         	->where("date_delivered >='".$from."' AND date_delivered <='".$to."'"); 
+         	->where("date_delivered >=?",$from)
+        	->where("date_delivered <=?",$to); 
         return $this;
     }
 

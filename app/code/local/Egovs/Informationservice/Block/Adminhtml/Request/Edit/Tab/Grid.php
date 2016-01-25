@@ -20,7 +20,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Edit_Tab_Grid extends Mag
       $this->_id = $this->getRequest()->getParam('id');
       //falls noch keine request_id soll auch nichts angezeigt werden
       if($this->_id == null) $this->_id = 0;
-      $collection->getSelect()->where('request_id='.$this->_id);
+      $collection->getSelect()->where('request_id=?', intval($this->_id));
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }

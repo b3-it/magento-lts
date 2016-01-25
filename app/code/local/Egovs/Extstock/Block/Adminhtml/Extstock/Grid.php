@@ -49,23 +49,23 @@ class Egovs_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_
 		$this->setCollection($collection);
 
 		//$productid = Mage::getSingleton('adminhtml/session')->getData('extstockproduct'); 
-		$productid = $this->_product_id;
+		$productid = intval($this->_product_id);
 		if(!$this->_isStockMode())
 		{
 			if (!is_null($productid)) {
-				$collection->getSelect()->where("product_id = $productid");
+				$collection->getSelect()->where("product_id = ?", $productid);
 			} else {
 				$collection->getSelect()->where("product_id IS NULL");
 			}
 		} else {
 			//Wichtig für Redirect von extstocklist mit Filterung!!
 			if (!is_null($this->_product_id)) {
-				$collection->getSelect()->where("product_id = $this->_product_id");
+				$collection->getSelect()->where("product_id = ?", $this->_product_id);
 			}
 			if (!is_null($this->_distributor)) {
 				//Leerzeichen Rückcodieren #371
 				$this->_distributor = str_ireplace("%20", " ", $this->_distributor);
-				$collection->getSelect()->where("`distributor` like '$this->_distributor' ");
+				$collection->getSelect()->where("`distributor` like ?",$this->_distributor);
 			}
 		}	
 		
