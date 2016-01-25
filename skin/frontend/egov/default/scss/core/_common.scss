@@ -98,12 +98,16 @@ ul {
 /* ============================================ *
  * Default-Active marking
  * ============================================ */
-:active, :focus {
+:focus {
     border-width: $global-active-border !important;
     border-style: solid !important;
     border-color: $global-active-color !important;
-
-    outline: $global-active-border solid $global-active-color !important;
+}
+input[type="checkbox"]:focus, input[type="radio"]:focus {
+    /* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
+    outline-width: $global-active-border !important;
+    outline-style: solid !important;
+    outline-color: $global-active-color !important;
 }
 
 /* ============================================ *
