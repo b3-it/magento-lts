@@ -15,7 +15,7 @@ class Slpb_Verteiler_Model_Verteiler extends Mage_Core_Model_Abstract
     	{
 	    	$collection = Mage::getModel('verteiler/verteiler_customer')->getCollection();
 	     	$collection->getSelect()
-     			->where('verteiler_id='.$this->getId());
+     			->where('verteiler_id=?', intval($this->getId()));
      			
      		$res = array(); 
      		foreach($collection->getItems() as $item)

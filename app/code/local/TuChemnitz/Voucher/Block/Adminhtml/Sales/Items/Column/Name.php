@@ -51,7 +51,7 @@ class TuChemnitz_Voucher_Block_Adminhtml_Sales_Items_Column_Name extends Mage_Ad
 	{
 		$result =parent::getOrderOptions();
 		$collection = Mage::getModel('tucvoucher/tan')->getCollection();
-		$collection->getSelect()->where('order_item_id='.intval($this->getItem()->getItemId()));
+		$collection->getSelect()->where('order_item_id=?', intval($this->getItem()->getItemId()));
 		//die($collection->getSelect()->__toString());
 		if(count($collection->getItems()) > 0)
 		{

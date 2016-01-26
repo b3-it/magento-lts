@@ -67,7 +67,7 @@ class Slpb_Extstock_Adminhtml_Extstock_WarningController extends Slpb_Extstock_C
 		
 		//vorhandne Mengen ermitteln
 		$collection = Mage::getResourceModel('extstock/detail_collection');
-		$collection->getSelect()->where('main_table.stock_id = '. intval($params['source']));
+		$collection->getSelect()->where('main_table.stock_id = ?', intval($params['source']));
 		$stockItems = array();
 		foreach($collection->getItems() as $item)
 		{

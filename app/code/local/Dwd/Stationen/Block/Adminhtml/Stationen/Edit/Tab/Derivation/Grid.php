@@ -26,7 +26,7 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Edit_Tab_Derivation_Grid extends M
       $collection = Mage::getModel('stationen/derivation')->getCollection();
       $collection->addAttributeToSelect('*')
       		->getSelect()
-      		->where('parent_id='. $this->_model->getId())
+      		->where('parent_id=?', intval($this->_model->getId()))
       		//->columns(array('name_derivat'=>'name'))
       		;
       

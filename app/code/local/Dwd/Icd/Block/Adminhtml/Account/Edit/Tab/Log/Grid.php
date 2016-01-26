@@ -25,7 +25,7 @@ class Dwd_Icd_Block_Adminhtml_Account_Edit_Tab_Log_Grid extends Mage_Adminhtml_B
   		$id     = $this->getRequest()->getParam('id');
       $collection = Mage::getModel('dwd_icd/account_log')->getCollection();
    
-      $collection->getSelect()->where('account_id='.intval($id));
+      $collection->getSelect()->where('account_id=?',intval($id));
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }

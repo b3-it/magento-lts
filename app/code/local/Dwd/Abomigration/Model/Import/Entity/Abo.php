@@ -520,7 +520,7 @@ class Dwd_Abomigration_Model_Import_Entity_Abo extends Mage_ImportExport_Model_I
     	$this->_lastPeriodeId == null;
     	/* @var $product Mage_Catalog_Model_Product */
     	$collection = Mage::getModel('periode/periode')->getCollection();
-    	$collection->getSelect()->where('product_id='. $product_id);
+    	$collection->getSelect()->where('product_id=?', $product_id);
     	
     	if(count($collection->getItems()) != 1)
     	{
@@ -716,7 +716,7 @@ class Dwd_Abomigration_Model_Import_Entity_Abo extends Mage_ImportExport_Model_I
     protected function getAddressId($rowData)
     {
     	$addresses = Mage::getModel('customer/address')->getCollection();
-    	$addresses->getSelect()->where('parent_id='. $rowData['customer_id']);
+    	$addresses->getSelect()->where('parent_id=?', $rowData['customer_id']);
     	$addresses->addAttributeToSelect('*');
     	$check = array('vorname'=>'firstname', 'nachname'=>'lastname', 'ort' =>'city', 'strasse' => 'street','plz'=>'postcode');
     	foreach($addresses as $adr)

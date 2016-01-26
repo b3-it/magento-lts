@@ -101,7 +101,7 @@ class Dwd_Icd_IndexController extends Mage_Core_Controller_Front_Action
     	
     	$collection->getSelect()
     		//join('icd_orderitem','icd_orderitem.account_id = main_table.id AND icd_orderitem.id = '.$itemId,array())
-    		->where('customer_id='.$customer->getId())
+    		->where('customer_id=?', intval($customer->getId()))
     		->where('id='.intval($accountId));
     	;
     	   	

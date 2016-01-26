@@ -29,7 +29,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     	$orderItem = Mage::getModel('sales/order_item')->load($orderItemId);
     	
     	$collection = Mage::getModel('sales/quote_item_option')->getCollection();
-    	$collection->getSelect()->where('item_id='.intval($orderItem->getQuoteItemId()));
+    	$collection->getSelect()->where('item_id=?', intval($orderItem->getQuoteItemId()));
     	
     	$periode = null;
     	foreach ($collection->getItems() as $option)

@@ -53,7 +53,7 @@ class Dwd_ConfigurableDownloadable_Model_Resource_Link_Collection extends Mage_C
                 'd.link_id=main_table.link_id AND d.store_id = 0',
                 array('default_title' => 'title'))
             ->joinLeft(array('st' => $this->getTable('configdownloadable/link_title')),
-                'st.link_id=main_table.link_id AND st.store_id = ' . (int)$storeId,
+                'st.link_id=main_table.link_id AND st.store_id = ' . intval($storeId),
                 array('store_title' => 'title','title' => $ifNullDefaultTitle))
             ->order('main_table.sort_order ASC')
             ->order('title ASC');

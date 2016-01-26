@@ -35,7 +35,7 @@ class Dwd_Icd_Model_Account extends Dwd_Icd_Model_Abstract
     			$collection
     			->getSelect()
     			->where('connection_id = ' .$connectionId)
-    			->where('customer_id = '.$customerId)
+    			->where('customer_id = ?', $customerId)
     			->where('is_shareable = 1')
     			->where('status <> '. Dwd_Icd_Model_AccountStatus::ACCOUNTSTATUS_DELETE)
     			->limit('1');

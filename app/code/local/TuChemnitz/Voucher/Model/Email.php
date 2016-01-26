@@ -93,7 +93,7 @@ class TuChemnitz_Voucher_Model_Email extends Mage_Core_Model_Abstract
     		|| $item->getRealProductType() == TuChemnitz_Voucher_Model_Product_Type_Tucvoucher::TYPE_VOUCHER)
     		{
     			$collection = Mage::getModel('tucvoucher/tan')->getCollection();
-    			$collection->getSelect()->where("order_item_id = ". $item->getItemId());
+    			$collection->getSelect()->where("order_item_id = ?", intval($item->getItemId()));
     	//die($collection->getSelect()->__toString());	
     			$tans = array();	
     			foreach($collection->getItems() as $tan)

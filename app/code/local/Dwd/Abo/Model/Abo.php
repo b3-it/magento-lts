@@ -339,7 +339,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
    public function getTierPriceDependBenefitCount()
    {
    	$td = Mage::getModel('dwd_abo/tierpricedepends')->getCollection();
-   	$td->getSelect()->where('benefit_orderitem_id = '. $this->getCurrentOrderitemId());
+   	$td->getSelect()->where('benefit_orderitem_id = ?', $this->getCurrentOrderitemId());
    	return count($td->getItems());
    }
    	

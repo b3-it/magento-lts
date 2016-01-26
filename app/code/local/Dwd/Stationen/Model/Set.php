@@ -26,7 +26,7 @@ class Dwd_Stationen_Model_Set extends Mage_Core_Model_Abstract
 	        $collection->addAttributeToSelect('*');
 	     	$collection->getSelect()
 	     		->distinct()
-     			->join(array('relation'=>'stationen_set_relation'),'relation.stationen_id = e.entity_id AND set_id='.$this->getId(),array());
+     			->join(array('relation'=>'stationen_set_relation'),'relation.stationen_id = e.entity_id AND set_id='.intval($this->getId()),array());
    			
      		$res = array();
      		foreach($collection->getItems() as $item)

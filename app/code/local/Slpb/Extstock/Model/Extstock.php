@@ -129,9 +129,9 @@ class Slpb_Extstock_Model_Extstock extends Mage_Core_Model_Abstract
     {
     	$coll = Mage::getModel('extstock/extstock')->getCollection();
     	$coll->getSelect()
-    		->where('product_id='.$product_id)
+    		->where('product_id=?',$product_id)
     		->where('quantity >= 0')
-    		->where('stock_id='.$from_stock_id)
+    		->where('stock_id=?',$from_stock_id)
     		->order("date_ordered")
     		->order("extstock_id");
     	//die($coll->getSelect()->__ToString());

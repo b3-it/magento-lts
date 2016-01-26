@@ -64,19 +64,19 @@ class Slpb_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_W
 		if(!$this->_isStockMode())
 		{
 			if (!is_null($this->_product_id)) {
-				$collection->getSelect()->where("product_id = ". intval($this->_product_id));
+				$collection->getSelect()->where("product_id = ?", intval($this->_product_id));
 			} else {
 				$collection->getSelect()->where("product_id IS NULL");
 			}
 		} else {
 			//Wichtig für Redirect von extstocklist mit Filterung!!
 			if (!is_null($this->_product_id)) {
-				$collection->getSelect()->where("product_id = $this->_product_id");
+				$collection->getSelect()->where("product_id = ?", intval($this->_product_id));
 			}
 			if (!is_null($this->_distributor)) {
 				//Leerzeichen Rückcodieren #371
 				$this->_distributor = str_ireplace("%20", " ", $this->_distributor);
-				$collection->getSelect()->where("`distributor` like '$this->_distributor' ");
+				$collection->getSelect()->where("`distributor` like ?", $this->_distributor);
 			}
 		}	
 		//die($collection->getSelect()->__toString());		

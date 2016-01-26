@@ -114,7 +114,7 @@ class TuChemnitz_Voucher_Model_Product_Observer extends Varien_Object
 				|| $item->getRealProductType() == TuChemnitz_Voucher_Model_Product_Type_Tucvoucher::TYPE_VOUCHER
 				) {
 					$collection = Mage::getModel('tucvoucher/tan')->getCollection();
-					$collection->getSelect()->where('order_item_id='.$item->getId());
+					$collection->getSelect()->where('order_item_id=?',intval($item->getId()));
 					
 					$n = $item->getQtyOrdered() - count($collection->getItems());
 					

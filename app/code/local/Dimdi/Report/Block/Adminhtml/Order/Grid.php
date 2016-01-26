@@ -42,8 +42,8 @@ class Dimdi_Report_Block_Adminhtml_Order_Grid extends Mage_Adminhtml_Block_Widge
       
      
       $collection->getSelect()
-      	->where('invoice_date >= ' .$from)
-      	->where('invoice_date < ' .$to)
+      	->where('invoice_date >= ?', $from)
+      	->where('invoice_date < ?', $to)
       	;
       	
   

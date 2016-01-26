@@ -77,7 +77,7 @@ class Slpb_Checkout_Block_Quick_Suggest extends Mage_Core_Block_Abstract
             $collection->addAttributeToFilter('name',array('like'=>str_replace("'","",$queryText)));
             $collection->addStoreFilter($this->getStore());
             $s = $collection->getSelect()
-            	->orWhere("sku like ".$queryText);
+            	->orWhere("sku like ?", $queryText);
             $s = $collection->getSelect()->__toString();
 
             $counter = 0;

@@ -191,7 +191,7 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
     {
     	$collection = $this->getCollection();
     	$collection->getSelect()
-    	->where('product_id='.intval($productId));
+    	->where('product_id=?',intval($productId));
     
     	/* @var $collection Dwd_Periode_Model_Mysql4_Periode_Collection */ 
     	return $collection->getAllIds();
@@ -325,7 +325,7 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
     		$id = $this->getId();
     		if(!$id) $id = -1;
     		$collection->getSelect()
-    			->where('periode_id=' . $id)
+    			->where('periode_id=?', intval($id))
     			->order('qty');
     		$this->_tierPrice = $collection;
 
@@ -401,7 +401,7 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
     public static function loadPeriodeByOrderItem($orderitem)
     {
     	$collection = Mage::getModel('sales/quote_item_option')->getCollection();
-    	$collection->getSelect()->where('item_id='.intval($orderitem->getQuoteItemId()));
+    	$collection->getSelect()->where('item_id=?', intval($orderitem->getQuoteItemId()));
     
     	$periode = null;
     	foreach ($collection->getItems() as $option)

@@ -74,8 +74,8 @@ class Dimdi_Import_Model_Product_Attributes
     	
     	$collection = Mage::getModel('catalog/category')->getCollection();
     	$collection->getSelect()->join(array('osc'=>'catalog_category_entity_varchar'),'e.entity_id = osc.entity_id',array('oscid'=>'value'))
-    		->where("osc.value in (" .$cat.")")
-    		->where("attribute_id = $attribute_id");
+    		->where("osc.value in (?)", $cat)
+    		->where("attribute_id = ?", $attribute_id);
     		$tmp = $collection->getSelect()->__toString();
     		
     	$res = array();

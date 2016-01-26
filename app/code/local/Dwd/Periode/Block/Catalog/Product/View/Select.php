@@ -13,7 +13,7 @@ class Dwd_Periode_Block_Catalog_Product_View_Select extends Mage_Catalog_Block_P
 			if($product_id)
 			{
 				$collection = Mage::getModel('periode/periode')->getCollection();
-				$collection->getSelect()->where('product_id='.$product_id);
+				$collection->getSelect()->where('product_id=?', intval($product_id));
 				foreach ($collection->getItems() as $item)
 				{
 					$this->_perioden[] = $item;

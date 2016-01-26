@@ -19,7 +19,7 @@ class Slpb_Extstock_Model_Ordersheet_Pdf extends Varien_Object
 				   ->joinleft(array('size'=>'catalog_product_entity_varchar'),'size.entity_id = main_table.product_id AND size.attribute_id='.$PackageSize->getId(),array('size'=>'value'))
 				   ->join('extstock2_stock_order','extstock2_stock_order.extstock_stockorder_id=main_table.deliveryorder_increment_id',array('desired_date'=>'desired_date','order_note'=>'note'))
 				   ->columns($exp)
-				   ->where('deliveryorder_increment_id='.intval($orderSheets))
+				   ->where('deliveryorder_increment_id=?',intval($orderSheets))
 				   ->order('sku')
 				   ;
             

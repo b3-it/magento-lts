@@ -29,10 +29,10 @@ class Slpb_Extstock_Block_Adminhtml_Ordersheet_Grid extends Mage_Adminhtml_Block
 		$exp = new Zend_Db_Expr('format(qty_ordered / size.value,2)  as package ');
 		$PackageSize = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'packaging_size');
 		$collection->getSelect()
-				   ->joinleft(array('size'=>'catalog_product_entity_varchar'),'size.entity_id = main_table.product_id AND size.attribute_id='.$PackageSize->getId(),array('size'=>'value'))
+				   ->joinleft(array('size'=>'catalog_product_entity_varchar'),'size.entity_id = main_table.product_id AND size.attribute_id='.intval($PackageSize->getId()),array('size'=>'value'))
 				   ->columns($exp)
 				   ->join('extstock2_stock_order','extstock2_stock_order.extstock_stockorder_id=main_table.deliveryorder_increment_id','desired_date')
-				   ->where('deliveryorder_increment_id='.intval($lieferid));
+				   ->where('deliveryorder_increment_id=?',intval($lieferid));
 //die($collection->getSelect()->__toString());		
 		$this->setCollection($collection);
 		return parent::_prepareCollection();		

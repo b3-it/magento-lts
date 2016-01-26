@@ -30,7 +30,7 @@ class Dwd_Icd_Block_Checkout_Multipage_Successview extends Egovs_Checkout_Block_
 		->join(array('p1'=>'catalog_product_entity_int'),'p1.entity_id= items.product_id  AND p1.attribute_id  = '.$eav->getIdByCode('catalog_product', 'icd_use').' AND p1.value = 1' ,array())
 		
 		->joinleft(array('stationen'=>'stationen_entity'),'stationen.entity_id = items.station_id')
-		->where('items.order_id = ' . $orderid)
+		->where('items.order_id = ?', $orderid)
 		;
 		//die($collection->getSelect()->__toString());
 		

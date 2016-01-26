@@ -77,8 +77,8 @@ class Dimdi_Import_Model_Category extends Dimdi_Import_Model_Abstract
     	
     	$collection = Mage::getModel('catalog/category')->getCollection();
     	$collection->getSelect()->join(array('osc'=>'catalog_category_entity_varchar'),'e.entity_id = osc.entity_id',array('oscid'=>'value'))
-    		->where("osc.value = $oscid")
-    		->where("attribute_id = $attribute_id");
+    		->where("osc.value = ?", $oscid)
+    		->where("attribute_id = ?", $attribute_id);
      	foreach($collection->getItems() as $item)
     	{
     		return $item;

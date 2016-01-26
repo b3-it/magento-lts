@@ -133,8 +133,8 @@ class Dimdi_Import_Model_Order extends Dimdi_Import_Model_Abstract
     	
     	$collection = Mage::getModel('catalog/product')->getCollection();
     	$collection->getSelect()->join(array('osc'=>'catalog_product_entity_varchar'),'e.entity_id = osc.entity_id',array('oscid'=>'value'))
-    		->where("osc.value = $oscid")
-    		->where("attribute_id = $attribute_id");
+    		->where("osc.value = ?", $oscid)
+    		->where("attribute_id = ?", $attribute_id);
     	$collection->addAttributeToSelect('*');
     	
      	foreach($collection->getItems() as $item)
@@ -341,8 +341,8 @@ class Dimdi_Import_Model_Order extends Dimdi_Import_Model_Abstract
     	
     	$collection = Mage::getModel('customer/customer')->getCollection();
     	$collection->getSelect()->join(array('osc'=>'customer_entity_varchar'),'e.entity_id = osc.entity_id',array('oscid'=>'value'))
-    		->where("osc.value = $oscid")
-    		->where("attribute_id = $attribute_id");
+    		->where("osc.value = ?", $oscid)
+    		->where("attribute_id = ?",$attribute_id);
      	foreach($collection->getItems() as $item)
     	{
     		return  Mage::getModel('customer/customer')->load($item->getId());

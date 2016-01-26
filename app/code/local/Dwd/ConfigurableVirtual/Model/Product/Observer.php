@@ -394,7 +394,7 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
     	if(($customerId != 0) && ($is_shareable))
     	{
     		$collection = Mage::getModel('configvirtual/purchased_credential')->getCollection();
-    		$collection->getSelect()->where('customer_id = '.$customerId)
+    		$collection->getSelect()->where('customer_id = ?', $customerId)
     								->where('is_shareable = 1')
     								->limit('1');
     		foreach ($collection->getItems() as $item)

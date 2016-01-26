@@ -16,7 +16,7 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Content exten
     public function getItems()
     {
     	$collection = Mage::getModel('periode/periode')->getCollection();
-    	$collection->getSelect()->where('product_id='.$this->getProductId());
+    	$collection->getSelect()->where('product_id=?', intval($this->getProductId()));
     	return $collection->getItems();
     }
 
@@ -144,7 +144,7 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Content exten
     	{
     		$collection = Mage::getModel('dwd_abo/abo')->getCollection();
     		$collection->getSelect()
-    			->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id=main_table.first_orderitem_id AND order_item.period_id='.$periode->getId(),array())
+    			->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id=main_table.first_orderitem_id AND order_item.period_id='.intval($periode->getId()),array())
     			->where('main_table.status='. Dwd_Abo_Model_Status::STATUS_ACTIVE);
     		
     		return count($collection->getItems());

@@ -39,7 +39,7 @@ class Dwd_Stationen_Model_Resource_Stationen extends Mage_Eav_Model_Entity_Abstr
     {
     	$collection = Mage::getModel('stationen/stationen')->getCollection();
     	$collection->getSelect()
-    				->where("entity_id='" . $stationen_id ."'")
+    				->where("entity_id=?",  $stationen_id )
     				->where('status = '.Dwd_Stationen_Model_Stationen_Status::STATUS_ACTIVE);
     	//die($collection->getSelect()->__toString());
     	if(count($collection->getItems()) == 0)

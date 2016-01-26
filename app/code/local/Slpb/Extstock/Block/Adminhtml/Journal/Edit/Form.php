@@ -21,7 +21,7 @@ class Slpb_Extstock_Block_Adminhtml_Journal_Edit_Form extends Mage_Adminhtml_Blo
       $model  = Mage::registry('extstock_journal_data');
       $product = Mage::getModel('catalog/product')->load($model->getProductId());
       $bestand = Mage::getResourceModel('extstock/detail_collection');
-	  $bestand->getSelect()->where("product_id = ".$model->getProductId());
+	  $bestand->getSelect()->where("product_id = ?", intval($model->getProductId()));
 		
       
       

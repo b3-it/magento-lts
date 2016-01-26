@@ -31,6 +31,7 @@ class Dwd_ConfigurableDownloadable_Model_Resource_Extendedlink_Collection extend
     	$ifNullDefaultTitle = $this->getConnection()
     		->getIfNullSql('st.title', 'd.title')
     	;
+    	$productId = intval($productId);
     	$ifProduct = '';
     	if ($productId > 0) {
     		$ifProduct = "AND main_table.product_id = $productId";
@@ -62,6 +63,7 @@ class Dwd_ConfigurableDownloadable_Model_Resource_Extendedlink_Collection extend
     	$ifNullDefaultPrice = $this->getConnection()
     		->getIfNullSql('stp.price', 'dp.price')
     	;
+    	$productId = intval($productId);
     	$ifProduct = '';
     	if ($productId > 0) {
     		$ifProduct = "AND main_table.product_id = $productId";

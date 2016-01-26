@@ -19,7 +19,7 @@ class Dwd_Stationen_Block_Catalog_Product_View_Abstract extends Mage_Catalog_Blo
     		$collection->getSelect()
     				->distinct()
 	    			->join(array('set'=>'stationen_set_relation'),'set.stationen_id = e.entity_id',array())
-	    			->where('set_id = ' . $set_id)
+	    			->where('set_id = ?', $set_id)
 	    			;
 			$set = Mage::getModel('stationen/set')->load($set_id);
 			

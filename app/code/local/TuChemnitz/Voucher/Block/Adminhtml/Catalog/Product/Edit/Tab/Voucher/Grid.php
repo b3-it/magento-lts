@@ -21,7 +21,7 @@
       if($product_id)
       {
 	      $collection->getSelect()
-	      	->where('product_id='.$product_id)  	
+	      	->where('product_id=?', intval($product_id))  	
       	;
       }
       //die($collection->getSelect()->__toString());

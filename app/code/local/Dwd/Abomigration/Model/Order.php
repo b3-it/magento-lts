@@ -27,7 +27,7 @@ class Dwd_Abomigration_Model_Order extends Dwd_Abo_Model_Order_Order
     	->where('order_id = 0')
     	->where('customer_id > 0')
     	->where('error = 0')
-    	->where("period_end <= '".$bis."'")
+    	->where("period_end <= ?",$bis)
     	->limit($limit);
     	//die($collection->getSelect()->__toString());
     	foreach($collection->getItems() as $item)

@@ -26,7 +26,7 @@ class Slpb_Extstock_Block_Adminhtml_Extstocklist_Grid extends Mage_Adminhtml_Blo
 			$id = $this->_product->getEntityId();
 			if($id == null) $id = -1;
 			
-			$collection->getSelect()->where("product_id = $id ");
+			$collection->getSelect()->where("product_id = ?", intval($id));
 		}
 		return parent::_prepareCollection();
 	}

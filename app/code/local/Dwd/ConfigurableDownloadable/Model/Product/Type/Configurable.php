@@ -256,7 +256,7 @@ class Dwd_ConfigurableDownloadable_Model_Product_Type_Configurable extends Mage_
     		$product = $this->getProduct();
     	}
     	$collection = Mage::getModel('periode/periode')->getCollection();
-    	$collection->getSelect()->where('product_id='.$product->getId());
+    	$collection->getSelect()->where('product_id=?',intval($product->getId()));
     	
     	return $collection->getItems();
     }
@@ -368,7 +368,7 @@ class Dwd_ConfigurableDownloadable_Model_Product_Type_Configurable extends Mage_
     				->addFieldToFilter('data_valid_to', array('from'=>$periodeItem->getStartDate(), 'to' => $periodeItem->getEndDate()))
     			;
     		}
-    		Mage::log(sprintf("getLinksForSale SQL: \n%s", $_linkCollection->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+    		$this->setLog(sprintf("getLinksForSale SQL: \n%s", $_linkCollection->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     		$linksCollectionById = array();    		
 	    	foreach ($_linkCollection as $link) {
 	    		/* @var Dwd_ConfigurableDownloadable_Model_Extendedlink $link */
