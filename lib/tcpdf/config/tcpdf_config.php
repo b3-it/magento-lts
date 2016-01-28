@@ -80,6 +80,7 @@
  * Cache directory for temporary files (full path).
  */
 //define ('K_PATH_CACHE', '/tmp/');
+define ('K_PATH_CACHE', Mage::getBaseDir('tmp').DS);
 
 /**
  * Generic name for a blank image.

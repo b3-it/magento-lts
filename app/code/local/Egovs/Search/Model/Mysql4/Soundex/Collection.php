@@ -9,7 +9,7 @@ class Egovs_Search_Model_Mysql4_Soundex_Collection extends Mage_Core_Model_Mysql
     public function _construct()
     {    
         $this->_init('egovssearch/soundex');
-        //$this->_phonetic = Mage::helper('egovssearch/colognephon');
+        $this->_phonetic = Mage::helper('egovssearch/colognephon');
     }
     
     public function addProduct($product, $storeid)
@@ -101,9 +101,9 @@ class Egovs_Search_Model_Mysql4_Soundex_Collection extends Mage_Core_Model_Mysql
     	{
     		foreach ($value as $s)
     		{
-    			$s = metaphone(trim($s));
-    			//if(strlen($s)>2)$res .= $this->_phonetic->germanphonetic($s)." ";
-    			if(strlen($s)>2)$res .= $s." ";
+    			//$s = metaphone(trim($s));
+    			if(strlen($s)>2)$res .= $this->_phonetic->germanphonetic($s)." ";
+    			//if(strlen($s)>0)$res .= $s." ";
     		} 
     	}
     	
