@@ -20,7 +20,7 @@
  *
  * @category    Varien
  * @package     Varien_Http
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -91,21 +91,6 @@ class Varien_Http_Adapter_Curl implements Zend_Http_Client_Adapter_Interface
                 curl_setopt($this->_getResource(), $this->_allowedParams[$param], $this->_config[$param]);
             }
         }
-        
-        $proxyUserPass = '';
-        if (isset($this->_config['proxy_user'])) {
-        	$proxyUserPass = $this->_config['proxy_user'].':';
-        }
-        if (isset($this->_config['proxy_pass'])) {
-        	if (empty($proxyUserPass)) {
-        		$proxyUserPass = ':';
-        	}
-        	$proxyUserPass .= $this->_config['proxy_pass'];
-        }
-        if (!empty($proxyUserPass)) {
-        	curl_setopt ($this->_getResource(), CURLOPT_PROXYUSERPWD, $proxyUserPass);
-        }
-        
         return $this;
     }
 

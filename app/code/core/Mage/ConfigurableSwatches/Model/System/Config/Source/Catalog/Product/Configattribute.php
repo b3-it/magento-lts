@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_ConfigurableSwatches
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Mage_ConfigurableSwatches_Model_System_Config_Source_Catalog_Product_Configattribute
@@ -50,10 +50,9 @@ class Mage_ConfigurableSwatches_Model_System_Config_Source_Catalog_Product_Confi
                 ->setOrder('frontend_label', Varien_Data_Collection::SORT_ORDER_ASC);
 
             $this->_attributes = array();
-            $helper = Mage::helper('configurableswatches');
             foreach ($attrCollection as $attribute) {
                 $this->_attributes[] = array(
-                    'label' => $helper->__($attribute->getFrontendLabel()),
+                    'label' => $attribute->getFrontendLabel(),
                     'value' => $attribute->getId(),
                 );
             }

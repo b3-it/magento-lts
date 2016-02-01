@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <config>
     <modules>
+    	<Egovs_Import>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Import>
+        <Egovs_Infoletter>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Infoletter>
         <Egovs_Acl>
             <active>true</active>
             <codePool>local</codePool>
@@ -44,7 +52,7 @@
             </depends>
         </Egovs_Customer>
         <Egovs_Debit>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />
@@ -52,7 +60,7 @@
             </depends>
         </Egovs_Debit>
         <Egovs_DebitPIN>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />
@@ -68,7 +76,7 @@
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_SepaDebitBund>
-        <Egovs_SepaDebitSax>
+		<Egovs_SepaDebitSax>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
@@ -95,6 +103,9 @@
         <Egovs_Extsalesorder>
             <active>true</active>
             <codePool>local</codePool>
+            <xdepends>
+                <Egovs_Paymentbase />
+            </xdepends>
         </Egovs_Extsalesorder>
         <Egovs_Extstock>
             <active>true</active>
@@ -123,35 +134,11 @@
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_GermanTax>
-		<Egovs_PayplaceGiropay>
-			<active>true</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Payment />
-                <Egovs_Paymentbase />
-            </depends>
-		</Egovs_PayplaceGiropay>
-		<Egovs_PayplacePaypage>
-			<active>true</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Payment />
-                <Egovs_Paymentbase />
-            </depends>
-		</Egovs_PayplacePaypage>
-		<Egovs_Import>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Egovs_Import>
-        <Egovs_Infoletter>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Egovs_Infoletter>
         <Egovs_Informationservice>
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Informationservice>
-        <Egovs_Maintenance>
+         <Egovs_Maintenance>
             <active>false</active>
             <codePool>local</codePool>
         </Egovs_Maintenance>
@@ -203,6 +190,13 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Shipment>
+        <Egovs_ShippingTax>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Tax />
+            </depends>
+        </Egovs_ShippingTax>
         <Egovs_Sitemap>
             <active>true</active>
             <codePool>local</codePool>

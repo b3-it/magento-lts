@@ -21,7 +21,7 @@
  *
  * @category    Mage
  * @package     Mage_Usa
- * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
@@ -229,7 +229,6 @@
                 <handling_type>F</handling_type>
                 <handling_action>O</handling_action>
                 <shipment_days>Mon,Tue,Wed,Thu,Fri</shipment_days>
-                <content_type>D</content_type>
             </dhlint>
         </carriers>
     </default>

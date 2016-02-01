@@ -20,7 +20,7 @@
 #
 # @category    Mage
 # @package     Mage
-# @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+# @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
 # @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
 #
 
@@ -42,7 +42,7 @@ PHP_BIN=`which php`
 INSTALLDIR=`echo $0 | sed 's/cron\.sh//g'`
 
 #	prepend the intallation path if not given an absolute path
-if [ "$INSTALLDIR" != "" -a "`expr index $CRONSCRIPT /`" != "1" ] ; then
+if [ "$INSTALLDIR" != "" -a "`expr index $CRONSCRIPT /`" != "1" ];then
     if ! ps auxwww | grep "$INSTALLDIR$CRONSCRIPT$MODE" | grep -v grep 1>/dev/null 2>/dev/null ; then
     	$PHP_BIN $INSTALLDIR$CRONSCRIPT$MODE &
     fi

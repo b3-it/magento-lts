@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -47,7 +47,7 @@
 <body id="page-login" onload="document.forms.loginForm.username.focus();">
     <div class="login-container">
         <div class="login-box">
-            <form method="post" action="" id="loginForm" autocomplete="<?php echo Mage::getIsDeveloperMode() ? "on" : "off"; ?>">
+            <form method="post" action="" id="loginForm" autocomplete="off">
                 <div class="login-form">
                     <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
                     <h2><?php echo Mage::helper('adminhtml')->__('Log in to Admin Panel') ?></h2>

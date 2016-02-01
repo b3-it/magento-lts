@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Stala_Abo>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Egovs_Acl/>
@@ -11,7 +11,7 @@
             </depends>
         </Stala_Abo>
         <Stala_Extcustomer>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Catalog/>
@@ -39,7 +39,7 @@
             <codePool>local</codePool>
         </Stala_CustomerReports>
         <Stala_Product>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Stala_Product>
     </modules>

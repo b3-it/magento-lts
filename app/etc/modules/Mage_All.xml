@@ -21,7 +21,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
@@ -74,7 +74,7 @@
             </depends>
         </Mage_Adminhtml>
         <Mage_AdminNotification>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
             <depends>
                <Mage_Core/>
@@ -191,14 +191,14 @@
             </depends>
         </Mage_Usa>
         <Mage_Paygate>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Payment/>
             </depends>
         </Mage_Paygate>
         <Mage_Paypal>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Paygate/>
@@ -207,7 +207,7 @@
             </depends>
         </Mage_Paypal>
         <Mage_PaypalUk>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Paygate/>
@@ -217,7 +217,7 @@
             </depends>
         </Mage_PaypalUk>
         <Mage_GoogleCheckout>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Sales/>
