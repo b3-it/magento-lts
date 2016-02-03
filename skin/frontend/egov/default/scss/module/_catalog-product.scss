@@ -63,6 +63,14 @@
 
 .product-view {
 
+    .required {
+        color: $global-warning-color;
+
+        em {
+            margin-right: $fa-icon-margin;
+        }
+    }
+
     .tab-content {
         .std {
             width: 100%;
