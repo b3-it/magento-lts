@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_germantax_tools_analyse_sales_order_index>
+        <reference name="content">
+            <block type="germantax/adminhtml_tools_analyse_sales_order" name="germantax" >
+            </block>
+        </reference>
+    </adminhtml_germantax_tools_analyse_sales_order_index>
+   
+</layout> 

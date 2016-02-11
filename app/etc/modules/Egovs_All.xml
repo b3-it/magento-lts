@@ -44,13 +44,6 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Checkout>
-        <Egovs_Customer>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Customer />
-            </depends>
-        </Egovs_Customer>
         <Egovs_Debit>
             <active>false</active>
             <codePool>local</codePool>
@@ -103,21 +96,11 @@
         <Egovs_Extsalesorder>
             <active>true</active>
             <codePool>local</codePool>
-            <xdepends>
-                <Egovs_Paymentbase />
-            </xdepends>
         </Egovs_Extsalesorder>
         <Egovs_Extstock>
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Extstock>
-        <Egovs_Freepayment>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Payment />
-            </depends>
-        </Egovs_Freepayment>
         <Egovs_Giropay>
             <active>true</active>
             <codePool>local</codePool>
@@ -138,10 +121,6 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Informationservice>
-         <Egovs_Maintenance>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Egovs_Maintenance>
         <Egovs_Openaccountpayment>
             <active>true</active>
             <codePool>local</codePool>
@@ -190,13 +169,6 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Shipment>
-        <Egovs_ShippingTax>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Tax />
-            </depends>
-        </Egovs_ShippingTax>
         <Egovs_Sitemap>
             <active>true</active>
             <codePool>local</codePool>
