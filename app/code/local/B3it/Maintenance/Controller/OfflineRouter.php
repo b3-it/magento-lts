@@ -4,6 +4,8 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 	private $cmspage = '/index/';
 	
 	public function addOfflineRouter(Varien_Event_Observer $observer) {	
+		if (!Mage::isInstalled()) return;
+		
 		$request = Mage::app()->getRequest();
 		$storeCode = $request->getStoreCodeFromPath();
 		//return;
