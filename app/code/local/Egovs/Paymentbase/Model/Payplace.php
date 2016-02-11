@@ -458,7 +458,6 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 		if ($this->getDebugFlag()) {
 			$_formData->setLabel(new Egovs_Paymentbase_Model_Payplace_Types_Label($this->__('Submit').'(DEBUG)', 'submit'));
 		}
-		$_formData->setCssURL(Mage::getStoreConfig("payment_services/payplace/css_url"));
 		
 		$_callbackData = new Egovs_Paymentbase_Model_Payplace_Types_Callback_Data();
 		$_formServiceRequest->setCallbackData($_callbackData);

@@ -480,15 +480,6 @@
                             <show_in_store>0</show_in_store>
                             <comment><![CDATA[Test: https://test.soap.bs-card-service.com/soapapi/services/XmlApiNl <br/>Live: https://soap.bs-card-service.com/soapapi/services/XmlApiNl]]></comment>
                         </service_url>
-                        <css_url translate="label">
-                            <label>css Url</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>70</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>Css url customizing Paypage Design</comment>
-                        </css_url>
                         <locale translate="label">
                             <label>Form Locale</label>
                             <frontend_type>text</frontend_type>
