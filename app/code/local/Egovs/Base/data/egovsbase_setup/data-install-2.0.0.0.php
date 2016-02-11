@@ -137,6 +137,7 @@ $installer->getConnection()->insertMultiple(
 );
 
 
+/*
 
 $installer->getConnection()->insertMultiple(
 		$installer->getTable('admin/permission_block'),
@@ -147,5 +148,5 @@ $installer->getConnection()->insertMultiple(
 				array('block_name' => 'symmetrics_impressum/impressum', 'is_allowed' => 1)
 		)
 );
-
+*/
 $installer->endSetup();

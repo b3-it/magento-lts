@@ -90,4 +90,71 @@ class Varien_Http_Client extends Zend_Http_Client
 
         return $body;
     }
+    
+    
+    public function setConfig($config = array()) {
+    	try {
+    
+    		$uri = $this->getUri(true);
+    		if(!$uri) {$uri = "";}
+    
+    		if ((Mage::getStoreConfig('web/proxy/use_proxy') == 1) && !($this->getExcludeProxy($uri)))
+    		{
+    			//Sobald der Proxy-Host konfiguriert wurde, darf der Rest nicht �berschrieben werden
+    			if (!array_key_exists('proxy_host', $config)) {
+    				Mage::log('Proxy is enabled but not manual set, using default settings...', Zend_Log::DEBUG);
+    				$config['adapter'] = 'Zend_Http_Client_Adapter_Proxy';
+    				$this->setAdapter($config['adapter']);
+    
+    				$config['proxy_host'] = Mage::getStoreConfig('web/proxy/proxy_name');
+    				$config['proxy_port'] = Mage::getStoreConfig('web/proxy/proxy_port');
+    
+    				//Proxy settings für cUrl
+    				$config['proxy'] = sprintf('%s%s', $config['proxy_host'], isset($config['proxy_port']) ? ':'.$config['proxy_port'] : '');
+    				$user = Mage::getStoreConfig('web/proxy/proxy_user');
+    				if (!empty($user)) {
+    					$config['proxy_user'] = $user;
+    				}
+    				$pass = Mage::getStoreConfig('web/proxy/proxy_user_pwd');
+    				if (!empty($pass)) {
+    					$config['proxy_pass'] = $pass;
+    				}
+    			}
+    		}
+    	} catch (Exception $e) {
+    		Mage::logException($e);
+    	}
+    	 
+    	 
+    	 
+    	return parent::setConfig($config);
+    }
+    
+    public function getExcludeProxy($uri)
+    {
+    	$excludeList = null;
+    	try {
+    		$excludeList = Mage::getStoreConfig('web/proxy/exclude_list');
+    	} catch (Exception $e) {
+    		return false;
+    	}
+    	 
+    	$excludeArray = explode("\n", $excludeList);
+    	 
+    	if (empty($excludeArray) || empty($uri)) {
+    		return false;
+    	}
+    	 
+    	$match = false;
+    	foreach ($excludeArray as $exclude) {
+    		if (stripos($uri, trim($exclude)) !== false) {
+    			$match = true;
+    			break;
+    		}
+    	}
+    	 
+    	return $match;
+    	 
+    }
+    
 }
