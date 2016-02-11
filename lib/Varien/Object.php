@@ -32,7 +32,7 @@
  * @package    Varien_Object
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Varien_Object implements ArrayAccess
+class Varien_Object extends Egovs_Object implements ArrayAccess
 {
 
     /**

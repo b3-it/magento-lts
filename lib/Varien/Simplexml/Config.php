@@ -507,12 +507,19 @@ class Varien_Simplexml_Config
     public function loadString($string)
     {
         if (is_string($string)) {
-            $xml = simplexml_load_string($string, $this->_elementClass);
-
-            if ($xml instanceof Varien_Simplexml_Element) {
-                $this->_xml = $xml;
-                return true;
-            }
+        try 
+	    	{
+	            $xml = simplexml_load_string($string, $this->_elementClass);
+		    	if ($xml instanceof Varien_Simplexml_Element) {
+	                $this->_xml = $xml;
+	                return true;
+	            }
+	    	}
+	    	catch(Exception $ex)
+	    	{
+	    		//var_dump($string);
+	    		 Mage::logException($ex);
+	    	}
         } else {
             Mage::logException(new Exception('"$string" parameter for simplexml_load_string is not a string'));
         }
