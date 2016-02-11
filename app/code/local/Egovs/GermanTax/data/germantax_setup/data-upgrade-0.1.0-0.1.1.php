@@ -274,7 +274,10 @@ $tax_rate = Mage::helper('germantax/setup')->getTaxRateArray($tax_rate);
 
 
 //SELECT  concat('$tax_calc[] = array(',tax_calculation_rate_id,',', tax_calculation_rule_id, ',', customer_tax_class_id, ',', product_tax_class_id,');') FROM tax_calculation t;
+//Die IDs (tax_calculation_rate_id) muss mit denen aus $tax_rates übereinstimmen. Ggf muss SQL mit where eingegrenzt werden! 
 //Achtung!!!: In VM kann Ergebnis nur bis ca Zeile 1800 kopiert werden! Das Ergebnis muss ggf in mehreren Teilen kopiert werden!!
+$installer->run("delete from tax_calculation");
+
 $tax_calc = array();
 $tax_calc[] = array(147,24,11,13);
 $tax_calc[] = array(148,24,11,13);
