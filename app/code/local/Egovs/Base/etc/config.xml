@@ -543,6 +543,14 @@ T: {{var telephone}}
 				<log_level>5</log_level>
 			</log>
 		</dev>
+		<design>
+            <package>
+                <default_theme>default</default_theme>
+                <name>egov</name>
+                <theme>default</theme>
+                <translate>default</translate>
+            </package>
+        </design>
 		<system>
 			<smtp>
 				<log_mails>1</log_mails>
