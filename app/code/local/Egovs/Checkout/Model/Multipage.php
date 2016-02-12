@@ -223,7 +223,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 				
 				if (isset ( $data ['use_for_shipping'] ) && $data ['use_for_shipping'] == 1 && ! $this->isVirtual ()) {
 					$shippingAddress = $this->getQuote ()->getAddressByCustomerAddressId ( $customerAddressId );
-					if ($shippingAddress && $shippingAddress->getTaxvat ()) {
+					if ($shippingAddress && $shippingAddress->getTaxId()) {
 						$this->_validateAddressVat ( $shippingAddress );
 					}
 					$adrdata = $customerAddress->getData ();
@@ -377,7 +377,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 		}
 		
 		$baseAddress = $this->getQuote ()->getBaseAddress ();
-		if ($baseAddress && $baseAddress->getTaxvat () && $this->getQuote ()->hasVirtualItems ()) {
+		if ($baseAddress && $baseAddress->getTaxId() && $this->getQuote ()->hasVirtualItems ()) {
 			$this->_validateAddressVat ( $baseAddress );
 		}
 		
@@ -435,7 +435,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     		return $this;
     	}
     	
-    	if ($address->getTaxvatValid()) {
+    	if ($address->getVatIsValid()) {
     		return $this;
     	}
     	$customer = $this->getQuote()->getCustomer();
@@ -444,59 +444,59 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	if ($customer) {
     		//Ist nur gesetzt wenn neue Adresse angelegt wird!
     		//Taxvat wurde nur in Customer gespeichert, mit GermanTax (Base-Modul) wird sie nur noch in Adresse gespeichert.
-    		if ($address->getTaxvat()) {
+    		if ($address->getTaxId()) {
     			// set customer tax/vat number for further usage
-    			$this->getQuote()->setCustomerTaxvat($address->getTaxvat());
+    			$this->getQuote()->setCustomerTaxvat($address->getTaxId());
     			//Wenn die Customer-Taxvat der Adresse gesetzt ist und mit Customer-taxvat übereinstimmt und das Land übereinstimmt,
     			//ist sie auf jeden Fall schon einmal validiert worden!
-    			if ($customer->getTaxvat() === $address->getTaxvat() && stripos(trim($address->getTaxvat()), $address->getCountryId()) === 0) {
+    			if ($customer->getTaxvat() === $address->getTaxId() && stripos(trim($address->getTaxId()), $address->getCountryId()) === 0) {
     				$address->setTaxvatValid(true);
     				$customer->setTaxvatValid(true);
     			}
     			//Falls in Adresse neue Taxvat gesetzt wird
-    			if ($customer->getTaxvat() !== $address->getTaxvat() ) {
-    				//Es gibt nur eine taxvat und zwar am Customer-Object
-    				$customer->setTaxvat($address->getTaxvat());
+    			if ($customer->getTaxvat() !== $address->getTaxId() ) {
+    				//Es gibt nur eine taxvat am Customer-Object
+    				$customer->setTaxvat($address->getTaxId());
     			}
     		}
     		 
-    		if (($taxvat = $customer->getTaxvat())
-    			&& !$address->getTaxvatValid()
+    		if (($address->getTaxId())
+    			&& !$address->getVatIsValid()
+    			&& Mage::helper('core')->isCountryInEU($address->getCountryId())
+    			&& Mage::helper('customer/address')->isVatValidationEnabled($customer->getStore())
     		) {
-    			/* @var $vatService Egovs_Vies_Model_Webservice_CheckVatService */
-    			$vatService = null;
-    			try {
-    				$vatService = Mage::getModel('egovsvies/webservice_checkVatService');
-    			} catch (Exception $e) {
-    				return $this;
-    			}
-    			 
-    			if (!is_null($vatService)
-    				&& (get_class($vatService) == 'Egovs_Vies_Model_Webservice_CheckVatService' || is_subclass_of($vatService, 'Egovs_Vies_Model_Webservice_CheckVatService'))) {
-    				$result = $vatService->checkVatBy($taxvat);
-    	
-    				if (get_class($result) == 'Egovs_Vies_Model_Webservice_Types_CheckVatResponse' || is_subclass_of($result, 'Egovs_Vies_Model_Webservice_Types_CheckVatResponse')) {
-    					$addressData = $address->getData();
-    					$result->validateWith($addressData, $errors);
-    					 
-    					if (count($errors) > 0 ) {
-    						$type = 'base';
-    						if ($address->getAddressType() != 'base_address') {
-    							$type = $address->getAddressType();
-    						}
-    						$text = Mage::helper('checkout')->__("Vat for $type address not valid or could not be validated!");
-    						$text .= " " . Mage::helper('checkout')->__("Please check and modify your VAT or try again later.");
-    						if (class_exists('Egovs_Vies_Model_Resource_Exception_VatNotValid')) {
-    							throw new Egovs_Vies_Model_Resource_Exception_VatNotValid($text);
-    						} else {
-    							Mage::throwException($text);
-    						}
-    					}
-    					
-    					$address->setTaxvatValid(true);
-    					$customer->setTaxvatValid(true);
-    				}
-    			}
+    			/* @var $customerHelper Mage_Customer_Helper_Data */
+				$customerHelper = Mage::helper('customer');
+		
+				$result = $customerHelper->checkVatNumber(
+						$address->getCountryId(),
+						$address->getVatId()
+				);
+	
+				if (Mage::helper('core')->isModuleEnabled('Egovs_Vies')) {
+					if (!Mage::app()->getStore()->isAdmin()) {
+						$validationMessage = Mage::helper('customer')->getVatValidationUserMessage($address, $customer->getDisableAutoGroupChange(), $result);
+		
+						if (!$validationMessage->getIsError()) {
+							//Mage::getSingleton('customer/session')->addSuccess($validationMessage->getMessage());
+							$address->setVatIsValid(true);
+							$customer->setTaxvatValid(true);
+						} else {
+							//Mage::getSingleton('customer/session')->addError($validationMessage->getMessage());
+							$type = 'base';
+							if ($address->getAddressType() != 'base_address') {
+								$type = $address->getAddressType();
+							}
+							$text = Mage::helper('checkout')->__("Vat for $type address not valid or could not be validated!");
+							$text .= " " . Mage::helper('checkout')->__("Please check and modify your VAT or try again later.");
+							if (class_exists('Egovs_Vies_Model_Resource_Exception_VatNotValid')) {
+								throw new Egovs_Vies_Model_Resource_Exception_VatNotValid($text);
+							} else {
+								Mage::throwException($text);
+							}
+						}
+					}
+				}
     		}
     	}
     	return $this;
@@ -800,6 +800,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 	                $billing->setCustomerDob($this->getQuote()->getCustomerDob());
 	            }
 	
+	            //TODO : taxvat : Ist das noch relevant?
 	            if ($this->getQuote()->getCustomerTaxvat() && !$billing->getCustomerTaxvat()) {
 	                $billing->setCustomerTaxvat($this->getQuote()->getCustomerTaxvat());
 	            }

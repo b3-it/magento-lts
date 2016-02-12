@@ -169,9 +169,6 @@
 				<source_model>adminhtml/system_config_source_nooptreq</source_model>
                 <backend_model>adminhtml/system_config_backend_customer_show_customer</backend_model>
             -->
-			<!--<address>
-				<taxvat_show>opt</taxvat_show>
-			</address>-->
             <create_account>
                 <tax_calculation_address_type>shipping</tax_calculation_address_type>
             </create_account>
