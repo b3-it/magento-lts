@@ -32,6 +32,7 @@ class Egovs_Helper
 	private static $__vcsVersion = null;
 	
 	
+	
 	/**
 	 * Prüft die Verfügbarkeit der Module von denen $module abhängig ist.
 	 * 
