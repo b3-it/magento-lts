@@ -29,6 +29,8 @@ class Egovs_Helper
 	private static $lastTime = 0;
 	private static $startTime = 0;
 	
+	private static $__vcsVersion = null;
+	
 	
 	/**
 	 * Prüft die Verfügbarkeit der Module von denen $module abhängig ist.
@@ -142,5 +144,19 @@ class Egovs_Helper
 		self::$lastMem = $mem;
 		self::$lastTime = time();
 		 
+	}
+	
+	public static function getVcsVersion() {
+		$revFile = Mage::getBaseDir() .DS.'.git'.DS.'refs'.DS.'remotes'.DS.'origin'.DS.'master';
+		$rev = null;
+		
+		if (is_null(self::$__vcsVersion)) {
+			if (file_exists($revFile)) {
+				$rev = file_get_contents($revFile);
+				self::$__vcsVersion = substr($rev, 0, 8);
+			}
+		}
+		
+		return self::$__vcsVersion;
 	}
 }
