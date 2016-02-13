@@ -246,7 +246,7 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sal
     		}
     
     
-    		if ($appliedAmount || $previouslyAppliedTaxes[$row['id']]['amount'] >= 0) {
+    		if ($appliedAmount >= 0 || $previouslyAppliedTaxes[$row['id']]['amount'] >= 0) {
     			$previouslyAppliedTaxes[$row['id']]['amount'] += $appliedAmount;
     			$previouslyAppliedTaxes[$row['id']]['base_amount'] += $baseAppliedAmount;
     		} else {
