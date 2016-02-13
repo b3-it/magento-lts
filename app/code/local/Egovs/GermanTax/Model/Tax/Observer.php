@@ -42,7 +42,7 @@ class Egovs_GermanTax_Model_Tax_Observer
 					->setRegionId($baseAddress->getRegionId())
 					->setPostcode($baseAddress->getPostcode())
 				;
-				if ($baseAddress->hasTaxId() && $baseAddress->getTaxId()) {
+				if ($baseAddress->hasVatId() && $baseAddress->getVatId()) {
 					$request->setTaxvat(1);
 				} else {
 					$request->unsetData('taxvat');
@@ -155,7 +155,7 @@ class Egovs_GermanTax_Model_Tax_Observer
 			//&& $firstAddress->getPostcode() == $secondAddress->getPostcode()
 			//&& $firstAddress->getRegionId() == $secondAddress->getRegionId()
 			//&& $firstAddress->getCompany() == $secondAddress->getCompany()
-			&& $firstAddress->getTaxId() == $secondAddress->getTaxId()
+			&& $firstAddress->getVatId() == $secondAddress->getVatId()
 		) {
 			return true;
 		}

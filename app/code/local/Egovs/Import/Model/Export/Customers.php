@@ -119,7 +119,7 @@ class Egovs_Import_Model_Export_Customers  extends Varien_Object
   		$this->writeData($address,"region_id",$child);
   		$this->writeData($address,"street",$child);
   		$this->writeData($address,"suffix",$child);
-  		$this->writeData($address,"tax_id",$child);
+  		$this->writeData($address,"vat_id",$child);
   		$this->writeData($address,"telephone",$child);
   		$this->writeData($address,"web",$child);
   		$this->_appendData('original_id', $address->getId() , $child);

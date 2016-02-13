@@ -223,7 +223,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 				
 				if (isset ( $data ['use_for_shipping'] ) && $data ['use_for_shipping'] == 1 && ! $this->isVirtual ()) {
 					$shippingAddress = $this->getQuote ()->getAddressByCustomerAddressId ( $customerAddressId );
-					if ($shippingAddress && $shippingAddress->getTaxId()) {
+					if ($shippingAddress && $shippingAddress->getVatId()) {
 						$this->_validateAddressVat ( $shippingAddress );
 					}
 					$adrdata = $customerAddress->getData ();
@@ -377,7 +377,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 		}
 		
 		$baseAddress = $this->getQuote ()->getBaseAddress ();
-		if ($baseAddress && $baseAddress->getTaxId() && $this->getQuote ()->hasVirtualItems ()) {
+		if ($baseAddress && $baseAddress->getVatId() && $this->getQuote ()->hasVirtualItems ()) {
 			$this->_validateAddressVat ( $baseAddress );
 		}
 		
@@ -444,23 +444,23 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	if ($customer) {
     		//Ist nur gesetzt wenn neue Adresse angelegt wird!
     		//Taxvat wurde nur in Customer gespeichert, mit GermanTax (Base-Modul) wird sie nur noch in Adresse gespeichert.
-    		if ($address->getTaxId()) {
+    		if ($address->getVatId()) {
     			// set customer tax/vat number for further usage
-    			$this->getQuote()->setCustomerTaxvat($address->getTaxId());
+    			$this->getQuote()->setCustomerTaxvat($address->getVatId());
     			//Wenn die Customer-Taxvat der Adresse gesetzt ist und mit Customer-taxvat übereinstimmt und das Land übereinstimmt,
     			//ist sie auf jeden Fall schon einmal validiert worden!
-    			if ($customer->getTaxvat() === $address->getTaxId() && stripos(trim($address->getTaxId()), $address->getCountryId()) === 0) {
+    			if ($customer->getTaxvat() === $address->getVatId() && stripos(trim($address->getVatId()), $address->getCountryId()) === 0) {
     				$address->setTaxvatValid(true);
     				$customer->setTaxvatValid(true);
     			}
     			//Falls in Adresse neue Taxvat gesetzt wird
-    			if ($customer->getTaxvat() !== $address->getTaxId() ) {
+    			if ($customer->getTaxvat() !== $address->getVatId() ) {
     				//Es gibt nur eine taxvat am Customer-Object
-    				$customer->setTaxvat($address->getTaxId());
+    				$customer->setTaxvat($address->getVatId());
     			}
     		}
     		 
-    		if (($address->getTaxId())
+    		if (($address->getVatId())
     			&& !$address->getVatIsValid()
     			&& Mage::helper('core')->isCountryInEU($address->getCountryId())
     			&& Mage::helper('customer/address')->isVatValidationEnabled($customer->getStore())

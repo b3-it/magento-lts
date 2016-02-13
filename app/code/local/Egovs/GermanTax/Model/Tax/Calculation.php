@@ -121,7 +121,7 @@ public function getRateRequest(
             ->setPostcode($address->getPostcode())
             ->setStore($store)
             ->setCustomerClassId($customerTaxClass)
-            ->setTaxvat($address->getTaxvat() ? 1 : 0)
+            ->setTaxvat($address->getVatId() ? 1 : 0)
         ;
         return $request;
     }
