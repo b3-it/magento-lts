@@ -218,18 +218,26 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	protected function LoadTemplate($object)
 	{
 		$id = $object->getTemplateId();
-		if((($this->_Template == null) ||($this->_Template->getId() != $id)) && $id) {
-			$model  = Mage::getModel('pdftemplate/section')->getCollection();
-			$this->_TemplateSections = $model->getByTempalteId($id);
-			
-			
-			$this->_Template = Mage::getModel('pdftemplate/template')->load($id);
-			$this->setDefaultFont($this->_Template->getFont(),$this->_Template->getFontsize());
-			
-			$this->_Pdf->HeaderSection = $this->prepareTemplate($object, $this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_HEADER]);
-			$this->_Pdf->MarginalSection = $this->prepareTemplate($object,$this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_MARGINAL]);
-			$this->_Pdf->FooterSection = $this->prepareTemplate($object,$this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_FOOTER]);
-		} elseif (!$id) {
+		if ((($this->_Template == null) || ($this->_Template->getId() != $id)) && $id) {
+			/* @var $col Egovs_Pdftemplate_Model_Mysql4_Section_Collection */
+			$col  = Mage::getModel('pdftemplate/section')->getCollection();
+			$sections = $col->getByTemplateId($id);
+			if (!empty($sections)) {
+				$this->_TemplateSections = $sections;
+				
+				
+				$this->_Template = Mage::getModel('pdftemplate/template')->load($id);
+				$this->setDefaultFont($this->_Template->getFont(),$this->_Template->getFontsize());
+				
+				$this->_Pdf->HeaderSection = $this->prepareTemplate($object, $this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_HEADER]);
+				$this->_Pdf->MarginalSection = $this->prepareTemplate($object,$this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_MARGINAL]);
+				$this->_Pdf->FooterSection = $this->prepareTemplate($object,$this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_FOOTER]);
+			} else {
+				$id = false;
+			}
+		}
+		
+		if (!$id) {
 			$emptySections = array();
 			$emptySections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_HEADER] = Mage::getModel('pdftemplate/template',
 					array(
@@ -298,6 +306,9 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	
 	protected function prepareTemplate($object,$template)
 	{
+		if (!$template) {
+			Mage::throwException(Mage::helper('pdftemplate')->__('No template given.'));
+		}
 		$html = $template->getContent();
 		$html = str_replace("\n", '', $html);
 		$html = $this->replaceBlocks($object,$html);
