@@ -86,10 +86,22 @@
                 <default>DE</default>
             </country>
         </general>
-	        <sendfriend>
-	        	<email>
-	        	<enabled>false</enabled>
-	        	</email>
-	        </sendfriend>
+        <sendfriend>
+        	<email>
+        	   <enabled>false</enabled>
+        	</email>
+        </sendfriend>
+        <tax>
+            <calculation>
+                <algorithm>UNIT_BASE_CALCULATION</algorithm>
+                <apply_after_discount>1</apply_after_discount>
+                <based_on>shipping</based_on>
+                <price_includes_tax>0</price_includes_tax>
+                <shipping_includes_tax>0</shipping_includes_tax>
+            </calculation>
+            <defaults>
+                <country>DE</country>
+            </defaults>
+        </tax>
     </default>
 </config>
