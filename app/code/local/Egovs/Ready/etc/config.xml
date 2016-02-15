@@ -86,10 +86,50 @@
                 <default>DE</default>
             </country>
         </general>
-	        <sendfriend>
-	        	<email>
-	        	<enabled>false</enabled>
-	        	</email>
-	        </sendfriend>
+        <sendfriend>
+        	<email>
+        	   <enabled>false</enabled>
+        	</email>
+        </sendfriend>
+        <tax>
+            <calculation>
+                <algorithm>UNIT_BASE_CALCULATION</algorithm>
+                <apply_after_discount>1</apply_after_discount>
+                <based_on>shipping</based_on>
+                <price_includes_tax>0</price_includes_tax>
+                <shipping_includes_tax>0</shipping_includes_tax>
+            </calculation>
+            <defaults>
+                <country>DE</country>
+            </defaults>
+            <display>
+                <type>2</type>
+                <shipping>2</shipping>
+            </display>
+            <cart_display>
+                <price>3</price>
+                <subtotal>2</subtotal>
+                <shipping>2</shipping>
+                <discount>2</discount>
+                <grandtotal>0</grandtotal>
+                <full_summary>1</full_summary>
+                <zero_tax>1</zero_tax>
+            </cart_display>
+            <sales_display>
+                <price>2</price>
+                <subtotal>2</subtotal>
+                <shipping>2</shipping>
+                <discount>2</discount>
+                <grandtotal>0</grandtotal>
+                <full_summary>1</full_summary>
+                <zero_tax>1</zero_tax>
+            </sales_display>
+        </tax>
+        <catalog>
+            <price>
+                <display_block_below_price>1</display_block_below_price>
+                <display_delivery_time_on_categories>1</display_delivery_time_on_categories>
+            </price>
+        </catalog>
     </default>
 </config>

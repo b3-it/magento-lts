@@ -80,7 +80,6 @@ class Egovs_Import_Model_Export_Customers  extends Varien_Object
   		$this->writeData($customer,"sepa_mandate_id",$node);
   		$this->writeData($customer,"store_id",$node);
   		$this->writeData($customer,"suffix",$node);
-  		$this->writeData($customer,"taxvat",$node);
   		$this->writeData($customer,"unlock_customer",$node);
   		$this->writeData($customer,"use_group_autoassignment",$node);
   		$this->writeData($customer,"website_id",$node);
@@ -120,7 +119,7 @@ class Egovs_Import_Model_Export_Customers  extends Varien_Object
   		$this->writeData($address,"region_id",$child);
   		$this->writeData($address,"street",$child);
   		$this->writeData($address,"suffix",$child);
-  		$this->writeData($address,"taxvat",$child);
+  		$this->writeData($address,"vat_id",$child);
   		$this->writeData($address,"telephone",$child);
   		$this->writeData($address,"web",$child);
   		$this->_appendData('original_id', $address->getId() , $child);

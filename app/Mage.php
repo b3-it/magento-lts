@@ -167,7 +167,7 @@ final class Mage
      */
     public static function getVersionInfo()
     {
-        return array(
+        $vi = array(
             'major'     => '1',
             'minor'     => '9',
             'revision'  => '2',
@@ -175,6 +175,9 @@ final class Mage
             'stability' => '',
             'number'    => '',
         );
+        $vi['number'] = Egovs_Helper::getVcsVersion();
+        
+        return $vi;
     }
 
     /**

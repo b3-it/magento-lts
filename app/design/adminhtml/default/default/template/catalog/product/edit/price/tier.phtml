@@ -37,7 +37,7 @@
 <?php $_showWebsite = $this->isShowWebsiteColumn(); ?>
 <?php $_showWebsite= $this->isMultiWebsites(); ?>
 <tr>
-    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td class="label"><?php echo Mage::helper('catalog')->__($this->getElement()->getLabel()) ?></td>
     <td colspan="10" class="grid tier">
     <table cellspacing="0" class="data border" id="tiers_table">
         <?php if ($_showWebsite): ?>

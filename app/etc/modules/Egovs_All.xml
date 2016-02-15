@@ -114,6 +114,7 @@
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />
+                <Mage_Tax />
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_GermanTax>

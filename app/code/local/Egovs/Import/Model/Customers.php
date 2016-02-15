@@ -123,7 +123,7 @@ class Egovs_Import_Model_Customers  extends Egovs_Import_Model_Abstract
     	$address = Mage::getModel('customer/address');
     	$address->setCustomerId($customer->getId());
     	
-    	$keys = array('isDefaultBilling','isDefaultShipping','isBaseAddress','city','company','company2','company3','country_id','email','fax','firstname','lastname','middlename','postcode','prefix','region','region_id','street','suffix','taxvat','telephone','web');
+    	$keys = array('isDefaultBilling','isDefaultShipping','isBaseAddress','city','company','company2','company3','country_id','email','fax','firstname','lastname','middlename','postcode','prefix','region','region_id','street','suffix','vat_id','telephone','web');
     	
     	foreach($keys as $key)
     	{

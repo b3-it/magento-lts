@@ -1,0 +1,22 @@
+<?php
+/**
+ *
+ * @category  Egovs
+ * @package   Egovs_Paymentbase
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright 2016 B3 IT Systeme GmbH (http://www.b3-it.de)
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ * 
+ */
+?>
+<?php
+/**
+ * @var $this Egovs_Paymentbase_Block_Adminhtml_Notifications
+ */
+?>
+<?php if (!$this->isInitialized()): ?>
+    <div class="notification-global">
+        <strong><?php echo $this->helper('paymentbase')->__('Household parameters are not initialized.') ?></strong>
+        <?php echo $this->helper('paymentbase')->__('Click <a href="%s">here</a> to set up your household parameters.', $this->getManageUrl()) ?>
+    </div>
+<?php endif ?>
