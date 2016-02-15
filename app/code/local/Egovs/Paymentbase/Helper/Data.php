@@ -1331,6 +1331,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
 				$this->sendMailToAdmin("paymentbase::Fehler in WebService-Funktion: aendernKunde\n$sMailText");
 			}
 			
+			$sMailText .= print_r(debug_backtrace(), true)."\n";
 			Mage::log("paymentbase::Fehler in WebService-Funktion: aendernKunde ". $sMailText, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			// Fehlermeldung
 			if (!$objResult || $objResult instanceof SoapFault) {
