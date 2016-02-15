@@ -124,7 +124,7 @@
                 <action method="setElementClass"><value>footer-before-container</value></action>
             </block>
 
-            <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml">
+            <block type="egovsbase/page_html_footer" name="footer" as="footer" template="page/html/footer.phtml">
                 <action method="setData"><key>accesskey</key><value>s</value></action>
                 <action method="setData"><key>jumptitle</key><value>Servicemenü</value></action>
                 <block type="page/html_wrapper" name="bottom.container" as="bottomContainer" translate="label">
