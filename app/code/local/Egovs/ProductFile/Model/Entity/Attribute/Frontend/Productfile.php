@@ -9,7 +9,6 @@
  * @name        Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile
  * @author      Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @author      Holger Kögel <h.koegel@b3-it.de>
- * @author      René Mütterlein <r.muetterlein@b3-it.de>
  * @copyright	  Copyright (c) 2015 B3-it System GmbH
  * @license		  http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
@@ -22,7 +21,6 @@
  * @name        Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile
  * @author      Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @author      Holger Kögel <h.koegel@b3-it.de>
- * @author      René Mütterlein <r.muetterlein@b3-it.de>
  * @copyright	  Copyright (c) 2015 B3-it System GmbH
  * @license		  http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
