@@ -45,7 +45,7 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
         if ( is_file($_file) ) {
             $_descr = Mage::helper('core')->escapeHtml($_product->getProductfiledescription());
             $_fsize = Mage::helper('productfile')->getFormatBytes( filesize($_file) );
-            $_image = Mage::helper('productfile')->getThumbnailProductImageUrl($_product->getProductimage());
+            $_image = Mage::helper('productfile')->getThumbnailProductImageUrl(Mage::helper('core')->escapeHtml($_product->getProductimage()));
 
             $_img_descr = Mage::helper('productfile')->__('ProductFile description');
 
