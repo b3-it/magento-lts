@@ -34,7 +34,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Customer_Tab
     if($this->customer_id != null)
     {
       	$customer_id = intval($this->customer_id);
-      	$this->_updateButton('add', 'onclick', "setLocation('". $this->getUrl('informationservice/adminhtml_request/edit', array('customer' => $customer_id))."');");
+      	$this->_updateButton('add', 'onclick', "setLocation('". $this->getUrl('adminhtml/informationservice_request/edit', array('customer' => $customer_id))."');");
     }
     else
     {
