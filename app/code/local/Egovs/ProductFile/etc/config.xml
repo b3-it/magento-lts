@@ -20,7 +20,7 @@
 			<productfile_setup>
 				<setup>
 					<module>Egovs_ProductFile</module>
-					<class>Egovs_ProductFile_Model_Resource_Eav_Mysql4_Setup</class>
+					<class>Mage_Catalog_Model_Resource_Setup</class>
 				</setup>
 				<connection>
 					<use>core_setup</use>
@@ -44,7 +44,7 @@
 		</helpers>
 	</global>
 	<frontend>
-			<translate>
+		<translate>
 			<modules>
 				<Egovs_ProductFile>
 					<files>
@@ -54,11 +54,6 @@
 			</modules>
 		</translate>
 		<layout>
-			<updates>
-				<productfile>
-					<file>egovs/productfile.xml</file>
-				</productfile>
-			</updates>
 		</layout>
 	</frontend>
 	<adminhtml>

@@ -39,11 +39,12 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
         $_product = $this->__getProduct();
 
         $_fname = $_product->getProductfile();
-        $_file  = $this->__getFullURL() . '/' . $_fname;
+        $_fileUrl  = $this->__getFullURL() . '/' . $_fname;
+        $_file = $this->__getFullPath() . DS . $_fname;
 
         if ( is_file($_file) ) {
             $_descr = Mage::helper('core')->escapeHtml($_product->getProductfiledescription());
-            $_fsize = Mage::helper('productfile')->getFormatBytes( filesize($this->__getFullPath() . DS . $_fname) );
+            $_fsize = Mage::helper('productfile')->getFormatBytes( filesize($_file) );
             $_image = Mage::helper('productfile')->getThumbnailProductImageUrl($_product->getProductimage());
 
             $_img_descr = Mage::helper('productfile')->__('ProductFile description');
@@ -59,7 +60,7 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
                 $html[] = '  </div>';
             }
 
-            $html[] = '  <a href="' . $_file . '" target="_blank">' . $_fname . '</a>';
+            $html[] = '  <a href="' . $_fileUrl . '" target="_blank">' . $_fname . '</a>';
             $html[] = '  <span>(' . $_fsize . ')</span>';
             $html[] = '</div>';
 
