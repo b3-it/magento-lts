@@ -7,13 +7,13 @@
     </modules>
     <frontend>
         <routers>
-            <abo>
+            <dwd_abo>
                 <use>standard</use>
                 <args>
                     <module>Dwd_Abo</module>
                     <frontName>dwd_abo</frontName>
                 </args>
-            </abo>
+            </dwd_abo>
         </routers>
         <layout>
             <updates>

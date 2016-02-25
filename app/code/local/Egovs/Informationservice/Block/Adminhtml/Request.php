@@ -21,7 +21,7 @@ class Egovs_Informationservice_Block_Adminhtml_Request extends Mage_Adminhtml_Bl
     if($customer_id != null)
     {
       	 $customer_id = intval($customer_id);
-      	$this->_updateButton('add', 'onclick', "setLocation('". $this->getUrl('informationservice/adminhtml_request/edit', array('customer' => $customer_id))."');");
+      	$this->_updateButton('add', 'onclick', "setLocation('". $this->getUrl('adminhtml/informationservice_request/edit', array('customer' => $customer_id))."');");
     }
     return parent::_prepareLayout();
   }

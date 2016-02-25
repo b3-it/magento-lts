@@ -75,11 +75,11 @@
             }
         }
 
-        span.required,
-        p.required,
+        label.required em, label span.required,
+        span.required, p.required,
         div.validation-advice {
             color: $global-warning-color;
-            margin-right: 5px;
+            margin-right: $fa-icon-margin;
         }
 
         select.validation-failed,
