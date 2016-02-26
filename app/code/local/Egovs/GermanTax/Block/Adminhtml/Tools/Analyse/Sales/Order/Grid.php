@@ -52,9 +52,9 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
        	
        	$collection->getSelect()
        		->joinleft(array('shipping_adr'=>'sales_flat_order_address'),"main_table.entity_id=shipping_adr.parent_id AND if(is_virtual = 0,shipping_adr.address_type = 'shipping', shipping_adr.address_type = 'base_address')",
-       				array('shipping_name'=>"concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.taxvat)"))
+       				array('shipping_name'=>"concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.vat_id)"))
        		->joinleft(array('base_adr'=>'sales_flat_order_address'),"main_table.entity_id=base_adr.parent_id AND base_adr.address_type = 'base_address'"
-       				,array('base_name'=>"concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.taxvat)"));
+       				,array('base_name'=>"concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.vat_id)"));
        	
        	
        	//die($collection->getSelect()->__toString());
@@ -192,7 +192,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
     		return;
     	}
     	$table = $collection->getTable("sales/order");
-    	$condition = "(concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.taxvat) like ?";
+    	$condition = "(concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.vat_id) like ?";
     	$collection->getSelect()->where($condition, "%$value%");
     }
     
@@ -209,7 +209,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
     		return;
     	}
     	$table = $collection->getTable("sales/order");
-    	$condition = "concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.taxvat) like ?";
+    	$condition = "concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.vat_id) like ?";
     	$collection->getSelect()->where($condition, "%$value%");
     }
     
