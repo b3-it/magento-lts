@@ -91,6 +91,6 @@
 </table>
 <script type="text/javascript">decorateTable('my-orders-table', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})</script>
 <?php else: ?>
-<p><?php echo Mage::helper('downloadable')->__('You have not purchased any credentials yet.'); ?></p>
+<p><?php echo Mage::helper('dwd_abo')->__('You do not have any Abo yet.'); ?></p>
 <?php endif;?>
 <?php echo $this->getChildHtml('pager'); ?>
