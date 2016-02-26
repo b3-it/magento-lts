@@ -192,7 +192,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
     		return;
     	}
     	$table = $collection->getTable("sales/order");
-    	$condition = "(concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.vat_id) like ?";
+    	$condition = "(concat_ws(' ', shipping_adr.firstname,shipping_adr.lastname, shipping_adr.company, shipping_adr.country_id, shipping_adr.vat_id) like ?)";
     	$collection->getSelect()->where($condition, "%$value%");
     }
     
@@ -209,7 +209,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
     		return;
     	}
     	$table = $collection->getTable("sales/order");
-    	$condition = "concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.vat_id) like ?";
+    	$condition = "(concat_ws(' ', base_adr.firstname,base_adr.lastname, base_adr.company, base_adr.country_id, base_adr.vat_id) like ?)";
     	$collection->getSelect()->where($condition, "%$value%");
     }
     
