@@ -205,8 +205,7 @@
 							<show_in_store>1</show_in_store>
 						</register_number>
 						<business_rules translate="label">
-							<label>Reference for business rules (physician, physician...)
-							</label>
+							<label>Reference for business rules (physician, physician...)</label>
 							<frontend_type>textarea</frontend_type>
 							<sort_order>142</sort_order>
 							<show_in_default>1</show_in_default>

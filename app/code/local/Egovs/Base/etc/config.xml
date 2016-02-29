@@ -562,6 +562,11 @@ T: {{var telephone}}
 				<use_http_user_agent>1</use_http_user_agent>
 			</session>
 		</web>
+		<sales_email>
+			<invoice>
+				<send_mail>1</send_mail>
+			</invoice>
+		</sales_email>
 	</default>
 
 	<crontab>
