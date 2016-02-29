@@ -63,9 +63,20 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 		if(!is_string($value))
 			return false;
 		
-		if (strpos($value, '=?') == 0)
-			return Zend_Mime_Decode::decodeQuotedPrintable($value);
-		elseif (Zend_Mime::isPrintable($value)) {
+		if (strpos($value, '=?') === 0) {
+			//Encoding entfernen
+			$prefix = '=?' . $this->getMail()->getCharset() . '?B?';
+			$prefixLen = strlen($prefix);
+			if (stripos($value, $prefix) === 0) {
+				$value = substr($value, $prefixLen);
+			}
+			
+			if ($this->getMail()->getHeaderEncoding() === Zend_Mime::ENCODING_QUOTEDPRINTABLE) {
+				$value = Zend_Mime_Decode::decodeQuotedPrintable($value);
+			} else {
+				$value = base64_decode($value);
+			}
+		} elseif (Zend_Mime::isPrintable($value)) {
 			return $value;
 		} else {
 			return false;
