@@ -7,6 +7,11 @@
  */
 ?>
 <div class="footer-container">
+    <!--Sprungziel Tastatursteuerung -->
+    <div id="jumptarget<?php echo $this->getNameInLayout();?>">
+        <h2 style="display:none;"><?php echo $this->__('Service Menue')?></h2>
+    </div>
+
     <div id="footer-wrapper">
         <div class="footer">
             <?php echo $this->getChildHtml() ?>

@@ -255,6 +255,11 @@ Customer account pages, rendered for all tabs in dashboard
         </reference>
 
         <reference name="content">
+            <!-- egovs custom code begin -->
+            <action method="setData"><key>accesskey</key><value>o</value></action>
+            <action method="setData"><key>jumptitle</key><value>Benutzerkonto</value></action>
+            <!-- egovs custom code end -->
+
             <block type="page/html_wrapper" name="my.account.wrapper" translate="label">
                 <label>My Account Wrapper</label>
                 <action method="setElementClass"><value>my-account</value></action>
@@ -293,6 +298,11 @@ Customer account home dashboard layout
         </reference>
         <reference name="my.account.wrapper">
             <block type="customer/account_dashboard" name="customer_account_dashboard" template="customer/account/dashboard.phtml">
+                <!-- egovs custom code begin -->
+                <action method="setData"><key>accesskey</key><value>i</value></action>
+                <action method="setData"><key>jumptitle</key><value>Inhalt/Anzeige</value></action>
+                <!-- egovs custom code end -->
+
                 <block type="customer/account_dashboard_hello" name="customer_account_dashboard_hello" as="hello" template="customer/account/dashboard/hello.phtml"/>
                 <block type="core/template" name="customer_account_dashboard_top" as="top" />
                 <block type="customer/account_dashboard_info" name="customer_account_dashboard_info" as="info" template="customer/account/dashboard/info.phtml"/>
@@ -313,6 +323,11 @@ Customer account address book
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="customer/address_book" name="address_book" template="customer/address/book.phtml"/>
+
+            <!-- egovs custom code begin -->
+            <action method="setData"><key>accesskey</key><value>i</value></action>
+            <action method="setData"><key>jumptitle</key><value>Inhaltsbereich</value></action>
+            <!-- egovs custom code end -->
         </reference>
     </customer_address_index>
 
