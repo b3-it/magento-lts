@@ -48,6 +48,7 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 		if (is_null($this->_mail)) {
 			$this->_initTransport();
 			$this->_mail = new Zend_Mail('utf-8');
+			$this->_mail->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
 		}
 		return $this->_mail;
 	}
@@ -76,6 +77,7 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 			} else {
 				$value = base64_decode($value);
 			}
+			return $value;
 		} elseif (Zend_Mime::isPrintable($value)) {
 			return $value;
 		} else {
