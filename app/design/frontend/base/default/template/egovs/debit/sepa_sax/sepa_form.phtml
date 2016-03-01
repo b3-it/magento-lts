@@ -186,23 +186,29 @@ Translator.add('BIC must be either 8 or 11 characters long','<?php echo Mage::he
 Translator.add('IBAN not valid.','<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>');
 Translator.add('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.','<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>');
 
+var lngg = 1;
+var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
+
 // http://www.tbg5-finance.org/?ibandocs.shtml
 var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
 $j(document).ready(function(){
     opcToggle();
-});
-
-document.observe("dom:loaded", function() {
     toggleFields();
 });
+
+//document.observe("dom:loaded", function() {
+//    toggleFields();
+//});
 //]]>
 </script>
 
 <?php if($this->getAccountholderDiffers()):?>
 <script type="text/javascript">
 //<![CDATA[
+$j(document).ready(function(){
     toggleFields();
+});
 //]]>
 </script>
 <?php endif;?>
