@@ -127,3 +127,12 @@
         list-style-image: url($global-category-arrow-full-right);
     }
 }
+
+@include bp(max-width, 480px) {
+    .egov-account-login {
+        .new-users, .registered-users {
+            width: 100%;
+            margin-bottom: 10px !important;
+        }
+    }
+}

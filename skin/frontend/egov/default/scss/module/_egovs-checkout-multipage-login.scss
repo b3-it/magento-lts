@@ -8,3 +8,18 @@
 .egovs-checkout-multipage-login {
     @include egov_loginform;
 }
+
+@include bp(max-width, 480px) {
+    .egovs-checkout-multipage-login {
+        .col-wrapper {
+            margin-top: 20px;
+        }
+
+        .col2-set {
+            div.col-1, div.col-2 {
+                width: 100%;
+                margin-bottom: 10px !important;
+            }
+        }
+    }
+}
