@@ -54,10 +54,20 @@ function setPostcodeOptional(zipElement, country) {
         while (zipElement.hasClassName('required-entry')) {
             zipElement.removeClassName('required-entry');
         }
-        zipElement.up(1).down('label > span.required').hide();
+        //zipElement.up(1).down('label > span.required').hide();
+        //http://premius.net/blog/php/116-fixing-magento-error-error-in-unknown-object-fireevent.html
+        var zipElementLabel = zipElement.up(1).down('label > span.required');
+        if (zipElementLabel) {
+            zipElementLabel.hide();
+        }
     } else {
         zipElement.addClassName('required-entry');
-        zipElement.up(1).down('label > span.required').show();
+        //zipElement.up(1).down('label > span.required').show();
+        //http://premius.net/blog/php/116-fixing-magento-error-error-in-unknown-object-fireevent.html
+        var zipElementLabel = zipElement.up(1).down('label > span.required');
+        if (zipElementLabel) {
+            zipElementLabel.hide();
+        }
     }
 }
 
