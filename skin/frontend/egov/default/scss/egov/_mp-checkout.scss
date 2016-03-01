@@ -290,3 +290,19 @@
         display:none;
     }
 }
+
+@include bp(max-width, 480px) {
+    .mp-checkout {
+        .buttons-set {
+            a.egovslistbutton, button.button {
+                width: auto !important;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            a.break-link {
+                margin-left: 0px !important;
+            }
+        }
+    }
+}
