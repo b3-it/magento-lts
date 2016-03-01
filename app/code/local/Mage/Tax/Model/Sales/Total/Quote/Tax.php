@@ -1431,7 +1431,7 @@ class Mage_Tax_Model_Sales_Total_Quote_Tax extends Mage_Sales_Model_Quote_Addres
 
         foreach ($applied as $row) {
             if ($row['percent'] == 0) {
-                continue;
+                //continue;
             }
             if (!isset($previouslyAppliedTaxes[$row['id']])) {
                 $row['process'] = $process;
@@ -1456,7 +1456,7 @@ class Mage_Tax_Model_Sales_Total_Quote_Tax extends Mage_Sales_Model_Quote_Addres
             }
 
 
-            if ($appliedAmount || $previouslyAppliedTaxes[$row['id']]['amount']) {
+            if ($appliedAmount >= 0 || $previouslyAppliedTaxes[$row['id']]['amount'] >= 0) {
                 $previouslyAppliedTaxes[$row['id']]['amount'] += $appliedAmount;
                 $previouslyAppliedTaxes[$row['id']]['base_amount'] += $baseAppliedAmount;
             } else {
