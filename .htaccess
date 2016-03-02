@@ -261,10 +261,12 @@
 	    	#Apache 2.2
 	        order allow,deny
 	        deny from all
+	        Allow from localhost
         </IfModule>
         <IfModule mod_authz_core.c>
 	        #Apache 2.3+
 			Require all denied
+			Require local
 		</IfModule>
 
     </Files>

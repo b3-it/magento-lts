@@ -68,6 +68,15 @@
     
 	<frontend>
 		<events>
+		    <!-- Überschreibt Observer aus Mage_Sales -->
+            <sales_quote_address_collect_totals_before>
+                <observers>
+                    <sales_customer_validate_vat_number>
+                        <class>egovsvies/sales_observer</class>
+                        <method>changeQuoteCustomerGroupId</method>
+                    </sales_customer_validate_vat_number>
+                </observers>
+            </sales_quote_address_collect_totals_before>
 		</events>
 		<translate>
 			<modules>
@@ -141,17 +150,7 @@
                 </observers>
             </customer_address_save_after>
             
-            <!-- Überschreibt Observer aus Mage_Sales -->
-            <sales_quote_address_collect_totals_before>
-                <observers>
-                    <sales_customer_validate_vat_number>
-                        <class>egovsvies/sales_observer</class>
-                        <method>changeQuoteCustomerGroupId</method>
-                    </sales_customer_validate_vat_number>
-                </observers>
-            </sales_quote_address_collect_totals_before>
-            
-			<controller_action_layout_render_before_customer_account_create>
+            <controller_action_layout_render_before_customer_account_create>
 				<observers>
 					<egovsvies_vat>
 						<type>singleton</type>
