@@ -6,7 +6,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
   public function __construct()
   {
       parent::__construct();
-      $this->setId('resipientsGrid');
+      $this->setId('recipientsGrid');
       $this->setDefaultSort('resipient_id');
       $this->setDefaultDir('ASC');
       //$this->setSaveParametersInSession(true);
@@ -16,7 +16,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
 
   protected function _prepareCollection()
   {
-  	  //$model = Mage::registry('stationen_data');
+
       $collection = Mage::getModel('infoletter/recipient')->getCollection();
       $queueid = 0;
       if(Mage::registry('queue_data')->getMessageId())
@@ -31,12 +31,6 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
   }
 
 	
-
-  
-
-  
-
-  
   
   protected function _prepareColumns()
   {
@@ -45,21 +39,28 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
       		'header'    => Mage::helper('infoletter')->__('Email'),
       		'align'     =>'left',
       		'index'     => 'email',
-      		'filter_index' => 'email'
+      		//'filter_index' => 'email'
       ));
       
-      $this->addColumn('name', array(
-          'header'    => Mage::helper('infoletter')->__('Name'),
+      $this->addColumn('firstname', array(
+          'header'    => Mage::helper('infoletter')->__('Firstname'),
           'align'     =>'left',
-          'index'     => 'name',
-      	  'filter_index' => 'name'	
+          'index'     => 'firstname',
+      	  //'filter_index' => 'name'	
+      ));
+      
+      $this->addColumn('lastname', array(
+      		'header'    => Mage::helper('infoletter')->__('Lastname'),
+      		'align'     =>'left',
+      		'index'     => 'lastname',
+      		//'filter_index' => 'name'
       ));
 
       $this->addColumn('status', array(
       		'header'    => Mage::helper('infoletter')->__('Status'),
       		'align'     =>'left',
       		'index'     => 'status',
-      		'filter_index' => 'status',
+      		//'filter_index' => 'status',
       		'width'     => '80px',
       		'type'      => 'options',
       		'options'   => Egovs_Infoletter_Model_Recipientstatus::getOptionArray(),
@@ -82,9 +83,9 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
       return parent::_prepareColumns();
   }
 
-	public function xgetGridUrl()
+	public function getGridUrl()
     {
-         return $this->_getData('grid_url') ? $this->_getData('grid_url') : $this->getUrl('*/stationen_stationen/setgrid', array('_current'=>true));
+         return$this->getUrl('*/*/recipientsgrid', array('_current'=>true));
     }
     
  
@@ -100,7 +101,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
 	    
 	    	$this->getMassactionBlock()->addItem('delete', array(
 	    			'label'    => Mage::helper('infoletter')->__('Delete'),
-	    			'url'      => $this->getUrl('*/*/massDeleteRecipient'),
+	    			'url'      => $this->getUrl('*/*/massDeleteRecipient',  array('_current'=>true)),
 	    			'confirm'  => Mage::helper('infoletter')->__('Are you sure?')
 	    	));
     	}
