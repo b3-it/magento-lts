@@ -4,7 +4,7 @@ $installer = $this;
 $installer->startSetup();
 
 
-$forms=array('customer_register_address');
+$forms=array('adminhtml_customer_address','customer_address_edit','customer_register_address');
 $entityType = 'customer_address';
 $attributeCode = 'company2';
 $att = Mage::getModel('customer/attribute')->loadByCode($entityType, $attributeCode);
