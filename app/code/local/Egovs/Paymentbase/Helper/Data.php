@@ -94,6 +94,111 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
 	protected $_code = 'paymentbase';
 
 	/**
+	 * Gibt den Pfad zum etc-Verzeichnis zurück
+	 *
+	 * @return string
+	 */
+	protected static function _getEtcPath() {
+		$f = dirname(__FILE__);			// Get the path of this file
+		$f = substr($f, 0, -6);			// Remove the "Helper" dir
+		$f = $f.'etc/';					// Add the "etc" dir
+		$f = str_replace("\\", "/", $f);	// change slashes
+	
+		//echo $f; exit;
+	
+		return $f;
+	}
+	
+	/**
+	 * Ermittelt den Banknamen über die BIC
+	 *
+	 * Die Dateien können von folgenden Quellen aktualisiert werden:<br/>
+	 * BLZ: http://www.bundesbank.de/Redaktion/DE/Standardartikel/Aufgaben/Unbarer_Zahlungsverkehr/bankleitzahlen_download.html
+	 * BIC: Wurden bisher immer von Herrn Flügge (KKR) geliefert
+	 *
+	 * fgetcsv nutzt die lokalen Systemeinstellungen für das Charakter-Encoding!
+	 *
+	 * @param string  $bic BIC
+	 * @param boolean $bicIsBlz True falls BIC eine BLZ ist.
+	 *
+	 * @return string
+	 */
+	public static function getBankname($bic, $bicIsBlz = false) {
+		$name = '';
+		if (strlen(trim($bic)) > 0) {
+			$path = self::_getEtcPath();
+				
+			if ($bicIsBlz) {
+				$files = array(
+						'blz.csv' => array(
+								'bic' => 0,
+								'name' => 2
+						),
+				);
+			} else {
+				$files = array(
+						'blz.csv' => array(
+								'bic' => 7,
+								'name' => 2
+						),
+						'bics.csv' => array(
+								'bic' => 0,
+								'name' => 1
+						)
+				);
+			}
+			$bicsToCheck = array($bic);
+			if (strtoupper(substr($bic, -3, 3)) == 'XXX') {
+				$bicsToCheck[] = substr($bic, -4);
+			}
+			foreach ($files as $file => $ref) {
+				$file = $path.$file;
+				foreach ($bicsToCheck as $bic) {
+					// Open file
+					$fp = fopen($file, 'r');
+	
+					while ($data = fgetcsv($fp, 1024, ";")) {
+						if (trim($data[$ref['bic']]) == $bic) {
+							$name = trim($data[$ref['name']]);
+							break;
+						}
+					}
+					fclose($fp);
+						
+					if (!empty($name)) {
+						break 2;
+					}
+				}
+			}
+		}
+		if (empty($name)) {
+			return Mage::helper('paymentbase')->__('Not found');
+		}
+	
+		return $name;
+	}
+	
+	/**
+	 * Liefert die BLZ einer DE IBAN
+	 * 
+	 * @param string $iban
+	 * 
+	 * @return string|false
+	 */
+	public static function getBlzFromIban($iban = false) {
+		if (!$iban) {
+			return false;
+		}
+		/*
+		 * Die IBAN beginnt immer mit dem Länderkennzeichen (z.B. DE für Deutschland) und der zweistelligen Prüfsumme für die gesamte IBAN,
+		 * die aufgrund einer genau festgelegten Formel berechnet werden kann.
+		 * Es folgen die 8 Stellen lange Bankleitzahl und die max. 10-stellige Kontonummer (hat die Kontonummer keine 10 Stellen,
+		 * werden die fehlenden Stellen von vorn mit Nullen aufgefüllt).
+		 */
+		return substr($iban, 4, 8);
+	}
+
+	/**
 	 * Prüft ob $result in der Ausnahmeliste zum Senden von Admin-Mails enthalten ist
 	 * 
 	 * @param mixed $result Int, String oder ePayBL-Objekt

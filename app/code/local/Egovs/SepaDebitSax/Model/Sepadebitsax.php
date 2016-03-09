@@ -322,7 +322,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		Mage_Payment_Model_Method_Abstract::validate();
 
 		$payment = $this->getInfoInstance();
-		if ((!$this->getIbanOnly() || $payment->hasData('cc_type')) && $payment->hasData('cc_number')) {
+		if ((!$this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
 			$sBankCheck = 0;
 			$this->_preprocessBic();
 			if (!preg_match('/^[a-z]{6}[0-9a-z]{2}([0-9a-z]{3})?\z/i', $this->getBic())) {
