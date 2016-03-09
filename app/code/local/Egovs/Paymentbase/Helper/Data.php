@@ -7,11 +7,10 @@
  * @category	Egovs
  * @package		Egovs_Paymentbase
  * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2011 EDV Beratung Hempel
- * @copyright	Copyright (c) 2011 TRW-NET
+ * @copyright	Copyright (c) 2011-2016 B3 IT Systeme GmbH <http://www.b3-it.de>
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_Paymentbase_Helper_Data extends Mage_Core_Helper_Abstract
+class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 {
 	/**
 	 * ePayBL Kundennummer
