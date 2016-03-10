@@ -7,8 +7,8 @@
  *
  * @category   	Egovs
  * @package    	Egovs_SepaDebitBund
- * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright  	Copyright (c) 2013 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2013 - 2016 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  * @see Mage_Payment_Block_Info
@@ -144,7 +144,7 @@ class Egovs_SepaDebitBund_Block_Info extends Mage_Payment_Block_Info
 				return false;
 			}
 			
-			return Mage::helper('adminhtml')->getUrl('paymentbase/adminhtml_mandate/link', array('_secure' => true, 'method' => $this->getMethod()->getCode(), 'id' => $customerId, 'reference' => $mandateRef, 'rkey' => md5($this->getIban().now())));			
+			return Mage::helper('adminhtml')->getUrl('adminhtml/paymentbase_mandate/link', array('_secure' => true, 'method' => $this->getMethod()->getCode(), 'id' => $customerId, 'reference' => $mandateRef, 'rkey' => md5($this->getIban().now())));			
 		}
 		//Der key ist nur für den Varnish-Cache da dieser die URL sonst Cached und man immer das selbe Mandat bekommt.
 		//Das Mandat kann dann auch von einem völlig anderen Kunden stammen.

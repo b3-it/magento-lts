@@ -41,19 +41,8 @@ class Egovs_SepaDebitBund_Block_Form extends Mage_Payment_Block_Form
 	 * 
 	 * @return Egovs_Paymentbase_Model_Sepa_Mandate
 	 */
-	protected function xxx_getMandate() {
-		if ($this->hasMandate()) {
-			return $this->getMethod()->getMandate();
-		}
-		return null;
-	}
-	
-	
-	
-	protected function _getMandate()
-	{
-		if(($this->_mandate == null) && (!$this->_invalidMandate))
-		{
+	protected function _getMandate() {
+		if (($this->_mandate == null) && (!$this->_invalidMandate)) {
 				
 			$ref = $this->getMethod()->getInfoInstance()->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID);
 			if (!$ref) {
@@ -199,7 +188,7 @@ class Egovs_SepaDebitBund_Block_Form extends Mage_Payment_Block_Form
 	}
 	
 	public function getBic() {
-		if ($_mandate = $this->_getMandate()) {
+		if (!$this->getIbanOnly() && ($_mandate = $this->_getMandate())) {
 			return $_mandate->getBankingAccount()->getBic();
 		}
 		
@@ -233,5 +222,9 @@ class Egovs_SepaDebitBund_Block_Form extends Mage_Payment_Block_Form
 	
 	public function getAllowOneoff() {
 		return $this->getMethod()->getAllowOneoff();
+	}
+	
+	public function getIbanOnly() {
+		return $this->getMethod()->getIbanOnly();
 	}
 }

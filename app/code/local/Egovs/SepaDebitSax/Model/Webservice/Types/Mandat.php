@@ -1010,7 +1010,9 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
     
     	$ba = self::_createNewBankingAccount($this);
     	$ba->setIban($payment->getCcNumber());
-    	$ba->setBic($payment->getCcType());
+    	if ($payment->getCcType()) {
+    		$ba->setBic($payment->getCcType());
+    	}
     	$this->DebitorBankverbindung = $ba;
     
     
@@ -1069,7 +1071,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
     	}
     
     	/* @var $payment Mage_Sales_Model_Order_Payment */
-    	if($payment->getCcType() != $mandate->getBankingAccount()->getBic()){
+    	if($payment->getCcType() != $mandate->getBankingAccount()->getBic() && $payment->getMethodInstance()->getIbanOnly()){
     		return self::MANDATE_CHANGE_ACCOUNT;
     	}
     

@@ -129,6 +129,7 @@
                 <group>epaybl</group>
                 <agent_id>Webshop</agent_id>
                 <allow_ooff>1</allow_ooff>
+                <iban_only>0</iban_only>
                 <mandate_template>sepa_mandate_email_template</mandate_template>
                 <notification_template>sepa_mandate_notification_email_template</notification_template>
                 <mandate_amendment_template>sepa_mandate_amendment_email_template</mandate_amendment_template>                

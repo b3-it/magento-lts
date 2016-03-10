@@ -26,6 +26,7 @@
  * @package		Egovs_Paymentbase
  * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
  * @copyright	Copyright (c) 2012 EDV Beratung Hempel
+ * @copyright   Copyright (c) 2014 - 2016 B3 IT Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe extends Egovs_Paymentbase_Model_Webservice_Types_Abstract

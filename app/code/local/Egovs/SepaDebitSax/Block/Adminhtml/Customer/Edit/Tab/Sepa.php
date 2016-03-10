@@ -1,13 +1,17 @@
 <?php
 
 /**
- * Customer account form block
+ * Adminhtml Form für SEPA-Mandate
  *
- * @category   Mage
- * @package    Mage_Adminhtml
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @category	Egovs
+ * @package		Egovs_Paymentbase
+ * @author		Holger Kögel <h.koegel@b3-it.de>
+ * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2013 - 2015 B3 IT Systeme GmbH
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa extends Mage_Adminhtml_Block_Widget_Form_Container
+class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa
+	extends Mage_Adminhtml_Block_Widget_Form_Container
 	implements Mage_Adminhtml_Block_Widget_Tab_Interface
 {
 	protected $_customer;

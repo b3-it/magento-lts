@@ -8,6 +8,7 @@
  * @package		Egovs_Paymentbase
  * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
  * @copyright	Copyright (c) 2012 - 2013 EDV Beratung Hempel
+ * @copyright   Copyright (c) 2014 - 2016 B3 IT Systeme GmbH  
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  * 
  * @property bool $istOK Status des Ergebnisses
