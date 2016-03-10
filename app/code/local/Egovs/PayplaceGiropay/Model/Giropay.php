@@ -262,6 +262,11 @@ class Egovs_PayplaceGiropay_Model_Giropay extends Egovs_Paymentbase_Model_Paypla
 			case 1376:
 				Mage::throwException($this->__('TEXT_PROCESS_ERROR_MISSING_BIC'));
 			default:
+				Mage::log(
+					sprintf("payplacegiropay::Invalid bank data with RC code: %s", $_giropayBankCheckResponse->getRc()),
+					Zend_Log::ERR,
+					Egovs_Helper::LOG_FILE
+				);
 				Mage::throwException($this->__('TEXT_PROCESS_ERROR_STANDARD', $this->_getHelper()->getCustomerSupportMail()));
 		}
 		$_service = $_giropayBankCheckResponse->getService();

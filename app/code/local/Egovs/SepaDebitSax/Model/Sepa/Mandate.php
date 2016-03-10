@@ -416,7 +416,9 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface
 		$res->abweichenderKontoinhaber = $this->getAccountholderDiffers() ? "true" : "false";
 		$res->accountOwnerDiffers = $this->getAccountholderDiffers();
 		$res->accountOwnerBankname = trim($this->getBankingAccount()->getBankname($this->getBankingAccount()->getBic()));
-		$res->accountOwnerBic = $this->getBankingAccount()->getBic();
+		if ($this->getBankingAccount()->getBic()) {
+			$res->accountOwnerBic = $this->getBankingAccount()->getBic();
+		}
 		$res->accountOwnerCity = $this->getAccountholderAddress()->getCity();
 		$res->accountOwnerHousenumber =  $this->getAccountholderAddress()->getHousenumber();
 		$res->accountOwnerIban = $this->getBankingAccount()->getIban();
@@ -428,19 +430,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface
 		$res->accountOwnerZip = $this->getAccountholderAddress()->getZip();
 		$res->aktiv = true;
 		
-		/* @var $amendment Egovs_Paymentbase_Model_Webservice_Types_SepaAmendment*/
-		$amendment = Mage::getModel('paymentbase/webservice_types_sepaAmendment');
-		$amendment->EShopKundennummer = $EShopKundenNummer;
-		$amendment->bic = $this->getBankingAccount()->getBic();
-		$amendment->glaeubigerID = $this->getKreditorGlaeubigerId();// $glaubigerId;
-		$amendment->iban = $this->getBankingAccount()->getIban();
-		$amendment->kontoinhaber = $this->getAccountholderFullname();
-		$amendment->mandatReferenz = $this->getReference();
-		
-		
-		
-		$res->amendment = null;//$amendment;
-		
+		$res->amendment = null;
 		
 		//$res->betrag
 		$res->bewirtschafterNr = Mage::helper('paymentbase')->getBewirtschafterNr();

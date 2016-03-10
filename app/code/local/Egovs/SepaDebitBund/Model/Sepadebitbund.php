@@ -170,7 +170,9 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 		if ($mandate->getAccountholderDiffers() && (!isset($_bankverbindung) || !($_bankverbindung instanceof Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung))) {
 			/* @var $bankverbindung Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung */
 			$_bankverbindung = Mage::getModel('paymentbase/webservice_types_bankverbindung');
-			$_bankverbindung->BIC = $this->getBic();
+			if (!$this->getIbanOnly()) {
+				$_bankverbindung->BIC = $this->getBic();
+			}
 			$_bankverbindung->IBAN = $this->getIban();
 			// 			$_bankverbindung->BLZ = substr($this->getIban(), 4, 8);
 			$_surname = $eCustomer->vorname;
@@ -286,7 +288,7 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 		parent::validate();
 		
 		$payment = $this->getInfoInstance();
-		if ($payment->hasData('cc_type') && $payment->hasData('cc_number')) {
+		if (($this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
 			$mandate = $this->getMandate();
 			if ($mandate->getIsNew()) {
 				$mandate->setTemplateId($this->getMandatePdfTemplateId());

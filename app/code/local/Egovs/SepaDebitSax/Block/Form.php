@@ -209,7 +209,7 @@ class Egovs_SepaDebitSax_Block_Form extends Mage_Payment_Block_Form
 	 */
 	public function getBic() {
 		$this->getMandate(); //damit PaymentInfo ausgefüllt wird
-		if ($value = call_user_func(array($this->getMethod(), __FUNCTION__))) {
+		if (!$this->getIbanOnly() && ($value = call_user_func(array($this->getMethod(), __FUNCTION__)))) {
 			return $value;//$this->_maskValue($value);;
 		}
 		return false;

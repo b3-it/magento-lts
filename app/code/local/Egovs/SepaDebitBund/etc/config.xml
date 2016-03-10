@@ -66,6 +66,7 @@
                 <delete_customer_after_transaction>0</delete_customer_after_transaction>
                 <include_personal_data>1</include_personal_data>
                 <group>epaybl</group>
+                <iban_only>0</iban_only>
                 <customtext>
 Ich ermächtige die zuständige Bundeskasse, Zahlungen von meinem Konto mittels Lastschrift einzuziehen.
 Zugleich weise ich mein Kreditinstitut an, die von der Bundeskasse auf mein Konto gezogenen Lastschriften einzulösen.

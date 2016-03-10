@@ -183,6 +183,21 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
     			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
     		}
     	}
-    	$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+    	$this->_redirect('adminhtml/infoletter_queue/edit', array('id' => $this->getRequest()->getParam('id')));
     }
+
+    public function recipientsgridAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('infoletter/queue')->load($id);
+    	Mage::register('queue_data', $model);
+    	
+    	
+    	$this->loadLayout(false);
+    	$this->getResponse()->setBody(
+    			$this->getLayout()->createBlock('infoletter/adminhtml_queue_edit_tab_recipients_grid')->toHtml()
+    	);
+    }
+    
+    
 }

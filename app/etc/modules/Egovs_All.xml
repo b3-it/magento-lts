@@ -45,6 +45,7 @@
             <codePool>local</codePool>
         </Egovs_Checkout>
         <Egovs_Debit>
+            <!-- Falls Modul einmal AKTIV war muss es aktiv bleiben -->
             <active>false</active>
             <codePool>local</codePool>
             <depends>
@@ -53,6 +54,7 @@
             </depends>
         </Egovs_Debit>
         <Egovs_DebitPIN>
+            <!-- Falls Modul einmal AKTIV war muss es aktiv bleiben -->
             <active>false</active>
             <codePool>local</codePool>
             <depends>
@@ -61,22 +63,6 @@
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_DebitPIN>
-        <Egovs_SepaDebitBund>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Payment />
-                <Egovs_Paymentbase />
-            </depends>
-        </Egovs_SepaDebitBund>
-		<Egovs_SepaDebitSax>
-            <active>true</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Payment />
-                <Egovs_Paymentbase />
-            </depends>
-        </Egovs_SepaDebitSax>
         <Egovs_Doc>
             <active>true</active>
             <codePool>local</codePool>
@@ -142,6 +128,20 @@
                 <Mage_Cms />
             </depends>
         </Egovs_Paymentbase>
+        <Egovs_PayplacePaypage>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Egovs_Paymentbase/>
+            </depends>
+        </Egovs_PayplacePaypage>
+        <Egovs_PayplaceGiropay>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Egovs_Paymentbase/>
+            </depends>
+        </Egovs_PayplaceGiropay>
         <Egovs_Pdftemplate>
             <active>true</active>
             <codePool>local</codePool>
@@ -166,6 +166,22 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Search>
+        <Egovs_SepaDebitBund>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_SepaDebitBund>
+        <Egovs_SepaDebitSax>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_SepaDebitSax>
         <Egovs_Shipment>
             <active>true</active>
             <codePool>local</codePool>
