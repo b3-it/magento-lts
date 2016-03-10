@@ -43,7 +43,7 @@
 
     .skip-links {
         position: relative;
-        top: 40px + $global-logo-height;
+        top: 35px + $global-logo-height;
     }
 
     .store-language-container {
@@ -56,6 +56,17 @@
 
     #egov-nav, #header-account {
         top: 35px + $global-logo-height !important;
+    }
+}
+
+@include bp(max-width, 800px) {
+    .skip-links {
+        position: relative;
+        top: 75px + $global-logo-height;
+    }
+
+    .store-language-container {
+        top: 0px + $global-logo-height !important;
     }
 }
 
@@ -228,8 +239,9 @@
 .skip-links {
     clear: both;
     overflow: hidden;
-    border-top: 1px solid #EDEDED;
-    border-bottom: 1px solid #EDEDED;
+    border-top:$global-active-border solid $global-navigation-border-color;
+    border-bottom: $global-active-border solid $global-navigation-border-color;
+    background-color: $global-navigation-color;
 }
 
 // ---------------------------------------------

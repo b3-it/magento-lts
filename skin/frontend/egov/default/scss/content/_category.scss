@@ -19,9 +19,14 @@
         display: inline;
         height: auto;
         width: auto;
-        max-width: 80px;
-        max-height: 53px;
+        max-width: $global-category-image-maxwidth;
+        max-height: $global-category-image-maxheight;
+        margin: 0px auto;
     }
+}
+
+.category-description {
+    margin-bottom: $global-boxpadding;
 }
 
 .col1-layout {
@@ -49,6 +54,9 @@
 }
 
 .category-title {
+    position: relative;
+    top: -7px;
+
     a {
     }
     h1 {

@@ -108,6 +108,10 @@
         text-decoration: none;
         color: $global-linkcolor;
         font-family: $base-font-family;
+
+        border-width: $global-active-border;
+        border-style: solid;
+        border-color: $global-navigation-color;
     }
 
     li.level0 {

@@ -810,71 +810,78 @@ div.block-reorder {
 }
 
 .col2-left-layout {
-    .main {
+    .col-wrapper {
+        width: $global-wrapper-width;
         position: relative;
-        top: 5px;
-    }
+        top: $global-wrapper-top;
 
-    .col-left {
-        margin-right: $global-leftcol-rightmargin-percent;
-        float: left;
-        position: relative;
-        width: $global-leftcol-percent;
-    }
+        .col-left {
+            margin-right: $global-leftcol-rightmargin-percent;
+            float: left;
+            position: relative;
+            width: $global-leftcol-percent;
+        }
 
-    .col-main {
-        background-image: url($global-content-top-image);
-        background-repeat: no-repeat;
-        background-color: $global-content-background;
-        background-position: 0px -3px;
-        background-size: 100% auto;
-        overflow: hidden;
-        width: $global-content-2col-left-percent;
-        padding-left: $global-content-leftpadding-percent;
-        padding-top: $global-content-paddingtop;
-        padding-right: $global-rightcol-rightmargin-percent;
-    }
+        .col-main {
+            background-image: url($global-content-top-image);
+            background-repeat: no-repeat;
+            background-color: $global-content-background;
+            background-position: 0px -3px;
+            background-size: 100% auto;
+            overflow: hidden;
+            width: $global-content-2col-left-percent;
+            padding-left: $global-content-leftpadding-percent;
+            padding-top: $global-content-paddingtop;
+            padding-right: $global-rightcol-rightmargin-percent;
+        }
 
-    p.note-msg {
-        width: $global-content-2col-left-percent;
+        p.note-msg {
+            width: $global-content-2col-left-percent;
+        }
     }
 }
 
 .col2-right-layout {
-	  .col-right {
-        right: $global-rightcol-rightmargin-percent;
+    .col-wrapper {
+        width: $global-wrapper-width;
         position: relative;
-        width: $global-rightcol-percent;
-        top: $global-rightcol-margintop;
-        margin-bottom: $global-rightcol-margintop;
-    }
-    .col-main {
-        padding-left: 0; /* Remove the 15px padding */
-        background-image: url($global-content-top-image);
-        background-repeat: no-repeat;
-        background-color: $global-content-background;
-        background-position: 0px -3px;
-        background-size: 100% auto;
-        overflow: hidden;
-        width: 100%;
-        padding-left: $global-content-leftpadding-percent;
-        padding-top: $global-content-paddingtop;
+        top: $global-wrapper-top;
 
-        .std {
-            width: $global-content-2col-right-percent;
+    	  .col-right {
+            right: $global-rightcol-rightmargin-percent;
+            position: relative;
+            width: $global-rightcol-percent;
+            top: $global-rightcol-margintop;
+            margin-bottom: $global-rightcol-margintop;
         }
-    }
+        .col-main {
+            padding-left: 0; /* Remove the 15px padding */
+            background-image: url($global-content-top-image);
+            background-repeat: no-repeat;
+            background-color: $global-content-background;
+            background-position: 0px -3px;
+            background-size: 100% auto;
+            overflow: hidden;
+            width: 100%;
+            padding-left: $global-content-leftpadding-percent;
+            padding-top: $global-content-paddingtop;
 
-    p.note-msg {
-        width: 100%;
+            .std {
+                width: $global-content-2col-right-percent;
+            }
+        }
+
+        p.note-msg {
+            width: 100%;
+        }
     }
 }
 
 .col3-layout {
     .col-wrapper {
-        width: 100%;
+        width: $global-wrapper-width;
         position: relative;
-        top: 4px;
+        top: $global-wrapper-top;
 
         .col-left {
             margin-right: $global-leftcol-rightmargin-percent;
