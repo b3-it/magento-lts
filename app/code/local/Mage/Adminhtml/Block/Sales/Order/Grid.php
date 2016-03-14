@@ -88,6 +88,12 @@ class Mage_Adminhtml_Block_Sales_Order_Grid extends Mage_Adminhtml_Block_Widget_
             'width' => '100px',
         ));
 
+        $this->addColumn('owner', array(
+        		'header' => Mage::helper('sales')->__('Owner'),
+        		'index' => 'owner',
+        		'width' => '150px',
+        ));
+        
         $this->addColumn('billing_name', array(
             'header' => Mage::helper('sales')->__('Bill to Name'),
             'index' => 'billing_name',
