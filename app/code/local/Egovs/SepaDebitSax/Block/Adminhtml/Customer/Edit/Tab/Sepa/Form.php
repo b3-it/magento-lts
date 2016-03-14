@@ -9,7 +9,8 @@
  * @copyright	Copyright (c) 2013 - 2015 B3 IT Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mage_Adminhtml_Block_Widget_Form {
+class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mage_Adminhtml_Block_Widget_Form
+{
 	public function getIbanOnly() {
 		return Mage::getStoreConfigFlag ( 'payment/sepadebitsax/iban_only' );
 	}
@@ -41,7 +42,9 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
 				Mage::logException ( $ex );
 			}
 			
-			if ($mandate) {
+      	if($mandate)
+      	{
+
 				$fieldset->addField ( 'sepa_mandate_id', 'text', array (
 						'label' => Mage::helper ( 'sepadebitsax' )->__ ( 'SEPA Mandate Id' ),
 						'class' => 'readonly',
@@ -184,7 +187,8 @@ class Egovs_SepaDebitSax_Block_Adminhtml_Customer_Edit_Tab_Sepa_Form extends Mag
 							"readonly" => true,
 							'name' => 'sepa_mandate_bic',
 							"value" => $ba->getBic () 
-					) );
+						)
+					);
 				}
 				
 				if (! $mandate->getAccountholderDiffers ()) {

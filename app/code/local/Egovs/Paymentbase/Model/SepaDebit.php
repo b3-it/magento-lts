@@ -199,15 +199,13 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 // 			return $this;
 // 		}
 		$payment = $this->getInfoInstance();
-		if ($payment->hasData('cc_type') && $payment->hasData('cc_number')) {
+		if (($this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
 			$this->_validateBankdata();
 			
 			$change = Mage::helper('paymentbase')->getAdditionalCustomerMandateData($this->getCustomer(),'change_mandate');
 			$mandateref = $this->getMandateReferenceFromCustomer();
-			if( isset($change) && ($change != $mandateref) )
-			{
-				if(!$this->_canChange($change))
-				{
+			if (isset($change) && ($change != $mandateref) ) {
+				if (!$this->_canChange($change)) {
 						Mage::throwException("You can not change your Mandate! Please contact store owner!");
 				}
 				$this->_changeMandate($change, $payment);
@@ -245,11 +243,9 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 				$payment->save();
 			}	
 			throw new Egovs_Paymentbase_Exception_Validation($this->__('Customer requested to create a new mandate'));
-		}else 
-		{
+		} else {
 			$ref = Mage::helper('paymentbase')->getAdditionalCustomerMandateData($this->getCustomer(),"change_mandate");
-			if($ref)
-			{
+			if ($ref) {
 				$this->getCustomer()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID, $ref);
 				$resource = $this->getCustomer()->getResource();
 				$resource->saveAttribute($this->getCustomer(), Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID);
@@ -378,71 +374,15 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 	 * @return string
 	 */
 	public static function getBankname($bic, $bicIsBlz = false) {
-		$name = '';
-		if (strlen(trim($bic)) > 0) {
-			$path = self::_getEtcPath();
-			
-			if ($bicIsBlz) {
-				$files = array(
-						'blz.csv' => array(
-								'bic' => 0,
-								'name' => 2
-						),
-				);
-			} else {
-				$files = array(
-						'blz.csv' => array(
-								'bic' => 7,
-								'name' => 2
-								),
-						'bics.csv' => array(
-								'bic' => 0,
-								'name' => 1
-							)
-				);
-			}
-			$bicsToCheck = array($bic);
-			if (strtoupper(substr($bic, -3, 3)) == 'XXX') {
-				$bicsToCheck[] = substr($bic, -4);
-			}
-			foreach ($files as $file => $ref) {
-				$file = $path.$file;
-				foreach ($bicsToCheck as $bic) {
-					// Open file
-					$fp = fopen($file, 'r');
-				
-					while ($data = fgetcsv($fp, 1024, ";")) {
-						if (trim($data[$ref['bic']]) == $bic) {
-							$name = trim($data[$ref['name']]);
-							break;
-						}
-					}
-					fclose($fp);
-					
-					if (!empty($name)) {
-						break 2;
-					}
-				}
-			}
-		}
-		if (empty($name)) {
-			return Mage::helper('paymentbase')->__('Not found');
-		}
-	
-		return $name;
+		return Egovs_Paymentbase_Helper_Data::getBankname($bic, $bicIsBlz);
 	}
 	
 	public function getBlzFromIban($iban = false) {
 		if (!$iban) {
 			$iban = $this->getIban();
 		}
-		/*
-		 * Die IBAN beginnt immer mit dem Länderkennzeichen (z.B. DE für Deutschland) und der zweistelligen Prüfsumme für die gesamte IBAN,
-		 * die aufgrund einer genau festgelegten Formel berechnet werden kann.
-		 * Es folgen die 8 Stellen lange Bankleitzahl und die max. 10-stellige Kontonummer (hat die Kontonummer keine 10 Stellen,
-		 * werden die fehlenden Stellen von vorn mit Nullen aufgefüllt). 
-		 */
-		return substr($iban, 4, 8);
+		
+		return Egovs_Paymentbase_Helper_Data::getBlzFromIban($iban);
 	}
 	
 	/**
@@ -455,6 +395,10 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 	public function getAccountBankname() {
 		$_ibanOnly = $this->getIbanOnly();
 		if ($_ibanOnly) {
+			//BLZ geht nur für deutsche Banken!
+			if (strpos($this->getIban(), "DE") !== 0) {
+				return false;
+			}
 			$bic = $this->getBlzFromIban();
 		} else {
 			$bic  = $this->getBic();

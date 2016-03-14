@@ -43,6 +43,16 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 		return Mage::app()->getTranslator()->translate($args);
 	}
 	/**
+	 * Retrieve model helper
+	 *
+	 * @return Egovs_Paymentbase_Helper_Data
+	 */
+	protected function _getHelper() {
+		
+		return Mage::helper($this->getCode());
+	}
+	
+	/**
 	 * Aktuelle Kundennummer im WebShop
 	 * 
 	 * @var int

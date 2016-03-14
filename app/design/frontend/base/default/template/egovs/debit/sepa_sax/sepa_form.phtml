@@ -36,7 +36,7 @@ else {
         </li>
         <li class="double-line no-right-space">
             <div class="input-box">
-                <label for="bic"><?php if (!$this->getIbanOnly()) echo '<span class="required">*</span>'; ?><?php echo $this->__('BIC') ?></label>
+                <label for="bic"><?php echo $this->__('BIC') ?> <?php if (!$this->getIbanOnly()) echo '<span class="required">*</span>'; ?></label><br />
                 <input type="text" id="bic" name="payment[cc_type]" title="<?php echo $this->__('BIC') ?>" class="input-text <?php if (!$this->getIbanOnly()) echo "required-entry"; ?> validate-alphanum validate-debit-bic" value="<?php echo $this->getBic()?>" />
             </div>
         </li>
@@ -182,15 +182,31 @@ else {
 
 <script type="text/javascript">
 //<![CDATA[
-Translator.add('BIC must be either 8 or 11 characters long','<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>');
-Translator.add('IBAN not valid.','<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>');
-Translator.add('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.','<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>');
+	Translator.add('BIC must be either 8 or 11 characters long','<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>');
+	Translator.add('IBAN not valid.','<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>');
+	Translator.add('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.','<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>');
 
-var lngg = 1;
-var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
-
-// http://www.tbg5-finance.org/?ibandocs.shtml
-var sepaDebitForm = new VarienForm('multishipping-billing-form');
+	/*
+	 * http://stackoverflow.com/questions/15027613/magento-prototype-custom-validation
+	 */
+	var lngg = 1;
+	var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
+	if(Validation) {
+		Validation.addAllThese([
+			['validate-debit-bic', '<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>', function(v, r) {
+				return v.length == 8 || v.length == 11 || v.length == 0;
+			}],
+			['validate-debit-iban', '<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>', function(v, r) {
+				res = checkibancore(v);
+				return res == 0 ? false : true;
+			}],
+			['validate-alphanum_ws', '<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>', function(v) {
+                return Validation.get('IsEmpty').test(v) ||  /^[a-zA-Z0-9 ]+$/.test(v) /*!/\W/.test(v)*/
+            }],
+		])
+	}
+	// http://www.tbg5-finance.org/?ibandocs.shtml
+	var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
 $j(document).ready(function(){
     opcToggle();

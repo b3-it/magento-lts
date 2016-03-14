@@ -251,10 +251,12 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		Mage::log("{$objResult->getResult()->getResultCode()->getCode()}::Fehler in WebService-Funktion: $soapFunction\n". $sMailText, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 
 
-		//Mage::helper("paymentbase")->sendMailToAdmin("{$this->getCode()}::Fehler in WebService-Funktion: $soapFunction\n\n".$sMailText);
-		Mage::throwException(Mage::helper($this->getCode())->__($objResult->getResult()->getResultCode()->getDescription()));
-
-
+		$msg = Mage::helper($this->getCode())->__($objResult->getResult()->getResultCode()->getDescription());
+		$ev = new Egovs_Paymentbase_Exception_Validation($msg);
+		/* @var $eMsg Mage_Core_Model_Message_Error */
+		$eMsg = Mage::getModel('core/message_error', $msg);
+		$ev->addMessage($eMsg);
+		throw $ev;
 	}
 
 	/**
@@ -322,7 +324,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		Mage_Payment_Model_Method_Abstract::validate();
 
 		$payment = $this->getInfoInstance();
-		if (($this->getIbanOnly() || $payment->hasData('cc_type')) && $payment->hasData('cc_number')) {
+		if ((!$this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
 			$sBankCheck = 0;
 			$this->_preprocessBic();
 			if (!preg_match('/^[a-z]{6}[0-9a-z]{2}([0-9a-z]{3})?\z/i', $this->getBic())) {
@@ -385,7 +387,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		
 		
 		
-		if (($this->getIbanOnly() || $payment->hasData('cc_type')) && $payment->hasData('cc_number')) {
+		if (($this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
 			$payment->setCcNumberEnc($payment->encrypt($payment->getCcNumber()));
 			$mandate = $this->getMandateWithChanges($payment);
 			

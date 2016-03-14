@@ -35,6 +35,9 @@ $global-navigation-link-padding-right: 12px;
 $global-navigation-link-padding-bottom: 3px;
 $global-navigation-link-padding-left: 14px;
 
+$global-wrapper-top: 4px;
+$global-wrapper-width: 100%;
+
 $global-indent: 0px;
 $global-boxmargin: 20px;
 $global-element-magrin-bottom: 16px;
@@ -103,7 +106,7 @@ $global-content-marginright : 32px;
 $global-rightcol-marginright: 26px;
 $global-rightcol-width      : 230px;
 
-$global-rightcol-margintop : 62px;
+$global-rightcol-margintop : 48px;
 $global-content-paddingtop : 20px;
 
 // Berechnung aller Breiten in Prozent
@@ -176,6 +179,9 @@ $global-category-lineheight: 21px;
 $global-category-fontsize: 15px;
 $global-category-height: 30px;
 $global-category-subindent: 5px;
+
+$global-category-image-maxwidth: 80px;
+$global-category-image-maxheight: 53px;
 
 $global-subcat-left: 0px;
 $global-subcat-top: 0px;

@@ -136,6 +136,15 @@ implements Egovs_Paymentbase_Model_Sepa_Bankaccount
     	if (!$bic) {
     		$bic = $this->getBic();
     	}
-    	return Egovs_Paymentbase_Model_SepaDebit::getBankname($bic);
+    	
+    	if (empty($bic) && ($iban = $this->getIban())) {
+    		$bic = Egovs_Paymentbase_Helper_Data::getBlzFromIban($iban);
+    		if (!$bic) {
+    			return '';
+    		} else {
+    			return Egovs_Paymentbase_Helper_Data::getBankname($bic, true);
+    		}
+    	}
+    	return Egovs_Paymentbase_Helper_Data::getBankname($bic);
     }
 }

@@ -23,6 +23,7 @@
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_EinzugsermaechtigungErgebnis vervollstaendigenSEPAMandat(string $mandatReferenz, string $datumUnterschrift, string $ortUnterschrift)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_SepaMandat $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatreferenzMitBLP(string $customerID, string $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    anlegenKassenzeichenMitZahlverfahrenlisteMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, $lieferAdresse, string $buchungsText, $zahlverfahrenListe, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameter)
  *
  */
 class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
@@ -560,7 +561,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 			$parameter['lieferAdresse'] = null;
 		}
 		if (!is_null($buchungsText)) {
-			$parameter['buchungsText'] = $buchungsText;
+			$parameter['buchungsText'] = mb_substr($buchungsText, 0, 100, 'UTF-8');
 		} else {
 			$parameter['buchungsText'] = null;
 		}
