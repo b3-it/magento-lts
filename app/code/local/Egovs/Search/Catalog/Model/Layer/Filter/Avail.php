@@ -109,7 +109,7 @@ class Egovs_Search_Catalog_Model_Layer_Filter_Avail extends Mage_Catalog_Model_L
     
  	public function getName()
     {
-    	return 'Availability';
+    	return  Mage::helper('egovssearch')->__('Availability');
     }
     
 }

@@ -130,7 +130,7 @@ class Egovs_Doc_Block_Adminhtml_Doc_Grid extends Mage_Adminhtml_Block_Widget_Gri
         								'caption'   => Mage::helper('egovs_doc')->__('View'),
         								'url'       => array('base'=> '*/*/download'),
         								'field'     => 'id',
-        								'target' 	=> 'new'
+        								'target' 	=> '_blank'
         						)
         				),
         				'filter'    => false,

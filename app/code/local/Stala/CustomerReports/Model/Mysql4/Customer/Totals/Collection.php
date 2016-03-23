@@ -37,7 +37,7 @@ class Stala_CustomerReports_Model_Mysql4_Customer_Totals_Collection extends Mage
     public function setDateRange($from, $to) {
     	parent::setDateRange($from, $to);
         
-    	$this->joinAttribute('group_id', 'customer/group_id', 'customer_id', null, 'left');
+    	$this->getSelect()->join(array('group'=>$this->getTable('customer/customer_group')), 'group.customer_group_id=main_table.customer_group_id', array('group_id'=>'customer_group_id'));
     	
         $group_id = Mage::registry('cgroup');
         if (isset($group_id)) {
