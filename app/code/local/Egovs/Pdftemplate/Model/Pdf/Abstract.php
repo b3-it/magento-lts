@@ -810,8 +810,11 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
     	//TCPDF unterstützt keinen leeren String als Imagepfad -> siehe Egovs_Pdftemplate_Model_Pdf_Renderer_Pdf::Image
     	$config['logo'] = '';
     	$image = Mage::getStoreConfig('sales/identity/logo', $store);
+    	
         if ($image) {
-            $image = Mage::getStoreConfig('system/filesystem/media', $store) . '/sales/store/logo/' . $image;
+        	$dir = Mage::getStoreConfig('system/filesystem/media', $store);
+        	$dir =  Mage::getConfig()->substDistroServerVars($dir);
+            $image = $dir . '/sales/store/logo/' . $image;
             if (file_exists($image)) {
             	$config['logo'] = $image;
             } else {

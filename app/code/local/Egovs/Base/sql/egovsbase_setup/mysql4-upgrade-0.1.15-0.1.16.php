@@ -29,7 +29,7 @@ $installer = $this;
 /* @var $installer Mage_Customer_Model_Entity_Setup */
 $installer->startSetup();
 
-if (!$installer->getAttribute('customer', 'base_addrress')) {
+if (!$installer->getAttribute('customer', 'base_address')) {
 	$installer->addAttribute('customer', 'base_address', array(
 			'label' => 'Stammadresse',
 			'type' => 'int',
