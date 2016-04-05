@@ -229,15 +229,12 @@
 .skip-links {
     clear: both;
     overflow: hidden;
-    //border-top:$global-active-border solid $global-navigation-border-color;
-    //border-bottom: $global-active-border solid $global-navigation-border-color;
-    //background-color: $global-navigation-color;
     display: inline-block;
-    position: relative;
+    position: absolute;
     right: 10px;
-    float: right;
     width: 70%;
-    top: -100px;
+    top: 70px;
+    height: 100vh;
 }
 
 // ---------------------------------------------

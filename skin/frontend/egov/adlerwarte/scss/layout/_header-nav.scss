@@ -208,6 +208,7 @@
         a:hover,
         li:hover > a {
             color: $global-category-hover-color;
+            background-color: $global-category-hover-bg;
             text-decoration: underline;
         }
 

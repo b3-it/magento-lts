@@ -213,7 +213,7 @@ p.note-msg {
         font-size: $global-fontsize-big;
 
         span {
-            color: $global-h4-color;
+            color: $global-fontcolor-light;
         }
     }
 }
@@ -771,7 +771,7 @@ div.block-reorder {
 .col-main {
     width: 100%;
     position: relative;
-    top: -40px;
+    //top: -40px;
 
     .std {
         margin: 0px;

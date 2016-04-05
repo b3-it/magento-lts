@@ -21,6 +21,13 @@
         //]]>
         </script>
         <![endif]-->
+
+        <script type="text/javascript">
+        //<![CDATA[
+            var SKIN_PATH = '<?php echo Mage::getDesign()->getSkinUrl(); ?>';
+        //]]>
+        </script>
+
         <?php echo $this->getCssJsHtml() ?>
         <?php echo $this->getChildHtml() ?>
         <?php echo $this->helper('core/js')->getTranslatorScript() ?>
