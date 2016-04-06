@@ -667,10 +667,20 @@ div.block-reorder {
 .mini-products-list,
 #compare-items {
 
+    .tax-details {
+        position: relative;
+        right: -10px;
+        top: 10px;
+        text-align: right;
+    }
+
     .btn-remove,
     .btn-previous {
         float: right;
         margin-left: 6px;
+
+        background-color: $global-active-color;
+        color: $global-fontcolor-light;
     }
 }
 
@@ -1646,9 +1656,11 @@ $toolbar-icon-padding-offset: 8px;
     }
     .sort-by-switcher--asc {
         @extend .egov-arrow-down;
+        color: $global-fontcolor-dark;
     }
     .sort-by-switcher--desc {
         @extend .egov-arrow-up;
+        color: $global-fontcolor-dark;
     }
 }
 

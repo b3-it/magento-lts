@@ -36,6 +36,10 @@
         clear: both;
         position: relative;
         background-color: $global-minicart-background;
+
+        .price {
+            color: $global-active-color !important;
+        }
     }
 
     .block-cart {
@@ -235,6 +239,10 @@ div.block-cart {
         .block-subtitle {
             padding-top: 10px;
         }
+
+        p.amount > a {
+            color: $global-active-color;
+        }
     }
 
     #cart-sidebar {
@@ -249,10 +257,12 @@ div.block-cart {
                 .btn_edit {
                     @extend .egov-float-right;
                     margin-right: 10px;
+                    color: $global-active-color;
                 }
 
                 .btn_delete {
                     @extend .egov-float-right;
+                    color: $global-active-color;
                 }
 
                 .tax-block {

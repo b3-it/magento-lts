@@ -1,12 +1,19 @@
 //
 // @category    design
-// @package     egov_default
+// @package     egov_adlerwarte
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
 .mp-checkout {
     text-align: left;
+
+    .sidebar {
+        .block-cart {
+            margin-top: $global-boxmargin;
+            margin-bottom: 0px;
+        }
+    }
 
     .multiple-checkout {
         .col-2 {
@@ -15,6 +22,12 @@
             }
             > fieldset.form-list {
                 margin-left: 0px;
+            }
+        }
+
+        h4 {
+            a {
+                color: $global-active-color;
             }
         }
     }
@@ -274,6 +287,10 @@
     .main-container {
         left: 0px;
 
+        .sidebar {
+            margin-top: 10px;
+        }
+
         .multiple-checkout {
             .col-1 {
                 h4, address {
@@ -286,6 +303,15 @@
 }
 
 .egovs-checkout-multipage-successview {
+    .main-container {
+        top: -5px;
+    }
+
+    .footer-container {
+        height: $global-footer-height + 5px;
+        top: -5px;
+    }
+
     ul.checkout-progress {
         display:none;
     }

@@ -112,6 +112,19 @@
     border-radius: $global-radius;
 }
 
+.egov-productfile-block {
+    display: block;
+    margin-left: $blobal-blockcontent-marginleft;
+    margin-right: $blobal-blockcontent-marginright;
+    margin-top: $blobal-blockcontent-margintop;
+    margin-bottom: $blobal-blockcontent-marginbottom;
+    text-align: left;
+
+    a {
+        margin-right: $global-boxmargin;
+    }
+}
+
 .egov-default-message {
     @extend .egov-radius;
     border: $global-box-border solid $global-border-color;
