@@ -1,4 +1,4 @@
-var maxBottom = 220;  // Maximaler Abstand des Buttons von unten
+var maxBottom = 320;  // Maximaler Abstand des Buttons von unten
 var scrollMin = 100;  // Mindestwert von oben, ab welchem der Button sichtbar wird
 var viewHeight = 0;   // Höhe des sichtbaren Fensters
 var docHeight = 0;    // Höhe des gesamten Dokumentes
