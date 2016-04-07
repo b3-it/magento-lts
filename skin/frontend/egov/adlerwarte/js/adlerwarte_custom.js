@@ -10,13 +10,6 @@ var newBottom = 0;    // Neuer "von Unten" Wert für den Button
 var backgrounds = ['bg2.jpg', 'bg3.jpg', 'bg4.jpg', 'bg5.jpg', 'bg7.jpg', 'bg8.jpg', 'bg9.jpg'];
 
 $j(document).ready(function () {
-    // Header-Welle hinzufügen
-    var headerWave = $j('<div />',{
-        'id'   : 'top-wave',
-        'class': 'top-wave'
-    });
-    $j('.page').prepend(headerWave);
-
     // Scroll Top
     addScrollTop();
 
