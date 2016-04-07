@@ -22,6 +22,8 @@ $j(document).ready(function () {
 
     // Zufälliges Hintergrundbild
     randomBackground();
+
+alert( $j('.footer-container').height() );
 });
 
 /**
