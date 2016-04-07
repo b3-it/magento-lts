@@ -245,6 +245,11 @@
 
                     list-style-image: url($global-category-image);
                     display: block;
+
+                    // Pseudorahmen setzen, damit der Tastatur-Rahmen die Nav nicht bewegt
+                    border-width: 1px;
+                    border-style: solid;
+                    border-color: transparent;
                 }
             }
         }

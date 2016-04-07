@@ -6,13 +6,10 @@ var fromTop = 0;      // Abstand nach oben
 var spaceBottom = 0;  // Restabstand nach unten
 var newBottom = 0;    // Neuer "von Unten" Wert für den Button
 
+// Array mit Hintergrundgrafiken erzeugen
 var backgrounds = ['bg2.jpg', 'bg3.jpg', 'bg4.jpg', 'bg5.jpg', 'bg7.jpg', 'bg8.jpg', 'bg9.jpg'];
 
 $j(document).ready(function () {
-    // Start-Werte ermitteln
-    viewHeight = $j(window).innerHeight();
-    docHeight = $j(document).height();
-
     // Header-Welle hinzufügen
     var headerWave = $j('<div />',{
         'id'   : 'top-wave',
@@ -22,17 +19,57 @@ $j(document).ready(function () {
 
     // Scroll Top
     addScrollTop();
-    var image = backgrounds[ randomNumber(0, backgrounds.length) ];
-    $j('.wrapper .page').css('background-image', 'url("' + SKIN_PATH + '/images/' + image + '")');
-    //alert( randomNumber(0, 10) );
+
+    // Zufälliges Hintergrundbild
+    randomBackground();
 });
 
+/**
+ * Zufälliges Hintergrundbild setzen
+ * Wenn der Bildname "undefined" ist, wird der CSS-Default belassen
+ */
+function randomBackground()
+{
+    var index = randomNumber(0, backgrounds.length - 1);
+    var image = backgrounds[ index ];
+
+    if ( image != 'undefined' ) {
+        $j('.wrapper .page').css('background-image', 'url("' + SKIN_PATH + '/images/' + image + '")');
+    }
+}
+
+/**
+ * Erzeugen einer zufälligen Zahl zwischen 2 Werten
+ *
+ * @param    integer     Startwert als ganze Zahl
+ * @param    integer     Endwert als ganze Zahl
+ * @return   integer     Zufallszahl als ganze Zahl
+ */
+function randomNumber(min, max)
+{
+    if ( max > min ) {
+        return Math.floor(Math.random()*(max - min + 1) + min);
+    }
+    else {
+        return 0;
+    }
+}
+
+/**
+ * Einüfgen des "Nach oben" Buttons in die Seite
+ * Hinzufügen des Verhaltens direkt auf der Seite
+ * Einblenden, wenn der Abstand nach oben min. 100 Pixel beträgt
+ * Sanften Scroll-Lauf hinzufügen
+ * Der Button bleibt immer oberhalb des Footers
+ */
 function addScrollTop()
 {
+    // Scroll-Top-Div hinzufügen
     var topDiv = $j('<div />',{
         'id': 'to-top'
     });
 
+    // Pfeil in den DIV setzen und mit Funktion belegen
     var topLink = $j('<a />',{
         'href' : 'javascript:void(0);',
         'class': 'fa fa-arrow-up'
@@ -45,6 +82,9 @@ function addScrollTop()
     // #to-top anzeigen
 		$j(window).scroll(function () {
 		    fromTop = $j(this).scrollTop();                  // Wie weit wurde gescrollt
+        viewHeight = $j(window).innerHeight();           // Wie groß ist das Browser-Fenster
+        docHeight = $j(document).height();               // Wie groß ist das Dokument
+
 		    spaceBottom = docHeight - viewHeight - fromTop;  // Wievile Rest ist noch Platz
 		    newBottom = maxBottom - spaceBottom;             // neuen Bottom-Wert ermitteln
 
@@ -71,14 +111,4 @@ function addScrollTop()
 		    }, 800);
 		    return false;
 		});
-}
-
-function randomNumber(min, max)
-{
-    if ( max > min ) {
-        return Math.floor(Math.random()*(max - min + 1) + min);
-    }
-    else {
-        return 0;
-    }
 }

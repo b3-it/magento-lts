@@ -304,12 +304,7 @@
 
 .egovs-checkout-multipage-successview {
     .main-container {
-        top: -5px;
-    }
-
-    .footer-container {
-        height: $global-footer-height + 5px;
-        top: -5px;
+        margin-top: -5px;
     }
 
     ul.checkout-progress {
