@@ -1,5 +1,5 @@
-var maxBottom = 320;  // Maximaler Abstand des Buttons von unten
 var scrollMin = 100;  // Mindestwert von oben, ab welchem der Button sichtbar wird
+var maxBottom = 0;    // Maximaler Abstand des Buttons von unten
 var viewHeight = 0;   // Höhe des sichtbaren Fensters
 var docHeight = 0;    // Höhe des gesamten Dokumentes
 var fromTop = 0;      // Abstand nach oben
@@ -22,8 +22,6 @@ $j(document).ready(function () {
 
     // Zufälliges Hintergrundbild
     randomBackground();
-
-alert( $j('.footer-container').height() );
 });
 
 /**
@@ -83,12 +81,13 @@ function addScrollTop()
 
     // #to-top anzeigen
 		$j(window).scroll(function () {
-		    fromTop = $j(this).scrollTop();                  // Wie weit wurde gescrollt
-        viewHeight = $j(window).innerHeight();           // Wie groß ist das Browser-Fenster
-        docHeight = $j(document).height();               // Wie groß ist das Dokument
+		    fromTop = $j(this).scrollTop();                      // Wie weit wurde gescrollt
+        viewHeight = $j(window).innerHeight();               // Wie groß ist das Browser-Fenster
+        docHeight = $j(document).height();                   // Wie groß ist das Dokument
+        maxBottom = $j('.footer-container').height() + 12;   // Ausrechnen, wie hoch der Footer ist
 
-		    spaceBottom = docHeight - viewHeight - fromTop;  // Wievile Rest ist noch Platz
-		    newBottom = maxBottom - spaceBottom;             // neuen Bottom-Wert ermitteln
+		    spaceBottom = docHeight - viewHeight - fromTop;      // Wievile Rest ist noch Platz
+		    newBottom = maxBottom - spaceBottom;                 // neuen Bottom-Wert ermitteln
 
 		    // Button positionieren
 		    if ( spaceBottom >= maxBottom ) {
