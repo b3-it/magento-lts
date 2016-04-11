@@ -557,32 +557,32 @@ div.block-reorder {
 .breadcrumbs {
     overflow: hidden;
     margin: 0px;
-    color: $global-fontcolor-light;
-}
+    color: $global-active-color;
 
-.breadcrumbs li {
-    float: left;
-    font-family: $base-font-family;
-}
+    li {
+        float: left;
+        font-family: $base-font-family;
+    }
 
-.breadcrumbs a {
-    float: left;
-    color: $global-fontcolor-light;
-}
+    a {
+        float: left;
+        color: $global-active-color;
 
-.breadcrumbs a:hover {
-    color: $global-fontcolor-light;
-    text-decoration: underline;
-}
+        &:hover {
+            color: $global-active-color;
+            text-decoration: underline;
+        }
+    }
 
-.breadcrumbs strong {
-    color: $global-fontcolor-light;
-    font-weight: normal;
-}
+    strong {
+        color: $global-active-color;
+        font-weight: normal;
+    }
 
-.breadcrumbs span {
-    float: left;
-    padding: 0 7px;
+    span {
+        float: left;
+        padding: 0 7px;
+    }
 }
 
 @include bp(max-width, $bp-medium) {
