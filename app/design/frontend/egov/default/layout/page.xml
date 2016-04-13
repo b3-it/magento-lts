@@ -24,7 +24,7 @@
                 <action method="addJs"><script>prototype/prototype.js</script></action>
                 <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
                 <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
-                
+
                 <action method="addJs"><script>prototype/validation.js</script></action>
                 <action method="addJs"><script>scriptaculous/builder.js</script></action>
                 <action method="addJs"><script>scriptaculous/effects.js</script></action>
@@ -52,6 +52,7 @@
                 <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
 
                 <!-- added jQuery-Egov-Funktions -->
+                <action method="addJs"><script>egovs/jquery.nicescroll.min.js</script></action>
                 <action method="addJs"><script>egovs/jquery.egov.js</script></action>
                 <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
                 <!--  <action method="addJs"><script>egovs/jquery.prevent.lostsession.js</script></action> -->

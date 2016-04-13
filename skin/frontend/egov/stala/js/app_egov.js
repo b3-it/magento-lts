@@ -1,4 +1,4 @@
-﻿// Allgemeine JS-Funktionen
+// Allgemeine JS-Funktionen
 function setTabIndex(arr)
 {
     $j.each(arr, function(element, tabindex){
@@ -18,7 +18,7 @@ var egov_break = {
 $j(document).ready(function () {
     // Custom-Scrollbar im Skin-Design
     $j('body').niceScroll({
-        'cursorcolor'       : '#2F4327',
+        'cursorcolor'       : '#4B914B',
         'cursorwidth'       : '15px',
         'cursorborderradius': '3px'
     });
