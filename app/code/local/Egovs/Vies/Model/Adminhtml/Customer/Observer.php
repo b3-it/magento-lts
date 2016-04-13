@@ -27,13 +27,13 @@ class Egovs_Vies_Model_Adminhtml_Customer_Observer extends Mage_Core_Model_Abstr
 		/* @var $customer Mage_Customer_Model_Customer */
 		$customer = $observer->getCustomer();
 		
-		if (!$customer || $customer->isEmpty() || !$customer->getUseGroupAutoassignment()) {
+		if (!$customer || $customer->isEmpty() || !$customer->getDisableAutoGroupChange()) {
 			return;
 		}
 		
 		if ($customer->getOrigData('group_id') > 0 && $customer->getGroupId() != $customer->getOrigData('group_id')) {
 			//Autozuordnung deaktivieren
-			$customer->setUseGroupAutoassignment(false);
+			$customer->setDisableAutoGroupChange(false);
 		}
 	}
 }
