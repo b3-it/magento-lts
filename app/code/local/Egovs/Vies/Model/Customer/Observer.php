@@ -103,10 +103,22 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			/* @var $customerHelper Mage_Customer_Helper_Data */
 			$customerHelper = Mage::helper('customer');
 	
+			/*
+			 * isVatValidationEnabled prüft ob "Automatische Zuordnung zu Kundengruppen aktivieren" im Backend
+			 * aktiviert ist.
+			 */
 			if (!Mage::helper('customer/address')->isVatValidationEnabled($customer->getStore())
 					|| $customerAddress->getVatId() == ''
 					|| !Mage::helper('core')->isCountryInEU($customerAddress->getCountry()))
 			{
+				/*
+				 * isVatValidationEnabled prüft ob "Automatische Zuordnung zu Kundengruppen aktivieren" im Backend
+				 * aktiviert ist.
+				 */
+				if (!Mage::helper('customer/address')->isVatValidationEnabled($customer->getStore())) {
+					return;
+				}
+					
 				$data = $customerAddress->getData();
 				$ruleGroupId = Mage::helper('egovsvies')->getGroupIdByCustomerGroupRules($data);
 				//Falls nichts gematched hat!!!
