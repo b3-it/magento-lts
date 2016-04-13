@@ -14,30 +14,39 @@
 $installer = $this;
 
 
-$params = array();
-	$params[] = array('attr' =>'haushaltsstelle', 'id' => Egovs_Paymentbase_Model_Haushaltsparameter_Type::HAUSHALTSTELLE);
-	$params[] = array('attr' =>'objektnummer', 'id' => Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER);
-	$params[] = array('attr' =>'objektnummer_mwst', 'id' => Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER_MWST);
-	$params[] = array('attr' =>'href', 'id' => Egovs_Paymentbase_Model_Haushaltsparameter_Type::HREF);
-	$params[] = array('attr' =>'href_mwst', 'id' => Egovs_Paymentbase_Model_Haushaltsparameter_Type::HREF_MWST);
-	$params[] = array('attr' =>'buchungstext', 'id' => Egovs_Paymentbase_Model_Haushaltsparameter_Type::BUCHUNGSTEXT);
-	$params[] = array('attr' =>'buchungstext_mwst', 'id' => Egovs_Paymentbase_Model_Haushaltsparameter_Type::BUCHUNGSTEXT_MWST);
+$eav = Mage::getResourceModel('eav/entity_attribute');
 
-	foreach ($params as $param) {
-		$attribute = $installer->getAttribute('catalog_product', $param['attr']);
-		$tableProduct = $installer->getTable('catalog/product')."_varchar";
-		$tableHH = $installer->getTable('egovs_paymentbase_haushaltsparameter');
-		
-		$sql = array();
-		$sql[] = "UPDATE $tableProduct p";
-		$sql[] = "JOIN $tableHH h ON h.value = p.value AND h.type=".$param['id'];
-		$sql[] = "SET p.value = h.paymentbase_haushaltsparameter_id";
-		$sql[] = "WHERE p.attribute_id =  " .$attribute['attribute_id'];
-		
-		$sql = implode(' ',$sql);
-		//die($sql);
-		$installer->run($sql);
-	}
+$hparams = array();
+$hparams[] = array('htype'=>Egovs_Paymentbase_Model_Haushaltsparameter_Type::HAUSHALTSTELLE,'att'=>'haushaltsstelle');
+$hparams[] = array('htype'=>Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER,'att'=>'objektnummer');
+$hparams[] = array('htype'=>Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER_MWST,'att'=>'objektnummer_mwst');
+$hparams[] = array('htype'=>Egovs_Paymentbase_Model_Haushaltsparameter_Type::HREF,'att'=>'href');
+$hparams[] = array('htype'=>Egovs_Paymentbase_Model_Haushaltsparameter_Type::HREF_MWST,'att'=>'href_mwst');
+$hparams[] = array('htype'=>Egovs_Paymentbase_Model_Haushaltsparameter_Type::BUCHUNGSTEXT,'att'=>'buchungstext');
+$hparams[] = array('htype'=>Egovs_Paymentbase_Model_Haushaltsparameter_Type::BUCHUNGSTEXT_MWST,'att'=>'buchungstext_mwst');
 
+
+foreach($hparams as $hparam)
+{
+	$id = $eav->getIdByCode('catalog_product',$hparam['att']);
+	$sql = " update ".$installer->getTable('catalog/product')."_varchar as eavatt ";
+	$sql .=" join ".$installer->getTable('paymentbase/haushaltsparameter')." as hparam on  hparam.value = eavatt.value and hparam.type =". $hparam['htype'];
+	$sql .=" set eavatt.value = paymentbase_haushaltsparameter_id where attribute_id = ". $id;
+	
+	$installer->run($sql);
+}
+
+//Kundeadresse taxvat => vat_id
+
+$taxvat = $eav->getIdByCode('customer_address','taxvat');
+$vat_id = $eav->getIdByCode('customer_address','vat_id');
+
+$sql = "delete from ".$installer->getTable('customer/address_entity')."_varchar where attribute_id= $vat_id";
+$installer->run($sql);
+
+$sql  = " update ".$installer->getTable('customer/address_entity')."_varchar";
+$sql .= " set attribute_id =  $vat_id WHERE attribute_id = $taxvat";
+
+$installer->run($sql);
 
 $installer->endSetup();
