@@ -15,12 +15,16 @@
 ?>
 <?php $_helper = $this->helper('catalog/output'); ?>
 <?php $_product = $this->getProduct(); ?>
+<?php
+var_dump( $this->getPageLayout() );
+var_dump( $this->getLayout()->getBlock('root')->getLayoutCode() );
+?>
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
 <div class="product-name">
-	<h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
 </div>
 <div class="product-view">
     <div class="product-essential">
@@ -31,7 +35,7 @@
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
             </div>
 
-            <div>
+            <div id="product-base-block">
                 <div class="product-img-box">
                     <div class="product-name">
                         <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h1>
@@ -41,7 +45,7 @@
 
                 <div class="product-shop">
                     <div class="product-sku">
-                        <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+                        <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
                     </div>
                     <div class="price-info">
                         <?php echo $this->getPriceHtml($_product); ?>
@@ -55,6 +59,17 @@
                     </div>
 
                     <?php echo $this->getChildHtml('alert_urls'); ?>
+                    <?php echo $this->getChildHtml('product_type_data') ?>
+                    <?php echo $this->getChildHtml('extrahint') ?>
+
+                  <?php if (!$this->hasOptions()):?>
+                    <?php if($_product->isSaleable()): ?>
+                      <?php echo $this->getChildHtml('addtocart') ?>
+                    <?php endif; ?>
+                  <?php elseif (!$_product->isSaleable()): ?>
+                    <?php echo $this->getChildHtml('addto') ?>
+                  <?php endif; ?>
+
                 </div>
             </div>
 
@@ -74,27 +89,6 @@
                 <?php endif;?>
             </div>
 
-            <div class="add-to-cart-wrapper">
-                <?php echo $this->getChildHtml('product_type_data') ?>
-                <?php echo $this->getChildHtml('extrahint') ?>
-
-                <?php if (!$this->hasOptions()):?>
-                    <div class="add-to-box">
-                        <?php if($_product->isSaleable()): ?>
-                            <?php echo $this->getChildHtml('addtocart') ?>
-                            <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
-                                <span class="or"><?php echo $this->__('OR') ?></span>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <?php echo $this->getChildHtml('addto') ?>
-                    </div>
-                    <?php echo $this->getChildHtml('extra_buttons') ?>
-                <?php elseif (!$_product->isSaleable()): ?>
-                    <div class="add-to-box">
-                        <?php echo $this->getChildHtml('addto') ?>
-                    </div>
-                <?php endif; ?>
-            </div>
             <?php echo $this->getChildHtml('related_products') ?>
 
             <div class="clearer"></div>
@@ -167,6 +161,9 @@
         </dl>
       <?php endif; ?>
     </div>
+
+    <?php echo $this->getChildHtml('addto') ?>
+    <?php echo $this->getChildHtml('extra_buttons') ?>
 
     <?php echo $this->getChildHtml('upsell_products') ?>
     <?php echo $this->getChildHtml('product_additional_data') ?>

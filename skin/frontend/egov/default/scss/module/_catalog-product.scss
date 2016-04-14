@@ -28,6 +28,10 @@
     }
 }
 
+#product-base-block {
+    margin-bottom: $blobal-blockcontent-marginbottom;
+}
+
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
@@ -44,19 +48,59 @@
 }
 
 .col3-layout {
-	.category-products, .product-view {
+    .category-products, .product-view {
         width: $global-content-3col-percent;
     }
     .product-name {
-    	width: $global-maincol-title-percent;
-	}
+        width: $global-maincol-title-percent;
+    }
 
     .product-view {
-    	margin-top: 50px;
         .tab-content {
             .std {
                 width: 100%;
             }
+        }
+    }
+
+    #product-base-block {
+        height: $global-3-product-height;
+    }
+}
+
+.catalog-product-view {
+    .col2-left-layout {
+        .col-main {
+            padding-top: 13px;
+        }
+
+        .product-img-box {
+            width: $global-product-image-2L-width;
+        }
+        .product-shop {
+            width: $global-product-info-2L-width;
+
+            .add-to-cart-buttons {
+                float: left;
+                max-width: 180px;
+            }
+        }
+    }
+    .col3-layout {
+        .col-main {
+            padding-top: 13px;
+        }
+
+        .product-img-box {
+            width: $global-product-image-3-width;
+        }
+        .product-shop {
+            width: $global-product-info-3-width;
+        }
+
+        .add-to-cart {
+            position: absolute;
+            top: $global-3-product-height - $gobal-cart-block-height;
         }
     }
 }
@@ -88,9 +132,12 @@
     }
 
     .product-essential {
+        h2 {
+            margin: 0;
+        }
+
         .add-to-cart-wrapper {
             padding: 0px;
-            margin-bottom: $global-boxmargin;
         }
 
         .extra-info {
@@ -138,23 +185,18 @@
     }
 
     .product-shop {
-        width: $global-product-info-width;
+        height: 100%;
         display: inline-block;
+        vertical-align: top;
 
         .product-sku {
             padding: 0px 0px 10px 0px;
         }
 
         .extra-info {
-            float: left;
-            padding-right: $trim/2;
-            clear: left;
         }
 
         .price-info {
-            float: left;
-            text-align: left;
-            padding: 0px;
         }
 
         .extra-info,
@@ -332,8 +374,12 @@
 }
 
 .product-img-box {
-    width: $global-product-image-width;
+    height: 100%;
     display: inline-block;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: $global-border-color;
+    vertical-align: top;
 
     .product-name {
         h1 {
@@ -407,12 +453,6 @@
     padding-left: $trim/2;
 }
 
-.product-img-box {
-    padding-right: $trim/2;
-}
-
-.product-view .product-shop,
-.product-img-box,
 .product-collateral,
 .product-view .block-related,
 .box-collateral {
@@ -427,30 +467,25 @@
     }
 
     .add-to-cart {
-        padding-bottom: 3px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid $global-border-color;
-        display: inline-block;
-        width: 100%;
     }
 
     .add-to-cart-buttons {
-        button > span.egov-cart {
-            font-size: $global-fontsize-big !important;
-            font-weight: normal;
+        button {
+            margin: 0;
+
+            > span.egov-cart {
+                font-size: $global-fontsize-big !important;
+                font-weight: normal;
+            }
         }
     }
 
     /* Set a min-height so that the floated elements break appropriately */
-    .add-to-cart .qty-wrapper,
-    .product-options-bottom .price-box,
-    .add-to-cart-buttons {
+    .product-options-bottom .price-box {
         min-height: 40px;
     }
 
     .product-options-bottom .price-box,
-    .add-to-cart .qty-wrapper,
-    .add-to-cart-buttons .button,
     .add-to-cart-buttons .paypal-logo {
         margin-bottom: 10px;
     }
@@ -471,8 +506,11 @@
         width: 60px;
     }
 
+    .add-to-cart .qty-wrapper #qtd {
+        margin-bottom: 5px;
+    }
+
     .add-to-cart-buttons {
-        float: left;
         margin-right: 10px;
         max-width: 100%; // Constrain width in Firefox
 
@@ -514,6 +552,7 @@
         min-width: 160px;
         width: 100%;
         white-space: normal;
+        margin: 0;
     }
 
     .alert-price,
