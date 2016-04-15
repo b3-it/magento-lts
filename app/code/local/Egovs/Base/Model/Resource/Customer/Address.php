@@ -41,18 +41,7 @@ class Egovs_Base_Model_Resource_Customer_Address extends Mage_Customer_Model_Res
 					self::$isSaved = true;
 					$customer->setBaseAddress ( $address->getId () );
 					$resource->saveAttribute ( $customer, 'base_address' );
-					// wg. kundengruppenzuordnung
-					if ($address->getIsCustomerSaveTransaction ()) {
-						$customer = Mage::getModel ( 'customer/customer' )->load ( $address->getParentId () );
-						
-						if ((Mage::helper ( 'egovsbase' )->isModuleEnabled ( 'Egovs_Vies' ) && (intval ( $customer->getData ( 'use_group_autoassignment' ) ) == 1))) {
-							$observer = new Varien_Object ();
-							$observer->setCustomer ( $customer );
-							$vies = Mage::getModel ( 'egovsvies/customer_observer' );
-							$vies->autoAssignGroup ( $observer );
-							$this->__saveCustomerGroup ( $customer );
-						}
-					}
+					
 				}
 			}
 		// FE
@@ -82,18 +71,7 @@ class Egovs_Base_Model_Resource_Customer_Address extends Mage_Customer_Model_Res
 					self::$isSaved = true;
 					$customer->setBaseAddress ( $address->getId () );
 					$resource->saveAttribute ( $customer, 'base_address' );
-					// wg. kundengruppenzuordnung
-					if (! $address->getIsCustomerSaveTransaction ()) {
-						$customer = Mage::getModel ( 'customer/customer' )->load ( $address->getParentId () );
-						
-						if ((Mage::helper ( 'egovsbase' )->isModuleEnabled ( 'Egovs_Vies' ) && (intval ( $customer->getData ( 'use_group_autoassignment' ) ) == 1))) {
-							$observer = new Varien_Object ();
-							$observer->setCustomer ( $customer );
-							$vies = Mage::getModel ( 'egovsvies/customer_observer' );
-							$vies->autoAssignGroup ( $observer );
-							$this->__saveCustomerGroup ( $customer );
-						}
-					}
+					
 				}
 			}
 		}
