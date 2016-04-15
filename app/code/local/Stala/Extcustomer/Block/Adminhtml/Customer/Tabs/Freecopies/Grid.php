@@ -123,7 +123,7 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Freecopies_Grid extends Ma
 	        'name'      	=> 'in_products',
 	        'values'    	=> $this->_getSelectedProducts(),
 	        'align'     	=> 'center',
-    		'filter_index' 	=> 'catalog/product.entity_id',
+    		'filter_index' 	=> 'catalog_product.entity_id',
 	        'index'     	=> $index,
 	        'width'			=> '90px'
         ));
@@ -134,7 +134,7 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Freecopies_Grid extends Ma
             'sortable'  	=> true,
             'width'     	=> '60px',
         	'editable'		=> false,
-        	'filter_index' 	=> 'catalog/product.entity_id',
+        	'filter_index' 	=> 'catalog_product.entity_id',
             'index'     	=> $index
         ));
         
