@@ -22,6 +22,17 @@
     <add_order_grid_column_handle>
         <reference name="sales_order.grid">
             <action method="addColumnAfter" >
+                <columnId>owner</columnId>
+                <arguments helper="extsalesorder/translate">
+                    <translate>
+                        <header>Owner</header>
+                        <index>owner</index>
+                        <type>text</type>
+                    </translate>
+                </arguments>
+                <after>created_at</after>
+            </action>
+            <action method="addColumnAfter" >
                 <columnId>billing_company</columnId>
                 <arguments helper="extsalesorder/translate">
                     <translate>
@@ -30,7 +41,7 @@
                         <type>text</type>
                     </translate>
                 </arguments>
-                <after>created_at</after>
+                <after>owner</after>
             </action>
             <action method="addColumnAfter">
                 <columnId>billing_address</columnId>
