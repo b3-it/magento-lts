@@ -91,11 +91,11 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
 		 */
 		$this->_setIdFieldName('product_id');
 		/* Neue Abfrage für alle Produkte
-		 * SELECT `main_table`.*, `catalog/product`.`entity_id`, `catalog/product`.`type_id`, `catalog/product`.`sku`, `e`.`value` AS `price`, `e1`.`value` AS `name` FROM `extcustomer_freecopies` AS `main_table`
-		 * RIGHT JOIN `catalog_product_entity` AS `catalog/product` ON `catalog/product`.`entity_id` >= 0 AND IF(product_id IS NULL , 1, entity_id = product_id ) and customer_id = CUSTOMER_ID
-		 * INNER JOIN `catalog_product_entity_decimal` AS `e` ON `catalog/product`.`entity_id` = e.`entity_id` AND e.attribute_id = 60
-		 * INNER JOIN `catalog_product_entity_varchar` AS `e1` ON `catalog/product`.`entity_id` = e1.`entity_id` AND e1.attribute_id = 56
-		 * LEFT JOIN `catalog_product_entity_int` AS `e2` ON e2.entity_id=`catalog/product`.entity_id AND e2.attribute_id = 536
+		 * SELECT `main_table`.*, `catalog_product`.`entity_id`, `catalog_product`.`type_id`, `catalog_product`.`sku`, `e`.`value` AS `price`, `e1`.`value` AS `name` FROM `extcustomer_freecopies` AS `main_table`
+		 * RIGHT JOIN `catalog_product_entity` AS `catalog_product` ON `catalog_product`.`entity_id` >= 0 AND IF(product_id IS NULL , 1, entity_id = product_id ) and customer_id = CUSTOMER_ID
+		 * INNER JOIN `catalog_product_entity_decimal` AS `e` ON `catalog_product`.`entity_id` = e.`entity_id` AND e.attribute_id = 60
+		 * INNER JOIN `catalog_product_entity_varchar` AS `e1` ON `catalog_product`.`entity_id` = e1.`entity_id` AND e1.attribute_id = 56
+		 * LEFT JOIN `catalog_product_entity_int` AS `e2` ON e2.entity_id=`catalog_product`.entity_id AND e2.attribute_id = 536
 		 * WHERE (`e2`.`value` is null OR `e2`.value = 0)                        
 		 */
 		
@@ -127,25 +127,25 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
 			->from(array('main_table' => $expr))
 		;
 		
-		$this->getSelect()->joinRight(array('catalog/product' => $this->getTable('catalog/product')), //name ist auch alias
+		$this->getSelect()->joinRight(array('catalog_product' => $this->getTable('catalog/product')), //name ist auch alias
                 "entity_id = product_id and ".self::CUSTOMER_ID." = $customerID",
                 array('product_entity_id' => 'entity_id', 'type_id', 'sku')
         );
         $attribute = $model->getAttribute('price');
         $this->getSelect()->join(array('e' => $attribute->getBackendTable()),
-        		"e.entity_id=`catalog/product`.entity_id AND e.attribute_id = {$attribute->getAttributeId()} AND e.value > 0.0",
+        		"e.entity_id=`catalog_product`.entity_id AND e.attribute_id = {$attribute->getAttributeId()} AND e.value > 0.0",
                 array('price' => 'value')
         );
         $attribute = $model->getAttribute('name');
         $this->getSelect()->join(array('e1' => $attribute->getBackendTable()),
-        		"e1.entity_id=`catalog/product`.entity_id AND e1.attribute_id = {$attribute->getAttributeId()}",
+        		"e1.entity_id=`catalog_product`.entity_id AND e1.attribute_id = {$attribute->getAttributeId()}",
                 array('name' => 'value')
         );
         $attribute = $model->getAttribute('abo_parent_product');
         if (!empty($attribute)) {
 	        $this->getSelect()->joinLeft(
 	        		array('e2' => $attribute->getBackendTable()),
-	        		"e2.entity_id=`catalog/product`.entity_id AND e2.attribute_id = {$attribute->getAttributeId()}",
+	        		"e2.entity_id=`catalog_product`.entity_id AND e2.attribute_id = {$attribute->getAttributeId()}",
 	                array('abo_parent_product' => 'value')
 	        );
 	        $this->getSelect()->where('e2.value = 0 OR e2.value is null');
@@ -156,14 +156,14 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
         if (!empty($attribute)) {
         	$this->getSelect()->joinLeft(
         			array('e3' => $attribute->getBackendTable()),
-        	       	"e3.entity_id=`catalog/product`.entity_id AND e3.attribute_id = {$attribute->getAttributeId()}",
+        	       	"e3.entity_id=`catalog_product`.entity_id AND e3.attribute_id = {$attribute->getAttributeId()}",
         			array('article_type' => 'value')
         	);
         } else {
         	Mage::log("Attribute 'artikel_art' didn't exists, omitting...", Zend_Log::WARN, Stala_Helper::LOG_FILE);
         }
         
-        //$this->getSelect()->group(array('extcustomer_freecopies_id', 'catalog/product.entity_id'));
+        //$this->getSelect()->group(array('extcustomer_freecopies_id', 'catalog_product.entity_id'));
         
         /* ZVM 421
          * Produkte ohne Freiexemplare haben noch keine ID und werden daher vom System durchnummeriert (Magento-Core),
@@ -173,7 +173,7 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
          * !Wichtig!
          * Mit diesem ID-Field dürfen keine direkten Speicheroperationen ausgeführt werden --> nur zur Anzeige verwenden.
          */
-        $this->_setIdFieldName('catalog/product.entity_id');
+        $this->_setIdFieldName('catalog_product.entity_id');
         
 //      	Mage::log($this->getSelect()->assemble(), Zend_Log::DEBUG, Stala_Helper::LOG_FILE);
 	}
@@ -209,11 +209,11 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
 		 */
 		$this->_setIdFieldName('product_id');
 		/* Neue Abfrage für alle Produkte
-		 * SELECT `main_table`.*, `catalog/product`.`entity_id`, `catalog/product`.`type_id`, `catalog/product`.`sku`, `e`.`value` AS `price`, `e1`.`value` AS `name` FROM `extcustomer_freecopies` AS `main_table`
-		 * RIGHT JOIN `catalog_product_entity` AS `catalog/product` ON `catalog/product`.`entity_id` >= 0 AND IF(product_id IS NULL , 1, entity_id = product_id ) and customer_id = CUSTOMER_ID
-		 * INNER JOIN `catalog_product_entity_decimal` AS `e` ON `catalog/product`.`entity_id` = e.`entity_id` AND e.attribute_id = 60
-		 * INNER JOIN `catalog_product_entity_varchar` AS `e1` ON `catalog/product`.`entity_id` = e1.`entity_id` AND e1.attribute_id = 56
-		 * LEFT JOIN `catalog_product_entity_int` AS `e2` ON e2.entity_id=`catalog/product`.entity_id AND e2.attribute_id = 536
+		 * SELECT `main_table`.*, `catalog_product`.`entity_id`, `catalog_product`.`type_id`, `catalog_product`.`sku`, `e`.`value` AS `price`, `e1`.`value` AS `name` FROM `extcustomer_freecopies` AS `main_table`
+		 * RIGHT JOIN `catalog_product_entity` AS `catalog_product` ON `catalog_product`.`entity_id` >= 0 AND IF(product_id IS NULL , 1, entity_id = product_id ) and customer_id = CUSTOMER_ID
+		 * INNER JOIN `catalog_product_entity_decimal` AS `e` ON `catalog_product`.`entity_id` = e.`entity_id` AND e.attribute_id = 60
+		 * INNER JOIN `catalog_product_entity_varchar` AS `e1` ON `catalog_product`.`entity_id` = e1.`entity_id` AND e1.attribute_id = 56
+		 * LEFT JOIN `catalog_product_entity_int` AS `e2` ON e2.entity_id=`catalog_product`.entity_id AND e2.attribute_id = 536
 		 * WHERE (`e2`.`value` is null OR `e2`.value = 0)                        
 		 */
 		
@@ -245,24 +245,24 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
 			->from(array('main_table' => $expr))
 		;
 		
-		$this->getSelect()->joinRight(array('catalog/product' => $this->getTable('catalog/product')), //name ist auch alias
+		$this->getSelect()->joinRight(array('catalog_product' => $this->getTable('catalog/product_entity')), //name ist auch alias
                 "entity_id = product_id and ".self::CUSTOMER_ID." = $customerID",
                 array('product_entity_id' => 'entity_id', 'type_id', 'sku')
         );
         $attribute = $model->getAttribute('price');
         $this->getSelect()->join(array('e' => $attribute->getBackendTable()),
-        		"e.entity_id=`catalog/product`.entity_id AND e.attribute_id = {$attribute->getAttributeId()}",
+        		"e.entity_id=`catalog_product`.entity_id AND e.attribute_id = {$attribute->getAttributeId()}",
                 array('price' => 'value')
         );
         $attribute = $model->getAttribute('name');
         $this->getSelect()->join(array('e1' => $attribute->getBackendTable()),
-        		"e1.entity_id=`catalog/product`.entity_id AND e1.attribute_id = {$attribute->getAttributeId()}",
+        		"e1.entity_id=`catalog_product`.entity_id AND e1.attribute_id = {$attribute->getAttributeId()}",
                 array('name' => 'value')
         );
         $attribute = $model->getAttribute('abo_parent_product');
         if (!empty($attribute)) {
 	        $this->getSelect()->joinLeft(array('e2' => $attribute->getBackendTable()),
-	        		"e2.entity_id=`catalog/product`.entity_id AND e2.attribute_id = {$attribute->getAttributeId()}",
+	        		"e2.entity_id=`catalog_product`.entity_id AND e2.attribute_id = {$attribute->getAttributeId()}",
 	                array('abo_parent_product' => 'value')
 	        );
 	        $this->getSelect()->where('e2.value > 0');
@@ -273,14 +273,14 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
         if (!empty($attribute)) {
         	$this->getSelect()->joinLeft(
         	array('e3' => $attribute->getBackendTable()),
-                	       	"e3.entity_id=`catalog/product`.entity_id AND e3.attribute_id = {$attribute->getAttributeId()}",
+                	       	"e3.entity_id=`catalog_product`.entity_id AND e3.attribute_id = {$attribute->getAttributeId()}",
         	array('article_type' => 'value')
         	);
         } else {
         	Mage::log("Attribute 'artikel_art' didn't exists, omitting...", Zend_Log::WARN, Stala_Helper::LOG_FILE);
         }
         
-        //$this->getSelect()->group(array('extcustomer_freecopies_id', 'catalog/product.entity_id'));
+        //$this->getSelect()->group(array('extcustomer_freecopies_id', 'catalog_product.entity_id'));
         
         /* ZVM 421
          * Produkte ohne Freiexemplare haben noch keine ID und werden daher vom System durchnummeriert (Magento-Core),
@@ -290,7 +290,7 @@ class Stala_Extcustomer_Model_Mysql4_Freecopies_Collection extends Mage_Core_Mod
          * !Wichtig!
          * Mit diesem ID-Field dürfen keine direkten Speicheroperationen ausgeführt werden --> nur zur Anzeige verwenden.
          */
-        $this->_setIdFieldName('catalog/product.entity_id');
+        $this->_setIdFieldName('catalog_product.entity_id');
 //      	Mage::log($this->getSelect()->assemble(), Zend_Log::DEBUG, Stala_Helper::LOG_FILE);
 	}
 }
