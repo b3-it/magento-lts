@@ -821,12 +821,14 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
         }
         catch (Mage_Core_Exception $e){
             Mage::helper('checkout')->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-page');
-            Mage::getSingleton('checkout/session')->addError($e->getMessage());
+            Mage::logException($e);
+            Mage::getSingleton('checkout/session')->addError("Internal server error occurred, please try again later.");
             $this->_redirect('*/*/overview', array('_secure'=>true));
         }
         catch (Exception $e){
             Mage::helper('checkout')->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-page');
-            Mage::getSingleton('checkout/session')->addError($e->getMessage());
+            Mage::logException($e);
+            Mage::getSingleton('checkout/session')->addError("Internal server error occurred, please try again later.");
             $this->_redirect('*/*/overview', array('_secure'=>true));
         }
     }
