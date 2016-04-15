@@ -142,6 +142,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_Overview_Grid extends Mage_Adminht
             'header'    => Mage::helper('sales')->__('Order Date'),
             'index'     => 'order_created_at',
             'type'      => 'datetime',
+       		'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
         ));
 
          $this->addColumn('billing_company_full', array(
@@ -184,6 +185,35 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_Overview_Grid extends Mage_Adminht
         return parent::_prepareColumns();
     }
 
+    
+    
+    /**
+     *
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+     * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+     *
+     * @return void
+     */
+    protected function _filterCreatedAtCondition($collection, $column) {
+    	if (!$value = $column->getFilter()->getValue()) {
+    		return;
+    	}
+    	if(isset( $value['from']) && isset( $value['to'])){
+    		$condition = sprintf("((order.created_at >= '%s') && (order.created_at <= '%s'))", $value['from']->ToString('yyyy-MM-dd'),  $value['to']->ToString('yyyy-MM-dd') );
+    		$collection->getSelect()->where($condition);
+    	}
+    	else if(isset( $value['from'])){
+    		$condition = sprintf("((order.created_at >= '%s'))", $value['from']->ToString('yyyy-MM-dd'));
+    		$collection->getSelect()->where($condition);
+    	}
+    	else if(isset( $value['to'])){
+    		$condition = sprintf("((order.created_at <= '%s'))", $value['to']->ToString('yyyy-MM-dd') );
+    		$collection->getSelect()->where($condition);
+    	}
+    	
+    }
+    
+    
     /**
      * Liefert die URL für eine Klick-Aktion auf einer Zeile
      * 
