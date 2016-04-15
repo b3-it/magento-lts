@@ -44,6 +44,7 @@
 
     .welcome-header {
         top: $global-welcome-header-top + $global-logo-height !important;
+        text-align: right;
     }
 
     #egov-nav, #header-account {
@@ -71,6 +72,7 @@
         position: relative;
         top: $global-welcome-top;
         left: $global-welcome-left;
+        text-align: right;
         z-index: 999;
 
         h1 {
@@ -135,8 +137,8 @@
 .store-language-container {
     float: right;
     position: absolute;
-    right: 6px;
-    top: 200px;
+    right: 250px;
+    top: 16px;
     z-index: 999;
 
     label {

@@ -363,7 +363,7 @@ body:not(.customer-account) .block:first-child .block-title {
 
 div.block-reorder {
     margin-top: $global-boxmargin;
-    width: $global-leftcol-width + 5;
+    width: 100%;
 
     .validation-advice {
         display: block;
@@ -878,8 +878,6 @@ div.block-reorder {
             margin-right: $global-leftcol-rightmargin-percent;
             float: left;
             width: $global-leftcol-percent;
-            position: relative;
-            top: $global-leftcol-margintop;
         }
 
         .col-main {

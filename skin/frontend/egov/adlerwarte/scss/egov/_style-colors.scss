@@ -68,9 +68,9 @@ $global-rgba-1: rgba(239, 242, 234, 0.6);                              // Erste 
 $global-rgba-2: rgba(205, 218, 201, 0.65);                             // Zweite Farbe für Buttons
 
 $global-button-font-color: #FFFFFF;                                    // Schriftfarbe der Buttons
-$global-button-font-hover-color: #004720;                              // Hover-Schriftfarbe der Buttons
+$global-button-font-hover-color: #FFFFFF;                              // Hover-Schriftfarbe der Buttons
 $global-button-color: #004720;                                         // Hintergrundfarbe der Buttons
-$global-button-hovercolor: #FFFFFF;                                    // Hover-Hintergrundfarbe der Buttons
+$global-button-hovercolor: #707070;                                    // Hover-Hintergrundfarbe der Buttons
 $global-button-gradient: 5%;                                           // Höhe des Gradienten auf den Buttons (weniger=oben; mehr=unten)
 $global-button-gradient-1: $global-rgba-1 0%;                          // Startwert des Gradienten
 $global-button-gradient-2: $global-rgba-2 $global-button-gradient;     // Endwert des Gradienten

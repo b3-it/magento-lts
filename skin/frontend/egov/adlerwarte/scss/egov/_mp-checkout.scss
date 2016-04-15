@@ -12,6 +12,40 @@
         .block-cart {
             margin-top: $global-boxmargin;
             margin-bottom: 0px;
+
+            &:first-child {
+                top: -27px;
+            }
+        }
+    }
+
+    .required {
+        color: $global-warning-color;
+    }
+
+    p.required {
+        margin: $global-boxmargin 0;
+    }
+
+    ul.group-select {
+        li.agree {
+            width: 100%;
+
+            input {
+                vertical-align: top;
+            }
+
+            label {
+                width: 95%;
+            }
+        }
+
+        li.agree-content {
+            margin-left: 27px;
+
+            a {
+                color: $global-active-color;
+            }
         }
     }
 

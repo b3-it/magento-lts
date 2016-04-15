@@ -19,6 +19,36 @@
         }
     }
 
+    .required {
+        color: $global-warning-color;
+    }
+
+    p.required {
+        margin: $global-boxmargin 0;
+    }
+
+    ul.group-select {
+        li.agree {
+            width: 100%;
+
+            input {
+                vertical-align: top;
+            }
+
+            label {
+                width: 95%;
+            }
+        }
+
+        li.agree-content {
+            margin-left: 27px;
+
+            a {
+                color: $global-active-color;
+            }
+        }
+    }
+
     #custom-accountholder-box,
     #debitor-box {
         display: inline-block;

@@ -19,7 +19,7 @@
 // EGOV-Definitionen
 //    ACHTUNG!!!
 //    Variablen werden in "_framework.scss" eingebunden
-@import "../../default/scss/egov/bitv";
+@import "egov/bitv";
 @import "../../default/scss/egov/video";
 @import "egov/egov-base";
 @import "../../default/scss/egov/fa-icons";
@@ -56,9 +56,9 @@
 //  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
-@import "../../default/scss/module/buttons";
+@import "module/buttons";
 @import "../../default/scss/module/product-list";
-@import "../../default/scss/module/catalog-product";
+@import "module/catalog-product";
 @import "../../default/scss/module/catalog-msrp";
 @import "../../default/scss/module/catalog-seo-sitemap-category";
 @import "../../default/scss/module/catalog-compare";
