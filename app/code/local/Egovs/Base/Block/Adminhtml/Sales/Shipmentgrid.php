@@ -87,6 +87,7 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
             'index'     => 'created_at',
             'type'      => 'datetime',
         	'width'     => '150px',
+        	'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
         ));
 
         $this->addColumn('order_increment_id', array(
@@ -100,7 +101,8 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
             'header'    => Mage::helper('sales')->__('Order Date'),
             'index'     => 'order_created_at',
             'type'      => 'datetime',
-        	'filter_index' => 'order.created_at'
+        	//'filter_index' => 'order.created_at'
+        	'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
         ));
 
      
@@ -241,6 +243,39 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
     		$collection->getSelect()->where($condition, "%$value%");
     	}
     
+    	
+    	/**
+    	 *
+    	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+    	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+    	 *
+    	 * @return void
+    	 */
+    	protected function _filterCreatedAtCondition($collection, $column) {
+    		if (!$value = $column->getFilter()->getValue()) {
+    			return;
+    		}
+    		
+    		$col = 'main_table.created_at';
+    		if($column->getId() == 'order_created_at'){
+    			$col = 'order.created_at';
+    		}
+    		
+    		if(isset( $value['from']) && isset( $value['to'])){
+    			$condition = sprintf("(($col >= '%s') && ($col <= '%s'))", $value['from']->ToString('yyyy-MM-dd'),  $value['to']->ToString('yyyy-MM-dd') );
+    			$collection->getSelect()->where($condition);
+    		}
+    		else if(isset( $value['from'])){
+    			$condition = sprintf("($col >= '%s')", $value['from']->ToString('yyyy-MM-dd'));
+    			$collection->getSelect()->where($condition);
+    		}
+    		else if(isset( $value['to'])){
+    			$condition = sprintf("($col <= '%s')", $value['to']->ToString('yyyy-MM-dd'));
+    			$collection->getSelect()->where($condition);
+    		}
+    		 
+    	}
+    	
     public function getGridUrl()
     {
         return $this->getUrl('*/*/*', array('_current' => true));
