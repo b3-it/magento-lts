@@ -26,10 +26,11 @@
 .grid tbody td span.balanced    { color:#005E00; }
 .grid tbody td span.unbalanced  { color:#D50000; }
 
-.form-list                      { width:95%; }
-.form-list td.value textarea    { width:100%; }
-.form-list td.value select      { width:100%; }
-.form-list td.value p.note      { width:100%; }
+.form-list                           { width:95%; }
+.form-list td.value textarea         { width:100%; }
+.form-list td.value select           { width:100%; }
+.form-list td.value p.note           { width:100%; }
+.form-list td.value input.input-text { width:100%; }
 
 .columns .form-list             { width:95%; }
 .columns .form-list td.value    { width:75%; }
