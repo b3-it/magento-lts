@@ -265,7 +265,7 @@
 
         #checkout-review-table {
             @extend .egov-base-table;
-            margin-top: 20px;
+            margin-top: -10px;
 
             thead th, tbody td {
                 padding: $global-tdpadding;
