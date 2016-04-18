@@ -421,6 +421,11 @@ p.product-name {
 }
 
 .col3-layout {
+    .category-image, .category-description {
+        position: relative;
+        top: -15px;
+    }
+
     .products-list {
         .full {
             display: none;
