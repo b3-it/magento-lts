@@ -57,7 +57,7 @@
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
 @import "module/buttons";
-@import "../../default/scss/module/product-list";
+@import "module/product-list";
 @import "module/catalog-product";
 @import "../../default/scss/module/catalog-msrp";
 @import "../../default/scss/module/catalog-seo-sitemap-category";
