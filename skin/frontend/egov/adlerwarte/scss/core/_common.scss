@@ -780,7 +780,7 @@ div.block-reorder {
 .col-main {
     width: 100%;
     position: relative;
-    //top: -40px;
+    min-height: 300px;
 
     .std {
         margin: 0px;
