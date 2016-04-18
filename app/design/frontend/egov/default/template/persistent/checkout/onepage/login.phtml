@@ -104,7 +104,9 @@
 				                <strong><?php echo $this->__('Already registered?') ?></strong><br />
 				                <?php echo $this->__('If you have an account with us, please log in.') ?>
 			              </span>
+			            <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
 			              <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
+		              <?php endif; ?>
 		            </div>
                 <fieldset>
                     <?php echo $this->getMessagesBlock()->toHtml() ?>
