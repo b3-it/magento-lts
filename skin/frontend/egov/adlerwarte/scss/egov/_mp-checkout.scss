@@ -267,6 +267,11 @@
             @extend .egov-base-table;
             margin-top: -10px;
 
+            #product-details {
+                display: inline-block;
+                vertical-align: top;
+            }
+
             thead th, tbody td {
                 padding: $global-tdpadding;
             }
