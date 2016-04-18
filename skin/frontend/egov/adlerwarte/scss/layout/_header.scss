@@ -235,7 +235,7 @@
     position: absolute;
     right: 10px;
     width: 70%;
-    top: 70px;
+    top: 30px;
     height: 100vh;
 }
 
@@ -449,7 +449,7 @@ a.skip-link {
 
 .account-cart-wrapper {
     text-align: right;
-    height: 60px;
+    height: 100px;
 
     a {
         background-color: $global-h1-color;
@@ -462,7 +462,9 @@ a.skip-link {
         border-color: $global-active-color;
 
         span.icon, span.label {
-            line-height: 70px;
+            line-height: 30px;
+            position: relative;
+            top: 57px;
         }
     }
 
