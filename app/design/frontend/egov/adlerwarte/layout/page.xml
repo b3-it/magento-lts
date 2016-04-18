@@ -78,10 +78,10 @@
 
             <block type="page/html_notices" name="global_notices" as="global_notices" template="page/html/notices.phtml" />
 
-             <block type="page/html_header" name="header" as="header">
+             <block type="bitv/page_html_header" name="header" as="header">
                 <action method="setData"><key>accesskey</key><value>u</value></action>
                 <action method="setData"><key>jumptitle</key><value>Kundenmenü</value></action>
-                <block type="bitv/page_html_header" name="bitvmenu" as="bitvmenu" />
+                <block type="bitv/page_html_header" name="bitvmenu" as="bitvmenu" template="egovs/bitv/page/html/header.phtml"/>
                 <block type="page/template_links" name="top.links" as="topLinks" />
                 <block type="core/template" name="topEgovmenu" template="page/template/egovmenu.phtml" />
                 <block type="egovsbase/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" />
