@@ -35,7 +35,7 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
 {
 	private $_jump = null;
 	
-    public function _construct()
+    public function xx_construct()
     {
         $this->setTemplate('egovs/bitv/page/html/header.phtml');
     }
