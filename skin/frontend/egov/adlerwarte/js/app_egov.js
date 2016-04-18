@@ -20,7 +20,8 @@ $j(document).ready(function () {
     $j('body').niceScroll({
         'cursorcolor'       : '#004720',
         'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
+        'cursorborderradius': '3px',
+        'zindex'            : 999
     });
 
     // Dynamische Skallierung der Welcome-Schrift

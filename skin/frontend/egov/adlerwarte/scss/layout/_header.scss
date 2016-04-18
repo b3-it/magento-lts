@@ -457,6 +457,9 @@ a.skip-link {
         height: 100%;
         vertical-align: bottom;
         border-radius: 0px 0px 3px 3px;
+        border-width: $global-active-border;
+        border-style: solid;
+        border-color: $global-active-color;
 
         span.icon, span.label {
             line-height: 70px;

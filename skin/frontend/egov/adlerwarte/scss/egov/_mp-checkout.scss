@@ -24,7 +24,7 @@
     }
 
     p.required {
-        margin: $global-boxmargin 0;
+        margin: $global-boxmargin 0 0 0;
     }
 
     ul.group-select {
@@ -52,7 +52,7 @@
     .multiple-checkout {
         .col-2 {
             > div {
-                margin: 5px 0px 10px 10px;
+                margin: 0;
             }
             > fieldset.form-list {
                 margin-left: 0px;
@@ -155,11 +155,15 @@
             vertical-align: top;
             padding: 0px;
             width: 45%;
-            min-height: 150px;
+            min-height: 120px;
 
             h3 {
                 margin: 0px;
             }
+        }
+
+        .sp-methods .form-list {
+            padding: 0;
         }
 
         .full-wide {
@@ -173,11 +177,11 @@
 
         h3, h4 {
             @extend .block-title;
+            padding: 0 !important;
         }
 
         address, fieldset, p,
         .overview_shipping, .successview_shipping {
-            margin: 5px 0px 10px 10px;
         }
     }
 

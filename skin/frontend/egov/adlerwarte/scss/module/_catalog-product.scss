@@ -114,6 +114,10 @@
             width: $global-product-info-1-width;
             font-size: 1.3em;
 
+            .availability .label {
+                font-size: 1.2em;
+            }
+
             .add-to-cart-buttons {
                 float: left;
                 max-width: 180px;
@@ -149,6 +153,10 @@
         .product-shop {
             width: $global-product-info-2L-width;
             font-size: 1.3em;
+
+            .availability .label {
+                font-size: 1.2em;
+            }
 
             .add-to-cart-buttons {
                 float: left;

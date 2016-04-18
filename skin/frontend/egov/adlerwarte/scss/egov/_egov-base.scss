@@ -147,7 +147,6 @@
 }
 
 .egov-navheader-base {
-    box-shadow: 0 1px 2px 1px $global-text-shadow;
     border-radius: $global-radius $global-radius 0 0;
     border: $global-box-border solid $global-lightcolor;
     font-size: $global-category-fontsize;
@@ -162,7 +161,6 @@
     width: 100%;
     padding: 7px 25px 7px 13px;
     line-height: $global-navigation-line-height;
-    text-shadow: $global-category-textshadow;
 }
 .egov-arrow-main-closed {
     @extend .egov-navigation-base;
