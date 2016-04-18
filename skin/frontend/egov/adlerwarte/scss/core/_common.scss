@@ -892,8 +892,8 @@ div.block-reorder {
             width: $global-rightcol-3col-percent;
             right: $global-rightcol-rightmargin-percent;
             padding: 0px;
-            position: relative;
-            top: $global-rightcol-margintop;
+            position: absolute;
+            top: $global-rightcol-margintop - 17px;
             margin-bottom: $global-rightcol-margintop;
         }
 

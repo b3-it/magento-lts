@@ -183,7 +183,7 @@
     }
     .col3-layout {
         .col-main {
-            padding-top: 13px;
+            /*padding-top: 13px;*/
         }
 
         #product-base-block {
@@ -199,7 +199,7 @@
 
         .add-to-cart {
             position: absolute;
-            top: $global-3-product-height - $gobal-cart-block-height;
+            top: $global-3-product-height - $gobal-cart-block-height - 13px;
         }
     }
 }
