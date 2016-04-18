@@ -64,6 +64,16 @@
         }
     }
 
+    #shipping-zip-form {
+        li {
+            display: block;
+
+            select {
+                margin: 0;
+            }
+        }
+    }
+
     .cart-empty {
         @extend .egov-default-message;
 
