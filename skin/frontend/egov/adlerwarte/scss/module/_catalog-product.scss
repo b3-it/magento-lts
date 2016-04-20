@@ -180,6 +180,20 @@
             position: absolute;
             top: $global-2L-product-height + ( $gobal-cart-block-height / 2 ) - 10px;
         }
+
+        .product-additional-information {
+            .product-options-bottom {
+                .add-to-cart {
+                    top: 405px;
+                    left: 290px;
+
+                    .add-to-cart-buttons {
+                        display: inline-block;
+                        max-width: 180px;
+                    }
+                }
+            }
+        }
     }
 
     .col3-layout {
