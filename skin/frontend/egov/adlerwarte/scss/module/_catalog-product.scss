@@ -380,6 +380,10 @@
         .price-box {
             margin-top: 0;
 
+            .price {
+                font-weight: bold;
+            }
+
             .old-price,
             .special-price,
             .regular-price {
