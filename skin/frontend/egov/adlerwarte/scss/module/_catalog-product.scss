@@ -147,13 +147,6 @@
             height: $global-2L-product-height;
         }
 
-        #additional-product-images {
-            position: absolute;
-            width: 60%;
-            left: 42%;
-            top: 290px;
-        }
-
         .product-img-box {
             width: $global-product-image-2L-width;
         }
@@ -161,6 +154,11 @@
         .product-shop {
             width: $global-product-info-2L-width;
             font-size: $global-fontsize-big;
+
+            .short-description {
+                max-height: 180px;
+                overflow: auto;
+            }
 
             .availability {
                 font-size: $global-fontsize-small !important;
@@ -176,31 +174,60 @@
             }
         }
 
-        .add-to-cart {
-            position: absolute;
-            top: $global-2L-product-height + ( $gobal-cart-block-height / 2 ) - 10px;
-        }
-
         .product-additional-information {
+            .product-options {
+                dt {
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+
+                .checkbox, .radio {
+                    margin-top: 0;
+                }
+
+                .option-block {
+                    display: block;
+                    width: 100%;
+
+                    select, input[type="text"], textarea {
+                        width: 90%;
+                    }
+                }
+
+                .type-checkbox, .type-radio,
+                .type-multiple, .type-date {
+                    vertical-align: top;
+                    display: inline-block;
+                    width: 48%;
+                    margin-right: 10px;
+                }
+
+                .type-date {
+                    input[type="text"] {
+                        width: 60%;
+                    }
+                    img {
+                        display: inline-block;
+                    }
+                }
+            }
+
             .product-options-bottom {
                 .add-to-cart {
-                    top: 405px;
-                    left: 290px;
-
                     .add-to-cart-buttons {
                         display: inline-block;
                         max-width: 180px;
                     }
+                }
+
+                .add-to-links {
+                    display: none;
                 }
             }
         }
     }
 
     .col3-layout {
-        .col-main {
-            /*padding-top: 13px;*/
-        }
-
         #product-base-block {
             height: $global-3-product-height;
         }

@@ -567,6 +567,9 @@ div.block-reorder {
     a {
         float: left;
         color: $global-active-color;
+        border-width: $global-active-border;
+        border-color: transparent;
+        border-style: solid;
 
         &:hover {
             color: $global-active-color;
