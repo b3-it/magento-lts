@@ -429,6 +429,7 @@
 
 "Allowed file types: ICO, PNG, GIF, JPEG, APNG, SVG. Not all browsers support all these formats!","Erlaubte Formate: ICO, PNG, GIF, JPEG, APNG, SVG. Nicht alle Browser unterstützen alle diese Formate!"
 "Configurable Product System E-Mail","konfigurierbares virtuelles Produkt E-Mail"
+"excl. <a href=""%s"">Shipping Cost</a>","zuzügl. <a href=""%s"">Versandkosten</a>"
 "For Windows server only.","Nur für Windows-Server"
 "Please enter your email below and we\'ll send you confirmation link for it.","Bitte geben Sie Ihre E-Mail Adresse an, um einen Bestätigungslink zu erhalten."
 "Please enter your email below and we'll send you confirmation link for it.","Bitte geben Sie Ihre E-Mail Adresse an, um einen Bestätigungslink zu erhalten."
@@ -488,6 +489,7 @@
 "Services","Services"
 "Session Lifetime (seconds)","Session-Lebenszeit (Sekunden)"
 "Set as Default","Als Standard festlegen"
+"Shipping Weight %s","Gewicht: %s"
 "Skin (Images / CSS)","Skin (Bilder / CSS)"
 "Specified date/time ""%1$s"" do not match format ""%2$s"".","Angegebes Datum/Uhrzeit ""%1$s"" entspricht nicht dem Format ""%2$s""."
 "Start date cannot be greater than end date.","Startdatum darf nicht später als Enddatum liegen."
