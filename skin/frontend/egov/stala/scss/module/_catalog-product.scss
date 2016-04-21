@@ -182,6 +182,58 @@
             position: absolute;
             top: $global-2L-product-height + ( $gobal-cart-block-height / 2 );
         }
+
+        .product-additional-information {
+            .product-options {
+                dt {
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+
+                .checkbox, .radio {
+                    margin-top: 0;
+                }
+
+                .option-block {
+                    display: block;
+                    width: 100%;
+
+                    select, input[type="text"], textarea {
+                        width: 90%;
+                    }
+                }
+
+                .type-checkbox, .type-radio,
+                .type-multiple, .type-date {
+                    vertical-align: top;
+                    display: inline-block;
+                    width: 48%;
+                    margin-right: 10px;
+                }
+
+                .type-date {
+                    input[type="text"] {
+                        width: 60%;
+                    }
+                    img {
+                        display: inline-block;
+                    }
+                }
+            }
+
+            .product-options-bottom {
+                .add-to-cart {
+                    .add-to-cart-buttons {
+                        display: inline-block;
+                        max-width: 180px;
+                    }
+                }
+
+                .add-to-links {
+                    display: none;
+                }
+            }
+        }
     }
     .col3-layout {
         .col-main {
