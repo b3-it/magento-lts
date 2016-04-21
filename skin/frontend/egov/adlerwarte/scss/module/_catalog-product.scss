@@ -81,6 +81,19 @@
 }
 
 .catalog-product-view {
+    .product-name {
+        .product-sku {
+            font-weight: normal;
+            font-size: $global-fontsize;
+            color: $global-fontcolor-dark;
+            text-shadow: none;
+
+            display: inline-block;
+            float: right;
+            text-align: right;
+        }
+    }
+
     .col1-layout {
         .col-main {
             padding-top: 13px;
@@ -164,9 +177,22 @@
                 font-size: $global-fontsize-small !important;
             }
 
+            .add-to-cart {
+                float: right;
+                position: absolute;
+                right: 0;
+                top: 40px;
+                width: 160px;
+
+                .qty-wrapper {
+                    margin: 0 0 5px 50px;
+                }
+            }
+
             .add-to-cart-buttons {
                 float: left;
-                max-width: 180px;
+                max-width: 150px;
+                margin: 0;
 
                 button {
                     font-size: $global-fontsize-small;
@@ -329,16 +355,6 @@
         height: 100%;
         display: inline-block;
         vertical-align: top;
-
-        .product-sku {
-            padding: 0px 0px 10px 0px;
-        }
-
-        .extra-info {
-        }
-
-        .price-info {
-        }
 
         .extra-info,
         .price-info {

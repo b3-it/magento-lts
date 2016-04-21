@@ -20,7 +20,12 @@
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
 <div class="product-name">
-    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+    <h1>
+        <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
+        <div class="product-sku">
+            <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+        </div>
+    </h1>
 </div>
 <div class="product-view">
     <div class="product-essential">
@@ -37,9 +42,6 @@
                 </div>
 
                 <div class="product-shop">
-                    <div class="product-sku">
-                        <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
-                    </div>
                     <div class="price-info">
                         <?php echo $this->getPriceHtml($_product); ?>
                         <?php echo $this->getChildHtml('bundle_prices'); ?>
@@ -50,12 +52,11 @@
                         <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>
                         <?php echo $this->getChildHtml('product_type_availability'); ?>
                     </div>
-<!-- prüfen, warum bei Sachsen alles ok und bei Adlerwarte alles doppelt !!!
+<!-- prüfen, warum bei egov alles ok und bei adler alles doppelt !!!
                     <?php echo $this->getChildHtml('alert_urls'); ?>
                     <?php echo $this->getChildHtml('product_type_data') ?>
                     <?php echo $this->getChildHtml('extrahint') ?>
 -->
-
                   <?php if ($_product->getShortDescription()):?>
                     <div class="short-description">
                         <div class="std">
