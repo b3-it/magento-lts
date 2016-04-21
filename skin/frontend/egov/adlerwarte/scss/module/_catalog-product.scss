@@ -168,6 +168,12 @@
             width: $global-product-info-2L-width;
             font-size: $global-fontsize-big;
 
+            .tax-details {
+                .shipping-cost-details {
+                    display: block;
+                }
+            }
+
             .short-description {
                 max-height: 180px;
                 overflow: auto;
