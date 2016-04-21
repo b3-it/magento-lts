@@ -81,12 +81,18 @@
 }
 
 .catalog-product-view {
+    h2 {
+        font-family: $base-font-family;
+    }
+
     .product-name {
         .product-sku {
             font-weight: normal;
             font-size: $global-fontsize;
             color: $global-fontcolor-dark;
             text-shadow: none;
+
+            font-family: $base-font-family;
 
             display: inline-block;
             float: right;
