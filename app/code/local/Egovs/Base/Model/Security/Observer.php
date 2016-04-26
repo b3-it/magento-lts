@@ -580,6 +580,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 			|| $key == 'customer_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
 			|| $key == 'store_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
 			|| $key == 'new_password'
+			|| $key == 'password_confirmation'
 			|| $key == 'form_key'
 		) {
 			return true;
@@ -595,6 +596,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 		switch ($key) {
 			case 'password':
 			case 'new_password':
+			case 'password_confirmation':
 				$origValue = '*********';
 				$newValue = $origValue.'**';
 		}
