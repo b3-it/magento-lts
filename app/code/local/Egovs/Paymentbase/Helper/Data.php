@@ -639,8 +639,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 					$customer = $quote->getCustomer();
 				}
 				if (isset($customerId) &&  ($customer->getId() != $customerId)) {
-					Mage::log("paymentbase::getECustomerIdNonVolatile():: Customer from session isn't equal to given ID, reloading...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-					$customer->load($customerId);
+					Mage::log(sprintf("paymentbase::getECustomerIdNonVolatile():: Customer from session with ID %s isn't equal to given ID %s, reloading...", $customer->getId(), $customerId), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+					$customer = Mage::getModel('customer/customer')->load($customerId);
 				}
 
 				if (!$customer) {
@@ -654,7 +654,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$this->_nonVolatile = true;
 			if (!$customer->hasData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID) && !$customer->isEmpty()) {
 				$customer->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID, "{$this->getWebShopDesMandanten()}-{$this->getECustomerIdRandom($customerId)}");
-				Mage::log('paymentbase::getECustomerIdNonVolatile():: Generated customer ID for ePayBL: '.$this->__eCustomerId, Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+				Mage::log('paymentbase::getECustomerIdNonVolatile():: Generated customer ID for ePayBL: '.$customer->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				$this->__eCustomerId = $customer->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
 				if ($customer->getId() > 0 && !$customer->getDeleteOnPlatform()) {
 					/* @var $resource Mage_Customer_Model_Resource_Customer */
@@ -681,8 +681,9 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return void
 	 */
 	public function resetECustomerId() {
+		
+		Mage::log('paymentbase::Resetting eCustomer ID: '.$this->__eCustomerId , Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 		$this->__eCustomerId = null;
-		Mage::log('paymentbase::Resetting eCustomer ID', Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 	}
 	/**
 	 * Mandantennummer an der ePayment Plattform
