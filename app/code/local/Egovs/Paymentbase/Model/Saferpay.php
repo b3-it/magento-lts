@@ -411,8 +411,8 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 			: $this->_fieldsArr ['PAYMENTMETHODS'] = ''
 		;
 		Mage::getStoreConfig("payment/{$this->getCode()}/karteninhaber")
-			? $this->_fieldsArr ['CCNAME'] = '"yes"'
-			: $this->_fieldsArr ['CCNAME'] = '"no"'
+			? $this->_fieldsArr ['CCNAME'] = 'yes'
+			: $this->_fieldsArr ['CCNAME'] = 'no'
 		;
 		
 		$this->_fieldsArr ['ACCOUNTID'] = Mage::helper ( 'core' )->decrypt ( $this->getAccountId());
