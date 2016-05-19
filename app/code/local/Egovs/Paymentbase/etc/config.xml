@@ -439,13 +439,17 @@
 		</web>
     	<payment_services>
     		<paymentbase>
-                	<active>0</active>
-                    <maxcounthaushaltsstelle>0</maxcounthaushaltsstelle>
-					<is_alive>0</is_alive>
-					<accounting_list_limit>0</accounting_list_limit>
-                	<mandate_pdf_template_store>/mandates</mandate_pdf_template_store>
-                	<href_max_length>100</href_max_length>
-                </paymentbase>
+                <active>0</active>
+                <maxcounthaushaltsstelle>0</maxcounthaushaltsstelle>
+				<is_alive>0</is_alive>
+				<accounting_list_limit>0</accounting_list_limit>
+                <mandate_pdf_template_store>/mandates</mandate_pdf_template_store>
+                <href_max_length>100</href_max_length>
+            </paymentbase>
+            <saferpay>
+    	        <active>1</active>
+    	        <service_url>https://www.saferpay.com/hosting/</service_url>
+    	    </saferpay>
     		<payplace>
     			<service_url>https://test.soap.bs-card-service.com/soapapi/services/XmlApiNl</service_url>
     			<merchant_name>{{config path="general/imprint/shop_name"}}</merchant_name>

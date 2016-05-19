@@ -81,6 +81,25 @@
 }
 
 .catalog-product-view {
+    h2 {
+        font-family: $base-font-family;
+    }
+
+    .product-name {
+        .product-sku {
+            font-weight: normal;
+            font-size: $global-fontsize;
+            color: $global-fontcolor-dark;
+            text-shadow: none;
+
+            font-family: $base-font-family;
+
+            display: inline-block;
+            float: right;
+            text-align: right;
+        }
+    }
+
     .col1-layout {
         .col-main {
             padding-top: 13px;
@@ -147,13 +166,6 @@
             height: $global-2L-product-height;
         }
 
-        #additional-product-images {
-            position: absolute;
-            width: 60%;
-            left: 42%;
-            top: 290px;
-        }
-
         .product-img-box {
             width: $global-product-image-2L-width;
         }
@@ -162,13 +174,37 @@
             width: $global-product-info-2L-width;
             font-size: $global-fontsize-big;
 
+            .tax-details {
+                .shipping-cost-details {
+                    display: block;
+                }
+            }
+
+            .short-description {
+                max-height: 180px;
+                overflow: auto;
+            }
+
             .availability {
                 font-size: $global-fontsize-small !important;
             }
 
+            .add-to-cart {
+                float: right;
+                position: absolute;
+                right: 0;
+                top: 40px;
+                width: 160px;
+
+                .qty-wrapper {
+                    margin: 0 0 5px 50px;
+                }
+            }
+
             .add-to-cart-buttons {
                 float: left;
-                max-width: 180px;
+                max-width: 150px;
+                margin: 0;
 
                 button {
                     font-size: $global-fontsize-small;
@@ -176,17 +212,60 @@
             }
         }
 
-        .add-to-cart {
-            position: absolute;
-            top: $global-2L-product-height + ( $gobal-cart-block-height / 2 ) - 10px;
+        .product-additional-information {
+            .product-options {
+                dt {
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+
+                .checkbox, .radio {
+                    margin-top: 0;
+                }
+
+                .option-block {
+                    display: block;
+                    width: 100%;
+
+                    select, input[type="text"], textarea {
+                        width: 90%;
+                    }
+                }
+
+                .type-checkbox, .type-radio,
+                .type-multiple, .type-date {
+                    vertical-align: top;
+                    display: inline-block;
+                    width: 48%;
+                    margin-right: 10px;
+                }
+
+                .type-date {
+                    input[type="text"] {
+                        width: 60%;
+                    }
+                    img {
+                        display: inline-block;
+                    }
+                }
+            }
+
+            .product-options-bottom {
+                .add-to-cart {
+                    .add-to-cart-buttons {
+                        display: inline-block;
+                        max-width: 180px;
+                    }
+                }
+
+                .add-to-links {
+                    display: none;
+                }
+            }
         }
     }
 
     .col3-layout {
-        .col-main {
-            /*padding-top: 13px;*/
-        }
-
         #product-base-block {
             height: $global-3-product-height;
         }
@@ -289,16 +368,6 @@
         display: inline-block;
         vertical-align: top;
 
-        .product-sku {
-            padding: 0px 0px 10px 0px;
-        }
-
-        .extra-info {
-        }
-
-        .price-info {
-        }
-
         .extra-info,
         .price-info {
             margin-bottom: $box-spacing;
@@ -310,6 +379,10 @@
 
         .price-box {
             margin-top: 0;
+
+            .price {
+                font-weight: bold;
+            }
 
             .old-price,
             .special-price,

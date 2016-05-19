@@ -568,6 +568,9 @@ div.block-reorder {
 .breadcrumbs a {
     float: left;
     color: $global-fontcolor-light;
+    border-width: $global-active-border;
+    border-color: transparent;
+    border-style: solid;
 }
 
 .breadcrumbs a:hover {
@@ -768,7 +771,7 @@ div.block-reorder {
 
 .col-main {
     width: 100%;
-    min-height: 300px;
+    min-height: 500px;
 
     .std {
         margin: 0px;

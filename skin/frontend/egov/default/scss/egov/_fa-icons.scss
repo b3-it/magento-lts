@@ -161,19 +161,15 @@
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
 }
-/*
-// Fotoapparat 1
-.egov-compare-1 {
+
+// Icons für RSS-Feet
+.egov-rss {
     @extend .fa;
-    @extend .fa-camera;
-    font-size: $global-fontsize;
-    margin: $fa-icon-margin;
+    @extend .fa-rss-square;
+    font-size: $global-fontsize + 6;
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    float: left;
+    margin-right: 15px;
 }
-// Fotoapparat 2
-.egov-compare-2 {
-    @extend .fa;
-    @extend .fa-camera-retro;
-    font-size: $global-fontsize;
-    margin: $fa-icon-margin;
-}
-*/

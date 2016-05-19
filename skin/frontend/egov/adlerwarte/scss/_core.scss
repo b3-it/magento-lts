@@ -46,7 +46,7 @@
 @import "layout/header-search";
 @import "layout/header-account";
 @import "layout/header-cart";
-@import "../../default/scss/layout/footer";
+@import "layout/footer";
 
 
 // ----------------------------------------------
@@ -57,6 +57,7 @@
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
 @import "module/buttons";
+@import "../../default/scss/module/select-language";
 @import "module/product-list";
 @import "module/catalog-product";
 @import "../../default/scss/module/catalog-msrp";

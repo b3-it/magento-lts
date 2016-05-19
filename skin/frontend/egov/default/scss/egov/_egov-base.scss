@@ -129,16 +129,16 @@
 
 .egov-navigation-background {
     *zoom: 1;
-    /* Für IE9/IE10 Filter entfernen */
-    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
+    *zoom: 1;
+    background-size: 100% 45px;
 
-    background-image: url($global-category-image);
-    background-size: 100% auto;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));
-    background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-color: $global-category-item-color;
     background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-    background-image: -o-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-    background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: linear-gradient(to bottom, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+
+    /* Für IE9/IE10 Filter setzen */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2',GradientType=0 );
 }
 
 .egov-navheader-base {
