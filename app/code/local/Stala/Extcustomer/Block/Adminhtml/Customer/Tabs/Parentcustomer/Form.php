@@ -8,11 +8,11 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Parentcustomer_Form extend
       $this->setForm($form);
       $fieldset = $form->addFieldset('parentcustomer_form', array('legend'=>Mage::helper('extcustomer')->__('Parent Customer')));
      
-      /*
+      
       $fieldset->addField('parent_customer_id', 'hidden', array(
           'name'      => 'account[parent_customer_id]',
       ));
-      */
+      
       $fieldset->addField('parent_customer_id2', 'text', array(
           'name'      => 'account[parent_customer_id2]',
           'label'     => Mage::helper('extcustomer')->__('Parent Customer ID'),

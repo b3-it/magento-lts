@@ -47,7 +47,7 @@ button {
 
 textarea, input[type="text"], input[type="email"],
 input[type="password"], input[type="tel"], select {
-    border: 1px solid $global-wrapper-color;
+    border: 1px solid $global-element-border;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
     margin-bottom: $global-element-magrin-bottom;
     outline: medium none;
@@ -59,7 +59,7 @@ input[type="password"]:focus, input[type="tel"]:focus, select:focus,
 textarea:active, input[type="text"]:active, input[type="email"]:active,
 input[type="password"]:active, input[type="tel"]:active, select:active {
     background-color: $global-lightcolor-hover;
-    border-color: $global-lightcolor;
+    border-color: $global-active-color;
 }
 
 input[type="checkbox"], input[type="radio"] {

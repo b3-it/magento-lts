@@ -639,8 +639,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 					$customer = $quote->getCustomer();
 				}
 				if (isset($customerId) &&  ($customer->getId() != $customerId)) {
-					Mage::log("paymentbase::getECustomerIdNonVolatile():: Customer from session isn't equal to given ID, reloading...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-					$customer->load($customerId);
+					Mage::log(sprintf("paymentbase::getECustomerIdNonVolatile():: Customer from session with ID %s isn't equal to given ID %s, reloading...", $customer->getId(), $customerId), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+					$customer = Mage::getModel('customer/customer')->load($customerId);
 				}
 
 				if (!$customer) {
@@ -654,7 +654,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$this->_nonVolatile = true;
 			if (!$customer->hasData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID) && !$customer->isEmpty()) {
 				$customer->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID, "{$this->getWebShopDesMandanten()}-{$this->getECustomerIdRandom($customerId)}");
-				Mage::log('paymentbase::getECustomerIdNonVolatile():: Generated customer ID for ePayBL: '.$this->__eCustomerId, Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+				Mage::log('paymentbase::getECustomerIdNonVolatile():: Generated customer ID for ePayBL: '.$customer->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				$this->__eCustomerId = $customer->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
 				if ($customer->getId() > 0 && !$customer->getDeleteOnPlatform()) {
 					/* @var $resource Mage_Customer_Model_Resource_Customer */
@@ -681,8 +681,9 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return void
 	 */
 	public function resetECustomerId() {
+		
+		Mage::log('paymentbase::Resetting eCustomer ID: '.$this->__eCustomerId , Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 		$this->__eCustomerId = null;
-		Mage::log('paymentbase::Resetting eCustomer ID', Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 	}
 	/**
 	 * Mandantennummer an der ePayment Plattform
@@ -1224,8 +1225,13 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				$eCustomer = $this->getECustomer();
 				if (!$eCustomer) {
 					//Müsste eigentlich durch vorherige Prüfungen unmöglich sein, es sei denn der Kunde wurde direkt an der ePayBL gelöscht!
-					Mage::log(sprintf(" paymentbase::getCustomerFromEPayment:Kunde nicht vorhanden!\nID=%s\nePayBL-ID=%s", $customer->getId(), $id), Zend_Log::WARN, Egovs_Helper::EXCEPTION_LOG_FILE);
+					Mage::log(sprintf(" paymentbase::getCustomerFromEPayment:Kunde nicht vorhanden!\nID=%s\nePayBL-ID=%s", $customer->getId(), $id), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
 					return false;
+				}
+				if (isset($eCustomer->status) && isset($eCustomer->status->code) && $eCustomer->status->code != 'AKTIV') {
+					Mage::log(sprintf(" paymentbase::getCustomerFromEPayment:Kunde nicht mehr aktiv (STATUS:%s)!\nID=%s\nePayBL-ID=%s", $eCustomer->status->code, $customer->getId(), $id), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+					$address->setECustomerIsDeleted(true);
+					return $address;
 				}
 				$ePyBLAdr = $eCustomer->rechnungsAdresse;
 				$hasChanged = false;
@@ -1296,17 +1302,19 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			return $this;
 		}
 
+		if ($address->getECustomerIsDeleted()) {
+			// TODO :: Fehlerbehandlung implementieren!
+		}
+
 		$data = $this->extractCustomerInformation($address);
 		$data->setInvoiceAddress($address);
 
+		$code = 0;
 		try {
 			$code = $this->modifyCustomerOnEPayment($customer, $data, true);
-		} 
-		catch (Egovs_Paymentbase_Exception_Validation $e)
-		{
+		} catch (Egovs_Paymentbase_Exception_Validation $e) {
 			throw $e;
-		}
-		catch (Exception $e) {
+		} catch (Exception $e) {
 			$code = -9999;
 			Mage::log(sprintf("%s in %s Line: %d", $e->getMessage(), $e->getFile(), $e->getLine()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			Mage::logException($e);
@@ -1315,11 +1323,23 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 
 		//Falls Fehler
 		if (intval($code) < 0) {
-			//Kunde nicht vorhanden
-			if (intval($code) != -199) {
-				self::parseAndThrow($error);
-			} else {
+			switch (intval($code)) {
+				case -120:
+					//Kunde zum Löschen markiert
+					/* @var $resource Mage_Customer_Model_Resource_Customer */
+					Mage::log(sprintf("paymentbase::Removing eCustomerID (%s) from Customer (ID: %s). eCustomer is marked for deletion on ePayBL.", $customer->getData(self::ATTRIBUTE_EPAYBL_CUSTOMER_ID), $customer->getId()), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+					$resource = $customer->getResource();
+					$customer->unsetData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
+					$resource->saveAttribute($customer, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
+					$this->resetECustomerId();
+					break;
+				case -199:
+				//Kunde nicht vorhanden
 				Mage::log("paymentbase::The customer doesn't exist on the ePayment server (ID: ".$customer ? $customer->getId() : "0".")", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+					break;
+				default:
+					self::parseAndThrow($code);
+					break;
 			}
 		}
 
@@ -1412,6 +1432,14 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
 				$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n";
 				switch (intval($objResult->ergebnis->code)) {
+					case -120:
+						/*
+						 * Code: -0120
+						 * Titel: Kunden nicht änderbar
+						 * Beschreibung: Der Kunde ist zum Löschen markiert, änderungen seiner Daten sind nicht mehr möglich.
+						 */
+						$sMailText .= sprintf("Das Errorlogfile '%s' enthält weitere Informationen. Der Fehler kann unter Umständen ignoriert werden.\n", Egovs_Helper::EXCEPTION_LOG_FILE);
+						break;
 					case -440:
 						if ($objKunde && isset($objKunde->bankverbindung)) {
 							if ($objKunde->bankverbindung instanceof Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung) {
@@ -1435,7 +1463,13 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				$this->sendMailToAdmin("paymentbase::Fehler in WebService-Funktion: aendernKunde\n$sMailText");
 			}
 			
-			$sMailText .= print_r(debug_backtrace(), true)."\n";
+			if ($data instanceof Varien_Object) {
+				$sMailText .= sprintf("Data to change:\n%s\n", print_r($data->getData(), true));
+			} elseif (is_array($data)) {
+				$sMailText .= sprintf("Data to change:\n%s\n", print_r($data, true));
+			}
+
+			$sMailText .= $this->_logTrace()."\n";
 			Mage::log("paymentbase::Fehler in WebService-Funktion: aendernKunde ". $sMailText, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			// Fehlermeldung
 			if (!$objResult || $objResult instanceof SoapFault) {
@@ -1452,6 +1486,36 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 		}
 
 		return $objResult->ergebnis->code;
+	}
+
+	/**
+	 * Return the output from a backtrace
+	 *
+	 * @param string $message Optional message that will be sent the the error_log before the backtrace
+	 */
+	protected function _logTrace($message = '') {
+		$logMsg = '';
+		if (version_compare(phpversion(), '5.3.6', '<')) {
+			$trace = debug_backtrace(false);
+		} else {
+			$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+		}
+		if ($message) {
+			$logMsg = sprintf("%s:\n", $message);
+		}
+		$caller = array_shift($trace);
+		$function_name = $caller['function'];
+		$logMsg .= sprintf("%s: Called from %s:%s\n", $function_name, $caller['file'], $caller['line']);
+		foreach ($trace as $entry_id => $entry) {
+			$entry['file'] = $entry['file'] ? : '-';
+			$entry['line'] = $entry['line'] ? : '-';
+			if (empty($entry['class'])) {
+				$logMsg .= sprintf("%s %3s. %s() %s:%s\n", $function_name, $entry_id + 1, $entry['function'], $entry['file'], $entry['line']);
+			} else {
+				$logMsg .= sprintf("%s %3s. %s->%s() %s:%s\n", $function_name, $entry_id + 1, $entry['class'], $entry['function'], $entry['file'], $entry['line']);
+			}
+		}
+		return $logMsg;
 	}
 
 	/**

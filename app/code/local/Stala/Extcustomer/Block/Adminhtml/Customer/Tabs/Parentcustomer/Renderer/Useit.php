@@ -44,7 +44,7 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Parentcustomer_Renderer_Us
   	  		}
 	        $this->getColumn()->setActions(array(array(
 	            
-	        	'onclick' => "$('_accountparent_customer_id').value='".$row->getEntityId()."'; $('parent_customer_id2').value='".$row->getEntityId()."';$('parent_customer_name').value= '".$titel."'; $('parent_customer_copy_address').checked = true; return false; ",
+	        	'onclick' => "$('parent_customer_id').value='".$row->getEntityId()."'; $('parent_customer_id2').value='".$row->getEntityId()."';$('parent_customer_name').value= '".$titel."'; $('parent_customer_copy_address').checked = true; return false; ",
 	            'caption' => Mage::helper('extcustomer')->__('Use as Parent'),
 	        )));
 	        return parent::render($row);

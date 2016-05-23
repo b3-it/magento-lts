@@ -137,9 +137,9 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             </button>
             <?php endif; ?>
         </div>
-        <div class="cart-coupon">
-            <?php echo $this->getChildHtml('coupon') ?>
-        </div>
+
+        <?php echo $this->getChildHtml('coupon') ?>
+
     </div>
     <?php echo $this->getChildHtml('crosssell') ?>
 </div>

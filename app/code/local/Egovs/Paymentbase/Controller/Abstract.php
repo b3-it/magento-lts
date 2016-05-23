@@ -715,7 +715,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
         $idp = $dom->getElementsByTagName('IDP')->item(0);
         $this->_saferpayIDP = $idp;
         
-        $saferpay_payconfirm_gateway = "https://www.saferpay.com/hosting/VerifyPayConfirm.asp";
+        $saferpay_payconfirm_gateway = Mage::helper($this->_getModuleName())->getSaferpayServiceUrl() . "VerifyPayConfirm.asp";
 
         // * catch magic_quotes_gpc is set to yes in PHP.ini
         if (substr($data, 0, 15) =="<IDP MSGTYPE=\\\"") {
