@@ -190,12 +190,12 @@
         </events>
     </global>
     <default>
-        <payment>
+        <payment_services>
             <paymentbase>
                 <zpkonten_pool_limit>1000</zpkonten_pool_limit>
                 <zpkonten_length>11</zpkonten_length>
                 <zpkonten_checksum>1</zpkonten_checksum>
             </paymentbase>
-        </payment>
+        </payment_services>
     </default>
 </config>
