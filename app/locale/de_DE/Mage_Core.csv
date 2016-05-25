@@ -12,6 +12,7 @@
 "Admin","Admin"
 "Admin Base URL","Admin Basis-URL"
 "Admin User Emails","Admin Benutzer E-Mails"
+"Admin routing compatibility mode for extensions","Admin-Routing-Kompatibilitätsmodus für Erweiterungen"
 "Advanced","Erweitert"
 "After selecting a new media storage location, press the Synchronize button
                                 to transfer all media to that location. Media will not be available in the new
@@ -23,6 +24,7 @@
 "Allowed IPs (comma separated)","Erlaubte IPs (Kommagetrennt)"
 "Allowed file types: jpeg, gif, png.","Erlaubte Formate: jpeg, gif, png."
 "Allowed file types: jpg, jpeg, gif, png. To make logo look good on high-resolution displays, upload an image that is 2x normal size and then specify 1x dimensions in width/height fields below.","Erlaubte Formate: jpg, jpeg, gif, png. Um das Logo auch auf hochauflösenden Displays gut aussehen zu lassen, laden Sie ein Bild in der Doppelten Größe hoch und geben in den unten folgenden Feldern nur die Einfache Breite/Höhe an.<br />Bsp.: Logogröße: 600x600; Größenangabe: 300x300"
+"Allowed file types: ICO, PNG, GIF, JPG, JPEG, APNG. Not all browsers support all these formats!","Erlaubte Formate: ICO, PNG, GIF, JPG, JPEG, APNG. Nicht alle Browser unterstützen alle diese Formate!"
 "Allowed file types: ICO, PNG, GIF, JPG, JPEG, APNG, SVG. Not all browsers support all these formats!","Erlaubte Formate: ICO, PNG, GIF, JPG, JPEG, APNG, SVG. Nicht alle Browser unterstützen alle diese Formate!"
 "Allows customers to stay logged in when switching between different stores.","Kunden erlauben eingeloggt zu bleiben wenn Sie zwischen den Stores wechseln."
 "Alternative text for next link in pagination menu. If empty, default arrow image will used.","Alternativer Text für den 'Nächste Seite' Link in der Aufzählungsleiste. Wenn leer, wird eine Pfeil-Grafik verwendet."
@@ -134,6 +136,7 @@
 "Enabled for Admin","Aktiviert für Admin-Bereich"
 "Enabled for Frontend","Aktiviert für Shop"
 "Enabling ability to run Magento in a frame is not recommended for security reasons.","Aktiviert die Fähigkeit, Magento in einem Frame auszuführen. Dies wird aus Sicherheitsgründen nicht empfohlen."
+"Enabling this setting increases risk of automated attacks against admin functionality.","Die Aktivierung dieser Einstellung erhöht die Gefahr von automatisierten Angriffen gegen Admin-Funktionalität."
 "Entity types declaration cache.","Deklarations-Cache für Entitäts Typen."
 "Environment Update Time","Aktualisierungsintervall"
 "Error in file: ""%s"" - %s","Fehler in Datei: ""%s"" - %s"

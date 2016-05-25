@@ -6,3 +6,4 @@
 "If yes pre-authorization is used, otherwise authorization is used.","Ja nutzt Pre-Autorisierung, sonst wird Autorisierung verwendet."
 "There was an error at Payplace Payment. Customers payment was not valid.","Bei der Payplace-Zahlung ist ein Fehler aufgetreten. Die Zahlung des Kunden ist nicht gültig."
 "Customer canceled Payplace payment or an error occured.","Der Kunden hat die Payplace-Zahlung storniert oder es ist ein Fehler aufgetreten."
+"Testing Note","Testhinweis"
