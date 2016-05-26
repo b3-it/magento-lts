@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <verteiler_adminhtml_verteiler_index>
+    <adminhtml_slpbverteiler_verteiler_index>
         <reference name="content">
             <block type="verteiler/adminhtml_verteiler" name="verteiler" />
         </reference>
-    </verteiler_adminhtml_verteiler_index>
+    </adminhtml_slpbverteiler_verteiler_index>
     
-  <verteiler_adminhtml_verteiler_customer>
+  <adminhtml_slpbverteiler_verteiler_customer>
         <block type="core/text_list" name="root" output="toHtml">
           <block type="verteiler/adminhtml_verteiler_edit_tab_customer_grid" name="customer.grid"/>
            <block type="verteiler/adminhtml_widget_grid_serializer" name="grid_serializer">
@@ -23,12 +23,12 @@
                </reference>
            </block>
        </block>
-    </verteiler_adminhtml_verteiler_customer>
-    <verteiler_adminhtml_verteiler_customergrid>
+    </adminhtml_slpbverteiler_verteiler_customer>
+    <adminhtml_slpbverteiler_verteiler_customergrid>
      	 <block type="core/text_list" name="root" output="toHtml">
             <block type="verteiler/adminhtml_verteiler_edit_tab_customer_grid" name="customer.grid"/>
         </block>
-     </verteiler_adminhtml_verteiler_customergrid>
+     </adminhtml_slpbverteiler_verteiler_customergrid>
     
     
 </layout>
