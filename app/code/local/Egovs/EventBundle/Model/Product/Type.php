@@ -57,7 +57,9 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     	$selections = array();
     	$product = $this->getProduct($product);
     	$isStrictProcessMode = $this->_isStrictProcessMode($processMode);
-    	$_appendAllSelections = (bool)$product->getSkipCheckRequiredOption();
+    	
+    	$skipSaleableCheck = Mage::helper('catalog/product')->getSkipSaleableCheck();
+    	$_appendAllSelections = (bool)$product->getSkipCheckRequiredOption() || $skipSaleableCheck;
     
     	$options = $buyRequest->getBundleOption();
     	if (is_array($options)) {
@@ -108,7 +110,7 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     
     			// Check if added selections are still on sale
     			foreach ($selections->getItems() as $key => $selection) {
-    				if (!$selection->isSalable()) {
+    				if (!$selection->isSalable() && !$skipSaleableCheck) {
     					$requestedProducts[] = $selection->getId();
     					$_option = $optionsCollection->getItemById($selection->getOptionId());
     					if (is_array($options[$_option->getId()]) && count($options[$_option->getId()]) > 1) {
@@ -185,7 +187,9 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     			 * Create extra attributes that will be converted to product options in order item
     			 * for selection (not for all bundle)
     			*/
-    			$price = $product->getPriceModel()->getSelectionPrice($product, $selection, $qty);
+    			//$price = $product->getPriceModel()->getSelectionPrice($product, $selection, $qty);
+    			$price = $product->getPriceModel()->getSelectionFinalTotalPrice($product, $selection, 0, $qty);
+    			
     			$attributes = array(
     					'price'         => Mage::app()->getStore()->convertPrice($price),
     					'qty'           => $qty,
@@ -253,19 +257,20 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     	$productOptionIds   = $this->getOptionsIds($product);
     	$productSelections  = $this->getSelectionsCollection($productOptionIds, $product);
     	$selectionIds       = $product->getCustomOption('bundle_selection_ids');
-    	$selectionIds       = unserialize($selectionIds->getValue());
+    	$selectionIds       = (array)unserialize($selectionIds->getValue());
     	$buyRequest         = $product->getCustomOption('info_buyRequest');
     	$buyRequest         = new Varien_Object(unserialize($buyRequest->getValue()));
     	$bundleOption       = $buyRequest->getBundleOption();
     
-    	if (empty($bundleOption)) {
+    	if (empty($bundleOption) && empty($selectionIds)) {
     		Mage::throwException($this->getSpecifyOptionMessage());
     	}
-    
+    	
+    	$skipSaleableCheck = Mage::helper('catalog/product')->getSkipSaleableCheck();
     	foreach ($selectionIds as $selectionId) {
     		/* @var $selection Mage_Bundle_Model_Selection */
     		$selection = $productSelections->getItemById($selectionId);
-    		if (!$selection || !$selection->isSalable()) {
+    		if (!$selection || (!$selection->isSalable() && !$skipSaleableCheck )) {
     			Mage::throwException(
     					Mage::helper('bundle')->__('Selected required options are not available.')
     			);
@@ -276,7 +281,7 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     	$optionsCollection = $this->getOptionsCollection($product);
     	
     	foreach ($optionsCollection->getItems() as $option) {
-    		if (($option->getRequired() == 1) && empty($bundleOption[$option->getId()])) {
+    		if (($option->getRequired() == 1)  && empty($selectionIds) && empty($bundleOption[$option->getId()])) {
     			Mage::throwException(
     					Mage::helper('bundle')->__('Required options are not selected.')
     			);

@@ -52,7 +52,7 @@ class Egovs_EventBundle_Model_Observer
             $product->setBundleSelectionsData($selections);
         }
 
-        if($product->getType() == Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE)
+        if($product->getTypeId() == Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE)
         {
 	        if ($product->getPriceType() == '0' && !$product->getOptionsReadonly()) {
 	            $product->setCanSaveCustomOptions(true);
