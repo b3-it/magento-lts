@@ -23,7 +23,7 @@ class Egovs_EventBundle_Model_Bundle_Observer extends Mage_Bundle_Model_Observer
 
         
         //diese Optionen dürfen nur für richtige Bundle gelöscht werden
-        if($product->getType() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE)
+        if($product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE)
         {
 	        if ($product->getPriceType() == '0' && !$product->getOptionsReadonly()) {
 	            $product->setCanSaveCustomOptions(true);

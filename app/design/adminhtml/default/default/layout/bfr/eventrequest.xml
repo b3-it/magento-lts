@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_eventrequest__index>
+        <reference name="content">
+            <block type="eventrequest/adminhtml_" name="eventrequest" />
+        </reference>
+    </adminhtml_eventrequest__index>
+</layout>
