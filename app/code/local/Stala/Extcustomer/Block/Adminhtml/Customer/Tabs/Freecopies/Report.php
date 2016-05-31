@@ -104,7 +104,7 @@ class Stala_Extcustomer_Block_Adminhtml_Customer_Tabs_Freecopies_Report extends 
             'sortable'  	=> true,
             'width'     	=> '60px',
         	'editable'		=> false,
-        	'filter_index' 	=> 'catalog/product.entity_id',
+        	'filter_index' 	=> 'catalog_product.entity_id',
             'index'     	=> $index
         ));
         
