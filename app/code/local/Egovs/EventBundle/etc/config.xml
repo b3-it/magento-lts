@@ -154,7 +154,7 @@
                         <index_data_retreiver>bundle/catalogIndex_data_bundle</index_data_retreiver>
                         <index_priority>40</index_priority>
                         <price_indexer>bundle/indexer_price</price_indexer>
-                        <stock_indexer>bundle/indexer_stock</stock_indexer>
+                        <stock_indexer>eventbundle/indexer_stock</stock_indexer>
                     </eventbundle>
                     <configurable>
                         <allow_product_types>
@@ -185,7 +185,7 @@
                 <resourceModel>eventbundle_resource</resourceModel>
             </eventbundle>
             <eventbundle_resource>
-				<class>Egovs_EventBundle_Model_Ressource</class>
+				<class>Egovs_EventBundle_Model_Resource</class>
             </eventbundle_resource>
             <bundle>
 				<rewrite>

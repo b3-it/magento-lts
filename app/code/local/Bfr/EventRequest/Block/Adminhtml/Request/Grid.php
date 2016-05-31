@@ -1,0 +1,123 @@
+<?php
+/**
+ * Bfr EventRequest
+ *
+ *
+ * @category   	Bfr
+ * @package    	Bfr_EventRequest
+ * @name       	Bfr_EventRequest_Block_Adminhtml_Request_Grid
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block_Widget_Grid
+{
+  public function __construct()
+  {
+      parent::__construct();
+      $this->setId('requestGrid');
+      $this->setDefaultSort('request_id');
+      $this->setDefaultDir('ASC');
+      $this->setSaveParametersInSession(true);
+  }
+
+  protected function _prepareCollection()
+  {
+      $collection = Mage::getModel('eventrequest/request')->getCollection();
+      $this->setCollection($collection);
+      return parent::_prepareCollection();
+  }
+
+  protected function _prepareColumns()
+  {
+      $this->addColumn('eventrequest_request_id', array(
+          'header'    => Mage::helper('eventrequest')->__('ID'),
+          'align'     =>'right',
+          'width'     => '50px',
+          'index'     => 'eventrequest_request_id',
+      ));
+
+      $this->addColumn('title', array(
+          'header'    => Mage::helper('eventrequest')->__('Title'),
+          'align'     =>'left',
+          'index'     => 'title',
+      ));
+
+	  /*
+      $this->addColumn('content', array(
+			'header'    => Mage::helper('eventrequest')->__('Item Content'),
+			'width'     => '150px',
+			'index'     => 'content',
+      ));
+	  */
+/*
+      $this->addColumn('status', array(
+          'header'    => Mage::helper('eventrequest')->__('Status'),
+          'align'     => 'left',
+          'width'     => '80px',
+          'index'     => 'status',
+          'type'      => 'options',
+          'options'   => Bfr_EventRequest_Model_Status::getOptionArray(),
+      ));
+	*/
+        $this->addColumn('action',
+            array(
+                'header'    =>  Mage::helper('eventrequest')->__('Action'),
+                'width'     => '100',
+                'type'      => 'action',
+                'getter'    => 'getId',
+                'actions'   => array(
+                    array(
+                        'caption'   => Mage::helper('eventrequest')->__('Edit'),
+                        'url'       => array('base'=> '*/*/edit'),
+                        'field'     => 'id'
+                    )
+                ),
+                'filter'    => false,
+                'sortable'  => false,
+                'index'     => 'stores',
+                'is_system' => true,
+        ));
+
+		$this->addExportType('*/*/exportCsv', Mage::helper('eventrequest')->__('CSV'));
+		$this->addExportType('*/*/exportXml', Mage::helper('eventrequest')->__('XML'));
+
+      return parent::_prepareColumns();
+  }
+
+    protected function _prepareMassaction()
+    {
+        $this->setMassactionIdField('request_id');
+        $this->getMassactionBlock()->setFormFieldName('request');
+
+        $this->getMassactionBlock()->addItem('delete', array(
+             'label'    => Mage::helper('eventrequest')->__('Delete'),
+             'url'      => $this->getUrl('*/*/massDelete'),
+             'confirm'  => Mage::helper('eventrequest')->__('Are you sure?')
+        ));
+
+        $statuses = Mage::getSingleton('eventrequest/status')->getOptionArray();
+
+        array_unshift($statuses, array('label'=>'', 'value'=>''));
+        $this->getMassactionBlock()->addItem('status', array(
+             'label'=> Mage::helper('eventrequest')->__('Change status'),
+             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
+             'additional' => array(
+                    'visibility' => array(
+                         'name' => 'status',
+                         'type' => 'select',
+                         'class' => 'required-entry',
+                         'label' => Mage::helper('eventrequest')->__('Status'),
+                         'values' => $statuses
+                     )
+             )
+        ));
+        return $this;
+    }
+
+  public function getRowUrl($row)
+  {
+      return $this->getUrl('*/*/edit', array('id' => $row->getId()));
+  }
+
+}
