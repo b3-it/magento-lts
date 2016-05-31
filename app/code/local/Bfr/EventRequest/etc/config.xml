@@ -123,5 +123,25 @@
                 <class>Bfr_EventRequest_Helper</class>
             </eventrequest>
         </helpers>
+        <events>
+            <sales_quote_add_item>
+                <observers>
+                    <bfr_eventrequest_add_item>
+                        <type>singleton</type>
+                        <class>Bfr_EventRequest_Model_Observer</class>
+                        <method>onQuoteItemAdd</method>
+                    </bfr_eventrequest_add_item>
+                </observers>
+            </sales_quote_add_item>
+        </events>
+        <sales>
+			<quote>
+				<item>
+					<product_attributes>
+						<eventrequest />
+					</product_attributes>
+				</item>
+			</quote>
+		</sales>
     </global>
 </config>
