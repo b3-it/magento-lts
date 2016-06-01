@@ -209,7 +209,7 @@
 
         <!-- muss nach checkout und germantax wg. addItemRenderer-->
         <Egovs_EventBundle>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Egovs_Checkout />
