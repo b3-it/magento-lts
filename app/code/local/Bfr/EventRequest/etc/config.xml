@@ -18,7 +18,7 @@
         <layout>
             <updates>
                 <eventrequest>
-                    <file>eventrequest.xml</file>
+                    <file>bfr/eventrequest.xml</file>
                 </eventrequest>
             </updates>
         </layout>
@@ -48,27 +48,38 @@
 				</children>
 			</eventrequest>
 		</menu>
-		<acl>
-			<resources>
-				<all>
-					<title>Allow Everything</title>
-				</all>
-				<admin>
-					<children>
-						<bfr_eventrequest>
-							<title>EventRequest Module</title>
-							<sort_order>10</sort_order>
-              <children>
-                	<eventrequest_request module="pdftemplate">
-                    	<title>Manage EventRequest Request</title>
-                    	<sort_order>0</sort_order>
-                	</eventrequest_request>
-              </children>
-						</bfr_eventrequest>
-					</children>
-				</admin>
-			</resources>
-		</acl>
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+				<children>
+					<bfr_eventrequest>
+						<title>EventRequest Module</title>
+						<sort_order>10</sort_order>
+						<children>
+							<eventrequest_request module="pdftemplate">
+								<title>Manage EventRequest Request</title>
+								<sort_order>0</sort_order>
+							</eventrequest_request>
+						</children>
+					</bfr_eventrequest>
+					<system>
+						<children>
+							<config>
+								<children>
+									<event_request translate="title" module="eventrequest">
+										<title>Event Request Section</title>
+									</event_request>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
 		<layout>
 			<updates>
 				<eventrequest>
@@ -144,4 +155,11 @@
 			</quote>
 		</sales>
     </global>
+    <default>
+        <event_request>
+        <email>
+            <eventrequest_accept_template>eventrequest/email/eventrequest_accept_template</eventrequest_accept_template>
+        </email>
+        </event_request>
+    </default>
 </config>

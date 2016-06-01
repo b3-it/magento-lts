@@ -18,14 +18,14 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit_Tabs extends Mage_Adminhtml_
       parent::__construct();
       $this->setId('request_tabs');
       $this->setDestElementId('edit_form');
-      $this->setTitle(Mage::helper('eventrequest')->__('Item Information'));
+      $this->setTitle(Mage::helper('eventrequest')->__('Application Information'));
   }
 
   protected function _beforeToHtml()
   {
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('eventrequest')->__('Item Information'),
-          'title'     => Mage::helper('eventrequest')->__('Item Information'),
+          'label'     => Mage::helper('eventrequest')->__('Application Information'),
+          'title'     => Mage::helper('eventrequest')->__('Detail'),
           'content'   => $this->getLayout()->createBlock('eventrequest/adminhtml_request_edit_tab_form')->toHtml(),
       ));
      

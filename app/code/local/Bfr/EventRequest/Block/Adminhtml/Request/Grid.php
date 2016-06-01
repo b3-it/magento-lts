@@ -24,6 +24,8 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('eventrequest/request')->getCollection();
+      $collection->getSelect()
+      	->join(array('customer'=>$collection->getTable('customer/entity')), 'main_table.customer_id = customer.entity_id',array('email'));
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -35,22 +37,40 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
           'align'     =>'right',
           'width'     => '50px',
           'index'     => 'eventrequest_request_id',
+      	  'type'      => 'number',
       ));
 
+      $this->addColumn('created_time', array(
+      		'header'    => Mage::helper('eventrequest')->__('Created'),
+      		'index'     => 'created_time',
+      		'type'      => 'datetime',
+      		'width'     => '150px',
+      		//'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
+      ));
+      
+      $this->addColumn('product_id', array(
+      		'header'    => Mage::helper('eventrequest')->__('Product Id'),
+      		'width'     => '100px',
+      		'index'     => 'product_id',
+      		'type'      => 'number',
+      ));
+       
+      
       $this->addColumn('title', array(
           'header'    => Mage::helper('eventrequest')->__('Title'),
           'align'     =>'left',
           'index'     => 'title',
       ));
-
-	  /*
-      $this->addColumn('content', array(
-			'header'    => Mage::helper('eventrequest')->__('Item Content'),
-			'width'     => '150px',
-			'index'     => 'content',
+      
+      $this->addColumn('email', array(
+      		'header'    => Mage::helper('eventrequest')->__('Email'),
+      		'align'     =>'left',
+      		'index'     => 'email',
       ));
-	  */
-/*
+
+	  
+    
+
       $this->addColumn('status', array(
           'header'    => Mage::helper('eventrequest')->__('Status'),
           'align'     => 'left',
@@ -59,7 +79,7 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
           'type'      => 'options',
           'options'   => Bfr_EventRequest_Model_Status::getOptionArray(),
       ));
-	*/
+	
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('eventrequest')->__('Action'),
