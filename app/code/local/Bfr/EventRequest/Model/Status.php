@@ -1,6 +1,6 @@
 <?php
 /**
- * Bfr EventRequest
+ * Bfr EventRequest Status
  *
  *
  * @category   	Bfr
@@ -12,14 +12,16 @@
  */
 class Bfr_EventRequest_Model_Status extends Varien_Object
 {
-    const STATUS_ENABLED	= 1;
-    const STATUS_DISABLED	= 2;
+    const STATUS_REQUESTED	= 1;
+    const STATUS_ACCEPTED	= 2;
+    const STATUS_REJECTED	= 3;
 
     static public function getOptionArray()
     {
         return array(
-            self::STATUS_ENABLED    => Mage::helper('eventrequest')->__('Enabled'),
-            self::STATUS_DISABLED   => Mage::helper('eventrequest')->__('Disabled')
+            self::STATUS_REQUESTED    => Mage::helper('eventrequest')->__('Requested'),
+            self::STATUS_ACCEPTED   => Mage::helper('eventrequest')->__('Accepted'),
+            self::STATUS_REJECTED   => Mage::helper('eventrequest')->__('Rejected')
         );
     }
 

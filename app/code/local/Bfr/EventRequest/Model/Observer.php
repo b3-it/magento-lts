@@ -12,6 +12,12 @@
  */
 class Bfr_EventRequest_Model_Observer extends Varien_Object
 {
+	/**
+	 * verhinderd, dass Veranstaltungen mit Zulassungsbeschränkung
+	 * zusammen mit anderen im Korb liegen
+	 * @param unknown $observer
+	 * @return Bfr_EventRequest_Model_Observer
+	 */
 	public function onQuoteItemAdd($observer)
 	{
 		/* @var $orderItem Mage_Sales_Model_Quote_Item  */
@@ -20,29 +26,28 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		$productAdd = $quoteItem->getProduct();
 		
 		$quoteItems= $quote->getAllItems();
-		if(($productAdd->getEventrequest() == 1) && (count($quoteItems) > 0))
+		if(($productAdd->getEventrequest() == 1) && (count($quoteItems) > 1))
 		{
 			$quote->deleteItem($quoteItem);
-			Mage::getSingleton('customer/session')->addError("It is not possible");
+			Mage::throwException(Mage::helper('eventrequest')->__('%s has to be alone in basket!',$productAdd->getName()));
 			return $this;
 		}
-		else{
+
 		foreach($quoteItems as $item)
 			{
 				//das neue Item hat noch keine Id
 				if($item->getItemId()){
 					if($item->getProduct()->getEventrequest() == 1){
 						$quote->deleteItem($quoteItem);
-						//Mage::getSingleton('customer/session')->addError("It is not possible altes entfernen");
 						Mage::throwException(
-								Mage::helper('sales')->__('It is not possible altes entfernen')
+								Mage::helper('eventrequest')->__('Finalize application of %s first!',$item->getProduct()->getName())
 						);
 						return $this;
 					}
 				}
 			}
-		}
 		
+		return $this;
 		
 	}
 }

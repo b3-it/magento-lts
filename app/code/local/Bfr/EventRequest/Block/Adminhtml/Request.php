@@ -16,8 +16,10 @@ class Bfr_EventRequest_Block_Adminhtml_Request extends Mage_Adminhtml_Block_Widg
   {
     $this->_controller = 'adminhtml_request';
     $this->_blockGroup = 'eventrequest';
-    $this->_headerText = Mage::helper('eventrequest')->__('Item Manager');
-    $this->_addButtonLabel = Mage::helper('eventrequest')->__('Add Item');
+    $this->_headerText = Mage::helper('eventrequest')->__('Application Manager');
+   
     parent::__construct();
+    
+    $this->removeButton('add');
   }
 }
