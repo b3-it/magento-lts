@@ -666,7 +666,7 @@
 "Set order for existing transactions not allowed","Es ist nicht erlaubt, für die bestehende Transaktion eine Bestellung festzulegen."
 "Ship","Versand"
 "Ship To","Versand an"
-"Ship to Name","Versand - Name"
+"Ship to Name","Versand an: Name"
 "Ship to:","Versand an:"
 "Shipment","Versand"
 "Shipment #","Versand Nr."
@@ -884,6 +884,7 @@
 "the shipment email was sent","Die Versand-E-Mail wurde versandt"
 
 
+"ZIP Code","Postleitzahl"
 "Account is settled!","Die Rechnung ist bezahlt!"
 "Billing Company","Rechnung Firmenname"
 "Billing Name","Rechnung Name"
@@ -909,4 +910,3 @@
 "Submit Notes","Notizen übermitteln"
 "The customer doesn\'t exist in the system anymore","Dieser Kunde ist nicht mehr in der Datenbank vorhanden"
 "The total invoice amount is due immediately.","Der gesamte Rechnungsbetrag ist sofort fällig."
-"ZIP Code","Postleitzahl"

@@ -206,5 +206,15 @@
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_Zahlpartnerkonten>
+
+        <!-- muss nach checkout und germantax wg. addItemRenderer-->
+        <Egovs_EventBundle>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Egovs_Checkout />
+                <Mage_Bundle />
+            </depends>
+        </Egovs_EventBundle>
     </modules>
 </config>

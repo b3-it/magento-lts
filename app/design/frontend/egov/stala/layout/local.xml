@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <remove name="catalog.leftnav" />
+        <remove name="left.newsletter" />
+    </default>
+</layout>
