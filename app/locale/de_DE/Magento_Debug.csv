@@ -98,3 +98,4 @@
 "Show Layout Panel","zeige Layout Panel"
 "Show Blocks Panel","zeige Blocks Panel"
 "Show Logs Panel","zeige Logs Panel"
+"Display Debug Toolbar if set to Yes and client's ip is whitelisted in System / Configuration / Developer / Developer Client Restrictions - Allowed IPS.","Debug Toolbar anzeigen, wenn auf Ja und IP-Client in System / Konfiguration / Developer / Entwickler-Client Einschränkungen eine leere Liste - erlaubte IPs."

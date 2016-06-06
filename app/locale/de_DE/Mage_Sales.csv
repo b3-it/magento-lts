@@ -884,6 +884,7 @@
 "the shipment email was sent","Die Versand-E-Mail wurde versandt"
 
 
+"ZIP Code","Postleitzahl"
 "Account is settled!","Die Rechnung ist bezahlt!"
 "Billing Company","Rechnung Firmenname"
 "Billing Name","Rechnung Name"
@@ -909,4 +910,3 @@
 "Submit Notes","Notizen übermitteln"
 "The customer doesn\'t exist in the system anymore","Dieser Kunde ist nicht mehr in der Datenbank vorhanden"
 "The total invoice amount is due immediately.","Der gesamte Rechnungsbetrag ist sofort fällig."
-"ZIP Code","Postleitzahl"
