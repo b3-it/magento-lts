@@ -10,7 +10,9 @@ class Egovs_Paymentbase_Model_System_Config_Source_Apiuser
      */
     public function toOptionArray()
     {
-    	
+    	if (!Mage::helper('core')->isModuleEnabled('Mage_Api')) {
+    		return array();
+    	}
     	$collection = Mage::getModel('api/user')->getCollection();
     	$collection->getSelect()
     		->join(array('role'=>'api_role'),"role.user_id=main_table.user_id AND role.role_type='U'")

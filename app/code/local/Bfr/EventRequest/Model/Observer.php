@@ -26,7 +26,16 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		$productAdd = $quoteItem->getProduct();
 		
 		$quoteItems= $quote->getAllItems();
-		if(($productAdd->getEventrequest() == 1) && (count($quoteItems) > 1))
+		
+		$n = 0;
+		foreach($quoteItems as $item)
+		{
+			if($item->getParentItem() !== null ){
+				$n++;
+			}
+		}
+		
+		if(($productAdd->getEventrequest() == 1) && ($n > 1))
 		{
 			$quote->deleteItem($quoteItem);
 			Mage::throwException(Mage::helper('eventrequest')->__('%s has to be alone in basket!',$productAdd->getName()));
