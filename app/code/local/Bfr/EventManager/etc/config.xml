@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bfr_EventManager>
+            <version>0.1.0</version>
+        </Bfr_EventManager>
+    </modules>
+    <frontend>
+        <routers>
+            <eventmanager>
+                <use>standard</use>
+                <args>
+                    <module>Bfr_EventManager</module>
+                    <frontName>eventmanager</frontName>
+                </args>
+            </eventmanager>
+        </routers>
+        <layout>
+            <updates>
+                <eventmanager>
+                    <file>eventmanager.xml</file>
+                </eventmanager>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+         <adminhtml>
+           <args>
+             <modules>
+               <Bfr_EventManager_Adminhtml after="Mage_Adminhtml">Bfr_EventManager_Adminhtml</Bfr_EventManager_Adminhtml>
+             </modules>
+           </args>
+         </adminhtml>
+       </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<eventmanager module="eventmanager">
+				<title>EventManager</title>
+				<sort_order>71</sort_order>
+				<children>
+					<eventmanager_event module="eventmanager">
+						<title>Events</title>
+						<sort_order>0</sort_order>
+						<action>adminhtml/eventmanager_event</action>
+					</eventmanager_event>
+					<eventmanager_participant module="eventmanager">
+                        <title>Participant</title>
+                        <sort_order>10</sort_order>
+                        <action>adminhtml/eventmanager_participant</action>
+                    </eventmanager_participant>
+                    <eventmanager_lookup module="eventmanager">
+                        <title>Lookup</title>
+                        <sort_order>20</sort_order>
+                        <action>adminhtml/eventmanager_lookup</action>
+                    </eventmanager_lookup>
+                    <eventmanager_translate module="eventmanager">
+                        <title>Translate</title>
+                        <sort_order>30</sort_order>
+                        <action>adminhtml/eventmanager_translate</action>
+                    </eventmanager_translate>                    
+				</children>
+			</eventmanager>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<bfr_eventmanager>
+							<title>EventManager</title>
+							<sort_order>10</sort_order>
+							<children>
+								<eventmanager_event module="pdftemplate">
+									<title>Manage EventManager Event</title>
+									<sort_order>10</sort_order>
+								</eventmanager_event>
+								<eventmanager_participant module="eventmanager">
+									<title>Participant</title>
+									<sort_order>20</sort_order>
+								</eventmanager_participant>
+								<eventmanager_lookup module="eventmanager">
+									<title>Lookup</title>
+									<sort_order>30</sort_order>
+								</eventmanager_lookup>
+								<eventmanager_translate module="eventmanager">
+									<title>Translate</title>
+									<sort_order>40</sort_order>
+									
+								</eventmanager_translate>
+							</children>
+						</bfr_eventmanager>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<eventmanager>
+					<file>Bfr/eventmanager.xml</file>
+				</eventmanager>
+			</updates>
+		</layout>
+    </adminhtml>
+    <global>
+        <models>
+            <eventmanager>
+                <class>Bfr_EventManager_Model</class>
+                <resourceModel>eventmanager_resource</resourceModel>
+            </eventmanager>
+            <eventmanager_resource>
+                <class>Bfr_EventManager_Model_Resource</class>
+                <entities>
+                    <event>
+                        <table>eventmanager_event</table>
+                    </event>
+                    <lookup>
+                        <table>eventmanager_lookup</table>
+                    </lookup>
+                     <participant>
+                        <table>eventmanager_participant</table>
+                    </participant>
+                     <participant_attribute>
+                        <table>eventmanager_participant_attribute</table>
+                    </participant_attribute>
+                     <translate>
+                        <table>eventmanager_translate</table>
+                    </translate>
+                </entities>
+            </eventmanager_resource>
+        </models>
+        <resources>
+            <eventmanager_setup>
+                <setup>
+                    <module>Bfr_EventManager</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </eventmanager_setup>
+            <eventmanager_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </eventmanager_write>
+            <eventmanager_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </eventmanager_read>
+        </resources>
+        <blocks>
+            <eventmanager>
+                <class>Bfr_EventManager_Block</class>
+            </eventmanager>
+        </blocks>
+        <helpers>
+            <eventmanager>
+                <class>Bfr_EventManager_Helper</class>
+            </eventmanager>
+        </helpers>
+    </global>
+</config>

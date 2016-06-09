@@ -38,7 +38,7 @@ class Bfr_EventRequest_IndexController extends Mage_Checkout_Controller_Action
     		return $this;
     	}
     	
-		Mage::getSingleton('checkout/session')->addSuccess("Erfolgreich");
+		Mage::getSingleton('checkout/session')->addSuccess("Your event request has been registered!");
     	$this->_redirect('checkout/cart');
     }
 }
