@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_eventmanager_event_index>
+        <reference name="content">
+            <block type="eventmanager/adminhtml_event" name="eventmanager" />
+        </reference>
+    </adminhtml_eventmanager_event_index>
+    <adminhtml_eventmanager_participant_index>
+        <reference name="content">
+            <block type="eventmanager/adminhtml_participant" name="eventmanager" />
+        </reference>
+    </adminhtml_eventmanager_participant_index>
+        <adminhtml_eventmanager_lookup_index>
+        <reference name="content">
+            <block type="eventmanager/adminhtml_lookup" name="eventmanager" />
+        </reference>
+    </adminhtml_eventmanager_lookup_index>
+    <adminhtml_eventmanager_translate_index>
+        <reference name="content">
+            <block type="eventmanager/adminhtml_translate" name="eventmanager" />
+        </reference>
+    </adminhtml_eventmanager_translate_index>   
+</layout>
