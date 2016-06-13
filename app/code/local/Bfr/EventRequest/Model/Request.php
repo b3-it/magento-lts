@@ -28,7 +28,15 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     {
     	$errors = array();
     	$items = $quote->getAllItems();
-    	if(count($items) != 1){
+    	$n = 0;
+    	foreach($items as $item)
+    	{
+    		if($item->getParentItem() !== null ){
+    			$n++;
+    		}
+    	}
+    	
+    	if($n != 1){
     		$errors[] = Mage::helper('eventrequest')->__("You can register one event only!");
     		return $errors;
     	}
