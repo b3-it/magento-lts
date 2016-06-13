@@ -27,6 +27,23 @@
         }
     }
 
+    .data-table {
+        @extend .egov-base-table;
+
+        thead th, tbody td {
+            text-align: left !important;
+            padding: $global-tdpadding;
+        }
+
+        tbody td {
+            background-color: $global-checkout-tdbackground;
+        }
+
+        td.last {
+            text-align: right !important;
+        }
+    }
+
     .std {
 
         img {
