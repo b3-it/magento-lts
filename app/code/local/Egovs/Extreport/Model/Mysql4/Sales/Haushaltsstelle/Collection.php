@@ -42,7 +42,7 @@ class Egovs_Extreport_Model_Mysql4_Sales_Haushaltsstelle_Collection extends Egov
 					array(
 						'cpev'=>$haushaltsstelle->getBackendTable()
 					),
-					'main_table.product_id = cpev.entity_id',
+					't.product_id = cpev.entity_id',
 					array('haushaltsstelle'=>'value')
 			)->join(
 					array(
@@ -57,12 +57,12 @@ class Egovs_Extreport_Model_Mysql4_Sales_Haushaltsstelle_Collection extends Egov
 					array()
 			) */
 		;
-
+					//die($this->getSelect()->__toString());
 		//Filtern
 		if ($this->_haushaltsstellefilter != null) {
 			$this->getSelect()->where("cpev.value='".$this->_haushaltsstellefilter."'");
 		}
-
+		//die($this->getSelect()->__toString());
 		return $this;
 	}
 	
@@ -106,7 +106,8 @@ class Egovs_Extreport_Model_Mysql4_Sales_Haushaltsstelle_Collection extends Egov
 	{
 		if ($this->_haushaltsstellefilter != null) {
 			//$this->getSelect()->where("`cat`.`value`='".$this->_categoryfilter."'");
-			$this->getSelect()->where("haushaltsstelle=".$this->_haushaltsstellefilter);
+			//$this->getSelect()->where("haushaltsstelle=".$this->_haushaltsstellefilter);
+			$this->_addHaushaltsstelle();
 // 			unset($this->_haushaltsstellefilter);
 		}
 

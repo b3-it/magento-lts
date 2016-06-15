@@ -1,6 +1,6 @@
 <?php
 
-class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Eav_Mysql4_Setup
+class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 {
 	public function getTemplateContent($filename)
 	{
