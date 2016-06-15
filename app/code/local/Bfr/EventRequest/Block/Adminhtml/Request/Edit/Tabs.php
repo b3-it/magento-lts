@@ -25,8 +25,14 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit_Tabs extends Mage_Adminhtml_
   {
       $this->addTab('form_section', array(
           'label'     => Mage::helper('eventrequest')->__('Application Information'),
-          'title'     => Mage::helper('eventrequest')->__('Detail'),
+          'title'     => Mage::helper('eventrequest')->__('Application Information'),
           'content'   => $this->getLayout()->createBlock('eventrequest/adminhtml_request_edit_tab_form')->toHtml(),
+      ));
+      
+      $this->addTab('form_section1', array(
+      		'label'     => Mage::helper('eventrequest')->__('Customer Information'),
+      		'title'     => Mage::helper('eventrequest')->__('Customer Information'),
+      		'content'   => $this->getLayout()->createBlock('eventrequest/adminhtml_request_edit_tab_customer')->toHtml(),
       ));
      
       return parent::_beforeToHtml();

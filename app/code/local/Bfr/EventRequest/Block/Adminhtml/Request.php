@@ -16,7 +16,7 @@ class Bfr_EventRequest_Block_Adminhtml_Request extends Mage_Adminhtml_Block_Widg
   {
     $this->_controller = 'adminhtml_request';
     $this->_blockGroup = 'eventrequest';
-    $this->_headerText = Mage::helper('eventrequest')->__('Application Manager');
+    $this->_headerText = Mage::helper('eventrequest')->__('Application of Admission');
    
     parent::__construct();
     

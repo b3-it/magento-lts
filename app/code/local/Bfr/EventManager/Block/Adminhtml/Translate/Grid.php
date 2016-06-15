@@ -36,6 +36,17 @@ class Bfr_EventManager_Block_Adminhtml_Translate_Grid extends Mage_Adminhtml_Blo
           'width'     => '50px',
           'index'     => 'translate_id',
       ));
+      
+      $fields = Egovs_EventBundle_Model_Personal_Fields::getOptionArray();
+      
+      $this->addColumn('field', array(
+      		'header'    => Mage::helper('eventmanager')->__('Field'),
+      		'align'     => 'left',
+      		'width'     => '80px',
+      		'index'     => 'field',
+      		'type'      => 'options',
+      		'options'   => $fields,
+      ));
 
       $this->addColumn('source', array(
           'header'    => Mage::helper('eventmanager')->__('Source'),

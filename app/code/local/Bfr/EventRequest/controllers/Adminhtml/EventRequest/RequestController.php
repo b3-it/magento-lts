@@ -16,7 +16,7 @@ class Bfr_EventRequest_Adminhtml_EventRequest_RequestController extends Mage_Adm
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('request/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Events'), Mage::helper('adminhtml')->__('Events'));
 
 		return $this;
 	}
@@ -41,8 +41,8 @@ class Bfr_EventRequest_Adminhtml_EventRequest_RequestController extends Mage_Adm
 			$this->loadLayout();
 			$this->_setActiveMenu('eventrequest/items');
 
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
+			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Events'), Mage::helper('adminhtml')->__('Events'));
+			
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
