@@ -232,6 +232,14 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     			$product->addCustomOption('requested_products', serialize($requestedProducts));
     		}
     		
+    		
+    		$PersonalOptions = $buyRequest->getPersonalOptions();
+    		if($PersonalOptions)
+    		{
+    			$product->addCustomOption('personal_options', serialize($PersonalOptions));
+    		}
+    		
+    		
     		return $result;
     	}
     

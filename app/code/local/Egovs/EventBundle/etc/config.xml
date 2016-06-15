@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_EventBundle>
-            <version>0.0.1.0</version>
+            <version>0.0.1.1</version>
         </Egovs_EventBundle>
     </modules>
     
@@ -186,6 +186,17 @@
             </eventbundle>
             <eventbundle_resource>
 				<class>Egovs_EventBundle_Model_Resource</class>
+				<entities>
+                    <personal_options>
+                        <table>eventbundle_personal_options</table>
+                    </personal_options>
+                    <personal_options_label>
+                        <table>eventbundle_personal_options_label</table>
+                    </personal_options_label>
+                    <quote_options>
+                        <table>eventbundle_quote_personal_options</table>
+                    </quote_options>
+                </entities>
             </eventbundle_resource>
             <bundle>
 				<rewrite>
@@ -219,7 +230,33 @@
                 </observers>
             </catalogindex_plain_reindex_after>
         </events>
-
+        <eventbundle_personal_show>false</eventbundle_personal_show>
+        <eventbundle_personal>
+            <show>false</show>
+            <fields>
+                <firstname>
+                    <label>Firstname</label>
+                </firstname>
+                <lastname>
+                    <label>Lastname</label>
+                </lastname>
+                <company>
+                    <label>Company</label>
+                </company>
+                <company2>
+                    <label>Company 2</label>
+                </company2>
+                <company3>
+                    <label>Company 3</label>
+                </company3>
+                <street>
+                    <label>Street</label>
+                </street>
+                <city>
+                    <label>City</label>
+                </city>
+            </fields>
+        </eventbundle_personal>
     </global>
     <frontend>
         <routers>

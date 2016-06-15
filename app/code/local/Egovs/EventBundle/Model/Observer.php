@@ -70,7 +70,25 @@ class Egovs_EventBundle_Model_Observer
         $product->setCanSaveBundleSelections(
             (bool)$request->getPost('affect_bundle_product_selections') && !$product->getCompositeReadonly()
         );
-
+        $storeId = $request->getParam('store');
+        if ($personals = $request->getPost('personal_options')){
+        	foreach($personals as $personal){
+        		$model = Mage::getModel('eventbundle/personal_option')->load(intval($personal['id']));
+        		if($personal['is_delete']){
+        			$model->delete();
+        		}else{
+	        		$model->setStoreId($storeId);
+	        		$model->setName($personal['field']);
+	        		$model->setPos(intval($personal['pos']));
+	        		$model->setRequired(intval(isset($personal['required'])? 1:0));
+	        		$model->setMaxLength(intval($personal['max']));
+	        		$model->setLabel($personal['label']);
+	        		$model->setProductId($product->getId());
+	        		$model->save();
+        		}
+        	}
+        }
+        
         return $this;
     }
 
