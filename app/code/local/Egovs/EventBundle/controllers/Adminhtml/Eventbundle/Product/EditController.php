@@ -44,9 +44,11 @@ class Egovs_EventBundle_Adminhtml_Eventbundle_Product_EditController extends Mag
     {
         $product = $this->_initProduct();
         $this->getResponse()->setBody(
-            $this->getLayout()->createBlock('eventbundle/adminhtml_catalog_product_edit_tab_eventbundle', 'admin.product.bundle.items')
+        		$this->getLayout()->createBlock('eventbundle/adminhtml_catalog_product_edit_tab_eventbundle', 'admin.product.bundle.items')
                 ->setProductId($product->getId())
                 ->toHtml()
         );
     }
+    
+
 }

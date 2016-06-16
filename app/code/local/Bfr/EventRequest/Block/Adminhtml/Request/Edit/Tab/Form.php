@@ -19,7 +19,7 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit_Tab_Form extends Mage_Adminh
   	
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('request_form', array('legend'=>Mage::helper('eventrequest')->__('Item information')));
+      $fieldset = $form->addFieldset('request_form', array('legend'=>Mage::helper('eventrequest')->__('General')));
 
       $fieldset->addField('title', 'text', array(
           'label'     => Mage::helper('eventrequest')->__('Title'),

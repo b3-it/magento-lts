@@ -41,6 +41,7 @@ Layout handle for budle products
     <adminhtml_catalog_product_eventbundle>
         <reference name="product_tabs">
             <action method="addTab"><name>eventbundle_items</name><block>eventbundle/adminhtml_catalog_product_edit_tab_eventbundle</block></action>
+            <action method="addTab"><name>eventbundle_personal</name><block>eventbundle/adminhtml_catalog_product_edit_tab_personal</block></action>
             <action method="bindShadowTabs"><first>eventbundle_items</first><second>customer_options</second></action>
         </reference>
     </adminhtml_catalog_product_eventbundle>

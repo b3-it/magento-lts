@@ -16,12 +16,21 @@ class Bfr_EventManager_Block_Adminhtml_Translate_Edit_Tab_Form extends Mage_Admi
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('translate_form', array('legend'=>Mage::helper('eventmanager')->__('Item information')));
+      $fieldset = $form->addFieldset('translate_form', array('legend'=>Mage::helper('eventmanager')->__('Details')));
 
       $fieldset->addField('lang_code', 'select', array(
       		'label'     => Mage::helper('eventmanager')->__('Event Language'),
       		'name'      => 'lang_code',
+      		'required'  => true,
       		'values'    => Bfr_EventManager_Model_Event_Lang::getAllOptions(),
+      ));
+      
+      
+      $fieldset->addField('field', 'select', array(
+      		'label'     => Mage::helper('eventmanager')->__('Field'),
+      		'name'      => 'field',
+      		'required'  => true,
+      		'values'    => Egovs_EventBundle_Model_Personal_Fields::getAllOptions(),
       ));
       
       $fieldset->addField('source', 'text', array(

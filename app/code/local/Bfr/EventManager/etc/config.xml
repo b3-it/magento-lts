@@ -22,6 +22,15 @@
                 </eventmanager>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Bfr_EventManager>
+                    <files>
+                        <default>Bfr_EventManager.csv</default>
+                    </files>
+                </Bfr_EventManager>
+            </modules>
+        </translate>
     </frontend>
     <admin>
         <routers>
@@ -36,8 +45,8 @@
     </admin>
     <adminhtml>
 		<menu>
-			<eventmanager module="eventmanager">
-				<title>EventManager</title>
+			<event module="eventmanager">
+				<title>Events</title>
 				<sort_order>71</sort_order>
 				<children>
 					<eventmanager_event module="eventmanager">
@@ -61,7 +70,7 @@
                         <action>adminhtml/eventmanager_translate</action>
                     </eventmanager_translate>                    
 				</children>
-			</eventmanager>
+			</event>
 		</menu>
 		<acl>
 			<resources>
@@ -104,6 +113,15 @@
 				</eventmanager>
 			</updates>
 		</layout>
+		<translate>
+            <modules>
+                <Bfr_EventManager>
+                    <files>
+                        <default>Bfr_EventManager.csv</default>
+                    </files>
+                </Bfr_EventManager>
+            </modules>
+        </translate>
     </adminhtml>
     <global>
         <models>
@@ -163,5 +181,16 @@
                 <class>Bfr_EventManager_Helper</class>
             </eventmanager>
         </helpers>
+        <events>
+           <checkout_type_onepage_save_order_after>
+                <observers>
+                    <eventmanager_save_order>
+                        <type>singleton</type>
+                        <class>eventmanager/observer</class>
+                        <method>onCheckoutSubmitAllAfter</method>
+                    </eventmanager_save_order>
+                </observers>
+            </checkout_type_onepage_save_order_after>
+        </events>
     </global>
 </config>

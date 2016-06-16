@@ -58,4 +58,62 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	return $this;
     	
     }
+    
+    
+    public function importOrder($order,$orderItem)
+    {
+    	$customer = $order->getCustomer();
+    	$customer = Mage::getModel('customer/customer')->load($customer->getId());
+    	//$address = Mage::getModel('customer/address')->load($order->getBillingAddress()->getId());
+    	$address = $order->getBillingAddress();
+    	$productOptions = ($orderItem->getProductOptions());
+    	$personalOptions = $productOptions['info_buyRequest']['personal_options'];
+    	if(!is_array($personalOptions)){
+    		$personalOptions = array();
+    	}
+    	$productId = $orderItem->getProduct()->getId();
+    	$event = Mage::getModel('eventmanager/event')->load($productId,'product_id');
+    	if(!$event->getId()){
+    		return $this;
+    	}
+    	$collection = Mage::getModel('eventbundle/personal_option')->getCollection(); 
+    	$collection->getSelect()
+    		->where('product_id='.intval($productId));
+    	
+    	$mapping = array();
+    	foreach($collection->getItems() as $option)
+    	{
+    		if(isset($personalOptions[$option->getId()]) && (strlen(trim($personalOptions[$option->getId()])) > 0))
+    		{
+    			$mapping[$option->getName()] = $personalOptions[$option->getId()];
+    		}else {
+    			$mapping[$option->getName()] = $customer->get($mapping[$option->getName()]);
+    		}
+    	}
+    	
+    	
+    	
+    	$this->setOrderId($order->getId());
+    	$this->setOrderItemId($orderItem->getId());
+    	$this->setEventId($event->getId());
+    	$this->setCreatedTime(now())->setUpdateTime(now());
+    	$fields = array('prefix','firstname','lastname','company','company2','company3','street','city','postcode','email');
+    	foreach($fields as $field){
+    		if(isset($mapping[$field])){
+    			$this->setData($field,$mapping[$field]);
+    		}elseif ($customer->getData($field) != null) {
+    			$this->setData($field,$customer->getData($field));
+    		}else{
+    			$this->setData($field,$address->getData($field));
+    		}
+    	}
+    	
+    	
+    	$this->save();
+    	
+    	
+    	$t = 2/0;
+    	
+    	
+    }
 }

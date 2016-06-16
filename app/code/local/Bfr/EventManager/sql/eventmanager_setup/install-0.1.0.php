@@ -66,7 +66,7 @@ if (!$installer->tableExists($installer->getTable('eventmanager/participant')))
 			`firstname` varchar(255) NOT NULL default '', 
 			`lastname` varchar(255) NOT NULL default '', 
 			`email` varchar(255) NOT NULL default '', 
-			`company1` varchar(255) NOT NULL default '', 
+			`company` varchar(255) NOT NULL default '', 
 			`company2` varchar(255) NOT NULL default '', 
 			`company3` varchar(255) NOT NULL default '', 
 			`city` varchar(255) NOT NULL default '', 
@@ -117,6 +117,7 @@ if (!$installer->tableExists($installer->getTable('eventmanager/translate')))
 			-- DROP TABLE IF EXISTS {$this->getTable('eventmanager/translate')};
 			CREATE TABLE {$this->getTable('eventmanager/translate')} (
 			`translate_id` int(11) unsigned NOT NULL auto_increment,
+			`field` varchar(512) NOT NULL default '',
 			`source` varchar(512) NOT NULL default '',
 			`dest` varchar(512) NOT NULL default '',
 			`lang_code` varchar(255) NOT NULL default '',
