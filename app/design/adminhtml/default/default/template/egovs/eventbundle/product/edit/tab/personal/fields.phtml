@@ -1,0 +1,131 @@
+<?php
+/**
+ * Personalisierungsbox für Veranstaltungsprodukte
+ */
+?>
+
+<div id="personal_options_box" class="grid tier form-list">
+   <table >
+   <thead>
+   <tr class="headings">
+   	<th><?php echo($this->__('Label'))?></th>
+   	<th class="type-order"><?php echo($this->__('Position'))?></th>
+   	<th style="width:1px;"><?php echo($this->__('Required'))?></th>
+   	<th><?php echo($this->__('Max Characters'))?> </th>
+   	<th class="type-last last"><?php echo($this->__('Field'))?></th><th/>
+   	</tr>
+   </thead>
+   <tbody>
+   <tr id="personal_options_container_bottom"/>    
+   </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var firstPersonalTemplate = '<tr id="personal_options_{{number}}"><td  class="a-center">' +
+							'<input type="hidden" id="personal_options_{{number}}_is_delete" name="personal_options[{{number}}][is_delete]" value="" />'+
+							'<input type="hidden" name="personal_options[{{number}}][id]" value="{{id}}" />'+
+							'<input class="input-text" id="personal_options_{{number}}_label" value="{{label}}" name="personal_options[{{number}}][label]" />'+
+							'</td>'+
+							'<td class="a-center"><input class="input-text"  id="personal_options_{{number}}_pos" value="{{pos}}" name="personal_options[{{number}}][pos]" /></td>' +
+							'<td class="a-center"><input type="checkbox" id="personal_options_{{number}}_required" name="personal_options[{{number}}][required]" /></td>' +
+							'<td class="a-center"><input class="input-text"  id="personal_options_{{max}}_length" value="{{max_length}}" name="personal_options[{{number}}][max]" /></td>' +
+							'<td class="a-center"><select class="select product-option-price-type"  id="personal_options_{{number}}_field" name="personal_options[{{number}}][field]">' +
+							'	<?php foreach ($this->getFieldsAvail() as $key=>$value): ?>' +
+							'			<option value="<?php echo($key)?>"><?php echo($value['label']) ?></option>' +
+							'	<?php endforeach; ?>' +
+							'</select></td>'+
+							'<td class="a-center"><button style="" onclick="" class="scalable delete delete-personal-option " type="button" title="Option löschen" id="{{number}}"><span><span><span>Option löschen</span></span></span></button>'+
+							'</td></tr>';
+
+var personalOption = {
+    div : $('personal_options_container_bottom'),
+    templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+    templateText : firstPersonalTemplate,
+    itemCount : 1,
+    pos : 0,
+    add : function(data) {
+        this.template = new Template(this.templateText, this.templateSyntax);
+		if(!data){
+			var data = new Object();
+		} 
+
+        data.number = this.itemCount;
+
+        if (data.pos) {
+        	this.pos = Math.max(data.pos,this.pos);
+        }else{
+        	this.pos++;
+        	data.pos = this.pos;
+        }
+
+        Element.insert(this.div, {'before':this.template.evaluate(data)});
+
+        //set selected fieldname
+        if (data.name) {
+            $A($('personal_options_'+data.number+'_field').options).each(function(option){
+                if (option.value==data.name) option.selected = true;
+            });
+        }
+
+        //set selected is_require
+        if (data.required == '1') {
+            $('personal_options_'+data.number+'_required').checked = true;
+        }
+
+        this.itemCount++;
+        this.bindRemoveButtons();
+
+    },
+    remove : function(event){
+        var element = $(Event.findElement(event, 'tr'));
+        if(element){
+            var id = element.readAttribute('id');
+            $(id+'_'+'is_delete').value = '1';
+            element.addClassName('no-display');
+            element.addClassName('ignore-validate');
+            element.hide();
+        }
+    },
+    bindRemoveButtons : function(){
+        var buttons = $$('button.delete-personal-option');
+        for(var i=0;i<buttons.length;i++){
+            if(!$(buttons[i]).binded){
+                $(buttons[i]).binded = true;
+                Event.observe(buttons[i], 'click', this.remove.bind(this));
+            }
+        }
+       // var inputs = $$('div.product-custom-options button', 'div.product-custom-options input', 'div.product-custom-options select', 'div.product-custom-options textarea');
+        
+       // inputs.each(function(el) { Event.observe(el, 'change', el.setHasChanges.bind(el));  } )
+
+    }
+}
+
+
+
+
+if($('<?php echo $this->getAddButtonId() ?>')){
+    Event.observe('<?php echo $this->getAddButtonId() ?>', 'click', productOption.add.bind(productOption));
+}
+
+//validation for selected input type
+Validation.addAllThese([
+    ['required-option-select', <?php echo $this->helper('core')->jsonEncode(Mage::helper('catalog')->__('Select type of option')) ?>, function(v, elm) {
+        if (elm.getValue() == '') {
+            return false;
+        }
+        return true;
+}]]);
+
+<?php foreach ($this->getFields() as $field): ?>
+	personalOption.add(<?php echo $field->toJson() ?>);
+<?php endforeach; ?>
+
+
+
+
+//]]>
+</script>
+

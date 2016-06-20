@@ -25,20 +25,12 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit extends Mage_Adminhtml_Block
 		
 			
         $this->_addButton('saveandcontinue', array(
-            'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
+            'label'     => Mage::helper('eventrequest')->__('Save And Continue Edit'),
             'onclick'   => 'saveAndContinueEdit()',
             'class'     => 'save',
         ), -100);
 
         $this->_formScripts[] = "
-            function toggleEditor() {
-                if (tinyMCE.getInstanceById('request_content') == null) {
-                    tinyMCE.execCommand('mceAddControl', false, 'request_content');
-                } else {
-                    tinyMCE.execCommand('mceRemoveControl', false, 'request_content');
-                }
-            }
-
             function saveAndContinueEdit(){
                 editForm.submit($('edit_form').action+'back/edit/');
             }
@@ -48,7 +40,7 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit extends Mage_Adminhtml_Block
     public function getHeaderText()
     {
         if( Mage::registry('request_data') && Mage::registry('request_data')->getId() ) {
-            return Mage::helper('eventrequest')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('request_data')->getTitle()));
+            return Mage::helper('eventrequest')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('request_data')->getCustomerName()));
         } else {
             return Mage::helper('eventrequest')->__('Add Item');
         }

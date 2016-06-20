@@ -14,6 +14,7 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
 {
 	
 	private $_customer = null;
+	private $_address = null;
 	private $_product = null;
 	
 	
@@ -81,9 +82,17 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	return $this->_product;
     }
     
+    public function getAddress()
+    {
+    	if($this->_address == null){
+    		$this->_address = Mage::getModel('customer/address')->load($this->getCustomer()->getDefaultBilling());
+    	}
+    	return $this->_address;
+    }
+    
     public function getCustomerName()
     {
-    	return trim($this->getCustomer()->getCompany(). " ". $this->getCustomer()->getFirstname(). " ". $this->getCustomer()->getLastname());
+    	return trim($this->getAddress()->getCompany(). " ". $this->getCustomer()->getFirstname(). " ". $this->getCustomer()->getLastname());
     }
     
     public function getProductName()
@@ -100,9 +109,15 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	$data['customer'] = $this->getCustomer();
     	$data['product'] = $this->getProduct();
     	$data['created_time'] = $this->getCreatedTime();
+    	$this->setLog(sprintf("Sende Email über Zulassung an %s für Produkt %s",$this->getCustomer(),$this->getProduct()));
     	Mage::helper('eventrequest')->sendEmail($this->getCustomer()->getEmail(), $this->getCustomer(), $data, 'eventrequest/email/eventrequest_accept_template');
     }
     
+    
+    /**
+     * der pausierte Warenkorb wird wieder aktiviert
+     * @return Bfr_EventRequest_Model_Request
+     */
     private function reactivateQuote()
     {
     	$id = $this->getQuoteId();

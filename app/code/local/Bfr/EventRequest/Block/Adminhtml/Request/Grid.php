@@ -25,7 +25,9 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
   {
       $collection = Mage::getModel('eventrequest/request')->getCollection();
       $collection->getSelect()
-      	->join(array('customer'=>$collection->getTable('customer/entity')), 'main_table.customer_id = customer.entity_id',array('email'));
+      	->join(array('customer'=>$collection->getTable('customer/entity')), 'main_table.customer_id = customer.entity_id',array('email'))
+      	->join(array('product'=>$collection->getTable('catalog/product')), 'main_table.product_id = product.entity_id',array('sku'));
+     
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -47,14 +49,20 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
       		'width'     => '150px',
       		//'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
       ));
-      
+      /*
       $this->addColumn('product_id', array(
       		'header'    => Mage::helper('eventrequest')->__('Product Id'),
       		'width'     => '100px',
       		'index'     => 'product_id',
       		'type'      => 'number',
       ));
-       
+       */
+      $this->addColumn('sku', array(
+      		'header'    => Mage::helper('eventrequest')->__('Sku'),
+      		'width'     => '100px',
+      		'index'     => 'sku',
+      		//'type'      => 'number',
+      ));
       
       $this->addColumn('title', array(
           'header'    => Mage::helper('eventrequest')->__('Title'),
@@ -67,6 +75,7 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
       		'align'     =>'left',
       		'index'     => 'email',
       ));
+      
 
 	  
     
@@ -105,7 +114,7 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
+    protected function x_prepareMassaction()
     {
         $this->setMassactionIdField('request_id');
         $this->getMassactionBlock()->setFormFieldName('request');

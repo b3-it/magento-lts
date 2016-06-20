@@ -22,6 +22,15 @@
                 </eventrequest>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Bfr_EventRequest>
+                    <files>
+                        <default>Bfr_EventRequest.csv</default>
+                    </files>
+                </Bfr_EventRequest>
+            </modules>
+        </translate>
     </frontend>
     <admin>
         <routers>
@@ -36,17 +45,17 @@
     </admin>
     <adminhtml>
 		<menu>
-			<eventrequest module="eventrequest">
-				<title>EventRequest</title>
+			<event module="eventrequest">
+				<title>Events</title>
 				<sort_order>71</sort_order>
 				<children>
 					<eventrequest_request module="eventrequest">
-						<title>Manage Items</title>
+						<title>Application</title>
 						<sort_order>0</sort_order>
 						<action>adminhtml/eventrequest_request</action>
 					</eventrequest_request>
 				</children>
-			</eventrequest>
+			</event>
 		</menu>
 	<acl>
 		<resources>
@@ -59,8 +68,8 @@
 						<title>EventRequest Module</title>
 						<sort_order>10</sort_order>
 						<children>
-							<eventrequest_request module="pdftemplate">
-								<title>Manage EventRequest Request</title>
+							<eventrequest_request module="eventrequest">
+								<title>Manage Application</title>
 								<sort_order>0</sort_order>
 							</eventrequest_request>
 						</children>
@@ -87,6 +96,15 @@
 				</eventrequest>
 			</updates>
 		</layout>
+		<translate>
+            <modules>
+                <Bfr_EventRequest>
+                    <files>
+                        <default>Bfr_EventRequest.csv</default>
+                    </files>
+                </Bfr_EventRequest>
+            </modules>
+        </translate>
     </adminhtml>
     <global>
         <models>

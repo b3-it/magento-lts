@@ -211,6 +211,8 @@ Additional block for bundle product type
                 <action method="addRenderer"><type>checkbox</type><block>eventbundle/catalog_product_view_option_checkbox</block></action>
             </block>
             <action method="insert"><block>product.info.bundle.options</block></action>
+            <block type="eventbundle/catalog_product_view_personal" name="product.info.personal"  template="egovs/eventbundle/catalog/product/view/personal.phtml"/>
+            
         </reference>
         <reference name="product.info.options.wrapper.bottom">
             <remove name="product.tierprices" />
