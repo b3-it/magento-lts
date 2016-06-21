@@ -10,35 +10,53 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Abstract
+class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Adminhtml_Block_Widget_Grid
 {
+	private $_selections = null;
 	
-  public function __construct()
-  {
-      parent::__construct();
-      $this->setId('eventdayGrid');
-      $this->setDefaultSort('eventday_id');
-      $this->setDefaultDir('ASC');
-      $this->setSaveParametersInSession(true);
-  }
+	public function __construct()
+	{
+		parent::__construct();
+	    $this->setId('eventoptionGrid');
+	    //$this->setDefaultSort('eventoption_id');
+	    $this->setDefaultDir('ASC');
+	    $this->setSaveParametersInSession(true);
+	    $this->setUseAjax(true);
+	}
 
   
-  protected function getEvent()
-  {
-  	return Mage::registry('event_data');
-  }
+	protected function getEvent()
+	{
+		$this->setId('eventoptionGrid'.$this->getOption()->getId());
+		return Mage::registry('event_data');
+	}
+	  
+	protected function getSelections()
+	{
+			$res = array();
+			foreach($this->getAllSelections() as $item)
+			{
+				if($item->getOptionId() == $this->getOption()->getId()){
+					$res[] = $item;
+				}
+			}
+			return $res;
+	}
   
-  protected function getDynamicColumns()
+  protected function getAllSelections()
   {
-  		$res = array();
-  		foreach($this->getSelections() as $item)
-  		{
-  			if($item->getOptionId() == $this->getOption()->getId()){
-  				$res[] = $item;
-  			}
-  		}
-
-  		return $res;
+  	if($this->_selections == null){
+	  	$product = $this->getEvent()->getProduct();
+	  	{
+	  		$this->_selections = $product->getTypeInstance(true)
+	  		->getSelectionsCollection(
+	  				$product->getTypeInstance(true)->getOptionsIds($product),
+	  				$product
+	  		);
+	  
+	  	}
+  	}
+  	return $this->_selections;
   }
   
   
@@ -46,7 +64,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
   {
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      	//->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
+      	->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status'))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->where('event_id='.$this->getEvent()->getId());
       
@@ -54,16 +72,34 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
       return parent::_prepareCollection();
   }
   
+  
+  
+  protected function getSoldProductsIds($parentOrderItemId)
+  {
+  	$res = array();
+  	if($parentOrderItemId){
+  		$collection = Mage::getModel('sales/order_item')->getCollection();
+  		$collection->getSelect()->where('parent_item_id = '. $parentOrderItemId);
+  	  
+  		foreach($collection->getItems() as $item)
+  		{
+  			$res[$item->getProductId()] = $item->getProductId();
+  		}
+  	}
+  	return $res;
+  }
+  
+  
   protected function _afterLoadCollection()
   {
   		foreach($this->getCollection()->getItems() as $item)
   		{
   			$soldProducts = $this->getSoldProductsIds($item->getOrderItemId());
-  			foreach($this->getDynamicColumns() as $col)
+  			foreach($this->getSelections() as $col)
   			{
   				
   				if(isset($soldProducts[$col->getId()])){
-  					$item->setData('col_'.$col->getId(),$soldProducts[$col->getId()]->getName());
+  					$item->setData('col_'.$col->getId(),$col->getName());
   				}else{
   					$item->setData('col_'.$col->getId(),false);
   				}
@@ -75,14 +111,14 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
 
   protected function _prepareColumns()
   {
-      $this->addColumn('participant_id', array(
+      $this->addColumn('op_participant_id', array(
           'header'    => Mage::helper('eventmanager')->__('ID'),
           'align'     =>'right',
           'width'     => '50px',
           'index'     => 'participant_id',
       ));
 
-      $this->addColumn('created_time', array(
+      $this->addColumn('op_created_time', array(
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
       		'index'     => 'created_time',
@@ -90,16 +126,33 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
       		'width'     => '100px',
       ));
       
-      $this->addColumn('name', array(
+      $this->addColumn('op_increment_id', array(
+      		'header'    => Mage::helper('eventmanager')->__('Order #'),
+      		'align'     =>'left',
+      		'width'     => '100px',
+      		'index'     => 'increment_id',
+      		//'filter_condition_callback' => array($this, '_filterNameCondition'),
+      ));
+      
+      $this->addColumn('op_status', array(
+      		'header' => Mage::helper('sales')->__('Status'),
+      		'index' => 'status',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
+      
+      $this->addColumn('op_name', array(
           'header'    => Mage::helper('eventmanager')->__('Name'),
           'align'     =>'left',
           'index'     => 'name',
       	  'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
       
-		foreach($this->getDynamicColumns() as $col)
+
+		foreach($this->getSelections() as $col)
 		{
-			$this->addColumn('col_'.$col->getId(), array(
+			$this->addColumn('op_col_'.$col->getId(), array(
 					'header'    => $col->getName(),
 					'align'     =>'left',
 					'index'     => 'col_'.$col->getId(),
@@ -107,9 +160,6 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
 					//'filter_condition_callback' => array($this, '_filterNameCondition'),
 			));
 		}
-      
-
-
 
 		$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
@@ -117,35 +167,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('participant_id');
-        $this->getMassactionBlock()->setFormFieldName('participant');
 
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('eventmanager')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('eventmanager')->__('Are you sure?')
-        ));
-
-        $statuses = Mage::getSingleton('eventmanager/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('eventmanager')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
-        return $this;
-    }
+  public function getGridUrl()
+  {
+  	return $this->getUrl('*/*/optionsgrid', array('optionId'=> $this->getOption()->getId(),'id'=>$this->getEvent()->getId()));
+  }
+  
 
   public function getRowUrl($row)
   {

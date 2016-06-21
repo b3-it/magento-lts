@@ -10,16 +10,17 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Abstract
+class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Mage_Adminhtml_Block_Widget_Grid
 {
 	
   public function __construct()
   {
       parent::__construct();
-      $this->setId('eventdayGrid');
-      $this->setDefaultSort('eventday_id');
+      $this->setId('customeroptionsGrid');
+      //$this->setDefaultSort('eventday_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
+      $this->setUseAjax(true);
   }
 
   
@@ -40,6 +41,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bf
   {
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
+      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status'))
         ->joinLeft(array('orderitem'=>$collection->getTable('sales/order_item')),'orderitem.item_id = main_table.order_item_id')
       	//->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
@@ -66,8 +68,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bf
   				
   				
 	  			foreach($this->getDynamicColumns() as $col)
-	  			{
-	  				
+	  			{	  				
 	  				if(isset($option[$col->getOptionId()])){
 	  					$item->setData('customeroption_'.$col->getOptionId(),$option[$col->getOptionId()]);
 	  				}else{
@@ -82,14 +83,14 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bf
 
   protected function _prepareColumns()
   {
-      $this->addColumn('participant_id', array(
+      $this->addColumn('co_participant_id', array(
           'header'    => Mage::helper('eventmanager')->__('ID'),
           'align'     =>'right',
           'width'     => '50px',
           'index'     => 'participant_id',
       ));
 
-      $this->addColumn('created_time', array(
+      $this->addColumn('co_created_time', array(
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
       		'index'     => 'created_time',
@@ -97,16 +98,33 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bf
       		'width'     => '100px',
       ));
       
-      $this->addColumn('name', array(
+      $this->addColumn('co_increment_id', array(
+      		'header'    => Mage::helper('eventmanager')->__('Order #'),
+      		'align'     =>'left',
+      		'width'     => '100px',
+      		'index'     => 'increment_id',
+      		//'filter_condition_callback' => array($this, '_filterNameCondition'),
+      ));
+      
+      $this->addColumn('co_status', array(
+      		'header' => Mage::helper('sales')->__('Status'),
+      		'index' => 'status',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
+      
+      $this->addColumn('co_name', array(
           'header'    => Mage::helper('eventmanager')->__('Name'),
           'align'     =>'left',
           'index'     => 'name',
       	  'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
       
+      
 		foreach($this->getDynamicColumns() as $col)
 		{
-			$this->addColumn('customeroption_'.$col->getOptionId(), array(
+			$this->addColumn('co_customeroption_'.$col->getOptionId(), array(
 					'header'    => $col->getDefaultTitle(),
 					'align'     =>'left',
 					'index'     => 'customeroption_'.$col->getOptionId(),
@@ -124,36 +142,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bf
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('participant_id');
-        $this->getMassactionBlock()->setFormFieldName('participant');
-
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('eventmanager')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('eventmanager')->__('Are you sure?')
-        ));
-
-        $statuses = Mage::getSingleton('eventmanager/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('eventmanager')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
-        return $this;
-    }
-
+ 
   public function getRowUrl($row)
   {
       return $this->getUrl('*/*/edit', array('id' => $row->getId()));
@@ -193,4 +182,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bf
   	$condition = "TRIM(CONCAT(firstname,' ',lastname)) like ?";
   	$collection->getSelect()->where($condition, "%$value%");
   }
+  
+  
+  public function getGridUrl()
+  {
+  	return $this->getUrl('*/*/customeroptionsgrid', array('id'=>$this->getEvent()->getId()));
+  }
+  
 }

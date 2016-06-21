@@ -19,6 +19,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       $this->setDefaultSort('participant_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
+      $this->setUseAjax(true);
   }
 
   
@@ -31,6 +32,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   {
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
+      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->where('event_id='.$this->getEvent()->getId());
@@ -41,14 +43,14 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
   protected function _prepareColumns()
   {
-      $this->addColumn('participant_id', array(
+      $this->addColumn('pa_participant_id', array(
           'header'    => Mage::helper('eventmanager')->__('ID'),
           'align'     =>'right',
           'width'     => '50px',
           'index'     => 'participant_id',
       ));
 
-      $this->addColumn('created_time', array(
+      $this->addColumn('pa_created_time', array(
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
       		'index'     => 'created_time',
@@ -56,14 +58,32 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       		'width'     => '100px',
       ));
       
-      $this->addColumn('name', array(
+      $this->addColumn('pa_increment_id', array(
+      		'header'    => Mage::helper('eventmanager')->__('Order #'),
+      		'align'     =>'left',
+      		'width'     => '100px',
+      		'index'     => 'increment_id',
+      		//'filter_condition_callback' => array($this, '_filterNameCondition'),
+      ));
+      
+      $this->addColumn('pa_status', array(
+      		'header' => Mage::helper('sales')->__('Status'),
+      		'index' => 'status',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
+      
+      $this->addColumn('pa_name', array(
           'header'    => Mage::helper('eventmanager')->__('Name'),
           'align'     =>'left',
           'index'     => 'name',
       	  'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
       
-      $this->addColumn('company', array(
+
+      
+      $this->addColumn('pa_company', array(
       		'header'    => Mage::helper('eventmanager')->__('Company'),
       		'align'     =>'left',
       		'index'     => 'company',
@@ -71,7 +91,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       ));
       
       $role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
-      $this->addColumn('role', array(
+      $this->addColumn('pa_role', array(
           'header'    => Mage::helper('eventmanager')->__('Role'),
           'align'     => 'left',
           'width'     => '80px',
@@ -88,7 +108,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       	$yesno[$n['value']] = $n['label'];
       }
       
-      $this->addColumn('internal', array(
+      $this->addColumn('pa_internal', array(
           'header'    => Mage::helper('eventmanager')->__('Internal'),
           'align'     => 'left',
           'width'     => '80px',
@@ -97,7 +117,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
           'options'   => $yesno,
       ));
 	
-        $this->addColumn('action',
+        $this->addColumn('pa_action',
             array(
                 'header'    =>  Mage::helper('eventmanager')->__('Action'),
                 'width'     => '100',
@@ -155,6 +175,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   public function getRowUrl($row)
   {
       return $this->getUrl('*/*/edit', array('id' => $row->getId()));
+  }
+  
+  public function getGridUrl()
+  {
+  		return $this->getUrl('*/*/participantsgrid', array('id'=>$this->getEvent()->getId()));
   }
 
   

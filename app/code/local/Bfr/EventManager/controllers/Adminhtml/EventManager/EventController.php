@@ -62,10 +62,6 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
-
-			
-
-
 			$model = Mage::getModel('eventmanager/event');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
@@ -181,6 +177,46 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $this->_sendUploadResponse($fileName, $content);
     }
 
+    
+    public function optionsgridAction() {
+    	
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	
+    	$option = Mage::getModel('bundle/option')->load(intval($this->getRequest()->getParam('optionId')));
+	
+    	$this->loadLayout();
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
+    	$this->getResponse()->setBody($block->toHtml());
+
+    }
+    
+    public function participantsgridAction() {
+    	
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	
+    	$this->loadLayout();
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants');    	 
+    	$this->getResponse()->setBody($block->toHtml());
+    
+    }
+    
+    public function customeroptionsgridAction() {
+    	 
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	 
+    	$this->loadLayout();
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_customeroptions');
+    	$this->getResponse()->setBody($block->toHtml());
+    
+    }
+    
+    
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
     {
         $response = $this->getResponse();

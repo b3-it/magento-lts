@@ -37,7 +37,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
       if(Mage::registry('event_data')->getEventId())
       {
       		$data = Mage::registry('event_data');
-      		$data->setProduct($products[$data->getEventId()]);
+      		$data->setProduct($products[$data->getProductId()]);
       		//Mage::register('event_data', $data);
 	      	$fieldset->addField('product', 'text', array(
 	      			'label'     => Mage::helper('eventmanager')->__('Product'),
