@@ -163,6 +163,7 @@
         .add-to-cart {
             position: absolute;
             top: $global-2L-product-height + ( $gobal-cart-block-height / 2 );
+            left: $global-product-image-2L-width;
         }
 
         .product-additional-information {
@@ -236,6 +237,7 @@
         .add-to-cart {
             position: absolute;
             top: $global-3-product-height - $gobal-cart-block-height;
+            left: $global-product-image-3-width + 1%;
         }
     }
 }

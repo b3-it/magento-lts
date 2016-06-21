@@ -110,15 +110,14 @@
             margin-bottom: $global-boxmargin;
         }
 
-        #additional-product-images, .product-additional-information {
+        #additional-product-images {
             position: absolute;
             width: 55%;
             left: 42%;
         }
 
         .product-additional-information {
-            top: 290px;
-            height: 100px;
+            width: 100%;
 
             .short-description {
                 margin: 0;
@@ -157,7 +156,12 @@
 
         .add-to-cart {
             position: absolute;
-            top: $global-1-product-height + $gobal-cart-block-height;
+            top: $global-1-product-height - $gobal-cart-block-height + 40px;
+            left: $global-product-image-1-width + 2%;
+
+            .add-to-cart-buttons {
+                display: inline-block;
+            }
         }
     }
 
@@ -547,7 +551,7 @@
 }
 
 .product-img-box {
-    height: 100%;
+    /* height: 100%; */
     display: inline-block;
     border-width: $global-active-border;
     border-style: solid;
