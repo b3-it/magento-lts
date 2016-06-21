@@ -87,7 +87,7 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     		{
     			$mapping[$option->getName()] = $personalOptions[$option->getId()];
     		}else {
-    			$mapping[$option->getName()] = $customer->get($mapping[$option->getName()]);
+    			$mapping[$option->getName()] = $customer->getData($option->getName());
     		}
     	}
     	
@@ -112,7 +112,7 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	$this->save();
     	
     	
-    	$t = 2/0;
+    	//$t = 2/0;
     	
     	
     }

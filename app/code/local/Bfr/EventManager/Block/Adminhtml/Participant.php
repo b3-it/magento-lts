@@ -16,7 +16,7 @@ class Bfr_EventManager_Block_Adminhtml_Participant extends Mage_Adminhtml_Block_
   {
     $this->_controller = 'adminhtml_participant';
     $this->_blockGroup = 'eventmanager';
-    $this->_headerText = Mage::helper('eventmanager')->__('Item Manager');
+    $this->_headerText = Mage::helper('eventmanager')->__('Participants');
     $this->_addButtonLabel = Mage::helper('eventmanager')->__('Add Item');
     parent::__construct();
   }

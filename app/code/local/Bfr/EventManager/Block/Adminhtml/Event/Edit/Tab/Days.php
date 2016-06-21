@@ -10,27 +10,68 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Abstract
 {
   public function __construct()
   {
       parent::__construct();
-      $this->setId('participantGrid');
-      $this->setDefaultSort('participant_id');
+      $this->setId('eventdayGrid');
+      $this->setDefaultSort('eventday_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
   }
 
+  
+  protected function getEvent()
+  {
+  	return Mage::registry('event_data');
+  }
+  
+  protected function getDynamicColumns()
+  {
+  		
+  		
+  		$res = array();
+  		foreach($this->getSelections() as $item)
+  		{
+  			if($item->getEventRole() == Bfr_EventManager_Model_Role::STATUS_DAY){
+  				$res[] = $item;
+  			}
+  		}
+  		
+  		
+  		return $res;
+  }
+  
+  
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      	->join(array('event'=>$collection->getTable('eventmanager/event')), 'main_table.event_id = event.event_id',array('title'))
-      	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
-      	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"));
+      	//->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
+      	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
+      	->where('event_id='.$this->getEvent()->getId());
       
       $this->setCollection($collection);
       return parent::_prepareCollection();
+  }
+  
+  protected function _afterLoadCollection()
+  {
+  		foreach($this->getCollection()->getItems() as $item)
+  		{
+  			$soldProducts = $this->getSoldProductsIds($item->getOrderItemId());
+  			foreach($this->getDynamicColumns() as $col)
+  			{
+  				if(in_array($col->getId(),$soldProducts)){
+  					$item->setData('col_'.$col->getId(),'x');
+  				}else{
+  					$item->setData('col_'.$col->getId(),'o');
+  				}
+  			}
+  		}
+  		
+  		return $this;
   }
 
   protected function _prepareColumns()
@@ -50,13 +91,6 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_B
       		'width'     => '100px',
       ));
       
-      $this->addColumn('title', array(
-      		'header'    => Mage::helper('eventmanager')->__('title'),
-      		'width'     => '100px',
-      		'index'     => 'title',
-      		//'type'      => 'number',
-      ));
-      
       $this->addColumn('name', array(
           'header'    => Mage::helper('eventmanager')->__('Name'),
           'align'     =>'left',
@@ -64,58 +98,19 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_B
       	  'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
       
-      $this->addColumn('company', array(
-      		'header'    => Mage::helper('eventmanager')->__('Company'),
-      		'align'     =>'left',
-      		'index'     => 'company',
-      		'filter_condition_callback' => array($this, '_filterCompanyCondition'),
-      ));
-      
-      $role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
-      $this->addColumn('role', array(
-          'header'    => Mage::helper('eventmanager')->__('Role'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'role',
-          'type'      => 'options',
-          'options'   => $role,
-      ));
+		foreach($this->getDynamicColumns() as $col)
+		{
+			$this->addColumn('col_'.$col->getId(), array(
+					'header'    => $col->getName(),
+					'align'     =>'left',
+					'index'     => 'col_'.$col->getId(),
+					'width'     => '100px',
+					//'filter_condition_callback' => array($this, '_filterNameCondition'),
+			));
+		}
       
 
-      $yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-      $yesno = array();
-      foreach ($yn as $n)
-      {
-      	$yesno[$n['value']] = $n['label'];
-      }
-      
-      $this->addColumn('internal', array(
-          'header'    => Mage::helper('eventmanager')->__('Internal'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'internal',
-          'type'      => 'options',
-          'options'   => $yesno,
-      ));
-	
-        $this->addColumn('action',
-            array(
-                'header'    =>  Mage::helper('eventmanager')->__('Action'),
-                'width'     => '100',
-                'type'      => 'action',
-                'getter'    => 'getId',
-                'actions'   => array(
-                    array(
-                        'caption'   => Mage::helper('eventmanager')->__('Edit'),
-                        'url'       => array('base'=> '*/*/edit'),
-                        'field'     => 'id'
-                    )
-                ),
-                'filter'    => false,
-                'sortable'  => false,
-                'index'     => 'stores',
-                'is_system' => true,
-        ));
+
 
 		$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
