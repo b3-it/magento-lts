@@ -378,7 +378,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     
     protected function createErrorMail($msg = "")
     {
-    	$url = Mage::helper("adminhtml")->getUrl('dwd_icd/adminhtml_orderitem/edit',array('id'=>$this->getId()));
+    	$url = Mage::helper("adminhtml")->getUrl('adminhtml/icd_orderitem/edit',array('id'=>$this->getId()));
     	$body = $this->getError() . "\n Link:" . $url ."\n".$msg;
     	$this->sendMailToAdmin($body);
     }
