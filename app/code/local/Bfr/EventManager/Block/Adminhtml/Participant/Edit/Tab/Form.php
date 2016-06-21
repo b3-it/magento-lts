@@ -19,10 +19,10 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       $fieldset = $form->addFieldset('participant_form', array('legend'=>Mage::helper('eventmanager')->__('Persanal information')));
       
       $events = array();
-      $collection = Mage::helper('eventmanager')->getEventProducts();
+      $collection = Mage::getModel('eventmanager/event')->getCollection();
       foreach($collection as $item)
       {
-      	$events[$item->getId()] = $item->getName();
+      	$events[$item->getEventId()] = $item->getTitle();
       }
       
       

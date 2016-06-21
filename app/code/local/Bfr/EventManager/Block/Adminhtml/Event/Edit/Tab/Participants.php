@@ -100,6 +100,16 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
           'options'   => $role,
       ));
       
+      $job = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_JOB)->getOptionArray();
+      $this->addColumn('pa_jop', array(
+      		'header'    => Mage::helper('eventmanager')->__('Job'),
+      		'align'     => 'left',
+      		'width'     => '80px',
+      		'index'     => 'job',
+      		'type'      => 'options',
+      		'options'   => $job,
+      ));
+      
 
       $yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
       $yesno = array();
@@ -136,8 +146,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                 'is_system' => true,
         ));
 
-		$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
-		$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
+		$this->addExportType('*/*/exportparticipantsCsv', Mage::helper('eventmanager')->__('CSV'));
+		$this->addExportType('*/*/exportparticipantsXml', Mage::helper('eventmanager')->__('XML'));
 
       return parent::_prepareColumns();
   }

@@ -23,12 +23,19 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_B
 
   protected function _prepareCollection()
   {
+  	
+  	  /*
+  	   * SELECT GROUP_CONCAT(value) FROM eventmanager_participant_attribute as main_table
+join eventmanager_lookup as el on el.lookup_id = main_table.lookup_id
+where participant_id = 1 AND el.typ = 3
+  	   */	
+  	
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
       	->join(array('event'=>$collection->getTable('eventmanager/event')), 'main_table.event_id = event.event_id',array('title'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"));
-      
+
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -76,9 +83,19 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_B
           'header'    => Mage::helper('eventmanager')->__('Role'),
           'align'     => 'left',
           'width'     => '80px',
-          'index'     => 'role',
+          'index'     => 'role_id',
           'type'      => 'options',
           'options'   => $role,
+      ));
+      
+      $job = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_JOB)->getOptionArray();
+      $this->addColumn('pa_jop', array(
+      		'header'    => Mage::helper('eventmanager')->__('Job'),
+      		'align'     => 'left',
+      		'width'     => '80px',
+      		'index'     => 'job_id',
+      		'type'      => 'options',
+      		'options'   => $job,
       ));
       
 

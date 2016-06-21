@@ -176,6 +176,92 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 
         $this->_sendUploadResponse($fileName, $content);
     }
+    
+    
+    public function exportparticipantsCsvAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	 
+    	$fileName   = 'customeroptions.csv';
+    	$content    = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants')
+    	->getCsv();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    public function exportparticipantsXmlAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	 
+    	$fileName   = 'customeroptions.xml';
+    	$content    = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants')
+    	->getXml();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    
+    
+    public function exportcustomeroptionsCsvAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	
+    	$fileName   = 'customeroptions.csv';
+    	$content    = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_customeroptions')
+    	->getCsv();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    public function exportcustomeroptionsXmlAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	
+    	$fileName   = 'customeroptions.xml';
+    	$content    = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_customeroptions')
+    	->getXml();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    public function exportoptionsCsvAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	
+    	$option = Mage::getModel('bundle/option')->load(intval($this->getRequest()->getParam('optionId')));
+    	 
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
+    	
+    	$fileName   = 'customeroptions.csv';
+    	$content    = $block->getCsv();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    public function exportoptionsXmlAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	$option = Mage::getModel('bundle/option')->load(intval($this->getRequest()->getParam('optionId')));
+    	
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
+    	
+    	$fileName   = 'customeroptions.xml';
+    	$content    = $block->getXml();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
 
     
     public function optionsgridAction() {

@@ -136,11 +136,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
 
 
 
-		$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
-		$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
+		$this->addExportType('*/*/exportcustomeroptionsCsv', Mage::helper('eventmanager')->__('CSV'));
+		$this->addExportType('*/*/exportcustomeroptionsXml', Mage::helper('eventmanager')->__('XML'));
 
       return parent::_prepareColumns();
   }
+
 
  
   public function getRowUrl($row)

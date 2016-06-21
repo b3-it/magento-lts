@@ -161,13 +161,25 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 			));
 		}
 
-		$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
-		$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
+		$this->addExportType('*/*/exportoptionsCsv', Mage::helper('eventmanager')->__('CSV'),array('optionId'=> $this->getOption()->getId(),'id'=>$this->getEvent()->getId()));
+		$this->addExportType('*/*/exportoptionsXml', Mage::helper('eventmanager')->__('XML'),array('optionId'=> $this->getOption()->getId(),'id'=>$this->getEvent()->getId()));
 
       return parent::_prepareColumns();
   }
 
 
+  public function addExportType($url, $label, array $attributes = array())
+  {
+  	$this->_exportTypes[] = new Varien_Object(
+  			array(
+  					'url'   => $this->getUrl($url, $attributes),
+  					'label' => $label
+  			)
+  	);
+  	return $this;
+  }
+  
+  
   public function getGridUrl()
   {
   	return $this->getUrl('*/*/optionsgrid', array('optionId'=> $this->getOption()->getId(),'id'=>$this->getEvent()->getId()));
