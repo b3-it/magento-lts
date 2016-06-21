@@ -53,4 +53,8 @@ class Egovs_Paymentbase_Model_Haushaltsparameter extends Mage_Core_Model_Abstrac
     }
     
     
+    public function getName()
+    {
+    	return $this->getTitle().' ('.$this->getValue().')';
+    }
 }

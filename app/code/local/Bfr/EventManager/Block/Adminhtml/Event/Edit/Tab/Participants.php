@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
@@ -21,13 +21,19 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_B
       $this->setSaveParametersInSession(true);
   }
 
+  
+  protected function getEvent()
+  {
+  	return Mage::registry('event_data');
+  }
+  
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      	->join(array('event'=>$collection->getTable('eventmanager/event')), 'main_table.event_id = event.event_id',array('title'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
-      	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"));
+      	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
+      	->where('event_id='.$this->getEvent()->getId());
       
       $this->setCollection($collection);
       return parent::_prepareCollection();
@@ -48,13 +54,6 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Grid extends Mage_Adminhtml_B
       		'index'     => 'created_time',
       		'type'	=> 'Date',
       		'width'     => '100px',
-      ));
-      
-      $this->addColumn('title', array(
-      		'header'    => Mage::helper('eventmanager')->__('title'),
-      		'width'     => '100px',
-      		'index'     => 'title',
-      		//'type'      => 'number',
       ));
       
       $this->addColumn('name', array(

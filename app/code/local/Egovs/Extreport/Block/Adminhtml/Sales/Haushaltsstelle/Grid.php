@@ -133,15 +133,20 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Haushaltsstelle_Grid extends Egovs_E
 						'index' => 'sku',
 				));
 
+		$opt = $this->helper('extreport')->getHaushaltsstelleAsOptionArray();
+		//$opt= array();
+		//foreach($tmp as $key => $value){
+			//$opt[] = array('label' => $value,'value'=>$key);
+		//}
 		$this->addColumn('haushaltsstelle',
 				array(
 						'header'=> Mage::helper('catalog')->__('Haushaltsstelle'),
-						'width' => '80px',
+						'width' => '150px',
 						'index' => 'haushaltsstelle',
-						//'type'  => 'options',
+						'type'  => 'options',
 						//'renderer' => 'adminhtml/widget_grid_column_renderer_text',
-						//'options' => Mage::getSingleton('extreport/sales_revenue')->getCollection()->getCategorysAsOptionArray(),
-						'filter_index' => 'haushaltsstelle'
+						'options' => $opt,
+						//'filter_index' => 'haushaltsstelle'
 				));
 
 		$this->addColumn('total_price',
