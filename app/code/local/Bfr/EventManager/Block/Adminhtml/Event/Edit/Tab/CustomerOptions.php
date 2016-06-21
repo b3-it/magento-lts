@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Abstract
+class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Abstract
 {
 	
   public function __construct()
@@ -30,15 +30,9 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
   
   protected function getDynamicColumns()
   {
-  		$res = array();
-  		foreach($this->getSelections() as $item)
-  		{
-  			if($item->getOptionId() == $this->getOption()->getId()){
-  				$res[] = $item;
-  			}
-  		}
-
-  		return $res;
+  		$product = $this->getEvent()->getProduct();
+  		$options = $product->getOptions();
+  		return $options;
   }
   
   
@@ -46,6 +40,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
   {
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
+        ->joinLeft(array('orderitem'=>$collection->getTable('sales/order_item')),'orderitem.item_id = main_table.order_item_id')
       	//->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->where('event_id='.$this->getEvent()->getId());
@@ -58,15 +53,27 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
   {
   		foreach($this->getCollection()->getItems() as $item)
   		{
-  			$soldProducts = $this->getSoldProductsIds($item->getOrderItemId());
-  			foreach($this->getDynamicColumns() as $col)
+  			$product_options =  $item->getProductOptions();
+  			if($product_options)
   			{
+  				$product_options = unserialize($product_options);
   				
-  				if(isset($soldProducts[$col->getId()])){
-  					$item->setData('col_'.$col->getId(),$soldProducts[$col->getId()]->getName());
-  				}else{
-  					$item->setData('col_'.$col->getId(),false);
+  				$options = array();
+  				if(isset($product_options['info_buyRequest']['options']))
+  				{
+  					$option = $product_options['info_buyRequest']['options'];
   				}
+  				
+  				
+	  			foreach($this->getDynamicColumns() as $col)
+	  			{
+	  				
+	  				if(isset($option[$col->getOptionId()])){
+	  					$item->setData('customeroption_'.$col->getOptionId(),$option[$col->getOptionId()]);
+	  				}else{
+	  					$item->setData('customeroption_'.$col->getOptionId(),false);
+	  				}
+	  			}
   			}
   		}
   		
@@ -99,10 +106,10 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Days extends Bfr_EventMana
       
 		foreach($this->getDynamicColumns() as $col)
 		{
-			$this->addColumn('col_'.$col->getId(), array(
-					'header'    => $col->getName(),
+			$this->addColumn('customeroption_'.$col->getOptionId(), array(
+					'header'    => $col->getDefaultTitle(),
 					'align'     =>'left',
-					'index'     => 'col_'.$col->getId(),
+					'index'     => 'customeroption_'.$col->getOptionId(),
 					'width'     => '100px',
 					//'filter_condition_callback' => array($this, '_filterNameCondition'),
 			));

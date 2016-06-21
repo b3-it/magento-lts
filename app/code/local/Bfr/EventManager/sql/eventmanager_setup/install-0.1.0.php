@@ -127,11 +127,11 @@ if (!$installer->tableExists($installer->getTable('eventmanager/translate')))
 }
 
 
-
+/*
 
 if (!$installer->getAttribute('catalog_product', 'event_role')) {
 	$installer->addAttribute('catalog_product', 'event_role', array(
-			'label' => 'With Request',
+			'label' => 'Used As',
 			'input' => 'select',
 			'type' => 'int',
 			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
@@ -142,7 +142,7 @@ if (!$installer->getAttribute('catalog_product', 'event_role')) {
 			'comparable' => false,
 			'visible_on_front' => false,
 			'visible_in_advanced_search' => false,
-			'source'    => 'eav/entity_attribute_source_boolean',
+			'source'    => 'eventmanager/role',
 			'default' => '1',
 			//'option' => $option,
 			'group' => 'General',
@@ -150,6 +150,6 @@ if (!$installer->getAttribute('catalog_product', 'event_role')) {
 	));
 }
 
-
+*/
 
 $installer->endSetup(); 

@@ -28,19 +28,46 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tabs extends Mage_Adminhtml_Bl
           'title'     => Mage::helper('eventmanager')->__('Details'),
           'content'   => $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_form')->toHtml(),
       ));
+      if($this->getEvent()->getId())
+      {
+	      $this->addTab('form_section1', array(
+	      		'label'     => Mage::helper('eventmanager')->__('Participants'),
+	      		'title'     => Mage::helper('eventmanager')->__('Participants'),
+	      		'content'   => $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants')->toHtml(),
+	      ));
+	      
+	      $this->addTab('form_section2', array(
+	      		'label'     => Mage::helper('eventmanager')->__('Options'),
+	      		'title'     => Mage::helper('eventmanager')->__('Options'),
+	      		'content'   => $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_customerOptions')->toHtml(),
+	      ));
       
-      $this->addTab('form_section1', array(
-      		'label'     => Mage::helper('eventmanager')->__('Participants'),
-      		'title'     => Mage::helper('eventmanager')->__('Participants'),
-      		'content'   => $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants')->toHtml(),
-      ));
+      $product = $this->getEvent()->getProduct();
+      $optionCollection = $product->getTypeInstance(true)
+      ->getOptionsCollection($product);
       
-      $this->addTab('form_section2', array(
-      		'label'     => Mage::helper('eventmanager')->__('Days'),
-      		'title'     => Mage::helper('eventmanager')->__('Days'),
-      		'content'   => $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_days')->toHtml(),
-      ));
-     
+      foreach($optionCollection as $option){
+      	
+      	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_days','',array('option'=>$option));
+      	
+      	$this->addTab('form_section'.$option->getId(), array(
+      			'label'     => Mage::helper('eventmanager')->__($option->getDefaultTitle()),
+      			'title'     => Mage::helper('eventmanager')->__($option->getDefaultTitle()),
+      			'content'   => $block->toHtml(),
+      	));
+      	
+      	
+      }
+  	}
+      
       return parent::_beforeToHtml();
   }
+  
+  
+  protected function getEvent()
+  {
+  	return Mage::registry('event_data');
+  }
+  
+  
 }

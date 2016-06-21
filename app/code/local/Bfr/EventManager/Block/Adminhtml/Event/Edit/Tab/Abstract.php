@@ -22,20 +22,36 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Abstract extends Mage_Admi
   
   protected function getSelections()
   {
+  	$product = $this->getEvent()->getProduct();
+  	
+  	{
+  		$selectionCollection = $product->getTypeInstance(true)
+  		->getSelectionsCollection(
+  				$product->getTypeInstance(true)->getOptionsIds($product),
+  				$product
+  		);
+  		
+  	}
+  		
+  	return $selectionCollection;
+  }
+  
+  protected function getSelectionsProducts()
+  {
   	if($this->selctions == null)
   	{
-  		
+  
   		$collection = Mage::getModel('bundle/selection')->getCollection();
   		$collection->getSelect()
-  			->where('parent_product_id='.$this->getEvent()->getProductId());		
-  		
+  		->where('parent_product_id='.$this->getEvent()->getProductId());
+  
   		$this->selctions = array();
   		foreach($collection->getItems() as $item)
   		{
   			$this->selctions[] = Mage::getModel('catalog/product')->load($item->getProductId());
   		}
   	}
-  		
+  
   	return $this->selctions;
   }
   
@@ -46,10 +62,9 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Abstract extends Mage_Admi
 	  		$collection = Mage::getModel('sales/order_item')->getCollection();
 	  		$collection->getSelect()->where('parent_item_id = '. $parentOrderItemId);
 	  		
-	  		
 	  		foreach($collection->getItems() as $item)
 	  		{
-	  			$res[] = $item->getProductId();
+	  			$res[$item->getProductId()] = Mage::getModel('catalog/product')->load($item->getProductId());
 	  		}
   		}
   		return $res;

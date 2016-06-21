@@ -12,9 +12,25 @@
  */
 class Bfr_EventManager_Model_Event extends Mage_Core_Model_Abstract
 {
+	private $_product = null;
+	
     public function _construct()
     {
         parent::_construct();
         $this->_init('eventmanager/event');
     }
+    
+    
+    public function getProduct()
+    {
+    	if($this->_product == null)
+    	{
+    		if($this->getProductId()){
+    			$this->_product = Mage::getModel('catalog/product')->load($this->getProductId());
+    		}
+    	}
+    	
+    	return $this->_product;
+    }
+    
 }
