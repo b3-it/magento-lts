@@ -256,7 +256,7 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 					$this->_getECustomerId(),
 					$objBuchungsliste,
 					null,
-					null,
+					$this->_getPayerNote(),
 					$saferpayType,
 					$this->getBuchungsListeParameter($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal())
 			);			
@@ -345,24 +345,19 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 	protected abstract function _getSaferpayUrl();
 	
 	/**
-	 * Prepariert die Argumente die an Saferpay übertragen werden sollen
+	 * Liefert die PayerNote
 	 * 
-	 * Template method
+	 * Falls es keine PayerNote gibt wird:
+	 * <ul>
+	 * 	<li>Beschreibung</li>
+	 * 	<li>Titel</li>
+	 * 	<li>Zahlung per Saferpay</li>
+	 * </ul>
+	 * als Alternative geliefert.
 	 * 
-	 * Childrens müssen _getSaferpayUrl() überschreiben!
-	 * 
-	 * @return array
-	 */
-	public final function getSaferpayUrl() {
-        
-        $this->_fieldsArr = array ();
-        /*
-         * 20130403::Frank Rochlitzer
-         * URL Encode findet in Egovs_Paymentbase_Model_Curl::getResponse statt siehe #1582 ZVM844
+	 * @return string
          */
-		$this->_fieldsArr ['AMOUNT'] = ($this->_getOrder ()->getTotalDue() * 100);
-		$this->_fieldsArr ['CURRENCY'] = $this->_getOrder()->getOrderCurrencyCode();
-		
+	protected function _getPayerNote() {
 		if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/payernote")) <= 0) {
 			//Wenn Payernote nicht gefüllt ist
 			if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/description")) <= 0) {
@@ -379,6 +374,29 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/payernote");
 		}
 		
+		return $desc;
+	}
+	/**
+	 * Prepariert die Argumente die an Saferpay übertragen werden sollen
+	 *
+	 * Template method
+	 *
+	 * Childrens müssen _getSaferpayUrl() überschreiben!
+	 *
+	 * @return array
+	 */
+	public final function getSaferpayUrl() {
+
+        $this->_fieldsArr = array ();
+        /*
+         * 20130403::Frank Rochlitzer
+         * URL Encode findet in Egovs_Paymentbase_Model_Curl::getResponse statt siehe #1582 ZVM844
+         */
+		$this->_fieldsArr ['AMOUNT'] = ($this->_getOrder ()->getTotalDue() * 100);
+		$this->_fieldsArr ['CURRENCY'] = $this->_getOrder()->getOrderCurrencyCode();
+
+		$desc = $this->_getPayerNote();
+
 		$this->_fieldsArr ['DESCRIPTION'] = htmlentities($desc);
 		
         $this->_fieldsArr ['ALLOWCOLLECT'] = 'no';
