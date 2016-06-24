@@ -123,16 +123,24 @@
 	                         </quantityordered>
 	                         <kassenzeichen translate="title" module="extreport">
 	                            <title>Kassenzeichen</title>
-	                            <action>adminhtml/extreport_sales/kassenzeichen</action>                                       	
+	                            <action>adminhtml/extreport_sales/kassenzeichen</action>
 	                         </kassenzeichen>
 	                         <weight translate="title" module="extreport">
 	                            <title>Weight</title>
-	                            <action>adminhtml/extreport_sales/weight</action>                                       	
+	                            <action>adminhtml/extreport_sales/weight</action>
 	                         </weight>
 	                        <haushaltsstelle  module="extreport">
 	                            <title>Haushaltsstelle</title>
 	                            <action>adminhtml/extreport_sales/haushaltsstelle</action>
 	                         </haushaltsstelle>
+                             <pbc translate="title" module="reports">
+                                <title>Products by Customer</title>
+                                <action>adminhtml/extreport_sales/pbc</action>
+                            </pbc>
+                            <poptions translate="title" module="reports">
+                                <title>Product Options</title>
+                                <action>adminhtml/extreport_sales/options</action>
+                            </poptions>
 	                     </children>
 	                 </salesroot>             	
 	             </children>
@@ -195,6 +203,12 @@
 											<haushaltsstelle module="extreport">
 												<title>Haushaltsstelle</title>
 											</haushaltsstelle>
+                                            <pbc translate="title" module="reports">
+                                                <title>Products by Customer</title>
+                                            </pbc>
+                                            <poptions translate="title" module="reports">
+                                                <title>Product Options</title>
+                                            </poptions>
                             			</children>
                             		</salesroot>
                             	</children>
