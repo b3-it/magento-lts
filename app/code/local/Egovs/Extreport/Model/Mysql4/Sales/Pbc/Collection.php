@@ -9,8 +9,8 @@
  * 
  * @category   	Egovs
  * @package    	Egovs_Extreport
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @author 		Holger Kögel <h.koegel@edv-beratung-hempel.de>
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2011 - 2016 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
