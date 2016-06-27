@@ -14,20 +14,24 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 {
 	private $_selections = null;
 	
-	public function __construct()
+	private static $_count = 0;
+	
+	public function __construct(array $args = array())
 	{
+		self::$_count++;
 		parent::__construct();
-	    $this->setId('eventoptionGrid');
-	    //$this->setDefaultSort('eventoption_id');
+		
+	    $this->setId('eventoptionGrid'.$args['option']->getId());
 	    $this->setDefaultDir('ASC');
 	    $this->setSaveParametersInSession(true);
 	    $this->setUseAjax(true);
+	    
 	}
 
-  
+ 
+	
 	protected function getEvent()
 	{
-		$this->setId('eventoptionGrid'.$this->getOption()->getId());
 		return Mage::registry('event_data');
 	}
 	  
@@ -186,11 +190,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   }
   
 
-  public function getRowUrl($row)
-  {
-      return $this->getUrl('*/*/edit', array('id' => $row->getId()));
-  }
-
+ 
   
   /**
    * FilterIndex
