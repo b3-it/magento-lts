@@ -83,7 +83,7 @@
 							<title>EventManager</title>
 							<sort_order>10</sort_order>
 							<children>
-								<eventmanager_event module="pdftemplate">
+								<eventmanager_event module="eventmanager">
 									<title>Manage EventManager Event</title>
 									<sort_order>10</sort_order>
 								</eventmanager_event>
@@ -109,7 +109,7 @@
 		<layout>
 			<updates>
 				<eventmanager>
-					<file>Bfr/eventmanager.xml</file>
+					<file>bfr/eventmanager.xml</file>
 				</eventmanager>
 			</updates>
 		</layout>

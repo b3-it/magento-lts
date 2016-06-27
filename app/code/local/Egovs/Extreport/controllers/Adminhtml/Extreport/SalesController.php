@@ -85,6 +85,26 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
             ->renderLayout();
     }
     
+    public function pbcAction()
+    {
+    	$this->_initAction()
+    	->_setActiveMenu('report/salesroot/pbc')
+    	->_addBreadcrumb(Mage::helper('tufreports')->__('Products by Customer'), Mage::helper('tufreports')->__('Products by Customer'))
+    	/* TODO : Layout XML benutzen! */
+    	->_addContent($this->getLayout()->createBlock('tufreports/sales_pbc'))
+    	->renderLayout();
+    }
+    
+    public function optionsAction()
+    {
+    	$this->_initAction()
+    	->_setActiveMenu('report/salesroot/poptions')
+    	->_addBreadcrumb(Mage::helper('tufreports')->__('Product Options'), Mage::helper('tufreports')->__('Product Options'))
+    	/* TODO : Layout XML benutzen! */
+    	->_addContent($this->getLayout()->createBlock('tufreports/sales_options'))
+    	->renderLayout();
+    }
+    
     public function gridAction()
     {
     	$this->loadLayout();
@@ -100,6 +120,43 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
         } else {
         	$this->_forward('noRoute');
         }
+    }
+    
+    public function __call($method, $args) {
+    	switch (substr($method, 0, 6)) {
+    		case 'export' :
+    			//Varien_Profiler::start('GETTER: '.get_class($this).'::'.$method);
+    			$key = substr($method,6);
+    			$pos = stripos($key, 'Csv');
+    			$isExcel = false;
+    			if ($pos === false) {
+    				$pos = stripos($key, 'Excel');
+    				$isExcel = true;
+    			}
+    			if ($pos === false) {
+    				$this->_forward('noRoute');
+    				return;
+    			}
+    
+    			$method = strtolower(substr($key,0,$pos));
+    
+    			$fileName   = 'sales_'.$method;
+    			$isExcel ? $fileName .= ".xml" : $fileName .= ".csv";
+    
+    			if ($isExcel) {
+    				$content    = $this->getLayout()->createBlock('extreport/sales_'.$method.'_grid')
+    					->getExcel($fileName);
+    			} else {
+    				$content    = $this->getLayout()->createBlock('extreport/sales_'.$method.'_grid')
+    					->getCsv($fileName);
+    			}
+    
+    			$this->_prepareDownloadResponse($fileName, $content);
+    			//Varien_Profiler::stop('GETTER: '.get_class($this).'::'.$method);
+    			return;
+    	}
+    
+    	$this->_forward('noRoute');
     }
   	
 	public function exportKassenzeichenCsvAction()

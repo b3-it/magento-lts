@@ -59,12 +59,17 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	
     }
     
-    
+    /**
+     * Daten aus der Bestellung in die Veranstaltundsdatenbank übernehmen
+     * @param unknown $order
+     * @param unknown $orderItem
+     * @return Bfr_EventManager_Model_Participant
+     */
     public function importOrder($order,$orderItem)
     {
     	$customer = $order->getCustomer();
     	$customer = Mage::getModel('customer/customer')->load($customer->getId());
-    	//$address = Mage::getModel('customer/address')->load($order->getBillingAddress()->getId());
+    
     	$address = $order->getBillingAddress();
     	$productOptions = ($orderItem->getProductOptions());
     	$personalOptions = $productOptions['info_buyRequest']['personal_options'];
@@ -76,10 +81,13 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	if(!$event->getId()){
     		return $this;
     	}
+    	
+    	//zuerst die "Personl" Options aus den Produkt
     	$collection = Mage::getModel('eventbundle/personal_option')->getCollection(); 
     	$collection->getSelect()
     		->where('product_id='.intval($productId));
     	
+    	//letztlich sind im mapping alle angelegteten optionen ausgefüllt
     	$mapping = array();
     	foreach($collection->getItems() as $option)
     	{
@@ -87,6 +95,7 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     		{
     			$mapping[$option->getName()] = $personalOptions[$option->getId()];
     		}else {
+    			//falls die optionen angelegt aber nicht ausgefüllt wurden wird das kundenkonto benutzt 
     			$mapping[$option->getName()] = $customer->getData($option->getName());
     		}
     	}
@@ -102,14 +111,23 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     		if(isset($mapping[$field])){
     			$this->setData($field,$mapping[$field]);
     		}elseif ($customer->getData($field) != null) {
+    			//falls in mapping nicht vorhanden wird das Kundenkonto benutzt
     			$this->setData($field,$customer->getData($field));
     		}else{
+    			//falls in mapping nicht vorhanden wird die Adressen benutzt
     			$this->setData($field,$address->getData($field));
     		}
     	}
     	
+    	//übersetzten
+    	
+    	$translate = Mage::getModel('eventmanager/translate');
+    	
+    	$translate->translateData($this,$fields, $event->getLangCode());
     	
     	$this->save();
+    	
+    	
     	
     	
     	//$t = 2/0;
