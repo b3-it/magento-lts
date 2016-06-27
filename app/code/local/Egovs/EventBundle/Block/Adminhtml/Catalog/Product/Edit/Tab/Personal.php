@@ -56,7 +56,7 @@ class Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Personal extend
     {
     	$show =  Mage::getConfig()->getNode('global/eventbundle_personal/show')->asArray();
     	if($show === 'true'){
-    		return true;
+    		return boolval($this->getProductId() > 0);
     	}
     	
     	return false;
@@ -74,6 +74,22 @@ class Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Personal extend
     public function getAddButtonHtml()
     {
     	return $this->getChildHtml('add_button');
+    }
+    
+    
+    private function getProductId()
+    {
+    	if($this->getData('product_id')!= null)
+    	{
+    		return $this->getData('product_id');
+    	}
+    
+    	$product = Mage::registry('product');
+    	if($product)
+    	{
+    		return $product->getId();
+    	}
+    	return 0;
     }
     
 }
