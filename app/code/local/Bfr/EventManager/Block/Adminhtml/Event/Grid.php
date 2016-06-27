@@ -24,7 +24,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Grid extends Mage_Adminhtml_Block_W
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('eventmanager/event')->getCollection();
-     
+      $collection->getSelect()
+      	->join(array('product'=>$collection->getTable('catalog/product')),'main_table.product_id = product.entity_id');
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }

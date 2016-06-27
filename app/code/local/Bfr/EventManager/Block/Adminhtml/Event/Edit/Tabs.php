@@ -49,7 +49,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tabs extends Mage_Adminhtml_Bl
 	      foreach($optionCollection as $option){
 	      	
 	      	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
-	      	
+	      
 	      	$this->addTab('form_section_opt'.$option->getId(), array(
 	      			'label'     => Mage::helper('eventmanager')->__($option->getDefaultTitle()),
 	      			'title'     => Mage::helper('eventmanager')->__($option->getDefaultTitle()),

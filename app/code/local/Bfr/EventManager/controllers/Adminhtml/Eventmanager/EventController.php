@@ -184,7 +184,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
     	Mage::register('event_data', $model);
     	 
-    	$fileName   = 'customeroptions.csv';
+    	$fileName   = 'participants.csv';
     	$content    = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants')
     	->getCsv();
     
@@ -197,7 +197,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
     	Mage::register('event_data', $model);
     	 
-    	$fileName   = 'customeroptions.xml';
+    	$fileName   = 'participants.xml';
     	$content    = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants')
     	->getXml();
     
@@ -242,7 +242,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	 
     	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
     	
-    	$fileName   = 'customeroptions.csv';
+    	$fileName   = 'options.csv';
     	$content    = $block->getCsv();
     
     	$this->_sendUploadResponse($fileName, $content);
@@ -257,7 +257,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	
     	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
     	
-    	$fileName   = 'customeroptions.xml';
+    	$fileName   = 'options.xml';
     	$content    = $block->getXml();
     
     	$this->_sendUploadResponse($fileName, $content);
@@ -274,6 +274,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 	
     	$this->loadLayout();
     	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
+    	
     	$this->getResponse()->setBody($block->toHtml());
 
     }
