@@ -136,7 +136,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('eventmanager')->__('Edit'),
-                        'url'       => array('base'=> '*/*/edit'),
+                        'url'       => array('base'=> '*/eventmanager_participant/edit'),
                         'field'     => 'id'
                     )
                 ),
@@ -168,7 +168,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
         array_unshift($statuses, array('label'=>'', 'value'=>''));
         $this->getMassactionBlock()->addItem('status', array(
              'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
+             'url'  => $this->getUrl('*/eventmanager_participant/massStatus', array('_current'=>true)),
              'additional' => array(
                     'visibility' => array(
                          'name' => 'status',
@@ -184,7 +184,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
   public function getRowUrl($row)
   {
-      return $this->getUrl('*/*/edit', array('id' => $row->getId()));
+      return $this->getUrl('*/eventmanager_participant/edit', array('id' => $row->getId(),
+      		'event' =>$this->getEvent()->getId()));
   }
   
   public function getGridUrl()
@@ -192,6 +193,10 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   		return $this->getUrl('*/*/participantsgrid', array('id'=>$this->getEvent()->getId()));
   }
 
+  
+
+  
+  
   
   /**
    * FilterIndex

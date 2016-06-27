@@ -43,8 +43,33 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit extends Mage_Adminhtml_B
                 editForm.submit($('edit_form').action+'back/edit/');
             }
         ";
+        
+       
+        
     }
 
+    public function getBackUrl()
+    {
+    	$eventId = intval($this->getRequest()->getParam('event'));
+    	if($eventId > 0){
+    		return $this->getBack2EventUrl($eventId);
+    	}
+    	
+    	return parent::getBackUrl();
+    }
+    
+    
+    public function getBack2EventUrl($eventId)
+    {
+    	return $this->getUrl(
+    			'*/eventmanager_event/edit',
+    			array(
+    					'id'  => $eventId,
+    					'active_tab'=> 'participants_section'
+    			));
+    }
+    
+    
     public function getHeaderText()
     {
         if( Mage::registry('participant_data') && Mage::registry('participant_data')->getId() ) {

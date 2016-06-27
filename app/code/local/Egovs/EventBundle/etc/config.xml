@@ -230,7 +230,6 @@
                 </observers>
             </catalogindex_plain_reindex_after>
         </events>
-        <eventbundle_personal_show>false</eventbundle_personal_show>
         <eventbundle_personal>
             <show>false</show>
             <fields>

@@ -30,7 +30,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tabs extends Mage_Adminhtml_Bl
       ));
       if($this->getEvent()->getId())
       {
-	      $this->addTab('form_section1', array(
+	      $this->addTab('participants_section', array(
 	      		'label'     => Mage::helper('eventmanager')->__('Participants'),
 	      		'title'     => Mage::helper('eventmanager')->__('Participants'),
 	      		'content'   => $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_participants')->toHtml(),
@@ -50,7 +50,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tabs extends Mage_Adminhtml_Bl
 	      	
 	      	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_options','',array('option'=>$option));
 	      	
-	      	$this->addTab('form_section'.$option->getId(), array(
+	      	$this->addTab('form_section_opt'.$option->getId(), array(
 	      			'label'     => Mage::helper('eventmanager')->__($option->getDefaultTitle()),
 	      			'title'     => Mage::helper('eventmanager')->__($option->getDefaultTitle()),
 	      			'content'   => $block->toHtml(),
