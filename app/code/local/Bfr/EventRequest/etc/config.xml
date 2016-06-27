@@ -92,7 +92,7 @@
 		<layout>
 			<updates>
 				<eventrequest>
-					<file>Bfr/eventrequest.xml</file>
+					<file>bfr/eventrequest.xml</file>
 				</eventrequest>
 			</updates>
 		</layout>
