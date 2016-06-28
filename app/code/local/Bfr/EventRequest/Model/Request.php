@@ -32,7 +32,7 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	$n = 0;
     	foreach($items as $item)
     	{
-    		if($item->getParentItem() !== null ){
+    		if($item->getParentItem() === null ){
     			$n++;
     		}
     	}
