@@ -88,21 +88,21 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
     public function pbcAction()
     {
     	$this->_initAction()
-    	->_setActiveMenu('report/salesroot/pbc')
-    	->_addBreadcrumb(Mage::helper('tufreports')->__('Products by Customer'), Mage::helper('tufreports')->__('Products by Customer'))
-    	/* TODO : Layout XML benutzen! */
-    	->_addContent($this->getLayout()->createBlock('tufreports/sales_pbc'))
-    	->renderLayout();
+	    	->_setActiveMenu('report/salesroot/pbc')
+	    	->_addBreadcrumb(Mage::helper('extreport')->__('Products by Customer'), Mage::helper('extreport')->__('Products by Customer'))
+	    	/* TODO : Layout XML benutzen! */
+	    	->_addContent($this->getLayout()->createBlock('extreport/sales_pbc'))
+	    	->renderLayout();
     }
     
     public function optionsAction()
     {
     	$this->_initAction()
-    	->_setActiveMenu('report/salesroot/poptions')
-    	->_addBreadcrumb(Mage::helper('tufreports')->__('Product Options'), Mage::helper('tufreports')->__('Product Options'))
-    	/* TODO : Layout XML benutzen! */
-    	->_addContent($this->getLayout()->createBlock('tufreports/sales_options'))
-    	->renderLayout();
+	    	->_setActiveMenu('report/salesroot/poptions')
+	    	->_addBreadcrumb(Mage::helper('extreport')->__('Product Options'), Mage::helper('extreport')->__('Product Options'))
+	    	/* TODO : Layout XML benutzen! */
+	    	->_addContent($this->getLayout()->createBlock('extreport/sales_options'))
+	    	->renderLayout();
     }
     
     public function gridAction()
@@ -157,6 +157,26 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
     	}
     
     	$this->_forward('noRoute');
+    }
+    
+    public function exportOptionsCsvAction()
+    {
+    	$this->__call(__FUNCTION__, array());
+    }
+    
+    public function exportPbcCsvAction()
+    {
+    	$this->__call(__FUNCTION__, array());
+    }
+    
+    public function exportOptionsExcelAction()
+    {
+    	$this->__call(__FUNCTION__, array());
+    }
+    
+    public function exportPbcExcelAction()
+    {
+    	$this->__call(__FUNCTION__, array());
     }
   	
 	public function exportKassenzeichenCsvAction()
