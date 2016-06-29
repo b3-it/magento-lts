@@ -96,7 +96,9 @@ class Mage_Newsletter_Model_Resource_Queue_Collection extends Mage_Core_Model_Re
      */
     protected function _addSubscriberInfoToSelect()
     {
-        /** @var $select Varien_Db_Select */
+        if (!$this->_addSubscribersFlag) {
+            $this->_addSubscribersFlag = true;
+            //Possibel solution with join select
         $select = $this->getConnection()->select()
             ->from(array('qlt' => $this->getTable('newsletter/queue_link')), 'COUNT(qlt.queue_link_id)')
             ->where('qlt.queue_id = main_table.queue_id');
@@ -111,6 +113,7 @@ class Mage_Newsletter_Model_Resource_Queue_Collection extends Mage_Core_Model_Re
             'subscribers_sent'  => $sentExpr,
             'subscribers_total' => $totalExpr
         ));
+        }
         return $this;
     }
 
