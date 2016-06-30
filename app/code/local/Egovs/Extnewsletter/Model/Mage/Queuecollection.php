@@ -58,5 +58,17 @@ class Egovs_Extnewsletter_Model_Mage_Queuecollection extends Mage_Newsletter_Mod
 	    return $this;
     }
 
+    public function hasJoinToTable($joinname)
+    {
+    	foreach ($this->_joinedTables as $k=>$v)
+    	{
+    		if($k == $joinname)
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
  
 }

@@ -30,8 +30,17 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         $this->setCollection($collection);
         
        	$collection->getSelect()
-       	->join(array('order'=>'sales_flat_order'),'main_table.order_id = order.entity_id',array('increment_id'=>'increment_id','orderstatus'=>'status','customer_id','customer_email'));
-       	//->join(array('quote_adr'=>'sales_flat_quote_address'),'main_table.quote_id=quote_adr.quote_id AND length(applied_taxes) > 8',array('applied_taxes'=>'applied_taxes'));
+       	->join(array('order'=>$collection->getTable('sales/order')),'main_table.order_id = order.entity_id',array('increment_id'=>'increment_id','orderstatus'=>'status','customer_id','customer_email'));
+       	
+       	//StoreIsolation
+       	if(Mage::helper('egovsbase')->isModuleEnabled('Egovs_Isolation'))
+       	{
+       		$stores = Mage::helper('isolation')->getUserStoreViews();
+       		if(count($stores) > 0)
+       		{
+       			$collection->getSelect()->where('store_group IN ('.implode(',',$stores).')');
+       		}
+       	}
         
         //die($collection->getSelect()->__toString());
         return parent::_prepareCollection();
