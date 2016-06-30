@@ -22,9 +22,9 @@ class Egovs_Girosolution_Model_Observer
        
          
         if( $currencyCode != 'EUR'){
-            if ($method->getCode() == 'girosolution_creditcard' ){
+            if ($method->getCode() == 'egovs_girosolution_creditcard' ){
                 $result->isAvailable = true;
-            } else if($method->getCode() == 'girosolution_giropay' ){
+            } else if($method->getCode() == 'egovs_girosolution_giropay' ){
                 $result->isAvailable = false;
             }
         }

@@ -13,5 +13,15 @@
  */
 class Egovs_Girosolution_Helper_Data extends Egovs_Paymentbase_Helper_Data
 {
-
+	public function getLanguageCode() {
+		$result = 'de';
+		$languageCode = Mage::getStoreConfig('general/locale/code', Mage::app()->getStore()->getId());
+		if(isset($languageCode)) {
+			if(strlen($languageCode) > 2) {
+				$languageCode = substr($languageCode, 0, 2);
+				$result = strtolower($languageCode);
+			}
+		}
+		return $result;
+	}
 }

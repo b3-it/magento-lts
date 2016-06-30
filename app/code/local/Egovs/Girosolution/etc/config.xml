@@ -8,17 +8,17 @@
     </modules>
     <global>
         <models>
-            <girosolution>
+            <egovs_girosolution>
                 <class>Egovs_Girosolution_Model</class>
-            </girosolution>
+            </egovs_girosolution>
         </models>
         <helpers>
-            <girosolution>
+            <egovs_girosolution>
                 <class>Egovs_Girosolution_Helper</class>
-            </girosolution>
+            </egovs_girosolution>
         </helpers>
         <resources>
-            <girosolution_setup>
+            <egovs_girosolution_setup>
                 <setup>
                     <module>Egovs_Girosolution</module>
                     <class>Mage_Eav_Model_Entity_Setup</class>
@@ -26,34 +26,34 @@
                 <connection>
                     <use>core_setup</use>
                 </connection>
-            </girosolution_setup>
-            <girosolution_write>
+            </egovs_girosolution_setup>
+            <egovs_girosolution_write>
                 <connection>
                     <use>core_write</use>
                 </connection>
-            </girosolution_write>
-            <girosolution_read>
+            </egovs_girosolution_write>
+            <egovs_girosolution_read>
                 <connection>
                     <use>core_read</use>
                 </connection>
-            </girosolution_read>
+            </egovs_girosolution_read>
         </resources>
         <blocks>
-            <girosolution><class>Egovs_Girosolution_Block</class></girosolution>
+            <egovs_girosolution><class>Egovs_Girosolution_Block</class></egovs_girosolution>
         </blocks>
     </global>
     <frontend>
     	<secure_url>
-            <girosolution>/girosolution</girosolution>
+            <egovs_girosolution>/girosolution</egovs_girosolution>
         </secure_url>
         <routers>
-            <girosolution>
+            <egovs_girosolution>
                 <use>standard</use>
                 <args>
                     <module>Egovs_Girosolution</module>
                     <frontName>girosolution</frontName>
                 </args>
-            </girosolution>
+            </egovs_girosolution>
         </routers>
         <translate>
             <modules>
@@ -78,9 +78,9 @@
     </adminhtml>
     <default>
         <payment>
-            <girosolution_giropay>
+            <egovs_girosolution_giropay>
                 <currency>EUR</currency>
-                <model>girosolution/payment_giropay</model>
+                <model>egovs_girosolution/payment_giropay</model>
                 <payment_action>authorize</payment_action>
                 <title>Giropay per Girosolution</title>
                 <order_status>processing</order_status>
@@ -91,10 +91,10 @@
                 <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
                 <delete_customer_after_transaction>1</delete_customer_after_transaction>
                 <group>epaybl</group>
-            </girosolution_giropay>
-            <girosolution_creditcard>
+            </egovs_girosolution_giropay>
+            <egovs_girosolution_creditcard>
                 <currency>EUR</currency>
-                <model>girosolution/payment_creditcard</model>
+                <model>egovs_girosolution/payment_creditcard</model>
                 <payment_action>authorize</payment_action>
                 <title>Kreditkarte per Girosolution</title>
                 <order_status>processing</order_status>
@@ -105,7 +105,7 @@
                 <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
                 <delete_customer_after_transaction>1</delete_customer_after_transaction>
                 <group>epaybl</group>
-            </girosolution_creditcard>
+            </egovs_girosolution_creditcard>
         </payment>
     </default>
 </config>
