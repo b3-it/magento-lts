@@ -1,6 +1,6 @@
 ﻿//
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -49,10 +49,10 @@ $golbal-msgpadding: 20px;
 $global-btn-padding-h: 10px;
 $global-btn-padding-v: 5px;
 
-$global-logo-width: 225px;
-$global-logo-height: 35px;
-$global-logo-top: 60px;
-$global-logo-left: 0px;
+$global-logo-width: 260px;
+$global-logo-height: 104px;
+$global-logo-top: 20px;
+$global-logo-left: 30px;
 
 $global-skiplinks-space: 70px;
 
@@ -89,35 +89,37 @@ $global-header-height: 200px;
 
 $global-welcome-header: 70px;
 $global-welcome-left: 295px;
-$global-welcome-top: 65px;
 
 $global-welcome-header-top: 30px;
 
 $global-message-margintop: 20px;
 $global-message-marginbottom: 20px;
 
+$global-max-page-width: 1920px;
+$global-min-page-width: 320px;
+
 // Angabe aller Breiten in Pixel
-$global-fullpage-width      : 960px;
-$global-leftcol-width       : 225px;
-$global-leftcol-marginright : 22px;
-$global-content-paddingleft : 21px;
-$global-content-width       : 415px;
-$global-content-marginright : 32px;
-$global-rightcol-marginright: 26px;
-$global-rightcol-width      : 230px;
+$global-fullpage-width      : 100%;
+$global-leftcol-width       : 20%;
+$global-leftcol-marginright : 3%;
+$global-content-paddingleft : 3%;
+$global-content-width       : 55%;
+$global-content-marginright : 3%;
+$global-rightcol-marginright: 3%;
+$global-rightcol-width      : 20%;
 
 $global-rightcol-margintop : 48px;
 $global-content-paddingtop : 20px;
 
 // Berechnung aller Breiten in Prozent
 $global-3col-factor                 : 1.4; // Verhältnis zwischen Linker- und Hauptspalte bei 3-Spaltig
-$global-leftcol-percent             : percentage( $global-leftcol-width        / $global-fullpage-width );
-$global-leftcol-rightmargin-percent : percentage( $global-leftcol-marginright  / $global-fullpage-width );
-$global-rightcol-leftmargin-percent : percentage( $global-content-marginright  / $global-fullpage-width );
-$global-rightcol-percent            : percentage( $global-rightcol-width       / $global-fullpage-width );
+$global-leftcol-percent             : 20%;
+$global-leftcol-rightmargin-percent : 3%;
+$global-rightcol-leftmargin-percent : 3%;
+$global-rightcol-percent            : 20%;
 $global-rightcol-3col-percent       : $global-rightcol-percent * $global-3col-factor;
-$global-rightcol-rightmargin-percent: percentage( $global-rightcol-marginright / $global-fullpage-width );
-$global-content-leftpadding-percent : percentage( $global-content-paddingleft  / $global-fullpage-width );
+$global-rightcol-rightmargin-percent: 3%;
+$global-content-leftpadding-percent : 3%;
 
 // Breite der Linken Spalte mit dem Abstand nach rechts
 $global-left-col-fixed  : $global-leftcol-width + $global-leftcol-marginright;
@@ -164,12 +166,12 @@ $global-footer-links-width: 33%;
 
 $global-min-width: 60em;
 
-$global-content-top-position: -65px;
+$global-content-top-position: 0;
 $global-content-top-padding: 1em;
 $global-content-bottom-padding: 60px;
 $global-content-bottom-bordersize: 1px;
 
-$global-cms-top-position: $global-content-top-position + 15;
+$global-cms-top-position: 0;
 
 $global-category-width: 225px;
 $global-category-top-padding: 70px;

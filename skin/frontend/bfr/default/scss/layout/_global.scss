@@ -1,0 +1,42 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Global
+ * ============================================ */
+
+html,
+body {
+    height: 100%;
+    /* auf 0 setzen, da sonst über dem Header ein Leer-Raum entsteht */
+    line-height: 0px;
+}
+
+.wrapper {
+    min-height: 100%;
+    margin: 0 auto;
+    background: $global-wrapper-color;
+    position: relative;
+    width: 100%;
+
+    .page {
+        min-height: 100vh;
+        min-width: $global-min-page-width;
+        max-width: $global-max-page-width;
+        width: 94%;
+        margin: 0 auto;
+        background-color: $global-page-color;
+
+        border-style: none solid solid;
+        border-width: medium 5px 5px;
+        border-color: -moz-use-text-color #d7dbdc #d7dbdc;
+    }
+}
+
+.wrapper:after {
+    @include clearfix;
+}

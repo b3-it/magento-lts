@@ -31,7 +31,7 @@
 
 // ----------------------------------------------
 // Core
-@import "../../../egov/default/scss/core/common";
+@import "core/common";
 
 
 // ----------------------------------------------
@@ -40,8 +40,8 @@
 
 // ----------------------------------------------
 // Layout
-@import "../../../egov/default/scss/layout/global";
-@import "../../../egov/default/scss/layout/header";
+@import "layout/global";
+@import "layout/header";
 @import "../../../egov/default/scss/layout/header-nav";
 @import "../../../egov/default/scss/layout/header-search";
 @import "../../../egov/default/scss/layout/header-account";
