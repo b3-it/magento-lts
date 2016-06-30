@@ -1,0 +1,21 @@
+﻿//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2016 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Maddison Island Specific Components
+// ==============================================
+
+$mq-support: true;
+$mq-fixed-value: false;
+
+@import "framework";
+
+// ----------------------------------------------
+// Content
+
+@import "../../../egov/default/scss/content/home";
+@import "../../../egov/default/scss/content/category";
