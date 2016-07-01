@@ -57,7 +57,7 @@ class Egovs_Girosolution_Model_Payment_Creditcard extends Egovs_Paymentbase_Mode
 	 *
 	 * @var string $_formBlockType
 	 */
-	protected $_formBlockType = 'egovs_girosolution/creditcard_form';
+	protected $_formBlockType = 'egovs_girosolution/form_creditcard';
 	/**
 	 * Infoblock Type
 	 *
@@ -117,5 +117,9 @@ class Egovs_Girosolution_Model_Payment_Creditcard extends Egovs_Paymentbase_Mode
 		$buchungsListeParameter['ppCCaction'] = 'authorization';
 	
 		return $buchungsListeParameter;
+	}
+	
+	public function getTransactionType() {
+		return $this->_transaction_type;
 	}
 }

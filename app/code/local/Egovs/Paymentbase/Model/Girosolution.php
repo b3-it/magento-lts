@@ -24,19 +24,25 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @var <array, null>
 	 */
 	protected $_fieldsArr = null;
-	/**
-	 * Aktuelle Order
-	 * 
-	 * @var Mage_Sales_Model_Order
-	 */
-	protected $_order;
 	
 	/**
 	 * Array zum vermeiden doppelter Fehlermeldungen
 	 * 
-	 * @var unknown_type
+	 * @var array
 	 */
 	protected $_errors = array();
+	
+	/**
+	 * Liefert den Transaktionstyp
+	 * 
+	 * <ul>
+	 *  <li>creditcardTransaction</li>
+	 *  <li>giropayTransaction</li>
+	 * </ul>
+	 * 
+	 * @return string
+	 */
+	public abstract function getTransactionType();
 	
 	public function __construct() {
 		$libDIR = Mage::getBaseDir('lib');
@@ -173,7 +179,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @param Varien_Object $payment Payment
 	 * @param float         $amount  Betrag
 	 * 
-	 * @return Egovs_Paymentbase_Model_Saferpay
+	 * @return Egovs_Paymentbase_Model_Girosolution
 	 * 
 	 * @see Egovs_Paymentbase_Model_Abstract::_authorize()
 	 */
@@ -185,31 +191,31 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		
 		//20110801 :  Frank Rochlitzer : Doppelte Kassenzeichen vermeiden
         if (!$this->hasKassenzeichen($payment)) {
-        	$Kassenzeichen = $this->_anlegenKassenzeichen($this->_epaybl_transaction_type);
+        	$kassenzeichen = $this->_anlegenKassenzeichen($this->_epaybl_transaction_type);
         } else {
-        	$Kassenzeichen = $payment->getKassenzeichen();
-        	Mage::log("saferpay::KASSENZEICHEN BEREITS VORHANDEN:$Kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);        	
+        	$kassenzeichen = $payment->getKassenzeichen();
+        	Mage::log("{$this->getCode()}::KASSENZEICHEN BEREITS VORHANDEN:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);        	
         }
         
         //TODO : Kann eigentlich entfernt werden, da $this->_anlegenKassenzeichen(...) die Fehlerbehandlung macht!
-        if (substr($Kassenzeichen, 0, 6) == 'ERROR:') {
-        	switch (intval(substr($Kassenzeichen, 6))) {
+        if (substr($kassenzeichen, 0, 6) == 'ERROR:') {
+        	switch (intval(substr($kassenzeichen, 6))) {
         		case -611:
         			Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_-0611', Mage::helper('paymentbase')->getCustomerSupportMail()));
         		default :
-        			$base = 'TEXT_PROCESS_'. $Kassenzeichen;
-        			$translate = Mage::helper('saferpay')->__($base, Mage::helper('paymentbase')->getCustomerSupportMail());
+        			$base = 'TEXT_PROCESS_'. $kassenzeichen;
+        			$translate = Mage::helper('egovs_girosolution')->__($base, Mage::helper('paymentbase')->getCustomerSupportMail());
         			if ($base == $translate) {
         				Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR:UNKNOWN CURL ERROR', Mage::helper('paymentbase')->getCustomerSupportMail()));
         			} else Mage::throwException($translate);
         	}	
         }
         
-		Mage::log("saferpay::KASSENZEICHEN ANGELEGT:$Kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
-        $payment->setData('kassenzeichen', $Kassenzeichen);
+		Mage::log("{$this->getCode()}::KASSENZEICHEN ANGELEGT:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
+        $payment->setData('kassenzeichen', $kassenzeichen);
         
         //Verhindert im Kommentarverlauf den grünen Haken für die Kundenbenachrichtigung.
-        $order = $this->getOrder();
+        $order = $this->_getOrder();
         if ($order) {
         	$order->setCustomerNoteNotify(false);
         }
@@ -305,7 +311,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			$this->authorize($payment, $amount);
 		}
 		
-		$order = $this->getOrder();
+		$order = $this->_getOrder();
 		
 		if (!$order->getPayment()->getTransactionId()) {
 			Mage::throwException(
@@ -317,7 +323,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				|| $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT)
 		) {
 			
-    		//STATE_COMPLETE ist in Magento 1.6 geschützt
+    		//STATE_COMPLETE ist in Magento ab 1.6 geschützt
     		//wird für Virtuelle Produkte aber automatisch gesetzt
     		$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
 	    	
@@ -330,7 +336,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		) {
 			$order->sendOrderUpdateEmail(true, Mage::helper('paymentbase')->__('Your payment has been received'));
 			// we add a status message to the message-section in admin
-			$order->addStatusToHistory($order->getStatus(), Mage::helper('paymentbase')->__('Successfully received payment from customer'), true);
+			$order->addStatusHistoryComment(Mage::helper('paymentbase')->__('Successfully received payment from customer'));
 		}
 		
 		return $this;
@@ -394,6 +400,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         
 		$this->_fieldsArr['amount'] = ($this->_getOrder()->getTotalDue() * 100);
 		$this->_fieldsArr['currency'] = $this->_getOrder()->getOrderCurrencyCode();
+		
+		$controllerName = str_replace('egovs_girosolution_', '', $this->getCode());
+		$this->_fieldsArr ['urlRedirect'] = $this->_getLinkUrl("girosolution/$controllerName/success"). '?real_order_id='.$this->_getOrder()->getRealOrderId();
+		$this->_fieldsArr ['urlNotify'] = $this->_getLinkUrl("girosolution/$controllerName/notify"). '?real_order_id='.$this->_getOrder()->getRealOrderId();
 		
 		$desc = $this->_getPayerNote();
 
@@ -493,6 +503,136 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 */
 	public function getSupportsOnlyOfflineCreditmemo() {
 		return true;
+	}
+	
+	/**
+	 * Ändert die Order nach der Bezahlung
+	 * 
+	 * @param string $paymentSuccessful
+	 * @param string $merchantTxId
+	 * @param string $updateOrderState
+	 * @param string $orderStateComment
+	 * @param string $sendEmail
+	 * @param string $createInvoice
+	 * @param string $invoiceComment
+	 * @param unknown $gcRef
+	 * @param unknown $gcTransInfo
+	 * @param unknown $orderStateFinished
+	 * 
+	 * @return boolean
+	 */
+	public function modifyOrderAfterPayment(
+			$paymentSuccessful = false,
+			$merchantTxId = '',
+			$updateOrderState = false,
+			$orderStateComment = '',
+			$sendEmail = false,
+			$createInvoice = true,
+			$invoiceComment = '',
+			$gcRef = null,
+			$gcTransInfo = null,
+			$orderStateFinished = Mage_Sales_Model_Order::STATE_PROCESSING) {
+	
+				$paymentSuccessful = isset($paymentSuccessful) ? (is_bool($paymentSuccessful) ? $paymentSuccessful : false) : false;
+				$merchantTxId = isset($merchantTxId) ? $merchantTxId : '';
+				$updateOrderState = isset($updateOrderState) ? (is_bool($updateOrderState) ? $updateOrderState : false) : false;
+				$orderStateComment = isset($orderStateComment) ? $orderStateComment : '';
+	
+				if($orderStateComment == '') {
+					if($paymentSuccessful == true)
+						$orderStateComment = 'Payment was successful';
+						else
+							$orderStateComment = 'Payment failed';
+				}
+				$sendEmail = isset($sendEmail) ? (is_bool($sendEmail) ? $sendEmail : false) : false;
+				$createInvoice = isset($createInvoice) ? (is_bool($createInvoice) ? $createInvoice : true) : true;
+				$invoiceComment = isset($invoiceComment) ? $invoiceComment : '';
+				if($invoiceComment == '') {
+					$invoiceComment = 'Automatically generated by payment confirmation';
+				}
+	
+				$merchantTxId = str_replace("{$this->_getBewirtschafterNr()}/", "", $merchantTxId);
+				
+				if ($merchantTxId != $this->getInfoInstance()->getKassenzeichen()) {
+					Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus Girosolutiondaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+					return false;
+				}
+				$order = $this->_getOrder();
+				// If order was not found, return false
+				if(!$order || $order->isEmpty()) {
+					Mage::log("{$this->getCode()}::Es ist keine Bestellung verfügbar!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+					return false;
+				}
+				$orderId = $order->getIncrementId();
+				
+				//If order was already updated, do not update again.
+				if($order->getState() != Mage_Sales_Model_Order::STATE_PENDING_PAYMENT) {
+					$updateOrderState = false;
+				} else {
+					//update transaction
+					$payment = $order->getPayment();
+					$payment->setTransactionId($orderid);
+					$transaction = $payment->addTransaction('order', null, false, '');
+					$transaction->setParentTxnId($orderid);
+					$transaction->setIsClosed(1);
+					$transaction->setAdditionalInformation("arrInfo", serialize($gcTransInfo));
+					$transaction->save();
+					$order->save();
+				}
+	
+				if($paymentSuccessful == false) {
+					// If no update was required, return true, because the order was found
+					if($updateOrderState == false) {
+						return true;
+					}
+	
+					$order->cancel();
+					$order->addStatusHistoryComment($orderStateComment);
+					$order->save();
+					return true;
+				} // end failed payment
+	
+	
+				// SUCCESSFUL PAYMENT
+				// Set customers shopping cart inactive
+				$quote = $this->_getOrder()->getQuoteId();
+				$quote = Mage::getModel('sales/quote')->load($quote);
+				//Mage::getSingleton('checkout/session')->getQuote()->setIsActive(false)->save();
+				$quote->setIsActive(false)->save();
+				
+				// If no update was required, return true, because the order was found
+				if($updateOrderState == false) {
+					return true;
+				}
+	
+				// Send email
+				if($sendEmail == true) {
+					$order->sendNewOrderEmail();
+					$order->setEmailSent(true);
+				}
+	
+				if(empty($orderStateFinished)) {
+					$orderStateFinished = true;
+				}
+	
+				// Modify payment
+				$order->setState(
+						Mage_Sales_Model_Order::STATE_PROCESSING,
+						$orderStateFinished,
+						$orderStateComment
+				);
+	
+				if($createInvoice == true) {
+					if($order->canInvoice()) {
+						$invoice = $order->prepareInvoice()->addComment($invoiceComment)->register()->pay();
+						Mage::getModel('core/resource_transaction')->addObject($invoice)->addObject($invoice->getOrder())->save();
+						$invoice->sendEmail(true, '');
+						$order->setState(Mage_Sales_Model_Order::STATE_PROCESSING, $orderStateFinished, $invoiceComment);
+					}
+				}
+	
+				$order->save();
+				return true;
 	}
 	
 	public function validate() {
