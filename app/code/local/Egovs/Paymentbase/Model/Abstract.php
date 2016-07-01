@@ -1064,7 +1064,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	 */
 	public function hasKassenzeichen(Varien_Object $payment = null) {
 		if (is_null($payment) || !$payment) {
-			$payment = $this->getInfoInstance();
+			$payment = $this->_getOrder()->getPayment();
 				
 			if (is_null($payment) || !$payment) {
 				return false;
