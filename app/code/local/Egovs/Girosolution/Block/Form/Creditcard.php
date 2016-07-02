@@ -1,6 +1,6 @@
 <?php
 /**
- * Formblock für Kreditkarte über Saferpay
+ * Formblock für Kreditkarte
  *
  * @category   	Egovs
  * @package    	Egovs_Girosolution

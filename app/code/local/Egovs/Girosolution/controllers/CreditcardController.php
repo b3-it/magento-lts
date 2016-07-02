@@ -1,6 +1,6 @@
 <?php
 /**
- * Saferpay Controller
+ * Kreditkarten Controller
  *
  * @category   	Egovs
  * @package    	Egovs_Girosolution
@@ -44,7 +44,7 @@ class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controll
 	 * 
 	 * Implementation der abstrakten Methode
 	 * 
-	 * @return string 'saferpay'
+	 * @return string 'egovs_girosolution'
 	 * 
 	 * @see Egovs_Paymentbase_Controller_Abstract::_getModuleName()
 	 */
@@ -58,25 +58,6 @@ class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controll
 	 * @return string
 	 */
 	public function getDebug() {
-
 		return Mage::getStoreConfig('payment/egovs_girosolution_creditcard/debug_flag');
-	}
-
-	/**
-	 * Ruft aktiviereTempKreditkartenKassenzeichen am ePayBL-Server auf
-	 * 
-	 * Implementation der abstrakten Methode
-	 * 
-	 * @param object $objSOAPClient SOAPClient
-	 * @param object $idp           Saferpay-Nachrichten-Objekt
-	 * @param string $mandantNr     Mandanten Nr.
-	 * @param string $_providerName  Providername
-	 * 
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
-	 * 
-	 * @see Egovs_Paymentbase_Controller_Abstract::_callSoapClientImpl()
-	 */
-	protected function _callSoapClientImpl($objSOAPClient, $idp, $mandantNr, $_providerName) {
-		return $objSOAPClient->aktiviereTempKreditkartenKassenzeichen($idp->getAttribute('ORDERID'), $mandantNr, $idp->getAttribute('ID'), $_providerName);
 	}
 }

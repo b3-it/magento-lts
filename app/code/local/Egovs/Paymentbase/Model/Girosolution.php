@@ -51,6 +51,9 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			require_once $classPath;
 		}
 		
+		$config = GiroCheckout_SDK_Config::getInstance();
+		$config->setConfig('DEBUG_MODE', $this->getDebug());
+		
 		parent::__construct();
     }
 	/**
@@ -77,7 +80,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 */
 	public function getMerchantId() {
 		$merchantId =  Mage::getStoreConfig ( 'payment/' . $this->getCode () . '/merchant_id' );
-		
+		$merchantId = Mage::helper('core')->decrypt($merchantId);
 		if (empty($merchantId)) {
 			if (!array_key_exists('merid', $this->_errors)) {
 				$helper = Mage::helper($this->getCode());
@@ -101,6 +104,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 */
 	public function getProjectId() {
 		$projectId =  Mage::getStoreConfig ( 'payment/' . $this->getCode () . '/project_id' );
+		$projectId = Mage::helper('core')->decrypt($projectId);
 	
 		if (empty($projectId)) {
 			if (!array_key_exists('prjid', $this->_errors)) {
@@ -125,6 +129,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 */
 	public function getProjectPassword() {
 		$projectPassword =  Mage::getStoreConfig ( 'payment/' . $this->getCode () . '/project_pwd' );
+		$projectPassword = Mage::helper('core')->decrypt($projectPassword);
 	
 		if (empty($projectPassword)) {
 			if (!array_key_exists('prjpwd', $this->_errors)) {
@@ -157,7 +162,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @return the URL to be redirected to
 	 */
 	public function getOrderPlaceRedirectUrl() {
-		return Mage::getUrl("girosolution/{$this->getCode()}/redirect");
+		//return Mage::getUrl("girosolution/{$this->getCode()}/redirect");
+		return $this->getGirosolutionRedirectUrl();
 	}
 	/**
 	 * Gibt eine absolute URL zum übergebenen Pfad zurück
@@ -219,6 +225,9 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         if ($order) {
         	$order->setCustomerNoteNotify(false);
         }
+        
+        //Wichtig für richtigen State und Status
+        $payment->setIsTransactionPending(true);
 		
         return $this;
 	}
@@ -406,8 +415,6 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$this->_fieldsArr ['urlNotify'] = $this->_getLinkUrl("girosolution/$controllerName/notify"). '?real_order_id='.$this->_getOrder()->getRealOrderId();
 		
 		$desc = $this->_getPayerNote();
-
-		$this->_fieldsArr['desc'] = htmlentities($desc);
 		
         $this->_fieldsArr['merchantTxId'] = "{$this->_getBewirtschafterNr()}/{$this->getInfoInstance()->getKassenzeichen()}";
         
@@ -436,9 +443,9 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			foreach ($this->_fieldsArr as $param => $value) {
 				$request->addParam($param, $value);
 			}
-			$request->submit ();
+			$request->submit();
 			
-			if ($request->requestHasSucceeded ()) {
+			if ($request->requestHasSucceeded()) {
 				$strUrlRedirect = $request->getResponseParam('redirect');
 				
 				$result ["status"] = 1001;
@@ -466,10 +473,11 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				return Mage::getUrl('checkout/cart', array('_secure' => true));
 			}
 		} catch ( Exception $e ) {
-			Mage::getSingleton('core/session' )->addError(GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode()));
-			return Mage::getUrl('checkout/cart', array('_secure' => true));
+			Mage::logException($e);
+			$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
+			//Mage::getSingleton('core/session' )->addError($msg);
+			Mage::throwException($msg);
 		}
-		
 		
 		return $url;
 	}
@@ -480,7 +488,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @return string
 	 */
 	public function getDebug() {
-		return Mage::getStoreConfig ( 'payment/' . $this->getCode () . '/debug_flag' );
+		return Mage::getStoreConfigFlag('payment/'.$this->getCode().'/debug_flag');
 	}
 	
 	/**
