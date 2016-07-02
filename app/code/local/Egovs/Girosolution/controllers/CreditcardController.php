@@ -36,8 +36,8 @@ class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controll
 	 * @see Egovs_Paymentbase_Controller_Abstract::_successActionRedirectFailure()
 	 */
 	protected function _successActionRedirectFailure() {
-		// something is wrong -> redirect to failure controller
-		$this->_redirect('saferpay/saferpay/failure', array('_secure'=>$this->isSecureUrl()));
+		Mage::getSingleton('core/session')->addError(Mage::helper($this->_getModuleName())->__('Payment with Creditcard failed'));
+		$this->_redirect('checkout/cart', array('_secure' => true));
 	}
 	/**
 	 * Gibt den Modulnamen zurück
@@ -49,25 +49,7 @@ class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controll
 	 * @see Egovs_Paymentbase_Controller_Abstract::_getModuleName()
 	 */
 	protected function _getModuleName() {
-		return "saferpay";
-	}
-
-	/**
-	 * Zeigt den Warenkorb an falls Saferpay mit eiem Fehler antwortet
-	 * 
-	 * @return void
-	 */
-	public function failureAction() {
-		$this->_cancel('saferpay','There was an error at Saferpay Payment. Customers payment was not valid.');
-	}
-
-	/**
-	 * Zeigt den Warenkorb an falls der Benutzer den Zahlvorgang abbricht
-	 * 
-	 * @return void
-	 */
-	public function cancelAction() {
-		$this->_cancel('saferpay', 'Customer canceled Saferpay Payment.');
+		return "egovs_girosolution";
 	}
 
 	/**
@@ -77,7 +59,7 @@ class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controll
 	 */
 	public function getDebug() {
 
-		return Mage::getStoreConfig('payment/saferpay/debug_flag');
+		return Mage::getStoreConfig('payment/egovs_girosolution_creditcard/debug_flag');
 	}
 
 	/**

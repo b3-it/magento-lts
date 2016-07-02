@@ -291,203 +291,6 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
         exit;
     }
     
-    /**
-     * Präpariert die Order für den weiteren Prozess
-     * 
-     * <ul>
-     * 	<li>Aktiviert das Kassenzeichen</li>
-     * 	<li>Erstellt die nötige Rechnung</li>
-     * 	<li>Setzt den State mit Status</li>
-     * </ul>
-     * 
-     * @return void
-     */
-    protected function _prepareOrder() {
-    	Mage::log("saferpay::_prepareOrder called...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-    	
-        if ($this->getDebug()) {
-            $debugResponse = array();
-            $debugResponse['MSGTYPE'] = $idp->getAttribute('MSGTYPE');
-            $debugResponse['KEYID'] = $idp->getAttribute('KEYID');
-            $debugResponse['ID'] = $idp->getAttribute('ID');
-            $debugResponse['AMOUNT'] = $idp->getAttribute('AMOUNT');
-            $debugResponse['CURRENCY'] = $idp->getAttribute('CURRENCY');
-            $debugResponse['PROVIDERID'] = $idp->getAttribute('PROVIDERID');
-            $debugResponse['PROVIDERNAME'] = $idp->getAttribute('PROVIDERNAME');
-            $debugResponse['ORDERID'] = $idp->getAttribute('ORDERID');
-            $debugResponse['ACCOUNTID'] = $idp->getAttribute('ACCOUNTID');
-            $debugResponse['ECI'] = $idp->getAttribute('ECI');
-            $debugResponse['CCCOUNTRY'] = $idp->getAttribute('CCCOUNTRY');
-            $debugResponse['SIGNATURE'] = $this->_getSignature();
-            
-            $tmp = '';
-            foreach ($debugResponse as $k => $v) {
-                $tmp .= '<' .$k .'>' .$v .'</' .$k .'>';
-            }
-            Mage::log("saferpay::\n$tmp", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-        }
-        
-        $order = $this->_getOrder();
-        
-        $paymentInst = $order->getPayment()->getMethodInstance();
-        
-        if ($idp->getAttribute('MSGTYPE') =='PayConfirm') {
-            /*
-			 * now we are sure that the payment was successful as the result xml
-			 * element from the command line tool contains an attribute MSGTYPE
-			 * with value PayConfirm. We process the payment.
-			 */
-        	
-	        /*
-	         * 20110802 : Frank Rochlitzer
-	         * Die notify Action wird direkt von Saferpay aufgerufen (URL wird vorher übergeben)
-	         * 
-	         */
-	        Mage::log("$module::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-			
-        	if ($idp->getAttribute('PROVIDERID') == 77) {
-				$_providerName = "AMEX";
-			} elseif ($idp->getAttribute('PROVIDERID') == 102) {
-				$_providerName = "Visa";
-			} elseif ($idp->getAttribute('PROVIDERID') == 104) {
-				$_providerName = "Master";
-			} else {
-				$_providerName = "AMEX";
-			}
-
-			// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
-			$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
-			$objResult = null;
-			for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!isset($objResult->istOk) || $objResult->istOk != true); $i++) {
-				Mage::log(sprintf("$module::NOTIFY_ACTION:Try %s to activate kassenzeichen...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				try {
-					//Aktiviert z. B. das Kassenzeichen
-					$objResult = $this->_callSoapClientImpl($objSOAPClient, $idp, Mage::helper('paymentbase')->getMandantNr(), $_providerName);
-				} catch (Exception $e) {
-					Mage::log(sprintf("$module::NOTIFY_ACTION:Activating Kassenzeichen failed: %s", $e->getMessage()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
-				}
-			}
-			Mage::log(sprintf("$module::NOTIFY_ACTION:Tried to activate Kassenzeichen, validating result...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-						
-			// wenn Web-Service nicht geklappt hat
-			if (!$objResult || $objResult->istOk != true) {
-				$kassenzeichen = 'empty';
-				$subject = "$module::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() nicht erfolgreich";
-				$sMailText = '';
-				if ($order->getPayment()->hasData('kassenzeichen')) {
-					$kassenzeichen = $order->getPayment()->getKassenzeichen();
-				
-					Mage::log("$subject!\n\nKassenzeichen:$kassenzeichen\n\n".var_export($objResult, true), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
-					$sMailText = "Während der Kommunikation mit dem ePayment-Server trat ein Fehler auf!\n\nKassenzeichen:$kassenzeichen\n";
-					$sMailText .= "Falls das jeweilige Kassenzeichen bereits aktiviert wurde, kann dieser Fehler ignoriert werden.\n";
-					$sMailText .= "Überprüfen Sie hierzu die entsprechenden Protokolldateien (Logfiles)!\n\n";
-					if ($objResult) {
-						$sMailText .= "ObjResult:\n".var_export($objResult, true);
-					}
-				} else {
-					Mage::log("$subject\n\n".var_export($objResult, true), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
-					$sMailText = "Während der Kommunikation mit dem ePayment-Server trat ein Fehler auf!\n\n";
-					$sMailText .= "Überprüfen Sie hierzu die entsprechenden Protokolldateien (Logfiles)!\n\n";
-					if ($objResult) {
-						$sMailText .= "ObjResult:\n".var_export($objResult, true);
-					}
-				}
-				Mage::helper("paymentbase")->sendMailToAdmin($sMailText, $subject);
-			} else {
-				$kassenzeichen = 'empty';
-				if ($order->getPayment()->hasData('kassenzeichen')) {
-					$kassenzeichen = $order->getPayment()->getKassenzeichen();
-					Mage::log("$module::NOTIFY_ACTION:Using Kassenzeichen: $kassenzeichen", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				} else {
-					Mage::log("$module::Fehler:WS kein Kassenzeichen im Payment enthalten", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-					$sMailText = "WS kein Kassenzeichen im Payment enthalten!";
-									
-					Mage::helper("paymentbase")->sendMailToAdmin($sMailText);
-				}
-				Mage::log("$module::WS Kassenzeichen successfully activated : $kassenzeichen", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
-			}
-			
-            $invoicable = false;
-            //20131113::Frank Rochlitzer
-            //Bei Verbindungsfehler während aktivierenKassenzeichen wurde trotzdem die Order auf bezahlt gesetzt!
-            if ($order->canInvoice() && $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
-            	&& $objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis && $objResult->istOk == true
-            ) {
-                // it's a valid order
-                Mage::log("$module::Order is valid, preparing invoice...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-                $invoicable = true;
-                		        
-                $order->getPayment()->setData('saferpay_transaction_id', $idp->getAttribute('ID'));
-                $paymentInst->setTransactionId($idp->getAttribute('ID'));
-                
-                if (version_compare(Mage::getVersion(), '1.4.1', '<')) {
-                	//Magento 1.3
-	                $orderState = $order->getIsVirtual()
-	                            ? Mage_Sales_Model_Order::STATE_COMPLETE
-	                            : Mage_Sales_Model_Order::STATE_PROCESSING;
-                } else {
-                	//STATE_COMPLETE ist in Magento 1.6 geschützt
-                	//wird für Virtuelle Produkte aber automatisch gesetzt
-                	$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
-                }
-                $order->setState($orderState);
-                
-                $orderStatus = Mage::getStoreConfig("payment/$module/order_status");
-                
-	            if (!$orderStatus || $order->getIsVirtual()) {
-	                $orderStatus = $order->getConfig()->getStateDefaultStatus($orderState);
-	            }
-	            
-	            $order->sendNewOrderEmail();
-                // we add a status message to the message-section in admin
-                $order->addStatusToHistory($orderStatus, Mage::helper("$module")->__('Customer successfully granted by Saferpay<br /><strong>Transaction ID: %s</strong>', $idp->getAttribute('ID')), true);
-                
-                $invoice = $order->prepareInvoice();
-                
-                $invoice->register();
-                if ($paymentInst->canCapture()) {
-                	$invoice->capture();
-                }
-                $order->addRelatedObject($invoice);
-                $invoice->setOrder($order);
-                $invoice->save();
-                Mage::log("$module::NOTIFY_ACTION:dispatching event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-                Mage::dispatchEvent('egovs_paymentbase_saferpay_sales_order_invoice_after_pay', array('invoice'=>$invoice));
-                Mage::log("$module::NOTIFY_ACTION:dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-                Mage::log("$module::NOTIFY_ACTION:...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-            }
-
-            //Nur in der notify action wird der state verändert!
-            if (!$invoicable && !$order->hasInvoices()) {
-                /*
-				 * payment was not successfull. this code should not be executed
-				 * to make it safe, we redirect to failure action
-				 */
-            	$msg= Mage::helper("$module")->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper('paymentbase')->getCustomerSupportMail());
-                Mage::log("$module::NOTIFY_ACTION:NOT INVOICABLE NO EXISTING INVOICES : $msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-                $order->addStatusToHistory(Mage_Sales_Model_Order::STATE_CANCELED, $msg, true);
-                if ($order->canCancel()) {
-                	$order->cancel();
-                }
-                $order->sendOrderUpdateEmail(true, Mage::helper("$module")->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper('paymentbase')->getCustomerSupportMail()));
-                $this->getResponse()->setHeader('HTTP/1.1', '500 Internal Server Error', true);
-            } else {
-            	$order->addStatusToHistory($order->getState(), Mage::helper($module)->__('Order is now ready for processing'));
-            }
-	        $order->save();
-            Mage::log("$module::NOTIFY_ACTION:order saved!", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-        } else {
-            /*
-			 * payment was not successfull. this code should not be executed
-			 * to make it safe, we redirect to failure action
-			 */
-            
-        	Mage::log("$module::NOTIFY_ACTION:Error: 'MSGTYPE' != 'PayConfirm' : ".Mage::helper("$module")->__('Customer was rejected by Saferpay'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-            $order->addStatusToHistory(Mage_Sales_Model_Order::STATE_CANCELED, Mage::helper("$module")->__('Customer was rejected by Saferpay'));
-            $this->_successActionRedirectFailure();
-        }
-    }
-    
 	/**
      * Der Payment-Gateway (Saferpay/Paypage) ruft diese Methode im Erfolgsfall auf
      * 
@@ -553,39 +356,6 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
 	protected function _callCheckReturnedMessageImpl() {
     	return $this->_checkReturnedMessage();
     }
-    /**
-     * Behandelt das Abbrechen der Bestellung
-     * 
-	 * Eine mögliche Bestellung wird falls möglich storniert.<br>
-	 * Es kann eine benutzerspezifische Fehlermeldung geworfen werden.<br>
-	 * Am Ende erfolgt ein Redirect zum Warenkorb
-	 * 
-     * @param string $helper Name
-     * @param string $msg    Nachricht
-     * 
-     * @return void
-     */
-	protected function _cancel($helper, $msg = "Payment canceled.") {
-    	if ($this->getCheckout()->getLastOrderId()) {
-	    	/* @var $order Mage_Sales_Model_Order */
-    		$order = Mage::getModel('sales/order')
-	    				->load($this->getCheckout()->getLastOrderId())
-	    	;
-	    	
-	    	if ($order->getId() && $order->canCancel()) {
-	        	$order->cancel();
-	        }
-	        
-	        //TODO : Error sollte nur bei wirklichen Fehler angezeigt werden, bei manuellem abbruch wäre warning besser!
-	        $order->addStatusToHistory($order->getState(), Mage::helper($helper)->__($msg));
-	        $order->save();
-    	}
-    	
-    	Mage::getSingleton('checkout/session')->addError(Mage::helper($helper)->__($msg));
-    	$params = array('_secure' => $this->isSecureUrl());
-    	
-        $this->_redirect('checkout/cart', $params);
-    }
     
     /**
      * Gibt an ob im Frontend die SECURE_BASE_URL verwendet werden soll
@@ -595,36 +365,6 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     public function isSecureUrl() {
     	return Mage::getStoreConfigFlag(Mage_Core_Model_Store::XML_PATH_SECURE_IN_FRONTEND);
     }
-    
-    /**
-     * Ruft die Standard- bzw Modulimplementation des cURL-Aufrufs auf
-     * 
-     * @param string $payconfirm_url URL
-     * @param array  $fields         Parameter
-     * 
-     * @return string URL
-     * 
-     * @see Egovs_Paymentbase_Model_Curl::getResponse
-     */
-	protected function _callCurlImpl($payconfirm_url, $fields = array()) {
-    	return Egovs_Paymentbase_Model_Curl::getResponse($payconfirm_url, $fields);
-    }
-    
-    /**
-     * SOAP-Aufruf am ePayment-Server
-     * 
-     * Modulspzifische Implementation des Aufrufs
-     * 
-     * @param object $objSOAPClient SOAPClient
-	 * @param object $idp           Saferpay-Nachrichten-Objekt
-	 * @param string $mandantNr     Mandanten Nr.
-	 * @param string $_providerName Gilt nur für Kreditkarten
-	 * 
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
-     * 
-     * @throws Exception
-     */
-    protected abstract function _callSoapClientImpl($objSOAPClient, $idp, $mandantNr, $_providerName);
     
     /**
      * Validiert die Antwort des Zahlungsproviders -- Template Method --
@@ -650,13 +390,12 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     	//Retrieves the project password.
     	$projectPassword = $paymentMethod->getProjectPassword();
     	
-    	$notifyOK = TRUE;
     	try {
     		//Get the notification
     		$notify = new GiroCheckout_SDK_Notify($paymentMethod->getTransactionType());
     		$notify->setSecret($projectPassword);
     		$notify->parseNotification($this->getRequest()->getParams());
-    	
+    		
     		if (!$notify->paymentSuccessful()) {
     			Mage::log(sprintf("$module:: Girosolution data was empty or invalid!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
     			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
@@ -669,23 +408,41 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     			if ($order->getId() && $order->canCancel()) {
     				$order->cancel();
     			}
-    			$msg = "Can't validate Saferpay message or message was invalid!";
-    			$order->addStatusHistoryComment(Mage::helper($module)->__($msg), $order->getState());
-    			$order->save();
+    			$msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
     			
-    			$orderFound = $proxy->modifyOrderAfterPayment(FALSE, $_GET['gcMerchantTxId'], TRUE, $notify->getResponseParam('gcReference'), $notify->getResponseParams());
+    			$orderFound = $paymentMethod->modifyOrderAfterPayment(
+    					false,
+    					$this->getRequest()->getParam('gcMerchantTxId', ''),
+    					true,
+    					$msg,
+    					true,
+    					false,
+    					'',
+    					$notify->getResponseParam('gcReference'),
+    					$notify->getResponseParams()
+    			);
     			
     			return false;
     		} else {
     			Mage::log(sprintf("$module::... _checkReturnedMessage with valid DATA called:\r\n%s...", $data), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     			
-    			$orderFound = $proxy->modifyOrderAfterPayment(TRUE, $_GET['gcMerchantTxId'], TRUE, $notify->getResponseParam('gcReference'), $notify->getResponseParams());
+    			$msg = Mage::helper("egovs_girosolution")->__('Customer successfully granted by Girosolution<br /><strong>Transaction ID: %s</strong>', $notify->getResponseParam('gcReference'));
+    			$orderFound = $paymentMethod->modifyOrderAfterPayment(
+    					true,
+    					$this->getRequest()->getParam('gcMerchantTxId', ''),
+    					true,
+    					$msg,
+    					true,
+    					true,
+    					'',
+    					$notify->getResponseParam('gcReference'),
+    					$notify->getResponseParams()
+    			);
     			return true;
     		}
     	} catch (Exception $e) {
     		Mage::logException($e);
-    		$notifyOK = false;
     	}
     	
     	return false;

@@ -91,6 +91,10 @@ class Egovs_Girosolution_Model_Payment_Creditcard extends Egovs_Paymentbase_Mode
 		$this->_fieldsArr['pkn'] = 'create';
 	}
 	
+	protected function _callSoapClientImpl($objSOAPClient, $wId, $mandantNr, $refId, $providerName) {
+		return $objSOAPClient->aktiviereTempKreditkartenKassenzeichen($wId, $mandantNr, $refId, $providerName);
+	}
+	
 	/**
 	 * Liefert ein assoziatives Array mit Buchungslistenparametern
 	 *
