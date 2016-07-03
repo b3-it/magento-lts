@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_Girosolution>
-            <version>3.0.0.0</version>
+            <version>1.0.0.0</version>
             <depends>Egovs_Paymentbase</depends>
         </Egovs_Girosolution>
     </modules>
@@ -64,6 +64,24 @@
                 </Egovs_Girosolution>
             </modules>
         </translate>
+        <events>
+            <payment_method_is_active>
+                <observers>
+                    <egovs_girosolution_payment_method_is_active>
+                        <type>singleton</type>
+                        <class>egovs_girosolution/observer</class>
+                        <method>paymentMethodIsActive</method>
+                    </egovs_girosolution_payment_method_is_active>
+                </observers>
+            </payment_method_is_active>
+        </events>
+        <layout>
+            <updates>
+                <sepadebitbund>
+                    <file>egovs/girosolution.xml</file>
+                </sepadebitbund>
+            </updates>
+        </layout>
     </frontend>
     <adminhtml>
         <translate>

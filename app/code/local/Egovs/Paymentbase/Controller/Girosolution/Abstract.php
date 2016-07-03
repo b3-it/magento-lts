@@ -345,6 +345,8 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     			Mage::log(sprintf("$module:: Girosolution payment unsuccessful!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
     			
     			switch (intval($notify->getResponseParam("gcResultPayment"))) {
+    				//TODO : Giropay Error Codes abfangen
+    				//Giropay
     				//Kreditkarte
     				case 4101:
     					$msg = Mage::helper("egovs_girosolution")->__("Country of creditcard not accepted or unknown");

@@ -1,6 +1,6 @@
 <?php
 /**
- * Kreditkarten Controller
+ * Giropay Controller
  *
  * @category   	Egovs
  * @package    	Egovs_Girosolution
@@ -8,7 +8,7 @@
  * @copyright  	Copyright (c) 2016 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controller_Girosolution_Abstract
+class Egovs_Girosolution_GiropayController extends Egovs_Paymentbase_Controller_Girosolution_Abstract
 {
 	/**
 	 * Implementation der abstrakten Methode
@@ -52,6 +52,6 @@ class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controll
 	 * @return boolean
 	 */
 	public function getDebug() {
-		return Mage::getStoreConfigFlag('payment/egovs_girosolution_creditcard/debug_flag');
+		return Mage::getStoreConfigFlag('payment/egovs_girosolution_giropay/debug_flag');
 	}
 }

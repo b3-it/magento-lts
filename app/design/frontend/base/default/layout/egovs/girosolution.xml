@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+	 <checkout_onepage_index translate="label">
+        <reference name="head">
+            <action method="addItem"><type>js_css</type><name>egovs/girosolution/style.css</name><params>media=all</params></action>
+            <action method="addJs"><script>egovs/girosolution/giropaywidget.min.js</script></action>
+        </reference>
+    </checkout_onepage_index> 
+    <egovs_checkout_multipage_billingdetails translate="label">
+        <reference name="head">
+            <action method="addItem"><type>js_css</type><name>egovs/girosolution/style.css</name><params>media=all</params></action>
+            <action method="addJs"><script>egovs/girosolution/giropaywidget.min.js</script></action>
+        </reference>
+    </egovs_checkout_multipage_billingdetails> 
+</layout>
