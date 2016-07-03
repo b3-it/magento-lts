@@ -600,6 +600,13 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$transaction->setIsClosed(1);
 					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $gcTransInfo);
 					$transaction->save();
+					// Modify payment
+					$order->setState(
+							Mage_Sales_Model_Order::STATE_PENDING_PAYMENT,
+							false,
+							$this->__("Modifying state for further processing."),
+							false
+							);
 					$order->save();
 				}
 	
@@ -612,6 +619,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$order->cancel();
 					$order->addStatusHistoryComment($orderStateComment);
 					$order->save();
+					Mage::getSingleton('checkout/session')->addNotice($orderStateComment);
 					return true;
 				} // end failed payment
 	

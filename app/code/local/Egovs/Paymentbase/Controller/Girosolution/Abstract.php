@@ -256,7 +256,9 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
         	Mage::log($this->_getModuleName()."::success action : Checking order with ID: {$order->getId()} and state: {$order->getState()}", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 	        if ($order->isCanceled()) {
 	        	$this->getCheckout()->setDisplaySuccess(false);
-	        	Mage::getSingleton('checkout/session')->addError(Mage::helper($this->_getModuleName())->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper('paymentbase')->getCustomerSupportMail()));
+	        	$this->getCheckout()->setQuoteId($order->getQuoteId());
+	        	$this->getCheckout()->setLoadInactive(true);
+	        	$this->getCheckout()->getQuote()->setIsActive(true)->save();
 	        	$params = array('_secure' => $this->isSecureUrl());
 	        	 
 	        	$this->_redirect('checkout/cart', $params);
@@ -265,7 +267,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
 	        sleep(1);
 	        $diffTime = time() - $startTime;
 	        Mage::log($this->_getModuleName()."::success action : Waiting since $diffTime seconds for order modifications", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-        } while ($diffTime < 10 && $order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW);
+        } while ($diffTime < 10 && ($order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW || $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT));
         
         if ($status) {
             // everything allright, redirect the user to success page
@@ -340,18 +342,47 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     		$notify->parseNotification($this->getRequest()->getParams());
     		
     		if (!$notify->paymentSuccessful()) {
-    			Mage::log(sprintf("$module:: Girosolution data was empty or invalid!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-    			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-    			/*
-    			 * something was wrong with either the command line tool or someone
-    			 * tried to fake the response, so we redirect to failure page
-    			 */
-    			$order = $this->_getOrder();
+    			Mage::log(sprintf("$module:: Girosolution payment unsuccessful!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
     			
-    			if ($order->getId() && $order->canCancel()) {
-    				$order->cancel();
+    			switch (intval($notify->getResponseParam("gcResultPayment"))) {
+    				//Kreditkarte
+    				case 4101:
+    					$msg = Mage::helper("egovs_girosolution")->__("Country of creditcard not accepted or unknown");
+    					break;
+    				case 4102:
+    					$msg = Mage::helper("egovs_girosolution")->__("3D-Secure authorization unsuccessful");
+    					break;
+    				case 4103:
+    					$msg = Mage::helper("egovs_girosolution")->__("Date of expiry excedded");
+    					break;
+    				case 4104:
+    					$msg = Mage::helper("egovs_girosolution")->__("Type of creditcard is not valid or unknown");
+    					break;
+    				case 4107:
+    					$msg = Mage::helper("egovs_girosolution")->__("Card stolen, suspicious or marked for drawing");
+    					break;
+    				//Allgemein
+    				case 4501:
+    					$msg = Mage::helper("egovs_girosolution")->__("Timeout / No user action");
+    					break;
+    				case 4502:
+    					$msg = Mage::helper("egovs_girosolution")->__("Abort by customer");
+    					break;
+    				case 4503:
+    					$msg = Mage::helper("egovs_girosolution")->__("Duplicate transactions");
+    					break;
+    				case 4504:
+    					$msg = Mage::helper("egovs_girosolution")->__("Fraud suspicion or payment method is temporary disabled");
+    					break;
+    				case 4505:
+    					$msg = Mage::helper("egovs_girosolution")->__("Payment method locked or denied");
+    					break;
+    				case 4900:
+    					$msg = Mage::helper("egovs_girosolution")->__("Transaction unsuccessful");
+    					break;
+    				default:
+    					$msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
     			}
-    			$msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
     			
     			$orderFound = $paymentMethod->modifyOrderAfterPayment(
     					false,
@@ -365,10 +396,11 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     					$notify->getResponseParams()
     			);
     			
+    			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+    			
     			return false;
     		} else {
     			Mage::log(sprintf("$module::... _checkReturnedMessage with valid DATA called:\r\n%s...", $data), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-    			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     			
     			$msg = Mage::helper("egovs_girosolution")->__('Customer successfully granted by Girosolution<br /><strong>Transaction ID: %s</strong>', $notify->getResponseParam('gcReference'));
     			$orderFound = $paymentMethod->modifyOrderAfterPayment(
@@ -382,12 +414,15 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     					$notify->getResponseParam('gcReference'),
     					$notify->getResponseParams()
     			);
+    			
+    			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+    			
     			return true;
     		}
     	} catch (Exception $e) {
     		Mage::logException($e);
     	}
-    	
+    	Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	return false;
     }
 }
