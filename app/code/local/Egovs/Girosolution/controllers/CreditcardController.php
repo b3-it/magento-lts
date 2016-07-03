@@ -8,7 +8,7 @@
  * @copyright  	Copyright (c) 2016 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controller_Abstract
+class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controller_Girosolution_Abstract
 {
 	/**
 	 * Redirect Block Type
@@ -55,9 +55,9 @@ class Egovs_Girosolution_CreditcardController extends Egovs_Paymentbase_Controll
 	/**
 	 * Liefert Debug-Flag
 	 *
-	 * @return string
+	 * @return boolean
 	 */
 	public function getDebug() {
-		return Mage::getStoreConfig('payment/egovs_girosolution_creditcard/debug_flag');
+		return Mage::getStoreConfigFlag('payment/egovs_girosolution_creditcard/debug_flag');
 	}
 }

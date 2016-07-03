@@ -72,6 +72,22 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
     	
     	return parent::isAvailable($quote);
     }
+    
+    /**
+     * Liefert die Transaktions ID
+     * 
+     * Wichtig für Zahlpartnerkonten (ZPK), da dort nicht das Kassenzeichen als ID genutzt
+     * werden kann!<br>
+     * Ohne ZPK wird "BewirtschafterNr/Kassnezeichen" als ID genutzt.
+     * 
+     * @return string
+     */
+    public function getTransactionId(Varien_Object $payment = null) {
+    	if (!$payment) {
+    		$payment = $this->_getOrder()->getPayment();
+    	}
+    	return "{$this->_getBewirtschafterNr()}/{$payment->getKassenzeichen()}";
+    }
 	
 	/**
 	 * Get Merchant Id
@@ -198,27 +214,16 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		//20110801 :  Frank Rochlitzer : Doppelte Kassenzeichen vermeiden
         if (!$this->hasKassenzeichen($payment)) {
         	$kassenzeichen = $this->_anlegenKassenzeichen($this->_epaybl_transaction_type);
+        	
+        	Mage::log("{$this->getCode()}::KASSENZEICHEN ANGELEGT:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
+        	$payment->setKassenzeichen($kassenzeichen);
+        	
+        	/** @var $payment Mage_Sales_Model_Order_Payment */
+        	$payment->setTransactionId($this->getTransactionId($payment));
         } else {
         	$kassenzeichen = $payment->getKassenzeichen();
         	Mage::log("{$this->getCode()}::KASSENZEICHEN BEREITS VORHANDEN:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);        	
         }
-        
-        //TODO : Kann eigentlich entfernt werden, da $this->_anlegenKassenzeichen(...) die Fehlerbehandlung macht!
-        if (substr($kassenzeichen, 0, 6) == 'ERROR:') {
-        	switch (intval(substr($kassenzeichen, 6))) {
-        		case -611:
-        			Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_-0611', Mage::helper('paymentbase')->getCustomerSupportMail()));
-        		default :
-        			$base = 'TEXT_PROCESS_'. $kassenzeichen;
-        			$translate = Mage::helper('egovs_girosolution')->__($base, Mage::helper('paymentbase')->getCustomerSupportMail());
-        			if ($base == $translate) {
-        				Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR:UNKNOWN CURL ERROR', Mage::helper('paymentbase')->getCustomerSupportMail()));
-        			} else Mage::throwException($translate);
-        	}	
-        }
-        
-		Mage::log("{$this->getCode()}::KASSENZEICHEN ANGELEGT:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
-        $payment->setData('kassenzeichen', $kassenzeichen);
         
         //Verhindert im Kommentarverlauf den grünen Haken für die Kundenbenachrichtigung.
         $order = $this->_getOrder();
@@ -329,14 +334,15 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		}
 		if ($order 
 			&& ($order->getState() == Mage_Sales_Model_Order::STATE_NEW
-				|| $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT)
+				|| $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
+				|| $order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW)
 		) {
 			
     		//STATE_COMPLETE ist in Magento ab 1.6 geschützt
     		//wird für Virtuelle Produkte aber automatisch gesetzt
     		$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
 	    	
-			$order->setState($orderState);
+			//$order->setState($orderState);
 		}
 		
 		if ($order
@@ -460,10 +466,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				
 				if ($request->getResponseParam('reference')) {
 					$order = $this->_getOrder();
-					$payment = $order->getPayment ();
+					$payment = $order->getPayment();
 					$payment->setTransactionId($request->getResponseParam('reference'));
 					$transaction = $payment->addTransaction('order', null, false, '');
-					$transaction->setParentTxnId ($request->getResponseParam('reference'));
+					$transaction->setParentTxnId($request->getResponseParam('reference'));
 					$transaction->setIsClosed(1);
 					$transaction->setAdditionalInformation("arrInfo", serialize($request->getResponseParams()));
 					$transaction->save ();
@@ -567,12 +573,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					Mage::log("{$this->getCode()}::\n$tmp", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				}
 	
-				$merchantTxId = trim(str_replace("{$this->_getBewirtschafterNr()}/", "", $merchantTxId));
+				$extKassenzeichen = trim(str_replace("{$this->_getBewirtschafterNr()}/", "", $merchantTxId));
 				
-				if ($merchantTxId != $this->getInfoInstance()->getKassenzeichen()) {
-					Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus Girosolutiondaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-					return false;
-				}
 				$order = $this->_getOrder();
 				// If order was not found, return false
 				if(!$order || $order->isEmpty()) {
@@ -581,17 +583,22 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				}
 				$orderId = $order->getIncrementId();
 				
+				if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
+					Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus Girosolutiondaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+					return false;
+				}
+				
 				//If order was already updated, do not update again.
-				if($order->getState() != Mage_Sales_Model_Order::STATE_PENDING_PAYMENT) {
+				if($order->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
 					$updateOrderState = false;
 				} else {
 					//update transaction
 					$payment = $order->getPayment();
-					$payment->setTransactionId($orderid);
-					$transaction = $payment->addTransaction('order', null, false, '');
-					$transaction->setParentTxnId($orderid);
+					$payment->setTransactionId($gcRef);
+					$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_ORDER, null, false, '');
+					$transaction->setParentTxnId($this->getTransactionId($payment));
 					$transaction->setIsClosed(1);
-					$transaction->setAdditionalInformation("arrInfo", serialize($gcTransInfo));
+					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $gcTransInfo);
 					$transaction->save();
 					$order->save();
 				}
@@ -624,15 +631,26 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				//TODO : Providername ermitteln
 				$_providerName = 'VISA';
 				
-				$_kassenzeichenActivated = $this->_activateKassenzeichen($merchantTxId, $gcRef, $_providername); 
+				$_kassenzeichenActivated = $this->_activateKassenzeichen($merchantTxId, $gcRef, $_providerName);
+				
+				if ($_kassenzeichenActivated) {
+					/** @var $payment Mage_Sales_Model_Order_Payment */
+					$payment = $order->getPayment();
+					$payment->setTransactionId($this->getTransactionId($payment));
+					$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_AUTH, null, false, $this->__('Kassenzeichen activated'));
+					//$transaction->setParentTxnId($this->getTransactionId($payment));
+					$transaction->setIsClosed(1);
+					$transaction->save();
+				} else {
+					$order->setState(Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW, false, $this->__('Could not activate Kassenzeichen! See log files for further informations.'), false);
+					return true;
+				}
 	
 				// Send email
 				if($sendEmail == true) {
 					$order->sendNewOrderEmail();
 					$order->setEmailSent(true);
 				}
-				// we add a status message to the message-section in admin
-				$order->addStatusHistoryComment($orderStateComment);
 					
 				if(empty($orderStateFinished)) {
 					$orderStateFinished = true;
@@ -642,7 +660,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				$order->setState(
 						Mage_Sales_Model_Order::STATE_PROCESSING,
 						$orderStateFinished,
-						$orderStateComment
+						$orderStateComment,
+						$sendEmail
 				);
 	
 				if($createInvoice == true) {
@@ -654,7 +673,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 						
 						Mage::getModel('core/resource_transaction')->addObject($invoice)->addObject($invoice->getOrder())->save();
 						$invoice->sendEmail(true, '');
-						$order->setState(Mage_Sales_Model_Order::STATE_PROCESSING, $orderStateFinished, $invoiceComment);
+						//$order->setState(Mage_Sales_Model_Order::STATE_PROCESSING, $orderStateFinished, $invoiceComment);
 					}
 				}
 	
@@ -687,27 +706,27 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		 * Die notify Action wird direkt von Girosolution aufgerufen (URL wird vorher übergeben)
 		 *
 		 */
-		Mage::log("{$this->getCode()}::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+		Mage::log("{$this->getCode()}::WS aktiviereTempXXXKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 			
 		// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 		$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
 		$objResult = null;
 		for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!isset($objResult->istOk) || $objResult->istOk != true); $i++) {
-			Mage::log(sprintf("{$this->getCode()}::NOTIFY_ACTION:Try %s to activate kassenzeichen...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+			Mage::log(sprintf("{$this->getCode()}::Try %s to activate kassenzeichen...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 			try {
 				//Aktiviert z. B. das Kassenzeichen
 				$objResult = $this->_callSoapClientImpl($objSOAPClient, $merchantTxId, Mage::helper('paymentbase')->getMandantNr(), $refId, $providerName);
 			} catch (Exception $e) {
-				Mage::log(sprintf("{$this->getCode()}::NOTIFY_ACTION:Activating Kassenzeichen failed: %s", $e->getMessage()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				Mage::log(sprintf("{$this->getCode()}::Activating Kassenzeichen failed: %s", $e->getMessage()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			}
 		}
-		Mage::log(sprintf("{$this->getCode()}::NOTIFY_ACTION:Tried to activate Kassenzeichen, validating result...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+		Mage::log(sprintf("{$this->getCode()}::Tried to activate Kassenzeichen, validating result...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		$order = $this->_getOrder();
 		
 		// wenn Web-Service nicht geklappt hat
 		if (!$objResult || $objResult->istOk != true) {
 			$kassenzeichen = 'empty';
-			$subject = "{$this->getCode()}::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() nicht erfolgreich";
+			$subject = "{$this->getCode()}::WS aktiviereTempXXXKassenzeichen() nicht erfolgreich";
 			$sMailText = '';
 			if ($order->getPayment()->hasData('kassenzeichen')) {
 				$kassenzeichen = $order->getPayment()->getKassenzeichen();
@@ -735,7 +754,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$kassenzeichen = 'empty';
 		if ($order->getPayment()->hasData('kassenzeichen')) {
 			$kassenzeichen = $order->getPayment()->getKassenzeichen();
-			Mage::log("{$this->getCode()}::NOTIFY_ACTION:Using Kassenzeichen: $kassenzeichen", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+			Mage::log("{$this->getCode()}::Using Kassenzeichen: $kassenzeichen", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		} else {
 			Mage::log("{$this->getCode()}::Fehler:WS kein Kassenzeichen im Payment enthalten", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			$sMailText = "WS kein Kassenzeichen im Payment enthalten!";

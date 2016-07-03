@@ -4,9 +4,9 @@
  * 
  * !!!!Achtung!!!!: 
  * Die Funktion aktiviereTempXXXKassenzeichen() wird über _callSoapClientImpl(...) aufgerufen.
- * Die Funktion _callSoapClientImpl(...) wird jedoch nur in der NOTIFY_ACTION aufgerufen, welche
+ * Die Funktion _callSoapClientImpl(...) wird jedoch nur in der NOTIFY ACTION aufgerufen, welche
  * direkt vom Zahlungsprovider aus angesprochen wird.
- * Änderungen an der ORDER werden nur in der NOTIFY_ACTION vorgenommen.
+ * Änderungen an der ORDER werden nur in der NOTIFY ACTION vorgenommen.
  * 
  * @category   	Egovs
  * @package    	Egovs_Paymentbase
@@ -95,71 +95,14 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     public function getCheckout() {
 
         return Mage::getSingleton('checkout/session');
-    }    
-	/**
-     * Diese Action wird in der Funktion getOrderPlaceRedirectUrl aufgerufen.
-     * 
-     * Template Funktion
-     * Der State wird auf PENDING_PAYMENT gesetzt
-     * 
-     * @return void
-     */
-    public final function redirectAction() {
-    	
-        // Get the current cart
-        $session = $this->getCheckout();
-                
-        $this->_redirectAction($session);
-        
-        // get the order model
-        // get the order by its number
-        /* @var $order Mage_Sales_Model_Order */
-        $order = Mage::getModel('sales/order')
-        	->loadByIncrementId($session->getLastRealOrderId())
-        ;
-        $this->_order = $order;
-        
-        if ($order->getState() == ''
-        	|| $order->getState() == Mage_Sales_Model_Order::STATE_NEW
-        	|| $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
-        ) { 
-	        $order->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
-	        // add a message to the history section in order management
-	        /* 2010/10/22 Frank Rochlitzer:
-	         * States sind NICHT GLEICH Status!!!!!
-	         * Funktioniert hier aber!
-	         */
-	        $this->_redirectActionAddStatusToHistory($order);
-	        
-	        $order->save();
-	       
-	        // Redirect über Header, unten nur noch Fallback
-	        /** @var $shared Egovs_Paymentbase_Model_Girosolution */
-	        $shared = $order->getPayment ()->getMethodInstance ();
-	        $url = $shared->getGirosolutionRedirectUrl();
-	        try {
-	        	$this->_redirectUrl($url);
-	        	return;
-	        } catch (Zend_Controller_Response_Exception $zcre) {
-	        	Mage::logException($zcre);
-	        }
-        }
-        
-        Mage::getSingleton('checkout/session')->addError(Mage::helper('paymentbase')->__('This action was already executed!'));
-    	$params = array('_secure' => $this->isSecureUrl());
-    	
-        $this->_redirect('checkout/cart', $params);
     }
     
     /**
-     * Einige implementations spezifische Befehle
-     *  
-     * @param Mage_Checkout_Model_Session &$session Checkout Session
-     * 
-     * @return void
+     * Liefert Debug-Flag
+     *
+     * @return boolean
      */
-    protected function _redirectAction(&$session) {
-    }
+    public abstract function getDebug();
     
     /**
      * Modulabhängige Statusnachrichten
@@ -238,11 +181,11 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     	//20150126::Frank Rochlitzer:Wir setzen den Status immer => falls APC fehlschlägt
     	//Sobald der Status nicht mehr PENDING_PAYMENT ist, wurde die Order schon behandelt!
     	//Der Status ist mit dem State identisch benannt.
-    	if ($this->_getOrder()->getData('status') != Mage_Sales_Model_Order::STATE_PENDING_PAYMENT) {
+    	if ($this->_getOrder()->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
     		Mage::log("$module::NOTIFY_ACTION:Notify already called, omitting!", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
     		return;
     	}
-    	$this->_getOrder()->setData('status', 'notify');
+    	//$this->_getOrder()->setData('status', 'notify');
     	$resource = $this->_getOrder()->getResource();
     	$resource->saveAttribute($this->_getOrder(), 'status');
     	
@@ -322,7 +265,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
 	        sleep(1);
 	        $diffTime = time() - $startTime;
 	        Mage::log($this->_getModuleName()."::success action : Waiting since $diffTime seconds for order modifications", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-        } while ($diffTime < 10 && $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+        } while ($diffTime < 10 && $order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW);
         
         if ($status) {
             // everything allright, redirect the user to success page
