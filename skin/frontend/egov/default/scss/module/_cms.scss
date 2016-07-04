@@ -169,3 +169,29 @@
         }
     }
 }
+
+// ----------------------------------------------
+// Widgets
+
+.col1-layout {
+    .widget-new-products {
+        width: $global-content-1col-percent;
+    }
+}
+
+.col2-left-layout {
+    .widget-new-products {
+        width: $global-content-2col-left-percent;
+    }
+}
+.col2-right-layout {
+    .widget-new-products {
+        width: $global-content-2col-right-percent;
+    }
+}
+
+.col3-layout {
+    .widget-new-products {
+        width: $global-content-3col-percent;
+    }
+}
