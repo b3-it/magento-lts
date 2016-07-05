@@ -892,7 +892,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
          * a flag to set that there will be redirect to third party after confirmation
          * eg: paypal standard ipn
          */
-        $redirectUrl = $order->getPayment()->getMethodInstance()->getOrderPlaceRedirectUrl();
+        $redirectUrl = $this->getQuote()->getPayment()->getOrderPlaceRedirectUrl();
         if(!$redirectUrl){
             if($sendOrderEmail){
             	$order->setEmailSent(true);
