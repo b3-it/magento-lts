@@ -15,11 +15,6 @@
     .page-header {
         clear: both;
         z-index: 99;
-        height: $global-header-height;
-
-        background-image: url($global-header-background-image);
-        background-position: 55% -50px;
-        background-repeat: no-repeat;
     }
 
     .page-header-container {
@@ -70,20 +65,23 @@
     font-family: $base-font-family;
 
     .welcome-header {
-        float: right;
         text-align: left;
-        margin-right: 30px;
+        margin-left: $global-logo-left;
+        position: relative;
+        top: $global-header-height - 50px;
 
         h1 {
             color: $global-fontcolor-light;
-            display: block;
+            display: inline-block;
     	  }
 
         .welcome-msg {
             color: $global-fontcolor-light;
-            display: block;
             height: 1em;
-            margin-top: 12px;
+            float: right;
+            margin-right: 30px;
+            position: relative;
+            top: -10px;
         }
 
         @include bp(max-width, 910px) {
@@ -179,7 +177,7 @@
  * ============================================ */
 
 .logo {
-    display: block;
+    display: inline-block;
     width: $global-logo-width;
     margin: $global-logo-top $global-logo-top 0 $global-logo-left;
 
@@ -230,6 +228,44 @@
     overflow: hidden;
     border-top:$global-active-border solid $global-navigation-border-color;
     border-bottom: $global-active-border solid $global-navigation-border-color;
+
+    background-image: url($global-header-background-image);
+    background-position: 55% -50px;
+    background-repeat: no-repeat;
+
+    height: $global-header-height;
+
+    .links {
+        ul {
+             float: right;
+             margin: 0 30px 0 0;
+             border-top: 5px solid $global-wrapper-color;
+             padding: 10px 0;
+             width: 55%;
+
+             li {
+                float: left;
+                list-style-type: none;
+
+
+                a {
+                    border-right: $global-box-border solid $global-fontcolor-dark;
+                    padding: 3px 8px;
+                    color: $global-fontcolor-dark;
+
+                    &:hover, &:active {
+                        background-color: $global-navigation-hover-color;
+                        color: $global-navigation-color;
+                    }
+                }
+
+                &.last > a  {
+                    border-right: none;
+                }
+
+            }
+        }
+    }
 }
 
 // ---------------------------------------------
