@@ -99,7 +99,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$merchantId = Mage::helper('core')->decrypt($merchantId);
 		if (empty($merchantId)) {
 			if (!array_key_exists('merid', $this->_errors)) {
-				$helper = Mage::helper($this->getCode());
+				$helper = Mage::helper($thisMage::helper('egovs_girosolution'));
 				$helper->sendMailToAdmin("{$this->getCode()}::{$helper->__('Merchant ID is missing in Girosolution configuration')}", $helper->__('Girosolution Error').':', $this->getCode());
 			
 				$sModul = ucwords(substr($this->getCode(), 6), '_');
@@ -107,7 +107,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				Mage::log($this->getCode()."::".$helper->__("$sModul Merchant ID is missing in Girosolution configuration. Please contact the shop operator."), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				$this->_errors['merid'] = true;
 			}
-			Mage::throwException(Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
+			Mage::throwException(Mage::helper('egovs_girosolution')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
 		}
 		
 		return $merchantId;
@@ -124,7 +124,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	
 		if (empty($projectId)) {
 			if (!array_key_exists('prjid', $this->_errors)) {
-				$helper = Mage::helper($this->getCode());
+				$helper = Mage::helper('egovs_girosolution');
 				$helper->sendMailToAdmin("{$this->getCode()}::{$helper->__('Project ID is missing in Girosolution configuration')}", $helper->__('Girosolution Error').':', $this->getCode());
 					
 				$sModul = ucwords(substr($this->getCode(), 6), '_');
@@ -132,7 +132,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				Mage::log($this->getCode()."::".$helper->__("$sModul Project ID is missing in Girosolution configuration. Please contact the shop operator."), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				$this->_errors['prjid'] = true;
 			}
-			Mage::throwException(Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
+			Mage::throwException(Mage::helper('egovs_girosolution')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
 		}
 	
 		return $projectId;
@@ -149,7 +149,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	
 		if (empty($projectPassword)) {
 			if (!array_key_exists('prjpwd', $this->_errors)) {
-				$helper = Mage::helper($this->getCode());
+				$helper = Mage::helper('egovs_girosolution');
 				$helper->sendMailToAdmin("{$this->getCode()}::{$helper->__('Project password is missing in Girosolution configuration')}", $helper->__('Girosolution Error').':', $this->getCode());
 					
 				$sModul = ucwords(substr($this->getCode(), 6), '_');
@@ -157,7 +157,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				Mage::log($this->getCode()."::".$helper->__("$sModul Project password is missing in Girosolution configuration. Please contact the shop operator."), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				$this->_errors['prjpwd'] = true;
 			}
-			Mage::throwException(Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
+			Mage::throwException(Mage::helper('egovs_girosolution')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
 		}
 	
 		return $projectPassword;
@@ -413,12 +413,24 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         $this->_fieldsArr['merchantId'] = $this->getMerchantId();
         $this->_fieldsArr['projectId'] = $this->getProjectId();
         
-		$this->_fieldsArr['amount'] = ($this->_getOrder()->getTotalDue() * 100);
-		$this->_fieldsArr['currency'] = $this->_getOrder()->getOrderCurrencyCode();
+        $_source = $this->_getOrder();
+        $_realOrderId = null;
+        if (!$_source) {
+        	/** @var $_source Mage_Sales_Model_Quote */
+        	$_source = $this->getInfoInstance()->getQuote();
+        	$this->_fieldsArr['amount'] = ($_source->getGrandTotal() * 100);
+        	$this->_fieldsArr['currency'] = $_source->getGlobalCurrencyCode();
+        	$_realOrderId = $_source->getReservedOrderId();
+        } else {
+			$this->_fieldsArr['amount'] = ($_source->getTotalDue() * 100);
+			$this->_fieldsArr['currency'] = $_source->getOrderCurrencyCode();
+			
+			$_realOrderId = $_source->getRealOrderId();
+        }
 		
 		$controllerName = str_replace('egovs_girosolution_', '', $this->getCode());
-		$this->_fieldsArr ['urlRedirect'] = $this->_getLinkUrl("girosolution/$controllerName/success"). '?real_order_id='.$this->_getOrder()->getRealOrderId();
-		$this->_fieldsArr ['urlNotify'] = $this->_getLinkUrl("girosolution/$controllerName/notify"). '?real_order_id='.$this->_getOrder()->getRealOrderId();
+		$this->_fieldsArr ['urlRedirect'] = $this->_getLinkUrl("girosolution/$controllerName/success"). '?real_order_id='.$_realOrderId;
+		$this->_fieldsArr ['urlNotify'] = $this->_getLinkUrl("girosolution/$controllerName/notify"). '?real_order_id='.$_realOrderId;
 		
 		$desc = $this->_getPayerNote();
 		
@@ -459,33 +471,52 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				$result ["reference"] = $request->getResponseParam('reference');
 				$result ["gcTransInfo"] = $request->getResponseParams();
 				
-				$url = $strUrlRedirect;
+				return $strUrlRedirect;
 			} else {
 				$iReturnCode = $request->getResponseParam('rc');
 				$strResponseMsg = $request->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
-				
+				if (!$strResponseMsg) {
+					$strResponseMsg = $this->_getHelper()->__("Unkown server error.");
+				}
 				if ($request->getResponseParam('reference')) {
-					$order = $this->_getOrder();
-					$payment = $order->getPayment();
+					$params = var_export($request->getResponseParams(), true);
+					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+				}
+				$_source = $this->_getOrder();
+				if (!$_source) {
+					/** @var $_source Mage_Sales_Model_Quote */
+					$_source = $this->getInfoInstance()->getQuote();
+				} else {
+					/** @var $_source Mage_Sales_Model_Order */
+					/** @var $payment Mage_Sales_Model_Order_Payment */
+					$payment = $_source->getPayment();
 					$payment->setTransactionId($request->getResponseParam('reference'));
 					$transaction = $payment->addTransaction('order', null, false, '');
 					$transaction->setParentTxnId($request->getResponseParam('reference'));
 					$transaction->setIsClosed(1);
-					$transaction->setAdditionalInformation("arrInfo", serialize($request->getResponseParams()));
+					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
 					$transaction->save ();
-					$order->save ();
+					$_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+					$_source->cancel()->save();
+					
+					$_quoteId = $_source->getQuoteId();
+					$_source = $_source->getQuote();
+					if (!$_source) {
+						$_source = Mage::getModel('sales/quote')->load($_quoteId);
+					}
 				}
 				
-				return Mage::getUrl('checkout/cart', array('_secure' => true));
+				if (!$_source->isEmpty() && !$_source->getIsActive()) {
+					$_source->setIsActive(true)->save();
+				}
 			}
 		} catch ( Exception $e ) {
 			Mage::logException($e);
-			$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
-			//Mage::getSingleton('core/session' )->addError($msg);
-			Mage::throwException($msg);
 		}
 		
-		return $url;
+		$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
+		Mage::throwException($msg);
 	}
 	
 	/**
