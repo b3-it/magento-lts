@@ -140,7 +140,10 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     		Mage::log("$module::The request was not a GET request!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
     		return;
     	}
-        
+    	
+    	// clear response
+    	$this->getResponse()->clearAllHeaders()->clearBody();
+    	
     	/*
     	 * 20150122::Frank Rochlitzer
     	 * Setzen des mutex via APC schlägt mit CGI fehl
@@ -172,7 +175,9 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     		$apcKey = 'roi_mutex'.$this->getRequest()->getParam('real_order_id');
     		if (apc_fetch($apcKey)) {
     			Mage::log("$module::NOTIFY_ACTION:APC_FETCH:Notify already called, omitting!", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-    			return;
+    			$this->getResponse()->setHttpResponseCode(200);
+        		$this->getResponse()->sendResponse();
+        		exit;
     		}
     		//dauert ca. 1msec
     		//TTL = 180s = 3Min
@@ -182,8 +187,10 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     	//Sobald der Status nicht mehr PENDING_PAYMENT ist, wurde die Order schon behandelt!
     	//Der Status ist mit dem State identisch benannt.
     	if ($this->_getOrder()->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
-    		Mage::log("$module::NOTIFY_ACTION:Notify already called, omitting!", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-    		return;
+    		Mage::log("$module::NOTIFY_ACTION:Notify already called, omitting! State was: {$this->_getOrder()->getState()}", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+    		$this->getResponse()->setHttpResponseCode(200);
+        	$this->getResponse()->sendResponse();
+        	exit;
     	}
     	//$this->_getOrder()->setData('status', 'notify');
     	$resource = $this->_getOrder()->getResource();
@@ -217,12 +224,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     	// check if the response is valid
         $status = $this->_callCheckReturnedMessageImpl();
         
-        // clear response
-        $this->getResponse()->clearAllHeaders()->clearBody();
-        
-        if ($status == TRUE) {
-        	//$this->_prepareOrder();
-        	
+        if ($status == true) {
         	$this->getResponse()->setHttpResponseCode(200);
         	$this->getResponse()->sendResponse();
         } else {
@@ -402,7 +404,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     			
     			return false;
     		} else {
-    			Mage::log(sprintf("$module::... _checkReturnedMessage with valid DATA called:\r\n%s...", $data), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+    			Mage::log(sprintf("$module::... _checkReturnedMessage with valid DATA called:\r\n%s...", var_export($notify->getResponseParams(), true)), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     			
     			$msg = Mage::helper("egovs_girosolution")->__('Customer successfully granted by Girosolution<br /><strong>Transaction ID: %s</strong>', $notify->getResponseParam('gcReference'));
     			$orderFound = $paymentMethod->modifyOrderAfterPayment(
@@ -419,7 +421,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     			
     			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     			
-    			return true;
+    			return $orderFound;
     		}
     	} catch (Exception $e) {
     		Mage::logException($e);

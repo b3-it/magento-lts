@@ -78,7 +78,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
      * 
      * Wichtig für Zahlpartnerkonten (ZPK), da dort nicht das Kassenzeichen als ID genutzt
      * werden kann!<br>
-     * Ohne ZPK wird "BewirtschafterNr/Kassnezeichen" als ID genutzt.
+     * Ohne ZPK wird "BewirtschafterNr/Kassenzeichen" als ID genutzt.
      * 
      * @return string
      */
@@ -434,12 +434,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		
 		$desc = $this->_getPayerNote();
 		
-        $this->_fieldsArr['merchantTxId'] = "{$this->_getBewirtschafterNr()}/{$this->getInfoInstance()->getKassenzeichen()}";
+        $this->_fieldsArr['merchantTxId'] = $this->getTransactionId();
         
         if (Mage::getStoreConfigFlag("payment/{$this->getCode()}/epa_purpose")) {
         	$this->_fieldsArr['purpose'] = $this->_fieldsArr['merchantTxId'];
         } else {
-        	$this->_fieldsArr['purpose'] = "{$this->getInfoInstance()->getKassenzeichen()} : $desc";
+        	$this->_fieldsArr['purpose'] = "{$this->_getOrder()->getPayment()->getKassenzeichen()} : $desc";
         }
 		
 		//Call to the implementation method for childrens
@@ -493,7 +493,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$payment = $_source->getPayment();
 					$payment->setTransactionId($request->getResponseParam('reference'));
 					$transaction = $payment->addTransaction('order', null, false, '');
-					$transaction->setParentTxnId($request->getResponseParam('reference'));
+					$transaction->setParentTxnId($_source->getIncrementId());
 					$transaction->setIsClosed(1);
 					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
 					$transaction->save ();
@@ -507,8 +507,11 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					}
 				}
 				
-				if (!$_source->isEmpty() && !$_source->getIsActive()) {
-					$_source->setIsActive(true)->save();
+				if (!$_source->isEmpty()) {
+					if (!$_source->getIsActive()) {
+						$_source->setIsActive(true)->save();
+					}
+					Mage::getSingleton('checkout/session')->replaceQuote($_source);
 				}
 			}
 		} catch ( Exception $e ) {
@@ -718,10 +721,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	
 				$order->save();
 				//Event muss aus Kompatibilitätsgründen so heißen!?
-				Mage::log("{$this->getCode()}::NOTIFY_ACTION:dispatching event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+				Mage::log("{$this->getCode()}::dispatching event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				Mage::dispatchEvent('egovs_paymentbase_saferpay_sales_order_invoice_after_pay', array('invoice'=>$invoice));
-				Mage::log("{$this->getCode()}::NOTIFY_ACTION:dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				Mage::log("{$this->getCode()}::NOTIFY_ACTION:...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+				Mage::log("{$this->getCode()}::dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+				Mage::log("{$this->getCode()}::...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				return true;
 	}
 	
