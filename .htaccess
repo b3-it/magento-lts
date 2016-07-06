@@ -223,27 +223,6 @@
     		Require all granted
     </IfModule>
 
-    #Testbetrieb
-    #When multiple Require directives are used in a single configuration
-    # section and are not contained in another authorization directive
-    #  like <RequireAll>, they are implicitly contained within a
-    #  <RequireAny> directive.
-
-    #localhost
-    Require local
-    Require ip 217.7.17.30
-
-    #Saferpay
-    Require ip 193.247.180.4 153.46.244.84
-
-    #Girosolution
-    Require ip 46.163.91.71
-
-    #Flash Uploader
-    SetEnvIf User-Agent "Shockwave Flash" Flash=1
-    Require env Flash
-    Require valid-user
-
 </IfModule>
 
 ###########################################

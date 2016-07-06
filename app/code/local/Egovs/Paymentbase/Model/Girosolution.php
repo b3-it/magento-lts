@@ -104,7 +104,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			
 				$sModul = ucwords(substr($this->getCode(), 6), '_');
 			
-				Mage::log($this->getCode()."::".$helper->__("$sModul Merchant ID is missing in Girosolution configuration. Please contact the shop operator."), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				Mage::log($this->getCode()."::".$helper->__("%s Merchant ID is missing in Girosolution configuration. Please contact the shop operator.", $sModul), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				$this->_errors['merid'] = true;
 			}
 			Mage::throwException(Mage::helper('egovs_girosolution')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
@@ -129,7 +129,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					
 				$sModul = ucwords(substr($this->getCode(), 6), '_');
 					
-				Mage::log($this->getCode()."::".$helper->__("$sModul Project ID is missing in Girosolution configuration. Please contact the shop operator."), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				Mage::log($this->getCode()."::".$helper->__("%s Project ID is missing in Girosolution configuration. Please contact the shop operator.", $sModul), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				$this->_errors['prjid'] = true;
 			}
 			Mage::throwException(Mage::helper('egovs_girosolution')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
@@ -154,7 +154,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					
 				$sModul = ucwords(substr($this->getCode(), 6), '_');
 					
-				Mage::log($this->getCode()."::".$helper->__("$sModul Project password is missing in Girosolution configuration. Please contact the shop operator."), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				Mage::log($this->getCode()."::".$helper->__("%s Project password is missing in Girosolution configuration. Please contact the shop operator.", $sModul), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				$this->_errors['prjpwd'] = true;
 			}
 			Mage::throwException(Mage::helper('egovs_girosolution')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
