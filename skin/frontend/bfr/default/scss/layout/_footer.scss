@@ -9,6 +9,31 @@
  * Footer
  * ============================================ */
 
+.footer-container {
+    min-width: $global-min-page-width;
+    max-width: $global-max-page-width;
+    width: 94%;
+    margin: 0 auto;
+    padding-top: 10px;
+
+    .links {
+        li {
+            a {
+                border: none;
+                color: $global-footer-linkcolor;
+                text-decoration: none;
+                padding-left: 10px;
+                background: transparent url($global-footer-link-image) no-repeat scroll 0 5px;
+
+                &:hover, &:active {
+                    text-decoration: underline;
+                    border: none;
+                }
+            }
+        }
+    }
+}
+
 /* -------------------------------------------- *
  * Footer
  */

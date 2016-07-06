@@ -197,23 +197,46 @@ p.note-msg {
 }
 
 .block {
-    border-width: $global-checkout-borderwidth;
-    border-style: solid;
-    border-color: $global-border-color;
+    border-top-width: $global-checkout-borderwidth;
+    border-top-style: solid;
+    border-top-color: $global-border-color;
+
+    border-bottom-width: $global-checkout-borderwidth;
+    border-bottom-style: dotted;
+    border-bottom-color: $global-box-bottomcolor;
 
     .block-title {
-        background-color: $global-box-title-backgroundcolor;
-        border-bottom: $global-box-border-bottom solid $global-box-bordercolor;
+        border-bottom-width: $global-box-border-bottom;
+        border-bottom-style: dotted;
+        border-bottom-color: $global-box-bordercolor;
+
+        background: -moz-linear-gradient(top,  rgba(215,219,220,0.65) 0%, rgba(0,0,0,0) 60%);
+        background: -webkit-linear-gradient(top,  rgba(215,219,220,0.65) 0%,rgba(0,0,0,0) 60%);
+        background: linear-gradient(to bottom,  rgba(215,219,220,0.65) 0%,rgba(0,0,0,0) 60%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6d7dbdc', endColorstr='#00000000',GradientType=0 );
+
+        //background-color: $global-box-title-backgroundcolor;
         padding-top: $global-box-title-padding-top;
         padding-right: $global-box-title-padding-right;
         padding-bottom: $global-box-title-padding-bottom;
         padding-left: $global-box-title-padding-left;
-        color: $global-fontcolor-dark;
+
         font-weight: normal;
         font-size: $global-fontsize-big;
 
         span {
             color: $global-h4-color;
+        }
+    }
+
+    a {
+        color: $global-box-link-color;
+        text-decoration: none;
+        padding-left: 10px;
+        background: transparent url($global-link-image) no-repeat scroll 0 5px;
+
+        &:active, &:hover {
+            text-decoration: underline;
         }
     }
 }
@@ -558,34 +581,49 @@ div.block-reorder {
     overflow: hidden;
     margin: 0px;
     color: $global-fontcolor-light;
-}
 
-.breadcrumbs li {
-    float: left;
-    font-family: $base-font-family;
-}
+    border-bottom-width: $global-active-border;
+    border-bottom-style: dotted;
+    border-bottom-color: #aeafb3;
 
-.breadcrumbs a {
-    float: left;
-    color: $global-fontcolor-light;
-    border-width: $global-active-border;
-    border-color: transparent;
-    border-style: solid;
-}
+    margin: 0 0 15px;
+    padding: 10px 0 8px 10px;
 
-.breadcrumbs a:hover {
-    color: $global-fontcolor-light;
-    text-decoration: underline;
-}
+    span {
+        display: inline-block;
+        font-weight: bold;
+        color: #000000;
+        padding-right: 10px;
+    }
 
-.breadcrumbs strong {
-    color: $global-fontcolor-light;
-    font-weight: normal;
-}
+    ul {
+        display: inline-block;
 
-.breadcrumbs span {
-    float: left;
-    padding: 0 7px;
+        li {
+            display: inline-block;
+            font-family: $base-font-family;
+        }
+
+        a {
+            color: $global-linkcolor;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        strong {
+            color: #000000;
+            font-weight: bold;
+        }
+
+        img {
+            display: inline-block;
+            padding: 3px 7px 2px 3px;
+        }
+    }
+
 }
 
 @include bp(max-width, $bp-medium) {
@@ -711,11 +749,10 @@ div.block-reorder {
 
 .main-container {
     max-width: $global-fullpage-width;
-    padding: 0 10px;
+    padding: 0 10px 10px 10px;
 }
 
 .footer-container {
-    box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
     min-height: $global-footer-height;
     line-height: $global-footer-lineheight;
     background-color: $global-footer-backgroundcolor;
