@@ -47,6 +47,13 @@
 #    php_value memory_limit 64M
     php_value memory_limit 256M
     php_value max_execution_time 18000
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+
+############################################
+## PHP-Error-LOG
+    php_flag log_errors on
+    #php_value error_log /srv/www/htdocs/ *CUSTOMIZE* /var/log/php_error.log
 
 ############################################
 ## disable magic quotes for php request vars
@@ -201,35 +208,58 @@
 
 </IfModule>
 
-############################################
-## By default allow all access
-
-    #http://blog.plee.me/2013/07/access-control-via-hybrid-htaccess-for-both-apache-httpd-2-2-and-2-4/
-	<IfModule !mod_authz_core.c>
-		#Apache 2.2
-	    Order allow,deny
-	    Allow from all
+<IfModule mod_authz_host.c>
+    ############################################
+    ## By default allow all access
+    ## http://blog.plee.me/2013/07/access-control-via-hybrid-htaccess-for-both-apache-httpd-2-2-and-2-4/
+    <IfModule !mod_authz_core.c>
+    		#Apache 2.2
+    	  Order allow,deny
+    	  Allow from all
     </IfModule>
 
     <IfModule mod_authz_core.c>
-	    #Apache 2.3+
-		Require all granted
-	</IfModule>
+        #Apache 2.3+
+    		Require all granted
+    </IfModule>
+
+    #Testbetrieb
+    #When multiple Require directives are used in a single configuration
+    # section and are not contained in another authorization directive
+    #  like <RequireAll>, they are implicitly contained within a
+    #  <RequireAny> directive.
+
+    #localhost
+    Require local
+    Require ip 217.7.17.30
+
+    #Saferpay
+    Require ip 193.247.180.4 153.46.244.84
+
+    #Girosolution
+    Require ip 46.163.91.71
+
+    #Flash Uploader
+    SetEnvIf User-Agent "Shockwave Flash" Flash=1
+    Require env Flash
+    Require valid-user
+
+</IfModule>
 
 ###########################################
 ## Deny access to release notes to prevent disclosure of the installed Magento version
 
-    <Files RELEASE_NOTES.txt>
-    	<IfModule !mod_authz_core.c>
-	    	#Apache 2.2
-	        order allow,deny
-	        deny from all
-        </IfModule>
-        <IfModule mod_authz_core.c>
-	        #Apache 2.3+
-			Require all denied
+<Files RELEASE_NOTES.txt>
+    <IfModule !mod_authz_core.c>
+	      #Apache 2.2
+	      order allow,deny
+	      deny from all
+    </IfModule>
+    <IfModule mod_authz_core.c>
+	      #Apache 2.3+
+			  Require all denied
 		</IfModule>
-    </Files>
+</Files>
 
 ############################################
 ## If running in cluster environment, uncomment this
@@ -239,34 +269,34 @@
 
 ###########################################
 ## Deny access to cron.php
-    <Files cron.php>
+<Files cron.php>
 
-############################################
-## uncomment next lines to enable cron access with base HTTP authorization
-## http://httpd.apache.org/docs/2.2/howto/auth.html
-##
-## Warning: .htpasswd file should be placed somewhere not accessible from the web.
-## This is so that folks cannot download the password file.
-## For example, if your documents are served out of /usr/local/apache/htdocs
-## you might want to put the password file(s) in /usr/local/apache/.
+    ############################################
+    ## uncomment next lines to enable cron access with base HTTP authorization
+    ## http://httpd.apache.org/docs/2.2/howto/auth.html
+    ##
+    ## Warning: .htpasswd file should be placed somewhere not accessible from the web.
+    ## This is so that folks cannot download the password file.
+    ## For example, if your documents are served out of /usr/local/apache/htdocs
+    ## you might want to put the password file(s) in /usr/local/apache/.
 
-        #AuthName "Cron auth"
-        #AuthUserFile ../.htpasswd
-        #AuthType basic
-        #Require valid-user
+            #AuthName "Cron auth"
+            #AuthUserFile ../.htpasswd
+            #AuthType basic
+            #Require valid-user
 
-############################################
+    ############################################
 
-        <IfModule !mod_authz_core.c>
-	    	#Apache 2.2
-	        order allow,deny
-	        deny from all
-	        Allow from localhost
-        </IfModule>
-        <IfModule mod_authz_core.c>
-	        #Apache 2.3+
-			Require all denied
-			Require local
+    <IfModule !mod_authz_core.c>
+	      #Apache 2.2
+	      order allow,deny
+	      deny from all
+	      Allow from localhost
+    </IfModule>
+    <IfModule mod_authz_core.c>
+	      #Apache 2.3+
+			  Require all denied
+			  Require local
 		</IfModule>
 
-    </Files>
+</Files>
