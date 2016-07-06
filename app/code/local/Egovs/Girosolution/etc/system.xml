@@ -38,6 +38,10 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Your Girosolution merchant ID.</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
                         </merchant_id>
                         <project_id translate="label comment">
                             <label>Project ID</label>
@@ -48,6 +52,10 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Your Girosolution project ID.</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
                         </project_id>
                         <project_pwd translate="label comment">
                             <label>Project password</label>
@@ -58,6 +66,10 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Your Girosolution project password.</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
                         </project_pwd>
                         <description translate="label">
                             <label>Description</label>
@@ -220,6 +232,10 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Your Girosolution merchant ID.</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
                         </merchant_id>
                         <project_id translate="label comment">
                             <label>Project ID</label>
@@ -230,6 +246,10 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Your Girosolution project ID.</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
                         </project_id>
                         <project_pwd translate="label comment">
                             <label>Project password</label>
@@ -240,6 +260,10 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Your Girosolution project password.</comment>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>required-entry</validate>
                         </project_pwd>
                         <description translate="label">
                             <label>Description</label>

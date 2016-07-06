@@ -278,7 +278,19 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	 */
 	protected function _getOrder() {
 		if (!$this->__order) {
-			$this->__order = $this->getInfoInstance()->getOrder();
+			$_order = $this->getInfoInstance()->getOrder();
+			
+			if (!$_order) {
+				/** @var $_quote Mage_Sales_Model_Quote */
+				$_quote = $this->getInfoInstance()->getQuote();
+				$_reservedOrderId = $_quote->getReservedOrderId();
+				$this->__order = Mage::getModel('sales/order')->loadByIncrementId($_reservedOrderId);
+				if (!$this->__order->getId()) {
+					$this->__order = null;
+				}
+			} else {
+				$this->__order = $_order;
+			}
 		}
 		return $this->__order;
 	}

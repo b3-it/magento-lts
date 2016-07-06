@@ -16,6 +16,12 @@
             <egovs_girosolution>
                 <class>Egovs_Girosolution_Helper</class>
             </egovs_girosolution>
+            <egovs_girosolution_giropay>
+                <class>Egovs_Girosolution_Helper</class>
+            </egovs_girosolution_giropay>
+            <egovs_girosolution_creditcard>
+                <class>Egovs_Girosolution_Helper</class>
+            </egovs_girosolution_creditcard>
         </helpers>
         <resources>
             <egovs_girosolution_setup>
