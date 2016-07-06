@@ -56,7 +56,7 @@ class Egovs_Base_Model_Core_Email_Mailer extends Mage_Core_Model_Email_Template_
             }
             else
             {
-            	$localeCode = Mage::getStoreConfig('general/locale/code', $storeId);
+            	$localeCode = Mage::getStoreConfig('general/locale/code', $this->getStoreId());
             	$emailTemplate->loadDefault($this->getTemplateId(), $localeCode);
             }
             // Handle "Bcc" recepients of the current email
@@ -91,8 +91,8 @@ class Egovs_Base_Model_Core_Email_Mailer extends Mage_Core_Model_Email_Template_
             
             $sender =  $this->getSender();
 	        if (!is_array($sender)) {
-	            $this->setSenderName(Mage::getStoreConfig('trans_email/ident_' . $sender . '/name', $storeId));
-	            $this->setSenderEmail(Mage::getStoreConfig('trans_email/ident_' . $sender . '/email', $storeId));
+	            $this->setSenderName(Mage::getStoreConfig('trans_email/ident_' . $sender . '/name', $this->getStoreId()));
+	            $this->setSenderEmail(Mage::getStoreConfig('trans_email/ident_' . $sender . '/email', $this->getStoreId()));
 	        } else {
 	            $this->setSenderName($sender['name']);
 	            $this->setSenderEmail($sender['email']);

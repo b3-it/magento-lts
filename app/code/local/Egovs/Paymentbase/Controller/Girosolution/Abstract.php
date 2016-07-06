@@ -347,8 +347,20 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     			Mage::log(sprintf("$module:: Girosolution payment unsuccessful!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
     			
     			switch (intval($notify->getResponseParam("gcResultPayment"))) {
-    				//TODO : Giropay Error Codes abfangen
-    				//Giropay
+    				/* Giropay
+    				 * 4001 	giropay Bank offline
+    				 * 4002 	Online Banking Zugang ungültig
+    				 * 4500 	Zahlungsausgang unbekannt
+    				 */
+    				case 4001:
+    					$msg = Mage::helper("egovs_girosolution")->__("giropay Bank offline");
+    					break;
+    				case 4002:
+    					$msg = Mage::helper("egovs_girosolution")->__("Online banking account invalid");
+    					break;
+    				case 4500:
+    					$msg = Mage::helper("egovs_girosolution")->__("Payment result unknown");
+    					break;
     				//Kreditkarte
     				case 4101:
     					$msg = Mage::helper("egovs_girosolution")->__("Country of creditcard not accepted or unknown");
@@ -357,7 +369,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     					$msg = Mage::helper("egovs_girosolution")->__("3D-Secure authorization unsuccessful");
     					break;
     				case 4103:
-    					$msg = Mage::helper("egovs_girosolution")->__("Date of expiry excedded");
+    					$msg = Mage::helper("egovs_girosolution")->__("Date of expiry exceeded");
     					break;
     				case 4104:
     					$msg = Mage::helper("egovs_girosolution")->__("Type of creditcard is not valid or unknown");
