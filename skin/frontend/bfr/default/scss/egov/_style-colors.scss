@@ -7,11 +7,11 @@
 
 $global-wrapper-color: #ECEDED;                                        // Hintergrundfarbe der Seite
 $global-page-color: #FFFFFF;                                           // Hintergrundfarbe des Inhalts
-$global-fontcolor-dark: #000000;                                       // Schriftfarbe für helle Hintergründe
+$global-fontcolor-dark: #57585A;                                       // Schriftfarbe für helle Hintergründe
 $global-fontcolor-light: #FFFFFF;                                      // Schriftfarbe für Dunkle Hintergründe
 $global-lightcolor: #E0E6D7;                                           // Hintergrund für Eingabefelder
 $global-lightcolor-hover: #F0F6E7;                                     // Hintergrundfarbe für aktive Elemente
-$global-linkcolor: #59814C;                                            // Textfarbe für Links
+$global-linkcolor: #034EA2;                                            // Textfarbe für Links
 $global-linkcolor-hover: #59814C;                                      // Textfarbe für Hover-Links
 $global-linkcolor-active: #59814C;                                     // Textfarbe für aktive Links
 
@@ -21,17 +21,17 @@ $global-navigation-hover-color: #0D4FA0;                               // Hinter
 
 $global-active-color: #2F4327;                                         // Standard-Rand-Farbe des aktiven Elements
 
-$global-h1-color: #59814C;                                             // Farbe der Überschrift H1
-$global-h2-color: #59814C;                                             // Farbe der Überschrift H2
+$global-h1-color: #333333;                                             // Farbe der Überschrift H1
+$global-h2-color: #333333;                                             // Farbe der Überschrift H2
 $global-h3-color: #59814C;                                             // Farbe der Überschrift H3
-$global-h4-color: #000000;                                             // Farbe der Überschrift H4
+$global-h4-color: #57585A;                                             // Farbe der Überschrift H4
 $global-h5-color: #FF0000;                                             // Farbe der Überschrift H5 (nicht verwendet!)
 $global-h6-color: #FF0000;                                             // Farbe der Überschrift H6 (nicht verwendet!)
 
 $global-cart-color: #59814C;                                           // Textfarbe für Preise im Warenkorb
 $global-cart-subtotal: #59814C;                                        // Textfarbe für Summen im Warenkorb
 
-$global-border-color: #C1D0BB;                                         // Farbe für normale Ränder bei Boxen
+$global-border-color: #CC3300;                                         // Farbe für normale Ränder bei Boxen
 $global-border-color-light: #E0E6D7;                                   // Farbe für helle Ränder bei Boxen
 
 $global-price-normal-color: #59814C;                                   // Farbe für Preisangaben im Katalog
@@ -70,9 +70,9 @@ $global-rgba-1: rgba(239, 242, 234, 0.6);                              // Erste 
 $global-rgba-2: rgba(205, 218, 201, 0.65);                             // Zweite Farbe für Buttons
 // 2015-10-16 Anpassung der Buttons (Farbe und Gradient)
 $global-button-font-color: #000000;                                    // Schriftfarbe der Buttons
-$global-button-font-hover-color: #000000;                              // Hover-Schriftfarbe der Buttons
-$global-button-color: #F0F6E7;                                         // Hintergrundfarbe der Buttons
-$global-button-hovercolor: #FFFFFF;                                    // Hover-Hintergrundfarbe der Buttons
+$global-button-font-hover-color: #FFFFFF;                              // Hover-Schriftfarbe der Buttons
+$global-button-color: #D1D2D4;                                         // Hintergrundfarbe der Buttons
+$global-button-hovercolor: #0D4FA0;                                    // Hover-Hintergrundfarbe der Buttons
 $global-button-gradient: 50%;                                          // Höhe des Gradienten auf den Buttons (weniger=oben; mehr=unten)
 $global-button-gradient-1: $global-rgba-1 0%;                          // Startwert des Gradienten
 $global-button-gradient-2: $global-rgba-2 $global-button-gradient;     // Endwert des Gradienten
@@ -82,15 +82,18 @@ $global-button-font-boxed: #FFFFFF;                                    // Schrif
 $global-button-rgba-1: rgba(143, 182, 116, 0.6);                       // Erste Farbe für Buttons innerhalb von Boxen im Checkout
 $global-button-rgba-2: rgba(138, 174, 108, 0.65);                      // Zweite Farbe für Buttons innerhalb von Boxen im Checkout
 
-$global-footer-backgroundcolor: #F0F6E7;                               // Hintergrundfarbe des Footers
-$global-footer-fontcolor: #4D4D4D;                                     // Schriftfarbe des Footers
+$global-footer-backgroundcolor: transparent;                           // Hintergrundfarbe des Footers
+$global-footer-fontcolor: #999999;                                     // Schriftfarbe des Footers
+$global-footer-linkcolor: #9C0000;                                     // Linkfarbe im Footer
 
 $global-header-gradientcolor-1: #7EAA6F;                               // Start-Gradientfarbe im Header
 $global-header-gradientcolor-2: $global-linkcolor;                     // End-Gradientfarbe im Header
 
 $global-box-title-backgroundcolor: #E0E6D7;                            // Hintergrund der Titelleiste aller normalen Boxen
 $global-box-content-backgroundcolor: #FFFFFF;                          // Hintergrund des Inhaltes aller normalen Boxen
-$global-box-bordercolor: #C1D0BB;                                      // Randfarbe aller normalen Boxen
+$global-box-bordercolor: #CC3300;                                      // Randfarbe aller normalen Boxen
+$global-box-bottomcolor: #AEAFB3;                                      // Randfarbe für normale Boxen unten
+$global-box-link-color: #034EA2;                                       // Linkfarbe innerhalb von normalen Boxen
 
 $global-category-font-color: #333333;                                  // Textfarbe der Kategorie-Navigation
 $global-category-hover-color: #333333;                                 // Hover-Farbe der Kategorie-Navigation

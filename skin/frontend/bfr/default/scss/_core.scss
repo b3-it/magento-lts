@@ -56,7 +56,7 @@
 //  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
-@import "../../../egov/default/scss/module/buttons";
+@import "module/buttons";
 @import "../../../egov/default/scss/module/select-language";
 @import "../../../egov/default/scss/module/product-list";
 @import "../../../egov/default/scss/module/catalog-product";
