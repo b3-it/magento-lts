@@ -32,6 +32,31 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 	
 	}
 	
+	
+	/**
+	 * Nachträgliches laden der Storeabhängigen pdf-Template konfiguration
+	 * @param unknown $observer
+	 */
+	public function onCustomerGroupLoadAfter($observer)
+	{
+		$store = Mage::app()->getRequest()->getParam('store');
+		if(!isset($store)){
+			$store = 0;
+		}
+		
+		$customerGroup = Mage::registry('current_group');
+		$pdfStores = Mage::getModel('pdftemplate/customergroup_store')->loadByStore($customerGroup->getId(), $store);
+		$data = $customerGroup->getData();
+		$data['store_id'] = $store;
+		$data['invoice_template'] = $pdfStores->getInvoiceTemplateId();
+		$data['shipping_template'] = $pdfStores->getShippingTemplateId();
+		$data['creditmemo_template'] = $pdfStores->getCreditmemoTemplateId();
+		
+		Mage::registry('current_group')->setData($data);
+	}
+	
+	
+	
 	public function onCustomerGroupSaveAfter($observer)
 	{
 		
@@ -120,16 +145,8 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 		                'values' => $pdf->toOptionArray(Egovs_Pdftemplate_Model_Type::TYPE_CREDITMEMO)
 		            )
 		        );
-	        
-		        $customerGroup = Mage::registry('current_group');
-		        $pdfStores = Mage::getModel('pdftemplate/customergroup_store')->loadByStore($customerGroup->getId(), $store);
-		        $data = $customerGroup->getData();
-		        $data['store_id'] = $store;
-		        $data['invoice_template'] = $pdfStores->getInvoiceTemplateId();
-		        $data['shipping_template'] = $pdfStores->getShippingTemplateId();
-		        $data['creditmemo_template'] = $pdfStores->getCreditmemoTemplateId();
 		        
-	            $form->addValues($data);
+	            $form->addValues( Mage::registry('current_group')->getData());
 	        }
 			
 		}

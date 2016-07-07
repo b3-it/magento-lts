@@ -52,6 +52,15 @@
 					</pdftemplate>
 				</observers>
 			</customer_group_save_after>
+			<customer_group_load_after>
+				<observers>
+					<pdftemplate>
+						<type>singleton</type>
+						<class>pdftemplate/observer</class>
+						<method>onCustomerGroupLoadAfter</method>
+					</pdftemplate>
+				</observers>
+			</customer_group_load_after>			
 			<core_block_abstract_prepare_layout_after>
 			<observers>
 					<pdftemplate>
