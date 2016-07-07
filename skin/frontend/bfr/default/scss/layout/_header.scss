@@ -230,8 +230,9 @@
     border-bottom: $global-active-border solid $global-navigation-border-color;
 
     background-image: url($global-header-background-image);
-    background-position: 55% -50px;
+    background-position: 50% 0;
     background-repeat: no-repeat;
+    background-color: $global-header-background-color;
 
     height: $global-header-height;
 

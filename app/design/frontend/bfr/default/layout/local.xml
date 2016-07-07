@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="removeItem"><type>skin_js</type><name>js/app_egov.js</name></action>
+        </reference>
+    </default>
+</layout>
