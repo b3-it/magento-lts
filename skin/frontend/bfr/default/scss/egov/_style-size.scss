@@ -47,7 +47,7 @@ $global-tdpadding: 5px;
 $global-listmargin: 15px;
 $golbal-msgpadding: 20px;
 $global-btn-padding-h: 10px;
-$global-btn-padding-v: 5px;
+$global-btn-padding-v: 10px;
 
 $global-logo-width: 260px;
 $global-logo-height: 104px;
@@ -85,12 +85,11 @@ $global-checkout-op-height: 40px;
 $global-checkout-op-number: 26px;
 $global-checkout-op-boxmargin: 15px;
 
-$global-header-height: 200px;
+$global-header-height: 150px;
 
 $global-welcome-header: 70px;
-$global-welcome-left: 295px;
-
 $global-welcome-header-top: 30px;
+$global-welcome-left: 295px;
 
 $global-message-margintop: 20px;
 $global-message-marginbottom: 20px;
@@ -100,53 +99,35 @@ $global-min-page-width: 320px;
 
 // Angabe aller Breiten in Pixel
 $global-fullpage-width      : 100%;
-$global-leftcol-width       : 20%;
-$global-leftcol-marginright : 3%;
-$global-content-paddingleft : 3%;
-$global-content-width       : 55%;
-$global-content-marginright : 3%;
-$global-rightcol-marginright: 3%;
-$global-rightcol-width      : 20%;
 
-$global-rightcol-margintop : 48px;
-$global-content-paddingtop : 20px;
+$global-leftcol-width       : 15%;
+$global-leftcol-marginright : 1%;
+
+$global-rightcol-width      : 15%;
+$global-rightcol-marginleft : 1%;
+
+$global-sum-left : $global-leftcol-width + $global-leftcol-marginright;
+$golbal-sum-right: $global-rightcol-width + $global-rightcol-marginleft;
+
+$global-content-marginleft : 0;
+$global-content-marginright: 0;
 
 // Berechnung aller Breiten in Prozent
-$global-3col-factor                 : 1.4; // Verhältnis zwischen Linker- und Hauptspalte bei 3-Spaltig
-$global-leftcol-percent             : 20%;
-$global-leftcol-rightmargin-percent : 3%;
-$global-rightcol-leftmargin-percent : 3%;
-$global-rightcol-percent            : 20%;
-$global-rightcol-3col-percent       : $global-rightcol-percent * $global-3col-factor;
-$global-rightcol-rightmargin-percent: 3%;
-$global-content-leftpadding-percent : 3%;
+$global-content-width: 99 - $global-sum-left - $golbal-sum-right - $global-content-marginleft - $global-content-marginright;
 
-// Breite der Linken Spalte mit dem Abstand nach rechts
-$global-left-col-fixed  : $global-leftcol-width + $global-leftcol-marginright;
-$global-left-col-percent: $global-leftcol-percent + $global-leftcol-rightmargin-percent;
+$global-2L-leftcol-width      : $global-leftcol-width;
+$global-2L-leftcol-marginright: $global-leftcol-marginright;
+$global-2L-content-marginleft : $global-content-marginleft;
+$global-2L-content-marginright: $global-content-marginright;
+$global-2L-content-width      : 99 - $global-2L-leftcol-width - $global-2L-leftcol-marginright - $global-2L-content-marginleft - $global-2L-content-marginright;
 
-// Breite der Rechten Spalte mit dem Abstand nach links und rechts
-$global-right-col-fixed   : $global-content-marginright + $global-rightcol-width + $global-rightcol-marginright;
-$global-right-col-percent : $global-rightcol-leftmargin-percent + $global-rightcol-percent + $global-rightcol-rightmargin-percent;
-$global-right-3col-percent: $global-rightcol-leftmargin-percent + $global-rightcol-3col-percent + $global-rightcol-rightmargin-percent;
+$global-2R-rightcol-width     : $global-rightcol-width;
+$global-2R-rightcol-marginleft: $global-rightcol-marginleft;
+$global-2R-content-marginleft : $global-content-marginleft;
+$global-2R-content-marginright: $global-content-marginright;
+$global-2R-content-width      : 99 - $global-2R-rightcol-width - $global-2R-rightcol-marginleft - $global-2R-content-marginleft - $global-2R-content-marginright;
 
-// Content-Breiten (berechnet Pixel)
-$global-content-1col-width      : $global-fullpage-width - $global-content-paddingleft - $global-content-marginright;
-$global-content-2col-left-width : $global-fullpage-width - $global-left-col-fixed;
-$global-content-2col-right-width: $global-fullpage-width - $global-right-col-fixed;
-$global-content-3col-width      : $global-fullpage-width - $global-left-col-fixed - $global-right-col-fixed;
-
-// Content-Breiten (berechnet Prozent)
-$global-content-1col-percent      : 100 - $global-content-leftpadding-percent - $global-rightcol-rightmargin-percent;
-$global-content-2col-left-percent : 100 - $global-left-col-percent;
-$global-content-2col-right-percent: 100 - $global-right-col-percent;
-$global-content-3col-percent      : 100 - $global-right-3col-percent;
-
-// Breite Maincol (std + col right)
-$global-maincol-width-fixed  : $global-fullpage-width - $global-left-col-fixed;
-$global-maincol-width-percent: 100 - $global-left-col-percent;
-$global-maincol-title-fixed  : $global-maincol-width-fixed - $global-rightcol-marginright;
-$global-maincol-title-percent: percentage( $global-maincol-title-fixed / $global-maincol-width-fixed);
+$global-maincol-title-percent: 100%;
 
 //One-Page-Checkout - Breiten in Prozent
 $onepage-content-width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);

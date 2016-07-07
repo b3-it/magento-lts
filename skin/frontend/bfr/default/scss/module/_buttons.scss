@@ -23,7 +23,7 @@
     background-image: linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
     background-size: 100% auto;
 
-    border: none;
+    border: 1px solid $global-button-color;
 
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -44,7 +44,7 @@
     &:focus {
         background-color: $global-button-hovercolor $global-repeat-scroll;
         color: $global-button-font-hover-color;
-        outline: none;
+        //outline: none;
     }
 }
 
