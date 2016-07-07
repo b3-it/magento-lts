@@ -44,15 +44,16 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 			$store = 0;
 		}
 		
-		$customerGroup = Mage::registry('current_group');
+		$customerGroup = $observer->getObject();
+		
 		$pdfStores = Mage::getModel('pdftemplate/customergroup_store')->loadByStore($customerGroup->getId(), $store);
 		$data = $customerGroup->getData();
 		$data['store_id'] = $store;
 		$data['invoice_template'] = $pdfStores->getInvoiceTemplateId();
 		$data['shipping_template'] = $pdfStores->getShippingTemplateId();
 		$data['creditmemo_template'] = $pdfStores->getCreditmemoTemplateId();
+		$customerGroup->setData($data);
 		
-		Mage::registry('current_group')->setData($data);
 	}
 	
 	
