@@ -119,12 +119,14 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Weight_Grid extends Mage_Adminhtml_B
 						'index' => 'entity_id',
 
 				));
-		 
+		
+		$dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
 		$this->addColumn('order_date',
 				array(
 						'header'=> Mage::helper('catalog')->__('Date'),
 						'width' => '50px',
 						'type'  => 'date',
+						'format' => $dateFormatIso,
 						'index' => 'created_at',
 						//'filter_index' => 'order.created_at'
 				));

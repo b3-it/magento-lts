@@ -122,11 +122,13 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 	 */
 	protected function _prepareColumns()
 	{
+		$dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
 		$this->addColumn('order_date',
 				array(
 						'header'=> Mage::helper('catalog')->__('Date'),
 						'width' => '50px',
 						'type'  => 'date',
+						'format' => $dateFormatIso,
 						'index' => 'order_date',
 						'filter_index' => 'order.created_at'
 				));
