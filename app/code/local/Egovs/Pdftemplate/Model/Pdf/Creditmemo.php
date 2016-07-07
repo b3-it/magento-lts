@@ -19,11 +19,12 @@ class Egovs_Pdftemplate_Model_Pdf_Creditmemo extends Egovs_Pdftemplate_Model_Pdf
         foreach ($invoices as $invoice) 
         {
         	$order = $invoice->getOrder();
-        	//echo '<pre>'; var_dump($order->getData());die();
-        	$group = Mage::getModel('customer/group')->load($order->getCustomerGroupId());
-        	if($group->getCreditmemoTemplate() > 0)
+        	$store = $order->getStoreId();
+        	$pdfStores = Mage::getModel('pdftemplate/customergroup_store')->loadByStore($order->getCustomerGroupId(), $store);
+
+        	if(intval($pdfStores->getCreditmemoTemplateId()) > 0)
         	{
-        		$id = $group->getCreditmemoTemplate();
+        		$id = $pdfStores->getCreditmemoTemplateId();
         	}
         	else 
         	{

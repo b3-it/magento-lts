@@ -19,10 +19,12 @@ class Egovs_Pdftemplate_Model_Pdf_Shipment extends Egovs_Pdftemplate_Model_Pdf_A
         foreach ($invoices as $invoice) 
         {
         	$order = $invoice->getOrder();
-        	$group = Mage::getModel('customer/group')->load($order->getCustomerGroupId());
-        	if($group->getShippingTemplate() > 0)
+        	$store = $order->getStoreId();
+        	$pdfStores = Mage::getModel('pdftemplate/customergroup_store')->loadByStore($order->getCustomerGroupId(), $store);
+
+        	if(intval($pdfStores->getShippingTemplateId()) > 0)
         	{
-        		$id = $group->getShippingTemplate();
+        		$id = $pdfStores->getShippingTemplateId();
         	}
         	else 
         	{
