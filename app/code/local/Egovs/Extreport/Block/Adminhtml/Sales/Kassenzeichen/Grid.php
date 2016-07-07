@@ -49,10 +49,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Kassenzeichen_Grid extends Mage_Admi
 	{
 		$store = $this->_getStore();
 		 
-		if (version_compare(Mage::getVersion(), '1.4.1', '<')) {
-			/* @var $collection Mage_Core_Model_Mysql4_Collection_Abstract */
-			$collection = $this->_prepareCollection13();
-		} else {
+		
 			$collection = Mage::getResourceModel('extreport/sales_kassenzeichen_collection');
 			/* @var $collection Mage_Core_Model_Mysql4_Collection_Abstract */
 			$collection->getSelect()
@@ -103,12 +100,13 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Kassenzeichen_Grid extends Mage_Admi
 						array('email')
 				)
 			;
-		}
-
+		
+		
+		
 		$this->setCollection($collection);
 		
 		//Mage::log(sprintf('sql: %s', $this->getCollection()->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-		
+	
 		
 		parent::_prepareCollection();
 		
@@ -120,56 +118,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Kassenzeichen_Grid extends Mage_Admi
 	 * 
 	 * @return Mage_Core_Model_Mysql4_Collection_Abstract
 	 */
-	protected function _prepareCollection13 () {
-		
-		$paymentEntity = Mage::getModel('sales/order_payment')->getCollection()->getEntity();
-		$kassenzeichenAttribute = $paymentEntity->getAttribute('kassenzeichen');
-		$saferpayAttribute = $paymentEntity->getAttribute('saferpay_transaction_id');
-		$entityTable =  $kassenzeichenAttribute->getEntity()->getEntityTable();
-		
-		$collection = Mage::getResourceModel('sales/order_collection')
-			->addAttributeToSelect('*')
-			
-			->joinAttribute('company', 'order_address/company', 'billing_address_id', null, 'left')
-			->joinAttribute('billing_firstname', 'order_address/firstname', 'billing_address_id', null, 'left')
-			->joinAttribute('billing_lastname', 'order_address/lastname', 'billing_address_id', null, 'left')
-			->joinAttribute('shipping_firstname', 'order_address/firstname', 'shipping_address_id', null, 'left')
-			->joinAttribute('shipping_lastname', 'order_address/lastname', 'shipping_address_id', null, 'left')
-			->addExpressionAttributeToSelect(
-					'billing_name',
-					'CONCAT(COALESCE({{billing_firstname}}, ""), " ", COALESCE({{billing_lastname}}, ""))',
-					array('billing_firstname', 'billing_lastname')
-			)->addExpressionAttributeToSelect(
-					'shipping_name',
-					'CONCAT(COALESCE({{shipping_firstname}}, ""), " ", COALESCE({{shipping_lastname}}, ""))',
-					array('shipping_firstname', 'shipping_lastname')
-			)->joinField(
-					'payment_id',
-					$entityTable,
-					'entity_id',
-					'parent_id=entity_id',
-					'{{table}}.entity_type_id='.$kassenzeichenAttribute->getEntityTypeId(),
-					'inner'
-			)->joinField(
-					'kassenzeichen',
-					$kassenzeichenAttribute->getBackendTable(),
-					'value',
-					'entity_id=payment_id',
-					'{{table}}.attribute_id='.$kassenzeichenAttribute->getAttributeId(),
-					'inner'
-			)->joinField(
-					'saferpay_transaction_id',
-					$saferpayAttribute->getBackendTable(),
-					'value',
-					'entity_id=payment_id',
-					'{{table}}.attribute_id='.$saferpayAttribute->getAttributeId(),
-					'left'
-			)
-		;
-		
-		return $collection;
-	}
-
+	
 	/**
 	 * Initialisiert die Spalten
 	 *
@@ -240,7 +189,8 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Kassenzeichen_Grid extends Mage_Admi
 				'align'     => 'center',
 				'width' 	=> '80px',
 				'index'     => 'created_at',
-				'gmtoffset' => true
+				'gmtoffset' => true,
+				'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
 		));
 
 		$this->addColumn('kassenzeichen',
@@ -334,5 +284,30 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Kassenzeichen_Grid extends Mage_Admi
 		return $this->getUrl('*/*/grid', array('_current'=>true, 'action'=>'kassenzeichen'));
 	}
 
+	/**
+	 * Filterkondition für Datumsfeld der Bestellung
+	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+	 *
+	 * @return void
+	 */
+	protected function _filterCreatedAtCondition($collection, $column) {
+		if (!$value = $column->getFilter()->getValue()) {
+			return;
+		}
+		if(isset( $value['from']) && isset( $value['to'])){
+			$condition = sprintf("((main_table.created_at >= '%s') && (main_table.created_at <= '%s'))", $value['from']->ToString('yyyy-MM-dd'),  $value['to']->ToString('yyyy-MM-dd') );
+			$collection->getSelect()->where($condition);
+		}
+		else if(isset( $value['from'])){
+			$condition = sprintf("((main_table.created_at >= '%s'))", $value['from']->ToString('yyyy-MM-dd'));
+			$collection->getSelect()->where($condition);
+		}
+		else if(isset( $value['to'])){
+			$condition = sprintf("((main_table.created_at <= '%s'))", $value['to']->ToString('yyyy-MM-dd') );
+			$collection->getSelect()->where($condition);
+		}
+			
+	}
 
 }

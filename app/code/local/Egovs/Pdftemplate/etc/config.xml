@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_Pdftemplate>
-            <version>0.1.5</version>
+            <version>0.1.6</version>
         </Egovs_Pdftemplate>
     </modules>
     <admin>
@@ -43,6 +43,24 @@
 					</pdftemplate>
 				</observers>
 			</customer_group_save_before>
+			<customer_group_save_after>
+				<observers>
+					<pdftemplate>
+						<type>singleton</type>
+						<class>pdftemplate/observer</class>
+						<method>onCustomerGroupSaveAfter</method>
+					</pdftemplate>
+				</observers>
+			</customer_group_save_after>
+			<customer_group_load_after>
+				<observers>
+					<pdftemplate>
+						<type>singleton</type>
+						<class>pdftemplate/observer</class>
+						<method>onCustomerGroupLoadAfter</method>
+					</pdftemplate>
+				</observers>
+			</customer_group_load_after>			
 			<core_block_abstract_prepare_layout_after>
 			<observers>
 					<pdftemplate>
@@ -72,6 +90,9 @@
                     <blocks>
                     	 <table>pdftemplate_blocks</table>
                     </blocks>
+                    <customergroup_store>
+                    	<table>pdftemplate_customergroup_store</table>
+                    </customergroup_store>
                 </entities>
             </pdftemplate_mysql4>
             <sales>

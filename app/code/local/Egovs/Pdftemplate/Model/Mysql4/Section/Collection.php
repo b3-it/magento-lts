@@ -16,7 +16,7 @@ class Egovs_Pdftemplate_Model_Mysql4_Section_Collection extends Mage_Core_Model_
      * @return array
      * @deprecated Use getByTemplateId
      */
-	public function getByTempalteId($id) {
+	public function xxgetByTempalteId($id) {
     	return $this->getByTemplateId($id);
     }
     

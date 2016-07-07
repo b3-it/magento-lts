@@ -182,6 +182,16 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			return;
 		}
 		
+		
+		$store = Mage::app()->getRequest()->getParam('store');
+		if(!isset($store)){
+			$store = 0;
+		}
+		
+		if($store > 0){
+			return;
+		}
+		
 		$customerGroup = Mage::registry('current_group');
 		
 		if (!$customerGroup || $customerGroup->isEmpty()) {
