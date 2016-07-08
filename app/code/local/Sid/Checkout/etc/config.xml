@@ -126,7 +126,7 @@
         <layout>
             <updates>
                 <checkout>
-                    <file>sid/sidcheckout.xml</file>
+                    <file>checkout.xml</file>
                 </checkout>
             </updates>
         </layout>
