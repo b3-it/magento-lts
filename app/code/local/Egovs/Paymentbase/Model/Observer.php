@@ -195,7 +195,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 	 * @return Egovs_Paymentbase_Model_Observer
 	 */
 	public function cleanExpiredGatewayOrders($schedule) {
-		$payments = array('giropay', 'saferpay', 'paypage', 'payplacepaypage', 'payplacegiropay');
+		$payments = array('giropay', 'saferpay', 'paypage', 'payplacepaypage', 'payplacegiropay', 'egovs_girosolution_giropay', 'egovs_girosolution_creditcard');
 		
 		foreach ($payments as $payment) {
 			$lifetimes = Mage::getConfig()->getStoresConfigByPath("payment/$payment/cancel_order_after");
@@ -211,31 +211,17 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 				$lifetime *= 60;
 			
 				$orders = Mage::getModel('sales/order')->getCollection();
-				if (version_compare(Mage::getVersion(), '1.4.1', '<')) {
-					/* @var $orders Mage_Sales_Model_Entity_Order_Collection */
-					$orders->addAttributeToFilter('state', array('eq' => Mage_Sales_Model_Order::STATE_PENDING_PAYMENT))
-						->joinAttribute('payment_id', 'order_payment/entity_id', 'entity_id', 'parent_id')
-						->joinAttribute('payment_method',
-								'order_payment/method',
-								'payment_id',
-								null,
-								null,
-								$storeId
-						)
-					;
 				
-					$orders->addAttributeToFilter('payment_method', $payment);
-				} else {
-					//Magento > 1.4.1
-					/* @var $orders Mage_Sales_Model_Resource_Order_Collection */
-					$orders->addFieldToFilter('state', array('eq' => Mage_Sales_Model_Order::STATE_PENDING_PAYMENT));
-					$orders->join(
-								array('payment_table' => 'sales/order_payment'),
-								$orders->getConnection()->quoteInto('parent_id=main_table.entity_id AND method = ?', $payment),
-								array('payment_method' => 'method')
-							)
-					;
-				}
+				//Magento > 1.4.1
+				/* @var $orders Mage_Sales_Model_Resource_Order_Collection */
+				$orders->addFieldToFilter('state', array('in' => array(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT, Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW)));
+				$orders->join(
+							array('payment_table' => 'sales/order_payment'),
+							$orders->getConnection()->quoteInto('parent_id=main_table.entity_id AND method = ?', $payment),
+							array('payment_method' => 'method')
+						)
+				;
+
 				$orders->addFieldToFilter('store_id', $storeId);
 				
 				$dateObj = Mage::app()->getLocale()->date(time() - $lifetime);
@@ -255,21 +241,29 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 					);
 				}
 				
-				//$orders->walk('cancel');
 				foreach ($orders->getAllIds() as $id) {
+					/** @var $item Mage_Sales_Model_Order */
 					$item = Mage::getModel('sales/order')->load($id);
 					
 					if ($item->isEmpty()) {
 						continue;
 					}
+					
+					if ($item->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
+						//Girosolution Besonderheiten
+						if ($item->hasInvoices()) {
+							//Rechnungen werden bei Girosolution erst nach der Bestätigung bei Girosolution erstellt
+							continue;
+						}
+						
+						//Im State STATE_PAYMENT_REVIEW ist kein Cancel möglich!
+						$item->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT, false, Mage::helper('paymentbase')->__('Modifying state for further processing.'), false);
+					}
 					/* @var $item Mage_Sales_Model_Order */
 					if ($item->canCancel()) {
 						$item->cancel();
 						//Der Kunde muss nicht benachrichtigt werden, da er noch keine Mail über die Bestellung erhalten hat!
-						$item->addStatusToHistory(
-								Mage_Sales_Model_Order::STATE_CANCELED,
-								Mage::helper('paymentbase')->__('Payment session has expired.')
-						);
+						$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired.')).
 						$item->save();
 						continue;
 					}
@@ -299,15 +293,9 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 						//Irgendetwas stimmt nicht
 						if ($item->canHold()) {
 							$item->hold();
-							$item->addStatusToHistory(
-									Mage_Sales_Model_Order::STATE_HOLDED,
-									Mage::helper('paymentbase')->__('Payment session has expired, but an unknown error occured. Please contact support!')
-							);
+							$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired, but an unknown error occured. Please contact support!'));
 						} else {
-							$item->addStatusToHistory(
-									$item->getState(),
-									Mage::helper('paymentbase')->__('Payment session has expired, hold is not possible an unknown error occured. Please contact support!')
-							);
+							$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired, hold is not possible an unknown error occured. Please contact support!'));
 						}
 						$item->save();
 						continue;
@@ -331,13 +319,12 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 					$item->setTotalCanceled($item->getGrandTotal() - $item->getTotalPaid());
 					$item->setBaseTotalCanceled($item->getBaseGrandTotal() - $item->getBaseTotalPaid());
 					
-					$item->setData('state', Mage_Sales_Model_Order::STATE_CANCELED);
-					$status = $item->getConfig()->getStateDefaultStatus($item->getState());
-					$item->setStatus($status);
-					$comment = Mage::helper('paymentbase')->__('Payment session has expired.');
-					$history = $item->addStatusHistoryComment($comment, false); // no sense to set $status again
-					$history->setIsCustomerNotified(false); // for backwards compatibility
-					
+					$item->setState(
+							Mage_Sales_Model_Order::STATE_CANCELED,
+							false,
+							Mage::helper('paymentbase')->__('Payment session has expired.'),
+							false
+					);
 					Mage::dispatchEvent('order_cancel_after', array('order' => $item));
 					
 					$item->save();
