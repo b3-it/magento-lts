@@ -55,6 +55,33 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Options_Grid extends Mage_Adminhtml_
 
 		return $this;
 	}
+	
+	/**
+	 * Filterkondition für Datumsfeld der Bestellung
+	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+	 *
+	 * @return void
+	 */
+	protected function _filterCreatedAtCondition($collection, $column) {
+		if (!$value = $column->getFilter()->getValue()) {
+			return;
+		}
+		if(isset( $value['from']) && isset( $value['to'])){
+			$condition = sprintf("((order_items.created_at >= '%s') && (order_items.created_at <= '%s'))", $value['from']->ToString('yyyy-MM-dd'),  $value['to']->add('1', Zend_Date::DAY)->ToString('yyyy-MM-dd') );
+			$collection->getSelect()->where($condition);
+			die($condition);
+		}
+		else if(isset( $value['from'])){
+			$condition = sprintf("((order_items.created_at >= '%s'))", $value['from']->ToString('yyyy-MM-dd'));
+			$collection->getSelect()->where($condition);
+		}
+		else if(isset( $value['to'])){
+			$condition = sprintf("((order_items.created_at <= '%s'))", $value['to']->ToString('yyyy-MM-dd') );
+			$collection->getSelect()->where($condition);
+		}
+			
+	}
 
 	protected function _filterQtyCondition($collection, $column)
     {
@@ -70,12 +97,15 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Options_Grid extends Mage_Adminhtml_
             'header'    =>Mage::helper('catalog')->__('SKU'),
             'index'     => 'sku',
         )); */
-        
+		$dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
 		$this->addColumn('created_at', array(
             'header'    => Mage::helper('sales')->__('Ordered'),
             'index'     => 'created_at',
-			'type'		=> 'date',
-			'filter_index'	=> 'order_items.created_at'
+			'type'		=> 'datetime',
+ 			'gmtoffset' => false,
+			'format' => $dateFormatIso,
+			'filter_index'	=> 'order_items.created_at',
+			//'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
         ));
         
         $this->addColumn('product_name', array(

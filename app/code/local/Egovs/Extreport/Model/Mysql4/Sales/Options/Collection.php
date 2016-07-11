@@ -3,7 +3,10 @@
 /**
  *
  * Product Options reports resource collection
- *
+ * 
+ * Kann keine Optionen die nur Textfelder sind anzeigen!
+ * Zeigt nur Optionen mit Mehrfachauswahl (DropDown) an.
+ * 
  * @category   	Egovs
  * @package    	Egovs_Extreport
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
@@ -81,9 +84,9 @@ class Egovs_Extreport_Model_Mysql4_Sales_Options_Collection extends Mage_Core_Mo
 //            ->order(array('product_id', 'option_title', 'value_title'))
         ;
         
-//		$sql = $this->getSelect()->assemble();
-//		echo $sql.'<br>';
-//		Mage::log($sql, Zend_Log::DEBUG, 'sql.log');
+		/* $sql = $this->getSelect()->assemble();
+		echo $sql.'<br>';
+		Mage::log($sql, Zend_Log::DEBUG, 'sql.log'); */
         
         return $this;
 	}

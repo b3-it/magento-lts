@@ -62,14 +62,12 @@ class Egovs_Extreport_Model_Mysql4_Sales_Pbc_Collection extends Mage_Sales_Model
 					'name' => 'name'
 				)
 			)
-			->joinLeft(array('customer' => $this->getTable('customer/entity')),
-					'customer.entity_id=customer_id',
-					array('email'))
 			->joinLeft(array('order_address' => $this->getTable('sales/order_address')),
 				'order_address.entity_id=billing_address_id',
 				array(
 					'firstname',
 					'lastname',
+					'email',
 					'company',
 					'company2',
 					'company3',

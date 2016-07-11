@@ -32,7 +32,7 @@
  */
 class Egovs_Checkout_Block_Cart_Cart extends Mage_Checkout_Block_Cart
 {
-	private $_CheckoutUrl = 'egovs_checkout/multipageaa';
+	
     
     public function getDeleteAllUrl()
     {
@@ -47,12 +47,8 @@ class Egovs_Checkout_Block_Cart_Cart extends Mage_Checkout_Block_Cart
     
    public function getCheckoutUrl()
     {
-        return $this->getUrl($this->_CheckoutUrl, array('_secure'=>true));
+       return $this->helper('mpcheckout/url')->getCheckoutUrl();
     }
-    
-   	public function setCheckoutUrl($url)
-    {
-        $this->_CheckoutUrl = $url;
-    }
+   
     
 }
