@@ -73,7 +73,6 @@
         padding-top: 5px;
 
         .button {
-            font-size: $global-fontsize-small;
             padding: 3px 5px;
         }
     }
@@ -176,6 +175,24 @@
 
     td[data-rwd-label]:before {
         font-weight: 600;
+    }
+}
+
+#wishlist-sidebar {
+    .product-details {
+        .tax-details {
+            display: none;
+        }
+
+        .price-box {
+            width: 100%;
+            font-size: 1em;
+            margin: 5px 0;
+
+            .price {
+                font-size: 1em;
+            }
+        }
     }
 }
 
