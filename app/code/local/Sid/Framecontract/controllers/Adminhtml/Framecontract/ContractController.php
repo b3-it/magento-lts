@@ -168,6 +168,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 				
 				
 				$model->save();
+				$this->saveLose($model);
 				$this->saveFile('filename1', $model->getId(),Sid_Framecontract_Model_Filetype::TYP_CONFIG);
 				$this->saveFile('filename2', $model->getId(),Sid_Framecontract_Model_Filetype::TYP_INFO);
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Contract was successfully saved'));
@@ -190,6 +191,26 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
         $this->_redirect('*/*/');
 	}
  
+	
+	private function saveLose($contract)
+	{
+		if ($lose = $this->getRequest()->getPost('lose')){
+			foreach($lose as $los){
+				$model = Mage::getModel('framecontract/los')->load(intval($los['los_id']));
+				if($los['is_delete']){
+					$model->delete();
+				}else{
+					$model->setTitle($los['title']);
+					$model->setStatus(intval($los['status']));
+					$model->setNote($los['note']);
+					$model->setFramecontractContractId($contract->getId());
+					$model->save();
+				}
+			}
+		}
+	}
+	
+	
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
