@@ -132,9 +132,10 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 				if ($kInfo instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis) {
 					if ($kInfo->ergebnis->istOk == false) {
 						$msg = sprintf(
-								"%s; Error code: %s",
+								"%s; Error code: %s; Kassenzeichen: %s",
 								$this->getKassenzeichenInfo()->ergebnis->langText,
-								$this->getKassenzeichenInfo()->ergebnis->code
+								$this->getKassenzeichenInfo()->ergebnis->code,
+								$kzeichen
 						);
 						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->code])) {
 							$errors[$this->getKassenzeichenInfo()->ergebnis->code] = $msg;
