@@ -498,6 +498,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$params = var_export($request->getResponseParams(), true);
 					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
 					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+				} else {
+					$params = var_export($request->getResponseParams(), true);
+					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				}
 				$_source = $this->_getOrder();
 				if (!$_source) {
@@ -535,6 +539,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		}
 		
 		$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
+		Mage::helper("paymentbase")->sendMailToAdmin($msg, 'Fehler bei getGirosolutionRedirectURL');
 		Mage::throwException($msg);
 	}
 	
