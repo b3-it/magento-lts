@@ -92,6 +92,7 @@
 
 .nav-primary {
     @extend .egov-navheader-base;
+    margin-bottom: $global-boxmargin;
 
     ul {
         list-style-type: none;
