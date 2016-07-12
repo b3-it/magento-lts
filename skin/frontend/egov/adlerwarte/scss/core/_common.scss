@@ -76,6 +76,9 @@ input[type="radio"] {
 a {
     color: $global-linkcolor;
     text-decoration: none;
+    border-width: $global-active-border !important;
+    border-style: solid !important;
+    border-color: transparent !important;
 }
 
 a:hover {
@@ -98,10 +101,12 @@ ul {
 /* ============================================ *
  * Default-Active marking
  * ============================================ */
-:focus {
+*:focus {
     border-width: $global-active-border !important;
     border-style: solid !important;
     border-color: $global-active-color !important;
+    color: $global-category-hover-color !important;
+    background-color: $global-category-hover-bg !important;
 }
 input[type="checkbox"]:focus, input[type="radio"]:focus {
     /* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
