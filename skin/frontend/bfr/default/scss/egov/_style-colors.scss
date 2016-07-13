@@ -25,8 +25,8 @@ $global-active-color: #034EA2;                                         // Standa
 
 $global-h1-color: #333333;                                             // Farbe der Überschrift H1
 $global-h2-color: #333333;                                             // Farbe der Überschrift H2
-$global-h3-color: #59814C;                                             // Farbe der Überschrift H3
-$global-h4-color: #57585A;                                             // Farbe der Überschrift H4
+$global-h3-color: #333333;                                             // Farbe der Überschrift H3
+$global-h4-color: #333333;                                             // Farbe der Überschrift H4
 $global-h5-color: #FF0000;                                             // Farbe der Überschrift H5 (nicht verwendet!)
 $global-h6-color: #FF0000;                                             // Farbe der Überschrift H6 (nicht verwendet!)
 
@@ -36,8 +36,8 @@ $global-cart-subtotal: #59814C;                                        // Textfa
 $global-border-color: #CC3300;                                         // Farbe für normale Ränder bei Boxen
 $global-border-color-light: #E0E6D7;                                   // Farbe für helle Ränder bei Boxen
 
-$global-price-normal-color: #59814C;                                   // Farbe für Preisangaben im Katalog
-$global-price-special-color: #59814C;                                  // Farbe für spezielle Preise
+$global-price-normal-color: #57585A;                                   // Farbe für Preisangaben im Katalog
+$global-price-special-color: #57585A;                                  // Farbe für spezielle Preise
 
 $global-instock-color: #59814C;                                        // Farbe für "Auf Lager" im Katalog
 $global-available-color: #FF0000;                                      // Farbe für "Nicht Lieferbar" im Katalog
@@ -45,17 +45,17 @@ $global-available-color: #FF0000;                                      // Farbe 
 $global-minicart-background: #EBEDED;                                  // Hintergrundfarbe des Menü-Warenkorbs
 $global-sidebar-cart-background: #FFFFFF;                              // Hintergrundfarbe des Warenkorbs in der Sidebar
 
-$global-checkout-tableborder: #C1D0BB;                                 // Randfarbe der Checkout-Tabelle
-$global-checkout-thbackground: #59814C;                                // Hintergrundfarbe des Tabellkopfes im Checkout
-$global-checkout-thfontcolor: #FFFFFF;                                 // Schriftfarbe des Tabellkopfes im Checkout
+$global-checkout-tableborder: #EBEDED;                                 // Randfarbe der Checkout-Tabelle
+$global-checkout-thbackground: #EBEDED;                                // Hintergrundfarbe des Tabellkopfes im Checkout
+$global-checkout-thfontcolor: #57585A;                                 // Schriftfarbe des Tabellkopfes im Checkout
 $global-checkout-tdbackground: transparent;                            // Hintergrund der Zellen im Checkout
-$global-checkout-tdfontcolor: #000000;                                 // Schriftfarbe der zellen im Checkout
+$global-checkout-tdfontcolor: #57585A;                                 // Schriftfarbe der zellen im Checkout
 
 $global-checkout-total-background: #EBEDED;                            // Hintergrundfarbe der Tabelle für die Summen im Checkout
 $global-checkout-total-border: #E0E6D7;                                // Randfarbe der Tabelle für die Summen im Checkout
 
-$global-mp-checkout-active: #59814C;                                   // Farbe für den aktiven Schritt im Multipage-Checkout
-$global-mp-checkout-inactive: #8F8F8F;                                 // Farbe für alle inaktiven Schritte im Multipage-Checkout
+$global-mp-checkout-active: #57585A;                                   // Farbe für den aktiven Schritt im Multipage-Checkout
+$global-mp-checkout-inactive: #EBEDED;                                 // Farbe für alle inaktiven Schritte im Multipage-Checkout
 
 $global-message-background: #EBEDED;                                   // Standard-Hintergrund für Meldungen
 
@@ -83,6 +83,10 @@ $global-button-color-boxed: #59814C;                                   // Hinter
 $global-button-font-boxed: #FFFFFF;                                    // Schriftfarbe für Buttons innerhalb von Boxen im Checkout
 $global-button-rgba-1: rgba(239, 242, 234, 0.6);                       // Erste Farbe für Buttons innerhalb von Boxen im Checkout
 $global-button-rgba-2: rgba(205, 218, 201, 0.65);                      // Zweite Farbe für Buttons innerhalb von Boxen im Checkout
+
+$gobal-header-rgba-1  : rgba(215,219,220,0.65);                        // Erste Farbe für die Titelleisten der Boxen
+$gobal-header-rgba-2  : rgba(0,0,0,0);                                 // Zweite Farbe für die Titelleisten der Boxen
+$gobal-header-gradient: 60%;                                           // Höhe des Gradienten in der Titelleiste der Boxen
 
 $global-header-search-button: #9C0000;                                 // Hintergrundfarbe des Suchen-Button
 
