@@ -204,10 +204,31 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 					$model->setStatus(intval($los['status']));
 					$model->setNote($los['note']);
 					$model->setFramecontractContractId($contract->getId());
+					$id = $model->getId();
 					$model->save();
+					
+					if(!$id || isset($los['newkey']) ){
+						$model->setKey($this->getNewKey($contract, $model))->save();
+					}
+					
+					if(isset($los['sendkey'])){
+						$this->sendEMail($contract, $model);
+					}
 				}
 			}
 		}
+	}
+	
+	
+	private function getNewKey($contract, $los)
+	{
+		return sha1($contract->getId(). $los->getId(). now());
+	}
+	
+	
+	private function sendEMail($contract,$los)
+	{
+		
 	}
 	
 	
