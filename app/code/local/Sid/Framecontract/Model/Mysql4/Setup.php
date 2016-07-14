@@ -1,5 +1,5 @@
 <?php
-class Sid_Framecontract_Model_Mysql4_Setup extends Mage_Eav_Model_Entity_Setup
+class Sid_Framecontract_Model_Mysql4_Setup extends Mage_Catalog_Model_Resource_Setup//Mage_Eav_Model_Entity_Setup
 {
 	/**
 	 * Erstellt das Email-Template in der Config

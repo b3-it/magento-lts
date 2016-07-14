@@ -1,0 +1,146 @@
+<?php
+/**
+ * Personalisierungsbox für Veranstaltungsprodukte
+ */
+?>
+
+
+<div class="entry-edit">
+	<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo($this->__('Lose'))?></h4>
+    <div class="form-buttons"></div>
+</div>
+    <div id="content_form" class="fieldset ">
+    <div class="hor-scroll">
+          
+
+
+
+
+
+<?php echo $this->getChild('add_button')->toHtml();?>
+
+<div id="contract_los_box" class="grid tier form-list">
+   <table >
+   <thead>
+   <tr class="headings">
+   	<th><?php echo($this->__('Title'))?></th>
+   	<th><?php echo($this->__('Note'))?></th>
+   	<th class="type-last last"><?php echo($this->__('Status'))?></th><th/>
+   	</tr>
+   </thead>
+   <tbody>
+   <tr id="contract_los_container_bottom"/>    
+   </tbody>
+    </table>
+</div>
+
+
+            </div>
+        </div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+//<![CDATA[
+var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">' +
+							'<input type="hidden" id="contract_los_{{number}}_is_delete" name="lose[{{number}}][is_delete]" value="" />'+
+							'<input type="hidden" name="lose[{{number}}][los_id]" value="{{los_id}}" />'+
+							'<input class="input-text" id="contract_los_{{number}}_label" value="{{title}}" name="lose[{{number}}][title]" />'+
+							'</td>'+
+							'<td class="a-center"><input class="input-text"  id="contract_los_{{number}}_pos" value="{{note}}" name="lose[{{number}}][note]" /></td>' +
+							'<td class="a-center"><select class="select product-option-price-type"  id="contract_los_{{number}}_field" name="lose[{{number}}][status]">' +
+							'	<?php foreach ($this->getStatus() as $key=>$value): ?>' +
+							'			<option value="<?php echo($key)?>"><?php echo($value) ?></option>' +
+							'	<?php endforeach; ?>' +
+							'</select></td>'+
+							'<td class="a-center"><button style="" onclick="" class="scalable delete delete-personal-option " type="button" title="Option löschen" id="{{number}}"><span><span><span>Option löschen</span></span></span></button>'+
+							'</td></tr>';
+
+var contractLos = {
+    div : $('contract_los_container_bottom'),
+    templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+    templateText : firstLosTemplate,
+    itemCount : 1,
+    pos : 0,
+    add : function(data) {
+        this.template = new Template(this.templateText, this.templateSyntax);
+		if(!data){
+			var data = new Object();
+		} 
+
+        data.number = this.itemCount;
+
+        if (data.pos) {
+        	this.pos = Math.max(data.pos,this.pos);
+        }else{
+        	this.pos++;
+        	data.pos = this.pos;
+        }
+
+        Element.insert(this.div, {'before':this.template.evaluate(data)});
+
+        //set selected fieldname
+        if (data.status) {
+            $A($('contract_los_'+data.number+'_field').options).each(function(option){
+                if (option.value==data.status) option.selected = true;
+            });
+        }
+
+        
+
+        this.itemCount++;
+        this.bindRemoveButtons();
+
+    },
+    remove : function(event){
+        var element = $(Event.findElement(event, 'tr'));
+        if(element){
+            var id = element.readAttribute('id');
+            $(id+'_'+'is_delete').value = '1';
+            element.addClassName('no-display');
+            element.addClassName('ignore-validate');
+            element.hide();
+        }
+    },
+    bindRemoveButtons : function(){
+        var buttons = $$('button.delete-personal-option');
+        for(var i=0;i<buttons.length;i++){
+            if(!$(buttons[i]).binded){
+                $(buttons[i]).binded = true;
+                Event.observe(buttons[i], 'click', this.remove.bind(this));
+            }
+        }
+       // var inputs = $$('div.product-custom-options button', 'div.product-custom-options input', 'div.product-custom-options select', 'div.product-custom-options textarea');
+        
+       // inputs.each(function(el) { Event.observe(el, 'change', el.setHasChanges.bind(el));  } )
+
+    }
+}
+
+
+
+
+
+
+//validation for selected input type
+Validation.addAllThese([
+    ['required-option-select', <?php echo $this->helper('core')->jsonEncode(Mage::helper('catalog')->__('Select type of option')) ?>, function(v, elm) {
+        if (elm.getValue() == '') {
+            return false;
+        }
+        return true;
+}]]);
+
+<?php foreach ($this->getLose() as $field): ?>
+	contractLos.add(<?php echo $field->toJson() ?>);
+<?php endforeach; ?>
+
+
+
+
+//]]>
+</script>
+

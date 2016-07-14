@@ -19,6 +19,13 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tabs extends Mage_Adminhtm
           'content'   => $this->getLayout()->createBlock('framecontract/adminhtml_contract_edit_tab_form')->toHtml(),
       ));
       
+      $this->addTab('form_section0', array(
+      		'label'     => Mage::helper('framecontract')->__('Lose'),
+      		'title'     => Mage::helper('framecontract')->__('Lose'),
+      		'content'   => $this->getLayout()->createBlock('framecontract/adminhtml_contract_edit_tab_los')->toHtml(),
+      ));
+      
+      
      $this->addTab('form_section1', array(
           'label'     => Mage::helper('framecontract')->__('Configuration Files'),
           'title'     => Mage::helper('framecontract')->__('Configuration Files'),

@@ -239,8 +239,7 @@
     .links {
         ul {
              float: right;
-             margin: 0 30px 0 0;
-             border-top: 5px solid $global-wrapper-color;
+             margin: 10px 30px 0 0;
              padding: 10px 0;
              width: 55%;
 
@@ -251,6 +250,7 @@
 
                 a {
                     border-right: $global-box-border solid $global-fontcolor-dark;
+                    border-top: 5px solid $global-wrapper-color;
                     padding: 3px 8px;
                     color: $global-fontcolor-dark;
 

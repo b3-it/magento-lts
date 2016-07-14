@@ -19,6 +19,7 @@
 <!--[if IE 9 ]>    <html lang="<?php echo $this->getLang(); ?>" id="top" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--><html lang="<?php echo $this->getLang(); ?>" id="top" class="no-js"><!--<![endif]-->
     <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <?php echo $this->getChildHtml('head') ?>
     </head>
 
@@ -42,12 +43,11 @@
                                 <?php echo $this->getChildHtml('left') ?>
                             </div>
                             <div class="col-main">
-                                <?php echo $this->getChildHtml('global_messages') ?>
-                                <?php echo $this->getChildHtml('content') ?>
-
                                 <div class="col-right sidebar">
                                     <?php echo $this->getChildHtml('right') ?>
                                 </div>
+                                <?php echo $this->getChildHtml('global_messages') ?>
+                                <?php echo $this->getChildHtml('content') ?>
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_Framecontract>
-            <version>0.1.3</version>
+            <version>0.1.4</version>
         </Sid_Framecontract>
     </modules>
     <frontend>
@@ -185,6 +185,9 @@
                     <order>
                         <table>framecontract_order</table>
                     </order>
+                    <los>
+                        <table>framecontract_los</table>
+                    </los>
                 </entities>
             </framecontract_mysql4>
         </models>

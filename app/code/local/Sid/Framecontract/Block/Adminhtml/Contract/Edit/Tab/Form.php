@@ -59,6 +59,19 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
       ));
       
  	  
+      $tmp =$this->getUserStoreGroups();
+      $stores = array();
+      foreach($tmp as $k => $v){
+      	$stores[] = array('value'=>$k,'label' => $v);
+      }
+      
+      $fieldset->addField('store_id', 'select', array(
+      		'label'     => Mage::helper('framecontract')->__('Store'),
+      		'required'  => true,
+      		'values'    => $stores,
+      		'name'      => 'store_id',
+      ));
+      
 	  $fieldset = $form->addFieldset('vendor_form', array('legend'=>Mage::helper('framecontract')->__('Vendor Information')));
 	  
 	  $fieldset->addField('framecontract_vendor_id', 'select', array(
@@ -101,4 +114,21 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
       }
       return parent::_prepareForm();
   }
+  
+
+  	private function getUserStoreGroups()
+  	{
+  		if( Mage::helper('isolation')->getUserIsAdmin())
+  		{
+  			$storeGroups = array();
+  			foreach(Mage::getModel('adminhtml/system_store')->getGroupCollection()  as $storegroup)
+  			{
+  				$storeGroups[$storegroup->getId()] = $storegroup->getName();
+  			}
+  			return $storeGroups;
+  		}
+
+  		return  Mage::helper('isolation')->getUserStoreGroups();
+  	}
+  
 }

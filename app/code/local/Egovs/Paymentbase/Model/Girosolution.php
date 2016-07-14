@@ -84,7 +84,15 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
      */
     public function getTransactionId(Varien_Object $payment = null) {
     	if (!$payment) {
-    		$payment = $this->_getOrder()->getPayment();
+    		$_order = $this->_getOrder();
+    		if ($_order) {
+    			$payment = $_order->getPayment();
+    		} else {
+    			$payment = $this->getInfoInstance();
+    		}
+    	}
+    	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
+    		Mage::throwException($this->__('No kassenzeichen available!'));
     	}
     	return "{$this->_getBewirtschafterNr()}/{$payment->getKassenzeichen()}";
     }
@@ -217,6 +225,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         	
         	Mage::log("{$this->getCode()}::KASSENZEICHEN ANGELEGT:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
         	$payment->setKassenzeichen($kassenzeichen);
+        	//20160712 :: Frank Rochlitzer : Kassenzeichen auch in Quote ablegen
+        	$payment->getOrder()->getQuote()->getPayment()->setKassenzeichen($kassenzeichen);
         	
         	/** @var $payment Mage_Sales_Model_Order_Payment */
         	$payment->setTransactionId($this->getTransactionId($payment));
@@ -439,7 +449,13 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         if (Mage::getStoreConfigFlag("payment/{$this->getCode()}/epa_purpose")) {
         	$this->_fieldsArr['purpose'] = $this->_fieldsArr['merchantTxId'];
         } else {
-        	$this->_fieldsArr['purpose'] = "{$this->_getOrder()->getPayment()->getKassenzeichen()} : $desc";
+        	$_order = $this->_getOrder();
+        	if ($_order) {
+        		$_payment = $_order->getPayment();
+        	} else {
+        		$_payment = $this->getInfoInstance();
+        	}
+        	$this->_fieldsArr['purpose'] = "{$_payment->getKassenzeichen()} : $desc";
         }
 		
 		//Call to the implementation method for childrens
@@ -482,6 +498,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$params = var_export($request->getResponseParams(), true);
 					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
 					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+				} else {
+					$params = var_export($request->getResponseParams(), true);
+					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				}
 				$_source = $this->_getOrder();
 				if (!$_source) {
@@ -519,6 +539,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		}
 		
 		$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
+		Mage::helper("paymentbase")->sendMailToAdmin($msg, 'Fehler bei getGirosolutionRedirectURL');
 		Mage::throwException($msg);
 	}
 	

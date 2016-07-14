@@ -182,6 +182,14 @@ p.product-name {
     @include loadingOverlay();
 }
 
+.products-grid {
+    .actions {
+        button.button {
+            width: 90%;
+        }
+    }
+}
+
 // ---------------------------------------------
 
 @include bp(min-width, $bp-xsmall + 1) {
