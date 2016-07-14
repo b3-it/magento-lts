@@ -13,3 +13,15 @@
     border-width: 1px;
     font: 12px arial,helvetica,sans-serif;
 }
+
+#framecontract_los_0, #framecontract_los {
+	width: 48%;
+	display: inline-block;
+}
+
+#framecontract_los {
+	margin-left: 10px;
+}
+#framecontract_los_0 {
+    margin-right: 10px;
+}

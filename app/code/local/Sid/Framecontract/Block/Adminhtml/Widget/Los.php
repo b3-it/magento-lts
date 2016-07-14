@@ -10,12 +10,11 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
         			var contracts = '.json_encode($this->getFrameContract()).'
         			function changeContract(contract)
         			{	
-        				var lose = contracts[contract][\'lose\'].items;
-        				$(\''.$this->getHtmlId().'\').empty();
-        				for (var i = 0, len = lose.length; i < len; ++i) {
-   	 						$(\''.$this->getHtmlId().'\').options[i] = new Option(lose[i].title, lose[i].los_id);
-						};
-        				//alert(contract);
+        				if (typeof contracts[contract] != \'undefined\') {
+	        				var lose = contracts[contract][\'lose\'].items;
+	        				$(\''.$this->getHtmlId().'\').empty();
+	        				lose.each(function(los){$(\''.$this->getHtmlId().'\').appendChild(new Option(los.title, los.los_id));});
+        				}
         			}
         		</script>';
 		$html .='<select onchange="changeContract(this.value)" id="'.$this->getHtmlId().'_0" >';
@@ -23,13 +22,13 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
 		{
 			$html .= '<option value="'.$key.'">'.$value['label'].'</option>';
 		}
-		$html .='</select>' ;
+		$html .='</select> / ' ;
 		$html .= parent::getElementHtml();
 		
 		$tmp = '<script type="text/javascript">';
 		$tmp .= 'changeContract('.$this->getFrameContractId($this->getValue()).');';
 		$tmp .= '$A($(\''.$this->getHtmlId().'_0\').options).each(function(option){if (option.value=='.$this->getFrameContractId($this->getValue()).') option.selected = true; });';
-		$tmp .= '$A($(\''.$this->getHtmlId().'\').options).each(function(option){if (option.value=='.$this->getValue().') option.selected = true; });';
+		$tmp .= '$A($(\''.$this->getHtmlId().'\').options).each(function(option){if (option.value=='.intval($this->getValue()).') option.selected = true; });';
 		$tmp .= '</script>';
 		return $html.$tmp;
 	}
@@ -85,11 +84,32 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
 		return $this->_contracts;
 	}
 	
- 	public function xgetAfterElementHtml()
+	public function getReadonly()
+	{
+		if($this->isUsed()){
+			return true;
+		}
+		if ($this->hasData('readonly_disabled')) {
+			return $this->_getData('readonly_disabled');
+		}
+	
+		return $this->_getData('readonly');
+	}
+	
+	public function isUsed()
+	{
+		return false;
+	}
+	
+ 	public function getAfterElementHtml()
     {
         $html = parent::getAfterElementHtml();
-        return $html." xxxxxxxxxxxxxxxx <script>
+        if($this->getReadonly()){
+        	return $html." <script>
         				$('".$this->getHtmlId()."').disable();
+        				$('".$this->getHtmlId()."_0').disable();
         				</script>";
+        }
+        return $html;
     }
 }
