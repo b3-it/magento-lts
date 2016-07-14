@@ -107,10 +107,10 @@ $emailData['text'] = '<html xmlns="http://www.w3.org/1999/xhtml">
 					<tr>
 						<td valign="top">
 							<p>
-							Your Request to {{product.name}} has been accepted! Visit your  <a href="{{store url="checkout/cart/}}">website</a> again and finalize your application."
+							Your Request to {{var product.name}} has been accepted! Visit your  <a href="{{store url="checkout/cart/}}">website</a> again and finalize your application."
 							</p>
 							<p>
-							Ihre Bewerbung für {{product.name}} wurde akzeptiert! Bitte besuchen Sie unsere <a href="{{store url="checkout/cart/}}">Website</a> ernaut um die Anmeldung abzuschließen."
+							Ihre Bewerbung für {{var product.name}} wurde akzeptiert! Bitte besuchen Sie unsere <a href="{{store url="checkout/cart/}}">Website</a> ernaut um die Anmeldung abzuschließen."
 							</p>
 		        </td>
 					</tr>

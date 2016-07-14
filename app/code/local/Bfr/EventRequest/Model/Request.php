@@ -109,8 +109,8 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	$data['customer'] = $this->getCustomer();
     	$data['product'] = $this->getProduct();
     	$data['created_time'] = $this->getCreatedTime();
-    	$this->setLog(sprintf("Sende Email über Zulassung an %s für Produkt %s",$this->getCustomer(),$this->getProduct()));
-    	Mage::helper('eventrequest')->sendEmail($this->getCustomer()->getEmail(), $this->getCustomer(), $data, 'eventrequest/email/eventrequest_accept_template');
+    	$this->setLog(sprintf("Sende Email über Zulassung an %s für Produkt %s",$this->getCustomer()->getId(),$this->getProduct()->getId()));
+    	Mage::helper('eventrequest')->sendEmail($this->getCustomer()->getEmail(), $this->getCustomer(), $data, 'event_request/email/eventrequest_accept_template');
     }
     
     

@@ -16,8 +16,8 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
   {
       parent::__construct();
       $this->setId('requestGrid');
-      $this->setDefaultSort('request_id');
-      $this->setDefaultDir('ASC');
+      $this->setDefaultSort('eventrequest_request_id');
+      $this->setDefaultDir('DESC');
       $this->setSaveParametersInSession(true);
   }
 
