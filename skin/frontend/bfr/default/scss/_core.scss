@@ -42,7 +42,7 @@
 // Layout
 @import "layout/global";
 @import "layout/header";
-@import "../../../egov/default/scss/layout/header-nav";
+@import "layout/header-nav";
 @import "layout/header-search";
 @import "../../../egov/default/scss/layout/header-account";
 @import "layout/header-cart";
@@ -93,7 +93,7 @@
 @import "../../../egov/default/scss/module/popular-terms";
 @import "../../../egov/default/scss/module/widget";
 @import "../../../egov/default/scss/module/checkout-multi-address";
-@import "../../../egov/default/scss/module/my-account";
+@import "module/my-account";
 @import "../../../egov/default/scss/module/my-recent-tags";
 
 

@@ -1,0 +1,310 @@
+//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Nav - Skip Link
+ * ============================================ */
+
+.skip-nav {
+    width: 40%;
+
+    &:not(.skip-active):hover {
+        text-decoration: none;
+
+        .icon {
+            background-position: -50px+4px ($toolbar-icon-padding-offset/2);
+        }
+    }
+}
+
+.skip-nav .label {
+    display: inline;
+}
+
+.skip-nav .icon {
+    @extend .icon-sprite;
+    background-position: 0+4px ($toolbar-icon-padding-offset/2);
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, 500px) {
+
+    .skip-nav {
+        width: 25%;
+    }
+
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .skip-nav {
+        display: none;
+    }
+
+}
+
+/* ============================================ *
+ * Nav - Skip Content
+ * ============================================ */
+
+// ---------------------------------------------
+
+@include bp(min-width, $bp-medium + 1) {
+    #header-nav {
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    #egov-nav {
+        position: relative;
+        top: 35px;
+
+        a {
+            display: block;
+            width: auto;
+        }
+    }
+}
+
+/* ============================================ *
+ * Nav Primary
+ * ============================================ */
+
+@include bp(min-width, $bp-medium + 1) {
+    .nav-primary {
+        display: block;
+        margin-top: $global-category-margintop;
+        margin-right: $global-category-marginright;
+    }
+
+}
+
+/* ============================================ *
+ * General Navigation Styles
+ * ============================================ */
+
+.nav-primary {
+    @extend .egov-navigation-background;
+
+    ul {
+        list-style-type: none;
+    }
+
+    .egov-catalog-title {
+        a, a:hover {
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        font-family: $base-font-family;
+        display: block;
+        border: $global-active-border solid transparent;
+
+        &:hover, &:active {
+            color: $global-navigation-font-hover !important;
+            text-decoration: none;
+        }
+    }
+
+    li.level0 {
+        > ul > li > a {
+            background-color: $global-navigation-color;
+
+            border-top: $global-active-border solid transparent;
+            border-left: $global-active-border solid transparent;
+            border-right: $global-active-border solid transparent;
+            border-bottom: $global-active-border solid $global-navigation-border-color;
+
+            color: $global-navigation-font-color;
+            font-size: $global-navigation-font-size;
+            padding: 7px 20px 8px;
+        }
+
+        > ul > li.last > a {
+            border-bottom: $global-active-border solid transparent;
+        }
+    }
+
+    li.level1 {
+        > ul li a {
+            padding-top: $global-subcat-paddingtop;
+            padding-right: $global-subcat-paddingright;
+            padding-bottom: $global-subcat-paddingbottom;
+            padding-left: $global-subcat-paddingleft;
+            color: $global-navigation-font-color;
+        }
+    }
+
+    a.level0 {
+        @extend .egov-navigation-base;
+        padding: 17px 10px;
+        font-size: 1.05em;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    li {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+
+    li.active {
+        > a {
+            color: $global-linkcolor-active !important;
+        }
+    }
+
+    li.level1 a {
+    }
+}
+
+// Show sub-menus when JS adds the appropriate classes
+.nav-primary .menu-active > ul.level0,
+.nav-primary li.level0 li.sub-menu-active > ul {
+    display: block;
+}
+
+.nav-primary li.level0 > a {
+}
+
+/* ============================================ *
+ * Small Viewports - Accordion Style Menu
+ * ============================================ */
+
+@include bp(max-width, $bp-medium) {
+
+    .nav-primary {
+
+        // Increase clickable area of anchors for small viewports
+        a.level0,
+        a {
+        }
+
+        // Hide all sub-menus
+        li.level0 ul {
+        }
+
+        // Indent sub-menus
+        li.level0 li {
+            padding: 0 0 0 25px;
+        }
+
+        li.level1 a {
+            padding: 0 15px 0 25px;
+        }
+
+        li.parent > a:after {
+        }
+
+        // Menu active states
+        li.parent.sub-menu-active > a:after,
+        li.parent.menu-active > a:after {
+        }
+
+        li.menu-active > a,
+        li.sub-menu-active > a {
+            color: $global-linkcolor-active;
+        }
+    }
+}
+
+/* ============================================ *
+ * Large Viewports - Dropdown Menu
+ * ============================================ */
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .nav-primary {
+
+        a.level0 {
+            width:100%;
+        }
+
+        li.level0,
+        a.level0 {
+            display: inline-block;
+        }
+
+        li:last-child > a {
+            border-bottom: none;
+        }
+
+        a:hover,
+        li:hover > a,
+        li.active > a {
+            color: $global-category-hover-color;
+            text-decoration: underline;
+        }
+
+        .menu-active {
+            z-index: 200;
+        }
+
+        /* Default styles for 1+ drop-down menus */
+        li.level0 ul {
+            position: relative;
+            left: $global-subcat-left;
+            top: $global-subcat-top;
+            z-index: 10;
+            width: auto;
+            display: none; /* Hide until displayed. */
+
+            li {
+                a {
+                    display: block;
+                }
+            }
+        }
+
+        li.level1 {
+            //padding-left: 0px !important;
+        }
+
+        /* Level 2+ */
+        li.level1 ul {
+        }
+
+        /* Class for js to add briefly to evaluate element positioning. */
+        li.level0 ul.level0.position-test {
+            display: block;
+        }
+
+        /* Correct menus that will hang off the page (class added by js) */
+        li.level0 ul.level0.spill {
+            right: 0;
+            left: auto;
+
+            // Sub-menu drop down to the left
+            li.level1 ul {
+                left: auto;
+                right: 50px;
+                top: 20px;
+            }
+        }
+
+        /* Level 1+ */
+        li.level0 li.parent > a {
+            position: relative;
+
+            &:after {
+            }
+        }
+    }
+}
+
+.nav-primary li.menu-active {
+    > ul {
+        display: block;
+    }
+}

@@ -129,49 +129,31 @@
 
 .egov-navigation-background {
     *zoom: 1;
-    *zoom: 1;
-    background-size: 100% 45px;
-
-    background-color: $global-category-item-color;
-    background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-    background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-    background-image: linear-gradient(to bottom, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-
-    /* Für IE9/IE10 Filter setzen */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2',GradientType=0 );
+    border-bottom: 2px solid #cddcec;
+    border-top: 4px solid $global-active-color;
+    color: $global-active-color;
 }
 
 .egov-navheader-base {
-    box-shadow: 0 1px 2px 1px $global-text-shadow;
-    border-radius: $global-radius $global-radius 0 0;
-    border: $global-box-border solid $global-lightcolor;
-    font-size: $global-category-fontsize;
+    margin: 0;
+    background-color: transparent;
 
-    li, a {
-        line-height: $global-navigation-line-height;
+    li a {
     }
 }
 
 // Wechselnde Pfeile in den Navigationen
 .egov-navigation-base {
     width: 100%;
-    padding: 7px 25px 7px 13px;
-    line-height: $global-navigation-line-height;
-    text-shadow: $global-category-textshadow;
 }
 .egov-arrow-main-closed {
-    @extend .egov-navigation-base;
-    background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
 }
 .egov-arrow-main-open {
-    @extend .egov-navigation-base;
-    background: $global-content-background url($global-category-arrow-full-down) $global-norepeat-scroll 95% 55%;
+    font-weight: bold;
 }
 .egov-arrow-sub-closed {
-    background: $global-content-background url($global-category-arrow-light-right) $global-norepeat-scroll 2% 50%;
 }
 .egov-arrow-sub-open {
-    background: $global-content-background url($global-category-arrow-light-down) $global-norepeat-scroll 2% 50%;
 }
 
 .egov-float-left {

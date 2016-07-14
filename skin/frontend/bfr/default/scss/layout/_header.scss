@@ -457,23 +457,14 @@ a.skip-link {
 
     #header-account li a,
     .nav-primary a.level0 {
-        padding: 0 15px 0 25px;
-        border-bottom: $global-box-border solid $global-border-color;
-        text-align: left;
-        color: $global-linkcolor;
-        text-transform: uppercase;
-        line-height: 30px;
     }
 
     #header-account li:last-child a,
     .nav-primary li.level0:last-child a.level0 {
-        border-bottom: 0;
     }
 
     .no-touch #header-account a:hover,
     .no-touch .nav-primary a:hover {
-        background-color: $c-module-background;
-        text-decoration: none;
     }
 }
 
