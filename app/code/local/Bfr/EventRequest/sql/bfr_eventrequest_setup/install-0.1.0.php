@@ -41,7 +41,7 @@ if (!$installer->tableExists($installer->getTable('eventrequest/request')))
 
 if (!$installer->getAttribute('catalog_product', 'eventrequest')) {
 	$installer->addAttribute('catalog_product', 'eventrequest', array(
-			'label' => 'With Request',
+			'label' => 'requires approval',
 			'input' => 'select',
 			'type' => 'int',
 			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,

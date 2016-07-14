@@ -162,6 +162,15 @@
                     </bfr_eventrequest_add_item>
                 </observers>
             </sales_quote_add_item>
+            <checkout_entry_before>
+        		<observers>	
+        			<productlimit>
+        				<type>singleton</type>
+        				<class>Bfr_EventRequest_Model_Observer</class>
+        				<method>onCheckoutEntryBefore</method>
+        			</productlimit>
+        		</observers>
+        	</checkout_entry_before>
         </events>
         <sales>
 			<quote>
