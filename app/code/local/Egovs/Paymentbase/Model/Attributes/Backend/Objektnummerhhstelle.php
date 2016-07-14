@@ -40,7 +40,7 @@ class Egovs_Paymentbase_Model_Attributes_Backend_Objektnummerhhstelle
 			->where('ob.paymentbase_haushaltsparameter_id=?', $value);
 		//Mage::log($collection->getSelect()->__toString(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);	
 		
-		if (count($collection) == 0) {
+		if (count($collection) == 0 && $this->getAttribute()->getIsRequired()) {
 			//$label = $this->getAttribute()->getFrontend()->getLabel();
 			Mage::throwException(Mage::helper('eav')->__('Wrong correlation to Haushaltsstelle.'));
 		}
