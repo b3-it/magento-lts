@@ -34,7 +34,7 @@ class Egovs_Paymentbase_Model_System_Config_Backend_SyncBankAccountData extends 
         	
         	if (!$_autoSync) {
         		Mage::getSingleton('adminhtml/session')->addNotice(
-        			Mage::helper('paymentbase')->__('Bank account data synchronization with ePayBL is not enabled. Please enable it under Payments/ePayBL Settings')
+        			Mage::helper('paymentbase')->__('Bank account data synchronization with ePayBL is not enabled. Please enable it under Payment Services/ePayBL Settings')
         		);
         	} else {
 	        	try {
@@ -51,7 +51,7 @@ class Egovs_Paymentbase_Model_System_Config_Backend_SyncBankAccountData extends 
         	}
         }         
 		
-        if ($this->getField() == 'auto_sync_epaybl_data') {
+        if ($this->getField() == 'auto_sync_epaybl_data_now') {
 	        //Am Ende muss es immer deaktiviert sein
 	        $this->setValue(false);
         }

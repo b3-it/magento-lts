@@ -455,6 +455,11 @@
     			<merchant_name>{{config path="general/imprint/shop_name"}}</merchant_name>
     		</payplace>
     	</payment_services>
+    	<general>
+    		<imprint>
+    			<auto_sync_epaybl_data_now>0</auto_sync_epaybl_data_now>
+    		</imprint>
+    	</general>
      </default>
 
 	<crontab>

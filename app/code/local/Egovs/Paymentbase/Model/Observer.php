@@ -555,7 +555,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 		 
 		if (!$_autoSync) {
 			Mage::log(
-				Mage::helper('paymentbase')->__('Bank account data synchronization with ePayBL is not enabled. Please enable it under Payments/ePayBL Settings'),
+				Mage::helper('paymentbase')->__('Bank account data synchronization with ePayBL is not enabled. Please enable it under Payment Services/ePayBL Settings'),
 				Zend_Log::INFO,
 				Egovs_Helper::LOG_FILE
 			);

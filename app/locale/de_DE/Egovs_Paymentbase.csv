@@ -164,7 +164,7 @@
 "Bank account data synchronized with ePayBL Server","Bankdaten wurden erfolgreich von ePayBL geladen"
 "Synchronize bank account data with ePayBL Bewirtschafter data","Bankdaten des Bewirtschafters jetzt von ePayBL laden?"
 "Automatic Sync ePayBL Data","Bankdaten des Bewirtschafters automatisch von ePayBL laden?"
-"Bank account data synchronization with ePayBL is not enabled. Please enable it under Payments/ePayBL Settings","Die Synchronisation der Bankdaten mit der ePayBL ist nicht aktiviert! Es muss erst unter Zahlarten/ePayBL Einstellungen aktiviert werden."
+"Bank account data synchronization with ePayBL is not enabled. Please enable it under Payment Services/ePayBL Settings","Die Synchronisation der Bankdaten mit der ePayBL ist nicht aktiviert! Es muss erst unter Zahlungsdienste/ePayBL Einstellungen aktiviert werden."
 "Household parameters are not initialized.","Es wurden noch nicht alle Haushaltsparameter definiert!"
 "Click <a href=""%s"">here</a> to set up your household parameters.","<a href=""%s"">Hier</a> klicken um die Konfiguration abzuschließen."
 
