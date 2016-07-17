@@ -121,14 +121,42 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     private function reactivateQuote()
     {
     	$id = $this->getQuoteId();
-    	$old = Mage::getModel('sales/quote')->loadByIdWithoutStore($this->getQuoteId());
-    	$new = Mage::getModel('sales/quote')->loadByCustomer($this->getCustomer());
-    	if($new->getId()){
-    		$new->merge($old);
-    		return $this;
-    	}
+    	$quote = Mage::getModel('sales/quote')->loadByIdWithoutStore($this->getQuoteId());
+    	//$new = Mage::getModel('sales/quote')->loadByCustomer($this->getCustomer());
+    	//if($new->getId()){
+    	//	$new->merge($old);
+    	//	return $this;
+    	//}
+ 		if (Mage::getSingleton('customer/session')->getCustomerId()) 
+    		{
+	    		$customerQuote = Mage::getModel('sales/quote')
+	    		->setStoreId(Mage::app()->getStore()->getId())
+	    		->loadByCustomer(Mage::getSingleton('customer/session')->getCustomerId());
+	    	
+	    		if ($customerQuote->getId() && $quote->getId() != $customerQuote->getId()) {
+	    				$customerQuote->merge($quote)
+	    				->collectTotals()
+	    				->save();
+	    	
+	    			$this->setQuoteId($customerQuote->getId());
+	    	
+	    			if ($quote->getId()) {
+	    				$quote->delete();
+	    			}
+	    			$this->setQuoteId($customerQuote->getId())
+	    				->save();
+	    		}else {
+	    			$quote->setIsActive(true)->save();
+	    		}
+    		}else {
+	    			$quote->setIsActive(true)->save();
+	    	}
+    
     	
-    	$old->setIsActive(true)->save();
+    	
+    	
+    	
+    	
     }
     
     /**
