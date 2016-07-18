@@ -455,7 +455,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         	} else {
         		$_payment = $this->getInfoInstance();
         	}
-        	$this->_fieldsArr['purpose'] = "{$_payment->getKassenzeichen()} : $desc";
+        	$this->_fieldsArr['purpose'] = mb_substr("{$_payment->getKassenzeichen()} : $desc", 0, 27, "UTF-8");
         }
 		
 		//Call to the implementation method for childrens
