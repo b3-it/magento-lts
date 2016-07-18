@@ -47,7 +47,7 @@
 		<menu>
 			<event module="eventrequest">
 				<title>Events</title>
-				<sort_order>71</sort_order>
+				<sort_order>41</sort_order>
 				<children>
 					<eventrequest_request module="eventrequest">
 						<title>Application</title>
