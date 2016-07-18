@@ -109,7 +109,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		try {
 			$order = $observer['order'];
 			$quoteItems= $order->getAllItems();
-			$customer_id = $order->getCustomer()->getId();
+			$customer_id = $order->getCustomerId();
 			foreach($quoteItems as $item)
 			{
 				if($item->getProduct()->getEventrequest() == 1){

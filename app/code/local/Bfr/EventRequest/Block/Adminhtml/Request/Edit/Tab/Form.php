@@ -50,12 +50,10 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit_Tab_Form extends Mage_Adminh
       
       if($this->getModelData()->getStatus() == Bfr_EventRequest_Model_Status::STATUS_REQUESTED)
       {
-      	$opt = Bfr_EventRequest_Model_Status::getAllOptions();
-      	array_pop($opt);
 	      $fieldset->addField('status', 'select', array(
 	          'label'     => Mage::helper('eventrequest')->__('Status'),
 	          'name'      => 'status',
-	          'values'    => $opt,
+	          'values'    => Bfr_EventRequest_Model_Status::getAllOptions(true),
 	      	  'value'		=> $this->getModelData()->getStatus(),
 	      	 
 	      		
