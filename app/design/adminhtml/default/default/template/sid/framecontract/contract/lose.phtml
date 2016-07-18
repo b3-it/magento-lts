@@ -27,7 +27,10 @@
    <tr class="headings">
    	<th><?php echo($this->__('Title'))?></th>
    	<th><?php echo($this->__('Note'))?></th>
-   	<th class="type-last last"><?php echo($this->__('Status'))?></th><th/>
+   	<th class="type-last last"><?php echo($this->__('Status'))?></th>
+   	<th>Link erneuern</th>
+   	<th>Link versenden</th>
+   	<th/>
    	</tr>
    </thead>
    <tbody>
@@ -56,6 +59,8 @@ var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">'
 							'			<option value="<?php echo($key)?>"><?php echo($value) ?></option>' +
 							'	<?php endforeach; ?>' +
 							'</select></td>'+
+							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][newkey]" /></td>'+
+							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][sendlink]" /></td>'+
 							'<td class="a-center"><button style="" onclick="" class="scalable delete delete-personal-option " type="button" title="Option löschen" id="{{number}}"><span><span><span>Option löschen</span></span></span></button>'+
 							'</td></tr>';
 

@@ -35,6 +35,8 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Los extends Mage_Admin
   		return $collection->getItems();
   }
   
+  
+  
   public function getStatus()
   {
   	return Sid_Framecontract_Model_Status::getOptionArray();

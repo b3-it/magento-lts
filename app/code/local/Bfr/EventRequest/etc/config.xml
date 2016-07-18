@@ -162,6 +162,24 @@
                     </bfr_eventrequest_add_item>
                 </observers>
             </sales_quote_add_item>
+            <checkout_entry_before>
+        		<observers>	
+        			<productlimit>
+        				<type>singleton</type>
+        				<class>Bfr_EventRequest_Model_Observer</class>
+        				<method>onCheckoutEntryBefore</method>
+        			</productlimit>
+        		</observers>
+        	</checkout_entry_before>
+        	<sales_order_save_commit_after>
+                <observers>
+                    <invoice_pay_tuc_tan>
+                        <type>singleton</type>
+                        <class>Bfr_EventRequest_Model_Observer</class>
+                        <method>onSalesOrderSaveCommitAfter</method>
+                    </invoice_pay_tuc_tan>
+                </observers>  
+            </sales_order_save_commit_after> 
         </events>
         <sales>
 			<quote>
