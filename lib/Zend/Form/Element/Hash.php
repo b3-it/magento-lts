@@ -20,7 +20,10 @@
  */
 
 /** Zend_Form_Element_Xhtml */
-#require_once 'Zend/Form/Element/Xhtml.php';
+require_once 'Zend/Form/Element/Xhtml.php';
+
+/** @see Zend_Crypt_Math */
+require_once 'Zend/Crypt/Math.php';
 
 /**
  * CSRF form protection
@@ -105,7 +108,7 @@ class Zend_Form_Element_Hash extends Zend_Form_Element_Xhtml
     public function getSession()
     {
         if (null === $this->_session) {
-            #require_once 'Zend/Session/Namespace.php';
+            require_once 'Zend/Session/Namespace.php';
             $this->_session = new Zend_Session_Namespace($this->getSessionName());
         }
         return $this->_session;
@@ -249,10 +252,7 @@ class Zend_Form_Element_Hash extends Zend_Form_Element_Xhtml
     protected function _generateHash()
     {
         $this->_hash = md5(
-            mt_rand(1,1000000)
-            .  $this->getSalt()
-            .  $this->getName()
-            .  mt_rand(1,1000000)
+            Zend_Crypt_Math::randBytes(32)
         );
         $this->setValue($this->_hash);
     }
