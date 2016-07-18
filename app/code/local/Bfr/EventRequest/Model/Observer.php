@@ -46,7 +46,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 			return $this;
 		}
 
-		//falls der Kunde sich bereits für die Veranstaltung angeledet hat
+		//falls der Kunde sich bereits für die Veranstaltung angemeldet hat
 		if($productAdd->getEventrequest() == 1)
 		{
 			$request = Mage::getModel('eventrequest/request')->loadByCustomerAndProduct($customer_id, $productAdd->getId());

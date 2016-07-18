@@ -16,7 +16,7 @@ class Bfr_EventRequest_Model_Status extends Varien_Object
     const STATUS_ACCEPTED	= 2;
     const STATUS_REJECTED	= 3;
     const STATUS_ORDERED	= 4;
-    const STATUS_CANCELED	= 5;
+    //const STATUS_CANCELED	= 5;
 
     static public function getOptionArray()
     {
@@ -25,7 +25,7 @@ class Bfr_EventRequest_Model_Status extends Varien_Object
             self::STATUS_ACCEPTED   => Mage::helper('eventrequest')->__('Accepted'),
             self::STATUS_REJECTED   => Mage::helper('eventrequest')->__('Rejected'),
             self::STATUS_ORDERED   => Mage::helper('eventrequest')->__('Ordered'),
-        	self::STATUS_CANCELED   => Mage::helper('eventrequest')->__('Canceled')
+        	//self::STATUS_CANCELED   => Mage::helper('eventrequest')->__('Canceled')
         );
     }
 
