@@ -32,16 +32,17 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		$n = 0;
 		foreach($quoteItems as $item)
 		{
-			if($item->getParentItem() !== null ){
-				$n++;
+			if($item->getParentItem() === null ){
+				$n += $item->getQty();
 			}
 		}
 		
+		$n += $productAdd->getQty();
 		//falls ein Produkt mit eventrequest darf nur alleine im Warenkorb liegen
 		if(($productAdd->getEventrequest() == 1) && ($n > 1))
 		{
 			$quote->deleteItem($quoteItem);
-			Mage::throwException(Mage::helper('eventrequest')->__('%s may be contained only once in the cart.',$productAdd->getName()));
+			Mage::throwException(Mage::helper('eventrequest')->__('%s has to be alone in the cart.',$productAdd->getName()));
 			return $this;
 		}
 

@@ -44,6 +44,14 @@ class Egovs_EventBundle_Model_Observer
         $request = $observer->getEvent()->getRequest();
         $product = $observer->getEvent()->getProduct();
 
+        
+        if($product->getTypeId() != Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE)
+        {
+        	return $this;
+        }
+        
+        
+        
         if (($items = $request->getPost('bundle_options')) && !$product->getCompositeReadonly()) {
             $product->setBundleOptionsData($items);
         }
@@ -71,8 +79,10 @@ class Egovs_EventBundle_Model_Observer
             (bool)$request->getPost('affect_bundle_product_selections') && !$product->getCompositeReadonly()
         );
         $storeId = $request->getParam('store');
+        $has_personal = false;
         if ($personals = $request->getPost('personal_options')){
         	foreach($personals as $personal){
+        		$has_personal = true;
         		$model = Mage::getModel('eventbundle/personal_option')->load(intval($personal['id']));
         		if($personal['is_delete']){
         			$model->delete();
@@ -87,6 +97,10 @@ class Egovs_EventBundle_Model_Observer
 	        		$model->save();
         		}
         	}
+        }
+        
+        if($has_personal && $product->getEventrequest()){
+        	Mage::getSingleton('adminhtml/session')->addWarning(Mage::helper('eventbundle')->__('Using both "personal options" and "requires approval" is not recommended!'));
         }
         
         return $this;
