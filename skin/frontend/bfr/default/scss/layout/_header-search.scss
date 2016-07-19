@@ -38,31 +38,17 @@
  * ============================================ */
 
 #header-search {
-    padding: 20px;
-}
+    display: block;
 
-// ---------------------------------------------
-
-#header-search {
-    position: absolute;
-    background-color: transparent;
-    width: 215px;
-    top: 150px;
-    padding: 0px !important;
-    z-index: 99;
-    right: 0;
-    height: 28px;
+    input[type="text"] {
+        margin: 0;
+    }
 }
 
 
 @include bp(min-width, $bp-medium + 1) {
 
     #header-search {
-        display: block; // Force visibility
-        top: 15px;
-        right: 0;
-        width: 24%;
-        padding: 0;
     }
 }
 
@@ -74,7 +60,6 @@
 
 @include bp(min-width, 910px) {
     #header-search {
-        top: 15px;
     }
 }
 

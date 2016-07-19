@@ -65,21 +65,17 @@
     font-family: $base-font-family;
 
     .welcome-header {
-        text-align: left;
-        margin-left: $global-logo-left;
+        margin: 0 $global-logo-left;
         position: relative;
         top: $global-header-height - 50px;
 
         h1 {
             color: $global-fontcolor-light;
-            display: inline-block;
     	  }
 
         .welcome-msg {
             color: $global-fontcolor-light;
-            height: 1em;
             float: right;
-            margin-right: 30px;
             position: relative;
             top: -10px;
         }
@@ -110,6 +106,25 @@
 /* ============================================ *
  * Language switcher + welcome message
  * ============================================ */
+#header-function-block {
+    display: inline-block;
+    float: right;
+    width: 400px;
+    margin-right: 15%;
+
+    .store-language-container {
+        display: inline-block;
+
+
+        label {
+            display: none;
+        }
+        select {
+            max-width: 100%;
+            margin: 0;
+        }
+    }
+}
 
 .header-language-background {
 
@@ -130,21 +145,6 @@
 
     .welcome-msg {
         float: right;
-    }
-}
-
-.store-language-container {
-    float: right;
-    position: relative;
-    right: 6px;
-    top: 90px;
-    z-index: 999;
-
-    label {
-        display: none;
-    }
-    select {
-        max-width: 100%;
     }
 }
 
@@ -230,40 +230,38 @@
     border-bottom: $global-active-border solid $global-navigation-border-color;
 
     background-image: url($global-header-background-image);
-    background-position: 50% 0;
     background-repeat: no-repeat;
     background-color: $global-header-background-color;
+    background-size: 100%;
 
     height: $global-header-height;
 
     .links {
+        float: right;
+        margin: 0 15% 0 0;
+
         ul {
-             float: right;
-             margin: 10px 30px 0 0;
-             padding: 10px 0;
-             width: 55%;
+            padding: 10px 0;
+            border-top: 5px solid $global-wrapper-color;
 
-             li {
-                float: left;
-                list-style-type: none;
+            li {
+               display: inline;
+               list-style-type: none;
+               padding: 3px 8px;
+               border-right: $global-box-border solid $global-fontcolor-dark;
 
+               a {
+                   color: $global-fontcolor-dark;
 
-                a {
-                    border-right: $global-box-border solid $global-fontcolor-dark;
-                    border-top: 5px solid $global-wrapper-color;
-                    padding: 3px 8px;
-                    color: $global-fontcolor-dark;
+                   &:hover, &:active {
+                       background-color: $global-navigation-hover-color;
+                       color: $global-navigation-color;
+                   }
+               }
 
-                    &:hover, &:active {
-                        background-color: $global-navigation-hover-color;
-                        color: $global-navigation-color;
-                    }
-                }
-
-                &.last > a  {
-                    border-right: none;
-                }
-
+               &.last {
+                   border-right: none;
+               }
             }
         }
     }
@@ -465,23 +463,6 @@ a.skip-link {
 
     .no-touch #header-account a:hover,
     .no-touch .nav-primary a:hover {
-    }
-}
-
-.account-cart-wrapper {
-    position: absolute;
-    top:5px;
-    right:25%;
-    width: 80%;
-    text-align: right;
-
-    @include bp(max-width, $bp-medium) {
-        position: static;
-    }
-
-    @include bp(max-width, 910px) {
-        right: 0;
-        width: 100%;
     }
 }
 
