@@ -53,7 +53,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		
 		$config = GiroCheckout_SDK_Config::getInstance();
 		$config->setConfig('DEBUG_MODE', $this->getDebug());
-		$config->setConfig('DEBUG_PATH', Mage::getBaseDir('var') . DS . 'log';);
+		$config->setConfig('DEBUG_PATH', Mage::getBaseDir('var') . DS . 'log');
 		
 		parent::__construct();
     }
