@@ -290,6 +290,12 @@
             left: $global-product-image-3-width + 1%;
         }
     }
+
+    .product-name {
+        h1 {
+            font-size: $global-h2-size;
+        }
+    }
 }
 
 .product-view {

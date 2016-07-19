@@ -173,14 +173,8 @@ p.note-msg {
 }
 
 .page-title h1,
-.page-title h2,
-.product-name h1,
-.product-name .h1 {
-    @include pageTitle;
-}
-
-.page-title h1,
 .page-title h2 {
+    @include pageTitle;
     border-bottom: $global-box-border solid $global-linkcolor;
 }
 
