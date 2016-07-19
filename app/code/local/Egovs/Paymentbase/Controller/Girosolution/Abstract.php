@@ -344,8 +344,6 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     		$notify->parseNotification($this->getRequest()->getParams());
     		
     		if (!$notify->paymentSuccessful()) {
-    			Mage::log(sprintf("$module:: Girosolution payment unsuccessful!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-    			
     			switch (intval($notify->getResponseParam("gcResultPayment"))) {
     				/* Giropay
     				 * 4001 	giropay Bank offline
@@ -399,6 +397,9 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     				default:
     					$msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
     			}
+    			
+    			$data = var_export($notify->getResponseParams(), true);
+    			Mage::log(sprintf("$module:: Girosolution payment unsuccessful : %s\r\n%s", $msg, $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
     			
     			$orderFound = $paymentMethod->modifyOrderAfterPayment(
     					false,
