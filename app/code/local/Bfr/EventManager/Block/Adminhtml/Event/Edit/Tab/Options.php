@@ -1,7 +1,7 @@
 <?php
 /**
  * Bfr EventManager
- *
+ * Anzeige der gekauften UnterProdukte
  *
  * @category   	Bfr
  * @package    	Bfr_EventManager
@@ -34,7 +34,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 	{
 		return Mage::registry('event_data');
 	}
-	  
+
+	/**
+	 * Filter für die Produkte die zur Option des aktuellen Tabs gehören
+	 * @return multitype:unknown
+	 */
 	protected function getSelections()
 	{
 			$res = array();
@@ -47,6 +51,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 			return $res;
 	}
   
+	
+  /**
+   * Ermitteln aller verfügbaren Unterprodukte für das Bundle 
+   */
+	 
   protected function getAllSelections()
   {
   	if($this->_selections == null){
@@ -66,66 +75,32 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   
   protected function _prepareCollection()
   {
-      $collection = Mage::getModel('eventmanager/participant')->getCollection();
-      $collection->getSelect()
-      	->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status'))
-      	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
-      	->where('event_id='.$this->getEvent()->getId());
+	$collection = Mage::getModel('sales/order')->getCollection();
       
+      foreach($this->getSelections() as $product){
+      	$col = 'col_'.$product->getId();
+      	$collection->getSelect()
+      	->joinLeft(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = main_table.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'name'));
+      }
+      
+      $collection->getSelect()
+      ->distinct()
+      ->columns(array('name'=>"TRIM(CONCAT(customer_firstname,' ',customer_lastname))"));
+    //die( $collection->getSelect()->__toString());  
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
   
   
   
-  protected function getSoldProductsIds($parentOrderItemId)
-  {
-  	$res = array();
-  	if($parentOrderItemId){
-  		$collection = Mage::getModel('sales/order_item')->getCollection();
-  		$collection->getSelect()->where('parent_item_id = '. $parentOrderItemId);
-  	  
-  		foreach($collection->getItems() as $item)
-  		{
-  			$res[$item->getProductId()] = $item->getProductId();
-  		}
-  	}
-  	return $res;
-  }
-  
-  
-  protected function _afterLoadCollection()
-  {
-  		foreach($this->getCollection()->getItems() as $item)
-  		{
-  			$soldProducts = $this->getSoldProductsIds($item->getOrderItemId());
-  			foreach($this->getSelections() as $col)
-  			{
-  				
-  				if(isset($soldProducts[$col->getId()])){
-  					$item->setData('col_'.$col->getId(),$col->getName());
-  				}else{
-  					$item->setData('col_'.$col->getId(),false);
-  				}
-  			}
-  		}
-  		
-  		return $this;
-  }
-
+ 
   protected function _prepareColumns()
   {
-      $this->addColumn('op_participant_id', array(
-          'header'    => Mage::helper('eventmanager')->__('ID'),
-          'align'     =>'right',
-          'width'     => '50px',
-          'index'     => 'participant_id',
-      ));
 
       $this->addColumn('op_created_time', array(
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
-      		'index'     => 'created_time',
+      		'index'     => 'created_at',
       		'type'	=> 'Date',
       		'width'     => '100px',
       ));
@@ -161,7 +136,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 					'align'     =>'left',
 					'index'     => 'col_'.$col->getId(),
 					'width'     => '100px',
-					//'filter_condition_callback' => array($this, '_filterNameCondition'),
+					'filter_condition_callback' => array($this, '_filterDynamicCondition'),
 			));
 		}
 
@@ -190,7 +165,20 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   }
   
 
- 
+ /**
+  * die Filterbedingungen für die dynymischen Spalten 
+  * @param unknown $collection
+  * @param unknown $column
+  */
+  protected function _filterDynamicCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  
+  	$condition = $column->getIndex().'.name like ?';
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
   
   /**
    * FilterIndex
