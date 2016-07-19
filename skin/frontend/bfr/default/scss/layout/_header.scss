@@ -114,10 +114,7 @@
     margin-right: 15.5%;
     margin-top: $global-logo-top;
 
-    border-width: $global-active-border;
-    border-style: solid;
-    border-color: $global-minicart-background;
-
+    @include default-border-box;
     @include element-shadow;
 
     .header-function-row {
@@ -222,9 +219,7 @@
     margin-left: $global-logo-left;
     margin-bottom: $global-logo-bottom;
 
-    -webkit-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.84);
-    -moz-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.84);
-    box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.84);
+    @include element-shadow;
 
     img {
         max-width: 100%;
@@ -367,6 +362,7 @@
     background-color: $global-wrapper-color;
     color: $global-linkcolor;
     text-align: center;
+    @include hidden-border;
 }
 
 a.skip-link {
