@@ -46,12 +46,35 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit_Tab_Form extends Mage_Adminh
       		'value'		=> $this->getModelData()->getProductName()
       ));
       
-      $fieldset->addField('status', 'select', array(
-          'label'     => Mage::helper('eventrequest')->__('Status'),
-          'name'      => 'status',
-          'values'    => Bfr_EventRequest_Model_Status::getAllOptions(),
-      	  'value'		=> $this->getModelData()->getStatus()
-      ));
+      
+      
+      if($this->getModelData()->getStatus() == Bfr_EventRequest_Model_Status::STATUS_REQUESTED)
+      {
+	      $fieldset->addField('status', 'select', array(
+	          'label'     => Mage::helper('eventrequest')->__('Status'),
+	          'name'      => 'status',
+	          'values'    => Bfr_EventRequest_Model_Status::getAllOptions(true),
+	      	  'value'		=> $this->getModelData()->getStatus(),
+	      	 
+	      		
+	      ));
+      }else{
+      
+      	$fieldset->addField('status1', 'select', array(
+      			'label'     => Mage::helper('eventrequest')->__('Status'),
+      			'name'      => 'status',
+      			'values'    => Bfr_EventRequest_Model_Status::getAllOptions(),
+      			'value'		=> $this->getModelData()->getStatus(),
+      			'disabled'  =>true,
+	      	    'class'     => 'disabled',
+      			 
+      	));
+      	$fieldset->addField('status', 'hidden', array(
+      			'label'     => Mage::helper('eventrequest')->__('Status'),
+      			'name'      => 'status',
+      			'value'		=> $this->getModelData()->getStatus(),
+      	));
+      }
 
       $fieldset->addField('note', 'editor', array(
           'name'      => 'note',

@@ -22,4 +22,19 @@ class Sid_Framecontract_Model_Contract extends Mage_Core_Model_Abstract
     	
     	return parent::_beforeDelete();
     }
+    
+    
+    public function alterLosStatus($status)
+    {
+    	$collection = Mage::getModel('framecontract/los')->getCollection();
+    	$collection->getSelect()->where('framecontract_contract_id = '. intval($this->getId()));
+    	
+    	foreach($collection->getItems() as $los)
+    	{
+    		if($los->getStatus() != $status){
+    			$los->setStatus($status)
+    				->save();
+    		}
+    	}
+    }
 }

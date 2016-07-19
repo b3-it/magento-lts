@@ -63,8 +63,17 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
 	{
 				
 		$collection = Mage::getModel('catalog/product')->getCollection()
-			->addAttributeToSelect(array('name', 'sku','framecontract','groupscatalog_hide_group'));
+			->addAttributeToSelect(array('name', 'sku','framecontract_los','groupscatalog_hide_group'));
 		
+		$eav = Mage::getResourceModel('eav/entity_attribute');
+		$eav = $eav->getIdByCode('catalog_product', 'framecontract_los');
+		
+		
+		$collection->getSelect()
+			->join(array('los' => $collection->getTable('catalog/product').'_int'),'los.entity_id = e.entity_id AND los.attribute_id='.$eav,array('framecontract_los'=>'value'))
+			->join(array('contract'=>$collection->getTable('framecontract/contract')),'contract.framecontract_contract_id = los.value',array('framecontract_contract_id'));
+
+		//die($collection->getSelect()->__toString());
 		$this->setCollection($collection);
 		return parent::_prepareCollection();
 	}
@@ -118,10 +127,22 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
           'header'    => Mage::helper('framecontract')->__('Framework Contract'),
           'align'     => 'left',
           'width'     => '150px',
-          'index'     => 'framecontract',
+          'index'     => 'framecontract_contract_id',
           'type'      => 'options',
           'options'   => $ctr
       ));
+		
+		$lose = Mage::getModel('framecontract/source_attribute_lose');
+		$ctr = ($lose->getOptionArray(false));
+		
+		$this->addColumn('los', array(
+				'header'    => Mage::helper('framecontract')->__('Los'),
+				'align'     => 'left',
+				'width'     => '150px',
+				'index'     => 'framecontract_los',
+				'type'      => 'options',
+				'options'   => $ctr
+		));
 
 		return parent::_prepareColumns();
 	}

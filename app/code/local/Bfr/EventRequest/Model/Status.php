@@ -15,13 +15,17 @@ class Bfr_EventRequest_Model_Status extends Varien_Object
     const STATUS_REQUESTED	= 1;
     const STATUS_ACCEPTED	= 2;
     const STATUS_REJECTED	= 3;
+    const STATUS_ORDERED	= 4;
+    //const STATUS_CANCELED	= 5;
 
     static public function getOptionArray()
     {
         return array(
             self::STATUS_REQUESTED    => Mage::helper('eventrequest')->__('Requested'),
             self::STATUS_ACCEPTED   => Mage::helper('eventrequest')->__('Accepted'),
-            self::STATUS_REJECTED   => Mage::helper('eventrequest')->__('Rejected')
+            self::STATUS_REJECTED   => Mage::helper('eventrequest')->__('Rejected'),
+            self::STATUS_ORDERED   => Mage::helper('eventrequest')->__('Ordered'),
+        	//self::STATUS_CANCELED   => Mage::helper('eventrequest')->__('Canceled')
         );
     }
 
@@ -42,7 +46,7 @@ static public function getAllOption()
  *
  * @return array
  */
-static public function getAllOptions()
+static public function getAllOptions($hideOrderStatus = false)
 {
   $res = array(
       array(
@@ -51,10 +55,13 @@ static public function getAllOptions()
       )
   );
   foreach (self::getOptionArray() as $index => $value) {
-    $res[] = array(
-        'value' => $index,
-        'label' => $value
-    );
+  	if(!$hideOrderStatus || ($index < self::STATUS_ORDERED))
+  	{
+	    $res[] = array(
+	        'value' => $index,
+	        'label' => $value
+	    );
+  	}
   }
   return $res;
 }

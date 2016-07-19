@@ -152,7 +152,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
+    protected function x_prepareMassaction()
     {
         $this->setMassactionIdField('participant_id');
         $this->getMassactionBlock()->setFormFieldName('participant');

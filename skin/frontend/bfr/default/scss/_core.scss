@@ -21,7 +21,7 @@
 //    Variablen werden in "_framework.scss" eingebunden
 @import "../../../egov/default/scss/egov/bitv";
 @import "../../../egov/default/scss/egov/video";
-@import "../../../egov/default/scss/egov/egov-base";
+@import "egov/egov-base";
 @import "../../../egov/default/scss/egov/fa-icons";
 @import "../../../egov/default/scss/egov/mp-checkout";
 @import "../../../egov/default/scss/egov/checkiban";
@@ -42,10 +42,10 @@
 // Layout
 @import "layout/global";
 @import "layout/header";
-@import "../../../egov/default/scss/layout/header-nav";
+@import "layout/header-nav";
 @import "layout/header-search";
 @import "../../../egov/default/scss/layout/header-account";
-@import "../../../egov/default/scss/layout/header-cart";
+@import "layout/header-cart";
 @import "layout/footer";
 
 
@@ -80,7 +80,7 @@
 @import "../../../egov/default/scss/module/checkout-cart-minicart";
 @import "module/search";
 @import "../../../egov/default/scss/module/account-reviews";
-@import "../../../egov/default/scss/module/account-login";
+@import "module/account-login";
 @import "module/cms";
 @import "../../../egov/default/scss/module/pricing_conditions";
 @import "../../../egov/default/scss/module/cookies";
@@ -93,7 +93,7 @@
 @import "../../../egov/default/scss/module/popular-terms";
 @import "../../../egov/default/scss/module/widget";
 @import "../../../egov/default/scss/module/checkout-multi-address";
-@import "../../../egov/default/scss/module/my-account";
+@import "module/my-account";
 @import "../../../egov/default/scss/module/my-recent-tags";
 
 

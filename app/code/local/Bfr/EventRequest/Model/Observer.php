@@ -24,24 +24,38 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		$quoteItem = $observer->getQuoteItem();
 		$quote = $quoteItem->getQuote();
 		$productAdd = $quoteItem->getProduct();
+		$customer_id = $quote->getCustomer()->getId();
 		
 		$quoteItems= $quote->getAllItems();
 		
+		//Produkte im Warenkorb zählen
 		$n = 0;
 		foreach($quoteItems as $item)
 		{
-			if($item->getParentItem() !== null ){
-				$n++;
+			if($item->getParentItem() === null ){
+				$n += $item->getQty();
 			}
 		}
 		
+		$n += $productAdd->getQty();
+		//falls ein Produkt mit eventrequest darf nur alleine im Warenkorb liegen
 		if(($productAdd->getEventrequest() == 1) && ($n > 1))
 		{
 			$quote->deleteItem($quoteItem);
-			Mage::throwException(Mage::helper('eventrequest')->__('%s has to be alone in basket!',$productAdd->getName()));
+			Mage::throwException(Mage::helper('eventrequest')->__('%s has to be alone in the cart.',$productAdd->getName()));
 			return $this;
 		}
 
+		//falls der Kunde sich bereits für die Veranstaltung angemeldet hat
+		if($productAdd->getEventrequest() == 1)
+		{
+			$request = Mage::getModel('eventrequest/request')->loadByCustomerAndProduct($customer_id, $productAdd->getId());
+			if($request->getId() && !$request->isAccepted()){
+	 					Mage::throwException(Mage::helper('eventrequest')->__('A application of %s has been found!',$item->getProduct()->getName()));
+	 					return $this;
+	 				}
+		}
+		
 		foreach($quoteItems as $item)
 			{
 				//das neue Item hat noch keine Id
@@ -58,5 +72,65 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		
 		return $this;
 		
+	}
+	
+	/**
+	 * verhindern, dass eine Veranstaltung ohne Zulassung gekauft wird
+	 * @param unknown $observer
+	 * @throws Exception
+	 */
+	public function onCheckoutEntryBefore($observer)
+	{
+		try {
+			$quote = $observer['quote'];
+			$quoteItems= $quote->getAllItems();
+			$customer_id = $quote->getCustomer()->getId();
+			foreach($quoteItems as $item)
+			{
+				if($item->getProduct()->getEventrequest() == 1){
+					$request = Mage::getModel('eventrequest/request')->loadByCustomerAndProduct($customer_id, $item->getProduct()->getId());
+	 				if(!$request->isAccepted()){
+	 					throw new Exception(Mage::helper('eventrequest')->__('Finalize application of %s first!',$item->getProduct()->getName()));
+	 				}
+				}
+			}
+		}
+		catch(Exception $ex){
+			$sess = Mage::getSingleton('core/session');
+			$messages = $sess->getMessages();	
+			$sess->addError($ex->getMessage());
+			$this->_redirect('checkout/cart');
+		}
+	}
+	
+	
+	public function onSalesOrderSaveCommitAfter($observer)
+	{
+		try {
+			$order = $observer['order'];
+			$quoteItems= $order->getAllItems();
+			$customer_id = $order->getCustomerId();
+			foreach($quoteItems as $item)
+			{
+				if($item->getProduct()->getEventrequest() == 1){
+					$request = Mage::getModel('eventrequest/request')->loadByCustomerAndProduct($customer_id, $item->getProduct()->getId());
+					$request->setStatus(Bfr_EventRequest_Model_Status::STATUS_ORDERED)->save();
+				}
+			}
+		}
+		catch(Exception $ex){
+			Mage::logException($ex);
+			}
+		}
+
+	
+	
+	private function _redirect($url)
+	{
+		$url = Mage::getUrl($url);
+		$app = Mage::app()->getResponse()
+		->setRedirect($url)
+		->sendResponse();
+		die();
 	}
 }

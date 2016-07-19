@@ -52,6 +52,18 @@ class Bfr_EventManager_Model_Resource_Participant extends Mage_Core_Model_Resour
     }
     
     
+    protected function _beforeSave(Mage_Core_Model_Abstract $object)
+    {
+    	$fields = array('job_id','role_id');
+    	foreach($fields as $field)
+    	{
+    		if(!$object->getData($field)){
+    			$object->setData($field,null);
+    		}
+    	}
+    	return parent::_beforeSave($object);
+    }
+    
     public function getAttributeValues($id,$key)
     {
     	$values = array();

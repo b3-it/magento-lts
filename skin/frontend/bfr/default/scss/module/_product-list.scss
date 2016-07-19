@@ -577,6 +577,10 @@ p.product-name {
                 border-color: $global-border-color;
                 border-style: solid;
             }
+
+            a {
+                background: none;
+            }
         }
     }
 }

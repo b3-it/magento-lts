@@ -42,9 +42,18 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     		return $errors;
     	}
     	
+    	
+    	
     	$item = $items[0];
     	if(!$item->getProduct()->getEventrequest()){
     		$errors[] = Mage::helper('eventrequest')->__("You can register events only!");
+    		return $errors;
+    	}
+    	
+    	
+    	$request = Mage::getModel('eventrequest/request')->loadByCustomerAndProduct($customer->getId(), $item->getProduct()->getId());
+    	if($request->getId()){
+    		$errors[] = Mage::helper('eventrequest')->__('A application of %s has been found!',$item->getProduct()->getName());
     		return $errors;
     	}
     	
@@ -109,8 +118,8 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	$data['customer'] = $this->getCustomer();
     	$data['product'] = $this->getProduct();
     	$data['created_time'] = $this->getCreatedTime();
-    	$this->setLog(sprintf("Sende Email über Zulassung an %s für Produkt %s",$this->getCustomer(),$this->getProduct()));
-    	Mage::helper('eventrequest')->sendEmail($this->getCustomer()->getEmail(), $this->getCustomer(), $data, 'eventrequest/email/eventrequest_accept_template');
+    	$this->setLog(sprintf("Sende Email über Zulassung an %s für Produkt %s",$this->getCustomer()->getId(),$this->getProduct()->getId()));
+    	Mage::helper('eventrequest')->sendEmail($this->getCustomer()->getEmail(), $this->getCustomer(), $data, 'event_request/email/eventrequest_accept_template');
     }
     
     
@@ -121,14 +130,42 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     private function reactivateQuote()
     {
     	$id = $this->getQuoteId();
-    	$old = Mage::getModel('sales/quote')->loadByIdWithoutStore($this->getQuoteId());
-    	$new = Mage::getModel('sales/quote')->loadByCustomer($this->getCustomer());
-    	if($new->getId()){
-    		$new->merge($old);
-    		return $this;
-    	}
+    	$quote = Mage::getModel('sales/quote')->loadByIdWithoutStore($this->getQuoteId());
+    	//$new = Mage::getModel('sales/quote')->loadByCustomer($this->getCustomer());
+    	//if($new->getId()){
+    	//	$new->merge($old);
+    	//	return $this;
+    	//}
+ 		if (Mage::getSingleton('customer/session')->getCustomerId()) 
+    		{
+	    		$customerQuote = Mage::getModel('sales/quote')
+	    		->setStoreId(Mage::app()->getStore()->getId())
+	    		->loadByCustomer(Mage::getSingleton('customer/session')->getCustomerId());
+	    	
+	    		if ($customerQuote->getId() && $quote->getId() != $customerQuote->getId()) {
+	    				$customerQuote->merge($quote)
+	    				->collectTotals()
+	    				->save();
+	    	
+	    			$this->setQuoteId($customerQuote->getId());
+	    	
+	    			if ($quote->getId()) {
+	    				$quote->delete();
+	    			}
+	    			$this->setQuoteId($customerQuote->getId())
+	    				->save();
+	    		}else {
+	    			$quote->setIsActive(true)->save();
+	    		}
+    		}else {
+	    			$quote->setIsActive(true)->save();
+	    	}
+    
     	
-    	$old->setIsActive(true)->save();
+    	
+    	
+    	
+    	
     }
     
     /**
