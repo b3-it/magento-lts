@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Bfr_EventRequest>
-           <active>true</active>
+           <active>false</active>
            <codePool>local</codePool>
         </Bfr_EventRequest>
     </modules>
