@@ -31,22 +31,29 @@
             ?>
 
             <div id="header-function-block">
-                <!-- Cart -->
-                <div class="header-minicart">
-                    <?php echo $this->getChildHtml('minicart_head'); ?>
+                <div class="header-function-row">
+                    <div class="header-function-cell-half">
+                        <!-- Cart -->
+                        <div class="header-minicart">
+                            <?php echo $this->getChildHtml('minicart_head'); ?>
+                        </div>
+                    </div>
+                    <div class="header-function-cell-half">
+                        <!-- Store-Switcher -->
+                        <div id="big-view-switcher" class="store-language-container">
+                            <?php echo $this->getChildHtml('store_language') ?>
+                        </div>
+                        <?php echo $this->getChildHtml('currency_switcher') ?>
+                        <div id="small-view-switcher" class="store-language-container"></div>
+                    </div>
                 </div>
-
-                <!-- Store-Switcher -->
-                <div id="big-view-switcher" class="store-language-container">
-                    <?php echo $this->getChildHtml('store_language') ?>
-                </div>
-                <?php echo $this->getChildHtml('currency_switcher') ?>
-
-                <div id="small-view-switcher" class="store-language-container"></div>
-
-                <!-- Search -->
-                <div id="header-search" class="skip-content">
-                    <?php echo $this->getChildHtml('topSearch') ?>
+                <div class="header-function-row">
+                    <div class="header-function-cell-full">
+                        <!-- Search -->
+                        <div id="header-search" class="skip-content">
+                            <?php echo $this->getChildHtml('topSearch') ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

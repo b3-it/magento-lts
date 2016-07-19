@@ -27,7 +27,7 @@
 
 @include bp(min-width, 911px) {
 
-    .skip-search {
+    a.skip-search {
         display: none;
     }
 
@@ -38,7 +38,9 @@
  * ============================================ */
 
 #header-search {
+    width: 100%;
     display: block;
+    margin: 10px 30px;
 
     input[type="text"] {
         margin: 0;
