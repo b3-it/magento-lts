@@ -471,6 +471,9 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			Mage::log(sprintf('%s::debug: %s', $this->getCode(), $request), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		}
 		
+		$msg = null;
+		$iReturnCode = null;
+		$request = null;
 		try {
 			// Sends request to Girocheckout.
 			$request = new GiroCheckout_SDK_Request($this->_transaction_type);
@@ -539,8 +542,14 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			Mage::logException($e);
 		}
 		
-		$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
+		if (is_null($msg)) {
+			$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
+		}
 		Mage::helper("paymentbase")->sendMailToAdmin($msg, 'Fehler bei getGirosolutionRedirectURL');
+		
+		if (!is_null($iReturnCode) && !is_null($request)) {
+			$msg = $request->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
+		}
 		Mage::throwException($msg);
 	}
 	
