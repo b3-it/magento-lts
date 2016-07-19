@@ -118,9 +118,7 @@
     border-style: solid;
     border-color: $global-minicart-background;
 
-    -webkit-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.84);
-    -moz-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.84);
-    box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.84);
+    @include element-shadow;
 
     .header-function-row {
         display: block;
