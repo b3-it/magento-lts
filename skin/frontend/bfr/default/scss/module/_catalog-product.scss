@@ -805,7 +805,7 @@
     width: 100%;
     padding-top: $global-boxpadding-large;
     border-top-width: $global-active-border;
-    border-top-color: $global-border-color;
+    border-top-color: $global-navigation-border-color;
     border-top-style: solid;
 
     &:after {
@@ -819,7 +819,7 @@
     a {
         padding: 2px 7px 2px 0px;
         margin-left: 7px;
-        border-right: $global-box-border solid $global-border-color;
+        border-right: $global-active-border solid $global-navigation-border-color;
     }
 
     li:first-child a {
@@ -962,15 +962,13 @@
     border-spacing: 0px;
 
     th, td {
-        border-width: $global-box-border;
-        border-style: solid;
-        border-color: $global-border-color;
+        border: $global-active-border solid $global-navigation-border-color;
         padding: 5px;
         white-space: nowrap;
     }
 
     th {
-        background-color: $global-lightcolor;
+        background-color: $global-navigation-color;
     }
 }
 

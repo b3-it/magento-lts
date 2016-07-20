@@ -72,7 +72,7 @@ $global-text-shadow: rgba(0, 0, 0, 0.3);                               // Textsc
 
 $global-rgba-1: rgba(239, 242, 234, 0.6);                              // Erste Farbe für Buttons
 $global-rgba-2: rgba(205, 218, 201, 0.65);                             // Zweite Farbe für Buttons
-// 2015-10-16 Anpassung der Buttons (Farbe und Gradient)
+
 $global-button-font-color: #000000;                                    // Schriftfarbe der Buttons
 $global-button-font-hover-color: #FFFFFF;                              // Hover-Schriftfarbe der Buttons
 $global-button-color: #D1D2D4;                                         // Hintergrundfarbe der Buttons
@@ -81,10 +81,10 @@ $global-button-gradient: 50%;                                          // Höhe 
 $global-button-gradient-1: $global-rgba-1 0%;                          // Startwert des Gradienten
 $global-button-gradient-2: $global-rgba-2 $global-button-gradient;     // Endwert des Gradienten
 
-$global-button-color-boxed: #3B67A7;                                   // Hintergrundfarbe für Buttons innerhalb von Boxen im Checkout
-$global-button-font-boxed: #FFFFFF;                                    // Schriftfarbe für Buttons innerhalb von Boxen im Checkout
-$global-button-rgba-1: rgba(239, 242, 234, 0.6);                       // Erste Farbe für Buttons innerhalb von Boxen im Checkout
-$global-button-rgba-2: rgba(205, 218, 201, 0.65);                      // Zweite Farbe für Buttons innerhalb von Boxen im Checkout
+$global-button-color-boxed: $global-button-color;                      // Hintergrundfarbe für Buttons innerhalb von Boxen im Checkout
+$global-button-font-boxed: $global-button-font-color;                  // Schriftfarbe für Buttons innerhalb von Boxen im Checkout
+$global-button-rgba-1: $global-rgba-1;                                 // Erste Farbe für Buttons innerhalb von Boxen im Checkout
+$global-button-rgba-2: $global-rgba-2;                                 // Zweite Farbe für Buttons innerhalb von Boxen im Checkout
 
 $gobal-header-rgba-1  : rgba(215,219,220,0.65);                        // Erste Farbe für die Titelleisten der Boxen
 $gobal-header-rgba-2  : rgba(0,0,0,0);                                 // Zweite Farbe für die Titelleisten der Boxen

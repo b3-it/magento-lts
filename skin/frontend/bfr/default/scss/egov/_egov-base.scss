@@ -122,9 +122,9 @@
 
 .egov-default-message {
     @extend .egov-radius;
-    border: $global-box-border solid $global-border-color;
+    border: $global-active-border solid $global-navigation-border-color;
     padding: $golbal-msgpadding;
-    background-color: $global-box-title-backgroundcolor;
+    background-color: $global-navigation-color;
 }
 
 .egov-navigation-background {

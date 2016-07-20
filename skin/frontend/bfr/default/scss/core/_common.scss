@@ -130,6 +130,11 @@ h6, .h6 { @include h6; }
  * Shared Classes
  * ============================================ */
 
+*[class*="cms-"] .std {
+    margin: 0 auto !important;
+    max-width: $max-content-width;
+}
+
 .address-list address {
     margin-bottom: 1em;
 }
@@ -224,13 +229,7 @@ p.note-msg {
     }
 
     a {
-        color: $global-box-link-color;
-        text-decoration: none;
-        padding-left: 10px;
-        background: transparent url($global-link-image) no-repeat scroll 0 5px;
-
         &:active, &:hover {
-            text-decoration: underline;
         }
     }
 }
@@ -542,6 +541,11 @@ div.block-reorder {
         float: right;
         margin-left: 5px;
         min-width: 140px;
+
+        &:active, &:hover {
+            background: $global-button-hovercolor $global-repeat-scroll;
+            color: $global-button-font-hover-color;
+        }
     }
 
     &:after {
