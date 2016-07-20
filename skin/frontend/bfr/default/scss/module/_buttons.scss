@@ -13,50 +13,18 @@
 .cart-table .product-cart-actions .button,
 #co-shipping-method-form .buttons-set .button,
 .footer .button {
-
-    color: $global-button-font-color;
-    background-color: $global-button-color;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-rgba-1), color-stop($global-button-gradient, $global-rgba-2), color-stop(100%, $global-button-color));
-    background-image: -webkit-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
-    background-image: -moz-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
-    background-image: -o-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
-    background-image: linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
-    background-size: 100% auto;
-
-    border: 1px solid $global-button-color;
-
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-
-    padding: $global-btn-padding-v $global-btn-padding-h;
-
-    &:hover {
-        background: $global-button-hovercolor $global-repeat-scroll;
-        color: $global-button-font-hover-color;
-        cursor: pointer;
-        box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.42);
-    }
-    &:active {
-        background: $global-button-hovercolor $global-repeat-scroll;
-        color: $global-button-font-hover-color;
-        box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.42);
-    }
-    &:focus {
-        background-color: $global-button-hovercolor $global-repeat-scroll;
-        color: $global-button-font-hover-color;
-        //outline: none;
-    }
+    @include default-button;
 }
 
 a.button {
     color: $global-button-font-color;
     text-decoration: none;
     padding: $global-btn-padding-v $global-btn-padding-h;
-}
 
-a.button:hover {
-    color: $global-button-font-hover-color;
-    background-color: $global-button-hovercolor $global-repeat-scroll;
+    &:hover, &:active {
+        color: $global-button-font-hover-color;
+        background-color: $global-button-hovercolor $global-repeat-scroll;
+    }
 }
 
 /* Disabled - class for anchor, state for form elements */

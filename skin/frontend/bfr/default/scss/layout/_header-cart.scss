@@ -14,8 +14,7 @@
  */
 
 .skip-cart {
-    margin-top: 3px;
-    margin-right: 2px;
+    margin: 3px 10px;
 
     &:not(.skip-active):hover {
         .icon {
@@ -31,7 +30,8 @@
 }
 
 .header-minicart {
-    display: inline !important;
+    text-align: center;
+    //display: inline !important;
 }
 
 // ---------------------------------------------
@@ -40,7 +40,7 @@
 
     .skip-cart {
         width: auto;
-        padding: 0 10px;
+        padding: 0 7px;
     }
 
     .skip-cart:hover {
@@ -51,7 +51,7 @@
         display: block;
         position: absolute;
         z-index: 200;
-        top: 54px;
+        top: 55px;
         right: 28%;
         width: 320px;
         border: 0;
@@ -108,7 +108,7 @@
 
         .count {
             @include border-radius(49%);
-            margin: 0 14px;
+            margin: 0 7px;
             min-width: 23px;
             padding: 0 7px;
 
