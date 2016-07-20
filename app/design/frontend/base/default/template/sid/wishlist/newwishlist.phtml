@@ -5,8 +5,7 @@
  * @category   	Sid
  * @package    	Sid_Wishlist
  * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright  	Copyright (c) 2012 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
- * @copyright  	Copyright (c) 2012 TRW-NET - http://www.trw-net.de
+ * @copyright  	Copyright (c) 2012 - 2016 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 ?>
@@ -23,42 +22,36 @@
 
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
 	<div class="page-title title-buttons">
-		<h2>
-			<?php echo $this->__('Create New Collector List') ?>
-		</h2>
+		<h2><?php echo $this->__('Create New Collector List') ?></h2>
 	</div>
 	<div id="jumptarget<?php echo $this->getNameInLayout();?>">
-		<fieldset>
-			<legend>
-				<?php echo $this->__('New Collector List') ?>
-			</legend>
-			<ul class="form-list group-select">
-				<li id="wishlist-new-form"><input type="hidden" name="wishlist[id]" value="new" id="wishlist:id" />
-					<fieldset>
-						<ul>
-							<li>
+		<div class="fieldset">
+			<h2 class="legend"><?php echo $this->__('New Collector List') ?></h2>
+			<ul class="form-list">
+				<li id="wishlist-new-form" class="wide">
+					<input type="hidden" name="wishlist[id]" value="new" id="wishlist:id" />
+					<div class="fieldset">
+						<ul class="form-list">
+							<li class="wide">
 								<div class="input-box">
 									<label for="wishlist:name"> <?php echo $this->__('Name') ?>	<?php echo $this->getFieldRequiredHtml('name')?> </label>
-									<br /> 
 									<input type="text" id="wishlist:name" name="wishlist[name]"
-										value="<?php echo $this->htmlEscape($this->getWishlist()->getName()) ?>"
+										value="<?php echo $this->escapeHtml($this->getWishlist()->getName()) ?>"
 										title="<?php echo $this->__('Name') ?>"
 										class="input-text" maxlength="27"
-									/>									
+									/>
 								</div>
 								<div class="input-box">
-									<br />
 									<input type="checkbox" name="wishlist[is_default]" id="wishlist:is_default" value="1" <?php if (!$this->customerHasWishlists()) : ?> checked="checked" disabled="disabled" <?php endif; ?> class="checkbox" />
 									<label for="wishlist:is_default"><?php echo  $this->__('Is default') ?></label>
 								</div>
 							</li>
-							<li>
+							<li class="wide">
 								<label for="wishlist:description"> <?php echo $this->__('Description') ?> <?php echo $this->getFieldRequiredHtml('description')?> </label>
-								<br /> 
-								<textarea id="wishlist:description" name="wishlist[description]" rows="3" cols="5" title="<?php echo $this->__('Description') ?>" style="width: 248px; height: 100px;"><?php echo $this->htmlEscape($this->getWishlist()->getDescription()); ?></textarea>
+								<textarea id="wishlist:description" name="wishlist[description]" rows="3" cols="5" title="<?php echo $this->__('Description') ?>" style="width: 248px; height: 100px;"><?php echo $this->escapeHtml($this->getWishlist()->getDescription()); ?></textarea>
 							</li>
 						</ul>
-					</fieldset>
+					</div>
 				</li>
 			</ul>
 			<?php if (!$this->customerHasWishlists()): ?>
@@ -74,6 +67,6 @@
 					<span><?php echo $this->__('Continue') ?> </span>
 				</button>
 			</div>
-		</fieldset>
+		</div>
 	</div>
 </form>
