@@ -47,7 +47,9 @@ class Bfr_EventManager_Model_Resource_Participant extends Mage_Core_Model_Resour
     
     public function loadAttribute($object,$field,$key)
     {
-    	$object->setData($field,$this->getAttributeValues($object->getId(),$key));
+    	if($object->getId()){
+    		$object->setData($field,$this->getAttributeValues($object->getId(),$key));
+    	}
     	return $this;
     }
     

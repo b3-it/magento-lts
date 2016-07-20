@@ -51,7 +51,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		{
 			$request = Mage::getModel('eventrequest/request')->loadByCustomerAndProduct($customer_id, $productAdd->getId());
 			if($request->getId() && !$request->isAccepted()){
-	 					Mage::throwException(Mage::helper('eventrequest')->__('A application of %s has been found!',$item->getProduct()->getName()));
+	 					Mage::throwException(Mage::helper('eventrequest')->__('An application of %s has been found!',$item->getProduct()->getName()));
 	 					return $this;
 	 				}
 		}
