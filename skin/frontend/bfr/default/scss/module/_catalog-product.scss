@@ -350,12 +350,14 @@
     }
 
     .product-name {
-        border-bottom: $global-box-border solid $global-linkcolor;
         margin-bottom: 10px;
+
+        h1, .h1 {
+            border: none;
+        }
 
         .h1 {
             color: $global-h1-color;
-            border: 0px;
         }
     }
 

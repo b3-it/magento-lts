@@ -30,8 +30,6 @@ class Zend_Cloud_AbstractFactory
 {
     /**
      * Constructor
-     *
-     * @return void
      */
     private function __construct()
     {
@@ -58,7 +56,7 @@ class Zend_Cloud_AbstractFactory
         $classname = $options[$adapterOption];
         unset($options[$adapterOption]);
         if (!class_exists($classname)) {
-            #require_once 'Zend/Loader.php';
+            require_once 'Zend/Loader.php';
             Zend_Loader::loadClass($classname);
         }
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * Bfr EventManager
- *
+ * Anzeige der Individualisierungsoptionen
  *
  * @category   	Bfr
  * @package    	Bfr_EventManager

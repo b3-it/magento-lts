@@ -14,12 +14,6 @@
 <?php echo $this->getChildHtml('bitvmenu') ?>
 
 
-<div id="big-view-switcher" class="store-language-container">
-    <?php echo $this->getChildHtml('store_language') ?>
-</div>
-<?php echo $this->getChildHtml('currency_switcher') ?>
-
-
 <header id="header" class="page-header">
 
     <?php echo $this->getChildHtml('loadingMask') ?>
@@ -35,11 +29,32 @@
                 // In order for the language switcher to display next to logo on smaller viewports, it will be moved here.
                 // See app.js for details
             ?>
-            <div id="small-view-switcher" class="store-language-container"></div>
 
-            <!-- Search -->
-            <div id="header-search" class="skip-content">
-                <?php echo $this->getChildHtml('topSearch') ?>
+            <div id="header-function-block">
+                <div class="header-function-row">
+                    <div class="header-function-cell-half">
+                        <!-- Cart -->
+                        <div class="header-minicart">
+                            <?php echo $this->getChildHtml('minicart_head'); ?>
+                        </div>
+                    </div>
+                    <div class="header-function-cell-half">
+                        <!-- Store-Switcher -->
+                        <div id="big-view-switcher" class="store-language-container">
+                            <?php echo $this->getChildHtml('store_language') ?>
+                        </div>
+                        <?php echo $this->getChildHtml('currency_switcher') ?>
+                        <div id="small-view-switcher" class="store-language-container"></div>
+                    </div>
+                </div>
+                <div class="header-function-row">
+                    <div class="header-function-cell-full">
+                        <!-- Search -->
+                        <div id="header-search" class="skip-content">
+                            <?php echo $this->getChildHtml('topSearch') ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -76,11 +91,6 @@
                     <span class="label"><?php echo $this->__('Account'); ?></span>
                 </a>
 -->
-
-                <!-- Cart -->
-                <div class="header-minicart">
-                    <?php echo $this->getChildHtml('minicart_head'); ?>
-                </div>
             </div>
             <div class="welcome-header">
                 <h1 class="header-position"><?php echo Mage::getStoreConfig('general/store_information/name'); ?></h1>

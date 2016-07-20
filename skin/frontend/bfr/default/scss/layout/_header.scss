@@ -65,21 +65,17 @@
     font-family: $base-font-family;
 
     .welcome-header {
-        text-align: left;
-        margin-left: $global-logo-left;
+        margin: 0 $global-logo-left;
         position: relative;
         top: $global-header-height - 50px;
 
         h1 {
             color: $global-fontcolor-light;
-            display: inline-block;
     	  }
 
         .welcome-msg {
             color: $global-fontcolor-light;
-            height: 1em;
             float: right;
-            margin-right: 30px;
             position: relative;
             top: -10px;
         }
@@ -108,8 +104,65 @@
 }
 
 /* ============================================ *
+ * Block für Such-Feld und Language switcher
+ * ============================================ */
+#header-function-block {
+    display: block;
+    float: right;
+    width: 400px;
+    height: 95px;
+    margin-right: 15.5%;
+    margin-top: $global-logo-top;
+
+    @include default-border-box;
+    @include element-shadow;
+
+    .header-function-row {
+        display: block;
+        height: 50%;
+
+        .header-function-cell-half, .header-function-cell-full {
+            display: inline-block;
+            height: 100%;
+        }
+        .header-function-cell-half {
+            width: 50%;
+
+            &:first-child {
+                float: left;
+                border-right-width: $global-active-border;
+                border-right-style: solid;
+                border-right-color: $global-minicart-background;
+            }
+        }
+        .header-function-cell-full {
+            width: 100%;
+        }
+
+        &:last-child {
+            border-top-width: $global-active-border;
+            border-top-style: solid;
+            border-top-color: $global-minicart-background;
+        }
+    }
+}
+
+
+/* ============================================ *
  * Language switcher + welcome message
  * ============================================ */
+.store-language-container {
+    width: 100%;
+    height: 100%;
+
+    label {
+        display: none;
+    }
+    select {
+        margin: 10px;
+        width: 90%;
+    }
+}
 
 .header-language-background {
 
@@ -130,21 +183,6 @@
 
     .welcome-msg {
         float: right;
-    }
-}
-
-.store-language-container {
-    float: right;
-    position: relative;
-    right: 6px;
-    top: 90px;
-    z-index: 999;
-
-    label {
-        display: none;
-    }
-    select {
-        max-width: 100%;
     }
 }
 
@@ -175,11 +213,13 @@
 /* ============================================ *
  * Logo
  * ============================================ */
-
 .logo {
     display: inline-block;
-    width: $global-logo-width;
-    margin: $global-logo-top $global-logo-top 0 $global-logo-left;
+    margin-top: $global-logo-top;
+    margin-left: $global-logo-left;
+    margin-bottom: $global-logo-bottom;
+
+    @include element-shadow;
 
     img {
         max-width: 100%;
@@ -202,7 +242,6 @@
 @include bp(min-width, $bp-medium + 1) {
 
     .logo {
-        width: $global-logo-width;
 
         .small {
             display: none;
@@ -230,40 +269,38 @@
     border-bottom: $global-active-border solid $global-navigation-border-color;
 
     background-image: url($global-header-background-image);
-    background-position: 50% 0;
     background-repeat: no-repeat;
     background-color: $global-header-background-color;
+    background-size: 100%;
 
     height: $global-header-height;
 
     .links {
+        float: right;
+        margin: 0 15% 0 0;
+
         ul {
-             float: right;
-             margin: 10px 30px 0 0;
-             padding: 10px 0;
-             width: 55%;
+            padding: 14px 0;
+            border-top: 5px solid $global-wrapper-color;
 
-             li {
-                float: left;
-                list-style-type: none;
+            li {
+               display: inline;
+               list-style-type: none;
+               padding: 3px 8px;
+               border-right: $global-box-border solid $global-fontcolor-dark;
 
+               a {
+                   color: $global-fontcolor-dark;
 
-                a {
-                    border-right: $global-box-border solid $global-fontcolor-dark;
-                    border-top: 5px solid $global-wrapper-color;
-                    padding: 3px 8px;
-                    color: $global-fontcolor-dark;
+                   &:hover, &:active {
+                       background-color: $global-navigation-hover-color;
+                       color: $global-navigation-color;
+                   }
+               }
 
-                    &:hover, &:active {
-                        background-color: $global-navigation-hover-color;
-                        color: $global-navigation-color;
-                    }
-                }
-
-                &.last > a  {
-                    border-right: none;
-                }
-
+               &.last {
+                   border-right: none;
+               }
             }
         }
     }
@@ -324,8 +361,8 @@
     width: 15%;
     background-color: $global-wrapper-color;
     color: $global-linkcolor;
-    line-height: 42px;
     text-align: center;
+    @include hidden-border;
 }
 
 a.skip-link {
@@ -465,23 +502,6 @@ a.skip-link {
 
     .no-touch #header-account a:hover,
     .no-touch .nav-primary a:hover {
-    }
-}
-
-.account-cart-wrapper {
-    position: absolute;
-    top:5px;
-    right:25%;
-    width: 80%;
-    text-align: right;
-
-    @include bp(max-width, $bp-medium) {
-        position: static;
-    }
-
-    @include bp(max-width, 910px) {
-        right: 0;
-        width: 100%;
     }
 }
 
