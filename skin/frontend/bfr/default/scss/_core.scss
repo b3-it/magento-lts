@@ -23,7 +23,7 @@
 @import "../../../egov/default/scss/egov/video";
 @import "egov/egov-base";
 @import "../../../egov/default/scss/egov/fa-icons";
-@import "../../../egov/default/scss/egov/mp-checkout";
+@import "egov/mp-checkout";
 @import "../../../egov/default/scss/egov/checkiban";
 @import "../../../egov/default/scss/egov/silver-track";
 @import "../../../egov/default/scss/egov/credit-cards";
@@ -64,7 +64,7 @@
 @import "module/catalog-seo-sitemap-category";
 @import "../../../egov/default/scss/module/catalog-compare";
 @import "module/catalogsearch-term-popular";
-@import "../../../egov/default/scss/module/checkout-cart";
+@import "module/checkout-cart";
 @import "../../../egov/default/scss/module/checkout-onepage";
 @import "../../../egov/default/scss/module/checkout-success";
 @import "../../../egov/default/scss/module/configurableswatches";

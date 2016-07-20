@@ -37,15 +37,16 @@
 // ----------------------------------------------
 // Mixins
 
+@import "mixin/button";
 @import "../../../egov/default/scss/mixin/breakpoint";
 @import "../../../egov/default/scss/mixin/clearfix";
-@import "../../../egov/default/scss/mixin/egov_loginform";
+@import "mixin/egov_loginform";
 @import "../../../egov/default/scss/mixin/image-replacement";
 @import "../../../egov/default/scss/mixin/menu";
 @import "../../../egov/default/scss/mixin/new_address";
 @import "../../../egov/default/scss/mixin/not-selectable";
 @import "../../../egov/default/scss/mixin/if-resolution";
-@import "../../../egov/default/scss/mixin/toggle-content";
+@import "mixin/toggle-content";
 @import "../../../egov/default/scss/mixin/triangle";
 @import "mixin/typography";
 @import "mixin/effects";

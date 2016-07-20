@@ -1,0 +1,40 @@
+//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// =============================================
+// Default-Button
+// =============================================
+
+@mixin default-button {
+    color: $global-button-font-color;
+    background-color: $global-button-color;
+    //background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-rgba-1), color-stop($global-button-gradient, $global-rgba-2), color-stop(100%, $global-button-color));
+    background-image: -webkit-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-image: -moz-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-image: -o-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-image: linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-size: 100% auto;
+
+    border: 1px solid $global-button-color;
+
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+
+    padding: $global-btn-padding-v $global-btn-padding-h;
+
+    &:hover, &:active {
+        background: $global-button-hovercolor $global-repeat-scroll;
+        color: $global-button-font-hover-color;
+        cursor: pointer;
+        box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.42);
+    }
+
+    &:focus {
+        background-color: $global-button-hovercolor $global-repeat-scroll;
+        color: $global-button-font-hover-color;
+    }
+}

@@ -220,6 +220,7 @@
     margin-bottom: $global-logo-bottom;
 
     @include element-shadow;
+    @include hidden-border;
 
     img {
         max-width: 100%;
@@ -291,9 +292,17 @@
 
                a {
                    color: $global-fontcolor-dark;
+                   @include hidden-border;
 
                    &:hover, &:active {
-                       background-color: $global-navigation-hover-color;
+                       color: $global-navigation-color;
+                   }
+               }
+
+               &:hover, &:active {
+                   background-color: $global-navigation-hover-color;
+
+                   a {
                        color: $global-navigation-color;
                    }
                }
@@ -356,12 +365,8 @@
  */
 
 .skip-link {
-    position: relative;
-    float: right;
-    width: 15%;
     background-color: $global-wrapper-color;
-    color: $global-linkcolor;
-    text-align: center;
+    float: right;
     @include hidden-border;
 }
 
