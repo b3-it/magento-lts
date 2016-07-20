@@ -53,7 +53,7 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	
     	$request = Mage::getModel('eventrequest/request')->loadByCustomerAndProduct($customer->getId(), $item->getProduct()->getId());
     	if($request->getId()){
-    		$errors[] = Mage::helper('eventrequest')->__('A application of %s has been found!',$item->getProduct()->getName());
+    		$errors[] = Mage::helper('eventrequest')->__('An application of %s has been found!',$item->getProduct()->getName());
     		return $errors;
     	}
     	
