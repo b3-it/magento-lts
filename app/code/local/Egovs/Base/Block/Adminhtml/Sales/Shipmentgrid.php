@@ -186,12 +186,12 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
 
         $this->getMassactionBlock()->addItem('pdfshipments_order', array(
              'label'=> Mage::helper('sales')->__('PDF Packingslips'),
-             'url'  => $this->getUrl('*/*/pdfshipments'),
+             'url'  => $this->getUrl('*/sales_shipment/pdfshipments'),
         ));
         
         $this->getMassactionBlock()->addItem('label_order', array(
              'label'=> Mage::helper('sales')->__('Print Address Label'),
-             'url'  => $this->getUrl('ppw/adminhtml_shipment/printlabelmass/'),
+             'url'  => $this->getUrl('*/sales_order_shipment/massPrintShippingLabel'),
         ));
 
         return $this;
