@@ -29,7 +29,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		/* @var $response Zend_Http_Response */
 		$response = $httpClient->setUri($transactionUrl)
 			->setParameterGet(array('id' => $id))
-			->setConfig(array('timeout' => 5))
+			->setConfig(array('timeout' => 7))
 			->request('GET')
 		;
 		if (!$response || $response->getStatus() != 200) {
