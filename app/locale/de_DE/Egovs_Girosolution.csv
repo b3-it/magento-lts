@@ -32,3 +32,4 @@
 "Transaction unsuccessful","Transaktion nicht erfolgreich"
 "Can't validate Girosolution message or message was invalid!","Girosolution Nachricht kann nicht validiert werden oder ist ungültig."
 "Customer successfully granted by Girosolution<br /><strong>Transaction ID: %s</strong>","Kunde wurde durch Girosolution berechtigt <br /><strong>Transaktions ID: %s</strong>"
+"A maximum of 12 characters","Maximal 12 Zeichen"
