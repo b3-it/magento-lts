@@ -22,7 +22,7 @@ class Bfr_EventManager_Block_Adminhtml_Lookup_Edit_Tab_Form extends Mage_Adminht
           'label'     => Mage::helper('eventmanager')->__('Title'),
           'class'     => 'required-entry',
           'required'  => true,
-          'name'      => 'title',
+          'name'      => 'value',
       ));
 
       $fieldset->addField('typ', 'select', array(

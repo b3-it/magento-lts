@@ -73,7 +73,7 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       		'label'     => Mage::helper('eventmanager')->__('Company'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
-      		'name'      => 'compan1',
+      		'name'      => 'company',
       ));
       
       $fieldset->addField('company2', 'text', array(
