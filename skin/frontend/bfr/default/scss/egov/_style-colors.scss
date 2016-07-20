@@ -32,8 +32,8 @@ $global-h4-color: #333333;                                             // Farbe 
 $global-h5-color: #FF0000;                                             // Farbe der Überschrift H5 (nicht verwendet!)
 $global-h6-color: #FF0000;                                             // Farbe der Überschrift H6 (nicht verwendet!)
 
-$global-cart-color: #59814C;                                           // Textfarbe für Preise im Warenkorb
-$global-cart-subtotal: #59814C;                                        // Textfarbe für Summen im Warenkorb
+$global-cart-color: #3B67A7;                                           // Textfarbe für Preise im Warenkorb
+$global-cart-subtotal: #3B67A7;                                        // Textfarbe für Summen im Warenkorb
 
 $global-border-color: #CC3300;                                         // Farbe für normale Ränder bei Boxen
 $global-border-color-light: #E0E6D7;                                   // Farbe für helle Ränder bei Boxen
@@ -41,7 +41,7 @@ $global-border-color-light: #E0E6D7;                                   // Farbe 
 $global-price-normal-color: #57585A;                                   // Farbe für Preisangaben im Katalog
 $global-price-special-color: #57585A;                                  // Farbe für spezielle Preise
 
-$global-instock-color: #59814C;                                        // Farbe für "Auf Lager" im Katalog
+$global-instock-color: #3B67A7;                                        // Farbe für "Auf Lager" im Katalog
 $global-available-color: #FF0000;                                      // Farbe für "Nicht Lieferbar" im Katalog
 
 $global-minicart-background: #EBEDED;                                  // Hintergrundfarbe des Menü-Warenkorbs
@@ -65,7 +65,7 @@ $global-warning-color: #DF280A;                                        // Schrif
 $global-warning-background: #FAEBE7;                                   // Hintergrund für Warnungen
 $global-notice-color: #DF280A;                                         // Schriftfarbe für Mitteilungen
 $global-notice-background: #FAEBE7;                                    // Hintergrund für Mitteilungen
-$global-success-color: #59814C;                                        // Schriftfarbe für Erfolgreich
+$global-success-color: #3B67A7;                                        // Schriftfarbe für Erfolgreich
 $global-success-background: #EFF5EA;                                   // Hintergrund für Erfolgreich
 
 $global-text-shadow: rgba(0, 0, 0, 0.3);                               // Textschatten für Überschriften
@@ -81,7 +81,7 @@ $global-button-gradient: 50%;                                          // Höhe 
 $global-button-gradient-1: $global-rgba-1 0%;                          // Startwert des Gradienten
 $global-button-gradient-2: $global-rgba-2 $global-button-gradient;     // Endwert des Gradienten
 
-$global-button-color-boxed: #59814C;                                   // Hintergrundfarbe für Buttons innerhalb von Boxen im Checkout
+$global-button-color-boxed: #3B67A7;                                   // Hintergrundfarbe für Buttons innerhalb von Boxen im Checkout
 $global-button-font-boxed: #FFFFFF;                                    // Schriftfarbe für Buttons innerhalb von Boxen im Checkout
 $global-button-rgba-1: rgba(239, 242, 234, 0.6);                       // Erste Farbe für Buttons innerhalb von Boxen im Checkout
 $global-button-rgba-2: rgba(205, 218, 201, 0.65);                      // Zweite Farbe für Buttons innerhalb von Boxen im Checkout
