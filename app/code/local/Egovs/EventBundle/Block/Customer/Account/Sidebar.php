@@ -65,7 +65,8 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 				->distinct()
 				->join(array('order'=>$collection->getTable('sales/order')), "order.entity_id= main_table.order_id AND customer_id = " . $this->getCustomer()->getId(),array())
 				->join(array('product_status'=>Mage::getConfig()->getTablePrefix().'catalog_product_entity_int'),'product_status.entity_id=main_table.product_id AND value=1 AND product_status.attribute_id='.$eav->getIdByCode('catalog_product', 'status'),array())
-				->where("product_type='eventbundle'");
+				->where("product_type='eventbundle'")
+				->where("order.status IN ('processing','complete')");
 
 			//die($collection->getSelect()->__toString());
 			

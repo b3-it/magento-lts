@@ -12,6 +12,7 @@
  */
 class Bfr_EventRequest_Model_Observer extends Varien_Object
 {
+	private $_lastQuote = 0;
 	/**
 	 * verhinderd, dass Veranstaltungen mit Zulassungsbeschränkung
 	 * zusammen mit anderen im Korb liegen
@@ -23,6 +24,14 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		/* @var $orderItem Mage_Sales_Model_Quote_Item  */
 		$quoteItem = $observer->getQuoteItem();
 		$quote = $quoteItem->getQuote();
+		
+		if($this->_lastQuote == $quote->getId())
+		{
+			return $this;
+		}
+		
+		$this->_lastQuote = $quote->getId();
+		
 		$productAdd = $quoteItem->getProduct();
 		$customer_id = $quote->getCustomer()->getId();
 		
