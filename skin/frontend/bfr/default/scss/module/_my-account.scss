@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -8,6 +8,8 @@
 .my-account {
 
     .dashboard {
+        top: -15px !important;
+
         .box-head {
             padding-bottom: 0px;
             border: 0px;
@@ -142,6 +144,7 @@
 }
 
 #customer-account-menu {
+    margin-top: $global-boxmargin;
     margin-bottom: $global-boxmargin;
     @extend .egov-navigation-background;
 

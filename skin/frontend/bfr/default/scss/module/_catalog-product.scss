@@ -211,9 +211,9 @@
         }
 
         .add-to-cart {
-            position: absolute;
-            top: 60px;
-            right: 5%;
+            //position: absolute;
+            //top: 60px;
+            //right: 5%;
 
             .qty-wrapper {
                 float: none;
@@ -221,10 +221,29 @@
         }
 
         .product-additional-information {
+            margin-bottom: $global-boxmargin;
+
             .product-options {
+                border-width: $global-active-border;
+                border-style: solid;
+                border-color: $global-navigation-border-color;
+
                 dt {
                     margin-top: 0;
-                    margin-bottom: 10px;
+                    margin-bottom: $global-boxmargin / 2;
+                }
+
+                dt.option-box {
+                    display: inline-block;
+                    vertical-align: top;
+                    width: 48%;
+                    margin-bottom: $global-boxmargin;
+
+                    > label {
+                        display: block;
+                        font-size: 1.3em;
+                        margin-bottom: $global-boxmargin / 2;
+                    }
                 }
 
                 .checkbox, .radio {
@@ -259,7 +278,13 @@
             }
 
             .product-options-bottom {
+                background-color: $global-navigation-color;
+                border-color: $global-navigation-border-color;
+
                 .add-to-cart {
+                    display: inline-block;
+                    float: right;
+
                     .add-to-cart-buttons {
                         display: inline-block;
                         max-width: 180px;

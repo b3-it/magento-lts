@@ -846,6 +846,8 @@ div.block-reorder {
             width: $global-2L-content-width;
             margin-left: $global-2L-content-marginleft;
             margin-right: $global-2L-content-marginright;
+            position: relative;
+            top: -9px;
         }
 
         p.note-msg {
