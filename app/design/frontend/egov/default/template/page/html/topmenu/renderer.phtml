@@ -34,7 +34,13 @@ foreach ($children as $child) {
 
     $file_name = $child->getUrl();
     $file_info = pathinfo($file_name);
-    $file_id   = strtolower( basename( $file_name, '.' . $file_info['extension'] ) );
+    $ext = '';
+    if(isset($file_info['extension']))
+    {
+    	$ext = $file_info['extension'];
+    }
+
+    $file_id   = strtolower( basename( $file_name, '.' . $ext ) );
 
     $outermostClassCode = 'level'. $childLevel;
     $_hasChildren = ($child->hasChildren()) ? 'has-children' : '';
