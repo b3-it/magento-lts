@@ -279,7 +279,7 @@ p.product-name {
     & > li {
         padding-bottom: $global-boxpadding;
         margin-bottom: $global-boxmargin;
-        border-bottom: $global-box-border solid $global-border-color;
+        border-bottom: $global-box-border solid $global-navigation-border-color;
 
         height: auto;
         display: flex;
@@ -291,6 +291,7 @@ p.product-name {
 
         .product-list-left-col {
             width: $global-product-list-imagesize;
+            margin-bottom: $global-boxmargin - $global-boxpadding;
 
             .product-image {
                 img {
@@ -300,11 +301,12 @@ p.product-name {
             }
 
             .product-add-links {
+                display: none;
             }
 
             a.link-learn {
-                display: block;
-                padding: $global-boxpadding 0px;
+                display: none;
+                //padding: $global-boxpadding 0px;
             }
         }
 
@@ -316,7 +318,11 @@ p.product-name {
     }
 
     .product-action {
-        text-align: right;
+        margin-top: $global-boxmargin;
+
+        button, a.button {
+            margin: 0;
+        }
     }
 
     .product-shop {
@@ -338,10 +344,9 @@ p.product-name {
 
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
-            height: 1em;
 
             a {
-                font-size: $global-fontsize;
+                font-size: 1.5em !important;
             }
         }
 
@@ -359,6 +364,8 @@ p.product-name {
         }
 
         .product-price {
+            font-size: 1.1em;
+
             .price-box {
                 margin-top: 0;
 
@@ -371,10 +378,15 @@ p.product-name {
                     font-size: $global-fontsize;
                 }
             }
+
+            .delivery-time {
+                display: none;
+            }
         }
 
         .desc {
-            margin-top: $element-spacing;
+            margin: $element-spacing 0 $element-spacing * 2 0;
+            font-size: 1.2em;
         }
 
         .product-primary {
