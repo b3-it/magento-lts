@@ -33,6 +33,7 @@
  */
 class Egovs_EventBundle_Model_Observer
 {
+	private $_ProductIdSaveBefore = 0;
     /**
      * Setting Bundle Items Data to product for father processing
      *
@@ -385,5 +386,36 @@ class Egovs_EventBundle_Model_Observer
     	}
     
     }
+    
+    public function onProductSaveBefore($observer)
+    {
+    	$request = $observer->getEvent()->getRequest();
+    	$product = $observer->getEvent()->getProduct();
+    
+    
+    	if($product->getTypeId() != Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE)
+    	{
+    		return $this;
+    	}
+    	$this->_ProductIdSaveBefore = intval($product->getId());
+    }
+    
+    public function onProductSaveAfter($observer)
+    {
+    	$request = $observer->getEvent()->getRequest();
+    	$product = $observer->getEvent()->getProduct();
+    
+    
+    	if($product->getTypeId() != Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE)
+    	{
+    		return $this;
+    	}
+    	
+    	if(($this->_ProductIdSaveBefore != $product->getId()) && ($this->_ProductIdSaveBefore == 0))
+    	{
+    		Mage::dispatchEvent('eventbundle_create_after',  array('product' => $product));
+    	}
+    }
+    	
     
 }
