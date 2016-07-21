@@ -66,7 +66,7 @@ class Egovs_EventBundle_Model_Observer
 	            $product->setCanSaveCustomOptions(true);
 	            if ($customOptions = $product->getProductOptions()) {
 	                foreach (array_keys($customOptions) as $key) {
-	                    $customOptions[$key]['is_delete'] = 0;
+	                    //$customOptions[$key]['is_delete'] = 0;
 	                    $customOptions[$key]['price'] = 0;
 	                    $customOptions[$key]['price_type'] = 'fixed';
 	                }
