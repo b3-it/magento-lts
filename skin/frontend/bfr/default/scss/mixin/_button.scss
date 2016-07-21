@@ -12,17 +12,18 @@
 @mixin default-button {
     color: $global-button-font-color;
     background-color: $global-button-color;
-    //background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-rgba-1), color-stop($global-button-gradient, $global-rgba-2), color-stop(100%, $global-button-color));
     background-image: -webkit-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
     background-image: -moz-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
     background-image: -o-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
     background-image: linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
     background-size: 100% auto;
 
-    border: 1px solid $global-button-color;
+    border: $global-active-border solid $global-button-color;
 
-    border-radius: 3px;
-    -moz-border-radius: 3px;
+    border-radius: $global-radius;
+    -moz-border-radius: $global-radius;
+
+    max-width: 300px;
 
     padding: $global-btn-padding-v $global-btn-padding-h;
 
@@ -30,11 +31,16 @@
         background: $global-button-hovercolor $global-repeat-scroll;
         color: $global-button-font-hover-color;
         cursor: pointer;
-        box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.42);
+        box-shadow: 5px 5px 5px 0 $global-text-shadow;
     }
 
     &:focus {
         background-color: $global-button-hovercolor $global-repeat-scroll;
         color: $global-button-font-hover-color;
+    }
+
+    span.default-font {
+        font-family: $base-font-family;
+        font-size: 0.9em;
     }
 }

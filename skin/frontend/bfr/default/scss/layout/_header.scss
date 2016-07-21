@@ -218,6 +218,7 @@
     margin-top: $global-logo-top;
     margin-left: $global-logo-left;
     margin-bottom: $global-logo-bottom;
+    height: $global-logo-height;
 
     @include element-shadow;
     @include hidden-border;
@@ -232,10 +233,10 @@
     .large {
         display: none;
     }
-}
 
-.logo:hover {
-    opacity: 0.8;
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 // ---------------------------------------------

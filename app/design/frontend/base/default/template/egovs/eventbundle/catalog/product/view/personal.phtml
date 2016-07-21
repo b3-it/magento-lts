@@ -27,23 +27,23 @@
 
 <?php $_fields = $this->getFields(); ?>
 <?php if (count($_fields) > 0):?>
-<dl>
+<dl class="personal-options">
         <?php foreach ($_fields as $field): ?>
         <dt class="option-block type-field">
         	<div class="option-block-label">
         		<label <?php if ($field->getRequired()) echo 'class="required"' ?> ><?php if ($field->getRequired()) echo '<em>*</em>' ?><?php echo($field->getLabel())?></label>
             </div>
-        
+
          <div class="option-block-elements">
             <input type="text" value="" name="personal_options[<?php echo($field->getId())?>]" class="input-text product-custom-option <?php echo $field->getRequired() ? ' required-entry' : '' ?> <?php echo $field->getMaxLength() ? ' validate-length maximum-length-'.$field->getMaxLength() : '' ?> product-custom-option" name="options[<?php echo $field->getId() ?>]" value="<?php echo $this->escapeHtml($this->getDefaultValue()) ?>"" id="options_<?php echo($field->getId())?>_text" >
               <?php if ($field->getMaxLength()): ?>
         <p class="note"><?php echo Mage::helper('catalog')->__('Maximum number of characters:')?> <strong><?php echo $field->getMaxLength() ?></strong></p>
-    <?php endif; ?>   
+    <?php endif; ?>
         </div>
         </dt>
         <?php endforeach; ?>
- 
-        
-        
+
+
+
 </dl>
 <?php endif;?>
