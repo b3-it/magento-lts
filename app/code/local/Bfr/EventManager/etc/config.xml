@@ -122,6 +122,17 @@
                 </Bfr_EventManager>
             </modules>
         </translate>
+        <events>
+           <eventbundle_create_after>
+                <observers>
+                    <eventmanager_eventbundle_create_after>
+                        <type>singleton</type>
+                        <class>eventmanager/observer</class>
+                        <method>onEventbundleCreateAfter</method>
+                    </eventmanager_eventbundle_create_after>
+                </observers>
+            </eventbundle_create_after>
+        </events>
     </adminhtml>
     <global>
         <models>

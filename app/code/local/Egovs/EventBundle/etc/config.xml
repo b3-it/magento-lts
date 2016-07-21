@@ -65,6 +65,22 @@
                     </eventbundle_observer>
                 </observers>
             </catalog_product_edit_action>
+            <catalog_product_save_before>
+                <observers>
+                    <eventbundle_observer>
+                        <class>eventbundle/observer</class>
+                        <method>onProductSaveBefore</method>
+                    </eventbundle_observer>
+                </observers>
+            </catalog_product_save_before>
+            <catalog_product_save_after>
+                <observers>
+                    <eventbundle_observer>
+                        <class>eventbundle/observer</class>
+                        <method>onProductSaveAfter</method>
+                    </eventbundle_observer>
+                </observers>
+            </catalog_product_save_after>
             <catalog_product_new_action>
                 <observers>
                     <eventbundle_observer>
@@ -73,6 +89,14 @@
                     </eventbundle_observer>
                 </observers>
             </catalog_product_new_action>
+            <catalog_model_product_duplicate>
+                <observers>
+                    <bundle_observer>
+                        <class>eventbundle/observer</class>
+                        <method>duplicateProduct</method>
+                    </bundle_observer>
+                </observers>
+            </catalog_model_product_duplicate>
         </events>
 		<menu>
 			<report>
