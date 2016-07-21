@@ -23,6 +23,13 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit extends Mage_Adminhtml_B
         $this->_updateButton('save', 'label', Mage::helper('eventmanager')->__('Save Item'));
         $this->_updateButton('delete', 'label', Mage::helper('eventmanager')->__('Delete Item'));
 		
+        $data = Mage::registry('participant_data');
+        if($data)
+        {
+        	if(intval($data->getOrderId()) > 0){
+        		$this->removeButton('delete');
+        	}
+        }
 			
         $this->_addButton('saveandcontinue', array(
             'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),

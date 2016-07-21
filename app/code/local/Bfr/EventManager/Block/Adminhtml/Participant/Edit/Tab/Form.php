@@ -25,14 +25,39 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       	$events[$item->getEventId()] = $item->getTitle();
       }
       
+      $lock = false;
+      $data = Mage::registry('participant_data');
+      if($data)
+      {
+      	if(intval($data->getOrderId()) > 0){
+      		$lock = true;
+      		//dupliziieren wg. disabled selectbox und hidden
+      		$data->setEventId1($data->getEventId());
+      	}
+      }
       
-      $fieldset->addField('event_id', 'select', array(
-      		'label'     => Mage::helper('eventmanager')->__('Event'),
-      		//'class'     => 'readonly',
-      		//'readonly'  => true,
-      		'values'    => $events,
-      		'name'      => 'event_id',
-      ));
+      if($lock){
+	      $fieldset->addField('event_id1', 'select', array(
+	      		'label'     => Mage::helper('eventmanager')->__('Event'),
+	      		'class'     => 'disabled',
+	      		'disabled'  => true,
+	      		'values'    => $events,
+	      		'name'      => 'event_id1',
+	      		'value' =>$data->getEventId()
+	      ));
+	      $fieldset->addField('event_id', 'hidden', array(
+	      		'name'      => 'event_id',
+	      ));
+      }else 
+      {
+      	$fieldset->addField('event_id', 'select', array(
+      			'label'     => Mage::helper('eventmanager')->__('Event'),
+      			//'class'     => $lock ? 'readonly':'',
+      			//'readonly'  => $lock,
+      			'values'    => $events,
+      			'name'      => 'event_id',
+      	));
+      }
       
       $fieldset->addField('prefix', 'text', array(
       		'label'     => Mage::helper('eventmanager')->__('Prefix'),
@@ -153,13 +178,9 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       		//'required'  => true,
       ));
       
-      if ( Mage::getSingleton('adminhtml/session')->getEventManagerData() )
-      {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getEventManagerData());
-          Mage::getSingleton('adminhtml/session')->setEventManagerData(null);
-      } elseif ( Mage::registry('participant_data') ) {
-          $form->setValues(Mage::registry('participant_data')->getData());
-      }
+     
+      $form->setValues($data);
+      
       return parent::_prepareForm();
   }
 }
