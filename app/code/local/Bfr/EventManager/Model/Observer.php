@@ -34,6 +34,30 @@ class Bfr_EventManager_Model_Observer extends Varien_Object
           return Mage::app()->getStore()->getId();
     }
  
+    /**
+     * Bei nueanlegen eines Eventbundles automatisch ein neues Event erzeugen
+     * @param unknown $observer
+     * @return Bfr_EventManager_Model_Observer
+     */
+    public function onEventbundleCreateAfter($observer)
+    {
+    	$product = $observer->getEvent()->getProduct();
+    	if($product->getTypeId() != Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE)
+    	{
+    		return $this;
+    	}
     
+    	$collection = Mage::getModel('eventmanager/event')->getCollection();
+    	$collection->getSelect()->where('product_id ='.$product->getId());
+    	if(count($collection->getItems()) === 0)
+    	{
+    		$event =  Mage::getModel('eventmanager/event');
+    		$event->setTitle($product->getName())
+    			->setProductId($product->getId())
+    			->setCreatedTime(now())
+    			->setUpdateTime(now())
+    			->save();
+    	}
+    }
     
 }
