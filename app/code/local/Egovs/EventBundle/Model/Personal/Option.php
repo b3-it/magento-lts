@@ -15,6 +15,8 @@ class Egovs_EventBundle_Model_Personal_Option extends Mage_Core_Model_Abstract
 	private $store_id = 0;
 	private $option_label = null;
 	
+	private $all_option_labels = null;
+	
     public function _construct()
     {
         parent::_construct();
@@ -32,19 +34,57 @@ class Egovs_EventBundle_Model_Personal_Option extends Mage_Core_Model_Abstract
 	  $this->store_id = $value;
 	}
 	
-	private function getOptionLabel()
+	private function getOptionLabel($fallback = false)
 	{
-		if($this->option_label == null)
+
+		foreach($this->getAllOptionLabels() as $label)
 		{
-			$this->option_label = Mage::getModel('eventbundle/personal_optionLabel')->loadByStoreOption($this->store_id,$this->getId());
+			if($label->getStoreId() == $this->getStoreId())
+			{
+				return $label;
+			}
+		}
+		if($fallback)
+		{
+			foreach($this->getAllOptionLabels() as $label)
+			{
+				if($label->getStoreId() == 0)
+				{
+					return $label;
+				}
+			}
 		}
 		
-		return $this->option_label;
+		$label = Mage::getModel('eventbundle/personal_optionLabel');
+		$label->setStoreId( $this->getStoreId());
+		if($this->all_option_labels == null) $this->all_option_labels = array();
+		$this->all_option_labels[] = $label;
+		
+		return $label;
+		
 	}
 	
-	public function getLabel()
+	public function getAllOptionLabels()
 	{
-		return $this->getOptionLabel()->getLabel();
+		if($this->all_option_labels == null)
+		{
+			$collection = Mage::getModel('eventbundle/personal_optionLabel')->getCollection();
+			$collection->getSelect()->where('option_id='.intval($this->getId()));
+			$this->all_option_labels = $collection->getItems();
+		}
+	
+		return $this->all_option_labels;
+	}
+	
+	public function setAllOptionLabels($labels)
+	{
+		$this->all_option_labels = $labels;
+		return $this;
+	}
+	
+	public function getLabel($fallback = false)
+	{
+		return $this->getOptionLabel($fallback)->getLabel();
 	}
 	
 	public function setLabel($label)
@@ -53,12 +93,19 @@ class Egovs_EventBundle_Model_Personal_Option extends Mage_Core_Model_Abstract
 	}
 	
 	protected function _afterSave()
-	{
-		$label = $this->getOptionLabel();
-		$label->setStoreId($this->getStoreId());
-		$label->setOptionId($this->getId());
-		$label->save();
+	{		
+		foreach($this->getAllOptionLabels() as $label)
+		{
+			$label->setOptionId($this->getId());
+			$label->save();
+		}
+		
 		return parent::_afterSave();
+	}
+	
+	protected function _afterLoad()
+	{
+		$this->getAllOptionLabels();
 	}
 	
 	public function toJson(array $arrAttributes = array())
@@ -66,5 +113,7 @@ class Egovs_EventBundle_Model_Personal_Option extends Mage_Core_Model_Abstract
 		$this->setData('label',$this->getLabel());
 		return parent::toJson();
 	}
+	
+	
 	
 }
