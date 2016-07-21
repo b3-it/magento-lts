@@ -66,6 +66,19 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 
+				
+			$collection = Mage::getModel('eventmanager/event')->getCollection();
+			$collection->getSelect()
+				->where('event_id <>'.intval($model->getId()))
+				->where('product_id ='.intval($model->getProductId()));
+			if(count($collection->getItems()) > 0)
+			{	
+					Mage::getSingleton('adminhtml/session')->addError(Mage::helper('eventmanager')->__('EventBundle is already used.'));
+					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+					return;
+			}
+				
+				
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())
