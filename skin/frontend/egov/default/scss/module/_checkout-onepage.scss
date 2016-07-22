@@ -610,15 +610,16 @@ body:not(.opc-has-progressed-from-login) .opc.opc-firststep-login .section#opc-l
 }
 
 @include bp(max-width, $bp-xsmall) {
+    // Kontrolle mit OPC!!!
     #checkout-review-table thead > tr > th {
-        display: none;
+        //display: none;
 
         &:first-child {
-            display: block;
+            //display: block;
         }
     }
     #checkout-review-table thead > tr > th:first-child {
-        display: block;
+        //display: block;
     }
 }
 

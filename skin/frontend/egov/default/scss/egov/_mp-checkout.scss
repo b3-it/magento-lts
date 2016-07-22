@@ -347,18 +347,20 @@
                 display: block !important;
             }
         }
+    }
 
-        #multishipping-billing-form {
-            .col-1, .col-2 {
-                width: 95%;
-            }
+    .egovs-checkout-multipage-overview,
+    .egovs-checkout-multipage-successview,
+    #multishipping-billing-form,
+    #shipping_method_form {
+        .col-1, .col-2 {
+            width: 95% !important;
+            margin: 0 !important;
+            min-height: auto !important;
         }
 
-        #shipping_method_form,
-        #multishipping-billing-form {
-            .buttons-set {
-                max-width: 100% !important;
-            }
+        .buttons-set {
+            max-width: 100% !important;
         }
     }
 }
