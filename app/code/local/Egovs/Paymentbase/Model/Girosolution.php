@@ -108,7 +108,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$merchantId = Mage::helper('core')->decrypt($merchantId);
 		if (empty($merchantId)) {
 			if (!array_key_exists('merid', $this->_errors)) {
-				$helper = Mage::helper($thisMage::helper('egovs_girosolution'));
+				$helper = Mage::helper('egovs_girosolution');
 				$helper->sendMailToAdmin("{$this->getCode()}::{$helper->__('Merchant ID is missing in Girosolution configuration')}", $helper->__('Girosolution Error').':', $this->getCode());
 			
 				$sModul = ucwords(substr($this->getCode(), 6), '_');
