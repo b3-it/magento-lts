@@ -12,7 +12,7 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
 	 */
 	const TYPE_EVENTBUNDLE = 'eventbundle';
 	
-	
+	private $_personalOptions = null;
 	
 	private $_isSaleAble = null;
 
@@ -347,6 +347,43 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
 
         $this->_isSaleAble = (array_sum($requiredOptionIds) == count($requiredOptionIds) && $salableSelectionCount);
         return $this->_isSaleAble;
+    }
+    
+    
+    public function getPersonalOptions()
+    {
+    	if($this->_personalOptions == null)
+    	{
+    		$collection = Mage::getModel('eventbundle/personal_option')->getCollection();
+    		$collection->getSelect()
+    		->where('product_id='.intval($this->getProduct()->getId()))
+    		->order('pos');
+    		$collection->setStoreId(intval($this->getProduct()->getStoreId()));
+    		$this->_personalOptions = $collection->getItems();
+    	}
+    	
+    	return $this->_personalOptions;
+    }
+    
+    public function setPersonalOptions($options)
+    {
+    	$this->_personalOptions = $options;
+    	return $this;
+    }
+    
+    public function save($product = null)
+    {
+    	parent::save($product);
+    	$product = $this->getProduct($product);
+    	if($product)
+    	{
+	    	foreach($product->getPersonalOptions() as $option)
+	    	{
+	    		$option->setProductId($product->getId())
+	    			->save();
+	    	}
+    	}
+    	return $this;	
     }
 
 }

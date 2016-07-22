@@ -15,58 +15,58 @@
  *
  * @see Sid_Wishlist_Block_Wishlist_New
  */
-/* @var $this Sid_Wishlist_Block_Wishlist_New */
+/** @var $this Sid_Wishlist_Block_Wishlist_New */
 ?>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <!--Sprungziel Tastatursteuerung -->
 
-<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="wishlist-new-form">
 	<div class="page-title title-buttons">
 		<h2><?php echo $this->__('Create New Collector List') ?></h2>
 	</div>
 	<div id="jumptarget<?php echo $this->getNameInLayout();?>">
-		<div class="fieldset">
 			<h2 class="legend"><?php echo $this->__('New Collector List') ?></h2>
 			<ul class="form-list">
-				<li id="wishlist-new-form" class="wide">
-					<input type="hidden" name="wishlist[id]" value="new" id="wishlist:id" />
-					<div class="fieldset">
-						<ul class="form-list">
-							<li class="wide">
-								<div class="input-box">
-									<label for="wishlist:name"> <?php echo $this->__('Name') ?>	<?php echo $this->getFieldRequiredHtml('name')?> </label>
-									<input type="text" id="wishlist:name" name="wishlist[name]"
-										value="<?php echo $this->escapeHtml($this->getWishlist()->getName()) ?>"
-										title="<?php echo $this->__('Name') ?>"
-										class="input-text" maxlength="27"
-									/>
-								</div>
-								<div class="input-box">
-									<input type="checkbox" name="wishlist[is_default]" id="wishlist:is_default" value="1" <?php if (!$this->customerHasWishlists()) : ?> checked="checked" disabled="disabled" <?php endif; ?> class="checkbox" />
-									<label for="wishlist:is_default"><?php echo  $this->__('Is default') ?></label>
-								</div>
-							</li>
-							<li class="wide">
-								<label for="wishlist:description"> <?php echo $this->__('Description') ?> <?php echo $this->getFieldRequiredHtml('description')?> </label>
-								<textarea id="wishlist:description" name="wishlist[description]" rows="3" cols="5" title="<?php echo $this->__('Description') ?>" style="width: 248px; height: 100px;"><?php echo $this->escapeHtml($this->getWishlist()->getDescription()); ?></textarea>
-							</li>
-						</ul>
+				<li class="fields fullwide">
+					<div>
+						<div class="field">
+							<label for="wishlist:name"> <?php echo $this->__('Name') ?>	<?php echo $this->getFieldRequiredHtml('name')?> </label>
+							<div class="input-box">
+								<input type="text" id="wishlist:name" name="wishlist[name]"
+									value="<?php echo $this->escapeHtml($this->getWishlist()->getName()) ?>"
+									title="<?php echo $this->__('Name') ?>"
+									class="input-text" maxlength="27"
+								/>
+							</div>
+						</div>
+						<div class="field">
+							<div class="input-box">
+								<input type="checkbox" name="wishlist[is_default]" id="wishlist:is_default" value="1" <?php if (!$this->customerHasWishlists()) : ?> checked="checked" disabled="disabled" <?php endif; ?> class="checkbox" />
+								<label for="wishlist:is_default"><?php echo  $this->__('Is default') ?></label>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="fields wide">
+					<div class="field">
+						<label for="wishlist:description"> <?php echo $this->__('Description') ?> <?php echo $this->getFieldRequiredHtml('description')?> </label>
+					</div>
+					<div class="input-box">
+						<textarea id="wishlist:description" name="wishlist[description]" rows="3" cols="5" title="<?php echo $this->__('Description') ?>" style="width: 248px; height: 100px;"><?php echo $this->escapeHtml($this->getWishlist()->getDescription()); ?></textarea>
 					</div>
 				</li>
 			</ul>
+			<input type="hidden" name="wishlist[id]" value="new" id="wishlist:id" />
 			<?php if (!$this->customerHasWishlists()): ?>
 				<input type="hidden" name="wishlist[is_default]" value="1" />
 			<?php endif; ?>
-			<p class="required">
-				<?php echo $this->__('* Required Fields') ?>
-			</p>
+			<p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
-			<div class="buttons-set">
+			<div class="buttons-set buttons-set2">
 				<a class="back-link egovslistbutton" href="<?php echo $this->getBackUrl() ?>"><span><?php echo $this->__('Back') ?>	</span> </a> 
 				<button class="button" type="submit">
 					<span><?php echo $this->__('Continue') ?> </span>
 				</button>
 			</div>
 		</div>
-	</div>
 </form>

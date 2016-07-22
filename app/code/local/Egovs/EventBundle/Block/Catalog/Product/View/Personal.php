@@ -4,35 +4,13 @@ class Egovs_EventBundle_Block_Catalog_Product_View_Personal extends Mage_Catalog
 {
 	public function getFields()
 	{
-		$fields = array();
-		$collection = Mage::getModel('eventbundle/personal_option')->getCollection();
-		$collection->getSelect()
-			->where('product_id='.$this->getProductId())
-			->order('pos');
-		$collection->setStoreId($this->getStoreId());
-		return $collection->getItems();
-	}
-		
-	private function getProductId()
-	{
-		if($this->getData('product_id')!= null)
-		{
-			return $this->getData('product_id');
-		}
-	
-		$product = Mage::registry('product');
+		$product  =  $this->getProduct();
 		if($product)
 		{
-			return $product->getId();
+			return $product->getTypeInstance(false)->getPersonalOptions();
 		}
-		return 0;
+		return array();
 	}
+		
 	
-	private function getStoreId()
-	{
-		$storeId   = Mage::app()->getStore()->getId();
-		return $storeId;
-	
-	}
-
 }

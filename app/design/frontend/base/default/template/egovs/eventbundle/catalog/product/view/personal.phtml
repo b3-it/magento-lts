@@ -31,7 +31,7 @@
         <?php foreach ($_fields as $field): ?>
         <dt class="option-block type-field">
         	<div class="option-block-label">
-        		<label <?php if ($field->getRequired()) echo 'class="required"' ?> ><?php if ($field->getRequired()) echo '<em>*</em>' ?><?php echo($field->getLabel())?></label>
+        		<label <?php if ($field->getRequired()) echo 'class="required"' ?> ><?php if ($field->getRequired()) echo '<em>*</em>' ?><?php echo($field->getLabel(true))?></label>
             </div>
 
          <div class="option-block-elements">

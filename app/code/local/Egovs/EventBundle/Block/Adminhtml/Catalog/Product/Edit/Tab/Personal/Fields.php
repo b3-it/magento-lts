@@ -1,35 +1,8 @@
 <?php
 /**
- * Magento
+ * 
+ * @author h.koegel
  *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category    Mage
- * @package     Mage_Adminhtml
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-
-/**
- * customers defined options
- *
- * @category   Mage
- * @package    Mage_Adminhtml
- * @author     Magento Core Team <core@magentocommerce.com>
  */
 
 class Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Personal_Fields extends Mage_Adminhtml_Block_Widget
@@ -41,15 +14,24 @@ class Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Personal_Fields
        
     }
 
+    
+    //alle verfügbaren PersonalOptions für das Produkt finden 
 	public function getFields()
 	{
-		$fields = array();
-		$collection = Mage::getModel('eventbundle/personal_option')->getCollection();
-		$collection->getSelect()
-			->where('product_id='.$this->getProductId())
-			->order('pos');
-		$collection->setStoreId($this->getStoreId());
-		return $collection;
+		$product = $this->getProduct();
+		if($product)
+		{
+			if($product->getPersonalOptions() == null){
+				$collection = Mage::getModel('eventbundle/personal_option')->getCollection();
+				$collection->getSelect()
+					->where('product_id='.$product->getId())
+					->order('pos');
+				$collection->setStoreId($product->getStoreId());
+				$product->setPersonalOptions($collection->getItems());
+			}
+			return $product->getPersonalOptions() ;
+		}
+		return array();
 	}
 
 	private function getStoreId()
@@ -59,19 +41,26 @@ class Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Personal_Fields
 		
 	}
 	
-	private function getProductId()
-	{
-		if($this->getData('product_id')!= null)
-		{
-			return $this->getData('product_id');
-		}
 	
+	
+	
+	private function getProduct()
+	{
 		$product = Mage::registry('product');
 		if($product)
 		{
-			return $product->getId();
+			return $product;
 		}
-		return 0;
+		
+		if($this->getData('product_id')!= null)
+		{
+			$product = Mage::getModel('catalog/product')->load('product_id');
+			$product->setStoreId($this->getStoreId());
+			return $product;
+		}
+	
+		
+		return null;
 	}
 	
 	public function getFieldsAvail()

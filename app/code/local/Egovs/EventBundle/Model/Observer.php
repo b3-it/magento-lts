@@ -79,8 +79,9 @@ class Egovs_EventBundle_Model_Observer
         $product->setCanSaveBundleSelections(
             (bool)$request->getPost('affect_bundle_product_selections') && !$product->getCompositeReadonly()
         );
-        $storeId = $request->getParam('store');
+
         $has_personal = false;
+        $personalOptions = array();
         if ($personals = $request->getPost('personal_options')){
         	foreach($personals as $personal){
         		$has_personal = true;
@@ -88,17 +89,20 @@ class Egovs_EventBundle_Model_Observer
         		if($personal['is_delete']){
         			$model->delete();
         		}else{
-	        		$model->setStoreId($storeId);
+	        		$model->setStoreId(intval($product->getStoreId()));
 	        		$model->setName($personal['field']);
 	        		$model->setPos(intval($personal['pos']));
 	        		$model->setRequired(intval(isset($personal['required'])? 1:0));
 	        		$model->setMaxLength(intval($personal['max']));
 	        		$model->setLabel($personal['label']);
 	        		$model->setProductId($product->getId());
-	        		$model->save();
+	        		//$model->save();
+	        		$personalOptions[] = $model;
         		}
         	}
         }
+        
+        $product->setPersonalOptions($personalOptions);
         
         if($has_personal && $product->getEventrequest()){
         	Mage::getSingleton('adminhtml/session')->addWarning(Mage::helper('eventbundle')->__('Using both "personal options" and "requires approval" is not recommended!'));
@@ -275,6 +279,26 @@ class Egovs_EventBundle_Model_Observer
 
         $newProduct->setBundleOptionsData($optionRawData);
         $newProduct->setBundleSelectionsData($selectionRawData);
+        
+        $personalCollection = $product->getTypeInstance(false)->getPersonalOptions();
+       	$personal = array();
+       	
+       	foreach($personalCollection as $option)
+       	{
+       		$labels = array();
+       		foreach($option->getAllOptionLabels() as $label)
+       		{
+       			$label->unsId()->unsOptionId();
+       			$labels[] = $label;
+       			
+       		}
+       		$option->setAllOptionLabels($labels);	
+       		$option->unsId()->unsProductId();
+       		$personal[] = $option;
+       	}
+        
+       	$newProduct->setPersonalOptions($personal);
+        
         return $this;
     }
 
