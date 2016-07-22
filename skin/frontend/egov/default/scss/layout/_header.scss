@@ -61,12 +61,12 @@
 
 @include bp(max-width, 800px) {
     .skip-links {
-        position: relative;
-        top: 75px + $global-logo-height;
+        //position: relative;
+        //top: 75px + $global-logo-height;
     }
 
     .store-language-container {
-        top: 0px + $global-logo-height !important;
+        top: 0px - $global-logo-height !important;
     }
 }
 

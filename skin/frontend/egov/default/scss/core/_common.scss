@@ -942,6 +942,18 @@ div.block-reorder {
     }
 }
 
+@include bp(max-width, 490px) {
+    .col2-left-layout {
+        .col-left {
+            display: none;
+        }
+
+        .col-main {
+            width: 100% !important;
+        }
+    }
+}
+
 @include bp(max-width, $bp-medium) {
     .col-left,
     .col-right,
