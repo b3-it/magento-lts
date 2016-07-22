@@ -502,9 +502,8 @@ body.customer-account {
  * ============================================ */
 
 .order-info {
-    padding: $global-boxpadding;
-    border:$global-box-border solid $global-border-color;
     width: 100%;
+    padding-bottom: 10px;
 
     dt,
     dd,
@@ -606,6 +605,10 @@ body.customer-account {
 
     tbody td {
         background-color: $global-checkout-tdbackground;
+
+        a {
+            border: $global-active-border solid transparent;
+        }
     }
 
     td.last {
