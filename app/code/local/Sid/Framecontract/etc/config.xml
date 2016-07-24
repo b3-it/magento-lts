@@ -222,8 +222,17 @@
                 <class>Sid_Framecontract_Helper</class>
             </framecontract>
         </helpers>
+        <template>
+            <email>
+                <framecontract_catalog_upload_request_email_template translate="label" module="framecontract">
+                    <label>Catalog Upload Request</label>
+                    <file>sid/framecontract/catalog_upload_request.html</file>
+                    <type>html</type>
+                </framecontract_catalog_upload_request_email_template>
+            </email>
+        </template>
     </global>
-    	<crontab>
+    <crontab>
 		<jobs>
 			<framecontract>
 				<schedule>
@@ -235,4 +244,11 @@
 			</framecontract>
 		</jobs>
 	</crontab>
+	<default>
+        <framecontract>
+            <email>
+                <upload_request_template>framecontract_catalog_upload_request_email_template</upload_request_template>
+            </email>
+        </framecontract>
+    </default>
 </config>

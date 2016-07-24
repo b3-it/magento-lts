@@ -2,6 +2,8 @@
 
 class Sid_Framecontract_Model_Contract extends Mage_Core_Model_Abstract
 {
+	private $_vendor = null;
+	
     public function _construct()
     {
         parent::_construct();
@@ -36,5 +38,16 @@ class Sid_Framecontract_Model_Contract extends Mage_Core_Model_Abstract
     				->save();
     		}
     	}
+    }
+    
+    
+    public function getVendor()
+    {
+    	if($this->_vendor == null)
+    	{
+    		$this->_vendor = Mage::getModel('framecontract/vendor')->load($this->getFramecontractVendorId());
+    	}
+    	
+    	return $this->_vendor;
     }
 }
