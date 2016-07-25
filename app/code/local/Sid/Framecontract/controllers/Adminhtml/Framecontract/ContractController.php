@@ -211,7 +211,8 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 						$model->setKey($this->getNewKey($contract, $model))->save();
 					}
 					
-					if(isset($los['sendkey'])){
+					if(isset($los['sendlink'])){
+						Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Email was successfully send'));
 						$this->sendEMail($contract, $model);
 					}
 				}
@@ -228,7 +229,13 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 	
 	private function sendEMail($contract,$los)
 	{
-		
+		$template = 'framecontract/email/upload_request_template';
+		$recipients = array();
+		$recipients[] = array('name' => $contract->getVendor()->getOperator(),'email'=>$contract->getVendor()->getEmail());
+		$data = array();
+		$data['contract'] = $contract->getTitle().'/'.$los->getTitle();
+		$storeid = $contract->getStoreId();
+		Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid);
 	}
 	
 	
