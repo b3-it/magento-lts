@@ -31,6 +31,7 @@
 <form action="<?php echo $this->getSendUrl() ?>" id="form-validate" method="post">
     <div class="fieldset">
 	    <?php echo $this->getBlockHtml('formkey')?>
+	    <input type="hidden" value="sharing" name="share_key">
         <h2 class="legend"><?php echo $this->__('Sharing Information') ?></h2>
         <ul class="form-list">
 	        <li class="wide">
