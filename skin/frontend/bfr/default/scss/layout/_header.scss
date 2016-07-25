@@ -285,6 +285,8 @@
             padding: 14px 0;
             border-top: 5px solid $global-wrapper-color;
 
+            min-width: 410px;
+
             li {
                display: inline;
                list-style-type: none;
@@ -368,7 +370,9 @@
 .skip-link {
     background-color: $global-wrapper-color;
     float: right;
-    @include hidden-border;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: #DDDDDD;
 }
 
 a.skip-link {
@@ -440,8 +444,8 @@ a.skip-link {
 
 .skip-link .icon {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     vertical-align: middle;
 }
 

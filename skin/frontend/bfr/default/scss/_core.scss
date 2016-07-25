@@ -22,7 +22,7 @@
 @import "../../../egov/default/scss/egov/bitv";
 @import "../../../egov/default/scss/egov/video";
 @import "egov/egov-base";
-@import "../../../egov/default/scss/egov/fa-icons";
+@import "egov/fa-icons";
 @import "egov/mp-checkout";
 @import "../../../egov/default/scss/egov/checkiban";
 @import "../../../egov/default/scss/egov/silver-track";
@@ -77,7 +77,7 @@
 @import "../../../egov/default/scss/module/sales-order-print";
 @import "../../../egov/default/scss/module/slideshow";
 @import "module/wishlist";
-@import "../../../egov/default/scss/module/checkout-cart-minicart";
+@import "module/checkout-cart-minicart";
 @import "module/search";
 @import "../../../egov/default/scss/module/account-reviews";
 @import "module/account-login";

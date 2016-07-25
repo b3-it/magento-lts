@@ -238,8 +238,18 @@
                 dt.option-box {
                     display: inline-block;
                     vertical-align: top;
-                    width: 48%;
+                    width: 90%;
                     margin-bottom: $global-boxmargin;
+                    padding-bottom: $global-boxmargin / 2;
+
+                    border-bottom-width: $global-active-border;
+                    border-bottom-style: solid;
+                    border-bottom-color: $global-border-color;
+
+                    &:last-child {
+                        border-bottom: 0;
+                        margin-bottom: 0;
+                    }
 
                     > label {
                         display: block;
@@ -266,16 +276,30 @@
                     }
                 }
 
+                .personal-options {
+                    width: 90%;
+                    margin-top: $global-boxmargin / 2;
+                    padding-top: $global-boxmargin;
+
+                    border-top-width: $global-active-border;
+                    border-top-style: solid;
+                    border-top-color: $global-border-color;
+
+                    .option-block {
+                        width: 100%;
+                    }
+                }
+
                 .checkbox, .radio {
                     margin-top: 0;
                 }
 
                 .option-block {
                     display: block;
-                    width: 100%;
+                    width: 90%;
 
                     select, input[type="text"], textarea, p.note {
-                        width: 90%;
+                        width: 100%;
                     }
                 }
 
