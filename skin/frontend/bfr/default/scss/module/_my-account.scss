@@ -46,9 +46,9 @@
             width: 100%;
 
             .wishlist-empty {
-                border: $global-box-border solid $global-border-color;
+                border: $global-box-border solid $global-navigation-border-color;
                 padding: $golbal-msgpadding;
-                background-color: $global-box-title-backgroundcolor;
+                background-color: $global-navigation-color;
             }
         }
     }

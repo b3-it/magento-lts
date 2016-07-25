@@ -14,7 +14,7 @@
  */
 
 .skip-cart {
-    margin: 3px 10px;
+    margin: 8px 10px 7px 11px;
 
     &:not(.skip-active):hover {
         .icon {
@@ -51,10 +51,23 @@
         display: block;
         position: absolute;
         z-index: 200;
-        top: 55px;
+        top: 51px;
         right: 28%;
-        width: 320px;
+        width: 400px;
         border: 0;
+
+        .mini-products-list {
+            .product-details {
+                .product-name {
+                    a {
+                        -ms-hyphens: auto;
+                        -moz-hyphens: auto;
+                        -webkit-hyphens: auto;
+                        hyphens: auto;
+                    }
+                }
+            }
+        }
 
         a {
             background: none;
@@ -70,14 +83,12 @@
 .skip-cart .count {
     @include border-radius(12px);
     display: inline-block;
-    top: -6px;
-    position: relative;
     z-index: 5;
     width: 22px;
     height: 22px;
     background: rgba($global-linkcolor, 0.9);
     color: $global-fontcolor-light;
-    line-height: 24px;
+    line-height: 22px;
     text-align: center;
 }
 .skip-link.skip-active .count {
@@ -108,11 +119,10 @@
 
         .count {
             @include border-radius(49%);
-            margin: 0 7px;
+            margin: 0 0 0 3px;
             min-width: 23px;
             padding: 0 7px;
 
-            position: static;
             width: auto;
 
             &:hover {
