@@ -485,11 +485,16 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 	 * @return bool
 	 */
 	public function hasAuthorizedOrderer() {
-		
 		foreach ($this->getCustomerAcls()->getData() as $key => $value) {
 			if ($value == 'O') {
 				return true;
 			}
+		}
+		/** @var $customerSession Mage_Customer_Model_Session */
+		$customerSession = Mage::getSingleton('customer/session');
+		if ($customerSession->isLoggedIn() && $customerSession->getCustomer()->getCheckoutAuthority() == Sid_Roles_Model_Customer_Authority::AUTHORIZED_ORDERER) {
+			$this->getCustomerAcls()->setData($customerSession->getCustomerId(), 'W');
+			return true;
 		}
 		
 		return false;
