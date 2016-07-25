@@ -261,7 +261,7 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
     		return;
     	}
     	
-    	if ($this->getRequest()->has('form_key')) {
+    	if ($this->getRequest()->has('share_key')) {
     		$this->_forward('sharePost');
     		return;
     	}
@@ -366,7 +366,7 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
     	}
     	
     	if (!$this->getQuote()->hasAuthorizedOrderer()) {
-    		$this->getSession()->addNotice($this->__("This collection list has no authorized orders!"));
+    		$this->getSession()->addNotice($this->__("This collection list has no authorized orderers!"));
     	}
     	$infos = $this->getQuote()->getAssignedCustomersInformation();
     	if (isset($infos['specials'])) {
