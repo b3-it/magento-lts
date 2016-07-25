@@ -80,13 +80,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       foreach($this->getSelections() as $product){
       	$col = 'col_'.$product->getId();
       	$collection->getSelect()
-      	->joinLeft(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = main_table.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'name'));
+      	->join(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = main_table.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'qty_ordered'));
       }
       
       $collection->getSelect()
       ->distinct()
       ->columns(array('name'=>"TRIM(CONCAT(customer_firstname,' ',customer_lastname))"));
-    //die( $collection->getSelect()->__toString());  
+   // die( $collection->getSelect()->__toString());  
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
