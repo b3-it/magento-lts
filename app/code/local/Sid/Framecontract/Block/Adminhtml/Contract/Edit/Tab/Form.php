@@ -118,7 +118,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
 
   	private function getUserStoreGroups()
   	{
-  		if( Mage::helper('isolation')->getUserIsAdmin())
+  		if( Mage::helper('framecontract')->getUserIsAdmin())
   		{
   			$storeGroups = array();
   			foreach(Mage::getModel('adminhtml/system_store')->getGroupCollection()  as $storegroup)
@@ -128,7 +128,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
   			return $storeGroups;
   		}
 
-  		return  Mage::helper('isolation')->getUserStoreGroups();
+  		return  Mage::helper('framecontract')->getUserStoreGroups();
   	}
   
 }
