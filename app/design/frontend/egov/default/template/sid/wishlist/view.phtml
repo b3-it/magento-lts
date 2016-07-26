@@ -21,9 +21,7 @@ function deleteAll(url)
 	}
 }
 //]]>
-
 </script>
-
 
 <!--Sprungziel Tastatursteuerung -->
 <div class="cart <?php echo $_priceDisplay; ?>" id="jumptarget<?php echo $this->getNameInLayout();?>">
@@ -38,7 +36,6 @@ function deleteAll(url)
         <table id="collection-list-table" class="cart-table data-table">
             <col width="50" />
             <col />
-            <col width="50" /> <?php //Beschreibung/Kommentare ?>
             <col width="70" />
             <col width="70" />
             <col width="1" /> <?php //Angefragt ?>
@@ -58,7 +55,6 @@ function deleteAll(url)
 				<tr>
 					<th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
 					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?></th>
-					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Description') ?></th>
 					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?></th>
 					<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty Requested') ?>	</th>
 					<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>

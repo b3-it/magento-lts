@@ -57,13 +57,6 @@
         <?php endforeach; ?>
         <?php endif; ?>
     </td>
-	<td>
-		<textarea name="description[<?php echo $_item->getId() ?>]" rows="3" cols="5"
-			onfocus="focusComment(this)"
-			onblur="focusComment(this)"
-			title="<?php echo $this->__('Comment') ?>"
-			style="width: 150px; height: 100px;"><?php echo $_item->getDescription(); ?></textarea>
-	</td>
 	<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
     <td class="a-right">
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
@@ -273,6 +266,13 @@
 				>
 				<?php echo $this->getStatusOptionsHtml() ?>
 			</select>
+		</div>
+		<div class="input-box">
+			<textarea name="description[<?php echo $_item->getId() ?>]" rows="3" cols="5"
+				onfocus="focusComment(this)"
+				onblur="focusComment(this)"
+				title="<?php echo $this->__('Comment') ?>"
+				style="width: 150px; height: 100px;"><?php echo $_item->getDescription(); ?></textarea>
 		</div>
 	</td>
 	<td class="a-center">
