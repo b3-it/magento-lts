@@ -32,19 +32,19 @@
 <?php if ($this->helper('sidwishlist')->isAllow()) : ?>
 	<li>
 		<a href="<?php echo $this->helper('sidwishlist')->getAddUrl($_product) ?>"
-		class="link-wishlist egov-star egov-float-left"
+		class="link-wishlist"
 		alt="<?php echo $this->__('Add to Collector List') ?>"
 		title="<?php echo $this->__('Add to Collector List') ?>"
-		onclick="productAddToCartForm.submitLight(this, this.href); return false;"> </a>
+		onclick="productAddToCartForm.submitLight(this, this.href); return false;"><?php echo $this->__('Add to Collector List') ?></a>
 	</li>
 <?php else : ?>
 	<?php if ($this->helper('wishlist')->isAllow()) : ?>
 	<li>
 		<a href="<?php echo $_wishlistSubmitUrl ?>"
-			class="link-wishlist egov-star egov-float-left"
+			class="link-wishlist"
 			alt="<?php echo $this->__('Add to Wishlist') ?>"
 			title="<?php echo $this->__('Add to Wishlist') ?>"
-			onclick="productAddToCartForm.submitLight(this, this.href); return false;"> </a>
+			onclick="productAddToCartForm.submitLight(this, this.href); return false;"><?php echo $this->__('Add to Wishlist') ?></a>
 	</li>
 	<?php endif; ?>
 <?php endif; ?>
