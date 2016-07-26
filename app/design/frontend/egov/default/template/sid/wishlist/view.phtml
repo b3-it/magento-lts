@@ -34,19 +34,16 @@ function deleteAll(url)
     <form id="collection-list-view-form" action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="collection-list-table" class="cart-table data-table">
-            <col width="50" />
-            <col />
-            <col width="70" />
-            <col width="70" />
-            <col width="1" /> <?php //Angefragt ?>
+            <col width="50" /> <?php //Bild ?>
+            <col />				<?php //Produktname ?>
+            <col width="20" /> <?php //Preis ?>
+            <col width="50" /> <?php //Angefragt ?>
 		<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
-			<col width="1" /> <?php //Genehmigt ?>
+			<col width="50" /> <?php //Genehmigt ?>
 		<?php endif; ?>
-            <col width="10" />
-            <col width="20" />
-        <?php if ($this->isAuthorizedOrderer()): ?>
-			<col width="20" />
-		<?php endif ?>	
+            <col width="20" /> <?php //Zwischensumme ?>
+            <col width="50" /> <?php //Status ?>
+            <col width="40" /> <?php //Aktionen ?>
         <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
             <col width="70" />
             <col width="20" />
@@ -55,12 +52,12 @@ function deleteAll(url)
 				<tr>
 					<th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
 					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?></th>
-					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?></th>
-					<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty Requested') ?>	</th>
+					<th class="a-center" style="word-break:break-all;word-wrap:break-word" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?></th>
+					<th rowspan="<?php echo $mergedCells; ?>" style="word-break:break-all;word-wrap:break-word" class="a-center"><?php echo $this->__('Qty Requested') ?>	</th>
 					<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
-						<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty Granted') ?></th>
+						<th rowspan="<?php echo $mergedCells; ?>" style="word-break:break-all;word-wrap:break-word" class="a-center"><?php echo $this->__('Qty Granted') ?></th>
 					<?php endif; ?>
-					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
+					<th class="a-center" style="word-break:break-all;word-wrap:break-word" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Status') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Actions') ?></th>
 				</tr>
