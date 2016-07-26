@@ -37,6 +37,21 @@
     margin-bottom: $blobal-blockcontent-marginbottom;
 }
 
+.validation-failed {
+    input[type="checkbox"], input[type="radio"] {
+        outline: $global-active-border solid $global-warning-color;
+    }
+}
+
+div.validation-advice {
+    color: $global-warning-color;
+    background-color: $global-warning-background;
+    border: $global-active-border solid $global-warning-color;
+    margin: 5px 0 0 0;
+    padding: 10px;
+}
+
+
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
@@ -157,6 +172,20 @@
     .col2-left-layout {
         .col-main {
             padding-top: 13px;
+
+            .product-view {
+                .product-essential {
+                    #product-base-block {
+                        .product-shop {
+                            .add-to-cart {
+                                left: 85%;
+                                position: absolute;
+                                top: 60px;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         #product-base-block {
@@ -165,9 +194,9 @@
 
         #additional-product-images {
             position: absolute;
-            width: 39%;
-            left: 54.5%;
-            top: 290px;
+            width: 45%;
+            left: 46.3%;
+            top: 330px;
 
             h2 {
                 margin-bottom: 10px;
@@ -259,20 +288,6 @@
 
                     .qty-hidden {
                         display: none;
-                    }
-
-                    .validation-failed {
-                        input[type="checkbox"], input[type="radio"] {
-                            outline: $global-active-border solid $global-warning-color;
-                        }
-                    }
-
-                    div.validation-advice {
-                        color: $global-warning-color;
-                        background-color: $global-warning-background;
-                        border: $global-active-border solid $global-warning-color;
-                        margin: 5px 0 0 0;
-                        padding: 10px;
                     }
                 }
 
