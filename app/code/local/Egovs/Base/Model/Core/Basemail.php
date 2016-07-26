@@ -21,11 +21,17 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 		$username = Mage::getStoreConfig('system/smtp/username');
 		$passwd = Mage::getStoreConfig('system/smtp/password');
 		if (($auth = Mage::getStoreConfig('system/smtp/auth')) != 'NONE' &&
-		!empty($username) &&
-		!empty($passwd)) {
+			!empty($username) &&
+			!empty($passwd)) {
 			$config['auth'] = $auth;
 			$config['username'] = $username;
 			$config['password'] = $passwd;
+		}
+		
+		//Client host name setzten --> Standard ist sonst localhost
+		$hostName = parse_url(Mage::getBaseUrl(), PHP_URL_HOST);
+		if ($hostName !== false) {
+			$config['name'] = $hostName;
 		}
 
 		$mailServer = Mage::getStoreConfig('system/smtp/host');
