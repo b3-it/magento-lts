@@ -48,6 +48,17 @@ Customer account pages, rendered for all tabs in dashboard
                 </block>
             </block>
         </reference>
+
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Newsletter Manage</crumbname>
+                <crumbinfo>
+                    <label>Newsletter Manage</label>
+                    <title>Newsletter Manage</title>
+                </crumbinfo>
+            </action>
+        </reference>
+
     </newsletter_manage_index>
 
 </layout>
