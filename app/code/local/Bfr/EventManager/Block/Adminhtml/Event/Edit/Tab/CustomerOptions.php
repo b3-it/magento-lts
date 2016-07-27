@@ -124,13 +124,36 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       
 		foreach($this->getDynamicColumns() as $col)
 		{
-			$this->addColumn('co_customeroption_'.$col->getOptionId(), array(
-					'header'    => $col->getDefaultTitle(),
-					'align'     =>'left',
-					'index'     => 'customeroption_'.$col->getOptionId(),
-					'width'     => '100px',
-					//'filter_condition_callback' => array($this, '_filterNameCondition'),
-			));
+			/* @var $col Mage_Catalog_Model_Product_Option*/
+			$values = $col->getValues();
+			if(count($values) > 0){
+				$options = array();
+				foreach($values as $value)
+				{
+					//$options[] = array('label'=>$value->getDefaultTitle(),'value'=>$value->getOptionId());
+					$options[$value->getOptionTypeId()] =$value->getDefaultTitle();
+				}
+				$this->addColumn('co_customeroption_'.$col->getOptionId(), array(
+						'header'    => $col->getDefaultTitle(),
+						'align'     =>'left',
+						'index'     => 'customeroption_'.$col->getOptionId(),
+						'width'     => '100px',
+						'type'		=> 'options',
+						'options'	=> $options,
+						'filter'	=> false
+						//'filter_condition_callback' => array($this, '_filterNameCondition'),
+				));
+			
+			}else{
+				$this->addColumn('co_customeroption_'.$col->getOptionId(), array(
+						'header'    => $col->getDefaultTitle(),
+						'align'     =>'left',
+						'index'     => 'customeroption_'.$col->getOptionId(),
+						'width'     => '100px',
+						'filter'	=> false
+						//'filter_condition_callback' => array($this, '_filterNameCondition'),
+				));
+			}
 		}
       
 
