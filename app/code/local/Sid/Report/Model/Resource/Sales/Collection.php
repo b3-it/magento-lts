@@ -89,6 +89,12 @@ class Sid_Report_Model_Resource_Sales_Collection extends Sid_Report_Model_Mysql4
         {
         	$this->getSelect()->where($this->getConnection()->quoteInto('dst.value like ?',$this->_dienststelle));
         }
+        
+        $this->getSelect()
+        	->join(array('los'=>$this->getTable('framecontract/los')), 'main_table.los_id = los.los_id',array('lostitle'=>'title'))
+        	->join(array('contract'=>$this->getTable('framecontract/contract')), 'contract.framecontract_contract_id = los.framecontract_contract_id',array('contracttitle'=>'title'))
+        	->columns(array('contractlos' => "CONCAT(contract.title,' / ', los.title )") );
+        
 
         //die($this->getSelect()->__toString());
         return $this;

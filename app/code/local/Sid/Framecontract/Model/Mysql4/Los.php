@@ -36,4 +36,28 @@ class Sid_Framecontract_Model_Mysql4_Los extends Mage_Core_Model_Mysql4_Abstract
         return $values;
     }
     
+    
+    public function loadByProductId($object,$productId)
+    {
+    	$eav = Mage::getResourceModel('eav/entity_attribute');
+    	$eav = $eav->getIdByCode('catalog_product', 'framecontract_los');
+    	 
+    	$read = $this->_getReadAdapter();
+    	if ($read && !is_null($productId)) {
+    		$select = $this->_getReadAdapter()->select()
+    		->join(array('product' => $this->getTable('catalog/product').'_int'),'product.value = framecontract_los.los_id AND product.attribute_id ='.$eav , array())
+    		->from($this->getMainTable())
+    		->where('product.entity_id = ?', $productId);
+    		$data = $read->fetchRow($select);
+    		 
+    		if ($data) {
+    			$object->setData($data);
+    		}
+    	}
+    	 
+    	$this->unserializeFields($object);
+    	$this->_afterLoad($object);
+    	 
+    	return $this;
+    }
 }

@@ -6,27 +6,30 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Transmit_Grid extends 
   {
       parent::__construct();
       $this->setId('transmitGrid');
-      $this->setDefaultSort('transmit_id');
+      $this->setDefaultSort('transmit_date');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
-      $this->_headersVisibility = false;
+      $this->setUseAjax(true);
+      //$this->_headersVisibility = false;
   }
 
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('framecontract/transmit')->getCollection();
-      $collection->getSelect()->where('framecontract_contract_id='. intval(Mage::registry('contract_data')->getId()));
+      $collection->getSelect()
+      	->joinLeft(array('los'=>$collection->getTable('framecontract/los')),'main_table.los_id = los.los_id',array('title'))
+      	->where('main_table.framecontract_contract_id='. intval(Mage::registry('contract_data')->getId()));
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
 
   protected function _prepareColumns()
   {
-      $this->addColumn('framecontract_transmit_id', array(
-          'header'    => Mage::helper('framecontract')->__('ID'),
+      $this->addColumn('los_id', array(
+          'header'    => Mage::helper('framecontract')->__('Los'),
           'align'     =>'right',
-          'width'     => '50px',
-          'index'     => 'framecontract_transmit_id',
+          //'width'     => '50px',
+          'index'     => 'title',
       ));
 
       $this->addColumn('owner', array(
@@ -46,12 +49,21 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Transmit_Grid extends 
           'align'     =>'left',
           'index'     => 'recipient',
       ));
+     
+     $this->addColumn('note', array(
+     		'header'    => Mage::helper('framecontract')->__('Note'),
+     		'align'     =>'left',
+     		'index'     => 'note',
+     ));
 
 
 	  
       return parent::_prepareColumns();
   }
 
-
+  public function getGridUrl()
+  {
+  	return $this->getUrl('*/*/transmitgrid', array('_current'=>true));
+  }
 
 }

@@ -120,25 +120,15 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
 			
 */
 			
-		$contracts = Mage::getModel('framecontract/source_attribute_contracts');
-		$ctr = ($contracts->getOptionArray(false));
+
 		
-		$this->addColumn('framecontract', array(
-          'header'    => Mage::helper('framecontract')->__('Framework Contract'),
-          'align'     => 'left',
-          'width'     => '150px',
-          'index'     => 'framecontract_contract_id',
-          'type'      => 'options',
-          'options'   => $ctr
-      ));
-		
-		$lose = Mage::getModel('framecontract/source_attribute_lose');
+		$lose = Mage::getModel('framecontract/source_attribute_contractLos');
 		$ctr = ($lose->getOptionArray(false));
 		
 		$this->addColumn('los', array(
 				'header'    => Mage::helper('framecontract')->__('Los'),
 				'align'     => 'left',
-				'width'     => '150px',
+				//'width'     => '150px',
 				'index'     => 'framecontract_los',
 				'type'      => 'options',
 				'options'   => $ctr
