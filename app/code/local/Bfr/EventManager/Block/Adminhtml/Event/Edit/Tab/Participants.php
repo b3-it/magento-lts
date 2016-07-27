@@ -90,6 +90,35 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       		'filter_condition_callback' => array($this, '_filterCompanyCondition'),
       ));
       
+      $this->addColumn('pa_email', array(
+      		'header'    => Mage::helper('eventmanager')->__('Email'),
+      		'align'     =>'left',
+      		'index'     => 'email',
+      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
+      
+      $this->addColumn('pa_phone', array(
+      		'header'    => Mage::helper('eventmanager')->__('Phone'),
+      		'align'     =>'left',
+      		'index'     => 'phone',
+      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
+      
+      $this->addColumn('pa_address', array(
+      		'header'    => Mage::helper('eventmanager')->__('Address'),
+      		'align'     =>'left',
+      		'index'     => 'street',
+      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
+      
+      
+      $this->addColumn('pa_country', array(
+      		'header'    => Mage::helper('eventmanager')->__('Country'),
+      		'align'     =>'left',
+      		'index'     => 'country',
+      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
+      
       $role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
       $this->addColumn('pa_role', array(
           'header'    => Mage::helper('eventmanager')->__('Role'),

@@ -272,12 +272,18 @@
                 <company3>
                     <label>Company 3</label>
                 </company3>
+                <phone>
+                    <label>Phone</label>
+                </phone>
                 <street>
                     <label>Street</label>
                 </street>
                 <city>
                     <label>City</label>
                 </city>
+                <country>
+                    <label>Country</label>
+                </country>
             </fields>
         </eventbundle_personal>
     </global>

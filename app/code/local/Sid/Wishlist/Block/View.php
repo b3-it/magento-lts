@@ -148,7 +148,7 @@ class Sid_Wishlist_Block_View extends Sid_Wishlist_Block_View_Quote_Abstract
 		return Mage::getUrl('*/*/index', array('_secure'=>true));
 	}
 	
-	public function getUpdateUrl() {
+	public function getFormActionUrl() {
 		return Mage::getUrl('*/*/updatePost', array('_secure'=>true));
 	}
 	

@@ -59,7 +59,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
       ));
       
  	  
-      $tmp =$this->getUserStoreGroups();
+      $tmp =$this->__getUserStoreGroups();
       $stores = array();
       foreach($tmp as $k => $v){
       	$stores[] = array('value'=>$k,'label' => $v);
@@ -116,9 +116,23 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
   }
   
 
-  	private function getUserStoreGroups()
+  	/**
+  	 * Liefert User Groups aus Store Isolation
+  	 * 
+  	 * @return array
+  	 */
+  	private function __getUserStoreGroups()
   	{
-  		if( Mage::helper('framecontract')->getUserIsAdmin())
+  		if (!Mage::helper('core')->isModuleEnabled('Egovs_Isolation')) {
+  			$stores = Mage::getModel('adminhtml/system_config_source_store')->toOptionArray();
+  			$tmp = array();
+  			foreach ($stores as $store) {
+  				$tmp[$store['value']] = $store['label'];
+  			}
+  			return $tmp;
+  		}
+  		
+  		if( Mage::helper('isolation')->getUserIsAdmin())
   		{
   			$storeGroups = array();
   			foreach(Mage::getModel('adminhtml/system_store')->getGroupCollection()  as $storegroup)
@@ -128,7 +142,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
   			return $storeGroups;
   		}
 
-  		return  Mage::helper('framecontract')->getUserStoreGroups();
+  		return  Mage::helper('isolation')->getUserStoreGroups();
   	}
   
 }

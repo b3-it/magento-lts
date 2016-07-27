@@ -101,7 +101,18 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 	 * @return string
 	 */
 	public function getPaymentHtml() {
-		return $this->getChildHtml('payment_info');
+		$block = null;
+		try {
+			$block = $this->getChildHtml('payment_info');
+		} catch (Exception $e) {
+			Mage::logException($e);
+		}
+		
+		if (empty($block)) {
+			return $this->__('No information available.');
+		}
+		
+		return $block;
 	}
 	
 	public function getItems() {

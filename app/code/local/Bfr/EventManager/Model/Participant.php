@@ -106,7 +106,7 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	$this->setOrderItemId($orderItem->getId());
     	$this->setEventId($event->getId());
     	$this->setCreatedTime(now())->setUpdateTime(now());
-    	$fields = array('prefix','firstname','lastname','company','company2','company3','street','city','postcode','email');
+    	$fields = array('prefix','firstname','lastname','company','company2','company3','street','city','postcode','email','country','phone');
     	foreach($fields as $field){
     		if(isset($mapping[$field])){
     			$this->setData($field,$mapping[$field]);

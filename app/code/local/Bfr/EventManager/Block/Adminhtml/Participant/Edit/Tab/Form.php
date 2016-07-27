@@ -94,6 +94,13 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       		'name'      => 'email',
       ));
       
+      $fieldset->addField('phone', 'text', array(
+      		'label'     => Mage::helper('eventmanager')->__('Phone'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'phone',
+      ));
+      
       $fieldset->addField('company', 'text', array(
       		'label'     => Mage::helper('eventmanager')->__('Company'),
       		//'class'     => 'required-entry',
@@ -134,6 +141,13 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'postcode',
+      ));
+      
+      $fieldset->addField('country', 'text', array(
+      		'label'     => Mage::helper('eventmanager')->__('Country'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'country',
       ));
       $fieldset->addField('status', 'select', array(
           'label'     => Mage::helper('eventmanager')->__('Status'),
