@@ -214,13 +214,13 @@
     ## http://blog.plee.me/2013/07/access-control-via-hybrid-htaccess-for-both-apache-httpd-2-2-and-2-4/
     <IfModule !mod_authz_core.c>
     		#Apache 2.2
-    	  Order allow,deny
-    	  Allow from all
+    	  #Order allow,deny
+    	  #Allow from all
     </IfModule>
 
     <IfModule mod_authz_core.c>
         #Apache 2.3+
-    		Require all granted
+    		#Require all granted
     </IfModule>
 
     #Testbetrieb

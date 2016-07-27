@@ -1,15 +1,14 @@
 <?php
 /**
  * @category    design
- * @package     bfr_default
+ * @package     egov_default
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php if($crumbs && is_array($crumbs)): ?>
 <div class="breadcrumbs">
-    <span><?php echo $this->__('You are here:'); ?></span>
     <ul>
-      <?php if($crumbs && is_array($crumbs)): ?>
         <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
             <li class="<?php echo $_crumbName ?>">
             <?php if($_crumbInfo['link']): ?>
@@ -19,15 +18,11 @@
             <?php else: ?>
                 <?php echo $this->escapeHtml($this->__($_crumbInfo['label'])) ?>
             <?php endif; ?>
+            <?php if(!$_crumbInfo['last']): ?>
+                <span>/ </span>
+            <?php endif; ?>
             </li>
-          <?php if(!$_crumbInfo['last']): ?>
-            <img src="<?php echo $this->getSkinUrl('images/icon_breadcrump.gif'); ?>" />
-          <?php endif; ?>
         <?php endforeach; ?>
-      <?php else: ?>
-        <li>
-            <strong><?php echo $this->__('Home'); ?></strong>
-        </li>
-      <?php endif; ?>
     </ul>
 </div>
+<?php endif; ?>
