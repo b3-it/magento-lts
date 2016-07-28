@@ -6,6 +6,7 @@ images_dir = "../images"
 javascripts_dir = "../js"
 font_dir = "../font"
 relative_assets = true
+sass_options = {:unix_newlines => true}
 
 output_style = :compressed
 environment = :production
