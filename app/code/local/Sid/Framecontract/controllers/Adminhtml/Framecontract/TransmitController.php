@@ -13,24 +13,14 @@ class Sid_Framecontract_Adminhtml_Framecontract_TransmitController extends Mage_
 		{
 			if ($model->getId()) {
 				
-				$data = array();	
-				$data['vendor_email'] = $model->getOrderEmail();
-				$data['title'] = $model->getTitle();
-				$data['contractnumber'] = $model->getContractnumber();
-				
-				
 				$files = Mage::getModel('framecontract/files')->getCollection();
 				$expr = new Zend_Db_Expr('framecontract_contract_id='.$id.' AND ((type='.Sid_Framecontract_Model_Filetype::TYP_CONFIG.') OR (type='.Sid_Framecontract_Model_Filetype::TYP_INFO.'))');
 				$files->getSelect()
 					->where($expr);
 				
 			
-				$this->sendVendorEmail($data,$files);
-				$transmit = Mage::getModel('framecontract/transmit');
-				$transmit->setOwner(Mage::getSingleton('admin/session')->getUser()->getUsername());
-				$transmit->setRecipient($model->getOrderEmail());
-				$transmit->setFramecontractContractId($id);
-				$transmit->save();
+				$this->sendVendorEmail($model,$files);
+				
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('E-Mail has been send.'));
 				$this->_redirect('*/framecontract_contract/edit',array('id'=>$id));
 			} else {
@@ -46,77 +36,30 @@ class Sid_Framecontract_Adminhtml_Framecontract_TransmitController extends Mage_
 	}
  
 	
-	public  function sendVendorEmail($data,$files)
+	
+	
+	public  function sendVendorEmail($contract,$files)
     {
-    	$storeid = $this->getStoreId();
-    	$user = Mage::getSingleton('admin/session')->getUser();
-    	$vendorEMail = array();
+    	$storeid = $contract->getStoreId();
     	
-    	if(strlen($data['vendor_email']) > 1)
-    	{
-    		$vendorEMail[] = $data['vendor_email'];
-    	}
-    
-    	
-    	if(Mage::getStoreConfig("framecontract/email/notify_owner", $storeid))
-    	{
-    		if(strlen($user->getEmail()) > 1)
-    		{
-    			$vendorEMail[] = $user->getEmail();
-    		}
-    	}
+    	//Email senden
+    	$template = Mage::getStoreConfig("framecontract/email/vendor_template", $storeid);
+    	$recipients = array();
+    	$recipients[] = array('name' => $contract->getVendor()->getOperator(),'email'=>$contract->getVendor()->getEmail());
     	
     	
     	
-    	   
+    	$data = array();	
+    	$data['title'] = $contract->getTitle();
+    	$data['contractnumber'] = $contract->getContractnumber();
+    	$data['contract'] = $contract->getTitle();
     	
+    	Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid);
     	
-    	$translate = Mage::getSingleton('core/translate');
-        /* @var $translate Mage_Core_Model_Translate */
-        $translate->setTranslateInline(false);
-
-        $mailTemplate = Mage::getModel('core/email_template');
-        /* @var $mailTemplate Mage_Core_Model_Email_Template */
- 
-        
-        $template = Mage::getStoreConfig("framecontract/email/vendor_template", $storeid);
-        
-        
-		$sender = array();
-		$sender['name'] = trim($user->getFirstname(). " " .$user->getLastname());
-        $sender['email'] = $user->getEmail();
-        
-        
-        foreach($files->getItems() as $file)
-        {
-        	$fileContents = file_get_contents($file->getDiskFilename());
-    		$attachment = $mailTemplate->getMail()->createAttachment($fileContents);
-    		$attachment->filename = $file->getfilenameOriginal();	
-        }
-        
-        //foreach ($vendorEMail as $mail)
-        {
-	        try {
-			        $mailTemplate->setReturnPath($user->getEmail());
-			        $mailTemplate->setDesignConfig(array('area'=>'frontend', 'store'=>$storeid));
-			        $mailTemplate->sendTransactional(
-			                    $template,
-			                    $sender,
-			                    $vendorEMail,
-			                    null,
-			                   	$data
-			                );
-			        
-			
-			        $translate->setTranslateInline(true);
-	        	}
-	        
-	    	catch(Exception $ex)
-			{
-				Mage::getSingleton('adminhtml/session')->addError($ex->getMessage());
-				Mage::logException($ex);
-			}
-        }
+    	//info speichern
+    	$note = "Infos zum Rahmenvertrag versendet";
+    	Mage::helper('framecontract')->saveEmailSendInformation($contract->getId(),0, $recipients, $note );
+    	
         return $this;
     }
     

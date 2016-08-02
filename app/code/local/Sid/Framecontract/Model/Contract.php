@@ -50,4 +50,15 @@ class Sid_Framecontract_Model_Contract extends Mage_Core_Model_Abstract
     	
     	return $this->_vendor;
     }
+    
+    /**
+     * ermitteln aller ProduktId's die mit diesem Los verbunden sind
+     */
+    public function getProductIds()
+    {
+    	return $this->getResource()->getProductIds($this);
+    }
+    
+
+    
 }

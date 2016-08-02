@@ -125,6 +125,17 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
             'sortable'  => false
         ));
         
+       
+        
+        $this->addColumn('los', array(
+        		'header'    => Mage::helper('framecontract')->__('Los'),
+        		'align'     => 'left',
+        		//'width'     => '150px',
+        		'index'     => 'contractlos',
+        		'type'      => 'string',
+        		
+        ));
+        
 		$this->setCountTotals(true);
 
         $this->addExportType('*/*/exportSalesCsv', Mage::helper('adminhtml')->__('CSV'));

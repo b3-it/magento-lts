@@ -229,6 +229,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 	
 	private function sendEMail($contract,$los)
 	{
+		//Email senden
 		$template = 'framecontract/email/upload_request_template';
 		$recipients = array();
 		$recipients[] = array('name' => $contract->getVendor()->getOperator(),'email'=>$contract->getVendor()->getEmail());
@@ -236,6 +237,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 		$data['contract'] = $contract->getTitle().'/'.$los->getTitle();
 		$storeid = $contract->getStoreId();
 		Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid);
+		
+		//info speichern
+		$note = "Link zu Los versendet " . $los->getKey();
+		Mage::helper('framecontract')->saveEmailSendInformation($contract->getId(),$los->getId(), $recipients, $note );
+		
 	}
 	
 	
@@ -371,5 +377,18 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
     	}
     }
     
+    public function transmitgridAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('framecontract/contract')->load($id);
+    	
+    	Mage::register('contract_data', $model);
+    	
+	    $this->loadLayout(false);
+	    $this->getResponse()->setBody(
+	    			$this->getLayout()->createBlock('framecontract/adminhtml_contract_edit_tab_transmit_grid')->toHtml()
+	    );
+    	
+    }
     
 }

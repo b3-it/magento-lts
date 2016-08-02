@@ -609,7 +609,7 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
             $order->getPayment()->setMethod('free');
         }
 
-        $product = null;
+        $los = null;
         foreach ($address->getAllItems() as $item) {
             $_quoteItem = $item->getQuoteItem();
             if (!$_quoteItem) {
@@ -620,16 +620,17 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
                     $_quoteItem->getProduct()->getTypeInstance(true)->getOrderOptions($_quoteItem->getProduct())
                 );
             $orderItem = $convertQuote->itemToOrderItem($item);
+            
+            $los = Mage::getModel('framecontract/los')->loadByProductId($item->getProduct()->getId());
+            $orderItem->setLosId($los->getLosId());
+            
             if ($item->getParentItem()) {
                 $orderItem->setParentItem($order->getItemByQuoteItemId($item->getParentItem()->getId()));
             }
-            if($product == null)
-            {
-            	$product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-            	$order->setFramecontract($product->getFramecontract());
-            }
+            
             $order->addItem($orderItem);
         }
+        $order->setFramecontract($los->getFramecontractContractId());
 
         return $order;
     }
@@ -688,8 +689,8 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
                     continue;
                 }
                 //Rahmenvertrag finden
-                $product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-        		$fcid = $product->getFramecontract();
+                $los = Mage::getModel('framecontract/los')->loadByProductId($item->getProduct()->getId());
+        		$fcid = $los->getFramecontractContractId();
         		//initialisieren
         		if($n == 0) $address->setFrameContractId($fcid);
         		$n++;

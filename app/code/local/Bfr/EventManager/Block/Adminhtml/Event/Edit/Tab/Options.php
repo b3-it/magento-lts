@@ -25,6 +25,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 	    $this->setDefaultDir('ASC');
 	    $this->setSaveParametersInSession(true);
 	    $this->setUseAjax(true);
+	    $this->setCountTotals(true);
 	    
 	}
 
@@ -77,6 +78,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   {
 	$collection = Mage::getModel('sales/order')->getCollection();
       
+		$col = null;
       foreach($this->getSelections() as $product){
       	$col = 'col_'.$product->getId();
       	$collection->getSelect()
@@ -86,8 +88,15 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       $collection->getSelect()
       ->distinct()
       ->columns(array('name'=>"TRIM(CONCAT(customer_firstname,' ',customer_lastname))"));
+      
+      //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
+      if($col == null){
+      	$collection->getSelect()->where('entity_id=0');
+      }
+      
    // die( $collection->getSelect()->__toString());  
       $this->setCollection($collection);
+      $this->_prepareTotals();
       return parent::_prepareCollection();
   }
   
@@ -129,22 +138,56 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       ));
       
 
+      $columns = array();
 		foreach($this->getSelections() as $col)
 		{
+			$columns[] = 'op_col_'.$col->getId();
 			$this->addColumn('op_col_'.$col->getId(), array(
 					'header'    => $col->getName(),
 					'align'     =>'left',
 					'index'     => 'col_'.$col->getId(),
+					'total'		=> 'sum',
+					'type'      => 'number',
+					//'total_label'=> 'xxx',
 					'width'     => '100px',
 					'filter_condition_callback' => array($this, '_filterDynamicCondition'),
 			));
 		}
 
+		
+		$this->setCountTotals(true);
 		$this->addExportType('*/*/exportoptionsCsv', Mage::helper('eventmanager')->__('CSV'),array('optionId'=> $this->getOption()->getId(),'id'=>$this->getEvent()->getId()));
 		$this->addExportType('*/*/exportoptionsXml', Mage::helper('eventmanager')->__('XML'),array('optionId'=> $this->getOption()->getId(),'id'=>$this->getEvent()->getId()));
 
       return parent::_prepareColumns();
   }
+  
+  
+  protected function _prepareTotals()
+  {
+  	$columns = array();
+  	foreach($this->getColumns() as $col)
+  	{
+  		if($col->getTotal()){
+  			$columns[] = $col->getIndex();
+  		}
+  	}
+  	$this->_countTotals = true;
+  	$totals = new Varien_Object();
+  	$fields = array();
+  	foreach($columns as $column){
+  		$fields[$column]    = 0;
+  	}
+  	foreach ($this->getCollection() as $item) {
+  		foreach($fields as $field=>$value){
+  			$fields[$field]+= intval($item->getData($field));
+  		}
+  	}
+  	$totals->setData($fields);
+  	$this->setTotals($totals);
+  	return;
+  }
+  
 
 
   public function addExportType($url, $label, array $attributes = array())

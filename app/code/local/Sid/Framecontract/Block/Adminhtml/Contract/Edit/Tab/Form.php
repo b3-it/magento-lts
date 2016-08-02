@@ -74,12 +74,31 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
       
 	  $fieldset = $form->addFieldset('vendor_form', array('legend'=>Mage::helper('framecontract')->__('Vendor Information')));
 	  
-	  $fieldset->addField('framecontract_vendor_id', 'select', array(
-          'label'     => Mage::helper('framecontract')->__('Vendor'),
-          'required'  => true,
-	  	  'values'    => Mage::getModel('framecontract/vendor')->toSelectArray(),
-          'name'      => 'framecontract_vendor_id',
-	  ));
+	  $productCount = count(Mage::registry('contract_data')->getProductIds());
+	  if($productCount > 0)
+	  {
+		  	$fieldset->addField('framecontract_vendor_id', 'hidden', array(
+		  			'name'      => 'framecontract_vendor_id',
+		  	));
+		  	
+		  	$fieldset->addField('framecontract_vendor_id_1', 'select', array(
+		  			'label'     => Mage::helper('framecontract')->__('Vendor'),
+		  			'disabled'  => true,
+		  			'class'		=> 'disabled',
+		  			'values'    => Mage::getModel('framecontract/vendor')->toSelectArray(),
+		  			'name'      => 'framecontract_vendor_id_1',
+		  	));
+		  	Mage::registry('contract_data')->setData('framecontract_vendor_id_1',Mage::registry('contract_data')->getData('framecontract_vendor_id'));
+	  }
+	  else
+	  {
+		  $fieldset->addField('framecontract_vendor_id', 'select', array(
+	          'label'     => Mage::helper('framecontract')->__('Vendor'),
+	          'required'  => true,
+		  	  'values'    => Mage::getModel('framecontract/vendor')->toSelectArray(),
+	          'name'      => 'framecontract_vendor_id',
+		  ));
+	  }
 	  
 	 $fieldset->addField('operator', 'text', array(
           'label'     => Mage::helper('framecontract')->__('Operator'),

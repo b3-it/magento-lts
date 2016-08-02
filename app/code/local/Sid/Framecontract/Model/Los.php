@@ -34,6 +34,9 @@ class Sid_Framecontract_Model_Los extends Mage_Core_Model_Abstract
     }
     
     
+    /**
+     * ermitteln aller ProduktId's die mit diesem Los verbunden sind
+     */
     public function getProductIds()
     {
     	return $this->getResource()->getProductIds($this);
@@ -60,4 +63,15 @@ class Sid_Framecontract_Model_Los extends Mage_Core_Model_Abstract
     	}
     	
     }
+    
+    public function loadByProductId($productId)
+    {
+    	$this->_getResource()->loadByProductId($this,$productId);
+    	$this->_afterLoad();
+    	$this->setOrigData();
+    	$this->_hasDataChanges = false;
+    	return $this;
+    	 
+    }
+    
 }
