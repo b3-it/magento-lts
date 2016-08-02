@@ -95,6 +95,14 @@
                 <Egovs_Paymentbase />
             </depends>
         </Egovs_Giropay>
+        <Egovs_Girosolution>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_Girosolution>
         <Egovs_GermanTax>
             <active>false</active>
             <codePool>local</codePool>
