@@ -110,8 +110,15 @@
                 <rewrite>
                     <calculation>Egovs_GermanTax_Model_Tax_Calculation</calculation>
                 </rewrite>
+                <rewrite>
+                    <calculation_rule>Egovs_GermanTax_Model_Tax_Calculation_Rule</calculation_rule>
+                </rewrite>
             </tax>
-            
+            <tax_resource>
+                <rewrite>
+                    <calculation_rule>Egovs_GermanTax_Model_Resource_Tax_Calculation_Rule</calculation_rule>
+                </rewrite>
+            </tax_resource>
         </models>
         <resources>
             <germantax_setup>
