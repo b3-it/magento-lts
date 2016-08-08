@@ -14,6 +14,8 @@
  */
 
 .skip-cart {
+    min-width: 170px;
+
     &:not(.skip-active):hover {
         .icon {
             background-image: none;
@@ -99,8 +101,9 @@
 
         .count {
             @include border-radius(0px);
-            position: static;
+            //position: static;
             background: none;
+            top: 57px;
             margin-left: 0px;
             font-size: $f-size;
             width: auto;

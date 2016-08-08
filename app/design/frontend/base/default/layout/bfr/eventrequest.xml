@@ -6,7 +6,7 @@
 
        
        <reference name="minicart_head">
-                <block type="eventrequest/checkout_cart_sidebar" name="minicart_content" template="checkout/cart/minicart/eventrequest_items.phtml">
+                <block type="eventrequest/checkout_cart_sidebar" name="minicart_content" template="bfr/checkout/cart/minicart/eventrequest_items.phtml">
                     <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/cart/minicart/default.phtml</template></action>
                     <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/minicart/default.phtml</template></action>
                     <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/minicart/default.phtml</template></action>
@@ -31,7 +31,7 @@
             <!-- remove funktioniert nicht -->
             <action method="unsetChild"><name>checkout.cart</name></action>
             <block type="eventrequest/checkout_cart" name="checkout.cart">
-                <action method="setCartTemplate"><value>checkout/eventrequest_cart.phtml</value></action>
+                <action method="setCartTemplate"><value>bfr/checkout/eventrequest_cart.phtml</value></action>
                 <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
                 <action method="chooseTemplate"/>
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
