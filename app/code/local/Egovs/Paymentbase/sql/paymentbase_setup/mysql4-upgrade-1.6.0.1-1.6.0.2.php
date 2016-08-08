@@ -23,9 +23,21 @@ if (!$installer->getAttributeGroup(Mage_Catalog_Model_Product::ENTITY, 'Default'
 	
 	$epayblAttributes = array('haushaltsstelle', 'objektnummer', 'objektnummer_mwst', 'href', 'href_mwst', 'buchungstext', 'buchungstext_mwst');
 	foreach ($epayblAttributes as $attributeId) {
-		$installer->updateAttribute(Mage_Catalog_Model_Product::ENTITY, $attributeId, 'group', $epayblSettings);
+		/**
+		 * 
+		 * @var Mage_Eav_Model_Attribute $attribute
+		 */
+		$attributeId = $installer->getAttributeId(Mage_Catalog_Model_Product::ENTITY, $attributeId);
+		if (!$attributeId) {
+			continue;
+		}
+		$installer->addAttributeToGroup(
+				Mage_Catalog_Model_Product::ENTITY,
+				'Default',
+				$epayblSettings,
+				$attributeId
+			);
 	}
 }
-
 
 $installer->endSetup();
