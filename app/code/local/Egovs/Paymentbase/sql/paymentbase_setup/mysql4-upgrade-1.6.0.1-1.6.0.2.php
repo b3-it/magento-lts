@@ -27,15 +27,15 @@ if (!$installer->getAttributeGroup(Mage_Catalog_Model_Product::ENTITY, 'Default'
 		 * 
 		 * @var Mage_Eav_Model_Attribute $attribute
 		 */
-		$attribute = $installer->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attributeId);
-		if (!$attribute) {
+		$attributeId = $installer->getAttributeId(Mage_Catalog_Model_Product::ENTITY, $attributeId);
+		if (!$attributeId) {
 			continue;
 		}
 		$installer->addAttributeToGroup(
 				Mage_Catalog_Model_Product::ENTITY,
 				'Default',
 				$epayblSettings,
-				$attribute->getId()
+				$attributeId
 			);
 	}
 }
