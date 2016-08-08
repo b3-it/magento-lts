@@ -2,218 +2,24 @@
 <layout version="0.1.0">
     <default>
         <reference name="head">
-            <action method="removeItem"><type>skin_js</type><name>js/app_egov.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/app_bfr.js</name></action>
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>js/app_egov.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/app_bfr.js</name>
+            </action>
         </reference>
     </default>
 
-    <customer_account translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Home</crumbname>
-                <crumbinfo>
-                    <label>Home</label>
-                    <title>Home</title>
-                    <link>/</link>
-                </crumbinfo>
-            </action>
-            <action method="addCrumb">
-                <crumbname>My Account</crumbname>
-                <crumbinfo>
-                    <label>My Account</label>
-                    <title>My Account</title>
-                    <link>/customer/account/</link>
-                </crumbinfo>
+    <catalog_product_view translate="label">
+        <reference name="head">
+            <action method="removeItem">
+                <type>skin_js</type>
+                <script>js/lib/elevatezoom/jquery.elevateZoom-3.0.8.min.js</script>
             </action>
         </reference>
-    </customer_account>
-
-    <customer_account_login translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Home</crumbname>
-                <crumbinfo>
-                    <label>Home</label>
-                    <title>Home</title>
-                    <link>/</link>
-                </crumbinfo>
-            </action>
-            <action method="addCrumb">
-                <crumbname>Login or Create an Account</crumbname>
-                <crumbinfo>
-                    <label>Login or Create an Account</label>
-                    <title>Login or Create an Account</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </customer_account_login>
-
-    <customer_account_create translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Home</crumbname>
-                <crumbinfo>
-                    <label>Home</label>
-                    <title>Home</title>
-                    <link>/</link>
-                </crumbinfo>
-            </action>
-            <action method="addCrumb">
-                <crumbname>Create an Account</crumbname>
-                <crumbinfo>
-                    <label>Create an Account</label>
-                    <title>Create an Account</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </customer_account_create>
-
-    <customer_account_index translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Dashboard</crumbname>
-                <crumbinfo>
-                    <label>Dashboard</label>
-                    <title>Dashboard</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </customer_account_index>
-
-    <customer_address_index translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Address Book</crumbname>
-                <crumbinfo>
-                    <label>Address Book</label>
-                    <title>Address Book</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </customer_address_index>
-
-    <customer_address_form translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Address Book</crumbname>
-                <crumbinfo>
-                    <label>Address Book</label>
-                    <title>Address Book</title>
-                    <link>/customer/address/</link>
-                </crumbinfo>
-            </action>
-            <action method="addCrumb">
-                <crumbname>Add/Edit Address</crumbname>
-                <crumbinfo>
-                    <label>Add/Edit Address</label>
-                    <title>Add/Edit Address</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </customer_address_form>
-
-    <customer_account_edit translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Account Information</crumbname>
-                <crumbinfo>
-                    <label>Account Information</label>
-                    <title>Account Information</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </customer_account_edit>
-
-    <review_customer_index translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>My Product Reviews</crumbname>
-                <crumbinfo>
-                    <label>My Product Reviews</label>
-                    <title>My Product Reviews</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </review_customer_index>
-
-    <tag_customer_index translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-            <crumbname>My Tags</crumbname>
-                <crumbinfo>
-                    <label>My Tags</label>
-                    <title>My Tags</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </tag_customer_index>
-
-    <downloadable_customer_products translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Downloadable Products</crumbname>
-                <crumbinfo>
-                    <label>Downloadable Products</label>
-                    <title>Downloadable Products</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </downloadable_customer_products>
-
-    <wishlist_index_index translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>My Wishlist</crumbname>
-                <crumbinfo>
-                    <label>My Wishlist</label>
-                    <title>My Wishlist</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </wishlist_index_index>
-
-    <newsletter_manage_index translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>Newsletter Manage</crumbname>
-                <crumbinfo>
-                    <label>Newsletter Manage</label>
-                    <title>Newsletter Manage</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </newsletter_manage_index>
-
-    <sales_order_history translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>My Orders</crumbname>
-                <crumbinfo>
-                    <label>My Orders</label>
-                    <title>My Orders</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </sales_order_history>
-
-    <sales_order_view translate="label">
-        <reference name="breadcrumbs">
-            <action method="addCrumb">
-                <crumbname>My Orders</crumbname>
-                <crumbinfo>
-                    <label>My Orders</label>
-                    <title>My Orders</title>
-                    <link>/sales/order/history/</link>
-                </crumbinfo>
-            </action>
-            <action method="addCrumb">
-                <crumbname>Order View</crumbname>
-                <crumbinfo>
-                    <label>Order View</label>
-                    <title>Order View</title>
-                </crumbinfo>
-            </action>
-        </reference>
-    </sales_order_view>
+    </catalog_product_view>
 
 </layout>
