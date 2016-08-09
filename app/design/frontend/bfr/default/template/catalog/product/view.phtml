@@ -19,9 +19,7 @@
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
-<div class="product-name">
-    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
-</div>
+
 <div class="product-view">
     <div class="product-essential">
         <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->_isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
@@ -33,50 +31,55 @@
 
             <div id="product-base-block">
                 <div class="product-img-box">
-                    <div class="product-name">
-                        <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h1>
-                    </div>
                     <?php echo $this->getChildHtml('thumbnail'); ?>
                 </div>
 
                 <div class="product-shop">
-                    <div class="product-sku">
-                        <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
-                    </div>
-                    <div class="price-info">
-                        <?php echo $this->getPriceHtml($_product); ?>
-                        <?php echo $this->getChildHtml('bundle_prices'); ?>
-                        <?php echo $this->getTierPriceHtml(); ?>
+                    <div class="product-name">
+                        <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h1>
                     </div>
 
-                    <div class="extra-info">
-                        <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>
-                        <?php echo $this->getChildHtml('product_type_availability'); ?>
+                    <div id="details-block">
+                        <div class="product-sku">
+                            <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+                        </div>
+                        <div class="price-info">
+                            <?php echo $this->getPriceHtml($_product); ?>
+                            <?php echo $this->getChildHtml('bundle_prices'); ?>
+                            <?php echo $this->getTierPriceHtml(); ?>
+                        </div>
+
+                        <div class="extra-info">
+                            <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>
+                            <?php echo $this->getChildHtml('product_type_availability'); ?>
+                        </div>
+
+                        <?php echo $this->getChildHtml('product_type_data') ?>
+                        <?php echo $this->getChildHtml('extrahint') ?>
+
+                      <?php if ($_product->getShortDescription()):?>
+                        <div class="short-description">
+                            <div class="std">
+                                <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
+                            </div>
+                        </div>
+                      <?php endif;?>
+
+
+                      <?php if (!$this->hasOptions()):?>
+                        <?php if($_product->isSaleable()): ?>
+                          <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php endif; ?>
+                      <?php elseif (!$_product->isSaleable()): ?>
+                        <?php echo $this->getChildHtml('addto') ?>
+                      <?php endif; ?>
                     </div>
-
-                    <?php echo $this->getChildHtml('product_type_data') ?>
-                    <?php echo $this->getChildHtml('extrahint') ?>
-
-                  <?php if (!$this->hasOptions()):?>
-                    <?php if($_product->isSaleable()): ?>
-                      <?php echo $this->getChildHtml('addtocart') ?>
-                    <?php endif; ?>
-                  <?php elseif (!$_product->isSaleable()): ?>
-                    <?php echo $this->getChildHtml('addto') ?>
-                  <?php endif; ?>
-
                 </div>
             </div>
 
             <?php echo $this->getChildHtml('media'); ?>
 
             <div class="product-additional-information">
-                <?php if ($_product->getShortDescription()):?>
-                    <div class="short-description">
-                        <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
-                    </div>
-                <?php endif;?>
-
                 <?php echo $this->getChildHtml('other');?>
 
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>

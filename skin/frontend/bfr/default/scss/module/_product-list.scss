@@ -587,7 +587,8 @@ p.product-name {
             dt {
                 border-width: $global-box-border 0px $global-box-border-bottom 0px;
                 border-color: $global-border-color;
-                border-style: solid;
+                border-top-style: solid;
+                border-bottom-style: dotted;
             }
 
             a {

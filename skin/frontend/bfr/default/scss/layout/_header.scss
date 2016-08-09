@@ -115,7 +115,6 @@
     margin-top: $global-logo-top;
 
     @include default-border-box;
-    @include element-shadow;
 
     .header-function-row {
         display: block;
@@ -220,7 +219,6 @@
     margin-bottom: $global-logo-bottom;
     height: $global-logo-height;
 
-    @include element-shadow;
     @include hidden-border;
 
     img {
