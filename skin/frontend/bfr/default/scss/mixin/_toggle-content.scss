@@ -84,7 +84,11 @@
     padding: 7px 10px 7px 24px;
     border: $global-active-border solid $global-navigation-border-color;
     position: relative;
-    background-color: $global-lightcolor;
+
+    background: -moz-linear-gradient(top,  $gobal-header-rgba-1 0%, $gobal-header-rgba-2 $gobal-header-gradient);
+    background: -webkit-linear-gradient(top,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
+    background: linear-gradient(to bottom,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6d7dbdc', endColorstr='#00000000',GradientType=0 );
 
     &:after {
         @include triangle(#{$arrow-direction}, 4px, $c-action);
