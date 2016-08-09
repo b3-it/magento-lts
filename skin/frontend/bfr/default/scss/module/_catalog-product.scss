@@ -51,6 +51,9 @@ div.validation-advice {
     padding: 10px;
 }
 
+div#details-block {
+    position: relative;
+}
 
 /* ============================================ *
  * Catalog - Product
@@ -62,6 +65,11 @@ div.validation-advice {
 
 	  input[type="text"] {
 	    margin: 0;
+	  }
+
+	  .tab-content .std {
+        @include multi-two-columns;
+        margin: 0 0;
 	  }
 }
 
@@ -79,11 +87,9 @@ div.validation-advice {
         width: 100%;
     }
 
-    .product-view {
-        .tab-content {
-            .std {
-                width: 100%;
-            }
+    .tab-content {
+        .std {
+            width: 100%;
         }
     }
 }
@@ -179,10 +185,7 @@ div.validation-advice {
         }
 
         #additional-product-images {
-            position: absolute;
-            width: 45%;
-            left: 46.3%;
-            top: 330px;
+            width: 100%;
 
             h2 {
                 margin-bottom: 10px;
@@ -196,49 +199,51 @@ div.validation-advice {
         .product-shop {
             width: $global-product-info-2L-width;
             font-size: 1.3em;
-            margin-top: 3px;
+            margin-top: 11px;
 
-            //.price-info {
-                .price-box {
-                    .old-price, .special-price {
-                        display: block;
-                        float: none;
-                        width: 50%;
-                        padding: 0;
-                    }
-
-                    .old-price {
-                        span {
-                            font-size: 1.5em;
-                        }
-                    }
-
-                    span.label {
-                        display: inline-block;
-                        width: 30%;
-                    }
-                }
-            //}
-
-            .add-to-cart-buttons {
-                max-width: 180px;
-                margin-top: 10px;
-
-                button {
-                    font-size: 0.9em;
+            .price-box {
+                .old-price, .special-price {
+                    display: block;
                     float: none;
+                    width: 50%;
+                    padding: 0;
+                }
+
+                .old-price {
+                    span {
+                        font-size: 1.5em;
+                    }
+                }
+
+                span.label {
+                    display: inline-block;
+                    width: 30%;
                 }
             }
-        }
 
-        .add-to-cart {
-            left: 85%;
-            position: absolute;
-            top: 0px;
+            .add-to-cart {
+                left: 76.3%;
+                position: absolute;
+                top: 0px;
 
-            .qty-wrapper {
-                float: none;
+                .qty-wrapper {
+                    float: none;
+                    margin: 0;
+                }
+
+                .add-to-cart-buttons {
+                    display: inline-block;
+                    max-width: 180px;
+                    margin-top: 10px;
+                    margin: 0;
+
+                    button {
+                        font-size: 0.9em;
+                        float: none;
+                    }
+                }
             }
+
         }
 
         .product-additional-information {
@@ -330,16 +335,6 @@ div.validation-advice {
                 background-color: $global-navigation-color;
                 border-color: $global-navigation-border-color;
 
-                .add-to-cart {
-                    display: inline-block;
-                    float: right;
-
-                    .add-to-cart-buttons {
-                        display: inline-block;
-                        max-width: 180px;
-                    }
-                }
-
                 .add-to-links {
                     display: none;
                 }
@@ -405,15 +400,15 @@ div.validation-advice {
         }
     }
 
-    .product-additional-information {
-        .short-description {
-            margin: $box-spacing 0;
+    .short-description {
+        margin: $box-spacing 0;
 
-            .std {
-                width: 100%;
-            }
+        .std {
+            width: 100%;
+            font-size: 0.8em;
         }
     }
+
 
     .product-essential {
         h2 {
@@ -451,11 +446,9 @@ div.validation-advice {
         margin-bottom: 10px;
 
         h1, .h1 {
-            border: none;
-        }
-
-        .h1 {
             color: $global-h1-color;
+            border: none;
+            font-size: 1.5em;
         }
     }
 
@@ -479,12 +472,6 @@ div.validation-advice {
             padding: 0px 0px 10px 0px;
         }
 
-        .extra-info {
-        }
-
-        .price-info {
-        }
-
         .extra-info,
         .price-info {
             margin-bottom: $box-spacing;
@@ -500,7 +487,8 @@ div.validation-advice {
             .price-from, .price-to {
                 padding: 10px 0;
             }
-                        .old-price,
+
+            .old-price,
             .special-price,
             .regular-price {
                 padding-right: 0;
@@ -557,9 +545,6 @@ div.validation-advice {
         .price-label {
             display: none;
         }
-    }
-
-    .add-to-cart-wrapper {
     }
 
     .block-related {
@@ -667,26 +652,24 @@ div.validation-advice {
     display: inline-block;
     vertical-align: top;
 
-    .product-name {
-        h1 {
-        }
-    }
-
     .product-image {
-        position: relative;
-        top: -13px;
-    }
+        border: none;
 
-    .product-image img {
-        max-width: 100%;
-        height: 100%;
+        &:hover {
+            border: none !important;
+        }
 
-        // Since product detail page images are not cropped to a specific aspect ratio, in order to make the image not
-        // cut off on tall skinny screens, we are setting a max-height on the image
-        max-height: 400px;
+        img {
+            max-width: 100%;
+            height: 100%;
 
-        // Centering the image for instances where max-height kicks in
-        margin: 0px auto;
+            // Since product detail page images are not cropped to a specific aspect ratio, in order to make the image not
+            // cut off on tall skinny screens, we are setting a max-height on the image
+            max-height: 400px;
+
+            // Centering the image for instances where max-height kicks in
+            margin: 0px auto;
+        }
     }
 }
 
@@ -753,12 +736,10 @@ div.validation-advice {
         @include clearfix;
     }
 
-    .add-to-cart {
-    }
-
     .add-to-cart-buttons {
         button {
             margin: 0;
+            padding: 5px;
 
             > span.egov-cart {
                 font-size: $global-fontsize-big !important;
@@ -791,7 +772,7 @@ div.validation-advice {
     .add-to-cart .qty-wrapper .qty {
         float: left;
         height: 40px;
-        width: 60px;
+        width: 107px;
     }
 
     .add-to-cart .qty-wrapper #qtd {
@@ -1005,9 +986,6 @@ div.validation-advice {
 
     .product-view .product-shop .product-name {
         display: block;
-    }
-    .product-img-box .product-name {
-        display: none;
     }
 }
 
