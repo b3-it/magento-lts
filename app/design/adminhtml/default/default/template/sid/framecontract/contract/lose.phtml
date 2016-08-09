@@ -22,15 +22,15 @@
 <?php echo $this->getChild('add_button')->toHtml();?>
 
 <div id="contract_los_box" class="grid tier form-list">
-   <table >
+   <table id="sid-lose-grid">
    <thead>
    <tr class="headings">
-   	<th><?php echo($this->__('Title'))?></th>
-   	<th><?php echo($this->__('Note'))?></th>
-   	<th class="type-last last"><?php echo($this->__('Status'))?></th>
-   	<th>Link erneuern</th>
-   	<th>Link versenden</th>
-   	<th/>
+   	<th class="type-title"><?php echo($this->__('Title'))?></th>
+   	<th class="type-note"><?php echo($this->__('Note'))?></th>
+   	<th class="type-status"><?php echo($this->__('Status'))?></th>
+   	<th class="type-link">Link erneuern</th>
+   	<th class="type-send">Link versenden</th>
+   	<th class="type-button"/>
    	</tr>
    </thead>
    <tbody>
@@ -54,7 +54,7 @@ var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">'
 							'<input class="input-text" id="contract_los_{{number}}_label" value="{{title}}" name="lose[{{number}}][title]" />'+
 							'</td>'+
 							'<td class="a-center"><input class="input-text"  id="contract_los_{{number}}_pos" value="{{note}}" name="lose[{{number}}][note]" /></td>' +
-							'<td class="a-center"><select class="select product-option-price-type"  id="contract_los_{{number}}_field" name="lose[{{number}}][status]">' +
+							'<td class="a-center"><select   id="contract_los_{{number}}_field" name="lose[{{number}}][status]">' +
 							'	<?php foreach ($this->getStatus() as $key=>$value): ?>' +
 							'			<option value="<?php echo($key)?>"><?php echo($value) ?></option>' +
 							'	<?php endforeach; ?>' +
