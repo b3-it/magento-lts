@@ -25,3 +25,25 @@
 #framecontract_los_0 {
     margin-right: 10px;
 }
+
+#sid-lose-grid 
+{
+	margin-top:10px;
+}
+
+
+#sid-lose-grid  .type-status{
+	width: 80px;
+}
+
+#sid-lose-grid  .type-link, #sid-lose-grid  .type-send{
+	width: 80px;
+}
+
+#sid-lose-grid  .type-button{
+	width: 80px;
+}
+
+#sid-lose-grid input.input-text {
+    width: 98%;
+}
