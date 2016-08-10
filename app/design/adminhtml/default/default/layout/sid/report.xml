@@ -39,4 +39,10 @@
             </block>
         </reference>
     </adminhtml_sidreport_sales_sales>
+    <adminhtml_sidreport_product_index>
+        <reference name="content">
+            <block type="sidreport/adminhtml_product" name="report" />
+        </reference>
+    </adminhtml_sidreport_product_index>
+    
 </layout>
