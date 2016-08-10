@@ -12,7 +12,10 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
         			{	
         				if (typeof contracts[contract] != \'undefined\') {
 	        				var lose = contracts[contract][\'lose\'].items;
-	        				$(\''.$this->getHtmlId().'\').empty();
+	        				
+	        				while ($(\''.$this->getHtmlId().'\').options.length) {
+        						$(\''.$this->getHtmlId().'\').remove(0);
+    						}
 	        				lose.each(function(los){$(\''.$this->getHtmlId().'\').appendChild(new Option(los.title, los.los_id));});
         				}
         			}

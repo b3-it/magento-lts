@@ -77,6 +77,7 @@ $installer->addAttribute('catalog_product', 'framecontract', array(
     'visible' => true,
 	'source' => 'framecontract/source_attribute_contracts',
     'default' => '0',
+	'group' =>'Framecontract'
 ));
 
 $installer->endSetup(); 
