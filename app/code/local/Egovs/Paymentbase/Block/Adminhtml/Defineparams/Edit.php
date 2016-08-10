@@ -42,12 +42,15 @@ class Egovs_Paymentbase_Block_Adminhtml_Defineparams_Edit extends Mage_Adminhtml
             }
         ";
         
+        /**
+         * 
+         * @var Egovs_Paymentbase_Model_Mysql4_Defineparams_Collection $collection
+         */
         $collection = Mage::getModel('paymentbase/localparams')->getCollection();
         $data = Mage::registry('defineparams_data')->getData();
-        if(($data) && (isset($data['ident'])))
-        {
-        	$collection->load($data['ident'],'ident');
-        	if(count($collection->getItems()) > 0){
+        if (($data) && (isset($data['param_id']))) {
+        	$collection->addFieldToFilter('param_id', $data['param_id']);
+        	if($collection->count() > 0){
         		$this->_removeButton('delete');
         	}
         }

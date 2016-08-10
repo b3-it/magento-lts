@@ -393,6 +393,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$customer = new Egovs_Paymentbase_Model_Webservice_Types_Kunde($this->getECustomerId());
 		}
 
+		$this->_eCustomerObject = null;
 		$objResult = null;
 		try {
 			$objResult = $this->getSoapClient()->lesenKunde($customer);
@@ -1225,11 +1226,14 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				$eCustomer = $this->getECustomer();
 				if (!$eCustomer) {
 					//Müsste eigentlich durch vorherige Prüfungen unmöglich sein, es sei denn der Kunde wurde direkt an der ePayBL gelöscht!
-					Mage::log(sprintf(" paymentbase::getCustomerFromEPayment:Kunde nicht vorhanden!\nID=%s\nePayBL-ID=%s", $customer->getId(), $id), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+					Mage::log(sprintf("paymentbase::getCustomerFromEPayment:Kunde nicht vorhanden!\nID=%s\nePayBL-ID=%s", $customer->getId(), $id), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
 					return false;
 				}
 				if (isset($eCustomer->status) && isset($eCustomer->status->code) && $eCustomer->status->code != 'AKTIV') {
-					Mage::log(sprintf(" paymentbase::getCustomerFromEPayment:Kunde nicht mehr aktiv (STATUS:%s)!\nID=%s\nePayBL-ID=%s", $eCustomer->status->code, $customer->getId(), $id), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+					Mage::log(sprintf("paymentbase::getCustomerFromEPayment:Kunde nicht mehr aktiv (STATUS:%s)!\nID=%s\nePayBL-ID=%s", $eCustomer->status->code, $customer->getId(), $id), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+					if ($eCustomer->status->code == 'GESPERRT') {
+						return false;
+					}
 					$address->setECustomerIsDeleted(true);
 					return $address;
 				}

@@ -393,6 +393,9 @@ class Egovs_BankPayment_Model_Bankpayment extends Egovs_Paymentbase_Model_Abstra
     	if ($order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT) {
     		Mage::throwException(Mage::helper($this->getCode())->__("Invoice isn't paid yet")."!");
     	}
+    	// Start store emulation process
+    	$appEmulation = Mage::getSingleton('core/app_emulation');
+    	$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($order->getStoreId());
     	
     	if ($order->getIsVirtual()) {
     		$customerNote = $this->__("Your order is complete.<br/>If your order contains downloads, so you can now download these.");    		
@@ -400,6 +403,9 @@ class Egovs_BankPayment_Model_Bankpayment extends Egovs_Paymentbase_Model_Abstra
     		$customerNote = $this->__("We received your payment and your order will now prepared for delivery.<br/>If your order contains downloads, so you can now download these.");
     	}
     	
+    	// Stop store emulation process
+        $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
     	$order->sendOrderUpdateEmail(true, $customerNote);
     	
     	$order->addStatusToHistory(
