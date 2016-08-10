@@ -707,7 +707,9 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
         // $data contains an xml element, so create an xml object of it
         $dom = new DOMDocument();
         if (empty($data) || !$dom->loadXML($data)) {
-        	Mage::log(sprintf("Saferpay data was empty or invalid!\r\n%s", $data), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+        	$msg = Mage::helper('paymentbase')->__("Can't create XML DOM for Saferpay data\n%s", $data);
+        	Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+        	Mage::helper('paymentbase')->sendMailToAdmin($msg, Mage::helper('paymentbase')->_("Can't create XML DOM for Saferpay data"));
         	Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         	return false;
         }
@@ -738,6 +740,9 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 			 * something was wrong with either the command line tool or someone
 			 * tried to fake the response, so we redirect to failure page
 			 */
+        	$msg = Mage::helper('paymentbase')->__("Can't validate Saferpay\nReturned verification:%s\nData:\n%s\nSignature:%s", $verification, $data, $signature);
+        	Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+        	Mage::helper('paymentbase')->sendMailToAdmin($msg, Mage::helper('paymentbase')->_("Can't validate Saferpay data"));
             return false;
         }
         
