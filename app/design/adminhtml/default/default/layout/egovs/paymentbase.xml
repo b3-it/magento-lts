@@ -23,6 +23,12 @@
         </reference>
     </adminhtml_paymentbase_defineparams_index>
     
+    <adminhtml_paymentbase_defineparams_edit>
+        <reference name="content">
+            <block type="paymentbase/adminhtml_defineparams_edit" name="defineparams"/>
+        </reference>
+    </adminhtml_paymentbase_defineparams_edit>
+    
     <adminhtml_paymentbase_haushaltsparameter_index>
         <reference name="content">
             <block type="paymentbase/adminhtml_haushaltsparameter" name="haushaltsparameters"/>
