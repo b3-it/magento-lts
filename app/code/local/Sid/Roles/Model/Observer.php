@@ -7,7 +7,9 @@ class Sid_Roles_Model_Observer extends Mage_Core_Model_Abstract
 			$user = $observer->getObject();
 			$conn = Mage::getSingleton('core/resource')->getConnection('core_write');
 			$conn->query('DELETE from sid_roles_customergroups WHERE user_id='.$user->getId());
-			$user->setAllowAllCustomergroups($post['allow_all_customergroups']);
+			if(isset($post['allow_all_customergroups'])){
+				$user->setAllowAllCustomergroups($post['allow_all_customergroups']);
+			}
 			if (isset($post['customergroups'])) {
 				foreach ($post['customergroups'] as $key=>$value) {
 					if (is_array($value)) {

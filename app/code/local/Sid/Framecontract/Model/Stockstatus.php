@@ -3,35 +3,85 @@
 class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 {
   
-	
-	public function getStockStatusCollection($losId = 0)
+	/**
+	 * Warnung versenden falls ein Schwellwert erreicht ist
+	 * @return Sid_Framecontract_Model_Stockstatus
+	 */
+	public function sendStockStatusEmail()
 	{
-		/* @var $eav Mage_Eav_Model_Entity_Attribute */
-		$eav = Mage::getResourceModel('eav/entity_attribute');
-    	$status = $eav->getIdByCode('catalog_product', 'status');
-    	$los = $eav->getIdByCode('catalog_product', 'framecontract_los');
-    	$qty = $eav->getIdByCode('catalog_product', 'framecontract_qty');
+		$collection = Mage::helper('framecontract')->getStockStatusCollection();
 		
-    	$sold = new Zend_Db_Expr('(qty.value - stock.qty) as sold');
-    	$sold_p = new Zend_Db_Expr('IF(qty.value <> 0, (qty.value - stock.qty)/qty.value * 100, 0) as sold_p');
-		
-		/* @var $collection Mage_Catalog_Model_Resource_Product_Collection */
-		$collection = Mage::getModel('catalog/product')->getCollection();
+		$qty = intval(Mage::getStoreConfig("framecontract/contract_qty/qty"));
+		$expr = new Zend_Db_Expr('IF(qty.value <> 0, ((qty.value - stock.qty) / qty.value * 100), 0) >= ' . $qty);
+		$expr2 = new Zend_Db_Expr('losdetail.stock_status_send = 0');
 		
 		$collection->getSelect()
-			->columns($sold)
-			->columns($sold_p)
-			->join(array('status'=>$collection->getTable('catalog/product').'_int'), 'status.entity_id=e.entity_id AND status.attribute_id ='.$status)
-			->join(array('los'=>$collection->getTable('catalog/product').'_int'), 'los.entity_id=e.entity_id AND los.attribute_id ='.$los)
-			->join(array('qty'=>$collection->getTable('catalog/product').'_int'), 'qty.entity_id=e.entity_id AND qty.attribute_id ='.$qty)
-			->join(array('stock'=>$collection->getTable('cataloginventory/stock_item')),'stock.product_id=e.entity_id')
-			->where('los.value = '.intval($losId))
-			->where('status.value = '. Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
-			->where('stock.manage_stock = 1')
-		;
+			->join(array('losdetail' => $collection->getTable('framecontract_los')),'losdetail.los_id = los.value')
+			->where($expr)
+			->where($expr2)
+			->order('store_group');
 		
 		
-		die($collection->getSelect()->assemble());
+		$template = "framecontract/contract_qty/email_template";
+		$lastStore = null;
+		$lastItem = null;
+		$data = array();
+		$data['items'] = array();
+		foreach($collection->getItems() as $item)
+		{
+			if($lastStore && $lastStore != $item->getStoreGroup())
+			{
+				$data['formated_items'] = $this->_formatItemsHTML($data['items']);
+				$recipients = array();
+				$recipients[] = array('name'=>Mage::getStoreConfig("framecontract/contract_qty/recipient", $lastStore), 'email' => Mage::getStoreConfig("framecontract/contract_qty/recipient", $lastStore));
+				
+				//mail senden
+				Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $lastStore);
+				//status am los speichern
+				Mage::getModel('framecontract/los')->load($lastItem->getLosId())->setStockStatusSend(1)->save();
+				//neu initialisieren
+				$data = array();
+				$data['items'] = array();
+				
+			}
+			
+			$lastStore = $item->getStoreGroup();
+			$data['items'][] = $item;
+			$lastItem = $item;
+			
+		}
+		
+		if(count($data['items']) > 0)
+		{
+			$data['formated_items'] = $this->_formatItemsHTML($data['items']);
+			$recipients = array();
+			$recipients[] = array('name'=>Mage::getStoreConfig("framecontract/contract_qty/recipient", $lastStore), 'email' => Mage::getStoreConfig("framecontract/contract_qty/recipient", $lastStore));
+					
+			//mail senden
+			Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $lastStore);
+			//status am los speichern
+			Mage::getModel('framecontract/los')->load($lastItem->getLosId())->setStockStatusSend(1)->save();
+		}
+		
+		//die($collection->getSelect()->__toString());
+		return $this;
+	}
+	
+	//die Items so formatieren, dass eine Tabelle entsteht
+	private function _formatItemsHTML($items)
+	{
+		$res = array();
+		$res[] = "<table><tr><td> Product </td><td> Artikelnummer </td><td> Bestellt </td><td> Bestellt [%]</td><tr>";
+		
+		foreach ($items as $item)
+		{
+			$res[] = sprintf("<tr><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr>",$item->getName(),$item->getSku(), $item->getSold(), $item->getSoldP());
+			
+		}
+		
+		$res[] = "</table>";
+		
+		return implode(' ', $res);
 	}
 	
 }

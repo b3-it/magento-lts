@@ -14,7 +14,6 @@ if (!$installer->tableExists($installer->getTable('framecontract_los')))
 		`title` varchar(255) NOT NULL default '',
 		`note` varchar(1024) NOT NULL default '',
 		`status` smallint(6) NOT NULL default '0',
-		`stock_status_send` smallint(6) NOT NULL default '0',
 		`key` varchar(255) NOT NULL default '',
 		FOREIGN KEY (`framecontract_contract_id`) REFERENCES {$this->getTable('framecontract_contract')} (framecontract_contract_id) ON DELETE CASCADE,
 		PRIMARY KEY (`los_id`)
