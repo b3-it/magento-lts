@@ -69,7 +69,15 @@
 	                             <action>adminhtml/sidreport_sales/sales</action>
 	                         </frame_contract_report>
 	                     </children>
-	                 </salesroot>             	
+	                 </salesroot> 
+	                 <products>
+	                    <children>
+                            <frame_contract_product_report translate="title" module="sidreport">
+                                 <title>Frame Contract</title>
+                                 <action>adminhtml/sidreport_product</action>
+                             </frame_contract_product_report>
+                         </children>
+	                 </products>            	
 	             </children>
 	          </report>
 	         </menu>
@@ -89,6 +97,13 @@
                             				</frame_contract_report>
                             			</children>
                             		</salesroot>
+                            		<products>
+                                        <children>
+                                            <frame_contract_product_report translate="title" module="sidreport">
+                                                <title>Frame Contract</title>
+                                            </frame_contract_product_report>
+                                        </children>
+                                    </products>
 	                 			</children>
                             </report>
 	                    </children>

@@ -35,8 +35,9 @@ class Sid_Framecontract_Model_Source_Attribute_ContractLos extends Mage_Eav_Mode
     public function getAllOptions($addEmpty = true)
     {
         if (is_null($this->_options)) {
+        	$this->_options = array();
         	if($addEmpty) {
-	            $this->_options = array();
+	            
 	            $this->_options[] =  array(
 	                    'label' => '',
 	                    'value' =>  ''
@@ -47,6 +48,18 @@ class Sid_Framecontract_Model_Source_Attribute_ContractLos extends Mage_Eav_Mode
             	->join(array('contract'=>$collection->getTable('framecontract/contract')),'main_table.framecontract_contract_id=contract.framecontract_contract_id',array('contract' => 'title'))
             	->order('contract.title')
             	->order('main_table.title');
+            
+            //storeisolation
+            if(Mage::helper('framecontract')->isModuleEnabled('Egovs_Isolation'))
+            {
+            	if(!Mage::helper('isolation')->getUserIsAdmin()){
+            		$stores = implode(',',Mage::helper('isolation')->getUserStoreViews());
+            		$collection->getSelect()->where('contract.store_id IN ('.$stores.')');
+            	}
+            	
+            }
+            
+            
             foreach ($collection->getItems() as $item) {
             	$this->_options[] =  array(
                     'label' => $item->getContract().' / ' . $item->getTitle(),

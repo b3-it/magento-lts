@@ -29,4 +29,5 @@ $installer->addAttribute('customer_address', 'dap', array(
 $installer->run("ALTER TABLE {$this->getTable('framecontract_transmit')} ADD `los_id` int default 0 ");
 $installer->run("ALTER TABLE {$this->getTable('framecontract_transmit')} ADD `note` varchar(255) NOT NULL default '' ");
 $installer->removeAttribute('catalog_product', 'framecontract');
+$installer->run("ALTER TABLE {$this->getTable('framecontract_los')} ADD `stock_status_send` smallint(6) NOT NULL default 0 ");
 $installer->endSetup();
