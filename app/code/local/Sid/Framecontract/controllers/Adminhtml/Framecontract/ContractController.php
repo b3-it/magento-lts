@@ -13,8 +13,6 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 	}   
  
 	public function indexAction() {
-		
-		$test = Mage::getModel('framecontract/stockstatus')->getStockStatusCollection();
 		$this->_initAction()
 			->renderLayout();
 	}
