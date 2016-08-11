@@ -665,10 +665,7 @@ div#details-block {
 
             // Since product detail page images are not cropped to a specific aspect ratio, in order to make the image not
             // cut off on tall skinny screens, we are setting a max-height on the image
-            max-height: 400px;
-
-            // Centering the image for instances where max-height kicks in
-            margin: 0px auto;
+            max-height: 380px;
         }
     }
 }
