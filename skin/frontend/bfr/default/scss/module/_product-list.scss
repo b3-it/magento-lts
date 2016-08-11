@@ -290,7 +290,7 @@ p.product-name {
         }
 
         .price-box, .price-box .price {
-            font-size: 1.3em;
+            font-size: $global-fontsize-big;
         }
 
         .product-list-left-col {
@@ -312,7 +312,6 @@ p.product-name {
 
             a.link-learn {
                 display: none;
-                //padding: $global-boxpadding 0px;
             }
         }
     }

@@ -24,6 +24,18 @@
     }
 }
 
+.catalog-category-view {
+    .product-name a {
+        color: $global-footer-linkcolor;
+        text-decoration: none;
+
+        &:hover {
+            color: $global-footer-linkcolor;
+            text-decoration: underline;
+        }
+    }
+}
+
 .category-products {
     position: relative;
     top: -32px;
@@ -95,6 +107,10 @@ div#details-block {
 }
 
 .catalog-product-view {
+    .price-box, .price-box .price {
+        font-size: $global-fontsize-big;
+    }
+
     .col1-layout {
         .col-main {
             padding-top: 13px;
