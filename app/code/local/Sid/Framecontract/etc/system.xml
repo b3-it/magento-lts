@@ -14,24 +14,24 @@
                     <label>E-Mail Settings</label>
                     <sort_order>1000</sort_order>
                     <show_in_default>1</show_in_default>
-                    <show_in_website>0</show_in_website>
-                    <show_in_store>0</show_in_store>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
                          <sender_name translate="label">
                             <label>Sending Name</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </sender_name>
                          <sender_email_address translate="label">
                             <label>Sending E-Mail Address</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </sender_email_address>
                     	<vendor_template translate="label">
                             <label>Vendor Template</label>
@@ -60,6 +60,15 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </notify_owner>
+                        <stock_warning translate="label">
+                            <label>Warning for Contract Qty</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </stock_warning>
                       </fields>
                 </email>  
                 <checkout_email>
@@ -75,16 +84,16 @@
                             <sort_order>20</sort_order>
                             <source_model>adminhtml/system_config_source_email_template</source_model>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </order_template>
                         <office_sender translate="label">
                             <label>Sending Name</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </office_sender>
                         <office_email translate="label">
                             <label>Send E-Mail to Authority Office too</label>
@@ -92,8 +101,8 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </office_email>
                         <office_email_address translate="label">
                             <label>E-Mail Address Authority Office</label>
@@ -104,7 +113,41 @@
                             <show_in_store>0</show_in_store>
                         </office_email_address>
                       </fields>
-        		</checkout_email>     
+        		</checkout_email> 
+        		<contract_qty>
+                    <label>Warning Contract Qty</label>
+                    <sort_order>1100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <email_template translate="label">
+                            <label>Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_template>
+                        <recipient translate="label">
+                            <label>Recipient Email</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </recipient>
+                        <qty translate="label">
+                            <label>Warning Qty</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty>
+                      </fields>
+                </contract_qty>   
          </groups>
         </framecontract>
         <dev>

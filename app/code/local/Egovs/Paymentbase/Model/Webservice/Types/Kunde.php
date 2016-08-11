@@ -149,6 +149,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_Kunde extends Egovs_Paymentbase_M
 			case 'anrede':
 			case 'geschlecht':
 				$length = 15;
+				break;
 			case 'vorname':
 			case 'nachname':
 				$length = 27;

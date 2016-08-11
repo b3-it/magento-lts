@@ -16,9 +16,10 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController exten
 	 * @return Egovs_Paymentbase_Adminhtml_HaushaltsparameterController
 	 */
 	protected function _initAction() {
-		$this->loadLayout()
-			->_setActiveMenu('haushaltsparameter/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+		$this->loadLayout();
+		$this->_setActiveMenu('system');
+		$this->_addBreadcrumb(Mage::helper('adminhtml')->__('System'), Mage::helper('adminhtml')->__('System'));
+		$this->_addBreadcrumb(Mage::helper('paymentbase')->__('ePayment Parameter'), Mage::helper('paymentbase')->__('ePayment Parameter'));
 		
 		return $this;
 	}   
@@ -50,11 +51,8 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController exten
 
 			Mage::register('haushaltsparameter_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('paymentbase/items');
-
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
+			$this->_initAction();
+			$this->_addBreadcrumb(Mage::helper('paymentbase')->__('Define Haushaltsparameter'), Mage::helper('paymentbase')->__('Define Haushaltsparameter'));
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 

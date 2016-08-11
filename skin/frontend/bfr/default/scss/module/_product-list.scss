@@ -284,9 +284,14 @@ p.product-name {
         height: auto;
         display: flex;
         flex-flow: row column;
+        position: relative;
 
         &:after {
             @include clearfix;
+        }
+
+        .price-box, .price-box .price {
+            font-size: $global-fontsize-big;
         }
 
         .product-list-left-col {
@@ -295,8 +300,10 @@ p.product-name {
 
             .product-image {
                 img {
-                    width: 100%;
                     max-width: 100%;
+                    max-height: $global-product-list-image-max-height;
+                    width: auto;
+                    height: auto;
                 }
             }
 
@@ -306,10 +313,8 @@ p.product-name {
 
             a.link-learn {
                 display: none;
-                //padding: $global-boxpadding 0px;
             }
         }
-
     }
 
     & > li:last-child {
@@ -318,7 +323,9 @@ p.product-name {
     }
 
     .product-action {
-        margin-top: $global-boxmargin;
+        position: absolute;
+        bottom: $global-listmargin + 5px;
+        width: 60%;
 
         button, a.button {
             margin: 0;
@@ -372,10 +379,6 @@ p.product-name {
                 span.price-excluding-tax, span.price-including-tax {
                     width: $global-product-list-price-width;
                     display: inline-block;
-                }
-
-                .price {
-                    font-size: $global-fontsize;
                 }
             }
 

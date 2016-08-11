@@ -96,8 +96,8 @@ var personalOption = {
                 Event.observe(buttons[i], 'click', this.remove.bind(this));
             }
         }
-       // var inputs = $$('div.product-custom-options button', 'div.product-custom-options input', 'div.product-custom-options select', 'div.product-custom-options textarea');
-        
+
+       var inputs = $$('div.personal-options button', 'div.personal-options input');
        inputs.each(function(el) { Event.observe(el, 'change', el.setHasChanges.bind(el));  } )
 
     }
