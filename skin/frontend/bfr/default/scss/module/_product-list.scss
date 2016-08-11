@@ -289,14 +289,20 @@ p.product-name {
             @include clearfix;
         }
 
+        .price-box, .price-box .price {
+            font-size: 1.3em;
+        }
+
         .product-list-left-col {
             width: $global-product-list-imagesize;
             margin-bottom: $global-boxmargin - $global-boxpadding;
 
             .product-image {
                 img {
-                    width: 100%;
                     max-width: 100%;
+                    max-height: $global-product-list-image-max-height;
+                    width: auto;
+                    height: auto;
                 }
             }
 
@@ -309,7 +315,6 @@ p.product-name {
                 //padding: $global-boxpadding 0px;
             }
         }
-
     }
 
     & > li:last-child {
@@ -372,10 +377,6 @@ p.product-name {
                 span.price-excluding-tax, span.price-including-tax {
                     width: $global-product-list-price-width;
                     display: inline-block;
-                }
-
-                .price {
-                    font-size: $global-fontsize;
                 }
             }
 

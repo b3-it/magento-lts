@@ -56,8 +56,8 @@ $global-btn-padding-v: 10px;
 
 $global-logo-top: 10px;
 $global-logo-left: 80px;
-$global-logo-bottom: 10px;
-$global-logo-height: 104px;
+$global-logo-bottom: 0;
+$global-logo-height: 100px;
 
 $global-skiplinks-space: 70px;
 
@@ -181,6 +181,7 @@ $global-subcat-paddingright: 5px;
 $global-product-spacing: 20px;
 $global-product-grid-action-height: 85px;
 $global-product-list-imagesize: 50%;
+$global-product-list-image-max-height: 295px;
 $global-product-list-desc_height: 63%;
 $global-product-list-button-width: 45%;
 $global-product-list-price-width: 48%;
