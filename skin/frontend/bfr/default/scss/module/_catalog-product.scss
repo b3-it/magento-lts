@@ -270,7 +270,7 @@ div#details-block {
                     border-bottom-style: solid;
                     border-bottom-color: $global-border-color;
 
-                    &:last-child {
+                    &:last-child, &.last {
                         border-bottom: 0;
                         margin-bottom: 0;
                     }
