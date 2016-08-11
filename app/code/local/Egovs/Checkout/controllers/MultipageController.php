@@ -777,7 +777,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
         	if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
                 if ($diff = array_diff($requiredAgreements, $postedAgreements)) {
-                    Mage::getSingleton('checkout/session')->addError($this->__('Please agree to all Terms and Conditions before placing the order.'));
+                    Mage::getSingleton('checkout/session')->addError($this->__('Please agree to all terms and conditions before placing the order.'));
                     $this->_redirect('*/*/overview', array('_secure' => true));
                     return;
                 }
@@ -787,7 +787,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
          	if ($requiredAgreements = Mage::getModel('mpcheckout/cmsblock')->loadAgreementIdsFromQuote($this->_getCheckout()->getQuote(), $this->getStoreId())) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreementtext', array()));
                 if ($diff = array_diff($requiredAgreements, $postedAgreements)) {
-                    Mage::getSingleton('checkout/session')->addError($this->__('Please agree to all additional Conditions before placing the order.'));
+                    Mage::getSingleton('checkout/session')->addError($this->__('Please agree to all additional conditions before placing the order.'));
                     $this->_redirect('*/*/overview',array('_secure'=>true));
                     return;
                 }
@@ -838,14 +838,20 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     	$lastQuoteId = $this->_getCheckout()->getCheckout()->getLastQuoteId();
     	$lastOrderId = $this->_getCheckout()->getCheckout()->getLastOrderId();
 
-    	//$msg = "successviewAction [lastQuoteId: $lastQuoteId; lastOrderId: $lastOrderId;].";
-    	//Mage::log("mpcheckout::".$msg, Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
+    	$msg = "successviewAction [lastQuoteId: $lastQuoteId; lastOrderId: $lastOrderId;].";
+    	Mage::log("mpcheckout::".$msg, Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 
+    	if (!$lastQuoteId || !$lastOrderId) {
+    		$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
+    		$this->_redirect('checkout/cart');
+    		return;
+    	}
+    	
     	$this->loadLayout();
     	$this->_initLayoutMessages('checkout/session');
     	//erst am Ende deaktivieren
-    	//$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
-    	//Mage::dispatchEvent('checkout_onepage_controller_success_action');
+    	$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
+    	Mage::dispatchEvent('checkout_onepage_controller_success_action');
     	$this->renderLayout();
 
     }
