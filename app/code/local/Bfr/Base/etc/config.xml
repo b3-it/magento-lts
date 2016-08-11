@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bfr_Base>
+            <version>0.1.0</version>
+        </Bfr_Base>
+    </modules>
+    <global>
+        <helpers>
+            <bfr_base>
+                <class>Bfr_Base_Helper</class>
+            </bfr_base>
+        </helpers>
+        <resources>
+            <bfr_base_setup>
+                <setup>
+                    <module>Bfr_Base</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </bfr_base_setup>
+        </resources>
+    </global>
+</config>
