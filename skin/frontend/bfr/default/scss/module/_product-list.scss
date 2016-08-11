@@ -284,6 +284,7 @@ p.product-name {
         height: auto;
         display: flex;
         flex-flow: row column;
+        position: relative;
 
         &:after {
             @include clearfix;
@@ -322,7 +323,9 @@ p.product-name {
     }
 
     .product-action {
-        margin-top: $global-boxmargin;
+        position: absolute;
+        bottom: $global-listmargin + 5px;
+        width: 60%;
 
         button, a.button {
             margin: 0;
