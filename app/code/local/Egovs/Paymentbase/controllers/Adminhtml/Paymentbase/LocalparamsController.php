@@ -16,10 +16,11 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_LocalparamsController extends Mage
 	 * @return Egovs_Paymentbase_Adminhtml_LocalparamsController
 	 */
 	protected function _initAction() {
-		$this->loadLayout()
-		->_setActiveMenu('localparams/items')
-		->_addBreadcrumb(Mage::helper('adminhtml')->__('Param Manager'), Mage::helper('adminhtml')->__('Param Manager'));
-
+		$this->loadLayout();
+		$this->_setActiveMenu('system');
+		$this->_addBreadcrumb(Mage::helper('adminhtml')->__('System'), Mage::helper('adminhtml')->__('System'));
+		$this->_addBreadcrumb(Mage::helper('paymentbase')->__('ePayment Parameter'), Mage::helper('paymentbase')->__('ePayment Parameter'));
+		
 		return $this;
 	}
 
@@ -50,11 +51,8 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_LocalparamsController extends Mage
 
 			Mage::register('localparams_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('paymentbase/items');
-
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Param Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Param News'));
+			$this->_initAction();
+			$this->_addBreadcrumb(Mage::helper('paymentbase')->__('user-defined ePayment Parameter'), Mage::helper('paymentbase')->__('user-defined ePayment Parameter'));
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
