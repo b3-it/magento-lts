@@ -21,12 +21,13 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     {
         $keyOptionIds = (is_array($optionIds) ? implode('_', $optionIds) : '');
         $key = $this->_keySelectionsCollection . $keyOptionIds;
-        if (!$this->getProduct($product)->hasData($key)) {
+        //if (!$this->getProduct($product)->hasData($key)) 
+        {
             $storeId = $this->getProduct($product)->getStoreId();
             $selectionsCollection = Mage::getResourceModel('bundle/selection_collection')
                 ->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes())
                 ->addAttributeToSelect('tax_class_id') //used for calculation item taxes in Bundle with Dynamic Price
-                //->setFlag('require_stock_items', true)
+                ->setFlag('require_stock_items', true)
                 ->setFlag('product_children', true)
                 ->setPositionOrder()
                 ->addStoreFilter($this->getStoreFilter($product))
@@ -38,7 +39,13 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
                 $websiteId = Mage::app()->getStore($storeId)->getWebsiteId();
                 $selectionsCollection->joinPrices($websiteId);
             }
-			$s = $selectionsCollection->getSelect()->__toString();
+			//$s = $selectionsCollection->getSelect()->__toString();
+			foreach($selectionsCollection as $item)
+			{
+				if($item->getStatus() == Mage_Catalog_Model_Product_Status::STATUS_ENABLED){
+					$item->setIsSalable(true);
+				}
+			}
             $this->getProduct($product)->setData($key, $selectionsCollection);
         }
         return $this->getProduct($product)->getData($key);
