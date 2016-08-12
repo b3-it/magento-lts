@@ -1,0 +1,50 @@
+@charset "utf-8";
+/* CSS Document */
+/* non inline styles BfR */
+.wrapper {
+	background-color: #ebebeb;
+	padding: 30px;
+}
+.container {
+	width: 600px;
+	margin: 20px auto;
+}
+.logo-container {
+	margin-bottom: 15px;
+	padding-left: 8px;
+}
+.top-content {
+	background-color: #ffffff;
+/*	border: 5px solid #ffffff;*/
+	padding: 8px;
+}
+.email-heading {
+	background-color: #e1f0f8;
+	padding: 5px;
+}
+.order-details {
+	padding-left: 15px;
+}
+.order-details h3 {
+	font-size: 12px;
+}
+.order-details p {}
+.order-information {
+	padding-left: 15px;
+}
+.order-information h6 {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-top: 5px;
+	text-align: left;
+	color: #3696c2;
+}
+.order-items {font-size: 12px;}
+.support {padding-left: 15px;}
+.footer-text {padding: 8px; background-color: #e1f0f8;}
+
+	
+	
+	
+
