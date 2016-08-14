@@ -23,14 +23,17 @@
 .email-heading {
 	background-color: #e1f0f8;
 	padding: 5px;
+	font-size: 12px;
 }
 .order-details {
 	padding-left: 15px;
+	margin: 15px 0 15px 0;
 }
 .order-details h3 {
-	font-size: 12px;
+	font-size: 13px;
+	font-weight: bold;
 }
-.order-details p {}
+.order-details p {font-size: 12px;}
 .order-information {
 	padding-left: 15px;
 }
@@ -51,6 +54,8 @@
 .support {padding-left: 15px;}
 .footer-text {padding: 8px; background-color: #e1f0f8;}
 .message-container: {padding-left: 5px;}
+p.product-name {font-size: 12px;}
+p.sku {font-size: 11px;}
 
 	
 	
