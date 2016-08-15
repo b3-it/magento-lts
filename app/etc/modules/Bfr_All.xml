@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Bfr_EventManager>
-           <active>false</active>
+           <active>true</active>
            <codePool>local</codePool>
            <depends>
                 <Mage_Bundle/>
@@ -13,7 +13,7 @@
            </depends>
         </Bfr_EventManager>
         <Bfr_EventRequest>
-           <active>false</active>
+           <active>true</active>
            <codePool>local</codePool>
            <depends>
                 <Mage_Sales/>
@@ -21,5 +21,14 @@
                 <Mage_Customer/>
            </depends>
         </Bfr_EventRequest>
+        <Bfr_Mach>
+           <active>true</active>
+           <codePool>local</codePool>
+           <depends>
+                <Mage_Sales/>
+                <Mage_Catalog/>
+                <Mage_Customer/>
+           </depends>
+        </Bfr_Mach>        
     </modules>
 </config>

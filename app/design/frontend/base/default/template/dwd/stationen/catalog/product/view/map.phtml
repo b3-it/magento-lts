@@ -1,8 +1,8 @@
 <?php if ($this->hasStationen()):?>
 <div id="map" class="map_size"></div>
 <p id="map_quest_logo">
-    Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>
-    <img src="http://developer.mapquest.com/content/osm/mq_logo.png">
+    © OpenStreetMap-Mitwirkende. <a href="http://www.openstreetmap.org/copyright" target="_blank">copyright</a>
+    
 </p>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/OpenLayers.js"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/OpenStreetMap.js"></script>
@@ -13,10 +13,11 @@ OpenLayers.Lang.setCode('de');
 var map, zoom, georss, layer, marker_aktuell, arrayOSM;
 
 arrayOSM = [
-            "http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
-            "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg"
+            "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
+            "http://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
+            "http://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
+            
+          
            ];
 
 var proj4326  = new OpenLayers.Projection("EPSG:4326");

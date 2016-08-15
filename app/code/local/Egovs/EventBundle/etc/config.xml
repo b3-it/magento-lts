@@ -255,7 +255,7 @@
             </catalogindex_plain_reindex_after>
         </events>
         <eventbundle_personal>
-            <show>false</show>
+            <show>true</show>
             <fields>
                 <firstname>
                     <label>Firstname</label>

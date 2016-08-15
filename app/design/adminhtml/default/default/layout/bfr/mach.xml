@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_mach_history_index>
+        <reference name="content">
+            <block type="bfr_mach/adminhtml_history" name="bfr_mach" />
+        </reference>
+    </adminhtml_mach_history_index>
+</layout>

@@ -18,7 +18,7 @@
         <layout>
             <updates>
                 <dwd_abo>
-                    <file>dwd_abo.xml</file>
+                    <file>dwd/abo.xml</file>
                 </dwd_abo>
             </updates>
         </layout>
