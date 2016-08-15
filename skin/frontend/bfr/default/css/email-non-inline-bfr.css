@@ -1,0 +1,63 @@
+@charset "utf-8";
+/* CSS Document */
+/* non inline styles BfR */
+.wrapper {
+	background-color: #ebebeb;
+	padding: 30px;
+}
+.container {
+	width: 600px;
+	margin: 20px auto;
+}
+.logo-container {
+	margin-bottom: 15px;
+	padding-left: 8px;
+}
+.top-content {
+	background-color: #ffffff;
+/*	border: 5px solid #ffffff;*/
+	padding: 8px;
+}
+.action-content {padding: 0;}
+
+.email-heading {
+	background-color: #e1f0f8;
+	padding: 5px;
+	font-size: 12px;
+}
+.order-details {
+	padding-left: 15px;
+	margin: 15px 0 15px 0;
+}
+.order-details h3 {
+	font-size: 13px;
+	font-weight: bold;
+}
+.order-details p {font-size: 12px;}
+.order-information {
+	padding-left: 15px;
+}
+.order-information h6 {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-top: 5px;
+	text-align: left;
+	color: #3696c2;
+}
+.order-information table {width: 98%;}
+/*.order-information td {width: 50%;}*/
+.order-items {font-size: 12px;}
+.store-information {padding-left: 15px;}
+.store-information h4 {font-weight: bold; margin-bottom: 0px;}
+.store-information p {font-weight: normal; margin-top: 0px;
+.support {padding-left: 15px;}
+.footer-text {padding: 8px; background-color: #e1f0f8;}
+.message-container: {padding-left: 5px;}
+p.product-name {font-size: 12px;}
+p.sku {font-size: 11px;}
+
+	
+	
+	
+
