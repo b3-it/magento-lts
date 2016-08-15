@@ -15,6 +15,7 @@
             <bfr_base_setup>
                 <setup>
                     <module>Bfr_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>

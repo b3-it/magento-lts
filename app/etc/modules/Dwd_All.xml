@@ -1,71 +1,71 @@
 <?xml version="1.0"?>
 <config>
-    <modules>
-        <Dwd_Abo>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Dwd_Stationen />
-                <Dwd_ConfigurableVirtual />
-                <Dwd_Periode />
-            </depends>
-        </Dwd_Abo>
-        <Dwd_Abomigration>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Dwd_Abo />
-            </depends>
-        </Dwd_Abomigration>
-        <Dwd_AutoFileAssignment>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Dwd_Stationen />
-                <Dwd_ConfigurableDownloadable />
-                <Dwd_Periode />
-            </depends>
-        </Dwd_AutoFileAssignment>
-        <Dwd_ConfigurableDownloadable>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Downloadable />
-                <Dwd_Stationen />
-                <Dwd_Periode />
-            </depends>
-        </Dwd_ConfigurableDownloadable>
-        <Dwd_ConfigurableVirtual>
-            <active>false</active>
-            <codePool>local</codePool>
-            <depends>
-                <Dwd_Stationen />
-                <Dwd_Periode />
-            </depends>
-        </Dwd_ConfigurableVirtual>
-        <Dwd_Icd>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Dwd_Icd>
-        <Dwd_Ibewi>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Dwd_Ibewi>
-        <Dwd_Periode>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Dwd_Periode>
-        <Dwd_ProductOnDemand>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Dwd_ProductOnDemand>
-        <Dwd_Sales>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Dwd_Sales>
-        <Dwd_Stationen>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Dwd_Stationen>
-    </modules>
+  <modules>
+    <Dwd_Abo>
+      <active>false</active>
+      <codePool>local</codePool>
+      <depends>
+        <Dwd_Stationen />
+        <Dwd_ConfigurableVirtual />
+        <Dwd_Periode />
+      </depends>
+    </Dwd_Abo>
+    <Dwd_Abomigration>
+      <active>false</active>
+      <codePool>local</codePool>
+      <depends>
+        <Dwd_Abo />
+      </depends>
+    </Dwd_Abomigration>
+    <Dwd_AutoFileAssignment>
+      <active>false</active>
+      <codePool>local</codePool>
+      <depends>
+        <Dwd_Stationen />
+        <Dwd_ConfigurableDownloadable />
+        <Dwd_Periode />
+      </depends>
+    </Dwd_AutoFileAssignment>
+    <Dwd_ConfigurableDownloadable>
+      <active>false</active>
+      <codePool>local</codePool>
+      <depends>
+        <Mage_Downloadable />
+        <Dwd_Stationen />
+        <Dwd_Periode />
+      </depends>
+    </Dwd_ConfigurableDownloadable>
+    <Dwd_ConfigurableVirtual>
+      <active>false</active>
+      <codePool>local</codePool>
+      <depends>
+        <Dwd_Stationen />
+        <Dwd_Periode />
+      </depends>
+    </Dwd_ConfigurableVirtual>
+    <Dwd_Icd>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Dwd_Icd>
+    <Dwd_Ibewi>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Dwd_Ibewi>
+    <Dwd_Periode>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Dwd_Periode>
+    <Dwd_ProductOnDemand>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Dwd_ProductOnDemand>
+    <Dwd_Sales>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Dwd_Sales>
+    <Dwd_Stationen>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Dwd_Stationen>
+  </modules>
 </config>
