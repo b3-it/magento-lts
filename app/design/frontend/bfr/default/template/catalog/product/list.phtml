@@ -77,6 +77,7 @@
                 <div class="product-primary">
                     <?php
                     $_productNameStripped = $this->stripTags($_product->getName(), null, true);
+                    $_productPrefix = $_helper->productAttribute($_product, $_product->getNamePrefix(), 'name_prefix');
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
 
                     if ( strlen($_productName) > $name_limit ) {
@@ -84,6 +85,7 @@
                     }
                     ?>
                     <h2 class="product-name">
+                        <span class="name-prefix"><?php echo $_productPrefix ?></span>
                         <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
                             <?php echo $_productName; ?>
                         </a>
@@ -177,12 +179,14 @@
                 <div class="product-info">
                     <?php
                     $_productNameStripped = $this->stripTags($_product->getName(), null, true);
+                    $_productPrefix = $_helper->productAttribute($_product, $_product->getNamePrefix(), 'name_prefix');
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
                     if ( strlen($_productName) > $name_limit ) {
                         $_productName = substr($_productName, 0, $name_limit) . '...';
                     }
                     ?>
                     <h2 class="product-name">
+                        <span class="name-prefix"><?php echo $_productPrefix ?></span>
                         <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
                             <?php echo $_productName; ?>
                         </a>

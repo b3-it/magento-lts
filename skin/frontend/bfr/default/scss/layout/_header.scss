@@ -77,7 +77,8 @@
             color: $global-fontcolor-light;
             float: right;
             position: relative;
-            top: -10px;
+            top: -15px;
+            font-size: $global-pagetitle-size;
         }
 
         @include bp(max-width, 910px) {

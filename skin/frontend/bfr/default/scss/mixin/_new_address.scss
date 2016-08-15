@@ -141,7 +141,7 @@
         }
 
         select {
-            width: 90%;
+            width: 95%;
             margin-bottom: 6px;
         }
 
@@ -157,7 +157,10 @@
             width: 100%;
 
             .customer-name,
-            .customer-name-prefix {
+            .customer-name-prefix,
+            .customer-name-prefix-suffix,
+            .customer-name-prefix-middlename,
+            .customer-name-prefix-middlename-suffix {
                 div.field {
                     display: inline-block;
                     width: 48%;
