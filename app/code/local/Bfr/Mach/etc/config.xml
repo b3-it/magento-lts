@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Bfr_Mach>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Bfr_Mach>
     </modules>
     <admin>
@@ -18,17 +18,19 @@
     </admin>
     <adminhtml>
 		<menu>
-			<mach module="bfr_mach">
-				<title>Mach</title>
-				<sort_order>71</sort_order>
+			<system>
 				<children>
-					<mach_history module="bfr_mach">
-						<title>Manage Items</title>
-						<sort_order>0</sort_order>
-						<action>adminhtml/mach_history</action>
-					</mach_history>
+					<convert>
+						<children>
+						<mach_history module="bfr_mach">
+							<title>Mach Export</title>
+							<sort_order>0</sort_order>
+							<action>adminhtml/mach_history</action>
+						</mach_history>
+						</children>
+					</convert>
 				</children>
-			</mach>
+			</system>
 		</menu>
 		<acl>
 			<resources>
@@ -37,18 +39,15 @@
 				</all>
 				<admin>
 					<children>
-						<bfr_mach>
-							<title>Mach Module</title>
-							<sort_order>10</sort_order>
-				              <children>
-				                	<mach_history module="bfr_mach">
-				                    	<title>Manage Mach History</title>
-				                    	<sort_order>0</sort_order>
-				                	</mach_history>
-				              </children>
-						</bfr_mach>
-						  <system>
+						<system>
                         <children>
+                        	<convert>
+                        		<children>
+                                    <mach_export translate="title" module="bfr_mach">
+                                        <title>Mach Export</title>
+                                    </mach_export>
+                                </children>
+                        	</convert>
                             <config>
                                 <children>
                                     <mach_export translate="title" module="bfr_mach">
@@ -119,64 +118,45 @@
         <default>
         <mach_export>
         <head>
-           <irquellsystem>irquellsystem</irquellsystem>
-				<irlauf>irlauf</irlauf>
-				<niederlassung>niederlassung</niederlassung>
-				<orgeinheit>orgeinheit</orgeinheit>
-				<periode>periode</periode>
-				<beleg>beleg</beleg>
-				<belegart>belegart</belegart>
-				<belegkontotitel>belegkontotitel</belegkontotitel>
-				<belegtext>belegtext</belegtext>
-				<storno>storno</storno>
-				<waehrung>waehrung</waehrung>
-				<rwbeleg>rwbeleg</rwbeleg>
-				<gedrucktam>gedrucktam</gedrucktam>
-				<benutzer>benutzer</benutzer>
-				<recordident>recordident</recordident>
-				<schreibgruppe>schreibgruppe</schreibgruppe>
-				<lesegruppe>lesegruppe</lesegruppe>
-				<belegvorgabe>belegvorgabe</belegvorgabe>
-				<belegbetrag>belegbetrag</belegbetrag>
-				<referenz>referenz</referenz>
-				<kassenanweisung>kassenanweisung</kassenanweisung>
-				<akn>akn</akn>
-				<vgvorgang>vgvorgang</vgvorgang>
-				<festlegung>festlegung</festlegung>
-				<festlegungsred>festlegungsred</festlegungsred>
-				<fehlertext>fehlertext</fehlertext>
-				<mandant>mandant</mandant>
+           <irquellsystem>ONLINE</irquellsystem>
+				<niederlassung>1</niederlassung>
+				<orgeinheit></orgeinheit>
+				<periode>0</periode>
+				<belegart>SB</belegart>
+				<belegkontotitel>FORDERUNG ONLINESHOP</belegkontotitel>
+				<belegtext>Buchungstext Webshop</belegtext>
+				<waehrung>EUR</waehrung>
+				<benutzer></benutzer>
+				<schreibgruppe></schreibgruppe>
+				<lesegruppe></lesegruppe>
+				<referenz></referenz>
+				<kassenanweisung></kassenanweisung>
+				<akn></akn>
+				<vgvorgang></vgvorgang>
+				<festlegung></festlegung>
+				<festlegungsred></festlegungsred>
+				<fehlertext></fehlertext>
+				<mandant>100</mandant>
         </head>
         <pos>
-	        <irquellsystem>irquellsystem</irquellsystem>
-			<irlauf>irlauf</irlauf>
-			<irposition>irposition</irposition>
-			<text>text</text>
-			<betrag>betrag</betrag>
-			<fwbetrag>fwbetrag</fwbetrag>
-			<sollkontotitel>sollkontotitel</sollkontotitel>
-			<habenkontotitel>habenkontotitel</habenkontotitel>
-			<sollhaushstelle>sollhaushstelle</sollhaushstelle>
+	        <irquellsystem>ONLINE</irquellsystem>
+			<sollkontotitel>FORDERUNG ONLINESHOP</sollkontotitel>
+			<habenkontotitel>ALLG. FACHKO./TAGU.</habenkontotitel>
+			<sollhaushstelle></sollhaushstelle>
 			<habenhaushstelle>habenhaushstelle</habenhaushstelle>
-			<huelnummer>huelnummer</huelnummer>
-			<referenz>referenz</referenz>
-			<positionsart>positionsart</positionsart>
-			<ust>ust</ust>
-			<startabgrenzung>startabgrenzung</startabgrenzung>
-			<endeabgrenzung>endeabgrenzung</endeabgrenzung>
-			<periodizitaet>periodizitaet</periodizitaet>
-			<magkontorolle>magkontorolle</magkontorolle>
-			<irbeleg>irbeleg</irbeleg>
+			<huelnummer></huelnummer>
+			<referenz></referenz>
+			<positionsart>SB</positionsart>
+			<startabgrenzung></startabgrenzung>
+			<endeabgrenzung></endeabgrenzung>
+			<periodizitaet></periodizitaet>
+			<magkontorolle></magkontorolle>
+			<decimal_separator>,</decimal_separator>
         </pos>
         <mapping>
-			<irquellsystem>irquellsystem</irquellsystem>
-			<irlauf>irlauf</irlauf>
-			<irbeleg>irbeleg</irbeleg>
-			<irposition>irposition</irposition>
+			<irquellsystem>ONLINE</irquellsystem>
 			<kostenrechnung>kostenrechnung</kostenrechnung>
 			<abrechnungsobjekt>abrechnungsobjekt</abrechnungsobjekt>
-			<betrag>betrag</betrag>
-			<fwbetrag>fwbetrag</fwbetrag>
         </mapping>
         </mach_export>
     </default>

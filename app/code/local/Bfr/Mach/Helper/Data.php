@@ -12,5 +12,45 @@
  */
 class Bfr_Mach_Helper_Data extends Mage_Core_Helper_Abstract
 {
-
+	private $_Dirname = 'mach_export';
+	
+	public function clearDirectory()
+	{
+		$path = Mage::getBaseDir('media') . DS . $this->_Dirname . DS;
+			
+			try {
+			if (!is_dir($path)) {
+				mkdir($path);
+			}
+			
+			$handle=opendir($path);
+			while($data=readdir($handle))
+			{
+				if(!is_dir($data) && $data!="." && $data!="..") unlink($data);
+			}
+			closedir($handle);
+			
+		} catch(Exception $e) {
+			Mage::getSingleton('adminhtml/session')->addError($helper->__($e->getMessage()));
+		}
+	}
+	
+	public function saveFile($filename, $content)
+	{
+		$path = Mage::getBaseDir('media') . DS . $this->_Dirname . DS;
+			
+		try {
+			if (!is_dir($path)) {
+				mkdir($path);
+			}
+			
+			$datei = fopen($path.$filename,"w");
+			fwrite($datei, $content);
+			fclose($datei);
+			
+			
+		} catch(Exception $e) {
+			Mage::getSingleton('adminhtml/session')->addError($helper->__($e->getMessage()));
+		}
+	}
 }

@@ -14,38 +14,64 @@ class Bfr_Mach_Model_Export_Pos extends Bfr_Mach_Model_Export_Abstract
 {
 	protected $_ExportType = Bfr_Mach_Model_ExportType::TYPE_POSITION;
 	
-    public function getData4Order(array $orderIds = array())
+	private $_cols = array('IRQUELLSYSTEM','IRLAUF','IRPOSITION','TEXT','BETRAG','FWBETRAG','SOLLKONTOTITEL','HABENKONTOTITEL','SOLLHAUSHSTELLE','HABENHAUSHSTELLE','HUELNUMMER','REFERENZ','POSITIONSART','UST','STARTABGRENZUNG','ENDEABGRENZUNG','PERIODIZITAET','MAGKONTOROLLE','IRBELEG');
+    
+    
+    public function getData4Order(array $orderIds = array(), $Lauf)
     {
-    	parent::getData4Order($orderIds);
-    	$collection = Mage::getModel('sales/order')->getCollection();
+    	parent::getData4Order($orderIds, $Lauf);
+    	$collection = Mage::getModel('sales/order_item')->getCollection();
+    	
+    	$eav = Mage::getResourceModel('eav/entity_attribute');
     	
     	$collection->getSelect()
-    		->where('entity_id IN( '. implode(',',$orderIds).')' );
+    		->join(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id'))
+    		->joinleft(array('product_haushaltstelle'=>'catalog_product_entity_varchar'), 'product_haushaltstelle.entity_id=main_table.product_id AND product_haushaltstelle.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'))
+    		->joinLeft(array('haushaltstelle'=>$collection->getTable('paymentbase/haushaltsparameter')),'product_haushaltstelle.value = haushaltstelle.paymentbase_haushaltsparameter_id', array('haushaltstelle'=>'value'))
+    		->where('order_id IN( '. implode(',',$orderIds).')' )
+    		->order('order_id');
     	
     	
     	$result = array();
+    	$result[] = implode($this->getDelimiter(), $this->_cols);
     	
-    	foreach($collection as $order){
+    	
+    	//Zähler
+    	$IRBeleg = 0;
+    	$lastOrderId = 0;
+    	$IRPos = 0;
+    	
+    	foreach($collection as $orderItem){
+    		
+    		if($lastOrderId != $orderItem->getOrderId())
+    		{
+    			$IRBeleg++;
+    			$IRPos = 0;
+    		}
+    		$lastOrderId = $orderItem->getOrderId();
+    		
+    		$IRPos++;
+    		
     		$line = array();
-    		$line[] = $this->getConfigValue('head/irquellsystem',null, null); //Irquellsystem
-			$line[] = $this->getConfigValue('head/irlauf',null, null); //Irlauf
-			$line[] = $this->getConfigValue('head/irposition',null, null); //Irposition
-			$line[] = $this->getConfigValue('head/text',null, null); //Text
-			$line[] = $this->getConfigValue('head/betrag',null, null); //Betrag
-			$line[] = $this->getConfigValue('head/fwbetrag',null, null); //Fwbetrag
-			$line[] = $this->getConfigValue('head/sollkontotitel',null, null); //Sollkontotitel
-			$line[] = $this->getConfigValue('head/habenkontotitel',null, null); //Habenkontotitel
-			$line[] = $this->getConfigValue('head/sollhaushstelle',null, null); //Sollhaushstelle
-			$line[] = $this->getConfigValue('head/habenhaushstelle',null, null); //Habenhaushstelle
-			$line[] = $this->getConfigValue('head/huelnummer',null, null); //Huelnummer
-			$line[] = $this->getConfigValue('head/referenz',null, null); //Referenz
-			$line[] = $this->getConfigValue('head/positionsart',null, null); //Positionsart
-			$line[] = $this->getConfigValue('head/ust',null, null); //Ust
-			$line[] = $this->getConfigValue('head/startabgrenzung',null, null); //Startabgrenzung
-			$line[] = $this->getConfigValue('head/endeabgrenzung',null, null); //Endeabgrenzung
-			$line[] = $this->getConfigValue('head/periodizitaet',null, null); //Periodizitaet
-			$line[] = $this->getConfigValue('head/magkontorolle',null, null); //Magkontorolle
-			$line[] = $this->getConfigValue('head/irbeleg',null, null); //Irbeleg
+    		$line[] = $this->getConfigValue('pos/irquellsystem',null, null); //Irquellsystem
+			$line[] = $this->_Lauf; //Irlauf
+			$line[] = $IRPos; //Irposition
+			$line[] = $orderItem->getName(); //Text
+			$line[] = $this->_formatPrice($orderItem->getBasePrice(), $this->getConfigValue('pos/decimal_separator')); //Betrag
+			$line[] = $this->_formatPrice($orderItem->getPrice(), $this->getConfigValue('pos/decimal_separator')); //Fwbetrag
+			$line[] = $this->getConfigValue('pos/sollkontotitel',null, null); //Sollkontotitel
+			$line[] = $this->getConfigValue('pos/habenkontotitel',null, null); //Habenkontotitel
+			$line[] = $orderItem->getHaushaltstelle(); //Sollhaushstelle
+			$line[] = $orderItem->getHaushaltstelle(); //Habenhaushstelle
+			$line[] = $this->getConfigValue('pos/huelnummer',null, null); //Huelnummer
+			$line[] = $this->getConfigValue('pos/referenz',null, null); //Referenz
+			$line[] = $this->getConfigValue('pos/positionsart',null, null); //Positionsart
+			$line[] = $this->_formatPrice($orderItem->getTaxPercent(), $this->getConfigValue('pos/decimal_separator')); //Ust
+			$line[] = $this->getConfigValue('pos/startabgrenzung',null, null); //Startabgrenzung
+			$line[] = $this->getConfigValue('pos/endeabgrenzung',null, null); //Endeabgrenzung
+			$line[] = $this->getConfigValue('pos/periodizitaet',null, null); //Periodizitaet
+			$line[] = $this->getConfigValue('pos/magkontorolle',null, null); //Magkontorolle
+			$line[] = $orderItem->getIncrementId(); //Irbeleg
     		
     		
     		$result[] = implode($this->getDelimiter(), $line);
