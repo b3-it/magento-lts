@@ -27,86 +27,25 @@ class Bfr_Mach_Adminhtml_Mach_HistoryController extends Mage_Adminhtml_Controlle
 	}
 
     
-    public function exportHeadAction()
+    public function exportAction()
     {
     	$orderIds = $this->getRequest()->getParam('order_id');
     	if(!is_array($orderIds)) {
     		Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
     	} else {
-    			$model = Mage::getModel('bfr_mach/export_head');
+    			$model = Mage::getModel('bfr_mach/export');
     		try {
     			
-    			$content = $model->getData4Order($orderIds);
-    			$fileName = date('d_m_Y').'_kopf.csv';
-    			$this->_sendUploadResponse($fileName, $content);
+    			$model->saveData($orderIds);
     			
     		} catch (Exception $e) {
     			$this->_getSession()->addError($e->getMessage());
+    			$this->_redirect('*/*/index');
     		}
-    		$model->saveHistory();
-    		die();
+    		
     	}
-    	$this->_redirect('*/*/index');
-    }
-    
-    public function exportPosAction()
-    {
-    	$orderIds = $this->getRequest()->getParam('order_id');
-    	if(!is_array($orderIds)) {
-    		Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
-    	} else {
-    		$model = Mage::getModel('bfr_mach/export_pos');
-    		try {
-    			 
-    			$content = $model->getData4Order($orderIds);
-    			$fileName = date('d_m_Y').'_pos.csv';
-    			$this->_sendUploadResponse($fileName, $content);
-    			 
-    		} catch (Exception $e) {
-    			$this->_getSession()->addError($e->getMessage());
-    		}
-    		$model->saveHistory();
-    		die();
-    	}
-    	$this->_redirect('*/*/index');
-    }
-    
-    public function exportMappingAction()
-    {
-    	$orderIds = $this->getRequest()->getParam('order_id');
-    	if(!is_array($orderIds)) {
-    		Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
-    	} else {
-    		$model = Mage::getModel('bfr_mach/export_mapping');
-    		try {
-    			 
-    			$content = $model->getData4Order($orderIds);
-    			$fileName = date('d_m_Y').'_zuordnung.csv';
-    			$this->_sendUploadResponse($fileName, $content);
-    			 
-    		} catch (Exception $e) {
-    			$this->_getSession()->addError($e->getMessage());
-    		}
-    		$model->saveHistory();
-    		die();
-    	}
-    	$this->_redirect('*/*/index');
+    	$this->_redirect('*/mach_download/index', array('lauf' => $model->getLauf()));
     }
     
 
-    protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
-    {
-        $response = $this->getResponse();
-        $response->setHeader('HTTP/1.1 200 OK','');
-        $response->setHeader('Pragma', 'public', true);
-        $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
-        $response->setHeader('Content-Disposition', 'attachment; filename='.$fileName);
-        $response->setHeader('Last-Modified', date('r'));
-        $response->setHeader('Accept-Ranges', 'bytes');
-        $response->setHeader('Content-Length', strlen($content));
-        $response->setHeader('Content-type', $contentType);
-        $response->setBody($content);
-        $response->sendResponse();
-        
-    }
 }

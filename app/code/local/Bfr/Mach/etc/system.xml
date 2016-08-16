@@ -41,15 +41,7 @@
                         <show_in_default>1</show_in_default>
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
-                     </irquellsystem>
-                    <irlauf translate="label">
-                        <label>Irlauf</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>20</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irlauf>
+                    </irquellsystem>
                     <niederlassung translate="label">
                         <label>Niederlassung</label>
                         <frontend_type>text</frontend_type>
@@ -74,14 +66,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </periode>
-                    <beleg translate="label">
-                        <label>Beleg</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>90</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </beleg>
                     <belegart translate="label">
                         <label>Belegart</label>
                         <frontend_type>text</frontend_type>
@@ -106,14 +90,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </belegtext>
-                    <storno translate="label">
-                        <label>Storno</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>130</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </storno>
                     <waehrung translate="label">
                         <label>Waehrung</label>
                         <frontend_type>text</frontend_type>
@@ -122,22 +98,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </waehrung>
-                    <rwbeleg translate="label">
-                        <label>Rwbeleg</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>150</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </rwbeleg>
-                    <gedrucktam translate="label">
-                        <label>Gedrucktam</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>160</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </gedrucktam>
                     <benutzer translate="label">
                         <label>Benutzer</label>
                         <frontend_type>text</frontend_type>
@@ -146,14 +106,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </benutzer>
-                    <recordident translate="label">
-                        <label>Recordident</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>180</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </recordident>
                     <schreibgruppe translate="label">
                         <label>Schreibgruppe</label>
                         <frontend_type>text</frontend_type>
@@ -170,22 +122,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </lesegruppe>
-                    <belegvorgabe translate="label">
-                        <label>Belegvorgabe</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>210</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </belegvorgabe>
-                    <belegbetrag translate="label">
-                        <label>Belegbetrag</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>220</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </belegbetrag>
                     <referenz translate="label">
                         <label>Referenz</label>
                         <frontend_type>text</frontend_type>
@@ -268,46 +204,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </irquellsystem>
-                    <irlauf translate="label">
-                        <label>Irlauf</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>20</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irlauf>
-                    <irposition translate="label">
-                        <label>Irposition</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>30</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irposition>
-                    <text translate="label">
-                        <label>Text</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>40</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </text>
-                    <betrag translate="label">
-                        <label>Betrag</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>50</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </betrag>
-                    <fwbetrag translate="label">
-                        <label>Fwbetrag</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>60</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </fwbetrag>
                     <sollkontotitel translate="label">
                         <label>Sollkontotitel</label>
                         <frontend_type>text</frontend_type>
@@ -364,14 +260,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </positionsart>
-                    <ust translate="label">
-                        <label>Ust</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>140</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </ust>
                     <startabgrenzung translate="label">
                         <label>Startabgrenzung</label>
                         <frontend_type>text</frontend_type>
@@ -404,15 +292,15 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </magkontorolle>
-                    <irbeleg translate="label">
-                        <label>Irbeleg</label>
+                      <decimal_separator translate="label">
+                        <label>Decimalseparator</label>
                         <frontend_type>text</frontend_type>
                         <sort_order>190</sort_order>
                         <show_in_default>1</show_in_default>
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
-                     </irbeleg>
-                
+                     </decimal_separator>
+                     
                 </fields>
                 </pos>
                 <mapping>
@@ -430,30 +318,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </irquellsystem>
-                    <irlauf translate="label">
-                        <label>Irlauf</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>20</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irlauf>
-                    <irbeleg translate="label">
-                        <label>Irbeleg</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>30</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irbeleg>
-                    <irposition translate="label">
-                        <label>Irposition</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>40</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irposition>
                     <kostenrechnung translate="label">
                         <label>Kostenrechnung</label>
                         <frontend_type>text</frontend_type>
@@ -470,23 +334,6 @@
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                      </abrechnungsobjekt>
-                    <betrag translate="label">
-                        <label>Betrag</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>70</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </betrag>
-                    <fwbetrag translate="label">
-                        <label>Fwbetrag</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>80</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </fwbetrag>
-                
                 </fields>
                 </mapping>
          </groups>

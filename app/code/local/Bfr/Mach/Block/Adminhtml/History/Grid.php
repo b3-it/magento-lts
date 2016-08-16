@@ -34,10 +34,10 @@ class Bfr_Mach_Block_Adminhtml_History_Grid extends Mage_Adminhtml_Block_Widget_
   	$collection = Mage::getResourceModel($this->_getCollectionClass());
   	
   	$collection->getSelect()
-  		->joinLeft(array('kopf'=>$collection->getTable('bfr_mach/history')),'kopf.order_id = main_table.entity_id AND kopf.deprecated = 0 AND kopf.export_type ='.Bfr_Mach_Model_ExportType::TYPE_KOPF, array('kopf_created_time'=> 'kopf.created_time'))
-  		->joinLeft(array('pos'=>$collection->getTable('bfr_mach/history')),'pos.order_id = main_table.entity_id AND pos.deprecated = 0 AND pos.export_type ='.Bfr_Mach_Model_ExportType::TYPE_POSITION, array('pos_created_time'=> 'pos.created_time'))
-  		->joinLeft(array('zuord'=>$collection->getTable('bfr_mach/history')),'zuord.order_id = main_table.entity_id AND zuord.deprecated = 0 AND zuord.export_type ='.Bfr_Mach_Model_ExportType::TYPE_ZUORDNUNG, array('zuord_created_time'=> 'zuord.created_time'))
-  		->columns(new Zend_Db_Expr('IF(kopf.created_time AND zuord.created_time AND pos.created_time,1,0) AS export_status'));
+  		->joinLeft(array('kopf'=>$collection->getTable('bfr_mach/history')),'kopf.order_id = main_table.entity_id AND kopf.deprecated = 0 AND kopf.export_type ='.Bfr_Mach_Model_ExportType::TYPE_KOPF, array('kopf_created_time'=> 'kopf.download_time'))
+  		->joinLeft(array('pos'=>$collection->getTable('bfr_mach/history')),'pos.order_id = main_table.entity_id AND pos.deprecated = 0 AND pos.export_type ='.Bfr_Mach_Model_ExportType::TYPE_POSITION, array('pos_created_time'=> 'pos.download_time'))
+  		->joinLeft(array('zuord'=>$collection->getTable('bfr_mach/history')),'zuord.order_id = main_table.entity_id AND zuord.deprecated = 0 AND zuord.export_type ='.Bfr_Mach_Model_ExportType::TYPE_ZUORDNUNG, array('zuord_created_time'=> 'zuord.download_time'))
+  		->columns(new Zend_Db_Expr('IF(kopf.download_time AND zuord.download_time AND pos.download_time,1,0) AS export_status'));
   	;
   	
   	$this->setCollection($collection);
@@ -107,27 +107,27 @@ class Bfr_Mach_Block_Adminhtml_History_Grid extends Mage_Adminhtml_Block_Widget_
         		'type' => 'datetime',
         		'width' => '100px',
         		'align'     =>'left',
-        		'filter_index' => 'kopf.created_time',
+        		'filter_index' => 'kopf.download_time',
         		'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
         ));
         
         $this->addColumn('pos_created', array(
         		'header' => Mage::helper('sales')->__('Pos'),
         		'index' => 'pos_created_time',
-        		'type' => 'date',
+        		'type' => 'datetime',
         		'width' => '100px',
         		'align'     =>'left',
-        		'filter_index' => 'pos.created_time',
+        		'filter_index' => 'pos.download_time',
         		'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
         ));
         
         $this->addColumn('zuord_created', array(
         		'header' => Mage::helper('sales')->__('Zuordnung'),
         		'index' => 'zuord_created_time',
-        		'type' => 'date',
+        		'type' => 'datetime',
         		'width' => '100px',
         		'align'     =>'left',
-        		'filter_index' => 'zuord.created_time',
+        		'filter_index' => 'zuord.download_time',
         		'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
         ));
         
@@ -152,23 +152,12 @@ class Bfr_Mach_Block_Adminhtml_History_Grid extends Mage_Adminhtml_Block_Widget_
         $this->setMassactionIdField('entity_id');
         $this->getMassactionBlock()->setFormFieldName('order_id');
 
-        $this->getMassactionBlock()->addItem('exportBeleg', array(
-             'label'    => Mage::helper('bfr_mach')->__('Export Kopf'),
-             'url'      => $this->getUrl('*/*/exportHead'),
+        $this->getMassactionBlock()->addItem('export', array(
+             'label'    => Mage::helper('bfr_mach')->__('Export'),
+             'url'      => $this->getUrl('*/*/export'),
             
         ));
         
-        $this->getMassactionBlock()->addItem('exportPos', array(
-        		'label'    => Mage::helper('bfr_mach')->__('Export Positionen'),
-        		'url'      => $this->getUrl('*/*/exportPos'),
-        
-        ));
-        
-        $this->getMassactionBlock()->addItem('exportMap', array(
-        		'label'    => Mage::helper('bfr_mach')->__('Export Zuordnung'),
-        		'url'      => $this->getUrl('*/*/exportMapping'),
-        
-        ));
 
         
         return $this;
@@ -182,7 +171,7 @@ class Bfr_Mach_Block_Adminhtml_History_Grid extends Mage_Adminhtml_Block_Widget_
   		return;
   	}
   	
-  		$condition = '(kopf.created_time AND zuord.created_time AND pos.created_time) = '. $value;
+  		$condition = '(kopf.download_time AND zuord.download_time AND pos.download_time) = '. $value;
   		if($condition){
   			$collection->getSelect()->where($condition, $value);
   		}
@@ -204,9 +193,6 @@ class Bfr_Mach_Block_Adminhtml_History_Grid extends Mage_Adminhtml_Block_Widget_
   	
   	$col = null;
   	
-  	if($column->getId() == 'stock'){ 
-  		$col = 'kopf.created_time';
-  	}
   	
   	$col = 'DATE('.$column->getFilterIndex().')';
   	if ($col == null) return $this;

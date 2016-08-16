@@ -16,43 +16,47 @@ class Bfr_Mach_Model_Export_Head extends Bfr_Mach_Model_Export_Abstract
 	
 	private $_cols = array('IRQUELLSYSTEM','IRLAUF','IRBELEG','NIEDERLASSUNG','ORGEINHEIT','PERIODE','BUCHUNGSDATUM','BELEGDATUM','BELEG','BELEGART','BELEGKONTOTITEL','BELEGTEXT','STORNO','WAEHRUNG','RWBELEG','GEDRUCKTAM','BENUTZER','RECORDIDENT','SCHREIBGRUPPE','LESEGRUPPE','BELEGVORGABE','BELEGBETRAG','REFERENZ','KASSENANWEISUNG','AKN','VGVORGANG','FESTLEGUNG','FESTLEGUNGSRED','FEHLERTEXT','MANDANT');
 	
-    public function getData4Order(array $orderIds = array())
+    public function getData4Order(array $orderIds = array(), $Lauf)
     {
-    	parent::getData4Order($orderIds);
+    	parent::getData4Order($orderIds, $Lauf);
     	$collection = Mage::getModel('sales/order')->getCollection();
     	
     	$collection->getSelect()
-    		->where('entity_id IN( '. implode(',',$orderIds).')' );
+    		->where('entity_id IN( '. implode(',',$orderIds).')' )
+    		->order('entity_id');
     	
     	
     	$result = array();
     	$result[] = implode($this->getDelimiter(), $this->_cols);
     	
+    	//Zähler
+    	$IRBeleg = 0;
     	
     	foreach($collection as $order){
+    		$IRBeleg ++;
     		$line = array();
     		$line[] = $this->getConfigValue('head/irquellsystem',null, null); //Irquellsystem
-    		$line[] = $this->getConfigValue('head/irlauf',null, null); //Irlauf
-			$line[] = $order->getIncrementId(); //Irbeleg
+    		$line[] = $this->_Lauf; //Irlauf
+			$line[] = $IRBeleg; //??$order->getIncrementId(); //?? //Irbeleg
 			$line[] = $this->getConfigValue('head/niederlassung',null, null); //Niederlassung
 			$line[] = $this->getConfigValue('head/orgeinheit',null, null); //Orgeinheit
 			$line[] = $this->getConfigValue('head/periode',null, null); //Periode
 			$line[] = date('m.d.Y H:i', strtotime($order->getCreatedAt())); //Buchungsdatum
 			$line[] = date('m.d.Y H:i', strtotime($order->getCreatedAt())); //Belegdatum
-			$line[] = $this->getConfigValue('head/beleg',null, null); //Beleg
+			$line[] = $order->getIncrementId(); //Beleg
 			$line[] = $this->getConfigValue('head/belegart',null, null); //Belegart
 			$line[] = $this->getConfigValue('head/belegkontotitel',null, null); //Belegkontotitel
 			$line[] = $this->getConfigValue('head/belegtext',null, null); //Belegtext
-			$line[] = $this->getConfigValue('head/storno',null, null); //Storno
+			$line[] = $order->getState() == 'canceled' ? 'S' : 'B' ; //Storno
 			$line[] = $this->getConfigValue('head/waehrung',null, null); //Waehrung
-			$line[] = $this->getConfigValue('head/rwbeleg',null, null); //Rwbeleg
-			$line[] = $this->getConfigValue('head/gedrucktam',null, null); //Gedrucktam
+			$line[] = ''; //Rwbeleg
+			$line[] = ''; //Gedrucktam
 			$line[] = $this->getConfigValue('head/benutzer',null, null); //Benutzer
-			$line[] = $this->getConfigValue('head/recordident',null, null); //Recordident
+			$line[] = '1'; //Recordident
 			$line[] = $this->getConfigValue('head/schreibgruppe',null, null); //Schreibgruppe
 			$line[] = $this->getConfigValue('head/lesegruppe',null, null); //Lesegruppe
-			$line[] = $this->getConfigValue('head/belegvorgabe',null, null); //Belegvorgabe
-			$line[] = $this->getConfigValue('head/belegbetrag',null, null); //Belegbetrag
+			$line[] = ''; //Belegvorgabe
+			$line[] = ''; //Belegbetrag
 			$line[] = $this->getConfigValue('head/referenz',null, null); //Referenz
 			$line[] = $this->getConfigValue('head/kassenanweisung',null, null); //Kassenanweisung
 			$line[] = $this->getConfigValue('head/akn',null, null); //Akn

@@ -14,27 +14,51 @@ class Bfr_Mach_Model_Export_Mapping extends Bfr_Mach_Model_Export_Abstract
 {
 	protected $_ExportType = Bfr_Mach_Model_ExportType::TYPE_ZUORDNUNG;
 	
-    public function getData4Order(array $orderIds = array())
+	private $_cols = array('IRQUELLSYSTEM','IRLAUF','IRBELEG','IRPOSITION','KOSTENRECHNUNG','ABRECHNUNGSOBJEKT','BETRAG','FWBETRAG');
+	
+    public function getData4Order(array $orderIds = array(), $Lauf)
     {
-    	parent::getData4Order($orderIds);
-    	$collection = Mage::getModel('sales/order')->getCollection();
+    	parent::getData4Order($orderIds, $Lauf);
+    	$collection = Mage::getModel('sales/order_item')->getCollection();
+    	
+    	$eav = Mage::getResourceModel('eav/entity_attribute');
     	
     	$collection->getSelect()
-    		->where('entity_id IN( '. implode(',',$orderIds).')' );
+    		->join(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id'))
+    		->joinleft(array('product_haushaltstelle'=>'catalog_product_entity_varchar'), 'product_haushaltstelle.entity_id=main_table.product_id AND product_haushaltstelle.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'))
+    		->joinLeft(array('haushaltstelle'=>$collection->getTable('paymentbase/haushaltsparameter')),'product_haushaltstelle.value = haushaltstelle.paymentbase_haushaltsparameter_id', array('haushaltstelle'=>'value'))
+    		->where('order_id IN( '. implode(',',$orderIds).')' )
+    		->order('order_id');
     	
     	
     	$result = array();
+    	$result[] = implode($this->getDelimiter(), $this->_cols);
     	
-    	foreach($collection as $order){
+    	//Zähler
+    	$IRBeleg = 0;
+    	$lastOrderId = 0;
+    	$IRPos = 0;
+    	
+    	foreach($collection as $orderItem){
+    		
+    		if($lastOrderId != $orderItem->getOrderId())
+    		{
+    			$IRBeleg++;
+    			$IRPos = 0;
+    		}
+    		$lastOrderId = $orderItem->getOrderId();
+    		
+    		$IRPos++;
+    		
     		$line = array();
-    		$line[] = $this->getConfigValue('head/irquellsystem',null, null); //Irquellsystem
-			$line[] = $this->getConfigValue('head/irlauf',null, null); //Irlauf
-			$line[] = $this->getConfigValue('head/irbeleg',null, null); //Irbeleg
-			$line[] = $this->getConfigValue('head/irposition',null, null); //Irposition
-			$line[] = $this->getConfigValue('head/kostenrechnung',null, null); //Kostenrechnung
-			$line[] = $this->getConfigValue('head/abrechnungsobjekt',null, null); //Abrechnungsobjekt
-			$line[] = $this->getConfigValue('head/betrag',null, null); //Betrag
-			$line[] = $this->getConfigValue('head/fwbetrag',null, null); //Fwbetrag
+    		$line[] = $this->getConfigValue('mapping/irquellsystem',null, null); //Irquellsystem
+			$line[] = $this->_Lauf; //Irlauf
+			$line[] = $IRBeleg; //Irbeleg
+			$line[] = $IRPos; //Irposition
+			$line[] = $this->getConfigValue('mapping/kostenrechnung',null, null); //Kostenrechnung
+			$line[] = $this->getConfigValue('mapping/abrechnungsobjekt',null, null); //Abrechnungsobjekt
+			$line[] = $this->_formatPrice($orderItem->getBasePrice(), $this->getConfigValue('pos/decimal_separator')); ; //Betrag
+			$line[] = $this->_formatPrice($orderItem->getPrice(), $this->getConfigValue('pos/decimal_separator')); ; //Fwbetrag
     		
     		
     		

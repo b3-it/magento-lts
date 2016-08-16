@@ -5,4 +5,9 @@
             <block type="bfr_mach/adminhtml_history" name="bfr_mach" />
         </reference>
     </adminhtml_mach_history_index>
+    <adminhtml_mach_download_index>
+        <reference name="content">
+            <block type="bfr_mach/adminhtml_download" name="bfr_mach" />
+        </reference>
+    </adminhtml_mach_download_index>
 </layout>
