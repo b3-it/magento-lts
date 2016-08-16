@@ -67,6 +67,10 @@ div#details-block {
     position: relative;
 }
 
+#product-attribute-row-delivery_time {
+    display: none;
+}
+
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
@@ -107,10 +111,6 @@ div#details-block {
 }
 
 .catalog-product-view {
-    .price-box, .price-box .price {
-        font-size: $global-fontsize-big;
-    }
-
     .col1-layout {
         .col-main {
             padding-top: 13px;
@@ -161,13 +161,10 @@ div#details-block {
             width: $global-product-info-1-width;
             font-size: 1.3em;
 
-            .price-info {
-                .price-box {
-                    span.label {
-                        display: inline-block;
-                        width: 20%;
-                    }
-                }
+            .price-info .price-box span.label {
+                display: inline-block;
+                width: 20%;
+                font-size: $global-fontsize-big;
             }
 
             .add-to-cart-buttons {
@@ -218,18 +215,16 @@ div#details-block {
             margin-top: 11px;
 
             .price-box {
-                .old-price, .special-price {
-                    display: block;
-                    float: none;
-                    width: 50%;
-                    padding: 0;
+                span {
+                    font-size: $global-fontsize-big;
                 }
 
-                .old-price, .minimal-price {
-                    span {
-                        font-size: 1.5em;
-                    }
-                }
+                //.old-price, .special-price {
+                //    display: block;
+                //    float: none;
+                //    width: 50%;
+                //    padding: 0;
+                //}
 
                 span.label {
                     display: inline-block;
@@ -421,7 +416,6 @@ div#details-block {
 
         .std {
             width: 100%;
-            font-size: 0.8em;
         }
     }
 
@@ -485,7 +479,8 @@ div#details-block {
         vertical-align: top;
 
         .product-sku {
-            padding: 0px 0px 10px 0px;
+            padding: 0 0 20px 0;
+            font-size: 0.8em;
         }
 
         .extra-info,
@@ -604,22 +599,22 @@ div#details-block {
 
 
 @include bp(max-width, 850px) {
-    .product-view {
-        .product-shop {
-            .price-box {
-                .price-excluding-tax,
-                .price-including-tax {
-                    .label {
-                        font-size: $global-fontsize;
-                    }
-
-                    .price {
-                        font-size: $global-fontsize-big;
-                    }
-                }
-            }
-        }
-    }
+//    .product-view {
+//        .product-shop {
+//            .price-box {
+//                .price-excluding-tax,
+//                .price-including-tax {
+//                    .label {
+//                        font-size: $global-fontsize;
+//                    }
+//
+//                    .price {
+//                        font-size: $global-fontsize-big;
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 @include bp(max-width, $bp-medium) {
@@ -629,20 +624,20 @@ div#details-block {
             width: 100%;
         }
 
-        .product-shop {
-            .price-box {
-                .price-excluding-tax,
-                .price-including-tax {
-                    .label {
-                        font-size: $global-fontsize;
-                    }
-
-                    .price {
-                        font-size: $global-fontsize-big;
-                    }
-                }
-            }
-        }
+//        .product-shop {
+//            .price-box {
+//                .price-excluding-tax,
+//                .price-including-tax {
+//                    .label {
+//                        font-size: $global-fontsize;
+//                    }
+//
+//                    .price {
+//                        font-size: $global-fontsize-big;
+//                    }
+//                }
+//            }
+//        }
     }
 }
 
