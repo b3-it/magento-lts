@@ -98,10 +98,13 @@ ul {
 /* ============================================ *
  * Default-Active marking
  * ============================================ */
-:focus {
-    border-width: $global-active-border !important;
-    border-style: solid !important;
-    border-color: $global-active-color !important;
+a, input, button, select, textarea {
+    /* Bugfix für IE11, da er das Rumpf-Element bei Seite laden auf Active setzt */
+    &:focus {
+        border-width: $global-active-border;
+        border-style: solid !important;
+        border-color: $global-active-color;
+    }
 }
 input[type="checkbox"]:focus, input[type="radio"]:focus {
     /* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
