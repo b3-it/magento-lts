@@ -1,0 +1,34 @@
+//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ================================================= *
+ * Linear-Gradient for Product-List
+ * ================================================= */
+@mixin granient-top-bottom {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+
+    /* IE10+ */
+    background-image: -ms-linear-gradient(top, transparent 0%, $global-page-color 100%);
+
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(top, transparent 0%, $global-page-color 100%);
+
+    /* Opera */
+    background-image: -o-linear-gradient(top, transparent 0%, $global-page-color 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(100, $global-page-color));
+
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(top, transparent 0%, $global-page-color 100%);
+
+    /* W3C Markup */
+    background-image: linear-gradient(to bottom, transparent 0%, $global-page-color 100%);
+}

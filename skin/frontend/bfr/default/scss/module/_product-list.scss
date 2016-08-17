@@ -276,6 +276,17 @@ p.product-name {
     margin-top: $global-boxmargin;
     margin-bottom: $global-boxmargin;
 
+    .full, .short {
+        height: 140px;
+        position: relative;
+
+        .shorter {
+            height: 60%;
+
+            @include granient-top-bottom;
+        }
+    }
+
     & > li {
         padding-bottom: $global-boxpadding;
         margin-bottom: $global-boxmargin;

@@ -103,12 +103,12 @@
                     <div class="desc std">
                         <?php
                         $_short_description = $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description');
-                        echo "<span class=\"full\">$_short_description</span>\n";
+                        echo "<div class=\"full\">$_short_description<div class=\"shorter\"></div></div>\n";
 
                         if ( strlen($_short_description) > $desc_limit ) {
                             $_short_description = substr($_short_description, 0, $desc_limit) . '...';
                         }
-                        echo "<span class=\"short\">$_short_description</span>\n";
+                        echo "<div class=\"short\">$_short_description<div class=\"shorter\"></div></div>\n";
                         ?>
                     </div>
                     <?php if($_product->getRatingSummary()): ?>
