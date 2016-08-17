@@ -214,6 +214,11 @@ div#details-block {
             font-size: 1.3em;
             margin-top: 11px;
 
+            .short-description {
+                height: 250px;
+                overflow: auto;
+            }
+
             .price-box {
                 span {
                     font-size: $global-fontsize-big;
