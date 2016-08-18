@@ -92,4 +92,25 @@ class Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Personal extend
     	return 0;
     }
     
+    private function getProduct()
+    {
+    	
+    	$product = Mage::registry('product');
+    	if($product)
+    	{
+    		return $product();
+    	}
+    	return null;
+    }
+    
+    public function getFieldValue($field)
+    {
+    	$product = Mage::registry('product');
+    	if($product)
+    	{
+    		return $product->getData($field);
+    	}
+    	return null;
+    }
+    
 }

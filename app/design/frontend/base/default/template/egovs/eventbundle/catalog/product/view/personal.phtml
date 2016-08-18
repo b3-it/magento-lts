@@ -27,6 +27,7 @@
 
 <?php $_fields = $this->getFields(); ?>
 <?php if (count($_fields) > 0):?>
+<div class="personal_header_text"><?php echo $this->getProduct()->getPersonalHeaderText(); ?></h3>
 <dl class="personal-options">
   <?php foreach ($_fields as $field): ?>
     <dt class="option-block type-field">

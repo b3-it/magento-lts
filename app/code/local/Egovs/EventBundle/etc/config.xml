@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_EventBundle>
-            <version>0.0.1.1</version>
+            <version>0.0.1.2</version>
         </Egovs_EventBundle>
     </modules>
     
@@ -375,4 +375,16 @@
 			</adminhtml>
 		</routers>
     </admin>
+    <crontab>
+        <jobs>
+            <egovs_eventbundle>
+                <schedule>
+                    <cron_expr>*/9 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>eventbundle/cron::runCron</model>
+                </run>
+            </egovs_eventbundle>
+        </jobs>
+    </crontab>
 </config>

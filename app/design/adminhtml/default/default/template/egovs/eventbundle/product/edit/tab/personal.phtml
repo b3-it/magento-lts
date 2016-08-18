@@ -5,6 +5,24 @@
 
 <div class="entry-edit">
 	<div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('eventbundle')->__('Header Text for Personal Settings') ?></h4>
+    </div>
+    <fieldset>
+        <legend><?php echo Mage::helper('eventbundle')->__('Header Text for Personal Settings') ?></legend>
+        <table cellspacing="0" class="form-list" >
+          <tr>
+            <td class="label"><label for="personal_header_text"><?php echo Mage::helper('eventbundle')->__('Header Text') ?></label></td>
+            <td class="value">
+               
+                <input type="text" class="input-text" id="personal_header_text" name="product[personal_header_text]" value="<?php echo $this->getFieldValue('personal_header_text') ?>" />
+            </td>
+            <td class="value scope-label"><?php echo Mage::helper('adminhtml')->__('[STORE VIEW]') ?></td>
+        </tr>
+        </table>
+    </fieldset>
+    
+    
+    <div class="entry-edit-head">
         <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('eventbundle')->__('Personal Settings') ?></h4>
     </div>
     <fieldset class="a-right">
