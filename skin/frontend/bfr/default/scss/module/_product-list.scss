@@ -27,6 +27,10 @@ body.catalogsearch-result-index .page-title h1 {
     white-space: normal;
 }
 
+.name-prefix {
+    vertical-align: top;
+}
+
 /* -------------------------------------------- *
  * Product Name
  */
@@ -39,8 +43,7 @@ p.product-name {
     @include h2;
     font-size: $global-fontsize;
     font-family: $base-font-family;
-    font-weight: bold;
-    line-height: $global-lineheight;
+    font-weight: normal;
     max-height: $global-lineheight * 2.8;
     height: auto;
 
@@ -277,7 +280,7 @@ p.product-name {
     margin-bottom: $global-boxmargin;
 
     .full, .short {
-        height: 140px;
+        height: 110px;
         position: relative;
 
         .shorter {
@@ -362,9 +365,20 @@ p.product-name {
 
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
+            line-height: 1.6em;
 
             a {
                 font-size: 1.5em !important;
+
+                display: inline-block;
+                height: 2.2em;
+                width: 90%;
+                overflow: hidden;
+
+                span {
+                    @include granient-right-left;
+                    height: 2.2em;
+                }
             }
         }
 

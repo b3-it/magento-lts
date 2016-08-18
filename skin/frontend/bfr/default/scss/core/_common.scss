@@ -23,6 +23,11 @@
     width: device-width;
 }
 
+// Remove Zoom
+div.zoomContainer {
+    display: none !important;
+}
+
 // Prevent 300ms delay in IE on touch devices
 a, button {
     -ms-touch-action: manipulation;
