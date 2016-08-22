@@ -52,7 +52,12 @@
             <li>
                 <input onclick="bundle.changeSelection(this)" class="change-container-classname checkbox bundle-option-<?php echo $_option->getId() ?> <?php if ($_option->getRequired()) echo 'validate-one-required-by-name' ?>" id="bundle-option-<?php echo $_option->getId() ?>-<?php echo $_selection->getSelectionId() ?>" type="checkbox" name="bundle_option[<?php echo $_option->getId() ?>][]"<?php if ($this->_isSelected($_selection)) echo ' checked="checked"' ?><?php if (!$_selection->isSaleable()) echo ' disabled="disabled"' ?> value="<?php echo $_selection->getSelectionId() ?>"/>
                 <label for="bundle-option-<?php echo $_option->getId() ?>-<?php echo $_selection->getSelectionId() ?>">
-                    <?php echo $this->getSelectionQtyTitlePrice($_selection) ?>
+                    <?php if ( $this->getSelectionPrice($_selection) == 0 ): ?>
+                        <?php echo $this->escapeHtml($_selection->getName()); ?>
+                    <?php else: ?>
+                        <?php echo $this->getSelectionTitlePrice($_selection) ?>
+                    <?php endif; ?>
+
                     <?php if (!$this->isInStock($_selection)){echo $this->getOutOfStockLabel();}?>
                 </label>
                 <?php if($_option->getRequired()): ?>
