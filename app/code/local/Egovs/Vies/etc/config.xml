@@ -172,10 +172,10 @@
                 <tax_calculation_address_type>shipping</tax_calculation_address_type>
             </create_account>
 		</customer>
-		<checkout>
+		<customer>
 			<registerrequired>
 				<country_id>req</country_id>
 			</registerrequired>
-		</checkout>
+		</customer>
 	</default>
 </config>

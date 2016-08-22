@@ -165,15 +165,15 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
   			$method = $this->getQuote()->getCheckoutMethod();
 			if(Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST == $method)
 	    	{
-	    		$key = 'checkout/guestrequired/additionalcompany';
+	    		$key = 'customer/guestrequired/additionalcompany';
 	    	}
 	    	elseif ('shipping' == $method)
 	    	{
-	    		$key = 'checkout/shippingrequired/additionalcompany';
+	    		$key = 'customer/shippingrequired/additionalcompany';
 	    	}
 	    	else
 	    	{
-	    		$key = 'checkout/registerrequired/additionalcompany';
+	    		$key = 'customer/registerrequired/additionalcompany';
 	    	}
 
 	    	$res = Mage::getStoreConfig($key);

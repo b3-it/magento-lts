@@ -567,6 +567,43 @@ T: {{var telephone}}
 				<send_mail>1</send_mail>
 			</invoice>
 		</sales_email>
+		<customer>
+			<guestrequired>
+				<prefix>opt</prefix>
+				<firstname>req</firstname>
+				<lastname>req</lastname>
+				<company>opt</company>
+				<telephone>opt</telephone>
+				<fax>opt</fax>
+				<region>opt</region>
+				<email>req</email>
+				<street>req</street>
+				<city>req</city>
+				<postcode>req</postcode>
+				<country_id>req</country_id>
+			</guestrequired>
+			<registerrequired>
+				<prefix>opt</prefix>
+				<firstname>req</firstname>
+				<lastname>req</lastname>
+				<company>opt</company>
+				<taxvat>opt</taxvat>
+				<telephone>opt</telephone>
+				<fax>opt</fax>
+				<region>opt</region>
+				<street>req</street>
+				<city>req</city>
+				<postcode>req</postcode>
+				<country_id>req</country_id>
+			</registerrequired>
+			<shippingrequired>
+				<company>opt</company>
+				<telephone>opt</telephone>
+				<fax>opt</fax>
+				<additionalcompany>opt</additionalcompany>
+				
+			</shippingrequired>
+		</customer>
 	</default>
 
 	<crontab>

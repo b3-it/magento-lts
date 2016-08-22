@@ -10,7 +10,7 @@ class Egovs_Base_Helper_Config extends Mage_Core_Helper_Abstract
 	    	if(Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST == $CheckoutMethod)
 	    	{
 	    		if (is_null($this->_guestconfig)) {
-		            $this->_guestconfig = Mage::getStoreConfig('checkout/guestrequired');
+		            $this->_guestconfig = Mage::getStoreConfig('customer/guestrequired');
 		        }
 		        return isset($this->_guestconfig[$key]) ? $this->_guestconfig[$key] : '';
 	    	}
@@ -23,7 +23,7 @@ class Egovs_Base_Helper_Config extends Mage_Core_Helper_Abstract
 	    		if($key == 'postcode') return true;
 	    		if($key == 'country_id') return true;
 		        if (is_null($this->_shippingconfig)) {
-		            $this->_shippingconfig = Mage::getStoreConfig('checkout/shippingrequired');
+		            $this->_shippingconfig = Mage::getStoreConfig('customer/shippingrequired');
 		        }
 		        return isset($this->_shippingconfig[$key]) ? $this->_shippingconfig[$key] : '';
 	    	}
@@ -32,7 +32,7 @@ class Egovs_Base_Helper_Config extends Mage_Core_Helper_Abstract
 	    		
 	    		//if(($key == 'email') && ($CheckoutMethod != 'login_in')) return 'req';
 		        if (is_null($this->_registerconfig)) {
-		            $this->_registerconfig = Mage::getStoreConfig('checkout/registerrequired');
+		            $this->_registerconfig = Mage::getStoreConfig('customer/registerrequired');
 		        }
 		        
 		        return isset($this->_registerconfig[$key]) ? $this->_registerconfig[$key] : '';

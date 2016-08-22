@@ -107,34 +107,6 @@
 				<enable_text>1</enable_text>
 				<cms_page>datenschutz</cms_page>
 			</datenschutz>
-			<guestrequired>
-				<prefix>opt</prefix>
-				<firstname>req</firstname>
-				<lastname>req</lastname>
-				<company>opt</company>
-				<telephone>opt</telephone>
-				<fax>opt</fax>
-				<region>opt</region>
-				<email>req</email>
-				<street>req</street>
-				<city>req</city>
-				<postcode>req</postcode>
-				<country_id>req</country_id>
-			</guestrequired>
-			<registerrequired>
-				<prefix>opt</prefix>
-				<firstname>req</firstname>
-				<lastname>req</lastname>
-				<company>opt</company>
-				<taxvat>opt</taxvat>
-				<telephone>opt</telephone>
-				<fax>opt</fax>
-				<region>opt</region>
-				<street>req</street>
-				<city>req</city>
-				<postcode>req</postcode>
-				<country_id>req</country_id>
-			</registerrequired>
 			<progress>
 				<skip_shipping_method>0</skip_shipping_method>
 			</progress>
