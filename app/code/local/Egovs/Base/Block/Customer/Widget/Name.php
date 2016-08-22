@@ -11,6 +11,8 @@
  */
 class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_Name
 {
+	private $_method = 'register';
+	
     public function _construct() {
         parent::_construct();
 
@@ -30,7 +32,13 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
     		return false;
     	}
     		
-    	return ($helper->isFieldRequired($key, 'register'));
+    	return ($helper->isFieldRequired($key, $this->_method));
+    }
+    
+    public function setMethod($method)
+    {
+    	$this->_method = $method;
+    	return $this;
     }
     
     public function getFieldRequiredHtml($name) {
@@ -51,7 +59,7 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
     		return true;
     	}
     
-    	return ($helper->getConfig($key, 'register') != '');
+    	return ($helper->getConfig($key, $this->_method) != '');
     		
     }
     

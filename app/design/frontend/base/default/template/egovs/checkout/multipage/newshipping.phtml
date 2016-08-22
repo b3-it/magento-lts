@@ -42,6 +42,7 @@
             <ul class="form-list">
                 <li class="fields fullwide">
                     <?php echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')
+                                    ->setMethod('shipping')
                                     ->setObject($this->getAddress())
                                     ->setFieldIdFormat('shipping:%s')->setFieldNameFormat('shipping[%s]')
                                     ->setFieldParams('onchange="shipping.setSameAsBilling(false)"')->toHtml();
