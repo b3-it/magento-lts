@@ -51,6 +51,11 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     
 	public function onOrderInvoiceCollectionLoad($observer)
     {
+    	$this->addStoreGroupFilterToCollection($observer->getOrderInvoiceCollection());
+    }
+    
+    public function onOrderInvoiceGridCollectionLoad($observer)
+    {
     	$this->addStoreGroupFilterToCollection($observer->getOrderInvoiceGridCollection());
     }
     
