@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<sections>
-		<dev>
-			<groups>
-				<debug>
-					<fields>
-						<security_filter translate="label" module="egovsbase">
-							<label>Security Filter Active</label>
-							<frontend_type>select</frontend_type>
-							<source_model>adminhtml/system_config_source_yesno</source_model>
-							<sort_order>100</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>0</show_in_website>
-							<show_in_store>0</show_in_store>
-						</security_filter>
-						<error_reporting translate="label" module="egovsbase">
-							<label>Error Reporting</label>
-							<frontend_type>select</frontend_type>
-							<source_model>egovsbase/security_config_source_errorreporting</source_model>
-							<sort_order>101</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>0</show_in_website>
-							<show_in_store>0</show_in_store>
-						</error_reporting>
-						<display_errors translate="label" module="egovsbase">
-							<label>Display Errors</label>
-							<frontend_type>select</frontend_type>
-							<source_model>adminhtml/system_config_source_yesno</source_model>
-							<sort_order>102</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>0</show_in_website>
-							<show_in_store>0</show_in_store>
-						</display_errors>
-						<error_log translate="label" module="egovsbase">
-							<label>Error Logfile</label>					
-							<sort_order>104</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>0</show_in_website>
-							<show_in_store>0</show_in_store>
-						</error_log>
-					</fields>
-				</debug>
-				<log>
-					<fields>
-						<log_level translate="label" module="egovsbase">
-							<label>Log Level</label>
-							<frontend_type>select</frontend_type>
-							<source_model>egovsbase/system_config_source_loglevel</source_model>
-							<sort_order>100</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-						</log_level>
-					</fields>
-				</log>
-				<modulelog>
-					<label>Module Level Logging</label>
-				    <show_in_default>1</show_in_default>
-				    <show_in_website>1</show_in_website>
-					<show_in_store>1</show_in_store>
-					<sort_order>300</sort_order>		
-				</modulelog>
-			</groups>
-		</dev>
-		<sales translate="label" > 
+    <sections>
+        <dev>
+            <groups>
+                <debug>
+                    <fields>
+                        <security_filter translate="label" module="egovsbase">
+                            <label>Security Filter Active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </security_filter>
+                        <error_reporting translate="label" module="egovsbase">
+                            <label>Error Reporting</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovsbase/security_config_source_errorreporting</source_model>
+                            <sort_order>101</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </error_reporting>
+                        <display_errors translate="label" module="egovsbase">
+                            <label>Display Errors</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>102</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </display_errors>
+                        <error_log translate="label" module="egovsbase">
+                            <label>Error Logfile</label>
+                            <sort_order>104</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </error_log>
+                    </fields>
+                </debug>
+                <log>
+                    <fields>
+                        <log_level translate="label" module="egovsbase">
+                            <label>Log Level</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovsbase/system_config_source_loglevel</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </log_level>
+                    </fields>
+                </log>
+                <modulelog>
+                    <label>Module Level Logging</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>300</sort_order>
+                </modulelog>
+            </groups>
+        </dev>
+        <sales translate="label" >
             <groups>
                 <identity translate="label" >
-                     <fields>
+                    <fields>
                         <owner_name translate="label" module="egovsbase">
                             <label>Default Owner Name</label>
                             <sort_order>300</sort_order>
@@ -83,13 +83,13 @@
                         </owner_phone>
                     </fields>
                 </identity>
-              </groups>
-         </sales>
-         <sales_email translate="label" > 
+            </groups>
+        </sales>
+        <sales_email translate="label" >
             <groups>
-              <invoice>
-                <fields>
-                <send_mail translate="label">
+                <invoice>
+                    <fields>
+                        <send_mail translate="label">
                             <label>Send E-Mail On Invoice Create</label>
                             <frontend_type>select</frontend_type>
                             <sort_order>100</sort_order>
@@ -98,8 +98,8 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </send_mail>
-                </fields>
-              </invoice>
+                    </fields>
+                </invoice>
                 <creditmemo>
                     <fields>
                         <add_attachment_to_mail translate="label">
@@ -111,50 +111,50 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </add_attachment_to_mail>
-                    </fields>   
+                    </fields>
                 </creditmemo>
-             </groups>
-         </sales_email>
-         
-         <system>
-         	<groups>
-         		<smtp translate="label" module="egovsbase">
-         			<label>SMTP settings</label>
-         			<fields>
-         			    <mail_filter_active translate="label" module="egovsbase">
-         			        <label>Filter Mails</label>
-         			        <frontend_type>select</frontend_type>
-         			        <source_model>adminhtml/system_config_source_yesno</source_model>
-         			        <sort_order>11</sort_order>
-         			        <show_in_default>1</show_in_default>
-         			        <show_in_website>1</show_in_website>
-         			        <show_in_store>1</show_in_store>
-         			        <depends>
-         			            <disable>0</disable>
-         			        </depends>
-         			    </mail_filter_active>
-         			    <mail_filter translate="label comment" module="egovsbase">
-         			        <label>Allow only mails to:</label>
-         			        <frontend_type>textarea</frontend_type>
-         			        <sort_order>12</sort_order>
-         			        <show_in_default>1</show_in_default>
-         			        <show_in_website>1</show_in_website>
-         			        <show_in_store>1</show_in_store>
-         			        <depends>
-         			            <mail_filter_active>1</mail_filter_active>
-         			        </depends>
-         			        <comment>One entry per line.</comment>
-         			    </mail_filter>
-         				<use_ssl translate="label" module="egovsbase">
-         					<label>Use SSL/TLS</label>
-         					<frontend_type>select</frontend_type>
-         					<source_model>adminhtml/system_config_source_yesno</source_model>
+            </groups>
+        </sales_email>
+
+        <system>
+            <groups>
+                <smtp translate="label" module="egovsbase">
+                    <label>SMTP settings</label>
+                    <fields>
+                        <mail_filter_active translate="label" module="egovsbase">
+                            <label>Filter Mails</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <disable>0</disable>
+                            </depends>
+                        </mail_filter_active>
+                        <mail_filter translate="label comment" module="egovsbase">
+                            <label>Allow only mails to:</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <mail_filter_active>1</mail_filter_active>
+                            </depends>
+                            <comment>One entry per line.</comment>
+                        </mail_filter>
+                        <use_ssl translate="label" module="egovsbase">
+                            <label>Use SSL/TLS</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>15</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-         				</use_ssl>
-         				<auth translate="label"  module="egovsbase">
+                        </use_ssl>
+                        <auth translate="label"  module="egovsbase">
                             <label>Authentication method</label>
                             <frontend_type>select</frontend_type>
                             <source_model>egovsbase/system_config_source_email_smtpauth</source_model>
@@ -180,19 +180,19 @@
                             <show_in_store>1</show_in_store>
                         </password>
                         <log_mails translate="label" module="egovsbase">
-         					<label>Enable logging for mails</label>
-         					<frontend_type>select</frontend_type>
-         					<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <label>Enable logging for mails</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-         				</log_mails>
-         			</fields>
-         		</smtp>
-         	</groups>
-         </system>
-         <admin translate="label" >
+                        </log_mails>
+                    </fields>
+                </smtp>
+            </groups>
+        </system>
+        <admin translate="label" >
             <groups>
                 <export translate="label" module="egovsbase">
                     <label>Export</label>
@@ -229,31 +229,31 @@
                         </shop_mode>
                     </fields>
                 </design>
-             </groups>
-         </admin>
+            </groups>
+        </admin>
         <customer>
-	        <groups>
-	            <address>
-	                <fields>
-	                <base_address_info_block translate="label">
+            <groups>
+                <address>
+                    <fields>
+                        <base_address_info_block translate="label">
                             <label>Base Address Info Block</label>
-	                        <frontend_type>select</frontend_type>
+                            <frontend_type>select</frontend_type>
                             <source_model>egovsbase/system_config_source_cms_block</source_model>
                             <sort_order>200</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                      </base_address_info_block>    
-	                </fields>
-	            </address>
-	            <registerrequired translate="label">
+                        </base_address_info_block>
+                    </fields>
+                </address>
+                <registerrequired translate="label">
                     <label>Pflichtfelder für Registration</label>
                     <sort_order>180</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                    	<prefix translate="label">
+                        <prefix translate="label">
                             <label>Prefix</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
@@ -271,20 +271,29 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </firstname>
-                        <lastname translate="label">
-                            <label>Last Name</label>
+                        <middlename translate="label">
+                            <label>Middle Name</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </lastname> 
+                        </middlename>
+                        <lastname translate="label">
+                            <label>Last Name</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </lastname>
                         <company translate="label">
                             <label>Company</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>3</sort_order>
+                            <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -293,25 +302,25 @@
                             <label>Taxvat</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>3</sort_order>
+                            <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </taxvat>
-                         <street translate="label">
+                        <street translate="label">
                             <label>Street</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>4</sort_order>
+                            <sort_order>6</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </street>
-                         <city translate="label">
+                        <city translate="label">
                             <label>City</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>6</sort_order>
+                            <sort_order>7</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -320,16 +329,16 @@
                             <label>Zip Code</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>7</sort_order>
+                            <sort_order>8</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </postcode>
-                         <telephone translate="label">
+                        <telephone translate="label">
                             <label>Telephone</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>8</sort_order>
+                            <sort_order>9</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -338,7 +347,7 @@
                             <label>Fax</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>9</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -347,7 +356,7 @@
                             <label>Country</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>10</sort_order>
+                            <sort_order>11</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -356,7 +365,7 @@
                             <label>Region</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>11</sort_order>
+                            <sort_order>12</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -365,21 +374,21 @@
                             <label>Additional Company Fields</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>12</sort_order>
+                            <sort_order>13</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </additionalcompany>
                     </fields>
-                </registerrequired>       
-	            <guestrequired translate="label">
+                </registerrequired>
+                <guestrequired translate="label">
                     <label>Pflichtfelder für Gastzugang</label>
                     <sort_order>175</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                    	<prefix translate="label">
+                        <prefix translate="label">
                             <label>Prefix</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
@@ -397,30 +406,39 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </firstname>
-                        <lastname translate="label">
-                            <label>Last Name</label>
+                        <middlename translate="label">
+                            <label>Middle Name</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </lastname> 
-                        <email translate="label comment">
-                            <label>e-Mail</label>
+                        </middlename>
+                        <lastname translate="label">
+                            <label>Last Name</label>
                             <frontend_type>select</frontend_type>
-                            <comment>Field e-Mail should be allways set to required!</comment>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
                             <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </email> 
-                         <street translate="label">
+                        </lastname>
+                        <email translate="label comment">
+                            <label>e-Mail</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Field e-Mail should be allways set to required!</comment>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email>
+                        <street translate="label">
                             <label>Street</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>4</sort_order>
+                            <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -429,16 +447,16 @@
                             <label>Company</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>5</sort_order>
+                            <sort_order>6</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </company>
-                         <city translate="label">
+                        <city translate="label">
                             <label>City</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>6</sort_order>
+                            <sort_order>7</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -447,16 +465,16 @@
                             <label>Zip Code</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>7</sort_order>
+                            <sort_order>8</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </postcode>
-                         <telephone translate="label">
+                        <telephone translate="label">
                             <label>Telephone</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>8</sort_order>
+                            <sort_order>9</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -465,7 +483,7 @@
                             <label>Fax</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>9</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -474,7 +492,7 @@
                             <label>Country</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>10</sort_order>
+                            <sort_order>11</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -483,7 +501,7 @@
                             <label>Region</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
-                            <sort_order>11</sort_order>
+                            <sort_order>12</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -492,7 +510,7 @@
                             <label>Additional Company Fields</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>12</sort_order>
+                            <sort_order>13</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -515,7 +533,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </company>
-                         <telephone translate="label">
+                        <telephone translate="label">
                             <label>Telephone</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_nooptreq</source_model>
@@ -543,41 +561,41 @@
                             <show_in_store>1</show_in_store>
                         </additionalcompany>
                     </fields>
-                </shippingrequired> 
-	        </groups>    
-	    </customer>
-	    
-	    <trans_email translate="label" module="egovsbase">
-	        <class>separator-top</class>
-	        <label>Store Email Addresses</label>
-	        <tab>general</tab>
-	        <frontend_type>text</frontend_type>
-	        <sort_order>90</sort_order>
-	        <show_in_default>1</show_in_default>
-	        <show_in_website>0</show_in_website>
-	        <show_in_store>0</show_in_store>
-	        <groups>
-	            <ident_admin translate="label">
-	                <label>Administrator E-Mail</label>
-	                <frontend_type>text</frontend_type>
-	                <sort_order>40</sort_order>
-	                <show_in_default>1</show_in_default>
-	                <show_in_website>0</show_in_website>
-	                <show_in_store>0</show_in_store>
-	                <fields>
-	                    <email translate="label">
-	                        <label>Email</label>
-	                        <frontend_type>text</frontend_type>
-	                        <backend_model>adminhtml/system_config_backend_email_address</backend_model>
-	                        <validate>required-entry validate-email</validate>
-	                        <sort_order>2</sort_order>
-	                        <show_in_default>1</show_in_default>
-	                        <show_in_website>0</show_in_website>
-	                        <show_in_store>0</show_in_store>
-	                    </email>
-	                </fields>
-	            </ident_admin>
-	        </groups>
-	    </trans_email>
-	</sections>
+                </shippingrequired>
+            </groups>
+        </customer>
+
+        <trans_email translate="label" module="egovsbase">
+            <class>separator-top</class>
+            <label>Store Email Addresses</label>
+            <tab>general</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>90</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <ident_admin translate="label">
+                    <label>Administrator E-Mail</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <email translate="label">
+                            <label>Email</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_email_address</backend_model>
+                            <validate>required-entry validate-email</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </email>
+                    </fields>
+                </ident_admin>
+            </groups>
+        </trans_email>
+    </sections>
 </config>

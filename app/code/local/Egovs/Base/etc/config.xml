@@ -1,195 +1,195 @@
 <?xml version="1.0"?>
 <config>
-	<modules>
-		<Egovs_Base>
-			<version>2.0.0.4</version>
-		</Egovs_Base>
-	</modules>
-	<admin>
-		<routers>
-			<adminhtml>
-				<args>
-					<modules>
-						<Egovs_Base_Adminhtml before="Mage_Adminhtml">Egovs_Base_Adminhtml</Egovs_Base_Adminhtml>
-					</modules>
-				</args>
-			</adminhtml>
-		</routers>
-	</admin>
-	<adminhtml>
-	  <layout>
-			<updates>
-				<egovsbase>
-					<file>egovs/base.xml</file>
-				</egovsbase>
-			</updates>
-		</layout>
-		<translate>
-			<modules>
-				<Egovs_Base>
-					<files>
-						<default>Egovs_Base.csv</default>
-					</files>
-				</Egovs_Base>
-			</modules>
-		</translate>
-		<menu>
-		<sales>
-			<children>
-				<egovs_base_order_item module="egovsbase">
-					<title>Produkte pro Bestellung</title>
-					<sort_order>20</sort_order>
-					<action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
-				</egovs_base_order_item>
-			</children>
-		</sales>
-			<system>
-				<children>
-				<cache>
-					<children>
-						<cache translate="title">
-							<title>Cache Management</title>
-							<sort_order>10</sort_order>
-							<action>adminhtml/cache</action>
-						</cache>
+    <modules>
+        <Egovs_Base>
+            <version>2.0.0.4</version>
+        </Egovs_Base>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Egovs_Base_Adminhtml before="Mage_Adminhtml">Egovs_Base_Adminhtml</Egovs_Base_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <egovsbase>
+                    <file>egovs/base.xml</file>
+                </egovsbase>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Egovs_Base>
+                    <files>
+                        <default>Egovs_Base.csv</default>
+                    </files>
+                </Egovs_Base>
+            </modules>
+        </translate>
+        <menu>
+            <sales>
+                <children>
+                    <egovs_base_order_item module="egovsbase">
+                        <title>Produkte pro Bestellung</title>
+                        <sort_order>20</sort_order>
+                        <action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
+                    </egovs_base_order_item>
+                </children>
+            </sales>
+            <system>
+                <children>
+                    <cache>
+                        <children>
+                            <cache translate="title">
+                                <title>Cache Management</title>
+                                <sort_order>10</sort_order>
+                                <action>adminhtml/cache</action>
+                            </cache>
 
-						<apc_cache translate="title">
-							<title>Reset APC/Zend Cache</title>
-							<sort_order>100</sort_order>
-							<action>adminhtml/system_cache</action>
-						</apc_cache>
-					</children>
-					</cache>
-					<tools translate="title">
-						<children>
-							<analyse translate="title" module="adminhtml">
-								<title>Analyse</title>
-								<children>
-									<egovs_base_order_item module="egovsbase">
-										<title>Produkte pro Bestellung</title>
-										<sort_order>20</sort_order>
-										<action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
-									</egovs_base_order_item>
+                            <apc_cache translate="title">
+                                <title>Reset APC/Zend Cache</title>
+                                <sort_order>100</sort_order>
+                                <action>adminhtml/system_cache</action>
+                            </apc_cache>
+                        </children>
+                    </cache>
+                    <tools translate="title">
+                        <children>
+                            <analyse translate="title" module="adminhtml">
+                                <title>Analyse</title>
+                                <children>
+                                    <egovs_base_order_item module="egovsbase">
+                                        <title>Produkte pro Bestellung</title>
+                                        <sort_order>20</sort_order>
+                                        <action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
+                                    </egovs_base_order_item>
 
-								</children>
-							</analyse>
+                                </children>
+                            </analyse>
 
-						</children>
-					</tools>
-				</children>
-			</system>
-		</menu>
-		<acl>
-			<resources>
-				<all>
-					<title>Allow everything</title>
-				</all>
-				<admin>
-					<children>
-						<system>
-							<children>
-								<cache>
-									<children>
-										<cache translate="title">
-											<title>Cache Management</title>
-											<sort_order>10</sort_order>
-										</cache>
-										<apc_cache translate="title">
-											<title>Clear APC Cache</title>
-											<sort_order>20</sort_order>
-										</apc_cache>
-									</children>
-								</cache>
-							</children>
-						</system>
-					</children>
-				</admin>
-			</resources>
-		</acl>
-		<events>
-			<adminhtml_block_html_before>
-				<observers>
-					<egovs_base_multilanguage_dialogs>
-						<type>singleton</type>
-						<class>egovsbase/core_observer</class>
-						<method>onAdminhtmlBlockHtmlBefore</method>
-					</egovs_base_multilanguage_dialogs>
-				</observers>
-			</adminhtml_block_html_before>
-			<core_layout_block_create_after>
-				<observers>
-					<egovs_base_adminhtml_layout_block>
-						<type>singleton</type>
-						<class>egovsbase/adminhtml_observer</class>
-						<method>onCoreLayoutBlockCreateAfter</method>
-					</egovs_base_adminhtml_layout_block>
-				</observers>
-			</core_layout_block_create_after>
-			<core_block_abstract_prepare_layout_after>
-				<observers>
-					<egovs_base_system_email_template_notice_observer>
-						<type>singleton</type>
-						<class>egovsbase/system_email_template_observer</class>
-						<method>onPrepareLayoutAfter</method>
-					</egovs_base_system_email_template_notice_observer>
-				</observers>
-			</core_block_abstract_prepare_layout_after>
-			<model_delete_after>
-				<observers>
-					<egovs_base_security_trace_observer>
-						<type>singleton</type>
-						<class>egovsbase/security_observer</class>
-						<method>doTrace</method>
-					</egovs_base_security_trace_observer>
-				</observers>
-			</model_delete_after>
-			<model_save_after>
-				<observers>
-					<egovs_base_security_trace_observer>
-						<type>singleton</type>
-						<class>egovsbase/security_observer</class>
-						<method>doTrace</method>
-					</egovs_base_security_trace_observer>
-				</observers>
-			</model_save_after>
-			<core_config_data_save_commit_after>
-				<observers>
-					<egovs_base_security_trace_observer>
-						<type>singleton</type>
-						<class>egovsbase/security_observer</class>
-						<method>doTrace</method>
-					</egovs_base_security_trace_observer>
-				</observers>
-			</core_config_data_save_commit_after>
-		</events>
-	</adminhtml>
-	<frontend>
-		<translate>
-			<modules>
-				<Egovs_Base>
-					<files>
-						<default>Egovs_Base.csv</default>
-					</files>
-				</Egovs_Base>
-			</modules>
-		</translate>
-		<layout>
-			<updates>
-				<egovsbase>
-					<!-- z_ muss vorhanden sein, damit XML möglichst als letztes geparsed wird! -->
-					<file>z_egovs_base.xml</file>
-				</egovsbase>
-			</updates>
-		</layout>
-	</frontend>
+                        </children>
+                    </tools>
+                </children>
+            </system>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <cache>
+                                    <children>
+                                        <cache translate="title">
+                                            <title>Cache Management</title>
+                                            <sort_order>10</sort_order>
+                                        </cache>
+                                        <apc_cache translate="title">
+                                            <title>Clear APC Cache</title>
+                                            <sort_order>20</sort_order>
+                                        </apc_cache>
+                                    </children>
+                                </cache>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <events>
+            <adminhtml_block_html_before>
+                <observers>
+                    <egovs_base_multilanguage_dialogs>
+                        <type>singleton</type>
+                        <class>egovsbase/core_observer</class>
+                        <method>onAdminhtmlBlockHtmlBefore</method>
+                    </egovs_base_multilanguage_dialogs>
+                </observers>
+            </adminhtml_block_html_before>
+            <core_layout_block_create_after>
+                <observers>
+                    <egovs_base_adminhtml_layout_block>
+                        <type>singleton</type>
+                        <class>egovsbase/adminhtml_observer</class>
+                        <method>onCoreLayoutBlockCreateAfter</method>
+                    </egovs_base_adminhtml_layout_block>
+                </observers>
+            </core_layout_block_create_after>
+            <core_block_abstract_prepare_layout_after>
+                <observers>
+                    <egovs_base_system_email_template_notice_observer>
+                        <type>singleton</type>
+                        <class>egovsbase/system_email_template_observer</class>
+                        <method>onPrepareLayoutAfter</method>
+                    </egovs_base_system_email_template_notice_observer>
+                </observers>
+            </core_block_abstract_prepare_layout_after>
+            <model_delete_after>
+                <observers>
+                    <egovs_base_security_trace_observer>
+                        <type>singleton</type>
+                        <class>egovsbase/security_observer</class>
+                        <method>doTrace</method>
+                    </egovs_base_security_trace_observer>
+                </observers>
+            </model_delete_after>
+            <model_save_after>
+                <observers>
+                    <egovs_base_security_trace_observer>
+                        <type>singleton</type>
+                        <class>egovsbase/security_observer</class>
+                        <method>doTrace</method>
+                    </egovs_base_security_trace_observer>
+                </observers>
+            </model_save_after>
+            <core_config_data_save_commit_after>
+                <observers>
+                    <egovs_base_security_trace_observer>
+                        <type>singleton</type>
+                        <class>egovsbase/security_observer</class>
+                        <method>doTrace</method>
+                    </egovs_base_security_trace_observer>
+                </observers>
+            </core_config_data_save_commit_after>
+        </events>
+    </adminhtml>
+    <frontend>
+        <translate>
+            <modules>
+                <Egovs_Base>
+                    <files>
+                        <default>Egovs_Base.csv</default>
+                    </files>
+                </Egovs_Base>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <egovsbase>
+                    <!-- z_ muss vorhanden sein, damit XML möglichst als letztes geparsed wird! -->
+                    <file>z_egovs_base.xml</file>
+                </egovsbase>
+            </updates>
+        </layout>
+    </frontend>
 
-	<global>
-		<models>
-			<egovsbase>
-				<class>Egovs_Base_Model</class>
-				 <resourceModel>egovsbase_resource</resourceModel>
-			</egovsbase>
-			<egovsbase_resource>
+    <global>
+        <models>
+            <egovsbase>
+                <class>Egovs_Base_Model</class>
+                <resourceModel>egovsbase_resource</resourceModel>
+            </egovsbase>
+            <egovsbase_resource>
                 <class>Egovs_Base_Model_Resource</class>
                 <entities>
                     <mail_attachment>
@@ -197,94 +197,94 @@
                     </mail_attachment>
                 </entities>
             </egovsbase_resource>
-			 <customer>
+            <customer>
                 <rewrite>
-					<address_config>Egovs_Base_Model_Customer_Address_Config</address_config>
+                    <address_config>Egovs_Base_Model_Customer_Address_Config</address_config>
                 </rewrite>
-			</customer>
-			<customer_resource>
-				<rewrite>
-					<address>Egovs_Base_Model_Resource_Customer_Address</address>
-				</rewrite>
-			</customer_resource>
-			<core>
-				<rewrite>
-					<email>Egovs_Base_Model_Core_Email</email>
-					<email_template>Egovs_Base_Model_Core_Email_Template</email_template>
-					<email_queue>Egovs_Base_Model_Core_Email_Queue</email_queue>
-				</rewrite>
-			</core>
-			<newsletter>
-				<rewrite>
-					<template>Egovs_Base_Model_Newsletter_Template</template>
-				</rewrite>
-			</newsletter>
-			<sales>
-				<rewrite>
-					<order_invoice>Egovs_Base_Model_Sales_Order_Invoice</order_invoice>
-				</rewrite>
-				<rewrite>
-					<order_creditmemo>Egovs_Base_Model_Sales_Order_Creditmemo</order_creditmemo>
-				</rewrite>
-				<rewrite>
-					<observer>Egovs_Base_Model_Sales_Observer</observer>
-				</rewrite>
-				<rewrite>
+            </customer>
+            <customer_resource>
+                <rewrite>
+                    <address>Egovs_Base_Model_Resource_Customer_Address</address>
+                </rewrite>
+            </customer_resource>
+            <core>
+                <rewrite>
+                    <email>Egovs_Base_Model_Core_Email</email>
+                    <email_template>Egovs_Base_Model_Core_Email_Template</email_template>
+                    <email_queue>Egovs_Base_Model_Core_Email_Queue</email_queue>
+                </rewrite>
+            </core>
+            <newsletter>
+                <rewrite>
+                    <template>Egovs_Base_Model_Newsletter_Template</template>
+                </rewrite>
+            </newsletter>
+            <sales>
+                <rewrite>
+                    <order_invoice>Egovs_Base_Model_Sales_Order_Invoice</order_invoice>
+                </rewrite>
+                <rewrite>
+                    <order_creditmemo>Egovs_Base_Model_Sales_Order_Creditmemo</order_creditmemo>
+                </rewrite>
+                <rewrite>
+                    <observer>Egovs_Base_Model_Sales_Observer</observer>
+                </rewrite>
+                <rewrite>
                     <quote>Egovs_Base_Model_Sales_Quote</quote>
                 </rewrite>
-			</sales>
-		</models>
-		<blocks>
-			<egovsbase>
-				<class>Egovs_Base_Block</class>
-			</egovsbase>
-			<customer>
-				<rewrite>
-					<address_edit>Egovs_Base_Block_Customer_Address_Edit</address_edit>
-					<address_book>Egovs_Base_Block_Customer_Address_Book</address_book>
-					<account_dashboard_address>Egovs_Base_Block_Customer_Account_Dashboard_Address</account_dashboard_address>
-					<account_navigation>Egovs_Base_Block_Customer_Account_Navigation</account_navigation>
-				</rewrite>
-			</customer>
-			<sales>
-				<rewrite>
-					<guest_links>Egovs_Base_Block_Sales_Guest_Links</guest_links>
-				</rewrite>
-			</sales>
-			<adminhtml>
-				<rewrite>
-					<customer_grid>Egovs_Base_Block_Adminhtml_Customer_Grid</customer_grid>
-					<permissions_user_edit_tab_main>Egovs_Base_Block_Adminhtml_Permissions_User_Edit_Tab_Main</permissions_user_edit_tab_main>
-	    			<sales_shipment_grid>Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid</sales_shipment_grid>
-	    			<sales_order_create_customer_grid>Egovs_Base_Block_Adminhtml_Sales_Order_Create_Customer_Grid</sales_order_create_customer_grid>
-	    			<customer_edit_tab_account>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account</customer_edit_tab_account>
-					<customer_edit_tab_addresses>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
-				</rewrite>
-			</adminhtml>
-		</blocks>
-		<helpers>
-			<egovsbase>
-				<class>Egovs_Base_Helper</class>
-			</egovsbase>
-			<customer>
-			    <rewrite>
-			        <data>Egovs_Base_Helper_Customer_Data</data>
-			    </rewrite>
-			</customer>
-		</helpers>
-		<resources>
-			<egovsbase_setup>
-				<setup>
-					<module>Egovs_Base</module>
-					<class>Mage_Eav_Model_Entity_Setup</class>
-				</setup>
-				<connection>
-					<use>core_setup</use>
-				</connection>
-			</egovsbase_setup>
-		</resources>
-		<events>
-			<checkout_cart_save_before>
+            </sales>
+        </models>
+        <blocks>
+            <egovsbase>
+                <class>Egovs_Base_Block</class>
+            </egovsbase>
+            <customer>
+                <rewrite>
+                    <address_edit>Egovs_Base_Block_Customer_Address_Edit</address_edit>
+                    <address_book>Egovs_Base_Block_Customer_Address_Book</address_book>
+                    <account_dashboard_address>Egovs_Base_Block_Customer_Account_Dashboard_Address</account_dashboard_address>
+                    <account_navigation>Egovs_Base_Block_Customer_Account_Navigation</account_navigation>
+                </rewrite>
+            </customer>
+            <sales>
+                <rewrite>
+                    <guest_links>Egovs_Base_Block_Sales_Guest_Links</guest_links>
+                </rewrite>
+            </sales>
+            <adminhtml>
+                <rewrite>
+                    <customer_grid>Egovs_Base_Block_Adminhtml_Customer_Grid</customer_grid>
+                    <permissions_user_edit_tab_main>Egovs_Base_Block_Adminhtml_Permissions_User_Edit_Tab_Main</permissions_user_edit_tab_main>
+                    <sales_shipment_grid>Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid</sales_shipment_grid>
+                    <sales_order_create_customer_grid>Egovs_Base_Block_Adminhtml_Sales_Order_Create_Customer_Grid</sales_order_create_customer_grid>
+                    <customer_edit_tab_account>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account</customer_edit_tab_account>
+                    <customer_edit_tab_addresses>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <egovsbase>
+                <class>Egovs_Base_Helper</class>
+            </egovsbase>
+            <customer>
+                <rewrite>
+                    <data>Egovs_Base_Helper_Customer_Data</data>
+                </rewrite>
+            </customer>
+        </helpers>
+        <resources>
+            <egovsbase_setup>
+                <setup>
+                    <module>Egovs_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </egovsbase_setup>
+        </resources>
+        <events>
+            <checkout_cart_save_before>
                 <observers>
                     <germantax_checkout_cart_save_before>
                         <type>singleton</type>
@@ -302,232 +302,232 @@
                     </germantax_checkout_type_onepage_save_order>
                 </observers>
             </checkout_type_onepage_save_order>
-		    <core_block_abstract_to_html_after>
-		        <observers>
-		            <egovs_base_core_block_abstract_to_html_after>
-		                <class>egovsbase/observer</class>
-		                <method>replaceTemplateAbbr</method>
-		            </egovs_base_core_block_abstract_to_html_after>
-		        </observers>
-		    </core_block_abstract_to_html_after>
-			<customer_save_before>
-				<observers>
-					<egovs_base_customer_save_observer>
-						<type>singleton</type>
-						<class>egovsbase/customer_observer</class>
-						<method>onCustomerSave</method>
-					</egovs_base_customer_save_observer>
-				</observers>
-			</customer_save_before>
-			<sales_order_place_before>
-				<observers>
-					<egovs_base_sales_order_place_before>
-						<type>singleton</type>
-						<class>egovsbase/owner_observer</class>
-						<method>onSalesOrderPlaceBefore</method>
-					</egovs_base_sales_order_place_before>
-				</observers>
-			</sales_order_place_before>
-			<checkout_type_onepage_save_order_after>
-				<observers>
-					<mpcheckout_invoice>
-						<type>singleton</type>
-						<class>egovsbase/sales_order_observer</class>
-						<method>onCheckoutSubmitAllAfter</method>
-					</mpcheckout_invoice>
-				</observers>
-			</checkout_type_onepage_save_order_after>
-			<egovs_paymentbase_saferpay_sales_order_invoice_after_pay>
-				<observers>
-					<mpcheckout_invoice>
-						<type>singleton</type>
-						<class>egovsbase/sales_order_observer</class>
-						<method>onSaferpaySalesOrderInvoiceAfterPay</method>
-					</mpcheckout_invoice>
-				</observers>
-			</egovs_paymentbase_saferpay_sales_order_invoice_after_pay>
-		</events>
-		<!-- Änderungen des Cores aus [1999] -->
-		<fieldsets>
-			<sales_copy_order_billing_address>
-				<company2>
-					<to_order>*</to_order>
-				</company2>
-				<company3>
-					<to_order>*</to_order>
-				</company3>
-			</sales_copy_order_billing_address>
-			<sales_copy_order_shipping_address>
-				<company2>
-					<to_order>*</to_order>
-				</company2>
-				<company3>
-					<to_order>*</to_order>
-				</company3>
-			</sales_copy_order_shipping_address>
-			<sales_convert_quote_address>
-				<company2>
-					<to_order_address>*</to_order_address>
-					<to_customer_address>*</to_customer_address>
-				</company2>
-				<company3>
-					<to_order_address>*</to_order_address>
-					<to_customer_address>*</to_customer_address>
-				</company3>
-			</sales_convert_quote_address>
-			<sales_convert_order_address>
-				<company2>
-					<to_quote_address>*</to_quote_address>
-				</company2>
-				<company3>
-					<to_quote_address>*</to_quote_address>
-				</company3>
-			</sales_convert_order_address>
-			<customer_address>
-				<company2>
-					<to_quote_address>*</to_quote_address>
-				</company2>
-				<company3>
-					<to_quote_address>*</to_quote_address>
-				</company3>
-			</customer_address>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <egovs_base_core_block_abstract_to_html_after>
+                        <class>egovsbase/observer</class>
+                        <method>replaceTemplateAbbr</method>
+                    </egovs_base_core_block_abstract_to_html_after>
+                </observers>
+            </core_block_abstract_to_html_after>
+            <customer_save_before>
+                <observers>
+                    <egovs_base_customer_save_observer>
+                        <type>singleton</type>
+                        <class>egovsbase/customer_observer</class>
+                        <method>onCustomerSave</method>
+                    </egovs_base_customer_save_observer>
+                </observers>
+            </customer_save_before>
+            <sales_order_place_before>
+                <observers>
+                    <egovs_base_sales_order_place_before>
+                        <type>singleton</type>
+                        <class>egovsbase/owner_observer</class>
+                        <method>onSalesOrderPlaceBefore</method>
+                    </egovs_base_sales_order_place_before>
+                </observers>
+            </sales_order_place_before>
+            <checkout_type_onepage_save_order_after>
+                <observers>
+                    <mpcheckout_invoice>
+                        <type>singleton</type>
+                        <class>egovsbase/sales_order_observer</class>
+                        <method>onCheckoutSubmitAllAfter</method>
+                    </mpcheckout_invoice>
+                </observers>
+            </checkout_type_onepage_save_order_after>
+            <egovs_paymentbase_saferpay_sales_order_invoice_after_pay>
+                <observers>
+                    <mpcheckout_invoice>
+                        <type>singleton</type>
+                        <class>egovsbase/sales_order_observer</class>
+                        <method>onSaferpaySalesOrderInvoiceAfterPay</method>
+                    </mpcheckout_invoice>
+                </observers>
+            </egovs_paymentbase_saferpay_sales_order_invoice_after_pay>
+        </events>
+        <!-- Änderungen des Cores aus [1999] -->
+        <fieldsets>
+            <sales_copy_order_billing_address>
+                <company2>
+                    <to_order>*</to_order>
+                </company2>
+                <company3>
+                    <to_order>*</to_order>
+                </company3>
+            </sales_copy_order_billing_address>
+            <sales_copy_order_shipping_address>
+                <company2>
+                    <to_order>*</to_order>
+                </company2>
+                <company3>
+                    <to_order>*</to_order>
+                </company3>
+            </sales_copy_order_shipping_address>
+            <sales_convert_quote_address>
+                <company2>
+                    <to_order_address>*</to_order_address>
+                    <to_customer_address>*</to_customer_address>
+                </company2>
+                <company3>
+                    <to_order_address>*</to_order_address>
+                    <to_customer_address>*</to_customer_address>
+                </company3>
+            </sales_convert_quote_address>
+            <sales_convert_order_address>
+                <company2>
+                    <to_quote_address>*</to_quote_address>
+                </company2>
+                <company3>
+                    <to_quote_address>*</to_quote_address>
+                </company3>
+            </sales_convert_order_address>
+            <customer_address>
+                <company2>
+                    <to_quote_address>*</to_quote_address>
+                </company2>
+                <company3>
+                    <to_quote_address>*</to_quote_address>
+                </company3>
+            </customer_address>
             <customer_account>
-				<prefix>
-					<create>1</create>
-					<update>1</update>
-					<name>1</name>
-				</prefix>
-				<firstname>
-					<create>1</create>
-					<update>1</update>
-					<name>1</name>
-				</firstname>
-				<middlename>
-					<create>1</create>
-					<update>1</update>
-					<name>1</name>
-				</middlename>
-				<lastname>
-					<create>1</create>
-					<update>1</update>
-					<name>1</name>
-				</lastname>
-				<suffix>
-					<create>1</create>
-					<update>1</update>
-					<name>1</name>
-				</suffix>
-				<email>
-					<create>1</create>
-					<update>1</update>
-				</email>
-				<password>
-					<create>1</create>
-				</password>
-				<confirmation>
-					<create>1</create>
-				</confirmation>
-				<dob>
-					<create>1</create>
-					<update>1</update>
-				</dob>
-				<taxvat>
-					<create>1</create>
-					<update>1</update>
-				</taxvat>
-				<company>
-					<create>1</create>
-					<update>1</update>
-					<to_quote>customer_company</to_quote>
-				</company>
+                <prefix>
+                    <create>1</create>
+                    <update>1</update>
+                    <name>1</name>
+                </prefix>
+                <firstname>
+                    <create>1</create>
+                    <update>1</update>
+                    <name>1</name>
+                </firstname>
+                <middlename>
+                    <create>1</create>
+                    <update>1</update>
+                    <name>1</name>
+                </middlename>
+                <lastname>
+                    <create>1</create>
+                    <update>1</update>
+                    <name>1</name>
+                </lastname>
+                <suffix>
+                    <create>1</create>
+                    <update>1</update>
+                    <name>1</name>
+                </suffix>
+                <email>
+                    <create>1</create>
+                    <update>1</update>
+                </email>
+                <password>
+                    <create>1</create>
+                </password>
+                <confirmation>
+                    <create>1</create>
+                </confirmation>
+                <dob>
+                    <create>1</create>
+                    <update>1</update>
+                </dob>
+                <taxvat>
+                    <create>1</create>
+                    <update>1</update>
+                </taxvat>
+                <company>
+                    <create>1</create>
+                    <update>1</update>
+                    <to_quote>customer_company</to_quote>
+                </company>
             </customer_account>
             <sales_convert_quote>
-            	  <customer_company>
+                <customer_company>
                     <to_order>*</to_order>
                 </customer_company>
             </sales_convert_quote>
             <sales_convert_order>
-            	 <customer_company>
+                <customer_company>
                     <to_quote>*</to_quote>
                 </customer_company>
             </sales_convert_order>
-		</fieldsets>
-		<sales>
-			<order>
-				<statuses>
-					<!-- Änderung des Cores aus [502], [911] -->
-					<new translate="label">
-						<label>New</label>
-					</new>
-					<pending_payment translate="label">
-						<label>Pending Payment</label>
-					</pending_payment>
-				</statuses>
-			</order>
-		</sales>
-						<customer>
-			<address_templates>
-				<text><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}
-{{depend company}}{{var company}}{{/depend}}
-{{depend vat_id}}USt. ID: {{var vat_id}}{{/depend}}
-{{if street1}}{{var street1}}
-{{/if}}
-{{depend street2}}{{var street2}}{{/depend}}
-{{depend street3}}{{var street3}}{{/depend}}
-{{depend street4}}{{var street4}}{{/depend}}
-{{if postcode}}{{var postcode}} {{/if}}{{if city}}{{var city}}, {{/if}}{{if region}}{{var region}}{{/if}}
-{{var country}}
-T: {{var telephone}}
-{{depend fax}}F: {{var fax}}{{/depend}}]]></text>
-				<oneline><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}{{depend company}}{{var company}} {{/depend}}{{depend vat_id}}USt. ID: {{var vat_id}}{{/depend}}, {{var street}}, {{var city}}, {{var region}} {{var postcode}}, {{var country}}]]></oneline>
-				<html><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}&lt;br/&gt;
-					{{depend company}}{{var company}}&lt;br /&gt;{{/depend}}
-					{{depend vat_id}}USt. ID: {{var vat_id}}&lt;br /&gt;{{/depend}}
-					{{if street1}}{{var street1}}&lt;br /&gt;{{/if}}
-					{{depend street2}}{{var street2}}&lt;br /&gt;{{/depend}}
-					{{depend street3}}{{var street3}}&lt;br /&gt;{{/depend}}
-					{{depend street4}}{{var street4}}&lt;br /&gt;{{/depend}}
-					{{if city}}{{var city}},  {{/if}}{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}&lt;br/&gt;
-					{{var country}}&lt;br/&gt;
-					{{depend telephone}}T: {{var telephone}}{{/depend}}
-					{{depend fax}}&lt;br/&gt;F: {{var fax}}{{/depend}}]]></html>
-				<pdf><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}|
-{{depend company}}{{var company}}|{{/depend}}
-					{{depend vat_id}}USt. ID: {{var vat_id}}|{{/depend}}
-					{{if street1}}{{var street1}}
-					{{/if}}
-{{depend street2}}{{var street2}}|{{/depend}}
-{{depend street3}}{{var street3}}|{{/depend}}
-{{depend street4}}{{var street4}}|{{/depend}}
-					{{if city}}{{var city}},|{{/if}}
-					{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}|
-{{var country}}|
-					{{depend telephone}}T: {{var telephone}}{{/depend}}|
-					{{depend fax}}&lt;br/&gt;F: {{var fax}}{{/depend}}|]]></pdf>
-				<js_template><![CDATA[#{prefix} #{firstname} #{middlename} #{lastname} #{suffix}&lt;br/&gt;#{company}&lt;br/&gt;#{vat_id}&lt;br/&gt;#{street0}&lt;br/&gt;#{street1}&lt;br/&gt;#{street2}&lt;br/&gt;#{street3}&lt;br/&gt;#{city}, #{region}, #{postcode}&lt;br/&gt;#{country_id}&lt;br/&gt;T: #{telephone}&lt;br/&gt;F: #{fax}]]></js_template>
-			</address_templates>
+        </fieldsets>
+        <sales>
+            <order>
+                <statuses>
+                    <!-- Änderung des Cores aus [502], [911] -->
+                    <new translate="label">
+                        <label>New</label>
+                    </new>
+                    <pending_payment translate="label">
+                        <label>Pending Payment</label>
+                    </pending_payment>
+                </statuses>
+            </order>
+        </sales>
+        <customer>
+            <address_templates>
+                <text><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}
+                    {{depend company}}{{var company}}{{/depend}}
+                    {{depend vat_id}}USt. ID: {{var vat_id}}{{/depend}}
+                    {{if street1}}{{var street1}}
+                    {{/if}}
+                    {{depend street2}}{{var street2}}{{/depend}}
+                    {{depend street3}}{{var street3}}{{/depend}}
+                    {{depend street4}}{{var street4}}{{/depend}}
+                    {{if postcode}}{{var postcode}} {{/if}}{{if city}}{{var city}}, {{/if}}{{if region}}{{var region}}{{/if}}
+                    {{var country}}
+                    T: {{var telephone}}
+                {{depend fax}}F: {{var fax}}{{/depend}}]]></text>
+                <oneline><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}{{depend company}}{{var company}} {{/depend}}{{depend vat_id}}USt. ID: {{var vat_id}}{{/depend}}, {{var street}}, {{var city}}, {{var region}} {{var postcode}}, {{var country}}]]></oneline>
+                <html><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}&lt;br/&gt;
+                    {{depend company}}{{var company}}&lt;br /&gt;{{/depend}}
+                    {{depend vat_id}}USt. ID: {{var vat_id}}&lt;br /&gt;{{/depend}}
+                    {{if street1}}{{var street1}}&lt;br /&gt;{{/if}}
+                    {{depend street2}}{{var street2}}&lt;br /&gt;{{/depend}}
+                    {{depend street3}}{{var street3}}&lt;br /&gt;{{/depend}}
+                    {{depend street4}}{{var street4}}&lt;br /&gt;{{/depend}}
+                    {{if city}}{{var city}},  {{/if}}{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}&lt;br/&gt;
+                    {{var country}}&lt;br/&gt;
+                    {{depend telephone}}T: {{var telephone}}{{/depend}}
+                {{depend fax}}&lt;br/&gt;F: {{var fax}}{{/depend}}]]></html>
+                <pdf><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}|
+                    {{depend company}}{{var company}}|{{/depend}}
+                    {{depend vat_id}}USt. ID: {{var vat_id}}|{{/depend}}
+                    {{if street1}}{{var street1}}
+                    {{/if}}
+                    {{depend street2}}{{var street2}}|{{/depend}}
+                    {{depend street3}}{{var street3}}|{{/depend}}
+                    {{depend street4}}{{var street4}}|{{/depend}}
+                    {{if city}}{{var city}},|{{/if}}
+                    {{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}|
+                    {{var country}}|
+                    {{depend telephone}}T: {{var telephone}}{{/depend}}|
+                {{depend fax}}&lt;br/&gt;F: {{var fax}}{{/depend}}|]]></pdf>
+                <js_template><![CDATA[#{prefix} #{firstname} #{middlename} #{lastname} #{suffix}&lt;br/&gt;#{company}&lt;br/&gt;#{vat_id}&lt;br/&gt;#{street0}&lt;br/&gt;#{street1}&lt;br/&gt;#{street2}&lt;br/&gt;#{street3}&lt;br/&gt;#{city}, #{region}, #{postcode}&lt;br/&gt;#{country_id}&lt;br/&gt;T: #{telephone}&lt;br/&gt;F: #{fax}]]></js_template>
+            </address_templates>
         </customer>
-		<catalog>
-			<content>
-				<tempate_filter>widget/template_filter</tempate_filter>
-			</content>
-		</catalog>
+        <catalog>
+            <content>
+                <tempate_filter>widget/template_filter</tempate_filter>
+            </content>
+        </catalog>
 
 
-	</global>
-	<default>
-		<dev>
-			<debug>
-				<error_reporting>0</error_reporting>
-				<display_errors>0</display_errors>
-				<security_filter>1</security_filter>
-			</debug>
-			<log>
-				<!-- Notice Level (Zend_Log::NOTICE) -->
-				<log_level>5</log_level>
-			</log>
-		</dev>
-		<design>
+    </global>
+    <default>
+        <dev>
+            <debug>
+                <error_reporting>0</error_reporting>
+                <display_errors>0</display_errors>
+                <security_filter>1</security_filter>
+            </debug>
+            <log>
+                <!-- Notice Level (Zend_Log::NOTICE) -->
+                <log_level>5</log_level>
+            </log>
+        </dev>
+        <design>
             <package>
                 <default_theme>default</default_theme>
                 <name>egov</name>
@@ -535,87 +535,89 @@ T: {{var telephone}}
                 <translate>default</translate>
             </package>
         </design>
-		<system>
-			<smtp>
-				<log_mails>1</log_mails>
-			</smtp>
-			<calculation>
-				<based_on>shipping</based_on>
-			</calculation>
-		</system>
-		<admin>
-			<export>
-				<csv_separator>;</csv_separator>
-			</export>
-			<design>
-				<mode_default>1</mode_default>
-				<mode_test>0</mode_test>
-				<mode_int>0</mode_int>
-				<mode_prod>0</mode_prod>
-			</design>
-			<security>
-				<extensions_compatibility_mode>0</extensions_compatibility_mode>
-			</security>
-		</admin>
-		<web>
-			<session>
-				<use_http_user_agent>1</use_http_user_agent>
-			</session>
-		</web>
-		<sales_email>
-			<invoice>
-				<send_mail>1</send_mail>
-			</invoice>
-		</sales_email>
-		<customer>
-			<guestrequired>
-				<prefix>opt</prefix>
-				<firstname>req</firstname>
-				<lastname>req</lastname>
-				<company>opt</company>
-				<telephone>opt</telephone>
-				<fax>opt</fax>
-				<region>opt</region>
-				<email>req</email>
-				<street>req</street>
-				<city>req</city>
-				<postcode>req</postcode>
-				<country_id>req</country_id>
-			</guestrequired>
-			<registerrequired>
-				<prefix>opt</prefix>
-				<firstname>req</firstname>
-				<lastname>req</lastname>
-				<company>opt</company>
-				<taxvat>opt</taxvat>
-				<telephone>opt</telephone>
-				<fax>opt</fax>
-				<region>opt</region>
-				<street>req</street>
-				<city>req</city>
-				<postcode>req</postcode>
-				<country_id>req</country_id>
-			</registerrequired>
-			<shippingrequired>
-				<company>opt</company>
-				<telephone>opt</telephone>
-				<fax>opt</fax>
-				<additionalcompany>opt</additionalcompany>
-				
-			</shippingrequired>
-		</customer>
-	</default>
+        <system>
+            <smtp>
+                <log_mails>1</log_mails>
+            </smtp>
+            <calculation>
+                <based_on>shipping</based_on>
+            </calculation>
+        </system>
+        <admin>
+            <export>
+                <csv_separator>;</csv_separator>
+            </export>
+            <design>
+                <mode_default>1</mode_default>
+                <mode_test>0</mode_test>
+                <mode_int>0</mode_int>
+                <mode_prod>0</mode_prod>
+            </design>
+            <security>
+                <extensions_compatibility_mode>0</extensions_compatibility_mode>
+            </security>
+        </admin>
+        <web>
+            <session>
+                <use_http_user_agent>1</use_http_user_agent>
+            </session>
+        </web>
+        <sales_email>
+            <invoice>
+                <send_mail>1</send_mail>
+            </invoice>
+        </sales_email>
+        <customer>
+            <guestrequired>
+                <prefix>opt</prefix>
+                <firstname>req</firstname>
+                <middlename>opt</middlename>
+                <lastname>req</lastname>
+                <company>opt</company>
+                <telephone>opt</telephone>
+                <fax>opt</fax>
+                <region>opt</region>
+                <email>req</email>
+                <street>req</street>
+                <city>req</city>
+                <postcode>req</postcode>
+                <country_id>req</country_id>
+            </guestrequired>
+            <registerrequired>
+                <prefix>opt</prefix>
+                <firstname>req</firstname>
+                <middlename>opt</middlename>
+                <lastname>req</lastname>
+                <company>opt</company>
+                <taxvat>opt</taxvat>
+                <telephone>opt</telephone>
+                <fax>opt</fax>
+                <region>opt</region>
+                <street>req</street>
+                <city>req</city>
+                <postcode>req</postcode>
+                <country_id>req</country_id>
+            </registerrequired>
+            <shippingrequired>
+                <company>opt</company>
+                <telephone>opt</telephone>
+                <fax>opt</fax>
+                <additionalcompany>opt</additionalcompany>
 
-	<crontab>
-		<jobs>
-			<sales_clean_quotes>
-				<schedule>
-					<cron_expr>0,15,30,45 * * * *</cron_expr>
-				</schedule>
-				<run>
-					<model>sales/observer::cleanExpiredQuotes</model>
-				</run>
-			</sales_clean_quotes>
-		</jobs>
-	</crontab>
+            </shippingrequired>
+        </customer>
+    </default>
+
+    <crontab>
+        <jobs>
+            <sales_clean_quotes>
+                <schedule>
+                    <cron_expr>0,15,30,45 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sales/observer::cleanExpiredQuotes</model>
+                </run>
+            </sales_clean_quotes>
+        </jobs>
+    </crontab>
 </config>
