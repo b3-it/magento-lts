@@ -16,8 +16,10 @@ class Sid_Report_Block_Adminhtml_Product extends Mage_Adminhtml_Block_Widget_Gri
   {
     $this->_controller = 'adminhtml_product';
     $this->_blockGroup = 'sidreport';
-    $this->_headerText = Mage::helper('sidreport')->__('Item Manager');
-    $this->_addButtonLabel = Mage::helper('sidreport')->__('Add Item');
+    $this->_headerText = Mage::helper('sidreport')->__('Abrufe aus Rahmenverträgen');
+    
     parent::__construct();
+    
+    $this->removeButton('add');
   }
 }

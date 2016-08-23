@@ -8,6 +8,8 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminh
       $this->setForm($form);
       $fieldset = $form->addFieldset('vendor_form', array('legend'=>Mage::helper('framecontract')->__('Vendor information')));
      
+     
+      
       $fieldset->addField('company', 'text', array(
           'label'     => Mage::helper('framecontract')->__('Company'),
           'class'     => 'required-entry',

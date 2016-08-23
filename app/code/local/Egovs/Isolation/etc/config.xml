@@ -144,11 +144,19 @@
           </isolation_orderload_observer>
         </observers>
       </sales_order_load_after>
-      <sales_order_invoice_grid_collection_load_before>
+      <sales_order_invoice_collection_load_before>
         <observers>
           <isolation_orderinvoicecollectionload_observer>
             <class>isolation/observer_order</class>
             <method>onOrderInvoiceCollectionLoad</method>
+          </isolation_orderinvoicecollectionload_observer>
+        </observers>
+      </sales_order_invoice_collection_load_before>
+      <sales_order_invoice_grid_collection_load_before>
+        <observers>
+          <isolation_orderinvoicecollectionload_observer>
+            <class>isolation/observer_order</class>
+            <method>onOrderInvoiceGridCollectionLoad</method>
           </isolation_orderinvoicecollectionload_observer>
         </observers>
       </sales_order_invoice_grid_collection_load_before>

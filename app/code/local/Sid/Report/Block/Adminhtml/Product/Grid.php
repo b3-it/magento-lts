@@ -64,7 +64,7 @@ class Sid_Report_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
       $ctr = ($lose->getOptionArray(false));
       
       $this->addColumn('los', array(
-      		'header'    => Mage::helper('framecontract')->__('Los'),
+      		'header'    => Mage::helper('framecontract')->__('Rahmenvertrag / Los'),
       		'align'     => 'left',
       		//'width'     => '150px',
       		'index'     => 'los_id',
