@@ -36,6 +36,7 @@
                 <li class="fields fullwide">
                   <?php
                     echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')
+                              ->setMethod('register')
                               ->setObject($this->getFormData())
                               ->setForceUseCustomerAttributes(true)->toHtml();
                   ?>
@@ -43,7 +44,7 @@
                 <li class="fields halfwide">
                     <div class="field">
                         <label for="email_address">
-                            <span class="required">*</span>
+                            <?php echo $this->getFieldRequiredHtml('email')?>
                             <?php echo $this->__('Email Address') ?>
                         </label>
                         <input tabindex="5" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email_address" value="<?php echo $this->escapeHtml($this->getFormData()->getEmail()) ?>" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />

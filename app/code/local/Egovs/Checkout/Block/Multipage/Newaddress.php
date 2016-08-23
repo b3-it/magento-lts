@@ -142,7 +142,7 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
         if (!$this->getQuote()->isVirtual()) {
             /* @var $addrValidator Egovs_Checkout_Model_Validateadr */
             $addrValidator = Mage::getSingleton('mpcheckout/validateadr');
-            $omit = array('company', 'fax', 'telephone', 'region');
+            $omit = array('taxvat','prefix','company', 'fax', 'telephone', 'region');
             if (!in_array($name, $omit) && !$addrValidator->validateShippingAddressField($name, null)) {
                 return $requiredHtml;
             }

@@ -577,7 +577,7 @@
                 <telephone>opt</telephone>
                 <fax>opt</fax>
                 <region>opt</region>
-                <email>req</email>
+                <!--<email>req</email>-->
                 <street>req</street>
                 <city>req</city>
                 <postcode>req</postcode>
@@ -592,6 +592,7 @@
                 <taxvat>opt</taxvat>
                 <telephone>opt</telephone>
                 <fax>opt</fax>
+                <!--<email>req</email>-->
                 <region>opt</region>
                 <street>req</street>
                 <city>req</city>
@@ -599,11 +600,15 @@
                 <country_id>req</country_id>
             </registerrequired>
             <shippingrequired>
+                <prefix>opt</prefix>
+                <middlename>opt</middlename>
                 <company>opt</company>
+                <taxvat>opt</taxvat>
                 <telephone>opt</telephone>
                 <fax>opt</fax>
                 <additionalcompany>opt</additionalcompany>
-
+                <region>opt</region>
+                <country_id>req</country_id>
             </shippingrequired>
         </customer>
     </default>
