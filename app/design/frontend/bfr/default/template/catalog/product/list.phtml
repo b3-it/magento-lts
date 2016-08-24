@@ -41,6 +41,9 @@
                          alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
                 </a>
 
+                <?php
+                $_productNameStripped = $this->stripTags($_product->getName(), null, true);
+                ?>
                 <?php // More-Link ?>
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn">
                     <?php echo $this->__('Learn More') ?>
@@ -76,7 +79,7 @@
             <div class="product-shop">
                 <div class="product-primary">
                     <?php
-                    $_productNameStripped = $this->stripTags($_product->getName(), null, true);
+                    //$_productNameStripped = $this->stripTags($_product->getName(), null, true);
                     $_productPrefix = $_product->getNamePrefix();
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
 
