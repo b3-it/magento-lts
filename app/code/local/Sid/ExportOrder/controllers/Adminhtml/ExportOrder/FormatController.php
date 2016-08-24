@@ -26,10 +26,14 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_FormatController extends Mage_Adminh
 		$block = "";
 		
 		if( $type == 'transdoc'){
+			$model = Mage::getModel('exportorder/format_transdoc')->load(intval($vendor),'vendor_id');
+			Mage::register('format', $model);
 			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_format_transdoc_form')->toHtml();
 		}
 		
 		if( $type == 'plain'){
+			$model = Mage::getModel('exportorder/format_plain')->load(intval($vendor),'vendor_id');
+			Mage::register('format', $model);
 			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_format_plain_form')->toHtml();
 		}
 		

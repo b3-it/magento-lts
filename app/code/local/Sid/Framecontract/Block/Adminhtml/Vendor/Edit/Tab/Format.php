@@ -9,20 +9,20 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Format extends Mage_Admi
       $fieldset = $form->addFieldset('vendor_form', array('legend'=>Mage::helper('framecontract')->__('Format information')));
      
       
-      $select = $fieldset->addField('export_type', 'select', array(
+      $select = $fieldset->addField('export_format', 'select', array(
       		'label'     => Mage::helper('framecontract')->__('Type'),
       		'required'  => true,
       		'values'    => Sid_ExportOrder_Model_Type_Format::getTypeList(),
-      		'name'      => 'export_type',
-      		'onchange'  => 'onchangeExportType()',
+      		'name'      => 'export_format',
+      		'onchange'  => 'onchangeExportFormat()',
       		
       ));
       $vendorId = Mage::registry('vendor_data')->getData('framecontract_vendor_id');
       $url = $this->getUrl('adminhtml/exportOrder_format/typeform',array('vendor'=>$vendorId));
       $select->setAfterElementHtml('
                         <script>
-                        function onchangeExportType() {
-      						var type = $("export_type").getValue();
+                        function onchangeExportFormat() {
+      						var type = $("export_format").getValue();
       						var url = "'.$url.'";
       						url = url.replace("typeform", "typeform/type/" + type); 
 				      		new Ajax.Request(url, {
@@ -34,7 +34,7 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Format extends Mage_Admi
 							  onFailure: function() { alert(\'Something went wrong...\'); }
 							});
                         }
-      					onchangeExportType();
+      					onchangeExportFormat();
                         </script>
                     ');
       
