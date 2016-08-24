@@ -611,6 +611,7 @@
 "Retrieve list of shipments by filters","Versandliste gemäß Filter abfragen"
 "Retrieve order information","Bestellinformationen abfragen"
 "Retrieve orders info","Bestellinformationen abfragen"
+"Retrieve payed orders","Zahlungseingänge anfordern"
 "Retrieve shipment info","Versandinformationen abfragen"
 "Retrieve shipment information","Versandinformationen abfragen"
 "Return to Stock","Zurück ins Lager"
