@@ -81,6 +81,7 @@ input[type="radio"] {
 a {
     color: $global-linkcolor;
     text-decoration: none;
+    border: 1px solid transparent;
 }
 
 a:hover {
@@ -591,17 +592,39 @@ div.block-reorder {
 
     span {
         display: inline-block;
-        //font-weight: bold;
         color: #000000;
         padding-right: 10px;
     }
 
     ul {
         display: inline-block;
+        width: 80%;
 
         li {
             display: inline-block;
             font-family: $base-font-family;
+
+            &.product {
+                max-width: 80%;
+            }
+
+            &.product strong {
+                max-width: 90%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                position: relative;
+                bottom: -4px;
+            }
+
+            &:nth-child(3) strong {
+            }
+        }
+
+        strong {
+            color: #000000;
+            display: inline-block;
+            font-weight: bold;
         }
 
         a {
@@ -611,11 +634,6 @@ div.block-reorder {
             &:hover {
                 text-decoration: underline;
             }
-        }
-
-        strong {
-            color: #000000;
-            font-weight: bold;
         }
 
         img {

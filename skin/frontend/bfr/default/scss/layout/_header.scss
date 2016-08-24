@@ -63,6 +63,7 @@
 .header-language-container,
 .page-header {
     font-family: $base-font-family;
+    background-color: $global-page-color;
 
     .welcome-header {
         margin: 0 $global-logo-left;

@@ -19,7 +19,7 @@ body {
 .wrapper {
     min-height: 100%;
     margin: 0 auto;
-    background: $global-wrapper-color;
+    background-color: $global-wrapper-color;
     position: relative;
     width: 100%;
 
@@ -29,11 +29,13 @@ body {
         max-width: $global-max-page-width;
         width: 94%;
         margin: 0 auto;
-        background-color: $global-page-color;
+    }
 
+    .main-container {
         border-style: none solid solid;
         border-width: medium 5px 5px;
         border-color: -moz-use-text-color #d7dbdc #d7dbdc;
+        background-color: $global-page-color;
     }
 }
 
