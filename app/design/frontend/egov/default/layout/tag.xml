@@ -89,6 +89,23 @@ All tags page
         <reference name="content">
             <block type="tag/all" name="tags_all" template="tag/cloud.phtml"/>
         </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>All Tags</crumbname>
+                <crumbinfo>
+                    <label>All Tags</label>
+                    <title>All Tags</title>
+                </crumbinfo>
+            </action>
+        </reference>
     </tag_list_index>
 
     <tag_product_list translate="label">

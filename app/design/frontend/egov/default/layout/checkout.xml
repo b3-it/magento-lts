@@ -115,6 +115,24 @@ Default layout, loads most of the pages
             <label>Additional Product Info</label>
         </block>
 
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shopping Cart</crumbname>
+                <crumbinfo>
+                    <label>Shopping Cart</label>
+                    <title>Shopping Cart</title>
+                </crumbinfo>
+            </action>
+        </reference>
+
     </checkout_cart_index>
 
     <checkout_cart_configure translate="label">

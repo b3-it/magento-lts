@@ -138,7 +138,7 @@ Layout for customer login page
                 <crumbinfo>
                     <label>Home</label>
                     <title>Home</title>
-                     <url>/</url>
+                    <url>/</url>
                 </crumbinfo>
             </action>
             <action method="addCrumb">
@@ -195,7 +195,6 @@ New customer registration
                     <label>Home</label>
                     <title>Home</title>
                     <url>/</url>
-                   
                 </crumbinfo>
             </action>
             <action method="addCrumb">
@@ -345,7 +344,7 @@ Customer account pages, rendered for all tabs in dashboard
                 <crumbinfo>
                     <label>My Account</label>
                     <title>My Account</title>
-                    <link>/customer/account/</link>
+                    <url>customer/account/</url>
                 </crumbinfo>
             </action>
         </reference>
@@ -434,7 +433,7 @@ Customer account address edit page
                 <crumbinfo>
                     <label>Address Book</label>
                     <title>Address Book</title>
-                    <link>/customer/address/</link>
+                    <url>customer/address/</url>
                 </crumbinfo>
             </action>
             <action method="addCrumb">

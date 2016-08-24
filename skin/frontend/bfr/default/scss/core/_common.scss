@@ -890,6 +890,7 @@ div.block-reorder {
             width: $global-2R-content-width;
             margin-left: $global-2R-content-marginleft;
             margin-right: $global-2R-content-marginright;
+            margin-top: 10px;
 
             .std {
                 width: 100%;
@@ -916,6 +917,7 @@ div.block-reorder {
         .col-left {
             margin-right: $global-leftcol-marginright;
             width: $global-leftcol-width;
+            margin-top: 30px;
         }
 
         .col-main {
