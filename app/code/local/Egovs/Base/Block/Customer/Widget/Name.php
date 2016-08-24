@@ -24,7 +24,7 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
     	
     	$helper = null;
     	try {
-    		$helper = $this->helper('mpcheckout/config');
+    		$helper = Mage::helper('egovsbase/config');
     	} catch (Exception $e) {
     	}
     
@@ -51,7 +51,7 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
     public function isFieldVisible($key) {
     	$helper = null;
     	try {
-    		$helper = $this->helper('mpcheckout/config');
+    		$helper = $this->helper('egovsbase/config');
     	} catch (Exception $e) {
     	}
     
