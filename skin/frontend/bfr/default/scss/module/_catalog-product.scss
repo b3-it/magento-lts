@@ -312,6 +312,12 @@ div#details-block {
                     border-top-style: solid;
                     border-top-color: $global-border-color;
 
+                    > label {
+                        display: block;
+                        font-size: 1.3em;
+                        margin-bottom: $global-boxmargin / 2;
+                    }
+
                     .option-block {
                         width: 100%;
                     }
@@ -1100,8 +1106,7 @@ div#details-block {
 }
 
 .product-options p.required {
-    position: absolute;
-    top: 6px;
+    position: relative;
     right: 15px;
     text-align: right;
 }
