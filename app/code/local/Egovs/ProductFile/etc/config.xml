@@ -98,10 +98,10 @@
             <productfile_allowed_extensions>
                 <ext1>pdf</ext1>
                 <ext2>doc</ext2>
-                <ext2>docx</ext2>
-                <ext3>xls</ext3>
-                <ext4>xlsx</ext4>
-                <ext5>odt</ext5>
+                <ext3>docx</ext3>
+                <ext4>xls</ext4>
+                <ext5>xlsx</ext5>
+                <ext6>odt</ext6>
             </productfile_allowed_extensions>
             <productimage_allowed_extensions>
                 <ext1>jpg</ext1>

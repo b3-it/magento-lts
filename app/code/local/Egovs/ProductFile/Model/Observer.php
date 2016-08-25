@@ -98,11 +98,16 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 					}
 					$uploader = new Varien_File_Uploader(Egovs_ProductFile_Helper_Data::PRODUCT_FILE);
 					$uploader->setAllowedExtensions($fileext);
-					$uploader->setAllowRenameFiles(false);
-					$uploader->setFilesDispersion(false);
-					$ufile = $helper->getUniqueFilename($_FILES[Egovs_ProductFile_Helper_Data::PRODUCT_FILE]['name'], $path);
-					$uploader->save($path, $ufile);	
-					$product->setProductfile($ufile);
+					$uploader->setAllowCreateFolders(true);
+					$uploader->setAllowRenameFiles(true);
+					$uploader->setFilesDispersion(true);
+					$result = $uploader->save($path);
+					if ($result && isset($result['file'])) {
+						$product->setProductfile(trim($result['file'], '/\\'));
+					} else {
+						Mage::getSingleton('adminhtml/session')->addError($helper->__('Product file upload error!'));
+						return;
+					}
 				}
 
 				if (isset($_FILES[Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE]['name']) && (file_exists($_FILES[Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE]['tmp_name']))) {
@@ -112,13 +117,18 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 					if (file_exists($path . "resized" . DS . $product->getProductimage()) && !is_dir($path . "resized" . DS . $product->getProductimage())) {
 						unlink($path . "resized" . DS . $product->getProductimage());
 					}	
-					$uploader2 = new Varien_File_Uploader(Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE);
-					$uploader2->setAllowedExtensions($imgext);
-					$uploader2->setAllowRenameFiles(false);
-					$uploader2->setFilesDispersion(false);
-					$ufile = $helper->getUniqueFilename($_FILES[Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE]['name'], $path);
-					$uploader2->save($path, $ufile);
-					$product->setProductimage($ufile);
+					$uploader = new Varien_File_Uploader(Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE);
+					$uploader->setAllowedExtensions($imgext);
+					$uploader->setAllowCreateFolders(true);
+					$uploader->setAllowRenameFiles(true);
+					$uploader->setFilesDispersion(true);
+					$result = $uploader->save($path);
+					if ($result && isset($result['file'])) {
+						$product->setProductfile(trim($result['file'], '/\\'));
+					} else {
+						Mage::getSingleton('adminhtml/session')->addError($helper->__('Product image upload error!'));
+						return;
+					}
 				}
 					
 				if (isset($post[Egovs_ProductFile_Helper_Data::PRODUCT_FILE_DESCRIPTION])) {

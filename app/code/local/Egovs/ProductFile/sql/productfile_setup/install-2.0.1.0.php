@@ -37,7 +37,7 @@ if (!$installer->getAttribute($entityTypeId, $attributeId)) {
 			'comparable' => false,
 			'visible_on_front' => false,
 			'visible_in_advanced_search' => false,
-			'user_defined' => true,
+			'user_defined' => false,
 			'default' => '',
 	));
 }

@@ -25,6 +25,7 @@ $installer->addAttribute('customer_address', 'position', array(
 ));
 
 
+
 $entityType = 'customer_address';
 
 
@@ -47,12 +48,13 @@ $att->setData('used_in_forms', $forms)->setData('sort_order', '0')->save();
 
 
 
+
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventmanager/participant'), 'title')) {
 	$installer->run("
 			ALTER TABLE {$installer->getTable('eventmanager/participant')}
 			ADD COLUMN title varchar(255) NOT NULL default '';
 			");
-	
+
 }
 
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventmanager/participant'), 'position')) {

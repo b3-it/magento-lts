@@ -58,7 +58,7 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
                 $html[] = '  </div>';
             }
 
-            $html[] = '  <a href="' . $_fileUrl . '" target="_blank">' . $_fname . '</a>';
+            $html[] = '  <a href="' . $_fileUrl . '" target="_blank">' . basename($_fname) . '</a>';
             $html[] = '  <span>(' . $_fsize . ')</span>';
             $html[] = '</div>';
 

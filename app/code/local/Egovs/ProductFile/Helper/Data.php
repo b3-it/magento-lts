@@ -31,6 +31,9 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
     	$path = Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS;
     	$resizedPath = $path . "resized" . DS . $image;
     	$resizedUrl = $url . "resized/" . $image;
+    	if (!$image) {
+    		return;
+    	}
     	$imagePath = $path . $image;
     	if (!file_exists($imagePath)) return;
     	if (!file_exists($resizedPath)) {
@@ -55,6 +58,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @param string $target_dir Ziel-Pfad
 	 *
 	 * @return string Dateiname
+	 * @deprecated see Varien_File_Uploader::save
 	 */
 	public function getUniqueFilename($filename, $target_dir) {
 		$file_suffix = substr($filename, (strrpos($filename, '.')+1));
@@ -174,7 +178,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getProductFileFullName() {
 		$product = Mage::registry('current_product');
 		$product_file_name = preg_replace("/[^a-zA-Z0-9-_.\/]/i", "_", $product->getProductfile());
-		return Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS . $product->getProductfile(); //str_replace('__', '_', $product_file_name);
+		return Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS . str_replace('__', '_', $product_file_name);
 	}
 
 	/**
