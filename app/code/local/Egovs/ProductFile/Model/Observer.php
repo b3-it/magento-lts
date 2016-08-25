@@ -103,7 +103,7 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 					$uploader->setFilesDispersion(true);
 					$result = $uploader->save($path);
 					if ($result && isset($result['file'])) {
-						$product->setProductfile(trim($result['file'], DS));
+						$product->setProductfile(trim($result['file'], '/\\'));
 					} else {
 						Mage::getSingleton('adminhtml/session')->addError($helper->__('Product file upload error!'));
 						return;
@@ -124,7 +124,7 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 					$uploader->setFilesDispersion(true);
 					$result = $uploader->save($path);
 					if ($result && isset($result['file'])) {
-						$product->setProductfile(trim($result['file'], DS));
+						$product->setProductfile(trim($result['file'], '/\\'));
 					} else {
 						Mage::getSingleton('adminhtml/session')->addError($helper->__('Product image upload error!'));
 						return;
