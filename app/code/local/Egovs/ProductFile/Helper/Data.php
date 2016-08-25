@@ -174,7 +174,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getProductFileFullName() {
 		$product = Mage::registry('current_product');
 		$product_file_name = preg_replace("/[^a-zA-Z0-9-_.\/]/i", "_", $product->getProductfile());
-		return Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS . str_replace('__', '_', $product_file_name);
+		return Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS . $product->getProductfile(); //str_replace('__', '_', $product_file_name);
 	}
 
 	/**
