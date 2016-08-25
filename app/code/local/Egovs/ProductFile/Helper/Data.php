@@ -173,7 +173,8 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function getProductFileFullName() {
 		$product = Mage::registry('current_product');
-		return Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS . $product->getProductfile();
+		$product_file_name = preg_replace("/[^a-zA-Z0-9-_.\/]/i", "_", $product->getProductfile());
+		return Mage::getBaseDir('media') . DS . $this->getProductFileUploadDirectory() . DS . $product->getProductfile(); //str_replace('__', '_', $product_file_name);
 	}
 
 	/**
@@ -183,9 +184,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function getProductFileAllowedExtensions() {
 		$exts = Mage::getStoreConfig('settings/productfile_allowed_extensions');
-		$r = array();
-		foreach($exts as $key => $ext) array_push($r, $ext);
-		return $r;
+		return array_values($exts);
 	}
 	/**
 	 * Gibt die erlaubten Erweiterungen für Bilder zu Bewschreibungsdateien aus der Konfiguration zurück
@@ -194,9 +193,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function getProductImageAllowedExtensions() {
 		$exts = Mage::getStoreConfig('settings/productimage_allowed_extensions');
-		$r = array();
-		foreach($exts as $key => $ext) array_push($r, $ext);
-		return $r;
+		return array_values($exts);
 	}
 	/**
 	 * Gibt die erlaubten Erweiterungen formatiert zurück
@@ -206,10 +203,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @see Egovs_ProductFile_Helper_Data::getProductFileAllowedExtensions
 	 */
 	public function getFormattedProductFileAllowedExtensions() {
-		$exts = $this->getProductFileAllowedExtensions();
-		$r = "";
-		foreach($exts as $key => $ext) $r .= "." . $ext . " ";
-		return $r;
+		return implode(', ', $this->getProductFileAllowedExtensions());
 	}
 	/**
 	 * Gibt die erlaubten Erweiterungen formatiert zurück
@@ -219,10 +213,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @see Egovs_ProductFile_Helper_Data::getProductImageAllowedExtensions
 	 */
 	public function getFormattedProductImageAllowedExtensions() {
-		$exts = $this->getProductImageAllowedExtensions();
-		$r = "";
-		foreach($exts as $key => $ext) $r .= "." . $ext . " ";
-		return $r;
+		return implode(', ', $this->getProductImageAllowedExtensions());
 	}
 
 	/**

@@ -5,7 +5,7 @@
             <version>0.0.1.2</version>
         </Egovs_EventBundle>
     </modules>
-    
+
     <adminhtml>
         <translate>
             <modules>
@@ -98,39 +98,39 @@
                 </observers>
             </catalog_model_product_duplicate>
         </events>
-		<menu>
-			<report>
-				<children>
-					<salesroot translate="title" module="reports">
-						<children>
-							<eventbundleoptions translate="title" module="reports">
-								<title>Eventbundle Options</title>
-								<action>adminhtml/eventbundle_report/options</action>
-							</eventbundleoptions>
-						</children>
-					</salesroot>
-				</children>
-			</report>
-		</menu>
-		<acl>
-             <resources>
-                 <admin>
-                 	<children>
-                 		<report>
-                           	<children>
-                           		<salesroot>
-									<children>
-										<eventbundleoptions translate="title" module="reports">
-											<title>Eventbundle Options</title>
-										</eventbundleoptions>
-									</children>
-								</salesroot>
-							</children>
-						</report>
-					</children>
-				</admin>
-			</resources>
-		</acl>
+        <menu>
+            <report>
+                <children>
+                    <salesroot translate="title" module="reports">
+                        <children>
+                            <eventbundleoptions translate="title" module="reports">
+                                <title>Eventbundle Options</title>
+                                <action>adminhtml/eventbundle_report/options</action>
+                            </eventbundleoptions>
+                        </children>
+                    </salesroot>
+                </children>
+            </report>
+        </menu>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <report>
+                            <children>
+                                <salesroot>
+                                    <children>
+                                        <eventbundleoptions translate="title" module="reports">
+                                            <title>Eventbundle Options</title>
+                                        </eventbundleoptions>
+                                    </children>
+                                </salesroot>
+                            </children>
+                        </report>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
     </adminhtml>
     <global>
         <fieldsets>
@@ -193,9 +193,9 @@
                 <class>Egovs_EventBundle_Block</class>
             </eventbundle>
             <adminhtml>
-            	<rewrite>
-            		<catalog_product_edit_tab_options>Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Options</catalog_product_edit_tab_options> 
-            	</rewrite>
+                <rewrite>
+                    <catalog_product_edit_tab_options>Egovs_EventBundle_Block_Adminhtml_Catalog_Product_Edit_Tab_Options</catalog_product_edit_tab_options>
+                </rewrite>
             </adminhtml>
         </blocks>
         <helpers>
@@ -209,8 +209,8 @@
                 <resourceModel>eventbundle_resource</resourceModel>
             </eventbundle>
             <eventbundle_resource>
-				<class>Egovs_EventBundle_Model_Resource</class>
-				<entities>
+                <class>Egovs_EventBundle_Model_Resource</class>
+                <entities>
                     <personal_options>
                         <table>eventbundle_personal_options</table>
                     </personal_options>
@@ -223,9 +223,9 @@
                 </entities>
             </eventbundle_resource>
             <bundle>
-				<rewrite>
-					<observer>Egovs_EventBundle_Model_Bundle_Observer</observer>
-				</rewrite>
+                <rewrite>
+                    <observer>Egovs_EventBundle_Model_Bundle_Observer</observer>
+                </rewrite>
             </bundle>
         </models>
         <resources>
@@ -366,14 +366,14 @@
             </catalog_product_dataflow>
         </fieldsets>
         <routers>
-			<adminhtml>	
-				<args>
-					<modules>
-						<Egovs_EventBundle_Adminhtml after="Mage_Adminhtml">Egovs_EventBundle_Adminhtml</Egovs_EventBundle_Adminhtml>
-					</modules>
-				</args>
-			</adminhtml>
-		</routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Egovs_EventBundle_Adminhtml after="Mage_Adminhtml">Egovs_EventBundle_Adminhtml</Egovs_EventBundle_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
     </admin>
     <crontab>
         <jobs>
