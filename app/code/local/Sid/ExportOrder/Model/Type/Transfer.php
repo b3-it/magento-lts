@@ -2,6 +2,10 @@
 
 class Sid_ExportOrder_Model_Type_Transfer extends Varien_Object
 {
+	const TRANSFER_TYPE_EMAIL = 'email';
+	const TRANSFER_TYPE_POST = 'post';
+	const TRANSFER_TYPE_EMAIL_ATTACHMENT = 'email_attachment';
+	
 	public static function getTypeList()
 	{
 		$result = array();

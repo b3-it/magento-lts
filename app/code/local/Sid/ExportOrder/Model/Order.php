@@ -56,7 +56,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	$content = $format->processOrder($order);
     	
     	$transfer = $this->getVendor()->getTransferModel();
-    	$msg = $transfer->send($content);
+    	$msg = $transfer->send($content,$order);
     	
     	$this->setMessage($msg)
     		->setUpdatedTime(now())
@@ -73,7 +73,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     		$recipients = array();
     		$recipients[] = array('name' => Mage::getStoreConfig("framecontract/email/sender_name", $storeId),
     							  'email' => Mage::getStoreConfig("framecontract/email/sender_email_address", $storeId));
-    		Mage::helper('framecontract')->sendEmail('exportorder/email/error',$recipients,array('message' => $ex->getMessage()),$storeId);
+    		Mage::helper('exportorder')->sendEmail('exportorder/email/error',$recipients,array('message' => $ex->getMessage()),$storeId);
     	}
     	
     }

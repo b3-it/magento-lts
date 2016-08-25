@@ -18,7 +18,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
         $this->_init('exportorder/transfer_post');
     }
     
-    public function send($content)
+    public function send($content,$order = null)
     {
     	 
     }
