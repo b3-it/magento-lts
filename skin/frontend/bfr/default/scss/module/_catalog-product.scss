@@ -195,6 +195,7 @@ div#details-block {
 
         #product-base-block {
             min-height: $global-2L-product-height;
+            margin-top: 16px;
         }
 
         #additional-product-images {
@@ -212,7 +213,6 @@ div#details-block {
         .product-shop {
             width: $global-product-info-2L-width;
             font-size: 1.3em;
-            margin-top: 11px;
 
             .short-description {
                 height: 250px;
