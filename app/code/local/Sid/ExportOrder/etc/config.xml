@@ -118,6 +118,10 @@
     			<label>Email</label>
 	    		<typ>email</typ>
     		</email>
+    		<email_attachment>
+    			<label>email_attachment</label>
+	    		<typ>email_attachment</typ>
+    		</email_attachment>
     		<post>
     			<label>Post</label>
 	    		<typ>post</typ>

@@ -18,11 +18,11 @@ class Sid_ExportOrder_Model_Transfer_Email extends Sid_ExportOrder_Model_Transfe
         $this->_init('exportorder/transfer_email');
     }
     
-    public function send($content)
+    public function send($content, $order = null)
     {
     	$recipients = array();
     	$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
-    	Mage::helper('framecontract')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
+    	Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
     	 
     }
     

@@ -27,16 +27,12 @@
 
     padding: $global-btn-padding-v $global-btn-padding-h;
 
-    &:hover, &:active {
-        background: $global-button-hovercolor $global-repeat-scroll !important;
+    &:hover, &:active, &:focus {
+        background-color: $global-button-hovercolor;
+        background-image: none;
         color: $global-button-font-hover-color !important;
         cursor: pointer;
         box-shadow: 5px 5px 5px 0 $global-text-shadow;
-    }
-
-    &:focus {
-        background-color: $global-button-hovercolor $global-repeat-scroll !important;
-        color: $global-button-font-hover-color !important;
     }
 
     span.default-font {

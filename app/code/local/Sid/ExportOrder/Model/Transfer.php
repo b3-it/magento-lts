@@ -19,13 +19,18 @@ abstract class Sid_ExportOrder_Model_Transfer extends Mage_Core_Model_Abstract
 	 */
 	public static function getInstance($type)
 	{
-		if($type == 'post')
+		if($type == Sid_ExportOrder_Model_Type_Transfer::TRANSFER_TYPE_POST)
 		{
 			return Mage::getModel('exportorder/transfer_post');
+		}
+		
+		if($type == Sid_ExportOrder_Model_Type_Transfer::TRANSFER_TYPE_EMAIL_ATTACHMENT)
+		{
+			return Mage::getModel('exportorder/transfer_attachment');
 		}
 
 		return Mage::getModel('exportorder/transfer_email');
 	}
 
-	public abstract function send($content);
+	public abstract function send($content,$order = null);
 }

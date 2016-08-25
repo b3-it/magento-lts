@@ -386,20 +386,16 @@ p.product-name {
 
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
-            line-height: 1.6em;
+            line-height: 1.7em;
 
             a {
                 font-size: 1.5em !important;
 
                 display: inline-block;
-                height: 2.2em;
-                width: 85%;
+                min-height: 1.4em;
+                max-height: 2.4em;
+                width: 95%;
                 overflow: hidden;
-
-                span {
-                    @include granient-right-left;
-                    height: 2.2em;
-                }
             }
         }
 
@@ -421,11 +417,23 @@ p.product-name {
 
             .price-box {
                 margin-top: 0;
+                display: inline-block;
 
                 span.price-excluding-tax, span.price-including-tax {
                     width: $global-product-list-price-width;
                     display: inline-block;
                 }
+            }
+
+            .tax-details {
+                margin: 0 20px;
+            }
+
+            .tax-details:before {
+                content: "(";
+            }
+            .tax-details:after {
+                content: ")";
             }
 
             .delivery-time {
