@@ -27,11 +27,11 @@ body.catalogsearch-result-index .page-title h1 {
     white-space: normal;
 }
 
-.name-prefix {
+.catalog-category-view .name-prefix {
     vertical-align: top;
     color: $global-footer-linkcolor;
     font-size: 1.33em;
-    margin-right: 15px;
+    display: block;
 }
 
 .image-copyright-box {
@@ -65,7 +65,7 @@ p.product-name {
     font-size: $global-fontsize;
     font-family: $base-font-family;
     font-weight: normal;
-    max-height: $global-lineheight * 2.8;
+    max-height: $global-lineheight * 3.7;
     height: auto;
 
     a {

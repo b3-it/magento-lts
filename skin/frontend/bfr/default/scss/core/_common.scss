@@ -598,7 +598,7 @@ div.block-reorder {
 
     ul {
         display: inline-block;
-        width: 80%;
+        width: 91%;
 
         li {
             display: inline-block;
@@ -615,9 +615,6 @@ div.block-reorder {
                 text-overflow: ellipsis;
                 position: relative;
                 bottom: -4px;
-            }
-
-            &:nth-child(3) strong {
             }
         }
 

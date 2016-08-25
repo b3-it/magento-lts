@@ -573,6 +573,7 @@
                 <firstname>req</firstname>
                 <middlename>opt</middlename>
                 <lastname>req</lastname>
+                <suffix>opt</suffix>
                 <company>opt</company>
                 <telephone>opt</telephone>
                 <fax>opt</fax>
@@ -588,6 +589,7 @@
                 <firstname>req</firstname>
                 <middlename>opt</middlename>
                 <lastname>req</lastname>
+                <suffix>opt</suffix>
                 <company>opt</company>
                 <taxvat>opt</taxvat>
                 <telephone>opt</telephone>
