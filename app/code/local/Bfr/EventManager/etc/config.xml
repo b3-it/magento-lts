@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Bfr_EventManager>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </Bfr_EventManager>
     </modules>
     <frontend>
@@ -203,5 +203,15 @@
                 </observers>
             </checkout_type_onepage_save_order_after>
         </events>
+        <eventbundle_personal>
+            <fields>
+                <title>
+                    <label>Academic Title</label>
+                </title>
+                <position>
+                    <label>Position</label>
+                </position>
+                </fields>
+          </eventbundle_personal>
     </global>
 </config>
