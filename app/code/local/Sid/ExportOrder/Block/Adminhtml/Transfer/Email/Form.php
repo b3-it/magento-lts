@@ -16,24 +16,28 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Email_Form extends Mage_Adminhtml
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      //$fieldset = $form->addFieldset('vendor_form_format_details', array('legend'=>Mage::helper('exportorder')->__('Item information')));
      
-      $form->addField('title', 'text', array(
-          'label'     => Mage::helper('exportorder')->__('Title'),
+      $form->addField('email', 'text', array(
+          'label'     => Mage::helper('exportorder')->__('Email'),
           'class'     => 'required-entry',
           'required'  => true,
-          'name'      => 'title',
+          'name'      => 'transfer[email]',
+      ));
+      
+      $templates = Mage::getModel('adminhtml/system_config_source_email_template');
+      $form->addField('template', 'select', array(
+      		'label'     => Mage::helper('exportorder')->__('Email Template'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'transfer[template]',
+      		'values' =>$templates->toOptionArray()
       ));
 
- 
-     
-      if ( Mage::getSingleton('adminhtml/session')->getExportOrderData() )
-      {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getExportOrderData());
-          Mage::getSingleton('adminhtml/session')->setExportOrderData(null);
-      } elseif ( Mage::registry('exportorder_data') ) {
-          $form->setValues(Mage::registry('exportorder_data')->getData());
+      $data = Mage::registry('transfer')->getData();
+      if(empty($data['template'])){
+      	$data['template'] = 'exportorder_vendor_order_plain';
       }
+      $form->setValues($data);
       return parent::_prepareForm();
   }
 }

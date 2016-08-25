@@ -26,10 +26,14 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_TransferController extends Mage_Admi
 		$block = "";
 		
 		if( $type == 'email'){
+			$model = Mage::getModel('exportorder/transfer_email')->load(intval($vendor),'vendor_id');
+			Mage::register('transfer', $model);
 			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_transfer_email_form')->toHtml();
 		}
 		
 		if( $type == 'post'){
+			$model = Mage::getModel('exportorder/transfer_post')->load(intval($vendor),'vendor_id');
+			Mage::register('transfer', $model);
 			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_transfer_post_form')->toHtml();
 		}
 		

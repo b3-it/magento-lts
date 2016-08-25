@@ -5,24 +5,6 @@
             <version>0.1.0</version>
         </Sid_ExportOrder>
     </modules>
-    <frontend>
-        <routers>
-            <exportorder>
-                <use>standard</use>
-                <args>
-                    <module>Sid_ExportOrder</module>
-                    <frontName>exportorder</frontName>
-                </args>
-            </exportorder>
-        </routers>
-        <layout>
-            <updates>
-                <exportorder>
-                    <file>exportorder.xml</file>
-                </exportorder>
-            </updates>
-        </layout>
-    </frontend>
     <admin>
          <routers>
 			<adminhtml>	
@@ -38,26 +20,38 @@
         <models>
             <exportorder>
                 <class>Sid_ExportOrder_Model</class>
-                <resourceModel>exportorder_mysql4</resourceModel>
+                <resourceModel>exportorder_resource</resourceModel>
             </exportorder>
-            <exportorder_mysql4>
-                <class>Sid_ExportOrder_Model_Mysql4</class>
+            <exportorder_resource>
+                <class>Sid_ExportOrder_Model_Resource</class>
                 <entities>
-                    <exportorder>
-                        <table>exportorder</table>
-                    </exportorder>
+                    <order>
+                        <table>sidexport_order</table>
+                    </order>
+                    <transfer_email>
+                        <table>sidexportorder_transfer_email</table>
+                    </transfer_email>
+                    <transfer_post>
+                        <table>sidexportorder_transfer_post</table>
+                    </transfer_post> 
+                    <format_plain>
+                        <table>sidexportorder_format_plain</table>
+                    </format_plain>
+                    <format_transdoc>
+                        <table>sidexportorder_format_transdoc</table>
+                    </format_transdoc>       
                 </entities>
-            </exportorder_mysql4>
+            </exportorder_resource>
         </models>
         <resources>
-            <exportorder_setup>
+            <sidexportorder_setup>
                 <setup>
                     <module>Sid_ExportOrder</module>
                 </setup>
                 <connection>
                     <use>core_setup</use>
                 </connection>
-            </exportorder_setup>
+            </sidexportorder_setup>
             <exportorder_write>
                 <connection>
                     <use>core_write</use>
@@ -79,7 +73,33 @@
                 <class>Sid_ExportOrder_Helper</class>
             </exportorder>
         </helpers>
+        <template>
+            <email>
+                <exportorder_vendor_order_plain translate="label" module="exportorder">
+                    <label>Lieferantenbestellung Einfach</label>
+                    <file>sid/exportorder/order_plain.html</file>
+                    <type>html</type>
+                </exportorder_vendor_order_plain>
+                <exportorder_vendor_error translate="label" module="exportorder">
+                    <label>Lieferantenbestellung Fehlerinformation</label>
+                    <file>sid/exportorder/error.html</file>
+                    <type>html</type>
+                </exportorder_vendor_error>
+             </email>
+        </template>
     </global>
+    <adminhtml>
+    <events>
+      <framecontract_vendor_save_after>
+        <observers>
+          <exportorder_vendor_save_observer>
+            <class>exportorder/observer</class>
+            <method>onVendorSaveAfter</method>
+          </exportorder_vendor_save_observer>
+        </observers>
+      </framecontract_vendor_save_after>
+      </events>
+    </adminhtml>
     <sid_exportorder>
     	<format>
     		<plain>
@@ -104,4 +124,24 @@
 	    	</post>
     	</transfer>
     </sid_exportorder>
+        <crontab>
+        <jobs>
+            <exportorder>
+                <schedule>
+                    <cron_expr>*/1 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>exportorder/cron::runCron</model>
+                </run>
+            </exportorder>
+        </jobs>
+    </crontab>
+    <default>
+        <exportorder>
+            <email>
+                <vendor_order_plain>exportorder_vendor_order_plain</vendor_order_plain>
+                <error>exportorder_vendor_error</error>
+            </email>
+        </exportorder>
+    </default>
 </config>

@@ -18,21 +18,15 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
       $this->setForm($form);
       //$fieldset = $form->addFieldset('vendor_form_format_details', array('legend'=>Mage::helper('exportorder')->__('Item information')));
      
-      $form->addField('title', 'text', array(
-          'label'     => Mage::helper('exportorder')->__('Title'),
+      $form->addField('address', 'text', array(
+          'label'     => Mage::helper('exportorder')->__('Address'),
           'class'     => 'required-entry',
           'required'  => true,
-          'name'      => 'title',
+          'name'      => 'transfer[address]',
       ));
 
  
-      if ( Mage::getSingleton('adminhtml/session')->getExportOrderData() )
-      {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getExportOrderData());
-          Mage::getSingleton('adminhtml/session')->setExportOrderData(null);
-      } elseif ( Mage::registry('exportorder_data') ) {
-          $form->setValues(Mage::registry('exportorder_data')->getData());
-      }
+      $form->setValues(Mage::registry('transfer')->getData());
       return parent::_prepareForm();
   }
 }

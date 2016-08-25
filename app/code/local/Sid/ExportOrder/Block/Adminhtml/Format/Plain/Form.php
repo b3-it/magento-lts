@@ -16,23 +16,24 @@ class Sid_ExportOrder_Block_Adminhtml_Format_Plain_Form extends Mage_Adminhtml_B
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      //$fieldset = $form->addFieldset('vendor_form_format_details', array('legend'=>Mage::helper('exportorder')->__('Item information')));
      
-      $form->addField('title', 'text', array(
-          'label'     => Mage::helper('exportorder')->__('Title'),
+      $form->addField('line_separator', 'text', array(
+          'label'     => Mage::helper('exportorder')->__('Line Separator'),
           'class'     => 'required-entry',
           'required'  => true,
-          'name'      => 'title',
+          'name'      => 'format[line_separator]',
+      ));
+      
+      $form->addField('item_separator', 'text', array(
+      		'label'     => Mage::helper('exportorder')->__('Item Separator'),
+      		'class'     => 'required-entry',
+      		'required'  => true,
+      		'name'      => 'format[item_separator]',
       ));
 
-    
-      if ( Mage::getSingleton('adminhtml/session')->getExportOrderData() )
-      {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getExportOrderData());
-          Mage::getSingleton('adminhtml/session')->setExportOrderData(null);
-      } elseif ( Mage::registry('exportorder_data') ) {
-          $form->setValues(Mage::registry('exportorder_data')->getData());
-      }
+      $data = Mage::registry('format')->getData();
+      
+      $form->setValues($data);
       return parent::_prepareForm();
   }
 }
