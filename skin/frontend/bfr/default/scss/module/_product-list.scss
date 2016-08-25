@@ -34,6 +34,24 @@ body.catalogsearch-result-index .page-title h1 {
     margin-right: 15px;
 }
 
+.image-copyright-box {
+    background: $global-category-gradient none repeat scroll 0 0;
+    height: 37px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: inline-flex;
+    font-size: $global-fontsize-big;
+    padding: $global-boxpadding-large;
+
+    > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: $global-fontcolor-dark;
+    }
+}
+
 /* -------------------------------------------- *
  * Product Name
  */

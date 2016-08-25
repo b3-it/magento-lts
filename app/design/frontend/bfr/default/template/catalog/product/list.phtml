@@ -34,16 +34,16 @@
     <?php foreach ($_productCollection as $_product): ?>
         <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
             <div class="product-list-left-col">
-                <?php // Product Image ?>
+                <?php /* Product Image */ ?>
+                <?php $_imageAlt = $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?>
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <img id="product-collection-image-<?php echo $_product->getId(); ?>"
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
-                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                         alt="<?php echo $_imageAlt; ?>" />
+                    <div class="image-copyright-box"><span><?php echo $_imageAlt; ?></span></div>
                 </a>
 
-                <?php
-                $_productNameStripped = $this->stripTags($_product->getName(), null, true);
-                ?>
+                <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
                 <?php // More-Link ?>
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn">
                     <?php echo $this->__('Learn More') ?>
@@ -175,9 +175,11 @@
         <?php $i=0; foreach ($_productCollection as $_product): ?>
             <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                    <?php $_imageAlt = $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?>
                     <img id="product-collection-image-<?php echo $_product->getId(); ?>"
-                         src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize_grid); ?>"
-                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                         src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
+                         alt="<?php echo $_imageAlt; ?>" />
+                    <div class="image-copyright-box"><span><?php echo $_imageAlt; ?></span></div>
                 </a>
                 <div class="product-info">
                     <?php

@@ -113,7 +113,8 @@ $global-category-gradientrgb-1: rgba(224, 230, 215, 0.9);              // Start-
 $global-category-gradientrgb-2: rgba(193, 208, 187, 0.97);             // End-Gradient des ersten Menüpunktes
 $global-category-color-ms-1: #FFE0E6D7;                                // IE Start-Gradient des ersten Menüpunktes
 $global-category-color-ms-2: #FFC1D0BB;                                // IE End-Gradient des ersten Menüpunktes
-$global-category-textshadow: 0 1px 1px rgba(255, 255, 255, 0.5);       // Schatten der Kategorie-Navigation
+$global-category-gradient: rgba(255, 255, 255, 0.5);                   // Farbgradient für Kategorie und Copyright
+$global-category-textshadow: 0 1px 1px $global-category-gradient;      // Schatten der Kategorie-Navigation
 
 $global-subcat-bordercolor: #F4EEE3;                                   // Linienfarbe der Unterkategorien
 
