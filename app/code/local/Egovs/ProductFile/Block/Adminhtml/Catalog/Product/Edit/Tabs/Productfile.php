@@ -102,8 +102,11 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
      * @return boolean
      */
     public function existsProductFile() {
-        //Mage::getBaseDir('media') . DS . $this->helper('productfile')->getProductFileUploadDirectory() . DS;
-        $path = $this->helper('productfile')->getProductFileFullName();
+        $path = Mage::getBaseDir('media') . DS .
+                $this->helper('productfile')->getProductFileUploadDirectory() . DS .
+                preg_replace($this->_file_pattern, "_", $this->getProduct()->getProductfile() );
+
+var_dump( $path );
 
         if (file_exists($path) && !is_dir($path)) {
             return true;

@@ -184,9 +184,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function getProductFileAllowedExtensions() {
 		$exts = Mage::getStoreConfig('settings/productfile_allowed_extensions');
-		$r = array();
-		foreach($exts as $key => $ext) array_push($r, $ext);
-		return $r;
+		return array_values($exts);
 	}
 	/**
 	 * Gibt die erlaubten Erweiterungen für Bilder zu Bewschreibungsdateien aus der Konfiguration zurück
@@ -195,9 +193,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function getProductImageAllowedExtensions() {
 		$exts = Mage::getStoreConfig('settings/productimage_allowed_extensions');
-		$r = array();
-		foreach($exts as $key => $ext) array_push($r, $ext);
-		return $r;
+		return array_values($exts);
 	}
 	/**
 	 * Gibt die erlaubten Erweiterungen formatiert zurück
@@ -207,10 +203,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @see Egovs_ProductFile_Helper_Data::getProductFileAllowedExtensions
 	 */
 	public function getFormattedProductFileAllowedExtensions() {
-		$exts = $this->getProductFileAllowedExtensions();
-		$r = "";
-		foreach($exts as $key => $ext) $r .= "." . $ext . " ";
-		return $r;
+		return implode(', ', $this->getProductFileAllowedExtensions());
 	}
 	/**
 	 * Gibt die erlaubten Erweiterungen formatiert zurück
@@ -220,10 +213,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @see Egovs_ProductFile_Helper_Data::getProductImageAllowedExtensions
 	 */
 	public function getFormattedProductImageAllowedExtensions() {
-		$exts = $this->getProductImageAllowedExtensions();
-		$r = "";
-		foreach($exts as $key => $ext) $r .= "." . $ext . " ";
-		return $r;
+		return implode(', ', $this->getProductImageAllowedExtensions());
 	}
 
 	/**
