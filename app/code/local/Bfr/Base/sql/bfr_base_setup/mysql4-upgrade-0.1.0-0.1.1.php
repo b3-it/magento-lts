@@ -11,7 +11,8 @@ if (!$installer->getAttribute('catalog_product', 'event_date')) {
         'global'                  => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
         'visible'                 => true,
         'required'                => false,
-        'used_in_product_listing' => true
+        'used_in_product_listing' => true,
+        'visible_on_front'        => true
     ));
 }
 

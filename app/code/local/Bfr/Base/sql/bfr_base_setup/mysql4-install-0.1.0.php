@@ -14,6 +14,7 @@ if (!$installer->getAttribute('catalog_product', 'name_prefix')) {
 			'visible' => true,
 			'required' => false,
 			'used_in_product_listing'    => true,
+      'visible_on_front'        => true,
 	));
 
 	//$installer->updateAttribute(Mage_Catalog_Model_Product::ENTITY, 'name_prefix', 'apply_to', Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE);
@@ -21,4 +22,4 @@ if (!$installer->getAttribute('catalog_product', 'name_prefix')) {
 
 
 
-$installer->endSetup(); 
+$installer->endSetup();
