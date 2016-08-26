@@ -132,6 +132,15 @@
                     </eventmanager_eventbundle_create_after>
                 </observers>
             </eventbundle_create_after>
+            <adminhtml_block_customer_edit_tab_addresses_init_after>
+                <observers>
+                   <eventmanager_customer_edit_tab_addresses_init_after>
+                    <type>singleton</type>
+                    <class>eventmanager/observer</class>
+                    <method>onAddressFormInitAfter</method>
+                </eventmanager_customer_edit_tab_addresses_init_after>
+                </observers>
+            </adminhtml_block_customer_edit_tab_addresses_init_after>
         </events>
     </adminhtml>
     <global>

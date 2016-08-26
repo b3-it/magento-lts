@@ -60,4 +60,26 @@ class Bfr_EventManager_Model_Observer extends Varien_Object
     	}
     }
     
+    
+    public function onAddressFormInitAfter($observer)
+    {
+    	$form = $observer->getForm();
+    	$customerStoreId = $observer->getCustomerStoreId();
+    	$fieldset = $form->getElement('address_fieldset');
+    	$prefixElement = $form->getElement('academic_titel');
+    	if ($prefixElement) {
+    		//$prefixOptions = $this->helper('customer')->getNamePrefixOptions($customerStoreId);
+    		$prefixOptions = Mage::helper('customer')->getAcademicTitleOptions($customerStoreId);
+    		if (!empty($prefixOptions)) {
+    			$fieldset->removeField($prefixElement->getId());
+    			$prefixField = $fieldset->addField($prefixElement->getId(),
+    					'select',
+    					$prefixElement->getData(),
+    					'^'
+    			);
+    			$prefixField->setValues($prefixOptions);
+    		}
+    	}
+    	 
+    }
 }

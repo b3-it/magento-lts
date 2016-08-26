@@ -33,6 +33,26 @@
  */
 class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminhtml_Block_Customer_Edit_Tab_Addresses
 {
+	
+	
+	public function initForm()
+	{
+		parent::initForm();
+		
+		$customer = Mage::registry('current_customer');
+		$customerStoreId = null;
+		if ($customer->getId()) {
+			$customerStoreId = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore()->getId();
+		}
+		
+		$data['form'] = $this->getForm();
+		$data['customer_store_id'] = $customerStoreId;
+		Mage::dispatchEvent('adminhtml_block_customer_edit_tab_addresses_init_after',$data);
+		
+		return $this;
+	}
+	
+	
 	/**
      * Set Fieldset to Form
      *

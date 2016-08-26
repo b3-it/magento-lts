@@ -72,9 +72,9 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
      *
      * @return array|bool
      */
-    public function getAcademicTitleOptions()
+    public function getAcademicTitleOptions($store = null)
     {
-        $prefixOptions = $this->helper('customer')->getAcademicTitleOptions();
+        $prefixOptions = $this->helper('customer')->getAcademicTitleOptions($store);
 
         if ($this->getObject() && !empty($prefixOptions)) {
             $oldPrefix = $this->escapeHtml(trim($this->getObject()->getPrefix()));
