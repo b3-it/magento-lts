@@ -12,7 +12,7 @@
 class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_Name
 {
 	private $_method = 'register';
-	
+
     public function _construct() {
         parent::_construct();
 
@@ -21,49 +21,66 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
     }
 
     public function isFieldRequired($key) {
-    	
+
     	$helper = null;
     	try {
     		$helper = Mage::helper('egovsbase/config');
     	} catch (Exception $e) {
     	}
-    
+
     	if (is_null($helper)) {
     		return false;
     	}
-    		
+
     	return ($helper->isFieldRequired($key, $this->_method));
     }
-    
+
     public function setMethod($method)
     {
     	$this->_method = $method;
     	return $this;
     }
-    
+
     public function getFieldRequiredHtml($name) {
     	if ($this->isFieldRequired($name)) {
     		return '<span class="required">*</span>';
     	}
     	return '';
     }
-    
+
     public function isFieldVisible($key) {
     	$helper = null;
     	try {
     		$helper = $this->helper('egovsbase/config');
     	} catch (Exception $e) {
     	}
-    
+
     	if (is_null($helper)) {
     		return true;
     	}
-    
+
     	return ($helper->getConfig($key, $this->_method) != '');
-    		
+
     }
-    
+
     public function isPrefixRequired() {
     	return parent::isPrefixRequired() && $this->isFieldRequired('prefix');
     }
+
+    /**
+     * Retrieve academic_titel drop-down options
+     *
+     * @return array|bool
+     */
+    public function getAcademicTitleOptions()
+    {
+        $prefixOptions = $this->helper('customer')->getAcademicTitleOptions();
+
+        if ($this->getObject() && !empty($prefixOptions)) {
+            $oldPrefix = $this->escapeHtml(trim($this->getObject()->getPrefix()));
+            $prefixOptions[$oldPrefix] = $oldPrefix;
+        }
+        return $prefixOptions;
+    }
+
 }
