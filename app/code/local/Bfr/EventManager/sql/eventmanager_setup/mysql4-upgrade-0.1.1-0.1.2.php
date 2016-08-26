@@ -5,7 +5,7 @@ $installer = $this;
 
 $installer->startSetup();
 
-$installer->addAttribute('customer_address', 'titel', array(
+$installer->addAttribute('customer_address', 'academic_titel', array(
 		'label'			=> 'Academic Titel',
 		'global' 		=> Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
 		'visible'      	=> 1,
@@ -37,7 +37,7 @@ if (!$att || $att->isEmpty()) {
 }
 $att->setData('used_in_forms', $forms)->setData('sort_order', '1')->save();
 
-$attributeCode = 'titel';
+$attributeCode = 'academic_titel';
 $att = Mage::getModel('customer/attribute')->loadByCode($entityType, $attributeCode);
 if (!$att || $att->isEmpty()) {
 	Mage::throwException(sprintf('Attribute code "%s" for "%s" not found!', $attributeCode, $entityType));
@@ -49,7 +49,7 @@ $att->setData('used_in_forms', $forms)->setData('sort_order', '0')->save();
 
 
 
-if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventmanager/participant'), 'title')) {
+if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventmanager/participant'), 'academic_titel')) {
 	$installer->run("
 			ALTER TABLE {$installer->getTable('eventmanager/participant')}
 			ADD COLUMN title varchar(255) NOT NULL default '';

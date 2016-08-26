@@ -205,9 +205,9 @@
         </events>
         <eventbundle_personal>
             <fields>
-                <title>
+                <academic_titel>
                     <label>Academic Title</label>
-                </title>
+                </academic_titel>
                 <position>
                     <label>Position</label>
                 </position>

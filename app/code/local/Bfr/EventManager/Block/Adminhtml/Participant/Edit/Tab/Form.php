@@ -66,6 +66,18 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       		'name'      => 'prefix',
       ));
       
+      $fieldset->addField('academic_titel', 'text', array(
+      		'label'     => Mage::helper('eventmanager')->__('Academic Titel'),
+      		
+      		'name'      => 'academic_titel',
+      ));
+      
+      $fieldset->addField('position', 'text', array(
+      		'label'     => Mage::helper('eventmanager')->__('Position'),
+      		
+      		'name'      => 'position',
+      ));
+      
       $fieldset->addField('firstname', 'text', array(
           'label'     => Mage::helper('eventmanager')->__('First Name'),
           'class'     => 'required-entry',

@@ -30,11 +30,20 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   
   protected function _prepareCollection()
   {
+  	
+  	$industry = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
+						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_INDUSTRY.' group by participant_id)');
+  		
+  	$lobby = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
+						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
+  	
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
       ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
+      	->joinLeft(array('lobbyT'=>$lobby),'lobbyT.participant_id=main_table.participant_id',array('lobby'=>'value'))
+      	->joinLeft(array('industryT'=>$industry),'industryT.participant_id=main_table.participant_id',array('industry'=>'value'))
       	->where('event_id='.$this->getEvent()->getId());
       
       $this->setCollection($collection);
@@ -72,6 +81,22 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       		'type'  => 'options',
       		'width' => '70px',
       		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
+      
+      
+      $this->addColumn('title', array(
+      		'header'    => Mage::helper('eventmanager')->__('Event'),
+      		'width'     => '100px',
+      		'index'     => 'title',
+      		//'type'      => 'number',
+      ));
+      
+      
+      $this->addColumn('academic_titel', array(
+      		'header'    => Mage::helper('eventmanager')->__('Academic Titel'),
+      		'width'     => '100px',
+      		'index'     => 'academic_titel',
+      		//'type'      => 'number',
       ));
       
       $this->addColumn('pa_name', array(
@@ -117,6 +142,21 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       		'align'     =>'left',
       		'index'     => 'country',
       		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
+      
+      
+      $this->addColumn('pa_industry', array(
+      		'header'    => Mage::helper('eventmanager')->__('Industry'),
+      		'align'     =>'left',
+      		'index'     => 'industry',
+      		'filter_condition_callback' => array($this, '_filterIndustryCondition'),
+      ));
+      
+      $this->addColumn('pa_lobby', array(
+      		'header'    => Mage::helper('eventmanager')->__('Lobby'),
+      		'align'     =>'left',
+      		'index'     => 'lobby',
+      		'filter_condition_callback' => array($this, '_filterLobbyCondition'),
       ));
       
       $role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
@@ -258,6 +298,38 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	}
   	
   	$condition = "TRIM(CONCAT(firstname,' ',lastname)) like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterIndustryCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "industryT.value like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  /**
+   * FilterIndex
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
+  protected function _filterLobbyCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$condition = "lobbyT.value like ?";
   	$collection->getSelect()->where($condition, "%$value%");
   }
 }
