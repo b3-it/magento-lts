@@ -73,10 +73,10 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
       ));
       
  		
-      $fieldset->addField('status', 'select', array(
+      $fieldset->addField('status', 'text', array(
           'label'     => Mage::helper('infoletter')->__('Status'),
           'name'      => 'status',
-          'values'    => Egovs_Infoletter_Model_Status::getAllOptions(),
+          //'values'    => Egovs_Infoletter_Model_Status::getAllOptions(),
       	  'readonly' => true,
       	  'disabled' => true,
       ));
@@ -121,7 +121,8 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
       		'disabled' => $readonly,
       ));
       
-     
+     $data = Mage::registry('queue_data');
+     $data['status'] = Egovs_Infoletter_Model_Status::getOptionText(intval($data['status']));
      
       if ( Mage::getSingleton('adminhtml/session')->getInfoletterData() )
       {

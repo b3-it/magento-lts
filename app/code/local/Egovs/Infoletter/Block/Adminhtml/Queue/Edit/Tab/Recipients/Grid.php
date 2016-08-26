@@ -56,7 +56,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Recipients_Grid extends Ma
       		//'filter_index' => 'name'
       ));
 
-      $this->addColumn('status', array(
+      $this->addColumn('g_status', array(
       		'header'    => Mage::helper('infoletter')->__('Status'),
       		'align'     =>'left',
       		'index'     => 'status',

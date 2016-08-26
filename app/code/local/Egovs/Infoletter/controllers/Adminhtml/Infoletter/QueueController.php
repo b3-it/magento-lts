@@ -99,6 +99,8 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
 				}
 			}
 			
+			$data['status'] = intval($data['status']);
+			
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 

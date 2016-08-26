@@ -224,4 +224,13 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
     	
     }
     
+    public function getNameBlockHtml()
+    {
+    	$nameBlock = $this->getLayout()
+    		->createBlock('egovsbase/customer_widget_name')
+    		->setObject($this->getAddress());
+    
+    	return $nameBlock->toHtml();
+    }
+    
 }

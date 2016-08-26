@@ -25,11 +25,12 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Grid extends Mage_Adminhtml_Block_W
   {
       $collection = Mage::getModel('infoletter/queue')->getCollection();
       
+      $expr = new Zend_Db_Expr('(SELECT count(recipient_id) as recipients , message_id FROM `'.$collection->getTable('infoletter/recipient').'`  GROUP BY message_id) ');
       $collection->getSelect()
-      ->joinleft(array('rec'=>$collection->getTable('infoletter/recipient')),'rec.message_id = main_table.message_id',array('recipients'=>'count(recipient_id)') );
+      ->joinleft(array('rec'=>$expr),'rec.message_id = main_table.message_id',array('recipients') );
       
       $this->setCollection($collection);
-      
+      //die($collection->getSelect()->__toString());
       return parent::_prepareCollection();
   }
 

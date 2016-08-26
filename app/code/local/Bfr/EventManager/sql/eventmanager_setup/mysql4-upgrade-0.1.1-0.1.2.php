@@ -29,7 +29,7 @@ $installer->addAttribute('customer_address', 'position', array(
 $entityType = 'customer_address';
 
 
-$forms=array('adminhtml_customer_address','customer_address_edit');
+$forms=array('adminhtml_customer_address','customer_address_edit', 'customer_register_address');
 $attributeCode = 'position';
 $att = Mage::getModel('customer/attribute')->loadByCode($entityType, $attributeCode);
 if (!$att || $att->isEmpty()) {
