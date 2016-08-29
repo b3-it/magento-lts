@@ -2,23 +2,23 @@
 <config>
     <sections>
         <dev>
-			<groups>
-				<modulelog>
-					<fields>
-						<bfr_mach>
-							<label>Mach Export</label>
-							<frontend_type>select</frontend_type>
-							<source_model>adminhtml/system_config_source_yesno</source_model>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-						</bfr_mach>
-					</fields>
-				</modulelog>
-			</groups>
-		</dev>
-		<mach_export translate="label" module="bfr_mach">
-		  <class>separator-top</class>
+            <groups>
+                <modulelog>
+                    <fields>
+                        <bfr_mach>
+                            <label>Mach Export</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bfr_mach>
+                    </fields>
+                </modulelog>
+            </groups>
+        </dev>
+        <mach_export translate="label" module="bfr_mach">
+            <class>separator-top</class>
             <label>Mach Export</label>
             <tab>general</tab>
             <frontend_type>text</frontend_type>
@@ -34,309 +34,309 @@
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <fields>
-                    <irquellsystem translate="label">
-                        <label>Irquellsystem</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>10</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                    </irquellsystem>
-                    <niederlassung translate="label">
-                        <label>Niederlassung</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>40</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </niederlassung>
-                    <orgeinheit translate="label">
-                        <label>Orgeinheit</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>50</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </orgeinheit>
-                    <periode translate="label">
-                        <label>Periode</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>60</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </periode>
-                    <belegart translate="label">
-                        <label>Belegart</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>100</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </belegart>
-                    <belegkontotitel translate="label">
-                        <label>Belegkontotitel</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>110</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </belegkontotitel>
-                    <belegtext translate="label">
-                        <label>Belegtext</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>120</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </belegtext>
-                    <waehrung translate="label">
-                        <label>Waehrung</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>140</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </waehrung>
-                    <benutzer translate="label">
-                        <label>Benutzer</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>170</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </benutzer>
-                    <schreibgruppe translate="label">
-                        <label>Schreibgruppe</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>190</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </schreibgruppe>
-                    <lesegruppe translate="label">
-                        <label>Lesegruppe</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>200</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </lesegruppe>
-                    <referenz translate="label">
-                        <label>Referenz</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>230</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </referenz>
-                    <kassenanweisung translate="label">
-                        <label>Kassenanweisung</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>240</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </kassenanweisung>
-                    <akn translate="label">
-                        <label>Akn</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>250</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </akn>
-                    <vgvorgang translate="label">
-                        <label>Vgvorgang</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>260</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </vgvorgang>
-                    <festlegung translate="label">
-                        <label>Festlegung</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>270</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </festlegung>
-                    <festlegungsred translate="label">
-                        <label>Festlegungsred</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>280</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </festlegungsred>
-                    <fehlertext translate="label">
-                        <label>Fehlertext</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>290</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </fehlertext>
-                    <mandant translate="label">
-                        <label>Mandant</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>300</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </mandant>
+                        <irquellsystem translate="label">
+                            <label>Irquellsystem</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </irquellsystem>
+                        <niederlassung translate="label">
+                            <label>Niederlassung</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </niederlassung>
+                        <orgeinheit translate="label">
+                            <label>Orgeinheit</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </orgeinheit>
+                        <periode translate="label">
+                            <label>Periode</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </periode>
+                        <belegart translate="label">
+                            <label>Belegart</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </belegart>
+                        <belegkontotitel translate="label">
+                            <label>Belegkontotitel</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </belegkontotitel>
+                        <belegtext translate="label">
+                            <label>Belegtext</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </belegtext>
+                        <waehrung translate="label">
+                            <label>Waehrung</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </waehrung>
+                        <benutzer translate="label">
+                            <label>Benutzer</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </benutzer>
+                        <schreibgruppe translate="label">
+                            <label>Schreibgruppe</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>190</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </schreibgruppe>
+                        <lesegruppe translate="label">
+                            <label>Lesegruppe</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </lesegruppe>
+                        <referenz translate="label">
+                            <label>Referenz</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </referenz>
+                        <kassenanweisung translate="label">
+                            <label>Kassenanweisung</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>240</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </kassenanweisung>
+                        <akn translate="label">
+                            <label>Akn</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </akn>
+                        <vgvorgang translate="label">
+                            <label>Vgvorgang</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>260</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </vgvorgang>
+                        <festlegung translate="label">
+                            <label>Festlegung</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </festlegung>
+                        <festlegungsred translate="label">
+                            <label>Festlegungsred</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>280</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </festlegungsred>
+                        <fehlertext translate="label">
+                            <label>Fehlertext</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>290</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </fehlertext>
+                        <mandant translate="label">
+                            <label>Mandant</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </mandant>
 
-                   </fields>
+                    </fields>
                 </head>
                 <pos>
-                 <label>Export Position Values</label>
+                    <label>Export Position Values</label>
                     <sort_order>1020</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
-                <fields>
-                                    <irquellsystem translate="label">
-                        <label>Irquellsystem</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>10</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irquellsystem>
-                    <sollkontotitel translate="label">
-                        <label>Sollkontotitel</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>70</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </sollkontotitel>
-                    <habenkontotitel translate="label">
-                        <label>Habenkontotitel</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>80</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </habenkontotitel>
-                    <sollhaushstelle translate="label">
-                        <label>Sollhaushstelle</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>90</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </sollhaushstelle>
-                    <habenhaushstelle translate="label">
-                        <label>Habenhaushstelle</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>100</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </habenhaushstelle>
-                    <huelnummer translate="label">
-                        <label>Huelnummer</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>110</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </huelnummer>
-                    <referenz translate="label">
-                        <label>Referenz</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>120</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </referenz>
-                    <positionsart translate="label">
-                        <label>Positionsart</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>130</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </positionsart>
-                    <startabgrenzung translate="label">
-                        <label>Startabgrenzung</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>150</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </startabgrenzung>
-                    <endeabgrenzung translate="label">
-                        <label>Endeabgrenzung</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>160</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </endeabgrenzung>
-                    <periodizitaet translate="label">
-                        <label>Periodizitaet</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>170</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </periodizitaet>
-                    <magkontorolle translate="label">
-                        <label>Magkontorolle</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>180</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </magkontorolle>
-                      <decimal_separator translate="label">
-                        <label>Decimalseparator</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>190</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </decimal_separator>
-                     
-                </fields>
+                    <fields>
+                        <irquellsystem translate="label">
+                            <label>Irquellsystem</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </irquellsystem>
+                        <sollkontotitel translate="label">
+                            <label>Sollkontotitel</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sollkontotitel>
+                        <habenkontotitel translate="label">
+                            <label>Habenkontotitel</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </habenkontotitel>
+                        <sollhaushstelle translate="label">
+                            <label>Sollhaushstelle</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sollhaushstelle>
+                        <habenhaushstelle translate="label">
+                            <label>Habenhaushstelle</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </habenhaushstelle>
+                        <huelnummer translate="label">
+                            <label>Huelnummer</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </huelnummer>
+                        <referenz translate="label">
+                            <label>Referenz</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </referenz>
+                        <positionsart translate="label">
+                            <label>Positionsart</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </positionsart>
+                        <startabgrenzung translate="label">
+                            <label>Startabgrenzung</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </startabgrenzung>
+                        <endeabgrenzung translate="label">
+                            <label>Endeabgrenzung</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </endeabgrenzung>
+                        <periodizitaet translate="label">
+                            <label>Periodizitaet</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </periodizitaet>
+                        <magkontorolle translate="label">
+                            <label>Magkontorolle</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>180</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </magkontorolle>
+                        <decimal_separator translate="label">
+                            <label>Decimalseparator</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>190</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </decimal_separator>
+
+                    </fields>
                 </pos>
                 <mapping>
-                 <label>Export Mapping Values</label>
+                    <label>Export Mapping Values</label>
                     <sort_order>1030</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
-                <fields>
-                                    <irquellsystem translate="label">
-                        <label>Irquellsystem</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>10</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </irquellsystem>
-                    <kostenrechnung translate="label">
-                        <label>Kostenrechnung</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>50</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </kostenrechnung>
-                    <abrechnungsobjekt translate="label">
-                        <label>Abrechnungsobjekt</label>
-                        <frontend_type>text</frontend_type>
-                        <sort_order>60</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>0</show_in_website>
-                        <show_in_store>0</show_in_store>
-                     </abrechnungsobjekt>
-                </fields>
+                    <fields>
+                        <irquellsystem translate="label">
+                            <label>Irquellsystem</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </irquellsystem>
+                        <kostenrechnung translate="label">
+                            <label>Kostenrechnung</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </kostenrechnung>
+                        <abrechnungsobjekt translate="label">
+                            <label>Abrechnungsobjekt</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </abrechnungsobjekt>
+                    </fields>
                 </mapping>
-         </groups>
+            </groups>
         </mach_export>
     </sections>
 </config>

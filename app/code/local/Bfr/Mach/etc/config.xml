@@ -7,67 +7,76 @@
     </modules>
     <admin>
         <routers>
-         <adminhtml>
-           <args>
-             <modules>
-               <Bfr_Mach_Adminhtml after="Mage_Adminhtml">Bfr_Mach_Adminhtml</Bfr_Mach_Adminhtml>
-             </modules>
-           </args>
-         </adminhtml>
-       </routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bfr_Mach_Adminhtml after="Mage_Adminhtml">Bfr_Mach_Adminhtml</Bfr_Mach_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
     </admin>
     <adminhtml>
-		<menu>
-			<system>
-				<children>
-					<convert>
-						<children>
-						<mach_history module="bfr_mach">
-							<title>Mach Export</title>
-							<sort_order>0</sort_order>
-							<action>adminhtml/mach_history</action>
-						</mach_history>
-						</children>
-					</convert>
-				</children>
-			</system>
-		</menu>
-		<acl>
-			<resources>
-				<all>
-					<title>Allow Everything</title>
-				</all>
-				<admin>
-					<children>
-						<system>
+        <menu>
+            <system>
+                <children>
+                    <convert>
                         <children>
-                        	<convert>
-                        		<children>
-                                    <mach_export translate="title" module="bfr_mach">
-                                        <title>Mach Export</title>
-                                    </mach_export>
-                                </children>
-                        	</convert>
-                            <config>
-                                <children>
-                                    <mach_export translate="title" module="bfr_mach">
-                                        <title>Mach Export</title>
-                                    </mach_export>
-                                </children>
-                            </config>
+                            <mach_history module="bfr_mach">
+                                <title>Mach Export</title>
+                                <sort_order>0</sort_order>
+                                <action>adminhtml/mach_history</action>
+                            </mach_history>
                         </children>
-                    </system>
-					</children>
-				</admin>
-			</resources>
-		</acl>
-		<layout>
-			<updates>
-				<mach>
-					<file>bfr/mach.xml</file>
-				</mach>
-			</updates>
-		</layout>
+                    </convert>
+                </children>
+            </system>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <convert>
+                                    <children>
+                                        <mach_export translate="title" module="bfr_mach">
+                                            <title>Mach Export</title>
+                                        </mach_export>
+                                    </children>
+                                </convert>
+                                <config>
+                                    <children>
+                                        <mach_export translate="title" module="bfr_mach">
+                                            <title>Mach Export</title>
+                                        </mach_export>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <mach>
+                    <file>bfr/mach.xml</file>
+                </mach>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Bfr_Mach>
+                    <files>
+                        <default>Bfr_Mach.csv</default>
+                    </files>
+                </Bfr_Mach>
+            </modules>
+        </translate>
     </adminhtml>
     <global>
         <models>
@@ -115,49 +124,49 @@
             </bfr_mach>
         </helpers>
     </global>
-        <default>
+    <default>
         <mach_export>
-        <head>
-           <irquellsystem>ONLINE</irquellsystem>
-				<niederlassung>1</niederlassung>
-				<orgeinheit></orgeinheit>
-				<periode>0</periode>
-				<belegart>SB</belegart>
-				<belegkontotitel>FORDERUNG ONLINESHOP</belegkontotitel>
-				<belegtext>Buchungstext Webshop</belegtext>
-				<waehrung>EUR</waehrung>
-				<benutzer></benutzer>
-				<schreibgruppe></schreibgruppe>
-				<lesegruppe></lesegruppe>
-				<referenz></referenz>
-				<kassenanweisung></kassenanweisung>
-				<akn></akn>
-				<vgvorgang></vgvorgang>
-				<festlegung></festlegung>
-				<festlegungsred></festlegungsred>
-				<fehlertext></fehlertext>
-				<mandant>100</mandant>
-        </head>
-        <pos>
-	        <irquellsystem>ONLINE</irquellsystem>
-			<sollkontotitel>FORDERUNG ONLINESHOP</sollkontotitel>
-			<habenkontotitel>ALLG. FACHKO./TAGU.</habenkontotitel>
-			<sollhaushstelle></sollhaushstelle>
-			<habenhaushstelle>habenhaushstelle</habenhaushstelle>
-			<huelnummer></huelnummer>
-			<referenz></referenz>
-			<positionsart>SB</positionsart>
-			<startabgrenzung></startabgrenzung>
-			<endeabgrenzung></endeabgrenzung>
-			<periodizitaet></periodizitaet>
-			<magkontorolle></magkontorolle>
-			<decimal_separator>,</decimal_separator>
-        </pos>
-        <mapping>
-			<irquellsystem>ONLINE</irquellsystem>
-			<kostenrechnung>kostenrechnung</kostenrechnung>
-			<abrechnungsobjekt>abrechnungsobjekt</abrechnungsobjekt>
-        </mapping>
+            <head>
+                <irquellsystem>ONLINE</irquellsystem>
+                <niederlassung>1</niederlassung>
+                <orgeinheit></orgeinheit>
+                <periode>0</periode>
+                <belegart>SB</belegart>
+                <belegkontotitel>FORDERUNG ONLINESHOP</belegkontotitel>
+                <belegtext>Buchungstext Webshop</belegtext>
+                <waehrung>EUR</waehrung>
+                <benutzer></benutzer>
+                <schreibgruppe></schreibgruppe>
+                <lesegruppe></lesegruppe>
+                <referenz></referenz>
+                <kassenanweisung></kassenanweisung>
+                <akn></akn>
+                <vgvorgang></vgvorgang>
+                <festlegung></festlegung>
+                <festlegungsred></festlegungsred>
+                <fehlertext></fehlertext>
+                <mandant>100</mandant>
+            </head>
+            <pos>
+                <irquellsystem>ONLINE</irquellsystem>
+                <sollkontotitel>FORDERUNG ONLINESHOP</sollkontotitel>
+                <habenkontotitel>ALLG. FACHKO./TAGU.</habenkontotitel>
+                <sollhaushstelle></sollhaushstelle>
+                <habenhaushstelle>habenhaushstelle</habenhaushstelle>
+                <huelnummer></huelnummer>
+                <referenz></referenz>
+                <positionsart>SB</positionsart>
+                <startabgrenzung></startabgrenzung>
+                <endeabgrenzung></endeabgrenzung>
+                <periodizitaet></periodizitaet>
+                <magkontorolle></magkontorolle>
+                <decimal_separator>,</decimal_separator>
+            </pos>
+            <mapping>
+                <irquellsystem>ONLINE</irquellsystem>
+                <kostenrechnung>kostenrechnung</kostenrechnung>
+                <abrechnungsobjekt>abrechnungsobjekt</abrechnungsobjekt>
+            </mapping>
         </mach_export>
     </default>
 </config>

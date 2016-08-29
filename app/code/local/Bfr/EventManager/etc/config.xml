@@ -34,27 +34,27 @@
     </frontend>
     <admin>
         <routers>
-         <adminhtml>
-           <args>
-             <modules>
-               <Bfr_EventManager_Adminhtml after="Mage_Adminhtml">Bfr_EventManager_Adminhtml</Bfr_EventManager_Adminhtml>
-             </modules>
-           </args>
-         </adminhtml>
-       </routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bfr_EventManager_Adminhtml after="Mage_Adminhtml">Bfr_EventManager_Adminhtml</Bfr_EventManager_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
     </admin>
     <adminhtml>
-		<menu>
-			<event module="eventmanager">
-				<title>Events</title>
-				<sort_order>41</sort_order>
-				<children>
-					<eventmanager_event module="eventmanager">
-						<title>Events</title>
-						<sort_order>10</sort_order>
-						<action>adminhtml/eventmanager_event</action>
-					</eventmanager_event>
-					<eventmanager_participant module="eventmanager">
+        <menu>
+            <event module="eventmanager">
+                <title>Events</title>
+                <sort_order>41</sort_order>
+                <children>
+                    <eventmanager_event module="eventmanager">
+                        <title>Events</title>
+                        <sort_order>10</sort_order>
+                        <action>adminhtml/eventmanager_event</action>
+                    </eventmanager_event>
+                    <eventmanager_participant module="eventmanager">
                         <title>Participant</title>
                         <sort_order>20</sort_order>
                         <action>adminhtml/eventmanager_participant</action>
@@ -68,52 +68,52 @@
                         <title>Translate</title>
                         <sort_order>40</sort_order>
                         <action>adminhtml/eventmanager_translate</action>
-                    </eventmanager_translate>                    
-				</children>
-			</event>
-		</menu>
-		<acl>
-			<resources>
-				<all>
-					<title>Allow Everything</title>
-				</all>
-				<admin>
-					<children>
-						<bfr_eventmanager>
-							<title>EventManager</title>
-							<sort_order>10</sort_order>
-							<children>
-								<eventmanager_event module="eventmanager">
-									<title>Manage EventManager Event</title>
-									<sort_order>10</sort_order>
-								</eventmanager_event>
-								<eventmanager_participant module="eventmanager">
-									<title>Participant</title>
-									<sort_order>20</sort_order>
-								</eventmanager_participant>
-								<eventmanager_lookup module="eventmanager">
-									<title>Lookup</title>
-									<sort_order>30</sort_order>
-								</eventmanager_lookup>
-								<eventmanager_translate module="eventmanager">
-									<title>Translate</title>
-									<sort_order>40</sort_order>
-									
-								</eventmanager_translate>
-							</children>
-						</bfr_eventmanager>
-					</children>
-				</admin>
-			</resources>
-		</acl>
-		<layout>
-			<updates>
-				<eventmanager>
-					<file>bfr/eventmanager.xml</file>
-				</eventmanager>
-			</updates>
-		</layout>
-		<translate>
+                    </eventmanager_translate>
+                </children>
+            </event>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <bfr_eventmanager>
+                            <title>EventManager</title>
+                            <sort_order>10</sort_order>
+                            <children>
+                                <eventmanager_event module="eventmanager">
+                                    <title>Manage EventManager Event</title>
+                                    <sort_order>10</sort_order>
+                                </eventmanager_event>
+                                <eventmanager_participant module="eventmanager">
+                                    <title>Participant</title>
+                                    <sort_order>20</sort_order>
+                                </eventmanager_participant>
+                                <eventmanager_lookup module="eventmanager">
+                                    <title>Lookup</title>
+                                    <sort_order>30</sort_order>
+                                </eventmanager_lookup>
+                                <eventmanager_translate module="eventmanager">
+                                    <title>Translate</title>
+                                    <sort_order>40</sort_order>
+
+                                </eventmanager_translate>
+                            </children>
+                        </bfr_eventmanager>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <eventmanager>
+                    <file>bfr/eventmanager.xml</file>
+                </eventmanager>
+            </updates>
+        </layout>
+        <translate>
             <modules>
                 <Bfr_EventManager>
                     <files>
@@ -123,7 +123,7 @@
             </modules>
         </translate>
         <events>
-           <eventbundle_create_after>
+            <eventbundle_create_after>
                 <observers>
                     <eventmanager_eventbundle_create_after>
                         <type>singleton</type>
@@ -134,11 +134,11 @@
             </eventbundle_create_after>
             <adminhtml_block_customer_edit_tab_addresses_init_after>
                 <observers>
-                   <eventmanager_customer_edit_tab_addresses_init_after>
-                    <type>singleton</type>
-                    <class>eventmanager/observer</class>
-                    <method>onAddressFormInitAfter</method>
-                </eventmanager_customer_edit_tab_addresses_init_after>
+                    <eventmanager_customer_edit_tab_addresses_init_after>
+                        <type>singleton</type>
+                        <class>eventmanager/observer</class>
+                        <method>onAddressFormInitAfter</method>
+                    </eventmanager_customer_edit_tab_addresses_init_after>
                 </observers>
             </adminhtml_block_customer_edit_tab_addresses_init_after>
         </events>
@@ -158,13 +158,13 @@
                     <lookup>
                         <table>eventmanager_lookup</table>
                     </lookup>
-                     <participant>
+                    <participant>
                         <table>eventmanager_participant</table>
                     </participant>
-                     <participant_attribute>
+                    <participant_attribute>
                         <table>eventmanager_participant_attribute</table>
                     </participant_attribute>
-                     <translate>
+                    <translate>
                         <table>eventmanager_translate</table>
                     </translate>
                 </entities>
@@ -202,7 +202,7 @@
             </eventmanager>
         </helpers>
         <events>
-           <checkout_type_onepage_save_order_after>
+            <checkout_type_onepage_save_order_after>
                 <observers>
                     <eventmanager_save_order>
                         <type>singleton</type>
@@ -220,7 +220,7 @@
                 <position>
                     <label>Position</label>
                 </position>
-                </fields>
-          </eventbundle_personal>
+            </fields>
+        </eventbundle_personal>
     </global>
 </config>
