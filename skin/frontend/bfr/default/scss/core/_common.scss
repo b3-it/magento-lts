@@ -94,6 +94,12 @@ a:focus {
     color: darken($global-linkcolor-active, 30%);
 }
 
+img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
 ol,
 ul {
     list-style: none;
