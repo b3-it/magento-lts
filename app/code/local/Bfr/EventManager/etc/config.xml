@@ -218,7 +218,7 @@
                     <label>Academic Title</label>
                 </academic_titel>
                 <position>
-                    <label>Position</label>
+                    <label>Occupation</label>
                 </position>
             </fields>
         </eventbundle_personal>

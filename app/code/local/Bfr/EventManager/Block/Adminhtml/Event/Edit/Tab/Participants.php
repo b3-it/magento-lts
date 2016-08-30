@@ -93,9 +93,16 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       
       
       $this->addColumn('academic_titel', array(
-      		'header'    => Mage::helper('eventmanager')->__('Academic Titel'),
+      		'header'    => Mage::helper('eventmanager')->__('Academic Title'),
       		'width'     => '100px',
       		'index'     => 'academic_titel',
+      		//'type'      => 'number',
+      ));
+      
+      $this->addColumn('position', array(
+      		'header'    => Mage::helper('eventmanager')->__('Occupation'),
+      		'width'     => '100px',
+      		'index'     => 'position',
       		//'type'      => 'number',
       ));
       
