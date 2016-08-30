@@ -53,13 +53,12 @@ input[type="password"], input[type="tel"], select {
     outline: medium none;
     padding: 3px 6px;
     border-radius: 3px;
-}
-textarea:focus, input[type="text"]:focus, input[type="email"]:focus,
-input[type="password"]:focus, input[type="tel"]:focus, select:focus,
-textarea:active, input[type="text"]:active, input[type="email"]:active,
-input[type="password"]:active, input[type="tel"]:active, select:active {
-    background-color: $global-lightcolor-hover;
-    border-color: $global-active-color;
+
+    &:active, &:hover {
+        background-color: $global-lightcolor-hover;
+        border-color: $global-active-color;
+        color: $global-active-color;
+    }
 }
 
 input[type="checkbox"], input[type="radio"] {
@@ -79,16 +78,16 @@ a {
     border-width: $global-active-border !important;
     border-style: solid !important;
     border-color: transparent !important;
-}
 
-a:hover {
-    color: $global-linkcolor-hover;
-    text-decoration: none;
-}
+    &:hover {
+        color: $global-linkcolor-hover;
+        text-decoration: none;
+    }
 
-a:focus {
-    outline-color: $global-linkcolor-active;
-    color: darken($global-linkcolor-active, 30%);
+    &:focus {
+        outline-color: $global-linkcolor-active;
+        color: darken($global-linkcolor-active, 30%);
+    }
 }
 
 img {

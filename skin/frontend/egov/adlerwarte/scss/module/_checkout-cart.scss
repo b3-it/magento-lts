@@ -70,7 +70,7 @@
             display: block;
 
             select {
-                margin: 0;
+                margin: 4px 0;
                 width: 100%;
             }
         }
@@ -726,7 +726,7 @@
             margin-right: 0;
             width: 18%;
 
-            input {
+            input, select {
                 margin-top: 4px;
             }
         }

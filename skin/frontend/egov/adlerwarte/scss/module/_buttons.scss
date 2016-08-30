@@ -54,8 +54,8 @@ a.button:hover {
 /* Disabled - class for anchor, state for form elements */
 .button.disabled,
 .button:disabled {
-    background: $global-lightcolor;
-    opacity: 0.6;
+    background-color: $global-button-hovercolor;
+    color: $global-button-font-color;
     cursor: not-allowed;
 }
 
