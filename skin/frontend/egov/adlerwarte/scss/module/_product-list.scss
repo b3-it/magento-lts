@@ -48,8 +48,9 @@ p.product-name {
         color: $global-linkcolor;
         text-decoration: underline;
 
-        &:hover {
-            color: $global-linkcolor-hover;
+        &:hover, &:active {
+            color: $global-fontcolor-light;
+            background-color: $global-category-hover-bg;
         }
     }
 }
