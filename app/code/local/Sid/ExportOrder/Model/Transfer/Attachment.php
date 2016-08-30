@@ -25,7 +25,7 @@ class Sid_ExportOrder_Model_Transfer_Attachment extends Sid_ExportOrder_Model_Tr
     	
     	
     	Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array(),0,$attachments);
-    	 
+    	
     }
     
     

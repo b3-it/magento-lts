@@ -20,6 +20,23 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
     
     public function send($content,$order = null)
     {
-    	 
+    	$postfields = array();
+    	$postfields['data'] = ($content);
+    	    	
+    	$ch = curl_init();
+    	
+    	// Follow any Location headers
+    	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    	
+    	curl_setopt($ch, CURLOPT_URL, $this->getAddress());
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	
+    	// Alert cURL to the fact that we're doing a POST, and pass the associative array for POSTing.
+    	curl_setopt($ch, CURLOPT_POST, 1);
+    	
+    	curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+    	
+    	$output = curl_exec($ch);
+    	curl_close($ch);
     }
 }

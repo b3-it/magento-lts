@@ -1,4 +1,7 @@
 <?php
+use \SE\Component\OpenTrans;
+use \Doctrine\Common;
+
 
 class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Adminhtml_Controller_action
 {
@@ -16,6 +19,8 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 			->renderLayout();
 	}
 
+
+	
 	public function editAction() {
 		$id     = $this->getRequest()->getParam('id');
 		$model  = Mage::getModel('framecontract/vendor')->load($id);

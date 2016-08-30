@@ -63,6 +63,7 @@ if (!$installer->tableExists($installer->getTable('exportorder/transfer_post')))
 	  `port` varchar(255) NOT NULL default '',
 	  `user` varchar(255) NOT NULL default '',
 	  `pwd` varchar(255) NOT NULL default '',
+	  `ident` varchar(255) NOT NULL default '',
 	  FOREIGN KEY (`vendor_id`) REFERENCES `{$this->getTable('framecontract_vendor')}`(`framecontract_vendor_id`) ON DELETE CASCADE,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;

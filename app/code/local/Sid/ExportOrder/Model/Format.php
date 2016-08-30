@@ -26,6 +26,10 @@ abstract class Sid_ExportOrder_Model_Format extends Mage_Core_Model_Abstract
 		return Mage::getModel('exportorder/format_plain');;
 	}
 	
+	/**
+	 * Erzeugen eines formatierten Streams aus der Bestellung
+	 * @param Mage_Sales_Model_Orderr $order
+	 */
 	public abstract function processOrder($order);
     
 }
