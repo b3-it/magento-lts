@@ -67,8 +67,10 @@ For checkout/onepage/shipping.phtml:
   <?php endif; ?>
 <?php endif; ?>
 
+<?php if($this->isFieldVisible('academic_titel')):?>
     <div class="field name-academic-title">
         <label for="<?php echo $this->getFieldId('academic_titel')?>">
+            <?php echo $this->getFieldRequiredHtml('academic_titel')?>
             <?php echo $this->__('Academic Title') ?>
         </label>
         <div class="input-box">
@@ -83,6 +85,7 @@ For checkout/onepage/shipping.phtml:
           <?php endif; ?>
         </div>
     </div>
+<?php endif; ?>
 
 <?php if($this->isFieldVisible('firstname')):?>
     <div class="field name-firstname">
@@ -142,13 +145,15 @@ For checkout/onepage/shipping.phtml:
   <?php endif; ?>
 <?php endif; ?>
 
+<?php if($this->isFieldVisible('position')):?>
     <div class="field name-occupation">
         <label for="<?php echo $this->getFieldId('position')?>">
+            <?php echo $this->getFieldRequiredHtml('position')?>
             <?php echo $this->__('Occupation') ?>
         </label>
         <div class="input-box">
             <input type="text" id="<?php echo $this->getFieldId('position')?>" name="<?php echo $this->getFieldName('position')?>" value="<?php echo $this->escapeHtml($this->getObject()->getPosition()) ?>" title="<?php echo $this->__('Occupation') ?>" maxlength="255" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('position') ?>" <?php echo $this->getFieldParams() ?> />
         </div>
     </div>
-
+<?php endif; ?>
 </div>

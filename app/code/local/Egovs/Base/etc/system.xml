@@ -247,7 +247,7 @@
                     </fields>
                 </address>
                 <registerrequired translate="label">
-                    <label>Pflichtfelder für Registration</label>
+                    <label>Required fields for registration</label>
                     <sort_order>180</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
@@ -403,7 +403,7 @@
                     </fields>
                 </registerrequired>
                 <guestrequired translate="label">
-                    <label>Pflichtfelder für Gastzugang</label>
+                    <label>Required fields for guests</label>
                     <sort_order>175</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
@@ -550,7 +550,7 @@
                     </fields>
                 </guestrequired>
                 <shippingrequired translate="label">
-                    <label>Pflichtfelder für Versand</label>
+                    <label>Required fields for shipping</label>
                     <sort_order>185</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>

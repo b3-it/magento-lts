@@ -11,7 +11,7 @@
  */
 class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_Name
 {
-	private $_method = 'register';
+    private $_method = 'register';
 
     public function _construct() {
         parent::_construct();
@@ -20,51 +20,55 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
         $this->setTemplate('customer/widget/name.phtml');
     }
 
-    public function isFieldRequired($key) {
+    public function isFieldRequired($key)
+    {
+        $helper = null;
+        try {
+            $helper = Mage::helper('egovsbase/config');
+        } catch (Exception $e) {
+        }
 
-    	$helper = null;
-    	try {
-    		$helper = Mage::helper('egovsbase/config');
-    	} catch (Exception $e) {
-    	}
-
-    	if (is_null($helper)) {
-    		return false;
-    	}
-
-    	return ($helper->isFieldRequired($key, $this->_method));
+        if (is_null($helper)) {
+            return false;
+        }
+        return ($helper->isFieldRequired($key, $this->_method));
     }
 
+    public function isFieldVisible($key)
+    {
+        $helper = null;
+        try {
+            $helper = $this->helper('egovsbase/config');
+        } catch (Exception $e) {
+        }
+
+        if (is_null($helper)) {
+            return true;
+        }
+
+        return $helper->isFieldVisible($key, $this->_method);
+    }
+
+    /**
+     * Set current Controller-Method (Register, Checkout, ...)
+     */
     public function setMethod($method)
     {
-    	$this->_method = $method;
-    	return $this;
+        $this->_method = $method;
+        return $this;
     }
 
-    public function getFieldRequiredHtml($name) {
-    	if ($this->isFieldRequired($name)) {
-    		return '<span class="required">*</span>';
-    	}
-    	return '';
+    public function getFieldRequiredHtml($name)
+    {
+        if ($this->isFieldRequired($name)) {
+            return '<span class="required">*</span>';
+        }
+        return '';
     }
 
-    public function isFieldVisible($key) {
-    	$helper = null;
-    	try {
-    		$helper = $this->helper('egovsbase/config');
-    	} catch (Exception $e) {
-    	}
-
-    	if (is_null($helper)) {
-    		return true;
-    	}
-
-    	return ($helper->getConfig($key, $this->_method) != '');
-
-    }
-
-    public function isPrefixRequired() {
-    	return parent::isPrefixRequired() && $this->isFieldRequired('prefix');
+    public function isPrefixRequired()
+    {
+        return parent::isPrefixRequired() && $this->isFieldRequired('prefix');
     }
 
     /**

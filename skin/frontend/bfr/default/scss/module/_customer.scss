@@ -98,6 +98,12 @@
     }
 }
 
+.customer-address-form {
+    .my-account select {
+        width: 95% !important;
+    }
+}
+
 .customer-account-edit {
     .scaffold-form{
         div.fieldset {
@@ -194,7 +200,7 @@ body.customer-account {
             }
         }
         .col-left-first {
-            margin-top: -15px;
+            margin-top: 0;
         }
     }
 
@@ -203,6 +209,10 @@ body.customer-account {
         .dashboard {
             position: relative;
             top: -20px;
+        }
+
+        select {
+            width: 90%;
         }
 
         h2 {
@@ -494,6 +504,10 @@ body.customer-account {
                 }
             }
         }
+    }
+
+    button {
+        padding: 10px !important;
     }
 }
 
