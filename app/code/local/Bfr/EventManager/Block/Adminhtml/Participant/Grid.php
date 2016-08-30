@@ -75,14 +75,14 @@ where participant_id = 1 AND el.typ = 3
       
       
       $this->addColumn('academic_titel', array(
-      		'header'    => Mage::helper('eventmanager')->__('Academic Titel'),
+      		'header'    => Mage::helper('eventmanager')->__('Academic Title'),
       		'width'     => '100px',
       		'index'     => 'academic_titel',
       		//'type'      => 'number',
       ));
       
       $this->addColumn('position', array(
-      		'header'    => Mage::helper('eventmanager')->__('Position'),
+      		'header'    => Mage::helper('eventmanager')->__('Occupation'),
       		'width'     => '100px',
       		'index'     => 'position',
       		//'type'      => 'number',
