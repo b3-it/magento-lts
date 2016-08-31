@@ -18,7 +18,7 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @param array $data template Data
 	 * @param number $storeid default 0
 	 * @param array $attachment array(array('filename'=>'xxx.txt','content'=>'abc'))
-	 * @return void|Sid_Framecontract_Helper_Data
+	 * @return void|Sid_ExportOrder_Helper_Data
 	 */
 	public function sendEmail($template, array $recipients, array $data = array(), $storeid = 0, $attachments = null)
 	{

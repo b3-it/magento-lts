@@ -72,7 +72,7 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
             'required' => true,
             'values'   => Mage::getModel('importexport/source_import_behavior')->toOptionArray()
         ));
-
+/*
          $contracts = Mage::getModel('framecontract/source_attribute_contracts');
          $fieldset->addField('framecontract', 'select', array(
             'name'     => 'framecontract',
@@ -81,6 +81,17 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
             'required' => true,
             'values'   => $contracts->getOptionArray()
         ));
+         
+    */     
+         $lose = Mage::getModel('framecontract/source_attribute_contractLos');
+        
+         $fieldset->addField('los', 'select', array(
+         		'name'     => 'los',
+         		'title'    => $helper->__('Los'),
+         		'label'    => $helper->__('Los'),
+         		'required' => true,
+         		'values'   => $lose->getOptionArray()
+         ));
 
         //if (!Mage::app()->isSingleStoreMode())
         //{

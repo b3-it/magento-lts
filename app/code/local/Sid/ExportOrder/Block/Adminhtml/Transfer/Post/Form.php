@@ -24,6 +24,37 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
           'required'  => true,
           'name'      => 'transfer[address]',
       ));
+      
+      $form->addField('port', 'text', array(
+      		'label'     => Mage::helper('exportorder')->__('Port'),
+      		
+      		'name'      => 'transfer[port]',
+      ));      
+      
+      $form->addField('user', 'text', array(
+      		'label'     => Mage::helper('exportorder')->__('Username'),
+      		
+      		'name'      => 'transfer[user]',
+      ));
+      
+      $form->addField('pwd', 'text', array(
+      		'label'     => Mage::helper('exportorder')->__('Password'),
+      		
+      		'name'      => 'transfer[pwd]',
+      ));
+      
+      $form->addField('field', 'text', array(
+      		'label'     => Mage::helper('exportorder')->__('Field'),
+      		'class'     => 'required-entry',
+      		'required'  => true,
+      		'name'      => 'transfer[field]',
+      ));
+      
+      $form->addField('ident', 'text', array(
+      		'label'     => Mage::helper('exportorder')->__('Ident'),
+      		
+      		'name'      => 'transfer[ident]',
+      ));
 
  
       $form->setValues(Mage::registry('transfer')->getData());

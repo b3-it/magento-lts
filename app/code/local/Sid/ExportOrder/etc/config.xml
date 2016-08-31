@@ -119,7 +119,7 @@
 	    		<typ>email</typ>
     		</email>
     		<email_attachment>
-    			<label>email_attachment</label>
+    			<label>Email Attachment</label>
 	    		<typ>email_attachment</typ>
     		</email_attachment>
     		<post>
