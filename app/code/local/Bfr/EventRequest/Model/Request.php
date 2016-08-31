@@ -122,6 +122,16 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	Mage::helper('eventrequest')->sendEmail($this->getCustomer()->getEmail(), $this->getCustomer(), $data, 'event_request/email/eventrequest_accept_template');
     }
     
+    private function sendDeniedEmail()
+    {
+    	$data=array();
+    	$data['customer'] = $this->getCustomer();
+    	$data['product'] = $this->getProduct();
+    	$data['created_time'] = $this->getCreatedTime();
+    	$this->setLog(sprintf("Sende Email über Ablehnung an %s für Produkt %s",$this->getCustomer()->getId(),$this->getProduct()->getId()));
+    	Mage::helper('eventrequest')->sendEmail($this->getCustomer()->getEmail(), $this->getCustomer(), $data, 'event_request/email/eventrequest_reject_template');
+    }
+    
     
     /**
      * der pausierte Warenkorb wird wieder aktiviert
@@ -179,6 +189,9 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	if(($this->getData('status') == Bfr_EventRequest_Model_Status::STATUS_ACCEPTED ) && ($this->getData('status') != $this->getOrigData('status'))){
     		$this->reactivateQuote();
     		$this->sendAcceptedEmail();
+    	}
+    	else if(($this->getData('status') == Bfr_EventRequest_Model_Status::STATUS_REJECTED ) && ($this->getData('status') != $this->getOrigData('status'))){
+    		$this->sendDeniedEmail();
     	}
     	
     	return $this;
