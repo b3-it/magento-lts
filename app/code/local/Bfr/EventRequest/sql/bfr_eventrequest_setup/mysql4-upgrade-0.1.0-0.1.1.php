@@ -15,63 +15,19 @@
 $installer = $this;
 
 $installer->startSetup();
-if (!$installer->tableExists($installer->getTable('eventrequest/request')))
-{
 
-	$installer->run("
-
-	-- DROP TABLE IF EXISTS {$this->getTable('eventrequest/request')};
-	CREATE TABLE {$this->getTable('eventrequest/request')} (
-	  `eventrequest_request_id` int(11) unsigned NOT NULL auto_increment,
-	  `title` varchar(255) NOT NULL default '',
-	  `note` text NOT NULL default '',
-	  `status` smallint(6) NOT NULL default '0',
-	  `customer_id` int(11) unsigned NOT NULL,
-	  `quote_id` int(11) unsigned ,
-	  `product_id` int(11) unsigned NOT NULL,
-	  `created_time` datetime NULL,
-	  `update_time` datetime NULL,
-	  PRIMARY KEY (`eventrequest_request_id`),
-	  FOREIGN KEY (`customer_id`) REFERENCES `{$this->getTable('customer/entity')}`(`entity_id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`quote_id`) REFERENCES `{$this->getTable('sales/quote')}`(`entity_id`) ON DELETE SET NULL,
-	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	");
-}
-
-if (!$installer->getAttribute('catalog_product', 'eventrequest')) {
-	$installer->addAttribute('catalog_product', 'eventrequest', array(
-			'label' => 'requires approval',
-			'input' => 'select',
-			'type' => 'int',
-			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
-			'visible' => false,
-			//'required' => true,
-			'is_user_defined' => true,
-			'searchable' => false,
-			'comparable' => false,
-			'visible_on_front' => false,
-			'visible_in_advanced_search' => false,
-			'source'    => 'eav/entity_attribute_source_boolean',
-			'default' => '1',
-			//'option' => $option,
-			'group' => 'General',
-			'apply_to' => Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE,
-	));
-	$installer->updateAttribute(Mage_Catalog_Model_Product::ENTITY, 'eventrequest', 'apply_to', Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE);
-}
 
 $allEmailData = array();
 
 $emailData = array();
-$emailData['template_code'] = "Application accepted (Template)";
-$emailData['template_subject'] = "Application accepted";
-$emailData['config_data_path'] = "eventrequest/email/eventrequest_accept_template";
+$emailData['template_code'] = "Application rejected (Template)";
+$emailData['template_subject'] = "Application rejected";
+$emailData['config_data_path'] = "eventrequest/email/eventrequest_reject_template";
 $emailData['template_type'] = "2";
 $emailData['text'] = '<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Ihre Bewerbung wurde angenommen</title>
+<title>Ihre Bewerbung wurde abgelehnt</title>
 </head>
 
 <body>
@@ -107,10 +63,10 @@ $emailData['text'] = '<html xmlns="http://www.w3.org/1999/xhtml">
 					<tr>
 						<td valign="top">
 							<p>
-							Your Request to {{var product.name}} has been accepted! Visit our <a href="{{store url="checkout/cart/}}">website</a> again and finalize your application."
+							Your Request to {{var product.name}} has been rejected!
 							</p>
 							<p>
-							Ihre Bewerbung für {{var product.name}} wurde akzeptiert! Bitte besuchen Sie unsere <a href="{{store url="checkout/cart/}}">Website</a> ernaut um die Anmeldung abzuschließen."
+							Ihre Bewerbung für {{var product.name}} wurde abgelehnt!
 							</p>
 		        </td>
 					</tr>

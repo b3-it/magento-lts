@@ -42,5 +42,18 @@
                 </Bfr_Base>
             </modules>
         </translate>
+         <cms>
+            <browser>
+                <extensions>
+                    <allowed>
+                        <pdf>1</pdf>
+                    </allowed>
+                    <image_allowed>
+                        <pdf>1</pdf>
+                    </image_allowed>
+                </extensions>
+            </browser>
+        </cms>
+        
     </adminhtml>
 </config>

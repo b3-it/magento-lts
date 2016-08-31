@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Bfr_EventRequest>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Bfr_EventRequest>
     </modules>
     <frontend>
@@ -195,6 +195,7 @@
         <event_request>
             <email>
                 <eventrequest_accept_template>eventrequest/email/eventrequest_accept_template</eventrequest_accept_template>
+                <eventrequest_reject_template>eventrequest/email/eventrequest_reject_template</eventrequest_reject_template>
             </email>
         </event_request>
     </default>

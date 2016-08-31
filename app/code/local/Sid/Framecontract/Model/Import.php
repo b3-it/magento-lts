@@ -107,6 +107,10 @@ class Sid_Framecontract_Model_Import extends Mage_ImportExport_Model_Abstract
      */
     protected function _getSourceAdapter($sourceFile)
     {
+    	if(pathinfo($sourceFile)['extension'] == 'xml')
+    	{
+    		return new Sid_Framecontract_Model_Import_Adapter_Xml_Bmecat($sourceFile);
+    	}
     	return new Sid_Framecontract_Model_Import_Adapter_Csv($sourceFile);
     }
 
@@ -412,8 +416,10 @@ class Sid_Framecontract_Model_Import extends Mage_ImportExport_Model_Abstract
     public function uploadSource()
     {
         $entity    = $this->getEntity();
+        /* @var $uploader Mage_Core_Model_File_Uploader */
         $uploader  = Mage::getModel('core/file_uploader', self::FIELD_NAME_SOURCE_FILE);
         $uploader->skipDbProcessing(true);
+        $uploader->setAllowedExtensions(array('csv','xml'));
         $result    = $uploader->save(self::getWorkingDir());
         $extension = pathinfo($result['file'], PATHINFO_EXTENSION);
 

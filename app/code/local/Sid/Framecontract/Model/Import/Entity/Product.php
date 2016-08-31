@@ -1810,7 +1810,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     	$p['_category'] = $this->_parameters['category'];
     	$p['_product_websites'] = Mage::getModel('core/website')->load($this->_parameters['website'])->getCode();
     	$p['_store'] = Mage::getModel('core/store')->load($this->_parameters['store'])->getCode();
-    	$p['framecontract'] = Mage::getModel('framecontract/contract')->load($this->_parameters['framecontract'])->getTitle();
+    	$p['store_group'] = $p['_store'];
+    	//$p['framecontract'] = Mage::getModel('framecontract/contract')->load($this->_parameters['framecontract'])->getTitle();
+    	$p['framecontract_los'] = $this->_parameters['los'];
 		$p['tax_class_id'] = $this->_parameters['tax_class'];
 		$p['sku_prefix'] = $this->_parameters['sku_prefix'];
 		$p['image_upload_token'] = $this->_parameters['image_upload_token'];
@@ -1818,13 +1820,13 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
 		$p['status'] = Mage_Catalog_Model_Product_Status::STATUS_DISABLED;
 		$p['visibility']= Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE;
 		
-		$p['haushaltsstelle']="xyz";
-		$p['objektnummer']="xyz";
-		$p['objektnummer_mwst']="xyz";
-		$p['href']="xyz";
-		$p['href_mwst']="xyz";
-		$p['buchungstext']="xyz";
-		$p['buchungstext_mwst']="xyz";
+		$p['haushaltsstelle']="0";
+		$p['objektnummer']="0";
+		$p['objektnummer_mwst']="0";
+		$p['href']="0";
+		$p['href_mwst']="0";
+		$p['buchungstext']="0";
+		$p['buchungstext_mwst']="0";
 		$p['groupscatalog_hide_group']="NOT LOGGED IN";
 		$p['generate_meta']="1";
 		$p['enable_googlecheckout']="0";
