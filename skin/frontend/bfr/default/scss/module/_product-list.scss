@@ -13,8 +13,12 @@
  * Product List General
  */
 
-.category-title h1,
-body.catalogsearch-result-index .page-title h1 {
+body.catalogsearch-result-index .block-layered-nav {
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+body.catalogsearch-result-index .col-right {
+    margin-top: 26px;
 }
 
 .category-image {
