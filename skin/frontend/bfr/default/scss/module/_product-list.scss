@@ -35,14 +35,14 @@ body.catalogsearch-result-index .page-title h1 {
 }
 
 .image-copyright-box {
-    background-color: $global-category-gradient;
-    height: 37px;
-    position: absolute;
-    bottom: 0;
+    //background-color: $global-category-gradient;
+    //height: 37px;
+    //position: absolute;
+    //bottom: 0;
     width: 100%;
     display: inline-flex;
-    font-size: $global-fontsize-big;
-    padding: $global-boxpadding-large;
+    font-size: 0.7em;
+    //padding: $global-boxpadding-large;
 
     > span {
         overflow: hidden;
@@ -359,7 +359,7 @@ p.product-name {
 
     .product-action {
         position: absolute;
-        bottom: $global-listmargin + 5px;
+        bottom: $global-listmargin + 23px;
         width: 60%;
 
         button, a.button {

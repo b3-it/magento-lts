@@ -1606,6 +1606,11 @@ ul.super-product-attributes { padding-left:15px; }
 .normal             { font-weight:normal !important; }
 .strike             { text-decoration: line-through; }
 
+/*****************************************/
+/********* Login and Password ************/
+/*****************************************/
+.login-form div.input-box {display: inline-block; width:50%; vertical-align: top;}
+
 /* Clear */ /* This keeps our HTML free of buncha clearing elements */
 .config-heading:after,
 .side-col .switcher:after,
