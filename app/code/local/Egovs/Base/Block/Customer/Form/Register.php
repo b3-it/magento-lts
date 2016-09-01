@@ -11,66 +11,122 @@
  */
 class Egovs_Base_Block_Customer_Form_Register extends Mage_Customer_Block_Form_Register
 {
-	public function isFieldRequired($key) {
-		$helper = null;
-		try {
-			$helper = $this->helper('mpcheckout/config');
-		} catch (Exception $e) {
-		}
+    private $_method = 'register';
+    private $_helper = null;
 
-		if (is_null($helper)) {
-			return false;
-		}
+    public function _construct() {
+        parent::_construct();
 
-		return ($helper->isFieldRequired($key, 'register'));
-	}
+        // Helper setzen
+        $this->setHelper();
+    }
 
-	public function getFieldRequiredHtml($name) {
-		if($this->isFieldRequired($name)) {
-			return '<span class="required">*</span>';
-		}
-		return '';
-	}
+    /**
+     * aktuellen Helper setzen
+     */
+    private function setHelper()
+    {
+        try {
+            $this->_helper = Mage::helper('egovsbase/config');
+        } catch (Exception $e) {
+        }
 
-	public function isFieldVisible($key) {
-		$helper = null;
-		try {
-			$helper = $this->helper('mpcheckout/config');
-		} catch (Exception $e) {
-		}
+        if (is_null($this->_helper)) {
+            return false;
+        }
+    }
 
-		if (is_null($helper)) {
-			return true;
-		}
+    /**
+     * Wenn ein Benutzerfeld ein Pflichtfeld ist,
+     * so wird im HTML das Markier-Element benötigt
+     *
+     * @param string $name               Feldname
+     *
+     * @return string
+     */
+    public function getFieldRequiredHtml($name) {
+        if($this->isFieldRequired($name, $this->_method)) {
+            return '<span class="required">*</span>';
+        }
+        return '';
+    }
 
-		return ($helper->getConfig($key, 'register') != '');
+    /**
+     * Abfrage, ob ein bestimmtes Feld für Benutzerdaten pflicht ist
+     *
+     * @param string $key               Feldname
+     *
+     * @return bool
+     */
+    public function isFieldRequired($key) {
+        if ( $this->_helper !== false ) {
+            return ($this->_helper->isFieldRequired($key, $this->_method));
+        }
+        else {
+            return false;
+        }
+    }
 
-	}
+    /**
+     * Abfrage, ob ein bestimmtes Feld für Benutzerdaten sichtbar ist
+     *
+     * @param string $key               Feldname
+     *
+     * @return bool
+     */
+    public function isFieldVisible($key) {
+        if ( $this->_helper !== false ) {
+            return ($this->_helper->isFieldVisible($key, $this->_method));
+        }
+        else {
+            return false;
+        }
+    }
 
-	public function getCountryHtmlSelect($defValue=null, $name='country_id', $id='country', $title='Country') {
-		Varien_Profiler::start('TEST: '.__METHOD__);
-		if (is_null($defValue)) {
-			$defValue = $this->getCountryId();
-		}
-		$cacheKey = 'DIRECTORY_COUNTRY_SELECT_STORE_'.Mage::app()->getStore()->getCode();
-		if (Mage::app()->useCache('config') && $cache = Mage::app()->loadCache($cacheKey)) {
-			$options = unserialize($cache);
-		} else {
-			$options = $this->getCountryCollection()->toOptionArray();
-			if (Mage::app()->useCache('config')) {
-				Mage::app()->saveCache(serialize($options), $cacheKey, array('config'));
-			}
-		}
-		$html = $this->getLayout()->createBlock('core/html_select')
-			->setName($name)
-			->setId($id)
-			->setTitle(Mage::helper('directory')->__($title))
-			->setClass($this->isFieldRequired($name) ? 'validate-select' : '')
-			->setValue($defValue)
-			->setOptions($options)
-			->getHtml();
+    /**
+     * Wenn ein Benutzerfeld ein Pflichtfeld ist,
+     * so wird die Validator-Klasse im HTML benötigt
+     *
+     * @param string $key               Feldname
+     *
+     * @return string
+     */
+    public function getValidationClass($key)
+    {
+        if ( $this->isFieldRequired($key, $this->_method) ) {
+            return 'required-entry';
+        }
+        else {
+            return '';
+        }
+    }
 
-		Varien_Profiler::stop('TEST: '.__METHOD__);
-		return $html;
-	}
+    public function getCountryHtmlSelect($defValue=null, $name='country_id', $id='country', $title='Country') {
+        Varien_Profiler::start('TEST: '.__METHOD__);
+        if (is_null($defValue)) {
+            $defValue = $this->getCountryId();
+        }
+
+        $cacheKey = 'DIRECTORY_COUNTRY_SELECT_STORE_'.Mage::app()->getStore()->getCode();
+        if (Mage::app()->useCache('config') && $cache = Mage::app()->loadCache($cacheKey)) {
+            $options = unserialize($cache);
+        } else {
+            $options = $this->getCountryCollection()->toOptionArray();
+            if (Mage::app()->useCache('config')) {
+                Mage::app()->saveCache(serialize($options), $cacheKey, array('config'));
+            }
+        }
+
+        $html = $this->getLayout()->createBlock('core/html_select')
+                     ->setName($name)
+                     ->setId($id)
+                     ->setTitle(Mage::helper('directory')->__($title))
+                     ->setClass($this->isFieldRequired($name) ? 'validate-select' : '')
+                     ->setValue($defValue)
+                     ->setOptions($options)
+                     ->getHtml();
+
+        Varien_Profiler::stop('TEST: '.__METHOD__);
+        return $html;
+    }
 }

@@ -71,7 +71,6 @@ class Egovs_Base_Block_Customer_Widget_Name extends Mage_Customer_Block_Widget_N
         else {
             return false;
         }
-
     }
 
     /**
