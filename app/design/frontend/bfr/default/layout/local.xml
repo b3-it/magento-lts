@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<layout version="0.1.0">
+<layout>
     <default>
         <reference name="head">
             <action method="removeItem">
@@ -12,4 +12,10 @@
             </action>
         </reference>
     </default>
+
+    <checkout_cart_index>
+        <reference name="content">
+            <remove name="checkout.cart.coupon"/>
+        </reference>
+    </checkout_cart_index>
 </layout>
