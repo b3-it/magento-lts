@@ -22,25 +22,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
       $this->setTemplate('sid/navigation/tabs.phtml');
   }
   
-  protected function _prepareLayout()
-  {
-  	$addUrl = $this->getUrl("*/*/add", array(
-  			'_current'=>true,
-  			'id'=>null,
-  			'_query' => false
-  	));
-  
-  	$this->setChild('add_sub_button',
-  			$this->getLayout()->createBlock('adminhtml/widget_button')
-  			->setData(array(
-  					'label'     => Mage::helper('catalog')->__('Add Subcategory'),
-  					'onclick'   => "addNew('".$addUrl."', false)",
-  					'class'     => 'add',
-  					'id'        => 'add_subcategory_button',
-  					//'style'     => $this->canAddSubCategory() ? '' : 'display: none;'
-  			))
-  	);
-  }
+ 
 
 	public function getNodes()
 	{
@@ -48,6 +30,17 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
 	}
   
   
+	public function getPages()
+	{
+		$collection = Mage::getModel('cms/page')->getCollection();
+		$res = array();
+		foreach ($collection as $item)
+		{
+			$res[$item->getPageId()] = $item->getTitle();
+		}
+		return $res;
+	}
+	
   
   protected function _beforeToHtml()
   {
@@ -57,12 +50,6 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
           'content'   => $this->getLayout()->createBlock('sidcms/adminhtml_navi_edit_tab_form')->toHtml(),
       ));
       
-      $this->addTab('child_section', array(
-      		'label'     => Mage::helper('sidcms')->__('Child Settings'),
-      		'title'     => Mage::helper('sidcms')->__('Child Settings'),
-      		'content'   => $this->getLayout()->createBlock('sidcms/adminhtml_navi_edit_tab_child')->toHtml(),
-      ));
-     
       return parent::_beforeToHtml();
   }
 }

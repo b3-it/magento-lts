@@ -114,5 +114,19 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 		$this->_redirect('*/*/');
 	}
 
+	
+	public function rootAction()
+	{
+		$data = array();
+		$data[] = array("id" => "demo_root_1", "text" => "Root", "children" => true, "type" => "root", "open" => true);
+		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($data));
+		//$this->getResponse()->setBody('[{ "id" : "demo_root_1", "text" : "Root 1", "children" : true, "type" : "root" }]');
+	}
+	
+	public function nodesAction()
+	{
+		//$this->getResponse()->setBody('');
+		$this->getResponse()->setBody('["Child 11", { "id" : "demo_child_1", "text" : "Child 2", "children" : [ { "id" : "demo_child_2", "text": "One more", "type" : "file" }] }]');
+	}
 
 }
