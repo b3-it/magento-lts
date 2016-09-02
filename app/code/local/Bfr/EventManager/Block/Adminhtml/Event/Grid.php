@@ -55,7 +55,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Grid extends Mage_Adminhtml_Block_W
       ));
       
       $this->addColumn('event_from', array(
-      		'header'    => Mage::helper('eventmanager')->__('From'),
+      		'header'    => Mage::helper('eventmanager')->__('Start Date'),
       		'align'     =>'left',
       		'index'     => 'event_from',
       		'type'	=> 'Date',

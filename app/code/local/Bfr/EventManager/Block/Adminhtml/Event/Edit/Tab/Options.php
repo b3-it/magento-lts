@@ -79,15 +79,21 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 	$collection = Mage::getModel('sales/order')->getCollection();
       
 		$col = null;
+		$coalesce = array();
+		
       foreach($this->getSelections() as $product){
       	$col = 'col_'.$product->getId();
+      	$coalesce[] = $col.'.product_id';
       	$collection->getSelect()
-      	->join(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = main_table.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'qty_ordered'));
+      	->joinleft(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = main_table.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'qty_ordered'));
       }
+      
+      $coalesce[] = '0';
       
       $collection->getSelect()
       ->distinct()
-      ->columns(array('name'=>"TRIM(CONCAT(customer_firstname,' ',customer_lastname))"));
+      ->columns(array('name'=>"TRIM(CONCAT(customer_firstname,' ',customer_lastname))"))
+      ->where(new Zend_Db_Expr('coalesce('.implode(',', $coalesce).') > 0'));
       
       //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
       if($col == null){

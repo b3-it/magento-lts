@@ -61,7 +61,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
       
       $dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
       $fieldset->addField('event_from', 'date', array(
-      		'label'     => Mage::helper('eventmanager')->__('From'),
+      		'label'     => Mage::helper('eventmanager')->__('Start Date'),
       		'name'      => 'event_from',
       		'input_format' => Varien_Date::DATE_INTERNAL_FORMAT,
       		'class'     => 'required-entry',
