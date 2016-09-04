@@ -30,7 +30,7 @@ class Bfr_EventManager_Model_Status extends Varien_Object
  */
 static public function getAllOption()
 {
-  $options = self::getOptionArray();
+  $options = self::getAllOptions();
   array_unshift($options, array('value'=>'', 'label'=>''));
   return $options;
 }

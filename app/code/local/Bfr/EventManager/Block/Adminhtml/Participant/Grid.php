@@ -74,14 +74,14 @@ where participant_id = 1 AND el.typ = 3
       ));
       
       
-      $this->addColumn('academic_titel', array(
+      $this->addColumn('pa_academic_titel', array(
       		'header'    => Mage::helper('eventmanager')->__('Academic Title'),
       		'width'     => '100px',
       		'index'     => 'academic_titel',
       		//'type'      => 'number',
       ));
       
-      $this->addColumn('position', array(
+      $this->addColumn('pa_position', array(
       		'header'    => Mage::helper('eventmanager')->__('Occupation'),
       		'width'     => '100px',
       		'index'     => 'position',
@@ -90,18 +90,26 @@ where participant_id = 1 AND el.typ = 3
       
     
       
-      $this->addColumn('name', array(
+      $this->addColumn('pa_name', array(
           'header'    => Mage::helper('eventmanager')->__('Name'),
           'align'     =>'left',
           'index'     => 'name',
       	  'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
       
-      $this->addColumn('company', array(
+      $this->addColumn('pa_company', array(
       		'header'    => Mage::helper('eventmanager')->__('Company'),
       		'align'     =>'left',
       		'index'     => 'company',
       		'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
+      
+      
+      $this->addColumn('pa_postfix', array(
+      		'header'    => Mage::helper('eventmanager')->__('Postfix'),
+      		'align'     =>'left',
+      		'index'     => 'email',
+      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
       ));
       
       $this->addColumn('pa_email', array(
@@ -125,6 +133,19 @@ where participant_id = 1 AND el.typ = 3
       		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
       ));
       
+      $this->addColumn('pa_city', array(
+      		'header'    => Mage::helper('eventmanager')->__('City'),
+      		'align'     =>'left',
+      		'index'     => 'city',
+      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
+      
+      $this->addColumn('pa_postcode', array(
+      		'header'    => Mage::helper('eventmanager')->__('Zip'),
+      		'align'     =>'left',
+      		'index'     => 'postcode',
+      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+      ));
       
       $this->addColumn('pa_country', array(
       		'header'    => Mage::helper('eventmanager')->__('Country'),
@@ -132,6 +153,10 @@ where participant_id = 1 AND el.typ = 3
       		'index'     => 'country',
       		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
       ));
+      
+      
+      
+      
       
       $this->addColumn('pa_industry', array(
       		'header'    => Mage::helper('eventmanager')->__('Industry'),
@@ -175,15 +200,41 @@ where participant_id = 1 AND el.typ = 3
       	$yesno[$n['value']] = $n['label'];
       }
       
-      $this->addColumn('internal', array(
-          'header'    => Mage::helper('eventmanager')->__('Internal'),
+      $this->addColumn('vip', array(
+          'header'    => Mage::helper('eventmanager')->__('Vip'),
           'align'     => 'left',
           'width'     => '80px',
-          'index'     => 'internal',
+          'index'     => 'vip',
           'type'      => 'options',
           'options'   => $yesno,
       ));
+      
+      $this->addColumn('online_eval', array(
+      		'header'    => Mage::helper('eventmanager')->__('Online Evaluation'),
+      		'align'     => 'left',
+      		'width'     => '80px',
+      		'index'     => 'online_eval',
+      		'type'      => 'options',
+      		'options'   => $yesno,
+      ));
+      
+      $this->addColumn('internal', array(
+      		'header'    => Mage::helper('eventmanager')->__('Internal'),
+      		'align'     => 'left',
+      		'width'     => '80px',
+      		'index'     => 'internal',
+      		'type'      => 'options',
+      		'options'   => $yesno,
+      ));
 	
+      $this->addColumn('status', array(
+      		'header'    => Mage::helper('eventmanager')->__('Status'),
+      		'align'     => 'left',
+      		'width'     => '80px',
+      		'index'     => 'status',
+      		'type'      => 'options',
+      		'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
+      ));
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('eventmanager')->__('Action'),

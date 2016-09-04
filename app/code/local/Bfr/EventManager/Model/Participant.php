@@ -70,7 +70,10 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	$customer = $order->getCustomer();
     	$customer = Mage::getModel('customer/customer')->load($customer->getId());
     
-    	$address = $order->getBillingAddress();
+    	$address = Mage::getModel('customer/address')->load($order->getBillingAddress()->getCustomerAddressId());
+    	if(!$address){
+    		$address = $order->getBillingAddress();
+    	}
     	$productOptions = ($orderItem->getProductOptions());
     	$personalOptions = $productOptions['info_buyRequest']['personal_options'];
     	if(!is_array($personalOptions)){
@@ -106,19 +109,23 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	$this->setOrderItemId($orderItem->getId());
     	$this->setEventId($event->getId());
     	$this->setCreatedTime(now())->setUpdateTime(now());
-    	$fields = array('prefix','academic_titel','position','firstname','lastname','company','company2','company3','street','city','postcode','email','country','phone');
-    	foreach($fields as $field){
+    	$fields = array('prefix'=>'getPrefix','academic_titel'=>'getAcademicTitel','position'=>'getPosition',
+    			'firstname'=>'getFirstname','lastname'=>'getLastName','company'=>'getCompany','company2'=>'getCompany2',
+    			'company3'=>'getCompany3','street'=>'getStreetFull','city'=>'getCity','postcode'=>'getPostcode','email'=>'getEmail',
+    			'country'=>'getCountry','phone'=>'getPhone');
+    	foreach($fields as $field => $func){
+    		//$func = $v.'()';	
+    		$customersData = $customer->$func();
     		if(isset($mapping[$field])){
     			$this->setData($field,$mapping[$field]);
-    		}elseif ($customer->getData($field) != null) {
+    		}elseif (!empty($customersData)) {
     			//falls in mapping nicht vorhanden wird das Kundenkonto benutzt
-    			$this->setData($field,$customer->getData($field));
+    			$this->setData($field,$customersData);
     		}else{
     			//falls in mapping nicht vorhanden wird die Adressen benutzt
-    			$this->setData($field,$address->getData($field));
+    			$this->setData($field,$address->$func());
     		}
     	}
-    	
     	//übersetzten
     	
     	$translate = Mage::getModel('eventmanager/translate');

@@ -52,156 +52,192 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
   protected function _prepareColumns()
   {
-      $this->addColumn('pa_participant_id', array(
-          'header'    => Mage::helper('eventmanager')->__('ID'),
-          'align'     =>'right',
-          'width'     => '50px',
-          'index'     => 'participant_id',
-      ));
-
-      $this->addColumn('pa_created_time', array(
-      		'header'    => Mage::helper('eventmanager')->__('Created at'),
-      		'align'     =>'left',
-      		'index'     => 'created_time',
-      		'type'	=> 'Date',
-      		'width'     => '100px',
-      ));
-      
-      $this->addColumn('pa_increment_id', array(
-      		'header'    => Mage::helper('eventmanager')->__('Order #'),
-      		'align'     =>'left',
-      		'width'     => '100px',
-      		'index'     => 'increment_id',
-      		//'filter_condition_callback' => array($this, '_filterNameCondition'),
-      ));
-      
-      $this->addColumn('pa_status', array(
-      		'header' => Mage::helper('sales')->__('Status'),
-      		'index' => 'status',
-      		'type'  => 'options',
-      		'width' => '70px',
-      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
-      ));
-      
-      
-      $this->addColumn('title', array(
-      		'header'    => Mage::helper('eventmanager')->__('Event'),
-      		'width'     => '100px',
-      		'index'     => 'title',
-      		//'type'      => 'number',
-      ));
-      
-      
-      $this->addColumn('academic_titel', array(
-      		'header'    => Mage::helper('eventmanager')->__('Academic Title'),
-      		'width'     => '100px',
-      		'index'     => 'academic_titel',
-      		//'type'      => 'number',
-      ));
-      
-      $this->addColumn('position', array(
-      		'header'    => Mage::helper('eventmanager')->__('Occupation'),
-      		'width'     => '100px',
-      		'index'     => 'position',
-      		//'type'      => 'number',
-      ));
-      
-      $this->addColumn('pa_name', array(
-          'header'    => Mage::helper('eventmanager')->__('Name'),
-          'align'     =>'left',
-          'index'     => 'name',
-      	  'filter_condition_callback' => array($this, '_filterNameCondition'),
-      ));
-      
-
-      
-      $this->addColumn('pa_company', array(
-      		'header'    => Mage::helper('eventmanager')->__('Company'),
-      		'align'     =>'left',
-      		'index'     => 'company',
-      		'filter_condition_callback' => array($this, '_filterCompanyCondition'),
-      ));
-      
-      $this->addColumn('pa_email', array(
-      		'header'    => Mage::helper('eventmanager')->__('Email'),
-      		'align'     =>'left',
-      		'index'     => 'email',
-      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
-      ));
-      
-      $this->addColumn('pa_phone', array(
-      		'header'    => Mage::helper('eventmanager')->__('Phone'),
-      		'align'     =>'left',
-      		'index'     => 'phone',
-      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
-      ));
-      
-      $this->addColumn('pa_address', array(
-      		'header'    => Mage::helper('eventmanager')->__('Address'),
-      		'align'     =>'left',
-      		'index'     => 'street',
-      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
-      ));
-      
-      
-      $this->addColumn('pa_country', array(
-      		'header'    => Mage::helper('eventmanager')->__('Country'),
-      		'align'     =>'left',
-      		'index'     => 'country',
-      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
-      ));
-      
-      
-      $this->addColumn('pa_industry', array(
-      		'header'    => Mage::helper('eventmanager')->__('Industry'),
-      		'align'     =>'left',
-      		'index'     => 'industry',
-      		'filter_condition_callback' => array($this, '_filterIndustryCondition'),
-      ));
-      
-      $this->addColumn('pa_lobby', array(
-      		'header'    => Mage::helper('eventmanager')->__('Lobby'),
-      		'align'     =>'left',
-      		'index'     => 'lobby',
-      		'filter_condition_callback' => array($this, '_filterLobbyCondition'),
-      ));
-      
-      $role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
-      $this->addColumn('pa_role', array(
-          'header'    => Mage::helper('eventmanager')->__('Role'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'role',
-          'type'      => 'options',
-          'options'   => $role,
-      ));
-      
-      $job = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_JOB)->getOptionArray();
-      $this->addColumn('pa_jop', array(
-      		'header'    => Mage::helper('eventmanager')->__('Job'),
-      		'align'     => 'left',
-      		'width'     => '80px',
-      		'index'     => 'job',
-      		'type'      => 'options',
-      		'options'   => $job,
-      ));
-      
-
-      $yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-      $yesno = array();
-      foreach ($yn as $n)
-      {
-      	$yesno[$n['value']] = $n['label'];
-      }
-      
-      $this->addColumn('pa_internal', array(
-          'header'    => Mage::helper('eventmanager')->__('Internal'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'internal',
-          'type'      => 'options',
-          'options'   => $yesno,
-      ));
+  	$this->addColumn('participant_id', array(
+  			'header'    => Mage::helper('eventmanager')->__('ID'),
+  			'align'     =>'right',
+  			'width'     => '50px',
+  			'index'     => 'participant_id',
+  	));
+  	
+  	$this->addColumn('created_time', array(
+  			'header'    => Mage::helper('eventmanager')->__('Created at'),
+  			'align'     =>'left',
+  			'index'     => 'created_time',
+  			'type'	=> 'Date',
+  			'width'     => '100px',
+  	));
+  	
+  	
+  	$this->addColumn('title', array(
+  			'header'    => Mage::helper('eventmanager')->__('Event'),
+  			'width'     => '100px',
+  			'index'     => 'title',
+  			//'type'      => 'number',
+  	));
+  	
+  	
+  	$this->addColumn('pa_academic_titel', array(
+  			'header'    => Mage::helper('eventmanager')->__('Academic Title'),
+  			'width'     => '100px',
+  			'index'     => 'academic_titel',
+  			//'type'      => 'number',
+  	));
+  	
+  	$this->addColumn('pa_position', array(
+  			'header'    => Mage::helper('eventmanager')->__('Occupation'),
+  			'width'     => '100px',
+  			'index'     => 'position',
+  			//'type'      => 'number',
+  	));
+  	
+  	
+  	
+  	$this->addColumn('pa_name', array(
+  			'header'    => Mage::helper('eventmanager')->__('Name'),
+  			'align'     =>'left',
+  			'index'     => 'name',
+  			'filter_condition_callback' => array($this, '_filterNameCondition'),
+  	));
+  	
+  	$this->addColumn('pa_company', array(
+  			'header'    => Mage::helper('eventmanager')->__('Company'),
+  			'align'     =>'left',
+  			'index'     => 'company',
+  			'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	
+  	$this->addColumn('pa_postfix', array(
+  			'header'    => Mage::helper('eventmanager')->__('Postfix'),
+  			'align'     =>'left',
+  			'index'     => 'email',
+  			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	$this->addColumn('pa_email', array(
+  			'header'    => Mage::helper('eventmanager')->__('Email'),
+  			'align'     =>'left',
+  			'index'     => 'email',
+  			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	$this->addColumn('pa_phone', array(
+  			'header'    => Mage::helper('eventmanager')->__('Phone'),
+  			'align'     =>'left',
+  			'index'     => 'phone',
+  			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	$this->addColumn('pa_address', array(
+  			'header'    => Mage::helper('eventmanager')->__('Address'),
+  			'align'     =>'left',
+  			'index'     => 'street',
+  			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	$this->addColumn('pa_city', array(
+  			'header'    => Mage::helper('eventmanager')->__('City'),
+  			'align'     =>'left',
+  			'index'     => 'city',
+  			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	$this->addColumn('pa_postcode', array(
+  			'header'    => Mage::helper('eventmanager')->__('Zip'),
+  			'align'     =>'left',
+  			'index'     => 'postcode',
+  			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	$this->addColumn('pa_country', array(
+  			'header'    => Mage::helper('eventmanager')->__('Country'),
+  			'align'     =>'left',
+  			'index'     => 'country',
+  			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+  	));
+  	
+  	
+  	
+  	
+  	
+  	$this->addColumn('pa_industry', array(
+  			'header'    => Mage::helper('eventmanager')->__('Industry'),
+  			'align'     =>'left',
+  			'index'     => 'industry',
+  			'filter_condition_callback' => array($this, '_filterIndustryCondition'),
+  	));
+  	
+  	$this->addColumn('pa_lobby', array(
+  			'header'    => Mage::helper('eventmanager')->__('Lobby'),
+  			'align'     =>'left',
+  			'index'     => 'lobby',
+  			'filter_condition_callback' => array($this, '_filterLobbyCondition'),
+  	));
+  	
+  	$role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
+  	$this->addColumn('role', array(
+  			'header'    => Mage::helper('eventmanager')->__('Role'),
+  			'align'     => 'left',
+  			'width'     => '80px',
+  			'index'     => 'role_id',
+  			'type'      => 'options',
+  			'options'   => $role,
+  	));
+  	
+  	$job = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_JOB)->getOptionArray();
+  	$this->addColumn('pa_jop', array(
+  			'header'    => Mage::helper('eventmanager')->__('Job'),
+  			'align'     => 'left',
+  			'width'     => '80px',
+  			'index'     => 'job_id',
+  			'type'      => 'options',
+  			'options'   => $job,
+  	));
+  	
+  	
+  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+  	$yesno = array();
+  	foreach ($yn as $n)
+  	{
+  		$yesno[$n['value']] = $n['label'];
+  	}
+  	
+  	$this->addColumn('vip', array(
+  			'header'    => Mage::helper('eventmanager')->__('Vip'),
+  			'align'     => 'left',
+  			'width'     => '80px',
+  			'index'     => 'vip',
+  			'type'      => 'options',
+  			'options'   => $yesno,
+  	));
+  	
+  	$this->addColumn('online_eval', array(
+  			'header'    => Mage::helper('eventmanager')->__('Online Evaluation'),
+  			'align'     => 'left',
+  			'width'     => '80px',
+  			'index'     => 'online_eval',
+  			'type'      => 'options',
+  			'options'   => $yesno,
+  	));
+  	
+  	$this->addColumn('internal', array(
+  			'header'    => Mage::helper('eventmanager')->__('Internal'),
+  			'align'     => 'left',
+  			'width'     => '80px',
+  			'index'     => 'internal',
+  			'type'      => 'options',
+  			'options'   => $yesno,
+  	));
+  	
+  	$this->addColumn('status', array(
+  			'header'    => Mage::helper('eventmanager')->__('Status'),
+  			'align'     => 'left',
+  			'width'     => '80px',
+  			'index'     => 'status',
+  			'type'      => 'options',
+  			'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
+  	));
+  	 
 	
         $this->addColumn('pa_action',
             array(

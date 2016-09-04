@@ -52,7 +52,7 @@ $att->setData('used_in_forms', $forms)->setData('sort_order', '0')->save();
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventmanager/participant'), 'academic_titel')) {
 	$installer->run("
 			ALTER TABLE {$installer->getTable('eventmanager/participant')}
-			ADD COLUMN title varchar(255) NOT NULL default '';
+			ADD COLUMN academic_titel varchar(255) default '';
 			");
 
 }
@@ -60,7 +60,7 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventm
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventmanager/participant'), 'position')) {
 	$installer->run("
 			ALTER TABLE {$installer->getTable('eventmanager/participant')}
-			ADD COLUMN position varchar(255) NOT NULL default '';
+			ADD COLUMN position varchar(255) default '';
 			");
 }
 
