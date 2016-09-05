@@ -52,14 +52,14 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
   protected function _prepareColumns()
   {
-  	$this->addColumn('participant_id', array(
+  	$this->addColumn('pa_participant_id', array(
   			'header'    => Mage::helper('eventmanager')->__('ID'),
   			'align'     =>'right',
   			'width'     => '50px',
   			'index'     => 'participant_id',
   	));
   	
-  	$this->addColumn('created_time', array(
+  	$this->addColumn('pa_created_time', array(
   			'header'    => Mage::helper('eventmanager')->__('Created at'),
   			'align'     =>'left',
   			'index'     => 'created_time',
@@ -68,7 +68,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	));
   	
   	
-  	$this->addColumn('title', array(
+  	$this->addColumn('pa_title', array(
   			'header'    => Mage::helper('eventmanager')->__('Event'),
   			'width'     => '100px',
   			'index'     => 'title',
