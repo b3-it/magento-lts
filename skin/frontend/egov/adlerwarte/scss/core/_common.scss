@@ -800,6 +800,11 @@ div.block-reorder {
 
     .std {
         margin: 0px;
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     }
 }
 

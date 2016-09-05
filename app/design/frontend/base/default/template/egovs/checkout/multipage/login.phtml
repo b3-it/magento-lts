@@ -80,6 +80,7 @@
 		<div class="col-2 registered-users">
 		    <form id="login-form" class="scaffold-form" action="<?php echo $this->getPostAction() ?>" method="post">
 		    <?php echo $this->getBlockHtml('formkey'); ?>
+		    <?php $_secure = Mage::app()->getFrontController()->getRequest()->isSecure(); ?>
 		        <h2><?php echo $this->__('Login') ?></h2>
 		        <div class="content">
 		            <div class="securityLabel">
@@ -87,11 +88,11 @@
 				                <strong><?php echo $this->__('Already registered?') ?></strong><br />
 				                <?php echo $this->__('If you have an account with us, please log in.') ?>
 			              </span>
-			            <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
+			            <?php if( $_secure ): ?>
 			              <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
 		              <?php endif; ?>
 		            </div>
-			          <fieldset>
+			          <fieldset<?php if( $_secure != true ): ?> class="width"<?php endif; ?>>
 				            <ul class="form-list">
 		                    <li>
 		                        <div class="input-box">
