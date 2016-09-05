@@ -757,6 +757,10 @@ div#details-block {
     .add-to-cart:after {
         @include clearfix;
     }
+    
+    .add-to-cart:after {
+        display: inline-block;
+    }
 
     .add-to-cart-buttons {
         button {
@@ -946,6 +950,12 @@ div#details-block {
     a.link-twitter {
         background-position: 0px (-375px + 3px);
     }
+}
+
+.product-view .product-options-bottom .sharing-links {
+    float: right;
+    position: relative;
+    top: -10px;
 }
 
 @include bp(max-width, 599px) {

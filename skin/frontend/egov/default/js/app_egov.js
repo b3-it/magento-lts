@@ -13,7 +13,7 @@ var egov_break = {
     navbar   : 785,    // Navigation
     rightCol : 1000,   // Rechte Maginal-Spalte
     topSearch: 911     // Suchen-Leiste im Header
-}
+};
 
 $j(document).ready(function () {
     // Custom-Scrollbar im Skin-Design
