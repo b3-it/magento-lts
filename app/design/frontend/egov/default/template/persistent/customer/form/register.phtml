@@ -44,7 +44,7 @@
                 <li class="fields halfwide">
                     <div class="field">
                         <label for="email_address">
-                            <?php echo $this->getFieldRequiredHtml('email')?>
+                            <span class="required">*</span>
                             <?php echo $this->__('Email Address') ?>
                         </label>
                         <input tabindex="6" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email_address" value="<?php echo $this->escapeHtml($this->getFormData()->getEmail()) ?>" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />
