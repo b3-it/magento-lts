@@ -41,7 +41,7 @@
         <reference name="right">
             <action method="unsetChildren"/>
         </reference>
-       <remove name="breadcrumbs"/>
+       <!--<remove name="breadcrumbs"/>-->
        <remove name="catalog.leftnav_sachsen"/>
        <remove name="right.newsletter"/>
        <reference name="left">
@@ -70,6 +70,24 @@
                 <action method="setData"><key>accesskey</key><value>l</value></action>
                 <action method="setData"><key>jumptitle</key><value>Login/Registrieren</value></action>
             </block>
+        </reference>
+
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Register</crumbname>
+                <crumbinfo>
+                    <label>Register</label>
+                    <title>Register</title>
+                </crumbinfo>
+            </action>
         </reference>
     </egovs_checkout_multipage_login>
 
@@ -106,6 +124,24 @@
             <block type="mpcheckout/multipage_addresses" name="checkout_addresses" template="egovs/checkout/multipage/addresses.phtml">
                      </block>
         </reference>
+
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Select_Address</crumbname>
+                <crumbinfo>
+                    <label>Select Address</label>
+                    <title>Select Address</title>
+                </crumbinfo>
+            </action>
+        </reference>
     </egovs_checkout_multipage_addresses>
 
    <egovs_checkout_multipage_newaddress>
@@ -117,6 +153,23 @@
                	<action method="setData"><key>jumptitle</key><value>Adresseingabe</value></action>
             </block>
         </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>New_Address</crumbname>
+                <crumbinfo>
+                    <label>New Address</label>
+                    <title>New Address</title>
+                </crumbinfo>
+            </action>
+        </reference>
     </egovs_checkout_multipage_newaddress>
 
     <egovs_checkout_multipage_shipping>
@@ -125,6 +178,30 @@
         <reference name="content">
             <block type="mpcheckout/multipage_shipping" name="checkout_shipping" template="egovs/checkout/multipage/shipping.phtml">
             </block>
+        </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Select_Address</crumbname>
+                <crumbinfo>
+                    <label>Select Address</label>
+                    <title>Select Address</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shippinginformation</crumbname>
+                <crumbinfo>
+                    <label>Shipping Information</label>
+                    <title>Shipping Information</title>
+                </crumbinfo>
+            </action>
         </reference>
     </egovs_checkout_multipage_shipping>
 
@@ -144,6 +221,37 @@
             <block type="mpcheckout/multipage_shippingmethod" name="checkout_shipping" template="egovs/checkout/multipage/shippingmethod.phtml">
             </block>
         </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Select_Address</crumbname>
+                <crumbinfo>
+                    <label>Select Address</label>
+                    <title>Select Address</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shippinginformation</crumbname>
+                <crumbinfo>
+                    <label>Shipping Information</label>
+                    <title>Shipping Information</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shipping_Method</crumbname>
+                <crumbinfo>
+                    <label>Shipping Method</label>
+                    <title>Shipping Method</title>
+                </crumbinfo>
+            </action>
+        </reference>
     </egovs_checkout_multipage_shippingmethod>
 
     <egovs_checkout_multipage_billing>
@@ -161,6 +269,44 @@
 
             </block>
         </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Select_Address</crumbname>
+                <crumbinfo>
+                    <label>Select Address</label>
+                    <title>Select Address</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shippinginformation</crumbname>
+                <crumbinfo>
+                    <label>Shipping Information</label>
+                    <title>Shipping Information</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shipping_Method</crumbname>
+                <crumbinfo>
+                    <label>Shipping Method</label>
+                    <title>Shipping Method</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Payment_Method</crumbname>
+                <crumbinfo>
+                    <label>Payment Method</label>
+                    <title>Payment Method</title>
+                </crumbinfo>
+            </action>
+        </reference>
     </egovs_checkout_multipage_billing>
 
    <egovs_checkout_multipage_billingdetails>
@@ -170,6 +316,51 @@
             <block type="mpcheckout/multipage_billingdetails" name="checkout_billing" template="egovs/checkout/multipage/billingdetails.phtml">
                 <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
             </block>
+        </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Select_Address</crumbname>
+                <crumbinfo>
+                    <label>Select Address</label>
+                    <title>Select Address</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shippinginformation</crumbname>
+                <crumbinfo>
+                    <label>Shipping Information</label>
+                    <title>Shipping Information</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shipping_Method</crumbname>
+                <crumbinfo>
+                    <label>Shipping Method</label>
+                    <title>Shipping Method</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Payment_Method</crumbname>
+                <crumbinfo>
+                    <label>Payment Method</label>
+                    <title>Payment Method</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Payment_Information</crumbname>
+                <crumbinfo>
+                    <label>Payment Information</label>
+                    <title>Payment Information</title>
+                </crumbinfo>
+            </action>
         </reference>
     </egovs_checkout_multipage_billingdetails>
 
@@ -210,6 +401,58 @@
                 </block>
             </block>
         </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Select_Address</crumbname>
+                <crumbinfo>
+                    <label>Select Address</label>
+                    <title>Select Address</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shippinginformation</crumbname>
+                <crumbinfo>
+                    <label>Shipping Information</label>
+                    <title>Shipping Information</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shipping_Method</crumbname>
+                <crumbinfo>
+                    <label>Shipping Method</label>
+                    <title>Shipping Method</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Payment_Method</crumbname>
+                <crumbinfo>
+                    <label>Payment Method</label>
+                    <title>Payment Method</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Payment_Information</crumbname>
+                <crumbinfo>
+                    <label>Payment Information</label>
+                    <title>Payment Information</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Order_now</crumbname>
+                <crumbinfo>
+                    <label>Order now</label>
+                    <title>Order now</title>
+                </crumbinfo>
+            </action>
+        </reference>
     </egovs_checkout_multipage_overview>
 
 
@@ -243,6 +486,65 @@
                 <block type="mpcheckout/multipage_review_totals" name="totals" template="egovs/checkout/multipage/review/totals.phtml"/>
                 <block type="mpcheckout/multipage_payment_successinfo" name="payment_info"></block>
             </block>
+        </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Select_Address</crumbname>
+                <crumbinfo>
+                    <label>Select Address</label>
+                    <title>Select Address</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shippinginformation</crumbname>
+                <crumbinfo>
+                    <label>Shipping Information</label>
+                    <title>Shipping Information</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Shipping_Method</crumbname>
+                <crumbinfo>
+                    <label>Shipping Method</label>
+                    <title>Shipping Method</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Payment_Method</crumbname>
+                <crumbinfo>
+                    <label>Payment Method</label>
+                    <title>Payment Method</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Payment_Information</crumbname>
+                <crumbinfo>
+                    <label>Payment Information</label>
+                    <title>Payment Information</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Order_now</crumbname>
+                <crumbinfo>
+                    <label>Order now</label>
+                    <title>Order now</title>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Order_Success</crumbname>
+                <crumbinfo>
+                    <label>Order Success</label>
+                    <title>Order Success</title>
+                </crumbinfo>
+            </action>
         </reference>
     </egovs_checkout_multipage_successview>
 
