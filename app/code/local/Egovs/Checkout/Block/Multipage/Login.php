@@ -91,18 +91,4 @@ class Egovs_Checkout_Block_Multipage_Login extends Mage_Checkout_Block_Onepage_A
     {
     	return  Mage::getSingleton('mpcheckout/text')->getDatenschutztext();
     }
-    
-    public function getCertImgUrl()
-    {	
-    	$cn = Mage::app()->getFrontController();
-    	$_secure = false;
-    	if ($cn instanceof Mage_Core_Controller_Varien_Front) {
-    		$_secure = $cn->getRequest()->isSecure();
-    	}
-    	if (!$_secure) {
-    		$_secure = Mage::getStoreConfigFlag(Mage_Core_Model_Store::XML_PATH_SECURE_IN_FRONTEND);
-    	}
-    	return Mage::getDesign()->getSkinUrl('images/litessl_tl_trans.gif', array('_secure' => $_secure));
-    }
-    
 }
