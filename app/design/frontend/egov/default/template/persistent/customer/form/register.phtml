@@ -137,7 +137,7 @@
                             <?php echo $this->getFieldRequiredHtml('postcode')?>
                             <?php echo $this->__('Zip/Postal Code') ?>
                         </label>
-                        <input tabindex="10" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->quoteEscape($this->__('Zip/Postal Code')) ?>" id="zip" class="input-text validate-zip-international <?php echo $this->isFieldRequired('postcode') ? 'required-entry' : 'egov'?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                        <input tabindex="10" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->quoteEscape($this->__('Zip/Postal Code')) ?>" id="zip" class="input-text validate-zip-international <?php echo $this->isFieldRequired('postcode') ? 'required-entry' : 'egov'?>" />
                     </div>
                 </li>
               <?php endif; ?>
@@ -152,7 +152,7 @@
                             <?php echo $this->getFieldRequiredHtml('city')?>
                             <?php echo $this->__('City') ?>
                         </label>
-                        <input tabindex="11" type="text" name="city" value="<?php echo $this->escapeHtml($this->getFormData()->getCity()) ?>" title="<?php echo $this->quoteEscape($this->__('City')) ?>" class="input-text <?php echo $this->isFieldRequired('city') ? 'required-entry' : ''?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                        <input tabindex="11" type="text" name="city" value="<?php echo $this->escapeHtml($this->getFormData()->getCity()) ?>" title="<?php echo $this->quoteEscape($this->__('City')) ?>" class="input-text <?php echo $this->isFieldRequired('city') ? 'required-entry' : ''?>" id="city" />
                     </div>
                 </li>
               <?php endif; ?>
