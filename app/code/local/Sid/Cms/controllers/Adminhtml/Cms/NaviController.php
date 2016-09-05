@@ -57,8 +57,48 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 	}
 
 	public function newAction() {
-		$this->_forward('edit');
+		$this->loadLayout();
+		$this->_setActiveMenu('cms/items');
+
+		//$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+		//$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
+
+		$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+
+		$this->_addContent($this->getLayout()->createBlock('sidcms/adminhtml_navi_new'));
+				
+
+		$this->renderLayout();
 	}
+	
+	
+	public function step1Action() {
+		if ($data = $this->getRequest()->getPost()) {
+	
+			$model = Mage::getModel('sidcms/navi');
+			$model->setData($data);
+	
+			
+			try {
+				
+				$model->setCreatedTime(now())
+					->setUpdateTime(now());	
+				$model->save();
+				
+				$this->_redirect('*/*/edit',array('id'=>$model->getId()));
+				return;
+			} catch (Exception $e) {
+				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+				Mage::getSingleton('adminhtml/session')->setFormData($data);
+				$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+				return;
+			}
+		}
+		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('sidcms')->__('Can not save'));
+		$this->_redirect('*/*/');
+	}
+	
+	
 
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
@@ -68,10 +108,10 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 				->setId($this->getRequest()->getParam('id'));
 
 			if(isset($data['node_options'])){
-				$this->saveChilds($data['node_options']);
+				$this->saveChilds($data['node_options'], $this->getRequest()->getParam('id'));
 			}
 			
-			die();
+
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())
@@ -101,18 +141,73 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
         $this->_redirect('*/*/');
 	}
 
-	
-	public function saveChilds($nodes)
+	/**
+	 * Den Baum speichern 
+	 */
+	public function saveChilds($nodes,$naviId)
 	{
+		$loaded = array();
+		//model erzeugen oder laden
 		foreach($nodes as $node)
 		{
-			
-			if(isset($node['id']))
+			$model = Mage::getModel('sidcms/node');
+			if(!isset($node['id']) || empty($node['id']))
 			{
-				$id = $node['id'];
+				$model->save();
+				$node['id'] = $model->getId();
+				$node['model'] = $model;
+			}else {
+				$model = Mage::getModel('sidcms/node')->load($node['id']);
+				$node['model'] = $model;
 			}
-			$model = Mage::getModel('');
+			
+			$model->setLabel($node['label'])
+				->setPos($node['pos'])
+				->setNaviId($naviId);
+			
+			$loaded[] = $node;
+			
 		}
+		
+		//jetzt die Elternbeziehung und die Reihenfolge
+		foreach($loaded as $node)
+		{
+			
+			$model = $node['model'];
+			$parent = $this->findByNumber($loaded, $node['parent']);
+			
+			if($parent){
+				$model->setParentId($parent['model']->getId());
+			}else{
+				$model->setData('parent_id',null);
+			}
+			
+			
+			$model->save();
+			
+		}
+		
+		foreach($loaded as $node)
+		{
+			if($node['is_delete']){
+				$model = $node['model'];
+				$model->delete();
+			}
+		}
+		
+		
+		
+	}
+	
+	private function findByNumber($nodes,$number)
+	{
+		foreach ($nodes as $node){
+			if($node['number'] == $number){
+				return $node;
+			}
+		}
+		
+		return null;
 	}
 	
 	public function deleteAction() {
