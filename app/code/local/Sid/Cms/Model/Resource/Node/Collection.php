@@ -12,9 +12,57 @@
  */
 class Sid_Cms_Model_Resource_Node_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
+	
+	
     public function _construct()
     {
         parent::_construct();
         $this->_init('sidcms/node');
     }
+    
+    /**
+     * die Knoten müssen enstprechend ihre Abhängigkeiten (ein)sortiert werden
+     * @param array $naviId
+     * @return Sid_Cms_Model_Resource_Node Dummy Root Node
+     */
+    private function _getNodeTree($naviId)
+    {
+    	$this->getSelect()->where('navi_id = '.intval($naviId));
+    	
+    	$allItems = $this->getItems();
+    	
+    	$root = Mage::getModel('sidcms/node');
+    	
+    	$n = 0;
+    	while((count($allItems) > 0) && ($n < 50))
+    	{
+    		$tmp = array();
+    		foreach($allItems as $item){
+    			if($item->getParentId() == null)
+    			{
+    				$root->addChild($item);
+    			}else 
+    			{
+    				$node = $root->getChild($item->getParentId(),true);
+    				if($node){
+    					$node->addChild($item);
+    				}else{
+    					$tmp[] = $item;
+    				}
+    			}
+    		}
+    		$allItems = $tmp;
+    		$n++;
+    	}
+    	
+    	return $root;
+    	
+    }
+    
+    public function getNodesAsArray($naviId)
+    {
+    	$root = $this->_getNodeTree($naviId);
+    	return $root->getChildrenArray(true);	
+    }
+    
 }

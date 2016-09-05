@@ -29,8 +29,8 @@
 
 <div >
 <button class="" onclick="nodeOptions.add();" type="button">New</button>
-<button class="btn btn-warning btn-sm" onclick="demo_rename();" type="button">Rename</button>
-<button class="btn btn-danger btn-sm" onclick="demo_delete();" type="button">Delete</button>
+<button class="btn btn-warning btn-sm" onclick="nodeOptions.edit();" type="button">Rename</button>
+<button class="btn btn-danger btn-sm" onclick="nodeOptions.remove();" type="button">Delete</button>
 </div>
 
 
@@ -48,26 +48,6 @@
 <script type="text/javascript">
 //<![CDATA[
 
-
-	
-	function demo_rename() {
-		var ref = $j('#jstree_demo').jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		sel = sel[0];
-		ref.edit(sel);
-	};
-	
-	function demo_delete() {
-		var ref = $j('#jstree_demo').jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		ref.delete_node(sel);
-	};
-
-
-
-
 $j('#jstree_demo').jstree({
 	  "core" : {
 	    "animation" : 0,
@@ -79,7 +59,7 @@ $j('#jstree_demo').jstree({
 	  },
 	  "types" : {
 	    "#" : {
-	      "max_children" : 1,
+	      "max_children" : 10,
 	      "max_depth" : 4,
 	      "valid_children" : ["root"]
 	    },
@@ -119,6 +99,9 @@ $j('#jstree_demo').on("move_node.jstree", function (e, data) {
 		nodeOptions.move(data.node, data.position);
 	}
 });
+$j('#jstree_demo').on("ready.jstree", function (e, data) {
+	init_db_nodes();
+});
 
 
 
@@ -129,6 +112,7 @@ var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class
 				'<input type="hidden" id="node_options_{{number}}_is_delete" name="node_options[{{number}}][is_delete]" value="" />'+
 				'<input type="hidden" name="node_options[{{number}}][id]" value="{{id}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_name" name="node_options[{{number}}][label]" value="{{label}}" />'+
+				'<input type="hidden" id="node_options_{{number}}_number" name="node_options[{{number}}][number]" value="{{number}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_parent" name="node_options[{{number}}][parent]" value="{{parent}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_pos" name="node_options[{{number}}][pos]" value="{{pos}}" />'+
 				'<tr id="node_options_{{number}}"><td  class="label">' +
@@ -164,7 +148,7 @@ var nodeOptions = {
 			//Element.insert(this.div, {'':this.template.evaluate(data)});
 		},
 		hideAll : function(){
-			for (var i = 0; i <= this.itemCount; i++){
+			for (var i = 1; i <= this.itemCount; i++){
 					var elem = $j("#node_options_"+i);
 					if(elem.length != 0)
 					{
@@ -184,7 +168,11 @@ var nodeOptions = {
 				var ref = this.tree.jstree(true);
 				var parent = ref.get_node(node.parent);
 				var elem = $j("#node_options_" + node.data.number + "_parent");
-				elem.val(parent.data.number);
+				if(parent.data){
+					elem.val(parent.data.number);
+				}else{
+					elem.val('0');
+				}
 				var pos = 0;
 				for(var childId in parent.children)
 				{
@@ -198,35 +186,67 @@ var nodeOptions = {
 			}
 		},
 		
-		add: function(data) {
-			var ref = this.tree.jstree(true),
-				sel = ref.get_selected();
-			if(!sel.length) { return false; }
-			sel = sel[0];
-			ref.open_node(sel);
+		add: function(data, sel) {
+			
+			var ref = this.tree.jstree(true);
+			var edit = false;
+
+			this.itemCount++;
+			if(!sel)
+			{
+				var	sel = ref.get_selected();
+				if(!sel.length) { return false; }
+				sel = sel[0];
+				ref.open_node(sel);
+				edit = true;
+			}
+			else if(sel == 'root')
+			{
+				sel =  ref.get_node('j1_1');
+				//var children = sel.children;// ref.get_children_dom(sel);
+				//var cild = children[0];
+			} 
 			
 			if(!data){
 				var data = new Object();
-				data.number = this.itemCount;
+				
 				data.name = 'default';
-				
-				this.itemCount++;
-				sel = ref.create_node(sel,  {"type":"default","data":data});
-				if(sel) {
-					ref.edit(sel);
-				}
-				this.template = new Template(this.templateText, this.templateSyntax);
-				var content = this.template.evaluate(data);
-				this.div.html( this.div.html() + content);
-				
-				var node = ref.get_node(sel);
-				this.move(node, this.itemCount);
-				
-			}else
-			{
-				
+				data.label = 'New Node';
 			}
+			data.number = this.itemCount;
 			
+			sel = ref.create_node(sel,  {"type":"default","data":data, "text" : data.label});
+			if(sel && edit) {
+				ref.edit(sel);
+			}
+			this.template = new Template(this.templateText, this.templateSyntax);
+			var content = this.template.evaluate(data);
+			this.div.html( this.div.html() + content);
+			
+			var node = ref.get_node(sel);
+			this.move(node, this.itemCount);
+				
+			
+			return node.id;
+			
+		},
+		remove: function(data) {
+			this.hideAll();
+			var ref = this.tree.jstree(true);
+			var	sel = ref.get_selected();
+			if(!sel.length) { return false; }
+			var node = ref.get_node(sel);
+			var elem = $j("#node_options_" + node.data.number + "_is_delete");
+			elem.val(1);
+			ref.delete_node(sel);
+		},
+
+		edit: function(data) {
+			var ref = this.tree.jstree(true);
+			var	sel = ref.get_selected();
+			if(!sel.length) { return false; }
+			sel = sel[0];
+			ref.edit(sel);
 		},
 		xxadd : function(data) {
 			this.template = new Template(this.templateText, this.templateSyntax);
@@ -261,16 +281,6 @@ var nodeOptions = {
 			this.bindRemoveButtons();
 			
 		},
-		remove : function(event){
-		var element = $(Event.findElement(event, 'tr'));
-		if(element){
-		var id = element.readAttribute('id');
-		$(id+'_'+'is_delete').value = '1';
-		element.addClassName('no-display');
-		element.addClassName('ignore-validate');
-		element.hide();
-		}
-		},
 		bindRemoveButtons : function(){
 		var buttons = $$('button.delete-personal-option');
 		for(var i=0;i<buttons.length;i++){
@@ -286,7 +296,22 @@ var nodeOptions = {
 		}
 }
 
+function init_db_nodes()
+{
+<?php foreach ($this->getNodes() as $node):
+	$parent = $node->getParentId();
+	if($node->getParentId())
+	{
+		$parent = 'node_'.$node->getParentId();
+	}
+	else{
+		$parent = '"root"';
+	}
+	echo "var node_".$node->getId()." = nodeOptions.add(".$node->toJson().",$parent);"
 
+?>
+<?php endforeach;?>
+}
 
 //]]>
 </script>

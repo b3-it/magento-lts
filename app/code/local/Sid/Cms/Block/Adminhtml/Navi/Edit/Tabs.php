@@ -27,7 +27,10 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
 
 	public function getNodes()
 	{
-		$collection = Mage::getModel('sidcms/navi')->getCollection();
+		$navi = Mage::registry('navi_data');
+		$collection = Mage::getModel('sidcms/node')->getCollection();
+		$res = $collection->getNodesAsArray($navi->getId());
+		return $res;
 	}
   
   
