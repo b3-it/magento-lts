@@ -420,6 +420,10 @@
 			<depit>
 				<include_personal_data>0</include_personal_data>
 			</depit>
+			<free>
+                <order_status>processing</order_status>
+                <payment_action>authorize_capture</payment_action>
+            </free>
 			<openaccount>
 				<include_personal_data>0</include_personal_data>
 			</openaccount>
