@@ -67,6 +67,11 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 
+			if(isset($data['node_options'])){
+				$this->saveChilds($data['node_options']);
+			}
+			
+			die();
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())
@@ -96,6 +101,20 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
         $this->_redirect('*/*/');
 	}
 
+	
+	public function saveChilds($nodes)
+	{
+		foreach($nodes as $node)
+		{
+			
+			if(isset($node['id']))
+			{
+				$id = $node['id'];
+			}
+			$model = Mage::getModel('');
+		}
+	}
+	
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
@@ -125,8 +144,8 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 	
 	public function nodesAction()
 	{
-		//$this->getResponse()->setBody('');
-		$this->getResponse()->setBody('["Child 11", { "id" : "demo_child_1", "text" : "Child 2", "children" : [ { "id" : "demo_child_2", "text": "One more", "type" : "file" }] }]');
+		$this->getResponse()->setBody('');
+		//$this->getResponse()->setBody('["Child 11", { "id" : "demo_child_1", "text" : "Child 2", "children" : [ { "id" : "demo_child_2", "text": "One more", "type" : "file" }] }]');
 	}
 
 }

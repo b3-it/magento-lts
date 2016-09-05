@@ -23,6 +23,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
   }
   
  
+	
 
 	public function getNodes()
 	{
