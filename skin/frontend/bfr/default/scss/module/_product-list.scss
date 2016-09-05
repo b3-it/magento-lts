@@ -43,10 +43,11 @@ body.catalogsearch-result-index .col-right {
     //height: 37px;
     //position: absolute;
     //bottom: 0;
-    width: 100%;
+    //padding: $global-boxpadding-large;
+    max-width: $global-product-list-image-width;
+    width: auto;
     display: inline-flex;
     font-size: 0.7em;
-    //padding: $global-boxpadding-large;
 
     > span {
         overflow: hidden;
@@ -87,9 +88,6 @@ p.product-name {
     margin-bottom: 5px;
     font-size: $base-font-family;
     font-family: $global-fontsize;
-
-    a {
-    }
 }
 
 /* ============================================ *
@@ -324,6 +322,7 @@ p.product-name {
         display: flex;
         flex-flow: row column;
         position: relative;
+        width: 100%;
 
         &:after {
             @include clearfix;
@@ -337,13 +336,11 @@ p.product-name {
             width: $global-product-list-imagesize;
             margin-bottom: $global-boxmargin - $global-boxpadding;
 
-            .product-image {
-                img {
-                    max-width: 100%;
-                    max-height: $global-product-list-image-max-height;
-                    width: auto;
-                    height: auto;
-                }
+            .product-image img {
+                max-width: $global-product-list-image-width;
+                max-height: $global-product-list-image-height;
+                width: auto;
+                height: auto;
             }
 
             .product-add-links {
