@@ -46,11 +46,15 @@
 	exceptions[]    = POST.groups.address_templates.fields.oneline.value;
 	exceptions[]    = POST.groups.address_templates.fields.pdf.value;
 	exceptions[]    = POST.groups.address_templates.fields.text.value;
+	exceptions[]    = POST.layout_update_xml;
+	exceptions[]    = POST.content;
 	exceptions[]    = REQUEST.groups.address_templates.fields.html.value;
 	exceptions[]    = REQUEST.groups.address_templates.fields.js_template.value;
 	exceptions[]    = REQUEST.groups.address_templates.fields.oneline.value;
 	exceptions[]    = REQUEST.groups.address_templates.fields.pdf.value;
 	exceptions[]    = REQUEST.groups.address_templates.fields.text.value;
+	exceptions[]    = REQUEST.content;
+	exceptions[]    = REQUEST.layout_update_xml;
     ; you can use regular expressions for wildcard exceptions - example: /.*foo/i
 
 [Caching]

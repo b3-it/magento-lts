@@ -28,7 +28,7 @@
 
 
 <div >
-<button class="" onclick="demo_create();" type="button">New</button>
+<button class="" onclick="nodeOptions.add();" type="button">New</button>
 <button class="btn btn-warning btn-sm" onclick="demo_rename();" type="button">Rename</button>
 <button class="btn btn-danger btn-sm" onclick="demo_delete();" type="button">Delete</button>
 </div>
@@ -48,17 +48,7 @@
 <script type="text/javascript">
 //<![CDATA[
 
-	function demo_create() {
-		var ref = $j("#jstree_demo").jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		sel = sel[0];
-		ref.open_node(sel);
-		sel = ref.create_node(sel,  {"type":"default"});
-		if(sel) {
-			ref.edit(sel);
-		}
-	};
+
 	
 	function demo_rename() {
 		var ref = $j('#jstree_demo').jstree(true),
@@ -83,16 +73,9 @@ $j('#jstree_demo').jstree({
 	    "animation" : 0,
 	    "check_callback" : true,
 	    "themes" : { "stripes" : true },
-	    'data' : {
-	      'url' : function (node) {
-	        return node.id === '#' ?
-	          '<?php echo $this->getUrl('*/*/root') ?>' : '<?php echo $this->getUrl('*/*/nodes') ?>';
-	      },
-	      "dataType" : "json",
-	      'data' : function (node) {
-	        return { 'id' : node.id };
-	      }
-	    }
+	    'data' :[
+					{ "text" : "<?php echo Mage::helper('sidcms')->__('Root node')?>"}
+					              			]
 	  },
 	  "types" : {
 	    "#" : {
@@ -118,11 +101,22 @@ $j('#jstree_demo').jstree({
 	  ]
 	});
 
-$j('#jstree_demo')
-.on("changed.jstree", function (e, data) {
+$j('#jstree_demo').on("changed.jstree", function (e, data) {
 	if(data.selected.length) {
 		//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
 		nodeOptions.show(data.instance.get_node(data.selected[0]));
+	}
+});
+$j('#jstree_demo').on("rename_node.jstree", function (e, data) {
+	if(data.node) {
+		//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
+		nodeOptions.rename(data.node,data.text);
+	}
+});
+$j('#jstree_demo').on("move_node.jstree", function (e, data) {
+	if(data.node) {
+		//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
+		nodeOptions.move(data.node, data.position);
 	}
 });
 
@@ -131,14 +125,16 @@ $j('#jstree_demo')
 
 
 
-var nodeTemplate = '<div display="none" id="node_options_{{number}}" class="hor-scroll"><table cellspacing="0" class="form-list"><tbody>' +
-				'<input type="hidden" id="node_options_{{number}}_is_delete" name="node_options_[{{number}}][is_delete]" value="" />'+
-				'<input type="hidden" name="node_options_[{{number}}][id]" value="{{id}}" />'+
-				'<input type="hidden" name="node_options_[{{number}}][label]" value="{{label}}" />'+
+var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class="hor-scroll"><table cellspacing="0" class="form-list"><tbody>' +
+				'<input type="hidden" id="node_options_{{number}}_is_delete" name="node_options[{{number}}][is_delete]" value="" />'+
+				'<input type="hidden" name="node_options[{{number}}][id]" value="{{id}}" />'+
+				'<input type="hidden" id="node_options_{{number}}_name" name="node_options[{{number}}][label]" value="{{label}}" />'+
+				'<input type="hidden" id="node_options_{{number}}_parent" name="node_options[{{number}}][parent]" value="{{parent}}" />'+
+				'<input type="hidden" id="node_options_{{number}}_pos" name="node_options[{{number}}][pos]" value="{{pos}}" />'+
 				'<tr id="node_options_{{number}}"><td  class="label">' +
 				'<label for="title">Pages</label>' +
 				'</td>' +
-				'<td class=2value"><select multiple="multiple" size="15" class="select"  id="node_options_{{number}}_pages" name="node_options_[{{number}}][pages]">' +
+				'<td class=2value"><select multiple="multiple" size="15" class="select"  id="node_options_{{number}}_pages" name="node_options[{{number}}][pages]">' +
 				'	<?php foreach ($this->getPages() as $key=>$value): ?>' +
 				'			<option value="<?php echo($key)?>"><?php echo($value) ?></option>' +
 				'	<?php endforeach; ?>' +
@@ -158,23 +154,17 @@ var nodeOptions = {
 		pos : 0,
 		kategories : [],
 		show : function(node) {
-			$this.hideAll(),
-			var elem = $j("#node_options_"+i)
-			if(elem.length == 0){
-				var data = new Object();
-				data.id = this.itemCount;
-				data.number = this.itemCount;
-				data.name = node.text;
-				this.template = new Template(this.templateText, this.templateSyntax);
-				var content = this.template.evaluate(data);
-				this.div.html( this.div.html() + content);
-				this.itemCount++;
+			this.hideAll();
+			if(node.data){
+				var elem = $j("#node_options_"+node.data.number);
+				if(elem){
+					elem.show();
+				}
 			}
-			
 			//Element.insert(this.div, {'':this.template.evaluate(data)});
 		},
 		hideAll : function(){
-			for (var i = 1; i <= this.itemCount; i++){
+			for (var i = 0; i <= this.itemCount; i++){
 					var elem = $j("#node_options_"+i);
 					if(elem.length != 0)
 					{
@@ -182,17 +172,63 @@ var nodeOptions = {
 					}
 			}
 		},
-		create() {
+		rename : function(node, $text) {
+			var elem = $j("#node_options_" + node.data.number + "_name");
+			if(elem){
+				elem.val($text);
+			}
+		},
+		move : function(node, pos) {
+			if(node)
+			{
+				var ref = this.tree.jstree(true);
+				var parent = ref.get_node(node.parent);
+				var elem = $j("#node_options_" + node.data.number + "_parent");
+				elem.val(parent.data.number);
+				var pos = 0;
+				for(var childId in parent.children)
+				{
+					var child = ref.get_node(parent.children[childId]);
+					if(child){
+						var elem = $j("#node_options_" + child.data.number + "_pos");
+						elem.val(pos);
+						pos++;
+					}
+				}
+			}
+		},
+		
+		add: function(data) {
 			var ref = this.tree.jstree(true),
 				sel = ref.get_selected();
 			if(!sel.length) { return false; }
 			sel = sel[0];
 			ref.open_node(sel);
-			sel = ref.create_node(sel,  {"type":"default"});
-			if(sel) {
-				ref.edit(sel);
+			
+			if(!data){
+				var data = new Object();
+				data.number = this.itemCount;
+				data.name = 'default';
+				
+				this.itemCount++;
+				sel = ref.create_node(sel,  {"type":"default","data":data});
+				if(sel) {
+					ref.edit(sel);
+				}
+				this.template = new Template(this.templateText, this.templateSyntax);
+				var content = this.template.evaluate(data);
+				this.div.html( this.div.html() + content);
+				
+				var node = ref.get_node(sel);
+				this.move(node, this.itemCount);
+				
+			}else
+			{
+				
+			}
+			
 		},
-		add : function(data) {
+		xxadd : function(data) {
 			this.template = new Template(this.templateText, this.templateSyntax);
 			if(!data){
 			var data = new Object();
