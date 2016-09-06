@@ -48,6 +48,18 @@
 <script type="text/javascript">
 //<![CDATA[
 
+           
+           function addPages()
+           {
+               //var pages = $j('#cms_pages').val() || [];
+               var cms_pages = $j('#cms_pages');
+               var selected = cms_pages.find('option:selected');
+               selected.each(function(){
+            	   nodeOptions.addPage($j(this).val(),$j(this).text());
+               });
+                    
+           }
+           
 $j('#jstree_demo').jstree({
 	  "core" : {
 	    "animation" : 0,
@@ -64,20 +76,19 @@ $j('#jstree_demo').jstree({
 	      "valid_children" : ["root"]
 	    },
 	    "root" : {
-	      "icon" : "/static/3.3.2/assets/images/tree_icon.png",
-	      "valid_children" : ["default"]
+	      "xicon" : "/static/3.3.2/assets/images/tree_icon.png",
+	      "valid_children" : ["default","page"]
 	    },
 	    "default" : {
-	      "valid_children" : ["default","file"]
+	      "valid_children" : ["default","page"]
 	    },
-	    "file" : {
-	      "icon" : "glyphicon glyphicon-file",
-	      "valid_children" : []
-	    }
+	    "page" : {
+	    	"icon" : "jstree-file",
+		     "valid_children" : []
+		    },
 	  },
 	  "plugins" : [
-	    "contextmenu", "dnd", "search",
-	    "state", "types", "wholerow"
+	    "types"
 	  ]
 	});
 
@@ -108,23 +119,17 @@ $j('#jstree_demo').on("ready.jstree", function (e, data) {
 
 
 
-var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class="hor-scroll"><table cellspacing="0" class="form-list"><tbody>' +
+var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class="hor-scroll">' +
 				'<input type="hidden" id="node_options_{{number}}_is_delete" name="node_options[{{number}}][is_delete]" value="" />'+
 				'<input type="hidden" name="node_options[{{number}}][id]" value="{{id}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_name" name="node_options[{{number}}][label]" value="{{label}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_number" name="node_options[{{number}}][number]" value="{{number}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_parent" name="node_options[{{number}}][parent]" value="{{parent}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_pos" name="node_options[{{number}}][pos]" value="{{pos}}" />'+
-				'<tr id="node_options_{{number}}"><td  class="label">' +
-				'<label for="title">Pages</label>' +
-				'</td>' +
-				'<td class=2value"><select multiple="multiple" size="15" class="select"  id="node_options_{{number}}_pages" name="node_options[{{number}}][pages]">' +
-				'	<?php foreach ($this->getPages() as $key=>$value): ?>' +
-				'			<option value="<?php echo($key)?>"><?php echo($value) ?></option>' +
-				'	<?php endforeach; ?>' +
-				'</select></td>'+
-				'</tr>'+
-				'</tbody></table></div>';
+				'<input type="hidden" id="node_options_{{number}}_type" name="node_options[{{number}}][type]" value="{{type}}" />'+
+				'<input type="hidden" id="node_options_{{number}}_page_id" name="node_options[{{number}}][page_id]" value="{{page_id}}" />'+
+				'<input type="hidden" id="node_options_{{number}}_title" name="node_options[{{number}}][title]" value="{{title}}" />'+
+				'</div>';
 
 
 
@@ -138,11 +143,11 @@ var nodeOptions = {
 		pos : 0,
 		kategories : [],
 		show : function(node) {
-			this.hideAll();
+			//this.hideAll();
 			if(node.data){
 				var elem = $j("#node_options_"+node.data.number);
 				if(elem){
-					elem.show();
+					//elem.show();
 				}
 			}
 			//Element.insert(this.div, {'':this.template.evaluate(data)});
@@ -160,6 +165,12 @@ var nodeOptions = {
 			var elem = $j("#node_options_" + node.data.number + "_name");
 			if(elem){
 				elem.val($text);
+			}
+			if(node.data.type = 'page'){
+				var elem = $j("#node_options_" + node.data.number + "_title");
+				node.text = node.text + " ("+elem.val()+")";
+				var ref = this.tree.jstree(true);
+				ref.redraw(true);
 			}
 		},
 		move : function(node, pos) {
@@ -212,13 +223,44 @@ var nodeOptions = {
 				
 				data.name = 'default';
 				data.label = 'New Node';
+				data.type = "default"
 			}
 			data.number = this.itemCount;
-			
-			sel = ref.create_node(sel,  {"type":"default","data":data, "text" : data.label});
+			var text = data.label;
+			if(data.type == 'page'){
+				text = text + " (" + data.title + ")";
+			}
+			sel = ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
 			if(sel && edit) {
 				ref.edit(sel);
 			}
+			this.template = new Template(this.templateText, this.templateSyntax);
+			var content = this.template.evaluate(data);
+			this.div.html( this.div.html() + content);
+			
+			var node = ref.get_node(sel);
+			this.move(node, this.itemCount);
+				
+			
+			return node.id;
+			
+		},
+		addPage: function(id, label) {
+			var ref = this.tree.jstree(true);
+			this.itemCount++;
+			var	sel = ref.get_selected();
+			if(!sel.length) { return false; }
+
+			sel = sel[0];
+			ref.open_node(sel);
+			var data = new Object();
+			data.number = this.itemCount;
+			data.type = 'page';
+			data.label = label;
+			data.page_id = id;
+			data.title = label;
+			sel = ref.create_node(sel,  {"type":"page","data":data, "text" : data.label});
+			
 			this.template = new Template(this.templateText, this.templateSyntax);
 			var content = this.template.evaluate(data);
 			this.div.html( this.div.html() + content);
@@ -246,53 +288,13 @@ var nodeOptions = {
 			var	sel = ref.get_selected();
 			if(!sel.length) { return false; }
 			sel = sel[0];
+			var node = ref.get_node(sel);
+			if(node.data.type = 'page'){
+				var node = ref.get_node(sel);
+				var elem = $j("#node_options_" + node.data.number + "_name");
+				node.text = elem.val();
+			}
 			ref.edit(sel);
-		},
-		xxadd : function(data) {
-			this.template = new Template(this.templateText, this.templateSyntax);
-			if(!data){
-			var data = new Object();
-			} 
-			
-			data.number = this.itemCount;
-			
-			if (data.pos) {
-			this.pos = Math.max(data.pos,this.pos);
-			}else{
-			this.pos++;
-			data.pos = this.pos;
-			}
-			
-			Element.insert(this.div, {'before':this.template.evaluate(data)});
-			
-			//set selected fieldname
-			if (data.name) {
-			$A($('personal_options_'+data.number+'_field').options).each(function(option){
-			if (option.value==data.name) option.selected = true;
-			});
-			}
-			
-			//set selected is_require
-			if (data.required == '1') {
-			$('personal_options_'+data.number+'_required').checked = true;
-			}
-			
-			this.itemCount++;
-			this.bindRemoveButtons();
-			
-		},
-		bindRemoveButtons : function(){
-		var buttons = $$('button.delete-personal-option');
-		for(var i=0;i<buttons.length;i++){
-		if(!$(buttons[i]).binded){
-		$(buttons[i]).binded = true;
-		Event.observe(buttons[i], 'click', this.remove.bind(this));
-		}
-		}
-		
-		var inputs = $$('div.personal-options button', 'div.personal-options input');
-		inputs.each(function(el) { Event.observe(el, 'change', el.setHasChanges.bind(el));  } )
-		
 		}
 }
 

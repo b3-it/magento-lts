@@ -68,6 +68,24 @@
             </updates>
         </layout>
     </adminhtml>
+        <frontend>
+        <translate>
+            <modules>
+                <Sid_Cms>
+                    <files>
+                        <default>Sid_Cms.csv</default>
+                    </files>
+                </Sid_Cms>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <sidcms>
+                    <file>sid/cms.xml</file>
+                </sidcms>
+            </updates>
+        </layout>
+    </frontend>
     <global>
         <models>
             <sidcms>

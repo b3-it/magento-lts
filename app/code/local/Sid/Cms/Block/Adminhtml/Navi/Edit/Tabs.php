@@ -29,7 +29,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
 	{
 		$navi = Mage::registry('navi_data');
 		$collection = Mage::getModel('sidcms/node')->getCollection();
-		$res = $collection->getNodesAsArray($navi->getId());
+		$res = $collection->getNodesAsArray($navi->getId(),true);
 		return $res;
 	}
   

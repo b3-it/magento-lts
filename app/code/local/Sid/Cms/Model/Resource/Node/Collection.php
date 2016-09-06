@@ -25,10 +25,13 @@ class Sid_Cms_Model_Resource_Node_Collection extends Mage_Core_Model_Resource_Db
      * @param array $naviId
      * @return Sid_Cms_Model_Resource_Node Dummy Root Node
      */
-    private function _getNodeTree($naviId)
+    private function _getNodeTree($naviId, $addCmsPage = false)
     {
     	$this->getSelect()->where('navi_id = '.intval($naviId));
-    	
+    	if($addCmsPage){
+    		$this->getSelect()->joinLeft(array('page'=>$this->getTable('cms/page')), 'main_table.page_id=page.page_id',array('title','is_active'));
+    	}
+    	//die($this->getSelect()->__toString());
     	$allItems = $this->getItems();
     	
     	$root = Mage::getModel('sidcms/node');
@@ -59,10 +62,16 @@ class Sid_Cms_Model_Resource_Node_Collection extends Mage_Core_Model_Resource_Db
     	
     }
     
-    public function getNodesAsArray($naviId)
+    public function getNodesAsArray($naviId, $addCmsPage = false)
     {
-    	$root = $this->_getNodeTree($naviId);
+    	$root = $this->_getNodeTree($naviId,$addCmsPage);
     	return $root->getChildrenArray(true);	
+    }
+    
+    public function getNodesTree($naviId, $addCmsPage = false)
+    {
+    	$root = $this->_getNodeTree($naviId,$addCmsPage);
+    	return $root;
     }
     
 }

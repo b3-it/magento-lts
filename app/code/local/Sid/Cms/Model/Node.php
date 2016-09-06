@@ -35,14 +35,19 @@ class Sid_Cms_Model_Node extends Mage_Core_Model_Abstract
     	 
     	foreach ($this->_children as $item)
     	{
-    		if($item->getPos() < $node->getPos())
+    		if($node) 
     		{
+	    		if($item->getPos() < $node->getPos())
+	    		{
+	    			$tmp[] = $item;
+	    		}
+	    		else {
+	    			$tmp[] = $node;
+	    			$tmp[] = $item;
+	    			$node = null;
+	    		}
+    		}else{
     			$tmp[] = $item;
-    		}
-    		else {
-    			$tmp[] = $node;
-    			$tmp[] = $item;
-    			$node = null;
     		}
     	}
     	if($node)
@@ -91,5 +96,10 @@ class Sid_Cms_Model_Node extends Mage_Core_Model_Abstract
     	}
     	 
     	return $result;
+    }
+    
+    public function getChildren()
+    {
+    	return $this->_children;
     }
 }

@@ -29,6 +29,7 @@ if (!$installer->tableExists($installer->getTable('sidcms/navigation')))
 		CREATE TABLE {$this->getTable('sidcms/navigation')} (
 		  `id` int(11) unsigned NOT NULL auto_increment,
 		  `store_id` smallint unsigned NOT NULL,
+		  `title` varchar(255) NOT NULL default '',
 		  `created_time` datetime NULL,
 		  `update_time` datetime NULL,
 		  PRIMARY KEY (`id`),
@@ -43,32 +44,23 @@ if (!$installer->tableExists($installer->getTable('sidcms/navigation_node')))
 			CREATE TABLE {$this->getTable('sidcms/navigation_node')} (
 			`id` int(11) unsigned NOT NULL auto_increment,
 			`parent_id` int(11) unsigned,
+			`page_id` smallint(6) default NULL,
 			`navi_id` int(11) unsigned NOT NULL,
+			`pos` smallint(6) unsigned default 0,
 			`label` varchar(255) NOT NULL default '',
+			`type` varchar(10) NOT NULL default 'default',
 			`created_time` datetime NULL,
 			`update_time` datetime NULL,
 			PRIMARY KEY (`id`),
 			FOREIGN KEY (`navi_id`) REFERENCES {$this->getTable('sidcms/navigation')} (id) ON DELETE CASCADE,
-			FOREIGN KEY (`parent_id`) REFERENCES {$this->getTable('sidcms/navigation_node')} (id) ON DELETE CASCADE
+			FOREIGN KEY (`parent_id`) REFERENCES {$this->getTable('sidcms/navigation_node')} (id) ON DELETE CASCADE,
+			FOREIGN KEY (`page_id`) REFERENCES {$this->getTable('cms/page')} (page_id) ON DELETE CASCADE
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	");
 }
 
 
-if (!$installer->tableExists($installer->getTable('sidcms/navigation_page')))
-{
-	$installer->run("
-			CREATE TABLE {$this->getTable('sidcms/navigation_page')} (
-			`id` int(11) unsigned NOT NULL auto_increment,
-			`page_id` int(11) unsigned NOT NULL,
-			`pos` int(11) unsigned default 0,			
-			`created_time` datetime NULL,
-			`update_time` datetime NULL,
-			PRIMARY KEY (`id`),
-			FOREIGN KEY (`page_id`) REFERENCES {$this->getTable('sidcms/navigation_page')} (id) ON DELETE CASCADE
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	");
-}
+
 
 
 

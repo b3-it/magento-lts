@@ -163,8 +163,16 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 			
 			$model->setLabel($node['label'])
 				->setPos($node['pos'])
+				->setType($node['type'])
 				->setNaviId($naviId);
 			
+			if(!isset($node['page_id']) || empty($node['page_id']))
+			{
+				$model->unsetData('page_id');
+			}else{
+				
+				$model->setPageId($node['page_id']);
+			}
 			$loaded[] = $node;
 			
 		}

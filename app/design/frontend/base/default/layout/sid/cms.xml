@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+   <default>
+        <reference name="left">
+           <block type="sidcms/navbar" before="navbar" name="sidcms.navbar" template="sid/cms/navbar.phtml"/>
+        </reference>
+    </default>
+</layout>
