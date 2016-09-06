@@ -11,7 +11,7 @@ class Egovs_Base_Helper_Config extends Mage_Core_Helper_Abstract
                                  );
 
     /**
-     * Config-Status für ein bestimmtes Feld innerhalb der Kundenkonfiguration
+     * Config-Status fÃ¼r ein bestimmtes Feld innerhalb der Kundenkonfiguration
      *
      * @param string $key               Feldname
      * @param string $CheckoutMethod    Methode
@@ -47,23 +47,23 @@ class Egovs_Base_Helper_Config extends Mage_Core_Helper_Abstract
 		        }
 		        return isset($this->_registerconfig[$key]) ? $this->_registerconfig[$key] : '';
 	    	}
-	  }
+    }
 
     /**
-     * Abfrage, ob ein bestimmtes Feld für Benutzerdaten ein Pflicht-Feld ist
+     * Abfrage, ob ein bestimmtes Feld fÃ¼r Benutzerdaten ein Pflicht-Feld ist
      *
      * @param string $key               Feldname
      * @param string $CheckoutMethod    Methode
      *
      * @return bool
      */
-	  public function isFieldRequired($key, $CheckoutMethod)
+    public function isFieldRequired($key, $CheckoutMethod)
     {
         return ($this->getConfig($key, $CheckoutMethod) == 'req');
     }
 
     /**
-     * Abfrage, ob ein bestimmtes Feld für Benutzerdaten sichtbar ist
+     * Abfrage, ob ein bestimmtes Feld fÃ¼r Benutzerdaten sichtbar ist
      *
      * @param string $key               Feldname
      * @param string $CheckoutMethod    Methode

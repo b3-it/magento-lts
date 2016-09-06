@@ -115,6 +115,14 @@ class Egovs_Checkout_Block_Multipage_Newaddress extends Egovs_Checkout_Block_Mul
 
         return $res;
     }
+    
+    public function getFormData() {
+    	$postdata = Mage::getSingleton('customer/session')->getData('addresspostdata');
+    	if(($postdata != null) && is_array($postdata)) {    		
+    		return new Varien_Object($postdata);
+    	}    	
+    	return new Varien_Object();
+    }    
 
     public function getFieldRequiredHtml($name, $method = null) {
         return $this->getFieldRequired($name, $method, 'html');

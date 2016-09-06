@@ -132,11 +132,13 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
 
     public function getRegionHtmlSelect($type)
     {
-        $select = $this->getLayout()->createBlock('core/html_select')
+        $require_class = ( Mage::helper('egovsbase/config')->isFieldRequired('region') ? 'required-entry ' : '' );
+    	
+    	$select = $this->getLayout()->createBlock('core/html_select')
             ->setName($type.'[region]')
             ->setId($type.':region')
             ->setTitle(Mage::helper('checkout')->__('State/Province'))
-            ->setClass('required-entry validate-state')
+            ->setClass($require_class . 'validate-state')
             ->setValue($this->getAddress()->getRegionId())
             ->setOptions($this->getRegionCollectionAsOptionArray());
 
