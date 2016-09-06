@@ -25,6 +25,7 @@
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate" class="scaffold-form" enctype="multipart/form-data" autocomplete="off">
         <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
         <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+        <input type="hidden" name="method" value="register" />
         <?php echo $this->getBlockHtml('formkey'); ?>
 
         <p class="form-instructions">

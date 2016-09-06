@@ -279,9 +279,16 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
      */
     public function addressesPostAction()
     {
+    	$_widget_keys = array('method', 'prefix', 'firstname', 'middlename', 'lastname', 'suffix', 'vat_id');
+    	
     	try {
     		if ($this->getRequest()->isPost()) {
     			$data = $this->getRequest()->getPost('billing', array());
+    			
+    			foreach( $_widget_keys AS $post_key ) {
+    				$data[$post_key] = $this->getRequest()->getPost($post_key, '');
+    			}
+    			
     			if(isset($data['base_address'])){ unset($data['base_address']);}
     			$customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
     			Mage::getSingleton('customer/session')->setData('addresspostdata', $data);
