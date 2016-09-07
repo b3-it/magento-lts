@@ -46,8 +46,8 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
-			$this->_addContent($this->getLayout()->createBlock('sidcms/adminhtml_navi_edit'))
-				->_addLeft($this->getLayout()->createBlock('sidcms/adminhtml_navi_edit_tabs'));
+			$this->_addContent($this->getLayout()->createBlock('sidcms/adminhtml_navi_edit'));
+			//	->_addLeft($this->getLayout()->createBlock('sidcms/adminhtml_navi_edit_tabs'));
 
 			$this->renderLayout();
 		} else {

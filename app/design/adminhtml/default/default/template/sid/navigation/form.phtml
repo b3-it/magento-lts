@@ -1,0 +1,14 @@
+<div class="columns sidcms-columns">
+	<div id="page:left" class="sidcms-side-col">
+		<?php echo $this->getChildHtml('navigation_tree');?>
+	</div>
+	<div id="content" class="sidcms-main-col">
+	<div class="main-col-inner">
+		
+		<div class="entry-edit">
+		    <?php echo $this->getFormHtml();?>
+		</div>
+		<?php echo $this->getChildHtml('form_after');?>
+	</div>
+	</div>
+</div>

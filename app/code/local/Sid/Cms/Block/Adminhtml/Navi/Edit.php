@@ -47,11 +47,10 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit extends Mage_Adminhtml_Block_Widget_Form
 
     public function getHeaderText()
     {
-        if( Mage::registry('navi_data') && Mage::registry('navi_data')->getId() ) {
-            return Mage::helper('sidcms')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('navi_data')->getTitle()));
-        } else {
-            return Mage::helper('sidcms')->__('Add Item');
-        }
+    	$navi = Mage::registry('navi_data');
+    	$store = Mage::getModel('core/store')->load($navi->getStoreId());
+        return Mage::helper('sidcms')->__("Edit '%s' (%s)", $this->htmlEscape(Mage::registry('navi_data')->getTitle()),$store->getName());
+        
     }
 	
 	

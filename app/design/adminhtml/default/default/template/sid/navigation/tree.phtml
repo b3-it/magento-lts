@@ -9,22 +9,7 @@
 <?php endif ?>
 
 
-<?php if(!empty($tabs)): ?>
-<ul id="<?php echo $this->getId() ?>" class="tabs">
-<?php foreach ($tabs as $_tab): ?>
-<?php if (!$this->canShowTab($_tab)): continue;  endif; ?>
-    <li <?php if($this->getTabIsHidden($_tab)): ?> style="display:none"<?php endif; ?>>
-        <a href="<?php echo $this->getTabUrl($_tab) ?>" id="<?php echo $this->getTabId($_tab) ?>" name="<?php echo $this->getTabId($_tab, false) ?>" 
-        title="<?php echo Mage::helper('core')->quoteEscape($this->getTabTitle($_tab)) ?>" class="tab-item-link <?php echo $this->getTabClass($_tab) ?><?php if (preg_match('/\s?ajax\s?/', $_tab->getClass())) {?> notloaded<?php }?>">
-           </a>
-        <div id="<?php echo $this->getTabId($_tab) ?>_content" style="display:none;"><?php echo $this->getTabContent($_tab) ?></div>
-    </li>
-<?php endforeach; ?>
-</ul>
-<script type="text/javascript">
-    <?php echo $this->getJsObjectName() ?> = new varienTabs('<?php echo $this->getId() ?>', '<?php echo $this->getDestElementId() ?>', '<?php echo $this->getActiveTabId() ?>', <?php echo $this->getAllShadowTabs()?>);
-</script>
-<?php endif; ?>
+
 
 
 <div >
@@ -94,19 +79,16 @@ $j('#jstree_demo').jstree({
 
 $j('#jstree_demo').on("changed.jstree", function (e, data) {
 	if(data.selected.length) {
-		//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
 		nodeOptions.show(data.instance.get_node(data.selected[0]));
 	}
 });
 $j('#jstree_demo').on("rename_node.jstree", function (e, data) {
 	if(data.node) {
-		//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
 		nodeOptions.rename(data.node,data.text);
 	}
 });
 $j('#jstree_demo').on("move_node.jstree", function (e, data) {
 	if(data.node) {
-		//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
 		nodeOptions.move(data.node, data.position);
 	}
 });
@@ -135,7 +117,7 @@ var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class
 
 				
 var nodeOptions = {
-		div : $j("#navi_form"),
+		div : $j("#edit_form"),
 		tree : $j("#jstree_demo"),
 		templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
 		templateText : nodeTemplate,
@@ -214,8 +196,6 @@ var nodeOptions = {
 			else if(sel == 'root')
 			{
 				sel =  ref.get_node('j1_1');
-				//var children = sel.children;// ref.get_children_dom(sel);
-				//var cild = children[0];
 			} 
 			
 			if(!data){
@@ -295,6 +275,11 @@ var nodeOptions = {
 				node.text = elem.val();
 			}
 			ref.edit(sel);
+		},
+		open_all: function()
+		{
+			var ref = this.tree.jstree(true);
+			ref.open_all('j1_1');
 		}
 }
 
@@ -313,6 +298,7 @@ function init_db_nodes()
 
 ?>
 <?php endforeach;?>
+	nodeOptions.open_all();
 }
 
 //]]>

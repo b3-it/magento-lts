@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
+class Sid_Cms_Block_Adminhtml_Navi_Edit_Tree extends Mage_Adminhtml_Block_Widget
 {
 
   public function __construct()
@@ -19,7 +19,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
       $this->setId('navi_tabs');
       $this->setDestElementId('edit_form');
       $this->setTitle(Mage::helper('sidcms')->__('Navigation'));
-      $this->setTemplate('sid/navigation/tabs.phtml');
+      $this->setTemplate('sid/navigation/tree.phtml');
   }
   
  
@@ -46,7 +46,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Tabs extends Mage_Adminhtml_Block_Widget
 	}
 	
   
-  protected function _beforeToHtml()
+  protected function x_beforeToHtml()
   {
       $this->addTab('form_section', array(
           'label'     => Mage::helper('sidcms')->__('Base Settings'),
