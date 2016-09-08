@@ -96,11 +96,14 @@ abstract class Egovs_Paymentbase_Model_Adapter_Abstract extends Mage_Core_Model_
 			//Firma
 			$data->setPrefix($this->__('Company'));
 			$company = trim(sprintf('%s %s %s', $address->getCompany(), $address->getCompany2(), $address->getCompany3()));
+			/** @var $helper Egovs_Base_Helper_Config */
+			$helper = Mage::helper('egovsbase/config');
+			
 			//20140304::Frank Rochlitzer
 			//META Daten für bessere Behandlung von Firmen setzen
 			$data->setIsCompany(true);
 			$data->setCompany($company);
-			$data->setCompanyRepresented(sprintf("%s %s", $this->_getFirstname($src, $address), $this->_getLastname($src, $address)));
+			$data->setCompanyRepresented(sprintf("%s %s", $this->_getFirstname($src, $address), $this->_getLastname($src, $address, $helper->isFieldRequired('lastname', 'register'))));
 			
 			if (mb_strlen($company, 'UTF-8') > 27) {
 				if (mb_strlen($company, 'UTF-8') > 54) {
@@ -117,7 +120,7 @@ abstract class Egovs_Paymentbase_Model_Adapter_Abstract extends Mage_Core_Model_
 				//Company wird in Lastname gespeichert
 				$data->setLastname($company);
 				//Nachname in Vornamen speichern
-				$data->setFirstname($this->_getLastname($src, $address));
+				$data->setFirstname($this->_getLastname($src, $address, $helper->isFieldRequired('lastname', 'register')));
 			}
 		} else {
 			//Person
@@ -171,14 +174,15 @@ abstract class Egovs_Paymentbase_Model_Adapter_Abstract extends Mage_Core_Model_
 	/**
 	 * Liefert den Nachnamen
 	 *
-	 * @param Mage_Sales_Model_Order|Mage_Customer_Model_Address_Abstract $src     Source
-	 * @param Mage_Customer_Model_Address_Abstract                        $address Adresse
+	 * @param Mage_Sales_Model_Order|Mage_Customer_Model_Address_Abstract $src            Source
+	 * @param Mage_Customer_Model_Address_Abstract                        $address        Adresse
+	 * @param boolean                                                     $throwException If not set throw exception
 	 *
 	 * @return string
 	 *
 	 * @throws Exception falls kein Nachname verfügbar
 	 */
-	protected function _getLastname($src, $address) {
+	protected function _getLastname($src, $address, $throwException = true) {
 		// Nachname
 		if (strlen($address->getLastname()) > 0) {
 			return $address->getLastname();
@@ -189,7 +193,11 @@ abstract class Egovs_Paymentbase_Model_Adapter_Abstract extends Mage_Core_Model_
 		} elseif ($address instanceof Mage_Customer_Model_Address && $address->getCustomer() != false) {
 			return $address->getCustomer()->getLastname();
 		}
-	
-		Mage::throwException($this->__('Lastname is a required field'));
+
+		if ($throwException) {
+			Mage::throwException($this->__('Lastname is a required field'));
+		}
+		
+		return null;
 	}
 }
