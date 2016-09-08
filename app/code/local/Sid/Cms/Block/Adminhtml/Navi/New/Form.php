@@ -34,7 +34,7 @@ class Sid_Cms_Block_Adminhtml_Navi_New_Form extends Mage_Adminhtml_Block_Widget_
       		'label'     => Mage::helper('cms')->__('Store View'),
       		'title'     => Mage::helper('cms')->__('Store View'),
       		'required'  => true,
-      		'values'    => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true),
+      		'values'    => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, false),
       ));
       $renderer = $this->getLayout()->createBlock('adminhtml/store_switcher_form_renderer_fieldset_element');
       $field->setRenderer($renderer);

@@ -24,15 +24,26 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="block block-compare">
-    <div class="block-title">
-        <h2>
-            <?php echo $this->getNavigation()->getTitle() ?>
-        </h2>
-    </div>
-    <div class="block-content">
+<?php if($this->isAvialable()):?>
+    <nav id="sid-cms-page-navigation">
+    
+    <?php if($this->getTitle()):?>
+	    <ol>
+	        <li class="egov-catalog-title">
+	        <a class="level0 egov-arrow-main-open" href="javascript:void(0);" ><?php echo $this->getTitle() ?></a>
+	            
+	        
+    <?php endif;?>
+    
     <?php echo $this->getPagesHtml()?>
     
-    </div>
-</div>
+    <?php if($this->getTitle()):?>
+    	</li>
+  		</ol>
+    <?php endif;?>
+    </nav>
 
+	<script type="text/javascript">
+    	$j('#sid-cms-page-navigation').eGovMenu();
+	</script>
+<?php endif;?>

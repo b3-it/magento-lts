@@ -68,6 +68,11 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Form extends Mage_Adminhtml_Block_Widget
       return parent::_prepareForm();
   }
   
+  protected function _afterToHtml($html)
+  {
+  	$html = str_replace('</form>', '<div id="hidden_navi_menu" /></form>', $html);
+  	return $html;
+  }
   
   public function getPages()
   {
