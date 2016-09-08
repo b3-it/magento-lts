@@ -88,8 +88,6 @@
 
             .block-title {
                 margin: 0px;
-                background-color: transparent;
-                border: 0px;
             }
 
             .block-content {
@@ -127,7 +125,7 @@
 
 .opc .section .step-title {
     width: 100%;
-    border-top: $global-box-border solid $global-border-color;
+    border-top: $global-box-border solid $global-navigation-border-color;
     position: relative;
     @include not-selectable;
 
@@ -178,7 +176,7 @@
     @extend .button;
     @extend .egov-float-right;
     display: block;
-    margin-top: 7px;
+    margin: 3px 0;
 }
 
 .no-touch .opc .section .step-title a:hover {

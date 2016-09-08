@@ -117,7 +117,6 @@ div#details-block {
         }
 
         #product-base-block {
-            /* min-height: $global-1-product-height; */
             margin-bottom: $global-boxmargin;
         }
 
@@ -224,13 +223,6 @@ div#details-block {
                 span {
                     font-size: $global-fontsize-big;
                 }
-
-                //.old-price, .special-price {
-                //    display: block;
-                //    float: none;
-                //    width: 50%;
-                //    padding: 0;
-                //}
 
                 span.label {
                     display: inline-block;

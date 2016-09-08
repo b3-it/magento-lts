@@ -92,29 +92,20 @@
             border: 0px;
 
             .block-title {
-                _border-width: $global-box-border $global-box-border $global-box-border-bottom $global-box-border;
-                _border-style: solid;
-                _border-color: $global-border-color;
                 margin: 0px;
-                _padding-top: 3px !important;
-
                 background-color: transparent;
                 border: 0px;
             }
 
             .block-content {
-                _border-width: 0px $global-box-border $global-box-border $global-box-border;
-                _border-style: solid;
-                _border-color: $global-border-color;
                 margin: 0px;
                 padding: $global-boxpadding;
-                _background-color: $global-box-content-backgroundcolor;
             }
         }
     }
 }
 
-#checkout-step-billing {
+#checkout-step-billing, #checkout-step-shipping {
     @include new_address;
 }
 
