@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout>
-     <adminhtml_cms_page_edit>
+     <xadminhtml_cms_page_edit>
 	      <reference name="cms_page_edit_tabs">
 	        <action method="addTab"><name>navi_section</name><block>sidcms/adminhtml_page_edit_tab_navi</block></action>
 	      </reference>
-     </adminhtml_cms_page_edit>
+     </xadminhtml_cms_page_edit>
      <adminhtml_cms_navi_index>
         <reference name="content">
             <block type="sidcms/adminhtml_navi" name="cms" />

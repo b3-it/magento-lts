@@ -7,13 +7,14 @@ class Sid_ExportOrder_Model_Type_Format extends Varien_Object
     	$result = array();
     	$types = Mage::getConfig()->getNode('sid_exportorder/format')->asArray();
     	
-    	foreach($types as $typ)
-    	{
-    		if(isset($typ['typ']) && isset($typ['label'])){
-    			$result[$typ['typ']] = $typ['label'];
-    		}
+    	if(is_array($types)){
+	    	foreach($types as $typ)
+	    	{
+	    		if(isset($typ['typ']) && isset($typ['label'])){
+	    			$result[$typ['typ']] = $typ['label'];
+	    		}
+	    	}
     	}
-    	
     	return $result;
     	
     }

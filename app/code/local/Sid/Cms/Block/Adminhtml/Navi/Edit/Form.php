@@ -45,7 +45,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Form extends Mage_Adminhtml_Block_Widget
       $fieldset = $form->addFieldset('navi_pages', array('legend'=>Mage::helper('sidcms')->__('Pages')));
       
       $fieldset->addField('cms_pages', 'multiselect', array(
-      		'label'     => Mage::helper('framecontract')->__('Seiten'),
+      		'label'     => Mage::helper('sidcms')->__('Seiten'),
       		//'required'  => true,
       		'values'    => $this->getPages(),
       		'name'      => 'cms_pages',

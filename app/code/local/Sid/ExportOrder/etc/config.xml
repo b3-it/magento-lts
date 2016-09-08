@@ -110,8 +110,6 @@
 	    		<label>Transdoc</label>
 	    		<typ>transdoc</typ>
     		</transdoc>
-    		<csv></csv>
-    		<transdoc></transdoc>
     	</format>
     	<transfer>
     		<email>

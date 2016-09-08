@@ -37,6 +37,59 @@ class Sid_Cms_Model_Observer extends Varien_Object
 					'time' => 	true,
 					'class'     => 'validate-datetime'
 			));
+			
+			 $fieldset->addField('customergroups_hide', 'multiselect', array(
+      		'label'     => Mage::helper('sidcms')->__('Hide from Customer Groups'),
+      		//'required'  => true,
+      		'values'    => $this->_getCustomerGroup(),
+      		'name'      => 'customergroups_hide',
+      		'value'	=> ''
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      		));
+		}
+		
+		private function _getCustomerGroup()
+		{
+			$collection = Mage::getResourceModel('customer/group_collection')->load();
+		
+			$res = array();
+			
+			foreach($collection as $item){
+				$res[] = array('value'=>$item->getId(),'label'=>$item->getCustomerGroupCode());
+			}
+			
+			return $res;
+		}
+		
+		/**
+		 * das Kundengruppen Array serialisieren 
+		 * @param unknown $observer
+		 */
+		public function onCmsPageSaveBefore($observer)
+		{
+			$page = $observer->getDataObject();	
+			$hide = $page->getData('customergroups_hide');
+			if(is_array($hide)){
+				$hide = implode(',', $hide);
+			}else{
+				$hide ="";
+			}
+			$page->setData('customergroups_hide',$hide);
+			
+		}
+		
+		/**
+		 * das Kundengruppen Array deserialisieren
+		 * @param unknown $observer
+		 */
+		public function onCmsPageLoadAfter($observer)
+		{
+			$page = $observer->getDataObject();
+			$hide = $page->getData('customergroups_hide');
+			$hide = explode(',',$hide);
+			$page->setData('customergroups_hide',$hide);
+				
 		}
 
 }
