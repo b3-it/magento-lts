@@ -106,7 +106,7 @@
       <codePool>local</codePool>
     </Egovs_Informationservice>
     <Egovs_Isolation>
-      <active>true</active>
+      <active>false</active>
       <codePool>local</codePool>
     </Egovs_Isolation>
     <Egovs_Openaccountpayment>
@@ -217,7 +217,7 @@
       </depends>
     </Egovs_Zahlpartnerkonten>
     <Egovs_EventBundle>
-        <active>true</active>
+        <active>false</active>
           <codePool>local</codePool>
            <depends>
              <Egovs_Checkout />
