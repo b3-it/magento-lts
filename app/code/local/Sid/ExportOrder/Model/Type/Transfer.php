@@ -11,10 +11,12 @@ class Sid_ExportOrder_Model_Type_Transfer extends Varien_Object
 		$result = array();
 		$types = Mage::getConfig()->getNode('sid_exportorder/transfer')->asArray();
 		 
-		foreach($types as $typ)
-		{
-			if(isset($typ['typ']) && isset($typ['label'])){
-				$result[$typ['typ']] = $typ['label'];
+		if(is_array($types)){
+			foreach($types as $typ)
+			{
+				if(isset($typ['typ']) && isset($typ['label'])){
+					$result[$typ['typ']] = $typ['label'];
+				}
 			}
 		}
 		 
