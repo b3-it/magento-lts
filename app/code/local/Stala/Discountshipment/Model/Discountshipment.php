@@ -46,7 +46,7 @@ class Stala_Discountshipment_Model_Discountshipment
 		
         $result = Mage::getModel('shipping/rate_result');
         
-        if($request->getPackageValueWithDiscount() <=  0.01) {
+        if ($request->getPackageValueWithDiscount() <=  0.01) {
             $method = Mage::getModel('shipping/rate_result_method');
 
             $method->setCarrier('discountshipment');
