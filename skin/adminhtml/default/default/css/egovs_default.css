@@ -47,3 +47,17 @@
 #sid-lose-grid input.input-text {
     width: 98%;
 }
+div.sidcms-side-col{
+	float: left;
+    margin-right: -220px;
+    padding-bottom: 25px;
+    width: 420px;
+}
+div.sidcms-main-col{
+	margin-left: 420px;
+    min-height: 450px;
+    padding: 0 0 25px 25px;
+}
+.sidcms-columns{
+    background: rgba(0, 0, 0, 0) url("images/side_col_bg.gif") repeat-y scroll 417px 0;
+}
