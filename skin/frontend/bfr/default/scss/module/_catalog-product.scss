@@ -265,73 +265,73 @@ div#details-block {
 
         .product-additional-information {
             margin-bottom: $global-boxmargin;
+        }
+       
+        .product-options {
+            border-width: $global-active-border;
+            border-style: solid;
+            border-color: $global-navigation-border-color;
 
-            .product-options {
-                border-width: $global-active-border;
-                border-style: solid;
-                border-color: $global-navigation-border-color;
+            dt {
+                margin-top: 0;
+                margin-bottom: $global-boxmargin / 2;
+            }
 
-                dt {
-                    margin-top: 0;
+            dt.option-box {
+                display: inline-block;
+                vertical-align: top;
+                width: 90%;
+                margin-bottom: $global-boxmargin;
+                padding-bottom: $global-boxmargin / 2;
+
+                border-bottom-width: $global-active-border;
+                border-bottom-style: solid;
+                border-bottom-color: $global-border-color;
+
+                &:last-child, &.last {
+                    border-bottom: 0;
+                    margin-bottom: 0;
+                }
+
+	            > label {
+                    display: block;
+                    font-size: 1.3em;
                     margin-bottom: $global-boxmargin / 2;
                 }
 
-                dt.option-box {
-                    display: inline-block;
-                    vertical-align: top;
-                    width: 90%;
-                    margin-bottom: $global-boxmargin;
-                    padding-bottom: $global-boxmargin / 2;
-
-                    border-bottom-width: $global-active-border;
-                    border-bottom-style: solid;
-                    border-bottom-color: $global-border-color;
-
-                    &:last-child, &.last {
-                        border-bottom: 0;
-                        margin-bottom: 0;
-                    }
-
-                    > label {
-                        display: block;
-                        font-size: 1.3em;
-                        margin-bottom: $global-boxmargin / 2;
-                    }
-
-                    .qty-hidden {
-                        display: none;
-                    }
-                }
-
-                .checkbox, .radio {
-                    margin-top: 0;
-                }
-
-                .type-checkbox, .type-radio,
-                .type-multiple, .type-date {
-                    vertical-align: top;
-                    display: inline-block;
-                    width: 44.5%;
-                    margin-right: 10px;
-                }
-
-                .type-date {
-                    input[type="text"] {
-                        width: 60%;
-                    }
-                    img {
-                        display: inline-block;
-                    }
+                .qty-hidden {
+                    display: none;
                 }
             }
 
-            .product-options-bottom {
-                background-color: $global-navigation-color;
-                border-color: $global-navigation-border-color;
+            .checkbox, .radio {
+                margin-top: 0;
+            }
 
-                .add-to-links {
-                    display: none;
+            .type-checkbox, .type-radio,
+            .type-multiple, .type-date {
+                vertical-align: top;
+                display: inline-block;
+                width: 44.5%;
+                margin-right: 10px;
+            }
+
+            .type-date {
+                input[type="text"] {
+                    width: 60%;
                 }
+                img {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .product-options-bottom {
+            background-color: $global-navigation-color;
+            border-color: $global-navigation-border-color;
+
+	        .add-to-links {
+                display: none;
             }
         }
 
