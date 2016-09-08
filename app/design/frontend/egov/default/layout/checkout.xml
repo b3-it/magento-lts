@@ -395,6 +395,24 @@ One page checkout main layout
                 <block type="checkout/onepage_review" name="checkout.onepage.review" as="review" template="checkout/onepage/review.phtml"/>
             </block>
         </reference>
+
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                     <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Checkout_Procedure</crumbname>
+                <crumbinfo>
+                    <label>Checkout Procedure</label>
+                    <title>Checkout Procedure</title>
+                </crumbinfo>
+            </action>
+        </reference>
     </checkout_onepage_index>
 
     <!--
