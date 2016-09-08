@@ -13,6 +13,12 @@ class Egovs_Paymentbase_Model_Attributes_Data_Postcode extends Mage_Customer_Mod
 	public function validateValue($value) {
 		$result = parent::validateValue($value);
 		
+		/** @var $helper Egovs_Base_Helper_Config */
+		$helper = Mage::helper('egovsbase/config');
+		if (!$helper->isFieldRequired('postcode', 'register') && empty($value)) {
+			return $result;
+		}
+		
 		$countryId      = $this->getExtractedData('country_id');
 		$errors = Mage::helper('paymentbase/validation')->validatePostcode($value, $countryId);
 		

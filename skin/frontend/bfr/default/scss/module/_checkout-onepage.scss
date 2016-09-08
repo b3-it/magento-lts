@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -78,11 +78,6 @@
             margin-bottom: $global-boxpadding;
             color: $global-warning-color;
         }
-
-        #checkoutSteps {
-            width: $onepage-content-width;
-            display: inline-block;
-        }
     }
 
     .col-right {
@@ -93,8 +88,6 @@
 
             .block-title {
                 margin: 0px;
-                background-color: transparent;
-                border: 0px;
             }
 
             .block-content {
@@ -111,26 +104,18 @@
 
 @include bp(min-width, $bp-large+1) {
     .checkout-onepage-index {
-        .col-main {
-            float: left;
-            padding-right: 20px;
+    	.col-main, .col-right {
+            display: inline-block;
         }
-
-        .col-right,
-        .col-left {
-            width: percentage(300px/960px);
-            display: block;
+    	
+        .col-main {            
+            margin-right: $global-2R-content-marginright;
         }
 
         .col-right {
-            padding-left: 0;
+            width: $global-2R-rightcol-width;
+            padding: 0;
         }
-    }
-}
-
-.opc {
-    select {
-        width: (230px + 135px);
     }
 }
 
@@ -140,7 +125,7 @@
 
 .opc .section .step-title {
     width: 100%;
-    border-top: $global-box-border solid $global-border-color;
+    border-top: $global-box-border solid $global-navigation-border-color;
     position: relative;
     @include not-selectable;
 
@@ -191,7 +176,7 @@
     @extend .button;
     @extend .egov-float-right;
     display: block;
-    margin-top: 7px;
+    margin: 3px 0;
 }
 
 .no-touch .opc .section .step-title a:hover {
