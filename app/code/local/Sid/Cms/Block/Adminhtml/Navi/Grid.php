@@ -36,13 +36,24 @@ class Sid_Cms_Block_Adminhtml_Navi_Grid extends Mage_Adminhtml_Block_Widget_Grid
           'width'     => '50px',
           'index'     => 'id',
       ));
-
-      $this->addColumn('label', array(
-          'header'    => Mage::helper('cms')->__('Title'),
-          'align'     =>'left',
-          'index'     => 'label',
+      
+      $this->addColumn('title', array(
+      		'header'    => Mage::helper('cms')->__('Title'),
+      		'align'     =>'right',
+      		'index'     => 'title',
       ));
 
+      $this->addColumn('store_id', array(
+      		'header'    => Mage::helper('sales')->__('Store'),
+      		'index'     => 'store_id',
+      		'type'      => 'store',
+      		'width'     => '300px',
+      		'store_view'=> true,
+      		'display_deleted' => true,
+      ));
+      
+      
+   
 
         $this->addColumn('action',
             array(
