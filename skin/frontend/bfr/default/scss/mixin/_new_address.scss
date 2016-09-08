@@ -18,7 +18,7 @@
             margin: 0px !important;
         }
 
-        #billing-new-address-form {
+        #billing-new-address-form, #shipping-new-address-form {
             width: 100%;
         }
 
@@ -74,6 +74,10 @@
                 label {
                     display: inline-block;
                 }
+            }
+           
+            .function-rows label {
+                display: inline-block;
             }
         }
 
@@ -160,31 +164,23 @@
 
         li.fullwide {
             width: 100%;
-
-            .customer-name,
-            .customer-name-prefix,
-            .customer-name-prefix-suffix,
-            .customer-name-prefix-middlename,
-            .customer-name-prefix-middlename-suffix {
-                div.field {
-                    display: inline-block;
-                    width: 48%;
-                }
-            }
         }
 
         li.halfwide {
             width: 48%;
         }
 
-        .customer-name-middlename {
-            width: 100%;
-
+        .customer-name,
+        .customer-name-middlename,
+        .customer-name-prefix,
+        .customer-name-prefix-suffix,
+        .customer-name-prefix-middlename,
+        .customer-name-prefix-middlename-suffix {
             div.field {
+                display: inline-block;
                 width: 48%;
                 vertical-align: top;
                 height: auto;
-                display: inline-block;
             }
         }
     }

@@ -27,7 +27,7 @@
                 <div class="fieldset wide">
                     <ul class="form-list">
                         <li class="fields">
-                            <?php echo $this->getLayout()->createBlock('customer/widget_name')
+                            <?php echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')
                                             ->setObject($this->getAddress()->getFirstname() ? $this->getAddress() : $this->getQuote()->getCustomer())
                                             ->setForceUseCustomerRequiredAttributes(!$this->isCustomerLoggedIn())
                                             ->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')
