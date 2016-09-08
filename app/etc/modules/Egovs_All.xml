@@ -93,6 +93,10 @@
         <Egovs_Paymentbase />
       </depends>
     </Egovs_GermanTax>
+    <Egovs_Girosolution>
+        <active>false</active>
+        <codePool>local</codePool>
+    </Egovs_Girosolution>
     <Egovs_Import>
       <active>false</active>
       <codePool>local</codePool>
