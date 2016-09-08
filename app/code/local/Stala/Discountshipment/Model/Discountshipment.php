@@ -39,22 +39,14 @@ class Stala_Discountshipment_Model_Discountshipment
      * @param Mage_Shipping_Model_Rate_Request $data
      * @return Mage_Shipping_Model_Rate_Result
      */
-    public function collectRates(Mage_Shipping_Model_Rate_Request $request)
-    {
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
         if (!$this->getConfigFlag('active')) {
-
             return false;
         }
-
-       
-        /*
-        if (!Mage::getStoreConfig('carriers/'.$this->_code.'/active'))
-	            return false;
-		*/
+		
         $result = Mage::getModel('shipping/rate_result');
         
-        if($this->_getTotal($request) <=  0.01)
-        {
+        if($request->getPackageValueWithDiscount() <=  0.01) {
             $method = Mage::getModel('shipping/rate_result_method');
 
             $method->setCarrier('discountshipment');
@@ -78,37 +70,7 @@ class Stala_Discountshipment_Model_Discountshipment
      *
      * @return array
      */
-    public function getAllowedMethods()
-    {
+    public function getAllowedMethods() {
         return array('discountshipment'=>Mage::helper('discountshipment')->__('Freeshipping'));
     }
-    
-    
-    protected function _getTotal($request)
-    {
-    	
-    	$a = $request->getPackageValueWithDiscount();
-    	
-    	//wegen Problemen mit Rabatten diese Methode alternativ gewählt
-        $total = 0.0;
-        $items = $request->getAllItems();
-        foreach ($items as $item)
-        {
-            if ($item->getProduct() instanceof Mage_Catalog_Model_Product) 
-            {
-            	if ($item->getDiscountAmount() > 0){
-            		$total += $item->getRowTotalWithDiscount();
-            	}
-            	else{
-            		$total += $item->getPrice();
-            	}
-            	
-            }
-        }
-  	 
-    	return min($a,$total);
-    }
-    
- 	
-
 }
