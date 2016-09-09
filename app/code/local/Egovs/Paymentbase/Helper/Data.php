@@ -376,6 +376,15 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	public function isNonVolatile() {
 		return $this->_nonVolatile;
 	}
+	
+	/**
+	 * Gibt an ob der Nachname bei Firmenaccounts Pflicht ist.
+	 * 
+	 * @return boolean
+	 */
+	public function isCompanyLastNameRequired() {
+		return Mage::getStoreConfigFlag('payment_services/paymentbase/company_lastname');
+	}
 
 	/**
 	 * Liefert die Kundeninformationen vom ePayBL Server

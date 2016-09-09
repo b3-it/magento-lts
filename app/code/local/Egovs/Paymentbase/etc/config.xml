@@ -449,6 +449,7 @@
 				<accounting_list_limit>0</accounting_list_limit>
                 <mandate_pdf_template_store>/mandates</mandate_pdf_template_store>
                 <href_max_length>100</href_max_length>
+                <company_lastname>1</company_lastname>
             </paymentbase>
             <saferpay>
     	        <active>1</active>
