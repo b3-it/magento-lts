@@ -17,8 +17,9 @@ $installer = $this;
 $installer->startSetup();
 if ($installer->tableExists($installer->getTable('cms/page')))
 {
-	//$installer->run("ALTER TABLE {$this->getTable('cms/page')} ADD `activate_time` datetime NULL;");
-	//$installer->run("ALTER TABLE {$this->getTable('cms/page')} ADD `deactivate_time` datetime NULL;");
+	$installer->run("ALTER TABLE {$this->getTable('cms/page')} ADD `activate_time` datetime NULL;");
+	$installer->run("ALTER TABLE {$this->getTable('cms/page')} ADD `deactivate_time` datetime NULL;");
+	$installer->run("ALTER TABLE {$this->getTable('cms/page')} ADD `customergroups_hide` varchar(255) NULL;");
 	
 }
 

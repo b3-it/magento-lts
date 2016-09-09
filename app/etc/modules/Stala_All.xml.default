@@ -18,10 +18,6 @@
                 <Stala_Product/>
             </depends>
         </Stala_Extcustomer>
-        <Stala_Ppw>
-            <active>false</active>
-            <codePool>local</codePool>
-        </Stala_Ppw>
         <Stala_Discountshipment>
             <active>false</active>
             <codePool>local</codePool>

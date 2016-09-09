@@ -117,7 +117,6 @@ div#details-block {
         }
 
         #product-base-block {
-            /* min-height: $global-1-product-height; */
             margin-bottom: $global-boxmargin;
         }
 
@@ -225,13 +224,6 @@ div#details-block {
                     font-size: $global-fontsize-big;
                 }
 
-                //.old-price, .special-price {
-                //    display: block;
-                //    float: none;
-                //    width: 50%;
-                //    padding: 0;
-                //}
-
                 span.label {
                     display: inline-block;
                     width: 30%;
@@ -265,105 +257,105 @@ div#details-block {
 
         .product-additional-information {
             margin-bottom: $global-boxmargin;
+        }
+       
+        .product-options {
+            border-width: $global-active-border;
+            border-style: solid;
+            border-color: $global-navigation-border-color;
 
-            .product-options {
-                border-width: $global-active-border;
-                border-style: solid;
-                border-color: $global-navigation-border-color;
+            dt {
+                margin-top: 0;
+                margin-bottom: $global-boxmargin / 2;
+            }
 
-                dt {
-                    margin-top: 0;
+            dt.option-box {
+                display: inline-block;
+                vertical-align: top;
+                width: 90%;
+                margin-bottom: $global-boxmargin;
+                padding-bottom: $global-boxmargin / 2;
+
+                border-bottom-width: $global-active-border;
+                border-bottom-style: solid;
+                border-bottom-color: $global-border-color;
+
+                &:last-child, &.last {
+                    border-bottom: 0;
+                    margin-bottom: 0;
+                }
+
+	            > label {
+                    display: block;
+                    font-size: 1.3em;
                     margin-bottom: $global-boxmargin / 2;
                 }
 
-                dt.option-box {
-                    display: inline-block;
-                    vertical-align: top;
-                    width: 90%;
-                    margin-bottom: $global-boxmargin;
-                    padding-bottom: $global-boxmargin / 2;
-
-                    border-bottom-width: $global-active-border;
-                    border-bottom-style: solid;
-                    border-bottom-color: $global-border-color;
-
-                    &:last-child, &.last {
-                        border-bottom: 0;
-                        margin-bottom: 0;
-                    }
-
-                    > label {
-                        display: block;
-                        font-size: 1.3em;
-                        margin-bottom: $global-boxmargin / 2;
-                    }
-
-                    .qty-hidden {
-                        display: none;
-                    }
-                }
-
-                .personal-options {
-                    width: 90%;
-                    margin-top: $global-boxmargin / 2;
-                    padding-top: $global-boxmargin;
-
-                    border-top-width: $global-active-border;
-                    border-top-style: solid;
-                    border-top-color: $global-border-color;
-
-                    > label {
-                        display: block;
-                        font-size: 1.3em;
-                        margin-bottom: $global-boxmargin / 2;
-                    }
-
-                    .option-block {
-                        width: 100%;
-                    }
-                }
-
-                .checkbox, .radio {
-                    margin-top: 0;
-                }
-
-                .option-block {
-                    display: block;
-                    width: 90%;
-
-                    select, input[type="text"], textarea, p.note {
-                        width: 100%;
-                    }
-                }
-
-                .type-checkbox, .type-radio,
-                .type-multiple, .type-date {
-                    vertical-align: top;
-                    display: inline-block;
-                    width: 44.5%;
-                    margin-right: 10px;
-                }
-
-                .type-date {
-                    input[type="text"] {
-                        width: 60%;
-                    }
-                    img {
-                        display: inline-block;
-                    }
-                }
-            }
-
-            .product-options-bottom {
-                background-color: $global-navigation-color;
-                border-color: $global-navigation-border-color;
-
-                .add-to-links {
+                .qty-hidden {
                     display: none;
                 }
             }
+
+            .checkbox, .radio {
+                margin-top: 0;
+            }
+
+            .type-checkbox, .type-radio,
+            .type-multiple, .type-date {
+                vertical-align: top;
+                display: inline-block;
+                width: 44.5%;
+                margin-right: 10px;
+            }
+
+            .type-date {
+                input[type="text"] {
+                    width: 60%;
+                }
+                img {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .product-options-bottom {
+            background-color: $global-navigation-color;
+            border-color: $global-navigation-border-color;
+
+	        .add-to-links {
+                display: none;
+            }
+        }
+
+        .personal-options {
+            width: 90%;
+            margin-top: $global-boxmargin / 2;
+            padding-top: $global-boxmargin;
+            border-top-width: $global-active-border;
+            border-top-style: solid;
+            border-top-color: $global-border-color;
+
+            > label {
+                display: block;
+                font-size: 1.3em;
+                margin-bottom: $global-boxmargin / 2;
+            }
+
+             .option-block {
+                width: 100%;
+            }
+        }
+
+	    .option-block {
+            display: block;
+            width: 90%;
+
+	        select, input[type="text"], textarea, p.note {
+                width: 100%;
+            }
         }
     }
+
     .col3-layout {
         .col-main {
             padding-top: 13px;

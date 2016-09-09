@@ -13,6 +13,7 @@ class Sid_Cms_Block_Navbar extends Mage_Core_Block_Template
 {
  
 	private $_Navigation = null;
+	private $_RootNode = null;
 
 	/**
 	 * Kunden aus der Session ermitteln
@@ -25,7 +26,17 @@ class Sid_Cms_Block_Navbar extends Mage_Core_Block_Template
 		return $this->_Customer;
 	}
 	
-	
+	public function isAvialable()
+	{
+		if($this->getNavigation()){
+			$children = $this->_getRootNode()->getChildren();
+			if(count($children) > 0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	public function getNavigation()
 	{
@@ -36,38 +47,59 @@ class Sid_Cms_Block_Navbar extends Mage_Core_Block_Template
 		return $this->_Navigation;
 	}
 	
+	public function getTitle()
+	{
+		$navi = $this->getNavigation();
+		if($navi){
+			return $navi->getTitle();
+		}
+		
+		return false;
+	}
+	
+	
+	private function _getRootNode()
+	{
+		if($this->_RootNode == null){
+			$navi = $this->getNavigation();
+			
+			$collection = Mage::getModel('sidcms/node')->getCollection();
+			$this->_RootNode = $collection->getNodesTree($navi->getId(),true);
+		}
+		
+		return $this->_RootNode;
+	}
+	
 	public function getPagesHtml()
 	{
 		
-		$navi = $this->getNavigation();
-		
-		$collection = Mage::getModel('sidcms/node')->getCollection();
-		$root = $collection->getNodesTree($navi->getId(),true);
-		return $this->getNodeHtml($root);
+		return $this->getNodeHtml($this->_getRootNode());
 	}
 	
-	public function getNodeHtml($node)
+	public function getNodeHtml($node, $level = 0)
 	{
+		$level++;
 		$html = array();
 		if($node->getType() == 'default'){
-			$html[] = $node->getLabel();
+			$html[] = '<a href="javascript:void(0);" class="egov-arrow-main-open">'. $node->getLabel().'</a>';
 		}elseif($node->getType() == 'page'){
 			if($node->getIsActive() == Mage_Cms_Model_Page::STATUS_ENABLED){
-				$html[] = '<a href="'.Mage::helper('cms/page')->getPageUrl($node->getPageId()).'">';
+				$html[] = '<a href="'.Mage::helper('cms/page')->getPageUrl($node->getPageId()).'" class="">';
 				$html[] = $node->getLabel();
 				$html[] = "</a>";
 			}
 		}
+		
 		if(count($node->getChildren()) > 0)
 		{
-			$html[] = "<ol>";
+			$html[] = '<ul>';
 			foreach($node->getChildren() as $child)
 			{
-				$html[] = "<li>";
-				$html[] = $this->getNodeHtml($child);
+				$html[] = '<li class="level'.$level.'">';
+				$html[] = $this->getNodeHtml($child, $level);
 				$html[] = "</li>";
 			}
-			$html[] = "</ol>";
+			$html[] = "</ul>";
 		}
 		
 		return implode("\n",$html);

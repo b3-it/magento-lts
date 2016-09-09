@@ -1,4 +1,7 @@
-﻿function toggle_loading_layer() {
+﻿/* Session-Preventer and Loding-Layer */
+var debug;
+
+function toggle_loading_layer() {
     $j('#loading-mask').fadeIn();
 }
 
@@ -6,10 +9,10 @@ $j(document).ready(function(){
     // Loading-Layer beim Klicken auf Link sichtbar machen
     $j('a').click(function(){
         if ( $j(this).attr('id') !== undefined ) {
-            var debug = $j(this).attr('id').slice(0, 2);
+            debug = $j(this).attr('id').slice(0, 2);
         }
         else {
-            var debug = '';
+            debug = '';
         }
 
         if ( debug != 'dj' && debug != 'eg' ) {
