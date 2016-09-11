@@ -96,14 +96,14 @@ abstract class Egovs_Paymentbase_Model_Adapter_Abstract extends Mage_Core_Model_
 			//Firma
 			$data->setPrefix($this->__('Company'));
 			$company = trim(sprintf('%s %s %s', $address->getCompany(), $address->getCompany2(), $address->getCompany3()));
-			/** @var $helper Egovs_Base_Helper_Config */
-			$helper = Mage::helper('egovsbase/config');
+			/** @var $helper Egovs_Paymentbase_Helper_Data */
+			$helper = Mage::helper('paymentbase');
 			
 			//20140304::Frank Rochlitzer
 			//META Daten für bessere Behandlung von Firmen setzen
 			$data->setIsCompany(true);
 			$data->setCompany($company);
-			$data->setCompanyRepresented(sprintf("%s %s", $this->_getFirstname($src, $address), $this->_getLastname($src, $address, $helper->isFieldRequired('lastname', 'register'))));
+			$data->setCompanyRepresented(sprintf("%s %s", $this->_getFirstname($src, $address), $this->_getLastname($src, $address, $helper->isCompanyLastNameRequired())));
 			
 			if (mb_strlen($company, 'UTF-8') > 27) {
 				if (mb_strlen($company, 'UTF-8') > 54) {
@@ -120,7 +120,7 @@ abstract class Egovs_Paymentbase_Model_Adapter_Abstract extends Mage_Core_Model_
 				//Company wird in Lastname gespeichert
 				$data->setLastname($company);
 				//Nachname in Vornamen speichern
-				$data->setFirstname($this->_getLastname($src, $address, $helper->isFieldRequired('lastname', 'register')));
+				$data->setFirstname($this->_getLastname($src, $address, $helper->isCompanyLastNameRequired()));
 			}
 		} else {
 			//Person

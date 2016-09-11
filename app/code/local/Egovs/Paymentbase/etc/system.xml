@@ -381,13 +381,22 @@
                             <validate>validate-digits-range digits-range-0-255</validate>
                             <comment>Possible range is between 0 and 255 digits (Default: 100)</comment>
                         </href_max_length>
+                        <company_lastname translate="label comment">
+                            <label>Is last name required for company customers on ePayBL</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>137</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </company_lastname>
                         <auto_sync_epaybl_data translate="label">
                             <label>Automatic Sync ePayBL Data</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>paymentbase/adminhtml_system_config_form_field_acl</frontend_model>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <backend_model>paymentbase/system_config_backend_syncBankAccountData</backend_model>
-                            <sort_order>140</sort_order>
+                            <sort_order>900</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>

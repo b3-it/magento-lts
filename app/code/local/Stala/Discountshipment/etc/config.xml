@@ -47,14 +47,13 @@
                 <methods>discountshipment</methods>
                 <sallowspecific>0</sallowspecific>
                 <model>discountshipment/discountshipment</model>
-                <name>discountshipment</name>
                 <price>0.00</price>
                 <title>Shipping using Discount</title>
                 <specificerrmsg>Diese Versandmethode ist derzeit nicht verfügbar. Bitte kontaktieren
                     Sie uns wenn sie diese Methode verwenden möchten.</specificerrmsg>
                 <handling_type>F</handling_type>
-                <name>Versankostenfrei</name>
-                <title>Versankostenfrei</title>
+                <name>Versandkostenfrei</name>
+                <title>Versandkostenfrei</title>
                 <rank>1</rank>
             </discountshipment>
         </carriers>
