@@ -145,6 +145,11 @@
             <sidcms>
                 <class>Sid_Cms_Helper</class>
             </sidcms>
+            <cms>
+	            <rewrite>
+	            	<page>Sid_Cms_Helper_Page</page>
+	            </rewrite>
+            </cms>
         </helpers>
         <events>
          <cms_page_load_after>

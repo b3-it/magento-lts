@@ -87,7 +87,11 @@ class Sid_Cms_Model_Observer extends Varien_Object
 		{
 			$page = $observer->getDataObject();
 			$hide = $page->getData('customergroups_hide');
-			$hide = explode(',',$hide);
+			if(strlen(trim($hide)) > 0){
+				$hide = explode(',',$hide);
+			}else{
+				$hide = array();
+			}
 			$page->setData('customergroups_hide',$hide);
 				
 		}

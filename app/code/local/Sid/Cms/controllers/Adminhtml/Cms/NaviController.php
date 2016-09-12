@@ -15,8 +15,8 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('navi/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_setActiveMenu('cms/navigation')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Cms'), Mage::helper('adminhtml')->__('Navigation'));
 
 		return $this;
 	}
@@ -41,8 +41,7 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 			$this->loadLayout();
 			$this->_setActiveMenu('cms/items');
 
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
+			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Cms'), Mage::helper('adminhtml')->__('Navigation'));
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
@@ -58,7 +57,7 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 
 	public function newAction() {
 		$this->loadLayout();
-		$this->_setActiveMenu('cms/items');
+		$this->_setActiveMenu('cms/navigation');
 
 		//$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
 		//$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));

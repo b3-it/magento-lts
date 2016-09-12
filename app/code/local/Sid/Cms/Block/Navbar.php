@@ -84,9 +84,12 @@ class Sid_Cms_Block_Navbar extends Mage_Core_Block_Template
 			$html[] = '<a href="javascript:void(0);" class="egov-arrow-main-open">'. $node->getLabel().'</a>';
 		}elseif($node->getType() == 'page'){
 			if($node->getIsActive() == Mage_Cms_Model_Page::STATUS_ENABLED){
-				$html[] = '<a href="'.Mage::helper('cms/page')->getPageUrl($node->getPageId()).'" class="">';
-				$html[] = $node->getLabel();
-				$html[] = "</a>";
+				$page = Mage::getModel('cms/page')->load($node->getPageId());
+				if($page->getId() && Mage::helper('sidcms')->isPageAllowed($page)){
+					$html[] = '<a href="'.Mage::helper('cms/page')->getPageUrl($node->getPageId()).'" class="">';
+					$html[] = $node->getLabel();
+					$html[] = "</a>";
+				}
 			}
 		}
 		
