@@ -15,7 +15,10 @@
  */
 ?>
 <?php
-/* @var $this Egovs_Ready_Block_Catalog_Product_Price */
+/** 
+ * @var $this Mage_Core_Block_Template
+ * @see Egovs_Ready_Block_Catalog_Product_Price
+ */
 ?>
 <?php $shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl() ?>
 <?php if( !empty( $shippingCostUrl ) && $this->getShowShippingLink() ): ?>
