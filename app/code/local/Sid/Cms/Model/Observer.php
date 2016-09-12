@@ -47,6 +47,7 @@ class Sid_Cms_Model_Observer extends Varien_Object
       		//'onchange'  => 'onchangeTransferType()',
       
       		));
+
 		}
 		
 		private function _getCustomerGroup()
@@ -77,6 +78,26 @@ class Sid_Cms_Model_Observer extends Varien_Object
 			}
 			$page->setData('customergroups_hide',$hide);
 			
+		}
+		
+		public function onCmsPageSaveAfter($observer)
+		{
+			$page = $observer->getDataObject();
+			$send = $page->getSend();
+			if($send && ($send['mode'] != Sid_Cms_Model_SendMode::MODE_NONE ))
+			{
+				$model = Mage::getModel('infoletter/queue');
+				$model->setData($send);
+				if($send['mode'] == Sid_Cms_Model_SendMode::MODE_NOW){
+					$model->setStatus(Egovs_Infoletter_Model_Status::STATUS_SENDING);
+				}else{
+					$model->setStatus(Egovs_Infoletter_Model_Status::STATUS_NEW);
+				}
+				$model	->setCreatedTime(now())
+						->setUpdateTime(now())
+						->save();
+			}
+				
 		}
 		
 		/**

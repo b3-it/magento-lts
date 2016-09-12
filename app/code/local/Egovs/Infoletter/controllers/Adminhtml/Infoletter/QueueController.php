@@ -15,7 +15,7 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('queue/items')
+			->_setActiveMenu('newsletter/infoletter')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
 
 		return $this;

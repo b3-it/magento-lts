@@ -250,4 +250,12 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 		//$this->getResponse()->setBody('["Child 11", { "id" : "demo_child_1", "text" : "Child 2", "children" : [ { "id" : "demo_child_2", "text": "One more", "type" : "file" }] }]');
 	}
 
+	public function tabInformationAction()
+	{
+		$block = $this->getLayout()->createBlock('sidcms/adminhtml_page_edit_tabs_information_form');
+		//$this->getLayout()->addBlock($block, 'sidcms.information');
+		//$this->renderLayout();
+		$this->getResponse()->setBody($block->toHtml());
+		return $this;
+	}
 }

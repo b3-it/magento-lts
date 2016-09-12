@@ -36,6 +36,15 @@
                     </Sid_Cms>
                 </observers>
             </cms_page_save_before>
+            <cms_page_save_after>
+                <observers>
+                    <Sid_Cms_After>
+                        <type>singleton</type>
+                        <class>Sid_Cms_Model_Observer</class>
+                        <method>onCmsPageSaveAfter</method>
+                    </Sid_Cms_After>
+                </observers>
+            </cms_page_save_after>
         </events>
         <menu>
             <cms>
