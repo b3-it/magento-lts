@@ -37,7 +37,7 @@ where participant_id = 1 AND el.typ = 3
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-        ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id'=>'order_increment_id','status'=>'order_status'))
+        ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status'))
       	->join(array('event'=>$collection->getTable('eventmanager/event')), 'main_table.event_id = event.event_id',array('title'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))

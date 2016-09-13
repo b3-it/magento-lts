@@ -196,14 +196,6 @@
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <fields>
-                        <irquellsystem translate="label">
-                            <label>Irquellsystem</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>10</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </irquellsystem>
                         <sollkontotitel translate="label">
                             <label>Sollkontotitel</label>
                             <frontend_type>text</frontend_type>
@@ -303,39 +295,7 @@
 
                     </fields>
                 </pos>
-                <mapping>
-                    <label>Export Mapping Values</label>
-                    <sort_order>1030</sort_order>
-                    <show_in_default>1</show_in_default>
-                    <show_in_website>0</show_in_website>
-                    <show_in_store>0</show_in_store>
-                    <fields>
-                        <irquellsystem translate="label">
-                            <label>Irquellsystem</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>10</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </irquellsystem>
-                        <kostenrechnung translate="label">
-                            <label>Kostenrechnung</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>50</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </kostenrechnung>
-                        <abrechnungsobjekt translate="label">
-                            <label>Abrechnungsobjekt</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>60</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </abrechnungsobjekt>
-                    </fields>
-                </mapping>
+               
             </groups>
         </mach_export>
     </sections>
