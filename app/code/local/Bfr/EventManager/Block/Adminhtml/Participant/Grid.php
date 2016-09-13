@@ -37,6 +37,7 @@ where participant_id = 1 AND el.typ = 3
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
+        ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status'))
       	->join(array('event'=>$collection->getTable('eventmanager/event')), 'main_table.event_id = event.event_id',array('title'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
@@ -50,6 +51,13 @@ where participant_id = 1 AND el.typ = 3
 
   protected function _prepareColumns()
   {
+  		$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+	      $yesno = array();
+	      foreach ($yn as $n)
+	      {
+	      	$yesno[$n['value']] = $n['label'];
+	      }
+      
       $this->addColumn('participant_id', array(
           'header'    => Mage::helper('eventmanager')->__('ID'),
           'align'     =>'right',
@@ -73,6 +81,21 @@ where participant_id = 1 AND el.typ = 3
       		//'type'      => 'number',
       ));
       
+      $this->addColumn('pa_increment_id', array(
+      		'header'    => Mage::helper('eventmanager')->__('Order #'),
+      		'align'     =>'left',
+      		'width'     => '100px',
+      		'index'     => 'order_increment_id',
+      		//'filter_condition_callback' => array($this, '_filterNameCondition'),
+      ));
+       
+      $this->addColumn('pa_status', array(
+      		'header' => Mage::helper('sales')->__('Status'),
+      		'index' => 'order_status',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
       
       $this->addColumn('pa_academic_titel', array(
       		'header'    => Mage::helper('eventmanager')->__('Academic Title'),
@@ -88,7 +111,13 @@ where participant_id = 1 AND el.typ = 3
       		//'type'      => 'number',
       ));
       
-    
+      $this->addColumn('pa_vip', array(
+      		'header' => Mage::helper('sales')->__('VIP'),
+      		'index' => 'vip',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'options' => $yesno,
+      ));
       
       $this->addColumn('pa_name', array(
           'header'    => Mage::helper('eventmanager')->__('Name'),
@@ -193,12 +222,6 @@ where participant_id = 1 AND el.typ = 3
       ));
       
 
-      $yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-      $yesno = array();
-      foreach ($yn as $n)
-      {
-      	$yesno[$n['value']] = $n['label'];
-      }
       
       $this->addColumn('vip', array(
           'header'    => Mage::helper('eventmanager')->__('Vip'),
@@ -234,6 +257,13 @@ where participant_id = 1 AND el.typ = 3
       		'index'     => 'status',
       		'type'      => 'options',
       		'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
+      ));
+      
+      $this->addColumn('pa_note', array(
+      		'header'    => Mage::helper('eventmanager')->__('Note'),
+      		'align'     =>'left',
+      		'index'     => 'note',
+      		
       ));
         $this->addColumn('action',
             array(
