@@ -74,4 +74,12 @@ class Sid_Framecontract_Model_Los extends Mage_Core_Model_Abstract
     	 
     }
     
+    /**
+     * für die verschiedenen select Boxen eine eindeutiges Label
+     */
+    public function getOptionsLabel()
+    {
+    	return sprintf('%s (Id: %s)',$this->getTitle(),$this->getId());
+    }
+    
 }

@@ -180,23 +180,68 @@ class Sid_Cms_Block_Adminhtml_Page_Edit_Tabs_Information_Form extends Mage_Admin
   	$js = " <script> 
   			$('upinfo_send_mode0').onclick = switch_mode0;
   			$('upinfo_send_mode1').onclick = switch_mode1;
-  			$('upinfo_send_mode2').onclick = switch_mode1;
+  			$('upinfo_send_mode2').onclick = switch_mode2;
   			
   			function switch_mode0() {
-  			  	var elements = ['upinfo_title'];
+  			  	var elements = ['upinfo_customergroups_send','upinfo_title','upinfo_sender_name','upinfo_sender_email','upinfo_message_subject','upinfo_message_body'];
+  				toogleEnabled(false);
   				elements.each(function(data){
-  					$(data).removeClassName('required-entry');
+  					toogleRequire(data, false);
   				});
   			}
+  			
   			function switch_mode1() {
-  			  	var elements = ['upinfo_title'];
+  				toogleEnabled(true);
+  			  	var elements = ['upinfo_customergroups_send','upinfo_title','upinfo_sender_name','upinfo_sender_email','upinfo_message_subject','upinfo_message_body'];
   				elements.each(function(data){
-  					$(data).addClassName('required-entry');
-  					var elem = $$('label[for=\"'+data+'\"]');
-  					var inner = elem.innerHTML;
-  					elem.first().update('<span class=\"required\">*</span>');
+  					toogleRequire(data, true);
   				});
   			}
+  			
+  			function switch_mode2() {
+  				toogleEnabled(true);
+  			  	var elements = ['upinfo_title','upinfo_sender_name','upinfo_sender_email','upinfo_message_subject','upinfo_message_body'];
+  				toogleRequire('upinfo_customergroups_send', false);
+  				elements.each(function(data){
+  					toogleRequire(data, true);
+  				});
+  			}
+  			
+  			function toogleEnabled(enabled)
+  			{
+  				var elements = ['toggleupinfo_message_body','upinfo_store_id','upinfo_customergroups_send','upinfo_title','upinfo_sender_name','upinfo_sender_email','upinfo_message_subject','upinfo_message_body','upinfo_message_body_plain'];
+	  			if(!enabled){
+	  				elements.each(function(element){
+	  					$(element).disable();
+  						$(element).addClassName('disabled');
+	  				});
+	  			}else{
+	  				elements.each(function(element){
+	  					$(element).enable();
+  						$(element).removeClassName('disabled');
+	  				});
+  				}
+  			}
+  			
+  			function toogleRequire(element, required)
+  			{
+  				var text = '<span class=\"required\"> *</span>';
+  				if(required){
+  					$(element).addClassName('required-entry');
+  					var elem = $$('label[for=\"'+element+'\"]');
+  					var inner = elem.first().innerHTML;
+  					inner = inner.replace(text,'');
+  					elem.first().update(inner + text);
+  				}
+  				else{
+  					$(element).removeClassName('required-entry');
+  					var elem = $$('label[for=\"'+element+'\"]');
+  					var inner = elem.first().innerHTML;
+  					inner = inner.replace(text,'');
+  					elem.first().update(inner);
+  				}
+  			}
+  			toogleEnabled(false);
   			</script>";
   	
   	return $html . $js;

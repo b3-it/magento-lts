@@ -11,8 +11,15 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
 
     
     protected $_xml = null;
-    protected $_pos = 0;
+    
+    //xpath von xml zu array
     protected $_Mapping = array();
+    
+    //mapping der xml struktur zu Bildern
+    protected $_Mime = array();
+    
+    //zweck laut xml Definition 
+    protected $_Purpose = array();
     
     
     public function setDefaultValues($values)
@@ -40,7 +47,7 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
     	
     	$xmlstr = file_get_contents($this->_source);
     	$this->_xml = new SimpleXMLElement($xmlstr);
-    	$this->rewind();
+    	//$this->rewind();
         
         return $this;
     }
@@ -52,10 +59,11 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
      */
     public function next()
     {
+    	//$this->_pos++;
         $this->_currentRow = $this->getLine();//fgetcsv($this->_fileHandler, null, $this->_delimiter, $this->_enclosure);
-        $this->_pos++;
+      
         
-        //$this->_currentKey = $this->_currentRow ? $this->_currentKey + 1 : null;
+        $this->_currentKey = $this->_currentRow ? $this->_currentKey + 1 : null;
     }
 
     /**
@@ -66,8 +74,7 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
     public function rewind()
     {
         // rewind resource, reset column names, read first row as current
-        $this->_pos = 0;
-        $this->_colNames =  array_keys($this->_bmcCatMapping);
+        $this->_colNames =  array_keys($this->_Mapping);
         $this->_currentRow = $this->getLine();//fgetcsv($this->_fileHandler, null, $this->_delimiter, $this->_enclosure);
 
        
@@ -105,18 +112,20 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
 
     private function getLine()
     {
-    	
-    	$line = $this->getProductAt($this->_pos);
-    	$res = array();
-    	if(($line != null))
+    	$pos = $this->_currentKey ? $this->_currentKey : 0;
+    	$line = $this->getProductAt($pos);
+    	$res = null;
+    	if($line != null)
     	{
+    		$res = array();
 	    	foreach($this->_Mapping as $key => $path)
 	    	{
 	    		$value = $this->xpath($line, $path);
+	    		$res[] =  $value;
 	    		
-	    		$res[] =  utf8_encode($value);
 	    	}
     	}
+    	
     	return $res;
     }
 
@@ -127,8 +136,18 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
     	$path = explode('/',$path);
     	$curr = array_shift($path);
     	$xml = $xml->{$curr};
+    	$name = $xml->getName();
+    	if(empty($name)){
+    		return null;
+    	}
     	if(count($path) == 0){
-    		return $xml;
+    		$children = $xml->children();
+    		if(count($children) == 0){
+    			return utf8_encode($xml);
+    		}else{
+    			return $xml;
+    		}
+    		
     	}
     	return $this->xpath($xml,implode('/',$path));
     	
@@ -152,8 +171,9 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
         );
         
         $res = array_merge($res,$this->_defaultValues);
-		$res['sku'] = $res['los'].'/'.$res['supplier_aid'];
-        
+        $los = $res['framecontract_los'];
+		$res['sku'] = $this->_defaultValues['sku_prefix'].$los.'/'.$res['sku'];
+		$res['framecontract_los'] = Mage::getModel('framecontract/los')->load($res['framecontract_los'])->getOptionsLabel();
 
         $skuCols = array('sku','_links_crosssell_sku','_links_upsell_sku','_links_related_sku','_parent_sku');
 
@@ -161,7 +181,7 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
         {
         	if(isset($res[$skuCol])) {
         			if(strlen(trim($res[$skuCol])) > 0){
-        				$res[$skuCol] = trim($this->_defaultValues['sku_prefix'].$res[$skuCol]);
+        				$res[$skuCol] = trim($this->_defaultValues['sku_prefix'].$los.'/'.$res[$skuCol]);
         			}
         	}
         }
@@ -175,29 +195,100 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
         	$this->_LastSku = $res['sku'];
         }
 
-        if(isset($res['image']))
-        {
-        	if(!isset($res['image_label'])){
-        		$res['image_label'] = $res['image'];
-        	}
-	        $res['small_image'] = $res['image'];
-	        $res['small_image_label'] = $res['image_label'];
-	        $res['thumbnail'] = $res['image'];
-	        $res['thumbnail_label'] = $res['image_label'];
-	        $res['_media_image'] = $res['image'];
-	        $res['_media_lable'] = $res['image_label'];
-	        $res['_media_position'] = 1;
-	        $res['_media_is_disabled'] = 0;
-	        $res['_media_attribute_id'] = $this->getMediaAttributeId();
-        }
-
-
-
-
+        $res = $this->_addImage($res);
 
         return $res;
     }
 
+    
+    
+    /*
+     *  protected $_Mime = array(
+    		'type' => 'MIME_TYPE',
+    		'source' => 'MIME_SOUCE',
+    		'label' => 'MIME_DESCR',
+    		'purpose' => 'MIME_PURPOSE',
+    		'allowed' => array('image/jpeg','image/png','jpg','png'),
+    		
+    		 protected $_Purpose = array(
+    		'detail' => 'image',
+    		'thumbnail' => 'thumbnail',
+    		'normal' => 'small_image'
+    );
+    );
+     */
+    
+    protected function _addImage($row)
+    {
+    	
+    	if(isset($row['imagelist']))
+    	{
+    		foreach($row['imagelist']->children() as $image)
+    		{
+    			$file = $this->xpath($image, $this->_Mime['source']).'' ;
+    			//type
+    			$type = $this->xpath($image, $this->_Mime['type']).'' ;
+    			if(!$type){
+    				$type = pathinfo($file)['extension'];
+    			}
+    			
+    			if(array_search($type,  $this->_Mime['allowed']) === false){
+    				continue;
+    			}
+    			
+    			$purpose = null;
+    			if(isset($this->_Purpose[$this->xpath($image, $this->_Mime['purpose'])])){
+    				$purpose =  $this->_Purpose[$this->xpath($image, $this->_Mime['purpose'])];
+    			}
+    			if(!$purpose){
+    				$purpose = 'image';
+    			}
+    			
+    			$row[$purpose] = $file;
+    			$row[$purpose.'_label'] = $this->xpath($image, $this->_Mime['label'].'');
+    			
+	    		if(!isset($row[$purpose.'_label'])){
+	    			$row[$purpose.'_label'] = $row[$purpose];
+	    		}
+    		}
+    		
+    		$default = null;
+    		if(isset($row['image'])){
+    			$default = 'image';
+    		}elseif(isset($row['thumbnail'])){
+    			$default = 'thumbnail';
+    		}elseif(isset($row['small_image'])){
+    			$default = 'small_image';
+    		}
+    		
+    		if($default)
+    		{
+    			if(!isset($row['image'])){
+    				$row['image'] = $row[$default];
+    				$row['image_label'] = $row[$default.'_label'];
+    			}
+    			if(!isset($row['thumbnail'])){
+    				$row['thumbnail'] = $row[$default];
+    				$row['thumbnail_label'] = $row[$default.'_label'];
+    			}
+    			if(!isset($row['small_image'])){
+    				$row['small_image'] = $row[$default];
+    				$row['small_image_label'] = $row[$default.'_label'];
+    			}
+    			
+    			/*
+	    		$row['_media_image'] = $row['image'];
+	    		$row['_media_lable'] = $row['image_label'];
+	    		$row['_media_position'] = 1;
+	    		$row['_media_is_disabled'] = 0;
+	    		$row['_media_attribute_id'] = $this->getMediaAttributeId();
+	    		*/
+    		}
+    	}
+    	return $row;
+    }
+    
+    
     private function getMediaAttributeId()
     {
     	if($this->_MediaAttributeId == null)
