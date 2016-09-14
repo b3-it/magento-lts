@@ -4,14 +4,13 @@
  *
  * @category	Stala
  * @package 	Stala_Extcustomer
- * @author		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2011 EDV Beratung Hempel (http://www.edv-beratung-hempel.de)
- * @copyright	Copyright (c) 2011 TRW-NET (http://www.trw-net.de)
+ * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2011 - 2016 B3 IT Systeme GmbH (http://www.b3-it.de)
+ * @license     http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Stala_Extcustomer_Adminhtml_Extcustomer_Product_FreecopiesController extends Mage_Adminhtml_Controller_Action
 {
-	private function _init()
-	{
+	protected function _init() {
 		$id  = $this->getRequest()->getParam('product_id');
 		if($id) {
 			$product = Mage::getModel('catalog/product')->load($id);
@@ -43,5 +42,9 @@ class Stala_Extcustomer_Adminhtml_Extcustomer_Product_FreecopiesController exten
 
 	public function freecopiesAction() {
 		$this->_forward('grid');
+	}
+	
+	protected function _isAllowed() {
+		return Mage::getSingleton('admin/session')->isAllowed('catalog');
 	}
 }

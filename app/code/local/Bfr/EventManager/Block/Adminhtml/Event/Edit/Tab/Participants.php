@@ -52,6 +52,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
   protected function _prepareColumns()
   {
+  	
+  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+  	$yesno = array();
+  	foreach ($yn as $n)
+  	{
+  		$yesno[$n['value']] = $n['label'];
+  	}
   	$this->addColumn('pa_participant_id', array(
   			'header'    => Mage::helper('eventmanager')->__('ID'),
   			'align'     =>'right',
@@ -67,14 +74,30 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'width'     => '100px',
   	));
   	
-  	
+  	/*
   	$this->addColumn('pa_title', array(
   			'header'    => Mage::helper('eventmanager')->__('Event'),
   			'width'     => '100px',
   			'index'     => 'title',
   			//'type'      => 'number',
   	));
+  	*/
   	
+  	$this->addColumn('pa_increment_id', array(
+  			'header'    => Mage::helper('eventmanager')->__('Order #'),
+  			'align'     =>'left',
+  			'width'     => '100px',
+  			'index'     => 'increment_id',
+  			//'filter_condition_callback' => array($this, '_filterNameCondition'),
+  	));
+  	
+  	$this->addColumn('pa_status', array(
+  			'header' => Mage::helper('sales')->__('Status'),
+  			'index' => 'status',
+  			'type'  => 'options',
+  			'width' => '70px',
+  			'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+  	));
   	
   	$this->addColumn('pa_academic_titel', array(
   			'header'    => Mage::helper('eventmanager')->__('Academic Title'),
@@ -90,7 +113,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			//'type'      => 'number',
   	));
   	
-  	
+  	$this->addColumn('pa_vip', array(
+  			'header' => Mage::helper('sales')->__('VIP'),
+  			'index' => 'vip',
+  			'type'  => 'options',
+  			'width' => '70px',
+  			'options' => $yesno,
+  	));
   	
   	$this->addColumn('pa_name', array(
   			'header'    => Mage::helper('eventmanager')->__('Name'),
@@ -195,12 +224,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	));
   	
   	
-  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-  	$yesno = array();
-  	foreach ($yn as $n)
-  	{
-  		$yesno[$n['value']] = $n['label'];
-  	}
+  
   	
   	$this->addColumn('vip', array(
   			'header'    => Mage::helper('eventmanager')->__('Vip'),

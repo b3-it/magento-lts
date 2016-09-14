@@ -46,7 +46,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       	//->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->where('event_id='.$this->getEvent()->getId());
-      
+
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
