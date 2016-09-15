@@ -460,9 +460,10 @@ div#details-block {
 
     .product-name {
         margin-bottom: 10px;
+        color: $global-footer-linkcolor;
 
         h1, .h1 {
-            color: $global-h1-color;
+        	color: $global-footer-linkcolor;
             border: none;
             font-size: 1.5em;
         }
