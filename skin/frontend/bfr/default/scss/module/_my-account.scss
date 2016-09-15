@@ -108,7 +108,8 @@
         width: 90%;
 
         .box-title {
-            padding: 0.2em 0 0em 0.6em;
+            padding: 0;
+            left: -1px;
             color: $global-fontcolor-dark;
 
             h3 {
@@ -117,7 +118,7 @@
         }
 
         .box-content {
-            margin: 5px;
+            margin: 0;
         }
     }
 

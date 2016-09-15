@@ -10,6 +10,10 @@
  * ============================================ */
 
 .customer-account-login {
+	ul.benefits {
+		padding: 0 !important;
+    }
+	
     .scaffold-form {
         label:first-child {
             width: 115px;
