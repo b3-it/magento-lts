@@ -37,7 +37,7 @@ class Egovs_Extreport_Block_Adminhtml_Visitors_Totals_Grid extends Egovs_Extrepo
     {
         parent::_prepareCollection();
         $this->getCollection()->initReport('extreport/visitors_totals_collection');
-        
+      
         return $this;
     }
 
@@ -48,11 +48,12 @@ class Egovs_Extreport_Block_Adminhtml_Visitors_Totals_Grid extends Egovs_Extrepo
      */
     protected function _prepareColumns()
     {
-        $this->addColumn('name', array(
+        $this->addColumn('visitors', array(
             'header'    => Mage::helper('extreport')->__('Number of Visitors'),
             'sortable'  => true,
             'index'     => 'visitors',
-        	'type'      => 'number'
+        	'type'      => 'number',
+        	'total'     => 'sum',
         ));
 
         $this->addColumn('totalsec', array(
