@@ -113,7 +113,8 @@ class Sid_Roles_Model_Observer extends Mage_Core_Model_Abstract
 	 * @return void
 	 */
 	public function onLayoutRenderAdminhtmlPermissionsUserEditBefore($observer) {
-		$block = $this->getLayout()->getBlock('left')->getChild('left.child0');
+		$block = $this->getLayout()->getBlock('left')->getChild('adminhtml.permissions.user.edit.tabs');
+		
 	
 		if (!$block || !($block instanceof Mage_Adminhtml_Block_Permissions_User_Edit_Tabs)) {
 			return;

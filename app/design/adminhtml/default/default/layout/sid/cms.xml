@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout>
-     <xadminhtml_cms_page_edit>
+     <adminhtml_cms_page_edit>
 	      <reference name="cms_page_edit_tabs">
-	        <action method="addTab"><name>navi_section</name><block>sidcms/adminhtml_page_edit_tab_navi</block></action>
+	        <action method="addTab"><name>information_section</name><block>sidcms/adminhtml_page_edit_tabs_information</block></action>
 	      </reference>
-     </xadminhtml_cms_page_edit>
+	       <reference name="head">
+            <action method="addJs"><script>sid/cms/be_page.js</script></action>
+        </reference>
+     </adminhtml_cms_page_edit>
      <adminhtml_cms_navi_index>
         <reference name="content">
             <block type="sidcms/adminhtml_navi" name="cms" />

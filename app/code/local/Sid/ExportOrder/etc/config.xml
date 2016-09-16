@@ -39,7 +39,10 @@
                     </format_plain>
                     <format_transdoc>
                         <table>sidexportorder_format_transdoc</table>
-                    </format_transdoc>       
+                    </format_transdoc>  
+                    <format_opentrans>
+                        <table>sidexportorder_format_opentrans</table>
+                    </format_opentrans>       
                 </entities>
             </exportorder_resource>
         </models>
@@ -106,10 +109,10 @@
 	    		<label>Plain</label>
 	    		<typ>plain</typ>
     		</plain>
-    		<transdoc>
-	    		<label>Transdoc</label>
-	    		<typ>transdoc</typ>
-    		</transdoc>
+    		<opentrans>
+	    		<label>Opentrans</label>
+	    		<typ>opentrans</typ>
+    		</opentrans>
     	</format>
     	<transfer>
     		<email>

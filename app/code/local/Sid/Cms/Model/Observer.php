@@ -86,6 +86,22 @@ class Sid_Cms_Model_Observer extends Varien_Object
 			$send = $page->getSend();
 			if($send && ($send['mode'] != Sid_Cms_Model_SendMode::MODE_NONE ))
 			{
+				$customers = array();
+				if(isset($send['customergroup']))
+				{
+					$groups = $send['customergroup'];
+					if(count($groups) > 0){
+						$groups= implode(',', $groups);
+						$collection = Mage::getModel('customer/customer')->getCollection();
+						$collection
+							->addAttributeToSelect('firstname')
+							->addAttributeToSelect('lastname')
+							->addAttributeToSelect('prefix')
+							->addAttributeToSelect('company')
+							->getSelect()->where('group_id IN(?)',$groups);
+						$customers = $collection->getItems();
+					}
+				}
 				$model = Mage::getModel('infoletter/queue');
 				$model->setData($send);
 				if($send['mode'] == Sid_Cms_Model_SendMode::MODE_NOW){
@@ -93,9 +109,15 @@ class Sid_Cms_Model_Observer extends Varien_Object
 				}else{
 					$model->setStatus(Egovs_Infoletter_Model_Status::STATUS_NEW);
 				}
-				$model	->setCreatedTime(now())
-						->setUpdateTime(now())
+				$model	->setCreatedAt(now())
 						->save();
+				
+				foreach($customers as $customer){
+					Mage::getModel('infoletter/recipient')
+						->createByCustomer($customer,$model->getId())
+						->save();
+				}
+				
 			}
 				
 		}
