@@ -81,7 +81,7 @@
         <layout>
             <updates>
                 <sidcms>
-                    <file>Sid/cms.xml</file>
+                    <file>sid/cms.xml</file>
                 </sidcms>
             </updates>
         </layout>
