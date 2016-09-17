@@ -66,11 +66,9 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
         	
         	
         	
-        	//$exp = $this->getConnection()->quoteInto('search_result.query_id=?',$this->_getQuery()->getId());
+        	$exp = $this->getConnection()->quoteInto('search_result.query_id=?',$this->_getQuery()->getId());
         	$exp = new Zend_Db_Expr($exp);	
-        	
-        	$SoundExpr = 
-        	
+        		
         	$this->getSelect()
         		->joinLeft(array('soundex_result' => $this->getTable('egovssearch/soundex')),$SoundExpr, array())
         		//->orWhere($this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.metaphone($query).'%'))
