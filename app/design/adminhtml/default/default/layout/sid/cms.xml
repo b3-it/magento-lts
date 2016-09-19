@@ -13,4 +13,11 @@
             <block type="sidcms/adminhtml_navi" name="cms" />
         </reference>
     </adminhtml_cms_navi_index>
+    <adminhtml_cms_navi_edit>
+    <update handle="jquery_load_handle"/>
+        <reference name="head">
+          <action method="addJs"><script>lib/jstree/jstree.js</script></action>
+          <action method="addCss"><stylesheet>lib/jstree/themes/default/style.min.css</stylesheet></action>
+        </reference>
+    </adminhtml_cms_navi_edit>
 </layout>

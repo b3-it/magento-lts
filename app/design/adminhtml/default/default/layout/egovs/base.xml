@@ -9,7 +9,7 @@
             <!-- Muss an letzter Stelle stehen um als DEFAULT zu gelten -->
             <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet> </action>
             
-            <action method="addJs"><script>egovs/jquery.admin.js</script></action>
+            
         </reference>
     </default>
     <adminhtml_egovsbase_tools_analyse_sales_order_item_index>
@@ -19,4 +19,10 @@
         </reference>
     </adminhtml_egovsbase_tools_analyse_sales_order_item_index>
 
+	<jquery_load_handle>
+		<reference name="head">
+            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+        </reference>
+	</jquery_load_handle>
 </layout>

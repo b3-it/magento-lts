@@ -21,6 +21,11 @@
         </reference>
     </adminhtml_framecontract_order_index>
     <adminhtml_framecontract_import_index>
+    <update handle="jquery_load_handle"/>
+    	 <reference name="head">
+          <action method="addJs"><script>lib/jquery/uploadify/jquery.uploadify.min.js</script></action>
+          <action method="addCss"><stylesheet>lib/jquery/uploadify/uploadify.css</stylesheet></action>
+        </reference>
         <reference name="content">
             <block type="adminhtml/template" template="importexport/import/form/before.phtml" name="import.form.before" alias="form_before"/>
             <block type="framecontract/adminhtml_import_edit" name="import.form.container"/>
