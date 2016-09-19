@@ -78,7 +78,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   {
 		$collection = Mage::getModel('eventmanager/participant')->getCollection();
 		$collection->getSelect()
-		->joinleft(array( 'order'=>$collection->getTable('sales/order')), 'main_table.order_id = order.entity_id');
+		->joinleft(array( 'order'=>$collection->getTable('sales/order')), 'main_table.order_id = order.entity_id', array('order_increment_id'=>'increment_id','order_status'=>'status'));
 		
 		$col = null;
 		$coalesce = array();
@@ -106,8 +106,10 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   
       //die( $collection->getSelect()->__toString());  
       $this->setCollection($collection);
+     
+      parent::_prepareCollection();
       $this->_prepareTotals();
-      return parent::_prepareCollection();
+      return $this;
   }
   
   
@@ -128,13 +130,14 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       		'header'    => Mage::helper('eventmanager')->__('Order #'),
       		'align'     =>'left',
       		'width'     => '100px',
-      		'index'     => 'increment_id',
-      		//'filter_condition_callback' => array($this, '_filterNameCondition'),
+      		'index'     => 'order_increment_id',
+      		'filter_index' => 'order.increment_id',
+      		'filter_condition_callback' => array($this, '_filterCondition'),
       ));
       
       $this->addColumn('op_status', array(
       		'header' => Mage::helper('sales')->__('Status'),
-      		'index' => 'status',
+      		'index' => 'order_status',
       		'type'  => 'options',
       		'width' => '70px',
       		'filter_index' => 'order.status',
@@ -189,6 +192,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   	foreach($columns as $column){
   		$fields[$column]    = 0;
   	}
+  	
   	foreach ($this->getCollection() as $item) {
   		foreach($fields as $field=>$value){
   			$fields[$field]+= intval($item->getData($field));
@@ -266,5 +270,15 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   	
   	$condition = "TRIM(CONCAT(firstname,' ',lastname)) like ?";
   	$collection->getSelect()->where($condition, "%$value%");
+  }
+  
+  protected function _filterCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
+  	$filter_index = $column->getFilterIndex();
+  	$condition = $filter_index." like ?";
+  	$collection->getSelect()->where($condition, "%$value%");
+  	//die( $collection->getSelect()->__toString());
   }
 }
