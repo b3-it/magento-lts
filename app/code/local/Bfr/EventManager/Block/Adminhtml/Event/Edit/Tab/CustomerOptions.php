@@ -103,6 +103,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       		'align'     =>'left',
       		'width'     => '100px',
       		'index'     => 'increment_id',
+      		
       		//'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
       
@@ -111,6 +112,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       		'index' => 'status',
       		'type'  => 'options',
       		'width' => '70px',
+      		'filter_index' => 'order.status',
       		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
       ));
       

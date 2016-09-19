@@ -137,6 +137,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       		'index' => 'status',
       		'type'  => 'options',
       		'width' => '70px',
+      		'filter_index' => 'order.status',
       		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
       ));
       
