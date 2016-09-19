@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_Ready>
-            <version>0.1.4.0</version>
+            <version>0.1.5.0</version>
         </Egovs_Ready>
     </modules>
 
@@ -160,6 +160,8 @@ T: {{var telephone}}
         <catalog>
             <price>
                 <display_block_below_price>1</display_block_below_price>
+                <display_tax_below_price>1</display_tax_below_price>
+                <display_zero_tax_below_price>1</display_zero_tax_below_price>
                 <display_delivery_time_on_categories>1</display_delivery_time_on_categories>
             </price>
         </catalog>

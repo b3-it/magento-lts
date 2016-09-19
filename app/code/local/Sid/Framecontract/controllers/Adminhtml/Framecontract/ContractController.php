@@ -394,11 +394,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
     {
     	/* @var $order Mage_Sales_Model_Order */
     	$order = Mage::getModel('sales/order')->load(1);
-    	$model = Mage::getModel('exportorder/format_transdoc');
+    	$model = Mage::getModel('exportorder/format_opentrans');
     	$xml = $model->processOrder($order);
     
-    	$post = Mage::getModel('exportorder/transfer_post')->load(1);
-    	$post->send($xml);
+    	//$post = Mage::getModel('exportorder/transfer_post')->load(1);
+    	//$post->send($xml);
     	echo '<pre>';
     	$xml = htmlentities($xml);
     	die($xml);

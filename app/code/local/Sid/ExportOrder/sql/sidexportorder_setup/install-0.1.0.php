@@ -99,6 +99,19 @@ if (!$installer->tableExists($installer->getTable('exportorder/format_transdoc')
 	");
 }
 
+if (!$installer->tableExists($installer->getTable('exportorder/format_opentrans')))
+{
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$this->getTable('exportorder/format_opentrans')};
+			CREATE TABLE {$this->getTable('exportorder/format_opentrans')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `vendor_id` int(11) unsigned NOT NULL,
+	  FOREIGN KEY (`vendor_id`) REFERENCES `{$this->getTable('framecontract_vendor')}`(`framecontract_vendor_id`) ON DELETE CASCADE,
+	  PRIMARY KEY (`id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	");
+}
+
 /*
 if (!$installer->getAttribute('catalog_product', 'request')) {
 	$installer->addAttribute('catalog_product', 'request', array(

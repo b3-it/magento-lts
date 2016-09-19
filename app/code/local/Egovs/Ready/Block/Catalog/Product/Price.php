@@ -78,6 +78,12 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 	
 		$_locale = Mage::app()->getLocale()->getLocaleCode();
 		$_taxRate = Zend_Locale_Format::toFloat($this->getTaxRate(), array('locale' => $_locale));
+		
+		if (($_taxRate <= 0.01 && !Mage::getStoreConfigFlag('catalog/price/display_zero_tax_below_price'))
+			|| !Mage::getStoreConfigFlag('catalog/price/display_tax_below_price')
+		) {
+			return false;
+		}
 	
 		return $this->__('%s%%', $_taxRate);
 	}
@@ -112,7 +118,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 		return sprintf("%s %s", floatval($this->getProduct()->getWeight()), Mage::getStoreConfig('catalog/price/weight_unit'));
 	}
 	
-	public function _toHtml()
+	protected function _toHtml()
 	{
 		$_html = trim(parent::_toHtml());
 	
@@ -123,10 +129,13 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 		if (!in_array($this->getTemplate(), $this->_tierPriceDefaultTemplates)) {
 			$_htmlObject = new Varien_Object();
 			$_htmlObject->setParentHtml($_html);
-			$_htmlTemplate = $this->getLayout()->createBlock('core/template')
+			$_infoBlock = $this->getLayout()->createBlock('core/template')
 				->setTemplate('egovs/ready/catalog/product/price/info.phtml')
 				->setProduct($this->getProduct())
 				->setFormattedTaxRate($this->getFormattedTaxRate())
+			;
+			
+			$_htmlTemplate = $_infoBlock
 				->setIsIncludingShippingCosts($this->isIncludingShippingCosts())
 				->setShowShippingLink($this->showShippingLink())
 				->setPriceDisplayType(Mage::helper('tax')->getPriceDisplayType())

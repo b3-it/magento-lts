@@ -17,6 +17,33 @@
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</display_block_below_price>
+						<display_tax_below_price translate="label,comment" module="egovsready">
+                            <label>Display tax below Price</label>
+                            <comment>Display tax info below the price on all pages</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends>
+                                <display_block_below_price>1</display_block_below_price>
+                            </depends>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_tax_below_price>
+                        <display_zero_tax_below_price translate="label,comment" module="egovsready">
+                            <label>Display zero tax below Price</label>
+                            <comment>Display zero tax info below the price on all pages</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends>
+                                <display_block_below_price>1</display_block_below_price>
+                                <display_tax_below_price>1</display_tax_below_price>
+                            </depends>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_zero_tax_below_price>
 						<display_delivery_time_on_categories translate="label,comment" module="egovsready">
 							<label>Display Delivery time on Category Pages</label>
 							<frontend_type>select</frontend_type>

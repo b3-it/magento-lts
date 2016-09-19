@@ -18,6 +18,10 @@
             }
         }
     }
+   
+    .col2-set {
+    	margin-bottom: $global-boxmargin;
+    }
 
     .required {
         color: $global-warning-color;
@@ -88,7 +92,9 @@
     fieldset {
         h3 {
             margin-top: 0;
-            margin-bottom: 0;
+            margin-bottom: $global-message-marginbottom / 3;
+            font-weight: bold;
+            font-size: $global-fontsize-big;
         }
 
         ul li label {
@@ -243,7 +249,7 @@
 
         #checkout-review-table {
             @extend .egov-base-table;
-            margin-top: 20px;
+            margin-top: 0;
 
             thead th, tbody td {
                 padding: $global-tdpadding;
