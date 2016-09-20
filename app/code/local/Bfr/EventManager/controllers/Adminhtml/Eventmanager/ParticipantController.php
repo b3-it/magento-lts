@@ -36,6 +36,10 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 				$model->setData($data);
 			}
 
+			$eventId = intval($this->getRequest()->getParam('event'));
+			if($eventId > 0){
+				$model->setBackEvent($eventId);
+			}
 			Mage::register('participant_data', $model);
 
 			$this->loadLayout();
@@ -78,10 +82,26 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('eventmanager')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
+				$eventId = intval($model->getBackEvent());
+				
 				if ($this->getRequest()->getParam('back')) {
-					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+					if($eventId > 0){
+						$this->_redirect('*/*/edit', array('id' => $model->getId(),'event'=>$eventId));
+						return;
+					}else{
+						$this->_redirect('*/*/edit', array('id' => $model->getId()));
+						return;
+					}
+				}
+				
+				if($eventId > 0){
+					$this->_redirect('*/eventmanager_event/edit',array(
+    					'id'  => $eventId,
+    					'active_tab'=> 'participants_section'
+    					));
 					return;
 				}
+				
 				$this->_redirect('*/*/');
 				return;
             } catch (Exception $e) {
@@ -104,6 +124,15 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 					->delete();
 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
+				$eventId = intval($model->getBackEvent());
+				
+				if($eventId > 0){
+					$this->_redirect('*/eventmanager_event/edit',array(
+							'id'  => $eventId,
+							'active_tab'=> 'participants_section'
+					));
+					return;
+				}
 				$this->_redirect('*/*/');
 			} catch (Exception $e) {
 				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -177,6 +206,8 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
         $this->_sendUploadResponse($fileName, $content);
     }
 
+    
+    
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
     {
         $response = $this->getResponse();

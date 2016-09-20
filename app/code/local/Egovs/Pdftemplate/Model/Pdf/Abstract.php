@@ -829,7 +829,11 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
         $config['shortaddress'] = Mage::getStoreConfig('sales/identity/shortaddress', $store);
         $config['kostenstelle'] = Mage::getStoreConfig('sales/identity/kostenstelle', $store);
         $config['address'] = Mage::getStoreConfig('sales/identity/address', $store);
-        $config['skinbasedir'] = Mage::getDesign()->getSkinBaseDir(array('_area'=>'frontend'));
+        $design = Mage::getDesign();
+        $design->setStore($store)
+        		->setArea('frontend')
+        		->setPackageName(null);
+        $config['skinbasedir'] = $design->getSkinBaseDir();
            
         
         return $config;
