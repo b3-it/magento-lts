@@ -145,55 +145,8 @@
 }
 
 #customer-account-menu {
-    margin-top: $global-boxmargin;
-    margin-bottom: $global-boxmargin;
-    @extend .egov-navigation-background;
-
-    ol {
-        list-style-type: none;
-    }
-
-    a {
-        text-decoration: none;
-        font-family: $base-font-family;
-        display: block;
-        border: $global-active-border solid transparent;
-
-        &:hover, &:active {
-            color: $global-navigation-font-hover !important;
-            text-decoration: none;
-        }
-    }
-
-    li {
-        > a {
-            @extend .egov-navigation-base;
-            padding: 17px 10px;
-            font-size: 1.05em;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        > ul > li > a {
-            font-weight: normal;
-            text-transform: none;
-
-            background-color: $global-navigation-color;
-
-            border-top: $global-active-border solid transparent;
-            border-left: $global-active-border solid transparent;
-            border-right: $global-active-border solid transparent;
-            border-bottom: $global-active-border solid $global-navigation-border-color;
-
-            color: $global-navigation-font-color;
-            font-size: $global-navigation-font-size;
-            padding: 7px 20px 8px;
-        }
-
-        > ul > li.last > a {
-            border-bottom: $global-active-border solid transparent;
-        }
-    }
+    @include main-navigation;
+    margin-top: 7px;
 }
 
 .block-cart {

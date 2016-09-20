@@ -74,74 +74,18 @@
 }
 
 /* ============================================ *
- * Nav Primary
- * ============================================ */
-
-@include bp(min-width, $bp-medium + 1) {
-    .nav-primary {
-        display: block;
-        margin-top: $global-category-margintop;
-        margin-right: $global-category-marginright;
-    }
-
-}
-
-/* ============================================ *
  * General Navigation Styles
  * ============================================ */
 
 .nav-primary {
-    @extend .egov-navheader-base;
-    margin-bottom: $global-boxmargin;
-
-    ul {
-        list-style-type: none;
-        background-color: $global-navigation-color;
-    }
-
-    .egov-catalog-title {
-        a, a:hover {
-            cursor: pointer;
-            text-decoration: none;
-        }
-    }
-
-    a {
-        text-decoration: none;
-        color: $global-fontcolor-light;
-        font-family: $base-font-family;
-
-    }
-
-    li.level0 {
-        @extend .egov-navigation-background;
-    }
-
-    a.level0 {
-        @extend .egov-navigation-base;
-    }
-
-    li {
-        position: relative;
-        display: block;
-        width: 100%;
-        background-size: 100% auto;
-    }
-
-    li.active {
-    }
-
-    li.level1 a {
-    }
+    @include main-navigation;
 }
 
-// Show sub-menus when JS adds the appropriate classes
-.nav-primary .menu-active > ul.level0,
-.nav-primary li.level0 li.sub-menu-active > ul {
-    display: block;
-}
+/* ============================================ *
+ * Nav Primary & Large Viewports - Dropdown Menu
+ * ============================================ */
 
-.nav-primary li.level0 > a {
+@include bp(min-width, $bp-medium + 1) {
 }
 
 /* ============================================ *
@@ -151,16 +95,6 @@
 @include bp(max-width, $bp-medium) {
 
     .nav-primary {
-
-        // Increase clickable area of anchors for small viewports
-        a.level0,
-        a {
-        }
-
-        // Hide all sub-menus
-        li.level0 ul {
-        }
-
         // Indent sub-menus
         li.level0 li {
             padding: 0 0 0 25px;
@@ -170,134 +104,9 @@
             padding: 0 15px 0 25px;
         }
 
-        li.parent > a:after {
-        }
-
-        // Menu active states
-        li.parent.sub-menu-active > a:after,
-        li.parent.menu-active > a:after {
-        }
-
         li.menu-active > a,
         li.sub-menu-active > a {
             color: $global-linkcolor-active;
         }
-    }
-}
-
-/* ============================================ *
- * Large Viewports - Dropdown Menu
- * ============================================ */
-
-@include bp(min-width, $bp-medium + 1) {
-
-    .nav-primary {
-
-        a.level0 {
-            width:100%;
-        }
-
-        li.level0,
-        a.level0 {
-            display: inline-block;
-        }
-
-        li:last-child > a {
-            border-bottom: none;
-        }
-
-        a:hover,
-        li:hover > a,
-        li.active > a {
-            color: $global-category-hover-color;
-            background-color: $global-category-hover-bg;
-            text-decoration: underline;
-        }
-
-        .menu-active {
-            z-index: 200;
-        }
-
-        /* Default styles for 1+ drop-down menus */
-        li.level0 ul {
-            position: relative;
-            left: $global-subcat-left;
-            top: $global-subcat-top;
-            z-index: 10;
-            width: auto;
-
-            padding-top: $global-subcat-paddingtop;
-            padding-right: $global-subcat-paddingright;
-            padding-bottom: $global-subcat-paddingbottom;
-            padding-left: $global-subcat-paddingleft;
-
-            display: none; /* Hide until displayed. */
-
-            li {
-                padding-left: $global-navigation-padding-left;
-                padding-right: $global-navigation-padding-right;
-                padding-bottom: $global-navigation-padding-bottom;
-                padding-top: $global-navigation-padding-top;
-
-                a {
-                    padding-top: $global-navigation-link-padding-top;
-                    padding-right: $global-navigation-link-padding-right;
-                    padding-bottom: $global-navigation-link-padding-bottom;
-                    padding-left: $global-navigation-link-padding-left;
-
-                    list-style-image: url($global-category-image);
-                    display: block;
-
-                    // Pseudorahmen setzen, damit der Tastatur-Rahmen die Nav nicht bewegt
-                    border-width: 1px;
-                    border-style: solid;
-                    border-color: transparent;
-                }
-            }
-        }
-
-        li.level1 {
-            padding-left: 0px !important;
-        }
-
-        /* Level 2+ */
-        li.level1 ul {
-        }
-
-        /* Class for js to add briefly to evaluate element positioning. */
-        li.level0 ul.level0.position-test {
-            display: block;
-        }
-
-        /* Correct menus that will hang off the page (class added by js) */
-        li.level0 ul.level0.spill {
-            right: 0;
-            left: auto;
-
-            // Sub-menu drop down to the left
-            li.level1 ul {
-                left: auto;
-                right: 50px;
-                top: 20px;
-            }
-        }
-
-        /* Level 1+ */
-        li.level0 li.parent > a {
-            position: relative;
-
-            &:after {
-            //    @include triangle(right, 4px, #ccc);
-            //    right: 5px;
-            //    top: 50%;
-            //    margin-top: -3px;
-            }
-        }
-    }
-}
-
-.nav-primary li.menu-active {
-    > ul {
-        display: block;
     }
 }

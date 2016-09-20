@@ -501,20 +501,6 @@ a.skip-link {
  * ============================================ */
 
 @include bp(max-width, $bp-medium) {
-    // ---------------------------------------------
-    // Link
-
-    #header-account li a,
-    .nav-primary a.level0 {
-    }
-
-    #header-account li:last-child a,
-    .nav-primary li.level0:last-child a.level0 {
-    }
-
-    .no-touch #header-account a:hover,
-    .no-touch .nav-primary a:hover {
-    }
 }
 
 .skip-egov{
