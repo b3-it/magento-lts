@@ -36,6 +36,11 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       	}
       }
       
+      
+      $fieldset->addField('back_event', 'hidden', array(
+      		'name'      => 'back_event',
+      ));
+      
       if($lock){
 	      $fieldset->addField('event_id1', 'select', array(
 	      		'label'     => Mage::helper('eventmanager')->__('Event'),
