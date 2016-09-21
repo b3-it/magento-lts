@@ -29,8 +29,8 @@ class Sid_Cms_Block_Adminhtml_Navi_New_Form extends Mage_Adminhtml_Block_Widget_
       
       $fieldset = $form->addFieldset('navi_form', array('legend'=>Mage::helper('sidcms')->__('Store information')));
       
-      $field =$fieldset->addField('store_id', 'multiselect', array(
-      		'name'      => 'stores[]',
+      $field =$fieldset->addField('store_id', 'select', array(
+      		'name'      => 'store_id',
       		'label'     => Mage::helper('cms')->__('Store View'),
       		'title'     => Mage::helper('cms')->__('Store View'),
       		'required'  => true,
