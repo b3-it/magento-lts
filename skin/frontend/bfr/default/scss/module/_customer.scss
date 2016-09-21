@@ -13,7 +13,7 @@
 	ul.benefits {
 		padding: 0 !important;
     }
-	
+
     .scaffold-form {
         label:first-child {
             width: 115px;
@@ -99,6 +99,10 @@
         label:first-child {
             width: 140px;
         }
+    }
+
+    #company2, #company3 {
+        display: none;
     }
 }
 
