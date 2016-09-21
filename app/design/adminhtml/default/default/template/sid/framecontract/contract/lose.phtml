@@ -51,9 +51,9 @@
 var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">' +
 							'<input type="hidden" id="contract_los_{{number}}_is_delete" name="lose[{{number}}][is_delete]" value="" />'+
 							'<input type="hidden" name="lose[{{number}}][los_id]" value="{{los_id}}" />'+
-							'<input class="input-text" id="contract_los_{{number}}_label" value="{{title}}" name="lose[{{number}}][title]" />'+
+							'<input class="input-text los-input" id="contract_los_{{number}}_label" value="{{title}}" name="lose[{{number}}][title]" />'+
 							'</td>'+
-							'<td class="a-center"><input class="input-text"  id="contract_los_{{number}}_pos" value="{{note}}" name="lose[{{number}}][note]" /></td>' +
+							'<td class="a-center"><input class="input-text los-input"  id="contract_los_{{number}}_pos" value="{{note}}" name="lose[{{number}}][note]" /></td>' +
 							'<td class="a-center"><select   id="contract_los_{{number}}_field" name="lose[{{number}}][status]">' +
 							'	<?php foreach ($this->getStatus() as $key=>$value): ?>' +
 							'			<option value="<?php echo($key)?>"><?php echo($value) ?></option>' +
@@ -61,7 +61,7 @@ var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">'
 							'</select></td>'+
 							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][newkey]" /></td>'+
 							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][sendlink]" /></td>'+
-							'<td class="a-center"><button style="" onclick="" class="scalable delete delete-personal-option " type="button" title="Option löschen" id="{{number}}"><span><span><span>Option löschen</span></span></span></button>'+
+							'<td class="a-center"><button style="" onclick="" class="scalable delete los-input " type="button" title="Option löschen" id="{{number}}"><span><span><span>Option löschen</span></span></span></button>'+
 							'</td></tr>';
 
 var contractLos = {
@@ -118,26 +118,13 @@ var contractLos = {
                 Event.observe(buttons[i], 'click', this.remove.bind(this));
             }
         }
-       // var inputs = $$('div.product-custom-options button', 'div.product-custom-options input', 'div.product-custom-options select', 'div.product-custom-options textarea');
-        
+
+        var inputs = $$('div.delete-personal-option button', 'div.los-input input');
         inputs.each(function(el) { Event.observe(el, 'change', el.setHasChanges.bind(el));  } )
 
     }
 }
 
-
-
-
-
-
-//validation for selected input type
-Validation.addAllThese([
-    ['required-option-select', <?php echo $this->helper('core')->jsonEncode(Mage::helper('catalog')->__('Select type of option')) ?>, function(v, elm) {
-        if (elm.getValue() == '') {
-            return false;
-        }
-        return true;
-}]]);
 
 <?php foreach ($this->getLose() as $field): ?>
 	contractLos.add(<?php echo $field->toJson() ?>);

@@ -99,6 +99,10 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
      {
      	parent::_applyProductLimitations();
      	$cats = array_filter($cats);
+     	foreach($cats as $k => $v)
+     	{
+     		$cats[$k] = intval($v);
+     	}
      	if( isset($this->_productLimitationFilters['category']) && (count($cats) > 0))
      	{
      		$crit = '('. implode(',',$cats).')';  		
@@ -108,7 +112,7 @@ class Egovs_Search_Model_Mysql4_Advanced_Collection extends Mage_CatalogSearch_M
 		     	$this->getSelect()
 		     	//$select->where('e.entity_id in (SELECT product FROM cataloginventory_stock_item_parent_merged group by product)');
 		     		->join(array('cat'=>'catalog_category_product'),'e.entity_id = cat.product_id',array()) 
-		     		->where('cat.category_id in ?', $crit);
+		     		->where('cat.category_id in ? ', new Zend_Db_Expr($crit));
 	     	}
 	     	$this->_categoryApplied = true; 
      	}

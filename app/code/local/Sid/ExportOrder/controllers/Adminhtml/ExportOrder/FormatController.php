@@ -37,6 +37,11 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_FormatController extends Mage_Adminh
 			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_format_plain_form')->toHtml();
 		}
 		
+		if( $type == 'opentrans'){
+			$model = Mage::getModel('exportorder/format_opentrans')->load(intval($vendor),'vendor_id');
+			Mage::register('format', $model);
+			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_format_opentrans_form')->toHtml();
+		}
 		
 		
 		$this->getResponse()->setBody($block);

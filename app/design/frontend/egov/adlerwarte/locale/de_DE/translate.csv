@@ -1,4 +1,4 @@
 "Mage_Customer::Thank you for registering with %s.","Vielen Dank für Ihre Registrierung im %s."
 "Egovs_GermanTax::Tax","enthaltene <abbr title=""Mehrwertsteuer"">MwSt</abbr>"
-"Mage_Catalog::Excl. %s Tax","zzgl. %s MwSt."
-"Mage_Catalog::Incl. %s Tax","inkl. %s MwSt."
+"Excl. %s Tax","zzgl. %s MwSt."
+"Incl. %s Tax","inkl. %s MwSt."

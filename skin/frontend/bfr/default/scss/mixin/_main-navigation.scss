@@ -1,0 +1,176 @@
+//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// =============================================
+// Mixin - Main-Navigation
+// =============================================
+
+@mixin main-navigation {
+	@extend .egov-navheader-base;
+	
+	display: block;
+	margin-top: $global-category-margintop;
+	margin-right: $global-category-marginright;
+	margin-bottom: $global-boxmargin;
+    
+    nav > li,
+    li.account-block-title,
+    li.egov-catalog-title {
+        @extend .egov-navigation-background;
+        
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        
+        > a {
+            @extend .egov-navigation-base;
+
+            width:100%;
+            text-align: left;
+            padding: 17px 10px;
+            font-size: 1.05em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+    
+    .no-touch #header-account a:hover,
+    .no-touch .nav-primary a:hover {
+        background-color: $global-category-item-color;
+        text-decoration: none;
+    }
+   
+    a {
+        display: block;
+        color: $global-linkcolor;
+        font-family: $base-font-family;
+        border: $global-active-border solid transparent;
+        
+        &:hover, &:active {
+            color: $global-navigation-font-hover !important;
+            text-decoration: none;
+        }
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin: 0;
+
+            strong, a:hover, a:active {
+                color: $global-linkcolor-active;
+            }
+
+            a {
+                padding: 10px 12px 10px 14px;
+                display: block;
+            }
+        }
+    }
+    
+    li {
+        position: relative;
+        display: block;
+        width: 100%;
+        
+        &:last-child > a {
+            border-bottom: none;
+        }
+    }
+   
+    li:last-child a,
+    li.level0:last-child a.level0 {
+        border-bottom: 0;
+    }
+   
+    li.level0,
+    li.account-block-title {
+        > ul > li > a {
+            background-color: $global-navigation-color;
+
+            border-top: $global-active-border solid transparent;
+            border-left: $global-active-border solid transparent;
+            border-right: $global-active-border solid transparent;
+            border-bottom: $global-active-border solid $global-navigation-border-color;
+
+            color: $global-navigation-font-color;
+            font-size: $global-navigation-font-size;
+            padding: 7px 20px 8px;
+        }
+
+        > ul > li.last > a {
+            border-bottom: $global-active-border solid transparent;
+        }
+    }
+
+    li.level1 {
+        > ul li a {
+            padding-top: $global-subcat-paddingtop;
+            padding-right: $global-subcat-paddingright;
+            padding-bottom: $global-subcat-paddingbottom;
+            padding-left: $global-subcat-paddingleft;
+            color: $global-navigation-font-color;
+        }
+    }
+
+    li.level0,
+    a.level0 {
+        display: inline-block;
+    }
+   
+    // Correct menus that will hang off the page (class added by js)
+    li.level0 ul.level0.spill {
+        right: 0;
+        left: auto;
+
+        // Sub-menu drop down to the left
+        li.level1 ul {
+            left: auto;
+            right: 50px;
+            top: 20px;
+        }
+    }
+   
+    // Level 1+
+    li.level0 li.parent > a {
+        position: relative;
+    }    
+        
+    a:hover,
+    li:hover > a,
+    li.active > a {
+        color: $global-category-hover-color;
+        text-decoration: underline;
+    }
+    
+    .menu-active {
+        z-index: 200;
+    }
+    
+    // Show sub-menus when JS adds the appropriate classes
+    .menu-active > ul,
+    .menu-active > ul.level0,
+    li.level0 li.sub-menu-active > ul {
+        display: block;
+    }
+    
+    //Class for js to add briefly to evaluate element positioning.
+    li.level0 ul.level0.position-test {
+        display: block;
+    }
+    
+    li.menu-active > a,
+    li.sub-menu-active > a {
+        color: $global-linkcolor-active;
+    }
+   
+    li.level1 {
+        padding-left: 0 !important;
+    }
+}

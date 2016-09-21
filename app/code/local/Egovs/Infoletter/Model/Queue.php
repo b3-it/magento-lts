@@ -15,7 +15,7 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
 
 	
 	/**
-	 * Maximum number of messages to be sent oer one cron run
+	 * Maximum number of messages to be sent or one cron run
 	 */
 	const MESSAGES_LIMIT_PER_CRON_RUN = 2;
 	

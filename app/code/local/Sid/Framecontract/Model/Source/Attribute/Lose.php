@@ -45,7 +45,7 @@ class Sid_Framecontract_Model_Source_Attribute_Lose extends Mage_Eav_Model_Entit
             $collection = Mage::getModel('framecontract/los')->getCollection();
             foreach ($collection->getItems() as $item) {
             	$this->_options[] =  array(
-                    'label' => $item->getTitle(),
+                    'label' => $item->getOptionsLabel(),
                     'value' =>  $item->getId()
                 	); 
             }

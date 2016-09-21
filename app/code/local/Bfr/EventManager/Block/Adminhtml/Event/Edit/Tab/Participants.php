@@ -39,7 +39,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status'))
+      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->joinLeft(array('lobbyT'=>$lobby),'lobbyT.participant_id=main_table.participant_id',array('lobby'=>'value'))
@@ -52,6 +52,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
   protected function _prepareColumns()
   {
+  	
+  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+  	$yesno = array();
+  	foreach ($yn as $n)
+  	{
+  		$yesno[$n['value']] = $n['label'];
+  	}
   	$this->addColumn('pa_participant_id', array(
   			'header'    => Mage::helper('eventmanager')->__('ID'),
   			'align'     =>'right',
@@ -67,14 +74,32 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'width'     => '100px',
   	));
   	
-  	
+  	/*
   	$this->addColumn('pa_title', array(
   			'header'    => Mage::helper('eventmanager')->__('Event'),
   			'width'     => '100px',
   			'index'     => 'title',
   			//'type'      => 'number',
   	));
+  	*/
   	
+  	$this->addColumn('pa_increment_id', array(
+  			'header'    => Mage::helper('eventmanager')->__('Order #'),
+  			'align'     =>'left',
+  			'width'     => '100px',
+  			'index'     => 'order_increment_id',
+  			'filter_index' => 'order.increment_id',
+  			//'filter_condition_callback' => array($this, '_filterNameCondition'),
+  	));
+  	
+  	$this->addColumn('pa_status', array(
+  			'header' => Mage::helper('sales')->__('Status'),
+  			'index' => 'order_status',
+  			'type'  => 'options',
+  			'width' => '70px',
+  			'filter_index' => 'order.status',
+  			'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+  	));
   	
   	$this->addColumn('pa_academic_titel', array(
   			'header'    => Mage::helper('eventmanager')->__('Academic Title'),
@@ -90,7 +115,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			//'type'      => 'number',
   	));
   	
-  	
+  	$this->addColumn('pa_vip', array(
+  			'header' => Mage::helper('sales')->__('VIP'),
+  			'index' => 'vip',
+  			'type'  => 'options',
+  			'width' => '70px',
+  			'options' => $yesno,
+  	));
   	
   	$this->addColumn('pa_name', array(
   			'header'    => Mage::helper('eventmanager')->__('Name'),
@@ -195,12 +226,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	));
   	
   	
-  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-  	$yesno = array();
-  	foreach ($yn as $n)
-  	{
-  		$yesno[$n['value']] = $n['label'];
-  	}
+  
   	
   	$this->addColumn('vip', array(
   			'header'    => Mage::helper('eventmanager')->__('Vip'),
@@ -248,7 +274,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('eventmanager')->__('Edit'),
-                        'url'       => array('base'=> '*/eventmanager_participant/edit'),
+                        'url'       => array('base'=> '*/eventmanager_participant/edit','params'=>array('event' => $this->getEvent()->getId())),
                         'field'     => 'id'
                     )
                 ),
@@ -280,7 +306,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
         array_unshift($statuses, array('label'=>'', 'value'=>''));
         $this->getMassactionBlock()->addItem('status', array(
              'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/eventmanager_participant/massStatus', array('_current'=>true)),
+             'url'  => $this->getUrl('*/eventmanager_participant/massStatus', array('_current'=>true, 'event' => $this->getEvent()->getId())),
              'additional' => array(
                     'visibility' => array(
                          'name' => 'status',

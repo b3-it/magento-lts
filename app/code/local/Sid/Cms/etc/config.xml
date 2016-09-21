@@ -36,6 +36,15 @@
                     </Sid_Cms>
                 </observers>
             </cms_page_save_before>
+            <cms_page_save_after>
+                <observers>
+                    <Sid_Cms_After>
+                        <type>singleton</type>
+                        <class>Sid_Cms_Model_Observer</class>
+                        <method>onCmsPageSaveAfter</method>
+                    </Sid_Cms_After>
+                </observers>
+            </cms_page_save_after>
         </events>
         <menu>
             <cms>
@@ -72,7 +81,7 @@
         <layout>
             <updates>
                 <sidcms>
-                    <file>Sid/cms.xml</file>
+                    <file>sid/cms.xml</file>
                 </sidcms>
             </updates>
         </layout>
@@ -145,6 +154,11 @@
             <sidcms>
                 <class>Sid_Cms_Helper</class>
             </sidcms>
+            <cms>
+	            <rewrite>
+	            	<page>Sid_Cms_Helper_Page</page>
+	            </rewrite>
+            </cms>
         </helpers>
         <events>
          <cms_page_load_after>

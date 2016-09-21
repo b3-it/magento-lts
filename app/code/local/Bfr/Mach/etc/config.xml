@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Bfr_Mach>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </Bfr_Mach>
     </modules>
     <admin>
@@ -97,6 +97,7 @@
             <mach_setup>
                 <setup>
                     <module>Bfr_Mach</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
@@ -148,7 +149,6 @@
                 <mandant>100</mandant>
             </head>
             <pos>
-                <irquellsystem>ONLINE</irquellsystem>
                 <sollkontotitel>FORDERUNG ONLINESHOP</sollkontotitel>
                 <habenkontotitel>ALLG. FACHKO./TAGU.</habenkontotitel>
                 <sollhaushstelle></sollhaushstelle>
@@ -162,11 +162,7 @@
                 <magkontorolle></magkontorolle>
                 <decimal_separator>,</decimal_separator>
             </pos>
-            <mapping>
-                <irquellsystem>ONLINE</irquellsystem>
-                <kostenrechnung>kostenrechnung</kostenrechnung>
-                <abrechnungsobjekt>abrechnungsobjekt</abrechnungsobjekt>
-            </mapping>
+ 
         </mach_export>
     </default>
 </config>

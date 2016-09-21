@@ -12,8 +12,21 @@
  */
 class Sid_Cms_Helper_Data extends Mage_Core_Helper_Abstract
 {
-		public function getPageIsVisible($pageId,$customerGroupId)
+		
+		public function isPageAllowed($page)
 		{
-			
+			$customergroups_hide = $page->getData('customergroups_hide');
+			$found = in_array($this->getCustomerGroupId(), $customergroups_hide);
+			return !$found;
 		}
+		
+ 	/**
+     * Return the customer id of the current customer
+     *
+     * @return int
+     */
+    public function getCustomerGroupId()
+    {
+        return Mage::getSingleton('customer/session')->getCustomerGroupId();
+    }
 }

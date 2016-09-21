@@ -46,7 +46,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       	//->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->where('event_id='.$this->getEvent()->getId());
-      
+
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -103,6 +103,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       		'align'     =>'left',
       		'width'     => '100px',
       		'index'     => 'increment_id',
+      		
       		//'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
       
@@ -111,6 +112,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       		'index' => 'status',
       		'type'  => 'options',
       		'width' => '70px',
+      		'filter_index' => 'order.status',
       		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
       ));
       

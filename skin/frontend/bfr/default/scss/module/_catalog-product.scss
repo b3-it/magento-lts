@@ -38,7 +38,6 @@
 
 .category-products {
     position: relative;
-    top: -32px;
 
     p.action .button {
         width: 95%;
@@ -84,7 +83,7 @@ div#details-block {
 	  }
 
 	  .tab-content .std {
-        @include multi-two-columns;
+        //@include multi-two-columns;
         margin: 0 0;
 	  }
 }
@@ -263,6 +262,14 @@ div#details-block {
             border-width: $global-active-border;
             border-style: solid;
             border-color: $global-navigation-border-color;
+            
+            > dl.last {
+                margin-top: $global-boxmargin;
+                padding-top: $global-boxmargin / 2;
+                border-top-width: $global-active-border;
+                border-top-style: solid;
+                border-top-color: $global-border-color;
+            }
 
             dt {
                 margin-top: 0;
@@ -270,11 +277,11 @@ div#details-block {
             }
 
             dt.option-box {
-                display: inline-block;
+                display: block;
                 vertical-align: top;
-                width: 90%;
-                margin-bottom: $global-boxmargin;
-                padding-bottom: $global-boxmargin / 2;
+                width: 100%;
+                margin-bottom: $global-boxmargin / 2;
+                padding-bottom: $global-boxmargin;
 
                 border-bottom-width: $global-active-border;
                 border-bottom-style: solid;
@@ -460,9 +467,10 @@ div#details-block {
 
     .product-name {
         margin-bottom: 10px;
+        color: $global-footer-linkcolor;
 
         h1, .h1 {
-            color: $global-h1-color;
+        	color: $global-footer-linkcolor;
             border: none;
             font-size: 1.5em;
         }

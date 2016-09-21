@@ -529,7 +529,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
      * @param array $rowData
      * @return array
      */
-    protected function _prepareRowForDb(array $rowData)
+    protected function x_prepareRowForDb(array $rowData)
     {
         $rowData = parent::_prepareRowForDb($rowData);
 
@@ -1173,7 +1173,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
                     }
                 }
                 $rowData      = $this->_productTypeModels[$productType]->prepareAttributesForSave($rowData);
-                $rowData['groupscatalog_hide_group'] = '-2';
+                $rowData['groupscatalog2_groups'] = '-2';
                 $product      = Mage::getModel('importexport/import_proxy_product', $rowData);
 
                 foreach ($rowData as $attrCode => $attrValue) {
@@ -1730,18 +1730,22 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
        
        	$path = Mage::getBaseDir('var') . DS ."import" .DS ."tmp". DS .$rowData['image_upload_token'] ;
         
-       	$filename = Varien_File_Uploader::getCorrectFileName($rowData['_media_image']);
-       
-        $zeile = $rowNum +2; 
-        if(!$this->isvalidFile_name($filename))
-        {
-        	$this->missingImages[] = $filename." (Zeile: ".$zeile.") ist nicht gültig";
-        }
-        else if(!file_exists($path. DS .$filename))
-        {
-        	$this->missingImages[] = $filename." (Zeile: ".$zeile.") fehlt";
-        }
-        
+       	//$filename = Varien_File_Uploader::getCorrectFileName($rowData['_media_image']);
+       	
+       	if(isset($rowData['image']))
+       	{
+	       	$filename = Varien_File_Uploader::getCorrectFileName($rowData['image']);
+	       
+	        $zeile = $rowNum +1; 
+	        if(!$this->isvalidFile_name($filename))
+	        {
+	        	$this->missingImages[] = $filename." (Zeile: ".$zeile.") ist nicht gültig";
+	        }
+	        else if(!file_exists($path. DS .$filename))
+	        {
+	        	$this->missingImages[] = $filename." (Zeile: ".$zeile.") fehlt";
+	        }
+       	}
         
         
         if (!isset($this->_invalidRows[$rowNum])) {
@@ -1813,6 +1817,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     	$p['store_group'] = $p['_store'];
     	//$p['framecontract'] = Mage::getModel('framecontract/contract')->load($this->_parameters['framecontract'])->getTitle();
     	$p['framecontract_los'] = $this->_parameters['los'];
+    	//$p['framecontract_los'] = Mage::getModel('framecontract/los')->load($this->_parameters['los'])->getOptionsLabel();
 		$p['tax_class_id'] = $this->_parameters['tax_class'];
 		$p['sku_prefix'] = $this->_parameters['sku_prefix'];
 		$p['image_upload_token'] = $this->_parameters['image_upload_token'];
@@ -1827,7 +1832,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
 		$p['href_mwst']="0";
 		$p['buchungstext']="0";
 		$p['buchungstext_mwst']="0";
-		$p['groupscatalog_hide_group']="NOT LOGGED IN";
+		$p['groupscatalog2_groups']="NOT LOGGED IN";
 		$p['generate_meta']="1";
 		$p['enable_googlecheckout']="0";
 		

@@ -28,10 +28,11 @@ class Bfr_Mach_Model_Export_Pos extends Bfr_Mach_Model_Export_Abstract
     		->join(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id'))
     		->joinleft(array('product_haushaltstelle'=>'catalog_product_entity_varchar'), 'product_haushaltstelle.entity_id=main_table.product_id AND product_haushaltstelle.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'))
     		->joinLeft(array('haushaltstelle'=>$collection->getTable('paymentbase/haushaltsparameter')),'product_haushaltstelle.value = haushaltstelle.paymentbase_haushaltsparameter_id', array('haushaltstelle'=>'value'))
+    		->where('parent_item_id IS NULL')
     		->where('order_id IN( '. implode(',',$orderIds).')' )
     		->order('order_id');
     	
-    	
+   // die($collection->getSelect()->__toString())	;
     	$result = array();
     	$result[] = implode($this->getDelimiter(), $this->_cols);
     	
@@ -53,7 +54,7 @@ class Bfr_Mach_Model_Export_Pos extends Bfr_Mach_Model_Export_Abstract
     		$IRPos++;
     		
     		$line = array();
-    		$line[] = $this->getConfigValue('pos/irquellsystem',null, null); //Irquellsystem
+    		$line[] = $this->getConfigValue('head/irquellsystem',null, null); //Irquellsystem
 			$line[] = $this->_Lauf; //Irlauf
 			$line[] = $IRPos; //Irposition
 			$line[] = $orderItem->getName(); //Text
