@@ -307,11 +307,11 @@ class Sid_Framecontract_Model_Import extends Mage_ImportExport_Model_Abstract
      */
     public function importSource()
     {
-        $this->setData(array(
-            'entity'   => self::getDataSourceModel()->getEntityTypeCode(),
-            'behavior' => self::getDataSourceModel()->getBehavior()
-        ));
-        $this->addLogComment(Mage::helper('importexport')->__('Begin import of "%s" with "%s" behavior', $this->getEntity(), $this->getBehavior()));
+//         $this->setData(array(
+//             'entity'   => self::getDataSourceModel()->getEntityTypeCode(),
+//             'behavior' => self::getDataSourceModel()->getBehavior()
+//         ));
+        //$this->addLogComment(Mage::helper('importexport')->__('Begin import of "%s" with "%s" behavior', $this->getEntity(), $this->getBehavior()));
         $result = $this->_getEntityAdapter()->importData();
         $this->addLogComment(array(
             Mage::helper('importexport')->__('Checked rows: %d, checked entities: %d, invalid rows: %d, total errors: %d',
@@ -473,6 +473,59 @@ class Sid_Framecontract_Model_Import extends Mage_ImportExport_Model_Abstract
     }
 
     
+    protected function _saveValidatedBunches()
+    {
+    	$source          = $this->_getSource();
+    	$productDataSize = 0;
+    	$bunchRows       = array();
+    	$startNewBunch   = false;
+    	$nextRowBackup   = array();
+    	$maxDataSize = Mage::getResourceHelper('importexport')->getMaxDataSize();
+    	$bunchSize = Mage::helper('importexport')->getBunchSize();
+    
+    	/** @var Mage_Core_Helper_Data $coreHelper */
+    	$coreHelper = Mage::helper("core");
+    
+    	$source->rewind();
+    	$this->_dataSourceModel->cleanBunches();
+    
+    	while ($source->valid() || $bunchRows) {
+    		if ($startNewBunch || !$source->valid()) {
+    			$this->_dataSourceModel->saveBunch($this->getEntityTypeCode(), $this->getBehavior(), $bunchRows);
+    
+    			$bunchRows       = $nextRowBackup;
+    			$productDataSize = strlen(serialize($bunchRows));
+    			$startNewBunch   = false;
+    			$nextRowBackup   = array();
+    		}
+    		if ($source->valid()) {
+    			if ($this->_errorsCount >= $this->_errorsLimit) { // errors limit check
+    				return;
+    			}
+    			$rowData = $coreHelper->unEscapeCSVData($source->current());
+    
+    			$this->_processedRowsCount++;
+    
+    			if ($this->validateRow($rowData, $source->key())) { // add row to bunch for save
+    				$rowData = $this->_prepareRowForDb($rowData);
+    				$rowSize = strlen(Mage::helper('core')->jsonEncode($rowData));
+    
+    				$isBunchSizeExceeded = ($bunchSize > 0 && count($bunchRows) >= $bunchSize);
+    
+    				if (($productDataSize + $rowSize) >= $maxDataSize || $isBunchSizeExceeded) {
+    					$startNewBunch = true;
+    					$nextRowBackup = array($source->key() => $rowData);
+    				} else {
+    					$bunchRows[$source->key()] = $rowData;
+    					$productDataSize += $rowSize;
+    				}
+    			}
+    			$source->next();
+    		}
+    	}
+    	return $this;
+    }
+    
     
     public function hasMissingImages()
     {
@@ -491,16 +544,11 @@ class Sid_Framecontract_Model_Import extends Mage_ImportExport_Model_Abstract
      */
     public function invalidateIndex()
     {
-        if (!isset(self::$_entityInvalidatedIndexes[$this->getEntity()])) {
-            return $this;
-        }
-
-        $indexers = self::$_entityInvalidatedIndexes[$this->getEntity()];
-        foreach ($indexers as $indexer) {
-            $indexProcess = Mage::getSingleton('index/indexer')->getProcessByCode($indexer);
+    	
+            $indexProcess = Mage::getSingleton('index/indexer')->getProcessByCode('catalog_product');
             if ($indexProcess) {
                 $indexProcess->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
-            }
+            
         }
 
         return $this;

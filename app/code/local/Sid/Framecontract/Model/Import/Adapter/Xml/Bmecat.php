@@ -6,10 +6,11 @@ class Sid_Framecontract_Model_Import_Adapter_Xml_Bmecat extends Sid_Framecontrac
 	protected $_productCollection = null;
 
     protected $_Mapping = array(
-    		'short_description' => 'ARTICLE_DETAILS/DESCRIPTION_SHORT',
+    		'short_description' => 'ARTICLE_DETAILS/DESCRIPTION_LONG',
     		'description' => 'ARTICLE_DETAILS/DESCRIPTION_LONG',
-    		'name' => 'ARTICLE_DETAILS/MANUFACTURER_NAME',
-     		'supplier_aid' => 'SUPPLIER_AID',
+    		'name' => 'ARTICLE_DETAILS/DESCRIPTION_SHORT',
+    		'manufacturer_name' => 'ARTICLE_DETAILS/MANUFACTURER_NAME',
+     		'supplier_sku' => 'SUPPLIER_AID',
     		'sku' => 'SUPPLIER_AID',
     		'qty' => 'ARTICLE_DETAILS/STOCK',
     		'framecontract_qty' => 'ARTICLE_DETAILS/STOCK',
@@ -37,13 +38,21 @@ class Sid_Framecontract_Model_Import_Adapter_Xml_Bmecat extends Sid_Framecontrac
     
     protected function getProductAt($index)
     {
-    	if($this->_productCollection == null)
-    	{
-    		$tmp = $this->xpath($this->_xml,'T_NEW_CATALOG');
-    		$this->_productCollection = $tmp->children();//$this->_xml->xpath('T_NEW_CATALOG/ARTICLE');
+    	
+	    	if($this->_productCollection == null)
+	    	{
+	    		$this->_productCollection = array();
+	    		$tmp = $this->xpath($this->_xml,'T_NEW_CATALOG');
+	    		foreach($tmp->ARTICLE as $item){
+	    			$this->_productCollection[] = $item;
+	    		}// $tmp->children();//$this->_xml->xpath('T_NEW_CATALOG/ARTICLE');
+	    	}
+    	
+    	if(isset($this->_productCollection[$index])){
+    		return $this->_productCollection[$index];
     	}
     	
-    	return $this->_productCollection[$index];
+    	return null;
     	 
     }
     

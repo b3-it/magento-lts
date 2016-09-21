@@ -345,14 +345,14 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
             $this->_deleteProducts();
         } else {
             $this->_saveProducts();
-            $this->_saveStockItem();
+            $this->_saveStockItems();
             $this->_saveLinks();
             $this->_saveCustomOptions();
             foreach ($this->_productTypeModels as $productType => $productTypeModel) {
                 $productTypeModel->saveData();
             }
         }
-        Mage::dispatchEvent('catalog_product_import_finish_before', array('adapter'=>$this));
+       // Mage::dispatchEvent('catalog_product_import_finish_before', array('adapter'=>$this));
         return true;
     }
 
@@ -522,6 +522,51 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
         return true;
     }
 
+    
+    protected function _saveValidatedBunches()
+    {
+    	$source          = $this->_getSource();
+    	$productDataSize = 0;
+    	$bunchRows       = array();
+    	$startNewBunch   = false;
+    	$nextRowBackup   = array();
+    	$maxDataSize = Mage::getResourceHelper('importexport')->getMaxDataSize();
+    	$bunchSize = Mage::helper('importexport')->getBunchSize();
+    
+    	/** @var Mage_Core_Helper_Data $coreHelper */
+    	$coreHelper = Mage::helper("core");
+    
+    	$source->rewind();
+    	$this->_dataSourceModel->cleanBunches();
+    
+    	while ($source->valid()) {
+    		
+    		//if ($source->valid()) {
+    			if ($this->_errorsCount >= $this->_errorsLimit) { // errors limit check
+    				return;
+    			}
+    			$current = $source->current();
+    			$rowData = $coreHelper->unEscapeCSVData($current);
+    
+    			$this->_processedRowsCount++;
+    
+    			if ($this->validateRow($rowData, $source->key())) { // add row to bunch for save
+    				$rowData = $this->_prepareRowForDb($rowData);
+    				
+    				$storage = Mage::getModel('sidimport/storage');
+    				$storage->setSku($current['sku'])
+    					->setName($current['name'])
+    					->setImportdata(serialize($rowData))
+    					->setCreatedTime(now())
+    					->setStatus(Sid_Import_Model_Status::STATUS_NEW)
+    					->save();
+    				
+    			//}
+    			$source->next();
+    		}
+    	}
+    	return $this;
+    }
     /**
      * Set valid attribute set and product type to rows with all scopes
      * to ensure that existing products doesn't changed.
@@ -617,7 +662,11 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
             'multiple'  => true
         );
 
-        while ($bunch = $this->_dataSourceModel->getNextBunch()) {
+         $collection = Mage::getModel('sidimport/storage')->getCollection();
+        $rowNum = 0;
+       foreach($collection as $item) 
+        //while ($bunch = $this->_dataSourceModel->getNextBunch()) 
+        {
             $customOptions = array(
                 'product_id'    => array(),
                 $optionTable    => array(),
@@ -627,10 +676,11 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
                 $typeTitleTable => array(),
                 $typeValueTable => array()
             );
-
-            foreach ($bunch as $rowNum => $rowData) {
-                if (!$this->isRowAllowedToImport($rowData, $rowNum)) {
-                    continue;
+            $rowData = unserialize($item->getImportdata());
+            //foreach ($bunch as $rowNum => $rowData) 
+            {
+                if (!$this->isRowAllowedToImport($rowData, $rowNum++)) {
+                    return $this;
                 }
                 if (self::SCOPE_DEFAULT == $this->getRowScope($rowData)) {
                     $productId = $this->_newSku[$rowData[self::COL_SKU]]['entity_id'];
@@ -869,13 +919,17 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
             );
             $positionAttrId[$linkId] = $adapter->fetchOne($select, $bind);
         }
-        while ($bunch = $this->_dataSourceModel->getNextBunch()) {
+        $collection = Mage::getModel('sidimport/storage')->getCollection();
+        $rowNum = 0;
+       foreach($collection as $item) {
             $productIds   = array();
             $linkRows     = array();
             $positionRows = array();
 
-            foreach ($bunch as $rowNum => $rowData) {
-                if (!$this->isRowAllowedToImport($rowData, $rowNum)) {
+            $rowData = unserialize($item->getImportdata());
+            //foreach ($bunch as $rowNum => $rowData) 
+            {
+                if (!$this->isRowAllowedToImport($rowData, $rowNum++)) {
                     continue;
                 }
                 if (self::SCOPE_DEFAULT == $this->getRowScope($rowData)) {
@@ -1051,12 +1105,30 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
         return $this;
     }
 
+    
+    
+    
+    protected function _saveProducts()
+    {
+    	$collection = Mage::getModel('sidimport/storage')->getCollection();
+    	$ProductsArray = $collection->getItems();
+    	$rowNum = 0;
+    	while(count($ProductsArray) > 0 )
+    	{
+    		$data = array_shift($ProductsArray);
+    		if($data)
+    		{
+    			$this->_saveProduct(unserialize($data->getImportdata()),$rowNum++);
+    		}
+    	}
+    }
+    
     /**
      * Gather and save information about product entities.
      *
      * @return Mage_ImportExport_Model_Import_Entity_Product
      */
-    protected function _saveProducts()
+    protected function _saveProduct($rowData, $rowNum)
     {
         /** @var $resource Mage_ImportExport_Model_Import_Proxy_Product_Resource */
         $resource       = Mage::getModel('importexport/import_proxy_product_resource');
@@ -1065,7 +1137,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
         $productLimit   = null;
         $productsQty    = null;
 
-        while ($bunch = $this->_dataSourceModel->getNextBunch()) {
+     
+       // while ($bunch = $this->_dataSourceModel->getNextBunch()) 
+        {
             $entityRowsIn = array();
             $entityRowsUp = array();
             $attributes   = array();
@@ -1077,9 +1151,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
             $previousType = null;
             $previousAttributeSet = null;
 
-            foreach ($bunch as $rowNum => $rowData) {
+           //foreach ($bunch as $rowNum => $rowData) {
                 if (!$this->validateRow($rowData, $rowNum)) {
-                    continue;
+                 //   continue;
                 }
                 $rowScope = $this->getRowScope($rowData);
 
@@ -1217,7 +1291,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
                     }
                     $attribute->setBackendModel($backModel); // restore 'backend_model' to avoid 'default' setting
                 }
-            }
+
             $this->_saveProductEntity($entityRowsIn, $entityRowsUp)
                 ->_saveProductWebsites($websites)
                 ->_saveProductCategories($categories)
@@ -1449,12 +1523,28 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
         return $this;
     }
 
+    
+    protected function _saveStockItems()
+    {
+    	$collection = Mage::getModel('sidimport/storage')->getCollection();
+    	$ProductsArray = $collection->getItems();
+    	$rowNum = 0;
+    	while(count($ProductsArray) > 0 )
+    	{
+    		$data = array_shift($ProductsArray);
+    		if($data)
+    		{
+    			$this->saveStockItem(unserialize($data->getImportdata()), $rowNum++);
+    		}
+    	}
+    }
+    
     /**
      * Stock item saving.
      *
      * @return Mage_ImportExport_Model_Import_Entity_Product
      */
-    protected function _saveStockItem()
+    protected function saveStockItem($rowData, $rowNum)
     {
         $defaultStockData = array(
             'manage_stock'                       => 1,
@@ -1483,13 +1573,17 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
         $entityTable = Mage::getResourceModel('cataloginventory/stock_item')->getMainTable();
         $helper      = Mage::helper('catalogInventory');
 
-        while ($bunch = $this->_dataSourceModel->getNextBunch()) {
+      
+        
+        //while ($bunch = $this->_dataSourceModel->getNextBunch()) 
+        {
             $stockData = array();
 
             // Format bunch to stock data rows
-            foreach ($bunch as $rowNum => $rowData) {
+            //foreach ($bunch as $rowNum => $rowData) 
+            {
                 if (!$this->isRowAllowedToImport($rowData, $rowNum)) {
-                    continue;
+                    return $this;
                 }
                 // only SCOPE_DEFAULT can contain stock data
                 if (self::SCOPE_DEFAULT != $this->getRowScope($rowData)) {
@@ -1837,7 +1931,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
 		$p['enable_googlecheckout']="0";
 		
 		$p['generate_meta']="1";
-		  	
+		
     	$this->_getSource()->setDefaultValues($p);
     	
     	

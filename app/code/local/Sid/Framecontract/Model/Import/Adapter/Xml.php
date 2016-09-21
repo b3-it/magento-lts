@@ -60,10 +60,11 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
     public function next()
     {
     	//$this->_pos++;
+    	$this->_currentKey += 1;
         $this->_currentRow = $this->getLine();//fgetcsv($this->_fileHandler, null, $this->_delimiter, $this->_enclosure);
       
         
-        $this->_currentKey = $this->_currentRow ? $this->_currentKey + 1 : null;
+        $this->_currentKey = $this->_currentRow ? $this->_currentKey : null;
     }
 
     /**
@@ -175,6 +176,14 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
 		$res['sku'] = $this->_defaultValues['sku_prefix'].$los.'/'.$res['sku'];
 		$res['framecontract_los'] = Mage::getModel('framecontract/los')->load($res['framecontract_los'])->getOptionsLabel();
 
+		if(!isset($res['qty'])){
+			$res['qty'] = 0;
+			$res['framecontract_qty'] = 0;
+		}
+		if(!isset($res['weight'])){
+			$res['weight'] = 0;
+		}
+		
         $skuCols = array('sku','_links_crosssell_sku','_links_upsell_sku','_links_related_sku','_parent_sku');
 
         foreach($skuCols as $skuCol)
@@ -284,7 +293,9 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
 	    		$row['_media_attribute_id'] = $this->getMediaAttributeId();
 	    		*/
     		}
+    		unset($row['imagelist']);
     	}
+    	
     	return $row;
     }
     
