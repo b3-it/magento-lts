@@ -18,7 +18,7 @@
             }
         }
     }
-   
+
     .col2-set {
     	margin-bottom: $global-boxmargin;
     }
@@ -67,7 +67,7 @@
     }
 
     ul.checkout-progress {
-        margin: 10px 0px 20px 0px;
+        margin: 20px 0;
         list-style: outside none none;
 
         li {
@@ -316,11 +316,11 @@
         left: 0px;
 
         .multiple-checkout {
-            .col-1 {
-                address {
-                    margin: 0px;
-                    padding: 0px;
-                }
+            h3 {
+                padding-left: 10px;
+            }
+            .col-1  address {
+                padding: 0px;
             }
         }
     }
