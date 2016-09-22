@@ -1,0 +1,33 @@
+//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.catalogsearch-advanced-result {
+	.advanced-search-summary {
+		margin-top: $global-boxmargin / 2;
+		background-color: $global-lightcolor;
+		border: $global-active-border solid $global-border-color;
+		display: block;
+		padding: $golbal-msgpadding;
+		
+		p {
+			margin-top: $global-boxmargin / 2;
+		}
+	}
+		
+	h2 {
+		a {
+			color: $global-footer-linkcolor;
+			text-decoration: underline;
+			font-weight: bold;
+		}
+		
+		span {
+		    display: block;
+		    color: $global-footer-linkcolor;
+	    }
+	}
+}
