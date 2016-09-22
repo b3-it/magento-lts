@@ -33,14 +33,18 @@
  */
 class Sid_Checkout_Block_Multishipping_Success extends Mage_Checkout_Block_Multishipping_Abstract
 {
+	private $_order_ids = null;
+	private $_orders = null;
     public function getOrderIds()
     {
-        $ids = Mage::getSingleton('core/session')->getOrderIds(true);
-//        Zend_Debug::dump(Mage::getSingleton('core/session')->getOrderIds());
-        if ($ids && is_array($ids)) {
-            return $ids;
-            return implode(', ', $ids);
-        }
+    	if($this->_order_ids == null){
+	        $this->_order_ids = Mage::getSingleton('core/session')->getOrderIds(true);
+    	}
+	//        Zend_Debug::dump(Mage::getSingleton('core/session')->getOrderIds());
+	        if ($this->_order_ids && is_array($this->_order_ids)) {
+	            return $this->_order_ids;
+	            return implode(', ', $this->_order_ids);
+	        }
         return false;
     }
 
@@ -53,4 +57,42 @@ class Sid_Checkout_Block_Multishipping_Success extends Mage_Checkout_Block_Multi
     {
         return Mage::getBaseUrl();
     }
+    
+    /**
+     * anhand der Rechnungsadresse das Haushaltsystem ermitteln
+     */
+    public function getOrderHaushaltssysteme()
+    {
+    	if($this->_orders == null){
+    		$this->_orders = array();
+	    	foreach($this->_order_ids as $id => $increment){
+	    		$order = Mage::getModel('sales/order')->load($id);
+	    		$address = Mage::getModel('customer/address')->load($order->getBillingAddress()->getCustomerAddressId());
+	    		
+	    		if(!empty($address->getHaushaltsSystem())){
+	    			
+	    			$this->_orders[$id] = $order;
+	    		}
+	    		
+	    	}
+    	}
+    	return $this->_orders;
+    }
+    
+    public function getFrameContractText($orderId = null)
+    {
+    	if(isset($this->_orders[$orderId])){
+    		$fc = Mage::getModel('framecontract/contract')->load($this->_orders[$orderId]->getFramecontract());
+    		if($fc->getId()){
+    			return "<td>".$fc->getTitle()."</td><td>".$fc->getVendor()->getCompany()."</td>";
+    		}
+    	}
+    	
+    	return "";
+    }
+    public function getAdditionalInfoUrl()
+    {
+    	 return $this->getUrl('sidhaushalt/index/saveaddinfo', array('_secure' => true));
+    }
+    
 }

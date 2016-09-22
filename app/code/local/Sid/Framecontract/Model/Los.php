@@ -82,4 +82,9 @@ class Sid_Framecontract_Model_Los extends Mage_Core_Model_Abstract
     	return sprintf('%s (Id: %s)',$this->getTitle(),$this->getId());
     }
     
+    
+    public function getFramecontract()
+    {
+    	return Mage::getModel('framecontract/contract')->load($this->getFramecontractContractId());
+    }
 }

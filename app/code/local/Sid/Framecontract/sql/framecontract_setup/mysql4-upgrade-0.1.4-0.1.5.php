@@ -26,6 +26,17 @@ $installer->addAttribute('customer_address', 'dap', array(
 		'sort_order'   	=> 40,
 ));
 
+
+
+$forms=array('adminhtml_customer_address','customer_address_edit');
+$entityType = 'customer_address';
+$attributeCode = 'dap';
+$att = Mage::getModel('customer/attribute')->loadByCode($entityType, $attributeCode);
+if (!$att || $att->isEmpty()) {
+	Mage::throwException(sprintf('Attribute code "%s" for "%s" not found!', $attributeCode, $entityType));
+}
+$att->setData('used_in_forms', $forms)->setData('sort_order', '150')->save();
+
 $installer->run("ALTER TABLE {$this->getTable('framecontract_transmit')} ADD `los_id` int default 0 ");
 $installer->run("ALTER TABLE {$this->getTable('framecontract_transmit')} ADD `note` varchar(255) NOT NULL default '' ");
 $installer->removeAttribute('catalog_product', 'framecontract');

@@ -59,6 +59,7 @@ class Sid_Framecontract_Model_Contract extends Mage_Core_Model_Abstract
     	return $this->getResource()->getProductIds($this);
     }
     
+  
 
     
 }
