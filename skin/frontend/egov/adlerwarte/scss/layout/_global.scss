@@ -44,6 +44,16 @@ body {
     }
 }
 
+@include bp(max-width, 980px) {
+	.page {
+	    background-image: none !important;
+    }
+
+	#top-wave {
+        background-position: 50% 0;
+	}
+}
+
 .wrapper:after {
     @include clearfix;
 }
