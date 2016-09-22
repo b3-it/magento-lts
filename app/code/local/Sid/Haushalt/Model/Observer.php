@@ -26,7 +26,7 @@ class Sid_Haushalt_Model_Observer extends Mage_Core_Model_Abstract
 				
 				if(!empty($address->getHaushaltsSystem())){
 				
-					$order_info->setHauahaltsSystem($address->getHaushaltsSystem());
+					$order_info->setHaushaltsSystem($address->getHaushaltsSystem());
 				}
 				$order_info->save();
 			}

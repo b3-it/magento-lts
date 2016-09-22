@@ -14,106 +14,116 @@ class Sid_Haushalt_Block_Adminhtml_Haushalt_Grid extends Mage_Adminhtml_Block_Wi
   {
       parent::__construct();
       $this->setId('haushaltGrid');
-      $this->setDefaultSort('haushalt_id');
+      //$this->setDefaultSort('haushalt_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
   }
 
+  protected function _getCollectionClass()
+  {
+  	return 'sales/order_grid_collection';
+  }
+  
   protected function _prepareCollection()
   {
-      $collection = Mage::getModel('haushalt/haushalt')->getCollection();
-      $this->setCollection($collection);
-      return parent::_prepareCollection();
+  	
+    	$collection = Mage::getResourceModel($this->_getCollectionClass());
+    	
+    	$collection->getSelect()
+    		->join(array('order_info'=>$collection->getTable('sidhaushalt/order_info')),'main_table.entity_id = order_info.order_id');
+    	
+    	$this->setCollection($collection);
+      	return parent::_prepareCollection();
   }
 
   protected function _prepareColumns()
   {
-      $this->addColumn('haushalt_id', array(
-          'header'    => Mage::helper('haushalt')->__('ID'),
-          'align'     =>'right',
-          'width'     => '50px',
-          'index'     => 'haushalt_id',
-      ));
+  	
+  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+  	$yesno = array();
+  	foreach ($yn as $n)
+  	{
+  		$yesno[$n['value']] = $n['label'];
+  	}
+  	
+        $this->addColumn('real_order_id', array(
+            'header'=> Mage::helper('sales')->__('Order #'),
+            'width' => '80px',
+            'type'  => 'text',
+            'index' => 'increment_id',
+        ));
 
-      $this->addColumn('title', array(
-          'header'    => Mage::helper('haushalt')->__('Title'),
-          'align'     =>'left',
-          'index'     => 'title',
-      ));
+        if (!Mage::app()->isSingleStoreMode()) {
+            $this->addColumn('store_id', array(
+                'header'    => Mage::helper('sales')->__('Purchased From (Store)'),
+                'index'     => 'store_id',
+                'type'      => 'store',
+                'store_view'=> true,
+                'display_deleted' => true,
+            	'width' => '200px',
+            ));
+        }
 
-	  /*
-      $this->addColumn('content', array(
-			'header'    => Mage::helper('haushalt')->__('Item Content'),
-			'width'     => '150px',
-			'index'     => 'content',
-      ));
-	  */
+        $this->addColumn('created_at', array(
+            'header' => Mage::helper('sales')->__('Purchased On'),
+            'index' => 'created_at',
+            'type' => 'datetime',
+            'width' => '100px',
+        ));
+        
+        $this->addColumn('billing_name', array(
+            'header' => Mage::helper('sales')->__('Bill to Name'),
+            'index' => 'billing_name',
+        ));
 
-      $this->addColumn('status', array(
-          'header'    => Mage::helper('haushalt')->__('Status'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'status',
-          'type'      => 'options',
-          'options'   => array(
-              1 => 'Enabled',
-              2 => 'Disabled',
-          ),
-      ));
-	  
-        $this->addColumn('action',
-            array(
-                'header'    =>  Mage::helper('haushalt')->__('Action'),
-                'width'     => '100',
-                'type'      => 'action',
-                'getter'    => 'getId',
-                'actions'   => array(
-                    array(
-                        'caption'   => Mage::helper('haushalt')->__('Edit'),
-                        'url'       => array('base'=> '*/*/edit'),
-                        'field'     => 'id'
-                    )
-                ),
-                'filter'    => false,
-                'sortable'  => false,
-                'index'     => 'stores',
-                'is_system' => true,
+ 		$this->addColumn('base_grand_total', array(
+            'header' => Mage::helper('sales')->__('G.T. (Base)'),
+            'index' => 'base_grand_total',
+            'type'  => 'currency',
+            'currency' => 'base_currency_code',
+        ));
+        
+ 		$this->addColumn('haushaltsystem', array(
+ 				'header' => Mage::helper('sidhaushalt')->__('Haushalts System'),
+ 				'index' => 'haushalts_system',
+ 				'width' => '70px',
+ 				'type'  => 'options',
+ 				'options' => Sid_Haushalt_Model_Type::getTypeList(),
+ 		));
+
+ 		$this->addColumn('status', array(
+ 				'header' => Mage::helper('sales')->__('Status'),
+ 				'index' => 'status',
+ 				'type'  => 'options',
+ 				'width' => '70px',
+ 				'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+ 		));
+ 		
+        $this->addColumn('exported', array(
+            'header' => Mage::helper('sidhaushalt')->__('Exported'),
+            'index' => 'exported',
+            'type'  => 'options',
+            'width' => '70px',
+            'options' => $yesno,
         ));
 		
-		$this->addExportType('*/*/exportCsv', Mage::helper('haushalt')->__('CSV'));
-		$this->addExportType('*/*/exportXml', Mage::helper('haushalt')->__('XML'));
+		
 	  
       return parent::_prepareColumns();
   }
 
     protected function _prepareMassaction()
     {
-        $this->setMassactionIdField('haushalt_id');
+        $this->setMassactionIdField('entity_id');
         $this->getMassactionBlock()->setFormFieldName('haushalt');
 
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('haushalt')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('haushalt')->__('Are you sure?')
+        $this->getMassactionBlock()->addItem('export', array(
+             'label'    => Mage::helper('sidhaushalt')->__('Export'),
+             'url'      => $this->getUrl('*/*/massExport'),
+             //'confirm'  => Mage::helper('sidhaushalt')->__('Are you sure?')
         ));
 
-        $statuses = Mage::getSingleton('haushalt/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('haushalt')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('haushalt')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
-        return $this;
+        
     }
 
   public function getRowUrl($row)

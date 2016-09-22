@@ -39,6 +39,7 @@ if (!$installer->tableExists($installer->getTable('sidhaushalt/order_info')))
 	  `exported` smallint(6) NOT NULL default 0,
 	  `haushalts_system` varchar(255) NOT NULL default '',
 	  `additional_info` varchar(255) NOT NULL default '',
+	  `exported_time` datetime NULL,
 	  `created_time` datetime NULL,
 	  `update_time` datetime NULL,
 	  PRIMARY KEY (`id`),

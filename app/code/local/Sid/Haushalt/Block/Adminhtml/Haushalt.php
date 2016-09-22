@@ -13,9 +13,11 @@ class Sid_Haushalt_Block_Adminhtml_Haushalt extends Mage_Adminhtml_Block_Widget_
   public function __construct()
   {
     $this->_controller = 'adminhtml_haushalt';
-    $this->_blockGroup = 'haushalt';
-    $this->_headerText = Mage::helper('haushalt')->__('Item Manager');
-    $this->_addButtonLabel = Mage::helper('haushalt')->__('Add Item');
+    $this->_blockGroup = 'sidhaushalt';
+    $this->_headerText = Mage::helper('sidhaushalt')->__('Item Manager');
+    
     parent::__construct();
+    
+    $this->removeButton('add');
   }
 }

@@ -6,14 +6,14 @@
         </Sid_Haushalt>
     </modules>
     <admin>
-        <routers>
-			<haushalt>
-				<use>admin</use>
-				<args>
-					<module>Sid_Haushalt</module>
-					<frontName>haushalt</frontName>
-				</args>
-			</haushalt>
+ 		<routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Sid_Haushalt_Adminhtml after="Mage_Adminhtml">Sid_Haushalt_Adminhtml</Sid_Haushalt_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
         </routers>
     </admin>
     <frontend>
@@ -29,6 +29,66 @@
     </frontend>
     
     <adminhtml>
+        <menu>
+            <system>
+                <children>
+                    <convert>
+                        <children>
+                            <sidhaushalt module="sidhaushalt">
+                                <title>Sid Haushalt Export</title>
+                                <sort_order>0</sort_order>
+                                <action>adminhtml/sidhaushalt_haushalt</action>
+                            </sidhaushalt>
+                        </children>
+                    </convert>
+                </children>
+            </system>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <convert>
+                                    <children>
+                                        <sidhaushalt translate="title" module="sidhaushalt">
+                                            <title>Sidhaushalt</title>
+                                        </sidhaushalt>
+                                    </children>
+                                </convert>
+                                <config>
+                                    <children>
+                                        <sidhaushalt translate="title" module="sidhaushalt">
+                                            <title>Sidhaushalt</title>
+                                        </sidhaushalt>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <mach>
+                    <file>sid/haushalt.xml</file>
+                </mach>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Bfr_Mach>
+                    <files>
+                        <default>Sid_Haushalt.csv</default>
+                    </files>
+                </Bfr_Mach>
+            </modules>
+        </translate>
     </adminhtml>   
     <global>
         <models>
@@ -67,9 +127,9 @@
             </haushalt_read>
         </resources>
         <blocks>
-            <haushalt>
+            <sidhaushalt>
                 <class>Sid_Haushalt_Block</class>
-            </haushalt>
+            </sidhaushalt>
         </blocks>
         <helpers>
             <sidhaushalt>
@@ -92,6 +152,7 @@
     	<lg04>
     		<label>Agresso LG 04</label>
     		<type>lg04</type>
+    		<model>sidhaushalt/types_lg04</model>
     	</lg04>
     </sid_haushaltsysteme>
 </config>
