@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_sidhaushalt_haushalt_index>
+        <reference name="content">
+            <block type="sidhaushalt/adminhtml_haushalt" name="haushalt" />
+        </reference>
+    </adminhtml_sidhaushalt_haushalt_index>
+</layout>
