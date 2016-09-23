@@ -151,7 +151,7 @@ class Slpb_Product_Adminhtml_Slpbproduct_OrderController extends Mage_Adminhtml_
                 $adresses[] = $adr;
             }
                     
-                $pdf = Mage::getModel('ppw/pdf_shipment_addresslabel')->getPdf($adresses);
+                $pdf = Mage::getModel('slpbshipping/pdf_addresslabel')->getPdf($adresses);
                     
                 return $this->_prepareDownloadResponse('addresslabel'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(), 'application/pdf');
           
