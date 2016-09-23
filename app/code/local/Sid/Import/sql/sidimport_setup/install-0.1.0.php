@@ -21,7 +21,7 @@ if (!$installer->tableExists($installer->getTable('sidimport/storage')))
 	$installer->run("
 
 	-- DROP TABLE IF EXISTS {$this->getTable('sidimport/storage')};
-	CREATE TABLE {$this->getTable('import/storage')} (
+	CREATE TABLE {$this->getTable('sidimport/storage')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `task` int(11) unsigned NOT NULL default 0,
 	  `name` varchar(255) NOT NULL default '',
