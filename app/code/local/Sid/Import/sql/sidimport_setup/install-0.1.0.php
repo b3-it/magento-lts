@@ -15,12 +15,12 @@
 $installer = $this;
 
 $installer->startSetup();
-if (!$installer->tableExists($installer->getTable('import/storage')))
+if (!$installer->tableExists($installer->getTable('sidimport/storage')))
 {
 
 	$installer->run("
 
-	-- DROP TABLE IF EXISTS {$this->getTable('import/storage')};
+	-- DROP TABLE IF EXISTS {$this->getTable('sidimport/storage')};
 	CREATE TABLE {$this->getTable('import/storage')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `task` int(11) unsigned NOT NULL default 0,
