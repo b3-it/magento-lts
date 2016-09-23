@@ -176,7 +176,7 @@
         <jobs>
             <sid_cms>
                 <schedule>
-                    <cron_expr>9/* * * * *</cron_expr>
+                    <cron_expr>*/9 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>sidcms/cron::runCron</model>

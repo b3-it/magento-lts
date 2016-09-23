@@ -115,7 +115,7 @@ class Sid_Haushalt_Block_Adminhtml_Haushalt_Grid extends Mage_Adminhtml_Block_Wi
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('entity_id');
-        $this->getMassactionBlock()->setFormFieldName('haushalt');
+        $this->getMassactionBlock()->setFormFieldName('orderIds');
 
         $this->getMassactionBlock()->addItem('export', array(
              'label'    => Mage::helper('sidhaushalt')->__('Export'),
@@ -126,9 +126,6 @@ class Sid_Haushalt_Block_Adminhtml_Haushalt_Grid extends Mage_Adminhtml_Block_Wi
         
     }
 
-  public function getRowUrl($row)
-  {
-      return $this->getUrl('*/*/edit', array('id' => $row->getId()));
-  }
+
 
 }

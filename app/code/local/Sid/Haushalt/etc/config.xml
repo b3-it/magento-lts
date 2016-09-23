@@ -152,7 +152,19 @@
     	<lg04>
     		<label>Agresso LG 04</label>
     		<type>lg04</type>
-    		<model>sidhaushalt/types_lg04</model>
+    		<model>sidhaushalt/export_type_lg04</model>
     	</lg04>
     </sid_haushaltsysteme>
+     <crontab>
+        <jobs>
+            <exportorder>
+                <schedule>
+                    <cron_expr>*/1 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sidhaushalt/cron::runCron</model>
+                </run>
+            </exportorder>
+        </jobs>
+    </crontab>
 </config>

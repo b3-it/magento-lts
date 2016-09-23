@@ -36,7 +36,7 @@ class Sid_Haushalt_Model_Type extends Varien_Object
     			}
     		}
     	}
-    	return null;
+    	return Mage::getModel('sidhaushalt/export_type_default');
     }
     
 }

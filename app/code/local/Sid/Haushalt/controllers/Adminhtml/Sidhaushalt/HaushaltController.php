@@ -26,19 +26,19 @@ class Sid_Haushalt_Adminhtml_Sidhaushalt_HaushaltController extends Mage_Adminht
 
 	public function massExportAction()
 	{
-		$orderIds = $this->getRequest()->getParam('haushalt');
-		if(!is_array($haushaltIds)) {
+		$orderIds = $this->getRequest()->getParam('orderIds');
+		if(!is_array($orderIds)) {
 			Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
 		} else {
 			try {
 				//prüfen ob alle dasselbe Model verwenden
-				$collection= Mage::getModel('sidhaushalt/order_info');
+				$collection= Mage::getModel('sidhaushalt/order_info')->getcollection();
 				$collection->getSelect()
 					->where('order_id IN ('.implode(',', $orderIds).')')
 					->group('haushalts_system');
 				
-					if(count($collection) > 0){
-						Mage::throwException($this->__('There are more than one Export System defined!'));
+					if(count($collection) > 1){
+						Mage::throwException($this->__('There are more than one Export Systems used!'));
 					}
 				
 					foreach($collection as $item)
@@ -50,8 +50,11 @@ class Sid_Haushalt_Adminhtml_Sidhaushalt_HaushaltController extends Mage_Adminht
 						Mage::throwException($this->__('Export System not defined!(%s)',$item->getHaushaltsSystem()));
 					}
 				
+					$export->setOrderIds($orderIds);
+					$data = $export->getExportData();
+					$this->_sendUploadResponse($export->getFilename(), $data);
 				$this->_getSession()->addSuccess(
-						$this->__('Total of %d record(s) were successfully exported', count($haushaltIds))
+						$this->__('Total of %d record(s) were successfully exported', count($orderIds))
 						);
 			} catch (Exception $e) {
 				$this->_getSession()->addError($e->getMessage());
