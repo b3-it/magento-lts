@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_Ready>
-            <version>0.1.5.0</version>
+            <version>0.1.6.0</version>
         </Egovs_Ready>
     </modules>
 
@@ -24,6 +24,11 @@
             <egovsready>
                 <class>Egovs_Ready_Model</class>
             </egovsready>
+            <checkout>
+                <rewrite>
+                    <agreement>Egovs_Ready_Model_Checkout_Agreement</agreement>
+                </rewrite>
+            </checkout>
         </models>
         <resources>
             <egovsready_setup>
@@ -165,5 +170,10 @@ T: {{var telephone}}
                 <display_delivery_time_on_categories>1</display_delivery_time_on_categories>
             </price>
         </catalog>
+        <checkout>
+            <options>
+                <enable_agreements>1</enable_agreements>
+            </options>
+        </checkout>
     </default>
 </config>

@@ -3,12 +3,22 @@
 
 $this->saveCmsPage(array(
     'title'         => 'AGB',
-    'identifier'    => 'unsere_agbs',
+    'identifier'    => 'agb',
     'content'       => $this->getTemplateContent('agb.html'),
-	'content_heading' => "Unsere AGB's",
+	'content_heading' => "AGB",
     'is_active'     => 1,
     'stores'        => 0,
-	'root_template' => 'three_columns'
+	'root_template' => 'two_columns_left'
+));
+
+$this->saveCmsPage(array(
+		'title'         => 'Widerrufsbelehrung',
+		'identifier'    => 'widerruf',
+		'content'       => $this->getTemplateContent('revocation.html'),
+		'content_heading' => "Widerrufsbelehrung",
+		'is_active'     => 1,
+		'stores'        => 0,
+		'root_template' => 'two_columns_left'
 ));
 
 $this->saveCmsPage(array(
@@ -18,7 +28,7 @@ $this->saveCmsPage(array(
 		'content_heading' => 'Impressum',
 		'is_active'     => 1,
 		'stores'        => 0,
-		'root_template' => 'three_columns'
+		'root_template' => 'two_columns_left'
 ));
 
 $this->saveCmsPage(array(
@@ -28,12 +38,12 @@ $this->saveCmsPage(array(
 		'content_heading' => 'Datenschutz',
 		'is_active'     => 1,
 		'stores'        => 0,
-		'root_template' => 'three_columns'
+		'root_template' => 'two_columns_left'
 ));
 
 $this->saveCmsBlock(array(
-		'title'         => 'Fusszeile Firma',
-		'identifier'    => 'footer_links_company',
+		'title'         => 'Fusszeile',
+		'identifier'    => 'footer_links',
 		'content'       => $this->getTemplateContent('footer.html'),
 		'is_active'     => 1,
 		'stores'        => 0,

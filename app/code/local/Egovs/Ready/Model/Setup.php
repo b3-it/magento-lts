@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * Installer
+ *
+ * @category		Egovs
+ * @package			Egovs_Ready
+ * @name			Egovs_Ready_Model_Setup
+ * @author			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ * @version			0.1.0.0
+ * @since			0.1.0.0
+ *
+ */
 class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 {
 	public function getTemplateContent($filename)
@@ -7,9 +19,8 @@ class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 		$file = dirname(__FILE__) .DS. ".." .DS ."data" .DS . "cms" . DS. $filename;
 		$file = realpath($file);
 		
-		if(file_exists($file))
-		{
-			return $this->file_get_contents_utf8($file);
+		if (file_exists($file)) {
+			return $this->__fileGetContentsUtf8($file);
 		}
 		return "";
 		 
@@ -50,10 +61,28 @@ class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 		}
 	}
 	
-	private function file_get_contents_utf8($fn) {
+	/**
+	 * Agreement anlegen
+	 *
+	 * @param array $agreementData Agreement Daten
+	 *
+	 * @return void
+	 */
+	public function createAgreement($agreementData)
+	{
+		$agreementData['is_active'] = '1';
+		$agreementData['is_html'] = '1';
+		$agreementData['stores'] = array('0');
+	
+		$agreement = Mage::getModel('checkout/agreement');
+		$agreement->setData($agreementData)
+				->save()
+		;
+	}
+	
+	private function __fileGetContentsUtf8($fn) {
 		$content = file_get_contents($fn);
-		return mb_convert_encoding($content, 'UTF-8',
-				mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+		return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
 	}
 	
 }
