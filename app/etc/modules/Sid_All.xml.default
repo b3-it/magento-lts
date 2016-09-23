@@ -2,34 +2,46 @@
 <config>
   <modules>
     <Sid_Checkout>
-      <active>false</active>
+      <active>true</active>
       <codePool>local</codePool>
       <depends>
         <Mage_Sales />
         <Sid_Framecontract />
       </depends>
     </Sid_Checkout>
-    <Sid_ExportOrder>
-      <active>false</active>
+    <Sid_Cms>
+      <active>true</active>
       <codePool>local</codePool>
-      <depends>
-        <Sid_Framecontract />
-      </depends>
+    </Sid_Cms>
+    <Sid_ExportOrder>
+      <active>true</active>
+      <codePool>local</codePool>
     </Sid_ExportOrder>
     <Sid_Framecontract>
-      <active>false</active>
+      <active>true</active>
       <codePool>local</codePool>
+      <depends>
+        <Sid_Import />
+      </depends>
     </Sid_Framecontract>
+    <Sid_Haushalt>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Sid_Haushalt>
+    <Sid_Import>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Sid_Import>
     <Sid_Report>
-      <active>false</active>
+      <active>true</active>
       <codePool>local</codePool>
     </Sid_Report>
     <Sid_Roles>
-      <active>false</active>
+      <active>true</active>
       <codePool>local</codePool>
     </Sid_Roles>
     <Sid_Wishlist>
-      <active>false</active>
+      <active>true</active>
       <codePool>local</codePool>
       <depends>
         <Mage_Sales />
