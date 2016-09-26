@@ -5,7 +5,7 @@
 	        <action method="addTab"><name>information_section</name><block>sidcms/adminhtml_page_edit_tabs_information</block></action>
 	      </reference>
 	       <reference name="head">
-            <action method="addJs"><script>sid/cms/be_page.js</script></action>
+            <action method="addJs"><script>sid/cms/page.admin.js</script></action>
         </reference>
      </adminhtml_cms_page_edit>
      <adminhtml_cms_navi_index>
