@@ -148,7 +148,7 @@ class Sid_Cms_Block_Adminhtml_Page_Edit_Tabs_Information_Form extends Mage_Admin
   			$('upinfo_send_mode0').addEventListener('click', sendUpdateInfo.switch_mode0);
   			$('upinfo_send_mode1').addEventListener('click', sendUpdateInfo.switch_mode1);
   			$('upinfo_send_mode2').addEventListener('click', sendUpdateInfo.switch_mode2);
-			
+			$('page_customergroups_show').addEventListener('click', sendUpdateInfo.customerGroups);
   			sendUpdateInfo.toogleEnabled(false);
   			</script>";
   	
