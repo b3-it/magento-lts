@@ -88,6 +88,13 @@
         <cms>
 			<browser>
 				<extensions>
+				 <image_allowed>
+                       <pdf>1</pdf>
+						<xml>1</xml>
+						<doc>1</doc>
+						<docx>1</docx>
+						<xslx>1</xslx>
+                    </image_allowed>
 					<allowed>
 						<pdf>1</pdf>
 						<xml>1</xml>
