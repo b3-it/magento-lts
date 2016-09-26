@@ -16,7 +16,7 @@ class Sid_Cms_Helper_Data extends Mage_Core_Helper_Abstract
 		public function isPageAllowed($page)
 		{
 			$customergroups_show = $page->getData('customergroups_show');
-			if(in_array(0, $customergroups_show)){
+			if(in_array(-1, $customergroups_show)){
 				return true;
 			}
 			
