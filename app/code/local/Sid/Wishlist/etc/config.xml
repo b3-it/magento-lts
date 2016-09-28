@@ -21,7 +21,7 @@
         <layout>
             <updates>
                 <sidwishlist>
-                    <file>sid/sidwishlist.xml</file>
+                    <file>sid/wishlist.xml</file>
                 </sidwishlist>
             </updates>
         </layout>
