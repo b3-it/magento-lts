@@ -276,6 +276,10 @@ body.customer-account {
                 text-align: left !important;
             }
         }
+       
+        #my-collections-table {
+        	@extend .egov-base-table;
+        }
     }
 
     .data-table {
