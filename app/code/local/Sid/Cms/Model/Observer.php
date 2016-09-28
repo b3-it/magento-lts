@@ -38,11 +38,11 @@ class Sid_Cms_Model_Observer extends Varien_Object
 					'class'     => 'validate-datetime'
 			));
 			
-			 $fieldset->addField('customergroups_hide', 'multiselect', array(
-      		'label'     => Mage::helper('sidcms')->__('Hide from Customer Groups'),
+			 $fieldset->addField('customergroups_show', 'multiselect', array(
+      		'label'     => Mage::helper('sidcms')->__('Show to Customer Groups'),
       		//'required'  => true,
       		'values'    => $this->_getCustomerGroup(),
-      		'name'      => 'customergroups_hide',
+      		'name'      => 'customergroups_show',
       		'value'	=> ''
       		//'onchange'  => 'onchangeTransferType()',
       
@@ -56,6 +56,7 @@ class Sid_Cms_Model_Observer extends Varien_Object
 		
 			$res = array();
 			
+			$res[] = array('value'=>'-1','label'=> Mage::helper('sidcms')->__('All Customer Groups'));
 			foreach($collection as $item){
 				$res[] = array('value'=>$item->getId(),'label'=>$item->getCustomerGroupCode());
 			}
@@ -70,13 +71,13 @@ class Sid_Cms_Model_Observer extends Varien_Object
 		public function onCmsPageSaveBefore($observer)
 		{
 			$page = $observer->getDataObject();	
-			$hide = $page->getData('customergroups_hide');
-			if(is_array($hide)){
-				$hide = implode(',', $hide);
+			$show = $page->getData('customergroups_show');
+			if(is_array($show)){
+				$show = implode(',', $show);
 			}else{
-				$hide ="";
+				$show ="-1";
 			}
-			$page->setData('customergroups_hide',$hide);
+			$page->setData('customergroups_show', $show);
 			
 		}
 		
@@ -115,6 +116,7 @@ class Sid_Cms_Model_Observer extends Varien_Object
 				foreach($customers as $customer){
 					Mage::getModel('infoletter/recipient')
 						->createByCustomer($customer,$model->getId())
+						->setStatus(Egovs_Infoletter_Model_Recipientstatus::STATUS_UNSEND)
 						->save();
 				}
 				
@@ -129,13 +131,13 @@ class Sid_Cms_Model_Observer extends Varien_Object
 		public function onCmsPageLoadAfter($observer)
 		{
 			$page = $observer->getDataObject();
-			$hide = $page->getData('customergroups_hide');
-			if(strlen(trim($hide)) > 0){
-				$hide = explode(',',$hide);
+			$show = $page->getData('customergroups_show');
+			if(strlen(trim($show)) > 0){
+				$show = explode(',',$show);
 			}else{
-				$hide = array();
+				$show = array(-1);
 			}
-			$page->setData('customergroups_hide',$hide);
+			$page->setData('customergroups_show',$show);
 				
 		}
 

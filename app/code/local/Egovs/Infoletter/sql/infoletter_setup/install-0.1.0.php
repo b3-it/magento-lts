@@ -24,7 +24,7 @@ $table = $installer->getConnection()
 		'primary'   => true,
 		), 'Message Id')
 		->addColumn('status', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-				'unsigned'  => true,
+				'unsigned'  => true,  'default'  => 0
 		), 'Status')
 		->addColumn('store_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
 				'unsigned'  => true,
@@ -83,7 +83,7 @@ $table = $installer->getConnection()
 		->addColumn('lastname', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array('nullable'  => false,'default'  => ''), 'Recipient Name')
 		->addColumn('company', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array('nullable'  => false,'default'  => ''), 'Recipient Name')
 		->addColumn('status', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-				'unsigned'  => true,
+				'unsigned'  => true, 'default'  => 0
 		), 'Status')
 		->addColumn('processed_at', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, array(
 		), 'Finish Time')
