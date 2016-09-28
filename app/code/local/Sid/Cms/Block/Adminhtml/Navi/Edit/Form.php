@@ -32,11 +32,11 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Form extends Mage_Adminhtml_Block_Widget
       $fieldset = $form->addFieldset('navi', array('legend'=>Mage::helper('sidcms')->__('Navigation')));
       
       $fieldset->addField('title', 'text', array(
-      		'label'     => Mage::helper('framecontract')->__('Title'),
+      		'label'     => Mage::helper('sidcms')->__('Title'),
       		'required'  => true,
       
       		'name'      => 'title',
-      		'value'	=> $navi->getTitle() ? $navi->getTitle() : Mage::helper('framecontract')->__('Navigation'),
+      		'value'	=> $navi->getTitle() ? $navi->getTitle() : Mage::helper('sidcms')->__('Navigation'),
       		//'onchange'  => 'onchangeTransferType()',
       
       ));
