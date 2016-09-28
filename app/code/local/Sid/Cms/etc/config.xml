@@ -105,6 +105,15 @@
 				</extensions>
 			</browser>
 		</cms>
+        <translate>
+            <modules>
+                <Sid_Cms>
+                    <files>
+                        <default>Sid_Cms.csv</default>
+                    </files>
+                </Sid_Cms>
+            </modules>
+        </translate>
     </adminhtml>
         <frontend>
         <translate>

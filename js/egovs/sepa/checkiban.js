@@ -441,7 +441,7 @@ function llanguagefile(language) {
 
 function llanguage(language) {
 	//jsfile = 'http://www.tbg5-finance.org/'+lngc[language-1]+'.js';
-	jsfile = baseUrl + '/' + lngc[language-1] + '.js';
+	jsfile = baseUrl + 'js/egovs/sepa/' + lngc[language-1] + '.js';
 	llanguagefile(jsfile);
 }
 
@@ -452,10 +452,10 @@ function helperjsfile(file) {
 
 function helpers() {
 	//jsfile = 'http://www.tbg5-finance.org/dragdrop.js';
-	jsfile = baseUrl + '/dragdrop.js';
+	jsfile = baseUrl + 'js/egovs/sepa/dragdrop.js';
 	helperjsfile(jsfile);
 	//jsfile = 'http://www.tbg5-finance.org/customalert.js';
-	jsfile = baseUrl + '/customalert.js';
+	jsfile = baseUrl + 'js/egovs/sepa/customalert.js';
 	helperjsfile(jsfile);
 }
 

@@ -858,14 +858,15 @@ div.block-reorder {
         position: relative;
         top: $global-wrapper-top;
 
-    	  .col-right {
+    	.col-right {
             right: $global-rightcol-rightmargin-percent;
             position: relative;
             width: $global-rightcol-percent;
             top: $global-rightcol-margintop;
             margin-bottom: $global-rightcol-margintop;
         }
-        .col-main {
+
+	    .col-main {
             padding-left: 0; /* Remove the 15px padding */
             background-image: url($global-content-top-image);
             background-repeat: no-repeat;

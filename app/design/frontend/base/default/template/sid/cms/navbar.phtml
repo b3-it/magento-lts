@@ -26,21 +26,18 @@
 ?>
 <?php if($this->isAvialable()):?>
     <nav id="sid-cms-page-navigation">
-    
-    <?php if($this->getTitle()):?>
-	    <ol>
+  <?php if($this->getTitle()):?>
+	    <ol class="cms-navigation">
 	        <li class="egov-catalog-title">
-	        <a class="level0 egov-arrow-main-open" href="javascript:void(0);" ><?php echo $this->getTitle() ?></a>
-	            
-	        
+	            <a class="level0 egov-arrow-main-open" href="javascript:void(0);" ><?php echo $this->getTitle() ?></a>
     <?php endif;?>
     
     <?php echo $this->getPagesHtml()?>
     
     <?php if($this->getTitle()):?>
-    	</li>
+    	    </li>
   		</ol>
-    <?php endif;?>
+  <?php endif;?>
     </nav>
 
 	<script type="text/javascript">

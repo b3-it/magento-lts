@@ -177,6 +177,19 @@
 
         .col-left {
             top: -15px;
+
+            @include bp(max-width, 800px) {
+                float: none;
+                display: block;
+                width: 100%;
+            }
+        }
+        .col-main {
+            @include bp(max-width, 800px) {
+                float: none;
+                display: block;
+                width: 100%;
+            }
         }
     }
 }

@@ -60,8 +60,28 @@
 }
 
 @include bp(max-width, 800px) {
-    .store-language-container {
-        top: 0px - $global-logo-height !important;
+    //.store-language-container {
+    //    top: 0px - $global-logo-height !important;
+    //}
+   
+    #egov-nav {
+        display: none;
+    }
+   
+   	.col-main, .col-left, .col-right {
+       	display: block;
+   		float: none;
+   		width: 100%;
+   		margin: 0 0 $global-boxmargin 0;
+   	}
+   
+    .col-left {
+        margin-top: $global-boxmargin;
+    }
+   
+    #header-nav {
+    	position: relative;
+    	top: 70px;
     }
 }
 
@@ -183,6 +203,7 @@
 .logo {
     display: block;
     width: $global-logo-width;
+    max-width: $global-logo-width;
     text-align: center;
     position: relative;
     top: $global-logo-top;
@@ -198,6 +219,10 @@
     .large {
         display: none;
     }
+    
+    @include bp(max-width, 800px) {
+    	max-width: 150px;
+    }
 }
 
 .logo:hover {
@@ -209,7 +234,6 @@
 @include bp(min-width, $bp-medium + 1) {
 
     .logo {
-        max-width: $global-logo-width;
         max-height: auto;
 
         .small {
@@ -233,10 +257,26 @@
 
 .skip-links {
     clear: both;
-    overflow: hidden;
+    //overflow: hidden;
     border-top:$global-active-border solid $global-navigation-border-color;
     border-bottom: $global-active-border solid $global-navigation-border-color;
     background-color: $global-navigation-color;
+    
+    @include bp(max-width, 800px) {
+    	background-color: transparent;
+    	//overflow: none;
+
+    	h1 {
+    		font-size: 2em;
+    	}
+    }
+}
+
+@include bp(max-width, 800px) {
+	a.skip-search {
+    	position: relative;
+		top: -60px;
+	}
 }
 
 // ---------------------------------------------
@@ -278,8 +318,8 @@
         }
     }
 
-    .main-container {
-        top: 30px !important;
+    .main-container, .footer-container {
+        top: 55px !important;
     }
 }
 
@@ -435,9 +475,8 @@ a.skip-link {
         position: static;
     }
 
-    @include bp(max-width, 910px) {
-        right: 0;
-        width: 100%;
+    @include bp(max-width, 800px) {
+        width: 55%;
     }
 }
 
