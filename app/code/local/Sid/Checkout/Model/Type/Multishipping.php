@@ -42,6 +42,11 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
     protected $_quoteShippingAddressesItems;
 
     /**
+     * die in der Overview eingegebene Bezeichner pro Adresse
+     * @var array
+     */
+    protected $_vergabenummern = array();
+    /**
      * Constructor
      */
     public function __construct()
@@ -576,6 +581,12 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
         $quote->save();
         return $this;
     }
+    
+    
+    public function setVergabenummern($value = array())
+    {
+    	$this->_vergabenummern = $value;
+    }
 
     /**
      * Prepare order based on quote address
@@ -629,6 +640,9 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
             }
             
             $order->addItem($orderItem);
+        }
+        if(isset($this->_vergabenummern[$address->getId()])){
+        	$order->setVergabenummer($this->_vergabenummern[$address->getId()]);
         }
         $order->setFramecontract($los->getFramecontractContractId());
 

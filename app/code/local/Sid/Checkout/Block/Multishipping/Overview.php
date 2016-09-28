@@ -312,4 +312,20 @@ class Sid_Checkout_Block_Multishipping_Overview extends Mage_Sales_Block_Items_A
         return 'row_' . $type;
     }
   	
+    public function getFrameContract($items)
+    {
+    	
+    	$id = 0;
+    	
+    	foreach($items as $item)
+    	{
+    		$id = $item->getProduct()->getId();
+    	}
+    	
+    	
+    	$los = Mage::getModel('framecontract/los')->loadByProductId($id);
+    	
+    	return $los->getFramecontract();
+    }
+    
 }

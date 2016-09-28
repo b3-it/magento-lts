@@ -16,7 +16,7 @@ class Sid_Report_Model_Resource_Sales_Collection extends Sid_Report_Model_Mysql4
 
 {
 	protected $_customer_group = null;
-	protected $_framecontract = null;
+	protected $_los = null;
 	protected $_dienststelle = null;
     
 	/**
@@ -53,8 +53,12 @@ class Sid_Report_Model_Resource_Sales_Collection extends Sid_Report_Model_Mysql4
 	        	->join(
 	        			array('order'=>$this->getTable('sales/order')),
 	        			$this->getConnection()->quoteInto('order.entity_id = main_table.order_id AND order.state in (?)', $state),
-	        			array('order_date'=>'created_at', "state",'customer_group_id','framecontract')
+	        			array('order_date'=>'created_at', 'order_increment_id'=>'increment_id',"state",'customer_group_id','framecontract')
 	        	)
+	        	->join(array('adr'=>$this->getTable('sales/order_address')),'order.billing_address_id = adr.entity_id',
+	        			array('billing_name' => 'CONCAT(COALESCE(firstname, ""), " ", COALESCE(lastname, ""))',
+	        				  'billing_company' => 'CONCAT(COALESCE(company, ""), " ", COALESCE(company2, ""), " ", COALESCE(company3, ""))'))
+	        	
 		
         ;
         $this->getSelect()->where("product_type != '".Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE."'")
@@ -71,13 +75,13 @@ class Sid_Report_Model_Resource_Sales_Collection extends Sid_Report_Model_Mysql4
         {
         	$this->getSelect()->joinLeft(
                 array('dst' => $attribute->getBackend()->getTable()),
-                'customer_id=dst.entity_id AND attribute_id='.$attribute->getId(), array('dienststelle'=>'value')
+                'order.customer_id=dst.entity_id AND attribute_id='.$attribute->getId(), array('dienststelle'=>'value')
             );
         }
         
-        if($this->_framecontract != null)
+        if($this->_los != null)
         {
-        	$this->getSelect()->where('framecontract='.intval($this->_framecontract));
+        	$this->getSelect()->where('main_table.los_id='.intval($this->_los));
         }
         
 	    if($this->_customer_group != null)
@@ -138,11 +142,11 @@ class Sid_Report_Model_Resource_Sales_Collection extends Sid_Report_Model_Mysql4
     	}
     }
     
-    public function setFramecontract($value)
+    public function setLos($value)
     {
-    	if($value != '-1')
+    	if(!empty($value))
     	{
-    		$this->_framecontract = $value;
+    		$this->_los = $value;
     	}
     }
     

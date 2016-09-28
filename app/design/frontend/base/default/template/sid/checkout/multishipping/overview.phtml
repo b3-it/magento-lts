@@ -103,6 +103,20 @@
                     </thead>
                     <tfoot>
                     <?php echo $this->renderTotals($this->getShippingAddressTotals($_address)); ?>
+                    <?php $contract = $this->getFrameContract($this->getShippingAddressItems($_address)); ?>
+                    <tr class="last">
+					    <td style="" class="a-right" colspan="1">
+					        <strong>Vergabenummer</strong>
+					    </td>
+					    <td style="" class="a-right" colspan="3">
+					        <?php echo $contract->getTitle() ?>
+					        <?php echo $contract->getVendor()->getCompany()?>
+					    </td>
+					    
+					    <td style="" class="a-right last" colspan="2">
+					        <input name="vergabenummer[<?php echo $_address->getId()?>]" />
+					    </td>
+					</tr>
                     </tfoot>
                     <tbody>
                     <?php foreach ($this->getShippingAddressItems($_address) as $_item): ?>
