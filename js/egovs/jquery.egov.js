@@ -175,4 +175,25 @@
             }
         });
     }
+    
+    $j(document).ready(function(){
+    	cloneNavigation();
+        toggleBlockContent('block-cart');
+        toggleBlockContent('block-tags');
+        toggleBlockContent('block-reorder');
+    });
+    
+    function cloneNavigation()
+    {
+    	// Inhalt in Mobile Navigation kopieren
+    	// Funktion der Navigation herstellen
+    	$j('#header-nav').html( $j('#egov-nav').html() ).eGovMenu();
+    }
+    
+    function toggleBlockContent(classElement)
+    {
+    	$j('.' + classElement).on('click', function(){
+    		$j('.' + classElement + ' > div.block-content').toggle();
+    	});
+    }
 })(jQuery);

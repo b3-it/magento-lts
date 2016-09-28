@@ -131,7 +131,7 @@
                     padding-top: $global-navigation-link-padding-top;
                     padding-right: $global-navigation-link-padding-right;
                     padding-bottom: $global-navigation-link-padding-bottom;
-                    padding-left: $global-navigation-link-padding-left;
+                    padding-left: $global-navigation-link-padding-left * 2;
 
                     list-style-image: url($global-category-image);
                     display: block;

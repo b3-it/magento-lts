@@ -113,6 +113,15 @@
                     }
                 }
             }
+           
+            @include bp(max-width, 800px) {
+           	    width: 95%;
+            }
+        }
+        .col-left {
+        	@include bp(max-width, 800px) {
+        		display: none;
+        	}
         }
     }
 }

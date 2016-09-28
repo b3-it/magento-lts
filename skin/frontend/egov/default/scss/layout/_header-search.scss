@@ -37,10 +37,6 @@
  * Search - Skip Content
  * ============================================ */
 
-#header-search {
-    padding: 20px;
-}
-
 // ---------------------------------------------
 
 #header-search {
@@ -48,38 +44,25 @@
     background-color: transparent;
     width: 215px;
     top: 150px;
-    padding: 0px !important;
+    padding: 0px;
     z-index: 99;
     right: 0;
     height: 28px;
-}
-
-
-@include bp(min-width, $bp-medium + 1) {
-
-    #header-search {
-        display: block; // Force visibility
-        top: 15px;
+    
+    @include bp(min-width, 910px) {
+    	top: 15px;
+    }
+    
+    @include bp(max-width, 785px) {
+    	top: 150px + $global-logo-height;
+    }
+    
+    @include bp(min-width, $bp-medium + 1) {
+    	display: block; // Force visibility
+        top: 50px;
         right: 0;
         width: 24%;
         padding: 0;
-    }
-}
-
-@include bp(max-width, 785px) {
-    #header-search {
-        top: 150px + $global-logo-height;
-    }
-}
-
-@include bp(min-width, 910px) {
-    #header-search {
-        top: 15px;
-/*
-        &:not(.skip-active) {
-            display: none;
-        }
-*/
     }
 }
 
