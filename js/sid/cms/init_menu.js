@@ -1,14 +1,16 @@
-           function addPages()
-           {
-               //var pages = $j('#cms_pages').val() || [];
-               var cms_pages = $j('#cms_pages');
-               var selected = cms_pages.find('option:selected');
-               selected.each(function(){
-            	   nodeOptions.addPage($j(this).val(),$j(this).text());
-               });
-                    
-           }
-           
+function addPages() {
+    //var pages = $j('#cms_pages').val() || [];
+    var cms_pages = $j('#cms_pages');
+    var selected = cms_pages.find('option:selected');
+	selected.each(function(){
+        nodeOptions.addPage($j(this).val(),$j(this).text());
+    });
+}
+
+function isEmptyElement(val) {
+    return (val === undefined || val == null || val.length <= 0) ? true : false;
+}
+
 $j('#jstree_demo').jstree({
 	  "core" : {
 	    "animation" : 0,
@@ -16,7 +18,7 @@ $j('#jstree_demo').jstree({
 	    "themes" : { "stripes" : true },
 	    'data' :[
 					{ "text" : root_node_title}
-					              			]
+			    ]
 	  },
 	  "types" : {
 	    "#" : {
@@ -148,51 +150,52 @@ var nodeOptions = {
 		},
 		
 		add: function(data, sel) {
-			
-			var ref = this.tree.jstree(true);
-			var edit = false;
+			//if ( isEmptyElement(data) == false && isEmptyElement(sel) == false ) {
+				var ref = this.tree.jstree(true);
+				var edit = false;
 
-			this.itemCount++;
-			if(!sel)
-			{
-				var	sel = ref.get_selected();
-				if(!sel.length) { return false; }
-				sel = sel[0];
-				ref.open_node(sel);
-				edit = true;
-			}
-			else if(sel == 'root')
-			{
-				sel =  ref.get_node('j1_1');
-			} 
-			
-			if(!data){
-				var data = new Object();
+				this.itemCount++;
+				if(!sel) {
+					var	sel = ref.get_selected();
+					if(!sel.length) { return false; }
+					sel = sel[0];
+					ref.open_node(sel);
+					edit = true;
+				}
+				else if(sel == 'root') {
+					sel =  ref.get_node('j1_1');
+				} 
 				
-				data.name = 'default';
-				data.label = 'New Node';
-				data.type = "default"
-			}
-			data.number = this.itemCount;
-			var text = data.label;
-			if(data.type == 'page'){
-				text = text + " (" + data.title + ")";
-			}
-			sel = ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
-			if(sel && edit) {
-				ref.edit(sel);
-			}
-			this.template = new Template(this.templateText, this.templateSyntax);
-			var content = this.template.evaluate(data);
-			var html = this.getDiv().html();
-			this.getDiv().html( this.getDiv().html() + content);
-			
-			var node = ref.get_node(sel);
-			this.move(node, this.itemCount);
+				if(!data){
+					var data = new Object();
+					
+					data.name = 'default';
+					data.label = element_default_title;
+					data.type = "default"
+				}
+				data.number = this.itemCount;
+				var text = data.label;
+				if(data.type == 'page'){
+					text = text + " (" + data.title + ")";
+				}
+				sel = ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
+				if(sel && edit) {
+					ref.edit(sel);
+				}
+				this.template = new Template(this.templateText, this.templateSyntax);
+				var content = this.template.evaluate(data);
+				var html = this.getDiv().html();
+				this.getDiv().html( this.getDiv().html() + content);
 				
-			
-			return node.id;
-			
+				var node = ref.get_node(sel);
+				this.move(node, this.itemCount);
+					
+				
+				return node.id;
+			//}
+			//else {
+			//	alert( element_not_selected );
+			//}
 		},
 		addPage: function(id, label) {
 			var ref = this.tree.jstree(true);
@@ -223,36 +226,49 @@ var nodeOptions = {
 			
 		},
 		remove: function(data) {
-			this.hideAll();
-			var ref = this.tree.jstree(true);
-			var	sel = ref.get_selected();
-			if(!sel.length) { return false; }
-			var node = ref.get_node(sel);
-			var elem = $j("#node_options_" + node.data.number + "_is_delete");
-			elem.val(1);
-			ref.delete_node(sel);
+			if ( isEmptyElement(data) == false ) {
+				this.hideAll();
+				var ref = this.tree.jstree(true);
+				var	sel = ref.get_selected();
+				if(!sel.length) {
+					return false;
+				}
+				var node = ref.get_node(sel);
+				var elem = $j("#node_options_" + node.data.number + "_is_delete");
+				elem.val(1);
+				ref.delete_node(sel);
+			}
+			else {
+				alert(node_element_is_null);
+			}
+			
 		},
 
 		edit: function(data) {
-			var ref = this.tree.jstree(true);
-			var	sel = ref.get_selected();
-			if(!sel.length) { return false; }
-			sel = sel[0];
-			var node = ref.get_node(sel);
-			if(node.data.type = 'page'){
+            //if ( isEmptyElement(data) == false ) {
+            	var ref = this.tree.jstree(true);
+            	var	sel = ref.get_selected();
+            	if(!sel.length) {
+            		return false;
+            	}
+				sel = sel[0];
 				var node = ref.get_node(sel);
-				var elem = $j("#node_options_" + node.data.number + "_name");
-				node.text = elem.val();
-			}
-			ref.edit(sel);
+				if(node.data.type = 'page'){
+					var node = ref.get_node(sel);
+					var elem = $j("#node_options_" + node.data.number + "_name");
+					node.text = elem.val();
+				}
+				ref.edit(sel);
+            //}
+			//else {
+			//	alert( node_element_not_selected );
+			//}
 		},
-		open_all: function()
-		{
+		open_all: function() {
 			var ref = this.tree.jstree(true);
 			ref.open_all('j1_1');
 		},
-		set_div: function(data)
-		{
+		set_div: function(data) {
 			this.div = data;
 		}
 }

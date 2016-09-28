@@ -81,6 +81,10 @@
     @include main-navigation;
 }
 
+.cms-navigation {
+	@include main-navigation;
+}
+
 /* ============================================ *
  * Nav Primary & Large Viewports - Dropdown Menu
  * ============================================ */

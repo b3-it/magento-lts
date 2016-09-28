@@ -43,8 +43,7 @@
         }
     }
     
-    .no-touch #header-account a:hover,
-    .no-touch .nav-primary a:hover {
+    .no-touch nav a:hover {
         background-color: $global-category-item-color;
         text-decoration: none;
     }
