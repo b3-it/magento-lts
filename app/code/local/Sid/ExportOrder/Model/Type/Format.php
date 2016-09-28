@@ -2,6 +2,9 @@
 
 class Sid_ExportOrder_Model_Type_Format extends Varien_Object
 {
+	const TYPE_PLAIN = 'plain';
+	const TYPE_OPENTRANS = 'opentrans';
+	
     public static function getTypeList()
     {
     	$result = array();

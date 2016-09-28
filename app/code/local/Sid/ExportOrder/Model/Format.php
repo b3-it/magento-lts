@@ -22,6 +22,11 @@ abstract class Sid_ExportOrder_Model_Format extends Mage_Core_Model_Abstract
 		{
 			return Mage::getModel('exportorder/format_transdoc');
 		}
+		
+		if($type == 'opentrans')
+		{
+			return Mage::getModel('exportorder/format_opentrans');
+		}
 	
 		return Mage::getModel('exportorder/format_plain');;
 	}

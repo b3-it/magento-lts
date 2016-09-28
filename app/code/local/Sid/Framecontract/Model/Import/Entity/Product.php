@@ -538,7 +538,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     
     	$source->rewind();
     	$this->_dataSourceModel->cleanBunches();
-    
+    	Mage::getModel('sidimport/storage')->getResource()->clear();
+    	
+    	
     	while ($source->valid()) {
     		
     		//if ($source->valid()) {

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_ExportOrder>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Sid_ExportOrder>
     </modules>
     <admin>
@@ -16,6 +16,19 @@
 			</adminhtml>
         </routers>
     </admin>
+       <frontend>
+        <routers>
+            <exportorder>
+                <use>standard</use>
+                <args>
+                    <module>Sid_ExportOrder</module>
+                    <frontName>exportorder</frontName>
+                </args>
+            </exportorder>
+            <frontend>
+            </frontend>
+        </routers>
+    </frontend>
     <global>
         <models>
             <exportorder>
@@ -34,6 +47,9 @@
                     <transfer_post>
                         <table>sidexportorder_transfer_post</table>
                     </transfer_post> 
+                     <transfer_link>
+                        <table>sidexportorder_transfer_link</table>
+                    </transfer_link> 
                     <format_plain>
                         <table>sidexportorder_format_plain</table>
                     </format_plain>
@@ -42,8 +58,18 @@
                     </format_transdoc>  
                     <format_opentrans>
                         <table>sidexportorder_format_opentrans</table>
-                    </format_opentrans>       
-                </entities>
+                    </format_opentrans>
+                     <history>
+                        <table>sidexportorder_history</table>
+                    </history>
+                     <link>
+                        <table>sidexportorder_link</table>
+                    </link>
+                    <link_order>
+                        <table>sidexportorder_link_order</table>
+                    </link_order>
+                   
+               </entities>
             </exportorder_resource>
         </models>
         <resources>
@@ -102,6 +128,46 @@
         </observers>
       </framecontract_vendor_save_after>
       </events>
+	<menu>
+		<framecontract >
+                    <children>
+                          <export translate='title' module="exportorder">
+                                <title>Export Orders</title>
+                                <sort_order>50</sort_order>
+                                <action>adminhtml/exportorder_export</action>
+                          </export>
+                        
+                    </children>
+              </framecontract>
+	</menu>
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+				<children>
+					<framecontract>
+						<title>ExportOrder Module</title>
+						<sort_order>10</sort_order>
+						<children>
+							<export module="exportorder">
+								<title>ExportOrder Export</title>
+								<sort_order>0</sort_order>
+							</export>
+						</children>
+					</framecontract>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+	<layout>
+		<updates>
+			<exportorder>
+				<file>sid/exportorder.xml</file>
+			</exportorder>
+		</updates>
+	</layout>
     </adminhtml>
     <sid_exportorder>
     	<format>
@@ -127,6 +193,10 @@
     			<label>Post</label>
 	    		<typ>post</typ>
 	    	</post>
+	    	<link>
+                <label>Link</label>
+                <typ>link</typ>
+            </link>
     	</transfer>
     </sid_exportorder>
         <crontab>

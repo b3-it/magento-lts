@@ -205,6 +205,9 @@ class Sid_Framecontract_Model_Import_Adapter_Csv extends Mage_ImportExport_Model
         );
         $res = array_merge($res,$this->_defaultValues);
 
+        $los = $res['framecontract_los'];
+        
+        $res['framecontract_los'] = Mage::getModel('framecontract/los')->load($res['framecontract_los'])->getOptionsLabel();
 
         $skuCols = array('sku','_links_crosssell_sku','_links_upsell_sku','_links_related_sku','_parent_sku');
 
@@ -212,7 +215,7 @@ class Sid_Framecontract_Model_Import_Adapter_Csv extends Mage_ImportExport_Model
         {
         	if(isset($res[$skuCol])) {
         			if(strlen(trim($res[$skuCol])) > 0){
-        				$res[$skuCol] = trim($this->_defaultValues['sku_prefix'].$res[$skuCol]);
+        				$res[$skuCol] = trim($this->_defaultValues['sku_prefix'].$los.'/'.$res[$skuCol]);
         			}
         	}
         }

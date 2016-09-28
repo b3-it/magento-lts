@@ -29,6 +29,16 @@ class Sid_ExportOrder_Model_Observer
         	$model->setData($data)->save();
         }
         
+        if($transfer == 'link')
+        {
+        	$model = Mage::getModel('exportorder/transfer_link')->load($vendor->getId(),'vendor_id');
+        	$data = $vendor->getTransfer();
+        	$data['vendor_id'] = $vendor->getId();
+        	$data['id'] = $model->getId();
+        	$model->setData($data)->save();
+        }
+        
+        
         //Fromat speichern
         if($format == 'plain')
         {

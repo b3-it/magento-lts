@@ -28,9 +28,19 @@ abstract class Sid_ExportOrder_Model_Transfer extends Mage_Core_Model_Abstract
 		{
 			return Mage::getModel('exportorder/transfer_attachment');
 		}
+		
+		if($type == Sid_ExportOrder_Model_Type_Transfer::TRANSFER_TYPE_LINK)
+		{
+			return Mage::getModel('exportorder/transfer_link');
+		}
 
 		return Mage::getModel('exportorder/transfer_email');
 	}
 
 	public abstract function send($content,$order = null);
+	
+	public function canSend()
+	{
+		return true;
+	}
 }
