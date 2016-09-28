@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     egov_adlerwarte
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -18,19 +18,15 @@
 	margin-bottom: $global-boxmargin;
     
     nav > li,
-    li.account-block-title,
-    li.egov-catalog-title {
+    li.level0 {
         @extend .egov-navigation-background;
-        
         background-color: $global-category-item-color;
-        
         margin: 0;
         padding: 0;
         cursor: pointer;
         
         > a {
             @extend .egov-navigation-base;
-
             width:100%;
             text-align: left;
             color: $global-fontcolor-light;
@@ -43,8 +39,7 @@
         }
     }
     
-    .no-touch #header-account a:hover,
-    .no-touch .nav-primary a:hover {
+    .no-touch nav a:hover {
         background-color: $global-category-item-color;
         text-decoration: none;
     }
@@ -69,17 +64,18 @@
             border-top: $global-box-border solid $global-subcat-bordercolor;
             margin: 0;
 
-            strong, a:hover{
+            strong{
             	color: $global-linkcolor;
-            }
-            
-            a:active {
-                color: $global-fontcolor-light;
             }
 
             a {
                 padding: 10px 12px 10px 14px;
                 display: block;
+                
+                &:hover, &:active {
+                	color: $global-fontcolor-light;
+                	background-color: $global-category-hover-bg;
+                }
             }
         }
     }
@@ -171,6 +167,10 @@
     li.active > a {
         color: $global-linkcolor;
         text-decoration: underline;
+    }
+    
+    li.level0:hover > a {
+    	color: $global-fontcolor-light;
     }
     
     .menu-active {

@@ -96,12 +96,8 @@
             font-size: $global-fontsize;
             color: $global-fontcolor-dark;
             text-shadow: none;
-
             font-family: $base-font-family;
-
-            display: inline-block;
-            float: right;
-            text-align: right;
+            display: block;
         }
     }
 
@@ -227,9 +223,9 @@
 
             .add-to-cart {
                 float: right;
-                position: absolute;
+                position: relative;
                 right: 0;
-                top: 55px;
+                top: -220px;
                 width: 160px;
 
                 .qty-wrapper {
