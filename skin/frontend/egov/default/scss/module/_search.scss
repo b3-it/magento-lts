@@ -77,8 +77,12 @@
         margin-top: 5px;
     }
 
-    .page-title, .buttons-set {
+    .page-title {
         width: $global-content-2col-right-percent;
+    }
+    
+    .buttons-set {
+    	clear: none;
     }
 }
 
