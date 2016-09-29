@@ -17,4 +17,15 @@ class Sid_Import_Model_Resource_Storage extends Mage_Core_Model_Resource_Db_Abst
         // Note that the import_storage_id refers to the key field in your database table.
         $this->_init('sidimport/storage', 'id');
     }
+    
+    public function clear($taskId = 0)
+    {
+    	if($taskId){
+    		$this->_getWriteAdapter()->delete($this->getTable('sidimport/storage'),'task = '. intval($taskId));
+    	}else{
+    		$this->_getWriteAdapter()->delete($this->getTable('sidimport/storage'));
+    	}
+    	
+    	
+    }
 }

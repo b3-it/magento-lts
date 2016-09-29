@@ -118,11 +118,11 @@ class Sid_Report_Block_Adminhtml_Sales_Filter_Form_Order extends Mage_Sales_Bloc
             //'required'  => true
         ));
         
-       $fieldset->addField('framecontract', 'select', array(
-            'name'      => 'framecontract',
-            'label'     => Mage::helper('sidreport')->__('Frame Contract'),
-            'title'     => Mage::helper('sidreport')->__('Frame Contract'),
-        	'options'	=> $this->getFramecontractArray()
+       $fieldset->addField('los', 'select', array(
+            'name'      => 'los',
+            'label'     => Mage::helper('sidreport')->__('Rahmenvertrag / Los'),
+            'title'     => Mage::helper('sidreport')->__('Rahmenvertrag / Los'),
+        	'options'	=> Mage::getModel('framecontract/source_attribute_contractLos')->getOptionArray(true),
             //'required'  => true
         ));
         
@@ -154,7 +154,7 @@ class Sid_Report_Block_Adminhtml_Sales_Filter_Form_Order extends Mage_Sales_Bloc
     {
     	$res = array();
     	$cg = Mage::getModel('customer/group')->getCollection();
-    	$res['-1'] = "All";
+    	$res['-1'] = "";
     	foreach ($cg->getItems() as $item)
     	{
     		$res[$item->getId()] = $item->getCustomerGroupCode();
@@ -162,16 +162,6 @@ class Sid_Report_Block_Adminhtml_Sales_Filter_Form_Order extends Mage_Sales_Bloc
     	return $res;
     }
     
-	private function getFramecontractArray()
-    {
-    	$res = array();
-    	$cg = Mage::getModel('framecontract/contract')->getCollection();
-    	$res['-1'] = "All";
-    	foreach ($cg->getItems() as $item)
-    	{
-    		$res[$item->getId()] = $item->getTitle();
-    	}
-    	return $res;
-    }
+	
     
 }

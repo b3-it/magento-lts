@@ -157,14 +157,14 @@
     </sid_haushaltsysteme>
      <crontab>
         <jobs>
-            <exportorder>
+            <order2haushalt>
                 <schedule>
                     <cron_expr>*/1 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>sidhaushalt/cron::runCron</model>
                 </run>
-            </exportorder>
+            </order2haushalt>
         </jobs>
     </crontab>
 </config>

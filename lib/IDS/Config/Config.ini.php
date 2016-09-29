@@ -55,6 +55,12 @@
 	exceptions[]    = REQUEST.groups.address_templates.fields.text.value;
 	exceptions[]    = REQUEST.content;
 	exceptions[]    = REQUEST.layout_update_xml;
+	exceptions[]          = REQUEST.variables;
+    exceptions[]          = REQUEST.template_text;
+    exceptions[]          = POST.variables;
+    exceptions[]          = POST.template_text;
+	
+	
     ; you can use regular expressions for wildcard exceptions - example: /.*foo/i
 
 [Caching]

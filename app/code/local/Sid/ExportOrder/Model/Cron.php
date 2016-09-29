@@ -23,6 +23,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 			Mage::throwException($message);
 		}
 		$this->run();
+		Mage::getModel('exportorder/order')->processPendingOrders();
 	}
     
     /**
@@ -66,7 +67,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			
   			$exportOrder
   				->setOrderId($order->getId())
-  				->setVendorId($order->getId())
+  				->setVendorId($vendor->getId())
   				->setContractId($order->getId())
   				->setTransfer($vendor->getTransferType())
   				->setFormat($vendor->getExportFormat())

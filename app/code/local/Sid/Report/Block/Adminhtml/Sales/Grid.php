@@ -60,7 +60,7 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
  
         $this->getCollection()->initReport('sidreport/sales_collection');
 	    $this->getCollection()->setPeriod($this->getFilter('period_type'));
-	    $this->getCollection()->getReportModel()->setFramecontract($this->getFilter('framecontract'));
+	    $this->getCollection()->getReportModel()->setLos($this->getFilter('los'));
 	    $this->getCollection()->getReportModel()->setCustomerGroup($this->getFilter('customer_group'));
 	    $this->getCollection()->getReportModel()->setDienststelle($this->getFilter('dienststelle'));
 	    $this->getCollection()->setInterval($this->getFilter('from'),$this->getFilter('to'));
@@ -73,6 +73,13 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
     protected function _prepareColumns()
     {
 
+    	$this->addColumn('increment_id', array(
+    			'header'    => Mage::helper('sales')->__('Order'),
+    			'index'     => 'order_increment_id',
+    			'type'      => 'string',
+    			'sortable'  => false
+    	));
+    	
         $this->addColumn('product_name', array(
             'header'    => Mage::helper('sales')->__('Product Name'),
             'index'     => 'name',
@@ -123,6 +130,20 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
             'index'     => 'all_dst',
             'type'      => 'string',
             'sortable'  => false
+        ));
+        
+        $this->addColumn('name', array(
+        		'header'    => Mage::helper('sales')->__('Name'),
+        		'index'     => 'billing_name',
+        		'type'      => 'string',
+        		'sortable'  => false
+        ));
+        
+        $this->addColumn('company', array(
+        		'header'    => Mage::helper('sales')->__('Company'),
+        		'index'     => 'billing_company',
+        		'type'      => 'string',
+        		'sortable'  => false
         ));
         
        

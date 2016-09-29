@@ -28,7 +28,7 @@
 <config>
     <modules>
         <Sid_Checkout>
-            <version>0.1.2</version>
+            <version>0.1.3</version>
         </Sid_Checkout>
     </modules>
     <global>
@@ -126,7 +126,7 @@
         <layout>
             <updates>
                 <checkout>
-                    <file>checkout.xml</file>
+                    <file>sid/checkout.xml</file>
                 </checkout>
             </updates>
         </layout>

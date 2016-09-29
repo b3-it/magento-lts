@@ -37,6 +37,12 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_TransferController extends Mage_Admi
 			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_transfer_post_form')->toHtml();
 		}
 		
+		if( $type == 'link'){
+			$model = Mage::getModel('exportorder/transfer_link')->load(intval($vendor),'vendor_id');
+			Mage::register('transfer', $model);
+			$block = $this->getLayout()->createBlock('sid_exportorder/adminhtml_transfer_link_form')->toHtml();
+		}
+		
 		
 		
 		$this->getResponse()->setBody($block);

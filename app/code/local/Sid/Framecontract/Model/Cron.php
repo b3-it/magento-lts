@@ -22,7 +22,7 @@ class Sid_Framecontract_Model_Cron extends Mage_Core_Model_Abstract
 	}
     
 	/**
-	 * Warnung versenden falls ein Schwellwert erreicht ist
+	 * Warnung versenden falls ein Schwellwert fürs Lager erreicht ist
 	 * @param unknown $sceduler
 	 */
 	public function sendStockWarning($sceduler)

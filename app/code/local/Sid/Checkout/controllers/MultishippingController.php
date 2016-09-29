@@ -390,6 +390,8 @@ class Sid_Checkout_MultishippingController extends Mage_Checkout_Controller_Acti
                 }
             }
 
+            $nummern = $this->getRequest()->getParam('vergabenummer', false);
+            $this->_getCheckout()->setVergabenummern($nummern);
             //$this->_getCheckout()->setShippingMethods();
             $this->_getCheckout()->setPaymentMethod();
             $this->_getCheckout()->createOrders();

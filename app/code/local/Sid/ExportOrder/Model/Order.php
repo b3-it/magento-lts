@@ -53,9 +53,14 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	$storeId = $order->getStoreId();
     	try {
     	$format = $this->getVendor()->getExportFormatModel();
+    	$transfer = $this->getVendor()->getTransferModel();
+    	
+    	if(!$transfer->canSend()){
+    		return $this;
+    	}
+    	
     	$content = $format->processOrder($order);
     	
-    	$transfer = $this->getVendor()->getTransferModel();
     	$msg = $transfer->send($content,$order);
     	
     	$this->setMessage($msg)
@@ -76,6 +81,46 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     		Mage::helper('exportorder')->sendEmail('exportorder/email/error',$recipients,array('message' => $ex->getMessage()),$storeId);
     	}
     	
+    }
+    
+    public function processPendingOrders($transfer = 'link')
+    {
+    	$collection = Mage::getResourceModel('sales/order_collection');
+    	$collection->getSelect()
+    	->join(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('vendor_id'))
+    	->where('export.status = ' .Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
+    	->where("export.transfer =?", $transfer)
+    	->order('vendor_id');
+    	
+    	$vendorId = 0;
+    	$content = array();
+    	$orderIds = array();
+    	$transfer = Sid_ExportOrder_Model_Transfer::getInstance($transfer);
+    	foreach($collection as $order)
+    	{
+    		if($vendorId != $order->getVendorId()){
+    			$vendorId = $order->getVendorId();
+    			$vendor = Mage::getModel('framecontract/vendor')->load($vendorId);
+    			$format = $vendor->getExportFormatModel();
+    			
+    			if(count($content) > 0){
+    				
+    				$transfer->sendOrders($content, $format, $orderIds, $vendor);
+    			}
+    			$content = array();
+    			$orderIds = array();
+    		}
+    		
+    		$content[$order->getIncrementId()] = $format->processOrder($order);
+    		$orderIds[] = $order->getId();
+    	}
+    	
+    	if(count($content) > 0){
+    		$transfer->sendOrders($content, $format, $orderIds, $vendor);
+    	}
+    	
+    	
+    	 
     }
     
     

@@ -173,7 +173,7 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
         
         $res = array_merge($res,$this->_defaultValues);
         $los = $res['framecontract_los'];
-		$res['sku'] = $this->_defaultValues['sku_prefix'].$los.'/'.$res['sku'];
+		
 		$res['framecontract_los'] = Mage::getModel('framecontract/los')->load($res['framecontract_los'])->getOptionsLabel();
 
 		if(!isset($res['qty'])){
