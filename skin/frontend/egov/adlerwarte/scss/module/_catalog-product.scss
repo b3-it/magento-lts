@@ -197,6 +197,14 @@
             width: $global-product-info-2L-width;
             font-size: $global-fontsize-big;
 
+            .product-info-box, .product-cart-box {
+            	display: inline-block;
+            }
+
+            .product-info-box {
+            	width: 57%;
+            }
+            	
             .tax-details {
                 .shipping-cost-details {
                     display: block;
@@ -222,10 +230,6 @@
             }
 
             .add-to-cart {
-                float: right;
-                position: relative;
-                right: 0;
-                top: -220px;
                 width: 160px;
 
                 .qty-wrapper {
@@ -281,18 +285,20 @@
                     }
                 }
             }
+        }
+       
+        .product-options-bottom {
+            .add-to-cart {
+            	margin-top: $global-boxmargin / 2;
+            }
+            
+            .add-to-cart-buttons {
+                display: inline-block;
+                max-width: 180px;
+            }
 
-            .product-options-bottom {
-                .add-to-cart {
-                    .add-to-cart-buttons {
-                        display: inline-block;
-                        max-width: 180px;
-                    }
-                }
-
-                .add-to-links {
-                    display: none;
-                }
+            .add-to-links {
+                display: none;
             }
         }
     }

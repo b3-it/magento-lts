@@ -836,7 +836,7 @@ div.block-reorder {
 }
 
 .col2-left-layout {
-    .col-wrapper {
+    .col-wrapper, .main {
         width: $global-wrapper-width;
         position: relative;
         top: $global-wrapper-top;
@@ -860,7 +860,7 @@ div.block-reorder {
 }
 
 .col2-right-layout {
-    .col-wrapper {
+    .col-wrapper, .main {
         width: $global-wrapper-width;
         position: relative;
         top: $global-wrapper-top;

@@ -49,17 +49,13 @@
     right: 0;
     height: 28px;
     
-    @include bp(min-width, 910px) {
-    	top: 15px;
-    }
-    
     @include bp(max-width, 785px) {
     	top: 150px + $global-logo-height;
     }
     
     @include bp(min-width, $bp-medium + 1) {
     	display: block; // Force visibility
-        top: 50px;
+        top: 15px;
         right: 0;
         width: 24%;
         padding: 0;
