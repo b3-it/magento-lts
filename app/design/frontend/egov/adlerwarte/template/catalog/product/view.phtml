@@ -23,7 +23,7 @@
     <h1>
         <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
         <div class="product-sku">
-            <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+            <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
         </div>
     </h1>
 </div>
@@ -42,15 +42,26 @@
                 </div>
 
                 <div class="product-shop">
-                    <div class="price-info">
-                        <?php echo $this->getPriceHtml($_product); ?>
-                        <?php echo $this->getChildHtml('bundle_prices'); ?>
-                        <?php echo $this->getTierPriceHtml(); ?>
-                    </div>
+                    <div class="product-info-box">
+                        <div class="price-info">
+                            <?php echo $this->getPriceHtml($_product); ?>
+                            <?php echo $this->getChildHtml('bundle_prices'); ?>
+                            <?php echo $this->getTierPriceHtml(); ?>
+                        </div>
 
-                    <div class="extra-info">
-                        <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>
-                        <?php echo $this->getChildHtml('product_type_availability'); ?>
+                        <div class="extra-info">
+                            <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>
+                            <?php echo $this->getChildHtml('product_type_availability'); ?>
+                        </div>
+                    </div>
+                    <div class="product-cart-box">
+                      <?php if (!$this->hasOptions()):?>
+                        <?php if($_product->isSaleable()): ?>
+                          <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php endif; ?>
+                      <?php elseif (!$_product->isSaleable()): ?>
+                        <?php echo $this->getChildHtml('addto') ?>
+                      <?php endif; ?>
                     </div>
 <!-- prüfen, warum bei egov alles ok und bei adler alles doppelt !!!
                     <?php echo $this->getChildHtml('alert_urls'); ?>
@@ -64,15 +75,6 @@
                         </div>
                     </div>
                   <?php endif;?>
-
-                  <?php if (!$this->hasOptions()):?>
-                    <?php if($_product->isSaleable()): ?>
-                      <?php echo $this->getChildHtml('addtocart') ?>
-                    <?php endif; ?>
-                  <?php elseif (!$_product->isSaleable()): ?>
-                    <?php echo $this->getChildHtml('addto') ?>
-                  <?php endif; ?>
-
                 </div>
             </div>
 
