@@ -288,6 +288,10 @@
         }
        
         .product-options-bottom {
+            .add-to-cart {
+            	margin-top: $global-boxmargin / 2;
+            }
+            
             .add-to-cart-buttons {
                 display: inline-block;
                 max-width: 180px;

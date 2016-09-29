@@ -46,7 +46,7 @@
    
     a {
         text-decoration: none;
-        color: $global-linkcolor;
+        color: $global-fontcolor-light;
         font-family: $base-font-family;
 
         border-width: $global-active-border;
@@ -57,11 +57,11 @@
     ul {
         margin: 0;
         padding: 0;
-        border: $global-box-border solid $global-lightcolor;
+        border: $global-box-border solid $global-navigation-border-color;
 
         li {
-            background: $global-wrapper-color $global-repeat-scroll;
-            border-top: $global-box-border solid $global-subcat-bordercolor;
+            background: $global-navigation-color;
+            border-top: $global-box-border solid $global-navigation-border-color;
             margin: 0;
 
             strong{
@@ -85,7 +85,7 @@
         display: block;
         width: 100%;
 
-        background-color: $global-category-item-color;
+        background-color: $global-navigation-color;
         background-size: 100% auto;
         
         &:last-child > a {
@@ -118,8 +118,8 @@
             display: none;
 
             li {
-                background: $global-wrapper-color $global-repeat-scroll;
-                border-top: $global-box-border solid $global-subcat-bordercolor;
+                background: $global-navigation-color;
+                border-top: $global-box-border solid $global-navigation-border-color;
 
                 padding-left: $global-navigation-padding-left;
                 padding-right: $global-navigation-padding-right;
@@ -134,6 +134,11 @@
 
                     list-style-image: url($global-category-image);
                     display: block;
+                }
+               
+                &.active {
+    	            color: $global-fontcolor-light;
+                    background-color: $global-category-hover-bg;
                 }
             }
         }
@@ -165,12 +170,8 @@
     a:hover,
     li:hover > a,
     li.active > a {
-        color: $global-linkcolor;
+        color: $global-fontcolor-light;
         text-decoration: underline;
-    }
-    
-    li.level0:hover > a {
-    	color: $global-fontcolor-light;
     }
     
     .menu-active {
