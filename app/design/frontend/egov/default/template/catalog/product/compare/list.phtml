@@ -105,8 +105,10 @@
                 <ul class="add-to-links">
                     <li>
                         <a href="<?php echo $this->getAddToWishlistUrl($_item) ?>"
-                           class="link-wishlist egov-star"
-                           title="<?php echo $this->__('Add to Wishlist') ?>"> </a>
+                           class="link-wishlist"
+                           title="<?php echo $this->__('Add to Wishlist') ?>">
+                            <?php echo $this->__('Add to Wishlist') ?>
+                        </a>
                     </li>
                 </ul>
               <?php endif; ?>

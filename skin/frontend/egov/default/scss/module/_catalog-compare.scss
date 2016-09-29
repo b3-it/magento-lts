@@ -71,7 +71,8 @@
 	    	}
 
 	        .add-to-links {
-	        	float: right;
+	        	display: block;
+	        	padding-bottom: $global-boxpadding;
 	        }
 	    
 	        button {
