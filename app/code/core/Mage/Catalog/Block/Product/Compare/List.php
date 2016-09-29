@@ -132,7 +132,6 @@ class Mage_Catalog_Block_Product_Compare_List extends Mage_Catalog_Block_Product
             Mage::getSingleton('catalog/product_visibility')
                 ->addVisibleInSiteFilterToCollection($this->_items);
         }
-
         return $this->_items;
     }
 

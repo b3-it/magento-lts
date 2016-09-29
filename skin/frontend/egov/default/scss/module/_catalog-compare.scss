@@ -8,35 +8,89 @@
 /* ============================================ *
  * Catalog - Compare
  * ============================================ */
+.block-compare, .block-compared {
+	margin-bottom: $global-boxmargin;
+}
 
-.block-compare {
-    margin-bottom: $global-boxmargin;
+.block-compare .actions a {
+	@extend .button;
+	line-height: $global-lineheight !important;
+}
 
-    .product-name:after {
-        @include clearfix;
-    }
+.catalog-product-compare-index {
+	h1 {
+		display: block;
+		position: relative;
+	}
 
-    .actions {
-        a {
+	.link-print {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		font-size: 0.4em;
+	}
+		
+	.block-compare {
+        margin-bottom: $global-boxmargin;
+
+        .product-name:after {
+            @include clearfix;
+        }
+
+        .actions a {
             @extend .button;
             line-height: $global-lineheight !important;
         }
     }
-}
 
-.compare-table .product-image {
-    display: inline-block;
-}
-
-.compare-table {
-    .product-shop-row {
-        &.top td {
-            padding-bottom: 0;
-            border-bottom: 0;
+    .compare-table {
+    	th, td {
+    		padding-right: $global-boxpadding * 2;
+    		vertical-align: top;
+    	}
+    
+        td {
+        	padding-bottom: $global-boxpadding * 2;
+        }
+    	
+        .remove-list-item {
+        	padding-bottom: $global-boxpadding * 2;
         }
 
-        &.bottom td {
-            padding-top: 0;
+    	.product-image, .product-compare-base-details {
+            display: block;
+            vertical-align: top;
+            padding: 0 3px;
+            border: none;
+        }
+
+	    .product-shop-row {
+	    	.product-action, .add-to-links {
+	    		display: inline-block;
+	    		margin: 5px 0;
+	    	}
+
+	        .add-to-links {
+	        	float: right;
+	        }
+	    
+	        button {
+	        	margin: 0;
+	        }
+	    
+	        .add-to-links .egov-star {
+	        	text-align: right;
+	        	font-size: 2em !important;
+	        }
+	    	
+            &.top td {
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+
+            &.bottom td {
+                padding-top: 0;
+            }
         }
     }
 }
