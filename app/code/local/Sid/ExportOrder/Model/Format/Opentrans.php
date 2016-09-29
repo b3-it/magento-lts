@@ -12,6 +12,7 @@
  */
 class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Format
 {
+	protected $_FileExtention = '.xml';
 	
 	private $_xml = null;
     public function _construct()
@@ -45,6 +46,9 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	$this->_addItems($ORDER_ITEM_LIST,$order);
     	
     	$this->_addTotals($ORDER, $order);
+    	
+    	Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Opentransdatei erzeugt');
+    	
     	return $this->_xml->saveXML();
     }
     

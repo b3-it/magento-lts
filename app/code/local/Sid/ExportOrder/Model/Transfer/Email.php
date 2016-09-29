@@ -23,7 +23,8 @@ class Sid_ExportOrder_Model_Transfer_Email extends Sid_ExportOrder_Model_Transfe
     	$recipients = array();
     	$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
     	Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
-    	 
+    	
+    	Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Email versendet');
     }
     
     protected function _beforeSave()

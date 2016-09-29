@@ -12,6 +12,7 @@ if (!$installer->tableExists($installer->getTable('exportorder/transfer_link')))
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `vendor_id` int(11) unsigned NOT NULL,
 	  `email` varchar(255) NOT NULL default '', 
+	  `cron` varchar(255) NOT NULL default '* */2 * * *', 
 	  `template` varchar(255) NOT NULL default '', 
 	  FOREIGN KEY (`vendor_id`) REFERENCES `{$this->getTable('framecontract_vendor')}`(`framecontract_vendor_id`) ON DELETE CASCADE,
 	  PRIMARY KEY (`id`)
@@ -71,5 +72,8 @@ if (!$installer->tableExists($installer->getTable('exportorder/link_order')))
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	  ");
 }
+
+$installer->run("ALTER TABLE {$this->getTable('exportorder/order')} ADD `semaphor` BIGINT unsigned DEFAULT 0");
+
 
 $installer->endSetup(); 

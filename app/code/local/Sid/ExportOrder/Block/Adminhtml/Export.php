@@ -17,7 +17,9 @@ class Sid_ExportOrder_Block_Adminhtml_Export extends Mage_Adminhtml_Block_Widget
     $this->_controller = 'adminhtml_export';
     $this->_blockGroup = 'sid_exportorder';
     $this->_headerText = Mage::helper('exportorder')->__('Item Manager');
-    $this->_addButtonLabel = Mage::helper('exportorder')->__('Add Item');
+   
     parent::__construct();
+    
+    $this->_removeButton('add');
   }
 }

@@ -22,6 +22,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 			$this->setLog('Found running Service my Id is:' . $schedule->getId());
 			Mage::throwException($message);
 		}
+		$this->prepare();
 		$this->run();
 		Mage::getModel('exportorder/order')->processPendingOrders();
 	}
@@ -48,13 +49,12 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 		return (count($collection->getItems()) > 0);
   	}
 
-  	
-  	private function run()
+  	private function prepare()
   	{
   		$oderCollection = Mage::getModel('sales/order')->getCollection();
   		$oderCollection->getSelect()
-  			->where('entity_id NOT IN (?)',new Zend_Db_Expr('SELECT order_id FROM '.$oderCollection->getTable('exportorder/order')));
-  		
+  		->where('entity_id NOT IN (?)',new Zend_Db_Expr('SELECT order_id FROM '.$oderCollection->getTable('exportorder/order')));
+  	
   		//preprocessing speichern damit keine Bestellung gleichzeitig bearbeitet wird
   		foreach($oderCollection as $order){
   			if(!$order->getFramecontract())
@@ -64,34 +64,49 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
   			$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
   			$exportOrder = Mage::getModel('exportorder/order');
-  			
+  				
   			$exportOrder
-  				->setOrderId($order->getId())
-  				->setVendorId($vendor->getId())
-  				->setContractId($order->getId())
-  				->setTransfer($vendor->getTransferType())
-  				->setFormat($vendor->getExportFormat())
-  				->setCreatedTime(now())
-  				->setUpdatedTime(now())
-  				->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
-  				->setVendor($vendor)
-  				->setContract($contract)
-  				->save();
+  			->setOrderId($order->getId())
+  			->setVendorId($vendor->getId())
+  			->setContractId($order->getId())
+  			->setTransfer($vendor->getTransferType())
+  			->setFormat($vendor->getExportFormat())
+  			->setCreatedTime(now())
+  			->setUpdateTime(now())
+  			->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
+  			->setVendor($vendor)
+  			->setContract($contract)
+  			->save();
+  				
   			
-  			//geladene Objekte merken
-  			$order->setExportOrder($exportOrder);
   		}
+  	
+
+  	
+  	
+  	}
+  	
+  	private function run()
+  	{
   		
-  		//jetzt bearbeiten
+  		$oderCollection = Mage::getModel('sales/order')->getCollection();
+  		$oderCollection->getSelect()
+  			->join(array('export'=> $oderCollection->getTable('exportorder/order')),'export.order_id=main_table.entity_id')
+  			->where('export.status = '.Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
+  			->where('export.semaphor < ' .Mage::helper('exportorder')->getSemaphor(-120)); 
+  		
+  		//preprocessing speichern damit keine Bestellung gleichzeitig bearbeitet wird
   		foreach($oderCollection as $order){
-  			
   			if(!$order->getFramecontract())
   			{
   				continue;
   			}
+  			$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
+  			$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
+  			$exportOrder = Mage::getModel('exportorder/order')->load($order->getId(),'order_id');
+  			
   			$exportOrder = $order->getExportOrder();
   			$exportOrder->processOrder($order);
-  			
   		}
   		
   		

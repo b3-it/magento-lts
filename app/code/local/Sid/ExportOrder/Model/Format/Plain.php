@@ -55,6 +55,8 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
      	 	$result[] = implode($item_separator,$orderItem);
      	 }
     	 
+     	 Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Plaindatei erzeugt');
+     	 
     	 return implode($line_separator,$result);
     }
     

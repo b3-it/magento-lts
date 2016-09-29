@@ -35,7 +35,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
   {
   	$collection = Mage::getResourceModel($this->_getCollectionClass());
   	$collection->getSelect()
-  		->joinleft(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('export_status'=>'status'));
+  		->joinleft(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('export_status'=>'status','message'));
   		
   	$this->setCollection($collection);
   	return parent::_prepareCollection();
@@ -101,6 +101,10 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
   			'filter_index' => 'export.status'
   	));
   	
+  	$this->addColumn('message', array(
+  			'header' => Mage::helper('sales')->__('Message'),
+  			'index' => 'message',
+  	));
   	
         $this->addColumn('action',
             array(
@@ -110,8 +114,8 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
                 'getter'    => 'getId',
                 'actions'   => array(
                     array(
-                        'caption'   => Mage::helper('exportorder')->__('Edit'),
-                        'url'       => array('base'=> '*/*/edit'),
+                        'caption'   => Mage::helper('exportorder')->__('Show'),
+                        'url'       => array('base'=> '*/*/show'),
                         'field'     => 'id'
                     )
                 ),
@@ -120,9 +124,28 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
                 'index'     => 'stores',
                 'is_system' => true,
         ));
+        
+        $this->addColumn('action1',
+        		array(
+        				'header'    =>  Mage::helper('exportorder')->__('Action'),
+        				'width'     => '100',
+        				'type'      => 'action',
+        				'getter'    => 'getId',
+        				'actions'   => array(
+        						array(
+        								'caption'   => Mage::helper('exportorder')->__('Download'),
+        								'url'       => array('base'=> '*/*/download'),
+        								'field'     => 'id'
+        						)
+        				),
+        				'filter'    => false,
+        				'sortable'  => false,
+        				'index'     => 'stores',
+        				'is_system' => true,
+        		));
 
-		$this->addExportType('*/*/exportCsv', Mage::helper('exportorder')->__('CSV'));
-		$this->addExportType('*/*/exportXml', Mage::helper('exportorder')->__('XML'));
+		//$this->addExportType('*/*/exportCsv', Mage::helper('exportorder')->__('CSV'));
+		//$this->addExportType('*/*/exportXml', Mage::helper('exportorder')->__('XML'));
 
       return parent::_prepareColumns();
   }

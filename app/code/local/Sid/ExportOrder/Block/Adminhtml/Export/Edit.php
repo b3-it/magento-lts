@@ -17,41 +17,20 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit extends Mage_Adminhtml_Block_W
         parent::__construct();
                  
         $this->_objectId = 'id';
-        $this->_blockGroup = 'exportorder';
+        $this->_blockGroup = 'sid_exportorder';
         $this->_controller = 'adminhtml_export';
         
-        $this->_updateButton('save', 'label', Mage::helper('exportorder')->__('Save Item'));
-        $this->_updateButton('delete', 'label', Mage::helper('exportorder')->__('Delete Item'));
-		
+        $this->_removeButton('save');
+        $this->_removeButton('delete');
+        $this->_removeButton('reset');
 			
-        $this->_addButton('saveandcontinue', array(
-            'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
-            'onclick'   => 'saveAndContinueEdit()',
-            'class'     => 'save',
-        ), -100);
-
-        $this->_formScripts[] = "
-            function toggleEditor() {
-                if (tinyMCE.getInstanceById('export_content') == null) {
-                    tinyMCE.execCommand('mceAddControl', false, 'export_content');
-                } else {
-                    tinyMCE.execCommand('mceRemoveControl', false, 'export_content');
-                }
-            }
-
-            function saveAndContinueEdit(){
-                editForm.submit($('edit_form').action+'back/edit/');
-            }
-        ";
+      
     }
 
     public function getHeaderText()
     {
-        if( Mage::registry('export_data') && Mage::registry('export_data')->getId() ) {
-            return Mage::helper('exportorder')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('export_data')->getTitle()));
-        } else {
-            return Mage::helper('exportorder')->__('Add Item');
-        }
+    	$order = Mage::registry('order');
+    	return Mage::helper('exportorder')->__("History to Order '%s'", $order->getIncrementId());
     }
 	
 	

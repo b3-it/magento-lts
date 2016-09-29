@@ -64,14 +64,18 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	$msg = $transfer->send($content,$order);
     	
     	$this->setMessage($msg)
-    		->setUpdatedTime(now())
+    		->setUpdateTime(now())
     		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
     		->save();
+    	
+    		if(strlen($msg) > 0){
+    			Mage::throwException($msg);
+    		}
     	}
     	catch (Exception $ex)
     	{
     		$this->setMessage($ex->getMessage())
-    		->setUpdatedTime(now())
+    		->setUpdateTime(now())
     		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR)
     		->save();
     		
@@ -95,14 +99,18 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	$vendorId = 0;
     	$content = array();
     	$orderIds = array();
-    	$transfer = Sid_ExportOrder_Model_Transfer::getInstance($transfer);
+    	$skip = false;
     	foreach($collection as $order)
     	{
     		if($vendorId != $order->getVendorId()){
     			$vendorId = $order->getVendorId();
     			$vendor = Mage::getModel('framecontract/vendor')->load($vendorId);
     			$format = $vendor->getExportFormatModel();
-    			
+    			$transfer = $vendor->getTransferModel();
+    			$expr = $transfer->getCron();
+    			if(!empty($expr)){
+    				$skip = !Mage::helper('exportorder')->canSchedule($expr);
+    			}
     			if(count($content) > 0){
     				
     				$transfer->sendOrders($content, $format, $orderIds, $vendor);
@@ -111,8 +119,10 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     			$orderIds = array();
     		}
     		
-    		$content[$order->getIncrementId()] = $format->processOrder($order);
-    		$orderIds[] = $order->getId();
+    		if(!$skip){
+	    		$content[$order->getIncrementId()] = $format->processOrder($order);
+	    		$orderIds[] = $order->getId();
+    		}
     	}
     	
     	if(count($content) > 0){

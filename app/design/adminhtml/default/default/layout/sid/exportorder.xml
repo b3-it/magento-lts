@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+     <adminhtml_exportorder_export_index>
+	      <reference name="content">
+            <block type="sid_exportorder/adminhtml_export" name="export" />
+        </reference>
+     </adminhtml_exportorder_export_index>
+
+</layout>

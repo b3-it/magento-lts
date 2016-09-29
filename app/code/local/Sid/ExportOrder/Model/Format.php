@@ -11,6 +11,7 @@
  */
 abstract class Sid_ExportOrder_Model_Format extends Mage_Core_Model_Abstract
 {
+	protected $_FileExtention = '.txt';
 	/**
 	 * 
 	 * @param unknown $type
@@ -36,5 +37,10 @@ abstract class Sid_ExportOrder_Model_Format extends Mage_Core_Model_Abstract
 	 * @param Mage_Sales_Model_Orderr $order
 	 */
 	public abstract function processOrder($order);
+	
+	public function getFilename($order)
+	{
+		return 'Order_'.date('d-m-Y_H-i-s').$this->_FileExtention;
+	}
     
 }

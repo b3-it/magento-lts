@@ -22,13 +22,14 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
     {
     	$postfields = array();
     	$postfields['data'] = ($content);
+    	  
     	    	
     	$ch = curl_init();
     	
     	// Follow any Location headers
     	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     	
-    	curl_setopt($ch, CURLOPT_URL, $this->getAddress());
+    	curl_setopt($ch, CURLOPT_URL, $this->getAddress().'xx');
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     	
     	// Alert cURL to the fact that we're doing a POST, and pass the associative array for POSTing.
@@ -38,5 +39,9 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
     	
     	$output = curl_exec($ch);
     	curl_close($ch);
+    	
+    	Sid_ExportOrder_Model_History::createHistory($order->getId(), 'per Post übertragen');
+    	
+    	return trim($output);
     }
 }

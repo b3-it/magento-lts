@@ -17,4 +17,18 @@ class Sid_ExportOrder_Model_Resource_Order extends Mage_Core_Model_Resource_Db_A
         // Note that the exportorder_order_id refers to the key field in your database table.
         $this->_init('exportorder/order', 'id');
     }
+    
+    
+    protected function _beforeSave(Mage_Core_Model_Abstract $object)
+    {
+    	$object->setSemaphor($this->getSemaphor());
+    	return parent::_beforeSave($object);
+    }
+    
+    
+    protected function getSemaphor()
+    {
+    	return Mage::helper('exportorder')->getSemaphor();
+    }
+    
 }

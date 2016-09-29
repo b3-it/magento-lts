@@ -25,6 +25,14 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Link_Form extends Mage_Adminhtml_
       		'name'      => 'transfer[email]',
       ));
       
+      $form->addField('cron', 'text', array(
+      		'label'     => Mage::helper('exportorder')->__('Cron Expression'),
+      		'class'     => 'required-entry',
+      		'required'  => true,
+      		'name'      => 'transfer[cron]',
+      		'after_element_html'	=> '<span> * * * * * (Minute Stunde Monatstag Monat Wochentag) </span>'
+      ));
+      
       $templates = Mage::getModel('adminhtml/system_config_source_email_template');
       $form->addField('template', 'select', array(
       		'label'     => Mage::helper('exportorder')->__('Email Template'),
