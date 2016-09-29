@@ -281,18 +281,16 @@
                     }
                 }
             }
+        }
+       
+        .product-options-bottom {
+            .add-to-cart-buttons {
+                display: inline-block;
+                max-width: 180px;
+            }
 
-            .product-options-bottom {
-                .add-to-cart {
-                    .add-to-cart-buttons {
-                        display: inline-block;
-                        max-width: 180px;
-                    }
-                }
-
-                .add-to-links {
-                    display: none;
-                }
+            .add-to-links {
+                display: none;
             }
         }
     }
