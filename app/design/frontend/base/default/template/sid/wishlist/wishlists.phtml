@@ -1,7 +1,7 @@
 <?php
 /**
  * Merkzettel - Auswahl - Block
- * 
+ *
  * @category   	Sid
  * @package    	Sid_Wishlist
  * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
@@ -10,28 +10,29 @@
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 ?>
-<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-sidwishlists>
-	<div class="page-title title-buttons">
-	    <h2><?php echo $this->__('Collector List') ?></h2>
-	</div>
-	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-	<h3><?php echo $this->__('Select a Collector List') ?></h3>
-	<ul class="form-list">
-		<li class="fields fullwide">
-		    <input type="hidden" name="continue" value="0" id="can_continue_flag" />
-		    <input type="hidden" name="new_wishlist" value="0" id="add_new_wishlist_flag" />
-		    <div class="field">
-		    	<?php echo $this->getSelectBoxHtml(); ?>
-		    </div>
-		
-		    <br />
-		
-			<div class="buttons-set buttons-set2">
-				<a href="<?php echo $this->getBackUrl() ?>" class="back-link egovslistbutton"><?php echo $this->__('Back') ?> </a>
-				<button class="button" type="submit">
-					<span><?php echo $this->__('Continue') ?> </span>
-				</button>
-			</div>
-		</li>
-	</ul>
-</form>
+<div class="page-title title-buttons">
+    <h2><?php echo $this->__('Collector List') ?></h2>
+</div>
+<div class="std">
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-sidwishlists">
+        <input type="hidden" name="continue" value="0" id="can_continue_flag" />
+    	<input type="hidden" name="new_wishlist" value="0" id="add_new_wishlist_flag" />
+
+    	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+    	<h3><?php echo $this->__('Select a Collector List') ?></h3>
+
+    	<div class="field">
+    		<?php echo $this->getSelectBoxHtml(); ?>
+    	</div>
+
+    	<div class="buttons-set">
+    		<button class="button egov-float-left" onclick="setLocation('<?php echo $this->getBackUrl() ?>');">
+    		    <?php echo $this->__('Back') ?>
+    		</button>
+    		<button class="button" type="submit">
+    			<span><?php echo $this->__('Continue') ?> </span>
+    		</button>
+    	</div>
+    </form>
+</div>
