@@ -18,7 +18,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tabs extends Mage_Adminhtml_Bl
       parent::__construct();
       $this->setId('export_tabs');
       $this->setDestElementId('edit_form');
-      $this->setTitle(Mage::helper('exportorder')->__('Item Information'));
+      $this->setTitle(Mage::helper('exportorder')->__('Vendor Order'));
   }
 
   protected function _beforeToHtml()

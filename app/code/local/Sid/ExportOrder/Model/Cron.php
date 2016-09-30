@@ -25,6 +25,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 		$this->prepare();
 		$this->run();
 		Mage::getModel('exportorder/order')->processPendingOrders();
+		$this->deleteOldLinks();
 	}
     
     /**
@@ -110,6 +111,23 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   		}
   		
   		
+  	}
+  	
+  	private function deleteOldLinks()
+  	{
+  		$days = intval(Mage::getConfig()->getNode('sid_exportorder/delete_old_links/days'));
+  		if ($days == 0){
+  			return;
+  		}
+  		
+  		$collection = Mage::getModel('exportorder/link')->getCollection();
+  		$collection->getSelect()
+  			->where("DATE_ADD(create_time, INTERVAL " . $days . " DAY) < NOW() ");
+  		
+  		foreach($collection as $link)
+  		{
+  			$link->delete();
+  		}
   	}
     
 }

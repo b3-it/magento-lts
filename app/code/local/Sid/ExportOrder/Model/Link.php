@@ -77,4 +77,33 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     {
     	return Mage::getUrl('exportorder/index/index',array('ident'=>$this->getIdent()));
     }
+    
+    
+    
+    protected function _beforeDelete()
+    {
+    	$filename = $this->getDirectory().$this->getFilename();
+    	/* @var collection Sid_ExportOrder_Model_Resource_Link_Order_Collection */
+    	$collection = Mage::getModel('exportorder/link_order')->getCollection();
+    	$collection->getSelect()->where('link_id = ' .intval($this->getId()));
+    	$orderIds = array();
+    	foreach($collection as $item){
+    		$orderIds[] = $item->getOrderId();
+    	}
+    	if(file_exists($filename))
+    	{
+    		try 
+    		{
+    			unlink($filename);
+    			Sid_ExportOrder_Model_History::createHistory($orderIds, sprintf('Datei %s gelöscht',$this->getSendFilename()));
+    		}catch(Exception $ex){
+    			Mage::logException($ex);
+    			Sid_ExportOrder_Model_History::createHistory($orderIds, $ex->getMessage());
+    		}
+    		
+    	}else{
+    		Sid_ExportOrder_Model_History::createHistory($orderIds, sprintf('Datei %s nicht gefunden',$this->getSendFilename()));
+    		$this->setLog(sprintf('Datei %s zum löschen nicht gefunden',$this->getSendFilename()));
+    	}
+    }
 }

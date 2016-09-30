@@ -114,7 +114,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
                 'getter'    => 'getId',
                 'actions'   => array(
                     array(
-                        'caption'   => Mage::helper('exportorder')->__('Show'),
+                        'caption'   => Mage::helper('exportorder')->__('Details'),
                         'url'       => array('base'=> '*/*/show'),
                         'field'     => 'id'
                     )
@@ -143,6 +143,25 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
         				'index'     => 'stores',
         				'is_system' => true,
         		));
+        $this->addColumn('action2',
+        		array(
+        				'header'    =>  Mage::helper('exportorder')->__('Action'),
+        				'width'     => '100',
+        				'type'      => 'action',
+        				'getter'    => 'getId',
+        				'actions'   => array(
+        						array(
+        								'caption'   => Mage::helper('exportorder')->__('Resend'),
+        								'url'       => '#',// array('base'=> '*/*/resend'),
+        								'field'     => 'id',
+        								'onclick' => 'resend($entity_id);'
+        						)
+        				),
+        				'filter'    => false,
+        				'sortable'  => false,
+        				'index'     => 'stores',
+        				'is_system' => true,
+        		));
 
 		//$this->addExportType('*/*/exportCsv', Mage::helper('exportorder')->__('CSV'));
 		//$this->addExportType('*/*/exportXml', Mage::helper('exportorder')->__('XML'));
@@ -150,35 +169,23 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('export_id');
-        $this->getMassactionBlock()->setFormFieldName('export');
-
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('exportorder')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('exportorder')->__('Are you sure?')
-        ));
-
-        $statuses = Mage::getSingleton('exportorder/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('exportorder')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('exportorder')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
-        return $this;
-    }
+  public function _toHtml()
+  {
+  
+  	$html = array();
+  	$html[]= "<script>";
+  	$html[]= "function resend(id){";
+  	$html[]= 'var url = "'.$this->getUrl('*/*/resend',array('id' => 'xxx')).'";';
+  	$html[]= "url = url.replace('xxx',id);";
+  	$html[]= "new Ajax.Request(url, {method:'get'})";
+  	$html[]= "}";
+  	$html[]= "</script>";
+  
+  
+  	return parent::_toHtml(). implode(' ',$html);
+  
+  
+  }
 
   public function getRowUrl($row)
   {

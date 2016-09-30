@@ -5,8 +5,8 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Export extends Mage_Adminh
   public function __construct()
   {
       parent::__construct();
-      $this->setId('transmitGrid');
-      $this->setDefaultSort('transmit_date');
+      $this->setId('sidexportGrid');
+      $this->setDefaultSort('update_time');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
@@ -34,11 +34,11 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Export extends Mage_Adminh
  
     
       
-      $this->addColumn('update_at', array(
+      $this->addColumn('update_time', array(
       		'header'    => Mage::helper('exportorder')->__('Verarbeitet'),
       		'align'     =>'right',
       		'width'     => '50px',
-      		'index'     => 'update_at',
+      		'index'     => 'update_time',
       		'type' 		=> 'datetime'
       ));
 
@@ -55,5 +55,13 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Export extends Mage_Adminh
       return parent::_prepareColumns();
   }
 
+ 	public function getGridUrl($params = array())
+    {
+    	if (!isset($params['_current'])) {
+    		$params['_current'] = true;
+    	}
+    	return $this->getUrl('*/*/exportgrid', $params);
+    	
+    }
 
 }

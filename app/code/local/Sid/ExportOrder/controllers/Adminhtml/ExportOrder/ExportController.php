@@ -14,9 +14,10 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 {
 
 	protected function _initAction() {
+		$this->_title(Mage::helper('adminhtml')->__('Vendor Order'));
 		$this->loadLayout()
-			->_setActiveMenu('export/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_setActiveMenu('framecontract/export')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Framecontract'), Mage::helper('adminhtml')->__('Vendor Order'));
 
 		return $this;
 	}
@@ -27,6 +28,7 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 	}
 
 	public function showAction() {
+		$this->_initAction();
 		$id     = $this->getRequest()->getParam('id');
 		
 		$model  = Mage::getModel('sales/order')->load(intval($id));
@@ -39,9 +41,7 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 		
 			Mage::register('order', $model);
 		
-			$this->loadLayout();
-			$this->_setActiveMenu('framecontract/export');
-		
+			
 		
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 		
@@ -72,10 +72,74 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 		$this->_sendUploadResponse($format->getFilename($order), $content);
     	
 	}	
-
 	
+	public function resendAction() {
+		$id     = $this->getRequest()->getParam('id');
+	
+		$order = Mage::getModel('sales/order')->load(intval($id));
+		$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
+		$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
+		$transfer = $vendor->getTransferModel();
+	
+		$format = $vendor->getExportFormatModel();
+		$content = $format->processOrder($order);
+		
+		if($transfer instanceof Sid_ExportOrder_Model_Transfer_Link )
+		{
+			$content = array($order->getIncrementId() => $content);
+			$orderIds = array($order->getId());
+			$msg = $transfer->sendOrders($content, $format, $orderIds, $vendor->getId());
+		}else {
+			$msg = $transfer->send($content,$order);
+		}
+		 
+	}
+
+	public function downloadgridAction()
+	{
+		$id     = $this->getRequest()->getParam('id');
+		$model  = Mage::getModel('sales/order')->load($id);
+		 
+		Mage::register('order', $model);
+		 
+		$this->loadLayout(false);
+		$this->getResponse()->setBody(
+				$this->getLayout()->createBlock('sid_exportorder/adminhtml_export_edit_tab_download')->toHtml()
+				);
+		 
+	}
+	
+	public function exportgridAction()
+	{
+		$id     = $this->getRequest()->getParam('id');
+		$model  = Mage::getModel('sales/order')->load($id);
+			
+		Mage::register('order', $model);
+			
+		$this->loadLayout(false);
+		$this->getResponse()->setBody(
+				$this->getLayout()->createBlock('sid_exportorder/adminhtml_export_edit_tab_export')->toHtml()
+				);
+			
+	}
 	
 
+	public function deleteLinkAction()
+	{
+		$id     = $this->getRequest()->getParam('id');
+		$model  = Mage::getModel('sales/order')->load($id);
+			
+		Mage::register('order', $model);
+		
+		$linkid     = $this->getRequest()->getParam('linkid');
+		$link = Mage::getModel('exportorder/link')->load($linkid);
+		$link->delete();
+		
+		$this->loadLayout(false);
+		$this->getResponse()->setBody(
+				$this->getLayout()->createBlock('sid_exportorder/adminhtml_export_edit_tab_download')->toHtml()
+				);
+	}
 
 
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')

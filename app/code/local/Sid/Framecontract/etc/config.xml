@@ -55,11 +55,7 @@
 				    		    <sort_order>10</sort_order>
 				    		    <action>adminhtml/framecontract_product</action>
 				    	  </product_visibility>
-				    	  <export_test translate='title' module="framecontract">
-				    		    <title>Export Test</title>
-				    		    <sort_order>10</sort_order>
-				    		    <action>adminhtml/framecontract_contract/exporttest</action>
-				    	  </export_test>
+				    	
 				    	<!--
 				    	<order module="framecontract">
 				    		<title>Product Order</title>

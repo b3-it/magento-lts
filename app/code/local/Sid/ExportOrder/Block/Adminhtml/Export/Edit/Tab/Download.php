@@ -5,7 +5,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Download extends Mage_Admi
   public function __construct()
   {
       parent::__construct();
-      $this->setId('transmitGrid');
+      $this->setId('downloadGrid');
       $this->setDefaultSort('transmit_date');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
@@ -19,7 +19,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Download extends Mage_Admi
   	 $collection = Mage::getModel('exportorder/link')->getCollection();
   	 $table = $collection->getTable('exportorder/link_order');
       $collection->getSelect()
-      	->join(array('orders' => $collection->getTable('exportorder/link_order') ),'orders.link_id = main_table.id')
+      	->join(array('orders' => $collection->getTable('exportorder/link_order') ),'orders.link_id = main_table.id',array('link_id'=>'link_id'))
       	->where('order_id ='. intval(Mage::registry('order')->getId()));
       $this->setCollection($collection);
       
@@ -69,10 +69,54 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Download extends Mage_Admi
       		'type'		=> 'datetime'
       ));
 
+      $order = Mage::registry('order');
+      $this->addColumn('action',
+      		array(
+      				'header'    =>  Mage::helper('exportorder')->__('Action'),
+      				'width'     => '100',
+      				'type'      => 'action',
+      				'getter'    => 'getLinkId',
+      				'actions'   => array(
+      						array(
+      								'caption'   => Mage::helper('exportorder')->__('Delete'),
+      								//'url'       => array('base'=> '*/*/deleteLink','params'=>array('id' => $order->getId())),
+      								'field'     => 'linkid',
+      								'onclick'   => 'deleteLink($link_id)',
+      						)
+      				),
+      				'filter'    => false,
+      				'sortable'  => false,
+      				'index'     => 'stores',
+      				'is_system' => true,
+      		));
      
 	  
       return parent::_prepareColumns();
   }
 
-
+  public function getGridUrl($params = array())
+  {
+  	if (!isset($params['_current'])) {
+  		$params['_current'] = true;
+  	}
+  	return $this->getUrl('*/*/downloadgrid', $params);
+  }
+  
+  public function _toHtml()
+  {
+  		
+  		$html = array();
+  		$html[]= "<script>";
+  		$html[]= "function deleteLink(id){";
+  		$html[]= 'var url = "'.$this->getUrl('*/*/deleteLink',array('id' => intval(Mage::registry('order')->getId()),'linkid'=>'xxx')).'";';  		
+  		$html[]= "url = url.replace('xxx',id);";
+  		$html[]= $this->getJsObjectName().".reload(url)";
+  		$html[]= "}";
+  		$html[]= "</script>";
+  		
+  		
+  		return parent::_toHtml(). implode(' ',$html);
+  		
+  		
+  }
 }
