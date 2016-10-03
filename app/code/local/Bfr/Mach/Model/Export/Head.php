@@ -37,13 +37,13 @@ class Bfr_Mach_Model_Export_Head extends Bfr_Mach_Model_Export_Abstract
     		$line = array();
     		$line[] = $this->getConfigValue('head/irquellsystem',null, null); //Irquellsystem
     		$line[] = $this->_Lauf; //Irlauf
-			$line[] = $IRBeleg; //??$order->getIncrementId(); //?? //Irbeleg
+			$line[] = $order->getIncrementId(); //?? //Irbeleg
 			$line[] = $this->getConfigValue('head/niederlassung',null, null); //Niederlassung
 			$line[] = $this->getConfigValue('head/orgeinheit',null, null); //Orgeinheit
 			$line[] = $this->getConfigValue('head/periode',null, null); //Periode
 			$line[] = date('m.d.Y H:i', strtotime($order->getCreatedAt())); //Buchungsdatum
 			$line[] = date('m.d.Y H:i', strtotime($order->getCreatedAt())); //Belegdatum
-			$line[] = $order->getIncrementId(); //Beleg
+			$line[] = '0';//$order->getIncrementId(); //Beleg
 			$line[] = $this->getConfigValue('head/belegart',null, null); //Belegart
 			$line[] = $this->getConfigValue('head/belegkontotitel',null, null); //Belegkontotitel
 			$line[] = $this->getConfigValue('head/belegtext',null, null); //Belegtext
