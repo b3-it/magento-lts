@@ -71,7 +71,8 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
 		
 		$collection->getSelect()
 			->join(array('los' => $collection->getTable('catalog/product').'_int'),'los.entity_id = e.entity_id AND los.attribute_id='.$eav,array('framecontract_los'=>'value'))
-			->join(array('contract'=>$collection->getTable('framecontract/contract')),'contract.framecontract_contract_id = los.value',array('framecontract_contract_id'));
+			//->join(array('contract'=>$collection->getTable('framecontract/contract')),'contract.framecontract_contract_id = los.value',array('framecontract_contract_id'))
+			;
 
 		//die($collection->getSelect()->__toString());
 		$this->setCollection($collection);
