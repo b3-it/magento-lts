@@ -189,7 +189,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
 
   public function getRowUrl($row)
   {
-      return $this->getUrl('*/*/edit', array('id' => $row->getId()));
+      return $this->getUrl('*/*/show', array('id' => $row->getId()));
   }
 
 }
