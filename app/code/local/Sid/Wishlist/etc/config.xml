@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_Wishlist>
-            <version>0.1.2.0</version>
+            <version>0.1.3.0</version>
         </Sid_Wishlist>
     </modules>
     <frontend>
@@ -111,7 +111,7 @@
             </sidwishlist>
         </helpers>
         <events>
-            <sales_quote_item_delete_after>
+            <sid_wishlist_quote_item_delete_after>
                 <observers>
                     <sid_wishlist_remove_item>
                         <type>singleton</type>
@@ -119,8 +119,51 @@
                         <method>onQuoteItemRemove</method>
                     </sid_wishlist_remove_item>
                 </observers>
+            </sid_wishlist_quote_item_delete_after>
+            <sales_quote_item_delete_after>
+                <observers>
+                    <sid_wishlist_sales_remove_item>
+                        <type>singleton</type>
+                        <class>sidwishlist/sales_observer</class>
+                        <method>onQuoteItemRemove</method>
+                    </sid_wishlist_sales_remove_item>
+                </observers>
             </sales_quote_item_delete_after>
+            <sales_quote_item_qty_set_after>
+                <observers>
+                    <sidwishlist_sales_quote_item_qty_set_after>
+                        <type>singleton</type>
+                        <class>sidwishlist/sales_observer</class>
+                        <method>onSalesQuoteItemQtySetAfter</method>
+                    </sidwishlist_sales_quote_item_qty_set_after>
+                </observers>
+            </sales_quote_item_qty_set_after>
+            <sales_order_place_after>
+                <observers>
+                    <sidwishlist_sales_order_place_after>
+                        <type>singleton</type>
+                        <class>sidwishlist/sales_observer</class>
+                        <method>onSalesOrderPlaceAfter</method>
+                    </sidwishlist_sales_order_place_after>
+                </observers>
+            </sales_order_place_after>
+            <sales_quote_add_item>
+                <observers>
+                    <sidwishlist_sales_quote_add_item>
+                        <type>singleton</type>
+                        <class>sidwishlist/sales_observer</class>
+                        <method>onSalesQuoteAddItem</method>
+                    </sidwishlist_sales_quote_add_item>
+                </observers>
+            </sales_quote_add_item>
         </events>
+        <fieldsets>
+            <sales_convert_quote_item>
+                <sidwishlist_item_id>
+                    <to_order_item>*</to_order_item>
+                </sidwishlist_item_id>
+            </sales_convert_quote_item>
+        </fieldsets>
     </global>
     <default>
         <sidwishlist>

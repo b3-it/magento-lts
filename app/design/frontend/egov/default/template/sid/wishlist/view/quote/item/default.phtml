@@ -24,6 +24,11 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php 
+/**
+ * @var $this Sid_Wishlist_Block_View_Quote_Item_Renderer
+ */
+?>
 <?php $_item = $this->getItem()?>
 <tr>
     <td><a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->htmlEscape($this->getProductName()) ?>"><img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></a></td>
@@ -301,7 +306,7 @@
 		        ?>
 				<?php if ($_item->canHaveQty() && $isVisibleProduct): ?>
 					<p>
-						<input type="text" class="input-text qty" name="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $_item->getQty() * 1 ?>" />
+						<input type="text" class="input-text qty" name="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $this->getAvailableQty() * 1 ?>" />
 					</p>
 				<?php endif; ?>
 				<?php if ($product->isSaleable()): ?> 
