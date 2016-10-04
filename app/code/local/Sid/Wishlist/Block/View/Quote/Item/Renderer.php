@@ -241,6 +241,15 @@ class Sid_Wishlist_Block_View_Quote_Item_Renderer extends Mage_Core_Block_Templa
     }
     
     /**
+     * Liefert die bereits bestellte Anzahl der Items
+     *
+     * @return float
+     */
+    public function getQtyOrdered() {
+    	return $this->getItem()->getQtyOrdered()*1;
+    }
+    
+    /**
      * Prüft ob das Item bereits eine genehmigte Menge besitzt
      */
     public function hasQtyGranted() {
