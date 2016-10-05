@@ -14,7 +14,7 @@ class Sid_Haushalt_Block_Adminhtml_Haushalt extends Mage_Adminhtml_Block_Widget_
   {
     $this->_controller = 'adminhtml_haushalt';
     $this->_blockGroup = 'sidhaushalt';
-    $this->_headerText = Mage::helper('sidhaushalt')->__('Item Manager');
+    $this->_headerText = Mage::helper('sidhaushalt')->__('Haushaltsystem Export');
     
     parent::__construct();
     

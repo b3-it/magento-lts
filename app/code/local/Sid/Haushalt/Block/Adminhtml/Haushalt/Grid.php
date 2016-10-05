@@ -17,6 +17,7 @@ class Sid_Haushalt_Block_Adminhtml_Haushalt_Grid extends Mage_Adminhtml_Block_Wi
       //$this->setDefaultSort('haushalt_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
+      $this->setDefaultFilter(array("exported"=>"0"));
   }
 
   protected function _getCollectionClass()

@@ -30,7 +30,7 @@ class Sid_ExportOrder_Model_History extends Mage_Core_Model_Abstract
 	    	$model = Mage::getModel('exportorder/history');
 	    	$model->setOrderId($orderId)
 	    		->setMessage($message)
-	    		->setUpadteTime(now())
+	    		->setUpdateTime(now())
 	    		->setStatus($status);
 	    	$model->save();
     	}
