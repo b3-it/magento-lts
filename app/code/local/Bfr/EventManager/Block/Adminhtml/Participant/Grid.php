@@ -37,7 +37,8 @@ where participant_id = 1 AND el.typ = 3
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-        ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status'))
+        ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
+        ->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
       	->join(array('event'=>$collection->getTable('eventmanager/event')), 'main_table.event_id = event.event_id',array('title'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
@@ -49,6 +50,8 @@ where participant_id = 1 AND el.typ = 3
       return parent::_prepareCollection();
   }
 
+  
+ 
   protected function _prepareColumns()
   {
   		$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
@@ -95,6 +98,43 @@ where participant_id = 1 AND el.typ = 3
       		'type'  => 'options',
       		'width' => '70px',
       		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
+      
+      
+      $this->addColumn('pa_price', array(
+      		'header' => Mage::helper('sales')->__('Price'),
+      		'index' => 'base_grand_total',
+      		'type'  => 'price',
+      		'width' => '70px',
+      		'currency' => 'base_currency_code',
+      		'currency_code' => 'EUR',
+      		
+      ));
+      
+      $this->addColumn('pa_price1', array(
+      		'header' => Mage::helper('sales')->__('Balance (Base)'),
+      		'index' => 'base_grand_total',
+      		'type'  => 'price',
+      		'width' => '70px',
+      		'index_paid' => 'base_total_paid',
+      		'filter_index' => new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)'),
+      		'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
+      		'type' => 'currency',
+      		'currency' => 'base_currency_code',
+      		//'filter_condition_callback' => array($this, '_filterBalanceCondition'),
+      ));
+      
+      $groups = Mage::getResourceModel('customer/group_collection')
+      ->addFieldToFilter('customer_group_id', array('gt'=> 0))
+      ->load()
+      ->toOptionHash();
+      
+      $this->addColumn('group', array(
+      		'header'    =>  Mage::helper('customer')->__('Group'),
+      		'width'     =>  '100',
+      		'index'     =>  'group_id',
+      		'type'      =>  'options',
+      		'options'   =>  $groups,
       ));
       
       $this->addColumn('pa_academic_titel', array(
@@ -391,4 +431,6 @@ where participant_id = 1 AND el.typ = 3
   	$condition = "lobbyT.value like ?";
   	$collection->getSelect()->where($condition, "%$value%");
   }
+  
+ 
 }

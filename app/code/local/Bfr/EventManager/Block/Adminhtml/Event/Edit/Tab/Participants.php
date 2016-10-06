@@ -39,7 +39,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status'))
+      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
+      ->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->joinLeft(array('lobbyT'=>$lobby),'lobbyT.participant_id=main_table.participant_id',array('lobby'=>'value'))
@@ -100,6 +101,44 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'filter_index' => 'order.status',
   			'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
   	));
+  	
+  	$this->addColumn('pa_price', array(
+  			'header' => Mage::helper('sales')->__('Price'),
+  			'index' => 'base_grand_total',
+  			'type'  => 'price',
+  			'width' => '70px',
+  			'currency' => 'base_currency_code',
+  			'currency_code' => 'EUR',
+  	
+  	));
+  	
+  	$this->addColumn('pa_price1', array(
+  			'header' => Mage::helper('sales')->__('Balance (Base)'),
+  			'index' => 'base_grand_total',
+  			'type'  => 'price',
+  			'width' => '70px',
+  			'index_paid' => 'base_total_paid',
+  			'filter_index' => new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)'),
+  			'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
+  			'type' => 'currency',
+  			'currency' => 'base_currency_code',
+  			//'filter_condition_callback' => array($this, '_filterBalanceCondition'),
+  	));
+  	
+  	$groups = Mage::getResourceModel('customer/group_collection')
+  	->addFieldToFilter('customer_group_id', array('gt'=> 0))
+  	->load()
+  	->toOptionHash();
+  	
+  	$this->addColumn('group', array(
+  			'header'    =>  Mage::helper('customer')->__('Group'),
+  			'width'     =>  '100',
+  			'index'     =>  'group_id',
+  			'type'      =>  'options',
+  			'options'   =>  $groups,
+  	));
+  	
+  	
   	
   	$this->addColumn('pa_academic_titel', array(
   			'header'    => Mage::helper('eventmanager')->__('Academic Title'),
