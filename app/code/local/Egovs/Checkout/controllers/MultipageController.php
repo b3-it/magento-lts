@@ -199,7 +199,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     				$this->_redirect('egovs_checkout/multipage/login');
     				return;
     			}
-    			if (!Mage::getStoreConfigFlag('checkout/options/checkout_customer_register')) {
+    			if ($method == 'register' && !Mage::getStoreConfigFlag('checkout/options/checkout_customer_register')) {
     				$this->_redirect('customer/account/create', array('_secure'=>true));
     				return;
     			}
