@@ -50,33 +50,45 @@ class Sid_Haushalt_Model_Cron extends Mage_Core_Model_Abstract
   	
   	private function run()
   	{
-  		$oderCollection = Mage::getModel('sidhaushalt/order_info')->getCollection();
-  		$oderCollection->getSelect()
-  			->where('exported = 0');
-  		
-  		$exports = array();
+  		$stores = Mage::getModel('core/store')->getCollection();
+  		$helper = Mage::helper('sidhaushalt');
+  		foreach($stores as $store)
+  		{
+  			$expr = Mage::getStoreConfig('sidhaushalt/hhexport/cron_expression',$store->getId());
   			
-  		foreach($oderCollection as $order){
-  			$hhs = !empty($order->getHaushaltsSystem()) ? $order->getHaushaltsSystem() : 'default' ;
-  			//if(!empty($hhs)){
-  				if(!isset($exports[$hhs])){
-  					$exports[$hhs]=array();
-  				}
-  				
-  				$exports[$hhs][] = $order->getOrderId();
-  			//}
+  			//nur abarbeiten wenn Zeit erreicht ist
+  			if($helper->canSchedule($expr))
+  			{
+		  		$oderCollection = Mage::getModel('sidhaushalt/order_info')->getCollection();
+		  		$oderCollection->getSelect()
+		  			->join(array('order'=>$oderCollection->getTable('order/sales'),'order.entity_id = main_table.order_id',array()))
+		  			->where('exported = 0')
+		  			->where('order.store_id ='. $store->getId())	;
+		  		
+		  		$exports = array();
+		  			
+		  		foreach($oderCollection as $order){
+		  			$hhs = !empty($order->getHaushaltsSystem()) ? $order->getHaushaltsSystem() : 'default' ;
+		  			//if(!empty($hhs)){
+		  				if(!isset($exports[$hhs])){
+		  					$exports[$hhs]=array();
+		  				}
+		  				
+		  				$exports[$hhs][] = $order->getOrderId();
+		  			//}
+		  		}
+		  		
+		  		
+		  		foreach($exports as $model){
+		  			$export = Sid_Haushalt_Model_Type::factory($model);
+		  			$export->setStoreId($store->getId())
+		  					->setOrderIds($model);
+		  			$data = $export->getExportData();
+		  			$export->saveFile($data);
+		  		}
+		  		
+	  		}
   		}
-  		
-  		
-  		foreach($exports as $model){
-  			$export = Sid_Haushalt_Model_Type::factory($model);
-  			$export->setOrderIds($model);
-  			$data = $export->getExportData();
-  			$export->saveFile($data);
-  		}
-  		
-  		
-  		
   		
   	}
     

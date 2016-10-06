@@ -159,7 +159,7 @@
         <jobs>
             <order2haushalt>
                 <schedule>
-                    <cron_expr>*/1 * * * *</cron_expr>
+                    <cron_expr>* * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>sidhaushalt/cron::runCron</model>
@@ -167,4 +167,11 @@
             </order2haushalt>
         </jobs>
     </crontab>
+    <default>
+        <sidhaushalt>
+            <hhexport>
+            <cron_expression>* 2 * * *</cron_expression>
+            </hhexport>
+        </sidhaushalt>
+    </default>
 </config>

@@ -26,6 +26,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </directory>
+                        <cron_expression translate="label">
+                            <label>Cron Expression</label>
+                            <comment> * * * * * (Minute Stunde Monatstag Monat Wochentag) </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cron_expression>
                       </fields> 
                 </hhexport>  
          </groups>

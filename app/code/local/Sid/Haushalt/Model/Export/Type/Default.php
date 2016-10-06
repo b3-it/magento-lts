@@ -14,10 +14,11 @@ class Sid_Haushalt_Model_Export_Type_Default extends Sid_Haushalt_Model_Export_A
 	{
 		$orders = Mage::getModel('sales/order')->getCollection();
 		$orders->getSelect()->where('entity_id IN (?)',implode(',',$this->_orderIds));
+		
 		$res = array();
 		foreach($orders as $order)
 		{
-			$this->_storeId = $order->getStoreId();
+			
 			$line = array();
 			$line[] = $order->getIncrementId();
 			$line[] = $order->getCreatedAt();
