@@ -19,7 +19,7 @@ class Sid_Wishlist_Model_Sales_Observer
 		foreach ($_order->getItemsCollection() as $orderItem) {
 			/** @var $orderItem Mage_Sales_Model_Order_Item */
 			$qtyOrdered = $orderItem->getQtyOrdered();
-			$_wishlistItem = Mage::getModel('sidwishlist/item')->load($orderItem->getSidwishlistItemId());
+			$_wishlistItem = Mage::getModel('sidwishlist/quote_item')->load($orderItem->getSidwishlistItemId());
 			if (!$_wishlistItem->getId()) {
 				continue;
 			}
