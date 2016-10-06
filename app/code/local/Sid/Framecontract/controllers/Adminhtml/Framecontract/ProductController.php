@@ -6,7 +6,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ProductController extends Mage_A
 	
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('contract/items')
+			->_setActiveMenu('framecontract/items')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
 		
 		return $this;

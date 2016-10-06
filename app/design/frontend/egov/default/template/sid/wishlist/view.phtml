@@ -38,6 +38,9 @@ function deleteAll(url)
             <col />			   <?php //Produktname ?>
             <col width="20" /> <?php //Preis ?>
             <col width="50" /> <?php //Angefragt ?>
+        <?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
+			<col width="1" /> <?php //bestellt ?>
+		<?php endif; ?>
 		<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
 			<col width="50" /> <?php //Genehmigt ?>
 		<?php endif; ?>
@@ -54,8 +57,11 @@ function deleteAll(url)
 					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?></th>
 					<th class="a-center" style="word-break:break-all;word-wrap:break-word" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?></th>
 					<th rowspan="<?php echo $mergedCells; ?>" style="word-break:break-all;word-wrap:break-word" class="a-center"><?php echo $this->__('Qty Requested') ?>	</th>
+					<?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
+						<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty Ordered') ?></th>
+					<?php endif; ?>
 					<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
-						<th rowspan="<?php echo $mergedCells; ?>" style="word-break:break-all;word-wrap:break-word" class="a-center"><?php echo $this->__('Qty Granted') ?></th>
+						<th rowspan="<?php echo $mergedCells; ?>" style="word-break:break-all;word-wrap:break-word" class="a-center"><?php echo $this->__('Qty In Carts') ?></th>
 					<?php endif; ?>
 					<th class="a-center" style="word-break:break-all;word-wrap:break-word" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Status') ?></th>

@@ -8,7 +8,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('vendor/items')
+			->_setActiveMenu('framecontract/items')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Vendor Manager'), Mage::helper('adminhtml')->__('Vendor Manager'));
 		
 		return $this;

@@ -11,6 +11,8 @@
  */
 class Sid_Wishlist_Model_Quote_Item extends Sid_Wishlist_Model_Quote_Item_Abstract
 {
+	protected $_eventPrefix = 'sid_wishlist_quote_item';
+	
 	const EXCEPTION_CODE_NOT_SALABLE            = 901;
 	const EXCEPTION_CODE_HAS_REQUIRED_OPTIONS   = 902;
 	const EXCEPTION_CODE_IS_GROUPED_PRODUCT     = 903; // deprecated after 1.4.2.0, because we can store product configuration and add grouped products

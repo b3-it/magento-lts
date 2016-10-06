@@ -284,6 +284,9 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 		$request['qty'] = $qty;
 		$request['uenc'] = Mage::helper('core/url')->getEncodedUrl($item->getProduct()->getProductUrl());
 		$request['product'] = $item->getProduct()->getId();
+		if ($item->getId() > 0) {
+			$request['sidwishlist_item_id'] = $item->getId();
+		}
 		$preparedLinks = array();
 		switch ($item->getProduct()->getTypeId()) {
 			case Mage_Downloadable_Model_Product_Type::TYPE_DOWNLOADABLE:

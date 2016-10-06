@@ -24,6 +24,11 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php 
+/**
+ * @var $this Sid_Wishlist_Block_View_Quote_Item_Renderer
+ */
+?>
 <?php $_item = $this->getItem()?>
 <tr>
     <td><a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->htmlEscape($this->getProductName()) ?>"><img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></a></td>
@@ -153,10 +158,21 @@
     <td class="a-center">
         <input name="collection[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>"  title='<?php echo Mage::helper('sidwishlist')->__("Quantity Requested: "). $this->getProductName()?>' size="4" class="input-text qty" maxlength="8" />
     </td>
+    <?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
+    <td class="a-center">
+    	<?php if ($this->hasQtyGranted()): ?>
+    	<div class="qty" title="<?php echo Mage::helper('sidwishlist')->__("Quantity Ordered: "). $this->getProductName()?>">
+    		<span><?php echo $this->getQtyOrdered() ?></span>
+    	</div>
+    	<?php else: ?>
+    		<div></div>
+    	<?php endif; ?>
+    </td>
+    <?php endif; ?>
     <?php if ($this->isAuthorizedOrderer() || $_item->getQuote()->hasQtyGranted()): ?>
     <td class="a-center">
     	<?php if ($this->hasQtyGranted()): ?>
-    	<div class="qty" title="<?php echo Mage::helper('sidwishlist')->__("Quantity Granted: "). $this->getProductName()?>">
+    	<div class="qty" title="<?php echo Mage::helper('sidwishlist')->__("Quantity In Carts: "). $this->getProductName()?>">
     		<span><?php echo $this->getQtyGranted() ?></span>
     	</div>
     	<?php else: ?>
@@ -290,7 +306,7 @@
 		        ?>
 				<?php if ($_item->canHaveQty() && $isVisibleProduct): ?>
 					<p>
-						<input type="text" class="input-text qty" name="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $_item->getQty() * 1 ?>" />
+						<input type="text" class="input-text qty" name="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $this->getAvailableQty() * 1 ?>" />
 					</p>
 				<?php endif; ?>
 				<?php if ($product->isSaleable()): ?> 
