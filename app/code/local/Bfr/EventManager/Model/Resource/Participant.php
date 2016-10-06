@@ -90,4 +90,16 @@ class Bfr_EventManager_Model_Resource_Participant extends Mage_Core_Model_Resour
         return $values;
     }
     
+    
+    public function changeStatus($itemIds,$newStatus)
+    {
+    	$data=array();
+    	if(is_array($itemIds) && (count($itemIds) >0 ))
+    	{
+    		$itemIds = implode(',',$itemIds);
+    		
+    		$this->_getWriteAdapter()->update($this->getTable('eventmanager/participant'), array('status'=>intval($newStatus)), 'participant_id IN ('.$itemIds.')');
+    	}
+    	return $this;
+    }
 }

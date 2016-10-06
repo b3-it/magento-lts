@@ -41,6 +41,12 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tabs extends Mage_Adminhtml_Bl
       		'title'     => Mage::helper('exportorder')->__('Download Information'),
       		'content'   => $this->getLayout()->createBlock('sid_exportorder/adminhtml_export_edit_tab_download')->toHtml(),
       ));
+      
+      $this->addTab('form_section3', array(
+      		'label'     => Mage::helper('exportorder')->__('History'),
+      		'title'     => Mage::helper('exportorder')->__('History'),
+      		'content'   => $this->getLayout()->createBlock('sid_exportorder/adminhtml_export_edit_tab_history')->toHtml(),
+      ));
        
       return parent::_beforeToHtml();
   }

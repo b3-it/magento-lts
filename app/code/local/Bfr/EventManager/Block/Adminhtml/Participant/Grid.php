@@ -90,7 +90,7 @@ where participant_id = 1 AND el.typ = 3
       ));
        
       $this->addColumn('pa_status', array(
-      		'header' => Mage::helper('sales')->__('Status'),
+      		'header' => Mage::helper('sales')->__('Order Status'),
       		'index' => 'order_status',
       		'type'  => 'options',
       		'width' => '70px',

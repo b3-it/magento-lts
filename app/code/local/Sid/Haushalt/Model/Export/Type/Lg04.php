@@ -19,7 +19,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		$res = array();
 		foreach($orders as $order)
 		{
-			$this->_storeId = $order->getStoreId();
+			
 			$line = array();
 			$line[] = $order->getIncrementId();
 			$line[] = $order->getCreatedAt();
@@ -35,28 +35,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 	}
 
 
-// 	public function getExportData()
-// 	{
-// 		$this->_lg04 = new Sid_Haushalt_Model_Export_Type_Lg04_Format();
-// 		$orders = Mage::getModel('sales/order')->getCollection();
-// 		$orders->getSelect()->where('entity_id IN (?)',implode(',',$this->_orderIds));
-// 		$res = array();
-// 		foreach($orders as $order)
-// 			{
-// 				$this->_storeId = $order->getStoreId();
-// 				$line = array();
-// 				$line[] = $order->getIncrementId();
-// 				$line[] = $order->getCreatedAt();
-// 				$line[] = $order->getBaseGandTotal();
-	
-// 				$res[] = implode("\t",$line);
-// 			}
 
-// 		$this->setExportStatus($this->_orderIds);
-
-// 		return implode("\n", $res);
-
-// 	}
 
 	private function getOrderData($order)
 	{

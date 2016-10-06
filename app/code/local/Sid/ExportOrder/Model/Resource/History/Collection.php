@@ -15,6 +15,6 @@ class Sid_ExportOrder_Model_Resource_History_Collection extends Mage_Core_Model_
     public function _construct()
     {
         parent::_construct();
-        $this->_init('exportorder_transfer/history');
+        $this->_init('exportorder/history');
     }
 }

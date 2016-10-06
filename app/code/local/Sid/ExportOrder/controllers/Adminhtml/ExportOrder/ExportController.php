@@ -123,6 +123,20 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 			
 	}
 	
+	public function historygridAction()
+	{
+		$id     = $this->getRequest()->getParam('id');
+		$model  = Mage::getModel('sales/order')->load($id);
+			
+		Mage::register('order', $model);
+			
+		$this->loadLayout(false);
+		$this->getResponse()->setBody(
+				$this->getLayout()->createBlock('sid_exportorder/adminhtml_export_edit_tab_history')->toHtml()
+				);
+			
+	}
+	
 
 	public function deleteLinkAction()
 	{

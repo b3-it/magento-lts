@@ -10,7 +10,7 @@ class Egovs_Base_Adminhtml_Egovsbase_Tools_Analyse_Sales_Order_ItemController ex
     {
         $this->_title($this->__('Sales'))->_title($this->__('Order Items'));
         
-        $this->loadLayout();
+        $this->loadLayout()->_setActiveMenu('sales/egovs_base_order_item');
         $this->renderLayout();
     }
 
