@@ -136,7 +136,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       ));
       
       $this->addColumn('op_status', array(
-      		'header' => Mage::helper('sales')->__('Status'),
+      		'header' => Mage::helper('sales')->__('Order Status'),
       		'index' => 'order_status',
       		'type'  => 'options',
       		'width' => '70px',

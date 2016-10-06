@@ -167,19 +167,14 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
     public function massStatusAction()
     {
         $participantIds = $this->getRequest()->getParam('participant');
-        if(!is_array($eventmanagerIds)) {
+        if(!is_array($participantIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
         } else {
             try {
-                foreach ($participantIds as $participantId) {
-                    $participant = Mage::getSingleton('eventmanager/participant')
-                        ->load($eventmanagerId)
-                        ->setStatus($this->getRequest()->getParam('status'))
-                        ->setIsMassupdate(true)
-                        ->save();
-                }
+            	Bfr_EventManager_Model_Participant::changeStatus($participantIds, $this->getRequest()->getParam('status'));
+                
                 $this->_getSession()->addSuccess(
-                    $this->__('Total of %d record(s) were successfully updated', count($eventmanagerIds))
+                    $this->__('Total of %d record(s) were successfully updated', count($participantIds))
                 );
             } catch (Exception $e) {
                 $this->_getSession()->addError($e->getMessage());

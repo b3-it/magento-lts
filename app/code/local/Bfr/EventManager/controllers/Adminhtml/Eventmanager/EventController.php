@@ -332,4 +332,26 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $response->sendResponse();
         die;
     }
+    
+    /**
+     * Massenaktion für die Telnehmerliste innerhalb der Veranstaltungverwaltung
+     */
+    public function massStatusParticipantAction()
+    {
+    	$participantIds = $this->getRequest()->getParam('participant');
+    	if(!is_array($participantIds)) {
+    		Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
+    	} else {
+    		try {
+    			Bfr_EventManager_Model_Participant::changeStatus($participantIds, $this->getRequest()->getParam('status'));
+    
+    			$this->_getSession()->addSuccess(
+    					$this->__('Total of %d record(s) were successfully updated', count($participantIds))
+    					);
+    		} catch (Exception $e) {
+    			$this->_getSession()->addError($e->getMessage());
+    		}
+    	}
+    	$this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
+    }
 }

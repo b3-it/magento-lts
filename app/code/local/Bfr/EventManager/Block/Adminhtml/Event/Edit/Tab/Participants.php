@@ -93,7 +93,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	));
   	
   	$this->addColumn('pa_status', array(
-  			'header' => Mage::helper('sales')->__('Status'),
+  			'header' => Mage::helper('sales')->__('Order Status'),
   			'index' => 'order_status',
   			'type'  => 'options',
   			'width' => '70px',
@@ -141,7 +141,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	$this->addColumn('pa_postfix', array(
   			'header'    => Mage::helper('eventmanager')->__('Postfix'),
   			'align'     =>'left',
-  			'index'     => 'email',
+  			'index'     => 'postfix',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
   	
@@ -264,7 +264,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
   	));
   	 
-	
+  	$this->addColumn('pa_note', array(
+  			'header'    => Mage::helper('eventmanager')->__('Note'),
+  			'align'     =>'left',
+  			'index'     => 'note',
+  	
+  	));
         $this->addColumn('pa_action',
             array(
                 'header'    =>  Mage::helper('eventmanager')->__('Action'),
@@ -290,23 +295,19 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       return parent::_prepareColumns();
   }
 
-    protected function x_prepareMassaction()
+    protected function _prepareMassaction()
     {
         $this->setMassactionIdField('participant_id');
         $this->getMassactionBlock()->setFormFieldName('participant');
 
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('eventmanager')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('eventmanager')->__('Are you sure?')
-        ));
+      
 
         $statuses = Mage::getSingleton('eventmanager/status')->getOptionArray();
 
         array_unshift($statuses, array('label'=>'', 'value'=>''));
         $this->getMassactionBlock()->addItem('status', array(
              'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/eventmanager_participant/massStatus', array('_current'=>true, 'event' => $this->getEvent()->getId())),
+             'url'  => $this->getUrl('*/eventmanager_event/massStatusParticipant', array('_current'=>true, 'event' => $this->getEvent()->getId())),
              'additional' => array(
                     'visibility' => array(
                          'name' => 'status',
