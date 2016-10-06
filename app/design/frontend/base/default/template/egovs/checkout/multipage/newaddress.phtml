@@ -41,7 +41,7 @@
                                   ->setForceUseCustomerAttributes(true)->toHtml();
                     ?>
 	   		    </li>
-              <?php if(!$this->isCustomerLoggedIn() AND $this->isFieldVisible('email')):?>
+              <?php if(!$this->isCustomerLoggedIn()):?>
                 <li class="fields halfwide">
                     <div class="field validate-email ">
                         <label for="email">
