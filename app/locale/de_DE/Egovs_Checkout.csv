@@ -12,6 +12,8 @@
 "Address %s of %s","Adresse <span class=""shipment-count"">%s</span> von %s"
 "Address","Straße und Hausnummer"
 "After adding a product redirect to shopping cart","Nach dem Hinzufügen eines Produktes zum Warenkorb weiterleiten"
+"Allow Checkout Customer Register","Kundenregistrierung im Checkout erlauben"
+"Allow customer to register within checkout","Kunden dürfen sich im Checkout registrieren"
 "Allow Guest Checkout","Bezahlvorgang als Gast ermöglichen"
 "Already registered?","Bereits registriert?"
 "An error occurred in the process of payment","Fehler im Bezahlvorgang"

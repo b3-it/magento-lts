@@ -103,6 +103,10 @@
 			<region/>
 		</mandatoryguest>
 		<checkout>
+		    <options>
+		        <checkout_type>multipage</checkout_type>
+		        <checkout_customer_register>1</checkout_customer_register>
+		    </options>
 			<datenschutz>
 				<enable_text>1</enable_text>
 				<cms_page>datenschutz</cms_page>
