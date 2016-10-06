@@ -578,7 +578,6 @@ div.block-reorder {
     }
 
     a {
-        float: left;
         color: $global-active-color;
         border-width: $global-active-border;
         border-color: transparent;
@@ -596,7 +595,6 @@ div.block-reorder {
     }
 
     span {
-        float: left;
         padding: 0 7px;
     }
 }
