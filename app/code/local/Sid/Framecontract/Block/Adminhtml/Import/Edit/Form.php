@@ -136,6 +136,16 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
             //'required' => true,
 
         	));
+        
+        $fieldset->addField('qty', 'text', array(
+        		'name'     => 'qty',
+        		'title'    => $helper->__('Quantity'),
+        		'label'    => $helper->__('Quantity'),
+        		'note'	   => $helper->__("0 = switch off Stock Inventory"),
+        		'value'	=>'0',
+        		//'required' => true,
+        
+        ));
       	/*
         $fieldset->addField('buchungstext', 'text', array(
             'name'     => 'buchungstext',
