@@ -61,7 +61,7 @@ var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">'
 							'</select></td>'+
 							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][newkey]" /></td>'+
 							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][sendlink]" /></td>'+
-							'<td class="a-center"><button style="" onclick="" class="scalable delete los-input " type="button" title="Option löschen" id="{{number}}"><span><span><span>Option löschen</span></span></span></button>'+
+							'<td class="a-center"><button style="" onclick="" class="scalable delete los-input " type="button" title="löschen" id="contract_los_remove_{{number}}"><span><span><span>Option löschen</span></span></span></button>'+
 							'</td></tr>';
 
 var contractLos = {
@@ -74,10 +74,11 @@ var contractLos = {
         this.template = new Template(this.templateText, this.templateSyntax);
 		if(!data){
 			var data = new Object();
+			data.products = 0;
 		} 
 
         data.number = this.itemCount;
-
+		
         if (data.pos) {
         	this.pos = Math.max(data.pos,this.pos);
         }else{
@@ -92,6 +93,11 @@ var contractLos = {
             $A($('contract_los_'+data.number+'_field').options).each(function(option){
                 if (option.value==data.status) option.selected = true;
             });
+        }
+
+        if(data.products > 0)
+        {
+            $('contract_los_remove_'+ data.number).hide();
         }
 
         
@@ -111,7 +117,7 @@ var contractLos = {
         }
     },
     bindRemoveButtons : function(){
-        var buttons = $$('button.delete-personal-option');
+        var buttons = $$('button.los-input');
         for(var i=0;i<buttons.length;i++){
             if(!$(buttons[i]).binded){
                 $(buttons[i]).binded = true;
