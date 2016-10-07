@@ -30,6 +30,13 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminh
           'required'  => true,
           'name'      => 'order_email',
       ));
+     
+     $fieldset->addField('claim_email', 'text', array(
+     		'label'     => Mage::helper('framecontract')->__('Claim EMail'),
+     		//'class'     => 'required-entry',
+     		//'required'  => true,
+     		'name'      => 'claim_email',
+     ));
       
       $fieldset->addField('email', 'text', array(
           'label'     => Mage::helper('framecontract')->__('General EMail'),
