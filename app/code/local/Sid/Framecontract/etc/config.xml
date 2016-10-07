@@ -150,6 +150,17 @@
                 </Sid_Framecontract>
             </modules>
         </translate>
+        <events>
+            <controller_action_layout_generate_blocks_before>
+                <observers>
+                    <paymentbase>
+                        <type>singleton</type>
+                        <class>Sid_Framecontract_Model_Observer</class>
+                        <method>onAdminSalesOrderView</method>
+                    </paymentbase>
+                </observers>
+            </controller_action_layout_generate_blocks_before>
+        </events>
     </adminhtml>
     <global>
        <events>
