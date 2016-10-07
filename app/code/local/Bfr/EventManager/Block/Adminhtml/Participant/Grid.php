@@ -102,7 +102,7 @@ where participant_id = 1 AND el.typ = 3
       
       
       $this->addColumn('pa_price', array(
-      		'header' => Mage::helper('sales')->__('Price'),
+      		'header' => Mage::helper('sales')->__('Amount'),
       		'index' => 'base_grand_total',
       		'type'  => 'price',
       		'width' => '70px',
@@ -112,7 +112,7 @@ where participant_id = 1 AND el.typ = 3
       ));
       
       $this->addColumn('pa_price1', array(
-      		'header' => Mage::helper('sales')->__('Balance (Base)'),
+      		'header' => Mage::helper('sales')->__('Balance'),
       		'index' => 'base_grand_total',
       		'type'  => 'price',
       		'width' => '70px',
@@ -130,7 +130,7 @@ where participant_id = 1 AND el.typ = 3
       ->toOptionHash();
       
       $this->addColumn('group', array(
-      		'header'    =>  Mage::helper('customer')->__('Group'),
+      		'header'    =>  Mage::helper('customer')->__('Customergroup'),
       		'width'     =>  '100',
       		'index'     =>  'group_id',
       		'type'      =>  'options',

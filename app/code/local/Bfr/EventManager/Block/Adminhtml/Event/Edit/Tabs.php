@@ -58,6 +58,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tabs extends Mage_Adminhtml_Bl
 	      	
 	      	
 	      }
+	      
+	      $this->addTab('form_section3', array(
+	      		'label'     => Mage::helper('eventmanager')->__('Export'),
+	      		'title'     => Mage::helper('eventmanager')->__('Export'),
+	      		'content'   => $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_export')->toHtml(),
+	      ));
   	}
       
       return parent::_beforeToHtml();
