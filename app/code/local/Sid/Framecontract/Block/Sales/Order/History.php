@@ -13,7 +13,10 @@ class Sid_Framecontract_Block_Sales_Order_History extends Mage_Sales_Block_Order
 		->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
 		->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
 		->setOrder('created_at', 'desc')
+		
 		;
+		$orders->getSelect()
+			->joinleft(array('export'=>$orders->getTable('exportorder/order')),'export.order_id=main_table.entity_id',array('export_status'=>'status'));
 	
 		$this->setOrders($orders);
 	
@@ -27,8 +30,15 @@ class Sid_Framecontract_Block_Sales_Order_History extends Mage_Sales_Block_Order
     
     public function canCancel($order)
     {
-    	return true;
+    	$orderCanCancel = ($order->getStatus() == Mage_Sales_Model_Order::STATE_PROCESSING)	|| ($order->getStatus() == 'pending');
+    	$isNotSync = ($order->getExportStatus() == Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)	|| ($order->getExportStatus() === null);
+    	if($orderCanCancel && $isNotSync)
+    	{
+    		return true;
+    	}
+    	return false;
     }
 
- 
+
+    
 }
