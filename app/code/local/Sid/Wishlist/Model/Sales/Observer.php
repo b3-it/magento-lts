@@ -30,6 +30,24 @@ class Sid_Wishlist_Model_Sales_Observer
 		}
 	}
 	
+	public function onSalesQuoteConvertItem($observer) {
+		/** @var $_orderItem Mage_Sales_Model_Order_Item */
+		$_orderItem = $observer->getOrderItem();
+		/** @var $_quoteAddressItem Mage_Sales_Model_Quote_Address_Item */
+		$_quoteAddressItem = $observer->getItem();
+		
+		$_quoteItem = $_quoteAddressItem->getQuoteItem();
+		if (!$_quoteItem) {
+			$_quoteItem = Mage::getModel('sales/quote_item')->load($_quoteAddressItem->getQuoteItemId());
+		}
+		
+		if (!$_quoteItem || !$_quoteItem->getSidwishlistItemId()) {
+			return;
+		}
+			
+		$_orderItem->setSidwishlistItemId($_quoteItem->getSidwishlistItemId());
+	}
+	
 	public function onSalesQuoteAddItem($observer) {
 		/** @var $_quoteItem Mage_Sales_Model_Quote_Item */
 		$_quoteItem = $observer->getQuoteItem();
