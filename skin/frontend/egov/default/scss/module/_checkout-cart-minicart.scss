@@ -11,13 +11,20 @@
 
 #header-cart {
     margin: 0px !important;
+    
+    @include bp(max-width, 490px) {
+    	position: absolute;
+    	top: 40px;
+    	right: 0;
+    }
 }
 
 .header-minicart {
     display: inline-block;
 
     @include bp(max-width, $bp-medium) {
-        display: block;
+        display: inline-block;
+        width: auto;
     }
 
     .minicart-message {
@@ -275,6 +282,7 @@ div.block-cart {
 @include bp(max-width, $bp-xsmall) {
     .header-minicart a.skip-cart {
         z-index: 1;
+        width: 100%;
     }
 }
 

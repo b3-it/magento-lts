@@ -2,6 +2,12 @@
 <layout version="0.1.0">
     <default>
         <remove name="catalog.leftnav" />
-        <remove name="left.newsletter" />
+        
+        <reference name="head">
+            <action method="addItem">
+            	<type>skin_js</type>
+            	<name>js/app_egov.js</name>
+            </action>
+        </reference>
     </default>
 </layout>
