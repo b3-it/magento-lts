@@ -52,6 +52,14 @@
         td {
         	padding-bottom: $global-boxpadding * 2;
         }
+        
+        .egov-cart {
+        	font-size: 1em;
+        	
+        	span {
+        	    font-family: $base-font-family;
+            }
+        }
     	
         .remove-list-item {
         	padding-bottom: $global-boxpadding * 2;
