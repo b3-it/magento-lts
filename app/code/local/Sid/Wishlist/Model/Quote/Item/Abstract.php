@@ -134,6 +134,15 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	}
 	
 	/**
+	 * Liefert die bestellte Anzahl
+	 *
+	 * @return float
+	 */
+	public function getQtyOrdered() {
+		return $this->getData('qty_ordered')*1;
+	}
+	
+	/**
 	 * Prüft ob es eine genehmigte Menge gibt
 	 * 
 	 * @return boolean

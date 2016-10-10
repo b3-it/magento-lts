@@ -24,9 +24,12 @@ class Sid_Wishlist_Model_Sales_Observer
 				continue;
 			}
 			
-			$_wishlistItem->setQtyOrdered($qtyOrdered)
-				->save()
-			;
+			if ($_wishlistItem->getQtyOrdered() > 0) {
+				$_wishlistItem->setQtyOrdered($_wishlistItem->getQtyOrdered() + $qtyOrdered);
+			} else {
+				$_wishlistItem->setQtyOrdered($qtyOrdered);
+			}
+			$_wishlistItem->save();
 		}
 	}
 	
