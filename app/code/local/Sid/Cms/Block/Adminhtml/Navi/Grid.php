@@ -39,7 +39,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Grid extends Mage_Adminhtml_Block_Widget_Grid
       
       $this->addColumn('title', array(
       		'header'    => Mage::helper('cms')->__('Title'),
-      		'align'     =>'right',
+      		//'align'     =>'right',
       		'index'     => 'title',
       ));
 

@@ -74,6 +74,15 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 	public function step1Action() {
 		if ($data = $this->getRequest()->getPost()) {
 	
+			$collection = Mage::getModel('sidcms/navi')->getCollection();
+			$collection->getSelect()->where('store_id = '. intval($data['store_id']));
+			if(count($collection)>0)
+			{
+				Mage::getSingleton('adminhtml/session')->addError(Mage::helper('sidcms')->__('The store has a navigation already'));
+				Mage::getSingleton('adminhtml/session')->setFormData($data);
+				$this->_redirect('*/*/new');
+				return;
+			}
 			$model = Mage::getModel('sidcms/navi');
 			$model->setData($data);
 	

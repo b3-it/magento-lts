@@ -29,9 +29,20 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Los extends Mage_Admin
   
   public function getLose()
   {
+  		$eav = Mage::getResourceModel('eav/entity_attribute');
+  		$eav = $eav->getIdByCode('catalog_product', 'framecontract_los');
+  		
   		$id = intval(Mage::registry('contract_data')->getId());
   		$collection = Mage::getModel('framecontract/los')->getCollection();
-  		$collection->getSelect()->where('framecontract_contract_id = '.$id);
+  		
+  		$expr = new Zend_Db_Expr('(SELECT COUNT(*) as products, value FROM '.$collection->getTable('catalog/product').'_int WHERE attribute_id='.$eav .' GROUP BY value )');
+  		
+  		
+  		$collection->getSelect()
+  			->joinleft(array('att'=>$expr),'att.value = main_table.los_id',array('products'))
+  			->where('framecontract_contract_id = '.$id);
+  		
+  		//die($collection->getSelect()->__toString());	
   		return $collection->getItems();
   }
   

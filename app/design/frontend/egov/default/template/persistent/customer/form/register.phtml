@@ -42,7 +42,7 @@
                               ->setForceUseCustomerAttributes(true)->toHtml();
                   ?>
                 </li>
-                <li class="fields halfwide">
+                <li class="fields halfwide" id="adress-new-email">
                     <div class="field">
                         <label for="email_address">
                             <span class="required">*</span>
@@ -51,7 +51,7 @@
                         <input tabindex="6" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email_address" value="<?php echo $this->escapeHtml($this->getFormData()->getEmail()) ?>" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />
                     </div>
                 </li>
-                <li class="fields fullwide">
+                <li class="fields fullwide" id="adress-new-dob-gender">
                   <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
                   <?php if ($_dob->isEnabled()): ?>
                     <div id="birthday-box" class="field">
@@ -78,7 +78,7 @@
         <div class="fieldset wide half-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('company')):?>
-                <li class="fields">
+                <li class="fields" id="adress-new-company">
                     <div class="field">
                     <?php $companyAttr = Mage::getModel('eav/entity_attribute')->loadByCode('customer', 'company') ?>
                     <?php if ($companyAttr && !$companyAttr->isEmpty()) : ?>
@@ -97,7 +97,7 @@
 				      <?php endif; ?>
 
               <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
-                <li class="fields halfwide">
+                <li class="fields halfwide" id="adress-new-taxvat">
                     <div class="field">
                         <label for="vat_id">
                             <?php echo $this->getFieldRequiredHtml('taxvat')?>
@@ -114,7 +114,7 @@
         <div class="fieldset wide half-space">
             <ul class="form-list">
               <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
-                <li class="fields">
+                <li class="fields" id="adress-new-street">
                     <div class="field">
                         <label for="street_1">
                             <?php echo $this->getFieldRequiredHtml('street')?>
@@ -134,7 +134,7 @@
         <div class="fieldset half-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('postcode')):?>
-                <li class="fields">
+                <li class="fields" id="adress-new-zip">
                     <div class="field">
                         <label for="zip">
                             <?php echo $this->getFieldRequiredHtml('postcode')?>
@@ -149,7 +149,7 @@
         <div class="fieldset half-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('city')):?>
-                <li class="fields">
+                <li class="fields" id="adress-new-city">
                     <div class="field">
                         <label for="city">
                             <?php echo $this->getFieldRequiredHtml('city')?>
@@ -165,7 +165,7 @@
         <div class="fieldset half-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('region')):?>
-                <li class="fields">
+                <li class="fields" id="adress-new-region">
                     <div class="field">
                         <label for="region_id">
                             <?php echo $this->getFieldRequiredHtml('region')?>
@@ -188,7 +188,7 @@
         <div class="fieldset half-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('country_id')):?>
-                <li class="fields">
+                <li class="fields" id="adress-new-contry">
                     <div class="field">
                         <label for="country">
                             <?php echo $this->getFieldRequiredHtml('country_id')?>
@@ -204,7 +204,7 @@
         <div class="fieldset half-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('telephone')):?>
-                <li class="fields">
+                <li class="fields" id="adress-new-telephone">
                     <div class="field">
                         <label for="telephone">
                             <?php echo $this->getFieldRequiredHtml('telephone')?>
@@ -219,7 +219,7 @@
         <div class="fieldset half-space">
             <ul class="form-list">
               <?php if($this->isFieldVisible('fax')):?>
-                <li class="fields">
+                <li class="fields" id="adress-new-fax">
 	                  <div class="field">
 	                      <label for="fax">
 	                          <?php echo $this->getFieldRequiredHtml('fax')?>
@@ -234,7 +234,7 @@
       <?php else: ?>
         <div class="fieldset wide half-space">
             <ul class="form-list">
-                <li class="fields">
+                <li class="fields" id="adress-new-company">
                     <div class="field">
                         <label for="company">
                             <?php echo $this->getFieldRequiredHtml('company')?>

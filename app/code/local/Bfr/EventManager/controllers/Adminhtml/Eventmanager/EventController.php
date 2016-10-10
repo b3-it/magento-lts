@@ -277,6 +277,36 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     }
 
     
+    public function exportAllCsvAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	   
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_export','');
+    	 
+    	$fileName   = 'eventAll.csv';
+    	$content    = $block->getCsv();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    public function exportAllXmlAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	
+    	 
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_export','');
+    	 
+    	$fileName   = 'eventAll.xml';
+    	$content    = $block->getXml();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    
     public function optionsgridAction() {
     	
     	$id     = $this->getRequest()->getParam('id');
@@ -290,6 +320,20 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	
     	$this->getResponse()->setBody($block->toHtml());
 
+    }
+    
+    public function exportgridAction() {
+    	 
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	 
+    	
+    	$this->loadLayout();
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_export','');
+    	 
+    	$this->getResponse()->setBody($block->toHtml());
+    
     }
     
     public function participantsgridAction() {

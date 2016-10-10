@@ -1,7 +1,7 @@
 <?php
 /**
  * Bfr EventManager
- *
+ * Anzeige der gekauften UnterProdukte
  *
  * @category   	Bfr
  * @package    	Bfr_EventManager
@@ -10,99 +10,221 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_Adminhtml_Block_Widget_Grid
+class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminhtml_Block_Widget_Grid
 {
-  public function __construct()
-  {
-      parent::__construct();
-      $this->setId('participantGrid');
-      $this->setDefaultSort('participant_id');
-      $this->setDefaultDir('ASC');
-      $this->setSaveParametersInSession(true);
-      $this->setUseAjax(true);
-  }
+	private $_selections = null;
+	private $_options = null;
+	
+	private static $_count = 0;
+	
+	public function __construct(array $args = array())
+	{
+		self::$_count++;
+		parent::__construct();
+		
+	    $this->setId('exportGrid');
+	    $this->setDefaultDir('ASC');
+	    $this->setSaveParametersInSession(true);
+	    $this->setUseAjax(true);
+	    //$this->setCountTotals(true);
+	    
+	}
 
+ 
+	protected function getOptions()
+	{
+		if($this->_options == null)
+		{
+			$product = $this->getEvent()->getProduct();
+			$optionCollection = $product->getTypeInstance(true)
+			->getOptionsCollection($product);
+			
+			$this->_options = $optionCollection;
+			
+		}
+		
+		return $this->_options;
+	}
+	
+	
+	protected function getEvent()
+	{
+		return Mage::registry('event_data');
+	}
+
+	/**
+	 * Filter für die Produkte die zur Option des aktuellen Tabs gehören
+	 * @return multitype:unknown
+	 */
+	protected function getSelections($option)
+	{
+			$res = array();
+			foreach($this->getAllSelections() as $item)
+			{
+				if($item->getOptionId() == $option->getId()){
+					$res[] = $item;
+				}
+			}
+			return $res;
+	}
   
-  protected function getEvent()
+	
+  /**
+   * Ermitteln aller verfügbaren Unterprodukte für das Bundle 
+   */
+	 
+  protected function getAllSelections()
   {
-  	return Mage::registry('event_data');
+  	if($this->_selections == null){
+	  	$product = $this->getEvent()->getProduct();
+	  	{
+	  		$this->_selections = $product->getTypeInstance(true)
+	  		->getSelectionsCollection(
+	  				$product->getTypeInstance(true)->getOptionsIds($product),
+	  				$product
+	  		);
+	  
+	  	}
+  	}
+  	return $this->_selections;
+  }
+  
+  /**
+   * die indivdualisierungs Optionen
+   * @return unknown
+   */
+  protected function getDynamicColumns()
+  {
+  	$product = $this->getEvent()->getProduct();
+  	$options = $product->getOptions();
+  	return $options;
   }
   
   protected function _prepareCollection()
   {
   	
+  	
   	$industry = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_INDUSTRY.' group by participant_id)');
-  		
+  	
   	$lobby = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
+  	 
   	
-      $collection = Mage::getModel('eventmanager/participant')->getCollection();
-      $collection->getSelect()
-      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
-      ->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
-      	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
-      	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
-      	->joinLeft(array('lobbyT'=>$lobby),'lobbyT.participant_id=main_table.participant_id',array('lobby'=>'value'))
-      	->joinLeft(array('industryT'=>$industry),'industryT.participant_id=main_table.participant_id',array('industry'=>'value'))
-      	->where('event_id='.$this->getEvent()->getId());
+  	
+		$collection = Mage::getModel('eventmanager/participant')->getCollection();
+		$collection->getSelect()
+		->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','created_at','base_grand_total','base_currency_code','base_total_paid'))
+		->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
+		->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
+		->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
+		->joinLeft(array('lobbyT'=>$lobby),'lobbyT.participant_id=main_table.participant_id',array('lobby'=>'value'))
+		->joinLeft(array('industryT'=>$industry),'industryT.participant_id=main_table.participant_id',array('industry'=>'value'))
+		->joinLeft(array('orderitem'=>$collection->getTable('sales/order_item')),'orderitem.item_id = main_table.order_item_id')
+		
+		;		
+		$col = null;
+		$coalesce = array();
+		
+		foreach($this->getOptions() as $option)
+		{
+	      foreach($this->getSelections($option) as $product){
+	      	$col = 'col_'.$product->getId();
+	      	$coalesce[] = $col.'.product_id';
+	      	$collection->getSelect()
+	      	->joinleft(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = order.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'qty_ordered'));
+	      	
+	      }
+		}
       
+      $coalesce[] = '0';
+      
+      $collection->getSelect()
+      ->distinct()
+      ->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
+      ->where(new Zend_Db_Expr('coalesce('.implode(',', $coalesce).') > 0'));
+      
+      //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
+      if($col == null){
+      	$collection->getSelect()->where('entity_id=0');
+      }
+      
+  
+      //die( $collection->getSelect()->__toString());  
       $this->setCollection($collection);
-      return parent::_prepareCollection();
+     
+      parent::_prepareCollection();
+      //$this->_prepareTotals();
+      return $this;
   }
-
+  
+  
+  protected function _afterLoadCollection()
+  {
+  	foreach($this->getCollection()->getItems() as $item)
+  	{
+  		$product_options =  $item->getProductOptions();
+  		if($product_options)
+  		{
+  			$product_options = unserialize($product_options);
+  
+  			$options = array();
+  			if(isset($product_options['info_buyRequest']['options']))
+  			{
+  				$option = $product_options['info_buyRequest']['options'];
+  			}
+  
+  
+  			foreach($this->getDynamicColumns() as $col)
+  			{
+  				if(isset($option[$col->getOptionId()])){
+  					$item->setData('customeroption_'.$col->getOptionId(),$option[$col->getOptionId()]);
+  				}else{
+  					$item->setData('customeroption_'.$col->getOptionId(),false);
+  				}
+  			}
+  		}
+  	}
+  
+  	return $this;
+  }
+ 
   protected function _prepareColumns()
   {
-  	
-  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-  	$yesno = array();
-  	foreach ($yn as $n)
-  	{
-  		$yesno[$n['value']] = $n['label'];
-  	}
-  	$this->addColumn('pa_participant_id', array(
-  			'header'    => Mage::helper('eventmanager')->__('ID'),
-  			'align'     =>'right',
-  			'width'     => '50px',
-  			'index'     => 'participant_id',
-  	));
-  	
-  	$this->addColumn('pa_created_time', array(
-  			'header'    => Mage::helper('eventmanager')->__('Created at'),
-  			'align'     =>'left',
-  			'index'     => 'created_time',
-  			'type'	=> 'Date',
-  			'width'     => '100px',
-  	));
-  	
-  	/*
-  	$this->addColumn('pa_title', array(
-  			'header'    => Mage::helper('eventmanager')->__('Event'),
-  			'width'     => '100px',
-  			'index'     => 'title',
-  			//'type'      => 'number',
-  	));
-  	*/
-  	
-  	$this->addColumn('pa_increment_id', array(
-  			'header'    => Mage::helper('eventmanager')->__('Order #'),
-  			'align'     =>'left',
-  			'width'     => '100px',
-  			'index'     => 'order_increment_id',
-  			'filter_index' => 'order.increment_id',
-  			//'filter_condition_callback' => array($this, '_filterNameCondition'),
-  	));
-  	
-  	$this->addColumn('pa_status', array(
-  			'header' => Mage::helper('sales')->__('Order Status'),
-  			'index' => 'order_status',
-  			'type'  => 'options',
-  			'width' => '70px',
-  			'filter_index' => 'order.status',
-  			'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
-  	));
-  	
-  	$this->addColumn('pa_price', array(
+	  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+	  	$yesno = array();
+	  	foreach ($yn as $n)
+	  	{
+	  		$yesno[$n['value']] = $n['label'];
+	  	}
+
+      $this->addColumn('op_created_time', array(
+      		'header'    => Mage::helper('eventmanager')->__('Created at'),
+      		'align'     =>'left',
+      		'index'     => 'created_at',
+      		'type'	=> 'Date',
+      		'width'     => '100px',
+      ));
+      
+      $this->addColumn('op_increment_id', array(
+      		'header'    => Mage::helper('eventmanager')->__('Order #'),
+      		'align'     =>'left',
+      		'width'     => '100px',
+      		'index'     => 'order_increment_id',
+      		'filter_index' => 'order.increment_id',
+      		'filter_condition_callback' => array($this, '_filterCondition'),
+      ));
+      
+      $this->addColumn('op_status', array(
+      		'header' => Mage::helper('sales')->__('Order Status'),
+      		'index' => 'order_status',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'filter_index' => 'order.status',
+      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
+      
+      	$this->addColumn('pa_price', array(
   			'header' => Mage::helper('sales')->__('Amount'),
   			'index' => 'base_grand_total',
   			'type'  => 'price',
@@ -309,71 +431,106 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'index'     => 'note',
   	
   	));
-        $this->addColumn('pa_action',
-            array(
-                'header'    =>  Mage::helper('eventmanager')->__('Action'),
-                'width'     => '100',
-                'type'      => 'action',
-                'getter'    => 'getId',
-                'actions'   => array(
-                    array(
-                        'caption'   => Mage::helper('eventmanager')->__('Edit'),
-                        'url'       => array('base'=> '*/eventmanager_participant/edit','params'=>array('event' => $this->getEvent()->getId())),
-                        'field'     => 'id'
-                    )
-                ),
-                'filter'    => false,
-                'sortable'  => false,
-                'index'     => 'stores',
-                'is_system' => true,
-        ));
+      
 
-		$this->addExportType('*/*/exportparticipantsCsv', Mage::helper('eventmanager')->__('CSV'));
-		$this->addExportType('*/*/exportparticipantsXml', Mage::helper('eventmanager')->__('XML'));
+      $columns = array();
+      foreach($this->getOptions() as $option)
+      {
+      	foreach($this->getSelections($option) as $col)
+		{
+			$columns[] = 'op_col_'.$col->getId();
+			$this->addColumn('op_col_'.$col->getId(), array(
+					'header'    => $col->getName(),
+					'align'     =>'left',
+					'index'     => 'col_'.$col->getId(),
+					'total'		=> 'sum',
+					'type'      => 'number',
+					//'total_label'=> 'xxx',
+					'width'     => '100px',
+					'filter_condition_callback' => array($this, '_filterDynamicCondition'),
+			));
+		}
+      }
+		
+      
+      
+      foreach($this->getDynamicColumns() as $col)
+      {
+      	/* @var $col Mage_Catalog_Model_Product_Option*/
+      	$values = $col->getValues();
+      	if(count($values) > 0){
+      		$options = array();
+      		foreach($values as $value)
+      		{
+      			//$options[] = array('label'=>$value->getDefaultTitle(),'value'=>$value->getOptionId());
+      			$options[$value->getOptionTypeId()] =$value->getDefaultTitle();
+      		}
+      		$this->addColumn('co_customeroption_'.$col->getOptionId(), array(
+      				'header'    => $col->getDefaultTitle(),
+      				'align'     =>'left',
+      				'index'     => 'customeroption_'.$col->getOptionId(),
+      				'width'     => '100px',
+      				'type'		=> 'options',
+      				'options'	=> $options,
+      				'filter'	=> false
+      				//'filter_condition_callback' => array($this, '_filterNameCondition'),
+      		));
+      			
+      	}else{
+      		$this->addColumn('co_customeroption_'.$col->getOptionId(), array(
+      				'header'    => $col->getDefaultTitle(),
+      				'align'     =>'left',
+      				'index'     => 'customeroption_'.$col->getOptionId(),
+      				'width'     => '100px',
+      				'filter'	=> false
+      				//'filter_condition_callback' => array($this, '_filterNameCondition'),
+      		));
+      	}
+      }
+      
+		
+		$this->addExportType('*/*/exportAllCsv', Mage::helper('eventmanager')->__('CSV'),array('id'=>$this->getEvent()->getId()));
+		$this->addExportType('*/*/exportAllXml', Mage::helper('eventmanager')->__('XML'),array('id'=>$this->getEvent()->getId()));
 
       return parent::_prepareColumns();
   }
+  
+  
+ 
+  
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('participant_id');
-        $this->getMassactionBlock()->setFormFieldName('participant');
 
-      
-
-        $statuses = Mage::getSingleton('eventmanager/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/eventmanager_event/massStatusParticipant', array('_current'=>true, 'event' => $this->getEvent()->getId())),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('eventmanager')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
-        return $this;
-    }
-
-  public function getRowUrl($row)
+  public function addExportType($url, $label, array $attributes = array())
   {
-      return $this->getUrl('*/eventmanager_participant/edit', array('id' => $row->getId(),
-      		'event' =>$this->getEvent()->getId()));
+  	$this->_exportTypes[] = new Varien_Object(
+  			array(
+  					'url'   => $this->getUrl($url, $attributes),
+  					'label' => $label
+  			)
+  	);
+  	return $this;
   }
+  
   
   public function getGridUrl()
   {
-  		return $this->getUrl('*/*/participantsgrid', array('id'=>$this->getEvent()->getId()));
+  	return $this->getUrl('*/*/exportgrid', array('id'=>$this->getEvent()->getId()));
   }
-
   
 
+ /**
+  * die Filterbedingungen für die dynymischen Spalten 
+  * @param unknown $collection
+  * @param unknown $column
+  */
+  protected function _filterDynamicCondition($collection, $column) {
+  	if (!$value = $column->getFilter()->getValue()) {
+  		return;
+  	}
   
+  	$condition = $column->getIndex().'.name like ?';
+  	$collection->getSelect()->where($condition, "%$value%");
+  }
   
   
   /**
@@ -410,35 +567,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	$collection->getSelect()->where($condition, "%$value%");
   }
   
-  /**
-   * FilterIndex
-   *
-   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
-   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
-   *
-   * @return void
-   */
-  protected function _filterIndustryCondition($collection, $column) {
+  protected function _filterCondition($collection, $column) {
   	if (!$value = $column->getFilter()->getValue()) {
   		return;
   	}
-  	$condition = "industryT.value like ?";
+  	$filter_index = $column->getFilterIndex();
+  	$condition = $filter_index." like ?";
   	$collection->getSelect()->where($condition, "%$value%");
-  }
-  
-  /**
-   * FilterIndex
-   *
-   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
-   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
-   *
-   * @return void
-   */
-  protected function _filterLobbyCondition($collection, $column) {
-  	if (!$value = $column->getFilter()->getValue()) {
-  		return;
-  	}
-  	$condition = "lobbyT.value like ?";
-  	$collection->getSelect()->where($condition, "%$value%");
+  	//die( $collection->getSelect()->__toString());
   }
 }
