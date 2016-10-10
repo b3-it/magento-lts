@@ -33,6 +33,7 @@ class Sid_Wishlist_Model_Sales_Observer
 	public function onSalesQuoteAddItem($observer) {
 		/** @var $_quoteItem Mage_Sales_Model_Quote_Item */
 		$_quoteItem = $observer->getQuoteItem();
+		
 		$_buyRequest = $_quoteItem->getBuyRequest();
 		
 		if (!$_buyRequest || $_buyRequest->isEmpty()) {
@@ -43,8 +44,10 @@ class Sid_Wishlist_Model_Sales_Observer
 			return;
 		}
 		
-		$_quoteItem->setSidwishlistItemId($_buyRequest->getSidwishlistItemId())
-			->save();
+		$_quoteItem->setSidwishlistItemId($_buyRequest->getSidwishlistItemId());
+		if ($_quoteItem->getId() > 0) {
+			$_quoteItem->save();
+		}
 	}
 	
 	public function onQuoteItemRemove($observer) {
