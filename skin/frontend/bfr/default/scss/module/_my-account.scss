@@ -124,6 +124,7 @@
 
     button {
         padding: 5px;
+        top: -10px !important;
 
         small {
             position: relative;
@@ -132,6 +133,10 @@
     }
 
     @include new_address;
+    
+    #adress-edit-company2, #adress-edit-company3 {
+    	display: none;
+    }
 
     .spacer {
         display: inline-block;

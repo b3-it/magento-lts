@@ -4,3 +4,4 @@
 "Mage_Page::Welcome, %s!","Guten Tag, %s!"
 "Mage_Customer::Registration is free and easy!","Um sich für Veranstaltungen des BfR anmelden zu können, müssen Sie im Veranstaltungsshop registriert sein. Klicken Sie für die Registrierung auf den Button 'Kundenkonto anlegen'"
 "Mage_Customer::Create an Account","Kundenkonto anlegen"
+"Egovs_Base::Company","Institution/Firma"
