@@ -156,13 +156,18 @@
                     </sidwishlist_sales_quote_add_item>
                 </observers>
             </sales_quote_add_item>
+            <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <sidwishlist_convert_quote_item_to_order_item>
+                        <type>singleton</type>
+                        <class>sidwishlist/sales_observer</class>
+                        <method>onSalesQuoteConvertItem</method>
+                    </sidwishlist_convert_quote_item_to_order_item>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
         </events>
         <fieldsets>
-            <sales_convert_quote_item>
-                <sidwishlist_item_id>
-                    <to_order_item>*</to_order_item>
-                </sidwishlist_item_id>
-            </sales_convert_quote_item>
+            <!-- <sales_convert_quote_item> fielset funktioniert nicht, da sidwishlist_item_id in sales/quote_item und nicht in sales/quote_address_item gepsiechert wird -->
         </fieldsets>
     </global>
     <default>
