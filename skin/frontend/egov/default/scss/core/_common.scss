@@ -29,6 +29,14 @@ a, button {
     touch-action: manipulation;
 }
 
+// Add Multi-Column
+.block-two-columns, .multi-two-columns {
+	@include multi-two-columns;
+}
+.block-tree-columns, .multi-tree-columns {
+	@include multi-tree-columns;
+}
+
 body,
 button,
 input,
