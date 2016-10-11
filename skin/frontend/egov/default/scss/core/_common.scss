@@ -29,6 +29,14 @@ a, button {
     touch-action: manipulation;
 }
 
+// Add Multi-Column
+.block-two-columns, .multi-two-columns {
+	@include multi-two-columns;
+}
+.block-tree-columns, .multi-tree-columns {
+	@include multi-tree-columns;
+}
+
 body,
 button,
 input,
@@ -504,8 +512,8 @@ div.block-reorder {
 
 .buttons-set {
     display: block;
-    margin: $global-boxmargin / 2 0 0;
-    padding-top: $global-boxpadding-large;
+    margin: $box-spacing 0 0;
+    padding-top: $box-spacing;
     border-top: $global-active-border solid $global-border-color;
     text-align: right;
 
@@ -830,6 +838,10 @@ div.block-reorder {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
+            
+            @include bp(max-width, 490px) {
+            	display: none;
+            }
         }
 
         .col-main {
@@ -843,6 +855,10 @@ div.block-reorder {
             padding-left: $global-content-leftpadding-percent;
             padding-top: $global-content-paddingtop;
             padding-right: $global-rightcol-rightmargin-percent;
+            
+            @include bp(max-width, 490px) {
+            	width: 100% !important;
+            }
         }
 
         p.note-msg {
@@ -928,35 +944,6 @@ div.block-reorder {
 
         p.note-msg {
             width: $global-content-3col-percent;
-        }
-    }
-}
-
-@include bp(max-width, 1000px) {
-    .col3-layout {
-        .col-wrapper {
-            width: 100%;
-
-            .col-left {
-            }
-
-            .col-main {
-            }
-
-            .col-right {
-            }
-        }
-    }
-}
-
-@include bp(max-width, 490px) {
-    .col2-left-layout {
-        .col-left {
-            display: none;
-        }
-
-        .col-main {
-            width: 100% !important;
         }
     }
 }

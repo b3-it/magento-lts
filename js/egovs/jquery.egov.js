@@ -177,7 +177,7 @@
     }
     
     $j(document).ready(function(){
-    	cloneNavigation();
+    	//cloneNavigation();
         toggleBlockContent('block-cart');
         toggleBlockContent('block-tags');
         toggleBlockContent('block-reorder');

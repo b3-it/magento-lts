@@ -34,6 +34,14 @@ a, button {
     touch-action: manipulation;
 }
 
+// Add Multi-Column
+.block-two-columns, .multi-two-columns {
+	@include multi-two-columns;
+}
+.block-tree-columns, .multi-tree-columns {
+	@include multi-tree-columns;
+}
+
 body,
 button,
 input,
@@ -173,9 +181,7 @@ h6, .h6 { @include h6; }
 
 p.note-msg {
     display: block;
-    border-width: $global-box-border;
-    border-style: solid;
-    border-color: $global-border-color;
+    border: $global-box-border solid $global-border-color;
     padding: $golbal-msgpadding;
     background-color: $global-navigation-color;
 }

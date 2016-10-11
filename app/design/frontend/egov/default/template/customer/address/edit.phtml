@@ -37,7 +37,7 @@
     <div class="fieldset wide no-space">
         <h2 class="legend"><?php echo $this->__('Address') ?></h2>
         <ul class="form-list">
-            <li class="fields street-field">
+            <li class="fields street-field" id="adress-edit-street">
                 <?php $_streetValidationClass = $_egov_helper->isFieldRequired('street') ? 'required-entry' : ''; ?>
                 <label for="street_1">
                     <?php echo $this->isFieldRequired('street') ? '<span class="required">*</span>' : ''; ?>
@@ -56,7 +56,7 @@
 
     <div class="fieldset half-space">
         <ul class="form-list">
-            <li class="fields">
+            <li class="fields" id="adress-edit-company">
                 <div class="field">
                     <label for="company">
                         <?php echo $_egov_helper->isFieldRequired('company') ? '<span class="required">*</span>' : ''; ?>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fields">
+            <li class="fields" id="adress-edit-company2">
                 <div class="field">
                     <label for="company">
                         <?php echo $this->__('Company Line 2') ?>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fields">
+            <li class="fields" id="adress-edit-telephone">
                 <div class="field">
                     <label for="telephone">
                         <?php echo $_egov_helper->isFieldRequired('telephone') ? '<span class="required">*</span>' : ''; ?>
@@ -88,7 +88,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fields">
+            <li class="fields" id="adress-edit-zip">
                 <div class="field">
                     <label for="zip">
                         <?php echo $_egov_helper->isFieldRequired('postcode') ? '<span class="required">*</span>' : ''; ?>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fields">
+            <li class="fields" id="adress-edit-region">
                  <div class="field">
                     <label for="region_id">
                         <?php echo $_egov_helper->isFieldRequired('region') ? '<span class="required">*</span>' : ''; ?>
@@ -123,7 +123,7 @@
     <div class="fieldset half-space">
         <ul class="form-list">
           <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
-            <li class="fields">
+            <li class="fields" id="adress-edit-taxvat">
                 <label for="vat_id">
                     <?php echo $_egov_helper->isFieldRequired('taxvat') ? '<span class="required">*</span>' : ''; ?>
                     <?php echo $this->__('VAT Number') ?>
@@ -135,7 +135,7 @@
           <?php else : ?>
             <li class="wide dummy"></li>
           <?php endif; ?>
-            <li class="fields">
+            <li class="fields" id="adress-edit-company3">
                 <div class="field">
                     <label for="company">
                         <?php echo $this->__('Company Line 3') ?>
@@ -145,7 +145,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fields">
+            <li class="fields" id="adress-edit-fax">
                 <div class="field">
                     <label for="fax">
                         <?php echo $_egov_helper->isFieldRequired('fax') ? '<span class="required">*</span>' : ''; ?>
@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fields">
+            <li class="fields" id="adress-edit-city">
                 <div class="field">
                     <label for="city">
                         <?php echo $_egov_helper->isFieldRequired('city') ? '<span class="required">*</span>' : ''; ?>
@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fields">
+            <li class="fields" id="adress-edit-contry">
                 <div class="field">
                     <label for="country">
                         <?php echo $_egov_helper->isFieldRequired('country_id') ? '<span class="required">*</span>' : ''; ?>

@@ -24,15 +24,37 @@ class Sid_Wishlist_Model_Sales_Observer
 				continue;
 			}
 			
-			$_wishlistItem->setQtyOrdered($qtyOrdered)
-				->save()
-			;
+			if ($_wishlistItem->getQtyOrdered() > 0) {
+				$_wishlistItem->setQtyOrdered($_wishlistItem->getQtyOrdered() + $qtyOrdered);
+			} else {
+				$_wishlistItem->setQtyOrdered($qtyOrdered);
+			}
+			$_wishlistItem->save();
 		}
+	}
+	
+	public function onSalesQuoteConvertItem($observer) {
+		/** @var $_orderItem Mage_Sales_Model_Order_Item */
+		$_orderItem = $observer->getOrderItem();
+		/** @var $_quoteAddressItem Mage_Sales_Model_Quote_Address_Item */
+		$_quoteAddressItem = $observer->getItem();
+		
+		$_quoteItem = $_quoteAddressItem->getQuoteItem();
+		if (!$_quoteItem) {
+			$_quoteItem = Mage::getModel('sales/quote_item')->load($_quoteAddressItem->getQuoteItemId());
+		}
+		
+		if (!$_quoteItem || !$_quoteItem->getSidwishlistItemId()) {
+			return;
+		}
+			
+		$_orderItem->setSidwishlistItemId($_quoteItem->getSidwishlistItemId());
 	}
 	
 	public function onSalesQuoteAddItem($observer) {
 		/** @var $_quoteItem Mage_Sales_Model_Quote_Item */
 		$_quoteItem = $observer->getQuoteItem();
+		
 		$_buyRequest = $_quoteItem->getBuyRequest();
 		
 		if (!$_buyRequest || $_buyRequest->isEmpty()) {
@@ -43,8 +65,10 @@ class Sid_Wishlist_Model_Sales_Observer
 			return;
 		}
 		
-		$_quoteItem->setSidwishlistItemId($_buyRequest->getSidwishlistItemId())
-			->save();
+		$_quoteItem->setSidwishlistItemId($_buyRequest->getSidwishlistItemId());
+		if ($_quoteItem->getId() > 0) {
+			$_quoteItem->save();
+		}
 	}
 	
 	public function onQuoteItemRemove($observer) {

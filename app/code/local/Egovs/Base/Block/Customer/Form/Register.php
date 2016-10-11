@@ -82,6 +82,16 @@ class Egovs_Base_Block_Customer_Form_Register extends Mage_Customer_Block_Form_R
             return false;
         }
     }
+    
+    /**
+     * Zusätzliche Firmenfelder anzeigen
+     * 
+     * @return boolean
+     */
+    public function isAdditionalCompanyVisible() {
+    	$key = 'customer/registerrequired/additionalcompany';
+    	return Mage::getStoreConfigFlag($key);
+    }
 
     /**
      * Wenn ein Benutzerfeld ein Pflichtfeld ist,
