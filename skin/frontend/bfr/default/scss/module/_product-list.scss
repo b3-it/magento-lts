@@ -31,7 +31,8 @@ body.catalogsearch-result-index .col-right {
     white-space: normal;
 }
 
-.catalog-category-view .name-prefix {
+.catalog-category-view .name-prefix,
+.catalogsearch-result-index .name-prefix {
     vertical-align: top;
     color: $global-footer-linkcolor;
     font-size: 1.33em;
@@ -335,12 +336,11 @@ p.product-name {
         .product-list-left-col {
             width: $global-product-list-imagesize;
             margin-bottom: $global-boxmargin - $global-boxpadding;
+            max-width: $global-product-list-image-width;
 
             .product-image img {
-                max-width: $global-product-list-image-width;
                 max-height: $global-product-list-image-height;
-                width: auto;
-                height: auto;
+                object-fit: cover;
             }
 
             .product-add-links {

@@ -173,9 +173,7 @@ h6, .h6 { @include h6; }
 
 p.note-msg {
     display: block;
-    border-width: $global-box-border;
-    border-style: solid;
-    border-color: $global-border-color;
+    border: $global-box-border solid $global-border-color;
     padding: $golbal-msgpadding;
     background-color: $global-navigation-color;
 }
