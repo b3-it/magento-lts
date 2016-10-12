@@ -28,7 +28,7 @@ class Sid_Framecontract_Model_Los extends Mage_Core_Model_Abstract
     	$neu = $this->getData('status');
     	
     	//alle Produkte deaktivieren falls los deaktivert
-    	if(($old != $neu) && ($neu == Sid_Framecontract_Model_Status::STATUS_DISABLED)){
+    	if($old != $neu){
     		$productIds = $this->getProductIds();
     		$this->alterProductStatus($productIds, $neu);
     	}
