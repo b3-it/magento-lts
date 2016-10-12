@@ -17,7 +17,7 @@ class Sid_Framecontract_Model_Cron extends Mage_Core_Model_Abstract
 		foreach($collection->getItems() as $contract)
 		{
 			$contract->setStatus(Sid_Framecontract_Model_Status::STATUS_DISABLED)->save();
-			$contract->alterLosStatus(Sid_Framecontract_Model_Status::STATUS_DISABLED);
+			
 		}
 	}
     
