@@ -30,6 +30,31 @@
 
 // ---------------------------------------------
 
+#header-account.skip-active {
+    @include menu;
+    display: block;
+    position: absolute;
+    z-index: 200;
+    top: 45px;
+    right: 350px;
+    width: 200px;
+    opacity: 0.9;
+
+    @include bp(max-width, $bp-medium) {
+        top: 35px;
+    }
+   
+    @include bp(max-width, 800px) {
+    	left: 42%;
+    }
+
+    @include bp(max-width, 785px) {
+ 	    top: $mobile-header-accountnav-top;
+ 	    left: 25%;
+    }
+}
+
+
 @include bp(min-width, $bp-medium + 1) {
 
     .skip-account {
@@ -42,21 +67,6 @@
     }
 
     .skip-account:hover {
-    }
-
-    #header-account.skip-active {
-        @include menu;
-        display: block;
-        position: absolute;
-        z-index: 200;
-        top: 40px;
-        right: 350px;
-        width: 200px;
-        opacity: 0.9;
-
-        @include bp(max-width, 911px) {
-            right: 230px;
-        }
     }
 
     #header-account a,

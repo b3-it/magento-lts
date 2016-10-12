@@ -36,14 +36,11 @@
         padding: 0 10px;
     }
 
-    .skip-cart:hover {
-    }
-
     #header-cart.skip-active {
         @include menu;
         display: block;
         position: absolute;
-        z-index: 200;
+        z-index: 2000;
         top: 40px;
         right: 0;
         width: 320px;

@@ -10,6 +10,7 @@
  * ============================================ */
 
 .skip-search {
+	top: 5px;
 
     &:not(.skip-active):hover {
         .icon {
@@ -21,17 +22,12 @@
         @extend .icon-sprite;
         background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
     }
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, 911px) {
-
-    .skip-search {
-        display: none;
+   
+    @include bp(min-width, 911px) {
+    	display: none;
     }
-
 }
+
 
 /* ============================================ *
  * Search - Skip Content
@@ -41,23 +37,30 @@
 
 #header-search {
     position: absolute;
-    background-color: transparent;
-    width: 215px;
-    padding: 0px;
-    z-index: 99;
     right: 0;
-    height: 28px;
+  	top: 50px;
+   	width: 260px;
+    height: 50px;
+    padding: 10px;
+    z-index: 99;
+    
+    &.skip-active {
+    	@include menu;
+    	opacity: 0.9;
+    	
+    	@include bp(max-width, 785px) {
+    		top: 155px + $global-logo-height;
+    	}
+    }
 
     @include bp(max-width, 785px) {
     	top: 150px + $global-logo-height;
     }
-
-    @include bp(min-width, $bp-medium + 1) {
+    
+    @include bp(min-width, 900px) {
     	display: block; // Force visibility
-        top: 15px;
-        right: 0;
-        width: 24%;
-        padding: 0;
+    	top: 0;
+    	right: -15px;
     }
 }
 
