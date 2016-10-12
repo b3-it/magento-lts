@@ -179,7 +179,7 @@
 
     .minicart-actions {
         padding: $box-spacing;
-        margin-top: 0px;
+        padding-top: 0px;
         overflow: hidden;
         position: relative;
         text-align: center;
@@ -270,6 +270,18 @@ div.block-cart {
 .header-minicart.skip-active .block-cart,
 .block-cart.skip-active {
     display: block;
+    position: absolute;
+    top: 40px;
+    
+    @include bp(max-width, $bp-medium) {
+    	top: 45px;
+    	right: 27%;
+    	width: 50%;
+    }
+    
+    @include bp(max-width, 500px) {
+    	width: 100%;
+    }
 }
 
 @include bp(min-width, $bp-medium + 1) {
@@ -293,12 +305,9 @@ div.block-cart {
                 color: $global-cart-subtotal;
             }
         }
-        .minicart-wrapper {
-            z-index: 999;
 
-            &:before {
-                background-color: #EDEDED;
-            }
+	    .minicart-wrapper {
+            z-index: 999;
         }
 
         .quantity-button {
