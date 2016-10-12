@@ -26,6 +26,16 @@ class Sid_Framecontract_Model_Contract extends Mage_Core_Model_Abstract
     }
     
     
+    protected function _afterSave(){
+    	$old = $this->getOrigData('status');
+    	$neu = $this->getData('status');
+    	 
+    	//alle Produkte deaktivieren falls los deaktivert
+    	if(($old != $neu) && ($neu == Sid_Framecontract_Model_Status::STATUS_DISABLED)){
+    		$this->alterLosStatus($neu);
+    	}
+    }
+    
     public function alterLosStatus($status)
     {
     	$collection = Mage::getModel('framecontract/los')->getCollection();

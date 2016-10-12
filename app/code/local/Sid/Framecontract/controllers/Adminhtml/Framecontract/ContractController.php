@@ -128,43 +128,6 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 					$model->setUpdateTime(now());
 				}	
 				
-				$id = $this->getRequest()->getParam('id');
-				if($id)
-				{
-					$old = Mage::getModel('framecontract/contract')->load($id);
-					
-					if($old->getStatus() != $model->getStatus())
-					{
-						
-						
-						if($model->getStatus() == Sid_Framecontract_Model_Status::STATUS_DISABLED){
-							$status = Mage_Catalog_Model_Product_Status::STATUS_DISABLED;
-							$old_status =  Mage_Catalog_Model_Product_Status::STATUS_ENABLED;
-						}
-						else {
-							$status = Mage_Catalog_Model_Product_Status::STATUS_ENABLED;
-							$old_status =  Mage_Catalog_Model_Product_Status::STATUS_DISABLED;
-						}
-						
-						
-						$products = Mage::getModel('catalog/product')->getCollection();
-						$products->addAttributeToFilter('framecontract',$id);
-						$products->addAttributeToFilter('status', $old_status);
-						
-						
-						$productIds = array();
-						foreach ($products->getItems() as $product) 
-						{
-							$productIds[] = $product->getId();
-						}
-						
-						if(count($productIds) > 0){
-							Mage::getSingleton('catalog/product_action')
-								->updateAttributes($productIds, array('status' => $status), 0);
-						}
-					}
-				}
-				
 				
 				$model->save();
 				$this->saveLose($model);
@@ -200,7 +163,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 					$model->delete();
 				}else{
 					$model->setTitle($los['title']);
-					$model->setStatus(intval($los['status']));
+					if($this->getStatus() == Sid_Framecontract_Model_Status::STATUS_DISABLED){
+						$model->setStatus(Sid_Framecontract_Model_Status::STATUS_DISABLED);
+					}else {
+						$model->setStatus(intval($los['status']));
+					}
 					$model->setNote($los['note']);
 					$model->setFramecontractContractId($contract->getId());
 					$id = $model->getId();
