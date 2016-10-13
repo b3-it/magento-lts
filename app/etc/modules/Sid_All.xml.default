@@ -32,6 +32,10 @@
       <active>true</active>
       <codePool>local</codePool>
     </Sid_Import>
+    <Sid_PurchaseOrder>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Sid_PurchaseOrder>
     <Sid_Report>
       <active>true</active>
       <codePool>local</codePool>

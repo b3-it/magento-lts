@@ -93,14 +93,14 @@
 						<xml>1</xml>
 						<doc>1</doc>
 						<docx>1</docx>
-						<xslx>1</xslx>
+						<xlsx>1</xlsx>
                     </image_allowed>
 					<allowed>
 						<pdf>1</pdf>
 						<xml>1</xml>
 						<doc>1</doc>
 						<docx>1</docx>
-						<xslx>1</xslx>
+						<xlsx>1</xlsx>
 					</allowed>
 				</extensions>
 			</browser>
