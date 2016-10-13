@@ -15,12 +15,12 @@ class Sid_ExportOrder_Block_Adminhtml_Format_Opentrans_Form extends Mage_Adminht
       $form = new Varien_Data_Form();
       $this->setForm($form);
       
-      $form->addField('title', 'text', array(
-          'label'     => Mage::helper('exportorder')->__('Title'),
-          'class'     => 'required-entry',
-          'required'  => true,
-          'name'      => 'title',
-      ));
+//       $form->addField('title', 'text', array(
+//           'label'     => Mage::helper('exportorder')->__('Title'),
+//           'class'     => 'required-entry',
+//           'required'  => true,
+//           'name'      => 'title',
+//       ));
 
  
       if ( Mage::getSingleton('adminhtml/session')->getExportOrderData() )

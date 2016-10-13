@@ -10,6 +10,6 @@
 // =============================================
 
 @mixin menu {
-    background: #FBFBFB;
-    border: solid 1px $c-module-border;
+    background-color: $global-minicart-background;
+    border: $global-active-border solid $global-border-color;
 }

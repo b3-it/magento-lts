@@ -15,8 +15,28 @@
 
 .skip-cart {
     margin: 8px 10px 7px 11px;
+    text-transform: uppercase;
+    position: relative;
+    top: -5px;
+    width: 90%;
+ 
+    &:hover {
+        text-decoration: none;
+    }
 
-    &:not(.skip-active):hover {
+    .count {
+        @include border-radius(49%);
+        margin: 0 0 0 3px;
+        min-width: 23px;
+        padding: 0 7px;
+        width: auto;
+
+        &:hover {
+            color: $global-fontcolor-light;
+        }
+    }
+
+	&:not(.skip-active):hover {
         .icon {
             background-image: none;
             text-indent: 0;
@@ -31,7 +51,7 @@
 
 .header-minicart {
     text-align: center;
-    //display: inline !important;
+    width: 100%;
 }
 
 // ---------------------------------------------
@@ -39,7 +59,6 @@
 @include bp(min-width, $bp-medium + 1) {
 
     .skip-cart {
-        width: auto;
         padding: 0 7px;
     }
 
@@ -110,26 +129,6 @@
 }
 
 @include bp(min-width, $bp-medium + 1) {
-    .skip-cart {
-        text-transform: uppercase;
-
-        &:hover {
-            text-decoration: none;
-        }
-
-        .count {
-            @include border-radius(49%);
-            margin: 0 0 0 3px;
-            min-width: 23px;
-            padding: 0 7px;
-
-            width: auto;
-
-            &:hover {
-                color: $global-fontcolor-light;
-            }
-        }
-    }
     .skip-link.skip-active .count {
         color: $global-fontcolor-light;
     }

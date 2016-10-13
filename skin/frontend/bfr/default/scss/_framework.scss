@@ -33,12 +33,13 @@
 
 // ----------------------------------------------
 // Functions
+//@import "../../../egov/default/scss/egov/svg-function";
 
 // ----------------------------------------------
 // Mixins
 
 @import "mixin/button";
-@import "mixin/multi-column";
+@import "../../../egov/default/scss/mixin/multi-column";
 @import "../../../egov/default/scss/mixin/breakpoint";
 @import "../../../egov/default/scss/mixin/clearfix";
 @import "mixin/egov_loginform";

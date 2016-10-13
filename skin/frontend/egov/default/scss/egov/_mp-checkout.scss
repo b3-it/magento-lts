@@ -129,6 +129,10 @@
             font-weight: bold;
             font-size: $global-checkout-success-order-number;
         }
+        
+        @include bp(max-width, 800px) {
+        	background-image: none !important;
+        }
     }
 
     .col2-set {
