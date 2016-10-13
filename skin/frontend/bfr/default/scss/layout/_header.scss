@@ -9,9 +9,45 @@
 /* ============================================ *
  * Header
  * ============================================ */
+.page-header {
+    font-family: $base-font-family;
+    background-color: $global-page-color;
+}
+
+.welcome-header {
+    margin: 0 $global-logo-left;
+    position: relative;
+    top: $global-header-height - 50px;
+
+    h1, .welcome-msg {
+        color: $global-fontcolor-light;
+        display: inline-block;
+        
+        @include bp(max-width, 1024px) {
+   	    	display: block;
+   	    	top: 0;
+        }
+    }
+
+    .welcome-msg {
+        position: absolute;
+        right: 0;
+        top: 27px;
+        font-size: $global-pagetitle-size;
+        
+        @include bp(max-width, 1024px) {
+   	    	top: 85px;
+   	    	left: 1px;
+        }
+    }
+    
+    @include bp(max-width, 1024px) {
+    	top: 40px;
+    }
+}
+
 
 @include bp(min-width, $bp-medium + 1) {
-
     .page-header {
         clear: both;
         z-index: 99;
@@ -27,7 +63,7 @@
 }
 
 @include bp(max-width, 785px) {
-    .page-header-container {
+	.page-header-container {
         height: 110px + $global-logo-height;
     }
 
@@ -38,10 +74,6 @@
 
     .store-language-container {
         top: 40px + $global-logo-height !important;
-    }
-
-    .welcome-header {
-        top: $global-welcome-header-top + $global-logo-height !important;
     }
 
     #egov-nav, #header-account {
@@ -57,51 +89,6 @@
 
     .store-language-container {
         top: 0px + $global-logo-height !important;
-    }
-}
-
-.header-language-container,
-.page-header {
-    font-family: $base-font-family;
-    background-color: $global-page-color;
-
-    .welcome-header {
-        margin: 0 $global-logo-left;
-        position: relative;
-        top: $global-header-height - 50px;
-
-        h1 {
-            color: $global-fontcolor-light;
-    	  }
-
-        .welcome-msg {
-            color: $global-fontcolor-light;
-            float: right;
-            position: relative;
-            top: -15px;
-            font-size: $global-pagetitle-size;
-        }
-
-        @include bp(max-width, 910px) {
-            left: $global-welcome-left - 50;
-        }
-        @include bp(max-width, 790px) {
-            left: $global-welcome-left - 90;
-            top: 70px;
-        }
-        @include bp(max-width, 770px) {
-            left: $global-welcome-left - 120;
-            top: 30px;
-            width: auto;
-        }
-        @include bp(max-width, 630px) {
-            left: 100px;
-            top: 40px;
-        }
-        @include bp(max-width, 550px) {
-            left: 35px;
-            top: 40px;
-        }
     }
 }
 
@@ -273,6 +260,7 @@
     background-repeat: no-repeat;
     background-color: $global-header-background-color;
     background-size: 100%;
+    background-position: center 0;
     
     fill: $global-linkcolor-hover;
 
@@ -318,6 +306,10 @@
                }
             }
         }
+    }
+    
+    @include bp(max-width, 1024px) {
+    	height: $global-header-height - 35px;
     }
 }
 
