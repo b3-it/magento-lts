@@ -106,7 +106,7 @@
 }
 
 /* ============================================ *
- * Block für Such-Feld und Language switcher
+ * Block fï¿½r Such-Feld und Language switcher
  * ============================================ */
 #header-function-block {
     display: block;
@@ -263,7 +263,6 @@
 /* ============================================ *
  * Skip Links
  * ============================================ */
-
 .skip-links {
     clear: both;
     overflow: hidden;
@@ -274,6 +273,8 @@
     background-repeat: no-repeat;
     background-color: $global-header-background-color;
     background-size: 100%;
+    
+    fill: $global-linkcolor-hover;
 
     height: $global-header-height;
 
