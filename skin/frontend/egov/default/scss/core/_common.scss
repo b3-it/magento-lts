@@ -211,6 +211,7 @@ p.note-msg {
     border-width: $global-checkout-borderwidth;
     border-style: solid;
     border-color: $global-border-color;
+    margin-bottom: $global-boxmargin;
 
     .block-title {
         background-color: $global-box-title-backgroundcolor;

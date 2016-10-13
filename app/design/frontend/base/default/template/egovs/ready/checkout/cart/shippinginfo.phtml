@@ -1,0 +1,27 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * @category		Egovs
+ * @package			Egovs_Ready
+ * @name			Egovs_Ready_Block_Catalog_Product_Price
+ * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2016 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+?>
+<div class="shipping-info">
+	<?php if (Mage::getStoreConfig('checkout/cart/deliveryurl')): ?>
+		<a href="<?php echo Mage::getUrl(Mage::getStoreConfig('checkout/cart/deliveryurl')) ?>"><?php echo Mage::helper('tweaksgerman')->__('Click here to get the shipping cost information')?></a>
+	<?php endif; ?>
+</div>

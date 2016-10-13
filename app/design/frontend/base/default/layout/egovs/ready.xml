@@ -447,4 +447,11 @@
             </action>
         </reference>
     </customer_logged_in>
+    
+    <checkout_cart_index>
+        <reference name="checkout.cart">
+            <block type="core/template" name="checkout.cart.shippinginfo" as="shippinginfo" template="egovs/ready/checkout/cart/shippinginfo.phtml"/>
+            <block type="egovsready/checkout_cart_cartinfo" name="checkout.cart.cartinfo" as="cartinfo" template="egovs/ready/checkout/cart/cartinfo.phtml"/>
+        </reference>
+    </checkout_cart_index>
 </layout>

@@ -74,21 +74,6 @@ div#details-block {
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
-.col1-layout, .col2-left-layout {
-    .category-products, .category-title, .product-view {
-        width: 100%;
-	  }
-
-	  input[type="text"] {
-	    margin: 0;
-	  }
-
-	  .tab-content .std {
-        //@include multi-two-columns;
-        margin: 0 0;
-	  }
-}
-
 .col2-right-layout {
     .category-products, .category-title, .product-view {
         width: 100%;
@@ -111,7 +96,22 @@ div#details-block {
 }
 
 .catalog-product-view {
-    .col1-layout {
+    .col1-layout, .col2-left-layout {
+        .category-products, .category-title, .product-view {
+            width: 100%;
+        }
+
+        input[type="text"] {
+	        margin: 0;
+        }
+
+	    .tab-content .std {
+            //@include multi-two-columns;
+            margin: 0 0;
+	    }
+    }
+
+	.col1-layout {
         .col-main {
             padding-top: 13px;
         }
