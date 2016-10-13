@@ -17,32 +17,41 @@
 .welcome-header {
     margin: 0 $global-logo-left;
     position: relative;
-    top: $global-header-height - 50px;
+    display: block;
+    clear: both;
 
     h1, .welcome-msg {
         color: $global-fontcolor-light;
-        display: inline-block;
-        
-        @include bp(max-width, 1024px) {
-   	    	display: block;
-   	    	top: 0;
-        }
+        display: inline;
+        position: relative;
     }
-
+    
     .welcome-msg {
-        position: absolute;
-        right: 0;
-        top: 27px;
         font-size: $global-pagetitle-size;
         
+        @include bp(min-width, 1025px) {
+        	position: absolute;
+        	top: 27px;
+        	right: 0;
+        }
+        
         @include bp(max-width, 1024px) {
-   	    	top: 85px;
+   	    	top: 10px;
    	    	left: 1px;
         }
     }
     
+    @include bp(min-width, 1025px) {
+    	top: $global-header-height - 80px;
+    }
+    
     @include bp(max-width, 1024px) {
     	top: 40px;
+    	height: 70px;
+    	
+    	h1 {
+    		display: block;
+    	}
     }
 }
 

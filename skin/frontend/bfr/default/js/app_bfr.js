@@ -1,12 +1,4 @@
 // Allgemeine JS-Funktionen
-$j(document).ready(function(){
-    removeZomm();
-
-    $j('a.egov-product-image').click(function(){
-        removeZomm();
-    });
-});
-
 function removeZomm()
 {
     setTimeout(function(){
@@ -20,3 +12,11 @@ function setTabIndex(arr)
         $j('#' + element).attr('tabindex', tabindex);
     });
 }
+
+$j(document).ready(function(){
+    removeZomm();
+
+    $j('a.egov-product-image').click(function(){
+        removeZomm();
+    });
+});
