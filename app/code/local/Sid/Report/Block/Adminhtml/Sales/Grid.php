@@ -99,27 +99,27 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
         }
         $currencyCode = $this->getCurrentCurrencyCode();
 
-        $this->addColumn('total_price', array(
-            'header'        => Mage::helper('sales')->__('Preis Netto'),
+        $this->addColumn('base_price', array(
+            'header'        => Mage::helper('sales')->__('Einzelpreis Netto'),
             'type'          => 'currency',
             'currency_code' => $currencyCode,
-            'index'         => 'total_price',
+            'index'         => 'base_price',
         	'total'     	=> 'sum',
             'sortable'      => false
         ));
         
-        $this->addColumn('base_row_total_incl_tax', array(
-        		'header'        => Mage::helper('sales')->__('Preis Brutto'),
+        $this->addColumn('base_row_total', array(
+        		'header'        => Mage::helper('sales')->__('Preis Netto'),
         		'type'          => 'currency',
         		'currency_code' => $currencyCode,
-        		'index'         => 'base_row_total_incl_tax',
+        		'index'         => 'base_row_total',
         		'total'     	=> 'sum',
         		'sortable'      => false
         ));
 
-        $this->addColumn('total_qty', array(
+        $this->addColumn('qty_ordered', array(
             'header'    => Mage::helper('sales')->__('Quantity Ordered'),
-            'index'     => 'total_qty',
+            'index'     => 'qty_ordered',
             'type'      => 'number',
             'total'     => 'sum',
             'sortable'  => false
