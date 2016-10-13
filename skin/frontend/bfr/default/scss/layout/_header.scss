@@ -29,23 +29,23 @@
     .welcome-msg {
         font-size: $global-pagetitle-size;
         
-        @include bp(min-width, 1025px) {
+        @include bp(min-width, 1346px) {
         	position: absolute;
         	top: 27px;
         	right: 0;
         }
         
-        @include bp(max-width, 1024px) {
+        @include bp(max-width, 1345px) {
    	    	top: 10px;
    	    	left: 1px;
         }
     }
     
-    @include bp(min-width, 1025px) {
+    @include bp(min-width, 1346px) {
     	top: $global-header-height - 80px;
     }
     
-    @include bp(max-width, 1024px) {
+    @include bp(max-width, 1345px) {
     	top: 40px;
     	height: 70px;
     	
@@ -317,7 +317,7 @@
         }
     }
     
-    @include bp(max-width, 1024px) {
+    @include bp(max-width, 1345px) {
     	height: $global-header-height - 35px;
     }
 }

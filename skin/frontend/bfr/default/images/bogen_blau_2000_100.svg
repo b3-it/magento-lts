@@ -8,12 +8,12 @@
      x="0px"
      y="0px"
 	 width="2000px"
-	 height="300px"
-	 viewBox="0 0 2000 300"
-	 enable-background="new 0 0 2000 300"
+	 height="700px"
+	 viewBox="0 0 2000 700"
+	 enable-background="new 0 0 2000 700"
 	 xml:space="preserve">
     <path fill-rule="evenodd"
           clip-rule="evenodd"
           fill="#034EA2"
-          d="M0,0c100.001,100.022,1900,100.022,2000,0v300H0V0z" />
+          d="M0,0c100.001,100.022,1900,100.022,2000,0v700H0V0z" />
 </svg>
