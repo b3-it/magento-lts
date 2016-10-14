@@ -11,8 +11,8 @@ class Sid_Checkout_Block_Cart_Cart extends Mage_Checkout_Block_Cart
                 Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->helper('core/url')->getEncodedUrl(),
                 '_secure'=>true
             ));
-        $img = $this->getSkinUrl('images/btn_trash.gif');
-        $text = Mage::helper('mpcheckout')->__('Delete All Items');
+        //$img = $this->getSkinUrl('images/btn_trash.gif');
+        //$text = Mage::helper('mpcheckout')->__('Delete All Items');
         return $url;//"<a title=\"$text\" href=\"#\" onclick=\"deleteAll(\'$url\')\" ><img height=\"16\" width=\"16\" alt=\"$text\" src=\"$img\"/></a>";
     }
     
