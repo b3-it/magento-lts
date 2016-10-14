@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_Framecontract>
-            <version>0.1.8</version>
+            <version>0.1.9</version>
         </Sid_Framecontract>
     </modules>
     <frontend>
@@ -55,11 +55,7 @@
 				    		    <sort_order>10</sort_order>
 				    		    <action>adminhtml/framecontract_product</action>
 				    	  </product_visibility>
-				    	  <export_test translate='title' module="framecontract">
-				    		    <title>Export Test</title>
-				    		    <sort_order>10</sort_order>
-				    		    <action>adminhtml/framecontract_contract/exporttest</action>
-				    	  </export_test>
+				    	
 				    	<!--
 				    	<order module="framecontract">
 				    		<title>Product Order</title>
@@ -154,6 +150,17 @@
                 </Sid_Framecontract>
             </modules>
         </translate>
+        <events>
+            <controller_action_layout_generate_blocks_before>
+                <observers>
+                    <paymentbase>
+                        <type>singleton</type>
+                        <class>Sid_Framecontract_Model_Observer</class>
+                        <method>onAdminSalesOrderView</method>
+                    </paymentbase>
+                </observers>
+            </controller_action_layout_generate_blocks_before>
+        </events>
     </adminhtml>
     <global>
        <events>

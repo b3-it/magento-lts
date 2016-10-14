@@ -36,7 +36,6 @@ class Bfr_Mach_Model_Export_Mapping extends Bfr_Mach_Model_Export_Abstract
     	$result[] = implode($this->getDelimiter(), $this->_cols);
     	
     	//Zähler
-    	$IRBeleg = 0;
     	$lastOrderId = 0;
     	$IRPos = 0;
     	
@@ -50,7 +49,6 @@ class Bfr_Mach_Model_Export_Mapping extends Bfr_Mach_Model_Export_Abstract
     		
     		if($lastOrderId != $orderItem->getOrderId())
     		{
-    			$IRBeleg++;
     			$IRPos = 0;
     		}
     		$lastOrderId = $orderItem->getOrderId();
@@ -64,7 +62,7 @@ class Bfr_Mach_Model_Export_Mapping extends Bfr_Mach_Model_Export_Abstract
 	    		$line = array();
 	    		$line[] = $this->getConfigValue('head/irquellsystem',null, null); //Irquellsystem
 				$line[] = $this->_Lauf; //Irlauf
-				$line[] = $IRBeleg; //Irbeleg
+				$line[] = $orderItem->getIncrementId(); //Irbeleg
 				$line[] = $IRPos; //Irposition
 				$line[] = $key; //Kostenrechnung
 				$line[] = $product->getData($value); //Abrechnungsobjekt

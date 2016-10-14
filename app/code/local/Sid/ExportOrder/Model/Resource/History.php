@@ -29,7 +29,7 @@ class Sid_ExportOrder_Model_Resource_History extends Mage_Core_Model_Resource_Db
     		$data[] = array('order_id'=>$id,'message'=>$message,'status'=>$status);
     	}
     	
-    	$write->insertMultiple('exportorder/history', $data);
+    	$write->insertMultiple($this->getTable('exportorder/history'), $data);
     	
     }
 

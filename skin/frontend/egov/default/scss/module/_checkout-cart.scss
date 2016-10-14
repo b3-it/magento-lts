@@ -115,7 +115,8 @@
             }
            
             @include bp(max-width, 800px) {
-           	    width: 95%;
+           	    width: 100%;
+           	    background: none;
             }
         }
         .col-left {

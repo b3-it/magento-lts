@@ -30,24 +30,98 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     {
     	$this->_xml = new DOMDocument('1.0', 'utf-8');
     	$this->_xml->formatOutput = true;
+    	$this->_xml->preserveWhiteSpace = false;
     	$ORDER = $this->_xml->createElementNS('http://www.opentrans.org/XMLSchema/2.1', 'ORDER');
     	$this->_xml->appendChild($ORDER);
     	$ORDER->setAttributeNS('http://www.w3.org/2000/xmlns/' ,'xmlns:bmecat','http://www.bmecat.org/bmecat/2005');
     	$ORDER->setAttributeNS('http://www.w3.org/2000/xmlns/' ,'xmlns:xmime','http://www.w3.org/2005/05/xmlmime');
     	
+    	/** @var Sid_ExportOrder_Model_Format_Opentrans_OrderHeader */
+    	$ORDER_HEADER = new Sid_ExportOrder_Model_Format_Opentrans_OrderHeader($ORDER, $this->_xml);
+    	$ORDER_HEADER->control_info->generation_date->setValue(now());
+    	$ORDER_HEADER->order_info->order_id->setValue($order->getIncrementId());
     	
-    	$ORDER_HEADER = $this->_addElement('ORDER_HEADER',null, $ORDER);
-    	$ORDER_INFO = $this->_addElement('ORDER_INFO', null, $ORDER_HEADER);
     	
     	
-    	$this->_addAddresses($ORDER_INFO, $order);
+    	//rechnungsadresse
+    	$billing = $order->getBillingAddress();
+    	$ORDER_HEADER->order_info->parties->billingParty->party_id->setValue('B_'.$billing->getCustomerId());   	
+    	$ORDER_HEADER->order_info->parties->billingParty->address->name->setValue($billing->getCompany());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->name2->setValue($billing->getCompany2());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->name3->setValue($billing->getCompany3());
     	
-    	$ORDER_ITEM_LIST = $this->_addElement('ORDER_ITEM_LIST',null, $ORDER);
+    	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->contact_id->setValue('BA_'.$billing->getCustomerAddressId());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->contact_name->setValue($billing->getLastname());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->first_name->setValue($billing->getFirstname());
+    	
+    	$ORDER_HEADER->order_info->parties->billingParty->address->city->setValue($billing->getCity());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->zip->setValue($billing->getPostcode());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->country->setValue($billing->getCountry());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->street->setValue($billing->getStreetFull());
+    	
+    	//versandadresse
+    	if(!$order->getIsVirtual()){
+	    	$shipping = $order->getShippingAddress();
+	    	$ORDER_HEADER->order_info->parties->shippingParty->party_id->setValue('S_'.$shipping->getCustomerId());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name->setValue($shipping->getCompany());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name2->setValue($shipping->getCompany2());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name3->setValue($shipping->getCompany3());
+	    	
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->contact_id->setValue('SA_'.$shipping->getCustomerAddressId());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->contact_name->setValue($shipping->getLastname());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->first_name->setValue($shipping->getFirstname());
+	    	
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->city->setValue($shipping->getCity());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->zip->setValue($shipping->getPostcode());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->country->setValue($shipping->getCountry());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->street->setValue($shipping->getStreetFull());
+	    	
+	    	$adr = Mage::getmodel('customer/address')->load($shipping->getCustomerAddressId());
+	    	if(!empty($adr->getDap())){
+	    		$txt = "Im Fall einer Lieferung 'frei Verwendungstelle' bitte hierher liefern: ".$adr->getDap();
+	    		$ORDER_HEADER->order_info->parties->shippingParty->address->address_remarks->setValue($txt);
+	    	}
+    	}
+    	
+    	//lieferant
+    	$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
+  		$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
+    	$ORDER_HEADER->order_info->parties->supplierParty->party_id->setValue('C_'.$vendor->getData('framecontract_vendor_id'));
+    	$ORDER_HEADER->order_info->parties->supplierParty->address->name->setValue($vendor->getCompany());
+    	$ORDER_HEADER->order_info->parties->supplierParty->address->name2->setValue($vendor->getOperator());
+    	
+    	
+    	$ORDER_HEADER->order_info->order_parties_reference->buyer_idref->setValue('B_'.$billing->getCustomerId());
+    	$ORDER_HEADER->order_info->order_parties_reference->supplier_idref->setValue('C_'.$vendor->getData('framecontract_vendor_id'));
+    	$ORDER_HEADER->order_info->order_parties_reference->shipment_parties_reference->final_delivery_idref->setValue('S_'.$shipping->getCustomerId());
+    	
+    	
+    	//die Positionen
+    	$ORDER_ITEM_LIST = new Sid_ExportOrder_Model_Format_Opentrans_OrderItemList($ORDER, $this->_xml);
     	$this->_addItems($ORDER_ITEM_LIST,$order);
     	
-    	$this->_addTotals($ORDER, $order);
+    	//totals
+    	$ORDER_SUMMARY = new Sid_ExportOrder_Model_Format_Opentrans_OrderSummary($ORDER, $this->_xml);
+    	$ORDER_SUMMARY->total_amount->setValue($order->getBaseGrandTotal());
+    	$ORDER_SUMMARY->total_item_num->setValue(count($order->getAllItems()));
     	
-    	Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Opentransdatei erzeugt');
+      	Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Opentransdatei erzeugt');
+    	
+    	$xpath = new DOMXPath($this->_xml);
+
+	    while (($notNodes = $xpath->query('//*[not(node())]')) && ($notNodes->length)) {
+		  foreach($notNodes as $node) {
+		    $node->parentNode->removeChild($node);
+		  }
+		}
+    	
+    	
+// 		//debug helper
+//     	$text = htmlentities($this->_xml->saveXML());
+//     	$text = str_replace("\n", "<br>", $text);
+//     	echo '<pre>';
+//     	die($text);
+    	
     	
     	return $this->_xml->saveXML();
     }
@@ -70,71 +144,36 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	return $node;
     }
     
-    /**
-     * die Adressen in den xml Baum einhängen
-     * @param DOMElement $parent
-     * @param unknown $order
-     */
-    protected function _addAddresses(DOMElement $parent, $order)
-    {
-    	$PARTIES = $this->_addElement('PARTIES',null, $parent);
-    	$PARTIE = $this->_addElement('PARTIE',null, $PARTIES);
-    	$PARTY_ROLE = $this->_addElement('PARTY_ROLE', 'buyer', $PARTIE);
-    	$ADDRESS = $this->_addElement('ADDRESS', null, $PARTIE);
-    	
-    	$adr = $order->getBillingAddress();
-    	$this->_addElement('bmecat:STREET', $adr->getStreetFull(), $ADDRESS);
-    	$this->_addElement('bmecat:ZIP', $adr->getPostcode(), $ADDRESS);
-    	$this->_addElement('bmecat:CITY', $adr->getCity(), $ADDRESS);
-    	$this->_addElement('bmecat:COUNTRY', $adr->getCountry(), $ADDRESS);
-    	
-    	
-    	if(!$order->getIsVirtual()){
-    		$PARTIE = $this->_addElement('PARTIE',null, $PARTIES);
-    		$PARTY_ROLE = $this->_addElement('PARTY_ROLE', 'xxxx', $PARTIE);
-    		$ADDRESS = $this->_addElement('ADDRESS', null, $PARTIE);
-    		$adr = $order->getShippingAddress();
-    		$this->_addElement('bmecat:STREET', $adr->getStreetFull(), $ADDRESS);
-    		$this->_addElement('bmecat:ZIP', $adr->getPostcode(), $ADDRESS);
-    		$this->_addElement('bmecat:CITY', $adr->getCity(), $ADDRESS);
-    		$this->_addElement('bmecat:COUNTRY', $adr->getCountry(), $ADDRESS);
-    	}
-    }
+    
     
     /**
      * die OrderItems in den xml Baum einhängen
      * @param DOMElement $parent
      * @param unknown $order
      */
-    protected function _addItems(DOMElement $parent, $order)
+    protected function _addItems(Sid_ExportOrder_Model_Format_Opentrans_OrderItemList $ORDER_ITEM_LIST, $order)
     {
     	$i = 0;
     	foreach($order->getAllItems() as $item)
     	{
     		$i++;
-    		$ORDER_ITEM = $this->_addElement('ORDER_ITEM',null, $parent);
-    		$this->_addElement('LINE_ITEM_ID',$i, $ORDER_ITEM);
+    		$order_item = $ORDER_ITEM_LIST->add();
+    		$order_item->line_item_id->setValue($i);
+    		$order_item->product_id->supplier_pid->setValue($item->getProduct()->getSupplierSku());
+    		$order_item->product_id->description_short->setValue($item->getName());
+    		$order_item->product_id->international_pid->setValue($item->getProduct()->getEan());
+    		$order_item->product_id->buyer_pid->setValue($item->getSku());
+    		$order_item->product_id->manufacturer_info->setValue($item->getProduct()->getManufacturerName());
     		
-    		$PRODUCT_ID = $this->_addElement('PRODUCT_ID',null, $ORDER_ITEM);
-    		$PRODUCT_ID = $this->_addElement('bmecat:SUPPLIER_PID',$item->getSku(), $PRODUCT_ID);
     		
-    		$this->_addElement('QUANTITY',$item->getQtyOrdered(), $ORDER_ITEM);
-    		$this->_addElement('PRICE_LINE_AMOUNT',$item->getBasePrice(), $ORDER_ITEM);
+    		
+    		$order_item->quantity->setValue($item->getQtyOrdered());
+    		$order_item->order_unit->setValue('C62');
+    		$order_item->product_price_fix->price_amount->setValue($item->getBasePrice());
     		
     	}
     }
     
     
-    /**
-     * die Totals in den xml Baum einhängen
-     * @param DOMElement $parent
-     * @param unknown $order
-     */
-    protected function _addTotals(DOMElement $parent, $order)
-    {
-    	$ORDER_SUMMARY = $this->_addElement('ORDER_SUMMARY',null, $parent);
-    	$this->_addElement('TOTAL_ITEM_NUM',count($order->getAllItems()), $ORDER_SUMMARY);
-    	$this->_addElement('TOTAL_AMOUNT',$order->getBaseGrandTotal(), $ORDER_SUMMARY);
-    }
-    
+   
 }

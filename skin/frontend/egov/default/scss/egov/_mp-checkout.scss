@@ -129,6 +129,10 @@
             font-weight: bold;
             font-size: $global-checkout-success-order-number;
         }
+        
+        @include bp(max-width, 800px) {
+        	background-image: none !important;
+        }
     }
 
     .col2-set {
@@ -325,7 +329,7 @@
     .mp-checkout {
         .buttons-set {
             text-align: center;
-            max-width: 76%;
+            max-width: 68%;
 
             a {
                 width: 47% !important;

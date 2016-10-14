@@ -39,7 +39,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status'))
+      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
+      ->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
       	->joinLeft(array('lobbyT'=>$lobby),'lobbyT.participant_id=main_table.participant_id',array('lobby'=>'value'))
@@ -93,13 +94,51 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	));
   	
   	$this->addColumn('pa_status', array(
-  			'header' => Mage::helper('sales')->__('Status'),
+  			'header' => Mage::helper('sales')->__('Order Status'),
   			'index' => 'order_status',
   			'type'  => 'options',
   			'width' => '70px',
   			'filter_index' => 'order.status',
   			'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
   	));
+  	
+  	$this->addColumn('pa_price', array(
+  			'header' => Mage::helper('sales')->__('Amount'),
+  			'index' => 'base_grand_total',
+  			'type'  => 'price',
+  			'width' => '70px',
+  			'currency' => 'base_currency_code',
+  			'currency_code' => 'EUR',
+  	
+  	));
+  	
+  	$this->addColumn('pa_price1', array(
+  			'header' => Mage::helper('sales')->__('Balance'),
+  			'index' => 'base_grand_total',
+  			'type'  => 'price',
+  			'width' => '70px',
+  			'index_paid' => 'base_total_paid',
+  			'filter_index' => new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)'),
+  			'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
+  			'type' => 'currency',
+  			'currency' => 'base_currency_code',
+  			//'filter_condition_callback' => array($this, '_filterBalanceCondition'),
+  	));
+  	
+  	$groups = Mage::getResourceModel('customer/group_collection')
+  	->addFieldToFilter('customer_group_id', array('gt'=> 0))
+  	->load()
+  	->toOptionHash();
+  	
+  	$this->addColumn('group', array(
+  			'header'    =>  Mage::helper('customer')->__('Customergroup'),
+  			'width'     =>  '100',
+  			'index'     =>  'group_id',
+  			'type'      =>  'options',
+  			'options'   =>  $groups,
+  	));
+  	
+  	
   	
   	$this->addColumn('pa_academic_titel', array(
   			'header'    => Mage::helper('eventmanager')->__('Academic Title'),
@@ -141,7 +180,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	$this->addColumn('pa_postfix', array(
   			'header'    => Mage::helper('eventmanager')->__('Postfix'),
   			'align'     =>'left',
-  			'index'     => 'email',
+  			'index'     => 'postfix',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
   	
@@ -264,7 +303,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
   	));
   	 
-	
+  	$this->addColumn('pa_note', array(
+  			'header'    => Mage::helper('eventmanager')->__('Note'),
+  			'align'     =>'left',
+  			'index'     => 'note',
+  	
+  	));
         $this->addColumn('pa_action',
             array(
                 'header'    =>  Mage::helper('eventmanager')->__('Action'),
@@ -290,23 +334,19 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       return parent::_prepareColumns();
   }
 
-    protected function x_prepareMassaction()
+    protected function _prepareMassaction()
     {
         $this->setMassactionIdField('participant_id');
         $this->getMassactionBlock()->setFormFieldName('participant');
 
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('eventmanager')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('eventmanager')->__('Are you sure?')
-        ));
+      
 
         $statuses = Mage::getSingleton('eventmanager/status')->getOptionArray();
 
         array_unshift($statuses, array('label'=>'', 'value'=>''));
         $this->getMassactionBlock()->addItem('status', array(
              'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/eventmanager_participant/massStatus', array('_current'=>true, 'event' => $this->getEvent()->getId())),
+             'url'  => $this->getUrl('*/eventmanager_event/massStatusParticipant', array('_current'=>true, 'event' => $this->getEvent()->getId())),
              'additional' => array(
                     'visibility' => array(
                          'name' => 'status',

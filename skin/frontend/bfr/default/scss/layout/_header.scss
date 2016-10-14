@@ -9,9 +9,54 @@
 /* ============================================ *
  * Header
  * ============================================ */
+.page-header {
+    font-family: $base-font-family;
+    background-color: $global-page-color;
+}
+
+.welcome-header {
+    margin: 0 $global-logo-left;
+    position: relative;
+    display: block;
+    clear: both;
+
+    h1, .welcome-msg {
+        color: $global-fontcolor-light;
+        display: inline;
+        position: relative;
+    }
+    
+    .welcome-msg {
+        font-size: $global-pagetitle-size;
+        
+        @include bp(min-width, 1346px) {
+        	position: absolute;
+        	top: 27px;
+        	right: 0;
+        }
+        
+        @include bp(max-width, 1345px) {
+   	    	top: 10px;
+   	    	left: 1px;
+        }
+    }
+    
+    @include bp(min-width, 1346px) {
+    	top: $global-header-height - 80px;
+    }
+    
+    @include bp(max-width, 1345px) {
+    	top: 40px;
+    	height: 70px;
+    	
+    	h1 {
+    		display: block;
+    	}
+    }
+}
+
 
 @include bp(min-width, $bp-medium + 1) {
-
     .page-header {
         clear: both;
         z-index: 99;
@@ -27,7 +72,7 @@
 }
 
 @include bp(max-width, 785px) {
-    .page-header-container {
+	.page-header-container {
         height: 110px + $global-logo-height;
     }
 
@@ -38,10 +83,6 @@
 
     .store-language-container {
         top: 40px + $global-logo-height !important;
-    }
-
-    .welcome-header {
-        top: $global-welcome-header-top + $global-logo-height !important;
     }
 
     #egov-nav, #header-account {
@@ -60,53 +101,8 @@
     }
 }
 
-.header-language-container,
-.page-header {
-    font-family: $base-font-family;
-    background-color: $global-page-color;
-
-    .welcome-header {
-        margin: 0 $global-logo-left;
-        position: relative;
-        top: $global-header-height - 50px;
-
-        h1 {
-            color: $global-fontcolor-light;
-    	  }
-
-        .welcome-msg {
-            color: $global-fontcolor-light;
-            float: right;
-            position: relative;
-            top: -15px;
-            font-size: $global-pagetitle-size;
-        }
-
-        @include bp(max-width, 910px) {
-            left: $global-welcome-left - 50;
-        }
-        @include bp(max-width, 790px) {
-            left: $global-welcome-left - 90;
-            top: 70px;
-        }
-        @include bp(max-width, 770px) {
-            left: $global-welcome-left - 120;
-            top: 30px;
-            width: auto;
-        }
-        @include bp(max-width, 630px) {
-            left: 100px;
-            top: 40px;
-        }
-        @include bp(max-width, 550px) {
-            left: 35px;
-            top: 40px;
-        }
-    }
-}
-
 /* ============================================ *
- * Block für Such-Feld und Language switcher
+ * Block fï¿½r Such-Feld und Language switcher
  * ============================================ */
 #header-function-block {
     display: block;
@@ -263,7 +259,6 @@
 /* ============================================ *
  * Skip Links
  * ============================================ */
-
 .skip-links {
     clear: both;
     overflow: hidden;
@@ -274,6 +269,9 @@
     background-repeat: no-repeat;
     background-color: $global-header-background-color;
     background-size: 100%;
+    background-position: center 0;
+    
+    fill: $global-linkcolor-hover;
 
     height: $global-header-height;
 
@@ -317,6 +315,10 @@
                }
             }
         }
+    }
+    
+    @include bp(max-width, 1345px) {
+    	height: $global-header-height - 35px;
     }
 }
 

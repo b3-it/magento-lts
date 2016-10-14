@@ -563,9 +563,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     					->setStatus(Sid_Import_Model_Status::STATUS_NEW)
     					->save();
     				
-    			//}
+    			}
     			$source->next();
-    		}
+    		//}
     	}
     	return $this;
     }
@@ -1601,6 +1601,13 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
                 /** @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
                 $stockItem = Mage::getModel('cataloginventory/stock_item', $row);
 
+                if($stockItem->getQty() == 0)
+                {
+                	$stockItem->setData('manage_stock',false);
+                	$stockItem->setData('use_config_manage_stock',false);
+                	$stockItem->setData('is_in_stock',true);
+                }
+                
                 if ($helper->isQty($this->_newSku[$rowData[self::COL_SKU]]['type_id'])) {
                     if ($stockItem->verifyNotification()) {
                         $stockItem->setLowStockDate(Mage::app()->getLocale()
@@ -1612,6 +1619,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
                 } else {
                     $stockItem->setQty(0);
                 }
+                
+              	$stockItem->setData('is_in_stock',$stockItem->getQty() != 0);
+                
                 $stockData[] = $stockItem->unsetOldData()->getData();
             }
 
@@ -1916,6 +1926,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     	//$p['framecontract_los'] = Mage::getModel('framecontract/los')->load($this->_parameters['los'])->getOptionsLabel();
 		$p['tax_class_id'] = $this->_parameters['tax_class'];
 		$p['sku_prefix'] = $this->_parameters['sku_prefix'];
+		$p['qty'] = $this->_parameters['qty'];
+		$p['framecontract_qty'] = $this->_parameters['qty'];
+		
 		$p['image_upload_token'] = $this->_parameters['image_upload_token'];
     	
 		$p['status'] = Mage_Catalog_Model_Product_Status::STATUS_DISABLED;

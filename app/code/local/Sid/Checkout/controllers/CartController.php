@@ -528,4 +528,33 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
 
         $this->_goBack();
     }
+    
+    /**
+     * Delete shoping cart all item action
+     */
+    public function deleteallAction()
+    {
+    	 
+    	try {
+    		$card = $this->_getCart();
+    		$items = $card->getItems();
+    
+    		foreach($items as $item)
+    		{
+    			$card->removeItem($item->getId());
+    		}
+    
+    		$card->save();
+    
+    	}
+    	catch (Exception $e)
+    	{
+    		$this->_getSession()->addError($this->__('Cannot remove items'));
+    		Mage::log("card::deleteAll ".$e->getMessage(), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+    
+    	}
+    
+    	//$this->_redirectReferer(Mage::getUrl('*/*'));
+    	$this->_redirect('checkout/cart/index');
+    }
 }

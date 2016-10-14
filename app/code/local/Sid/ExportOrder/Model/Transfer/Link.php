@@ -31,7 +31,10 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     {
     	if ($format instanceof Sid_ExportOrder_Model_Format_Plain)
     	{
-    		$lines = implode($format->getLineSeparator(), $content);
+    		
+    		$line_separator = $format->getLineSeparator() ? $format->getLineSeparator() : "\n";		 
+    		$line_separator = $this->_fitEscape($line_separator);
+    		$lines = implode($line_separator, $content);
     		$link = Sid_ExportOrder_Model_Link::create($vendorId);
     		$link->setFilename($link->getId().'.txt');
     		$link->setSendFilename('Orders_'.date('d-m-Y_H-i-s').'.txt');
@@ -93,6 +96,13 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     }
     
 
-    
+    private function _fitEscape($value)
+    {
+    	if($value == '\\t') return "\t";
+    	if($value == '\\n') return "\n";
+    	if($value == '\\r') return "\r";
+    	 
+    	return $value;
+    }
    
 }

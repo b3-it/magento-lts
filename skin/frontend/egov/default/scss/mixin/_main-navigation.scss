@@ -135,8 +135,17 @@
                     list-style-image: url($global-category-image);
                     display: block;
                 }
+               
+                @include bp(max-width, $bp-medium) {
+                	padding: 0 0 0 25px;
+                }
             }
         }
+       
+        //@include bp(max-width, 785px) {
+        //	position: relative;
+        //	top: -40px;
+        //}
     }
    
     li.level0,
@@ -192,5 +201,11 @@
    
     li.level1 {
         padding-left: 0 !important;
+        
+        a {
+        	@include bp(max-width, $bp-medium) {
+        		padding: 0 15px 0 25px;
+        	}
+        }
     }
 }

@@ -23,6 +23,7 @@
                 input[type="text"], input[type="password"] {
                     width: 90%;
                     max-width: 90%;
+                    margin-bottom: $global-boxmargin !important;
                 }
             }
         }

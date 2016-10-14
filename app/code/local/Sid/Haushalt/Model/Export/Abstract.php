@@ -97,4 +97,9 @@ class Sid_Haushalt_Model_Export_Abstract extends Mage_Core_Model_Abstract
     		Mage::logException($ex);
     	}
     }
+    public function setStoreId($value)
+    {
+    	$this->_storeId = $value;
+    	return $this;
+    }
 }

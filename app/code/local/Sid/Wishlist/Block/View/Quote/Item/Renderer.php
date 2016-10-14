@@ -230,6 +230,14 @@ class Sid_Wishlist_Block_View_Quote_Item_Renderer extends Mage_Core_Block_Templa
     public function getQty() {
         return $this->getItem()->getQty()*1;
     }
+    /**
+     * Liefert die noch verfügbare bestellbare Menge
+     * 
+     * @return float
+     */
+    public function getAvailableQty() {
+    	return max($this->getQty() - $this->getQtyGranted(), 0);
+    }
     
     /**
      * Liefert die genehmigte Anzahl der Items
@@ -238,6 +246,15 @@ class Sid_Wishlist_Block_View_Quote_Item_Renderer extends Mage_Core_Block_Templa
      */
     public function getQtyGranted() {
     	return $this->getItem()->getQtyGranted()*1;
+    }
+    
+    /**
+     * Liefert die bereits bestellte Anzahl der Items
+     *
+     * @return float
+     */
+    public function getQtyOrdered() {
+    	return $this->getItem()->getQtyOrdered()*1;
     }
     
     /**

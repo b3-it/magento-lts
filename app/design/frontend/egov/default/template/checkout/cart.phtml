@@ -135,6 +135,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                 </div>
                 (<?php echo $this->__('Checkout'); ?>)
             </button>
+            <?php echo $this->getChildHtml('cartinfo') ?>
             <?php endif; ?>
         </div>
 

@@ -25,6 +25,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 		$this->prepare();
 		$this->run();
 		Mage::getModel('exportorder/order')->processPendingOrders();
+		$this->deleteOldLinks();
 	}
     
     /**
@@ -53,9 +54,11 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   	{
   		$oderCollection = Mage::getModel('sales/order')->getCollection();
   		$oderCollection->getSelect()
-  		->where('entity_id NOT IN (?)',new Zend_Db_Expr('SELECT order_id FROM '.$oderCollection->getTable('exportorder/order')));
+  		->where('entity_id NOT IN (?)',new Zend_Db_Expr('SELECT order_id FROM '.$oderCollection->getTable('exportorder/order')))
+  		->where("main_table.status IN ('processing','complete')");
   	
   		//preprocessing speichern damit keine Bestellung gleichzeitig bearbeitet wird
+  		$orderIds = array();
   		foreach($oderCollection as $order){
   			if(!$order->getFramecontract())
   			{
@@ -77,8 +80,13 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			->setVendor($vendor)
   			->setContract($contract)
   			->save();
-  				
+  			$orderIds[] = $order->getId();
   			
+  		}
+  		
+  		//logging
+  		if(count($orderIds)>0){
+  			$this->setLog('Prepare OrderIds: ' . implode(',',$orderIds));
   		}
   	
 
@@ -93,23 +101,47 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   		$oderCollection->getSelect()
   			->join(array('export'=> $oderCollection->getTable('exportorder/order')),'export.order_id=main_table.entity_id')
   			->where('export.status = '.Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
-  			->where('export.semaphor < ' .Mage::helper('exportorder')->getSemaphor(-120)); 
+  			->where('export.semaphor < ' .Mage::helper('exportorder')->getSemaphor(-120))
+  			->where("main_table.status IN ('processing','complete')");
+		
+  		//$this->setLog(($oderCollection->getSelect()->__toString()));  		
   		
-  		//preprocessing speichern damit keine Bestellung gleichzeitig bearbeitet wird
   		foreach($oderCollection as $order){
   			if(!$order->getFramecontract())
   			{
   				continue;
   			}
-  			$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
-  			$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
-  			$exportOrder = Mage::getModel('exportorder/order')->load($order->getId(),'order_id');
   			
-  			$exportOrder = $order->getExportOrder();
+  			$exportOrder = Mage::getModel('exportorder/order')->load($order->getId(),'order_id');
   			$exportOrder->processOrder($order);
   		}
   		
   		
+  	}
+  	
+  	private function deleteOldLinks()
+  	{
+  		$days = intval(Mage::getConfig()->getNode('sid_exportorder/delete_old_links/days'));
+  		if ($days == 0){
+  			return;
+  		}
+  		
+  		$collection = Mage::getModel('exportorder/link')->getCollection();
+  		$collection->getSelect()
+  			->where("DATE_ADD(create_time, INTERVAL " . $days . " DAY) < NOW() ");
+  		
+  		$LinkIds = array();
+  		foreach($collection as $link)
+  		{
+  			$LinkIds[] = $link->getId();
+  			$link->delete();
+  			
+  		}
+  		
+  		//logging
+  		if(count($LinkIds)>0){
+  			$this->setLog('Deleting Links: ' . implode(',',$LinkIds));
+  		}
   	}
     
 }

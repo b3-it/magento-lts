@@ -108,7 +108,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       ));
       
       $this->addColumn('co_status', array(
-      		'header' => Mage::helper('sales')->__('Status'),
+      		'header' => Mage::helper('sales')->__('Order Status'),
       		'index' => 'status',
       		'type'  => 'options',
       		'width' => '70px',

@@ -10,6 +10,8 @@
  */ 
 class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abstract
 {
+	private $_lg04 = null;
+	
 	public function getExportData()
 	{
 		$orders = Mage::getModel('sales/order')->getCollection();
@@ -17,7 +19,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		$res = array();
 		foreach($orders as $order)
 		{
-			$this->_storeId = $order->getStoreId();
+			
 			$line = array();
 			$line[] = $order->getIncrementId();
 			$line[] = $order->getCreatedAt();
@@ -31,4 +33,59 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		return implode("\n", $res);
 		
 	}
+
+
+
+
+	private function getOrderData($order)
+	{
+		$content = array();
+		$data = array();
+		
+		
+		//kopfsatz
+		$result = array();
+		foreach($this->_lg04->getFields() as $idx => $field)
+		{
+			//var_dump($lg04->getFields()); die();
+			if($field['name'] == 'line_no')
+			{
+				$result[] = $this->_lg04->getFormatedValue($idx,'0');
+			}
+			else
+			{
+				if(isset($data[$idx]))
+				{
+					$result[] = $this->_lg04->getFormatedValue($idx,$data[$idx],'headline');
+				}else{
+					$result[] = $this->_lg04->getFormatedValue($idx,"");
+				}
+			}
+		}
+		$content[] = implode('',$result);
+		
+		//positionssatz
+		$result = array();
+		foreach($this->_lg04->getFields() as $idx => $field)
+		{
+			//var_dump($lg04->getFields()); die();
+			if($field['name'] == 'line_no')
+			{
+				$result[] = $this->_lg04->getFormatedValue($idx,'1');
+			}
+			else
+			{
+				if(isset($data[$idx]))
+				{
+					$result[] = $this->_lg04->getFormatedValue($idx,$data[$idx],'posline');
+				}else{
+					$result[] = $this->_lg04->getFormatedValue($idx,"");
+				}
+			}
+		}
+		$content[] = implode('',$result);
+		
+		return $content;
+	}
+
 }

@@ -13,8 +13,8 @@ class Sid_Haushalt_Adminhtml_Sidhaushalt_HaushaltController extends Mage_Adminht
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('haushalt/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_setActiveMenu('system/convert')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Haushaltsystem Export'), Mage::helper('adminhtml')->__('Haushaltsystem Export'));
 		
 		return $this;
 	}   

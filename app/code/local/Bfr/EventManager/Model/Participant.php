@@ -133,11 +133,14 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	$translate->translateData($this,$fields, $event->getLangCode());
     	
     	$this->save();
+   	
     	
-    	
-    	
-    	
-    	//$t = 2/0;
+    }
+    
+    public static function changeStatus($itemIds,$newStatus)
+    {
+    	$res = Mage::getResourceModel('eventmanager/participant');
+    	$res->changeStatus($itemIds,$newStatus);
     	
     	
     }

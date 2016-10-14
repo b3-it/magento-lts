@@ -78,7 +78,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   {
 		$collection = Mage::getModel('eventmanager/participant')->getCollection();
 		$collection->getSelect()
-		->joinleft(array( 'order'=>$collection->getTable('sales/order')), 'main_table.order_id = order.entity_id', array('order_increment_id'=>'increment_id','order_status'=>'status'));
+		->joinleft(array( 'order'=>$collection->getTable('sales/order')), 'main_table.order_id = order.entity_id', array('order_increment_id'=>'increment_id','order_status'=>'status', 'created_at'));
 		
 		$col = null;
 		$coalesce = array();
@@ -136,7 +136,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       ));
       
       $this->addColumn('op_status', array(
-      		'header' => Mage::helper('sales')->__('Status'),
+      		'header' => Mage::helper('sales')->__('Order Status'),
       		'index' => 'order_status',
       		'type'  => 'options',
       		'width' => '70px',

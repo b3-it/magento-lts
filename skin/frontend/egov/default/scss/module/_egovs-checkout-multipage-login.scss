@@ -7,11 +7,9 @@
 
 .egovs-checkout-multipage-login {
     @include egov_loginform;
-}
-
-@include bp(max-width, 480px) {
-    .egovs-checkout-multipage-login {
-        .col-wrapper {
+    
+    @include bp(max-width, 800px) {
+    	.col-wrapper {
             margin-top: 20px;
         }
 

@@ -21,8 +21,13 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     public static function create($vendorId)
     {
     	$model = Mage::getModel('exportorder/link');
-    	$random = rand(1,100);
-    	$ident = md5(crypt($random,time().rand(1,1000).$vendorId));
+    	$random = rand(1,100)."";
+    	$res = self::getRandomString(10);
+    	$res .= time()."";
+    	$res .= $vendorId."";
+    	$res .= self::getRandomString(20);
+    	$res .= self::getRandomString(5,"0123456789");
+    	$ident = md5($res);
     	$model->setIdent($ident)
     	->setCreateTime(now())
     	->setVendorId($vendorId)
@@ -31,6 +36,20 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     	return $model;
     	 
     }
+    
+    
+    protected static function getRandomString($len, $chars=null)
+    {
+    	if (is_null($chars)) {
+    		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    	}
+    	mt_srand(10000000*(double)microtime());
+    	for ($i = 0, $str = '', $lc = strlen($chars)-1; $i < $len; $i++) {
+    		$str .= $chars[mt_rand(0, $lc)];
+    	}
+    	return $str;
+    }
+    
     public function saveOrderIds($orderIds)
     {
     	if(is_array($orderIds) && (count($orderIds) > 0))
@@ -76,5 +95,34 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     public function getUrl()
     {
     	return Mage::getUrl('exportorder/index/index',array('ident'=>$this->getIdent()));
+    }
+    
+    
+    
+    protected function _beforeDelete()
+    {
+    	$filename = $this->getDirectory().$this->getFilename();
+    	/* @var collection Sid_ExportOrder_Model_Resource_Link_Order_Collection */
+    	$collection = Mage::getModel('exportorder/link_order')->getCollection();
+    	$collection->getSelect()->where('link_id = ' .intval($this->getId()));
+    	$orderIds = array();
+    	foreach($collection as $item){
+    		$orderIds[] = $item->getOrderId();
+    	}
+    	if(file_exists($filename))
+    	{
+    		try 
+    		{
+    			unlink($filename);
+    			Sid_ExportOrder_Model_History::createHistory($orderIds, sprintf('Datei %s gelöscht',$this->getSendFilename()));
+    		}catch(Exception $ex){
+    			Mage::logException($ex);
+    			Sid_ExportOrder_Model_History::createHistory($orderIds, $ex->getMessage());
+    		}
+    		
+    	}else{
+    		Sid_ExportOrder_Model_History::createHistory($orderIds, sprintf('Datei %s nicht gefunden',$this->getSendFilename()));
+    		$this->setLog(sprintf('Datei %s zum löschen nicht gefunden',$this->getSendFilename()));
+    	}
     }
 }

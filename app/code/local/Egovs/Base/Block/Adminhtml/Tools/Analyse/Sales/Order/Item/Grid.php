@@ -46,6 +46,29 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         return parent::_prepareCollection();
     }
 
+    
+    protected function _afterLoadCollection()
+    {
+    	$data = array();
+    	foreach($this->getCollection() as $item)
+    	{
+    		foreach($this->getColumns() as $col)
+    		{
+    			if($col->getTotal())
+    			{
+    				if(!isset($data[$col->getId()])){
+    					$data[$col->getId()] = $item->getData($col->getIndex());
+    				}else {
+    					$data[$col->getId()] += $item->getData($col->getIndex());
+    				}
+    			}
+    		}
+    	}
+    	
+    	$this->setTotals(new Varien_Object($data));
+    }
+    
+    
     protected function _prepareColumns()
     {
 
@@ -54,6 +77,7 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
             'width' => '80px',
             'type'  => 'text',
             'index' => 'increment_id',
+        	'totals_label' => Mage::helper('sales')->__('Totals')
         ));
 
         $this->addColumn('created_at', array(
@@ -105,6 +129,7 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         		'header' => Mage::helper('egovsbase')->__('Qty'),
         		'index' => 'qty_ordered',
         		'width' => '100px',
+        		'total' => 'sum'
         ));
   
         
@@ -112,24 +137,28 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         		'header' => Mage::helper('egovsbase')->__('Einzelpreis'),
         		'index' => 'price',
         		'width' => '100px',
+        		'total' => 'sum'
         ));
         
         $this->addColumn('tax_percent', array(
         		'header' => Mage::helper('egovsbase')->__('Tax Percent'),
         		'index' => 'tax_percent',
         		'width' => '100px',
+      
         ));
         
         $this->addColumn('tax_amount', array(
         		'header' => Mage::helper('egovsbase')->__('Tax Amount'),
         		'index' => 'tax_amount',
         		'width' => '100px',
+        		'total' => 'sum'
         ));
         
         $this->addColumn('base_row_total_incl_tax', array(
         		'header' => Mage::helper('egovsbase')->__('Row Total'),
         		'index' => 'base_row_total_incl_tax',
         		'width' => '100px',
+        		'total' => 'sum'
         ));
         
 
@@ -148,10 +177,12 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
 
         //$this->addExportType('*/*/exportCsv', Mage::helper('sales')->__('CSV'));
         //$this->addExportType('*/*/exportExcel', Mage::helper('sales')->__('Excel XML'));
-
+        $this->setCountTotals(true);
         return parent::_prepareColumns();
     }
 
+    
+   
     
     
     /**

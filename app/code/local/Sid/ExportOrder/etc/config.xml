@@ -132,9 +132,9 @@
 		<framecontract >
                     <children>
                           <export translate='title' module="exportorder">
-                                <title>Export Orders</title>
+                                <title>Vendor Order</title>
                                 <sort_order>50</sort_order>
-                                <action>adminhtml/exportorder_export</action>
+                                <action>adminhtml/exportOrder_export</action>
                           </export>
                         
                     </children>
@@ -168,6 +168,15 @@
 			</exportorder>
 		</updates>
 	</layout>
+	 <translate>
+            <modules>
+                <Sid_ExportOrder>
+                    <files>
+                        <default>Sid_Exportorder.csv</default>
+                    </files>
+                </Sid_ExportOrder>
+            </modules>
+        </translate>
     </adminhtml>
     <sid_exportorder>
     	<format>
@@ -198,6 +207,9 @@
                 <typ>link</typ>
             </link>
     	</transfer>
+    	<delete_old_links>
+    	   <days>14</days>
+    	</delete_old_links>
     </sid_exportorder>
         <crontab>
         <jobs>

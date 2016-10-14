@@ -14,7 +14,7 @@ class Sid_ExportOrder_Model_Type_Format extends Varien_Object
 	    	foreach($types as $typ)
 	    	{
 	    		if(isset($typ['typ']) && isset($typ['label'])){
-	    			$result[$typ['typ']] = $typ['label'];
+	    			$result[$typ['typ']] =  Mage::helper('exportorder')->__($typ['label']);
 	    		}
 	    	}
     	}

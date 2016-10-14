@@ -18,8 +18,8 @@ class Bfr_EventManager_Model_Status extends Varien_Object
     static public function getOptionArray()
     {
         return array(
-            self::STATUS_ENABLED    => Mage::helper('eventmanager')->__('Enabled'),
-            self::STATUS_DISABLED   => Mage::helper('eventmanager')->__('Disabled')
+            self::STATUS_ENABLED    => Mage::helper('eventmanager')->__('participated'),
+            self::STATUS_DISABLED   => Mage::helper('eventmanager')->__('not participated')
         );
     }
 

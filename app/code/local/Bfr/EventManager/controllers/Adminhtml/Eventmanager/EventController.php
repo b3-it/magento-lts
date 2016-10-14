@@ -277,6 +277,36 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     }
 
     
+    public function exportAllCsvAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	   
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_export','');
+    	 
+    	$fileName   = 'eventAll.csv';
+    	$content    = $block->getCsv();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    public function exportAllXmlAction()
+    {
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	
+    	 
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_export','');
+    	 
+    	$fileName   = 'eventAll.xml';
+    	$content    = $block->getXml();
+    
+    	$this->_sendUploadResponse($fileName, $content);
+    }
+    
+    
     public function optionsgridAction() {
     	
     	$id     = $this->getRequest()->getParam('id');
@@ -290,6 +320,20 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	
     	$this->getResponse()->setBody($block->toHtml());
 
+    }
+    
+    public function exportgridAction() {
+    	 
+    	$id     = $this->getRequest()->getParam('id');
+    	$model  = Mage::getModel('eventmanager/event')->load(intval($id));
+    	Mage::register('event_data', $model);
+    	 
+    	
+    	$this->loadLayout();
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_export','');
+    	 
+    	$this->getResponse()->setBody($block->toHtml());
+    
     }
     
     public function participantsgridAction() {
@@ -331,5 +375,27 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $response->setBody($content);
         $response->sendResponse();
         die;
+    }
+    
+    /**
+     * Massenaktion für die Telnehmerliste innerhalb der Veranstaltungverwaltung
+     */
+    public function massStatusParticipantAction()
+    {
+    	$participantIds = $this->getRequest()->getParam('participant');
+    	if(!is_array($participantIds)) {
+    		Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
+    	} else {
+    		try {
+    			Bfr_EventManager_Model_Participant::changeStatus($participantIds, $this->getRequest()->getParam('status'));
+    
+    			$this->_getSession()->addSuccess(
+    					$this->__('Total of %d record(s) were successfully updated', count($participantIds))
+    					);
+    		} catch (Exception $e) {
+    			$this->_getSession()->addError($e->getMessage());
+    		}
+    	}
+    	$this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
     }
 }

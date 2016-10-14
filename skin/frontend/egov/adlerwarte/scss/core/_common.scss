@@ -29,6 +29,14 @@ a, button {
     touch-action: manipulation;
 }
 
+// Add Multi-Column
+.block-two-columns, .multi-two-columns {
+	@include multi-two-columns;
+}
+.block-tree-columns, .multi-tree-columns {
+	@include multi-tree-columns;
+}
+
 body,
 button,
 input,
@@ -571,6 +579,7 @@ div.block-reorder {
     overflow: hidden;
     margin: 0px;
     color: $global-active-color;
+    background: transparent;
 
     li {
         float: left;
@@ -578,7 +587,6 @@ div.block-reorder {
     }
 
     a {
-        float: left;
         color: $global-active-color;
         border-width: $global-active-border;
         border-color: transparent;
@@ -596,7 +604,6 @@ div.block-reorder {
     }
 
     span {
-        float: left;
         padding: 0 7px;
     }
 }
