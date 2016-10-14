@@ -54,7 +54,11 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
      */    
     public function getVendor() 
     {
-      return $this->_vendor;
+    	if($this->_vendor == null)
+    	{
+    		$this->_vendor = Mage::getModel('framecontract/vendor')->load($this->getVendorId());
+    	}
+      	return $this->_vendor;
     }
     
     public function setVendor($value) 
@@ -66,7 +70,11 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
         
     public function getContract() 
     {
-      return $this->_contract;
+    	if($this->_contract = null)
+    	{
+    		$this->_contract =  Mage::getModel('framecontract/contract')->load($this->getContractId());
+    	}
+      	return $this->_contract;
     }
     
     public function setContract($value) 
@@ -170,7 +178,10 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     		$this->setLog(sprintf("send pendingOrders: %s", implode(',',$orderIds)));
     	}
     	
-    	$this->setLog(sprintf("process pendingOrders: %s", implode(',',$allOrderIds)));
+    	if(count($allOrderIds) > 0)
+    	{
+    		$this->setLog(sprintf("process pendingOrders: %s", implode(',',$allOrderIds)));
+    	}
     	 
     }
     

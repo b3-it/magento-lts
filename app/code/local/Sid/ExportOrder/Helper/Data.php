@@ -104,7 +104,7 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getSemaphor($delta = 0)
 	{
 		if (function_exists('microtime')) {
-			return microtime(true) + ($delta * 1000);
+			return microtime(true) + ($delta);
 		} else {
 			return time() + $delta;
 		}

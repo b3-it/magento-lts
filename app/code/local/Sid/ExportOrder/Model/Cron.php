@@ -103,15 +103,15 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			->where('export.status = '.Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
   			->where('export.semaphor < ' .Mage::helper('exportorder')->getSemaphor(-120))
   			->where("main_table.status IN ('processing','complete')");
+		
+  		//$this->setLog(($oderCollection->getSelect()->__toString()));  		
   		
-  		//preprocessing speichern damit keine Bestellung gleichzeitig bearbeitet wird
   		foreach($oderCollection as $order){
   			if(!$order->getFramecontract())
   			{
   				continue;
   			}
-  			$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
-  			$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
+  			
   			$exportOrder = Mage::getModel('exportorder/order')->load($order->getId(),'order_id');
   			$exportOrder->processOrder($order);
   		}
