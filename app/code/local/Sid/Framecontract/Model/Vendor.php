@@ -1,7 +1,56 @@
 <?php
 
+/**
+ * 
+ *  Verwaltung des Lieferanten
+ *  @category Egovs
+ *  @package  Sid_Framecontract_Model_Vendor
+ *  @author Frank Rochlitzer <​f.rochlitzer@b3-it.de>
+ *  @author Holger Kögel <​h.koegel@b3-it.de>
+ *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
+ *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+
+
+/**
+ *  @method int getFramecontractVendorId()
+ *  @method setFramecontractVendorId(int $value)
+ *  @method string getCompany()
+ *  @method setCompany(string $value)
+ *  @method string getOperator()
+ *  @method setOperator(string $value)
+ *  @method string getOrderEmail()
+ *  @method setOrderEmail(string $value)
+ *  @method string getEmail()
+ *  @method setEmail(string $value)
+ *  @method string getStreet()
+ *  @method setStreet(string $value)
+ *  @method string getCity()
+ *  @method setCity(string $value)
+ *  @method string getPlz()
+ *  @method setPlz(string $value)
+ *  @method string getFax()
+ *  @method setFax(string $value)
+ *  @method string getTel()
+ *  @method setTel(string $value)
+ *  @method string getCountry()
+ *  @method setCountry(string $value)
+ *  @method  getCreatedTime()
+ *  @method setCreatedTime( $value)
+ *  @method  getUpdateTime()
+ *  @method setUpdateTime( $value)
+ *  @method string getExportFormat()
+ *  @method setExportFormat(string $value)
+ *  @method string getTransferType()
+ *  @method setTransferType(string $value)
+ *  @method string getClaimEmail()
+ *  @method setClaimEmail(string $value)
+ */
+
 class Sid_Framecontract_Model_Vendor extends Mage_Core_Model_Abstract
 {
+	
+
 	
 	protected $_eventPrefix = 'framecontract_vendor';
 	

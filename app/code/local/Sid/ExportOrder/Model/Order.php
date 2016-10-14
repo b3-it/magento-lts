@@ -10,6 +10,31 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method int getOrderId()
+ *  @method setOrderId(int $value)
+ *  @method string getTransfer()
+ *  @method setTransfer(string $value)
+ *  @method string getFormat()
+ *  @method setFormat(string $value)
+ *  @method string getMessage()
+ *  @method setMessage(string $value)
+ *  @method int getStatus()
+ *  @method setStatus(int $value)
+ *  @method  getCreatedTime()
+ *  @method setCreatedTime( $value)
+ *  @method  getUpdateTime()
+ *  @method setUpdateTime( $value)
+ *  @method int getContractId()
+ *  @method setContractId(int $value)
+ *  @method int getVendorId()
+ *  @method setVendorId(int $value)
+ *  @method int getSemaphor()
+ *  @method setSemaphor(int $value)
+ */
 class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 {
 	protected $_vendor = null;
@@ -24,7 +49,9 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     
     
     
-        
+    /**
+     * @return Sid_Framecontract_Model_Vendor
+     */    
     public function getVendor() 
     {
       return $this->_vendor;
@@ -48,29 +75,37 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
       return $this;
     }
     
-    public function processOrder($order)
+    /**
+     * 
+     * @param Mage_Sales_Model_Order $order
+     * @return Sid_ExportOrder_Model_Order
+     */
+    public function processOrder(Mage_Sales_Model_Order $order)
     {
     	$storeId = $order->getStoreId();
     	try {
-    	$format = $this->getVendor()->getExportFormatModel();
-    	$transfer = $this->getVendor()->getTransferModel();
-    	
-    	if(!$transfer->canSend()){
-    		return $this;
-    	}
-    	
-    	$content = $format->processOrder($order);
-    	
-    	$msg = $transfer->send($content,$order);
-    	
-    	$this->setMessage($msg)
-    		->setUpdateTime(now())
-    		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
-    		->save();
-    	
-    		if(strlen($msg) > 0){
-    			Mage::throwException($msg);
-    		}
+	    	$format = $this->getVendor()->getExportFormatModel();
+	    	$transfer = $this->getVendor()->getTransferModel();
+	    	
+	    	
+	    	$this->setLog(sprintf("process Order: %s, Format: %s, Transfer: %s", $order->getId(), $this->getVendor()->getExportFormat(),$this->getVendor()->getTransferType()));
+	    	
+	    	if(!$transfer->canSend()){
+	    		return $this;
+	    	}
+	    	
+	    	$content = $format->processOrder($order);
+	    	
+	    	$msg = $transfer->send($content,$order);
+	    	
+	    	$this->setMessage($msg)
+	    		->setUpdateTime(now())
+	    		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
+	    		->save();
+	    	
+	    		if(strlen($msg) > 0){
+	    			Mage::throwException($msg);
+	    		}
     	}
     	catch (Exception $ex)
     	{
@@ -99,6 +134,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	$vendorId = 0;
     	$content = array();
     	$orderIds = array();
+    	$allOrderIds = array();
     	$skip = false;
     	foreach($collection as $order)
     	{
@@ -111,9 +147,9 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     			if(!empty($expr)){
     				$skip = !Mage::helper('exportorder')->canSchedule($expr);
     			}
-    			if(count($content) > 0){
-    				
+    			if(count($content) > 0){	
     				$transfer->sendOrders($content, $format, $orderIds, $vendor);
+    				$this->setLog(sprintf("send pendingOrders: %s", implode(',',$orderIds)));
     			}
     			$content = array();
     			$orderIds = array();
@@ -123,13 +159,18 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    		$content[$order->getIncrementId()] = $format->processOrder($order);
 	    		$orderIds[] = $order->getId();
     		}
+    		
+    		$allOrderIds[] = $order->getId();
     	}
+    	
+    	
     	
     	if(count($content) > 0){
     		$transfer->sendOrders($content, $format, $orderIds, $vendor);
+    		$this->setLog(sprintf("send pendingOrders: %s", implode(',',$orderIds)));
     	}
     	
-    	
+    	$this->setLog(sprintf("process pendingOrders: %s", implode(',',$allOrderIds)));
     	 
     }
     
