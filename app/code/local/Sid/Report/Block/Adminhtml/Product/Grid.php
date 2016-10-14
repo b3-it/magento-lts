@@ -72,8 +72,19 @@ class Sid_Report_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
       		'options'   => $ctr
       ));
       
+      $currencyCode = $this->getCurrentCurrencyCode();
+      
+      $this->addColumn('price', array(
+      		'header'    => Mage::helper('sidreport')->__('Gesammtpreis'),
+      		'align'     =>'left',
+      		'index'     => 'totalprice',
+      		'type'          => 'currency',
+        	'currency_code' => $currencyCode,
+      		'filter_condition_callback' => array($this, '_filterCondition'),
+      ));
+      
       $this->addColumn('stock', array(
-      		'header'    => Mage::helper('sidreport')->__('Stock'),
+      		'header'    => Mage::helper('sidreport')->__('Qty Stock'),
       		'align'     =>'left',
       		'index'     => 'stock_qty',
       		'type'		=> 'number',
@@ -81,15 +92,17 @@ class Sid_Report_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
       ));
       
       $this->addColumn('contract', array(
-      		'header'    => Mage::helper('sidreport')->__('Contract'),
+      		'header'    => Mage::helper('sidreport')->__('Qty Contract'),
       		'align'     =>'left',
       		'index'     => 'contract_qty',
       		'type'		=> 'number',
       		'filter_condition_callback' => array($this, '_filterCondition'),
       ));
       
+     
+      
       $this->addColumn('sold', array(
-      		'header'    => Mage::helper('sidreport')->__('Sold'),
+      		'header'    => Mage::helper('sidreport')->__('Qty Sold'),
       		'align'     =>'left',
       		'index'     => 'sold',
       		'type'		=> 'number',
@@ -97,7 +110,7 @@ class Sid_Report_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
       ));
       
       $this->addColumn('sold_p', array(
-      		'header'    => Mage::helper('sidreport')->__('Sold [%]'),
+      		'header'    => Mage::helper('sidreport')->__('Qty Sold [%]'),
       		'align'     =>'left',
       		'index'     => 'sold_p',
       		'type'		=> 'number',

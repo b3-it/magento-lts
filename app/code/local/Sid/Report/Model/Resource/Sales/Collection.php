@@ -64,6 +64,8 @@ class Sid_Report_Model_Resource_Sales_Collection extends Sid_Report_Model_Mysql4
         $this->getSelect()->where("product_type != '".Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE."'")
         		->group('main_table.product_id')
         		->columns(array('total_price' => 'SUM(qty_ordered*price)'))
+        		->columns(array('total_price_base_row_total' => 'SUM(base_row_total)'))
+        		->columns(array('total_price_base_row_total_incl_tax' => 'SUM(base_row_total_incl_tax)'))
 				->columns(array('total_qty' => 'SUM(qty_ordered)'))
 				->columns(array('all_dst' => 'GROUP_CONCAT(distinct `dst`.`value` order by `dst`.`value`)'))
         ;
@@ -93,10 +95,13 @@ class Sid_Report_Model_Resource_Sales_Collection extends Sid_Report_Model_Mysql4
         {
         	$this->getSelect()->where($this->getConnection()->quoteInto('dst.value like ?',$this->_dienststelle));
         }
+//         $eav = Mage::getResourceModel('eav/entity_attribute');
+//         $qty = $eav->getIdByCode('catalog_product', 'framecontract_qty');
         
         $this->getSelect()
         	->join(array('los'=>$this->getTable('framecontract/los')), 'main_table.los_id = los.los_id',array('lostitle'=>'title'))
         	->join(array('contract'=>$this->getTable('framecontract/contract')), 'contract.framecontract_contract_id = los.framecontract_contract_id',array('contracttitle'=>'title'))
+        	//->join(array('qty'=>$collection->getTable('catalog/product').'_int'), 'qty.entity_id=main_table.product_id AND qty.attribute_id ='.$qty, array('contract_qty'=>'value'))
         	->columns(array('contractlos' => "CONCAT(contract.title,' / ', los.title )") );
         
 

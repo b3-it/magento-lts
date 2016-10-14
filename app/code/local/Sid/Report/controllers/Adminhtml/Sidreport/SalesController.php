@@ -81,7 +81,7 @@ class Sid_Report_Adminhtml_Sidreport_SalesController extends Mage_Adminhtml_Cont
 
 
         $this->_initAction()
-            ->_setActiveMenu('sidreport/sales/sales')
+            ->_setActiveMenu('report/salesroot/frame_contract_report')
             ->_addBreadcrumb(Mage::helper('adminhtml')->__('Frame Contract'), Mage::helper('adminhtml')->__('Frame Contract'));
 
         //Muss mit $this->_controller aus Container Grid übereinstimmen

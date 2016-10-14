@@ -73,12 +73,7 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
     protected function _prepareColumns()
     {
 
-    	$this->addColumn('increment_id', array(
-    			'header'    => Mage::helper('sales')->__('Order'),
-    			'index'     => 'order_increment_id',
-    			'type'      => 'string',
-    			'sortable'  => false
-    	));
+    
     	
         $this->addColumn('product_name', array(
             'header'    => Mage::helper('sales')->__('Product Name'),
@@ -97,29 +92,33 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
         if ($this->getFilterData()->getStoreIds()) {
             $this->setStoreIds(explode(',', $this->getFilterData()->getStoreIds()));
         }
+        
         $currencyCode = $this->getCurrentCurrencyCode();
 
-        $this->addColumn('base_price', array(
-            'header'        => Mage::helper('sales')->__('Einzelpreis Netto'),
+        
+        $this->addColumn('total_price_base_row_total', array(
+        		'header'        => Mage::helper('sales')->__('Gesamtpreis Netto'),
+        		'type'          => 'currency',
+        		'currency_code' => $currencyCode,
+        		'index'         => 'total_price_base_row_total',
+        		'total'     	=> 'sum',
+        		'sortable'      => false
+        ));
+        
+        $this->addColumn('total_price_base_row_total_incl_tax', array(
+            'header'        => Mage::helper('sales')->__('Gesamtpreis Brutto'),
             'type'          => 'currency',
             'currency_code' => $currencyCode,
-            'index'         => 'base_price',
+            'index'         => 'total_price_base_row_total_incl_tax',
         	'total'     	=> 'sum',
             'sortable'      => false
         ));
         
-        $this->addColumn('base_row_total', array(
-        		'header'        => Mage::helper('sales')->__('Preis Netto'),
-        		'type'          => 'currency',
-        		'currency_code' => $currencyCode,
-        		'index'         => 'base_row_total',
-        		'total'     	=> 'sum',
-        		'sortable'      => false
-        ));
+       
 
-        $this->addColumn('qty_ordered', array(
+        $this->addColumn('total_qty', array(
             'header'    => Mage::helper('sales')->__('Quantity Ordered'),
-            'index'     => 'qty_ordered',
+            'index'     => 'total_qty',
             'type'      => 'number',
             'total'     => 'sum',
             'sortable'  => false

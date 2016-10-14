@@ -14,9 +14,12 @@ class Sid_Report_Adminhtml_Sidreport_ProductController extends Mage_Adminhtml_Co
 {
 
 	protected function _initAction() {
+		$this->_title($this->__('Reports'))
+			->_title($this->__('Article'))
+			->_title($this->__('Contract'));
 		$this->loadLayout()
-			->_setActiveMenu('product/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_setActiveMenu('report/products/frame_contract_product_report')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Article'), Mage::helper('adminhtml')->__('Article'));
 
 		return $this;
 	}
