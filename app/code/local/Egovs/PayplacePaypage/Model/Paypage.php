@@ -106,7 +106,13 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 		}
 		$_formServiceRequest->setAdditionalNote(substr($desc, 0, 25));
 		$_formServiceRequest->setKind(Egovs_Paymentbase_Model_Payplace_Enum_KindEnum::VALUE_CREDITCARD);
-		//$_formServiceRequest->giropayData = null;
+		
+		//Pseudokartennummern
+		if (Mage::getStoreConfigFlag("payment/{$this->getCode()}/use_pseudo")) {
+			$_panalias = new Egovs_Paymentbase_Model_Payplace_Types_Panalias();
+			$_panalias->setGenerate(true);
+			$_formServiceRequest->setPanalias($_panalias);
+		}
 	}
 	
 	public function aktiviereKassenzeichen($wId, $refId, $providerId) {

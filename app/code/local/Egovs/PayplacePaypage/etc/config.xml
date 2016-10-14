@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Egovs_PayplacePaypage>
-			<version>0.1.0.0</version>
+			<version>1.0.0.0</version>
 		</Egovs_PayplacePaypage>
 	</modules>
 	<global>
@@ -103,6 +103,7 @@
 					Mit "authorize" wird die Bestellung ohne automatische Rechnung erstellt.
 				 -->
 				<payment_action>authorize</payment_action>
+				<use_pseudo>1</use_pseudo>
 				<title>Payplace Paypage</title>
 				<allowspecific>0</allowspecific>
 				<min_order_total>10</min_order_total>
