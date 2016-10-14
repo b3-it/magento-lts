@@ -7,3 +7,5 @@
 "There was an error at Payplace Payment. Customers payment was not valid.","Bei der Payplace-Zahlung ist ein Fehler aufgetreten. Die Zahlung des Kunden ist nicht gültig."
 "Customer canceled Payplace payment or an error occured.","Der Kunden hat die Payplace-Zahlung storniert oder es ist ein Fehler aufgetreten."
 "Testing Note","Testhinweis"
+"Enable use of pseudocard numbers","Pseudokartennummern-Nutzung aktivieren"
+"Use pseudocard numbers to get full chargeback on cancellations (default:yes)","Pseudokartennummern müssen aktiviert sein  um den vollen Chargeback vom Anbieter zurückzuerhalten (Default:ja)"
