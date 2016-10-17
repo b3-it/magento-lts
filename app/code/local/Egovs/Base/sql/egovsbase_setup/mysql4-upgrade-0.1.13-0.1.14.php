@@ -7,7 +7,7 @@ $installer->startSetup();
 
 
 
-$installer->run("ALTER TABLE `{$installer->getTable('customer_group')}`  MODIFY `customer_group_code` varchar(127) default ''");
+$installer->run("ALTER TABLE `{$installer->getTable('customer_group')}`  MODIFY `customer_group_code` varchar(255) default ''");
 
 
 
