@@ -175,7 +175,7 @@ where participant_id = 1 AND el.typ = 3
       
       
       $this->addColumn('pa_prefix', array(
-      		'header'    => Mage::helper('eventmanager')->__('Postfix'),
+      		'header'    => Mage::helper('eventmanager')->__('Prefix'),
       		'align'     =>'left',
       		'index'     => 'prefix',
       		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
