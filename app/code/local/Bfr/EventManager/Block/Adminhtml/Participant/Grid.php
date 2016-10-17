@@ -174,10 +174,10 @@ where participant_id = 1 AND el.typ = 3
       ));
       
       
-      $this->addColumn('pa_postfix', array(
+      $this->addColumn('pa_prefix', array(
       		'header'    => Mage::helper('eventmanager')->__('Postfix'),
       		'align'     =>'left',
-      		'index'     => 'email',
+      		'index'     => 'prefix',
       		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
       ));
       

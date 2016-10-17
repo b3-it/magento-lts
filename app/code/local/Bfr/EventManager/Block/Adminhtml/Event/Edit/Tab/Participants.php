@@ -177,10 +177,10 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	));
   	
   	
-  	$this->addColumn('pa_postfix', array(
+  	$this->addColumn('pa_prefix', array(
   			'header'    => Mage::helper('eventmanager')->__('Postfix'),
   			'align'     =>'left',
-  			'index'     => 'postfix',
+  			'index'     => 'prefix',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
   	
