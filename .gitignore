@@ -9,6 +9,10 @@
 .project
 .buildpath
 
+.idea
+.idea/
+.tern-project
+
 # Magento-Config
 app/etc/local.xml
 
@@ -21,6 +25,7 @@ media/catalog/product
 media/downloadable
 media/egovs_productfile
 media/tmp
+media/captcha
 
 # Working-Data
 var/backups
