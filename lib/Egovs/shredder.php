@@ -2,7 +2,7 @@
 error_reporting( E_ALL ^ E_NOTICE );
 ob_start();
 
-$sub        = array('/lib/egovs', '\lib\egovs');
+$sub        = array('/lib/Egovs', '\lib\Egovs');
 $base       = str_replace( $sub, '', dirname(__FILE__) );
 $config_xml = $base . '/app/etc/local.xml';
 $data_xml   = array();
@@ -65,13 +65,71 @@ function get_xml_data()
         }
     }
 
-    $data_xml = $params;
+    // DB-Verbindungs-Informationen zurückgeben
+    $data_xml = $params['config']['global']['resources']['default_setup']['connection'];
 }
 
-function set_sql($query = '')
+function connect()
 {
+    // http://kushellig.de/prepared-statements-php-data-objects-pdo/
+    // http://culttt.com/2012/10/01/roll-your-own-pdo-php-class/
+
     global $data_xml;
 
+    $host   = $data_xml['host'];
+    $dbname = $data_xml['dbname'];
+    $dbuser = $data_xml['username'];
+    $dbpw   = $data_xml['password'];
+
+    $pdo = null;
+
+    try
+    {
+        $pdo = new PDO("mysql:host=$host; dbname=$dbname", $dbuser, $dbpw);
+        $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+        return $pdo;
+    }
+    catch(PDOException $err)
+    {
+        return $err -> getMessage();
+    }
+}
+
+function set_sql($query = '', $param = '', $value = '')
+{
+    $query = trim($query);
+    $param = trim($param);
+    $value = trim($value);
+
+    if ( ($query == '') OR ($param == '') OR ($value == '') )
+    {
+        return 'Fehler bei der Daten&uuml;bergabe!';
+    }
+
+    $link = connect();
+    if ( is_object($link) )
+    {
+        // Erfolg => PDO erzeugen und ausführen
+        // http://www.mustbebuilt.co.uk/php/insert-update-and-delete-with-pdo/
+
+        $link -> exec("SET foreign_key_checks=0");
+
+        $result = $link -> prepare($query);
+        $result -> bindParam($param, $value, PDO::PARAM_STR);
+
+        return $result -> execute();
+    }
+    else
+    {
+        // Fehler zurückgeben
+        return $link;
+    }
+}
+
+function get_sql($query = '')
+{
     $query = trim($query);
 
     if ( $query == '' )
@@ -79,40 +137,36 @@ function set_sql($query = '')
         $return = 'keine Abfrage!';
     }
 
-    $link = mysql_connect($data_xml['config']['global']['resources']['default_setup']['connection']['host'],
-                          $data_xml['config']['global']['resources']['default_setup']['connection']['username'],
-                          $data_xml['config']['global']['resources']['default_setup']['connection']['password']
-                         );
-    if ( !$link )
+    $link = connect();
+
+    if ( is_object($link) )
     {
-        return 'Error!';
+        // Erfolg => PDO erzeugen und ausführen
+        $result = $link -> prepare($query);
+        $result -> execute();
+
+        $data = array();
+        return $result -> fetchAll();
     }
-
-    $db = mysql_select_db($data_xml['config']['global']['resources']['default_setup']['connection']['dbname'], $link);
-
-    if ( !$db )
+    else
     {
-        return 'Fehler : ' . mysql_error();
+        // Fehler zurückgeben
+        return $link;
     }
-
-    $return = mysql_query($query, $link);
-
-    mysql_close($link);
-
-    return $return;
 }
+
 
 function get_table_list()
 {
     global $data_xml;
 
-    $result = set_sql('SHOW TABLES FROM ' . $data_xml['config']['global']['resources']['default_setup']['connection']['dbname']);
+    $result = get_sql('SHOW TABLES FROM ' . $data_xml['dbname']);
 
     $data = array();
 
-    while ( $row = mysql_fetch_row($result) )
+    foreach( $result AS $key => $val )
     {
-        $data[] = $row[0];
+        $data[] = $val[0];
     }
 
     return $data;
@@ -127,7 +181,6 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         <style type="text/css">
             html  {background-color:#DCDCDC;}
             table {width:500px;}
-            input {width:300px;}
             hr    {width:500px;}
             .okay {color:#008000;}
             .fail {color:#FF0000;}
@@ -140,7 +193,7 @@ get_xml_data();
 
 $data = get_table_list();
 
-echo $data_xml['config']['global']['resources']['default_setup']['connection']['dbname'] . '<hr />';
+echo 'Magento - Datenbank-Shredder :: ' . $data_xml['dbname'] . '<hr />';
 echo "<table summary=\"\">\n";
 
 if ( count($data) )
@@ -159,11 +212,11 @@ if ( count($data) )
         {
             try
             {
-                $result = set_sql('DROP TABLE IF EXISTS ' . $data[0]);
+                $err = set_sql('DROP TABLE IF EXISTS ' . $data[0], $data[0], $data[0]);
 
-                echo '      ' . $data[0] . ' Return: ' . ( ($result == TRUE) ? 'OK' : 'Fehler' );
+                echo '<div class="' . ( ($err == TRUE) ? 'okay' : 'fail' ) . '">[Code: ' . $err . '] ' . $data[0] . '</div>';
 
-                if ( $result != TRUE )
+                if ( $err != TRUE )
                 {
                     $rest[] = $data[0];
                 }
@@ -172,10 +225,10 @@ if ( count($data) )
             }
             catch (Exception $e)
             {
-                echo ' - Exception: ' .  $e -> getMessage();
+                echo $data[0] . ' - Exception: ' .  $e -> getMessage();
             }
 
-            echo "<br />\n";
+            echo "\n";
 
             ob_flush();
             flush();
@@ -201,7 +254,7 @@ else
 echo "</table>";
 
 echo '
-        <div class="copy">&copy; 2013 by EDV-Beratung-Hempel</div>
+        <div class="copy">&copy; 2015 by B3-IT System GmbH</div>
     </body>
 </html>
 ';
