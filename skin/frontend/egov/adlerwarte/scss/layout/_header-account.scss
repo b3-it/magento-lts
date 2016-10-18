@@ -41,9 +41,6 @@
         text-transform: uppercase;
     }
 
-    .skip-account:hover {
-    }
-
     #header-account.skip-active {
         @include menu;
         display: block;
@@ -53,10 +50,6 @@
         right: 155px;
         width: 200px;
         opacity: 0.9;
-
-        @include bp(max-width, 911px) {
-            right: 230px;
-        }
     }
 
     #header-account a,
@@ -87,6 +80,11 @@
 /* -------------------------------------------- *
  * Account Links
  */
+ #header-account {
+ 	@include bp(max-width, $bp-medium) {
+ 		top: 125px;
+ 	}
+ }
 
 #header-account,
 #egov-menu {

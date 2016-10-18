@@ -39,10 +39,16 @@
     nav > li,
     li.level0 {
         @extend .egov-navigation-background;
-        background-color: $global-category-item-color;
+        background-color: transparent;
         margin: 0;
         padding: 0;
         cursor: pointer;
+        
+        @include bp(max-width, $bp-medium) {
+        	position: relative;
+        	top: -85px;
+        }
+        
         
         > a {
             @extend .egov-navigation-base;
