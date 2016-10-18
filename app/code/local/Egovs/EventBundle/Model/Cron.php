@@ -37,6 +37,7 @@ class Egovs_EventBundle_Model_Cron extends Mage_Core_Model_Abstract
     {
     	/* @var $collection Mage_Catalog_Model_Resource_Product_Collection */
     	$collection = Mage::getModel('catalog/product')->getCollection();
+    	$collection->addAttributeToSelect('*');
     	$collection->addAttributeToFilter('date_notsaleable',array('neq'=>null));
     	$collection->addAttributeToFilter('date_notsaleable',array('lt'=> Mage::getModel('core/date')->Date()));
     	$collection->getSelect()->where("type_id = '".Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE."'");
@@ -55,6 +56,7 @@ class Egovs_EventBundle_Model_Cron extends Mage_Core_Model_Abstract
     {
     	/* @var $collection Mage_Catalog_Model_Resource_Product_Collection */
     	$collection = Mage::getModel('catalog/product')->getCollection();
+    	$collection->addAttributeToSelect('*');
     	$collection->addAttributeToFilter('date_disable',array('neq'=>null));
     	$collection->addAttributeToFilter('date_disable',array('lt'=> Mage::getModel('core/date')->Date()));
     	$collection->getSelect()->where("type_id = '".Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE."'");
