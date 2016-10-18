@@ -16,7 +16,26 @@
 	margin-top: $global-category-margintop;
 	margin-right: $global-category-marginright;
 	margin-bottom: $global-boxmargin;
-    
+
+	#mobile-home-link {
+        margin: 0;
+
+	    a:hover, a:active {
+            color: $global-linkcolor-active;
+        }
+
+        a {
+    	    width:100%;
+            padding: 10px 12px 10px 14px;
+            display: block;
+            overflow: hidden;
+        }
+       
+        @include bp(min-width, 800px) {
+            display: none;
+        }
+	}
+
     nav > li,
     li.level0 {
         @extend .egov-navigation-background;
