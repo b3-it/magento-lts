@@ -159,7 +159,7 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable('admin/
 	);
 }
 
-$installer->run("ALTER TABLE `{$installer->getTable('customer_group')}`  MODIFY `customer_group_code` varchar(127) default ''");
+$installer->run("ALTER TABLE `{$installer->getTable('customer_group')}`  MODIFY `customer_group_code` varchar(255) default ''");
 
 if (!$installer->tableExists($installer->getTable('egovsbase/mail_attachment'))
 		&& $installer->tableExists($installer->getTable('core/email_queue')))

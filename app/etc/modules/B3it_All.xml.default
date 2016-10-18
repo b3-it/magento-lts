@@ -9,5 +9,9 @@
             <active>false</active>
             <codePool>local</codePool>          
         </B3it_Ids>
+        <B3it_Maintenance>
+            <active>false</active>
+            <codePool>local</codePool>
+        </B3it_Maintenance>
     </modules>
 </config>

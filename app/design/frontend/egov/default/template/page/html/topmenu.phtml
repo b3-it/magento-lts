@@ -12,6 +12,11 @@
 <?php if($_menu): ?>
 <nav id="egov-nav">
     <ol class="nav-primary">
+	    <li id="mobile-home-link" class="level0">
+	        <a href="<?php echo Mage::getBaseUrl(); ?>">
+	            <?php echo $this->__('Startup Page'); ?>
+	        </a>
+	    </li>
         <li id="egov-catalog-title" class="level0 egov-catalog-title">
             <a class="level0 egov-arrow-main-open" href="javascript:void(0);">
                 <?php echo $this->__('Category'); ?>

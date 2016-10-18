@@ -10,7 +10,7 @@
 /** @var Varien_Data_Tree_Node $menuTree */
 /** @var string $childrenWrapClass */
 
-$html = '';
+$html = array();
 
 $children = $menuTree->getChildren();
 $parentLevel = $menuTree->getLevel();
@@ -27,7 +27,9 @@ $parentPositionClass = $menuTree->getPositionClass();
 $itemPositionClassPrefix = $parentPositionClass ? $parentPositionClass . '-' : 'nav-';
 
 foreach ($children as $child) {
-    $child->setLevel($childLevel);
+    $spacer = str_repeat('    ', $childLevel);
+	
+	$child->setLevel($childLevel);
     $child->setIsFirst($counter == 1);
     $child->setIsLast($counter == $childrenCount);
     $child->setPositionClass($itemPositionClassPrefix . $counter);
@@ -53,40 +55,40 @@ foreach ($children as $child) {
         // First Level => Arrow first
         $_cssAppend = ' egov-arrow-sub-closed';
     }
+    
+    $html[] = $spacer . '<li id="' . $file_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';
 
-    $html .= '<li id="' . $file_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';
-
-    $html .= '<a href="'. $child->getUrl() .'" data-category-count="" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
-             $this->escapeHtml($this->__($child->getName())) .'</a>';
+    $html[] = $spacer . '    <a href="'. $child->getUrl() .'" data-category-count="" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
+              $this->escapeHtml($this->__($child->getName())) .'</a>';
 
     if (!empty($childrenWrapClass)) {
-        $html .= '<div class="'. $childrenWrapClass .'">';
+        $html[] = $spacer . '    <div class="'. $childrenWrapClass .'">';
     }
 
     $nextChildLevel = $childLevel + 1;
 
     if (!empty($_hasChildren)) {
-        $html .= '<ul id="sub-' . $file_id . '" class="level'. $childLevel .'">';
+        $html[] = $spacer . '<ul id="sub-' . $file_id . '" class="level'. $childLevel .'">';
 
         if ($show_all_link == TRUE) {
-            $html .= '<li id="all-' . $file_id . '" class="level'. $nextChildLevel .' view-all">';
-            $html .=     '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
-            $html .=         $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
-            $html .=     '</a>';
-            $html .= '</li>';
+            $html[] = $spacer . '<li id="all-' . $file_id . '" class="level'. $nextChildLevel .' view-all">';
+            $html[] = $spacer . '    <a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
+            $html[] = $spacer . '        ' . $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
+            $html[] = $spacer . '    </a>';
+            $html[] = $spacer . '</li>';
         }
 
-        $html .=     $this->render($child, $childrenWrapClass);
-        $html .= '</ul>';
+        $html[] = $spacer . '    ' . $this->render($child, $childrenWrapClass);
+        $html[] = $spacer . '</ul>';
     }
 
     if (!empty($childrenWrapClass)) {
-        $html .= '</div>';
+        $html[] = $spacer . '    </div>';
     }
 
-    $html .= '</li>';
+    $html[] = '</li>';
 
     $counter++;
 }
 
-return $html;
+return implode("\n", $html);

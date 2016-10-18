@@ -106,7 +106,7 @@ $content = '<div class="block block-links" id="jumptargetherausgeberboxwidget">
             <li><a href="{{store url="impressum"}}">Impressum</a></li>
             <li><a href="{{store url="kontact"}}">Kontakt</a></li>
             <li><a href="{{store url="rechtlichehinweise"}}">rechtliche Hinweise</a></li>
-            <li><a href="{{store url="behoerdenwegweiser"}}">Behördenwegweiser</a></li>
+            <li><a href="{{store url="behoerdenwegweiser"}}">Beh&ouml;rdenwegweiser</a></li>
         </ul>
     </div>
 </div>
