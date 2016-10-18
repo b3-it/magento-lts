@@ -41,7 +41,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
   {
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status'))
+      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('increment_id','status','created_at'))
         ->joinLeft(array('orderitem'=>$collection->getTable('sales/order_item')),'orderitem.item_id = main_table.order_item_id')
       	//->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
@@ -93,7 +93,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_CustomerOptions extends Ma
       $this->addColumn('co_created_time', array(
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
-      		'index'     => 'created_time',
+      		'index'     => 'created_at',
       		'type'	=> 'Date',
       		'width'     => '100px',
       ));

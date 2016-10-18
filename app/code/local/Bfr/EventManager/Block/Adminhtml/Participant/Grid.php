@@ -37,7 +37,7 @@ where participant_id = 1 AND el.typ = 3
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-        ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
+        ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','created_at', 'order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
         ->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
       	->join(array('event'=>$collection->getTable('eventmanager/event')), 'main_table.event_id = event.event_id',array('title'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
@@ -71,7 +71,7 @@ where participant_id = 1 AND el.typ = 3
       $this->addColumn('created_time', array(
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
-      		'index'     => 'created_time',
+      		'index'     => 'created_at',
       		'type'	=> 'Date',
       		'width'     => '100px',
       ));
@@ -262,15 +262,7 @@ where participant_id = 1 AND el.typ = 3
       ));
       
 
-      
-      $this->addColumn('vip', array(
-          'header'    => Mage::helper('eventmanager')->__('Vip'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'vip',
-          'type'      => 'options',
-          'options'   => $yesno,
-      ));
+ 
       
       $this->addColumn('online_eval', array(
       		'header'    => Mage::helper('eventmanager')->__('Online Evaluation'),
