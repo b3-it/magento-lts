@@ -41,12 +41,7 @@
     .store-language-container {
         top: 40px + $global-logo-height !important;
     }
-/*
-    .welcome-header {
-        top: $global-welcome-header-top + $global-logo-height !important;
-        text-align: right;
-    }
-*/
+
     #egov-nav, #header-account {
         top: 35px + $global-logo-height !important;
     }
@@ -85,28 +80,15 @@
             margin-top: 12px;
         }
 
-        @include bp(max-width, 768px) {
+        @include bp(max-width, 785px) {
             top: auto;
-            bottom: -170px;
-        }
+            top: 170px;
+            position: absolute;
+            width: 100%;
+            text-align: right;
+            z-index: 0;
 
-/*
-        @include bp(max-width, 910px) {
-            left: $global-welcome-left - 50;
         }
-        @include bp(max-width, 790px) {
-            left: $global-welcome-left - 90;
-            top: 70px;
-        }
-        @include bp(max-width, 630px) {
-            left: 100px;
-            top: 40px;
-        }
-        @include bp(max-width, 550px) {
-            left: 35px;
-            top: 40px;
-        }
-*/ 
     }
 }
 
@@ -193,9 +175,17 @@
 
     .small {
         display: none;
+        
+        @include bp(max-width, 785px) {
+        	display: block;
+        }
     }
     .large {
         display: block;
+        
+        @include bp(max-width, 785px) {
+        	display: none;
+        }
     }
    
     &:hover {
@@ -203,8 +193,9 @@
     }
    
     @include bp(max-width, 980px) {
-        top: -20px;
-        left: 1%;        
+        top: 80px;
+        width: 90px;
+        left: 0;        
     }
 }
 
@@ -224,6 +215,10 @@
     width: 70%;
     top: 30px;
     height: 100vh;
+    
+    @include bp(max-width, 785px) {
+        width: 80%;
+    }
 }
 
 // ---------------------------------------------
@@ -235,10 +230,6 @@
         background-position: center 0px;
         height: 230px;
     }
-    
-    #header-account.skip-active {
-    	right: 180px !important;
-    }
    
     .skip-search {
    	    display: none;
@@ -248,21 +239,6 @@
         top: 30px !important;
     }
 }
-
-@include bp(max-width, 768px) {
-	.skip-nav, .skip-account, .skip-cart {
-		float: right !important;
-	}
-    .skip-cart {
-    	width: 130px;
-    	min-width: 130px !important;
-    }
-    .welcome-header {
-    	top: 30px;
-    	left: 0;
-    }
-}
-
 
 /* -------------------------------------------- *
  * Skip - Link
@@ -276,6 +252,10 @@
     color: $global-linkcolor;
     line-height: 42px;
     text-align: center;
+    
+    @include bp(max-width, $bp-medium) {
+    	float: left;
+    }
 }
 
 a.skip-link {
@@ -292,26 +272,28 @@ a.skip-link {
 @include bp(max-width, $bp-medium) {
 
     .skip-nav, .skip-account, .skip-cart {
-        float: left;
+        ///float: left;
     }
-    #header-account {
-        position: relative;
-        top: 35px;
+    .skip-cart {
+    	width: 130px;
+    	min-width: 130px !important;
     }
-
     .skip-search {
         float: right;
         position: relative;
         top: -5px;
     }
-
     .skip-link {
-        border-right: 1px solid #EDEDED;
         width: 25%;
     }
 
-    .skip-link:last-child {
-        border-right: 0;
+    #header-account {
+        position: relative;
+        top: 35px;
+    }
+    .welcome-header {
+    	top: 30px;
+    	left: 0;
     }
 }
 
@@ -400,10 +382,6 @@ a.skip-link {
 /* ============================================ *
  * Global Header Navigation
  * ============================================ */
-
-@include bp(max-width, $bp-medium) {
-}
-
 .account-cart-wrapper {
     text-align: right;
     height: 100px;
@@ -426,20 +404,25 @@ a.skip-link {
     }
 
     @include bp(max-width, $bp-medium) {
-        position: static;
-    }
-
-    @include bp(max-width, 910px) {
+        display: inline-block;
+        position: absolute;
         right: 0;
-        width: 100%;
+        width: 58%;
     }
 }
 
 .skip-egov{
     display: inline-block;
-    float: none !important;
     padding: 0 10px;
     text-transform: uppercase;
     vertical-align: top;
     width: auto;
+    
+    @include bp(min-width, $bp-medium + 1) {
+        float: none !important;
+    }
+    
+    @include bp(max-width, $bp-medium) {
+    	display: none;
+    }
 }

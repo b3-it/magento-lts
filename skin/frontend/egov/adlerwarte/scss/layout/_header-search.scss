@@ -21,6 +21,12 @@
         @extend .icon-sprite;
         background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
     }
+   
+    @include bp(max-width, $bp-medium) {
+    	display: inline-block;
+    	top: 0;
+    	width: 38%;
+    }
 }
 
 // ---------------------------------------------
@@ -36,13 +42,6 @@
 /* ============================================ *
  * Search - Skip Content
  * ============================================ */
-
-#header-search {
-    padding: 20px;
-}
-
-// ---------------------------------------------
-
 #header-search {
     position: absolute;
     background-color: transparent;
@@ -52,29 +51,22 @@
     z-index: 99;
     right: 10px;
     height: 28px;
-}
-
-
-@include bp(min-width, $bp-medium + 1) {
-
-    #header-search {
+    padding: 20px;
+    
+    @include bp(min-width, 910px) {
+    	top: 15px;
+    }
+    
+    @include bp(min-width, $bp-medium + 1) {
         display: block; // Force visibility
         top: 15px;
         right: 8px;
         width: 30%;
         padding: 0;
     }
-}
-
-@include bp(max-width, 785px) {
-    #header-search {
-        top: 150px + $global-logo-height;
-    }
-}
-
-@include bp(min-width, 910px) {
-    #header-search {
-        top: 15px;
+    	
+    @include bp(max-width, $bp-medium) {
+    	top: 130px;
     }
 }
 

@@ -745,6 +745,10 @@ div.block-reorder {
     position: relative;
     top: $global-cms-top-position;
     background-color: $global-wrapper-color;
+    
+    @include bp(max-width, $bp-medium) {
+    	padding-bottom: 0;
+    }
 }
 
 .footer-container {
