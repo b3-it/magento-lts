@@ -49,7 +49,7 @@ class Mage_Customer_Model_Group extends Mage_Core_Model_Abstract
 
     const ENTITY                    = 'customer_group';
 
-    const GROUP_CODE_MAX_LENGTH     = 127;
+    const GROUP_CODE_MAX_LENGTH     = 255;
 
     /**
      * Prefix of model events names

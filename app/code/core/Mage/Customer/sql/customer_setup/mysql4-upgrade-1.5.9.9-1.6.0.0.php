@@ -639,7 +639,7 @@ $tables = array(
             ),
             'customer_group_code' => array(
                 'type'      => Varien_Db_Ddl_Table::TYPE_TEXT,
-                'length'    => 127,
+                'length'    => 255,
                 'nullable'  => false,
                 'comment'   => 'Customer Group Code'
             ),
