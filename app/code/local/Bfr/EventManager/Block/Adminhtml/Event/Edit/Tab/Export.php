@@ -417,7 +417,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   	));
   	
   	$this->addColumn('status', array(
-  			'header'    => Mage::helper('eventmanager')->__('Status'),
+  			'header'    => Mage::helper('eventmanager')->__('Participation Status'),
   			'align'     => 'left',
   			'width'     => '80px',
   			'index'     => 'status',
