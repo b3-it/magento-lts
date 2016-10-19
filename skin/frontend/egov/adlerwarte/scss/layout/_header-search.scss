@@ -10,33 +10,18 @@
  * ============================================ */
 
 .skip-search {
-
-    &:not(.skip-active):hover {
-        .icon {
-            background-position: -50+4px (-150px + ($toolbar-icon-padding-offset/2));
-        }
-    }
-
     .icon {
-        @extend .icon-sprite;
-        background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
+        @extend .egov-search;
     }
    
+    @include bp(min-width, 911px) {
+    	display: none;
+    }
     @include bp(max-width, $bp-medium) {
     	display: inline-block;
     	top: 0;
     	width: 38%;
     }
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, 911px) {
-
-    .skip-search {
-        display: none;
-    }
-
 }
 
 /* ============================================ *

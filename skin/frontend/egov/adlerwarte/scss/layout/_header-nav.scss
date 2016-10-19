@@ -19,45 +19,41 @@
     border-width: $global-active-border;
     border-style: solid;
     border-color: $global-active-color;
-
-	&:not(.skip-active):hover {
-        text-decoration: none;
-
-        .icon {
-            background-position: -50px+4px ($toolbar-icon-padding-offset/2);
-        }
-    }
    
+    @include bp(min-width, $bp-medium + 1) {
+    	display: none;
+    }
     @include bp(max-width, $bp-medium) {
     	left: 22%;
         top: 10px;
         width: 20%;
     }
-}
-
-.skip-nav .label {
-    display: inline;
     
-    @include bp(max-width, $bp-medium) {
+    .label {
+    	display: inline;
     	position: relative;
-    	top: 45px;
+    	
+    	@include bp(max-width, $bp-medium) {
+    		top: 45px;
+    	}
+        @include bp(max-width, 500px) {
+        	display: none;
+        }
+    }
+    
+    .icon {
+    	@extend .egov-list;
+    	position: relative;
+    	
+    	@include bp(max-width, $bp-medium) {
+    		top: 45px;
+    	}
+        @include bp(max-width, 500px) {
+        	top: 50px;
+        }
     }
 }
 
-.skip-nav .icon {
-    @extend .icon-sprite;
-    background-position: 0+4px ($toolbar-icon-padding-offset/2);
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, $bp-medium + 1) {
-
-    .skip-nav {
-        display: none;
-    }
-
-}
 
 /* ============================================ *
  * Nav - Skip Content

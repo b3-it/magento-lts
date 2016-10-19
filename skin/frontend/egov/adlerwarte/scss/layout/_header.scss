@@ -176,26 +176,20 @@
     .small {
         display: none;
         
-        @include bp(max-width, 785px) {
+        @include bp(max-width, $bp-medium) {
         	display: block;
         }
     }
     .large {
         display: block;
         
-        @include bp(max-width, 785px) {
+        @include bp(max-width, $bp-medium) {
         	display: none;
         }
     }
    
     &:hover {
         opacity: 0.8;
-    }
-   
-    @include bp(max-width, 980px) {
-        top: 80px;
-        width: 90px;
-        left: 0;        
     }
 }
 
@@ -216,7 +210,7 @@
     top: 30px;
     height: 100vh;
     
-    @include bp(max-width, 785px) {
+    @include bp(max-width, $bp-medium) {
         width: 80%;
     }
 }
@@ -271,13 +265,6 @@ a.skip-link {
 
 @include bp(max-width, $bp-medium) {
 
-    .skip-nav, .skip-account, .skip-cart {
-        ///float: left;
-    }
-    .skip-cart {
-    	width: 130px;
-    	min-width: 130px !important;
-    }
     .skip-search {
         float: right;
         position: relative;
@@ -302,7 +289,7 @@ a.skip-link {
 @include bp(max-width, 500px) {
 
     .skip-link {
-        width: 15%;
+        width: 30%;
     }
 
 }
@@ -330,7 +317,6 @@ a.skip-link {
 .skip-link .icon {
     display: inline-block;
     width: 30px;
-    //height: 30px;
     vertical-align: middle;
 }
 
