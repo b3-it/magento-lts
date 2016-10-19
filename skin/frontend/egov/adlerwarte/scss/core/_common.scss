@@ -857,11 +857,22 @@ div.block-reorder {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
+            
+            @include bp(max-width, $bp-xsmall) {
+            	display: block;
+            	float: none;
+            	margin: 0;
+            	width: 100%;
+            }
         }
 
         .col-main {
             overflow: hidden;
             width: $global-content-2col-left-percent;
+            
+            @include bp(max-width, $bp-xsmall) {
+            	width: 100%;
+            }
         }
 
         p.note-msg {

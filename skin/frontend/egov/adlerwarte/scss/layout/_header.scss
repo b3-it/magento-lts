@@ -11,10 +11,6 @@
  * ============================================ */
 
 @include bp(min-width, $bp-medium + 1) {
-
-    .page-header {
-    }
-
     .page-header-container {
         max-width: $global-fullpage-width;
         min-width: $global-min-width;
@@ -28,7 +24,7 @@
     }
 }
 
-@include bp(max-width, 785px) {
+@include bp(max-width, $bp-medium) {
     .page-header-container {
         height: 110px + $global-logo-height;
     }
@@ -36,10 +32,6 @@
     .skip-links {
         position: relative;
         top: 35px + $global-logo-height;
-    }
-
-    .store-language-container {
-        top: 40px + $global-logo-height !important;
     }
 
     #egov-nav, #header-account {
@@ -51,10 +43,6 @@
     .skip-links {
         position: relative;
         top: 75px + $global-logo-height;
-    }
-
-    .store-language-container {
-        top: 0px + $global-logo-height !important;
     }
 }
 
@@ -80,14 +68,13 @@
             margin-top: 12px;
         }
 
-        @include bp(max-width, 785px) {
-            top: auto;
+        @include bp(max-width, $bp-medium) {
             top: 170px;
             position: absolute;
             width: 100%;
-            text-align: right;
+            text-align: left;
             z-index: 0;
-
+            padding: 0 10px;
         }
     }
 }
@@ -130,19 +117,24 @@
     }
     select {
         max-width: 100%;
-    }
-}
-
-@include bp(max-width, $bp-xsmall) {
-    .store-language-container {
-        padding-top: 8px;
-
-        select {
-            // Setting this font-size will causing zooming on iOs devices, but it keeps header more tidy
-            font-size: $global-fontsize-small;
+        
+        @include bp(max-width, $bp-xsmall) {
+        	font-size: $global-fontsize-small;
         }
     }
+    
+    @include bp(max-width, 800px) {
+    	top: 0px + $global-logo-height;
+    }
+	@include bp(max-width, $bp-medium) {
+    	top: 40px + $global-logo-height;
+    	right: 10px;
+    }
+    @include bp(max-width, $bp-xsmall) {
+    	padding-top: 8px;
+    }
 }
+
 
 .header-language-background,
 .header-language-background a {
@@ -233,10 +225,6 @@
     .skip-search {
    	    display: none;
    	}
-
-    .main-container {
-        top: 30px !important;
-    }
 }
 
 /* -------------------------------------------- *
