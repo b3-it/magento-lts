@@ -113,20 +113,35 @@
 			</report>
 		</menu>
 		<acl>
-             <resources>
-                 <admin>
-                 	<children>
-                 		<report>
-                           	<children>
-                           		<salesroot>
+			<resources>
+				<admin>
+					<children>
+						<report>
+							<children>
+								<salesroot>
 									<children>
-										<eventbundleoptions translate="title" module="reports">
+										<eventbundleoptions translate="title" module="eventbundle">
 											<title>Eventbundle Options</title>
 										</eventbundleoptions>
 									</children>
 								</salesroot>
 							</children>
 						</report>
+						<system>
+							<children>
+								<config>
+									<children>
+										<eventbundle>
+											<children>
+												<display_prices translate="title" module="eventbundle">
+													<title>Display Prices</title>
+												</display_prices>
+											</children>
+										</eventbundle>
+									</children>
+								</config>
+							</children>
+						</system>
 					</children>
 				</admin>
 			</resources>
@@ -387,4 +402,11 @@
             </egovs_eventbundle>
         </jobs>
     </crontab>
+	<default>
+		<eventbundle>
+			<display_prices>
+				<cart_sub_price_eq_null>1</cart_sub_price_eq_null>
+			</display_prices>
+		</eventbundle>
+	</default>
 </config>
