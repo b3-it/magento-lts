@@ -172,6 +172,11 @@
     img {
         max-width: 100%;
     }
+    
+    @include bp(max-width, $bp-medium) {
+    	width: auto;
+    	top: 80px;
+    }
 
     .small {
         display: none;
