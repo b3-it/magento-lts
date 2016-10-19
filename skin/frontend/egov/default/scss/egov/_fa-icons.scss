@@ -26,6 +26,13 @@
     font-size: $global-fontsize + 4;
 }
 
+// Icon für Suchen (Lupe)
+.egov-search {
+	@extend .fa;
+	@extend .fa-search;
+	font-size: $global-fontsize + 4 !important;
+}
+
 // Icon für Passwort (Schloss)
 .egov-password {
     @extend .fa;

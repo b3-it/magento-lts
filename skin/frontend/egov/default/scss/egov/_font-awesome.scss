@@ -17,6 +17,7 @@ $fa-inverse:          #fff !default;
 $fa-li-width:         (30em / 14) !default;
 
 $fa-var-spinner      : "\f110";
+$fa-var-search       : "\f002";
 $fa-var-pencil       : "\f040";
 $fa-var-trash-o      : "\f014";
 $fa-var-lock         : "\f023";
@@ -70,6 +71,7 @@ $fa-var-rss-square   : "\f143";
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
 .#{$fa-css-prefix}-spinner:before       { content: $fa-var-spinner; }
+.#{$fa-css-prefix}-search:before        { content: $fa-var-search; }
 .#{$fa-css-prefix}-pencil:before        { content: $fa-var-pencil; }
 .#{$fa-css-prefix}-trash-o:before       { content: $fa-var-trash-o; }
 .#{$fa-css-prefix}-lock:before          { content: $fa-var-lock; }
