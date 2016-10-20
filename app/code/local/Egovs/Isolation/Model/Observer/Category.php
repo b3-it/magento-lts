@@ -32,15 +32,15 @@ class Egovs_Isolation_Model_Observer_Category extends Egovs_Isolation_Model_Obse
     
     public function onRootCategoryEdit($observer)
     {
-    	$storeGroups = $this->getUserStoreRootCategories();
-    	if(($storeGroups) && (count($storeGroups) > 0)) 
+    	$CategoryIds = $this->getUserStoreRootCategories();
+    	if(($CategoryIds) && (count($CategoryIds) > 0)) 
     	{
-    		foreach ($storeGroups as $storeId)
+    		foreach ($CategoryIds as $CategoryId)
     		{
-    			$store = Mage::getModel('core/store')->load($storeId);
-    			if($store->getRootCategoryId()!= 0)
+    			//$store = Mage::getModel('core/store')->load($storeId);
+    			//if($store->getRootCategoryId()!= 0)
     			{
-    				$observer->getOptions()->setCategoryId($store->getRootCategoryId());
+    				$observer->getOptions()->setCategoryId($CategoryId);
     				return;
     			}
     		}
