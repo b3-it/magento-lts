@@ -46,7 +46,7 @@ function start_upload() {
 					'form_key'  : '<?php echo $this->getFormKey()?>'
 				},
 				'method'          : 'post',
-				'swf'             : '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>jquery/uploadify/uploadify.swf',
+				'swf'             : '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>lib/jquery/uploadify/uploadify.swf',
 				'uploader'        : '<?php echo $this->getActionUrl()?>',
 
 				'removeCompleted' : true,             // fertige Dateien aus der Warteschlange entfernen
