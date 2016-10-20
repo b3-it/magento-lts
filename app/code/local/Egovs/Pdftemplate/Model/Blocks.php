@@ -24,8 +24,17 @@ class Egovs_Pdftemplate_Model_Blocks extends Mage_Core_Model_Abstract
     	$collection= $this->getCollection();
     	$collection->getSelect()->where("ident= ? AND status=".Egovs_Pdftemplate_Model_Blocks_Status::STATUS_ENABLED, $ident);
     	
-    	$payment = $data->getOrder()->getPayment()->getMethod();
-    	$shippment = $data->getOrder()->getShippingMethod();
+    	$payment = null;
+    	$shippment = null;
+    	if($data->getOrder()->getId())
+    	{
+    		if($data->getOrder()->getPayment()){
+    			$payment = $data->getOrder()->getPayment()->getMethod();
+    		}
+    		
+    		$shippment = $data->getOrder()->getShippingMethod();
+    	}
+    	
     	$taxrule =  $this->getTaxRulesFromOder($data->getOrder());
     	
     	foreach ($collection->getItems() as $item)
