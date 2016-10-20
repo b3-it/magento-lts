@@ -75,10 +75,12 @@ class Egovs_EventBundle_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Bl
                             $text = $qty . ' x ' . Mage::helper('eventbundle')->escapeHtml($bundleSelection->getName());
                                 //. ' ' . Mage::helper('core')->currency($this->getSelectionPrice($item, $bundleSelection))
                                 if((Mage::getStoreConfig('eventbundle/display_prices/cart_sub_price_eq_null') == 1)  || (floatval($quoteItem->getPrice()) > 0.09)){
-	                                $text .=  ' ( ' . Mage::helper('core')->currency($quoteItem->getPrice())
-	                                . ' + ' . Mage::helper('core')->currency($quoteItem->getTaxAmount())
-	                                . ' (' . $quoteItem->getTaxPercent()."%))"
-	                                ;
+	                                $text .=  ' ( ' . Mage::helper('core')->currency($quoteItem->getPrice());
+	                                if (Mage::getStoreConfig('tax/cart_display/zero_tax') == 1){
+	                                $text .= ' + ' . Mage::helper('core')->currency($quoteItem->getTaxAmount())
+	                                . ' (' . $quoteItem->getTaxPercent()."%)";
+	                                }
+	                                $text .= ")";
                                 }
                             $option['value'][] = $text;
                         }
