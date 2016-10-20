@@ -69,8 +69,8 @@ class Egovs_Acl_Model_Observer extends Mage_Catalog_Model_Product
    		
    			$catId = $options->getCategoryId();
    			$cat = Mage::getModel('catalog/category')->load($options->getCategoryId());
-   			Mage::unregister('category');
-   			Mage::register('category', $cat);
+//      			Mage::unregister('category');
+//     			Mage::register('category', $cat);
    			
    		}
    }
