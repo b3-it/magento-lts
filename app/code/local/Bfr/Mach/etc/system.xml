@@ -43,7 +43,7 @@
                             <show_in_store>0</show_in_store>
                         </irquellsystem>
                         <niederlassung translate="label">
-                            <label>Niederlassung</label>
+                            <label>Branch Office</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
@@ -51,7 +51,7 @@
                             <show_in_store>0</show_in_store>
                         </niederlassung>
                         <orgeinheit translate="label">
-                            <label>Orgeinheit</label>
+                            <label>Organizational Unit</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
@@ -59,7 +59,7 @@
                             <show_in_store>0</show_in_store>
                         </orgeinheit>
                         <periode translate="label">
-                            <label>Periode</label>
+                            <label>Period</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
@@ -67,7 +67,7 @@
                             <show_in_store>0</show_in_store>
                         </periode>
                         <belegart translate="label">
-                            <label>Belegart</label>
+                            <label>Document Type</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
@@ -75,7 +75,7 @@
                             <show_in_store>0</show_in_store>
                         </belegart>
                         <belegkontotitel translate="label">
-                            <label>Belegkontotitel</label>
+                            <label>Document Account Title</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>110</sort_order>
                             <show_in_default>1</show_in_default>
@@ -83,7 +83,7 @@
                             <show_in_store>0</show_in_store>
                         </belegkontotitel>
                         <belegtext translate="label">
-                            <label>Belegtext</label>
+                            <label>Document Text</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>120</sort_order>
                             <show_in_default>1</show_in_default>
@@ -91,7 +91,7 @@
                             <show_in_store>0</show_in_store>
                         </belegtext>
                         <waehrung translate="label">
-                            <label>Waehrung</label>
+                            <label>Currency</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>140</sort_order>
                             <show_in_default>1</show_in_default>
@@ -99,7 +99,7 @@
                             <show_in_store>0</show_in_store>
                         </waehrung>
                         <benutzer translate="label">
-                            <label>Benutzer</label>
+                            <label>User</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>170</sort_order>
                             <show_in_default>1</show_in_default>
@@ -107,7 +107,7 @@
                             <show_in_store>0</show_in_store>
                         </benutzer>
                         <schreibgruppe translate="label">
-                            <label>Schreibgruppe</label>
+                            <label>Writing Group</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>190</sort_order>
                             <show_in_default>1</show_in_default>
@@ -115,7 +115,7 @@
                             <show_in_store>0</show_in_store>
                         </schreibgruppe>
                         <lesegruppe translate="label">
-                            <label>Lesegruppe</label>
+                            <label>Reading Group</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>200</sort_order>
                             <show_in_default>1</show_in_default>
@@ -123,7 +123,7 @@
                             <show_in_store>0</show_in_store>
                         </lesegruppe>
                         <referenz translate="label">
-                            <label>Referenz</label>
+                            <label>Reference</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>230</sort_order>
                             <show_in_default>1</show_in_default>
@@ -131,7 +131,7 @@
                             <show_in_store>0</show_in_store>
                         </referenz>
                         <kassenanweisung translate="label">
-                            <label>Kassenanweisung</label>
+                            <label>Cash Instructions</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>240</sort_order>
                             <show_in_default>1</show_in_default>
@@ -155,7 +155,7 @@
                             <show_in_store>0</show_in_store>
                         </vgvorgang>
                         <festlegung translate="label">
-                            <label>Festlegung</label>
+                            <label>Definition</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>270</sort_order>
                             <show_in_default>1</show_in_default>
@@ -163,7 +163,7 @@
                             <show_in_store>0</show_in_store>
                         </festlegung>
                         <festlegungsred translate="label">
-                            <label>Festlegungsred</label>
+                            <label>Definition red</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>280</sort_order>
                             <show_in_default>1</show_in_default>
@@ -171,7 +171,7 @@
                             <show_in_store>0</show_in_store>
                         </festlegungsred>
                         <fehlertext translate="label">
-                            <label>Fehlertext</label>
+                            <label>Error Text</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>290</sort_order>
                             <show_in_default>1</show_in_default>
@@ -179,7 +179,7 @@
                             <show_in_store>0</show_in_store>
                         </fehlertext>
                         <mandant translate="label">
-                            <label>Mandant</label>
+                            <label>Client</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>300</sort_order>
                             <show_in_default>1</show_in_default>
@@ -197,7 +197,7 @@
                     <show_in_store>0</show_in_store>
                     <fields>
                         <sollkontotitel translate="label">
-                            <label>Sollkontotitel</label>
+                            <label>Debit Account Title</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
@@ -205,7 +205,7 @@
                             <show_in_store>0</show_in_store>
                         </sollkontotitel>
                         <habenkontotitel translate="label">
-                            <label>Habenkontotitel</label>
+                            <label>Credit Account Title</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>80</sort_order>
                             <show_in_default>1</show_in_default>
@@ -213,7 +213,7 @@
                             <show_in_store>0</show_in_store>
                         </habenkontotitel>
                         <sollhaushstelle translate="label">
-                            <label>Sollhaushstelle</label>
+                            <label>Intended Household</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>90</sort_order>
                             <show_in_default>1</show_in_default>
@@ -221,7 +221,7 @@
                             <show_in_store>0</show_in_store>
                         </sollhaushstelle>
                         <habenhaushstelle translate="label">
-                            <label>Habenhaushstelle</label>
+                            <label>Have Household</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
@@ -229,7 +229,7 @@
                             <show_in_store>0</show_in_store>
                         </habenhaushstelle>
                         <huelnummer translate="label">
-                            <label>Huelnummer</label>
+                            <label>Household Monitoring List Number</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>110</sort_order>
                             <show_in_default>1</show_in_default>
@@ -237,7 +237,7 @@
                             <show_in_store>0</show_in_store>
                         </huelnummer>
                         <referenz translate="label">
-                            <label>Referenz</label>
+                            <label>Reference</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>120</sort_order>
                             <show_in_default>1</show_in_default>
@@ -245,7 +245,7 @@
                             <show_in_store>0</show_in_store>
                         </referenz>
                         <positionsart translate="label">
-                            <label>Positionsart</label>
+                            <label>Position Type</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>130</sort_order>
                             <show_in_default>1</show_in_default>
@@ -253,7 +253,7 @@
                             <show_in_store>0</show_in_store>
                         </positionsart>
                         <startabgrenzung translate="label">
-                            <label>Startabgrenzung</label>
+                            <label>Start Demarcation</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>150</sort_order>
                             <show_in_default>1</show_in_default>
@@ -261,7 +261,7 @@
                             <show_in_store>0</show_in_store>
                         </startabgrenzung>
                         <endeabgrenzung translate="label">
-                            <label>Endeabgrenzung</label>
+                            <label>End Demarcation</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>160</sort_order>
                             <show_in_default>1</show_in_default>
@@ -269,7 +269,7 @@
                             <show_in_store>0</show_in_store>
                         </endeabgrenzung>
                         <periodizitaet translate="label">
-                            <label>Periodizitaet</label>
+                            <label>Periodicity</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>170</sort_order>
                             <show_in_default>1</show_in_default>
@@ -277,7 +277,7 @@
                             <show_in_store>0</show_in_store>
                         </periodizitaet>
                         <magkontorolle translate="label">
-                            <label>Magkontorolle</label>
+                            <label>Mag Check</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>180</sort_order>
                             <show_in_default>1</show_in_default>
@@ -285,7 +285,7 @@
                             <show_in_store>0</show_in_store>
                         </magkontorolle>
                         <decimal_separator translate="label">
-                            <label>Decimalseparator</label>
+                            <label>Decimal Separator</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>190</sort_order>
                             <show_in_default>1</show_in_default>
