@@ -1010,6 +1010,7 @@
 "The Layered Navigation indices were refreshed.","Die Filternavigation Indizes wurden aktualisiert."
 "The Layered Navigation process has been queued to be killed.","Der Layered Navigation-Vorgang wurde zum Beenden in die Warteschlange gestellt."
 "The Magento cache storage has been flushed.","Der Magento-Cache wurde geleert."
+"The Special Price is active only when lower than the Actual Price","Der Sonderpreis wird nur aktiviert, wenn er geringer als der aktuelle Preis ist"
 "The URL Rewrite has been deleted.","URL-Rewrite wurde gelöscht."
 "The URL Rewrite has been saved.","URL-Rewrite wurde gespeichert."
 "The account has been saved.","Das Konto wurde gespeichert."

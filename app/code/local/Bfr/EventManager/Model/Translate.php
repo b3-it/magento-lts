@@ -48,16 +48,17 @@ class Bfr_EventManager_Model_Translate extends Mage_Core_Model_Abstract
     public function translateData($object,$fields,$LangCode)
     {
     	$trans = $this->getTranslateCollection($LangCode);
-    	foreach($fields as $field)
+    	foreach($fields as $key => $value)
     	{
-    		$data = trim($object->getData($field));
+    		$data = trim($object->getData($key));
     		if($data){
-    			if(isset($trans[$field])){
-	    			$data = str_replace($trans[$field]['search'], $trans[$field]['replace'], $data);
-	    			$object->setData($field,$data);
+    			if(isset($trans[$key])){
+	    			$data = str_replace($trans[$key]['search'], $trans[$key]['replace'], $data);
+	    			$object->setData($key,$data);
     			}
     		}
     	}
+    	
     }
     
     

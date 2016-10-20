@@ -1,6 +1,8 @@
 ﻿"%s","%s"
 "%s already exist.","%s existiert bereits"
 "%s already exists.","%s existiert bereits"
+"- Use the %s, %s buttons to select month","- Verwenden Sie %s, %s Buttons, um den Monat auszuwählen"
+"- Use the %s, %s buttons to select year","- Verwenden Sie %s, %s Buttons, um das Jahr auszuwälen"
 "-- Please Select --","-- Bitte wählen --"
 "<strong style=""color:red"">Warning!</strong> When using CDN, in some cases JavaScript may not run properly if CDN is not in your subdomain","<strong style=""color:red"">Achtung!</strong> Sollten sie ein CDN verwenden, kann es passieren, dass JavaScript nicht korrekt arbeitet, wenn das CDN nicht innerhalb Ihrer Subdomain liegt."
 "<strong style=""color:red"">Warning!</strong> When using Store Code in URLs, in some cases system may not work properly if URLs without Store Codes are specified in the third party services (e.g. PayPal etc.).","<strong style=""color:red"">Achtung!</strong> Wenn Sie den StoreCode in URLs verwenden, kann es passieren, dass das System nicht ordnungsgemäß arbeitet, wenn URLs ohne StoreCode im Dritthersteller-Anwendungen (PayPal o.ä.) verwendet werden."
