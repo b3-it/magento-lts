@@ -479,7 +479,7 @@
 "Please refresh ""Catalog URL Rewrites"" and ""Product Attributes"" in System -> <a href=""%s"">Index Management</a>","Bitte aktualisieren Sie ""Katalog-URL-Rewrites"" und ""Artikelattribute"" in System -> <a href=""%s"">Indexverwaltung</a>"
 "Please refresh ""Product Attributes"" in System -&gt; <a href=""%s"">Index Management</a>","Bitte aktualisieren Sie ""Artikelattribute"" in System -&gt; <a href=""%s"">Indexverwaltung</a>"
 "Please select a static block ...","Bitte wählen Sie einen Block …"
-"Please select items.","Bitte wählen Sie Artikel"
+"Please select items.","Bitte wählen Sie einen Eintrag."
 "Please select one or more attributes.","Bitte wählen Sie ein oder mehrere Attribut(e)"
 "Please select product(s).","Bitte Artikel auswählen"
 "Please select products for attributes update","Bitte wählen Sie ein oder mehrere Artikel für Attributaktualisierungen"
