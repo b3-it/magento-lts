@@ -118,6 +118,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
 		->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
 		->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
+		->columns(array('balance'=> new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)')))
 		->joinLeft(array('lobbyT'=>$lobby),'lobbyT.participant_id=main_table.participant_id',array('lobby'=>'value'))
 		->joinLeft(array('industryT'=>$industry),'industryT.participant_id=main_table.participant_id',array('industry'=>'value'))
 		->joinLeft(array('orderitem'=>$collection->getTable('sales/order_item')),'orderitem.item_id = main_table.order_item_id')
@@ -234,18 +235,34 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   	
   	));
   	
-  	$this->addColumn('pa_price1', array(
-  			'header' => Mage::helper('sales')->__('Balance'),
-  			'index' => 'base_grand_total',
-  			'type'  => 'price',
-  			'width' => '70px',
-  			'index_paid' => 'base_total_paid',
-  			'filter_index' => new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)'),
-  			'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
-  			'type' => 'currency',
-  			'currency' => 'base_currency_code',
-  			//'filter_condition_callback' => array($this, '_filterBalanceCondition'),
-  	));
+    if($this->_isExport){
+      		$this->addColumn('pa_price1', array(
+      				'header' => Mage::helper('sales')->__('Balance'),
+      				'index' => 'balance',
+      				'type'  => 'price',
+      				'width' => '70px',
+      				//'index_paid' => 'base_total_paid',
+      				//'filter_index' => new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)'),
+      				//'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
+      				'type' => 'currency',
+      				'currency' => 'base_currency_code',
+      				//'filter_condition_callback' => array($this, '_filterBalanceCondition'),
+      		));
+      	}
+      	else{
+		  	$this->addColumn('pa_price1', array(
+		  			'header' => Mage::helper('sales')->__('Balance'),
+		  			'index' => 'base_grand_total',
+		  			'type'  => 'price',
+		  			'width' => '70px',
+		  			'index_paid' => 'base_total_paid',
+		  			'filter_index' => new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)'),
+		  			'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
+		  			'type' => 'currency',
+		  			'currency' => 'base_currency_code',
+		  			//'filter_condition_callback' => array($this, '_filterBalanceCondition'),
+		  	));
+      	}
   	
   	$groups = Mage::getResourceModel('customer/group_collection')
   	->addFieldToFilter('customer_group_id', array('gt'=> 0))
@@ -284,11 +301,26 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   			'options' => $yesno,
   	));
   	
-  	$this->addColumn('pa_name', array(
-  			'header'    => Mage::helper('eventmanager')->__('Name'),
+//   	$this->addColumn('pa_name', array(
+//   			'header'    => Mage::helper('eventmanager')->__('Name'),
+//   			'align'     =>'left',
+//   			'index'     => 'name',
+//   			'filter_condition_callback' => array($this, '_filterNameCondition'),
+//   	));
+  	
+  	$this->addColumn('pa_first', array(
+  			'header'    => Mage::helper('eventmanager')->__('Firstname'),
   			'align'     =>'left',
-  			'index'     => 'name',
-  			'filter_condition_callback' => array($this, '_filterNameCondition'),
+  			'index'     => 'firstname',
+  			//'filter_condition_callback' => array($this, '_filterNameCondition'),
+  	));
+  	
+  	
+  	$this->addColumn('pa_lastname', array(
+  			'header'    => Mage::helper('eventmanager')->__('Lastname'),
+  			'align'     =>'left',
+  			'index'     => 'lastname',
+  			//'filter_condition_callback' => array($this, '_filterNameCondition'),
   	));
   	
   	$this->addColumn('pa_company', array(
@@ -299,10 +331,10 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   	));
   	
   	
-  	$this->addColumn('pa_postfix', array(
-  			'header'    => Mage::helper('eventmanager')->__('Postfix'),
+  	$this->addColumn('pa_prefix', array(
+  			'header'    => Mage::helper('eventmanager')->__('Prefix'),
   			'align'     =>'left',
-  			'index'     => 'postfix',
+  			'index'     => 'prefix',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
   	
@@ -389,14 +421,6 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   	
   
   	
-  	$this->addColumn('vip', array(
-  			'header'    => Mage::helper('eventmanager')->__('Vip'),
-  			'align'     => 'left',
-  			'width'     => '80px',
-  			'index'     => 'vip',
-  			'type'      => 'options',
-  			'options'   => $yesno,
-  	));
   	
   	$this->addColumn('online_eval', array(
   			'header'    => Mage::helper('eventmanager')->__('Online Evaluation'),

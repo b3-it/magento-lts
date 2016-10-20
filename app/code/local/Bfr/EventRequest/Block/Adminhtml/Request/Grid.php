@@ -23,10 +23,17 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
 
   protected function _prepareCollection()
   {
+  	  $eav = Mage::getResourceModel('eav/entity_attribute');
+  	  
       $collection = Mage::getModel('eventrequest/request')->getCollection();
       $collection->getSelect()
       	->join(array('customer'=>$collection->getTable('customer/entity')), 'main_table.customer_id = customer.entity_id',array('email'))
-      	->join(array('product'=>$collection->getTable('catalog/product')), 'main_table.product_id = product.entity_id',array('sku'));
+      	->join(array('product'=>$collection->getTable('catalog/product')), 'main_table.product_id = product.entity_id',array('sku'))
+      	->joinleft(array('first'=>$collection->getTable('customer/entity').'_varchar'), 'first.entity_id = customer.entity_id AND first.attribute_id = '. $eav->getIdByCode('customer', 'firstname') ,array('firstname'=>'value'))
+      	->joinleft(array('last'=>$collection->getTable('customer/entity').'_varchar'), 'last.entity_id = customer.entity_id AND last.attribute_id = '. $eav->getIdByCode('customer', 'lastname') ,array('lastname'=>'value'))
+      	->joinleft(array('pre'=>$collection->getTable('customer/entity').'_varchar'), 'pre.entity_id = customer.entity_id AND pre.attribute_id = '. $eav->getIdByCode('customer', 'prefix') ,array('prefix'=>'value'))
+      	 
+      ;
      
       $this->setCollection($collection);
       return parent::_prepareCollection();
@@ -80,6 +87,12 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
       		'header'    => Mage::helper('eventrequest')->__('Firstname'),
       		'align'     =>'left',
       		'index'     => 'firstname',
+      ));
+      
+      $this->addColumn('lastname', array(
+      		'header'    => Mage::helper('eventrequest')->__('Lastname'),
+      		'align'     =>'left',
+      		'index'     => 'lastname',
       ));
 
       $this->addColumn('status', array(

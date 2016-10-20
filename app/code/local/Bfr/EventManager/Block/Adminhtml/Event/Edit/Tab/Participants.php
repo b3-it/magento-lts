@@ -39,7 +39,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
-      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
+      ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','created_at','base_grand_total','base_currency_code','base_total_paid'))
       ->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
       	->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
       	->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
@@ -70,7 +70,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	$this->addColumn('pa_created_time', array(
   			'header'    => Mage::helper('eventmanager')->__('Created at'),
   			'align'     =>'left',
-  			'index'     => 'created_time',
+  			'index'     => 'created_at',
+  			//'filterindex' => 'order.created_at',
   			'type'	=> 'Date',
   			'width'     => '100px',
   	));
@@ -267,14 +268,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	
   
   	
-  	$this->addColumn('vip', array(
-  			'header'    => Mage::helper('eventmanager')->__('Vip'),
-  			'align'     => 'left',
-  			'width'     => '80px',
-  			'index'     => 'vip',
-  			'type'      => 'options',
-  			'options'   => $yesno,
-  	));
+ 
   	
   	$this->addColumn('online_eval', array(
   			'header'    => Mage::helper('eventmanager')->__('Online Evaluation'),
