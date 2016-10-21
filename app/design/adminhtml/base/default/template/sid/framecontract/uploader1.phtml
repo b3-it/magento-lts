@@ -1,31 +1,31 @@
 <script type="text/javascript">
 function getFileSize(fileSizeInBytes) {
-  var i = -1;
-  var byteUnits = [' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
-  do {
-    fileSizeInBytes = fileSizeInBytes / 1024;
-    i++;
-  } while (fileSizeInBytes > 1024);
-  return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+    var i = -1;
+    var byteUnits = [' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
+    do {
+        fileSizeInBytes = fileSizeInBytes / 1024;
+        i++;
+    } while (fileSizeInBytes > 1024);
+    return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
 }
 
 function start_upload() {
-  jQuery('#file_upload').uploadify('upload', '*');
+    $j('#file_upload').uploadify('upload', '*');
 }
 </script>
 
 <form>
-		<input id="image_upload_token" name="image_upload_token" type="hidden" value="<?php echo $this->getToken();?>"/>
-		<div style="width:420px; float:left;">
-		    <input id="file_upload" name="file_upload" type="file" />
-		</div>
-		<div id="result" class="uploadify-result"></div>
-		<br style="clear:left;"/>
-		<p>
-		    <button id="uploadify_button" type="button" class="scalable" onclick="start_upload();">
-		        <span><?php echo Mage::helper('framecontract')->__('Start Upload'); ?></span>
-		    </button>
-		</p>
+    <input id="image_upload_token" name="image_upload_token" type="hidden" value="<?php echo $this->getToken();?>"/>
+    <div style="width:420px; float:left;">
+        <input id="file_upload" name="file_upload" type="file" />
+    </div>
+    <div id="result" class="uploadify-result"></div>
+    <br style="clear:left;"/>
+    <p>
+        <button id="uploadify_button" type="button" class="scalable" onclick="start_upload();">
+            <span><?php echo Mage::helper('framecontract')->__('Start Upload'); ?></span>
+        </button>
+    </p>
 </form>
 
 <!-- http://www.excellencemagentoblog.com/onepage-checkout-add-file-upload-field-to-any-step -->
@@ -37,78 +37,74 @@ function start_upload() {
 	var max_size_1 = '1024KB';
 	var max_size_2 = '1100KB';
 
-  (function($) {
-    $(function() {
-			$('#file_upload').uploadify({
-				'formData'        : {
-					'timestamp' : '<?php echo $timestamp;?>',
-					'token'     : '<?php echo $this->getToken();?>',
-					'form_key'  : '<?php echo $this->getFormKey()?>'
-				},
-				'method'          : 'post',
-				'swf'             : '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>lib/jquery/uploadify/uploadify.swf',
-				'uploader'        : '<?php echo $this->getActionUrl()?>',
+	$j('#file_upload').uploadify({
+        'formData'        : {
+            'timestamp' : '<?php echo $timestamp;?>',
+            'token'     : '<?php echo $this->getToken();?>',
+            'form_key'  : '<?php echo $this->getFormKey()?>'
+        },
+        'method'          : 'post',
+        'swf'             : '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>lib/jquery/uploadify/uploadify.swf',
+        'uploader'        : '<?php echo $this->getActionUrl()?>',
 
-				'removeCompleted' : true,             // fertige Dateien aus der Warteschlange entfernen
-				'uploadLimit'     : max_upload,       // Hochlade-Limit       (default: 999)
-				'queueSizeLimit'  : max_upload,       // Warteschlangen-Limit (default: 999)
-				'fileSizeLimit'   : max_size_1,       // Dateigröße beschränken
-				'multi'           : true,             // mehrere Dateien auswählen
-				'progressData'    : 'speed',          // Angabe über der Progressbar (Prozent oder Geschwindigkeit)
-				'auto'            : false,            // Upload nicht automatisch beginnen
-				'buttonText'      : '<?php echo Mage::helper('framecontract')->__('Browse Files'); ?>',    // Beschriftung des Buttons
+        'removeCompleted' : true,             // fertige Dateien aus der Warteschlange entfernen
+        'uploadLimit'     : max_upload,       // Hochlade-Limit       (default: 999)
+        'queueSizeLimit'  : max_upload,       // Warteschlangen-Limit (default: 999)
+        'fileSizeLimit'   : max_size_1,       // Dateigröße beschränken
+        'multi'           : true,             // mehrere Dateien auswählen
+        'progressData'    : 'speed',          // Angabe über der Progressbar (Prozent oder Geschwindigkeit)
+        'auto'            : false,            // Upload nicht automatisch beginnen
+        'buttonText'      : '<?php echo Mage::helper('framecontract')->__('Browse Files'); ?>',    // Beschriftung des Buttons
 
-				'fileTypeDesc' : '<?php echo Mage::helper('framecontract')->__('Select Images'); ?>',
-				'fileTypeExts' : '*.gif; *.jpg; *.png',
-				'buttonText'   : '<?php echo Mage::helper('framecontract')->__('Search Images'); ?>',
+        'fileTypeDesc' : '<?php echo Mage::helper('framecontract')->__('Select Images'); ?>',
+        'fileTypeExts' : '*.gif; *.jpg; *.png',
+        'buttonText'   : '<?php echo Mage::helper('framecontract')->__('Search Images'); ?>',
 
-				'onInit'        : function(instance) {
-            $('#result').html('');
+        'onInit'        : function(instance) {
+            $j('#result').html('');
         },
         'onSelectError' : function(file, errorCode, errorMsg) {
-          var meldung = '<?php echo Mage::helper('framecontract')->__('This File '); ?>' + file.name;
-          switch(errorCode) {
-              case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED :
-                meldung = '<span><?php echo Mage::helper('framecontract')->__('Limit Reached: '); ?>' + meldung +
-                          '<?php echo Mage::helper('framecontract')->__(' do not append.'); ?></span>';
-                break;
-              case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT :
-                meldung = '<span>' + meldung + '<?php echo Mage::helper('framecontract')->__(' is with '); ?>' +
-                          getFileSize(file.size) + '<?php echo Mage::helper('framecontract')->__(' is to big. '); ?>(Max. ' + max_size_2 + ')</span>';
-                break;
-              case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE :
-                meldung = '<span>' + meldung + '<?php echo Mage::helper('framecontract')->__(' is empty.'); ?><br />';
-                break;
-              case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE :
-                meldung = '<span>' + meldung + '<?php echo Mage::helper('framecontract')->__(' has an invalid file type.'); ?></span>';
-                break;
-          }
-          this.queueData.errorMsg = '<?php echo Mage::helper('framecontract')->__('There Errors occurred!'); ?>';
-          $('#result').append(meldung);
+            var meldung = '<?php echo Mage::helper('framecontract')->__('This File '); ?>' + file.name;
+            switch(errorCode) {
+                case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED :
+                    meldung = '<span><?php echo Mage::helper('framecontract')->__('Limit Reached: '); ?>' + meldung +
+                              '<?php echo Mage::helper('framecontract')->__(' do not append.'); ?></span>';
+                    break;
+                case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT :
+                    meldung = '<span>' + meldung + '<?php echo Mage::helper('framecontract')->__(' is with '); ?>' +
+                              getFileSize(file.size) + '<?php echo Mage::helper('framecontract')->__(' is to big. '); ?>(Max. ' + max_size_2 + ')</span>';
+                    break;
+                case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE :
+                    meldung = '<span>' + meldung + '<?php echo Mage::helper('framecontract')->__(' is empty.'); ?><br />';
+                    break;
+                case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE :
+                    meldung = '<span>' + meldung + '<?php echo Mage::helper('framecontract')->__(' has an invalid file type.'); ?></span>';
+                    break;
+            }
+            this.queueData.errorMsg = '<?php echo Mage::helper('framecontract')->__('There Errors occurred!'); ?>';
+            $j('#result').append(meldung);
         },
         'onSelect'        : function(file) {
             added = added + 1;
             var rest_ul = max_upload - added;
-            $('#result').append('<span>' + file.name + '<?php echo Mage::helper('framecontract')->__(' added to queue '); ?>(Rest: ' + rest_ul + ')</span>');
+            $j('#result').append('<span>' + file.name + '<?php echo Mage::helper('framecontract')->__(' added to queue '); ?>(Rest: ' + rest_ul + ')</span>');
         },
         'onCancel'        : function(file) {
             added = added - 1;
             var rest_ul = max_upload - added;
-            $('#result').append('<span>' + file.name + '<?php echo Mage::helper('framecontract')->__(' canceled '); ?>(Rest: ' + rest_ul + ')</span>');
+            $j('#result').append('<span>' + file.name + '<?php echo Mage::helper('framecontract')->__(' canceled '); ?>(Rest: ' + rest_ul + ')</span>');
         },
         'onUploadStart'   : function() {
-            //$('#result').append('Starte Upload...<br />');
+            //$j('#result').append('Starte Upload...<br />');
         },
         'onUploadSuccess' : function(file, data, response) {
-            //$('#result').append(data + ' => ' + response + '<br />---------------------------<br /><br />');
+            //$j('#result').append(data + ' => ' + response + '<br />---------------------------<br /><br />');
         },
         'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
-            $('#result').append(file + '<br />Code: ' + errorCode + '<br />Msg: ' + errorMsg + '<br />Str: ' + errorString + '<br />---------------------------<br /><br />');
+            $j('#result').append(file + '<br />Code: ' + errorCode + '<br />Msg: ' + errorMsg + '<br />Str: ' + errorString + '<br />---------------------------<br /><br />');
         },
         'onQueueComplete' : function(queueData) {
-            $('#result').append('<span>' + queueData.uploadsSuccessful + '<?php echo Mage::helper('framecontract')->__(' Files uploaded.'); ?></span>');
+            $j('#result').append('<span>' + queueData.uploadsSuccessful + '<?php echo Mage::helper('framecontract')->__(' Files uploaded.'); ?></span>');
         }
-			});
-    });
-  })(jQuery);
+	});
 </script>
