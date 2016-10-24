@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Egovs_Extstock>
-            <version>0.1.4</version>
+            <version>0.1.5</version>
             <depends>Egovs_Acl</depends>
             <depends>Egovs_Extreport</depends>
         </Egovs_Extstock>
