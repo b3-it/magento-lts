@@ -35,7 +35,7 @@ class Egovs_Base_Model_Observer
                        //'BDA'        => 'Bundesvereinigung der Arbeitgeberverb&auml;nde',
                        //'BdB'        => 'Bundesverband deutscher Banken',
                        //'BDI'        => 'Bundesverband der Deutschen Industrie',
-                       //'BfA'        => 'Bundesversicherungsanstalt f�r Angestellte',
+                       //'BfA'        => 'Bundesversicherungsanstalt f&uuml;r Angestellte',
                        //'Bill.'      => 'Billionen',
                        //'BIP'        => 'Bruttoinlandsprodukt',
                        //'BIZ'        => 'Bank f&uuml;r Internationalen Zahlungsausgleich',
@@ -43,7 +43,7 @@ class Egovs_Base_Model_Observer
                        //'BuBa'       => 'Bundesbank',
                        //'DAX'        => 'Deutscher Aktienindex',
                        //'DIW'        => 'Deutsches Institut f&uuml;r Wirtschaftsforschung',
-                       //'EBWE'       => 'Europ&auml;ische Bank f�r Wiederaufbau und Entwicklung',
+                       //'EBWE'       => 'Europ&auml;ische Bank f&uuml;r Wiederaufbau und Entwicklung',
                        //'EG'         => 'Europ&auml;ische Gemeinschaft',
                        //'EIB'        => 'Europ&auml;ische Investitionsbank',
                        //'EP'         => 'Euro&auml;isches Parlament',
@@ -78,6 +78,11 @@ class Egovs_Base_Model_Observer
             // nur ersetzen, wenn noch nicht enthalten und Abk. überhaupt enthalten
             if ( !strpos($html, $replace) ) {
                 $html = str_replace($key, $replace, $html);
+            }
+            
+            // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
+            if ( strpos($html, '="<abbr') ) {
+            	$html = str_replace('="' . $replace, $key, $html);
             }
         }
 
