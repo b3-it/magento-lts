@@ -982,7 +982,8 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
         }
 
         $adapter->streamWriteCsv(
-            Mage::helper("core")->getEscapedCSVData($row)
+            Mage::helper("core")->getEscapedCSVData($row),
+        		$this->_CsvDelimiter
         );
     }
 
@@ -1013,6 +1014,10 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
         $io->open(array('path' => $path));
         $io->streamOpen($file, 'w+');
         $io->streamLock(true);
+        
+        //Content mit UTF-8 BOM
+        $io->streamWrite(chr(239).chr(187).chr(191));
+        
         $io->streamWriteCsv($this->_getExportHeaders(),$this->_CsvDelimiter);
 
         $this->_exportIterateCollection('_exportCsvItem', array($io));
