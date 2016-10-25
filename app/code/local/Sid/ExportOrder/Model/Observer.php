@@ -11,7 +11,7 @@ class Sid_ExportOrder_Model_Observer
         $transfer = $vendor->getTransferType();
         
         //Übertragungsweg speichern
-        if($transfer == 'email')
+        if(($transfer == 'email') || ($transfer == 'email_attachment'))
         {
         	$model = Mage::getModel('exportorder/transfer_email')->load($vendor->getId(),'vendor_id');
         	$data = $vendor->getTransfer();
@@ -19,6 +19,7 @@ class Sid_ExportOrder_Model_Observer
         	$data['id'] = $model->getId();
         	$model->setData($data)->save();
         }
+        
         
         if($transfer == 'post')
         {
