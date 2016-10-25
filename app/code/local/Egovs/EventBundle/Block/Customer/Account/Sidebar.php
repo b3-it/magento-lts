@@ -124,6 +124,7 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 				$this->removeCardOptions($product);
 				$this->removeSoldSelections($product);
 				$this->removeCardSelections($product);
+				$this->removeNotAvailable($product);
 			}
 			
 			$this->_AvailableProducts = $products;
@@ -401,6 +402,41 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 	
 	
 	
+		$product->setProductOptions($options);
+	}
+	
+	
+	/**
+	 * entfernen der Optionen die nicht verfügbar sind
+	 * @param unknown $product
+	 */
+	protected function removeNotAvailable($product)
+	{
+		$options = $product->getProductOptions();
+		foreach($options as $opt_id =>$option)
+		{
+			$selections = $option->getSelections();
+			foreach( $selections as $key => $selection)
+			{
+				if($selection->getStatus() != Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+				{
+					unset($selections[$key]);
+				}else{
+					$stockItem = $selection->getStockItem();
+					//hat das Produkt eine Lagerverwaltung
+					if($stockItem->getManageStock()){
+						if($stockItem->getIsInStock() == 0){
+							unset($selections[$key]);
+						}
+					}
+				}
+				
+			}
+			$option->setSelections($selections);
+			if(count($selections) == null){
+				unset($options[$opt_id]);
+			}
+		}
 		$product->setProductOptions($options);
 	}
 	
