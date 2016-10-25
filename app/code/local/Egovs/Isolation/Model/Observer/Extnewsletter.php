@@ -78,26 +78,30 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     	$storeGroups = $this->getUserStoreGroups();
     	if(($storeGroups) && (count($storeGroups) > 0))
     	{
+    		$collection = $observer->getSubscriberCollection();
+    		
     		$storeViews = $this->getUserStoreViews();
     		$storeViews = implode(',', $storeViews);
     		$storeGroups = implode(',', $storeGroups);
     		$sql = '((main_table.store_id IN ('.$storeViews.')) or (issue.store_id in ('.$storeViews.'))) ';
-    		$sql .= 'or (esub.product_id in (Select product_id from sales_flat_order_item where store_group in ('.$storeGroups.') group by product_id))';
+    		$sql .= 'or (main_table.subscriber_id in (Select distinct subscriber_id from '.$collection->getTable('extnewsletter/extnewsletter_subscriber').' AS esub';
+    		$sql .= ' left join (Select product_id FROM '.$collection->getTable('sales/order_item').' WHERE store_group in ('.$storeGroups.') group by product_id) AS p ON esub.product_id = p.product_id))';
+    		
     		$exp = new Zend_Db_Expr($sql);
     		
     		
-    		$collection = $observer->getSubscriberCollection();
+    		
     		$collection->getSelect()
     		->joinleft(array('ei'=>$collection->getTable('extnewsletter/issuesubscriber')),'ei.subscriber_id = main_table.subscriber_id',array())
     		->joinleft(array('issue'=>$collection->getTable('extnewsletter/issue')),'issue.extnewsletter_issue_id = ei.issue_id',array())
-    		->joinleft(array('esub'=>$collection->getTable('extnewsletter/extnewsletter_subscriber')),'esub.subscriber_id = main_table.subscriber_id',array())
+    		//->joinleft(array('esub'=>$collection->getTable('extnewsletter/extnewsletter_subscriber')),'esub.subscriber_id = main_table.subscriber_id',array())
     		->distinct()
     		->where($exp)
     		;
     		
   		
-    		//$s = $collection->getSelect()->__toString();
-    		//die($s);
+//     		$s = $collection->getSelect()->__toString();
+//     		die($s);
     		;
     	}
     

@@ -91,6 +91,13 @@ class Egovs_Extnewsletter_Model_Resource_Queue extends Mage_Newsletter_Model_Res
         if ($queue->getSaveStoresFlag()) {
             $this->setStores($queue);
         }
+        
+        //speichern der formulardaten
+        $subscribercollection = Mage::getModel('extnewsletter/mysql4_subscribercollection')
+        ->saveProductQueue($queue->getId());
+        
+        Mage::getModel('extnewsletter/mysql4_queueissue')->saveIssueQueue($queue->getId());
+        
         return $this;
     }
 }

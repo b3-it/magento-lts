@@ -57,11 +57,7 @@ class Egovs_Extnewsletter_Model_Mysql4_Queue extends Egovs_Extnewsletter_Model_R
             ->where('subscriber_id in (?)', $subscriberIds);
         
  
-        //speichern der formulardaten
-        $subscribercollection = Mage::getModel('extnewsletter/mysql4_subscribercollection')
-        			->saveProductQueue($queue->getId());
         
-        Mage::getModel('extnewsletter/mysql4_queueissue')->saveIssueQueue($queue->getId());
     
         $usedIds = $this->_getWriteAdapter()->fetchCol($select);
         $this->_getWriteAdapter()->beginTransaction();
