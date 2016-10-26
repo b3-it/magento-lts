@@ -2,10 +2,8 @@
 
 class Egovs_Base_Adminhtml_Sales_Invoice_PrintingnoteController extends Mage_Adminhtml_Controller_Action
 {
-
-	
-	public function saveAction() {
-		
+	public function saveAction()
+	{
 		$id     = $this->getRequest()->getParam('order_id');
 		$model  = Mage::getModel('sales/order')->load($id);
 
@@ -22,7 +20,6 @@ class Egovs_Base_Adminhtml_Sales_Invoice_PrintingnoteController extends Mage_Adm
 			//$this->getResponse()->setHeader('Content-type', 'application/json');
 			$this->getResponse()->setBody( Mage::helper('core')->jsonEncode($array) );
 		}
- 
 	}
 	
 	protected function _isAllowed()
