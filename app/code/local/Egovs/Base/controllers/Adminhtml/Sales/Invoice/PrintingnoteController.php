@@ -24,4 +24,9 @@ class Egovs_Base_Adminhtml_Sales_Invoice_PrintingnoteController extends Mage_Adm
 		}
  
 	}
+	
+	protected function _isAllowed()
+	{
+		return Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/printingnote');
+	}
 }

@@ -73,7 +73,6 @@
 
                                 </children>
                             </analyse>
-
                         </children>
                     </tools>
                 </children>
@@ -102,6 +101,22 @@
                                 </cache>
                             </children>
                         </system>
+                        <sales>
+                            <children>
+                                <order>
+                                    <children>
+	                                    <actions>
+	                                        <children>
+	                                        <printingnote translate="title">
+	                                            <title>Printing Note</title>
+	                                            <sort_order>10</sort_order>
+	                                        </printingnote>
+	                                        </children>
+	                                    </actions>
+                                    </children>
+                                </order>
+                            </children>
+                        </sales>
                     </children>
                 </admin>
             </resources>
