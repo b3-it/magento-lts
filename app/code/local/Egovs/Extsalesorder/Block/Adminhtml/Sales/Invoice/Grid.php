@@ -50,7 +50,7 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminh
 				),
 				'billing_name'
 		);
-		if(Mage::helper('core')->isModuleEnabled('paymentbase'))
+		if(Mage::helper('core')->isModuleEnabled('Egovs_Paymentbase'))
 		{
 			$this->addColumnAfter('payment_method', array(
 					'header'    => Mage::helper('sales')->__('Payment Method'),

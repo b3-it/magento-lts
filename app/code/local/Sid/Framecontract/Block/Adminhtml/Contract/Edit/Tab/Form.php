@@ -8,6 +8,30 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
       $this->setForm($form);
       $fieldset = $form->addFieldset('contract_form', array('legend'=>Mage::helper('framecontract')->__('Contract Information')));
      
+      //Falls die StoreIsolation an ist werden die möglichen Stores beschränkt
+      if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+      	$fieldset->addField('store_id', 'select', array(
+      			'label' => Mage::helper('catalog')->__('Store'),
+      			'title' => Mage::helper('catalog')->__('Store'),
+      			'name'  => 'store_id',
+      			'value' => '',
+      			'values'=> Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray()
+      	));
+      }else {
+      	$tmp =$this->__getUserStoreGroups();
+      	$stores = array();
+      	foreach($tmp as $k => $v){
+      		$stores[] = array('value'=>$k,'label' => $v);
+      	}
+      	
+      	$fieldset->addField('store_id', 'select', array(
+      			'label'     => Mage::helper('framecontract')->__('Store'),
+      			'required'  => true,
+      			'values'    => $stores,
+      			'name'      => 'store_id',
+      	));
+      }
+      
       $fieldset->addField('title', 'text', array(
           'label'     => Mage::helper('framecontract')->__('Title'),
           'class'     => 'required-entry',
@@ -59,18 +83,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
       ));
       
  	  
-      $tmp =$this->__getUserStoreGroups();
-      $stores = array();
-      foreach($tmp as $k => $v){
-      	$stores[] = array('value'=>$k,'label' => $v);
-      }
-      
-      $fieldset->addField('store_id', 'select', array(
-      		'label'     => Mage::helper('framecontract')->__('Store'),
-      		'required'  => true,
-      		'values'    => $stores,
-      		'name'      => 'store_id',
-      ));
+   
       
 	  $fieldset = $form->addFieldset('vendor_form', array('legend'=>Mage::helper('framecontract')->__('Vendor Information')));
 	  
