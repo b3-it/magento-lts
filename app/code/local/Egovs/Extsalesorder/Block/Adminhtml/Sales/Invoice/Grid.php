@@ -50,16 +50,18 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminh
 				),
 				'billing_name'
 		);
-		$this->addColumnAfter('payment_method', array(
-				'header'    => Mage::helper('sales')->__('Payment Method'),
-				'index'     => 'payment_method',
-				'type'      => 'options',
-				'width'     => '130px',
-				'options'   => Mage::helper('extsalesorder')->getActivePaymentMethods(),
-				),
-				'billing_address'
-		);
-		
+		if(Mage::helper('core')->isModuleEnabled('paymentbase'))
+		{
+			$this->addColumnAfter('payment_method', array(
+					'header'    => Mage::helper('sales')->__('Payment Method'),
+					'index'     => 'payment_method',
+					'type'      => 'options',
+					'width'     => '130px',
+					'options'   => Mage::helper('paymentbase')->getActivePaymentMethods(),
+					),
+					'billing_address'
+			);
+		}
 		return parent::_prepareColumns();
 	}
 }
