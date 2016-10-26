@@ -84,28 +84,20 @@ function submitPrintingNote() {
     })
 	.done(function(data){
 		// Request wurde abgesetzt und eine Antwort ist gekommen
-		if ( data.length ) {
-			if ( checkJSON(data) == true ) {
-				// Es ist ein Fehler aufgetreten
-				var result = jQuery.parseJSON(data);
-				
-				if ( result.error == true ) {
-					// Fehlermeldung aus dem Request anzeigen
-					alert( result.message );
-				}
-				else {
-					// Inhalt direkt ausgeben
-					alert( data );
-				}
+		if ( checkJSON(data) == true ) {
+			var result = jQuery.parseJSON(data);
+
+			// Meldung aus dem Request anzeigen
+			if ( result.error == 'true' ) {
+				alert(result.message);
 			}
 			else {
-				// Inhalt direkt ausgeben
-				alert( data );
+				alert(msg_print_data_200 + "\n" + result.message);
 			}
 		}
 		else {
-			// Leere Antwort => eventuell kein Fehler
-			alert( msg_print_data_200 + "\n" + msg_print_data_saved );
+			// kein JSON-Array zurück => Fehler
+			alert(msg_print_data_fail);
 		}
 
 		// Lade-Anpassungen zurücksetzen
@@ -113,7 +105,7 @@ function submitPrintingNote() {
 	})
 	.fail(function(){
 		// etwas ist schief gegangen
-		alert( msg_print_data_fail );
+		alert(msg_print_data_fail);
 
 		// Lade-Anpassungen zurücksetzen
 		toggleLoading(false);
