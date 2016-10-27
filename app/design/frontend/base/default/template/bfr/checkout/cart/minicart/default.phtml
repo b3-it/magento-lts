@@ -13,7 +13,7 @@
 
     $_longProductName = $this->escapeHtml($this->getProductName());
     if ( strlen($_longProductName) > 150 ) {
-        $_shortProductName = substr($_longProductName, 0, 146) . ' ...';
+        $_shortProductName = mb_substr($_longProductName, 0, 146) . ' ...';
     }
     else {
         $_shortProductName = $_longProductName;

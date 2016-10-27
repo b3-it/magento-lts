@@ -260,7 +260,7 @@ Print pages
 
     <sales_order_printinvoice>
         <reference name="sales.order.print.invoice">
-            <action method="addItemRender"><type>eventbundle</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/invoice/items/renderer.phtml</template></action>
+            <action method="addItemRender"><type>eventbundle</type><block>eventbundle/sales_order_items_renderer</block><template>egovs/eventbundle/sales/order/invoice/items/renderer.phtml</template></action>
         </reference>
     </sales_order_printinvoice>
 
