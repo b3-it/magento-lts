@@ -634,6 +634,10 @@
                 margin-bottom: 7px;
             }
         }
+        
+        .product-cart-symbols {
+        	display: inline-block;
+        }
 
         .price,
         .product-cart-price:before {
@@ -654,11 +658,20 @@
                 float: left;
             }
 
-            .btn-update,
             span.or {
                 display: none;
             }
-
+            
+            .button {
+            	padding: 3px 5px;
+            	font-size: 11px;
+            }
+            .egov-float-left {
+            	margin: 0 2px !important;
+            }
+            .btn-update {
+            	margin-right: 0;
+            }
         }
     }
 
