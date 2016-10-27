@@ -2,7 +2,7 @@
 <config>
     <modules>
 	    <Egovs_Search>
-	        <version>0.1.0</version>
+	        <version>1.9.1.0</version>
 	    </Egovs_Search>
 	</modules>
 <global>
