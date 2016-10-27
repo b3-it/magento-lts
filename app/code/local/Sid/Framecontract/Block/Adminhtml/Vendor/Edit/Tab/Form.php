@@ -8,7 +8,15 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminh
       $this->setForm($form);
       $fieldset = $form->addFieldset('vendor_form', array('legend'=>Mage::helper('framecontract')->__('Vendor information')));
      
-     
+     if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+	      $fieldset->addField('store_group', 'select', array(
+	      		'label' => Mage::helper('catalog')->__('Store'),
+	      		'title' => Mage::helper('catalog')->__('Store'),
+	      		'name'  => 'store_group',
+	      		'value' => '',
+	      		'values'=> Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray()
+	      ));
+     }
       
       $fieldset->addField('company', 'text', array(
           'label'     => Mage::helper('framecontract')->__('Company'),

@@ -308,6 +308,47 @@
           </report_eventbundle_options_collectionload_observer>
         </observers>
       </sales_report_eventbundle_options_collection_load_before>
+      <framecontract_contract_collection_load_before>
+        <observers>
+          <framecontract_contract_collection_load_before_observer>
+            <class>isolation/observer_framecontract</class>
+            <method>onContractCollectionLoad</method>
+          </framecontract_contract_collection_load_before_observer>
+        </observers>
+      </framecontract_contract_collection_load_before>
+      <framecontract_vendor_collection_load_before>
+        <observers>
+          <ramecontract_vendor_collectionload_observer>
+            <class>isolation/observer_framecontract</class>
+            <method>onVendorCollectionLoad</method>
+          </ramecontract_vendor_collectionload_observer>
+        </observers>
+      </framecontract_vendor_collection_load_before>
+      
+      <exportorder_order_load_after>
+        <observers>
+          <isolation_orderload_observer>
+            <class>isolation/observer_framecontract</class>
+            <method>onOrderExportLoad</method>
+          </isolation_orderload_observer>
+        </observers>
+      </exportorder_order_load_after>
+      <framecontract_vendor_load_after>
+        <observers>
+          <isolation_framecontract_vendor_load_after_observer>
+            <class>isolation/observer_framecontract</class>
+            <method>onVendorLoad</method>
+          </isolation_framecontract_vendor_load_after_observer>
+        </observers>
+      </framecontract_vendor_load_after>
+      <framecontract_contract_load_after>
+        <observers>
+          <isolation_framecontract_contract_load_after_observer>
+            <class>isolation/observer_framecontract</class>
+            <method>onContractLoad</method>
+          </isolation_framecontract_contract_load_after_observer>
+        </observers>
+      </framecontract_contract_load_after>
     </events>
   </adminhtml>
 

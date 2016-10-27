@@ -171,4 +171,9 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
         $response->sendResponse();
         die;
     }
+    
+    protected function _isAllowed()
+    {
+    	return Mage::getSingleton('admin/session')->isAllowed('admin/framecontract/export');
+    }
 }

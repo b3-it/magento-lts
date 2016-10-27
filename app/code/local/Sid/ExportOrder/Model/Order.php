@@ -37,6 +37,23 @@
  */
 class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 {
+	
+	/**
+	 * Prefix of model events names
+	 *
+	 * @var string
+	 */
+	protected $_eventPrefix = 'exportorder_order';
+	
+	/**
+	 * Parameter name in event
+	 *
+	 * In observe method you can use $observer->getEvent()->getObject() in this case
+	 *
+	 * @var string
+	 */
+	protected $_eventObject = 'object';
+	
 	protected $_vendor = null;
 	protected $_contract = null;
 	

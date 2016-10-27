@@ -49,10 +49,14 @@
 
 class Sid_Framecontract_Model_Vendor extends Mage_Core_Model_Abstract
 {
-	
 
-	
+	/**
+	 * Prefix of model events names
+	 *
+	 * @var string
+	 */
 	protected $_eventPrefix = 'framecontract_vendor';
+	
 	
     public function _construct()
     {

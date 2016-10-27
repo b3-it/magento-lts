@@ -631,6 +631,7 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
                     $_quoteItem->getProduct()->getTypeInstance(true)->getOrderOptions($_quoteItem->getProduct())
                 );
             $orderItem = $convertQuote->itemToOrderItem($item);
+            $orderItem->setStoreGroup($_quoteItem->getStoreGroup());
             
             $los = Mage::getModel('framecontract/los')->loadByProductId($item->getProduct()->getId());
             $orderItem->setLosId($los->getLosId());

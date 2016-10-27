@@ -30,7 +30,7 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminh
 	protected function _prepareColumns() {
 		//Die anderen Spalten dürfen noch nicht vorhanden sein!
 		$this->addColumnAfter('kassenzeichen', array(
-				'header'    => Mage::helper('paymentbase')->__('Kassenzeichen #'),
+				'header'    => Mage::helper('extsalesorder')->__('Kassenzeichen #'),
 				'index'     => 'kassenzeichen',
 				'type'      => 'text',
 				),
@@ -50,16 +50,18 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Invoice_Grid extends Mage_Adminh
 				),
 				'billing_name'
 		);
-		$this->addColumnAfter('payment_method', array(
-				'header'    => Mage::helper('sales')->__('Payment Method'),
-				'index'     => 'payment_method',
-				'type'      => 'options',
-				'width'     => '130px',
-				'options'   => Mage::helper('paymentbase')->getActivePaymentMethods(),
-				),
-				'billing_address'
-		);
-		
+		if(Mage::helper('core')->isModuleEnabled('Egovs_Paymentbase'))
+		{
+			$this->addColumnAfter('payment_method', array(
+					'header'    => Mage::helper('sales')->__('Payment Method'),
+					'index'     => 'payment_method',
+					'type'      => 'options',
+					'width'     => '130px',
+					'options'   => Mage::helper('paymentbase')->getActivePaymentMethods(),
+					),
+					'billing_address'
+			);
+		}
 		return parent::_prepareColumns();
 	}
 }
