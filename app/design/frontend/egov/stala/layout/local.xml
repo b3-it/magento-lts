@@ -10,4 +10,9 @@
             </action>
         </reference>
     </default>
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
+        </reference>
+    </customer_account>
 </layout>

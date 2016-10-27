@@ -64,9 +64,6 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             <tfoot>
                 <tr>
                     <td colspan="50" class="a-right cart-footer-actions">
-                        <button class="button btn-update" type="submit" style="visibility:hidden;" data-cart-item-update name="update_cart_action" value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>">
-                            <?php echo $this->__('Update Shopping Cart'); ?>
-                        </button>
                     <?php if($this->getContinueShoppingUrl()): ?>
                         <button class="button btn-continue egov-float-left" type="button" title="<?php echo $this->quoteEscape($this->__('Continue Shopping')) ?>" onclick="setLocation('<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>')">
                             <?php echo $this->__('Continue Shopping') ?>

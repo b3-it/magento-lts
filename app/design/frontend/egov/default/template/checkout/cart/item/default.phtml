@@ -36,8 +36,11 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
     </td>
 
     <td class="product-cart-info">
-
-        <a href="<?php echo $this->getDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove Item') ?></a>
+        <a class="egov-delete egov-float-right"
+           href="<?php echo $this->getDeleteUrl() ?>"
+           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
+           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
+           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
 
         <h2 class="product-name">
         <?php if ($this->hasProductUrl()):?>
