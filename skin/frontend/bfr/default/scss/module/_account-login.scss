@@ -141,6 +141,16 @@
         list-style-type: none;
         list-style-image: url($global-category-arrow-full-right);
     }
+    
+    .new-users {
+    	ul.info, p > strong {
+    		display: none;
+    	}
+        p {
+        	position: relative;
+        	top: -25px;
+        }
+    }
 }
 
 @include bp(max-width, 480px) {
