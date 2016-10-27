@@ -34,6 +34,19 @@
         <!-- Nur Für sich alleine Anzeigen -->
         <rank>1000</rank>
     </storepickup>
+    <bulkgoods>
+        <active>1</active>
+        <allowed_methods>bulkgoods</allowed_methods>
+        <methods>bulkgoods</methods>
+        <sallowspecific>0</sallowspecific>
+        <model>egovsshipment/bulkgoods</model>
+        <name></name>
+        <price>0.00</price>
+        <title>Sperrgut Versand</title>
+        <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+        <handling_type>F</handling_type>
+        <rank>1</rank>
+    </bulkgoods>
   </carriers>
 </default>
 <global>
