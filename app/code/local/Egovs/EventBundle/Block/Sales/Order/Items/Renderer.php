@@ -12,12 +12,20 @@
 class Egovs_EventBundle_Block_Sales_Order_Items_Renderer extends Mage_Bundle_Block_Sales_Order_Items_Renderer
 {
    public function getSubItemPriceString($item, $order)
-   {
-   		$html = " (" . $order->formatPrice($item->getPrice());
-   		$html .= " +" . $item->getTaxAmount();
-   		$html .= " (" . $item->getTaxPercent()."%))";
+   { 		
+   		$text = "";
+   		//. ' ' . Mage::helper('core')->currency($this->getSelectionPrice($item, $bundleSelection))
+   		if((Mage::getStoreConfig('eventbundle/display_prices/cart_sub_price_eq_null') == 1)  || (floatval($item->getPrice()) > 0.09)){
+   			$text .=  ' ( ' . Mage::helper('core')->currency($item->getPrice());
+   			if (Mage::getStoreConfig('tax/cart_display/zero_tax') == 1){
+   				$text .= ' + ' . Mage::helper('core')->currency($item->getTaxAmount())
+   				. ' (' . number_format($item->getTaxPercent(),2)."%)";
+   			}
+   			$text .= ")";
+   		}
    		
-   		return $html;
+   		
+   		return $text;
    		
    }
    
@@ -75,4 +83,13 @@ class Egovs_EventBundle_Block_Sales_Order_Items_Renderer extends Mage_Bundle_Blo
 	   	}
    }
    
+   
+   public function canShowPriceInfo($item)
+   {
+	   	if ($item->getOrderItem()->getParentItem()) 
+	   	{
+	   				return false;
+	   	}
+   		return true;
+   }
 }

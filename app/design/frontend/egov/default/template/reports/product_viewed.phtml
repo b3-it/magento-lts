@@ -24,7 +24,7 @@
                         <?php
                         $_item_short = $_item_full = $this->helper('catalog/output')->productAttribute($_item, $_item->getName() , 'name');
                         if ( strlen($_item_short) > 45 ) {
-                            $_item_short = substr($_item_short, 0, 42) . '...';
+                            $_item_short = mb_substr($_item_short, 0, 42) . '...';
                         }
                         ?>
                         <a href="<?php echo $this->getProductUrl($_item) ?>" title="<?php echo $_item_full; ?>">

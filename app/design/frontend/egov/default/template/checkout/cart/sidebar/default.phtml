@@ -35,7 +35,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
                 <?php
                     $_product_full = $_product_title = $this->escapeHtml($this->getProductName());
                     if ( strlen($_product_title) > $max_title_length ) {
-                        $_product_title = substr($_product_title, 0, ($max_title_length - 3) ) . '...';
+                        $_product_title = mb_substr($_product_title, 0, ($max_title_length - 3) ) . '...';
                     }
                     echo '<span title="' . $_product_full . '">' . $_product_title . '</span>';
                 ?>
