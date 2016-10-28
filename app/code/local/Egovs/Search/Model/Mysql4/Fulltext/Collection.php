@@ -57,22 +57,21 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
         $phone = Mage::helper('egovssearch/colognephon');
         if(strlen($query)>2)$phonquery = $phone->germanphonetic($query);
         //!!klammer für Suche nach soundex und search_result.query_id
-        if(strlen($phonquery)>2)
+        if(strlen($phonquery) > 1)
         {
-        	$exp  = "(soundex_result.product_id=e.entity_id AND ";
-        	$exp .= "(". $this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.$phonquery);
-        	$exp .= " OR ". $this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.$phonquery.'%')."))";
+        	//$exp  = "(soundex_result.product_id=e.entity_id AND ";
+        	$exp = "(". $this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.$phonquery);
+        	$exp .= " OR ". $this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.$phonquery.'%').")";
         	$SoundExpr = new Zend_Db_Expr($exp);
-        	
-        	
-        	
+
         	$exp = $this->getConnection()->quoteInto('search_result.query_id=?',$this->_getQuery()->getId());
         	$exp = new Zend_Db_Expr($exp);	
         		
         	$this->getSelect()
-        		->joinLeft(array('soundex_result' => $this->getTable('egovssearch/soundex')),$SoundExpr, array())
-        		//->orWhere($this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.metaphone($query).'%'))
+        		->joinLeft(array('soundex_result' => $this->getTable('egovssearch/soundex')),'soundex_result.product_id=e.entity_id', array())
+        		
         		->where($exp)
+        		->orWhere($SoundExpr)
         		;
         	//die($this->getSelect()->__toString());
         } 
