@@ -287,7 +287,8 @@
                         </handling_fee>
                         <export translate="label">
                             <label>Export</label>
-                            <frontend_type>export</frontend_type>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>egovsshipment/adminhtml_system_config_form_field_export</frontend_model>
                             <sort_order>40</sort_order>
                             <show_in_default>0</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -296,7 +297,7 @@
                         <import translate="label">
                             <label>Import</label>
                             <frontend_type>import</frontend_type>
-                            <backend_model>adminhtml/system_config_backend_shipping_tablerate</backend_model>
+                            <backend_model>egovsshipment/system_config_backend_shipping_bulkgoods</backend_model>
                             <sort_order>50</sort_order>
                             <show_in_default>0</show_in_default>
                             <show_in_website>1</show_in_website>
