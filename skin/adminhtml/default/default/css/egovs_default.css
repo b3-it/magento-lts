@@ -26,37 +26,33 @@
     margin-right: 10px;
 }
 
-#sid-lose-grid 
-{
+#sid-lose-grid {
 	margin-top:10px;
 }
-
-
-#sid-lose-grid  .type-status{
-	width: 80px;
-}
-
-#sid-lose-grid  .type-link, #sid-lose-grid  .type-send{
-	width: 80px;
-}
-
-#sid-lose-grid  .type-button{
+#sid-lose-grid .type-status, #sid-lose-grid .type-link,
+#sid-lose-grid  .type-send, #sid-lose-grid  .type-button {
 	width: 80px;
 }
 
 #sid-lose-grid input.input-text {
     width: 98%;
 }
+
+div.sidcms-side-col, div.sidcms-main-col {
+	display: inline-block;
+	min-height: 450px;
+}
+
 div.sidcms-side-col{
 	float: left;
-    margin-right: -220px;
     padding-bottom: 25px;
-    width: 420px;
+    min-width: 40px;
+    width: 40%;
 }
+
 div.sidcms-main-col{
-	margin-left: 420px;
-    min-height: 450px;
     padding: 0 0 25px 25px;
+    width: 58%;
 }
 .sidcms-columns{
     background: rgba(0, 0, 0, 0) url("images/side_col_bg.gif") repeat-y scroll 417px 0;
