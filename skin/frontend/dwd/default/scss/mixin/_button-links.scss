@@ -1,0 +1,36 @@
+//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// =============================================
+// Buttons mit Hover-Effekten
+// =============================================
+
+@mixin hover-blau-weiss {
+	background-color: $grundfarbe-blau;
+	color: $grundfarbe-weiss;
+	border: $global-active-border solid transparent;
+	
+	&:hover, &:active, &:focus {
+    	background-color: $grundfarbe-weiss;
+    	color: $grundfarbe-blau;
+    	border-color: $grundfarbe-blau;
+    	outline-color: $grundfarbe-blau;
+    }
+}
+
+@mixin hover-weiss-blau {
+	background-color: $grundfarbe-weiss;
+	color: $grundfarbe-blau;
+	border: $global-active-border solid transparent;
+	
+	&:hover, &:active, &:focus {
+    	background-color: $grundfarbe-blau;
+    	color: $grundfarbe-weiss;
+    	border-color: $grundfarbe-weiss;
+    	outline-color: $grundfarbe-weiss;
+    }
+}

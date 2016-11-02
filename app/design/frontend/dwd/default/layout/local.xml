@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="head">
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>js/app_egov.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/app_dwd.js</name>
+            </action>
+        </reference>
+    </default>
+</layout>
