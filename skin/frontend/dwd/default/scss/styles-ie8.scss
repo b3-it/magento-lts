@@ -1,0 +1,16 @@
+﻿//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2016 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Application Core / No MQ for Lte-IE8 Use
+// ==============================================
+
+$mq-support: false;
+$mq-fixed-value: 1024px;
+
+@import "framework";
+@import "core";
