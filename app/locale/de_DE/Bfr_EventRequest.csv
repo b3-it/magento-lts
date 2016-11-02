@@ -21,7 +21,7 @@
 "An application of %s has been found!","Eine Anmeldung für [%s] wurde bereits vorgenommen!"
 "You can register events only!","Sie können sich nur für Veranstaltungen anmelden!"
 "You can register one event only!","Sie können sich nur für eine Veranstaltung anmelden!"
-"Finalize application of %s first!","Schließen Sie bitte erst die Anmeldung zum [%s] ab."
+"Finalize application of %s first!","Schließen Sie bitte erst die Anmeldung zur Veranstaltung [%s] ab."
 "Accept Template","Vorlage für Akzeptiert"
 "Reject Template","Vorlage für Abgelehnt"
 "street","Straße"
