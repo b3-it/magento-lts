@@ -132,6 +132,44 @@
 					</Egovs_Acl_Model_Observer_Block>
 				</observers>
 			</core_block_abstract_prepare_layout_after>
+			<customer_info_tabs_wishlist_can_show>
+			<observers>
+                    <Egovs_Acl_Model_Observer_Block>
+                        <type>singleton</type>
+                        <class>acl/customer_observer</class>
+                        <method>onCustomerTabCanShow</method>
+                    </Egovs_Acl_Model_Observer_Block>
+                </observers>
+			</customer_info_tabs_wishlist_can_show>
+			<customer_info_tabs_newsletter_can_show>
+			     <observers>
+                    <Egovs_Acl_Model_Observer_Block>
+                        <type>singleton</type>
+                        <class>acl/customer_observer</class>
+                        <method>onCustomerTabCanShow</method>
+                    </Egovs_Acl_Model_Observer_Block>
+                </observers>
+			</customer_info_tabs_newsletter_can_show>
+			<customer_info_tabs_reviews_can_show>
+			 <observers>
+                    <Egovs_Acl_Model_Observer_Block>
+                        <type>singleton</type>
+                        <class>acl/customer_observer</class>
+                        <method>onCustomerTabCanShow</method>
+                    </Egovs_Acl_Model_Observer_Block>
+                </observers>
+			</customer_info_tabs_reviews_can_show>
+			 <customer_info_tabs_tags_can_show>
+             <observers>
+                    <Egovs_Acl_Model_Observer_Block>
+                        <type>singleton</type>
+                        <class>acl/customer_observer</class>
+                        <method>onCustomerTabCanShow</method>
+                    </Egovs_Acl_Model_Observer_Block>
+                </observers>
+            </customer_info_tabs_tags_can_show>
+            
+			
 		</events>
 		<acl>
 			<resources>
@@ -270,6 +308,28 @@
 										</customerdelete>
 									</children>
 								</manage>
+								<tabs>
+								    <title>Show Tabs</title>
+                                    <sort_order>30</sort_order>
+								    <children>
+                                        <wishlist translate="title" module="">
+                                            <title>Wishlist</title>
+                                            <sort_order>10</sort_order>
+                                        </wishlist>
+                                         <newsletter translate="title" module="">
+                                            <title>Newsletter</title>
+                                            <sort_order>20</sort_order>
+                                        </newsletter>
+                                         <reviews translate="title" module="">
+                                            <title>Reviews</title>
+                                            <sort_order>30</sort_order>
+                                        </reviews>
+                                         <tags translate="title" module="">
+                                            <title>Product Tags</title>
+                                            <sort_order>40</sort_order>
+                                        </tags>
+                                    </children>
+								</tabs>
 								<group>
 									<children>
 										<customergroupsave translate="title" module="">
