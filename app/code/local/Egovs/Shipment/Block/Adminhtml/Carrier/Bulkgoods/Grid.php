@@ -66,8 +66,7 @@ class Egovs_Shipment_Block_Adminhtml_Carrier_Bulkgoods_Grid extends Mage_Adminht
     {
     
         $collection = Mage::getResourceModel('egovsshipment/carrier_bulkgoods_collection');
-        $collection->setConditionFilter($this->getConditionName())
-            ->setWebsiteFilter($this->getWebsiteId());
+        $collection->setWebsiteFilter($this->getWebsiteId());
 
         $this->setCollection($collection);
 
@@ -99,14 +98,14 @@ class Egovs_Shipment_Block_Adminhtml_Carrier_Bulkgoods_Grid extends Mage_Adminht
             'default'   => '*',
         ));
 
-        $this->addColumn('dest_zip', array(
-            'header'    => Mage::helper('adminhtml')->__('Zip/Postal Code'),
-            'index'     => 'dest_zip',
-            'default'   => '*',
+        $this->addColumn('qty', array(
+            'header'    => Mage::helper('adminhtml')->__('Quantity'),
+            'index'     => 'qty',
+            
         ));
 
         $this->addColumn('price', array(
-            'header'    => Mage::helper('adminhtml')->__('Shipping Price'),
+            'header'    => Mage::helper('adminhtml')->__('Price'),
             'index'     => 'price',
         ));
 

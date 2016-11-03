@@ -54,7 +54,7 @@ class Egovs_Shipment_Model_Resource_Carrier_Bulkgoods_Collection extends Mage_Co
      */
     protected function _construct()
     {
-        $this->_init('shipping/carrier_tablerate');
+        $this->_init('egovsshipment/carrier_bulkgoods');
         $this->_shipTable       = $this->getMainTable();
         $this->_countryTable    = $this->getTable('directory/country');
         $this->_regionTable     = $this->getTable('directory/country_region');
@@ -81,8 +81,7 @@ class Egovs_Shipment_Model_Resource_Carrier_Bulkgoods_Collection extends Mage_Co
 
         $this->addOrder('dest_country', self::SORT_ORDER_ASC);
         $this->addOrder('dest_region', self::SORT_ORDER_ASC);
-        $this->addOrder('dest_zip', self::SORT_ORDER_ASC);
-        $this->addOrder('condition_value', self::SORT_ORDER_ASC);
+       
     }
 
     /**
