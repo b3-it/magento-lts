@@ -131,6 +131,8 @@
                         </button>
                         <input
                             id="qinput-<?php echo $_item->getId(); ?>"
+                            type="number"
+                            pattern="\d*"
                             data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
                             data-item-id="<?php echo $_item->getId(); ?>"
                             data-cart-item-id="<?php echo $_item->getSku(); ?>"
