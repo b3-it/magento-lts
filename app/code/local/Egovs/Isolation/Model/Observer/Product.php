@@ -31,6 +31,9 @@ class Egovs_Isolation_Model_Observer_Product extends Egovs_Isolation_Model_Obser
     
     public function onProductLoad($observer)
     {
+    	if(self::$_AllowProductLod4View){
+    		return ;
+    	}
     	$product = $observer->getProduct();
     	$storeGroups = $this->getUserStoreGroups();
     	$storeGroup = $product->getStoreGroup();

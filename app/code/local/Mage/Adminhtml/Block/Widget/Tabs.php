@@ -208,7 +208,7 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
         $this->_buildDependsTabsTree($_temp, $_keys, $_tree);
         //Falls jetzt noch Tabs ohne Zuordnung vorhanden sind, werden die hinten dran gehängt
         foreach ($_temp as $_key => $tab) {
-        	$_tree[$key] = $tab;
+        	$_tree[$_key] = $tab;
         }
         
         $_new = $this->_flatTree($_tree);
@@ -293,6 +293,15 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
 
     public function canShowTab($tab)
     {
+    	$event = $this->getTabId($tab).'_can_show';
+    	$data = new Varien_Object();
+    	$data->setTab($tab);
+    	$data->setTabId($this->getTabId($tab));
+    	Mage::dispatchEvent($this->getTabId($tab).'_can_show', array('eventdata'=>$data));
+    	
+    	if($data->getCanShow() === false ){
+    		return false;
+    	}
         if ($tab instanceof Mage_Adminhtml_Block_Widget_Tab_Interface) {
             return $tab->canShowTab();
         }
