@@ -1,0 +1,35 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<footer>
+	<div class="footer-container bottom-gradient">
+	    <!--Sprungziel Tastatursteuerung -->
+	    <div id="jumptarget<?php echo $this->getNameInLayout();?>">
+	        <h2 style="display:none;"><?php echo $this->__('Service Menue')?></h2>
+	    </div>
+	
+	    <div class="footer-wrapper">
+	        <div class="footer">
+	            <?php echo $this->getChildHtml() ?>
+	        </div>
+	    </div>
+	</div>
+	<div class="footer-container bottom-row">
+	    <div class="footer-wrapper">
+	        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('dwd_footer_block')->toHTML(); ?>
+	        <address class="copyright">
+	        <?php
+	            if ( $this->canShowVersion() == true ) {
+	          	    echo $this->__('(Version %s) ', $this->getVersion());
+	            }    
+	            echo $this->getCopyright();
+	        ?>
+	        </address>
+	    </div>
+	</div>
+</footer>

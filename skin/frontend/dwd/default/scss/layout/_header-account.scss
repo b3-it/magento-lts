@@ -1,0 +1,45 @@
+//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Header - Account
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Skip Link - Account
+ */
+
+.skip-account {
+    float: none;
+    width: auto;
+    vertical-align: top;
+    display: inline-block;
+}
+
+// ---------------------------------------------
+#header-account.skip-active {
+    display: inline-block;
+    position: absolute;
+    z-index: 200;
+    right: 0;
+    width: 200px;
+    top: 55px;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: $grundfarbe-blau;
+    
+   a {
+    	@include hover-weiss-blau;
+    	padding: 10px;
+    	width: 100%;
+    	display: block;
+    	text-decoration: none;
+    }
+}
+
+@include bp(min-width, $bp-medium + 1) {
+}

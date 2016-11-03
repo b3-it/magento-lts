@@ -6,13 +6,19 @@
 //
 
 // =============================================
-// Buttons mit Hover-Effekten
+// Borders/Buttons/Links mit Hover-Effekten
 // =============================================
+@mixin default-hidden-border {
+	border-width: $global-active-border;
+	border-style: solid;
+	border-color: transparent;
+}
 
 @mixin hover-blau-weiss {
+	@include default-hidden-border;
 	background-color: $grundfarbe-blau;
 	color: $grundfarbe-weiss;
-	border: $global-active-border solid transparent;
+	
 	
 	&:hover, &:active, &:focus {
     	background-color: $grundfarbe-weiss;
@@ -23,9 +29,9 @@
 }
 
 @mixin hover-weiss-blau {
+	@include default-hidden-border;
 	background-color: $grundfarbe-weiss;
 	color: $grundfarbe-blau;
-	border: $global-active-border solid transparent;
 	
 	&:hover, &:active, &:focus {
     	background-color: $grundfarbe-blau;
@@ -33,4 +39,28 @@
     	border-color: $grundfarbe-weiss;
     	outline-color: $grundfarbe-weiss;
     }
+}
+
+@mixin link-blau {
+	@include default-hidden-border;
+	background-color: $grundfarbe-weiss;
+	color: $grundfarbe-blau;
+	text-decoration: none;
+	
+	&:hover, &:active, &:focus {
+		outline-color: $grundfarbe-blau;
+		text-decoration: underline;
+	}
+}
+
+@mixin link-weiss {
+	@include default-hidden-border;
+	background-color: $grundfarbe-blau;
+	color: $grundfarbe-weiss;
+	text-decoration: none;
+	
+	&:hover, &:active, &:focus {
+		outline-color: $grundfarbe-weiss;
+		text-decoration: underline;
+	}
 }
