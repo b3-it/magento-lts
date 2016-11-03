@@ -103,8 +103,8 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     		;
     		
   		
-//     		$s = $collection->getSelect()->__toString();
-//     		die($s);
+    		$s = $collection->getSelect()->__toString();
+    		die($s);
     		;
     	}
     
