@@ -17,7 +17,7 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 	 * Falls Produkte aus einer Bestellung geladen werden sollen
 	 * @var string
 	 */
-	protected $_AllowProductLod4View = false;
+	protected static $_AllowProductLod4View = false;
 	
 	protected function getUser()
 	{
