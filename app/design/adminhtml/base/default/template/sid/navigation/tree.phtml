@@ -2,23 +2,22 @@
 /**
  */
 ?>
-
-<?php if($this->getTitle()): ?>
+<div class="content-header">
+  <?php if($this->getTitle()): ?>
     <h3><?php echo $this->getTitle() ?></h3>
-<?php endif ?>
-
-<div class="form-buttons" style="margin-bottom: 3px;">
-    <button class="scalable" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('sidcms')->__('New')?>">
-        <?php echo Mage::helper('sidcms')->__('New')?>
-    </button>
-    <button class="scalable btn btn-warning btn-sm" onclick="nodeOptions.edit();" type="button" title="<?php echo Mage::helper('sidcms')->__('Rename')?>">
-        <?php echo Mage::helper('sidcms')->__('Rename')?>
-    </button>
-    <button class="scalable btn btn-danger btn-sm" onclick="nodeOptions.remove();" type="button" title="<?php echo Mage::helper('sidcms')->__('Delete')?>">
-        <?php echo Mage::helper('sidcms')->__('Delete')?>
-    </button>
+  <?php endif ?>
+    <p class="form-buttons">
+        <button class="scalable" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('sidcms')->__('New')?>">
+            <?php echo Mage::helper('sidcms')->__('New')?>
+        </button>
+        <button class="scalable btn btn-warning btn-sm" onclick="nodeOptions.edit();" type="button" title="<?php echo Mage::helper('sidcms')->__('Rename')?>">
+            <?php echo Mage::helper('sidcms')->__('Rename')?>
+        </button>
+        <button class="scalable btn btn-danger btn-sm" onclick="nodeOptions.remove();" type="button" title="<?php echo Mage::helper('sidcms')->__('Delete')?>">
+            <?php echo Mage::helper('sidcms')->__('Delete')?>
+        </button>
+    </p>
 </div>
-
 
 <div id="jstree_demo" class="demo"></div>
 
@@ -37,8 +36,7 @@ var element_not_selected = "<?php echo Mage::helper('sidcms')->__('You must be s
 <script type="text/javascript" src="<?php echo $this->getJsUrl() ?>sid/cms/init_menu.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-function init_db_nodes()
-{
+function init_db_nodes() {
 <?php foreach ($this->getNodes() as $node):
 	$parent = $node->getParentId();
 	if($node->getParentId())
@@ -49,7 +47,6 @@ function init_db_nodes()
 		$parent = '"root"';
 	}
 	echo "var node_".$node->getId()." = nodeOptions.add(".$node->toJson().",$parent);"
-
 ?>
 <?php endforeach;?>
 	nodeOptions.open_all();

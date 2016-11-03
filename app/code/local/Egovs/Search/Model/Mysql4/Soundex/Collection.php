@@ -5,6 +5,8 @@ class Egovs_Search_Model_Mysql4_Soundex_Collection extends Mage_Core_Model_Mysql
 	private $_searchableAttributes = null;
 	private $_phonetic = null;
 	
+	// 3 Dim Array Store, Produkt , Value
+	private $_SavedValues = array();
 	
     public function _construct()
     {    
@@ -32,28 +34,53 @@ class Egovs_Search_Model_Mysql4_Soundex_Collection extends Mage_Core_Model_Mysql
     	$value = $product->getData($attribute);
     	if(($value != null)  && (strlen($value)>1))
     	{
-	    	$phone = $this->flat($value);
-	    	if(strlen($phone)>2){
-	    		$sql = "insert into ".$this->getTable('egovssearch/soundex')." (product_id,store_id,soundex) VALUES (";
-		    	$sql .= $productid . "," . $storeid .",'". $phone ."')";
-		    	$result = $this->_conn->query($sql);
-	    	}
+// 	    	$phone = $this->flat($value);
+// 	    	if(strlen($phone)>2){
+// 	    		$sql = "insert into ".$this->getTable('egovssearch/soundex')." (product_id,store_id,soundex) VALUES (";
+// 		    	$sql .= $productid . "," . $storeid .",'". $phone ."')";
+// 		    	$result = $this->_conn->query($sql);
+// 	    	}
 	    	
-	    	$search  = array('ä', 'ü', 'ö',);
-			$replace = array('ae', 'ue', 'oe');
+	    	//$search  = array('ä', 'ü', 'ö','der','die','das');
+	    	$search  = array('der','die','das');
+			//$replace = array('ae', 'ue', 'oe','','','');
+			$replace = array('','','');
 			$umschrift = str_ireplace($search,$replace,$value);
-			if($umschrift != $value)
+			//if($umschrift != $value)
 			{
 				$phone = $this->flat($umschrift);
-		    	if(strlen($phone)>2){
-		    		$sql = "insert into ".$this->getTable('egovssearch/soundex')." (product_id,store_id,soundex) VALUES (";
-			    	$sql .= $productid . "," . $storeid .",'". $phone ."')";
-			    	$result = $this->_conn->query($sql);
+		    	if(strlen($phone) > 2 ){
+		    		if(!$this->isValueSaved($productid, $storeid, $phone)){
+			    		$sql = "insert into ".$this->getTable('egovssearch/soundex')." (product_id,store_id,soundex) VALUES (";
+				    	$sql .= $productid . "," . $storeid .",'". $phone ."')";
+				    	$result = $this->_conn->query($sql);
+		    		}
 		    	}
 			}
     	}
     }
     
+	  private function isValueSaved($productid, $storeid, $phone )
+	  {
+	  	if(!isset($this->_SavedValues[$storeid])){
+	  		$this->_SavedValues[$storeid] = array();
+	  	}
+	  	
+	  	if(!isset($this->_SavedValues[$storeid][$productid])){
+	  		$this->_SavedValues[$storeid][$productid] = array();
+	  	}
+	  	
+	  	$values = $this->_SavedValues[$storeid][$productid];
+	  	
+	  	$result = array_search($phone, $values);
+	  	if($result === false){
+	  		$this->_SavedValues[$storeid][$productid][] = $phone;
+	  		return false;
+	  	}
+	  	
+	  	return true;
+	  	
+	  }
     
    protected function _getSearchableAttributes($backendType = null)
     {

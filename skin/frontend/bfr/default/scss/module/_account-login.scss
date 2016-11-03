@@ -146,7 +146,7 @@
     	ul.info, p > strong {
     		display: none;
     	}
-        p {
+        .content > fieldset > p {
         	position: relative;
         	top: -25px;
         }

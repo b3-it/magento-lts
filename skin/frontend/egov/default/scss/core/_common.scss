@@ -84,6 +84,7 @@ input[type="radio"] {
 a {
     color: $global-linkcolor;
     text-decoration: none;
+    border: $global-active-border solid transparent;
 }
 
 a:hover {
