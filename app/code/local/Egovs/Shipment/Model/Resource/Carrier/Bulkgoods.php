@@ -119,61 +119,33 @@ class Egovs_Shipment_Model_Resource_Carrier_Bulkgoods extends Mage_Core_Model_Re
         $bind = array(
             ':website_id' => (int) $request->getWebsiteId(),
             ':country_id' => $request->getDestCountryId(),
-            ':region_id' => (int) $request->getDestRegionId(),
-            ':postcode' => $request->getDestPostcode()
+            ':region_id' => (int) $request->getDestRegionId()
+//             ':postcode' => $request->getDestPostcode()
         );
         $select = $adapter->select()
             ->from($this->getMainTable())
             ->where('website_id = :website_id')
-            ->order(array('dest_country_id DESC', 'dest_region_id DESC', 'dest_zip DESC', 'condition_value DESC'))
-            ->limit(1);
+            ->order(array('dest_country_id DESC', 'dest_region_id DESC', 'qty ASC'));
+            
 
         // Render destination condition
         $orWhere = '(' . implode(') OR (', array(
-            "dest_country_id = :country_id AND dest_region_id = :region_id AND dest_zip = :postcode",
-            "dest_country_id = :country_id AND dest_region_id = :region_id AND dest_zip = ''",
-
             // Handle asterix in dest_zip field
-            "dest_country_id = :country_id AND dest_region_id = :region_id AND dest_zip = '*'",
-            "dest_country_id = :country_id AND dest_region_id = 0 AND dest_zip = '*'",
-            "dest_country_id = '0' AND dest_region_id = :region_id AND dest_zip = '*'",
-            "dest_country_id = '0' AND dest_region_id = 0 AND dest_zip = '*'",
-
-            "dest_country_id = :country_id AND dest_region_id = 0 AND dest_zip = ''",
-            "dest_country_id = :country_id AND dest_region_id = 0 AND dest_zip = :postcode",
-            "dest_country_id = :country_id AND dest_region_id = 0 AND dest_zip = '*'",
+            "dest_country_id = :country_id",
+            "dest_country_id = '*'",
+            "dest_region_id = :region_id",
+        	"dest_region_id = 0",
         )) . ')';
         $select->where($orWhere);
 
-        // Render condition by condition name
-        if (is_array($request->getConditionName())) {
-            $orWhere = array();
-            $i = 0;
-            foreach ($request->getConditionName() as $conditionName) {
-                $bindNameKey  = sprintf(':condition_name_%d', $i);
-                $bindValueKey = sprintf(':condition_value_%d', $i);
-                $orWhere[] = "(condition_name = {$bindNameKey} AND condition_value <= {$bindValueKey})";
-                $bind[$bindNameKey] = $conditionName;
-                $bind[$bindValueKey] = $request->getData($conditionName);
-                $i++;
-            }
-
-            if ($orWhere) {
-                $select->where(implode(' OR ', $orWhere));
-            }
-        } else {
-            $bind[':condition_name']  = $request->getConditionName();
-            $bind[':condition_value'] = $request->getData($request->getConditionName());
-
-            $select->where('condition_name = :condition_name');
-            $select->where('condition_value <= :condition_value');
+//die($select->assemble());
+        $result = array();
+        $rows = $adapter->fetchAll($select, $bind);
+        foreach($rows as $row)
+        {
+        	$result[] = new Varien_Object($row);
         }
-
-        $result = $adapter->fetchRow($select, $bind);
-        // Normalize destination zip code
-        if ($result && $result['dest_zip'] == '*') {
-            $result['dest_zip'] = '';
-        }
+       
         return $result;
     }
 
@@ -414,7 +386,7 @@ class Egovs_Shipment_Model_Resource_Carrier_Bulkgoods extends Mage_Core_Model_Re
     protected function _saveImportData(array $data)
     {
         if (!empty($data)) {
-            $columns = array('website_id', 'shipment_group','dest_country_id', 'dest_region_id', 'number', 'price');
+            $columns = array('website_id', 'shipment_group','dest_country_id', 'dest_region_id', 'qty', 'price');
             $this->_getWriteAdapter()->insertArray($this->getMainTable(), $columns, $data);
             $this->_importedRows += count($data);
         }

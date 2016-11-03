@@ -81,7 +81,15 @@
 			</connection>
 		</egovs_shipment>
 	</resources>
-    
+        <sales>
+	        <quote>
+	            <item>
+	                <product_attributes>
+	                    <shipment_group/>
+	                </product_attributes> 
+	            </item>
+	        </quote>
+	    </sales>
     <helpers>
    		<freeshipmentbyprice>
        		<class>Egovs_Shipment_Helper</class>

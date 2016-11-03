@@ -45,7 +45,7 @@ $table = $installer->getConnection()
         ), 'Primary key')
     ->addColumn('website_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'nullable'  => false,
-        'default'   => '0',
+        'default'   => '1',
         ), 'Website Id')
     ->addColumn('shipment_group', Varien_Db_Ddl_Table::TYPE_TEXT, 50, array(
         		'nullable'  => false,
@@ -63,7 +63,7 @@ $table = $installer->getConnection()
 //         'nullable'  => false,
 //         'default'   => '*',
 //         ), 'Destination Post Code (Zip)')
-    ->addColumn('number', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+    ->addColumn('qty', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         		'nullable'  => false,
         		'default'   => '0',
         ), 'Number of Items')
@@ -71,22 +71,22 @@ $table = $installer->getConnection()
         'nullable'  => false,
         'default'   => '0.0000',
         ), 'Price')
-    ->addIndex($installer->getIdxName('egovsshipment/bulkgoods', array('website_id', 'dest_country_id', 'dest_region_id', 'shipment_group','price','number'), Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE),
-        array('website_id', 'dest_country_id', 'dest_region_id', 'shipment_group','price','number'), array('type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE))
+    ->addIndex($installer->getIdxName('egovsshipment/bulkgoods', array('website_id', 'dest_country_id', 'dest_region_id', 'shipment_group','price','qty'), Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE),
+        array('website_id', 'dest_country_id', 'dest_region_id', 'shipment_group','price','qty'), array('type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE))
     ->setComment('Bulkgoods Tablerate');
 $installer->getConnection()->createTable($table);
 
 $data = array();
-$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'number'=>'1', 'price'=>'2');
-$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'number'=>'6', 'price'=>'4');
-$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'number'=>'11', 'price'=>'6');
-$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'number'=>'1', 'price'=>'4');
-$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'number'=>'6', 'price'=>'8');
-$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'number'=>'11', 'price'=>'15');
-$data[] = array('shipment_group'=>'Normal', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'number'=>'1', 'price'=>'6');
-$data[] = array('shipment_group'=>'Normal', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'number'=>'1', 'price'=>'15');
-$data[] = array('shipment_group'=>'Sperrgut', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'number'=>'0', 'price'=>'6');
-$data[] = array('shipment_group'=>'Sperrgut', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'number'=>'0', 'price'=>'15');
+$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'qty'=>'1', 'price'=>'2');
+$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'qty'=>'6', 'price'=>'4');
+$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'qty'=>'11', 'price'=>'6');
+$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'qty'=>'1', 'price'=>'4');
+$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'qty'=>'6', 'price'=>'8');
+$data[] = array('shipment_group'=>'Bücher', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'qty'=>'11', 'price'=>'15');
+$data[] = array('shipment_group'=>'Normal', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'qty'=>'1', 'price'=>'6');
+$data[] = array('shipment_group'=>'Normal', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'qty'=>'1', 'price'=>'15');
+$data[] = array('shipment_group'=>'Sperrgut', 'dest_country_id'=>'DE', 'dest_region_id'=>'*', 'qty'=>'0', 'price'=>'6');
+$data[] = array('shipment_group'=>'Sperrgut', 'dest_country_id'=>'*', 'dest_region_id'=>'*', 'qty'=>'0', 'price'=>'15');
 
 
 $installer->getConnection()->insertMultiple($installer->getTable('egovsshipment/bulkgoods'),$data);
@@ -97,7 +97,7 @@ if (!$installer->getAttribute('catalog_product', 'shipment_group')) {
 	$installer->addAttribute('catalog_product', 'shipment_group', array(
 			'label' => 'Shipment Group',
 			'input' => 'select',
-			'type' => 'int',
+			'type' => 'text',
 			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
 			'visible' => false,
 			//'required' => true,
