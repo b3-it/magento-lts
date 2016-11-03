@@ -83,17 +83,20 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     		$storeViews = $this->getUserStoreViews();
     		$storeViews = implode(',', $storeViews);
     		$storeGroups = implode(',', $storeGroups);
-    		$sql = '((main_table.store_id IN ('.$storeViews.')) or (issue.store_id in ('.$storeViews.'))) ';
+    		$sql = '((main_table.store_id IN ('.$storeViews.')) ) ';
     		$sql .= 'or (main_table.subscriber_id in (Select distinct subscriber_id from '.$collection->getTable('extnewsletter/extnewsletter_subscriber').' AS esub';
-    		$sql .= ' left join (Select product_id FROM '.$collection->getTable('sales/order_item').' WHERE store_group in ('.$storeGroups.') group by product_id) AS p ON esub.product_id = p.product_id))';
+    		$sql .= ' left join (Select product_id FROM '.$collection->getTable('sales/order_item').' WHERE store_group in ('.$storeGroups.') group by product_id) AS p ON esub.product_id = p.product_id)) ';
+    		//thema hinzu
+    		$sql .= 'or (subscriber_id in (SELECT subscriber_id FROM '. $collection->getTable('extnewsletter/issuesubscriber') . ' AS es JOIN '.$collection->getTable('extnewsletter/issue').' AS issue ';
+    		$sql .= 'ON issue.extnewsletter_issue_id = es.issue_id WHERE  issue.store_id IN('.$storeViews.') group by es.subscriber_id))';
     		
     		$exp = new Zend_Db_Expr($sql);
     		
     		
     		
     		$collection->getSelect()
-    		->joinleft(array('ei'=>$collection->getTable('extnewsletter/issuesubscriber')),'ei.subscriber_id = main_table.subscriber_id',array())
-    		->joinleft(array('issue'=>$collection->getTable('extnewsletter/issue')),'issue.extnewsletter_issue_id = ei.issue_id',array())
+    		//->joinleft(array('ei'=>$collection->getTable('extnewsletter/issuesubscriber')),'ei.subscriber_id = main_table.subscriber_id',array())
+    		//->joinleft(array('issue'=>$collection->getTable('extnewsletter/issue')),'issue.extnewsletter_issue_id = ei.issue_id',array())
     		//->joinleft(array('esub'=>$collection->getTable('extnewsletter/extnewsletter_subscriber')),'esub.subscriber_id = main_table.subscriber_id',array())
     		->distinct()
     		->where($exp)
