@@ -17,3 +17,17 @@ $global-category-arrow-full-down  : '../images/arrow_green_down.png';
 $global-category-arrow-full-right : '../images/arrow_green_right.png';
 $global-category-arrow-light-right: '../images/arrow_right_small.png';
 $global-category-arrow-light-down : '../images/arrow_down_small.png';
+
+@mixin dwd-gitter-rechts {
+	position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    content: "";
+    width: 15px;
+    background-color: transparent;
+    background-image: url($global-page-right-image);
+    background-position: 0 0;
+    background-scroll: scroll;
+    background-repeat: no-repeat;
+}

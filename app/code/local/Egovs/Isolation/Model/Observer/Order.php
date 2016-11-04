@@ -47,6 +47,7 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     {   	
     	$order = $observer->getOrder();
     	$this->testOrderAllow($order->getId(),$order);	
+    	self::$_AllowProductLod4View = true;
     }
     
 	public function onOrderInvoiceCollectionLoad($observer)
@@ -63,6 +64,7 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     {   	
     	$sale_item = $observer->getInvoice();
     	$this->testOrderAllow($sale_item->getOrderId());
+    	self::$_AllowProductLod4View = true;
     }
     
 	public function onOrderShipmentCollectionLoad($observer)
@@ -77,6 +79,7 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     	if($sale_item->getOrderId())
     	{
     		$this->testOrderAllow($sale_item->getOrderId());
+    		self::$_AllowProductLod4View = true;
     	}
     }
     

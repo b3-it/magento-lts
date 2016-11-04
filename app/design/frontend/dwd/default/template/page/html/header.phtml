@@ -1,7 +1,7 @@
 ﻿<?php
 /**
  * @category    design
- * @package     egov_default
+ * @package     dwd_default
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -9,6 +9,8 @@
 /**
  * @var Mage_Page_Block_Html_Header $this
  */
+
+$action = Mage::app()->getFrontController()->getRequest()->getActionName();
 ?>
 
 <?php echo $this->getChildHtml('bitvmenu') ?>
@@ -41,18 +43,56 @@
 	        </a>
 	        <h1>
 	            <?php echo Mage::getStoreConfig('general/store_information/name'); ?>
-		        <span class="welcome-msg">
-		            <?php echo $this->getChildHtml('welcome') ?>
-		            <?php echo $this->getChildHtml('accountLinks') ?>
-	        	</span>
 	        </h1>
+        
+	      <?php if( $action != 'index'): ?>
+	        <div class="page-header-main-navigation">
+                <!-- Home -->
+	            <div id="header-account-home">
+	                <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
+	                    <span class="icon egov-home"> </span>
+	                    <span class="label"><?php echo $this->__('Startup Page'); ?></span>
+	                </a>
+	            </div>
+
+                <!-- Account -->
+                <div id="header-account-link">
+                    <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
+                        <span class="icon egov-user"></span>
+                        <span class="label"><?php echo $this->__('Account'); ?></span>
+                    </a>
+                    <div id="header-account" class="skip-content">
+                        <?php echo $this->getChildHtml('topLinks') ?>
+                    </div>
+                </div>
+
+                <!-- Cart -->
+                <div class="header-minicart">
+                    <?php echo $this->getChildHtml('minicart_head'); ?>
+                </div>
+                
+                <!--  Login / Logout -->
+                <div class="header-login-logout">
+                  <?php if( Mage::getSingleton("customer/session")->isLoggedIn() ) : ?>
+                    <a href="<?php echo Mage::getUrl('customer/account/logout'); ?>" id="egov-account-logout" class="skip-link skip-logout">
+                        <span class="icon egov-logout"></span>
+                        <span class="label"><?php echo $this->__('Logout'); ?></span>
+                    </a>
+                  <?php else : ?>
+                    <a href="<?php echo Mage::getUrl('customer/account/login'); ?>" id="egov-account-login" class="skip-link skip-login">
+                        <span class="icon egov-login"></span>
+                        <span class="label"><?php echo $this->__('Login'); ?></span>
+                    </a>
+                  <?php endif; ?>
+                </div>
+	        </div>
+	      <?php endif; ?>
 	    </div>
     </div>
 
     <div class="page-header-container">
         <?php // In order for the language switcher to display next to logo on smaller viewports, it will be moved here.
               // See app.js for details ?>
-
         <!-- Skip Links -->
         <div class="skip-links">
             <a href="#header-nav" class="skip-link skip-nav" data-target-element="#egov-nav">
@@ -66,31 +106,52 @@
             </a>
 
             <div id="jumptargetheader" class="account-cart-wrapper">
-                <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
-                    <span class="icon egov-home"> </span>
-                    <span class="label"><?php echo $this->__('Startup Page'); ?></span>
-                </a>
+              <?php if( $action == 'index'): ?>        
+                <!-- Home -->
+	            <div id="header-account-home">
+	                <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
+	                    <span class="icon egov-home"> </span>
+	                    <span class="label"><?php echo $this->__('Startup Page'); ?></span>
+	                </a>
+	            </div>
 
-                <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
-                    <span class="icon egov-user"></span>
-                    <span class="label"><?php echo $this->__('Account'); ?></span>
-                </a>
+                <!-- Account -->
+                <div id="header-account-link">
+                    <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
+                        <span class="icon egov-user"></span>
+                        <span class="label"><?php echo $this->__('Account'); ?></span>
+                    </a>
+                    <div id="header-account" class="skip-content">
+                        <?php echo $this->getChildHtml('topLinks') ?>
+                    </div>
+                </div>
 
                 <!-- Cart -->
                 <div class="header-minicart">
                     <?php echo $this->getChildHtml('minicart_head'); ?>
                 </div>
+                
+                <!--  Login / Logout -->
+                <div class="header-login-logout">
+                  <?php if( Mage::getSingleton("customer/session")->isLoggedIn() ) : ?>
+                    <a href="<?php echo Mage::getUrl('customer/account/logout'); ?>" id="egov-account-logout" class="skip-link skip-logout">
+                        <span class="icon egov-logout"></span>
+                        <span class="label"><?php echo $this->__('Logout'); ?></span>
+                    </a>
+                  <?php else : ?>
+                    <a href="<?php echo Mage::getUrl('customer/account/login'); ?>" id="egov-account-login" class="skip-link skip-login">
+                        <span class="icon egov-login"></span>
+                        <span class="label"><?php echo $this->__('Login'); ?></span>
+                    </a>
+                  <?php endif; ?>
+                </div>
+              <?php endif; ?>
             </div>
         </div>
 
         <!-- Navigation -->
         <div id="header-nav" class="skip-content">
             <?php echo $this->getChildHtml('topMenu') ?>
-        </div>
-
-        <!-- Account -->
-        <div id="header-account" class="skip-content">
-            <?php echo $this->getChildHtml('topLinks') ?>
         </div>
 
         <!-- eGov-Menu -->

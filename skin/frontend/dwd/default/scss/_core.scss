@@ -44,9 +44,9 @@
 @import "layout/header";
 @import "../../../egov/default/scss/layout/header-nav";
 @import "layout/header-search";
-@import "../../../egov/default/scss/layout/header-account";
-@import "../../../egov/default/scss/layout/header-cart";
-@import "../../../egov/default/scss/layout/footer";
+@import "layout/header-account";
+@import "layout/header-cart";
+@import "layout/footer";
 
 
 // ----------------------------------------------
@@ -78,7 +78,7 @@
 @import "../../../egov/default/scss/module/sales-order-print";
 @import "../../../egov/default/scss/module/slideshow";
 @import "../../../egov/default/scss/module/wishlist";
-@import "../../../egov/default/scss/module/checkout-cart-minicart";
+@import "module/checkout-cart-minicart";
 @import "../../../egov/default/scss/module/search";
 @import "../../../egov/default/scss/module/account-reviews";
 @import "../../../egov/default/scss/module/account-login";

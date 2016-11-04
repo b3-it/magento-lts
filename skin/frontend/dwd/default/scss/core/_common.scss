@@ -72,20 +72,9 @@ input[type="radio"] {
 }
 
 a {
-    //color: $global-linkcolor;
-    text-decoration: none;
-    //border: $global-active-border solid transparent;
+    @include link-blau;
 }
 
-a:hover {
-    text-decoration: none;
-    //color: $global-linkcolor-hover;
-}
-
-a:focus {
-    //outline-color: $global-linkcolor-active;
-    //color: darken($global-linkcolor-active, 30%);
-}
 
 ol,
 ul {
@@ -199,21 +188,15 @@ p.note-msg {
 }
 
 .block {
-    border-width: $global-checkout-borderwidth;
-    border-style: solid;
-    border-color: $global-border-color;
+    border-color: $zusatzfarbe-blau;
     margin-bottom: $global-boxmargin;
 
     .block-title {
-        background-color: $global-box-title-backgroundcolor;
-        border-bottom: $global-box-border-bottom solid $global-box-bordercolor;
-        padding-top: $global-box-title-padding-top;
-        padding-right: $global-box-title-padding-right;
-        padding-bottom: $global-box-title-padding-bottom;
-        padding-left: $global-box-title-padding-left;
-        color: $global-fontcolor-dark;
+        background-color: $grundfarbe-weiss;
+        padding: 0.3em;
+        color: $textfarbe-mittel;
         font-weight: normal;
-        font-size: $global-fontsize-big;
+        font-size: $global-h4-size;
 
         span {
             color: $global-h4-color;
@@ -256,13 +239,10 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    margin-top: $blobal-blockcontent-margintop;
-    margin-bottom: $blobal-blockcontent-marginbottom;
-    margin-left: $blobal-blockcontent-marginleft;
-    margin-right: $blobal-blockcontent-marginright;
-
-    input {
-    }
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: $grundfarbe-grau;
+    padding: 15px;
 
     input[type="text"], input[type="email"] {
         width: 100%;
@@ -710,21 +690,6 @@ div.block-reorder {
  * Container
  */
 
-.main-container {
-    max-width: $global-fullpage-width;
-    position: relative;
-    top: $global-cms-top-position;
-}
-
-.footer-container {
-    box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
-    min-height: $global-footer-height;
-    line-height: $global-footer-lineheight;
-    background-color: $global-footer-backgroundcolor;
-    width: 100%;
-    padding-top: 0px;
-}
-
 .main-container,
 .footer-container {
     position: relative;
@@ -736,6 +701,11 @@ div.block-reorder {
     &:after {
         @include clearfix;
     }
+}
+
+.main-container {
+    max-width: $global-fullpage-width;
+    margin-top: 30px;
 }
 
 /* -------------------------------------------- *
