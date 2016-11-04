@@ -48,6 +48,9 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_FormatController extends Mage_Adminh
 
 	}
 	
-	
+	protected function _isAllowed()
+	{
+		return Mage::getSingleton('admin/session')->isAllowed('framecontract/vendor');
+	}
 
 }
