@@ -104,12 +104,21 @@ class Egovs_Extnewsletter_Block_Adminhtml_Queue_Edit_Form extends Mage_Adminhtml
             ));
 
             if (!Mage::app()->isSingleStoreMode()) {
+            	if(!Mage::helper('extnewsletter')->isModuleEnabled('Egovs_Isolation'))
+            	{
+            		$stores = Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm();
+            	}
+            	else
+            	{
+            		$stores = Mage::helper('isolation/store')->getStoreValuesForForm();
+            	}
+            	 
                 $fieldset->addField('stores','multiselect',array(
                     'name'          => 'stores[]',
                     'label'         => Mage::helper('newsletter')->__('Subscribers From'),
                     'image'         => $this->getSkinUrl('images/grid-cal.gif'),
                     'required'      => true,
-                    'values'        => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(),
+                    'values'        => $stores,
                     'value'         => $queue->getStores()
                 ));
             }

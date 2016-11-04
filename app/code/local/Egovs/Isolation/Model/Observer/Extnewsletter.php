@@ -87,7 +87,7 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     		$sql .= 'or (main_table.subscriber_id in (Select distinct subscriber_id from '.$collection->getTable('extnewsletter/extnewsletter_subscriber').' AS esub';
     		$sql .= ' join (Select product_id FROM '.$collection->getTable('sales/order_item').' WHERE store_group in ('.$storeGroups.') group by product_id) AS p ON esub.product_id = p.product_id)) ';
     		//thema hinzu
-    		$sql .= 'or (subscriber_id in (SELECT subscriber_id FROM '. $collection->getTable('extnewsletter/issuesubscriber') . ' AS es JOIN '.$collection->getTable('extnewsletter/issue').' AS issue ';
+    		$sql .= 'or (main_table.subscriber_id in (SELECT subscriber_id FROM '. $collection->getTable('extnewsletter/issuesubscriber') . ' AS es JOIN '.$collection->getTable('extnewsletter/issue').' AS issue ';
     		$sql .= 'ON issue.extnewsletter_issue_id = es.issue_id WHERE  issue.store_id IN('.$storeViews.') group by es.subscriber_id))';
     		
     		$exp = new Zend_Db_Expr($sql);
