@@ -207,7 +207,7 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
     
     protected function _isAllowed()
     {
-    	return Mage::getSingleton('admin/session')->isAllowed('newsletter/infoletter');
+    	return Mage::getSingleton('admin/session')->isAllowed('newsletter/infoletter_queue');
     }
     
 }
