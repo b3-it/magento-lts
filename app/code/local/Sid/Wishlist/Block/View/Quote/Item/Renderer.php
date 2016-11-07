@@ -236,7 +236,7 @@ class Sid_Wishlist_Block_View_Quote_Item_Renderer extends Mage_Core_Block_Templa
      * @return float
      */
     public function getAvailableQty() {
-    	return max($this->getQty() - $this->getQtyGranted(), 0);
+    	return max($this->getQty() - $this->getQtyGranted() - $this->getQtyOrdered(), 0);
     }
     
     /**
