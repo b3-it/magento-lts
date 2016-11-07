@@ -81,6 +81,8 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 	    		$txt = "Im Fall einer Lieferung 'frei Verwendungstelle' bitte hierher liefern: ".$adr->getDap();
 	    		$ORDER_HEADER->order_info->parties->shippingParty->address->address_remarks->setValue($txt);
 	    	}
+	    	
+	    	$ORDER_HEADER->order_info->order_parties_reference->shipment_parties_reference->final_delivery_idref->setValue('S_'.$shipping->getCustomerId());
     	}
     	
     	//lieferant
@@ -93,7 +95,7 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	
     	$ORDER_HEADER->order_info->order_parties_reference->buyer_idref->setValue('B_'.$billing->getCustomerId());
     	$ORDER_HEADER->order_info->order_parties_reference->supplier_idref->setValue('C_'.$vendor->getData('framecontract_vendor_id'));
-    	$ORDER_HEADER->order_info->order_parties_reference->shipment_parties_reference->final_delivery_idref->setValue('S_'.$shipping->getCustomerId());
+    	
     	
     	
     	//die Positionen
