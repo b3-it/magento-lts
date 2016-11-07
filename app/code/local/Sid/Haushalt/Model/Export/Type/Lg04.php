@@ -52,7 +52,8 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		$data['batch_id'] = '';
 		$data['client'] = '';
 		$data['currency'] = '';
-		$data['line_no'] = '';
+		$data['ext_ord_ref'] = '';
+		$data['line_no'] = '';	
 		$data['main_apar_id'] = '';
 		$data['order_date'] = '';
 		$data['order_id'] = '';

@@ -99,7 +99,8 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     	$params = array();
     	$params['_direct'] = true;
     	$params['_store'] = $store;
-    	$url = Mage::getUrl('exportorder/index/index',array('ident'=>$this->getIdent(),$params));
+    	$params['ident'] = $this->getIdent();
+    	$url = Mage::getUrl('exportorder/index/index',$params);
     	
     	$this->setLog('URL ExportOderLink: '. $url);
     	
