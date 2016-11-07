@@ -31,67 +31,64 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		
 	}
 
-
-
-
 	private function getOrderData($order)
 	{
 		$content = array();
-	
-		//mapping order -> lg04
-		$data = array();
-		
-		
-		$data['accountable'] = '';
-		$data['apar_id'] = '';
-		$data['att_1_id'] = '';
-		$data['att_2_id'] = '';
-		$data['att_3_id'] = '';
-		$data['att_6_id'] = '';
-		$data['att_7_id'] = '';
-		$data['batch_id'] = '';
-		$data['client'] = '';
-		$data['currency'] = '';
-		$data['ext_ord_ref'] = '';
-		$data['line_no'] = '';	
-		$data['main_apar_id'] = '';
-		$data['order_date'] = '';
-		$data['order_id'] = '';
-		$data['period'] = '';
-		$data['trans_type'] = '';
-		
-		
-		
-		
-		$format = $this->getHeadData($data);
+
+		/* @var $head Sid_Haushalt_Model_Export_Type_Lg04_Head */
+		$head = Mage::getModel('sidhaushalt/export_type_lg04_head');
+		$head->setAccountable('');
+		$head->setAparId('');
+		$head->setAtt1Id('');
+		$head->setAtt2Id('');
+		$head->setAtt3Id('');
+		$head->setAtt6Id('');
+		$head->setAtt7Id('');
+		$head->setBatchId('');
+		$head->setClient('');
+		$head->setCurrency('');
+		$head->setExtOrdRef('');
+		$head->setMainAparId('');
+		$head->setOrderDate('');
+		$head->setOrderId('');
+		$head->setPeriod('');
+		$head->setTransType('');
+
+		$format = $head->getFormatedData();
 		$content = array_merge($content, $format);
 		
 		foreach($order->getAllItems() as $item)
 		{
-			$data = array();
-			//mapping order -> lg04
-			$data['account'] = '';
-			$data['amount'] = '';
-			$data['amount_set'] = '';
-			$data['art_descr'] = '';
-			$data['article'] = '';
-			$data['batch_id'] = '';
-			$data['client'] = '';
-			$data['currency'] = '';
-			$data['dim_1'] = '';
-			$data['dim_2'] = '';
-			$data['dim_3'] = '';
-			$data['dim_6'] = '';
-			$data['dim_7'] = '';
-			$data['line_no'] = '';
-			$data['order_id'] = '';
-			$data['period'] = '';
-			$data['trans_type'] = '';
-			$data['unit_code'] = '';
-			$data['unit_price'] = '';
-			$data['value_1'] = '';
 			
-			$format = $this->getPosData($data);
+			/* @var $pos Sid_Haushalt_Model_Export_Type_Lg04_Pos */
+			$pos = Mage::getModel('sidhaushalt/export_type_lg04_pos');
+
+			$pos->setAccount('');
+			$pos->setAmount('');
+			$pos->setAmountSet('');
+			$pos->setArtDescr('');
+			$pos->setArticle('');
+			$pos->setBatchId('');
+			$pos->setClient('');
+			$pos->setCurrency('');
+			$pos->setDim1('');
+			$pos->setDim2('');
+			$pos->setDim3('');
+			$pos->setDim6('');
+			$pos->setDim7('');
+			$pos->setLineNo('');
+			$pos->setOrderId('');
+			$pos->setPeriod('');
+			$pos->setTransType('');
+			$pos->setUnitCode('');
+			$pos->setUnitPrice('');
+			$pos->setValue1('');
+			
+			
+			
+			
+			
+			$format = $pos->getFormatedData();
 			$content = array_merge($content, $format);
 		}
 		
@@ -99,60 +96,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		return $content;
 	}
 	
-	private function getHeadData($data = array())
-	{
-		$content = array();
 	
-		//kopfsatz
-		$result = array();
-		foreach($this->_lg04->getFields() as $idx => $field)
-		{
-			//var_dump($lg04->getFields()); die();
-			if($field['name'] == 'line_no')
-			{
-				$result[] = $this->_lg04->getFormatedValue($idx,'0');
-			}
-			else
-			{
-				if(isset($data[$idx]))
-				{
-					$result[] = $this->_lg04->getFormatedValue($idx,$data[$idx],'headline');
-				}else{
-					$result[] = $this->_lg04->getFormatedValue($idx,"");
-				}
-			}
-		}
-		$content[] = implode('',$result);
 	
-		return $content;
-	}
-	
-	private function getPosData($data = array())
-	{
-		$content = array();
-	
-		//positionssatz
-		$result = array();
-		foreach($this->_lg04->getFields() as $idx => $field)
-		{
-			//var_dump($lg04->getFields()); die();
-			if($field['name'] == 'line_no')
-			{
-				$result[] = $this->_lg04->getFormatedValue($idx,'1');
-			}
-			else
-			{
-				if(isset($data[$idx]))
-				{
-					$result[] = $this->_lg04->getFormatedValue($idx,$data[$idx],'posline');
-				}else{
-					$result[] = $this->_lg04->getFormatedValue($idx,"");
-				}
-			}
-		}
-		$content[] = implode('',$result);
-	
-		return $content;
-	}
 
 }
