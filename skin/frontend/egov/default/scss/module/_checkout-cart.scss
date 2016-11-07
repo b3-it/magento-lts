@@ -541,6 +541,10 @@
 
             &.product-cart-price {
                 text-align: left;
+                
+                @include bp(max-width, $bp-medium) {
+                	text-align: right;
+                }
             }
         }
 

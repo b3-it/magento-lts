@@ -66,6 +66,12 @@
         height: 25em;
         width: 48%;
         border: $global-box-border solid $global-box-bordercolor !important;
+        
+        @include bp(max-width, $bp-medium) {
+        	width: 100%;
+        	margin-bottom: 10px !important;
+        	display: block;
+        }
 
         .content {
             padding: 10px;
