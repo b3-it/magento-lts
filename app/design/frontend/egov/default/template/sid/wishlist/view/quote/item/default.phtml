@@ -164,7 +164,7 @@
     </td>
     <?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
     <td class="a-center">
-    	<?php if ($this->hasQtyGranted()): ?>
+    	<?php if ($this->hasQtyGranted() || $this->getQtyOrdered() > 0): ?>
     	<div class="qty" title="<?php echo Mage::helper('sidwishlist')->__("Quantity Ordered: "). $this->getProductName()?>">
     		<span><?php echo $this->getQtyOrdered() ?></span>
     	</div>
