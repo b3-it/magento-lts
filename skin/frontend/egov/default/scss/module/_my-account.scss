@@ -60,6 +60,18 @@
             @extend .button;
             padding: $global-btn-padding-v $global-btn-padding-h;
         }
+        
+        @include bp(max-width, $bp-medium) {
+        	a, button {
+        		height: 35px;
+        		text-align: center;
+        		vertical-align: middle;
+        		width: 40%;
+        	}
+            a {
+            	float: left;
+            }
+        }
     }
 
     .addresses-list {

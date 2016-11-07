@@ -49,6 +49,10 @@
     margin-bottom: $blobal-blockcontent-marginbottom;
 }
 
+.delivery-time {
+	margin-bottom: $global-boxmargin;
+}
+
 /* ============================================ *
  * Catalog - Product
  * ============================================ */
@@ -71,6 +75,10 @@
 .col3-layout {
     .category-products, .product-view {
         width: $global-content-3col-percent;
+        
+        @include bp(max-width, $bp-medium) {
+        	width: 100%;
+        }
     }
     .product-name {
         width: $global-maincol-title-percent;
@@ -157,6 +165,12 @@
             position: absolute;
             top: $global-1-product-height - $gobal-cart-block-height - 140px;
             left: $global-product-image-1-width + 2%;
+            
+            @include bp(max-width, $bp-medium) {
+            	position: relative;
+            	top: auto;
+            	left: auto;
+            }
 
             .add-to-cart-buttons {
                 display: inline-block;
