@@ -95,10 +95,9 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     public function getUrl()
     {
     	$vendor = Mage::getModel('framecontract/vendor')->load($this->getVendorId());
-    	$store = Mage::getModel('core/store')->load($vendor->getStoreGroup());
+    	$store = Mage::getModel('core/store')->load($vendor->getStoreGroup(),'group_id');
     	$params = array();
-    	$params['_direct'] = true;
-    	$params['_store'] = $store;
+    	$params['_store'] = $store->getId();
     	$params['ident'] = $this->getIdent();
     	$url = Mage::getUrl('exportorder/index/index',$params);
     	
