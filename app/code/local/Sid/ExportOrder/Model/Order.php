@@ -87,7 +87,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
         
     public function getContract() 
     {
-    	if($this->_contract = null)
+    	if($this->_contract == null)
     	{
     		$this->_contract =  Mage::getModel('framecontract/contract')->load($this->getContractId());
     	}

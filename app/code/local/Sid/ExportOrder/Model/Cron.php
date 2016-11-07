@@ -71,7 +71,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			$exportOrder
   			->setOrderId($order->getId())
   			->setVendorId($vendor->getId())
-  			->setContractId($order->getId())
+  			->setContractId($contract->getId())
   			->setTransfer($vendor->getTransferType())
   			->setFormat($vendor->getExportFormat())
   			->setCreatedTime(now())
