@@ -1558,7 +1558,8 @@ span.weee {
     color: $textfarbe-mittel;
     border-color: $grundfarbe-blau;
     border-style: solid;
-    border-width: $global-active-border 0;
+    border-width: $global-active-border;
+    padding: 0 10px;
     height: 40px;
     
     select {
