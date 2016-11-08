@@ -43,10 +43,15 @@ input,
 select,
 table,
 textarea {
+	@include default-hidden-border;
     font-family: $base-font-family;
-    color: $textfarbe-dunkel;
+    color: $textfarbe-mittel;
     font-size: $global-fontsize;
     line-height: $global-lineheight;
+}
+
+body {
+	border: none;
 }
 
 button {
@@ -168,11 +173,6 @@ p.note-msg {
 .product-name h1,
 .product-name .h1 {
     @include pageTitle;
-}
-
-.page-title h1,
-.page-title h2 {
-    border-bottom: $global-box-border solid $global-linkcolor;
 }
 
 /* -------------------------------------------- *
@@ -1560,6 +1560,10 @@ span.weee {
     border-style: solid;
     border-width: $global-active-border 0;
     height: 40px;
+    
+    select {
+    	margin: 0;
+    }
 
     &:after {
         @include clearfix;
@@ -1583,12 +1587,13 @@ span.weee {
 $toolbar-icon-padding-offset: 8px;
 
 .sorter {
-    margin-bottom: 5px;
     width: 100%;
+    height: 100%;
 
     label {
         float: left;
         margin-right: 5px;
+        margin-top: 8px;
 
         &:after {
             content: ':';
@@ -1599,6 +1604,11 @@ $toolbar-icon-padding-offset: 8px;
 .sorter > .sort-by {
     float: right;
     height: 30px;
+    margin-top: 5px;
+    
+    label {
+    	margin-top: 3px;
+    }
 
     .sort-by-switcher {
         display: inline-block;

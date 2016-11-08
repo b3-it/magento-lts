@@ -52,6 +52,12 @@ p.product-name {
     }
 }
 
+.product-new-block {
+	position: absolute;
+	right: 0;
+	top: 32%;
+}
+
 /* ============================================ *
  * Product Grid
  * ============================================ */
@@ -131,7 +137,7 @@ p.product-name {
     }
 
     .add-to-links {
-        margin-bottom: 0;
+        display: none;
     }
 }
 
