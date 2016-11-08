@@ -110,8 +110,8 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 		//Pseudokartennummern
 		if (Mage::getStoreConfigFlag("payment/{$this->getCode()}/use_pseudo")) {
 			$_panalias = new Egovs_Paymentbase_Model_Payplace_Types_Panalias();
-			$_panalias->setGenerate(true);
 			$_formServiceRequest->setPanalias($_panalias);
+			$_panalias->setGenerate(true);
 		}
 	}
 	
