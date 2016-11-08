@@ -1,23 +1,9 @@
 //
 // @category    design
-// @package     egov_default
+// @package     dwd_default
 // @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
-
-.catalog-product-view,
-.catalog-category-view {
-    .main-container {
-        top: $global-content-top-position;
-    }
-
-    @include bp(max-width, 785px) {
-        .main-container {
-            top: 0;
-        }
-    }
-}
-
 .catalog-category-view {
     .col2-left-layout {
         .col-main {
@@ -47,10 +33,6 @@
 
 #product-base-block {
     margin-bottom: $blobal-blockcontent-marginbottom;
-}
-
-.delivery-time {
-	margin-bottom: $global-boxmargin;
 }
 
 /* ============================================ *

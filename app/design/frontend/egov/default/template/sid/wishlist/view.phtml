@@ -75,7 +75,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 							<span><?php echo $this->__('Delete All Items') ?> </span>
 						</a>
 
-						<button type="submit" title="<?php echo $this->__('Share Collection List') ?>" class="button btn-share">
+						<button type="submit" onclick="this.name='save_and_share'" title="<?php echo $this->__('Share Collection List') ?>" class="button btn-share">
 							<span><?php echo $this->__('Share Collection List') ?></span>
 						</button>
 

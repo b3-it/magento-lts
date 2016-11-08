@@ -1,0 +1,162 @@
+//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// =============================================
+// Mixin - Main-Navigation
+// =============================================
+
+@mixin main-navigation {	
+	display: block;
+	margin-top: $global-category-margintop;
+	margin-right: $global-category-marginright;
+	margin-bottom: $global-boxmargin;
+	
+	#mobile-home-link {
+        margin: 0;
+
+	    a:hover, a:active {
+            color: $global-linkcolor-active;
+        }
+
+        a {
+    	    width:100%;
+            padding: 10px 12px 10px 14px;
+            display: block;
+            overflow: hidden;
+        }
+       
+        @include bp(min-width, 800px) {
+            display: none;
+        }
+	}
+    
+    nav > li,
+    li.account-block-title {
+        @extend .egov-navigation-background;
+        
+        background-color: $global-category-item-color;
+        
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        
+        > a {
+            @extend .egov-navigation-base;
+
+            width:100%;
+            text-align: left;
+            color: $global-linkcolor;
+            font-family: $base-font-family;
+            font-size: $global-category-fontsize;
+            display: inline-block;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+    }
+    
+    .no-touch nav a:hover {
+    }
+   
+    a {
+        text-decoration: none;
+        font-family: $base-font-family;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin: 0;
+
+            a {
+            	line-height: 1em;
+                padding: 18px 0 18px 12px;
+                display: block;
+                overflow: hidden;
+            }
+        }
+    }
+    
+    li {
+        position: relative;
+        display: block;
+        width: 100%;
+        
+        &:last-child > a {
+        }
+    }
+   
+    li:last-child a {
+        border-bottom: 0;
+    }
+    
+    li.level1 {
+    	> a {
+    		@include link-weiss;
+    		text-shadow: none;
+    	}
+        
+        ul {
+        	border-top-width: $global-active-border;
+        	border-top-color: $textfarbe-mittel;
+        	border-top-style: dotted;
+        }
+        
+        li {
+        	border-bottom-width: $global-active-border;
+        	border-bottom-color: $textfarbe-mittel;
+        	border-bottom-style: dotted;
+        	
+        	&:last-child {
+        		border-bottom: none;
+        	}
+
+            a {
+            	@include link-dunkel-grau;
+            	padding-left: 40px;
+            	
+            	&:hover, &:active, &:focus {
+            		font-weight: bold;
+            		text-decoration: none;
+            	}
+            }
+        }
+    }
+
+    li.level0,
+    a.level0 {
+        display: inline-block;
+    }
+
+    // Level 1+
+    li.level0 li.parent > a {
+        position: relative;
+    }    
+    
+    .menu-active {
+        z-index: 200;
+    }
+    
+    // Show sub-menus when JS adds the appropriate classes
+    .menu-active > ul,
+    .menu-active > ul.level0,
+    li.level0 li.sub-menu-active > ul {
+        display: block;
+    }
+
+   
+    li.level1 {
+        padding-left: 0 !important;
+        
+        a {
+        	@include bp(max-width, $bp-medium) {
+        		padding: 0 15px 0 25px;
+        	}
+        }
+    }
+}

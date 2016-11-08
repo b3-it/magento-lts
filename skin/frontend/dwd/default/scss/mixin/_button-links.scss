@@ -17,8 +17,7 @@
 @mixin hover-blau-weiss {
 	@include default-hidden-border;
 	background-color: $grundfarbe-blau;
-	color: $grundfarbe-weiss;
-	
+	color: $grundfarbe-weiss;	
 	
 	&:hover, &:active, &:focus {
     	background-color: $grundfarbe-weiss;
@@ -41,6 +40,19 @@
     }
 }
 
+@mixin grau-hover-blau {
+	@include default-hidden-border;
+	background-color: $grundfarbe-blgr;
+	color: $grundfarbe-blau;
+	
+	&:hover, &:active, &:focus {
+		background-color: $grundfarbe-blau;
+    	color: $grundfarbe-weiss;
+    	border-color: $grundfarbe-weiss;
+    	outline-color: $grundfarbe-weiss;
+	}
+}
+
 @mixin link-blau {
 	@include default-hidden-border;
 	background-color: $grundfarbe-weiss;
@@ -49,6 +61,7 @@
 	
 	&:hover, &:active, &:focus {
 		outline-color: $grundfarbe-blau;
+		border-color: $grundfarbe-blau;
 		text-decoration: underline;
 	}
 }
@@ -61,6 +74,20 @@
 	
 	&:hover, &:active, &:focus {
 		outline-color: $grundfarbe-weiss;
+		border-color: $grundfarbe-weiss;
+		text-decoration: underline;
+	}
+}
+
+@mixin link-dunkel-grau {
+	@include default-hidden-border;
+	background-color: $grundfarbe-weiss;
+	color: $textfarbe-mittel;
+	text-decoration: none;
+	
+	&:hover, &:active, &:focus {
+		outline-color: $textfarbe-mittel;
+		border-color: $textfarbe-mittel;
 		text-decoration: underline;
 	}
 }

@@ -167,9 +167,7 @@
                         <method>onCustomerTabCanShow</method>
                     </Egovs_Acl_Model_Observer_Block>
                 </observers>
-            </customer_info_tabs_tags_can_show>
-            
-			
+            </customer_info_tabs_tags_can_show>	
 		</events>
 		<acl>
 			<resources>

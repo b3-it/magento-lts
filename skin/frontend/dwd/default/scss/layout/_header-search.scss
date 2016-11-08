@@ -50,12 +50,7 @@
     	background-image: none;
     	width: 28px;
     	height: 28px;
-    	
-    	&:before {
-    		position: relative;
-    		left: -5px;
-    		top: -3px;
-    	}  	
+    	padding: 0;
     	
 	   	span {
     		display: none;

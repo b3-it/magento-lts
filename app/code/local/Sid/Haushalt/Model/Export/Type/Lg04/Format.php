@@ -11,7 +11,7 @@
 class Sid_Haushalt_Model_Export_Type_Lg04_Format extends Sid_Haushalt_Model_Export_Abstract
 {
 	
-	private $_FieldsAaAssoc = null;
+	private $_FieldsAsAssoc = null;
 	
 	public function getFormatedValue($idx, $value, $satzType = null)
 	{
@@ -32,20 +32,20 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Format extends Sid_Haushalt_Model_Expo
 	
 	public function getField($idx)
 	{
-		if($this->_FieldsAaAssoc == null)
+		if($this->_FieldsAsAssoc == null)
 		{
 			$this->getFields();
 		}
 	
-		return $this->_FieldsAaAssoc[$idx];
+		return $this->_FieldsAsAssoc[$idx];
 	}
 	
 	
 	public function getFields()
 	{
-		if($this->_FieldsAaAssoc == null)
+		if($this->_FieldsAsAssoc == null)
 		{
-			$this->_FieldsAaAssoc = array();
+			$this->_FieldsAsAssoc = array();
 			$head = array('nr','name','art','headline','posline','textline','laenge','von','bis','text');
 			foreach($this->_getFieldDescription() as  $idx => $field)
 			{
@@ -54,11 +54,11 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Format extends Sid_Haushalt_Model_Expo
 				{
 					$line[$head[$i]] = $field[$i];
 				}
-				$this->_FieldsAaAssoc[$idx] = $line;
+				$this->_FieldsAsAssoc[$idx] = $line;
 			}
 		}
 	
-		return $this->_FieldsAaAssoc;
+		return $this->_FieldsAsAssoc;
 	}
 	
 	private function _getFieldDescription()

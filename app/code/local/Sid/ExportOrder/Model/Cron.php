@@ -24,6 +24,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 		}
 		$this->prepare();
 		$this->run();
+		//für Transfermodel Link werden evtl. mehrere Bestellungen zusammen gefasst deshalt gesondert bearbeiten 
 		Mage::getModel('exportorder/order')->processPendingOrders();
 		$this->deleteOldLinks();
 	}
@@ -71,7 +72,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			$exportOrder
   			->setOrderId($order->getId())
   			->setVendorId($vendor->getId())
-  			->setContractId($order->getId())
+  			->setContractId($contract->getId())
   			->setTransfer($vendor->getTransferType())
   			->setFormat($vendor->getExportFormat())
   			->setCreatedTime(now())
@@ -94,9 +95,11 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   	
   	}
   	
+  	/**
+  	 * Alle Bestellungen mit Exportstatus Pending bearbeiten
+  	 */
   	private function run()
   	{
-  		
   		$oderCollection = Mage::getModel('sales/order')->getCollection();
   		$oderCollection->getSelect()
   			->join(array('export'=> $oderCollection->getTable('exportorder/order')),'export.order_id=main_table.entity_id')
@@ -115,10 +118,11 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			$exportOrder = Mage::getModel('exportorder/order')->load($order->getId(),'order_id');
   			$exportOrder->processOrder($order);
   		}
-  		
-  		
   	}
   	
+  	/**
+  	 * ALte Links nach definierter ablaufzeit löschen
+  	 */
   	private function deleteOldLinks()
   	{
   		$days = intval(Mage::getConfig()->getNode('sid_exportorder/delete_old_links/days'));

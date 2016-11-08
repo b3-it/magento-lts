@@ -87,7 +87,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
         
     public function getContract() 
     {
-    	if($this->_contract = null)
+    	if($this->_contract == null)
     	{
     		$this->_contract =  Mage::getModel('framecontract/contract')->load($this->getContractId());
     	}
@@ -153,6 +153,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	$collection->getSelect()
     	->join(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('vendor_id'))
     	->where('export.status = ' .Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
+    	//->where('export.semaphor < ' .Mage::helper('exportorder')->getSemaphor(-120))
     	->where("export.transfer =?", $transfer)
     	->order('vendor_id');
     	

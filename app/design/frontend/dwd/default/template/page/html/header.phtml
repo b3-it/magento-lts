@@ -149,6 +149,11 @@ $action = Mage::app()->getFrontController()->getRequest()->getActionName();
             </div>
         </div>
 
+        <span class="welcome-msg" id="welcome-hidden">
+            <?php echo $this->getChildHtml('welcome') ?>
+            <?php echo $this->getChildHtml('accountLinks') ?>
+        </span>
+
         <!-- Navigation -->
         <div id="header-nav" class="skip-content">
             <?php echo $this->getChildHtml('topMenu') ?>

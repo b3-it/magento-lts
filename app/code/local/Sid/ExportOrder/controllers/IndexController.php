@@ -31,8 +31,6 @@ class Sid_ExportOrder_IndexController extends Mage_Core_Controller_Front_Action
     					Mage::logException($ex);
     				}
     				$this->_sendUploadResponse($link->getSendFilename(), $content);
-    				
-    				
     			}
     		}
     	}

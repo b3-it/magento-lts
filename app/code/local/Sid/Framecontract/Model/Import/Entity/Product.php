@@ -1176,7 +1176,8 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
                                 'type_id'          => $this->_newSku[$rowSku]['type_id'],
                                 'sku'              => $rowSku,
                                 'created_at'       => now(),
-                                'updated_at'       => now()
+                                'updated_at'       => now(),
+                            	'store_group' 	 => $rowData['store_group'] //für Isolation BE Nutzer
                             );
                             $productsQty++;
                         } else {
@@ -1248,10 +1249,12 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
                         continue;
                     }
                 }
+                $save = $rowData;
                 $rowData      = $this->_productTypeModels[$productType]->prepareAttributesForSave($rowData);
                 $rowData['groupscatalog2_groups'] = '-2';
+               
                 $product      = Mage::getModel('importexport/import_proxy_product', $rowData);
-
+              
                 foreach ($rowData as $attrCode => $attrValue) {
                     $attribute = $resource->getAttribute($attrCode);
                     if('multiselect' != $attribute->getFrontendInput()
@@ -1920,7 +1923,8 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     	$p['_category'] = $this->_parameters['category'];
     	$p['_product_websites'] = Mage::getModel('core/website')->load($this->_parameters['website'])->getCode();
     	$p['_store'] = Mage::getModel('core/store')->load($this->_parameters['store'])->getCode();
-    	$p['store_group'] = $p['_store'];
+    	$p['store_group'] = $this->_parameters['store'];
+    	$p['website'] = $this->_parameters['website'];
     	//$p['framecontract'] = Mage::getModel('framecontract/contract')->load($this->_parameters['framecontract'])->getTitle();
     	$p['framecontract_los'] = $this->_parameters['los'];
     	//$p['framecontract_los'] = Mage::getModel('framecontract/los')->load($this->_parameters['los'])->getOptionsLabel();

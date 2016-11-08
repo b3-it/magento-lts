@@ -43,10 +43,15 @@ input,
 select,
 table,
 textarea {
+	@include default-hidden-border;
     font-family: $base-font-family;
-    color: $textfarbe-dunkel;
+    color: $textfarbe-mittel;
     font-size: $global-fontsize;
     line-height: $global-lineheight;
+}
+
+body {
+	border: none;
 }
 
 button {
@@ -86,7 +91,7 @@ ul {
 /* ============================================ *
  * Default-Active marking
  * ============================================ */
-a, input, button, select, textarea {
+input, button, select, textarea {
     /* Bugfix für IE11, da er das Rumpf-Element bei Seite laden auf Active setzt */
     &:focus {
         border-width: $global-active-border;
@@ -168,11 +173,6 @@ p.note-msg {
 .product-name h1,
 .product-name .h1 {
     @include pageTitle;
-}
-
-.page-title h1,
-.page-title h2 {
-    border-bottom: $global-box-border solid $global-linkcolor;
 }
 
 /* -------------------------------------------- *
@@ -539,43 +539,31 @@ div.block-reorder {
 
 .breadcrumbs {
     overflow: hidden;
-    margin: 0px;
-    color: $global-fontcolor-light;
-}
-
-.breadcrumbs li {
-    float: left;
+    margin: 0;
     font-family: $base-font-family;
-}
-
-.breadcrumbs a {
-    color: $global-fontcolor-light;
-    border-width: $global-active-border;
-    border-color: transparent;
-    border-style: solid;
-}
-
-.breadcrumbs a:hover {
-    color: $global-fontcolor-light;
-    text-decoration: underline;
-}
-
-.breadcrumbs strong {
-    color: $global-fontcolor-light;
-    font-weight: normal;
-}
-
-.breadcrumbs span {
-    padding: 0 7px;
-}
-
-@include bp(max-width, $bp-medium) {
-
-    .breadcrumbs {
-        display: none;
+    
+    li {
+    	display: inline-block;
     }
-
+    
+    a {
+    	@include link-blau;
+    }
+    
+    span {
+    	padding: 0 7px;
+    }
+    
+    strong {
+    	font-weight: bold;
+    	color: $textfarbe-mittel;
+    }
+    
+    @include bp(max-width, $bp-medium) {
+    	display: none;
+    }
 }
+
 
 /* -------------------------------------------- *
  * Button - Remove / Previous
@@ -1227,27 +1215,15 @@ div.block-reorder {
  */
 
 .price-box {
-    margin: $element-spacing 0;
+    margin: 0;
     font-family: $base-font-family;
 }
 
-.price-box p {
-    margin-bottom: 0;
-}
-
-.price-notice {
-    color: $c-text-gray;
-}
-
-.price-box .price {
-    color: $global-price-normal-color;
-    font-size: $global-fontsize;
-}
-
-.price-box .price,
-.price {
+.price-box .price, .price {
     font-family: $base-font-family;
-    color: $global-price-normal-color;
+    color: $grundfarbe-blau;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 .price-box .price-label {
@@ -1578,13 +1554,17 @@ span.weee {
  */
 
 .toolbar {
-    margin-bottom: 15px;
-    border-bottom: 1px solid $global-lightcolor;
-    border-top: 1px solid $global-lightcolor;
-    background: $global-lightcolor-hover;
-    padding: 5px 10px 0px 10px;
-    font-size: $global-fontsize-small;
-    max-height: 40px;
+    margin-bottom: 10px;
+    color: $textfarbe-mittel;
+    border-color: $grundfarbe-blau;
+    border-style: solid;
+    border-width: $global-active-border;
+    padding: 0 10px;
+    height: 40px;
+    
+    select {
+    	margin: 0;
+    }
 
     &:after {
         @include clearfix;
@@ -1600,13 +1580,6 @@ span.weee {
     margin-top: $box-spacing;
 }
 
-.toolbar,
-.pager {
-    font-family: $base-font-family;
-    color: $global-category-font-color;
-    line-height: 30px;
-}
-
 .toolbar label,
 .pager-no-toolbar label {
     font-weight: normal;
@@ -1615,12 +1588,13 @@ span.weee {
 $toolbar-icon-padding-offset: 8px;
 
 .sorter {
-    margin-bottom: 5px;
     width: 100%;
+    height: 100%;
 
     label {
         float: left;
         margin-right: 5px;
+        margin-top: 8px;
 
         &:after {
             content: ':';
@@ -1631,6 +1605,11 @@ $toolbar-icon-padding-offset: 8px;
 .sorter > .sort-by {
     float: right;
     height: 30px;
+    margin-top: 5px;
+    
+    label {
+    	margin-top: 3px;
+    }
 
     .sort-by-switcher {
         display: inline-block;
@@ -1666,10 +1645,12 @@ $toolbar-icon-padding-offset: 8px;
 .pager {
     overflow: hidden;
     width: 100%;
+    height: 100%;
 
-    & > .count-container {
+    > .count-container {
         float: left;
         font-size: $global-fontsize;
+        margin-top: 9px;
     }
 
     .amount {
@@ -1681,8 +1662,7 @@ $toolbar-icon-padding-offset: 8px;
 
     .limiter {
         float: right;
-        height: 30px;
-        line-height: 30px;
+        margin-top: 5px;
 
         & > label {
             padding-right: 5px;
@@ -1692,13 +1672,6 @@ $toolbar-icon-padding-offset: 8px;
             }
         }
     }
-
-    .amount,
-    .limiter,
-    .pages {
-        margin-bottom: 5px;
-    }
-
 }
 
 .pages {

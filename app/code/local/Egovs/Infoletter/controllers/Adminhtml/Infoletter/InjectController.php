@@ -146,4 +146,8 @@ class Egovs_Infoletter_Adminhtml_Infoletter_InjectController extends Mage_Adminh
 		return $res;
 	}
 	
+	protected function _isAllowed()
+    {
+    	return Mage::getSingleton('admin/session')->isAllowed('newsletter/infoletter_queue');
+    }
 }
