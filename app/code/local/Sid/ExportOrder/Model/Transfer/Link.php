@@ -27,8 +27,15 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     }
     
     
-    public function sendOrders($content, $format = null, $orderIds, $vendorId)
+    public function sendOrders($content, $format = null, $orderIds, $vendor)
     {
+    	if(is_object($vendor))
+    	{
+    		$vendorId = $vendor->getId();
+    	}else{
+    		$vendorId = $vendor;
+    	}
+    	
     	if ($format instanceof Sid_ExportOrder_Model_Format_Plain)
     	{
     		
