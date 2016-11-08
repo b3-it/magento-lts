@@ -345,10 +345,10 @@ class Egovs_Paymentbase_Model_Payplace_WsdlClass extends stdClass implements Arr
                     self::WSDL_TYPEMAP=>null,
                     self::WSDL_URL=>self::_getLocationFromConfig(),
                     self::WSDL_USER_AGENT=>null,
-                    self::WSDL_PROXY_HOST=>null,
-                    self::WSDL_PROXY_PORT=>null,
-                    self::WSDL_PROXY_LOGIN=>null,
-                    self::WSDL_PROXY_PASSWORD=>null,
+                    self::WSDL_PROXY_HOST=>self::_getProxyHostFromConfig(),
+                    self::WSDL_PROXY_PORT=>self::_getProxyPortFromConfig(),
+                    self::WSDL_PROXY_LOGIN=>self::_getProxyUserFromConfig(),
+                    self::WSDL_PROXY_PASSWORD=>self::_getProxyPasswordFromConfig(),
                     self::WSDL_LOCAL_CERT=>null,
                     self::WSDL_PASSPHRASE=>null,
                     self::WSDL_AUTHENTICATION=>null,
@@ -389,6 +389,78 @@ class Egovs_Paymentbase_Model_Payplace_WsdlClass extends stdClass implements Arr
     protected static function _getPasswordFromConfig() {
     	$_encryptedAccountName = Mage::getStoreConfig('payment_services/payplace/account_pwd');
     	return Mage::helper('core')->decrypt($_encryptedAccountName);
+    }
+    
+    protected static function _isProxyEnabled() {
+    	if (Mage::getStoreConfig('web/proxy/use_proxy') == true) {
+    		$config = true;
+    		Egovs_Paymentbase_Helper_Data::checkForProxyExcludes(self::_getLocationFromConfig(), $config);
+    		if ($config == true) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    protected static function _getProxyHostFromConfig() {
+    	if (!self::_isProxyEnabled()) {
+    		return null;
+    	}
+    	$host = Mage::getStoreConfig('web/proxy/proxy_name');
+    	
+    	return $host;
+    }
+    
+    protected static function _getProxyPortFromConfig() {
+    	if (!self::_isProxyEnabled()) {
+    		return null;
+    	}
+    	
+    	$host = self::_getProxyHostFromConfig();
+    	if (empty($host)) {
+    		return null;
+    	}
+    	
+    	$port = 8080;
+    	if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')>0)) {
+    		$port =  Mage::getStoreConfig('web/proxy/proxy_port');
+    	}
+    	
+    	return $port;
+    }
+    
+    protected static function _getProxyUserFromConfig() {
+    	if (!self::_isProxyEnabled()) {
+    		return null;
+    	}
+    	
+    	$port = self::_getProxyPortFromConfig();
+    	if (empty($port)) {
+    		return null;
+    	}
+    	
+    	$user = Mage::getStoreConfig('web/proxy/proxy_user');
+    	if (isset($user) && (strlen($user) > 0)) {
+    		return $user;
+    	}
+    	
+    	return null;
+    }
+    
+    protected static function _getProxyPasswordFromConfig() {
+    	$user = self::_getProxyUserFromConfig();
+    	
+    	if (empty($user)) {
+    		return null;
+    	}
+    	
+    	$pwd = Mage::getStoreConfig('web/proxy/proxy_user_pwd');
+    	if (empty($pwd)) {
+    		return null;
+    	}
+    	
+    	return $pwd;
     }
     
     /**
