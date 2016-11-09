@@ -29,12 +29,9 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Service extends Egovs_Paymentbase_Mo
 	 */
 	public function process(Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request $_payplaceXmlApiStructXmlApiRequest)
 	{
-		try
-		{
+		try {
 			return $this->setResult(self::getSoapClient()->process($_payplaceXmlApiStructXmlApiRequest));
-		}
-		catch(SoapFault $soapFault)
-		{
+		} catch(SoapFault $soapFault) {
 			return !$this->saveLastError(__METHOD__, $soapFault);
 		}
 	}
