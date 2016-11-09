@@ -34,7 +34,6 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 	
 	public function __doRequest($request, $location, $action, $version, $one_way = null) {	
 		$request = $this->_preProcessXml($request);
-		$this->lastRequest = $request;
 		//Workaround für Fehlermedlung: looks like we got no XML document
 		//BOM muss entfernt werden!
 		//@see http://www.highonphp.com/fixing-soap-exception-no-xml
