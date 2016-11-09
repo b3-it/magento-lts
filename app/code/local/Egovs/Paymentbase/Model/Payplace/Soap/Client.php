@@ -1,8 +1,7 @@
 <?php
 class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 {
-	protected function _preProcessXml($request)
-	{
+	protected function _preProcessXml($request) {
 		$doc = new DOMDocument; // declare a new DOMDocument Object
 		$doc->preserveWhiteSpace = false;
 		$doc->loadxml($request); //load the xml request
@@ -32,22 +31,29 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 		return $request;
 	}
 	
+	/**
+	 * Preprozessor Vorschalten um XML anzupassen
+	 * 
+	 * Achtung: Es ist nicht möglich das Ergebnis für __getLastRequest() an dieser Stelle direkt im Parent SoapClient zu ändern!
+	 * Dazu muss __getLastRequest() überschrieben werden. Sonst sind die Ergbenisse von __doRequest und __getLastRequest() unterschiedlich!
+	 * {@inheritDoc}
+	 * @see SoapClient::__doRequest()
+	 */
 	public function __doRequest($request, $location, $action, $version, $one_way = null) {	
 		$request = $this->_preProcessXml($request);
+		$this->__lastRequest = $request;
 		//Workaround für Fehlermedlung: looks like we got no XML document
 		//BOM muss entfernt werden!
 		//@see http://www.highonphp.com/fixing-soap-exception-no-xml
 	
 		$response = parent::__doRequest($request, $location, $action, $version, $one_way = null);
-		
 		return $response;
 	}
 	
-	public function __soapCall($function_name, array $arguments, array $options = null, $input_headers = null, array &$output_headers = null) {
-		return parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);
-	}
-	
-	public function __call ($function_name, $arguments) {
-		return parent::__call($function_name, $arguments);
+	public function __getLastRequest () {
+		if (isset($this->__lastRequest)) {
+			return $this->__lastRequest;
+		}
+		return parent::__getLastRequest();
 	}
 }
