@@ -15,6 +15,7 @@
 
 .skip-cart {
     text-align: left;
+    position: relative;
 
     &:hover {
         text-decoration: none;
@@ -22,13 +23,13 @@
 
     .count {
 	    display: inline-block;
-	    position: relative;
+	    position: absolute;
 	    z-index: 5;
-	    width: 22px;
-	    height: 16px;
-	    top: -35px;
-	    padding-top: 3px;
-	    right: -104px;
+	    width: 1.5rem;
+	    height: 1.5rem;
+	    top: -40%;
+	    padding-top: 3%;
+	    right: 5%;
 	    text-align: center;
 	    color: $grundfarbe-weiss;
 	    background-color: $grundfarbe-blau;

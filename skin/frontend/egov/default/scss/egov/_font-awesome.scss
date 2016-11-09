@@ -18,6 +18,7 @@ $fa-li-width:         (30em / 14) !default;
 
 $fa-var-spinner      : "\f110";
 $fa-var-search       : "\f002";
+$fa-var-times        : "\f00d";
 $fa-var-pencil       : "\f040";
 $fa-var-trash-o      : "\f014";
 $fa-var-lock         : "\f023";
@@ -93,6 +94,7 @@ $fa-var-rss-square   : "\f143";
 .#{$fa-css-prefix}-files-o:before       { content: $fa-var-files-o; }
 .#{$fa-css-prefix}-balance-scale:before { content: $fa-var-balance-scale; }
 .#{$fa-css-prefix}-rss-square:before    { content: $fa-var-rss-square; }
+.#{$fa-css-prefix}-times:before         { content: $fa-var-times; }
 
 // Spinning Icons
 // --------------------------
