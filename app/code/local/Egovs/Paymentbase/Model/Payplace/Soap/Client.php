@@ -33,9 +33,6 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 		//BOM muss entfernt werden!
 		//@see http://www.highonphp.com/fixing-soap-exception-no-xml
 	
-	
-		//$response = file_get_contents('d:\temp\sax.response.txt');
-	
 		$response = parent::__doRequest($request, $location, $action, $version, $one_way = null);
 		
 		return $response;

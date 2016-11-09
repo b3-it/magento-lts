@@ -236,7 +236,8 @@ class Egovs_Paymentbase_Model_Payplace_WsdlClass extends stdClass implements Arr
     }
     /**
      * Static method getting current SoapClient
-     * @return SoapClient
+     * 
+     * @return Egovs_Paymentbase_Model_Payplace_Soap_Client|SoapClient
      */
     public static function getSoapClient()
     {
