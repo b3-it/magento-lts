@@ -75,11 +75,18 @@ class Egovs_Shipment_Model_Bulkgoods
 					foreach ($item->getChildren() as $child) {
 						if ($child->getProduct()->isVirtual() && $this->getConfigFlag('include_virtual_price')) 
 						{
-							$costs[] = $this->getCost($child);	
+							$cost = $this->getCost($child);
+                            if($cost != null){
+                                $costs[] = $cost;	
+                            }
 						}
 					}
 			}else{
-				$costs[] = $this->getCost($item);
+				$cost = $this->getCost($item);
+                if($cost != null){
+                     $costs[] = $cost;
+                }
+
 			}
 		}
 	
@@ -140,15 +147,19 @@ class Egovs_Shipment_Model_Bulkgoods
 		
 		$countrys = $this->filter($group, 'dest_country_id', $this->_request->getDestCountryId());
 		if(count($countrys) == 0){
-			$countrys = $this->filter($group, 'dest_country_id', '*');
+			$countrys = $this->filter($group, 'dest_country_id', '0');
 		}
+	
+        if(count($countrys) == 0) return null;	
 		
-		$regions = $this->filter($countrys, 'dest_region_id', $this->_request->getDestRegionId());
+        $regions = $this->filter($countrys, 'dest_region_id', $this->_request->getDestRegionId());
 		if(count($regions) == 0){
 			$regions = $this->filter($countrys, 'dest_region_id', '0');
 		}
+       
+         if(count($regions) == 0) return null;	
 		
-		//kleinste Mengen kommen zuerst
+        //kleinste Mengen kommen zuerst
 		if(count($regions) == 1){
 			if($regions[0]->getQty() == 0){
 				$obj = new Varien_Object(array('rate'=>$regions[0],'price' => $regions[0]->getPrice() * $item->getQty()));
