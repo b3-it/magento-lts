@@ -1,7 +1,7 @@
 <?php
 class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 {
-	private function prepareXml($request)
+	protected function _preProcessXml($request)
 	{
 		$doc = new DOMDocument; // declare a new DOMDocument Object
 		$doc->preserveWhiteSpace = false;
@@ -10,7 +10,13 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 		$xpath = new DOMXPath($doc); //we use DOMXPath to edit the XML Request
 	
 		//create a query, looking a possible empty node(s)
-		foreach ($xpath->query('//*[not(node())]') as $node ) { 
+		/** @var $node DOMNode */
+		foreach ($xpath->query('//*[not(node())]') as $node ) {
+			//20161109::Frank Rochlitzer
+			//Nur löschen Falls wirklich leer --> Probleme bei Payplace panalias
+			if ($node->hasAttributes()) {
+				continue;
+			}
 			$node->parentNode->removeChild($node); //remove the node
 		}
 		
@@ -27,7 +33,7 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 	}
 	
 	public function __doRequest($request, $location, $action, $version, $one_way = null) {	
-		$request = $this->prepareXml($request);
+		$request = $this->_preProcessXml($request);
 		$this->lastRequest = $request;
 		//Workaround für Fehlermedlung: looks like we got no XML document
 		//BOM muss entfernt werden!
@@ -36,5 +42,13 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 		$response = parent::__doRequest($request, $location, $action, $version, $one_way = null);
 		
 		return $response;
+	}
+	
+	public function __soapCall($function_name, array $arguments, array $options = null, $input_headers = null, array &$output_headers = null) {
+		return parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);
+	}
+	
+	public function __call ($function_name, $arguments) {
+		return parent::__call($function_name, $arguments);
 	}
 }
