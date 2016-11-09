@@ -125,7 +125,7 @@ class Egovs_Shipment_Model_Resource_Carrier_Bulkgoods extends Mage_Core_Model_Re
         $select = $adapter->select()
             ->from($this->getMainTable())
             ->where('website_id = :website_id')
-            ->order(array('dest_country_id DESC', 'dest_region_id DESC', 'qty ASC'));
+            ->order(array('dest_country_id DESC', 'dest_region_id DESC', 'qty DESC'));
             
 
         // Render destination condition
