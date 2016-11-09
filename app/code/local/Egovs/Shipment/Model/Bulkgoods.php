@@ -161,14 +161,17 @@ class Egovs_Shipment_Model_Bulkgoods
 		
         //kleinste Mengen kommen zuerst
 		if(count($regions) == 1){
+            $obj = null;
 			if($regions[0]->getQty() == 0){
 				$obj = new Varien_Object(array('rate'=>$regions[0],'price' => $regions[0]->getPrice() * $item->getQty()));
-				return $obj;
-			}
+			}else{
+                $obj = new Varien_Object(array('rate'=>$regions[0],'price' => $regions[0]->getPrice()));
+            }
+            return $obj;
 		}
 		foreach($regions as $r){
 			//falls Menge größer
-			if ($r->getQty() >=  $item->getQty()) {
+			if ($item->getQty() >=  $r->getQty()) {
 				$obj = new Varien_Object(array('rate'=>$r,'price' => $r->getPrice())); 	
 				return $obj;
 			}
