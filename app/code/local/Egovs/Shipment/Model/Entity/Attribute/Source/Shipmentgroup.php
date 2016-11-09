@@ -43,10 +43,12 @@ class Egovs_Shipment_Model_Entity_Attribute_Source_Shipmentgroup extends Mage_Ea
     {
         if (is_null($this->_options)) {
         	$this->_options = array();
-        	$options = Mage::getConfig()->getNode('shipment_groups')->asArray();
-        	foreach($options as $key => $value)
-        	{
-        		$this->_options[] = array( 'label' => Mage::helper('egovsshipment')->__($value), 'value' => $key);
+        	//$options = Mage::getConfig()->getNode('shipment_groups')->asArray();
+        	
+            $ship = Mage::getModel('egovsshipment/carrier_bulkgoods')->getCollection();
+            $ship->getSelect()->group('shipment_group');
+            foreach($ship->getItems() as $value)        	{
+        		$this->_options[] = array( 'label' => Mage::helper('egovsshipment')->__($value->getShipmentGroup()), 'value' => $value->getShipmentGroup());
         	}
           
         }
