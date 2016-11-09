@@ -95,7 +95,13 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminh
           //'required'  => true,
           'name'      => 'country',
       ));
-
+     
+     $fieldset->addField('u4_main_apar_id', 'text', array(
+     		'label'     => Mage::helper('framecontract')->__('Agresso BW Lieferantennummer'),
+     		//'class'     => 'required-entry',
+     		//'required'  => true,
+     		'name'      => 'u4_main_apar_id',
+     ));
 
       if ( Mage::getSingleton('adminhtml/session')->getFramecontractData() )
       {

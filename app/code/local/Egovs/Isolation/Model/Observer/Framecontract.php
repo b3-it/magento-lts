@@ -13,7 +13,7 @@
 class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model_Observer_Abstract
 {
   /**
-   * für die Veträge des IT Warenhauses
+   * für die Lieferanten des IT Warenhauses
    * @param unknown $observer
    */
 	public function onVendorCollectionLoad($observer)
@@ -29,7 +29,7 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 	}
     
 	/**
-	 * Für die Lieferanten des IT Warenhauses
+	 * Für die Verträge des IT Warenhauses
 	 * @param unknown $observer
 	 */
 	public function onContractCollectionLoad($observer)
@@ -40,6 +40,24 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 			$collection = $observer->getCollection();
 			$storeGroups = implode(',', $storeGroups);
 			$collection->getSelect()->where('main_table.store_id in('.$storeGroups.')');
+		}
+	
+	}
+	
+	/**
+	 * Für die Lose des IT Warenhauses
+	 * @param unknown $observer
+	 */
+	public function onLosCollectionLoad($observer)
+	{
+		$storeGroups = $this->getUserStoreGroups();
+		if(($storeGroups) && (count($storeGroups) > 0))
+		{
+			$collection = $observer->getCollection();
+			$storeGroups = implode(',', $storeGroups);
+			$collection->getSelect()
+			->join(array('contract'=>$collection->getTable('framecontract/contract')),'contract.framecontract_contract_id = main_table.framecontract_contract_id AND contract.store_group IN('.$storeGroups.')');
+			
 		}
 	
 	}

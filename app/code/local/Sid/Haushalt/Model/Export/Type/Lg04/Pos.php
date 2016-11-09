@@ -12,34 +12,9 @@
 class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_Type_Lg04_Format
 {
 	
-	public function getFormatedData()
-	{
-		$content = array();
+	protected $lineType = 'posline';
 	
-		//positionssatz
-		$result = array();
-		$data = $this->getData();
-		foreach($this->_lg04->getFields() as $idx => $field)
-		{
-			//var_dump($lg04->getFields()); die();
-			if($field['name'] == 'line_no')
-			{
-				$result[] = $this->_lg04->getFormatedValue($idx,'1');
-			}
-			else
-			{
-				if(isset($data[$idx]))
-				{
-					$result[] = $this->_lg04->getFormatedValue($idx,$data[$idx],'posline');
-				}else{
-					$result[] = $this->_lg04->getFormatedValue($idx,"");
-				}
-			}
-		}
-		$content[] = implode('',$result);
 	
-		return $content;
-	}
 	
 
 	/**
@@ -48,6 +23,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setAccount($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('account',$value);
 	}
 	
@@ -57,6 +35,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setAllocationKey($value)
 	{
+		if(strlen($value) > 2){
+			$value = substr($value,0,2);
+		}
 		$this->setData('allocation_key',$value);
 	}
 	
@@ -66,6 +47,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setAmount($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('amount',$value);
 	}
 	
@@ -75,6 +59,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setAmountSet($value)
 	{
+		if(strlen($value) > 1){
+			$value = substr($value,0,1);
+		}
 		$this->setData('amount_set',$value);
 	}
 	
@@ -84,6 +71,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setArtDescr($value)
 	{
+		if(strlen($value) > 255){
+			$value = substr($value,0,255);
+		}
 		$this->setData('art_descr',$value);
 	}
 	
@@ -93,6 +83,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setArticle($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('article',$value);
 	}
 	
@@ -102,6 +95,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setBatchId($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('batch_id',$value);
 	}
 	
@@ -111,6 +107,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setClient($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('client',$value);
 	}
 	
@@ -120,7 +119,22 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setCurAmount($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('cur_amount',$value);
+	}
+	
+	/**
+	 * Lg04 Index 26
+	 * In diesem Feld wird die Auftragswährung angegeben. Der hier eingegebene Wert wird anhand der für Lieferanten definierten festen Währungen geprüft. Die Währung wird anhand der Tabellen für Währungsschlüssel und Währungskurse geprüft.
+	 **/
+	public function setCurrency($value)
+	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
+		$this->setData('currency',$value);
 	}
 	
 	/**
@@ -129,6 +143,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDelivDate($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('deliv_date',$value);
 	}
 	
@@ -138,6 +155,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDim1($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_1',$value);
 	}
 	
@@ -147,6 +167,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDim2($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_2',$value);
 	}
 	
@@ -156,6 +179,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDim3($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_3',$value);
 	}
 	
@@ -165,6 +191,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDim4($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_4',$value);
 	}
 	
@@ -174,6 +203,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDim5($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_5',$value);
 	}
 	
@@ -183,6 +215,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDim6($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_6',$value);
 	}
 	
@@ -192,6 +227,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDim7($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_7',$value);
 	}
 	
@@ -201,6 +239,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDiscount($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('discount',$value);
 	}
 	
@@ -210,6 +251,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setDiscPercent($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('disc_percent',$value);
 	}
 	
@@ -219,6 +263,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setExchRate($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('exch_rate',$value);
 	}
 	
@@ -228,6 +275,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setLineNo($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('line_no',$value);
 	}
 	
@@ -237,6 +287,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setLocation($value)
 	{
+		if(strlen($value) > 12){
+			$value = substr($value,0,12);
+		}
 		$this->setData('location',$value);
 	}
 	
@@ -246,6 +299,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setLot($value)
 	{
+		if(strlen($value) > 10){
+			$value = substr($value,0,10);
+		}
 		$this->setData('lot',$value);
 	}
 	
@@ -255,6 +311,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setOrderId($value)
 	{
+		if(strlen($value) > 15){
+			$value = substr($value,0,15);
+		}
 		$this->setData('order_id',$value);
 	}
 	
@@ -264,6 +323,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setPayTempId($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('pay_temp_id',$value);
 	}
 	
@@ -273,6 +335,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setPeriod($value)
 	{
+		if(strlen($value) > 6){
+			$value = substr($value,0,6);
+		}
 		$this->setData('period',$value);
 	}
 	
@@ -282,6 +347,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setRelValue($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('rel_value',$value);
 	}
 	
@@ -291,6 +359,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setSequenceNo($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('sequence_no',$value);
 	}
 	
@@ -300,6 +371,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setSerialNo($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('serial_no',$value);
 	}
 	
@@ -309,6 +383,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setStatus($value)
 	{
+		if(strlen($value) > 1){
+			$value = substr($value,0,1);
+		}
 		$this->setData('status',$value);
 	}
 	
@@ -318,6 +395,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setTaxCode($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('tax_code',$value);
 	}
 	
@@ -327,6 +407,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setTaxSystem($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('tax_system',$value);
 	}
 	
@@ -336,6 +419,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setTemplateId($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('template_id',$value);
 	}
 	
@@ -345,6 +431,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setTransType($value)
 	{
+		if(strlen($value) > 2){
+			$value = substr($value,0,2);
+		}
 		$this->setData('trans_type',$value);
 	}
 	
@@ -354,6 +443,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setUnitCode($value)
 	{
+		if(strlen($value) > 3){
+			$value = substr($value,0,3);
+		}
 		$this->setData('unit_code',$value);
 	}
 	
@@ -363,6 +455,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setUnitDescr($value)
 	{
+		if(strlen($value) > 255){
+			$value = substr($value,0,255);
+		}
 		$this->setData('unit_descr',$value);
 	}
 	
@@ -372,6 +467,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setUnitPrice($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('unit_price',$value);
 	}
 	
@@ -381,6 +479,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setValue1($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('value_1',$value);
 	}
 	
@@ -390,6 +491,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setVoucherType($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('voucher_type',$value);
 	}
 	
@@ -399,8 +503,10 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Pos extends Sid_Haushalt_Model_Export_
 	 **/
 	public function setWarehouse($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('warehouse',$value);
 	}
-	
 	
 }

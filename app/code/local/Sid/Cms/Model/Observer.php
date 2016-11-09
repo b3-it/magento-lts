@@ -132,12 +132,14 @@ class Sid_Cms_Model_Observer extends Varien_Object
 		{
 			$page = $observer->getDataObject();
 			$show = $page->getData('customergroups_show');
-			if(strlen(trim($show)) > 0){
-				$show = explode(',',$show);
-			}else{
-				$show = array(-1);
+			if(!is_array($show)){
+				if(strlen(trim($show)) > 0){
+					$show = explode(',',$show);
+				}else{
+					$show = array(-1);
+				}
+				$page->setData('customergroups_show',$show);
 			}
-			$page->setData('customergroups_show',$show);
 				
 		}
 

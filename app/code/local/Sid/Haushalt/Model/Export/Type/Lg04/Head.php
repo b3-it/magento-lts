@@ -11,35 +11,11 @@
  */
 class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export_Type_Lg04_Format
 {
+	protected $lineType = 'headline';
 
-	public function getFormatedData()
-	{
-		$content = array();
 	
-		//positionssatz
-		$result = array();
-		$data = $this->getData();
-		foreach($this->_lg04->getFields() as $idx => $field)
-		{
-			//var_dump($lg04->getFields()); die();
-			if($field['name'] == 'line_no')
-			{
-				$result[] = $this->_lg04->getFormatedValue($idx,'0');
-			}
-			else
-			{
-				if(isset($data[$idx]))
-				{
-					$result[] = $this->_lg04->getFormatedValue($idx,$data[$idx],'headline');
-				}else{
-					$result[] = $this->_lg04->getFormatedValue($idx,"");
-				}
-			}
-		}
-		$content[] = implode('',$result);
-		
-		return $content;
-	}
+	
+	
 	
 	/**
 	 * Lg04 Index 2
@@ -47,6 +23,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAccountable($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('accountable',$value);
 	}
 	
@@ -56,6 +35,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAddress($value)
 	{
+		if(strlen($value) > 160){
+			$value = substr($value,0,160);
+		}
 		$this->setData('address',$value);
 	}
 	
@@ -65,6 +47,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAparId($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('apar_id',$value);
 	}
 	
@@ -74,6 +59,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAparGrId($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('apar_gr_id',$value);
 	}
 	
@@ -83,6 +71,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAparName($value)
 	{
+		if(strlen($value) > 255){
+			$value = substr($value,0,255);
+		}
 		$this->setData('apar_name',$value);
 	}
 	
@@ -92,6 +83,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAtt1Id($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('att_1_id',$value);
 	}
 	
@@ -101,6 +95,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAtt2Id($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('att_2_id',$value);
 	}
 	
@@ -110,6 +107,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAtt3Id($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('att_3_id',$value);
 	}
 	
@@ -119,6 +119,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAtt4Id($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('att_4_id',$value);
 	}
 	
@@ -128,6 +131,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAtt5Id($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('att_5_id',$value);
 	}
 	
@@ -137,6 +143,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAtt6Id($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('att_6_id',$value);
 	}
 	
@@ -146,6 +155,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setAtt7Id($value)
 	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
 		$this->setData('att_7_id',$value);
 	}
 	
@@ -155,6 +167,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setBankAccount($value)
 	{
+		if(strlen($value) > 35){
+			$value = substr($value,0,35);
+		}
 		$this->setData('bank_account',$value);
 	}
 	
@@ -164,6 +179,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setBatchId($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('batch_id',$value);
 	}
 	
@@ -173,6 +191,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setClient($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('client',$value);
 	}
 	
@@ -182,6 +203,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setClientRef($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('client_ref',$value);
 	}
 	
@@ -191,6 +215,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setConfirmDate($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('confirm_date',$value);
 	}
 	
@@ -200,6 +227,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setControl($value)
 	{
+		if(strlen($value) > 1){
+			$value = substr($value,0,1);
+		}
 		$this->setData('control',$value);
 	}
 	
@@ -209,6 +239,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelMetDescr($value)
 	{
+		if(strlen($value) > 255){
+			$value = substr($value,0,255);
+		}
 		$this->setData('del_met_descr',$value);
 	}
 	
@@ -218,6 +251,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelTermDescr($value)
 	{
+		if(strlen($value) > 255){
+			$value = substr($value,0,255);
+		}
 		$this->setData('del_term_descr',$value);
 	}
 	
@@ -227,6 +263,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelivAddr($value)
 	{
+		if(strlen($value) > 255){
+			$value = substr($value,0,255);
+		}
 		$this->setData('deliv_addr',$value);
 	}
 	
@@ -236,6 +275,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelivAttention($value)
 	{
+		if(strlen($value) > 50){
+			$value = substr($value,0,50);
+		}
 		$this->setData('deliv_attention',$value);
 	}
 	
@@ -245,6 +287,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelivCountr($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('deliv_countr',$value);
 	}
 	
@@ -254,6 +299,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelivDate($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('deliv_date',$value);
 	}
 	
@@ -263,6 +311,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelivMethod($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('deliv_method',$value);
 	}
 	
@@ -272,6 +323,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDelivTerms($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('deliv_terms',$value);
 	}
 	
@@ -281,6 +335,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDimValue1($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_value_1',$value);
 	}
 	
@@ -290,6 +347,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDimValue2($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_value_2',$value);
 	}
 	
@@ -299,6 +359,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDimValue3($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_value_3',$value);
 	}
 	
@@ -308,6 +371,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDimValue4($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_value_4',$value);
 	}
 	
@@ -317,6 +383,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDimValue5($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_value_5',$value);
 	}
 	
@@ -326,6 +395,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDimValue6($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_value_6',$value);
 	}
 	
@@ -335,6 +407,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setDimValue7($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('dim_value_7',$value);
 	}
 	
@@ -344,6 +419,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setEan($value)
 	{
+		if(strlen($value) > 50){
+			$value = substr($value,0,50);
+		}
 		$this->setData('ean',$value);
 	}
 	
@@ -353,6 +431,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setExchRate($value)
 	{
+		if(strlen($value) > 20){
+			$value = substr($value,0,20);
+		}
 		$this->setData('exch_rate',$value);
 	}
 	
@@ -362,6 +443,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setExtOrdRef($value)
 	{
+		if(strlen($value) > 100){
+			$value = substr($value,0,100);
+		}
 		$this->setData('ext_ord_ref',$value);
 	}
 	
@@ -371,7 +455,22 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setIntruleId($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('intrule_id',$value);
+	}
+	
+	/**
+	 * Lg04 Index 55
+	 * Dieses Feld enthält die Zeilen-/Positionsnummer. Artikel-/Textzeilen müssen Werte im Bereich von 1 bis 9999 aufweisen, und Auftragskopfzeilen müssen den Wert 0 aufweisen.
+	 **/
+	public function setLineNo($value)
+	{
+		if(strlen($value) > 4){
+			$value = substr($value,0,4);
+		}
+		$this->setData('line_no',$value);
 	}
 	
 	/**
@@ -380,6 +479,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setLongInfo1($value)
 	{
+		if(strlen($value) > 120){
+			$value = substr($value,0,120);
+		}
 		$this->setData('long_info1',$value);
 	}
 	
@@ -389,6 +491,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setLongInfo2($value)
 	{
+		if(strlen($value) > 120){
+			$value = substr($value,0,120);
+		}
 		$this->setData('long_info2',$value);
 	}
 	
@@ -398,6 +503,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setMainAparId($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('main_apar_id',$value);
 	}
 	
@@ -407,6 +515,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setMarkAttention($value)
 	{
+		if(strlen($value) > 50){
+			$value = substr($value,0,50);
+		}
 		$this->setData('mark_attention',$value);
 	}
 	
@@ -416,6 +527,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setMarkCtryCd($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('mark_ctry_cd',$value);
 	}
 	
@@ -425,6 +539,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setMarkings($value)
 	{
+		if(strlen($value) > 255){
+			$value = substr($value,0,255);
+		}
 		$this->setData('markings',$value);
 	}
 	
@@ -434,6 +551,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setObsDate($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('obs_date',$value);
 	}
 	
@@ -443,6 +563,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setOrderDate($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('order_date',$value);
 	}
 	
@@ -452,6 +575,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setOrderId($value)
 	{
+		if(strlen($value) > 15){
+			$value = substr($value,0,15);
+		}
 		$this->setData('order_id',$value);
 	}
 	
@@ -461,6 +587,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setOrderType($value)
 	{
+		if(strlen($value) > 2){
+			$value = substr($value,0,2);
+		}
 		$this->setData('order_type',$value);
 	}
 	
@@ -470,6 +599,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setPayMethod($value)
 	{
+		if(strlen($value) > 2){
+			$value = substr($value,0,2);
+		}
 		$this->setData('pay_method',$value);
 	}
 	
@@ -479,6 +611,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setPeriod($value)
 	{
+		if(strlen($value) > 6){
+			$value = substr($value,0,6);
+		}
 		$this->setData('period',$value);
 	}
 	
@@ -488,6 +623,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setPlace($value)
 	{
+		if(strlen($value) > 40){
+			$value = substr($value,0,40);
+		}
 		$this->setData('place',$value);
 	}
 	
@@ -497,6 +635,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setProvince($value)
 	{
+		if(strlen($value) > 40){
+			$value = substr($value,0,40);
+		}
 		$this->setData('province',$value);
 	}
 	
@@ -506,6 +647,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setResponsible($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('responsible',$value);
 	}
 	
@@ -515,6 +659,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setResponsible2($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('responsible2',$value);
 	}
 	
@@ -524,6 +671,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setSequenceRef($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('sequence_ref',$value);
 	}
 	
@@ -533,6 +683,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setStatus($value)
 	{
+		if(strlen($value) > 1){
+			$value = substr($value,0,1);
+		}
 		$this->setData('status',$value);
 	}
 	
@@ -542,6 +695,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setTemplateId($value)
 	{
+		if(strlen($value) > 8){
+			$value = substr($value,0,8);
+		}
 		$this->setData('template_id',$value);
 	}
 	
@@ -551,6 +707,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setTermsId($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('terms_id',$value);
 	}
 	
@@ -560,6 +719,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setText1($value)
 	{
+		if(strlen($value) > 100){
+			$value = substr($value,0,100);
+		}
 		$this->setData('text1',$value);
 	}
 	
@@ -569,6 +731,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setText2($value)
 	{
+		if(strlen($value) > 100){
+			$value = substr($value,0,100);
+		}
 		$this->setData('text2',$value);
 	}
 	
@@ -578,6 +743,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setText3($value)
 	{
+		if(strlen($value) > 100){
+			$value = substr($value,0,100);
+		}
 		$this->setData('text3',$value);
 	}
 	
@@ -587,6 +755,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setText4($value)
 	{
+		if(strlen($value) > 100){
+			$value = substr($value,0,100);
+		}
 		$this->setData('text4',$value);
 	}
 	
@@ -596,6 +767,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setTransType($value)
 	{
+		if(strlen($value) > 2){
+			$value = substr($value,0,2);
+		}
 		$this->setData('trans_type',$value);
 	}
 	
@@ -605,6 +779,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setVoucherRef($value)
 	{
+		if(strlen($value) > 15){
+			$value = substr($value,0,15);
+		}
 		$this->setData('voucher_ref',$value);
 	}
 	
@@ -614,6 +791,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setVoucherType($value)
 	{
+		if(strlen($value) > 25){
+			$value = substr($value,0,25);
+		}
 		$this->setData('voucher_type',$value);
 	}
 	
@@ -623,6 +803,9 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Head extends Sid_Haushalt_Model_Export
 	 **/
 	public function setZipCode($value)
 	{
+		if(strlen($value) > 15){
+			$value = substr($value,0,15);
+		}
 		$this->setData('zip_code',$value);
 	}
 	

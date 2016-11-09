@@ -15,7 +15,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Los_Grid extends Mage_
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('framecontract/transmit')->getCollection();
-      $collection->getSelect()->where('framecontract_contract_id='. intval(Mage::registry('contract_data')->getId()));
+      $collection->getSelect()->where('main_table.framecontract_contract_id='. intval(Mage::registry('contract_data')->getId()));
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
