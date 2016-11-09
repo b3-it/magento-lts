@@ -91,3 +91,17 @@
 		text-decoration: underline;
 	}
 }
+
+@mixin input-field {
+	@include default-hidden-border;
+	background-color: $grundfarbe-weiss;
+	border-color: $grundfarbe-grau;
+	color: $textfarbe-mittel;
+	
+	&:hover, &:active, &:focus {
+		outline-color: $grundfarbe-blau;
+		border-color: $grundfarbe-blau;
+		background-color: $grundfarbe-blgr;
+		color: $grundfarbe-blau;
+	}
+}

@@ -26,6 +26,13 @@
     font-size: $global-fontsize + 4;
 }
 
+// Icon 2 für Löschen (Kreuz)
+.egov-delete2 {
+	@extend .fa;
+	@extend .fa-times;
+	font-size: $global-fontsize + 4;
+}
+
 // Icon für Suchen (Lupe)
 .egov-search {
 	@extend .fa;

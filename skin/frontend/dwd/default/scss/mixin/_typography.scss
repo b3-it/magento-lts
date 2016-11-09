@@ -84,9 +84,10 @@
 
 
 @mixin pageTitle() {
-    font-size: 24px;
+	color: $grundfarbe-blau;
+    font-size: $global-h4-size;
     font-weight: 600;
-    border-bottom: $global-box-border solid $global-border-color;
+    border-bottom: $global-box-border solid $textfarbe-mittel;
     padding-bottom: 3px;
     margin-bottom: 15px;
 }
