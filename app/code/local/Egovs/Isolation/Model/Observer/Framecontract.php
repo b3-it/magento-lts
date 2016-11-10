@@ -50,7 +50,7 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 	 */
 	public function onLosCollectionLoad($observer)
 	{
-		$storeGroups = array(1,2);//$this->getUserStoreGroups();
+		$storeGroups = $this->getUserStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0))
 		{
 			$collection = $observer->getCollection();
@@ -59,7 +59,7 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 			$expr = new Zend_Db_Expr('SELECT framecontract_contract_id FROM '.$collection->getTable('framecontract/contract').' WHERE store_id IN ('.$storeGroups.')');
 			
 			$collection->getSelect()
-			->where('framecontract_contract_id IN(?)',$expr);
+			->where('main_table.framecontract_contract_id IN(?)',$expr);
 			
 		}
 	
