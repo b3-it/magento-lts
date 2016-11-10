@@ -8,14 +8,6 @@ $forms=array('customer_account_edit', 'customer_account_create', 'adminhtml_cust
 $att = Mage::getModel('customer/attribute')->loadByCode('customer', 'company');
 $att->setData('used_in_forms', $forms)->save();
 
-$entityType = 'customer';
-$attributeCode = 'taxvat';
-$att = Mage::getModel('customer/attribute')->loadByCode($entityType, $attributeCode);
-if (!$att || $att->isEmpty()) {
-	Mage::throwException(sprintf('Attribute code "%s" for "%s" not found!', $attributeCode, $entityType));
-}
-$att->setData('used_in_forms', array())->save();
-
 $forms=array('adminhtml_customer_address','customer_address_edit');
 $entityType = 'customer_address';
 $attributeCode = 'company2';
