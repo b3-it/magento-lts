@@ -175,7 +175,9 @@ class Egovs_Search_Model_Advanced  extends Mage_CatalogSearch_Model_Advanced
                 } else {
                     if (strlen($value)>0) {
                         if (in_array($attribute->getBackend()->getType(), array('varchar', 'text'))) {
-                            $condition = array('like'=>'%'.$value.'%');
+                        	$tmp = explode(' ',$value);
+                        	$tmp = implode('%', $tmp);
+                            $condition = array('like'=>'%'.$tmp.'%');
                         } elseif ($attribute->getFrontendInput() == 'boolean') {
                             $condition = array('in' => array('0','1'));
                         } else {
