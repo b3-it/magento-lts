@@ -84,7 +84,7 @@ class Sid_Wishlist_Quote_ItemController extends Sid_Wishlist_Controller_Abstract
 		}
 	
 		if (!$quote || $quote->isEmpty()) {
-			$this->getSession()->addError($this->__('No collection list available!'));
+			$this->getSession()->addError($this->__('No collection list available'));
 			return;
 		}
 	
