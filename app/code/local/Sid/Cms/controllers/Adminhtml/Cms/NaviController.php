@@ -267,4 +267,9 @@ class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_act
 		$this->getResponse()->setBody($block->toHtml());
 		return $this;
 	}
+	
+	protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('admin/cms/cms_navi');
+    }
 }

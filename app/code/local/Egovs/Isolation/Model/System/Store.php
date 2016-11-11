@@ -48,8 +48,10 @@ class Egovs_Isolation_Model_System_Store extends Mage_Adminhtml_Model_System_Sto
         $this->_groupCollection = array();
         foreach (Mage::app()->getWebsites() as $website) {
             foreach ($website->getGroups() as $group) {
-            	if(array_search($group->getId(), $storeGroups) === false) {
-            		continue;	 
+            	if(($storeGroups != null) && (count($storeGroups) > 0))	{
+	            	if(array_search($group->getId(), $storeGroups) === false) {
+	            		continue;	 
+	            	}
             	}
                 $this->_groupCollection[$group->getId()] = $group;
             }
