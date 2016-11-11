@@ -50,11 +50,8 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 	 */
 	private function getBudgedNumber($order, $orderItem)
 	{
-		if($order->getCustomerAddress() == null){
-			$order->setCustomerAddress(Mage::getModel('customer/address')->load($order->getBillingAddress()->getCustomerAddressId()));
-		}
-		$res = $this->getConfigData('budget_prefix');
-		$res .= $order->getCustomerAddress()->getU4Kundennummer();
+		
+		$res = $this->getConfigData('dim_2');
 		return $res.$this->getOrderData($this->getFormatedOrderDate($order,'Y'));
 	}
 	

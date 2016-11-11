@@ -89,6 +89,10 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 		$storeGroups = $this->getUserStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0))
 		{
+			
+			//Mage::log(print_r($storeGroups));
+			//Mage::log(var_export($model, true));
+			
 			if(!in_array($model->getStoreGroup(), $storeGroups))
 			{
 				$this->denied();
