@@ -12,7 +12,7 @@
             </action>
         </reference>
         <reference name="left">
-            <remove name="catalog.leftnav"/>
+            <remove name="catalog.leftnav" />
             
             <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml" before="-">
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
@@ -22,6 +22,10 @@
                     <label>Shopping Cart Sidebar Extra Actions</label>
                 </block>
             </block>
+        </reference>
+        
+        <reference name="product.info.additional">
+            <remove name="product_tag_list"/>
         </reference>
     </default>
 </layout>
