@@ -16,6 +16,8 @@ $installer = $this;
 
 $installer->startSetup();
 
+if (!$installer->tableExists($installer->getTable('dwd_abo/abo')))
+{
 $installer->run("
 
 -- DROP TABLE IF EXISTS {$this->getTable('dwd_abo/abo')};
@@ -34,7 +36,7 @@ CREATE TABLE {$this->getTable('dwd_abo/abo')} (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
     ");
-
+}
 
 $allEmailData = array();
 

@@ -188,15 +188,16 @@ p.note-msg {
 }
 
 .block {
-    border-color: $zusatzfarbe-blau;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: $grundfarbe-blgr;
     margin-bottom: $global-boxmargin;
 
     .block-title {
-        background-color: $grundfarbe-weiss;
-        padding: 0.3em;
         color: $textfarbe-mittel;
-        font-weight: normal;
         font-size: $global-h4-size;
+        height: 51px;
+        padding: 10px;
 
         span {
             color: $global-h4-color;
@@ -229,8 +230,6 @@ p.note-msg {
 
 // On account pages, don't remove the top border in order to create separation between block and .block-account
 body:not(.customer-account) .block:first-child .block-title {
-    border-top: none;
-    padding-top: 0;
 }
 
 .block-subtitle {
@@ -239,12 +238,10 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    border-width: $global-active-border;
-    border-style: solid;
-    border-color: $grundfarbe-grau;
     padding: 15px;
 
     input[type="text"], input[type="email"] {
+        @include input-field;
         width: 100%;
     }
 }
@@ -262,17 +259,25 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block .actions {
-    margin: $box-spacing 0 0;
+    margin: 20px 0 0;
 
     &:after {
         @include clearfix;
     }
 
-    a {
-        float: left;
-    }
-    .button {
-        float: right;
+    a, .button {
+        @include grau-hover-blau;
+        
+        width: 100%;
+        display: block;
+        font-size: 1rem;
+        text-align: center;
+        margin: 0;
+        padding: 18px 0;
+        
+        span {
+            font-family: $base-font-family;
+        }
     }
 }
 

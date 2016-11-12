@@ -4,7 +4,8 @@ $installer = $this;
 
 $installer->startSetup();
 
-
+if (!$installer->tableExists($installer->getTable('periode/periode')))
+{
 $table = $installer->getConnection()
     ->newTable($installer->getTable('periode/periode'))
     ->addColumn('entity_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
@@ -25,7 +26,7 @@ $table = $installer->getConnection()
         Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
      ;
 $installer->getConnection()->createTable($table);
-
+}
 
 $columnName = 'period_type';
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/order_item'), $columnName)) {
