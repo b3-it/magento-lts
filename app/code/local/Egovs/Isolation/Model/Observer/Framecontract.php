@@ -55,8 +55,11 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 		{
 			$collection = $observer->getCollection();
 			$storeGroups = implode(',', $storeGroups);
+			
+			$expr = new Zend_Db_Expr('SELECT framecontract_contract_id FROM '.$collection->getTable('framecontract/contract').' WHERE store_id IN ('.$storeGroups.')');
+			
 			$collection->getSelect()
-			->join(array('contract'=>$collection->getTable('framecontract/contract')),'contract.framecontract_contract_id = main_table.framecontract_contract_id AND contract.store_group IN('.$storeGroups.')');
+			->where('main_table.framecontract_contract_id IN(?)',$expr);
 			
 		}
 	
@@ -86,6 +89,10 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 		$storeGroups = $this->getUserStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0))
 		{
+			
+			//Mage::log(print_r($storeGroups));
+			//Mage::log(var_export($model, true));
+			
 			if(!in_array($model->getStoreGroup(), $storeGroups))
 			{
 				$this->denied();

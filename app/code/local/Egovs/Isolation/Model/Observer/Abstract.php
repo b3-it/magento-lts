@@ -70,6 +70,10 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		return $user->getStoreGroups();
 	}
 	
+	/**
+	 * Aller erlaubten StoreViews des nutzers fesstellen
+	 * @return NULL[]
+	 */
 	protected function getUserStoreViews()
 	{
 		$res = array();
