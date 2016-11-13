@@ -93,7 +93,7 @@ $j(document).ready(function () {
 
     // Umlegen der Shop-Navigation
     if ( $j('.col-left').length > 0 && $j('.page-header-container').length > 0 ) {
-        enquire.register('screen and (max-width: ' + egov_break.navbar + 'px)', {
+    	enquire.register('screen and (max-width: ' + egov_break.navbar + 'px)', {
             match: function() {
                 // in Mobil-Container schieben
                 $j('.nav-primary').appendTo( $j('#header-nav') );

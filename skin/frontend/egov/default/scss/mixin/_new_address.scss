@@ -104,6 +104,10 @@
             height: auto;
             display: inline-block;
             margin-bottom: 15px;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
         }
 
         .wide {

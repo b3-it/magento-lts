@@ -118,6 +118,26 @@
                 border-bottom-color: $global-border-color;
             }
         }
+        
+        .button-set {
+            @include bp(max-width, $bp-medium) {
+                margin: 0;
+            }
+        }
+        
+        button.button, .back-link {
+            @include bp(max-width, $bp-small) {
+               width: 45%;
+               display: inline-block;
+               margin: 0;
+            }
+        }
+        
+        .back-link a {
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
+        }
 
         ul.form-list {
             margin-bottom: $global-boxmargin;
@@ -197,10 +217,60 @@ body.customer-account {
 
             .block-compare {
                 margin-top: $global-boxmargin;
+                
+                @include bp(max-width, $bp-medium) {
+                    display: none;
+                }
             }
         }
         .col-left-first {
             margin-top: -15px;
+        }
+    }
+    
+    .block-eventbundle-reorder {
+        .block-content {
+            @include bp(max-width, $bp-medium) {
+                border: 0 !important;
+            }
+        }
+        
+        ol, ul {
+            display: block;
+            width: 100%;
+            margin-bottom: $global-listmargin;
+        }
+        .eventbundle-item-title {
+            margin-bottom: $global-listmargin / 2;
+            text-decoration: underline;
+        }       
+        .item-cart-link, .price {
+            display: inline-block;
+        }
+        .item-cart-link {
+            width: 75%;
+            overflow: hidden;
+        }
+        .price {
+            position: absolute;
+            right: 5px;
+            
+            @include bp(max-width, $bp-medium) {
+                right: 15px;
+            }
+        }
+        
+        a {
+            border: $global-active-border solid transparent;
+            
+            &:hover, &:active, &:focus {
+                border-color: $global-linkcolor-active;
+            }
+        }
+        
+        @include bp(max-width, $bp-medium) {
+            width: 95%;
+            margin: 0 auto;
         }
     }
 
@@ -340,6 +410,10 @@ body.customer-account {
                     display: inline;
                     margin-bottom: 0;
                 }
+            }
+            
+            @include bp(max-width, $bp-medium) {
+                display: none;
             }
         }
     }
