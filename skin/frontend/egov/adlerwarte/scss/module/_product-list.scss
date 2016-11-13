@@ -417,7 +417,12 @@ p.product-name {
         }
 
         button.button, a.button {
-            width: $global-product-list-button-width / $global-3col-factor !important;
+            width: $global-product-list-button-width / $global-3col-factor;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+                padding: 10px;
+            }
         }
 
         .full {
