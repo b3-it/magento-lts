@@ -4,6 +4,15 @@ $j(document).ready(function(){
 		$j('#welcome-msg').html( $j('#welcome-hidden').html() );
 	}
 	
+	if ( $j('#grouped-product-avalible').length ) {
+		$j('#grouped-product-avalible-moved').html( $j('#grouped-product-avalible').html() )
+		                                     .removeClass('no-display')
+		                                     .css('display', 'block');
+		$j('#grouped-product-avalible').html('')
+		                               .addClass('no-display')
+		                               .css('display', 'none');
+	}
+	
 	// Auf Größen-Anpassung des Fensters reagieren
 	$j(window).resize(function() {
 		// Artikel-Namen und Artikel-Nummern abkürzen

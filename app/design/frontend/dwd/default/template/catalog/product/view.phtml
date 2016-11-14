@@ -55,12 +55,10 @@
                         <?php echo $this->getChildHtml('bundle_prices'); ?>
                         <?php echo $this->getTierPriceHtml(); ?>
                     </div>
-                    
-                    <?php echo $this->getChildHtml('product_type_data') ?>
-
                     <div class="extra-info">
                         <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>
                         <?php echo $this->getChildHtml('product_type_availability'); ?>
+                        <div id="grouped-product-avalible-moved" class="no-display"></div>
                     </div>
                     
                     <?php echo $this->getChildHtml('alert_urls'); ?>
@@ -77,7 +75,8 @@
                   <?php echo $this->getChildHtml('sharing') ?>
                 </div>
             </div>
-
+            
+            <?php echo $this->getChildHtml('product_type_data') ?>
             <?php echo $this->getChildHtml('media'); ?>
 
             <div class="product-additional-information">

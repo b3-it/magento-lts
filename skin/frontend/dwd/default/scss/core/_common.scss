@@ -120,11 +120,11 @@ h6, .h6 { @include h6; }
     }
 
     .in-stock {
-        color: $global-instock-color;
+        color: $grundfarbe-blau;
     }
 
     .available-soon, .out-of-stock {
-        color: $global-available-color;
+        color: $grundfarbe-blgr;
     }
 }
 

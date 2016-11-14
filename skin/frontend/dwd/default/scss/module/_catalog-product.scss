@@ -31,9 +31,94 @@
     }
 }
 
+.in-stock span.value {
+	color: $grundfarbe-blau;
+}
+
 #product-base-block {
     margin-bottom: $global-boxmargin;
 }
+
+/* ============================================ *
+ * Stations - Map
+ * ============================================ */
+#suggest-select, .map_size {
+	width: 530px;
+}
+#suggest, #list {
+     display: inline-block;
+     width: 48.5%;
+     
+     input, select {
+         margin: 0;
+         width: 100%;
+     }
+}
+#suggest {
+	margin-right: 1.5%;
+}
+#map a, #map_quest_logo a {
+     background-color: transparent;
+}
+.map_pos {
+    margin-bottom: $global-boxmargin;
+}
+.map_size {
+    height: 600px;
+    font-size: 0.7rem;
+}
+.olControlMousePosition {
+    left: 40px;
+}
+.olControlAttribution {
+    left: 200px;
+}
+.olControlScaleLine {
+    left: 480px;
+}
+#map_quest_logo {
+    text-align: right;
+    padding-right: 5px;
+    position: relative;
+    top: -20px;
+    z-index: 1000;
+}
+.olPopupContent {
+	.olLayerGeoRSSTitle, .olLayerGeoRSSClose {
+	    display: block;
+	    background-color: $grundfarbe-blau;
+	    color: $grundfarbe-weiss;
+	    padding: 5px 10px;
+	}
+	.olLayerGeoRSSClose {
+	    @include hover-blau-weiss;
+	    cursor: pointer;
+	    display: inline-block;
+	    position: absolute;
+	    right: 0;
+	    top: 0;
+        font-size: 15px;
+        font-weight: normal;
+        padding: 4px 10px;
+	}
+	.olLayerGeoRSSDescription {
+	    width: 100%;
+	    height: 75%;
+	    border: $global-active-border solid $grundfarbe-weiss;
+	    
+	    span {
+		    @include grau-hover-blau;
+		    cursor: pointer;
+		    padding: 12px 10px;
+		    font-size: 1.2rem;
+		    height: 51px;
+		    position: relative;
+		    left: 15%;
+		    top: 35%;
+		}
+	}
+}
+
 
 /* ============================================ *
  * Catalog - Product
@@ -212,10 +297,6 @@
                 margin-bottom: 10px;
             }
 
-            .checkbox, .radio {
-                margin-top: 0;
-            }
-            
             .option-block-label {
                 font-weight: bold;
             }
@@ -300,7 +381,10 @@
 }
 
 .product-view {
-
+    #grouped-product-avalible-moved {
+        display: none;
+    }
+    
     .required {
         color: $global-warning-color;
 
@@ -574,7 +658,7 @@
 		    font-size: 1.2rem;
 		    height: 51px;
 		    margin: 10px 0 0;
-		    padding: 15px 0;
+		    padding: 12px 0;
 		    text-align: center;
 		    width: 205px;
 		    
@@ -759,44 +843,68 @@
  */
 
 .grouped-items-table-wrapper {
-    border: $global-box-border solid $global-border-color;
+    border: $global-active-border solid $grundfarbe-blau;
     width: 100%;
-    padding: $box-spacing;
+    padding: 10px;
     margin-bottom: $global-boxmargin;
 
-    tbody tr:last-child td {
-        border-bottom: none;
-    }
     @include bp(max-width, $bp-xsmall) {
         margin-bottom: $trim-small;
     }
 }
 
 .grouped-items-table {
+	width: 100%;
+	
+	input {
+	    padding: 5px 15px;
+	    width: 70px;
+	    
+	    &:hover, &:active, &:focus {
+	        background-color: $grundfarbe-weiss;
+	    }
+	}
+	
     .name-wrapper {
-        color: $global-fontcolor-dark;
-        font-family: $base-font-family;
+        display: inline-block;
     }
-
     .qty-wrapper {
-        padding-top: $element-spacing;
+        display: block;
+        margin-top: $element-spacing;
+        background-color: $grundfarbe-blgr;
+        padding: 10px;
     }
 
     .qty-label {
         margin-left: $element-spacing;
     }
 
-
     td {
         padding: 4px;
-
-        &:last-child {
-            width: 30%;
+        vertical-align: bottom;
+        
+        &.image-cell {
+            vertical-align: top;
             text-align: left;
         }
+        
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        &:first-child {
+            width: 100px;
+        }
+        &:last-child {
+            width: 30%;
+        }
+    }
+    .tax-details, .price-box {
+        display: inline-block;
     }
     .price-box{
-        text-align: right;
+        float: right;
     }
 }
 
@@ -908,7 +1016,7 @@
 .product-options ul.options-list .radio,
 .product-options ul.options-list .checkbox {
     float: left;
-    margin-top: 5px;
+    margin-top: 4px;
 }
 
 .product-options ul.options-list .label {
