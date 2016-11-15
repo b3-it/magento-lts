@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<layout>
-	<customer_account_index>
-		<reference name="customer_account_dashboard">
-			<block type="extcustomer/account_dashboard_discountquota" name="customer_account_dashboard_discount_quota" as="discount_quota" before="customer_account_dashboard_info" template="stala/extcustomer/account/dashboard/diquota.phtml"/>
-		</reference>
-	</customer_account_index>
-</layout>
