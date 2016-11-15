@@ -1,0 +1,85 @@
+﻿//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.customer-account-login {
+    .main-container {
+        position: relative;
+        top: $global-cms-top-position;
+    }
+
+    p.required {
+        color: $global-warning-color;
+    }
+}
+
+.account-login > .egov-account-login {
+    // Reset aller Einstellungen aus dem gobalen Bereich
+    .col-1, .col-2 {
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+.egovs-checkout-multipage-login .egov-account-login {
+    top: -7px;
+}
+
+.egov-account-login {
+    overflow: hidden;
+    width: 97%;
+    position: relative;
+    top: -25px;
+
+    form {
+        height: 100%;
+        position: relative;
+
+        input {
+            max-width: 90%;
+            width: 70%;
+        }
+    }
+    
+    h2 {
+	    color: $textfarbe-mittel;
+	    font-size: $global-h4-size;
+	    font-weight: bold;
+	    height: 51px;
+	    padding: 10px;
+	    margin-bottom: 5px;
+    }
+
+    .new-users, .registered-users {
+        height: 25em;
+        width: 48%;
+        border: $global-box-border solid $grundfarbe-blgr !important;
+        
+        @include bp(max-width, $bp-large) {
+        	width: 100%;
+        	margin-bottom: 10px !important;
+        	display: block;
+        }
+    }
+
+    .form-list {
+        margin-top: 20px;
+
+        li {
+            font-weight: bold;
+
+            em {
+                color: $global-warning-color;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    ul.benefits > li {
+        list-style-type: none;
+        list-style-image: url($global-category-arrow-full-right);
+    }
+}

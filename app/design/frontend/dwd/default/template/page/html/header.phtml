@@ -10,13 +10,13 @@
  * @var Mage_Page_Block_Html_Header $this
  */
 
-$action = Mage::app()->getFrontController()->getRequest()->getActionName();
+$action  = Mage::app()->getFrontController()->getRequest()->getActionName();
+$action2 = Mage::getSingleton('cms/page')->getIdentifier();
 ?>
 
 <?php echo $this->getChildHtml('bitvmenu') ?>
 
 <?php echo $this->getChildHtml('currency_switcher') ?>
-
 
 <header id="header" class="page-header">
 
@@ -44,8 +44,8 @@ $action = Mage::app()->getFrontController()->getRequest()->getActionName();
 	        <h1>
 	            <?php echo Mage::getStoreConfig('general/store_information/name'); ?>
 	        </h1>
-        
-	      <?php if( $action != 'index'): ?>
+
+	      <?php if( ($action == 'index') AND ($action2 == 'home') ): echo ''; else: ?>
 	        <div class="page-header-main-navigation">
                 <!-- Home -->
 	            <div id="header-account-home">

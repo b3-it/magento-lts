@@ -26,33 +26,42 @@
 ?>
 <?php $_item = $this->getItem()?>
 <tr>
-    <td><a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->htmlEscape($this->getProductName()) ?>"><img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></a></td>
-    <td>
-        <h3 class="product-name"><a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->getProductName() ?></a></h3>
-          <div class="std small dwd-orderitem-options">
-	            <?php echo $this->__('Sku').': '.$this->htmlEscape($_item->getSku()) ?>
-	        </div>
-	     <?php if($station = $this->getStation($_item)):?>
-		      <div class="std small dwd-orderitem-options">
-		            <?php echo $this->__('Station').': '.$station->getName(); ?>
-		      </div>
-	     <?php endif;?>
-	   	<?php if($periode = $this->getPeriode($_item)):?>
-		      <div class="std small dwd-orderitem-options">
-		            <?php echo $this->__('Periode').': '.$periode->getFormatedText(); ?>
-		      </div>
-	     <?php endif;?>
-
-		<?php if ($_options = $this->getOptionList()):?>
+    <td class="product-cart-image">
+        <a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->htmlEscape($this->getProductName()) ?>">
+            <img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" />
+        </a>
+    </td>
+    <td class="product-cart-info">
+        <h2 class="product-name">
+        <?php if ($this->hasProductUrl()):?>
+            <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+        <?php else: ?>
+            <?php echo $this->escapeHtml($this->getProductName()) ?>
+        <?php endif; ?>
+        </h2>
+        <div class="product-cart-sku">
+            <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
+        </div>
+      <?php if($station = $this->getStation($_item)):?>
+		<div class="product-cart-dwd-station">
+		    <span class="label"><?php echo $this->__('Station'); ?>:</span> <?php echo $station->getName(); ?>
+		</div>
+	  <?php endif;?>
+	  <?php if($periode = $this->getPeriode($_item)):?>
+		<div class="product-cart-dwd-periode">
+		    <span class="label"><?php echo $this->__('Periode'); ?>:</span> <?php echo $periode->getFormatedText(); ?>
+		</div>
+      <?php endif;?>
+      <?php if ($_options = $this->getOptionList()):?>
         <dl class="item-options">
             <?php foreach ($_options as $_option) : ?>
             <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-            <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
-            <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
+                <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+                <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
                 <?php if (isset($_formatedOptionValue['full_view'])): ?>
                 <div class="truncated_full_value">
                     <dl class="item-options">
-                        <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                        <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
                         <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
                     </dl>
                 </div>
@@ -60,20 +69,23 @@
             </dd>
             <?php endforeach; ?>
         </dl>
-        <?php endif;?>
-        <?php if ($messages = $this->getMessages()): ?>
-        <?php foreach ($messages as $message): ?>
-            <p class="item-msg <?php echo $message['type'] ?>">* <?php echo $message['text'] ?></p>
-        <?php endforeach; ?>
-        <?php endif; ?>
+      <?php endif; ?>
+      <?php if ($messages = $this->getMessages()): ?>
+       <?php foreach ($messages as $message): ?>
+        <p class="item-msg <?php echo $message['type'] ?>">
+            * <?php echo $this->escapeHtml($message['text']) ?>
+        </p>
+       <?php endforeach; ?>
+      <?php endif; ?>
     </td>
+    
     <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
     <td class="a-center">
         <input type="checkbox" value="1" title="<?php echo Mage::helper('checkout')->__("Check if you want move the following Product to Wishlist: "). $this->getProductName()?>" name="cart[<?php echo $_item->getId() ?>][wishlist]" class="checkbox" />
     </td>
     <?php endif ?>
     <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <td class="a-right">
+    <td class="product-cart-price" data-rwd-label="<?php echo $this->__('Price'); ?>" data-rwd-tax-label="<?php echo $this->__('Excl. Tax'); ?>">
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <div class="cart-tax-total" onclick="taxToggle('eunit-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
         <?php else: ?>
@@ -120,7 +132,7 @@
     </td>
     <?php endif; ?>
     <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <td class="a-center">
+    <td class="product-cart-price" data-rwd-label="<?php echo $this->__('Price'); ?>" data-rwd-tax-label="<?php echo $this->__('Incl. Tax'); ?>">
         <?php $_incl = $this->helper('checkout')->getPriceInclTax($_item); ?>
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <div class="cart-tax-total" onclick="taxToggle('unit-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
@@ -165,11 +177,23 @@
         <?php endif; ?>
     </td>
     <?php endif; ?>
-    <td class="a-center">
-        <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>"  title='<?php echo Mage::helper('checkout')->__("Please put in Quantity for: "). $this->getProductName()?>' size="4" class="input-text qty" maxlength="8" />
+    <td class="product-cart-actions" data-rwd-label="<?php echo $this->__('Qty'); ?>">
+        <input type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
+               data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
+               title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
+        <div class="product-cart-symbols">
+        <?php if ($isVisibleProduct): ?>
+            <a class="egov-pencile" href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item parameters')) ?>" title="<?php echo $this->__('Edit') ?>" alt="<?php echo $this->__('Edit') ?>"> </a>
+        <?php endif ?>
+        <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+            <?php if ($isVisibleProduct): ?>
+            <a class="egov-star link-wishlist use-ajax" href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" alt="<?php echo $this->__('Move to wishlist'); ?>" title="<?php echo $this->__('Move to wishlist'); ?>"> </a>
+            <?php endif ?>
+        <?php endif ?>
+        </div>
     </td>
     <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <td class="a-right">
+    <td class="product-cart-total" data-rwd-label="<?php echo $this->__('Subtotal'); ?>">
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <div class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
         <?php else: ?>
@@ -214,7 +238,7 @@
     </td>
     <?php endif; ?>
     <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <td>
+    <td class="product-cart-total" data-rwd-label="<?php echo $this->__('Subtotal'); ?>">
         <?php $_incl = $this->helper('checkout')->getSubtotalInclTax($_item); ?>
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <div class="cart-tax-total" onclick="taxToggle('subtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
@@ -260,6 +284,12 @@
             <?php endif; ?>
         <?php endif; ?>
     </td>
-    <td class="a-center"><a href="<?php echo $this->getDeleteUrl() ?>" title="<?php echo $this->__('Remove item')?>"><img src="<?php echo $this->getSkinUrl('images/btn_trash.gif') ?>" alt="<?php echo $this->__('Remove item')?>" /></a></td>
     <?php endif; ?>
+    <td class="a-center product-cart-remove last">
+        <a class="remove egov-delete2"
+           href="<?php echo $this->getDeleteUrl() ?>"
+           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
+           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
+           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+    </td>
 </tr>

@@ -81,12 +81,10 @@ Quick.searchForm.prototype = {
             else if (found.length > 1)
             {
 
-            	var content ="<ul style=\"z-index:999;\">";
+            	var content ="<ul>";
             	for(i=0; i < found.length; i++)
             	{
-                	if(i%2==0) classname = 'even';
-                	else classname = 'odd';
-            		content = content + '<li id=\"'+found[i].id+'\" class=\"'+classname+'\" title=\"'+found[i].name+'\" onclick=\"_selectAutocompleteItem(this);\">'+found[i].name+'</li>';
+            		content += '<li id=\"'+found[i].id+'\" title=\"'+found[i].name+'\" onclick=\"_selectAutocompleteItem(this);\">'+found[i].name+'</li>';
             	}
             	content += "</ul>";
                 $('quick_autocomplete').update(content);

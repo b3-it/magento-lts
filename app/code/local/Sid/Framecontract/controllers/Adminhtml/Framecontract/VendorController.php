@@ -22,8 +22,14 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 
 	
 	public function editAction() {
-		$id     = $this->getRequest()->getParam('id');
-		$model  = Mage::getModel('framecontract/vendor')->load($id);
+		
+		$id = $this->getRequest()->getParam('id');
+		$id = intval($id);
+		$model  = Mage::getModel('framecontract/vendor');
+		if($id > 0){
+			$model->load($id);
+		}
+	
 
 		if ($model->getId() || $id == 0) {
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);

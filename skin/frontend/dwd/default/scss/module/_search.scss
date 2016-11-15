@@ -1,0 +1,99 @@
+//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Search - Auto Suggest
+ * ============================================ */
+
+.search-autocomplete {
+    left: 0 !important;
+    overflow: visible !important;
+    position: relative !important;
+    top: 0px !important;
+    width: 100% !important;
+    z-index: 200;
+    
+    ul {
+        background-color: $grundfarbe-weiss;
+        border: $global-active-border solid $grundfarbe-blau;
+        left: 0;
+        padding-left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+        li {
+            @include hover-weiss-blau;
+            cursor: pointer;
+            padding: 4px 6px;
+            text-align: left;
+            display: block;
+            line-height: $global-lineheight;
+
+            .amount {
+                float: right;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &:before {
+        @include triangle(up, 7px, $grundfarbe-blau);
+        left: 5px;
+        top: -7px;
+    }
+}
+
+/* ============================================ *
+ * Search - Advanced
+ * ============================================ */
+
+.catalogsearch-advanced-index {
+    .col-main {
+        margin-top: 5px;
+    }
+
+    .page-title {
+        width: $global-content-2col-right-percent;
+    }
+    
+    .buttons-set {
+    	clear: none;
+    }
+}
+
+.advanced-search {
+    width: $global-content-2col-right-percent;
+
+    #advanced-search-list {
+        input, select {
+            width: 100%;
+            margin: 0px;
+        }
+
+        #price, #price_to {
+            width: 20%;
+        }
+
+        li.even, li.odd {
+            margin-bottom: $global-listmargin;
+        }
+    }
+
+    select.multiselect {
+        option {
+            border-bottom: 1px solid $global-border-color-light;
+            padding: 2px 5px;
+        }
+    }
+}
+
+@include bp(max-width, $bp-xsmall) {
+    .advanced-search {
+        padding: $trim-small;
+    }
+}

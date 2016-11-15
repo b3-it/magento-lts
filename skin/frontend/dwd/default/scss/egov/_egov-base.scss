@@ -34,29 +34,29 @@
             }
         }
     }
-
+    
+    tfoot {
+        .button {
+            padding: 18px 15px;
+        }
+    }
 
     tbody td,
     tbody th {
         padding: $global-tdpadding 1px;
         font-family: $base-font-family;
-        border-color: $global-checkout-tableborder;
-        border-width: $global-checkout-borderwidth;
-        border-style: solid;
+        border: $global-active-border solid $grundfarbe-blgr;
     }
 
     tbody {
-        td {
-            background-color: $global-checkout-tdbackground;
-            color: $global-checkout-tdfontcolor;
-
-            h3 {
-                margin: 0px;
-                padding: 0px;
-                display: inline-block;
-                vertical-align: top;
+        tr {
+            background-color: $grundfarbe-weiss;
+            
+            &:nth-child(2n+0) {
+                background-color: $zusatzfarbe-weiss;
             }
-
+        }
+        td {
             .checkout-product-image {
                 display: inline-block;
                 margin-right: $fa-icon-margin;
@@ -85,13 +85,10 @@
 
     tbody td,
     tfoot td {
-        background-color: $global-checkout-total-background;
-        color: $global-fontcolor-dark;
-        border-color: $global-checkout-tableborder;
-        border-width: $global-checkout-borderwidth;
-        border-style: solid;
+        border: $global-active-border solid $grundfarbe-blgr;
         padding: $global-tdpadding;
         text-align: right;
+        font-size: 1rem;
 
         strong span.price {
             font-size: $global-fontsize-big;
@@ -120,34 +117,8 @@
 }
 
 .egov-default-message {
-    @extend .egov-radius;
-    border: $global-box-border solid $global-border-color;
+    border: $global-active-border solid $grundfarbe-blgr;
     padding: $golbal-msgpadding;
-    background-color: $global-box-title-backgroundcolor;
-}
-
-.egov-navigation-background {
-    *zoom: 1;
-    background-size: 100% 45px;
-
-    background-color: $global-category-item-color;
-    background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-    background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-    background-image: linear-gradient(to bottom, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
-
-    /* Für IE9/IE10 Filter setzen */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2',GradientType=0 );
-}
-
-.egov-navheader-base {
-    box-shadow: 0 1px 2px 1px $global-text-shadow;
-    border-radius: $global-radius $global-radius 0 0;
-    border: $global-box-border solid $global-lightcolor;
-    font-size: $global-category-fontsize;
-
-    li, a {
-        line-height: $global-navigation-line-height;
-    }
 }
 
 // Wechselnde Pfeile in den Navigationen
@@ -156,20 +127,6 @@
     padding: 7px 25px 7px 13px;
     line-height: $global-navigation-line-height;
     text-shadow: $global-category-textshadow;
-}
-.egov-arrow-main-closed {
-    @extend .egov-navigation-base;
-    background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
-}
-.egov-arrow-main-open {
-    @extend .egov-navigation-base;
-    background: $global-content-background url($global-category-arrow-full-down) $global-norepeat-scroll 95% 55%;
-}
-.egov-arrow-sub-closed {
-    background: $global-content-background url($global-category-arrow-light-right) $global-norepeat-scroll 2% 50%;
-}
-.egov-arrow-sub-open {
-    background: $global-content-background url($global-category-arrow-light-down) $global-norepeat-scroll 2% 50%;
 }
 
 .egov-float-left {
