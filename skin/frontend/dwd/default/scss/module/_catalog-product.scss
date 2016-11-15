@@ -43,7 +43,7 @@
  * Stations - Map
  * ============================================ */
 #suggest-select, .map_size {
-	width: 530px;
+	width: 100%;
 }
 #suggest, #list {
      display: inline-block;
@@ -68,13 +68,16 @@
     font-size: 0.7rem;
 }
 .olControlMousePosition {
-    left: 40px;
+    left: 6%;
 }
 .olControlAttribution {
-    left: 200px;
+    left: 40%;
 }
 .olControlScaleLine {
-    left: 480px;
+    left: 90%;
+}
+.olAlphaImg {
+	cursor: pointer;
 }
 #map_quest_logo {
     text-align: right;
@@ -117,6 +120,30 @@
 		    top: 35%;
 		}
 	}
+}
+
+/* ============================================ *
+ * Stations - Suggest
+ * ============================================ */
+#quick_autocomplete {
+    z-index: 9999;
+    
+    ul {
+        width: 200%;
+    }
+    
+    li {
+        display: inline-block;
+        width: 33%;
+        
+        @include bp(max-width, $bp-medium) {
+            width: 48%;
+            
+            &:nth-child(2n+0) {
+            	margin-left: 4%;
+        	}
+        }
+    }
 }
 
 
@@ -383,6 +410,12 @@
 .product-view {
     #grouped-product-avalible-moved {
         display: none;
+        font-size: 0.9rem;        
+        
+        span.in-stock, span.not-in-stock {
+            font-size: 1.2rem;
+            color: $grundfarbe-blau;
+        }
     }
     
     .required {
@@ -650,6 +683,10 @@
     .add-to-cart:after {
         @include clearfix;
     }
+    
+    form > div.price-box {
+        display: none;
+    } 
 
     .add-to-cart-buttons {
         button {
@@ -679,20 +716,14 @@
         margin-bottom: 10px;
     }
 
-    .add-to-cart .qty-wrapper,
     .add-to-cart .qty-wrapper label {
         margin-right: 7px;
-        float: left;
-    }
-
-    .add-to-cart .qty-wrapper label {
-        line-height: 51px;
+        line-height: 100%;
     }
 
     .add-to-cart .qty-wrapper .qty {
-        float: left;
         height: 40px;
-        width: 60px;
+        width: 65%;
         height: 51px;            
     }
 
@@ -826,15 +857,13 @@
     border-spacing: 0px;
 
     th, td {
-        border-width: $global-box-border;
-        border-style: solid;
-        border-color: $global-border-color;
+        border: $global-box-border solid $grundfarbe-blau;
         padding: 5px;
-        white-space: nowrap;
+        vertical-align: top;
     }
 
     th {
-        background-color: $global-lightcolor;
+        background-color: $grundfarbe-blgr;
     }
 }
 

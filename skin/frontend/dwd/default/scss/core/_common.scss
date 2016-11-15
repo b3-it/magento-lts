@@ -472,8 +472,6 @@ div.block-reorder {
     display: block;
     margin: $box-spacing 0 0;
     padding-top: $box-spacing;
-    border-top: $global-active-border solid $global-border-color;
-    text-align: right;
 
     p.required {
         margin: 0;
@@ -492,9 +490,11 @@ div.block-reorder {
         padding: 5px;
     }
     button.button {
-        float: right;
-        margin-left: 5px;
-        min-width: 140px;
+        //float: right;
+        //margin-left: 5px;
+        //min-width: 140px;
+        @include grau-hover-blau;
+        width: 100%;
     }
 
     &:after {
@@ -1779,13 +1779,7 @@ body.customer-account .data-table {
         cursor: pointer;
 
         &:before {
-            @include triangle(down, 7px, $c-blue);
-            position: static;
-            display: inline-block;
-            margin-right: 5px;
-        }
-        &:hover:before {
-            @include triangle(down, 7px, $c-stimulus);
+            @include triangle(down, 7px, $grundfarbe-blau);
             position: static;
             display: inline-block;
             margin-right: 5px;
@@ -1795,13 +1789,7 @@ body.customer-account .data-table {
     .show-details {
         .summary-collapse {
             &:before {
-                @include triangle(up, 7px, $c-blue);
-                position: static;
-                display: inline-block;
-                margin-right: 5px;
-            }
-            &:hover:before {
-                @include triangle(up, 7px, $c-stimulus);
+                @include triangle(up, 7px, $grundfarbe-blau);
                 position: static;
                 display: inline-block;
                 margin-right: 5px;
@@ -1814,7 +1802,7 @@ body.customer-account .data-table {
 #shopping-cart-totals-table tfoot td .summary-collapse {
     &:before,
     &:hover:before {
-        margin-bottom: 5px;
+        margin-bottom: 3px;
     }
 }
 

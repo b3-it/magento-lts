@@ -10,9 +10,7 @@
         display: block;
         width: 100%;
         position: relative;
-        border-width: $global-active-border $global-active-border 0 $global-active-border;
-        border-style: solid;
-        border-color: $grundfarbe-blau;
+        border: $global-active-border solid $grundfarbe-blau;
         background-color: $grundfarbe-blgr;
 
         li {
@@ -39,6 +37,8 @@
 	                padding: 0 65px 0 10px;
 	                z-index: 5;
 	                cursor: normal;
+	                bottom: -2px;
+	                position: relative;
 	            }
 	            
 	            &:hover, &:active, &:focus {

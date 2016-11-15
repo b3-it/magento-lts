@@ -1,12 +1,12 @@
 <?php if ($this->hasStationen()):?>
-<script type="text/javascript">
-var stationen = new Array(
-                  <?php $i =0; foreach($this->getStationsList() as $station) { ?>
-                  <?php echo $i?> = new Station(<?php echo $station->getId()?>,'<?php echo $station->getName()?>'),
-                  <?php $i++; } ?>
-		        );
-</script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/map-functions-suggest.js'); ?>"></script>
+<script type="text/javascript">
+var stationen = [
+    <?php foreach($this->getStationsList() as $station) { ?>
+    {id: <?php echo $station->getId()?>, name: "<?php echo $station->getName()?>"},
+    <?php } ?>
+];
+</script>
 <div id="suggest">
   <input id="quicksearch" type="text" class="input-text" name="quicksuggest" value="" autocomplete="off" />
   <div id="quick_autocomplete" class="search-autocomplete" style="display:none;"></div>

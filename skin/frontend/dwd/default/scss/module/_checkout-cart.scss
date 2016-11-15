@@ -95,24 +95,6 @@
                 position: relative;
                 top: 0 - $global-boxmargin;
             }
-
-            .cart {
-                .cart-totals-wrapper, .shipping {
-                    .button {
-                        background-color: $global-button-color-boxed;
-                        color: $global-button-font-boxed;
-                        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-button-rgba-1), color-stop($global-button-gradient, $global-button-rgba-2), color-stop(100%, $global-button-color-boxed));
-                        background-image: -webkit-linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
-                        background-image: -moz-linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
-                        background-image: -o-linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
-                        background-image: linear-gradient(top, $global-button-rgba-1 0%, $global-button-rgba-2 $global-button-gradient, $global-button-color-boxed 100%);
-
-                        &:hover, &:active {
-                            border-color: $global-button-color-boxed;
-                        }
-                    }
-                }
-            }
            
             @include bp(max-width, 800px) {
            	    width: 100%;
@@ -314,8 +296,8 @@
     }
 
     button.egov-float-left {
-        margin-left:0px;
-        margin-right:10px;
+        margin-left: 0;
+        margin-right: 15px;
     }
 
     .product-cart-info {
@@ -722,7 +704,6 @@
     .buttons-set {
         border: none;
         margin: 0;
-        padding: 0;
     }
 
     .form-list {
@@ -849,6 +830,7 @@
 
         td {
             padding: 2px 0px;
+            vertical-align: top;
         }
         td:first-child {
             padding-right: 10px;
@@ -859,23 +841,9 @@
         tbody tr:last-child th {
             padding-bottom: 10px;
         }
-
-        tfoot {
-            border-top: 1px solid $global-checkout-total-border;
-            border-bottom: 1px solid $global-checkout-total-border;
-            td {
-                font-size: $global-fontsize-big;
-                font-weight: bold;
-                vertical-align: top;
-            }
-
-            strong span,
-            span.price {
-                font-family: $base-font-family;
-            }
-
-            strong {
-            }
+        
+        #grandtotal-incl-tax {
+            font-weight: bold;
         }
     }
 }
@@ -922,28 +890,29 @@
         margin-right: 10px;
     }
 
-    .field-wrapper {
-        display: inline-block;
-    }
-
     .validation-advice {
         display: inline;
     }
 
     .button-wrapper {
-        display: inline-block;
+        display: block;
         vertical-align: bottom;
-
-        > button {
-            float: left;
+        margin-top: 10px;
+        
+        button {
+            width: 45%;
+            margin-right: 10%;
+            
+            &.full-width {
+                margin: 0;
+                width: 100%;
+            }
         }
     }
 
     .input-text {
-        border-radius: 0;
         height: 30px;
-        margin: 4px 10px 0 0;
-        width: 190px;
+        width: 64%;
     }
 }
 

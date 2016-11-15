@@ -45,6 +45,11 @@
             @include clearfix();
         }
     }
+    
+    p.product-name {
+        white-space: nowrap;
+        overflow: hidden;
+    }
 
     .product-image, .product-details {
     	display: inline-block;

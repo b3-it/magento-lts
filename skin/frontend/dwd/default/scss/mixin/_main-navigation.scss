@@ -35,9 +35,7 @@
 	}
     
     nav > li,
-    li.account-block-title {
-        @extend .egov-navigation-background;
-        
+    li.account-block-title {        
         background-color: $global-category-item-color;
         
         margin: 0;
@@ -45,8 +43,6 @@
         cursor: pointer;
         
         > a {
-            @extend .egov-navigation-base;
-
             width:100%;
             text-align: left;
             color: $global-linkcolor;

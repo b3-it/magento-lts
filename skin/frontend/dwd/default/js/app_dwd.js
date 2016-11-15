@@ -1,3 +1,5 @@
+var toggleBlocks = new Array();
+
 // Allgemeine JS-Funktionen
 $j(document).ready(function(){
 	if ( $j('body').hasClass('cms-index-index') ) {
@@ -11,6 +13,14 @@ $j(document).ready(function(){
 		$j('#grouped-product-avalible').html('')
 		                               .addClass('no-display')
 		                               .css('display', 'none');
+	}
+	if ( $j('#map').length ) {
+		$j('#grouped-product-avalible-moved').html( $j('.availability').html() )
+                                             .removeClass('no-display')
+                                             .css('display', 'block');
+        $j('.availability').html('')
+                           .addClass('no-display')
+                           .css('display', 'none');
 	}
 	
 	// Auf Größen-Anpassung des Fensters reagieren

@@ -178,9 +178,29 @@
     
     $j(document).ready(function(){
     	//cloneNavigation();
-        toggleBlockContent('block-cart');
-        toggleBlockContent('block-tags');
-        toggleBlockContent('block-reorder');
+        
+    	var setDefaultToggle = false;
+    	
+    	// Prüfen, ob die Array-Variable gesetzt ist
+    	if ( typeof toggleBlocks == 'undefined' ) {
+    		setDefaultToggle = true;
+    	}
+
+        // Default-Klapp-Funktion für Warenkorb, Suchwolke, Nachbestellung
+    	if ( setDefaultToggle == true ) {
+        	toggleBlockContent('block-cart');
+        	toggleBlockContent('block-tags');
+        	toggleBlockContent('block-reorder');
+        }
+        else {
+        	if ( toggleBlocks.length > 0 ) {
+        		// Alle Elemente im Array mit der Klapp-Funktion versehen
+        		$j(toggleBlocks).each(function(){
+	        		toggleBlockContent(this);
+	        	});
+        	}
+        }
+    	
     });
     
     function cloneNavigation()
