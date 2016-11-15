@@ -1,0 +1,170 @@
+//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+@mixin tabs() {
+    .toggle-tabs {
+        display: block;
+        width: 100%;
+        position: relative;
+        border-width: $global-active-border $global-active-border 0 $global-active-border;
+        border-style: solid;
+        border-color: $grundfarbe-blau;
+        background-color: $grundfarbe-blgr;
+
+        li {
+            @include grau-hover-blau;
+            display: inline-block;
+            font-size: 1rem;
+
+            > span {
+                @include not-selectable;
+                display: inline-block;
+                padding: 0 10px;
+                height: 51px;
+                line-height: 51px;
+                cursor: pointer;
+                font-size: 1rem;
+            }
+            
+            &.current {
+	            border-width: 0 $global-active-border;
+	            border-color: $grundfarbe-blau;
+	
+	            > span {
+	                background-color: $grundfarbe-weiss;
+	                padding: 0 65px 0 10px;
+	                z-index: 5;
+	                cursor: normal;
+	            }
+	            
+	            &:hover, &:active, &:focus {
+	                border-top-color: transparent;
+	                color: $grundfarbe-blau;
+	            }
+	        }
+	        &:first-child {
+	            border-left: 0;
+	        }
+        }
+
+        &:after {
+            @include clearfix;
+        }
+    }
+
+    > dl {
+        width: 100%;
+
+        > dt {
+            display: none;
+        }
+
+        > dd {
+            width: 100%;
+            display: none;
+            padding: 15px;
+            border: $global-active-border solid $grundfarbe-blau;
+            border-top: 0;
+        }
+
+        > dd.current {
+            display: block;
+        }
+    }
+}
+
+@mixin accordionDtBase($arrow-direction: 'down', $border-color: $global-border-color) {
+    @include h4;
+    @include not-selectable;
+    font-weight: normal;
+    margin-bottom: 0px;
+    padding: 7px 10px 7px 24px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color;
+    position: relative;
+    background-color: $global-lightcolor;
+
+    &:after {
+        @include triangle(#{$arrow-direction}, 4px, $c-action);
+        left: 10px;
+        top: 50%;
+        margin-top: -3px;
+    }
+
+    &:hover {
+        background-color: $global-lightcolor-hover;
+    }
+}
+
+@mixin accordion() {
+    .toggle-tabs {
+        display: none;
+    }
+
+    > dl {
+        > dt {
+            @include accordionDtBase;
+            display: block;
+        }
+
+        > dd {
+            padding: $box-spacing;
+            margin: 0;
+            border-width: 0 1px;
+            border-style: solid;
+            border-color: $global-border-color;
+        }
+        > dd:last-child {
+            border-width: 0 1px 1px 1px;
+        }
+    }
+}
+
+@mixin accordionCollapse() {
+    > dl {
+        > dt {
+            cursor: pointer;
+            border-bottom-width: 0;
+
+            &:hover {
+                color: $global-linkcolor;
+            }
+            &:after {
+                @include triangle(right, 4px, $global-linkcolor);
+            }
+            &.last {
+                border-bottom-width: 1px;
+            }
+        }
+
+        > dd {
+            display: none;
+        }
+    }
+
+    &.accordion-open {
+        > dl {
+            > dt {
+                &.current {
+                    border-bottom-width: 1px;
+                }
+
+                &.current:after {
+                    @include triangle(down, 4px, $global-linkcolor);
+                    left: 6px;
+                    top: 50%;
+                    margin-top: -3px;
+                }
+            }
+
+            > dd.current {
+                display: block;
+            }
+        }
+    }
+}

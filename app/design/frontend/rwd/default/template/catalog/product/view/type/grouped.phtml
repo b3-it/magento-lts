@@ -53,9 +53,9 @@
                          title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
                 </td>
                 <td class="name">
-                    <p class="name-wrapper">
+                    <div class="name-wrapper">
                         <?php echo $this->escapeHtml($_item->getName()) ?>
-                    </p>
+                    </div>
                     <?php if ($_product->isSaleable()): ?>
                     <div class="qty-wrapper">
                         <?php if ($_item->isSaleable()) : ?>

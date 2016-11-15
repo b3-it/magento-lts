@@ -493,6 +493,7 @@
                         <allow_product_types>
                             <simple/>
                             <virtual/>
+                            <downloadable/>
                         </allow_product_types>
                         <index_priority>50</index_priority>
                         <price_indexer>catalog/product_indexer_price_grouped</price_indexer>

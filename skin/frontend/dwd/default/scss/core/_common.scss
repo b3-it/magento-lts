@@ -55,13 +55,12 @@ body {
 }
 
 button {
-    color: $global-button-font-color;
+    @include grau-hover-blau;
 }
 
 textarea, input[type="text"], input[type="email"],
 input[type="password"], input[type="tel"], select {
-    border: 0;
-    margin-bottom: $global-element-magrin-bottom;
+    @include input-field;
     padding: 3px 6px;
 }
 
@@ -86,24 +85,6 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-/* ============================================ *
- * Default-Active marking
- * ============================================ */
-input, button, select, textarea {
-    /* Bugfix für IE11, da er das Rumpf-Element bei Seite laden auf Active setzt */
-    &:focus {
-        border-width: $global-active-border;
-        border-style: solid !important;
-        border-color: $global-active-color;
-    }
-}
-input[type="checkbox"]:focus, input[type="radio"]:focus {
-    /* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
-    outline-width: $global-active-border !important;
-    outline-style: solid !important;
-    outline-color: $global-active-color !important;
 }
 
 /* ============================================ *
@@ -139,11 +120,11 @@ h6, .h6 { @include h6; }
     }
 
     .in-stock {
-        color: $global-instock-color;
+        color: $grundfarbe-blau;
     }
 
     .available-soon, .out-of-stock {
-        color: $global-available-color;
+        color: $grundfarbe-blgr;
     }
 }
 
@@ -188,15 +169,16 @@ p.note-msg {
 }
 
 .block {
-    border-color: $zusatzfarbe-blau;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: $grundfarbe-blgr;
     margin-bottom: $global-boxmargin;
 
     .block-title {
-        background-color: $grundfarbe-weiss;
-        padding: 0.3em;
         color: $textfarbe-mittel;
-        font-weight: normal;
         font-size: $global-h4-size;
+        height: 51px;
+        padding: 10px;
 
         span {
             color: $global-h4-color;
@@ -229,8 +211,6 @@ p.note-msg {
 
 // On account pages, don't remove the top border in order to create separation between block and .block-account
 body:not(.customer-account) .block:first-child .block-title {
-    border-top: none;
-    padding-top: 0;
 }
 
 .block-subtitle {
@@ -239,12 +219,10 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    border-width: $global-active-border;
-    border-style: solid;
-    border-color: $grundfarbe-grau;
     padding: 15px;
 
     input[type="text"], input[type="email"] {
+        @include input-field;
         width: 100%;
     }
 }
@@ -262,17 +240,25 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block .actions {
-    margin: $box-spacing 0 0;
+    margin: 20px 0 0;
 
     &:after {
         @include clearfix;
     }
 
-    a {
-        float: left;
-    }
-    .button {
-        float: right;
+    a, .button {
+        @include grau-hover-blau;
+        
+        width: 100%;
+        display: block;
+        font-size: 1rem;
+        text-align: center;
+        margin: 0;
+        padding: 18px 0;
+        
+        span {
+            font-family: $base-font-family;
+        }
     }
 }
 
@@ -781,7 +767,6 @@ div.block-reorder {
     .col-wrapper {
         width: $global-wrapper-width;
         position: relative;
-        top: $global-wrapper-top;
 
         .col-left {
             margin-right: $global-leftcol-rightmargin-percent;
@@ -795,16 +780,9 @@ div.block-reorder {
         }
 
         .col-main {
-            background-image: url($global-content-top-image);
-            background-repeat: no-repeat;
-            background-color: $global-content-background;
-            background-position: 0px -3px;
-            background-size: 100% auto;
             overflow: hidden;
             width: $global-content-2col-left-percent;
-            padding-left: $global-content-leftpadding-percent;
             padding-top: $global-content-paddingtop;
-            padding-right: $global-rightcol-rightmargin-percent;
             
             @include bp(max-width, 490px) {
             	width: 100% !important;
@@ -1065,7 +1043,6 @@ div.block-reorder {
  */
 
 .messages {
-    margin-top: $global-message-margintop;
     margin-bottom: $global-message-marginbottom;
 }
 
@@ -1074,7 +1051,7 @@ div.block-reorder {
     margin-bottom: 5px;
     padding: 7px 10px 7px 20px;
     background: $c-module-background;
-    font-size: $f-size-l;
+    font-size: 1rem;
 }
 
 .messages li li:before {
@@ -1084,7 +1061,7 @@ div.block-reorder {
 }
 
 .messages .error-msg li {
-    color: $c-black;
+    color: $textfarbe-mittel;
     border-left: 5px solid $c-danger;
     background-color: $c-danger-background;
 }
@@ -1094,7 +1071,7 @@ div.block-reorder {
 }
 
 .messages .notice-msg li {
-    color: $c-black;
+    color: $textfarbe-mittel;
     border-left: 5px solid $c-warn;
     background-color: $c-warn-background;
 }
@@ -1457,17 +1434,6 @@ span.weee {
 .no-touch .product-img-box .product-image:not(.zoom-available):hover {
     position: relative;
     display: block;
-    border: 1px solid $global-border-color-light;
-}
-
-@include bp (max-width, $bp-medium) {
-    body .product-img-box .product-image:hover {
-        border-color: $global-border-color-light;
-    }
-}
-
-.no-touch .product-image:hover {
-    border-color: $global-border-color-light;
 }
 
 /* -------------------------------------------- *

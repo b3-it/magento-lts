@@ -48,6 +48,10 @@
     		padding-right: $global-boxpadding * 2;
     		vertical-align: top;
     	}
+    	
+    	th {
+    	    font-weight: bold;
+    	}
     
         td {
         	padding-bottom: $global-boxpadding * 2;

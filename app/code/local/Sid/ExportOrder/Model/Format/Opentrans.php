@@ -86,6 +86,7 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	}
     	
     	//lieferant
+    	/* @var $contract Sid_Framecontract_Model_Contract */
     	$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
   		$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
     	$ORDER_HEADER->order_info->parties->supplierParty->party_id->setValue('C_'.$vendor->getData('framecontract_vendor_id'));
@@ -96,7 +97,8 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	$ORDER_HEADER->order_info->order_parties_reference->buyer_idref->setValue('B_'.$billing->getCustomerId());
     	$ORDER_HEADER->order_info->order_parties_reference->supplier_idref->setValue('C_'.$vendor->getData('framecontract_vendor_id'));
     	
-    	
+    	$ORDER_HEADER->order_info->customer_order_reference->customer_idref->setValue('?Kundennummer?');
+    	$ORDER_HEADER->order_info->customer_order_reference->order_descr->setValue($contract->getTitle());
     	
     	//die Positionen
     	$ORDER_ITEM_LIST = new Sid_ExportOrder_Model_Format_Opentrans_OrderItemList($ORDER, $this->_xml);

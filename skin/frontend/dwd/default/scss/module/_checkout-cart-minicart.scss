@@ -295,41 +295,6 @@
     }
 }
 
-div.block-cart {
-    .block-content {
-        p.subtotal {
-            text-align: right;
-        }
-
-        .block-subtitle {
-            padding-top: 10px;
-        }
-    }
-
-    #cart-sidebar {
-        li.item {
-            margin-bottom: $global-boxpadding;
-            padding-bottom: $global-boxpadding;
-
-            .product-details {
-                .btn_edit {
-                    @extend .egov-float-right;
-                    margin-right: 10px;
-                }
-
-                .btn_delete {
-                    @extend .egov-float-right;
-                }
-
-                .tax-block {
-                    text-align: right;
-                }
-            }
-        }
-    }
-}
-
-
 .header-minicart.skip-active .block-cart,
 .block-cart.skip-active {
     top: 55px;

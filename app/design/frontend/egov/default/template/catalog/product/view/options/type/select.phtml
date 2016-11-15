@@ -12,7 +12,10 @@
 
 <dt class="option-block type-<?php echo $_option->getType(); ?>">
     <div class="option-block-label">
-        <label<?php if ($_option->getIsRequire()) echo ' class="required"' ?>><?php if ($_option->getIsRequire()) echo '<em>*</em>' ?><?php echo  $this->escapeHtml($_option->getTitle()) ?></label>
+        <label>
+            <?php if ($_option->getIsRequire()) echo '<em class="required">*</em>' ?>
+            <?php echo  $this->escapeHtml($_option->getTitle()) ?>
+        </label>
     </div>
     <div class="option-block-elements">
         <?php echo $this->getValuesHtml() ?>
