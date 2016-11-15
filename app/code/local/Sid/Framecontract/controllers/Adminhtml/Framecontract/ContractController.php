@@ -26,8 +26,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 	
 	private function _edit($id)
 	{
-		$model  = Mage::getModel('framecontract/contract')->load($id);
-		
+		$id = intval($id);
+		$model  = Mage::getModel('framecontract/contract');
+		if($id > 0){
+			$model->load($id);
+		}
 		if ($model->getId() || $id == 0) {
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
 			if (!empty($data)) {
