@@ -136,7 +136,9 @@ class Egovs_GermanTax_Model_Tax_Observer
 	 * @return boolean
 	 */
 	protected function _addressesHaveSameTaxRateRequests($firstAddress, $secondAddress) {
-		if ($firstAddress->getId() == $secondAddress->getId()
+		if ($firstAddress == false
+			|| $secondAddress == false
+			||	$firstAddress->getId() == $secondAddress->getId()
 			|| ($firstAddress->getCustomerAddressId() && $secondAddress->getCustomerAddressId()
 				&& $firstAddress->getCustomerAddressId() == $secondAddress->getCustomerAddressId())
 		) {
