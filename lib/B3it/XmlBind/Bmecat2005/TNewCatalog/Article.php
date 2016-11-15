@@ -376,4 +376,17 @@ class B3it_XmlBind_Bmecat2005_TNewCatalog_Article extends B3it_XmlBind_Bmecat200
 
 		return $xml;
 	}
+	
+	
+	
+	
+	public function getMageProduct()
+	{
+		$model = new B3it_XmlBind_Bmecat2005_Builder_Article($this);
+		
+		return $model->build(); 
+	}
+	
+	
+	
 }

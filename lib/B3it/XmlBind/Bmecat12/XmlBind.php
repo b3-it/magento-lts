@@ -1,7 +1,7 @@
 <?php
-namespace B3it\BmeCat2005;
 
-class XmlBind {
+
+class  B3it_XmlBind_Bmecat12_XmlBind {
 
     
     /**
