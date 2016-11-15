@@ -754,6 +754,13 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 		if(is_array($value)) {
 			return "";
 		}
+		
+		//objekte verwerfen ausser ZendDate mit format date
+		if(($value instanceof Zend_Date) && ($format == 'date'))
+		{
+			return Mage::helper('core')->formatDate($value);
+		}		
+		
 		if (is_object($value)) {
 			return "";
 		}
