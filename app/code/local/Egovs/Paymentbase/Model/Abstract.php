@@ -351,6 +351,9 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			$sMailText .= "Order #: {$this->_getOrder()->getIncrementId()}\n";
 			$sMailText .= "Quote ID: {$this->_getOrder()->getQuoteId()}\n";
 			
+			/** @var $_adminHelper Mage_Adminhtml_Helper_Data */
+			$_adminHelper = Mage::helper('adminhtml');
+			
 			foreach ($this->_getOrder()->getAllItems() as $item) {
 				/* @var $item Mage_Sales_Model_Order_Item */
 				$sMailText .= "Order item ID: {$item->getId()}\n";
@@ -374,7 +377,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 
 			$sMailText .= "ePayBL-Kundennummer: {$this->_getECustomerId()}\n";
 			if ($customer = $this->_getOrder()->getCustomer()) {
-				$backendUrl = Mage::getUrl('admin/customer/edit', array('id' => $this->_getCustomerId()));
+				$backendUrl = $_adminHelper->getUrl('adminhtml/customer/edit', array('id' => $this->_getCustomerId()));
 				$sMailText .= "Kundennummer: {$this->_getCustomerId()} $backendUrl\n";
 				$sMailText .= "Name: {$this->_getOrder()->getCustomer()->getFirstname()} {$this->_getOrder()->getCustomer()->getLastname()}\n\n";
 			} else {
@@ -396,8 +399,8 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			}
 			$sMailText .= "Liste der Produkte:\n";
 			foreach ($this->_getOrder()->getAllVisibleItems() as $item) {
-				/* @var $item Mage_Sales_Model_Order_Item */
-				$backendUrl = Mage::getUrl('admin/catalog_product/edit', array('id' => $item->getProductId()));
+				/** @var $item Mage_Sales_Model_Order_Item */
+				$backendUrl = $_adminHelper->getUrl('adminhtml/catalog_product/edit', array('id' => $item->getProductId()));
 				$sMailText .= "SKU: {$item->getSku()} ID: {$item->getProductId()} $backendUrl\n";
 			}
 			$sMailText .= "\n";
