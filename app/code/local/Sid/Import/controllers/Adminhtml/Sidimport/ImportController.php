@@ -17,10 +17,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
   
     
     public function indexAction() {
-    		$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
-    		if (!empty($data)) {
-    			$model->setData($data);
-    		}
+    		
     
     		//Mage::register('import_data', $model);
     
@@ -44,15 +41,19 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     			$this->getLayout()->createBlock('sidimport/adminhtml_import_edit_tab_grid')->toHtml());
     }
     
-	public function fetchAction() {
-    		$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
-    		if (!empty($data)) {
-    			$model->setData($data);
-    		}
-    		$losId =  intval($this->getRequest()->getParam('los'));
-    		$restClient = Mage::getModel('sidimport/restImport');
-    		$restClient->importProductList($losId);
+	public function saveAction() {
     		
+    		if ($data = $this->getRequest()->getPost()) {
+    		
+    			$default = $data['default'];
+    			/* @var $sessiion Mage_Core_Model_Session */
+	    		$session = Mage::getSingleton("admin/session");
+	    		$session->setImportDefaults($default);
+	    		
+	    		$losId =  intval($default['los']);
+	    		$restClient = Mage::getModel('sidimport/restImport');
+	    		$restClient->importProductList($losId);
+    		}
     		
     		
     		//Mage::register('import_data', $model);
@@ -72,7 +73,22 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     	
     }
 
+    private function getImportDefaults($key = NULL)
+    {
+    	$session = Mage::getSingleton("admin/session");
+    	$defaults = $session->getImportDefaults();
+    	if($key == null){
+    		return $defaults;
+    	}
+    	
+    	return $defaults[$key];
+    }
+    
     public function massImportAction() {
+    	
+    	$session = Mage::getSingleton("admin/session");
+    	$defaults = $session->getImportDefaults();
+    	
     	$importIds = $this->getRequest()->getParam('import_ids');
     	if(!is_array($importIds)) {
     		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
@@ -80,9 +96,19 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     		try {
     			/* @var $builder Sid_Import_Model_Itw */
     			$builder = Mage::getModel('sidimport/Itw');
-    			$builder->setSkuPrefix('prefix');
+    			$builder->setSkuPrefix($defaults['sku_prefix']);
+    			$builder->setCategoryId($defaults['category_id']);
+    			$builder->setWebSiteId($defaults['website']);
+    			$builder->setLos($defaults['los']);
+    			$builder->setQty($defaults['qty']);
+    			$builder->setStore($defaults['store']);
     			
-    			
+    			$taxclass = array();
+    			$taxclass[0] = $default['tax_class1'];
+    			$taxclass[$default['tax_rate2']] = $default['tax_class2'];
+    			$taxclass[$default['tax_rate3']] = $default['tax_class3'];
+
+    			$builder->setTaxRates($taxclass);
     			
     			foreach ($importIds as $importId) {
     				$import = Mage::getModel('sidimport/storage')->load($importId);

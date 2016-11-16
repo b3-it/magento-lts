@@ -49,89 +49,150 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
          $lose = Mage::getModel('framecontract/source_attribute_contractLos');
         
          $fieldset->addField('default_los', 'select', array(
-         		'name'     => 'default[los]',
+         		'name'     => "default[los]",
          		'title'    => $helper->__('Los'),
          		'label'    => $helper->__('Los'),
          		'required' => true,
-         		'values'   => $lose->getOptionArray()
+         		'values'   => $lose->getOptionArray(),
+         		'value' 	=> $this->getImportDefaults('los')
          ));
 
+         $fieldset->addField('sku_prefix', 'text', array(
+         		'name'     => 'default[sku_prefix]',
+         		'title'    => $helper->__('Sku Prefix'),
+         		'label'    => $helper->__('Sku Prefix'),
+         		'value' 	=> $this->getImportDefaults('sku_prefix')
+         		//'required' => true,
+         
+         ));
         //if (!Mage::app()->isSingleStoreMode())
         //{
 
         	$fieldset->addField('website', 'select', array(
-            'name'     => 'website',
+            'name'     => "default[website]",
             'title'    => $helper->__('Website'),
             'label'    => $helper->__('Website'),
             'required' => true,
-            'values'   => Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray()
+            'values'   => Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray(),
+        			'value' 	=> $this->getImportDefaults('website')
         	 ));
 
     		if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
 	        	$fieldset->addField('store', 'select', array(
-	            'name'     => 'store',
+	            'name'     => 'default[store]',
 	            'title'    => $helper->__('Store'),
 	            'label'    => $helper->__('Store'),
 	            'required' => true,
-	            'values'   => Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray()
+	            'values'   => Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray(),
+	        	'value' 	=> $this->getImportDefaults('store')
 	        	));
         	}
 
          $fieldset->addField('category', 'select', array(
-            'name'     => 'category',
+            'name'     => 'default[category]',
             'title'    => $helper->__('Category'),
             'label'    => $helper->__('Category'),
             'required' => true,
-            'values'   => $this->getCategories()
+            'values'   => $this->getCategories(),
+         	'value' 	=> $this->getImportDefaults('category')
         	));
 
-        $fieldset->addField('tax_class', 'select', array(
-            'name'     => 'tax_class',
-            'title'    => $helper->__('Tax'),
-            'label'    => $helper->__('Tax'),
+                 
+        $fieldset->addField('tax_class1', 'select', array(
+            'name'     => 'default[tax_class1]',
+            'title'    => $helper->__('No Tax Class'),
+            'label'    => $helper->__('No Tax Class'),
             'required' => true,
-            'values'   => Mage::getSingleton('tax/class_source_product')->toOptionArray()
+            'values'   => Mage::getSingleton('tax/class_source_product')->toOptionArray(),
+        	'value' 	=> $this->getImportDefaults('tax_class1')
         	));
 
-        $fieldset->addField('sku_prefix', 'text', array(
-            'name'     => 'sku_prefix',
-            'title'    => $helper->__('Sku Prefix'),
-            'label'    => $helper->__('Sku Prefix'),
-            //'required' => true,
-
-        	));
+        $fieldset->addField('tax_rate2', 'text', array(
+        		'name'     => 'default[tax_rate2]',
+        		'title'    => $helper->__('Tax Rate for Reduced Tax'),
+        		'label'    => $helper->__('Tax Rate for Reduced Tax'),
+        		'value' 	=> $this->getImportDefaults('tax_rate2')
+        		//'required' => true,
+        		 
+        ));
+        
+        
+        $fieldset->addField('tax_class2', 'select', array(
+        		'name'     => 'default[tax_class2]',
+        		'title'    => $helper->__('Reduced Tax Class'),
+        		'label'    => $helper->__('Reduced Tax Class'),
+        		'required' => true,
+        		'values'   => Mage::getSingleton('tax/class_source_product')->toOptionArray(),
+        		'value' 	=> $this->getImportDefaults('tax_class2')
+        ));
+        
+        $fieldset->addField('tax_rate3', 'text', array(
+        		'name'     => 'default[tax_rate3]',
+        		'title'    => $helper->__('Tax Rate for Normal Tax'),
+        		'label'    => $helper->__('Tax Rate for Normal Tax'),
+        		'value' 	=> $this->getImportDefaults('tax_rate3')
+        		//'required' => true,
+              
+        ));
+        
+        $fieldset->addField('tax_class3', 'select', array(
+        		'name'     => 'default[tax_class3]',
+        		'title'    => $helper->__('Normal Tax Class'),
+        		'label'    => $helper->__('Normal Tax Class'),
+        		'required' => true,
+        		'values'   => Mage::getSingleton('tax/class_source_product')->toOptionArray(),
+        		'value' 	=> $this->getImportDefaults('tax_class3')
+        ));
+        
+      
         
         $fieldset->addField('qty', 'text', array(
-        		'name'     => 'qty',
+        		'name'     => 'default[qty]',
         		'title'    => $helper->__('Quantity'),
         		'label'    => $helper->__('Quantity'),
         		'note'	   => $helper->__("0 = switch off Stock Inventory"),
-        		'value'	=>'0',
+        		'value'   => empty($this->getImportDefaults('los'))? $this->getImportDefaults('los') : '0',
         		//'required' => true,
         
         ));
         
-        $losId =  intval($this->getRequest()->getParam('los'));
-        if($losId == 0)
-        {
-	        $fieldset->addField('fetch', 'button', array(
-	        		'name'     => 'qty',
-	        		'title'    => $helper->__('Fetch Data'),
-	        		'label'    => $helper->__('Fetch Data'),
-	        		'value'	=>$helper->__('Start'),
-	        		'class' =>'button',
-	        		'onclick' => "fechData('".$this->_getFetchUrl()."');"
-	        		//'required' => true,
+//         $losId =  intval($this->getRequest()->getParam('los'));
+//         if($losId == 0)
+//         {
+// 	        $fieldset->addField('fetch', 'button', array(
+// 	        		'name'     => 'qty',
+// 	        		'title'    => $helper->__('Fetch Data'),
+// 	        		'label'    => $helper->__('Fetch Data'),
+// 	        		'value'	=>$helper->__('Start'),
+// 	        		'class' =>'button',
+// 	        		'onclick' => "fechData('".$this->_getFetchUrl()."');"
+// 	        		//'required' => true,
 	        
-	        ));
-        }
+// 	        ));
+//         }
 
 
-        $form->setUseContainer(true);
-        $this->setForm($form);
+//        $form->setUseContainer(true);
+//        $this->setForm($form);
 
         return parent::_prepareForm();
     }
+    
+    
+    private function getImportDefaults($key = NULL)
+    {
+    	$session = Mage::getSingleton("admin/session");
+    	$defaults = $session->getImportDefaults();
+    	if($key == null){
+    		return $defaults;
+    	}
+    	if(isset($defaults[$key])){
+    	   	return $defaults[$key];
+    	}
+    	
+    	return "";
+    }
+    
     
     private function _getFetchUrl()
     {

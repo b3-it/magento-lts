@@ -19,9 +19,10 @@ class Sid_Import_Block_Adminhtml_Import_Edit extends Mage_Adminhtml_Block_Widget
         $this->_objectId = 'id';
         $this->_blockGroup = 'sidimport';
         $this->_controller = 'adminhtml_import';
+        $this->_updateButton('save', 'label', Mage::helper('sidimport')->__('Next'));
+
         
-        $this->removeButton('save')
-        	->removeButton('delete')
+        $this->removeButton('delete')
         	->removeButton('reset')
         	->removeButton('back');
         
