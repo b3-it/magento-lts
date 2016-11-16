@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_Import>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Sid_Import>
     </modules>
     <frontend>
@@ -35,7 +35,60 @@
        </routers>
     </admin>
     <adminhtml>
-		
+      <menu>
+        <system>
+            <children>
+                <convert translate="title">
+                    <children>
+                        <supplierportal_import translate="title" module="sidimport">
+                            <title>Import Supplier Portal</title>
+                            <action>adminhtml/sidimport_import</action>
+                            <sort_order>10</sort_order>
+                        </supplierportal_import>
+                    </children>
+                </convert>
+            </children>
+        </system>
+        </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <convert>
+                                <children>
+                                    <supplierportal_import translate="title" module="sidimport">
+                                        <title>Import Supplier Portal</title>
+                                        <sort_order>30</sort_order>
+                                    </supplierportal_import>
+                                </children>
+                            </convert>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+        <layout>
+            <updates>
+                <sidimport>
+                    <file>sid/import.xml</file>
+                </sidimport>
+            </updates>
+        </layout>
+            <translate>
+            <modules>
+                <Sid_Framecontract>
+                    <files>
+                        <default>Sid_Import.csv</default>
+                    </files>
+                </Sid_Framecontract>
+            </modules>
+        </translate>
     </adminhtml>
     <global>
         <models>
@@ -73,14 +126,14 @@
             </import_read>
         </resources>
         <blocks>
-            <import>
+            <sidimport>
                 <class>Sid_Import_Block</class>
-            </import>
+            </sidimport>
         </blocks>
         <helpers>
-            <import>
+            <sidimport>
                 <class>Sid_Import_Helper</class>
-            </import>
+            </sidimport>
         </helpers>
     </global>
 </config>

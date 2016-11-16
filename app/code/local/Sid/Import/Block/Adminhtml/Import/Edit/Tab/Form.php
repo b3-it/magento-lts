@@ -31,7 +31,7 @@
  * @package     Mage_ImportExport
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
+class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
     /**
      * Add fieldset
@@ -42,51 +42,14 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
     {
         $helper = Mage::helper('importexport');
 
-        $form = new Varien_Data_Form(array(
-            'id'      => 'edit_form',
-            'action'  => $this->getUrl('*/*/validate'),
-            'method'  => 'post',
-            'enctype' => 'multipart/form-data'
-        ));
-
-        $fieldset = $form->addFieldset('base_fieldset1', array('legend' => $helper->__('Image Import Settings')));
-
-        $fieldset->addField('image_upload', 'text', array(
-         		'name'     => 'image_upload',
-        		'label'    => $helper->__('Select Image Archive File to Import'),
-        		'title'    => $helper->__('Select Image Archive File to Import'),
-        		'required' => false
-        ));
-
-        $form->getElement('image_upload')->setRenderer(
-        		$this->getLayout()->createBlock('framecontract/adminhtml_import_uploader')
-        );
-
+        $form = new Varien_Data_Form();
+        $this->setForm($form);
 
         $fieldset = $form->addFieldset('base_fieldset', array('legend' => $helper->__('Import Settings')));
-
-        $fieldset->addField('behavior', 'select', array(
-            'name'     => 'behavior',
-            'title'    => $helper->__('Import Behavior'),
-            'label'    => $helper->__('Import Behavior'),
-            'required' => true,
-            'values'   => Mage::getModel('importexport/source_import_behavior')->toOptionArray()
-        ));
-/*
-         $contracts = Mage::getModel('framecontract/source_attribute_contracts');
-         $fieldset->addField('framecontract', 'select', array(
-            'name'     => 'framecontract',
-            'title'    => $helper->__('Framework Contract'),
-            'label'    => $helper->__('Framework Contract'),
-            'required' => true,
-            'values'   => $contracts->getOptionArray()
-        ));
-         
-    */     
          $lose = Mage::getModel('framecontract/source_attribute_contractLos');
         
-         $fieldset->addField('los', 'select', array(
-         		'name'     => 'los',
+         $fieldset->addField('default_los', 'select', array(
+         		'name'     => 'default[los]',
          		'title'    => $helper->__('Los'),
          		'label'    => $helper->__('Los'),
          		'required' => true,
@@ -104,7 +67,7 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
             'values'   => Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray()
         	 ));
 
-        	if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+    		if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
 	        	$fieldset->addField('store', 'select', array(
 	            'name'     => 'store',
 	            'title'    => $helper->__('Store'),
@@ -147,56 +110,32 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
         		//'required' => true,
         
         ));
-      	/*
-        $fieldset->addField('buchungstext', 'text', array(
-            'name'     => 'buchungstext',
-            'title'    => $helper->__('Buchungstext'),
-            'label'    => $helper->__('Buchungstext'),
-            'required' => true,
-
-        	));
-        $fieldset->addField('buchungstext_mwst', 'text', array(
-            'name'     => 'buchungstext_mwst',
-            'title'    => $helper->__('Buchungstext MwSt'),
-            'label'    => $helper->__('Buchungstext MwSt'),
-            'required' => true,
-
-        	));
-       $fieldset->addField('haushaltsstelle', 'text', array(
-            'name'     => 'haushaltsstelle',
-            'title'    => $helper->__('Haushaltsstelle'),
-            'label'    => $helper->__('Haushaltsstelle'),
-            'required' => true,
-
-        	));
-       $fieldset->addField('href', 'text', array(
-            'name'     => 'href',
-            'title'    => $helper->__('Href'),
-            'label'    => $helper->__('Href'),
-            'required' => true,
-
-        	));
-
-       $fieldset->addField('href_mwst', 'text', array(
-            'name'     => 'href_mwst',
-            'title'    => $helper->__('Href MwSt'),
-            'label'    => $helper->__('Href MwSt'),
-            'required' => true,
-
-        	));
-      */
-        $fieldset->addField(Mage_ImportExport_Model_Import::FIELD_NAME_SOURCE_FILE, 'file', array(
-        		'name'     => Mage_ImportExport_Model_Import::FIELD_NAME_SOURCE_FILE,
-        		'label'    => $helper->__('Select File to Import'),
-        		'title'    => $helper->__('Select File to Import'),
-        		'required' => true
-        ));
+        
+        $losId =  intval($this->getRequest()->getParam('los'));
+        if($losId == 0)
+        {
+	        $fieldset->addField('fetch', 'button', array(
+	        		'name'     => 'qty',
+	        		'title'    => $helper->__('Fetch Data'),
+	        		'label'    => $helper->__('Fetch Data'),
+	        		'value'	=>$helper->__('Start'),
+	        		'class' =>'button',
+	        		'onclick' => "fechData('".$this->_getFetchUrl()."');"
+	        		//'required' => true,
+	        
+	        ));
+        }
 
 
         $form->setUseContainer(true);
         $this->setForm($form);
 
         return parent::_prepareForm();
+    }
+    
+    private function _getFetchUrl()
+    {
+    	return $this->getUrl('*/*/fetch');
     }
 
 	private function getCategories($addEmpty = true)

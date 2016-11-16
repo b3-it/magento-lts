@@ -51,7 +51,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ImportController extends Mage_Ad
      */
     protected function _initAction()
     {
-        $this->_title($this->__('Import/Export'))
+    	 $this->_title($this->__('Import/Export'))
             ->loadLayout()
             ->_setActiveMenu('system/importexport');
 
