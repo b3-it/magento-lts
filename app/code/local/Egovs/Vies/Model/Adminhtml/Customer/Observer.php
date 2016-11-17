@@ -33,7 +33,7 @@ class Egovs_Vies_Model_Adminhtml_Customer_Observer extends Mage_Core_Model_Abstr
 		
 		if ($customer->getOrigData('group_id') > 0 && $customer->getGroupId() != $customer->getOrigData('group_id')) {
 			//Autozuordnung deaktivieren
-			$customer->setDisableAutoGroupChange(false);
+			$customer->setDisableAutoGroupChange(true);
 		}
 	}
 }
