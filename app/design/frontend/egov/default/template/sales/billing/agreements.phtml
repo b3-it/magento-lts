@@ -19,7 +19,7 @@
  * needs please refer to http://www.magento.com for more information.
  *
  * @category    design
- * @package     default_iphone
+ * @package     rwd_default
  * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -35,36 +35,37 @@
     <?php $billingAgreements = $this->getBillingAgreements(); ?>
     <?php if (count($billingAgreements) > 0): ?>
         <?php echo $this->getChildHtml('pager'); ?>
-        <table id="billing-agreements" class="info-table">
+        <table id="billing-agreements" class="data-table linearize-table">
+            <col />
+            <col width="1" />
+            <col />
+            <col />
+            <col />
+            <col width="1" />
+            <thead>
+            <tr>
+                <th class="reference-id"><span class="nobr"><?php echo $this->__('Reference ID'); ?></span></th>
+                <th class="status"><?php echo $this->__('Status'); ?></th>
+                <th class="created-at"><span class="nobr"><?php echo $this->__('Created At'); ?></span></th>
+                <th class="updated-at"><span class="nobr"><?php echo $this->__('Updated At'); ?></span></th>
+                <th class="payment-method"><span class="nobr"><?php echo $this->__('Payment Method'); ?></span></th>
+                <th class="actions">&nbsp;</th>
+            </tr>
+            </thead>
             <tbody>
-                <?php foreach($billingAgreements as $item): ?>
+            <?php foreach($billingAgreements as $item): ?>
                 <tr>
-                    <th><span class="nobr"><?php echo $this->__('Reference ID'); ?></span></th>
+                    <td class="reference-id"><span class="nobr"><?php echo $this->getItemValue($item, 'reference_id') ?></span></td>
+                    <td class="status" data-rwd-label="Status"><?php echo $this->getItemValue($item, 'status') ?></td>
+                    <td class="created-at" data-rwd-label="Created at"><span class="nobr"><?php echo $this->getItemValue($item, 'created_at') ?></span></td>
+                    <td class="updated-at" data-rwd-label="Updated at"><span class="nobr"><?php echo $this->getItemValue($item, 'updated_at') ?></span></td>
+                    <td class="payment-method" data-rwd-label="Payment method"><?php echo $this->getItemValue($item, 'payment_method_label') ?></td>
+                    <td class="actions"><a href="<?php echo $this->getItemValue($item, 'edit_url') ?>"><?php echo $this->__('View') ?></a></td>
                 </tr>
-                    <td><span class="nobr"><?php echo $this->getItemValue($item, 'reference_id') ?></span></td>
-                </tr>
-                    <th><?php echo $this->__('Status'); ?></th>
-                </tr>
-                    <td><?php echo $this->getItemValue($item, 'status') ?></td>
-                <tr>
-                    <th><span class="nobr"><?php echo $this->__('Created At'); ?></span></th>
-                </tr>
-                    <td><span class="nobr"><?php echo $this->getItemValue($item, 'created_at') ?></span></td>
-                </tr>
-                <tr>
-                    <th><span class="nobr"><?php echo $this->__('Updated At'); ?></span></th>
-                </tr>
-                    <td><span class="nobr"><?php echo $this->getItemValue($item, 'updated_at') ?></span></td>
-                </tr>
-                    <th><span class="nobr"><?php echo $this->__('Payment Method'); ?></span></th>
-                </tr>
-                    <td><?php echo $this->getItemValue($item, 'payment_method_label') ?></td>
-                <tr>
-                    <td><a href="<?php echo $this->getItemValue($item, 'edit_url') ?>"><?php echo $this->__('View') ?></a></td>
-                </tr>
-                <?php endforeach; ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
+        <script type="text/javascript">decorateTable('billing-agreements')</script>
     <?php else: ?>
         <p><?php echo $this->__('There are no billing agreements yet.')?></p>
     <?php endif; ?>

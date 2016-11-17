@@ -15,6 +15,9 @@
 .footer .button {
     @include grau-hover-blau;
     padding: 18px 0;
+    display: inline-block;
+    min-width: 15%;
+    text-align: center;
 }
 
 /* Disabled - class for anchor, state for form elements */

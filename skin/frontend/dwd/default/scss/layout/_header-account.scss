@@ -24,9 +24,10 @@
 #header-account.skip-active {
     display: inline-block;
     position: absolute;
+    text-align: left;
     z-index: 200;
     right: 0;
-    width: 200px;
+    width: 250px;
     top: 55px;
     border-width: $global-active-border;
     border-style: solid;

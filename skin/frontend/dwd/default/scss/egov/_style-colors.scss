@@ -12,12 +12,14 @@ $grundfarbe-weiss : #FFFFFF;
 $grundfarbe-blgr  : #F2F4F6;
 $zusatzfarbe-blau : #96B9DC;
 $zusatzfarbe-rot  : #E10019;
-$zusatzfarbe-weiss: #fbfcfc;
+$zusatzfarbe-weiss: #FBFCFC;
 $zusatzfarbe-gradient-1: #324B8C;
 $zusatzfarbe-gradient-2: #247BA1;
 $textfarbe-dunkel : #333333;
 $textfarbe-mittel : #555555;
 $textfarbe-hell   : #FFFFFF;
+
+$progress-checkout-rgba: rgba(85, 85, 85, 0.3); 
 
 
 $global-wrapper-color: #FFFFFF;                                        // Hintergrundfarbe der Seite
@@ -70,7 +72,7 @@ $global-mp-checkout-inactive: #8F8F8F;                                 // Farbe 
 
 $global-message-background: #F0F6E7;                                   // Standard-Hintergrund für Meldungen
 
-$global-warning-color: #DF280A;                                        // Schriftfarbe für Warnungen
+$global-warning-color: #E10019;                                        // Schriftfarbe für Warnungen
 $global-warning-background: #FAEBE7;                                   // Hintergrund für Warnungen
 $global-notice-color: #DF280A;                                         // Schriftfarbe für Mitteilungen
 $global-notice-background: #FAEBE7;                                    // Hintergrund für Mitteilungen

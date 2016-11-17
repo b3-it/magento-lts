@@ -6,11 +6,6 @@
 //
 
 .customer-account-login {
-    .main-container {
-        position: relative;
-        top: $global-cms-top-position;
-    }
-
     p.required {
         color: $global-warning-color;
     }
@@ -24,15 +19,9 @@
     }
 }
 
-.egovs-checkout-multipage-login .egov-account-login {
-    top: -7px;
-}
-
 .egov-account-login {
     overflow: hidden;
     width: 97%;
-    position: relative;
-    top: -25px;
 
     form {
         height: 100%;
@@ -57,6 +46,24 @@
         height: 25em;
         width: 48%;
         border: $global-box-border solid $grundfarbe-blgr !important;
+        
+        .content, .buttons-set {
+            padding: 10px;
+        }
+        
+        .buttons-set {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .button {
+            margin: 0 !important;
+            width: 49%;
+            min-width: 49% !important;
+            display: inline-block;
+            text-align: center;
+        }
         
         @include bp(max-width, $bp-large) {
         	width: 100%;

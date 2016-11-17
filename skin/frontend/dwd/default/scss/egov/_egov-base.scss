@@ -37,7 +37,7 @@
     
     tfoot {
         .button {
-            padding: 18px 15px;
+            @include multi-buttons-definition;
         }
     }
 
