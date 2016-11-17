@@ -150,14 +150,16 @@ var nodeOptions = {
 		},
 		
 		add: function(data, sel) {
-			//if ( isEmptyElement(data) == false && isEmptyElement(sel) == false ) {
 				var ref = this.tree.jstree(true);
 				var edit = false;
 
 				this.itemCount++;
 				if(!sel) {
 					var	sel = ref.get_selected();
-					if(!sel.length) { return false; }
+					if(!sel.length) { 
+						alert( element_not_selected );
+						return false; 
+					}
 					sel = sel[0];
 					ref.open_node(sel);
 					edit = true;
@@ -192,16 +194,16 @@ var nodeOptions = {
 					
 				
 				return node.id;
-			//}
-			//else {
-			//	alert( element_not_selected );
-			//}
+			
 		},
 		addPage: function(id, label) {
 			var ref = this.tree.jstree(true);
 			this.itemCount++;
 			var	sel = ref.get_selected();
-			if(!sel.length) { return false; }
+			if(!sel.length) { 
+				alert( element_not_selected );
+				return false; 
+			}
 
 			sel = sel[0];
 			ref.open_node(sel);
@@ -226,22 +228,17 @@ var nodeOptions = {
 			
 		},
 		remove: function(data) {
-			if ( isEmptyElement(data) == false ) {
 				this.hideAll();
 				var ref = this.tree.jstree(true);
 				var	sel = ref.get_selected();
 				if(!sel.length) {
+					alert(node_element_is_null);
 					return false;
 				}
 				var node = ref.get_node(sel);
 				var elem = $j("#node_options_" + node.data.number + "_is_delete");
 				elem.val(1);
 				ref.delete_node(sel);
-			}
-			else {
-				alert(node_element_is_null);
-			}
-			
 		},
 
 		edit: function(data) {
@@ -249,6 +246,7 @@ var nodeOptions = {
             	var ref = this.tree.jstree(true);
             	var	sel = ref.get_selected();
             	if(!sel.length) {
+            		alert( node_element_not_selected );
             		return false;
             	}
 				sel = sel[0];
@@ -259,10 +257,6 @@ var nodeOptions = {
 					node.text = elem.val();
 				}
 				ref.edit(sel);
-            //}
-			//else {
-			//	alert( node_element_not_selected );
-			//}
 		},
 		open_all: function() {
 			var ref = this.tree.jstree(true);

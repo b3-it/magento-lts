@@ -5,6 +5,7 @@
 "Insert","Einfügen"
 "New","Neu"
 "Rename","Umbenennen"
+"Delete","Löschen"
 "Node Element is null and root node can not be deleted","Es wurde kein Element ausgewählt und das Wurzelelement kann nicht gelöscht werden"
 "Node Element is not selected and root node can not be renamed","Es wurde kein Element ausgewählt und das Wurzelelement kann nicht umbenannt werden"
 "You must be select an element","Es muß ein Element ausgewählt werden"
