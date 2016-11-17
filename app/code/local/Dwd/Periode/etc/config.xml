@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Dwd_Periode>
-            <version>0.1.3</version>
+            <version>0.1.4</version>
         </Dwd_Periode>
     </modules>
     <admin>
@@ -43,6 +43,9 @@
                     <tier_price>
                         <table>periode_tier_price</table>
                     </tier_price>
+                    <store_label>
+                        <table>periode_store_label</table>
+                    </store_label>
                 </entities>
             </periode_mysql4>
         </models>

@@ -22,7 +22,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$this->_redirectUrl($referer);
 			return;
 		}
-		
+
 		$msg = Mage::helper('prondemand')->__('Application Server is not available');
 		$transactionUrl = (string) Mage::getStoreConfig('catalog/dwd_pod/transaction_url');
 		$httpClient = new Varien_Http_Client();
@@ -37,7 +37,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$this->_redirectUrl($referer);
 			return;
 		}
-		
+
 		//XML auswerten
 		$productMetaData = null;
 		$body = $response->getBody();
@@ -52,7 +52,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$productMetaData = null;
 			Mage::log(sprintf("pod::%s\nBody:%s", $e->getMessage(), $response->getBody()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 		}
-		
+
 		$msg = Mage::helper('prondemand')->__('XML parsing error.');
 		/* @var $productMetaData Mage_Core_Model_Config_Base */
 		if (!$productMetaData || !($productMetaData instanceof Mage_Core_Model_Config_Base)) {
@@ -60,7 +60,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$this->_redirectUrl($referer);
 			return;
 		}
-		
+
 		$status = $productMetaData->getNode('status');
 		if (!$status || strtolower($status) != 'success') {
 			$errors = $productMetaData->getNode('errors');
@@ -79,7 +79,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 					if (isset($error['code'])) {
 						$errorCode = $error['code'];
 					}
-					
+
 					$msg = '';
 					foreach ($error->children() as $name => $childNode) {
 						switch (strtolower($name)) {
@@ -97,7 +97,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$this->_redirectUrl($referer);
 			return;
 		}
-		
+
 		$productInfo = $productMetaData->getNode('productInfo');
 		if (!$productInfo || !$productInfo->hasChildren()) {
 			$msg = Mage::helper('prondemand')->__('Product not available');
@@ -112,11 +112,12 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$this->_redirectUrl($referer);
 			return;
 		}
-		
+
 		$westeTypeId = $productMetaData->getNode()->getAttribute('westeTypId');
 		$collection = Mage::getModel('catalog/product')->getCollection();
 		/* @var $collection Mage_Catalog_Model_Resource_Product_Collection */
 		$collection->addAttributeToFilter('pod_type_id', $westeTypeId);
+		$collection->addAttributeToSelect('pod_show_reference_period');
 		/* @var $product Mage_Catalog_Model_Product */
 		$product = $collection->getFirstItem();
 		$productUrl = $product->getProductUrl();
@@ -124,6 +125,11 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$params['product'] = $product->getId();
 		$params['uenc'] = Mage::helper('core/url')->urlEncode($productUrl);
 		$productInfo = Mage::helper('egovsbase')->xmlToArray($productInfo);
+		if ($product->hasPodShowReferencePeriod() && !$product->getPodShowReferencePeriod()) {
+			if (isset($productInfo['startDate'])) {
+				unset($productInfo['startDate']);
+			}
+		}
 		$params['product_info'] = $productInfo;
 		$linkItem = array();
 		$price = $productInfo['netPrice'];
@@ -138,34 +144,34 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$linkItem['type'] = Mage_Downloadable_Helper_Download::LINK_TYPE_URL;
 		$linkId = $product->getTypeInstance(true)->setProduct($product)->addLinkItem($linkItem);
 		$params['links'] = array($linkId);
-		
+
 		$this->_forward('add', 'cart', 'checkout', $params);
 	}
-	
+
 	/**
 	 * Redirect zu Weste-Server
-	 * 
+	 *
 	 * @return void
 	 */
 	public function redirectToWesteAction() {
 		Mage::getSingleton('checkout/session')->getMessages(true);
-		
+
 		$referer = $this->_getRefererUrl();
 		$availUrl = Mage::getSingleton('customer/session')->getPodAvailibilityUrl();
-		
+
 		$msg = Mage::helper('prondemand')->__('Application Server is not available');
 		if (!$availUrl) {
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
 		}
-		
+
 		$id = Mage::getSingleton('customer/session')->getPodTypeId();
 		if (!$id) {
 			$id = $this->getRequest()->getParam('westeTypeId', 0);
 			$id = Mage::helper('core/url')->urlDecode($id);
 		}
-		
+
 		$params = array();
 		$params['branch'] = $id;
 		$httpClient = new Varien_Http_Client();
@@ -186,30 +192,30 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			return;
 		}
         $headers = $response->getHeaders();
-		
+
 		Mage::getSingleton('customer/session')->setPodReferer($referer);
-		
+
 		$redirect = Mage::getSingleton('customer/session')->getPodTargetUrl();
 		if (!$redirect) {
 			$redirect = $id = $this->getRequest()->getParam('redirect', null);
 			$redirect = Mage::helper('core/url')->urlDecode($redirect);
 		}
-		
+
 		$back = Mage::getSingleton('customer/session')->getPodBackUrl();
 		if (!$back) {
 			$back = $id = $this->getRequest()->getParam('back', null);
 			$back = Mage::helper('core/url')->urlDecode($back);
 		}
-		
+
 		$debug = (bool) Mage::getStoreConfigFlag('catalog/dwd_pod/is_debug');
-		
+
 		if ($debug) {
 			$url = sprintf('%s?westeTypID=%s&webshopURL=%s', $redirect, urlencode($id), urlencode($back));
 			Mage::log(sprintf('pod::webshopURL:%s', $back), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		} else {
 			$url = $redirect;
 		}
-		
+
 		Mage::log(sprintf('pod::Weste-Request-URL:%s', $url), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		$this->_redirectUrl($url);
 	}

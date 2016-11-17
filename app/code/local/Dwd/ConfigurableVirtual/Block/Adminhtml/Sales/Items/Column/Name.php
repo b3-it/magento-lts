@@ -43,7 +43,9 @@ class Dwd_ConfigurableVirtual_Block_Adminhtml_Sales_Items_Column_Name extends Ma
    	$oi = $this->getItem();
    	if ($oi->getPeriodId()!= 0)
    	{
-   		$periode = Mage::getModel('periode/periode')->load($oi->getPeriodId());
+   		$periode = Mage::getModel('periode/periode')
+   			->setStoreId($this->getStoreId())
+   			->load($oi->getPeriodId());
    		return $periode->getLabel();
    	}
    	return null;
@@ -59,7 +61,10 @@ class Dwd_ConfigurableVirtual_Block_Adminhtml_Sales_Items_Column_Name extends Ma
     		{
     			return null;
     		}
-    	 	$this->_station = Mage::getModel('stationen/stationen')->load($id);
+    		$this->_station = Mage::getModel('stationen/stationen')
+	   			->setStoreId($this->getStoreId())
+	   			->load($id);
+    	 	
     	}
      	return $this->_station;   
     }
@@ -78,6 +83,12 @@ class Dwd_ConfigurableVirtual_Block_Adminhtml_Sales_Items_Column_Name extends Ma
     	$start =  Mage::app()->getLocale()->date($this->getItem()->getPeriodStart(), null, null, true);
     	$stop  =  Mage::app()->getLocale()->date($this->getItem()->getPeriodEnd(), null, null, true);
     	return $start.' - '.$stop;
+    }
+    
+    public function getStoreId()
+    {
+    	$oi = $this->getItem();
+    	return $oi->getOrder()->getStoreId();
     }
 }
 ?>

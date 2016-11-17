@@ -23,7 +23,7 @@ class Dwd_Icd_Block_Adminhtml_Account_Edit extends Mage_Adminhtml_Block_Widget_F
         $this->_updateButton('save', 'label', Mage::helper('dwd_icd')->__('Save Item'));
         //$this->_updateButton('delete', 'label', Mage::helper('dwd_icd')->__('Delete Item'));
         $this->_removeButton('delete');
-			
+			/*
         $this->_addButton('saveandcontinue', array(
             'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
             'onclick'   => 'saveAndContinueEdit()',
@@ -43,6 +43,7 @@ class Dwd_Icd_Block_Adminhtml_Account_Edit extends Mage_Adminhtml_Block_Widget_F
                 editForm.submit($('edit_form').action+'back/edit/');
             }
         ";
+        */
     }
 
     public function getHeaderText()

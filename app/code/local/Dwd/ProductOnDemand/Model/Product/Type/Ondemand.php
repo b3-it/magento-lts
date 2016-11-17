@@ -70,7 +70,7 @@ class Dwd_ProductOnDemand_Model_Product_Type_Ondemand extends Mage_Downloadable_
 	    	->setData($linkItem)
 	    	->setLinkType($linkItem['type'])
 	    	->setProductId($product->getId())
-	    	->setStoreId($product->getStoreId())
+	    	->setStoreId(0)
 	    	->setWebsiteId($product->getStore()->getWebsiteId())
 	    	->setProductWebsiteIds($product->getWebsiteIds())
     	;

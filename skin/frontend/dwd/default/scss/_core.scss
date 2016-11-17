@@ -23,7 +23,7 @@
 @import "../../../egov/default/scss/egov/video";
 @import "egov/egov-base";
 @import "../../../egov/default/scss/egov/fa-icons";
-@import "../../../egov/default/scss/egov/mp-checkout";
+@import "egov/mp-checkout";
 @import "../../../egov/default/scss/egov/checkiban";
 @import "../../../egov/default/scss/egov/silver-track";
 @import "../../../egov/default/scss/egov/credit-cards";
@@ -62,14 +62,14 @@
 @import "module/catalog-product";
 @import "../../../egov/default/scss/module/catalog-msrp";
 @import "../../../egov/default/scss/module/catalog-seo-sitemap-category";
-@import "../../../egov/default/scss/module/catalog-compare";
+@import "module/catalog-compare";
 @import "../../../egov/default/scss/module/catalogsearch-advanced-result";
 @import "../../../egov/default/scss/module/catalogsearch-term-popular";
 @import "module/checkout-cart";
 @import "../../../egov/default/scss/module/checkout-onepage";
 @import "../../../egov/default/scss/module/checkout-success";
 @import "../../../egov/default/scss/module/configurableswatches";
-@import "../../../egov/default/scss/module/customer";
+@import "module/customer";
 @import "../../../egov/default/scss/module/customer-account-forgotpassword";
 @import "../../../egov/default/scss/module/contacts";
 @import "../../../egov/default/scss/module/egovs-checkout-multipage-login";
@@ -77,7 +77,7 @@
 @import "../../../egov/default/scss/module/review";
 @import "../../../egov/default/scss/module/sales-order-print";
 @import "../../../egov/default/scss/module/slideshow";
-@import "../../../egov/default/scss/module/wishlist";
+@import "module/wishlist";
 @import "module/checkout-cart-minicart";
 @import "module/search";
 @import "../../../egov/default/scss/module/account-reviews";

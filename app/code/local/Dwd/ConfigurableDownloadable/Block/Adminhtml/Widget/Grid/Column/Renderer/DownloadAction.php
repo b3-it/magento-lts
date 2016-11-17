@@ -97,7 +97,9 @@ class Dwd_ConfigurableDownloadable_Block_Adminhtml_Widget_Grid_Column_Renderer_D
         }
 
         $fileinfo = $action['file_info'];
-        if(isset($action['file_info'])){ unset($action['file_info']);}
+        if (isset($action['file_info'])) {
+        	unset($action['file_info']);
+        }
         $actionAttributes->setData($action);
         $html = '<a ' . $actionAttributes->serialize() . '>' . $actionCaption . '</a>';
         if (isset($fileinfo)) {

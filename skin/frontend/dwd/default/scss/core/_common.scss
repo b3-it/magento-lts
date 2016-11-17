@@ -159,11 +159,6 @@ p.note-msg {
 /* -------------------------------------------- *
  * Block Module
  */
-
-.col-left-first {
-    margin-top: $global-boxmargin;
-}
-
 .block-viewed, .block-poll, .block-subscribe {
     margin-bottom: $global-boxmargin;
 }
@@ -253,7 +248,7 @@ body:not(.customer-account) .block:first-child .block-title {
         display: block;
         font-size: 1rem;
         text-align: center;
-        margin: 0;
+        margin: 0 0 10px 0;
         padding: 18px 0;
         
         span {
@@ -348,12 +343,6 @@ div.block-reorder {
     button.egov-float-left {
         position: relative;
         left: -3px;
-    }
-
-    button.btn-cart {
-        @extend .egov-float-right;
-        position: relative;
-        right: -3px;
     }
 
     li {
@@ -481,8 +470,6 @@ div.block-reorder {
     }
     .back-link {
         float: left;
-        margin: 0;
-        line-height: 33px;
     }
     a:not(.button) {
         line-height: 20px;
@@ -490,11 +477,8 @@ div.block-reorder {
         padding: 5px;
     }
     button.button {
-        //float: right;
-        //margin-left: 5px;
-        //min-width: 140px;
         @include grau-hover-blau;
-        width: 100%;
+        //width: 100%;
     }
 
     &:after {
@@ -557,27 +541,22 @@ div.block-reorder {
 
 .btn-remove,
 .btn-previous {
+    @include hover-blau-weiss;
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: $global-box-border solid $global-border-color;
     text-align: center;
     /* Hide text */
     font: 0/0 a;
     text-shadow: none;
     color: transparent;
     position: relative;
-
-    &:hover {
-        background-color: $global-button-color;
-        border-color: $global-border-color;
-    }
 }
 
 .btn-remove {
     &:after {
         content: 'X';
-        color: $global-linkcolor;
+        color: $grundfarbe-weiss;
         height: 20px;
         line-height: 20px;
         width: 100%;
@@ -586,8 +565,8 @@ div.block-reorder {
         font-weight: bold;
     }
     &:hover:after {
-        color: $global-linkcolor;
         text-decoration: none;
+        color: $grundfarbe-blau;
     }
 }
 
@@ -1620,7 +1599,8 @@ span.weee {
 
     .limiter {
         float: right;
-        margin-top: 5px;
+        position: relative;
+        top: -5px;
 
         & > label {
             padding-right: 5px;

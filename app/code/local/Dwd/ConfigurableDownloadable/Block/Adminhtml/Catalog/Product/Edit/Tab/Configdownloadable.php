@@ -4,8 +4,8 @@
  *
  * @category    Dwd
  * @package     Dwd_ConfigurableDownloadable
- * @author     	Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright	Copyright (c) 2012 - 2013 EDV Beratung Hempel
+ * @author     	Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 - 2016 B3 IT Systeme GmbH <https://www.b3-it.de>
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Dwd_ConfigurableDownloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Configdownloadable
@@ -31,26 +31,6 @@ class Dwd_ConfigurableDownloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Conf
     public function __construct() {
     	Varien_Object::__construct();
     }
-    
-    /**
-     * Get tab URL
-     *
-     * @return string
-     */
-//     public function getTabUrl() {
-//     	return $this->getUrl('*/configdownloadable_product_edit/form', array('_current' => true));
-//     }
-    
-    /**
-     * Get tab class
-     *
-     * @return string
-     */
-    /* 
-     * JavaScript-Funktionen in Tempaltes gehen nicht mit ajax
-     * public function getTabClass() {
-    	return 'ajax';
-    } */
     
     /**
      * Render block HTML

@@ -8,6 +8,7 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Edit_Tab_Form extends Mage_Adminht
       $this->setForm($form);
       $fieldset = $form->addFieldset('stationen_form', array('legend'=>Mage::helper('stationen')->__('Station information')));
      
+      $storeId = intval($this->getRequest()->getParam('store'));
       $data = $this->getStData();
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('stationen')->__('Name'),
@@ -15,7 +16,13 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Edit_Tab_Form extends Mage_Adminht
           'required'  => true,
           'name'      => 'name',
       ));
+      $fieldset->addField('store_id', 'hidden', array(
+      		
+      		'name'      => 'store_id',
+      ));
       
+      if($storeId == 0)
+      {
       if(isset($data['entity_id']) && ($data['entity_id'] != null))
       {
 	     $fieldset->addField('stationskennung', 'text', array(
@@ -82,15 +89,7 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Edit_Tab_Form extends Mage_Adminht
           'name'      => 'height',
       ));
 		
-      /*
-      $fieldset->addField('overwrite', 'select', array(
-          'label'     => Mage::helper('stationen')->__('Overwrite'),
-          //'class'     => 'required-entry',
-          //'required'  => false,
-          'name'      => 'overwrite',
-          'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
-      ));
-      */
+     
       
       if(isset($data['entity_id']) && ($data['entity_id'] != null))
       {  
@@ -194,9 +193,9 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Edit_Tab_Form extends Mage_Adminht
           'wysiwyg'   => false,
           //'required'  => true,
       ));
-     
+      }//end store == 0
       $form->setValues($data);
-      
+      $form->getElement('store_id')->setValue($storeId);
       return parent::_prepareForm();
   }
   

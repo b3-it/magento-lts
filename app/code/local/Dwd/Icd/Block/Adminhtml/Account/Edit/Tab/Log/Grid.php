@@ -95,7 +95,7 @@ class Dwd_Icd_Block_Adminhtml_Account_Edit_Tab_Log_Grid extends Mage_Adminhtml_B
   public function getGridUrl()
   {
   		$id     = $this->getRequest()->getParam('id');
-  		return $this->getUrl('dwd_icd/adminhtml_account/loggrid', array('_current'=>true,'id'=> $id));
+  		return $this->getUrl('adminhtml/icd_account/loggrid', array('_current'=>true,'id'=> $id));
   }
   
 	

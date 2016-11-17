@@ -80,7 +80,7 @@ class Dwd_Icd_Block_Adminhtml_Account_Edit_Tab_Attributes_Grid extends Mage_Admi
   public function getGridUrl()
   {
   		$id     = $this->getRequest()->getParam('id');
-    	return $this->getUrl('dwd_icd/adminhtml_account/attributesgrid', array('_current'=>true,'id'=> $id));
+    	return $this->getUrl('adminhtml/icd_account/attributesgrid', array('_current'=>true,'id'=> $id));
   }
   
 	

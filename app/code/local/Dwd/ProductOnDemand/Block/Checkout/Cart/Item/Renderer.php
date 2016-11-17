@@ -4,9 +4,9 @@
  *
  * @category	Dwd
  * @package		Dwd_ProductOnDemand
- * @author 		Holger Kögel <h.koegel@edv-beratung-hempel.de>
- * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright	Copyright (c) 2012 - 2013 EDV Beratung Hempel
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 - 2016 B3 IT Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Dwd_ProductOnDemand_Block_Checkout_Cart_Item_Renderer extends Mage_Checkout_Block_Cart_Item_Renderer
@@ -21,6 +21,10 @@ class Dwd_ProductOnDemand_Block_Checkout_Cart_Item_Renderer extends Mage_Checkou
 	
 	public function getFormats($item) {
 		return Mage::helper('prondemand')->getFormats($item);
+	}
+	
+	public function getStartDate($item) {
+		return Mage::helper('prondemand')->getStartDate($item);
 	}
 	
 	/**

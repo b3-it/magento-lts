@@ -72,16 +72,40 @@ class Dwd_Icd_Adminhtml_Icd_AccountController extends Mage_Adminhtml_Controller_
 			}
 			$model->setId($this->getRequest()->getParam('id'));
 			
-			if (($model->getStatus() == Dwd_Icd_Model_AccountStatus::ACCOUNTSTATUS_NEW ) || ($model->getStatus() == Dwd_Icd_Model_AccountStatus::ACCOUNTSTATUS_NEWPASSWORD )) {
+			
+			
+			$newPasswort = false;
+			
+			//falls neues Passwort muss es überprüft werden
+			if (($model->getStatus() == Dwd_Icd_Model_AccountStatus::ACCOUNTSTATUS_NEWPASSWORD )) {
 				if (!$model->_checkPassword()) {
 					Mage::getSingleton('adminhtml/session')->addError(Mage::helper('dwd_icd')->__('Password does not meet requirements'));
 					$this->_redirect('*/*/edit', array('id' => $model->getId()));
 					return;
+				}else {
+					$newPasswort = true;
 				}	
-			} else {
-				$model->unsetData('password');
 			}
 			
+			
+			//für einen neuen, automatischen erzeugten Account KÖNNTE das pwd geändert werden
+			if (($model->getStatus() == Dwd_Icd_Model_AccountStatus::ACCOUNTSTATUS_NEW )) {
+				if(strlen(trim($this->getRequest()->getParam('password'))) > 0)
+				{
+					if (!$model->_checkPassword()) {
+						Mage::getSingleton('adminhtml/session')->addError(Mage::helper('dwd_icd')->__('Password does not meet requirements'));
+						$this->_redirect('*/*/edit', array('id' => $model->getId()));
+						return;
+					}else {
+						$newPasswort = true;
+					}	
+				}
+			}
+			//wenn das Passwort nicht geändert wurde - nicht überschreiben
+			if(!$newPasswort){
+				$model->unsetData('password');
+			}
+				
 			
 			try {
 				if ($model->getCreatedTime() == null || $model->getUpdateTime() == null) {

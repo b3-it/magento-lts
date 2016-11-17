@@ -91,12 +91,12 @@
 		</tbody>
 	</table>
 	<div class="buttons-set-shopping-cart">
-		<a href="<?php echo $this->getDeleteAllUrl(); ?>" class="egovslistbutton fll"><span><?php echo $this->__('Delete All Items') ?></span></a>
+		<a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button"><span><?php echo $this->__('Delete All Items') ?></span></a>
 		<?php if($this->getContinueShoppingUrl()): ?>
-	    	<a href="<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>" class="egovslistbutton fll"><span><?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?></span></a>
+	    	<a href="<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>" class="button"><span><?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?></span></a>
 		<?php endif; ?>
 
-		<button class="form-button-alt" type="submit"> <span><?php echo $this->__('Update Shopping Cart') ?></span></button>
+		<button class="button" type="submit"> <span><?php echo $this->__('Update Shopping Cart') ?></span></button>
 	</div>
 
 	<script type="text/javascript">decorateTable('shopping-cart-table');</script>

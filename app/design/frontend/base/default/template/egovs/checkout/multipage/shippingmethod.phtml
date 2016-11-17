@@ -92,8 +92,8 @@
     <?php endforeach; ?>
 
     <div class="buttons-set">
-        <a href="<?php echo $this->getBackUrl() ?>" class="back-link egovslistbutton"><?php echo $this->__('Back') ?></a>
-       <a class="break-link egovslistbutton" href="<?php echo $this->getUrl() ?>"><span><?php echo $this->__('Continue Shopping') ?></span></a>
+        <a href="<?php echo $this->getBackUrl() ?>" class="back-link button"><?php echo $this->__('Back') ?></a>
+       <a class="break-link button" href="<?php echo $this->getUrl() ?>"><span><?php echo $this->__('Continue Shopping') ?></span></a>
        <button  class="button <?php if (!$_shippingRateGroups) : ?> <?php echo 'disabled'; endif; ?>" type="submit" <?php if (!$_shippingRateGroups) : ?> <?php echo 'disabled="disabled"'; endif;?>><span><?php echo $this->__('Continue') ?></span></button>
     </div>
 </form>

@@ -7,7 +7,9 @@ class Dwd_ConfigurableVirtual_Block_Sales_Item_Renderer extends Mage_Sales_Block
 		$oi = $this->getOrderItem();
 		if ($oi->getPeriodId())
 		{
-			$periode = Mage::getModel('periode/periode')->load($oi->getPeriodId());
+			$periode = Mage::getModel('periode/periode')
+			->setStoreId($this->getStoreId())
+			->load($oi->getPeriodId());
 		}
 		return null;
 	}
@@ -17,12 +19,20 @@ class Dwd_ConfigurableVirtual_Block_Sales_Item_Renderer extends Mage_Sales_Block
 		$oi = $this->getOrderItem();
 		if ($oi->getStationId())
 		{
-			$station = Mage::getModel('stationen/stationen')->load($oi->getStationId());
+			$station = Mage::getModel('stationen/stationen')
+			->setStoreId($this->getStoreId())
+			->load($oi->getStationId());
 			return $station->getName();
 		}
 		return null;
 	}
 	
+	
+	public function getStoreId()
+	{
+		$oi = $this->getOrderItem();
+		return $oi->getOrder()->getStoreId();
+	}
 	
 	public function getFormatedPeriode() {
 		/*
@@ -35,7 +45,7 @@ class Dwd_ConfigurableVirtual_Block_Sales_Item_Renderer extends Mage_Sales_Block
 		}
 		return '';
 		*/
-		$periode = Dwd_Periode_Model_Periode::loadPeriodeByOrderItem($this->getOrderItem());
+		$periode = Dwd_Periode_Model_Periode::loadPeriodeByOrderItem($this->getOrderItem(), $this->getStoreId());
 		if($periode){
 			return $periode->getFormatedText();
 		}

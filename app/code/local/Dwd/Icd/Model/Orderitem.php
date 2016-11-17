@@ -220,7 +220,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     
     protected function _addGroup($application)
     {
-    	Mage::log("ICD:: _addGroup: ".$this->getId(), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _addGroup: ".$this->getId(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$client = $this->getAccount()->getSoapClient();
     	$success = true;
     	$res = $client->addGroup($this->getAccount()->getLogin(),$application);
@@ -259,7 +259,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     
     protected function _removeGroup($application)
     {
-    	Mage::log("ICD:: _removeGroup: ".$this->getId(), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _removeGroup: ".$this->getId(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$client = $this->getAccount()->getSoapClient();
     	$success = true;
     	$res = $client->removeGroup($this->getAccount()->getLogin(), $application);
@@ -279,6 +279,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     	//Egovs_Helper::printMemUsage('addAttributeNameValuePair<=');
     	$model = Dwd_Icd_Model_Account_Attributes::getAttribute($this->getAccount(), $name."=".$value);
     	$success  = true;
+    	$this->setLog(sprintf('addAttributeNameValuePair Account %s %s=%s Count %i ',$this->getAccount()->getLogin(), $name, $value, $model->getCount()));
     	if($model->getCount() == 0)
     	{
     		$success = $this->_addAttributeNameValuePair($name,$value);
@@ -296,7 +297,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     
     protected function _addAttributeNameValuePair($name,$value)
     {
-    	Mage::log("ICD:: _addAttributeNameValuePair: ".$this->getId(), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _addAttributeNameValuePair: ".$this->getId(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$att = Mage::getModel('dwd_icd/webservice_types_attributeNameValuePair');
     	$att->value = $value;
     	$att->name = $name;
@@ -317,6 +318,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     {
     	$model = Dwd_Icd_Model_Account_Attributes::getAttribute($this->getAccount(), $name."=".$value);
     	$success  = true;
+    	$this->setLog(sprintf('removeAttributeNameValuePair Account %s %s=%s Count %i ',$this->getAccount()->getLogin(), $name, $value, $model->getCount()));
     	if($model->getCount() == 1)
     	{
     		$success = $this->_removeAttributeNameValuePair($name,$value);
@@ -351,7 +353,10 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     
     
     
-    
+    /**
+     * Zugehöriges Konto laden
+     * @return Dwd_Icd_Model_Account
+     */
     protected function getAccount()
     {
     	if($this->_account == null)

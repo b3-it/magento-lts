@@ -73,13 +73,13 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 						if (strtolower($urlProp['scheme'] == 'https') && $_verifyPeer) {
 							
 							if (version_compare(phpversion(), '5.6.0', '<')===true) {
-							$context = stream_context_create(
-									array(
-										'ssl' => array(
-												'verify_peer' => $_verifyPeer,
-												'capath' => Mage::getStoreConfig('catalog/dwd_pod/ca_path'),
-												'disable_compression' => true,
-										)
+								$context = stream_context_create(
+										array(
+											'ssl' => array(
+													'verify_peer' => $_verifyPeer,
+													'capath' => Mage::getStoreConfig('catalog/dwd_pod/ca_path'),
+													'disable_compression' => true,
+											)
 									)
 								);
 							} else {

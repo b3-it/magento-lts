@@ -100,8 +100,10 @@ class Dwd_Icd_Model_Cron extends Mage_Core_Model_Abstract
     	
     	$exp = new Zend_Db_Expr('main_table.sync_status = ' . Dwd_Icd_Model_Syncstatus::SYNCSTATUS_PENDING .' OR main_table.sync_status = ' . Dwd_Icd_Model_Syncstatus::SYNCSTATUS_ERROR);
     	
+    	//alle abgelaufenen Zugänge deaktivieren und SyncStatus auf pending stellen 
     	$this->disableOutDated();
     	
+    	//alle icd_orderitems die zu synchronisieren sind abarbeiten
     	$collection = Mage::getModel('dwd_icd/orderitem')->getCollection();
     	$collection->getSelect()
     		->where($exp)
@@ -109,13 +111,15 @@ class Dwd_Icd_Model_Cron extends Mage_Core_Model_Abstract
     		->join(array('account'=>$collection->getTable('icd_account')),"account.id=main_table.account_id AND account.sync_status <>". Dwd_Icd_Model_Syncstatus::SYNCSTATUS_PERMANENTERROR ,array())
     		->limit('20')
     		->where('start_time <= ' ."'". Mage::getModel('core/date')->gmtDate()."'")
-    		->where('main_table.semaphor < '. Dwd_Icd_Model_Abstract::getMutexReleaseTime());
+    		->where('main_table.semaphor < '. Dwd_Icd_Model_Abstract::getMutexReleaseTime())
+    		->order('main_table.id');
     	
-    	//die($collection->getSelect()->__toString());    
-    	//Mage::log('ICD::'.$collection->getSelect()->__toString(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-    	$this->setLog("running SyncAll");
+
+    		
+    	$this->setLog("running SyncAll Items Count:".count($collection->getItems()));
     	$sql = $collection->getSelect()->__toString();
     	$this->setLog($sql);
+    	
     	foreach ($collection->getItems() as $item)
     	{
     		try {
@@ -180,6 +184,9 @@ class Dwd_Icd_Model_Cron extends Mage_Core_Model_Abstract
     }
     
     
+    /**
+     * alle abgelaufenen Zugänge deaktivieren und SyncStatus auf pending stellen 
+     */
     private function disableOutDated()
     {
     	$collection = Mage::getModel('dwd_icd/orderitem')->getCollection();
@@ -199,32 +206,6 @@ class Dwd_Icd_Model_Cron extends Mage_Core_Model_Abstract
     	}
     }
     
-    
-    private static function xxdeleteUnused()
-    {
-    	$collection = Mage::getModel('dwd_icd/orderitem')->getCollection();
-    	$collection->getSelect()
-    	->where('sync_status = ' . Dwd_Icd_Model_Syncstatus::SYNCSTATUS_SUCCESS)
-    	->where('status = ' . Dwd_Icd_Model_OrderStatus::ORDERSTATUS_ACTIVE)
-    	->limit('10');
-    	 
-    	foreach ($collection->getItems() as $item)
-    	{
-    		$item->delete()->save();
-    	}
-    	
-    	$collection = Mage::getModel('dwd_icd/account')->getCollection();
-    	$collection->getSelect()
-    	->where('sync_status = ' . Dwd_Icd_Model_Syncstatus::SYNCSTATUS_SUCCESS)
-    	->where('status = ' . Dwd_Icd_Model_AccountStatus::ACCOUNTSTATUS_DELETE)
-    	->limit('10');
-    	
-    	foreach ($collection->getItems() as $item)
-    	{
-    		$item->delete()->save();
-    	}
-    }
-    
-    		
+
     
 }

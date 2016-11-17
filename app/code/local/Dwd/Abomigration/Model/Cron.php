@@ -11,13 +11,22 @@
  */
 class Dwd_Abomigration_Model_Cron extends Mage_Core_Model_Abstract
 {
- 
+ 	private static $_isRunning = false; 	
+ 	private $_ScheduleId = 0;
+	
+	
     public function run()
     {
-    	$this->getIsRunning('dwd_abomigration',1);
+    	$this->setLog('ScheduleId: '.$this->_ScheduleId);
+    	if(self::$_isRunning){
+    		$this->setLog('isRunning ->exit');
+    		return $this;
+    	}
+    	self::$_isRunning = true;
     	
     	try{
 	    	$model = Mage::getModel('abomigration/abomigration');
+	    	
 	    	$this->setLog('Starting abomigration service');
 	    	
 	    	$this->setLog('create customers');
@@ -45,6 +54,7 @@ class Dwd_Abomigration_Model_Cron extends Mage_Core_Model_Abstract
     
 	public function runCron($schedule) 
 	{		
+		$this->_ScheduleId = $schedule->getId();
 		Mage::app()->addEventArea(Mage_Core_Model_App_Area::AREA_FRONTEND);
 		if ($this->getIsRunning($schedule->getJobCode(), $schedule->getId())) {
 			$message ='dwd::abomigration Some abomigration service running';

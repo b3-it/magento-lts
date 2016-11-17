@@ -13,6 +13,10 @@
 
 .mp-checkout {
     text-align: left;
+    
+    select {
+        max-width: 85vw;
+    }
 
     .sidebar {
         .block-cart {
@@ -48,6 +52,7 @@
 
         li.agree-content {
             margin-left: 27px;
+            margin-bottom: 10px;
 
             a {
                 color: $global-active-color;
@@ -363,9 +368,14 @@
 
 @include bp(max-width, 480px) {
     .mp-checkout {
+        .sidebar {
+            display: none !important;
+        }
+        li label {
+            width: 90% !important;
+        }
         .buttons-set {
-            a.egovslistbutton, button.button {
-                width: auto !important;
+            a, .button {
                 min-width: 120px;
                 text-align: center;
             }

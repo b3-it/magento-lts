@@ -1,0 +1,381 @@
+﻿//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.mp-checkout {
+    text-align: left;
+
+    select {
+        overflow: hidden;
+        max-width: 90vw;
+    }
+    
+    address {
+        color: $textfarbe-mittel;
+        text-align: left;
+        font-size: 1rem;
+    }
+ 
+    .col-left {
+        @include bp(max-width, $bp-medium) {
+            display: none;
+        }
+    }
+    
+    .col-main {
+        padding-top: 22px;
+        
+        @include bp(max-width, $bp-medium) {
+            width: 100% !important;
+        }
+    }
+    
+    .buttons-set {
+        border-top: $global-active-border solid $grundfarbe-blgr;
+    }
+    .button {
+        @include multi-buttons-definition;
+    }
+    
+    .multiple-checkout {
+        .col-2 {
+            > div {
+                margin: 5px 0px 10px 10px;
+            }
+            > fieldset.form-list {
+                margin-left: 0px;
+            }
+        }
+    }
+
+    .required {
+        color: $global-warning-color;
+    }
+
+    p.required {
+        margin: $global-boxmargin 0;
+    }
+
+    ul.group-select {
+        li.agree {
+            width: 100%;
+
+            input {
+                vertical-align: top;
+            }
+
+            label {
+                width: 90% !important;
+            }
+        }
+
+        li.agree-content {
+            margin-left: 27px;
+
+            a {
+                color: $global-active-color;
+            }
+        }
+    }
+
+    #custom-accountholder-box,
+    #debitor-box {
+        display: inline-block;
+    }
+
+    .col-1, .col-2, h3, h4 {
+        border: 0px !important;
+        background-color: transparent !important;
+    }
+
+    div.error-msg {
+        width: 85%;
+    }
+
+    ul.checkout-progress {
+        margin: 0 0 25px 0;
+        list-style: outside none none;
+        font-size: 1rem;
+
+        li {
+            border-top: 5px solid $progress-checkout-rgba;
+            color: $textfarbe-mittel;
+            height: 3.6em;
+            margin-right: 1px;
+            padding-top: 10px;
+            text-align: center;
+            width: 13.5%;
+            display: inline-block;
+            vertical-align: top;
+            
+            &.active {
+                border-top-color: $grundfarbe-blau;
+                color: $grundfarbe-blau;
+            }
+        }
+    }
+
+    fieldset {
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 0px;
+        }
+
+        ul li label {
+            width: 45%;
+            display: inline-block;
+            position: relative;
+            top: -2px;
+            margin-left: 3px;
+        }
+    }
+
+    h3 .spacer, h4 .spacer {
+        display: inline-block;
+        margin: 0px 10px;
+    }
+
+    .col-main {
+        .order_pre {
+            color: $global-fontcolor-dark;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: $global-checkout-success-order-text;
+        }
+        .order_number {
+            color: $grundfarbe-blau;
+            font-weight: bold;
+            font-size: $global-checkout-success-order-number;
+        }
+        
+        @include bp(max-width, $bp-medium) {
+        	background-image: none !important;
+        }
+    }
+
+    .col2-set {
+
+        div.col-1, div.col-2 {
+            @extend .block;
+            vertical-align: top;
+            padding: 0px;
+            width: 45%;
+            min-height: 150px;
+
+            h3 {
+                margin: 0px;
+            }
+        }
+
+        .full-wide {
+            width: 100%;
+            margin: 0px 0px 10px 0px;
+        }
+
+        div.col-1 {
+            margin-right: $global-checkout-marginright;
+        }
+
+        h3, h4 {
+            @extend .block-title;
+        }
+
+        address, fieldset, p,
+        .overview_shipping, .successview_shipping {
+            margin: 5px 0px 10px 10px;
+        }
+    }
+
+    .sepa-details {
+        li.single-line {
+            display: block;
+            width: 100%;
+        }
+        li.double-line {
+            float: left;
+            width: 48%;
+            margin-right: 15px;
+        }
+        li {
+            float: left;
+            width: 48%;
+
+            label {
+                width: 100%;
+                display: inline;
+            }
+        }
+
+        p.required,
+        span.required {
+            margin-right: 5px;
+            color: $global-warning-color;
+        }
+
+        div.validation-advice {
+            color: $global-warning-color;
+            margin-bottom: $global-element-magrin-bottom;
+        }
+
+        input.validation-failed {
+            margin-bottom: 0px;
+        }
+
+        input[type="text"] {
+            width: 95%;
+        }
+
+        .option-field {
+            input[type="radio"] {
+                display: inline-block;
+            }
+            label {
+                display: inline;
+            }
+        }
+
+        .option-line {
+            margin-top: 10px;
+        }
+
+        #custom_accountholder_box {
+            float: left;
+            width: 48%;
+            margin-right: 15px;
+        }
+        #debitor_box {
+            float: left;
+            width: auto;
+        }
+    }
+
+    .col1-layout {
+        .multiple-checkout {
+            width: 100% !important;
+        }
+    }
+
+    .col1-wide {
+        display: block;
+
+        #checkout-review-table {
+            @extend .egov-base-table;
+            margin-top: 20px;
+
+            thead th, tbody td {
+                padding: $global-tdpadding;
+            }
+
+            thead {
+                td:nth-child(5), td:nth-child(6) {
+                    font-weight: bold;
+                }
+            }
+            
+            td:nth-child(2), td:nth-child(4) {
+                text-align: right;
+            }
+            
+            img, .product-details {
+                display: inline-block;
+                vertical-align: top;
+            }
+            
+            h3 {
+                margin: 0;
+            }
+        }
+
+        #checkout-review-totals-table {
+            @extend .egov-base-totals;
+        }
+    }
+
+    p.grand-total {
+        display: inline-block;
+        text-align: right;
+        margin-top: 20px;
+        font-size: 1em;
+        width: 100%;
+
+        big {
+            font-weight: bold;
+        }
+
+        .price {
+            color: $grundfarbe-blau;
+            font-size: $global-checkout-total-sum;
+            white-space: nowrap !important;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    }
+}
+
+.egovs-checkout-multipage-newaddress,
+.egovs-checkout-multipage-newshipping {
+    @include new_address;
+}
+
+.egovs-checkout-multipage-overview {
+    .main-container {
+        left: 0px;
+
+        .multiple-checkout {
+            .col-1 {
+                h4, address {
+                    margin: 0px;
+                    padding: 0px;
+                }
+            }
+        }
+    }
+}
+
+.egovs-checkout-multipage-successview {
+    ul.checkout-progress {
+        display:none;
+    }
+    .buttons-set {
+        margin-bottom: $global-boxmargin;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    .mp-checkout {
+        .checkout-progress li {
+            width: 13% !important;
+        }
+        
+        label {
+            width: auto !important;
+        }
+    }
+}
+
+@include bp(max-width, $bp-small) {
+	.mp-checkout {
+        .checkout-progress li {
+            width: 24% !important;
+        }
+
+		.buttons-set a {
+		    width: 45% !important;
+		}
+		.buttons-set button {
+		    width: 95% !important;
+		    margin: 0 7px 0 0 !important;
+		}
+	}
+
+    .col2-set {
+        .col-1, .col-2 {
+            width: 100% !important;
+            margin: 0 !important;
+            min-height: auto !important;
+        }
+    }
+}

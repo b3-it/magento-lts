@@ -20,6 +20,11 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Input extends
 				'value'	=> '0'
 		));
 
+		$fieldset->addField('store_id', 'hidden', array(
+				'name'  => 'store_id',
+				'value'	=> $this->getProduct()->getStoreId()
+		));
+		
 		if($this->getProductHasAboOption()){
 			$type = Dwd_Periode_Model_Periode_Type::getOptionArray();
 		} else {

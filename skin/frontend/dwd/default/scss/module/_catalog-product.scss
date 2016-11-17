@@ -715,6 +715,15 @@
     .add-to-cart-buttons .paypal-logo {
         margin-bottom: 10px;
     }
+    .product-options-bottom {
+        .qty-wrapper, .add-to-cart-buttons {
+            display: inline-block;
+            vertical-align: top;
+        }
+        .button {
+            margin: 0;
+        }
+    }
 
     .add-to-cart .qty-wrapper label {
         margin-right: 7px;

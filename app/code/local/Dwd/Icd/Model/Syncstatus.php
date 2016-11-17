@@ -26,4 +26,14 @@ class Dwd_Icd_Model_Syncstatus extends Varien_Object
         	self::SYNCSTATUS_PERMANENTERROR   => Mage::helper('dwd_icd')->__('Permanent Error')
         );
     }
+    
+    static public function getLabel($var)
+    {
+    	$options = self::getOptionArray();
+    	if(isset($options[$var])){
+    		return $options[$var];
+    	}
+    	 
+    	return "";
+    }
 }

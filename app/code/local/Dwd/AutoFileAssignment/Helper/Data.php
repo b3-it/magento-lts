@@ -14,18 +14,18 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		$assigner = Mage::getSingleton('dwdafa/assigner');
 		$assigner->autoAssign();
 	}
-	
+
 	/**
 	 * Clean expired quotes (cron process)
 	 *
 	 * @param Varien_Object $context Kontext
-	 * 
+	 *
 	 * @return Dwd_AutoFileAssignment_Helper_Data
 	 */
 	public function cleanExpiredDynamicLinks($context = null) {
 		if (!$context) {
 			$context = new Varien_Object();
-		}		
+		}
 		/* @var $extendedLinkResource Dwd_ConfigurableDownloadable_Model_Resource_Extendedlink */
 		$extendedLinkResource = Mage::getResourceModel('configdownloadable/extendedlink');
 		/* @var $extendedLinks Dwd_ConfigurableDownloadable_Model_Resource_Extendedlink_Collection */
@@ -36,29 +36,29 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 			->addFieldToFilter('valid_to', array('to'=>date("Y-m-d H:i:s", time())))
 			->addFieldToFilter('link_type', 'file')
 		;
-		
+
 		if ($context->hasExpireDynamicLinksAdditionalFilterFields()) {
 			foreach ($context->getExpireDynamicLinksAdditionalFilterFields() as $field => $condition) {
 				$extendedLinks->addFieldToFilter($field, $condition);
 			}
 		}
-		
+
 		$itemsToDelete = $extendedLinks->getItems();
 		$linkFileItems = array();
 		foreach ($itemsToDelete as $item) {
 			if (array_key_exists($item->getLinkFileId(), $linkFileItems)) {
-				$linkFileItems[$item->getLinkFileId()] = $linkFileItems[$item->getLinkFileId()] + 1; 
+				$linkFileItems[$item->getLinkFileId()] = $linkFileItems[$item->getLinkFileId()] + 1;
 			} else {
 				$linkFileItems[$item->getLinkFileId()] = 1;
 			}
 		}
-		Mage::log(sprintf('dwdafa::%s Links and %s Files to delete...', count($itemsToDelete), count($linkFileItems)), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+		Mage::log(sprintf('dwdafa::%s Links and %s Files to delete...', count($itemsToDelete), count($linkFileItems)), Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 		$items = array('delete' => array_keys($itemsToDelete), 'links' => $linkFileItems);
 		$extendedLinkResource->deleteItems($items);
-		
+
 		//TODO Purchase müssen aktualisiert werden
 		Mage::dispatchEvent('afa_clean_expired_dynamic_links_after', array('deleted' => $items['delete']));
-		
+
 		/* @var $linkPurchased Mage_Downloadable_Model_Resource_Link_Purchased_Item_Collection */
 		$linkPurchased = Mage::getResourceModel('downloadable/link_purchased_item_collection');
 		$connection = $linkPurchased->getConnection();
@@ -76,15 +76,15 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		$updateQuery = $connection->updateFromSelect($select, array('lp' => $linkPurchased->getMainTable()));
 		Mage::log(sprintf('afa::Expired SQL:%s', $updateQuery), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		$connection->query($updateQuery);
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 * Entfernt die '.lock' Datei falls vorhanden
-	 * 
+	 *
 	 * @throws Dwd_AutoFileAssignment_Exception
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function unlock() {
@@ -95,7 +95,7 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 		}
 		$unlock = true;
-		
+
 		/* @var $collection Mage_Cron_Model_Resource_Schedule_Collection */
 		$collection = Mage::getResourceModel('cron/schedule_collection');
 		$collection->addFieldToFilter('job_code', 'dwdafa_autoassign_files')
@@ -106,11 +106,11 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		} else {
 			$collection->walk('delete');
 		}
-		
+
 		$ioObject = new Varien_Io_File();
 		$ioObject->open(array('path' => $storagePath));
 		$lockFile = '.locked';
-		
+
 		if (!$ioObject->fileExists($lockFile)) {
 			$unlock |= false;
 		} else {
@@ -124,7 +124,7 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 				Mage::log("dwdassigner::$msg", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				throw new Dwd_AutoFileAssignment_Exception(Mage::helper('dwdafa')->__($msg));
 			}
-			
+
 			if (!$ioObject->streamUnlock()) {
 				Mage::log("dwdassigner::Can't release exclusive access for lock file.", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 			}
@@ -136,13 +136,13 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 			$unlock |= true;
 		}
-		
+
 		return $unlock;
 	}
-	
+
 	/**
 	 * Liefert einen Pfad unterhalb von Media, höchstens jedoch Media selbst
-	 * 
+	 *
 	 * Alles was nicht [:alnum:]ßöäüÖÄÜ._\-\/\\\\] entspricht wird durch _ ersetzt.
 	 *
 	 * @return string
@@ -164,30 +164,30 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		//relative Pfade entfernen
 		$storageSubPath = str_ireplace(array('..'.DS, '..'), '', $storageSubPath);
 		$storageSubPath = preg_replace("/[^[:alnum:].ßöäüÖÄÜ_\-\/\\\\]/u", '_', $storageSubPath);
-	
+
 		if ((stripos($storageSubPath, DS) === false || stripos($storageSubPath, DS) != 0) && !empty($storageSubPath)) {
 			$storagePath = $storagePath.DS.$storageSubPath;
 		} else {
 			$storagePath = $storagePath.$storageSubPath;
 		}
-	
+
 		return $storagePath;
 	}
-	
+
 	/**
 	 * Sendet eine Mail mit $body als Inhalt an den Administrator
 	 *
 	 * @param string $body    Body der Mail
 	 * @param string $subject Betreff
 	 * @param string $module  Modulname für Übersetzungen
-	 * 
+	 *
 	 * @return void
 	 */
 	public function sendMailToAdmin($body, $subject="AFA Fehler:", $module="dwdafa") {
 		if (strlen($body) < 1) {
 			return;
 		}
-		
+
 		$mailTo = $this->getAdminSupportMail();
 		$mailTo = explode(';', $mailTo);
 		if (!$mailTo) {
@@ -202,14 +202,14 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		$mail->setFromEmail($mailFrom['mail']);
 		$mail->setFromName($mailFrom['name']);
 		$mail->setToEmail($mailTo);
-		
+
 		$subject = sprintf("%s::%s", $shopName, $subject);
 		$mail->setSubject($subject);
 		try {
 			$mail->send();
 		} catch(Exception $ex) {
 			$error = Mage::helper($module)->__('Unable to send email.');
-				
+
 			if (isset($ex)) {
 				Mage::log($error.": {$ex->getTraceAsString()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			} else {
@@ -217,12 +217,12 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 		}
 	}
-	
+
 	/**
 	 * Gibt die Admin-Support-Mailadresse aus der Konfiguration zurück.
 	 *
 	 * @param string $module Name für Helper
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getAdminSupportMail($module = "dwdafa") {
@@ -233,12 +233,12 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return $this->getCustomerSupportMail();
 	}
-	
+
 	/**
 	 * Gibt die Kundensupport Mailadresse aus der Kkonfiguration zurück.
 	 *
 	 * @param string $module Name für Helper
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getCustomerSupportMail($module = "dwdafa") {
@@ -247,21 +247,21 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		if (strlen($mail) > 0) {
 			return $mail;
 		}
-			
+
 		return '';
 	}
-	
+
 	/**
 	 * Liefert den Allgemeinen Kontakt des Shops als array
-	 * 
+	 *
 	 * Format:</br>
 	 * array (
 	 * 	name => Name
 	 * 	mail => Mail
 	 * )
-	 * 
+	 *
 	 * @param string $module Modulname
-	 * 
+	 *
 	 * @return array <string, string>
 	 */
 	public function getGeneralContact($module = "paymentbase") {
@@ -275,7 +275,7 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 		if (strlen($mail) < 1) {
 			$mail = 'dummy@shop.de';
 		}
-		
-		return array('name' => $name, 'mail' => $mail);		
+
+		return array('name' => $name, 'mail' => $mail);
 	}
 }
