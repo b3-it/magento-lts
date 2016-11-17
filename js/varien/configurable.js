@@ -288,10 +288,11 @@ Product.Config.prototype = {
 
         return price;
 
-        if($('product-price-'+this.config.productId)){
-            $('product-price-'+this.config.productId).innerHTML = price;
-        }
-        this.reloadOldPrice();
+        // 2016-11-15 -- Bug => das wird niemals erreicht werden
+        //if($('product-price-'+this.config.productId)){
+        //    $('product-price-'+this.config.productId).innerHTML = price;
+        //}
+        //this.reloadOldPrice();
     },
 
     reloadOldPrice: function(){

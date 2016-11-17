@@ -645,6 +645,14 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
         if(isset($this->_vergabenummern[$address->getId()])){
         	$order->setVergabenummer($this->_vergabenummern[$address->getId()]);
         }
+        
+        if(Mage::helper('sidcheckout')->isModuleEnabled('Sid_Haushalt')){
+        	$lg = Mage::getModel('sidhaushalt/lg04Pool');
+        	$min = Mage::getConfig()->getNode('sid_haushaltsysteme/lg04/params/increment_pool/min')->__toString();
+        	$max = Mage::getConfig()->getNode('sid_haushaltsysteme/lg04/params/increment_pool/max')->__toString();
+        	$order->setData('u4_increment_id', $lg->getNextIncrementId($min,$max));
+        }
+        
         $order->setFramecontract($los->getFramecontractContractId());
 
         return $order;

@@ -10,10 +10,38 @@
  */ 
 class Sid_Haushalt_Model_Export_Type_Lg04_Format extends Sid_Haushalt_Model_Export_Abstract
 {
+	protected $lineType = '';
 	
 	private $_FieldsAsAssoc = null;
 	
-	public function getFormatedValue($idx, $value, $satzType = null)
+	
+	/**
+	 * Gibt die Daten des Objektes als LG04 Zeile zurück
+	 * @return NULL[]|string[]
+	 */
+	public function getFormatedData()
+	{
+	
+		$result = array();
+		foreach($this->getFields() as $idx => $field)
+		{
+			if($this->getData($field['name']) != null)
+			{
+				$result[] = $this->getFormatedValue($idx,$this->getData($field['name']),$this->lineType);
+			}else{
+				$result[] = $this->getFormatedValue($idx,"");
+			}
+			
+		}
+		
+	
+		return $result;
+	}
+	
+	
+	
+	
+	private function getFormatedValue($idx, $value, $satzType = null)
 	{
 		$def  = $this->getField($idx);
 		if($satzType != null){
@@ -30,7 +58,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Format extends Sid_Haushalt_Model_Expo
 		return $value;
 	}
 	
-	public function getField($idx)
+	private function getField($idx)
 	{
 		if($this->_FieldsAsAssoc == null)
 		{
@@ -41,7 +69,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Format extends Sid_Haushalt_Model_Expo
 	}
 	
 	
-	public function getFields()
+	private function getFields()
 	{
 		if($this->_FieldsAsAssoc == null)
 		{

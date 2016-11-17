@@ -536,7 +536,6 @@ div.block-reorder {
     .back-link {
         float: left;
         margin: 0;
-        line-height: 33px;
     }
     a:not(.button) {
         line-height: 20px;
@@ -748,6 +747,7 @@ div.block-reorder {
     
     @include bp(max-width, $bp-medium) {
     	padding-bottom: 0;
+    	top: 10px !important;
     }
 }
 
@@ -920,6 +920,10 @@ div.block-reorder {
             margin-right: $global-leftcol-rightmargin-percent;
             float: left;
             width: $global-leftcol-percent;
+        }
+        
+        .messages {
+            width: $global-content-3col-percent;
         }
 
         .col-main {

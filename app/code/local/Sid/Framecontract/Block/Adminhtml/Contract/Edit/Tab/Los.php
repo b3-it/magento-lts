@@ -40,7 +40,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Los extends Mage_Admin
   		
   		$collection->getSelect()
   			->joinleft(array('att'=>$expr),'att.value = main_table.los_id',array('products'))
-  			->where('framecontract_contract_id = '.$id);
+  			->where('main_table.framecontract_contract_id = '.$id);
   		
   		//die($collection->getSelect()->__toString());	
   		return $collection->getItems();

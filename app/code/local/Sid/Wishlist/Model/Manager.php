@@ -106,7 +106,7 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			}
 		}
 		if (!$quote) {
-			Mage::throwException($this->__("No collection List available"));
+			Mage::throwException($this->__("No collection list available"));
 		}
 		
 		if ($quote->getId()) {

@@ -84,18 +84,16 @@
     }
 
     .buttons-set {
-        width: auto;
-        float: right;
+        width: 93%;
     }
 
-    button.button {
+    .button {
         padding: 5px 6px;
         width: 140px;
-    }
-
-    a.button {
-        padding: 6px 6px;
-        width: 140px;
+        
+        @include bp(max-width, 480px) {
+            width: 50% !important;
+        }
     }
 
     .button-recovery{

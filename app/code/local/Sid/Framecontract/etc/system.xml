@@ -60,6 +60,7 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </notify_owner>
+                        <!--  
                         <stock_warning translate="label">
                             <label>Warning for Contract Qty</label>
                             <frontend_type>select</frontend_type>
@@ -69,6 +70,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </stock_warning>
+                        -->
                       </fields>
                 </email>  
                 <checkout_email>
@@ -121,6 +123,14 @@
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <fields>
+                    <qty translate="label">
+                            <label>Warning Quantity [%]</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qty>
                         <email_template translate="label">
                             <label>Email Template</label>
                             <frontend_type>select</frontend_type>
@@ -133,19 +143,12 @@
                         <recipient translate="label">
                             <label>Recipient Email</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>10</sort_order>
+                            <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </recipient>
-                        <qty translate="label">
-                            <label>Warning Qty</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>10</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </qty>
+                        
                       </fields>
                 </contract_qty>   
          </groups>

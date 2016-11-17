@@ -50,14 +50,14 @@ class Sid_Framecontract_Model_Source_Attribute_ContractLos extends Mage_Eav_Mode
             	->order('main_table.title');
             
             //storeisolation
-            if(Mage::helper('framecontract')->isModuleEnabled('Egovs_Isolation'))
-            {
-            	if(!Mage::helper('isolation')->getUserIsAdmin()){
-            		$stores = implode(',',Mage::helper('isolation')->getUserStoreViews());
-            		$collection->getSelect()->where('contract.store_id IN ('.$stores.')');
-            	}
+//             if(Mage::helper('framecontract')->isModuleEnabled('Egovs_Isolation'))
+//             {
+//             	if(!Mage::helper('isolation')->getUserIsAdmin()){
+//             		$stores = implode(',',Mage::helper('isolation')->getUserStoreViews());
+//             		$collection->getSelect()->where('contract.store_id IN ('.$stores.')');
+//             	}
             	
-            }
+//             }
             
             
             foreach ($collection->getItems() as $item) {

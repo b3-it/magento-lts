@@ -1,8 +1,7 @@
 <?php
 class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 {
-	private function prepareXml($request)
-	{
+	protected function _preProcessXml($request) {
 		$doc = new DOMDocument; // declare a new DOMDocument Object
 		$doc->preserveWhiteSpace = false;
 		$doc->loadxml($request); //load the xml request
@@ -10,7 +9,13 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 		$xpath = new DOMXPath($doc); //we use DOMXPath to edit the XML Request
 	
 		//create a query, looking a possible empty node(s)
-		foreach ($xpath->query('//*[not(node())]') as $node ) { 
+		/** @var $node DOMNode */
+		foreach ($xpath->query('//*[not(node())]') as $node ) {
+			//20161109::Frank Rochlitzer
+			//Nur löschen Falls wirklich leer --> Probleme bei Payplace panalias
+			if ($node->hasAttributes()) {
+				continue;
+			}
 			$node->parentNode->removeChild($node); //remove the node
 		}
 		
@@ -26,18 +31,29 @@ class Egovs_Paymentbase_Model_Payplace_Soap_Client extends SoapClient
 		return $request;
 	}
 	
+	/**
+	 * Preprozessor Vorschalten um XML anzupassen
+	 * 
+	 * Achtung: Es ist nicht möglich das Ergebnis für __getLastRequest() an dieser Stelle direkt im Parent SoapClient zu ändern!
+	 * Dazu muss __getLastRequest() überschrieben werden. Sonst sind die Ergbenisse von __doRequest und __getLastRequest() unterschiedlich!
+	 * {@inheritDoc}
+	 * @see SoapClient::__doRequest()
+	 */
 	public function __doRequest($request, $location, $action, $version, $one_way = null) {	
-		$request = $this->prepareXml($request);
-		$this->lastRequest = $request;
+		$request = $this->_preProcessXml($request);
+		$this->__lastRequest = $request;
 		//Workaround für Fehlermedlung: looks like we got no XML document
 		//BOM muss entfernt werden!
 		//@see http://www.highonphp.com/fixing-soap-exception-no-xml
 	
-	
-		//$response = file_get_contents('d:\temp\sax.response.txt');
-	
 		$response = parent::__doRequest($request, $location, $action, $version, $one_way = null);
-		
 		return $response;
+	}
+	
+	public function __getLastRequest () {
+		if (isset($this->__lastRequest)) {
+			return $this->__lastRequest;
+		}
+		return parent::__getLastRequest();
 	}
 }

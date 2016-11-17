@@ -130,6 +130,7 @@ class Egovs_Vies_Model_Sales_Observer extends Mage_Sales_Model_Observer
 			$data = array(
 					'country_id' => $customerCountryCode,
 					'company' => $quoteAddress->getCompany(),
+					'vat_id' => $customerVatNumber,
 					'taxvat_valid' => $gatewayResponse->getIsValid()
 			);
 			if (!$gatewayResponse || !$gatewayResponse->getRequestSuccess()) {

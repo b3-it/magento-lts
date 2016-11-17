@@ -15,6 +15,11 @@
     border-color: $grundfarbe-blau;
     border-style: solid;
     
+    .block-content {
+    	padding: 0;
+    	border: 0;
+    }
+    
     @include bp(max-width, 490px) {
     	position: absolute;
     	top: 40px;
@@ -22,10 +27,124 @@
     }
 }
 
+/* ============================================ *
+ * Mini Product List
+ * ============================================ */
+
+.mini-products-list {
+    padding: $box-spacing;
+    padding-top: 0;
+
+    li {
+        border-bottom: $global-active-border solid $grundfarbe-blau;
+        min-height: 100px;
+        margin-bottom: $global-boxmargin;
+        clear: both;
+
+        &:after {
+            @include clearfix();
+        }
+    }
+    
+    p.product-name {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .product-image, .product-details {
+    	display: inline-block;
+    	vertical-align: top;
+    }
+    .product-image {
+        width: 18%;
+        float: left;
+    }
+    .product-details {
+    	margin-left: 5px;
+        text-align: left;
+        width: 80%;
+        font-size: 0.8rem;
+        
+        input, button {
+        	width: 90%;
+        	display: block;
+        }
+        button {
+        	padding: 0;
+        }
+        input {
+        	@include input-field;
+        	margin-bottom: 3px;
+        }
+ 
+ 	    .product-name {
+	        padding: 0;
+	        margin: 0;
+	    }
+
+	    .mini-cart-label {
+	    	height: 0.8rem;
+	    	display: block;
+	    	margin-bottom: 5px;
+	    }
+	    
+	    .mini-cart-price, .mini-cart-qty, .mini-cart-options {
+	    	display: inline-block;
+	    	vertical-align: top;
+	    	margin-right: 5px;
+	    	
+	    	&:last-child {
+	    		margin: 0;
+	    	}
+	    }
+	    .mini-cart-price {
+	    	width: 50%;
+	    }
+	    .mini-cart-qty {
+	    	width: 30%;
+	    }
+	    .mini-cart-options {
+	    	width: 10%;
+	    }
+    }
+}
+
+.mini-products-images-list {
+
+    &:after {
+        @include clearfix;
+    }
+
+    li.item {
+        float: left;
+        width: 50%;
+        margin: 0;
+        padding: 0 5px 10px 0;
+
+        &:nth-child(even) {
+            padding-right: 0;
+            padding-left: 5px;
+        }
+
+        .product-image {
+            display: block;
+
+            img {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+
+}
+
 .header-minicart {
     @include bp(max-width, $bp-medium) {
         display: inline-block;
         width: auto;
+    }
+    #minicart-top-block {
+    	height: 3rem;
     }
 
     .minicart-message {
@@ -42,6 +161,7 @@
         @include loadingOverlay();
         clear: both;
         position: relative;
+        top: -20px;
     }
 
     .block-cart {
@@ -56,51 +176,20 @@
         text-align: center;
         text-transform: uppercase;
         margin-bottom: 0px;
-
-        .close {
-            @include hover-blau-weiss;
-            width: 40px;
-            float: right;
-            display: block;
-            text-decoration: none;
-            font-weight: normal;
-            font-size: 30px;
-            position: absolute;
-            top: -21px;
-            right: $box-spacing - 11px;
-        }
     }
-    .mini-products-list {
-        padding: $box-spacing;
-        padding-top: 0px;
-        margin-bottom: 20px;
 
-        li {
-            padding: 8px 5px 8px 11px;
-            border-bottom: 1px solid #DDDDDD;
-            min-height: 100px;
-
-            &.last {
-                border: none;
-            }
-
-            .product-details {
-                position: relative;
-                top: -10px;
-            }
-        }
+    .close {
+        @include hover-blau-weiss;
+        width: 2rem;
+        height: 100%;
+        text-decoration: none;
+        font-weight: normal;
+        font-size: 30px;
+        padding: 2%;
+        float: right;
     }
 
     .product-details {
-        .product-name {
-            padding-top: 0px;
-            font-weight: bold;
-
-            a {
-                color: $global-linkcolor;
-            }
-        }
-
         .mini-cart-first {
             text-align: left;
         }
@@ -116,10 +205,6 @@
     }
 
     .info-wrapper {
-        margin-bottom: 0.5em;
-        position: absolute;
-        right: 0px;
-
         th {
             text-transform: uppercase;
             padding-right: $gap;
@@ -162,32 +247,29 @@
     }
 
     .subtotal {
-        background-color: $global-minicart-background;
-        line-height: $global-minicart-lineheight;
         padding-right: $global-boxpadding * 2;
 
         .label {
-            color: $global-fontcolor-dark;
-            text-transform: uppercase;
+            color: $textfarbe-mittel;
+            font-size: 0.7rem;
         }
         .price {
-            color: $global-cart-subtotal;
+            color: $grundfarbe-blau;
             font-weight: bold;
         }
     }
 
     .minicart-actions {
-        padding: $box-spacing;
-        padding-top: 0px;
-        overflow: hidden;
-        position: relative;
-        text-align: center;
-
-        a.button {
-            padding: $global-btn-padding-v $global-btn-padding-h;
+        padding: 0 $box-spacing $box-spacing;
+        margin-top: $global-boxmargin;
+        
+        button {
+        	display: inline-block;
+        	padding: 14px;
+        	width: 45%;
         }
 
-        .checkout-button {
+	    .checkout-button {
             min-width: 145px;
         }
 
@@ -196,12 +278,6 @@
             line-height: 39px;
             text-transform: uppercase;
             font-size: $global-fontsize;
-        }
-
-        .paypal-logo {
-            .paypal-or {
-                line-height: 1.6;
-            }
         }
     }
 
@@ -223,48 +299,6 @@
         display: none;
     }
 }
-
-div.block-cart {
-    .block-content {
-        p.subtotal {
-            text-align: right;
-        }
-
-        .block-subtitle {
-            padding-top: 10px;
-        }
-    }
-
-    #cart-sidebar {
-        li.item {
-            border-bottom-color: $global-border-color;
-            border-bottom-width: $global-box-border;
-            border-bottom-style: solid;
-            margin-bottom: $global-boxpadding;
-            padding-bottom: $global-boxpadding;
-
-            .product-details {
-                .btn_edit {
-                    @extend .egov-float-right;
-                    margin-right: 10px;
-                }
-
-                .btn_delete {
-                    @extend .egov-float-right;
-                }
-
-                .tax-block {
-                    text-align: right;
-                }
-
-                p.product-name {
-                    padding: 0px;
-                }
-            }
-        }
-    }
-}
-
 
 .header-minicart.skip-active .block-cart,
 .block-cart.skip-active {

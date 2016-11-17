@@ -8,6 +8,23 @@
 .mp-checkout {
     text-align: left;
 
+    select {
+        overflow: hidden;
+        max-width: 90vw;
+    }
+ 
+    .col-left {
+        @include bp(max-width, $bp-medium) {
+            display: none;
+        }
+    }
+    
+    .col-main {
+        @include bp(max-width, $bp-medium) {
+            width: 100% !important;
+        }
+    }
+
     .multiple-checkout {
         .col-2 {
             > div {
@@ -36,7 +53,7 @@
             }
 
             label {
-                width: 95%;
+                width: 90% !important;
             }
         }
 
@@ -130,7 +147,7 @@
             font-size: $global-checkout-success-order-number;
         }
         
-        @include bp(max-width, 800px) {
+        @include bp(max-width, $bp-medium) {
         	background-image: none !important;
         }
     }
@@ -261,11 +278,6 @@
                     border-right-style: none !important;
                 }
 
-                td:nth-child(2), td:nth-child(3),
-                td:nth-child(5), td:nth-child(6) {
-                    text-align: right;
-                }
-
                 td:nth-child(5), td:nth-child(6) {
                     font-weight: bold;
                 }
@@ -324,14 +336,23 @@
     }
 }
 
-@include bp(max-width, 490px) {
+@include bp(max-width, $bp-medium) {
     .mp-checkout {
+        .checkout-progress li {
+            width: 13% !important;
+        }
+        
+        label {
+            width: auto !important;
+        }
+        
         .buttons-set {
             text-align: center;
-            max-width: 68%;
+            max-width: 100%;
+            margin-bottom: $global-boxmargin;
 
-            a {
-                width: 47% !important;
+            a, button {
+                width: 30% !important;
                 display: inline-block !important;
                 margin-left: 0 !important;
                 margin-right: 0 !important;
@@ -343,27 +364,34 @@
                     margin-right: 2px !important;
                 }
             }
-
+            
             button {
-                float: none !important;
-                width: 97% !important;
-                display: block !important;
+                margin-left: 30px !important;
             }
         }
     }
+}
 
-    .egovs-checkout-multipage-overview,
-    .egovs-checkout-multipage-successview,
-    #multishipping-billing-form,
-    #shipping_method_form {
-        .col-1, .col-2 {
-            width: 95% !important;
-            margin: 0 !important;
-            min-height: auto !important;
+@include bp(max-width, $bp-small) {
+	.mp-checkout {
+        .checkout-progress li {
+            width: 24% !important;
         }
 
-        .buttons-set {
-            max-width: 100% !important;
+		.buttons-set a {
+		    width: 45% !important;
+		}
+		.buttons-set button {
+		    width: 95% !important;
+		    margin: 0 7px 0 0 !important;
+		}
+	}
+
+    .col2-set {
+        .col-1, .col-2 {
+            width: 100% !important;
+            margin: 0 !important;
+            min-height: auto !important;
         }
     }
 }

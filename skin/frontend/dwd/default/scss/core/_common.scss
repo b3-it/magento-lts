@@ -43,20 +43,24 @@ input,
 select,
 table,
 textarea {
+	@include default-hidden-border;
     font-family: $base-font-family;
-    color: $textfarbe-dunkel;
+    color: $textfarbe-mittel;
     font-size: $global-fontsize;
     line-height: $global-lineheight;
 }
 
+body {
+	border: none;
+}
+
 button {
-    color: $global-button-font-color;
+    @include grau-hover-blau;
 }
 
 textarea, input[type="text"], input[type="email"],
 input[type="password"], input[type="tel"], select {
-    border: 0;
-    margin-bottom: $global-element-magrin-bottom;
+    @include input-field;
     padding: 3px 6px;
 }
 
@@ -81,24 +85,6 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-/* ============================================ *
- * Default-Active marking
- * ============================================ */
-input, button, select, textarea {
-    /* Bugfix für IE11, da er das Rumpf-Element bei Seite laden auf Active setzt */
-    &:focus {
-        border-width: $global-active-border;
-        border-style: solid !important;
-        border-color: $global-active-color;
-    }
-}
-input[type="checkbox"]:focus, input[type="radio"]:focus {
-    /* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
-    outline-width: $global-active-border !important;
-    outline-style: solid !important;
-    outline-color: $global-active-color !important;
 }
 
 /* ============================================ *
@@ -134,11 +120,11 @@ h6, .h6 { @include h6; }
     }
 
     .in-stock {
-        color: $global-instock-color;
+        color: $grundfarbe-blau;
     }
 
     .available-soon, .out-of-stock {
-        color: $global-available-color;
+        color: $grundfarbe-blgr;
     }
 }
 
@@ -170,11 +156,6 @@ p.note-msg {
     @include pageTitle;
 }
 
-.page-title h1,
-.page-title h2 {
-    border-bottom: $global-box-border solid $global-linkcolor;
-}
-
 /* -------------------------------------------- *
  * Block Module
  */
@@ -188,15 +169,16 @@ p.note-msg {
 }
 
 .block {
-    border-color: $zusatzfarbe-blau;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: $grundfarbe-blgr;
     margin-bottom: $global-boxmargin;
 
     .block-title {
-        background-color: $grundfarbe-weiss;
-        padding: 0.3em;
         color: $textfarbe-mittel;
-        font-weight: normal;
         font-size: $global-h4-size;
+        height: 51px;
+        padding: 10px;
 
         span {
             color: $global-h4-color;
@@ -229,8 +211,6 @@ p.note-msg {
 
 // On account pages, don't remove the top border in order to create separation between block and .block-account
 body:not(.customer-account) .block:first-child .block-title {
-    border-top: none;
-    padding-top: 0;
 }
 
 .block-subtitle {
@@ -239,12 +219,10 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    border-width: $global-active-border;
-    border-style: solid;
-    border-color: $grundfarbe-grau;
     padding: 15px;
 
     input[type="text"], input[type="email"] {
+        @include input-field;
         width: 100%;
     }
 }
@@ -262,17 +240,25 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block .actions {
-    margin: $box-spacing 0 0;
+    margin: 20px 0 0;
 
     &:after {
         @include clearfix;
     }
 
-    a {
-        float: left;
-    }
-    .button {
-        float: right;
+    a, .button {
+        @include grau-hover-blau;
+        
+        width: 100%;
+        display: block;
+        font-size: 1rem;
+        text-align: center;
+        margin: 0;
+        padding: 18px 0;
+        
+        span {
+            font-family: $base-font-family;
+        }
     }
 }
 
@@ -486,8 +472,6 @@ div.block-reorder {
     display: block;
     margin: $box-spacing 0 0;
     padding-top: $box-spacing;
-    border-top: $global-active-border solid $global-border-color;
-    text-align: right;
 
     p.required {
         margin: 0;
@@ -506,9 +490,11 @@ div.block-reorder {
         padding: 5px;
     }
     button.button {
-        float: right;
-        margin-left: 5px;
-        min-width: 140px;
+        //float: right;
+        //margin-left: 5px;
+        //min-width: 140px;
+        @include grau-hover-blau;
+        width: 100%;
     }
 
     &:after {
@@ -781,7 +767,6 @@ div.block-reorder {
     .col-wrapper {
         width: $global-wrapper-width;
         position: relative;
-        top: $global-wrapper-top;
 
         .col-left {
             margin-right: $global-leftcol-rightmargin-percent;
@@ -795,16 +780,9 @@ div.block-reorder {
         }
 
         .col-main {
-            background-image: url($global-content-top-image);
-            background-repeat: no-repeat;
-            background-color: $global-content-background;
-            background-position: 0px -3px;
-            background-size: 100% auto;
             overflow: hidden;
             width: $global-content-2col-left-percent;
-            padding-left: $global-content-leftpadding-percent;
             padding-top: $global-content-paddingtop;
-            padding-right: $global-rightcol-rightmargin-percent;
             
             @include bp(max-width, 490px) {
             	width: 100% !important;
@@ -1065,7 +1043,6 @@ div.block-reorder {
  */
 
 .messages {
-    margin-top: $global-message-margintop;
     margin-bottom: $global-message-marginbottom;
 }
 
@@ -1074,7 +1051,7 @@ div.block-reorder {
     margin-bottom: 5px;
     padding: 7px 10px 7px 20px;
     background: $c-module-background;
-    font-size: $f-size-l;
+    font-size: 1rem;
 }
 
 .messages li li:before {
@@ -1084,7 +1061,7 @@ div.block-reorder {
 }
 
 .messages .error-msg li {
-    color: $c-black;
+    color: $textfarbe-mittel;
     border-left: 5px solid $c-danger;
     background-color: $c-danger-background;
 }
@@ -1094,7 +1071,7 @@ div.block-reorder {
 }
 
 .messages .notice-msg li {
-    color: $c-black;
+    color: $textfarbe-mittel;
     border-left: 5px solid $c-warn;
     background-color: $c-warn-background;
 }
@@ -1457,17 +1434,6 @@ span.weee {
 .no-touch .product-img-box .product-image:not(.zoom-available):hover {
     position: relative;
     display: block;
-    border: 1px solid $global-border-color-light;
-}
-
-@include bp (max-width, $bp-medium) {
-    body .product-img-box .product-image:hover {
-        border-color: $global-border-color-light;
-    }
-}
-
-.no-touch .product-image:hover {
-    border-color: $global-border-color-light;
 }
 
 /* -------------------------------------------- *
@@ -1558,8 +1524,13 @@ span.weee {
     color: $textfarbe-mittel;
     border-color: $grundfarbe-blau;
     border-style: solid;
-    border-width: $global-active-border 0;
+    border-width: $global-active-border;
+    padding: 0 10px;
     height: 40px;
+    
+    select {
+    	margin: 0;
+    }
 
     &:after {
         @include clearfix;
@@ -1580,55 +1551,53 @@ span.weee {
     font-weight: normal;
 }
 
-$toolbar-icon-padding-offset: 8px;
-
 .sorter {
-    margin-bottom: 5px;
     width: 100%;
+    height: 100%;
 
     label {
         float: left;
-        margin-right: 5px;
+        margin: 8px 0 0 0;
 
         &:after {
             content: ':';
         }
     }
-}
-
-.sorter > .sort-by {
-    float: right;
-    height: 30px;
-
-    .sort-by-switcher {
-        display: inline-block;
-        border-width: 1px;
-        border-style: solid;
-        border-color: $global-sorter-bordercolor;
-
-        margin: 0px -2px 0px 5px;
-        padding: 2px;
+    
+    a {
+    	@include hover-weiss-blau;
+    	height: 1.7rem;
+    	width: 1.7rem;
+    	padding: 2px;
+    	text-decoration: none;
     }
-    .sort-by-switcher--asc {
-        @extend .egov-arrow-down;
+    
+    .sort-by {
+    	float: right;	    
+	    margin: 5px 0;
+	    
+	    label {
+	    	margin-top: 3px;
+	    }
+	
+	    .sort-by-switcher {
+	        position: relative;
+	        top: -4px;
+	        float: right;
+	        padding: 2% 0 0 2%;
+	        margin-right: 0;
+	    }
+	    .sort-by-switcher--asc {
+	        @extend .egov-arrow-down;
+	    }
+	    .sort-by-switcher--desc {
+	        @extend .egov-arrow-up;
+	    }
     }
-    .sort-by-switcher--desc {
-        @extend .egov-arrow-up;
-    }
-}
-
-.sorter > .view-mode {
-    float: left;
-
-    .grid,
-    .list {
-        float: left;
-        width: 30px;
-        height: 30px;
-    }
-    .grid {
-        margin-right: 5px;
-    }
+    
+    .view-mode {
+	    float: left;
+	}
 }
 
 .pager {
@@ -1665,81 +1634,67 @@ $toolbar-icon-padding-offset: 8px;
 
 .pages {
     float: right;
+    display: inline-block;
     overflow: hidden;
-    margin-left: 15px;
+    margin: 0 15px;
+    position: relative;
+    height: 100%;
+    padding-top: 4px;
 
     strong {
         display: none;
     }
-}
-
-.pages li {
-    float: left;
-}
-
-.pages a,
-.pages .current {
-    display: inline-block;
-    border: 0;
-    font-size: $global-fontsize-big;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-    line-height: 30px;
-    width: 25px;
-    height: 30px;
-    padding: 0;
-    color: $global-linkcolor;
-    font-family: $base-font-family;
-}
-
-.pages .current,
-.pages .current:hover {
-    color: $global-linkcolor-hover;
-    border: 1px solid $global-border-color;
-    width: 30px;
-    background-color: $global-wrapper-color;
-    cursor: default;
-}
-
-.pages .next,
-.pages .previous {
-    // New HP5BP technique: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757c9e03dda4e463fb0d4db5a5f82d7
-    font: 0/0 a;
-    text-shadow: none;
-    color: transparent;
-    background-color: transparent;
-    position: relative;
-
-    &:hover {
-        border: 1px solid $global-linkcolor;
+    
+    li {
+    	display: inline-block;
     }
-}
-
-.pages .next {
-    &:before {
-        @include triangle(right, 4px, $global-linkcolor);
-        top: 50%;
-        margin-top: -3px;
-        left: 50%;
-        margin-left: -2px;
+    
+    a, .current {
+    	display: inline-block;
+	    border: 0;
+	    text-align: center;
+	    vertical-align: middle;
+	    white-space: nowrap;
+	    line-height: 1.7rem;
+	    width: 1.7rem;
+	    height: 1.7rem;
+	    padding: 0;
     }
-    &:hover:before {
-        @include triangle(right, 4px, $global-linkcolor);
+    
+    a {
+     	@include grau-hover-blau;
     }
-}
-
-.pages .previous {
-    &:before {
-        @include triangle(left, 4px, $global-linkcolor);
-        top: 50%;
-        margin-top: -3px;
-        left: 50%;
-        margin-left: -2px;
+    
+    .current {
+	    cursor: default;
+	    @include hover-blau-weiss;
     }
-    &:hover:before {
-        @include triangle(left, 4px, $global-linkcolor);
+    
+    .next, .previous {
+	    // New HP5BP technique: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757c9e03dda4e463fb0d4db5a5f82d7
+	    font: 0/0 a;
+        padding: 35% 0 0 30%;
+        background-color: transparent;
+        @include hover-weiss-blau;
     }
+    
+    .previous {
+    	&:before {
+    		@include triangle(left, 4px, $grundfarbe-blau);
+    	}
+        &:hover:before, &:active:before, &:focus:before {
+        	@include triangle(left, 4px, $grundfarbe-weiss);
+        }
+    }
+    
+    .next {
+    	&:before {
+    		@include triangle(right, 4px, $grundfarbe-blau);
+    	}
+        &:hover:before, &:active:before, &:focus:before {
+        	@include triangle(right, 4px, $grundfarbe-weiss);
+        }
+    } 
 }
 
 @include bp(max-width, $bp-xsmall) {
@@ -1824,13 +1779,7 @@ body.customer-account .data-table {
         cursor: pointer;
 
         &:before {
-            @include triangle(down, 7px, $c-blue);
-            position: static;
-            display: inline-block;
-            margin-right: 5px;
-        }
-        &:hover:before {
-            @include triangle(down, 7px, $c-stimulus);
+            @include triangle(down, 7px, $grundfarbe-blau);
             position: static;
             display: inline-block;
             margin-right: 5px;
@@ -1840,13 +1789,7 @@ body.customer-account .data-table {
     .show-details {
         .summary-collapse {
             &:before {
-                @include triangle(up, 7px, $c-blue);
-                position: static;
-                display: inline-block;
-                margin-right: 5px;
-            }
-            &:hover:before {
-                @include triangle(up, 7px, $c-stimulus);
+                @include triangle(up, 7px, $grundfarbe-blau);
                 position: static;
                 display: inline-block;
                 margin-right: 5px;
@@ -1859,7 +1802,7 @@ body.customer-account .data-table {
 #shopping-cart-totals-table tfoot td .summary-collapse {
     &:before,
     &:hover:before {
-        margin-bottom: 5px;
+        margin-bottom: 3px;
     }
 }
 

@@ -13,7 +13,7 @@
 class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model_Observer_Abstract
 {
   /**
-   * für die Veträge des IT Warenhauses
+   * für die Lieferanten des IT Warenhauses
    * @param unknown $observer
    */
 	public function onVendorCollectionLoad($observer)
@@ -29,7 +29,7 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 	}
     
 	/**
-	 * Für die Lieferanten des IT Warenhauses
+	 * Für die Verträge des IT Warenhauses
 	 * @param unknown $observer
 	 */
 	public function onContractCollectionLoad($observer)
@@ -40,6 +40,27 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 			$collection = $observer->getCollection();
 			$storeGroups = implode(',', $storeGroups);
 			$collection->getSelect()->where('main_table.store_id in('.$storeGroups.')');
+		}
+	
+	}
+	
+	/**
+	 * Für die Lose des IT Warenhauses
+	 * @param unknown $observer
+	 */
+	public function onLosCollectionLoad($observer)
+	{
+		$storeGroups = $this->getUserStoreGroups();
+		if(($storeGroups) && (count($storeGroups) > 0))
+		{
+			$collection = $observer->getCollection();
+			$storeGroups = implode(',', $storeGroups);
+			
+			$expr = new Zend_Db_Expr('SELECT framecontract_contract_id FROM '.$collection->getTable('framecontract/contract').' WHERE store_id IN ('.$storeGroups.')');
+			
+			$collection->getSelect()
+			->where('main_table.framecontract_contract_id IN(?)',$expr);
+			
 		}
 	
 	}
@@ -68,6 +89,10 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 		$storeGroups = $this->getUserStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0))
 		{
+			
+			//Mage::log(print_r($storeGroups));
+			//Mage::log(var_export($model, true));
+			
 			if(!in_array($model->getStoreGroup(), $storeGroups))
 			{
 				$this->denied();

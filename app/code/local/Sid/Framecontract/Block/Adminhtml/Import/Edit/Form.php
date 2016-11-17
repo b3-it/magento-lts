@@ -104,14 +104,15 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
             'values'   => Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray()
         	 ));
 
-        	$fieldset->addField('store', 'select', array(
-            'name'     => 'store',
-            'title'    => $helper->__('Store'),
-            'label'    => $helper->__('Store'),
-            'required' => true,
-            'values'   => Mage::getSingleton('adminhtml/system_config_source_store')->toOptionArray()
-        	));
-        //}
+        	if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+	        	$fieldset->addField('store', 'select', array(
+	            'name'     => 'store',
+	            'title'    => $helper->__('Store'),
+	            'label'    => $helper->__('Store'),
+	            'required' => true,
+	            'values'   => Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray()
+	        	));
+        	}
 
          $fieldset->addField('category', 'select', array(
             'name'     => 'category',

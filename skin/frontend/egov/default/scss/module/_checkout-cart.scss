@@ -114,13 +114,13 @@
                 }
             }
            
-            @include bp(max-width, 800px) {
+            @include bp(max-width, $bp-medium) {
            	    width: 100%;
            	    background: none;
             }
         }
         .col-left {
-        	@include bp(max-width, 800px) {
+        	@include bp(max-width, $bp-medium) {
         		display: none;
         	}
         }
@@ -321,6 +321,10 @@
     .product-cart-info {
         .item-options{
             font-size: $global-fontsize-small;
+        }
+        
+        a.egov-delete {
+            display: none;
         }
     }
 }
@@ -608,7 +612,6 @@
             display: none;
         }
 
-        .product-cart-image .cart-links,
         .product-cart-info .btn-remove {
             display: block;
         }

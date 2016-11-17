@@ -1979,7 +1979,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
     	}
 
     	//Proxy deaktivieren
-    	if (!$config) {
+    	if ($config === false || is_null($config) || !is_array($config)) {
     		$config = array();
     	}
     	foreach ($config as $k => $v) {

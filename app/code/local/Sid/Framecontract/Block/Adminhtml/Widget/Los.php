@@ -59,11 +59,11 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
 		{
 			$this->_contracts = array();
 			$collection = Mage::getModel('framecontract/contract')->getCollection();
-			$collection->getSelect()->order('title');
+			$collection->getSelect()->order('main_table.title');
 			foreach($collection->getItems() as $item)
 			{
 				$lose = Mage::getModel('framecontract/los')->getCollection();
-				$lose->getSelect()->where("framecontract_contract_id =".$item->getId())->order('title');
+				$lose->getSelect()->where("main_table.framecontract_contract_id =".$item->getId())->order('main_table.title');
 				$this->_contracts[$item->getId()] = array('label'=>$item->getTitle(), 'lose'=>$lose->toArray());
 			}
 		}
@@ -76,11 +76,11 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
 		{
 			$this->_contracts = array();
 			$collection = Mage::getModel('framecontract/contract')->getCollection();
-			$collection->getSelect()->order('title');
+			$collection->getSelect()->order('main_table.title');
 			foreach($collection->getItems() as $item)
 			{
 				$lose = Mage::getModel('framecontract/los')->getCollection();
-				$lose->getSelect()->where("framecontract_contract_id =".$item->getId())->order('title');
+				$lose->getSelect()->where("main_table.framecontract_contract_id =".$item->getId())->order('title');
 				$this->_contracts[$item->getId()] = array('label'=>$item->getTitle(), 'lose'=>$lose->toArray());
 			}
 		}

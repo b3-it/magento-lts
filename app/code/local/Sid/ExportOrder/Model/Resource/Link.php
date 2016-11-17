@@ -35,7 +35,7 @@ class Sid_ExportOrder_Model_Resource_Link extends Mage_Core_Model_Resource_Db_Ab
     {
     	$read = $this->_getWriteAdapter();
     	$orderIds = implode(',', $orderIds);
-    	$read->update($this->getTable('exportorder/order'), array('status' => $status), 'order_id IN('.$orderIds.')' );
+    	$read->update($this->getTable('exportorder/order'), array('status' => $status,'update_time'=>now()), 'order_id IN('.$orderIds.')' );
     }
     
    

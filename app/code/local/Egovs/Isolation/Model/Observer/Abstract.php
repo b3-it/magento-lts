@@ -19,21 +19,65 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 	 */
 	protected static $_AllowProductLod4View = false;
 	
+	private $_user = null;
+	
 	protected function getUser()
 	{
-		return Mage::getSingleton('admin/session')->getUser();
+		if($this->_user == null)
+		{
+			if(Mage::getSingleton('admin/session')->getUser()){
+				$this->_user =  Mage::getSingleton('admin/session')->getUser();
+				return $this->_user;
+			}
+			
+			$this->_user = $this->getApiUser();
+			
+		}
+		return $this->_user;
 	}
+	
+	protected function getApiUser()
+	{
+		$headerString = Mage::app()->getRequest()->getHeader('Authorization');
+		
+		
+		$tokenPosition = strpos($headerString, 'oauth_token=');
+		$token = null;
+		if($tokenPosition !== false){
+			$token = substr($headerString, $tokenPosition+13, 32);
+		}
+		
+		if($token == null){
+			$error = 'Authorization Token Not found.';
+			throw new Exception($error);
+			return null;
+		}
+		
+		$oauth =  Mage::getModel('oauth/token')->load($token,'token');
+		if($oauth){
+			return Mage::getModel('admin/user')->load($oauth->getAdminId());
+		}
+		
+		return null;
+		
+	}
+	
+	
 	
 	protected function getUserStoreGroups()
 	{
-		$user = Mage::getSingleton('admin/session')->getUser();
+		$user = $this->getUser();
 		return $user->getStoreGroups();
 	}
 	
+	/**
+	 * Aller erlaubten StoreViews des nutzers fesstellen
+	 * @return NULL[]
+	 */
 	protected function getUserStoreViews()
 	{
 		$res = array();
-		$user = Mage::getSingleton('admin/session')->getUser();
+		$user = $this->getUser();
 		$storeGroups = $user->getStoreGroups();
 		
 		if(($storeGroups) && (count($storeGroups) > 0)) 
@@ -54,7 +98,7 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 	protected function getUserStoreRootCategories()
 	{
 		$res = array();
-		$user = Mage::getSingleton('admin/session')->getUser();
+		$user = $this->getUser();
 		$storeGroups = $user->getStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0)) 
 		{	

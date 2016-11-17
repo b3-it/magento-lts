@@ -26,29 +26,29 @@
 ?>
 <?php foreach($this->getAvailableProducts() as $_item): ?>
 <?php if(count($_item->getProductOptions()) > 0):?>
-<div class="block block-compare">
+<div class="block block-eventbundle-reorder">
     <div class="block-title">
-        <h2>
+        <strong>
             <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->__('View Product') ?>">
                 <?php echo $this->htmlEscape($_item->getName()) ?>
             </a>
-        </h2>
+        </strong>
     </div>
     <div class="block-content">
     <?php foreach($_item->getProductOptions() as $option):?>
         <ol class="eventbundle-items">
             <li>
-                <?php echo $option->getTitle();?>
+                <span class="eventbundle-item-title"><?php echo $option->getTitle();?></span>
                 <ol class="eventbundle-subitems">
                 <?php if($option->getSelections()):?>
                 <?php foreach($option->getSelections() as $selection):?>
                     <li>
-	                	    <a class="item_cart_link" href="<?php echo $this->getAddToCartUrl($selection)?>" title="<?php echo $this->__('Add to Chart') ?>">
-	                	        <?php echo $selection->getName();?>
-	                	    </a>
+                        <a class="item-cart-link" href="<?php echo $this->getAddToCartUrl($selection)?>" title="<?php echo $this->__('Add to Chart') ?>">
+	                	    <?php echo $selection->getName();?>
+	                	</a>
                         <div class="price">
-	                	        <?php echo $this->getFormatedPrice($selection);?>
-	                	    </div>
+	                	    <?php echo $this->getFormatedPrice($selection);?>
+	                	</div>
                     </li>
                 <?php endforeach;?>
                 <?php endif;?>

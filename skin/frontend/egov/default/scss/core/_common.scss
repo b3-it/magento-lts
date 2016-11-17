@@ -370,13 +370,18 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 
+.block-viewed, .block-compare, .block-poll {
+	@include bp(max-width, $bp-medium) {
+	    margin-bottom: $global-boxmargin !important;
+	}
+}
+
 /* ============================================ *
  * Reorder-Box Styles
  * ============================================ */
 
 div.block-reorder {
     margin-top: $global-boxmargin;
-    width: $global-leftcol-width + 5;
 
     .validation-advice {
         display: block;
@@ -539,6 +544,13 @@ div.block-reorder {
         float: right;
         margin-left: 5px;
         min-width: 140px;
+        
+        @include bp(max-width, $bp-small) {
+            float: none;
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
     }
 
     &:after {

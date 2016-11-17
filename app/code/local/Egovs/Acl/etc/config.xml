@@ -132,7 +132,6 @@
 					</Egovs_Acl_Model_Observer_Block>
 				</observers>
 			</core_block_abstract_prepare_layout_after>
-			<!--  
 			<customer_info_tabs_wishlist_can_show>
 			<observers>
                     <Egovs_Acl_Model_Observer_Block>
@@ -168,9 +167,7 @@
                         <method>onCustomerTabCanShow</method>
                     </Egovs_Acl_Model_Observer_Block>
                 </observers>
-            </customer_info_tabs_tags_can_show>
-            -->
-			
+            </customer_info_tabs_tags_can_show>	
 		</events>
 		<acl>
 			<resources>

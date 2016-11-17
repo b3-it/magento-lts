@@ -12,7 +12,7 @@ $_productname = $this->escapeHtml($this->getProductName());
 <tr>
     <td>
         <img class="checkout-product-image" src="<?php echo $_thumbnail; ?>" alt="<?php echo $_productname; ?>" title="<?php echo $_productname; ?>" />
-        <div id="product-details">
+        <div class="product-details">
             <h3 class="product-name"><?php echo $_productname; ?></h3>
             <div class="product-cart-sku">
                 <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>

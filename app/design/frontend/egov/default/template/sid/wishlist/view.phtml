@@ -146,7 +146,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 <?php else: ?>
 	<p><?php echo $this->__('This list is empty.'); ?></p>
 	<div class="buttons-set">
-	    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+	    <a class="button" href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
 	</div>
 <?php endif;?>
 </div>

@@ -21,6 +21,10 @@
                 <?php echo $this->getChildHtml('header') ?>
                 <div class="main-container col1-layout">
                     <div class="main">
+                        <div class="col-left" style="display: none !important;">
+                            <?php /* Das muß hier rein, da es im 1-Spaltigen-Layout keine Navigation o.Ä. gibt => Mobil wird unbedienbar! */ ?>
+                            <?php echo $this->getChildHtml('left') ?>
+                        </div>
                         <?php echo $this->getChildHtml('breadcrumbs') ?>
                         <div class="col-main">
                             <?php echo $this->getChildHtml('global_messages') ?>

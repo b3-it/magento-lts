@@ -45,6 +45,13 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
           'required'  => true,
           'name'      => 'contractnumber',
       ));
+      
+      $fieldset->addField('u4_responsible', 'text', array(
+      		'label'     => Mage::helper('framecontract')->__('Agresso BW Budgetverantwortlicher'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'u4_responsible',
+      ));
 
       $dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
       $fieldset->addField('start_date', 'date', array(

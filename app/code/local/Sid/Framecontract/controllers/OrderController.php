@@ -68,7 +68,7 @@ class Sid_Framecontract_OrderController extends Mage_Core_Controller_Front_Actio
        		$service = Mage::getModel('sales/service_order', $order);
        		foreach($order->getInvoiceCollection() as $invoice)
        		{
-       			if($invoice->getStatus() == Mage_Sales_Model_Order_Invoice::STATE_OPEN )
+       			if($invoice->getState() == Mage_Sales_Model_Order_Invoice::STATE_PAID )
        			{
 		       		$creditmemo = $service->prepareInvoiceCreditmemo($invoice);
 		       		$creditmemo->setRefundRequested(true);

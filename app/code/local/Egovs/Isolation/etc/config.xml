@@ -324,7 +324,14 @@
           </ramecontract_vendor_collectionload_observer>
         </observers>
       </framecontract_vendor_collection_load_before>
-      
+      <framecontract_los_collection_load_before>
+        <observers>
+          <framecontract_los_collection_load_before_observer>
+            <class>isolation/observer_framecontract</class>
+            <method>onLosCollectionLoad</method>
+          </framecontract_los_collection_load_before_observer>
+        </observers>
+      </framecontract_los_collection_load_before>
       <exportorder_order_load_after>
         <observers>
           <isolation_orderload_observer>
@@ -349,6 +356,23 @@
           </isolation_framecontract_contract_load_after_observer>
         </observers>
       </framecontract_contract_load_after>
+
+     <cms_page_collection_load_before>
+        <observers>
+          <cms_page_collectionload_observer>
+            <class>isolation/observer_cms</class>
+            <method>onPageCollectionLoad</method>
+          </cms_page_collectionload_observer>
+        </observers>
+      </cms_page_collection_load_before>
+      <cms_block_collection_load_before>
+        <observers>
+          <cms_block_collectionload_observer>
+            <class>isolation/observer_cms</class>
+            <method>onBlockCollectionLoad</method>
+          </cms_block_collectionload_observer>
+        </observers>
+      </cms_block_collection_load_before>
     </events>
   </adminhtml>
 
@@ -373,6 +397,11 @@
       </rewrite>
       </catalog_resource>
       -->
+      <adminhtml>
+        <rewrite>
+            <system_store>Egovs_Isolation_Model_System_Store</system_store>
+        </rewrite>
+      </adminhtml>
     </models>
     <resources>
       <egovs_isolation_setup>
@@ -410,6 +439,7 @@
           <newsletter_template_grid>Egovs_Isolation_Block_Adminhtml_Newsletter_Template_Grid</newsletter_template_grid>
           <customer_edit_tab_view_accordion>Egovs_Isolation_Block_Adminhtml_Customer_Edit_Tab_View_Accordion</customer_edit_tab_view_accordion>
           <customer_edit_tab_carts>Egovs_Isolation_Block_Adminhtml_Customer_Edit_Tab_Carts</customer_edit_tab_carts>
+          <widget_grid_column_filter_store>Egovs_Isolation_Block_Adminhtml_Widget_Grid_Column_Filter_Store</widget_grid_column_filter_store>
         </rewrite>
       </adminhtml>
     </blocks>
