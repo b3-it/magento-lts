@@ -17,10 +17,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
   
     
     public function indexAction() {
-    		
-    
-    		//Mage::register('import_data', $model);
-    
+ 
     		$this->loadLayout();
     		$this->_setActiveMenu('import/items');
     
@@ -66,6 +63,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     		$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
     
     		$blockTab = $this->getLayout()->createBlock('sidimport/adminhtml_import_edit_tabs');
+    		$blockTab->setShowProducts(true);
     		$this->_addContent($this->getLayout()->createBlock('sidimport/adminhtml_import_edit'))
     		->_addLeft($blockTab);
     
@@ -94,19 +92,26 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
     	} else {
     		try {
+    			
+    			$imageLoader = new Sid_Import_Model_Imageloader();
+    			$imageLoader->setLosId($defaults['los']);
+    			
+    			
     			/* @var $builder Sid_Import_Model_Itw */
     			$builder = Mage::getModel('sidimport/Itw');
-    			$builder->setSkuPrefix($defaults['sku_prefix']);
-    			$builder->setCategoryId($defaults['category_id']);
+    			$builder->setSkuPrefix($defaults['sku_prefix'].$defaults['los']."/");
+    			$builder->setCategoryId($defaults['category']);
     			$builder->setWebSiteId($defaults['website']);
     			$builder->setLos($defaults['los']);
-    			$builder->setQty($defaults['qty']);
+    			$builder->setFramecontractQty($defaults['qty']);
     			$builder->setStore($defaults['store']);
+    			$builder->setImageDispersionPrefix('L'.$defaults['los']);
+    			 
     			
     			$taxclass = array();
-    			$taxclass[0] = $default['tax_class1'];
-    			$taxclass[$default['tax_rate2']] = $default['tax_class2'];
-    			$taxclass[$default['tax_rate3']] = $default['tax_class3'];
+    			$taxclass[0] = $defaults['tax_class1'];
+    			$taxclass[$defaults['tax_rate2']] = $defaults['tax_class2'];
+    			$taxclass[$defaults['tax_rate3']] = $defaults['tax_class3'];
 
     			$builder->setTaxRates($taxclass);
     			
@@ -118,7 +123,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     				
     			}
     			
-    			$builder->save();
+    			$builder->save($imageLoader);
     			Mage::getSingleton('adminhtml/session')->addSuccess(
     					Mage::helper('adminhtml')->__(
     							'Total of %d record(s) were successfully imported', count($importIds)

@@ -29,6 +29,23 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	
 	protected $category_id = 1;
 	
+	
+	protected $_imageLoader = null;
+	
+	
+	protected $_ImageDispersionPrefix = "";
+	    
+	public function getImageDispersionPrefix() 
+	{
+	  return $this->_ImageDispersionPrefix;
+	}
+	
+	public function setImageDispersionPrefix($value) 
+	{
+	  $this->_ImageDispersionPrefix = $value;
+	}
+	
+	
 	/**
 	 * ein xml Produkt hinzufügen
 	 * @param B3it_XmlBind_Bmecat2005_Builder_Item_Abstract $item
@@ -71,8 +88,9 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	/**
 	 * alle hinzugefügen Artikel Speichern
 	 */
-	public function save()
+	public function save(B3it_XmlBind_ProductBuilder_Imageloader_Abstract $imageLoader = null )
 	{
+		$this->_imageLoader = $imageLoader;
 		$this->_saveProductEntity();
 		$this->_saveProductAttributes();
 		$this->_saveStock();
@@ -363,11 +381,25 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$usedAttribute = array();
 			foreach ($item->getMediaData() as $pos => $media){
 	
+				$sourceFile = $media['source'];
+				
+				if($this->_imageLoader){
+					$targetDir = Mage::getBaseDir('media')."/catalog/product/".$this->_getDispretionPath($sourceFile);
+					
+					$res = $this->_imageLoader->moveImage($sourceFile, $targetDir);
+					if(!$res){
+						Mage::log("XML Product Import " .$sourceFile. " no found");
+						continue;
+					}
+				}
+				
+				$targetFile = $this->_getDispretionPath($sourceFile)."/".$sourceFile;
+				
 				if (!in_array($media['source'], $insertedGalleryImgs)) {
 					$valueArr = array(
 							'attribute_id' => $mediaGalleryAttribute,
 							'entity_id'    => $productId,
-							'value'        => $media['source']
+							'value'        => $targetFile
 					);
 	
 					$this->_connection
@@ -381,8 +413,8 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 						->where('entity_id IN (?)', $productId)
 						);
 	
-				if (array_key_exists($media['source'], $newMediaValues)) {
-					$value_id = $newMediaValues[$media['source']];
+				if (array_key_exists($targetFile, $newMediaValues)) {
+					$value_id = $newMediaValues[$targetFile];
 				}
 	
 				$valueArr = array(
@@ -404,7 +436,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 				
 				
 				$attribute = $this->_getAttribute($media['purpose']);
-				
+				$table = $attribute->getBackendTable();
 				//doppelte Attribute vermeiden
 				if(array_search($attribute->getId(), $usedAttribute) === false)
 				{
@@ -414,7 +446,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 					$attributeArr['entity_type_id'] = $this->_getEntityTypeId();
 					$attributeArr['store_id'] = 0;
 					$attributeArr['entity_id'] = $productId;
-					$attributeArr['value'] =  $media['source'];
+					$attributeArr['value'] =  $targetFile;
 					$allAttribute[] = $attributeArr;
 					
 					if(!empty($media['label'])){
@@ -427,11 +459,11 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 						$attributeArr['value'] =  $media['label'];
 						$allAttribute[] = $attributeArr;
 					}
-					$table = $attribute->getBackendTable();
+					
 				}
 				
 			}
-			if($table){
+			if(count($allAttribute) > 0){
 				$this->_connection->insertMultiple($table, $allAttribute);
 			}
 		}
@@ -560,5 +592,25 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		if ($categoryData) {
 			$this->_connection->insertMultiple($tableName, $categoryData);
 		}
+	}
+	
+	protected function _getDispretionPath($fileName)
+	{
+		$char = 0;
+		if(!empty($this->_ImageDispersionPrefix)){
+			return $this->_ImageDispersionPrefix;
+		}
+		$dispretionPath = '';
+		while (($char < 2) && ($char < strlen($fileName))) {
+			if (empty($dispretionPath)) {
+				$dispretionPath = DIRECTORY_SEPARATOR
+				. ('.' == $fileName[$char] ? '_' : $fileName[$char]);
+			} else {
+				$dispretionPath = self::_addDirSeparator($dispretionPath)
+				. ('.' == $fileName[$char] ? '_' : $fileName[$char]);
+			}
+			$char ++;
+		}
+		return $dispretionPath;
 	}
 }

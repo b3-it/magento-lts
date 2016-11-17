@@ -202,9 +202,15 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 		$template = 'framecontract/email/upload_request_template';
 		$recipients = array();
 		$recipients[] = array('name' => $contract->getVendor()->getOperator(),'email'=>$contract->getVendor()->getEmail());
+		
+		$store = Mage::getModel('core/store')->load($contract->getStoreId(),'group_id');
+		$storeid = $store->getId();
+		
 		$data = array();
 		$data['contract'] = $contract->getTitle().'/'.$los->getTitle();
-		$storeid = $contract->getStoreId();
+		$data['url'] = trim(Mage::getStoreConfig('framecontract/supplierportal/url'),'/'); 
+		$data['url'] .= '/supplier?key=' . $los->getKey();
+		
 		Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid);
 		
 		//info speichern

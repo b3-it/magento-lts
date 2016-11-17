@@ -13,6 +13,20 @@
 class Sid_Import_Block_Adminhtml_Import_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
 {
 
+private $showProducts = false;
+    
+public function getShowProducts() 
+{
+  return $this->showProducts;
+}
+
+public function setShowProducts($value) 
+{
+  $this->showProducts = $value;
+}
+	
+	
+	
   public function __construct()
   {
       parent::__construct();
@@ -29,8 +43,8 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tabs extends Mage_Adminhtml_Block_W
           'content'   => $this->getLayout()->createBlock('sidimport/adminhtml_import_edit_tab_form')->toHtml(),
       ));
       
-      $losId =  intval($this->getRequest()->getParam('los'));
-      if($losId > 0){
+    
+      if($this->showProducts){
       	
       	$this->addTab('form_section1', array(
       			'label'     => Mage::helper('sidimport')->__('Product Information'),

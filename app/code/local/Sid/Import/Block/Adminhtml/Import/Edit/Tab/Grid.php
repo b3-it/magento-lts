@@ -73,7 +73,7 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Grid extends Mage_Adminhtml_Blo
   
   
 	$this->getMassactionBlock()->addItem('status', array(
-  			'label'=> Mage::helper('import')->__('Import'),
+  			'label'=> Mage::helper('sidimport')->__('Import'),
   			'url'  => $this->getUrl('*/*/massImport', array('_current'=>true))
   			)
   	);
