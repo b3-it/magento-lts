@@ -921,6 +921,10 @@ div.block-reorder {
             float: left;
             width: $global-leftcol-percent;
         }
+        
+        .messages {
+            width: $global-content-3col-percent;
+        }
 
         .col-main {
             overflow: hidden;
