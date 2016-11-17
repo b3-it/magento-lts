@@ -32,6 +32,7 @@ class Dwd_Abomigration_Model_Order extends Dwd_Abo_Model_Order_Order
     	//die($collection->getSelect()->__toString());
     	foreach($collection->getItems() as $item)
     	{
+    		$this->setLog('Customer Id:' .$item->getCustomerId());
     		$abo_quote = $this->createQuote($item['customer_id'], $item['address_id']);
     		
     		for($i = 1; $i < 4; $i++)

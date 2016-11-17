@@ -87,6 +87,13 @@ class Dwd_ProductOnDemand_Helper_Data extends Mage_Downloadable_Helper_Data
 		return "";
 	}
 	
+	public function getStartDate($item) {
+		if ($str = $this->_getWesteProductInfo($item, 'startDate')) {
+			return substr($str, 0, 7);
+		}
+		return false;
+	}
+	
 	/**
 	 * Erzeuft aus einem Array einen String
 	 *

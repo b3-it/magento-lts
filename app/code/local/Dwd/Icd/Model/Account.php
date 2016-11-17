@@ -34,8 +34,8 @@ class Dwd_Icd_Model_Account extends Dwd_Icd_Model_Abstract
     			$collection = Mage::getModel('dwd_icd/account')->getCollection();
     			$collection
     			->getSelect()
-    			->where('connection_id = ' .$connectionId)
-    			->where('customer_id = ?', $customerId)
+    			->where('connection_id = ?', intval($connectionId))
+    			->where('customer_id = ?', intval($customerId))
     			->where('is_shareable = 1')
     			->where('status <> '. Dwd_Icd_Model_AccountStatus::ACCOUNTSTATUS_DELETE)
     			->limit('1');
@@ -132,14 +132,14 @@ class Dwd_Icd_Model_Account extends Dwd_Icd_Model_Abstract
     	$sUserSix = substr($sLowerUser, 0, 6);
     	$sUserTwo = substr($sLowerUser, 0, 2);
 
-    	if (strpos($sLowerPass, $sLowerUser)) {
+    	if (strpos($sLowerPass, $sLowerUser) !== false) {
     		return false;
     	}
 
-    	if ((strlen($sLowerUser) >= 6) AND strpos($sLowerUser, $sUserSix)) {
+    	if ((strlen($sLowerUser) >= 6) AND strpos($sLowerPass, $sUserSix) !== false) {
     		return false;
     	}
-    	if ( (strlen($sLowerUser) > 4) AND strpos($sLowerUser, $sUserTwo) ) {
+    	if ( (strlen($sLowerUser) > 4) AND strpos($sLowerPass, $sUserTwo) !== false) {
     		return false;
     	}
 
@@ -245,7 +245,7 @@ class Dwd_Icd_Model_Account extends Dwd_Icd_Model_Abstract
     
     protected function _removeUser()
     {
-    	Mage::log("ICD:: _removeUser: ".$this->getId(), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _removeUser: ".$this->getId(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$client = $this->getSoapClient();
     	$res = $client->removeUser($this->getLogin());
     	if($success = $this->processError($res,'removeUser',$this->getLogin()))
@@ -263,7 +263,7 @@ class Dwd_Icd_Model_Account extends Dwd_Icd_Model_Abstract
   
     protected function _changePassword()
     {
-    	Mage::log("ICD:: _changePassword: ".$this->getId(), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _changePassword: ".$this->getId(), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$client = $this->getSoapClient();
     	$pwd = $this->getPassword();
     	$res = $client->setPasswordUser($this->getLogin(),$pwd);

@@ -49,7 +49,7 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode extends Mage_
     }
 
 
-  
+ 
 
    protected function _getProduct()
     {

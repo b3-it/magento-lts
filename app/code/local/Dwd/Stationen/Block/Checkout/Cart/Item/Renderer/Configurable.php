@@ -42,7 +42,9 @@ class Dwd_Stationen_Block_Checkout_Cart_Item_Renderer_Configurable extends Mage_
    		}
 	   	if($item->getStationId())
 	   	{
-	   		$station = Mage::getModel('stationen/stationen')->load($item->getStationId());
+	   		$station = Mage::getModel('stationen/stationen')
+	   		    ->setStoreId(Mage::app()->getStore()->getStoreId())
+	   			->load($item->getStationId());
 	   		return $station;
 	   	}
 	   	return "";

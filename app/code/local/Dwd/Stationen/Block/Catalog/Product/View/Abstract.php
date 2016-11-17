@@ -14,7 +14,11 @@ class Dwd_Stationen_Block_Catalog_Product_View_Abstract extends Mage_Catalog_Blo
     		$set_id = $this->getProduct()->getStationenSet();
     		if( !$set_id) {$set_id = 0;}
     		$this->_StationsList = array();
-    		$collection = Mage::getModel('stationen/stationen')->getCollection();
+    		$storeId = Mage::app()->getStore()->getId(); 
+    		$collection = Mage::getModel('stationen/stationen')
+    			->setStoreId($storeId)
+    			->getCollection();
+    		$collection->setStoreId(Mage::app()->getStore()->getStoreId());
     		$collection->addAttributeToSelect('*')->setOrder('name');
     		$collection->getSelect()
     				->distinct()

@@ -38,7 +38,9 @@ class Dwd_ConfigurableVirtual_Block_Checkout_Cart_Item_Renderer extends Mage_Che
    {
 	   	if($item->getStationId())
 	   	{
-	   		$station = Mage::getModel('stationen/stationen')->load($item->getStationId());
+	   		$station = Mage::getModel('stationen/stationen')
+	   			->setStoreId(Mage::app()->getStore()->getStoreId())
+	   			->load($item->getStationId());
 	   		return $station;
 	   	}
 	   	return "";
@@ -48,7 +50,9 @@ class Dwd_ConfigurableVirtual_Block_Checkout_Cart_Item_Renderer extends Mage_Che
    {
 	   	if($item->getPeriodId())
 	   	{
-	   		$periode = Mage::getModel('periode/periode')->load($item->getPeriodId());
+	   		$periode = Mage::getModel('periode/periode')
+	   			->setStoreId(Mage::app()->getStore()->getStoreId())
+	   			->load($item->getPeriodId());
 	   		return $periode;
 	   	}
 	   	return "";

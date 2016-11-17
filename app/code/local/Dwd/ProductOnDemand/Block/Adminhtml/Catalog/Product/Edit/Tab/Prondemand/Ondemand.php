@@ -8,6 +8,9 @@
  */
 class Dwd_ProductOnDemand_Block_Adminhtml_Catalog_Product_Edit_Tab_Prondemand_Ondemand extends Mage_Downloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Downloadable_Links
 {
+	
+	protected $_showReferencePeriodAttribute;
+	
     /**
      * Class constructor
      *
@@ -99,9 +102,9 @@ class Dwd_ProductOnDemand_Block_Adminhtml_Catalog_Product_Edit_Tab_Prondemand_On
     }
     
     /**
-     * Retrieve default links title
+     * Retrieve default storage time
      *
-     * @return string
+     * @return int
      */
     public function getStorageTime()
     {
@@ -137,6 +140,74 @@ class Dwd_ProductOnDemand_Block_Adminhtml_Catalog_Product_Edit_Tab_Prondemand_On
     
     public function getStorageTimeNote() {
     	return $this->getStorageTimeAttribute()->getNote();
+    }
+    
+    /**
+     * Retrieve default show reference period
+     *
+     * @return int
+     */
+    public function getShowReferencePeriodDefault()
+    {
+    	return $this->getShowReferencePeriodAttribute()->getDefaultValue();
+    }
+    
+    /**
+     * Check exists default pod_show_reference_period
+     *
+     * @return bool
+     */
+    public function getUsedDefaultShowReferencePeriod()
+    {
+    	return $this->getProduct()->getAttributeDefaultValue('pod_show_reference_period') === false;
+    }
+    
+    /**
+     * Retrieve Show Reference Period Attribute object
+     *
+     * @return Mage_Catalog_Model_Resource_Eav_Attribute
+     */
+    public function getShowReferencePeriodAttribute() {
+    	if (is_null($this->_showReferencePeriodAttribute)) {
+    		$_attributeCode = 'pod_show_reference_period';
+    
+    		$this->_showReferencePeriodAttribute = Mage::getModel('eav/entity_attribute')
+    			->loadByCode(Mage_Catalog_Model_Product::ENTITY, $_attributeCode)
+    		;
+    	}
+    
+    	return $this->_showReferencePeriodAttribute;
+    }
+    
+    public function getShowReferencePeriodNote() {
+    	return $this->__($this->getShowReferencePeriodAttribute()->getNote());
+    }
+    
+    public function getShowReferencePeriodLabel() {
+    	return $this->getShowReferencePeriodAttribute()->getFrontendLabel();
+    }
+    
+    public function getShowReferencePeriodHtml()
+    {
+    	/* @var $src Mage_Eav_Model_Entity_Attribute_Source_Boolean */
+    	$src = $this->getShowReferencePeriodAttribute()->getSource();
+    	$opt = $src->getOptionArray();
+    	
+    	$select = $this->getLayout()->createBlock(sprintf('adminhtml/html_%s', $this->getShowReferencePeriodAttribute()->getFrontendInput()))
+	    	->setData(
+	    		array(
+	    			'id' => $this->getShowReferencePeriodAttribute()->getAttributeCode(),
+	    			'class' => 'select required-entry',
+	    		)
+	    	)
+	    	->setTitle($this->__($this->getShowReferencePeriodLabel()))
+	    	->setName(sprintf("product[%s]", $this->getShowReferencePeriodAttribute()->getAttributeCode()))
+	    	->setOptions($opt)
+    	;
+    	$_product = $this->getProduct();
+    	$select->setValue($_product->getId() ? $_product->getPodShowReferencePeriod() : $this->getShowReferencePeriodDefault());
+    
+    	return $select->getHtml();
     }
 
     /**

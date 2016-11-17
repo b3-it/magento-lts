@@ -12,10 +12,17 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Grid extends Mage_Adminhtml_Block_
       $this->setDefaultFilter(array('status'=>Dwd_Stationen_Model_Stationen_Status::STATUS_ACTIVE));
   }
 
+  protected function _getStore()
+  {
+  	$storeId = (int) $this->getRequest()->getParam('store', 0);
+  	return Mage::app()->getStore($storeId);
+  }
+  
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('stationen/stationen')->getCollection();
-      $collection->addAttributeToSelect('*');
+      //$collection->addAttributeToSelect('name');
+      $collection->addStoreFilter($this->_getStore());
       $this->setCollection($collection);
       //die($collection->getSelect()->__toString());
       return parent::_prepareCollection();

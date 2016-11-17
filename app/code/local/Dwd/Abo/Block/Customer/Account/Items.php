@@ -29,7 +29,7 @@ class Dwd_Abo_Block_Customer_Account_Items extends Mage_Core_Block_Template
 	{
 		if (!$this->hasAbos()) {
 			$eav = Mage::getResourceModel('eav/entity_attribute');
-			$userId = Mage::getSingleton('customer/session')->getCustomerId();
+			$userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
 			/* @var $collection Dwd_Abo_Model_Mysql4_Abo_Collection */
 			$collection = Mage::getModel('dwd_abo/abo')->getCollection();
 			$collection->getSelect()

@@ -7,7 +7,7 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Content exten
 
     public function __construct($attributes)
     {
-    	  $this->_attributes = $attributes;
+    	$this->_attributes = $attributes;
         parent::__construct();
         $this->setTemplate('dwd/periode/catalog/product/tab/periode/content.phtml');
         $this->setId('periode_content');
@@ -17,6 +17,10 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Content exten
     {
     	$collection = Mage::getModel('periode/periode')->getCollection();
     	$collection->getSelect()->where('product_id=?', intval($this->getProductId()));
+    	$store_id = $this->getStoreId();
+    	if ($store_id){
+    		$collection->setStoreId($store_id);
+    	}
     	return $collection->getItems();
     }
 
@@ -32,6 +36,23 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Content exten
     	{
     		return $product->getId();
     	}
+    	return 0;
+    }
+    
+    private function getStoreId()
+    {
+    	if($this->getData('store_id')!= null)
+    	{
+    		return $this->getData('store_id');
+    	}
+    	$product = $this->getProduct();
+    	if($product){
+    		$store = $product->getStore();
+    		if($store){
+    			return $store->getId();
+    		}
+    	}
+    	
     	return 0;
     }
 

@@ -812,5 +812,45 @@ class Dwd_Abomigration_Model_Import_Entity_Abo extends Mage_ImportExport_Model_I
  		} 
  		return (float)$str; 
  	} 
+ 	
+ 	public function getAttributeOptions(Mage_Eav_Model_Entity_Attribute_Abstract $attribute, $indexValAttrs = array())
+ 	{
+ 		$options = array();
+ 	
+ 		if ($attribute->usesSource()) {
+ 			// merge global entity index value attributes
+ 			$indexValAttrs = array_merge($indexValAttrs, $this->_indexValueAttributes);
+ 	
+ 			// should attribute has index (option value) instead of a label?
+ 			$index = in_array($attribute->getAttributeCode(), $indexValAttrs) ? 'value' : 'label';
+ 	
+ 			// only default (admin) store values used
+ 			$attribute->setStoreId(Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID);
+ 	
+ 			try {
+ 				foreach ($attribute->getSource()->getAllOptions(false) as $option) {
+ 					if(!isset($option['value'])){
+ 						$option = array();
+ 						$option['value'] = "";
+ 					}
+ 					$value = is_array($option['value']) ? $option['value'] : array($option);
+ 					foreach ($value as $innerOption) {
+ 						if(!isset($innerOption['value'])){
+ 							$innerOption['value'] = "";
+ 						}
+ 						if(!isset($innerOption[$index])){
+ 							$innerOption[$index] = "";
+ 						}
+ 						if (strlen($innerOption['value'])) { // skip ' -- Please Select -- ' option
+ 							$options[strtolower($innerOption[$index])] = $innerOption['value'];
+ 						}
+ 					}
+ 				}
+ 			} catch (Exception $e) {
+ 				// ignore exceptions connected with source models
+ 			}
+ 		}
+ 		return $options;
+ 	}
     
 }
