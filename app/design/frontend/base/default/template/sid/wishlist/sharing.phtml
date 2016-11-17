@@ -56,9 +56,9 @@
 	        <?php endif; ?> -->
 	    </ul>
     </div>
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
     <div class="buttons-set form-buttons">
-	 	<p class="required"><?php echo $this->__('* Required Fields') ?></p>
-        <p class="back-link"><a href="<?php echo $this->getBackLink() ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back')?></a></p>
+	 	<a class="button" href="<?php echo $this->getBackLink() ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back')?></a>
         <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Share Collector List')) ?>" class="button"><span><span><?php echo $this->__('Share Collector List') ?></span></span></button>
     </div>
 </form>
