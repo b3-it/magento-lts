@@ -17,10 +17,11 @@ class Dwd_Periode_Adminhtml_Periode_PeriodeController extends Mage_Adminhtml_Con
 		$data['price'] = $this->getRequest()->getParam('periode_price');
 		$data['cancelation_period'] = $this->getRequest()->getParam('cancelation_period');
 		$data['tierprice'] = json_decode($this->getRequest()->getParam('periode_tier_price'));
+		$data['store_id'] = json_decode($this->getRequest()->getParam('store_id'));
 
 		$error = $this->_addRow($data);
 		
-		$content = $this->getContent($data['product_id'],$error);
+		$content = $this->getContent($data['product_id'],$error, $data['store_id']);
 		
 		$response = $this->getResponse();
 		$response->setBody($content);
@@ -52,6 +53,7 @@ class Dwd_Periode_Adminhtml_Periode_PeriodeController extends Mage_Adminhtml_Con
 		{
 			$periode->setId($data['id']);
 		}
+		
 		/*
 		 * 20130207::Frank Rochlitzer
 		 * Das Enddatum enthielt nur den Datumsteil z. B. 07.02.2013
@@ -89,10 +91,11 @@ class Dwd_Periode_Adminhtml_Periode_PeriodeController extends Mage_Adminhtml_Con
 	}
 
 	
-   protected function getContent($product_id,$error)
+   protected function getContent($product_id,$error,$store_id)
    {
    		$block = $this->getLayout()->createBlock('periode/adminhtml_catalog_product_edit_tab_periode_content');
    		$block->setData('product_id',$product_id);
+   		$block->setData('store_id',$store_id);
    		$block->setData('error',$error);
    		
    		return  $block->toHtml(); 

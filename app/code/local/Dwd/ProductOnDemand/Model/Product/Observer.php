@@ -121,7 +121,7 @@ class Dwd_ProductOnDemand_Model_Product_Observer extends Varien_Object
 	
 	public function removeUniquePodData($observer) {
 		/* @var $quoteItem Mage_Sales_Model_Quote_Item */
-		$quoteItem = $observer->getItem();
+		$quoteItem = $observer->getQuoteItem();
 		if (!$quoteItem) {
 			return;
 		}

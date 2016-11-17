@@ -226,7 +226,7 @@ class Dwd_Icd_Block_Adminhtml_Orderitem_Grid extends Mage_Adminhtml_Block_Widget
 						'actions'   => array(
 								array(
 										'caption'   => Mage::helper('sales')->__('Synchronization'),
-										'url'       => array('base'=> 'dwd_icd/adminhtml_orderitem/sync'),
+										'url'       => array('base'=> 'adminhtml/icd_orderitem/sync'),
 										'field'     => 'id'
 								)
 						),

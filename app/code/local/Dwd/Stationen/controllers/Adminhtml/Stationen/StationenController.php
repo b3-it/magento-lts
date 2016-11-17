@@ -18,8 +18,11 @@ class Dwd_Stationen_Adminhtml_Stationen_StationenController extends Mage_Adminht
 
 	public function editAction() {
 		$id     = $this->getRequest()->getParam('id');
-		$model  = Mage::getModel('stationen/stationen')->load($id);
-
+		$storeId = $this->getRequest()->getParam('store', 0);
+		$model  = Mage::getModel('stationen/stationen')
+			->setStoreId($storeId)
+			->load($id);
+		
 		
 		if ($model->getId() || $id == 0) {
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
@@ -42,9 +45,9 @@ class Dwd_Stationen_Adminhtml_Stationen_StationenController extends Mage_Adminht
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
 			
-			$left = $this->getLayout()->createBlock('stationen/adminhtml_stationen_edit_tabs'); 
-			$this->_addContent($this->getLayout()->createBlock('stationen/adminhtml_stationen_edit'))
-				->_addLeft($left);
+			//$left = $this->getLayout()->createBlock('stationen/adminhtml_stationen_edit_tabs'); 
+			//$this->_addContent($this->getLayout()->createBlock('stationen/adminhtml_stationen_edit'))
+			//$this->_addLeft($left);
 
 			$this->renderLayout();
 		} else {
@@ -60,8 +63,11 @@ class Dwd_Stationen_Adminhtml_Stationen_StationenController extends Mage_Adminht
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 			
+			$storeId = intval($this->getRequest()->getParam('store_id'));
 			$id = intval($this->getRequest()->getParam('id'));
-			$model = Mage::getModel('stationen/stationen')->load($id);		
+			$model = Mage::getModel('stationen/stationen')
+				->setStoreId($storeId)
+				->load($id);		
 			$model->setData($data)
 				->setId($id);
 			$sets = $this->getRequest()->getParam('sets');
@@ -72,7 +78,7 @@ class Dwd_Stationen_Adminhtml_Stationen_StationenController extends Mage_Adminht
 				} else {
 					$model->setUpdateTime(now());
 				}	
-				
+				//$model->setStoreId($storeId);
 				$model->save();
 				if($model->getStatus() == Dwd_Stationen_Model_Stationen_Status::STATUS_ACTIVE)
 				{
@@ -88,7 +94,7 @@ class Dwd_Stationen_Adminhtml_Stationen_StationenController extends Mage_Adminht
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
 				if ($this->getRequest()->getParam('back')) {
-					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+					$this->_redirect('*/*/edit', array('id' => $model->getId(),'store'=>$storeId));
 					return;
 				}
 				$this->_redirect('*/*/');
@@ -101,10 +107,11 @@ class Dwd_Stationen_Adminhtml_Stationen_StationenController extends Mage_Adminht
             	else 
             	{
                 	Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                	throw $e;
             	}
  
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
-                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id'),'store'=>$storeId));
                 return;
             }
         }

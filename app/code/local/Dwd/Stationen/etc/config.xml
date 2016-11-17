@@ -15,6 +15,13 @@
                 </args>
             </stationen_front>
         </routers>
+        <layout>
+            <updates>
+                <stationen>
+                    <file>stationen.xml</file>
+                </stationen>
+            </updates>
+        </layout>
         <translate>
             <modules>
                 <Dwd_Stationen>
@@ -92,7 +99,7 @@
 		<layout>
 			<updates>
 				<stationen>
-					<file>dwd/stationen.xml</file>
+					<file>dwd_stationen.xml</file>
 				</stationen>
 			</updates>
 		</layout>

@@ -145,7 +145,7 @@ class Dwd_Icd_Model_Stress extends Dwd_Icd_Model_Abstract
     
     protected function _removeUser($user)
     {
-    	Mage::log("ICD:: _removeUser: ".$user, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _removeUser: ".$user, Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$client = $this->getSoapClient();
     	try{
     		$res = $client->removeUser($user);
@@ -162,7 +162,7 @@ class Dwd_Icd_Model_Stress extends Dwd_Icd_Model_Abstract
     
     protected function _addGroup($user,$application)
     {
-    	Mage::log("ICD:: _addGroup: ".$user, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _addGroup: ".$user, Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$client = $this->getSoapClient();
     	$success = true;
     	try{
@@ -197,7 +197,7 @@ class Dwd_Icd_Model_Stress extends Dwd_Icd_Model_Abstract
     
     protected function _addAttributeNameValuePair($user,$name,$value)
     {
-    	Mage::log("ICD:: _addAttributeNameValuePair: ".$user, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+    	Mage::log("ICD:: _addAttributeNameValuePair: ".$user, Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	$att = Mage::getModel('dwd_icd/webservice_types_attributeNameValuePair');
     	$att->value = $value;
     	$att->name = $name;

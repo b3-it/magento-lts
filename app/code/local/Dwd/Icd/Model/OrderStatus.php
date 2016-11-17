@@ -29,4 +29,15 @@ class Dwd_Icd_Model_OrderStatus extends Varien_Object
         	self::ORDERSTATUS_DISABLED   => Mage::helper('dwd_icd')->__('Disabled')
         );
     }
+    
+    static public function getLabel($var)
+    {
+    	$options = self::getOptionArray();
+    	if(isset($options[$var])){
+    		return $options[$var];
+    	}	
+    	
+    	return "";
+    }
+    
 }

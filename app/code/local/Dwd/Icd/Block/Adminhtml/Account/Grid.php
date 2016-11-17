@@ -127,7 +127,7 @@ class Dwd_Icd_Block_Adminhtml_Account_Grid extends Mage_Adminhtml_Block_Widget_G
 						'actions'   => array(
 								array(
 										'caption'   => Mage::helper('sales')->__('Synchronization'),
-										'url'       => array('base'=> 'dwd_icd/adminhtml_account/sync'),
+										'url'       => array('base'=> 'adminhtml/icd_account/sync'),
 										'field'     => 'id'
 								)
 						),

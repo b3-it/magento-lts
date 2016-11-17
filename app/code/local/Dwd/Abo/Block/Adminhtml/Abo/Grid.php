@@ -84,16 +84,7 @@ class Dwd_Abo_Block_Adminhtml_Abo_Grid extends Mage_Adminhtml_Block_Widget_Grid
 				'renderer' =>  'egovsbase/adminhtml_widget_grid_column_renderer_link',
 		));
 
-		/*
-		 $this->addColumn('order_increment_id', array(
-		 		'header'    => Mage::helper('dwd_abo')->__('Order'),
-		 		'align'     =>'left',
-		 		'index'     => 'order_increment_id',
-		 		'width'     => '150px',
-		 		'filter_index' => 'order.increment_id'
-		 ));
 
-		*/
 		$this->addColumn('order_increment_id', array(
 				'header'   => Mage::helper('dwd_abo')->__('Order'),
 

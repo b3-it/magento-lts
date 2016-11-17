@@ -1,6 +1,6 @@
 <?php
 
-class Dwd_Stationen_Model_Stationen extends Mage_Core_Model_Abstract
+class Dwd_Stationen_Model_Stationen extends Mage_Catalog_Model_Abstract//Mage_Core_Model_Abstract
 {
 	protected $_eventPrefix = 'stationen';
     protected $_eventObject = 'stationen';
@@ -23,4 +23,19 @@ class Dwd_Stationen_Model_Stationen extends Mage_Core_Model_Abstract
     	return $this;
     }
     
+    /**
+     * Set store id
+     *
+     * @param integer $storeId
+     * @return Mage_Catalog_Model_Category
+     */
+    public function setStoreId($storeId)
+    {
+    	if (!is_numeric($storeId)) {
+    		$storeId = Mage::app($storeId)->getStore()->getId();
+    	}
+    	$this->setData('store_id', $storeId);
+    	$this->getResource()->setStoreId($storeId);
+    	return $this;
+    }
 }

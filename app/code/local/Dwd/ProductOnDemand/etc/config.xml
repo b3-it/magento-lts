@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Dwd_ProductOnDemand>
-            <version>0.0.1.1</version>
+            <version>0.0.1.2</version>
             <depends>
                 <Mage_Downloadable />
                 <Dwd_ConfigurableDownloadable />
@@ -32,7 +32,7 @@
         <layout>
             <updates>
                 <prondemand>
-                    <file>dwd/prondemand.xml</file>
+                    <file>dwd_prondemand.xml</file>
                 </prondemand>
             </updates>
         </layout>
@@ -246,14 +246,14 @@
                     </checkout_allow_guest>
                 </observers>
             </checkout_allow_guest>
-            <sales_quote_item_delete_after>
+            <sales_quote_remove_item>
                 <observers>
                     <cart_remove_unique_pod_data>
                         <class>prondemand/product_observer</class>
                         <method>removeUniquePodData</method>
                     </cart_remove_unique_pod_data>
                 </observers>
-            </sales_quote_item_delete_after>
+            </sales_quote_remove_item>
         </events>
         
     </frontend>

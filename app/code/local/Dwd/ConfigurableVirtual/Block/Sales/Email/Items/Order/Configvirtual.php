@@ -7,7 +7,9 @@ class Dwd_ConfigurableVirtual_Block_Sales_Email_Items_Order_Configvirtual extend
 		$oi = $this->getItem();
 		if ($oi->getPeriodId()!= 0)
 		{
-			$periode = Mage::getModel('periode/periode')->load($oi->getPeriodId());
+			$periode = Mage::getModel('periode/periode')
+				->setStoreId($this->getStoreId())
+				->load($oi->getPeriodId());
 			return $periode->getLabel();
 		}
 		return null;
@@ -18,10 +20,19 @@ class Dwd_ConfigurableVirtual_Block_Sales_Email_Items_Order_Configvirtual extend
 		$oi = $this->getItem();
 		if ($oi->getStationId())
 		{
-			$station = Mage::getModel('stationen/stationen')->load($oi->getStationId());
+			$station = Mage::getModel('stationen/stationen')
+			->setStoreId($this->getStoreId())
+				->load($oi->getStationId());
 			return $station->getName();
 		}
 		return null;
+	}
+	
+	
+	public function getStoreId()
+	{
+		$oi = $this->getItem();
+		return $oi->getOrder()->getStoreId();
 	}
 	
 	public function getFormatedPeriode() {

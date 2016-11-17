@@ -14,6 +14,7 @@ class Dwd_Periode_Block_Catalog_Product_View_Select extends Mage_Catalog_Block_P
 			{
 				$collection = Mage::getModel('periode/periode')->getCollection();
 				$collection->getSelect()->where('product_id=?', intval($product_id));
+				$collection->setStoreId($this->getStoreId());
 				foreach ($collection->getItems() as $item)
 				{
 					$this->_perioden[] = $item;
@@ -25,6 +26,11 @@ class Dwd_Periode_Block_Catalog_Product_View_Select extends Mage_Catalog_Block_P
 		return $this->_perioden;
 	}
     
+	public function getStoreId()
+	{
+		return Mage::app()->getStore()->getStoreId();
+	}
+	
 	public function showInfo()
 	{
 		return count($this->getPerioden()) == 1;

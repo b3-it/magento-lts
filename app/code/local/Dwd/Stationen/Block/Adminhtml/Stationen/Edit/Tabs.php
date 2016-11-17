@@ -22,8 +22,8 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Edit_Tabs extends Mage_Adminhtml_B
       
      //Sets und Ableitungen brauchen die id
      $model = Mage::registry('stationen_data'); 
-      
-     if($model->getId() && $model->getStatus() == Dwd_Stationen_Model_Stationen_Status::STATUS_ACTIVE)
+     $storeId = intval($this->getRequest()->getParam('store'));
+     if($model->getId() && ($model->getStatus() == Dwd_Stationen_Model_Stationen_Status::STATUS_ACTIVE) && ($storeId == 0))
      {
      
 	     $this->addTab('set_section', array(

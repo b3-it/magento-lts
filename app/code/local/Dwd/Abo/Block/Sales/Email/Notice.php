@@ -34,7 +34,7 @@ class Dwd_Abo_Block_Sales_Email_Notice extends Mage_Core_Block_Template
 			if ($item->getProductType() == Dwd_ConfigurableVirtual_Model_Product_Type_Configurable::TYPE_CONFIGURABLE_VIRTUAL
 				&& $item->getPeriodType() == Dwd_Periode_Model_Periode_Type::PERIOD_DURATION_ABO
 			) {
-				$productIds[] = $item->getProductId();
+				$productIds[] = intval($item->getProductId());
 			}
 		}
 		/* @var $productCollection Mage_Catalog_Model_Resource_Product_Collection */

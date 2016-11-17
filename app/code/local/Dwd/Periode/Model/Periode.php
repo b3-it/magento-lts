@@ -149,7 +149,39 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
     	return $this->getStartDateFormated().' - '.$this->getEndDateFormated();
     }
 
-
+	public function getLabel()
+	{
+		$store_label = $this->getData('store_label');
+		if($store_label){
+			return $store_label;
+		}
+		return $this->getData('label');
+	}
+	
+	public function getStoreId()
+	{
+		$store_id = $this->getData('store_id');
+		if($store_id){
+			return $store_id;
+		}
+		return 0;
+	}
+	
+	/**
+	 * Set store id
+	 *
+	 * @param integer $storeId
+	 * @return Mage_Catalog_Model_Category
+	 */
+	public function setStoreId($storeId)
+	{
+		if (!is_numeric($storeId)) {
+			$storeId = Mage::app($storeId)->getStore()->getId();
+		}
+		$this->setData('store_id', $storeId);
+		$this->getResource()->setStoreId($storeId);
+		return $this;
+	}
     
     public function getEndDateFormated() {
     	$sDate = $this->getEndDate();
@@ -381,12 +413,13 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
     	              'from' => $data['from'],
     	              'to' => $data['to'],
     	              'duration' => $data['duration'],
-    	              'label' => $data['label'],
+    	              'label' => $this->getLabel(), //$data['label'],
     	              'unit' => $data['unit'],
     	              'price' => $data['price'],
     	              'product_id' => $data['product_id'],
     	              'cancelation_period' => $data['cancelation_period'],
-    	              'tierprices' => $array_liste
+    	              'tierprices' => $array_liste,
+    				  'store_id' => $this->getStoreId()
     	            );
 
     	return str_replace('"', "'", json_encode($new));
@@ -398,7 +431,7 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
      * @param unknown $orderitem
      * @return Dwd_Periode_Model_Periode|Ambigous <Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|NULL
      */
-    public static function loadPeriodeByOrderItem($orderitem)
+    public static function loadPeriodeByOrderItem($orderitem, $storeId = 0)
     {
     	$collection = Mage::getModel('sales/quote_item_option')->getCollection();
     	$collection->getSelect()->where('item_id=?', intval($orderitem->getQuoteItemId()));
@@ -416,12 +449,26 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
     		return $periode;
     	}
     
-    	$periode = Mage::getModel('periode/periode')->load($orderitem->getPeriodId());
+    	$periode = Mage::getModel('periode/periode')
+    	->setStoreId($storeId)
+    	->load($orderitem->getPeriodId());
     	if($periode->getId()){
     		return $periode;
     	}
     	 
     	return null;
     
+    }
+    
+    protected function _beforeSave(){
+    	if($this->getStoreId() > 0){
+    		$storelabel = Mage::getModel('periode/storelabel')->loadByPeriode($this->getId(),$this->getStoreId());
+    		$storelabel->setLabel($this->getLabel());
+    		$storelabel->setPeriodeId($this->getId());
+    		$storelabel->setStoreId($this->getStoreId());
+    		//var_dump($storelabel); die();
+    		$storelabel->save();
+    		$this->unsetData('label');
+    	}
     }
 }
