@@ -73,17 +73,7 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
                 
                 <!--  Login / Logout -->
                 <div class="header-login-logout">
-                  <?php if( Mage::getSingleton("customer/session")->isLoggedIn() ) : ?>
-                    <a href="<?php echo Mage::getUrl('customer/account/logout'); ?>" id="egov-account-logout" class="skip-link skip-logout" onclick="window.location.href='<?php echo Mage::getUrl('customer/account/logout'); ?>';">
-                        <span class="icon egov-logout"></span>
-                        <span class="label"><?php echo $this->__('Logout'); ?></span>
-                    </a>
-                  <?php else : ?>
-                    <a href="<?php echo Mage::getUrl('customer/account/login'); ?>" id="egov-account-login" class="skip-link skip-login" onclick="window.location.href='<?php echo Mage::getUrl('customer/account/login'); ?>';">
-                        <span class="icon egov-login"></span>
-                        <span class="label"><?php echo $this->__('Login'); ?></span>
-                    </a>
-                  <?php endif; ?>
+                    <?php echo $this->getChildHtml('dwdLoginLogoutLinks'); ?>
                 </div>
 	        </div>
 	      <?php endif; ?>
@@ -133,17 +123,7 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
                 
                 <!--  Login / Logout -->
                 <div class="header-login-logout">
-                  <?php if( Mage::getSingleton("customer/session")->isLoggedIn() ) : ?>
-                    <a href="<?php echo Mage::getUrl('customer/account/logout'); ?>" id="egov-account-logout" class="skip-link skip-logout">
-                        <span class="icon egov-logout"></span>
-                        <span class="label"><?php echo $this->__('Logout'); ?></span>
-                    </a>
-                  <?php else : ?>
-                    <a href="<?php echo Mage::getUrl('customer/account/login'); ?>" id="egov-account-login" class="skip-link skip-login">
-                        <span class="icon egov-login"></span>
-                        <span class="label"><?php echo $this->__('Login'); ?></span>
-                    </a>
-                  <?php endif; ?>
+                    <?php echo $this->getChildHtml('dwdLoginLogoutLinks'); ?>
                 </div>
               <?php endif; ?>
             </div>
