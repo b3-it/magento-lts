@@ -1,5 +1,5 @@
 <?php
-class  Sid_Import_Model_Itw extends B3it_XmlBind_ProductBuilder_Abstract
+class  Sid_Import_Model_Builder_Itw extends B3it_XmlBind_ProductBuilder_Abstract
 {
 	
 
@@ -104,7 +104,8 @@ class  Sid_Import_Model_Itw extends B3it_XmlBind_ProductBuilder_Abstract
 		$res['visibility'] = Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH;
 		$res['framecontract_los'] = $this->Los;
 		$res['groupscatalog2_groups'] = -1;
-		$res['framecontract_qty'] = $this->FramecontractQty;
+		
+		$res['default_qty'] = $this->FramecontractQty;
 
 		return $res;
 	}
