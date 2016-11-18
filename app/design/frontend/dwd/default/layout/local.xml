@@ -15,7 +15,7 @@
         </reference>
 
         <reference name="header">
-            <block type="core/template" name="dwd_login_logout_links" as="dwdLoginLogoutLinks" template="page/html/login-logout-buttons.phtml" output="toHtml" />
+            <block type="core/template" name="dwd_login_logout_links" as="dwdLoginLogoutLinks" template="page/html/login-logout-buttons.phtml" />
         </reference>
 
         <reference name="left">
