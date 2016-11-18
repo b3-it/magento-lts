@@ -44,9 +44,10 @@ $vat_id = $eav->getIdByCode('customer_address','vat_id');
 $sql = "delete from ".$installer->getTable('customer/address_entity')."_varchar where attribute_id= $vat_id";
 $installer->run($sql);
 
+$installer->run('SET FOREIGN_KEY_CHECKS=0;');
 $sql  = " update ".$installer->getTable('customer/address_entity')."_varchar";
 $sql .= " set attribute_id =  $vat_id WHERE attribute_id = $taxvat";
-
 $installer->run($sql);
+$installer->run('SET FOREIGN_KEY_CHECKS=1;');
 
 $installer->endSetup();

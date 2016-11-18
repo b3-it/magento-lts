@@ -1,0 +1,15 @@
+<?php if ($this->hasStationen()):?>
+<div id="map" class="map_size"></div>
+<p id="map_quest_logo">
+    © OpenStreetMap-Mitwirkende. <a href="http://www.openstreetmap.org/copyright" target="_blank">copyright</a>
+</p>
+<script type="text/javascript">
+var rssUrl       = "<?php echo $this->getRssUrl(); ?>";
+var marker_klein = "<?php echo $this->getSkinUrl(); ?>geomap/images/map2_point4.gif";
+var marker_gross = "<?php echo $this->getSkinUrl(); ?>geomap/images/map2_point4.png";
+</script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/OpenLayers.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/OpenStreetMap.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/helper.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/init.js"></script>
+<?php endif;?>

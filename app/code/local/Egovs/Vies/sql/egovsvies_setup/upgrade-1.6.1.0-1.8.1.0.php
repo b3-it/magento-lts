@@ -10,10 +10,15 @@ if (($attrId = $installer->getAttributeId('customer', 'use_group_autoassignment'
 	$coll = Mage::getModel('customer/customer')->getCollection();
 	$coll->addAttributeToFilter($attrId, 0);
 	$coll->addAttributeToSelect($attrId);
+	/** @var $resource Mage_Customer_Model_Resource_Customer */
+	$resource = $coll->getResource();
+	$writeCon = $resource->getWriteConnection();
 	foreach ($coll->getItems() as $customer) {
-		$customer->setDisableAutoGroupChange(true)
-			->save()
-		;
+		$writeCon->update(
+				$resource->getEntityTable(),
+				array('disable_auto_group_change' => 1),
+				array($resource->getEntityIdField() => $customer->getId())
+		);
 	}
 	$installer->removeAttribute('customer', 'use_group_autoassignment');
 }

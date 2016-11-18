@@ -2,6 +2,8 @@
 <layout>
     <default>
         <reference name="head">
+            <remove name="silver_track" />
+            
             <action method="removeItem">
                 <type>skin_js</type>
                 <name>js/app_egov.js</name>
@@ -11,6 +13,11 @@
                 <name>js/app_dwd.js</name>
             </action>
         </reference>
+
+        <reference name="header">
+            <block type="core/template" name="dwd_login_logout_links" as="dwdLoginLogoutLinks" template="page/html/login-logout-buttons.phtml" />
+        </reference>
+
         <reference name="left">
             <remove name="catalog.leftnav" />
             <remove name="cart_sidebar" />

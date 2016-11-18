@@ -1510,6 +1510,10 @@ span.weee {
     select {
     	margin: 0;
     }
+    
+    .limiter {
+        top: 5px !important;
+    }
 
     &:after {
         @include clearfix;
