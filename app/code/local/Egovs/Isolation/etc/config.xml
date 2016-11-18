@@ -18,15 +18,7 @@
     </routers>
   </admin>
 
-  <translate>
-    <modules>
-      <Egovs_Isolation>
-        <files>
-          <default>Mage_Adminhtml.csv</default>
-        </files>
-      </Egovs_Isolation>
-    </modules>
-  </translate>
+  
 
   <adminhtml>
     <layout>
@@ -36,7 +28,15 @@
         </isolation>
       </updates>
     </layout>
-    <events>
+    <translate>
+    <modules>
+      <Egovs_Isolation>
+        <files>
+          <default>Egovs_Isolation.csv</default>
+        </files>
+      </Egovs_Isolation>
+    </modules>
+  </translate><events>
       <admin_user_save_after>
         <observers>
           <isolation_save_observer>

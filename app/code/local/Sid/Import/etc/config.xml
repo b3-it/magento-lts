@@ -43,7 +43,7 @@
                         <supplierportal_import translate="title" module="sidimport">
                             <title>Import Supplier Portal</title>
                             <action>adminhtml/sidimport_import</action>
-                            <sort_order>10</sort_order>
+                            <sort_order>1</sort_order>
                         </supplierportal_import>
                     </children>
                 </convert>
@@ -82,11 +82,11 @@
         </layout>
             <translate>
             <modules>
-                <Sid_Framecontract>
+                <Sid_Import>
                     <files>
                         <default>Sid_Import.csv</default>
                     </files>
-                </Sid_Framecontract>
+                </Sid_Import>
             </modules>
         </translate>
     </adminhtml>

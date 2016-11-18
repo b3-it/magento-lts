@@ -24,6 +24,7 @@ class Sid_Import_Block_Adminhtml_Import_Edit extends Mage_Adminhtml_Block_Widget
         
         $this->removeButton('delete')
         	->removeButton('reset')
+        	->removeButton('save')
         	->removeButton('back');
         
         
