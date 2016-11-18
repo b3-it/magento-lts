@@ -226,7 +226,7 @@
         <layout>
             <updates>
                 <configdownloadable module="Dwd_ConfigurableDownloadable">
-                    <file>dwd_configdownloadable.xml</file>
+                    <file>dwd/configdownloadable.xml</file>
                 </configdownloadable>
             </updates>
         </layout>

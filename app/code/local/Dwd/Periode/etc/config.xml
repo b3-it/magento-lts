@@ -27,6 +27,13 @@
                 </Dwd_Periode>
             </modules>
         </translate>
+        <layout>
+            <updates>
+                <prondemand>
+                    <file>dwd/periode.xml</file>
+                </prondemand>
+            </updates>
+        </layout>
     </adminhtml>
     <global>
         <models>
