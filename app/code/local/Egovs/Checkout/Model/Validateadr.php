@@ -108,7 +108,7 @@ class Egovs_Checkout_Model_Validateadr extends Varien_Object
 		$result = Mage::helper('customer')->checkVatNumber($data['country_id'], $data['tax_id']);
 		$customerAddress = new Varien_Object($data);
 		
-		$$disableAutoGroupChange = true;
+		$disableAutoGroupChange = true;
 		$quote = Mage::getSingleton('checkout/session')->getQuote();
 		if ($quote instanceof Mage_Sales_Model_Quote && ($customer = $quote->getCustomer())) {
 			if ($customer instanceof Mage_Customer_Model_Customer) {

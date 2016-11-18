@@ -32,12 +32,11 @@
  */
 class Egovs_Checkout_Block_Cart_Cart extends Mage_Checkout_Block_Cart
 {
-	
-    
     public function getDeleteAllUrl()
     {
     	$url = $this->getUrl('egovs_checkout/cart/deleteall', array(
                 'id'=>'0',
+    			'form_key' => Mage::getSingleton('core/session')->getFormKey(),
                 Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->helper('core/url')->getEncodedUrl()
             ));
         $img = $this->getSkinUrl('images/btn_trash.gif');
@@ -45,10 +44,9 @@ class Egovs_Checkout_Block_Cart_Cart extends Mage_Checkout_Block_Cart
         return $url;//"<a title=\"$text\" href=\"#\" onclick=\"deleteAll(\'$url\')\" ><img height=\"16\" width=\"16\" alt=\"$text\" src=\"$img\"/></a>";
     }
     
-   public function getCheckoutUrl()
+    public function getCheckoutUrl()
     {
-       return $this->helper('mpcheckout/url')->getCheckoutUrl();
+    	return Mage::helper('mpcheckout/url')->getCheckoutUrl();
     }
-   
     
 }

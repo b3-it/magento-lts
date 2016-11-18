@@ -26,10 +26,13 @@
 
 class Egovs_Checkout_Block_Cart_Totals extends Mage_Checkout_Block_Cart_Totals
 {
-	private $_CheckoutUrl = 'egovs_checkout/multipagezz';
+	private $_CheckoutUrl = false;
 	
     public function getCheckoutUrl()
     {
+    	if (!$this->_CheckoutUrl) {
+    		return Mage::helper('mpcheckout/url')->getCheckoutUrl();
+    	}
         return $this->getUrl($this->_CheckoutUrl, array('_secure'=>true));
     }
     
