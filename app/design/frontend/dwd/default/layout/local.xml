@@ -36,4 +36,23 @@
             <remove name="product_tag_list"/>
         </reference>
     </default>
+    
+    <checkout_cart_index>
+        <!-- Rabattcodes im Warenkorb raus -->
+        <reference name="checkout.cart">
+            <action method="unsetChild"><name>coupon</name></action>
+        </reference>
+        
+        <reference name="checkout.cart">
+            <block type="mpcheckout/cart_coupon" name="checkout.cart.coupon" as="coupon" after="methods" template="checkout/cart/coupon.phtml"/>
+        </reference>
+
+        <reference name="checkout.cart">
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>stationen/checkout_cart_item_renderer_configurable</block>
+                <template>dwd/configvirtual/checkout/cart/item/default.phtml</template>
+            </action>
+        </reference>
+    </checkout_cart_index>
 </layout>
