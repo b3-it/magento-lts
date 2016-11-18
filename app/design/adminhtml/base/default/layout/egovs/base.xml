@@ -8,8 +8,8 @@
             <action method="addCss" ifconfig="admin/design/mode_prod"><stylesheet>css/shop-state-prod.css</stylesheet> </action>
             <!-- Muss an letzter Stelle stehen um als DEFAULT zu gelten -->
             <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet> </action>
-            
-            
+            <!-- Support für Native events und Aufrufe wie $(id).trigger('change') -->
+            <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action>
         </reference>
     </default>
     <adminhtml_egovsbase_tools_analyse_sales_order_item_index>
