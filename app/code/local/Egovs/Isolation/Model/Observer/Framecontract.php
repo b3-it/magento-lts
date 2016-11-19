@@ -70,6 +70,10 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 		/* @var $model Sid_ExportOrder_Model_Order */
 		$model = $observer->getObject();
 		
+		if($model->getId() == 0){
+			return;
+		}
+		
 		$storeGroups = $this->getUserStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0))
 		{
@@ -106,6 +110,9 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 		/* @var $model Sid_Framecontract_Model_Contract */
 		$model = $observer->getObject();
 	
+		if($model->getId() == 0){
+			return;
+		}
 		$storeGroups = $this->getUserStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0))
 		{

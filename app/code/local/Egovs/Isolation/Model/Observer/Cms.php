@@ -55,6 +55,46 @@ class Egovs_Isolation_Model_Observer_Cms extends Egovs_Isolation_Model_Observer_
 	}
 	
 
+	/**
+	 * Für die Cms Navigation
+	 * @param unknown $observer
+	 */
+	public function onNaviCollectionLoad($observer)
+	{
+		$storeViews = $this->getUserStoreViews();
+		if(($storeViews) && (count($storeViews) > 0))
+		{
+			$storeViews[] = '0';
+			$collection = $observer->getCollection();
+			$storeViews = implode(',', $storeViews);
+								
+			$collection->getSelect()
+			->where('main_table.store_id in(?)',$storeViews);
+		}
+	
+	}
+	
+	/**
+	 * Für die Cms Navigation
+	 * @param unknown $observer
+	 */
+	public function onNaviLoad($observer)
+	{
+		$model = $observer->getObject();
+		
+		if($model->getId() == 0){
+			return;
+		}
+		
+		$storeViews = $this->getUserStoreViews();
+		if(($storeViews) && (count($storeViews) > 0))
+		{
+			if(!in_array($model->getStoreId(), $storeViews))
+			{
+				$this->denied();
+			}
+		}
+	}
     
    
     

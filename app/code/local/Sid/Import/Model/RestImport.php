@@ -26,7 +26,7 @@ class Sid_Import_Model_RestImport
 	protected function _getProductList($losId)
 	{
 		$url =   trim(Mage::getStoreConfig('framecontract/supplierportal/url'),'/');
-		$url .= "/rest/products/{$losId}/.json";
+		$url .= "/rest/{$losId}/products.json";
 		$client = new Varien_Http_Client($url);
 		$client->setMethod(Varien_Http_Client::GET);
 		
