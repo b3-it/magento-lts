@@ -27,6 +27,8 @@
 /**
  * Html page block
  *
+ * Template wird im Layout gesetzt!
+ *
  * @category   Mage
  * @package    Mage_Page
  * @author      Magento Core Team <core@magentocommerce.com>
@@ -35,13 +37,6 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
 {
 	private $_jump = null;
 	
-    public function xx_construct()
-    {
-        $this->setTemplate('egovs/bitv/page/html/header.phtml');
-    }
-
-
-    
     private function getChilds($node)
     {
     	if($node == null) return; 
@@ -99,14 +94,14 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
 		    		$str = trim($customer->getName());
 		    		//Firma
 		    		if (!empty($str)) {
-		    			$str = trim(sprintf('%s (%s)', $str, $customer->getCompany()));
+                        $str = trim(sprintf('%s <span id="welcome-company">(%s)</span>', $this->htmlEscape($str), $this->htmlEscape($customer->getCompany())));
 		    		} else {
-		    			$str = trim(sprintf('%s', $customer->getCompany()));
+                        $str = trim(sprintf('%s', $this->htmlEscape($customer->getCompany())));
 		    		}
 		    	} else {
-		    		$str = $customer->getName();
+                    $str = $this->htmlEscape($customer->getName());
 		    	}
-     			$this->_data['welcome'] = $this->__('Welcome, %s!', $this->htmlEscape($str));
+                $this->_data['welcome'] = $this->__('Welcome, %s!', $str);
      		} else {
      			$this->_data['welcome'] = Mage::getStoreConfig('design/header/welcome');
      		}
