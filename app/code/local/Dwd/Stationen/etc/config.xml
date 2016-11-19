@@ -18,7 +18,7 @@
         <layout>
             <updates>
                 <stationen>
-                    <file>stationen.xml</file>
+                    <file>dwd/stationen.xml</file>
                 </stationen>
             </updates>
         </layout>
@@ -99,7 +99,7 @@
 		<layout>
 			<updates>
 				<stationen>
-					<file>dwd_stationen.xml</file>
+					<file>dwd/stationen.xml</file>
 				</stationen>
 			</updates>
 		</layout>

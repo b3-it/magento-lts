@@ -32,7 +32,7 @@
         <layout>
             <updates>
                 <prondemand>
-                    <file>dwd_prondemand.xml</file>
+                    <file>dwd/prondemand.xml</file>
                 </prondemand>
             </updates>
         </layout>
@@ -217,7 +217,7 @@
         <layout>
             <updates>
                 <prondemand module="Dwd_ProductOnDemand">
-                    <file>dwd_prondemand.xml</file>
+                    <file>dwd/prondemand.xml</file>
                 </prondemand>
             </updates>
         </layout>

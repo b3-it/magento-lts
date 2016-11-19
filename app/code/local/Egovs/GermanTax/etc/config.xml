@@ -172,6 +172,14 @@
                     </germantax_tax_rate_data_fetch>
                 </observers>
             </tax_rate_data_fetch>
+            <sales_order_place_before>
+            	 <observers>
+                    <tax_rule>
+                        <class>germantax/tax_observer</class>
+                        <method>onSalesOrderPlaceBefore</method>
+                    </tax_rule>
+                </observers>
+            </sales_order_place_before>
             <sales_order_save_after>
                 <observers>
                     <tax>
@@ -237,7 +245,8 @@
     <default>
     <tax>
     	<calculation>
-    		<cross_border_trade_enabled>1</cross_border_trade_enabled>
+    		<cross_border_trade_enabled>0</cross_border_trade_enabled>
+    		<deny_order_without_taxrule>0</deny_order_without_taxrule>
     	</calculation>
     </tax>
     </default>

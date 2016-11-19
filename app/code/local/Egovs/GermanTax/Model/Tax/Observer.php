@@ -90,7 +90,7 @@ class Egovs_GermanTax_Model_Tax_Observer
 			if ($this->_addressesHaveSameTaxRateRequests($quoteShippingAddress, $quoteBaseAddress)) {
 				return;
 			}
-			Mage::throwException(Mage::helper('germantax')->__('It is not possible to buy this items together. Please buy this item separately or remove all other items in your shopping cart.'));
+			Mage::throwException(Mage::helper('germantax')->__('It is not possible to buy these items together. Please buy this item separately or remove all other items in your shopping cart.'));
 		}
 	}
 	
@@ -299,4 +299,22 @@ class Egovs_GermanTax_Model_Tax_Observer
 		}
 		return $this;
 	}
+	
+
+
+	/**
+	 * Abfangen ob eine Steuerregel gefunden wurde
+	 */
+	public function onSalesOrderPlaceBefore($observer)
+	{
+		if(Mage::getStoreConfig('tax/calculation/deny_order_without_taxrule') == 1){
+			$model = Mage::getResourceModel('germantax/tax_rulecount');
+			$order = $observer->getOrder();
+			if($model->getRulecount($order) == 0)
+			{
+				Mage::throwException(Mage::helper('germantax')->__("No Tax Rule found! Verify your Addresses."));
+			}
+		}
+	}
+	
 }

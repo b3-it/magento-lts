@@ -1520,8 +1520,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 		$function_name = $caller['function'];
 		$logMsg .= sprintf("%s: Called from %s:%s\n", $function_name, $caller['file'], $caller['line']);
 		foreach ($trace as $entry_id => $entry) {
-			$entry['file'] = $entry['file'] ? : '-';
-			$entry['line'] = $entry['line'] ? : '-';
+			$entry['file'] = $entry['file'] ? '' : '-';
+			$entry['line'] = $entry['line'] ? $entry['line'] : '-';
 			if (empty($entry['class'])) {
 				$logMsg .= sprintf("%s %3s. %s() %s:%s\n", $function_name, $entry_id + 1, $entry['function'], $entry['file'], $entry['line']);
 			} else {

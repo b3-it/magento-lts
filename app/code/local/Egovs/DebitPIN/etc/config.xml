@@ -7,6 +7,25 @@
 		</Egovs_DebitPIN>
 	</modules>
 	<frontend>
+	    <secure_url>
+	       <debitpin>/debitpin/</debitpin>
+	    </secure_url>
+		<routers>
+			<debitpin>
+				<use>standard</use>
+				<args>
+					<module>Egovs_DebitPIN</module>
+					<frontName>debitpin</frontName>
+				</args>
+			</debitpin>
+		</routers>
+		<layout>
+			<updates>
+				<debitpin>
+					<file>egovs/debitpin.xml</file>
+				</debitpin>
+			</updates>
+		</layout>
 	</frontend>
 	
 	<global>

@@ -21,7 +21,7 @@
         <layout>
             <updates>
                 <dwd_icd>
-                    <file>dwd_icd.xml</file>
+                    <file>dwd/icd.xml</file>
                 </dwd_icd>
             </updates>
         </layout>

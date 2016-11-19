@@ -23,6 +23,14 @@ $stores = Mage::getModel('core/store')->getCollection()->addFieldToFilter('store
 //if you want one general block for all the store viwes, uncomment the line below
 $stores = array(0);
 foreach ($stores as $store){
+	/* @var $collection Mage_Cms_Model_Resource_Block_Collection */
+	$collection = Mage::getModel('cms/block')->getCollection();
+	$collection->addStoreFilter($store, true);
+	$collection->addFieldToFilter('identifier', 'herausgeberbox');
+	if ($collection->getSize() > 0) {
+		continue;
+	}
+	
 	$block = Mage::getModel('cms/block');
 	$block->setTitle('herausgeberbox');
 	$block->setIdentifier('herausgeberbox');
