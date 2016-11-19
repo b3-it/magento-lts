@@ -43,16 +43,9 @@
             <action method="unsetChild"><name>coupon</name></action>
         </reference>
         
+        <!-- Neue Rabattcodes in Warenkorb, sind aktuell nur für DWD -->
         <reference name="checkout.cart">
             <block type="mpcheckout/cart_coupon" name="checkout.cart.coupon" as="coupon" after="methods" template="checkout/cart/coupon.phtml"/>
-        </reference>
-
-        <reference name="checkout.cart">
-            <action method="addItemRender">
-                <type>configurable</type>
-                <block>stationen/checkout_cart_item_renderer_configurable</block>
-                <template>dwd/configvirtual/checkout/cart/item/default.phtml</template>
-            </action>
         </reference>
     </checkout_cart_index>
 </layout>
