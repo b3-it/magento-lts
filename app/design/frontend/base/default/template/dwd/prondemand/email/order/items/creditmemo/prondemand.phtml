@@ -1,72 +1,95 @@
 <?php
 /**
  * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category    design
- * @package     base_default
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Academic Free License (AFL 3.0)
+* that is bundled with this package in the file LICENSE_AFL.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/afl-3.0.php
+* If you did not receive a copy of the license and are unable to
+* obtain it through the world-wide-web, please send an email
+* to license@magentocommerce.com so we can send you a copy immediately.
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade Magento to newer
+* versions in the future. If you wish to customize Magento for your
+* needs please refer to http://www.magentocommerce.com for more information.
+*
+* @category    design
+* @package     base_default
+* @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+* @copyright   Copyright (c) 2016 B3 IT Systeme GmbH (http://www.b3-it.de)
+* @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+*/
 ?>
 <?php $_item = $this->getItem() ?>
 <?php $_order = $this->getItem()->getOrder(); ?>
 <tr>
     <td align="left" valign="top" style="padding:3px 9px">
-        <strong><?php echo $this->htmlEscape($_item->getName()) ?></strong>
-		 
-		 <?php if ($station = $this->getStationLabel()): ?>
+        <strong><?php echo $this->escapeHtml($_item->getName()); ?></strong>
+		
+				 
+		 <?php if ($stations = $this->getStations()): ?>
         <dl style="margin:0; padding:0;">
-            <dt><strong><em>Station(en)</em></strong></dt>
-                <dd style="margin:0; padding:0 0 0 9px;"><?php echo $this->getListAsHtml($station) ?></dd>
+            <dt><strong><em><?php echo $this->__('Station(s)') ?></em></strong></dt>
+            <dd style="margin:0; padding:0 0 0 9px;">
+            	<?php echo $this->getListAsHtml($stations) ?>
+            </dd>
         </dl>
         <?php endif; ?>
 
-		<?php if ($produkte = $this->getProducts()): ?>
+		<?php if ($products = $this->getProducts()): ?>
         <dl style="margin:0; padding:0;">
-            <dt><strong><em>Produkte(e)</em></strong></dt>
-                <dd style="margin:0; padding:0 0 0 9px;"><?php echo $this->getListAsHtml($produkte) ?></dd>
+            <dt><strong><em><?php echo $this->__('Product(s)') ?></em></strong></dt>
+            <dd style="margin:0; padding:0 0 0 9px;">
+                <?php echo $this->getListAsHtml($products) ?>
+            </dd>
         </dl>
         <?php endif; ?>		
 		
-		<?php if ($format = $this->getFormats()): ?>
+		<?php if ($startDate = $this->getStartDate()): ?>
         <dl style="margin:0; padding:0;">
-            <dt><strong><em>Formate(e)</em></strong></dt>
-                <dd style="margin:0; padding:0 0 0 9px;"><?php echo $this->getListAsHtml($format) ?></dd>
+            <dt><strong><em><?php echo $this->__('Start date') ?></em></strong></dt>
+            <dd style="margin:0; padding:0 0 0 9px;">
+                <?php echo $this->htmlEscape($startDate) ?>
+            </dd>
         </dl>
         <?php endif; ?>
+        
+		<?php if ($format = $this->getFormats()): ?>
+        <dl style="margin:0; padding:0;">
+            <dt><strong><em><?php echo $this->__('Format(s)') ?></em></strong></dt>
+            <dd style="margin:0; padding:0 0 0 9px;">
+            	<?php echo $this->getListAsHtml($format) ?>
+            </dd>
+        </dl>
+        <?php endif; ?>
+		
 		
         <?php if ($this->getItemOptions()): ?>
         <dl style="margin:0; padding:0;">
             <?php foreach ($this->getItemOptions() as $option): ?>
             <dt><strong><em><?php echo $option['label'] ?></em></strong></dt>
-            <dd style="margin:0; padding:0 0 0 9px;"><?php echo $option['value'] ?></dd>
+            <dd style="margin:0; padding:0 0 0 9px;">
+                <?php echo (isset($option['print_value']) ? $option['print_value'] : nl2br($this->escapeHtml($option['value']))) ?>
+            </dd>
             <?php endforeach; ?>
         </dl>
         <?php endif; ?>
-       
-        <?php echo $this->htmlEscape($_item->getDescription()) ?>
+        <?php $addInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock) :?>
+            <?php echo $addInfoBlock->setItem($_item->getOrderItem())->toHtml(); ?>
+        <?php endif; ?>
+        <?php echo $this->escapeHtml($_item->getDescription()) ?>
     </td>
     <td align="left" valign="top" style="padding:3px 9px"><?php echo $this->htmlEscape($this->getSku($_item)) ?></td>
     <td align="center" valign="top" style="padding:3px 9px"><?php echo $_item->getQty()*1 ?></td>
     <td align="right" valign="top" style="padding:3px 9px">
-        <?php if ($this->helper('tax')->displayCartPriceExclTax($_order->getStore()) || $this->helper('tax')->displayCartBothPrices($_order->getStore())): ?>
-            <?php if ($this->helper('tax')->displayCartBothPrices($_order->getStore())): ?>
+        <?php if ($this->helper('tax')->displaySalesPriceExclTax($_order->getStore()) || $this->helper('tax')->displaySalesBothPrices($_order->getStore())): ?>
+            <?php if ($this->helper('tax')->displaySalesBothPrices($_order->getStore())): ?>
                 <span class="label"><?php echo Mage::helper('tax')->__('Excl. Tax'); ?>:</span>
             <?php endif; ?>
             <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(0, 1, 4), 'email', $_order->getStore())): ?>
@@ -104,8 +127,8 @@
         <?php endif; ?>
 
 
-        <?php if ($this->helper('tax')->displayCartPriceInclTax($_order->getStore()) || $this->helper('tax')->displayCartBothPrices($_order->getStore())): ?>
-            <?php if ($this->helper('tax')->displayCartBothPrices($_order->getStore())): ?>
+        <?php if ($this->helper('tax')->displaySalesPriceInclTax($_order->getStore()) || $this->helper('tax')->displaySalesBothPrices($_order->getStore())): ?>
+            <?php if ($this->helper('tax')->displaySalesBothPrices($_order->getStore())): ?>
                 <br /><span class="label"><?php echo Mage::helper('tax')->__('Incl. Tax'); ?>:</span>
             <?php endif; ?>
             <?php $_incl = $this->helper('checkout')->getSubtotalInclTax($_item); ?>

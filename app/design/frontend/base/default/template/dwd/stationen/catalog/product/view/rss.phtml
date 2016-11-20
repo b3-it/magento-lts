@@ -11,13 +11,13 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
          xmlns:georss="http://www.georss.org/georss">
 
     <docs>
-        RSS-Informationen
+        <?php echo $this->__('RSS information') ?>
     </docs>
 
     <channel rdf:about="<?php echo $base_url ?>">
         <link><?php echo $current_url ?></link>
-        <title>Stationsdaten</title>
-        <description>Stationsdaten des DWD</description>
+        <title><?php echo $this->__('Station Information') ?></title>
+        <description><?php echo $this->__('Station Information of DWD') ?></description>
 
         <items>
             <rdf:Seq>
@@ -30,8 +30,8 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
 <?php foreach($this->getStationsList() as $station){?>
     <item rdf:about="<?php echo $base_url; echo $station->getId();?>">
-        <title><![CDATA[Station: <b><?php echo $station->getName()?></b>]]></title>
-        <description><![CDATA[<?php if ($station->getDescription()): echo $station->getDescription()?><br/><?php endif;?><span class="olMapClickLink" onClick="selectStation(<?php echo $station->getId()?>);">Station ausw&auml;hlen</span>]]></description>
+        <title><![CDATA[<?php echo $this->__('Station') ?>: <b><?php echo $station->getName()?></b>]]></title>
+        <description><![CDATA[<?php if ($station->getDescription()): echo $station->getDescription()?><br/><?php endif;?><span class="olMapClickLink" onClick="selectStation(<?php echo $station->getId()?>);"><?php echo $this->__('choose station') ?></span>]]></description>
         <georss:point><?php echo $station->getLat()?> <?php echo $station->getLon()?></georss:point>
         <dc:creator>DWD Wettershop</dc:creator>
         <dc:date><?php echo $timenow ?></dc:date>
