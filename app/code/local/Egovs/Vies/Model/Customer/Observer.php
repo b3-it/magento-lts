@@ -188,10 +188,6 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			$store = 0;
 		}
 		
-		if($store > 0){
-			return;
-		}
-		
 		$customerGroup = Mage::registry('current_group');
 		
 		if (!$customerGroup || $customerGroup->isEmpty()) {
@@ -199,7 +195,12 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 		}
 		
 		$form = $block->getForm();
-		$fieldset = $form->addFieldset('autoassign_country_fieldset', array('legend'=> Mage::helper('egovsvies')->__('Settings for group auto assignment')));
+		$fieldset = $form->addFieldset(
+				'autoassign_country_fieldset',
+				array(
+					'legend'=> Mage::helper('egovsvies')->__('Settings for group auto assignment')
+				)
+		);
 		
 		/* @var $assignedCountries Egovs_Vies_Model_Autoassign */
 		$assignedCountries = Mage::getSingleton('egovsvies/autoassign');
@@ -207,65 +208,101 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			return;
 		}
 		
-		$fieldset->addField('company', 'select',
-				array(
+		if ($store > 0) {
+			//für den Fall das eine Storeview ausgwählt wurde, werden alle Elemente verborgen
+			$fieldset->setClass('no-display');
+			$fieldset->setLegend(null);
+		
+			$fieldset->addField(
+					'company',
+					'hidden',
+					array(
 						'name'  => 'company',
-						'label' => Mage::helper('egovsvies')->__('Is for company'),
-						'title' => Mage::helper('egovsvies')->__('Is for company'),
-						'class' => 'required-entry',
-						'required' => true,
-						'values' => Mage::getModel('adminhtml/system_config_source_yesno')->toOptionArray()
-				)
-		);
+						'value' => $customerGroup->getCompany()
+					)
+			);
 		
-		$fieldset->addField('taxvat', 'select',
-				array(
+			$fieldset->addField(
+					'taxvat',
+					'hidden',
+					array(
 						'name'  => 'taxvat',
-						'label' => Mage::helper('egovsvies')->__('Is VAT required'),
-						'title' => Mage::helper('egovsvies')->__('Is VAT required'),
-						'class' => 'required-entry',
-						'required' => true,
-						'values' => Mage::getModel('egovsvies/adminhtml_system_config_source_yesnocustom')->toOptionArray()
-				)
-		);
+						'value' => $customerGroup->getTaxvat()
+					)
+			);
 		
-		$euCountries = Mage::helper('egovsvies')->getEuCountries();
-		$availableCountries = Mage::getSingleton('adminhtml/system_config_source_country')->toOptionArray(true);
-		foreach ($availableCountries as $key => $countryOption) {
-			if (array_search($countryOption['value'], $euCountries) === false) {
-				continue;
+			$values = $assignedCountries->getSelectedCountriesArray($customerGroup);
+			for ($i =0; $i < count($values); $i++) {
+				$fieldset->addField(
+						'assigned_countries'.$i,
+						'hidden',
+						array(
+							'name'  => 'assigned_countries[]',
+							'value' => $values[$i]
+						)
+				);
 			}
+		} else {
+			$fieldset->addField('company', 'select',
+					array(
+							'name'  => 'company',
+							'label' => Mage::helper('egovsvies')->__('Is for company'),
+							'title' => Mage::helper('egovsvies')->__('Is for company'),
+							'class' => 'required-entry',
+							'required' => true,
+							'values' => Mage::getModel('adminhtml/system_config_source_yesno')->toOptionArray(),
+							'value' => $customerGroup->getCompany()
+					)
+			);
 			
-			unset($availableCountries[$key]);
-		}
-		$availableCountries = array_merge(array(array('value' => 'EU', 'label' => Mage::helper('egovsvies')->__('European Union'))), $availableCountries);
-		$selectedCountries = $assignedCountries->getSelectedCountriesArray($customerGroup);
-		$selectEu = false;
-		foreach ($selectedCountries as $key => $countryOption) {
-			if (array_search($countryOption, $euCountries) === false) {
-				continue;
+			$fieldset->addField('taxvat', 'select',
+					array(
+							'name'  => 'taxvat',
+							'label' => Mage::helper('egovsvies')->__('Is VAT required'),
+							'title' => Mage::helper('egovsvies')->__('Is VAT required'),
+							'class' => 'required-entry',
+							'required' => true,
+							'values' => Mage::getModel('egovsvies/adminhtml_system_config_source_yesnocustom')->toOptionArray(),
+							'value' => $customerGroup->getTaxvat()
+					)
+			);
+			
+			$euCountries = Mage::helper('egovsvies')->getEuCountries();
+			$availableCountries = Mage::getSingleton('adminhtml/system_config_source_country')->toOptionArray(true);
+			foreach ($availableCountries as $key => $countryOption) {
+				if (array_search($countryOption['value'], $euCountries) === false) {
+					continue;
+				}
+				
+				unset($availableCountries[$key]);
 			}
-			$selectEu = true;
-			unset($selectedCountries[$key]);
+			$availableCountries = array_merge(array(array('value' => 'EU', 'label' => Mage::helper('egovsvies')->__('European Union'))), $availableCountries);
+			$selectedCountries = $assignedCountries->getSelectedCountriesArray($customerGroup);
+			$selectEu = false;
+			foreach ($selectedCountries as $key => $countryOption) {
+				if (array_search($countryOption, $euCountries) === false) {
+					continue;
+				}
+				$selectEu = true;
+				unset($selectedCountries[$key]);
+			}
+			if ($selectEu) {
+				$selectedCountries = array_merge(array('EU'), $selectedCountries);
+			}
+			$fieldset->addField('assigned_countries', 'multiselect',
+					array(
+							'name'  => 'assigned_countries',
+							'label' => Mage::helper('egovsvies')->__('Assigned countries'),
+							'title' => Mage::helper('egovsvies')->__('Assigned countries'),
+							//'class' => 'required-entry',
+							'required' => false,
+							'values' => $availableCountries,
+							'value' => $selectedCountries,
+							'note'	=> Mage::helper('egovsvies')->__('To select multiple values, hold the Control-Key<br/>while clicking on the payment method names.'),
+					)
+			);
 		}
-		if ($selectEu) {
-			$selectedCountries = array_merge(array('EU'), $selectedCountries);
-		}
-		$fieldset->addField('assigned_countries', 'multiselect',
-				array(
-						'name'  => 'assigned_countries',
-						'label' => Mage::helper('egovsvies')->__('Assigned countries'),
-						'title' => Mage::helper('egovsvies')->__('Assigned countries'),
-// 						'class' => 'required-entry',
-						'required' => false,
-						'values' => $availableCountries,
-						'value' => $selectedCountries,
-						'note'	=> Mage::helper('egovsvies')->__('To select multiple values, hold the Control-Key<br/>while clicking on the payment method names.'),
-				)
-		);
-		 
 		
-		$form->addValues($customerGroup->getData());
 		$form->setMethod('post');
 	}
 	
