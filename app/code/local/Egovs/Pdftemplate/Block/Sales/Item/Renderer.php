@@ -25,7 +25,7 @@ class Egovs_Pdftemplate_Block_Sales_Item_Renderer extends Mage_Core_Block_Templa
 	  public function __construct()
 	  {
 	        parent::__construct();
-	        $this->addItemRenderer('default', 'pdftemplate/sales_item_renderer_default', 'pdftemplate/sales/item/renderer/default.phtml');
+	        $this->addItemRenderer('default', 'pdftemplate/sales_item_renderer_default', 'egovs/pdftemplate/sales/item/renderer/default.phtml');
 	  }
 	  
 	  /**

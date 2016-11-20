@@ -87,6 +87,14 @@
 					<td><strong><?php echo Mage::helper('configdownloadable')->__('Station ID').": " ?></strong></td>
 					<td><?php echo Dwd_ConfigurableDownloadable_Model_Link::PLACEHOLDER_STATION_ID ?></td>
 				</tr>
+				<tr>
+					<td><strong><?php echo Mage::helper('configdownloadable')->__('Wildcard for any number of valid characters in file name').": " ?></strong></td>
+					<td><?php echo '*' ?></td>
+				</tr>
+				<tr>
+					<td><strong><?php echo Mage::helper('configdownloadable')->__('Wildcard for only one character in file name').": " ?></strong></td>
+					<td><?php echo '?' ?></td>
+				</tr>
 			</tbody>
 		</table>
 	</fieldset>
@@ -192,6 +200,9 @@ var linkTemplate = '<tr>'+
         '<div class="files">'+
             '<div class="row">'+
                 '<label for="configdownloadable_link_{{id}}_pattern_type"><input type="radio" class="radio validate-one-required-by-name" id="configdownloadable_link_{{id}}_pattern_type" name="configdownloadable[link][{{id}}][type]" value="pattern"{{pattern_checked}} /> <?php echo Mage::helper('configdownloadable')->__('Pattern'); ?> </label><input type="text" class="required-entry input-text" name="configdownloadable[link][{{id}}][link_pattern]" value="{{link_pattern}}" />'+
+            '</div>'+
+            '<div class="row">'+
+            	'<p class="note"><?php echo Mage::helper('configdownloadable')->__("Don't use wildcards at the beginning of a schema!")?></p>'+
             '</div>'+
             '<div>'+
                 '<span id="configdownloadable_link_{{id}}_link_container"></span>'+

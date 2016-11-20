@@ -1,0 +1,15 @@
+<?php
+/* @var $this Dwd_ProductOnDemand_Block_Sales_Item_Renderer_Pdf_Prondemand */
+?>
+<?php
+	$produkt = $this->getProducts();
+	$station = $this->getStations();
+	$startDate = $this->getStartDate();
+	$format = $this->getFormats();
+
+?>
+
+<?php if ($station):?><?php echo $this->__('Station(s)'); ?>: <?php echo $this->getListAsHtml($station);?><br/><?php endif;?>
+<?php if ($produkt):?><?php echo $this->__('Product(s)'); ?>: <?php echo $this->getListAsHtml($produkt);?> <br/><?php endif;?>
+<?php if ($startDate):?><?php echo $this->__('Start date: %s', $this->htmlEscape($this->getStartDate())); ?><br/><?php endif;?>
+<?php if ($format):?><?php echo $this->__('Format(s)'); ?>: <?php echo $this->getListAsHtml($format);?> <br/><?php endif;?>

@@ -29,9 +29,11 @@
 /**
  * @see Mage_Downloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Downloadable_Links
  */
+/** @var $this Dwd_ProductOnDemand_Block_Adminhtml_Catalog_Product_Edit_Tab_Prondemand_Ondemand */ 
 ?>
 <?php $_product = $this->getProduct()?>
 <div class="fieldset">
+<input type="hidden" class="" id="pod_link_purchase_type" name="product[links_purchased_separately]" value="1" />
 <table cellspacing="0" class="form-list">
     <tbody>
         <tr class="headings">
@@ -42,11 +44,6 @@
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
         </tr>
-    </tbody>
-</table>
-<br />
-<table cellspacing="0" class="form-list">
-    <tbody>
         <tr class="headings">
             <td class="label"><label for="pod_base_url"><?php echo Mage::helper('prondemand')->__('Base URL')?> <span class="required">*</span></label>
             </td>
@@ -56,11 +53,6 @@
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
         </tr>
-    </tbody>
-</table>
-<br />
-<table cellspacing="0" class="form-list">
-    <tbody>
         <tr class="headings">
             <td class="label"><label for="pod_availibility_url"><?php echo Mage::helper('prondemand')->__('Availibility URL')?> <span class="required">*</span></label>
             </td>
@@ -70,19 +62,21 @@
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
         </tr>
-    </tbody>
-</table>
-<br />
-<input type="hidden" class="" id="pod_link_purchase_type" name="product[links_purchased_separately]" value="1" />
-<br />
-<table cellspacing="0" class="form-list">
-    <tbody>
         <tr class="headings">
             <td class="label"><label for="pod_storage_time"><?php echo Mage::helper('prondemand')->__('Storage time')?> <span class="required">*</span></label>
             </td>
-            <td class="value">
+            <td class="value" style="width: 100%">
                 <input type="text" class="item-qty validate-digits required-entry" id="pod_storage_time" name="product[pod_storage_time]" value="<?php echo $_product->getId()?$_product->getPodStorageTime():$this->getStorageTime() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefaultStorageTime())?'disabled="disabled"':'' ?> />
                 <p class="note"><?php echo $this->getStorageTimeNote()?></p>
+            </td>
+            <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
+        </tr>
+        <tr class="headings">
+            <td class="label"><label for="pod_show_reference_period"><?php echo Mage::helper('prondemand')->__($this->getShowReferencePeriodLabel())?> <span class="required">*</span></label>
+            </td>
+            <td class="value">
+            	<?php echo $this->getShowReferencePeriodHtml(); ?>
+                <p class="note"><?php echo $this->getShowReferencePeriodNote()?></p>
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
         </tr>
