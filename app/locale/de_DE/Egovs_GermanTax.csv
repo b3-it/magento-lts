@@ -2,6 +2,9 @@
 "Recipient Valid Tax Vat Only","Leistungsempfänger mit gültiger UStId"
 "Row Total","Pos. Zwischensumme"
 "Tax Key","Steuerschlüssel"
-"It is not possible to buy this items together. Please buy this item separately or remove all other items in your shopping cart.","Es ist nicht möglich diese Artikel gemeinsam zu kaufen. Bitte kaufen Sie diesen Artikel einzeln oder entfernen Sie alle anderen Artikel aus dem Warenkorb."
+"It is not possible to buy these items together. Please buy this item separately or remove all other items in your shopping cart.","Es ist nicht möglich diese Artikel gemeinsam zu kaufen. Bitte kaufen Sie diesen Artikel einzeln oder entfernen Sie alle anderen Artikel aus dem Warenkorb."
 "It is not possible to buy all the items in your shopping cart with this address combination together. Please split your order in shippable and non-shippable products or choose an shipping address which is equivalent to your base address.","Es ist nicht möglich diese Artikel mit Ihrer Adresskombination gemeinsam zu kaufen. Bitte teilen Sie den Warenkorb in versandfähige und elektronische Artikel auf oder wählen Sie eine zu Ihrer Stammadresse äquivalente Versandadresse."
 "Tax Information","Information zur Steuerberechnung"
+"No Tax Rule found! Verify your Addresses.","Es wurden keine Steuerregeln gefunden. Bitte überprüfen sie Ihre Adressen."
+"Deny Order Without Tax Rule","Bestellungen ohne Steuerregel verhindern"
+
