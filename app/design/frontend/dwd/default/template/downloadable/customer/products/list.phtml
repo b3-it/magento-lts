@@ -1,0 +1,74 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * @see Mage_Downloadable_Block_Customer_Products_List
+ */
+?>
+<?php $_items = $this->getItems(); ?>
+<div class="page-title">
+    <h1><?php echo Mage::helper('downloadable')->__('My Downloadable Products') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<?php echo $this->getChildHtml('pager'); ?>
+<?php if(count($_items)): ?>
+    <table class="data-table linearize-table-large" id="my-downloadable-products-table">
+        <col width="80" />
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo Mage::helper('downloadable')->__('Order #') ?></th>
+                <th><?php echo Mage::helper('downloadable')->__('Date') ?></th>
+                <th><?php echo Mage::helper('downloadable')->__('Title') ?></th>
+                <th><?php echo Mage::helper('downloadable')->__('Status') ?><sup>*</sup></th>
+                <th><span class="nobr"><?php echo Mage::helper('downloadable')->__('Remaining Downloads') ?></span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $_odd = ''; ?>
+            <?php foreach ($_items as $_item): ?>
+                <tr>
+                    <td data-rwd-label="<?php echo Mage::helper('downloadable')->__('Order #') ?>"><a href="<?php echo $this->getOrderViewUrl($_item->getPurchased()->getOrderId()) ?>" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('downloadable')->__('View Order')) ?>"><?php echo $_item->getPurchased()->getOrderIncrementId() ?></a></td>
+                    <td data-rwd-label="<?php echo Mage::helper('downloadable')->__('Date') ?>"><span class="nobr"><?php echo $this->formatDate($_item->getPurchased()->getCreatedAt()) ?></span></td>
+                    <td data-rwd-label="<?php echo Mage::helper('downloadable')->__('Title') ?>">
+                    	<?php echo $this->escapeHtml($_item->getPurchased()->getProductName()) ?> - 
+                    	<?php if ($_item->getStatus() != Mage_Downloadable_Model_Link_Purchased_Item::LINK_STATUS_AVAILABLE) : ?>
+                    		<?php echo $_item->getLinkTitle() ?>
+                    	<?php else: ?>
+                    		<a href="<?php echo $this->getDownloadUrl($_item) ?>" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('downloadable')->__('Start Download')) ?>" <?php echo $this->getIsOpenInNewWindow()?'onclick="this.target=\'_blank\'"':''; ?>>
+                    			<?php echo $this->escapeHtml($_item->getLinkTitle()); ?>
+                    		</a>
+                    	<?php endif;?>
+                    	<?php $orderitem = Mage::getModel('sales/order_item')->load($_item->getOrderItemId()); ?>
+                    	<?php if( $orderitem->getProductType() == 'configdownloadable'):?>
+                    		<div class="my-downloadable-station-info">
+	                    		<?php $station = Mage::getModel('stationen/stationen')->load($orderitem->getStationId());?>
+	                    	    <?php echo 'Station: '. $station->getName(); ?>
+	                    		 <br/>
+	                    		 <?php echo 'Periode: '. Mage::app()->getLocale()->date($orderitem->getPeriodStart(), null, null, false) . ' - ' . Mage::app()->getLocale()->date($orderitem->getPeriodEnd(), null, null, false) ?>
+	             	    	</div>
+	             	    <?php endif;?>
+                    </td>
+                    <td data-rwd-label="<?php echo Mage::helper('downloadable')->__('Status') ?>"><em><?php echo Mage::helper('downloadable')->__(ucfirst($_item->getStatus())) ?></em></td>
+                    <td data-rwd-label="<?php echo Mage::helper('downloadable')->__('Remaining Downloads') ?>"><?php echo $this->getRemainingDownloads($_item) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <p>*) <?php echo Mage::helper('prondemand')->__('Weste Products are only 35 days after order unlimited available'); ?></p>
+    <script type="text/javascript">decorateTable('my-downloadable-products-table')</script>
+<?php else: ?>
+    <p id="customer-download-list-empty"><?php echo Mage::helper('downloadable')->__('You have not purchased any downloadable products yet.'); ?></p>
+<?php endif; ?>
+<?php echo $this->getChildHtml('pager'); ?>
+<div class="buttons-set">
+    <a class="button" href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
+</div>
