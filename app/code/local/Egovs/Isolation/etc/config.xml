@@ -373,6 +373,22 @@
           </cms_block_collectionload_observer>
         </observers>
       </cms_block_collection_load_before>
+      <cms_navi_collection_load_before>
+        <observers>
+          <cms_navi_collectionload_observer>
+            <class>isolation/observer_cms</class>
+            <method>onNaviCollectionLoad</method>
+          </cms_navi_collectionload_observer>
+        </observers>
+      </cms_navi_collection_load_before>
+      <cms_navi_load_after>
+        <observers>
+          <cms_navi_load_observer>
+            <class>isolation/observer_cms</class>
+            <method>onNaviLoad</method>
+          </cms_navi_load_observer>
+        </observers>
+      </cms_navi_load_after>    
     </events>
   </adminhtml>
 
