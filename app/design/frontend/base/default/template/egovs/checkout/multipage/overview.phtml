@@ -103,7 +103,7 @@
 					else
 						echo $_rate->getCarrierTitle() ." (" . $_rate->getMethodTitle().")";
 					?>
-					<br /> <strong>Versandkosten:&nbsp;</strong>
+					<br /> <strong><?php echo $this->__('Shipping charges') ?>:&nbsp;</strong>
 					<?php $_excl = $this->getShippingPriceExclTax($_address); ?>
 					<?php $_incl = $this->getShippingPriceInclTax($_address); ?>
 					<?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
