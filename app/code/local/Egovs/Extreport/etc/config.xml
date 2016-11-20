@@ -147,6 +147,16 @@
                                 <title>Product Options</title>
                                 <action>adminhtml/extreport_sales/options</action>
                             </poptions>
+                            <!--
+                            DWD:CR23 Grid Anzeige von Produkten + Kunden + Rechnungsadressen + Orderitems aus Rechnungen;
+                            iausgeschaltet weil CR23 vermutlich schon anders gelöst wurde
+                            -->
+                            <!--
+	                         <order_item translate="title" module="extreport">
+                                 <title>Produkte pro Bestellung</title>
+                                 <action>adminhtml/extreport_order_items/index</action>
+                             </order_item>
+							 -->
 	                     </children>
 	                 </salesroot>             	
 	             </children>
@@ -215,6 +225,9 @@
                                             <poptions translate="title" module="reports">
                                                 <title>Product Options</title>
                                             </poptions>
+                                            <order_item translate="title" module="extreport">
+                                 				<title>Produkte pro Bestellung</title>
+                                 			<order_item>
                             			</children>
                             		</salesroot>
                             	</children>
