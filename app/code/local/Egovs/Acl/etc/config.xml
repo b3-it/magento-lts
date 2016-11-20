@@ -257,8 +257,7 @@
 													<title>Save Attribute Set</title>
 													<sort_order>20</sort_order>
 												</attributesetsave>
-												<attributesetdelete translate="title"
-													module="">
+												<attributesetdelete translate="title" module="">
 													<title>Delete Attribute Set</title>
 													<sort_order>30</sort_order>
 												</attributesetdelete>
@@ -334,8 +333,7 @@
 											<title>Save Customer Group</title>
 											<sort_order>20</sort_order>
 										</customergroupsave>
-										<customergroupdelete translate="title"
-											module="">
+										<customergroupdelete translate="title" module="">
 											<title>Delete Customer Group</title>
 											<sort_order>30</sort_order>
 										</customergroupdelete>
@@ -347,18 +345,15 @@
 							<children>
 								<template>
 									<children>
-										<newslettertemplatequeue translate="title"
-											module="">
+										<newslettertemplatequeue translate="title" module="">
 											<title>Queue Template</title>
 											<sort_order>10</sort_order>
 										</newslettertemplatequeue>
-										<newslettertemplatesave translate="title"
-											module="">
+										<newslettertemplatesave translate="title" module="">
 											<title>Save Template</title>
 											<sort_order>20</sort_order>
 										</newslettertemplatesave>
-										<newslettertemplatedelete translate="title"
-											module="">
+										<newslettertemplatedelete translate="title" module="">
 											<title>Delete Template</title>
 											<sort_order>30</sort_order>
 										</newslettertemplatedelete>
