@@ -47,15 +47,15 @@ class Egovs_Checkout_Block_Cart_Coupon extends Mage_Checkout_Block_Cart_Coupon
 
 		$salesRuleCollection->addFieldToFilter('coupon_type', Mage_SalesRule_Model_Rule::COUPON_TYPE_SPECIFIC);
 		
-        $this->addWebsiteFilter(intval($websiteId));
+		$salesRuleCollection->addWebsiteFilter(intval($websiteId));
         
         $now = Mage::getModel('core/date')->date('Y-m-d');
         
         $entityInfo = $this->_getAssociatedEntityInfo('customer_group');
-        $connection = $this->getConnection();
-        $this->getSelect()
+        $connection = $salesRuleCollection->getConnection();
+        $salesRuleCollection->getSelect()
         	->joinInner(
-        			array('customer_group_ids' => $this->getTable($entityInfo['associations_table'])),
+        			array('customer_group_ids' => $salesRuleCollection->getTable($entityInfo['associations_table'])),
         			$connection->quoteInto(
         				'main_table.' . $entityInfo['rule_id_field']
         				. ' = customer_group_ids.' . $entityInfo['rule_id_field']
@@ -69,7 +69,7 @@ class Egovs_Checkout_Block_Cart_Coupon extends Mage_Checkout_Block_Cart_Coupon
 //         	->where('to_date is null or to_date >= ?', $now)
         ;
         
-        $this->addIsActiveFilter();
+        $salesRuleCollection->addIsActiveFilter();
 
 		$filterIsNull = array('null' => true);
 		$filterlteq = array('from' => $now);
