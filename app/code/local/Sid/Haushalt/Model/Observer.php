@@ -15,6 +15,11 @@ class Sid_Haushalt_Model_Observer extends Mage_Core_Model_Abstract
 		try 
 		{
 			$orders = $observer->getOrders();
+			//BE einzelne Order
+			if($orders == null){
+				$order = $observer->getOrder();
+				$orders = array( $order);
+			}
 			foreach($orders as $order){
 				$address = Mage::getModel('customer/address')->load($order->getBillingAddress()->getCustomerAddressId());
 				
