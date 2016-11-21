@@ -15,7 +15,7 @@ class Sid_Haushalt_Model_Lg04Pool extends Mage_Core_Model_Abstract
     public function _construct()
     {
         parent::_construct();
-        $this->_init('sidhaushalt/lg04pool');
+        $this->_init('sidhaushalt/lg04Pool');
     }
     
     

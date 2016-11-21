@@ -79,6 +79,12 @@ class Sid_Checkout_Model_Observer
 	    	
 	    	$los = Mage::getModel('framecontract/los')->load($losId);
     	
+	    	 if(Mage::helper('sidcheckout')->isModuleEnabled('Sid_Haushalt')){
+	        	$lg = Mage::getModel('sidhaushalt/lg04Pool');
+	        	$min = Mage::getConfig()->getNode('sid_haushaltsysteme/lg04/params/increment_pool/min')->__toString();
+	        	$max = Mage::getConfig()->getNode('sid_haushaltsysteme/lg04/params/increment_pool/max')->__toString();
+	        	$order->setData('u4_increment_id', $lg->getNextIncrementId($min,$max));
+	        }
     	
     		$order->setVergabenummer($vergabenr);
     		if($los){

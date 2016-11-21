@@ -34,14 +34,7 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 		$model  = Mage::getModel('sales/order')->load(intval($id));
 		
 		if ($model->getId() || $id == 0) {
-			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
-			if (!empty($data)) {
-				$model->setData($data);
-			}
-		
 			Mage::register('order', $model);
-		
-			
 		
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 		

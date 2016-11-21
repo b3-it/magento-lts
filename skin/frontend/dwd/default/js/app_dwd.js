@@ -43,6 +43,13 @@ $j(document).ready(function(){
 	cutAllArticleTitleLine();
 });
 
+function setTabIndex(arr)
+{
+    $j.each(arr, function(element, tabindex){
+        $j('#' + element).attr('tabindex', tabindex);
+    });
+}
+
 /**
  * Alle Artikel-Namen und Artikel-Nummern so abschneiden,
  * das sie nicht abrupt aufhören können

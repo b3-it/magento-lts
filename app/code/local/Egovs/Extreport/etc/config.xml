@@ -227,7 +227,7 @@
                                             </poptions>
                                             <order_item translate="title" module="extreport">
                                  				<title>Produkte pro Bestellung</title>
-                                 			<order_item>
+                                 			</order_item>
                             			</children>
                             		</salesroot>
                             	</children>
