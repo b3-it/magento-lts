@@ -41,13 +41,13 @@
 	    padding: 10px;
 	    margin-bottom: 5px;
     }
-
+    
     .new-users, .registered-users {
         height: 25em;
         width: 48%;
         border: $global-box-border solid $grundfarbe-blgr !important;
         
-        .content, .buttons-set {
+        .content {
             padding: 10px;
         }
         
@@ -55,14 +55,18 @@
             position: absolute;
             bottom: 0;
             width: 100%;
+            border: 0;
+            padding: 0;
         }
         
         .button {
             margin: 0 !important;
             width: 49%;
             min-width: 49% !important;
+            padding: 18px 5px !important;
             display: inline-block;
             text-align: center;
+            float: none;
         }
         
         @include bp(max-width, $bp-large) {

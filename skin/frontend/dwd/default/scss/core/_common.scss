@@ -56,6 +56,10 @@ body {
 
 button {
     @include grau-hover-blau;
+    
+    span, .default-font {
+        font-family: $base-font-family;
+    }
 }
 
 textarea, input[type="text"], input[type="email"],
@@ -1187,18 +1191,15 @@ div.block-reorder {
 }
 
 .price-box .price-label {
-    color: $global-fontcolor-dark;
     white-space: nowrap;
     font-family: $base-font-family;
 }
 
 .price-box .minimal-price-link {
-    padding-left: 1em;
-    color: $global-footer-fontcolor;
     display: block; /* We want this to show on its own line, otherwise the layout looks funky */
 
     .label {
-        color: $c-text-gray;
+        color: $textfarbe-mittel !important;
     }
 }
 
@@ -1257,8 +1258,7 @@ span.weee {
 .tier-prices-grouped {
     display: inline-block;
     padding: 4px 8px;
-    background: #FBF4DE;
-    border: $global-box-border solid $global-border-color;
+    border: $global-box-border solid $grundfarbe-blau;
     margin-top: $global-boxmargin;
 
     li {

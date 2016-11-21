@@ -125,17 +125,19 @@ body:not(.cms-index-index) {
     }
     .page-header-main-navigation {
     	display: inline-block;
-    	width: 44%;
     	vertical-align: top;
     	height: 91%;
     	margin-top: $global-welcome-top;
     	position: relative;
     	text-align: right;
+    	float: right;
     	
     	> div {
     		display: inline-block;
     		vertical-align: top;
     		height: 100%;
+    		float: left;
+    		margin-right: 1px;
     	}
         .skip-link {
         	padding: 0 10px;
