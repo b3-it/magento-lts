@@ -28,6 +28,27 @@ class Egovs_Checkout_Block_Cart_Coupon extends Mage_Checkout_Block_Cart_Coupon
 					'entity_id_field'    => 'customer_group_id'
 			)
 	);
+	
+	/**
+	 * Retrieve correspondent entity information (associations table name, columns names)
+	 * of rule's associated entity by specified entity type
+	 *
+	 * @param string $entityType
+	 *
+	 * @return array
+	 */
+	protected function _getAssociatedEntityInfo($entityType)
+	{
+		if (isset($this->_associatedEntitiesMap[$entityType])) {
+			return $this->_associatedEntitiesMap[$entityType];
+		}
+	
+		$e = Mage::exception(
+				'Mage_Core',
+				Mage::helper('rule')->__('There is no information about associated entity type "%s".', $entityType)
+				);
+		throw $e;
+	}
 
 	protected function _isCouponRuleAvaillable($websiteId = null, $customerGroupId = null) {
 		if (is_null($websiteId)) {
