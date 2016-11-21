@@ -15,4 +15,6 @@
 "Last Login: %s","Letzter Login: %s"
 "Last Login: %s<br/>Last Failed Login: %s","Letzter Login: %s<br/>Letzter fehlgeschlagener Login: %s"
 "Taxvat","USt-ID"
-"Admin routing compatibility mode for extensions","Routing Kompatibilitätsmodus für Erweiterungen"
+"Use offical Yubico validation servers?","Offiziellen Yubico Server benutzen?"
+"Verify validation server certificate?","Serverzertifikat validieren?"
+"Enabling this setting increases risk of automated attacks against admin functionality.","Das Aktivieren dieser Funktion erhÃ¶ht das Risiko bei Angriffen aud das Backend"

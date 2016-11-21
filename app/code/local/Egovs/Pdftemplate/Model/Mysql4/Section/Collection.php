@@ -9,18 +9,6 @@ class Egovs_Pdftemplate_Model_Mysql4_Section_Collection extends Mage_Core_Model_
     }
     
     /**
-     * Get Template by ID
-     * 
-     * @param int $id
-     * 
-     * @return array
-     * @deprecated Use getByTemplateId
-     */
-	public function xxgetByTempalteId($id) {
-    	return $this->getByTemplateId($id);
-    }
-    
-    /**
      * Get Template Sections by Template ID
      *
      * @param int $id

@@ -32,14 +32,14 @@ public function setShowProducts($value)
       parent::__construct();
       $this->setId('import_tabs');
       $this->setDestElementId('edit_form');
-      $this->setTitle(Mage::helper('sidimport')->__('Item Information'));
+      $this->setTitle(Mage::helper('sidimport')->__('Import Supplier Portal'));
   }
 
   protected function _beforeToHtml()
   {
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('sidimport')->__('Item Information'),
-          'title'     => Mage::helper('sidimport')->__('Item Information'),
+          'label'     => Mage::helper('sidimport')->__('Import Information'),
+          'title'     => Mage::helper('sidimport')->__('Import Information'),
           'content'   => $this->getLayout()->createBlock('sidimport/adminhtml_import_edit_tab_form')->toHtml(),
       ));
       
@@ -47,8 +47,8 @@ public function setShowProducts($value)
       if($this->showProducts){
       	
       	$this->addTab('form_section1', array(
-      			'label'     => Mage::helper('sidimport')->__('Product Information'),
-      			'title'     => Mage::helper('sidimport')->__('Product Information'),
+      			'label'     => Mage::helper('sidimport')->__('Product Selection for Import'),
+      			'title'     => Mage::helper('sidimport')->__('Product Selection for Import'),
       			'content'   => $this->getLayout()->createBlock('sidimport/adminhtml_import_edit_tab_grid')->toHtml(),
       	));
       	

@@ -210,7 +210,9 @@
 <script charset="utf-8" src="<?php echo Mage::getBaseUrl('js').'egovs/sepa'?>/checkiban.js" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
-	//var sepaDebitForm = new VarienForm('multishipping-billing-form');
+	<?php if (Mage::getStoreConfig('checkout/options/checkout_type') != Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE) : ?>
+		var sepaDebitForm = new VarienForm('multishipping-billing-form');
+	<?php endif; ?>
 
 function toggleFields(element) {
 	$('custom_accountholder_surname').up('li').toggle();

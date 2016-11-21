@@ -55,4 +55,27 @@ class Egovs_Isolation_Block_Adminhtml_Sales_Order_Create_Store_Select extends Ma
 	
 		return $collection->load();
 	}
+	
+	
+	public function getGroupCollection($website)
+	{
+		$collection = parent::getGroupCollection($website);
+		$UserStoreGroups = Mage::helper('isolation')->getUserStoreGroups();
+	
+		if($UserStoreGroups)
+		{
+			$groups = array();
+			foreach($collection->getItems() as $group)
+			{
+				if(in_array($group->getId(), $UserStoreGroups))
+				{
+					$groups[] = $group;
+				}
+			}
+		}
+		else {
+			$groups = $collection->getItems();
+		}
+		return $groups;
+	}
 }

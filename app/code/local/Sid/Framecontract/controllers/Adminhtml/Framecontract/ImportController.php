@@ -94,6 +94,10 @@ class Sid_Framecontract_Adminhtml_Framecontract_ImportController extends Mage_Ad
     public function startAction()
     {
         $data = $this->getRequest()->getPost();
+        
+       
+        
+        
         if ($data) {
             $this->loadLayout(false);
 
@@ -101,8 +105,20 @@ class Sid_Framecontract_Adminhtml_Framecontract_ImportController extends Mage_Ad
             $resultBlock = $this->getLayout()->getBlock('import.frame.result');
 
             $importModel = Mage::getModel('framecontract/import');
-
+           
             try {
+            	if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+            		$storeGroups = Mage::helper('isolation')->getUserStoreGroups();
+            		if(($storeGroups) && (count($storeGroups) > 0))
+            		{
+            			$store = $data['store'];
+            			if(array_search($store, $storeGroups) === false){
+            				throw new Exception('Access denied!');
+            			}
+            		}
+            	}
+            	
+            	
                 $importModel->importSource();
                 $importModel->invalidateIndex();
                 $resultBlock->addAction('show', 'import_validation_container')

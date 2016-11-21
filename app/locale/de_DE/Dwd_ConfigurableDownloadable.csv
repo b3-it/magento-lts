@@ -22,3 +22,6 @@
 "Storage time","Vorhaltezeit"
 "Updated at","Aktualisiert am"
 "Duration in days to keep files stored. Use 0 to store files unlimited.","Dauer in Tagen, für die Dateien gespeichert werden. 0 um Dateien unbegrenzt zu speichern."
+"Don't use wildcards at the beginning of a schema!","Wildcard-Platzhalter (*, ?) sollten nicht am Anfang eines Schemas genutzt werden!"
+"Wildcard for any number of valid characters in file name","Beliebige Anzahl zulässiger Zeichen im Dateinamen (Wildcard)"
+"Wildcard for only one character in file name","Ein zulässiges Zeichen im Dateinamen (Wildcard)"

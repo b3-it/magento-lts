@@ -348,13 +348,6 @@
                 }
             }
 
-            .type-radio, .type-multiple, .type-date {
-                vertical-align: top;
-                display: inline-block;
-                width: 48%;
-                margin-right: 10px;
-            }
-
             .type-date {
                 input[type="text"] {
                     width: 60%;
@@ -1043,8 +1036,7 @@
 }
 
 .product-options ul.options-list li {
-    line-height: 1.5;
-    margin-bottom: 7px;
+    margin: 10px 0;
 }
 
 .product-options ul.options-list li:last-child {

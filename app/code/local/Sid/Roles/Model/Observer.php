@@ -6,24 +6,27 @@ class Sid_Roles_Model_Observer extends Mage_Core_Model_Abstract
 		if ($post = Mage::app()->getRequest()->getPost()) {
 			$user = $observer->getObject();
 			$conn = Mage::getSingleton('core/resource')->getConnection('core_write');
-			$conn->query('DELETE from sid_roles_customergroups WHERE user_id='.$user->getId());
-			if(isset($post['allow_all_customergroups'])){
-				$user->setAllowAllCustomergroups($post['allow_all_customergroups']);
-			}
-			if (isset($post['customergroups'])) {
-				foreach ($post['customergroups'] as $key=>$value) {
-					if (is_array($value)) {
-						$roles = Mage::getModel('sidroles/customergroups');
-						$roles->setUserId($user->getId());
-						$roles->setCustomerGroupId($key);
-						 
-						if (isset($value['read'])) $roles->setRead(1);
-						if (isset($value['write'])) $roles->setWrite(1);
-						$roles->save();
+			//nur bearbeiten falls der Tab auch angezeigt wurde
+			if(isset($post['tab_adminuser_role_customergroups']))
+			{
+				$conn->query('DELETE from sid_roles_customergroups WHERE user_id='.$user->getId());
+				if(isset($post['allow_all_customergroups'])){
+					$user->setAllowAllCustomergroups($post['allow_all_customergroups']);
+				}
+				if (isset($post['customergroups'])) {
+					foreach ($post['customergroups'] as $key=>$value) {
+						if (is_array($value)) {
+							$roles = Mage::getModel('sidroles/customergroups');
+							$roles->setUserId($user->getId());
+							$roles->setCustomerGroupId($key);
+							 
+							if (isset($value['read'])) $roles->setRead(1);
+							if (isset($value['write'])) $roles->setWrite(1);
+							$roles->save();
+						}
 					}
 				}
 			}
-
 		}
 	}
 	 

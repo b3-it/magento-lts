@@ -17,9 +17,9 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
   
     
     public function indexAction() {
- 
+    	
     		$this->loadLayout();
-    		$this->_setActiveMenu('import/items');
+    		$this->_setActiveMenu('system/convert');
     
     		$this->_addBreadcrumb($this->__('Import'), $this->__('Import'));
     
@@ -56,7 +56,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     		//Mage::register('import_data', $model);
     
     		$this->loadLayout();
-    		$this->_setActiveMenu('import/items');
+    		$this->_setActiveMenu('system/convert');
     
     		$this->_addBreadcrumb($this->__('Import'), $this->__('Import'));
     
@@ -98,7 +98,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     			
     			
     			/* @var $builder Sid_Import_Model_Itw */
-    			$builder = Mage::getModel('sidimport/Itw');
+    			$builder = Mage::getModel('sidimport/builder_itw');
     			$builder->setSkuPrefix($defaults['sku_prefix'].$defaults['los']."/");
     			$builder->setCategoryId($defaults['category']);
     			$builder->setWebSiteId($defaults['website']);
@@ -118,7 +118,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     			foreach ($importIds as $importId) {
     				$import = Mage::getModel('sidimport/storage')->load($importId);
     				
-    				$article = new B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article($import->getImportdata(),true);
+    				$article = new Sid_Import_Model_Builder_Item_Article2005($import->getImportdata(),true);
     				$builder->addItem($article);
     				
     			}
@@ -129,6 +129,14 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     							'Total of %d record(s) were successfully imported', count($importIds)
     							)
     					);
+    			
+    			//zur Artikelverwaltung weiterleiten (mit Filter auf die importierten Produkte)
+    			$from = $builder->getFirstEntityId();
+    			$to = $builder->getLastEntityId();
+    			$filter = "entity_id[from]={$from}&entity_id[to]={$to}";
+    			$filter = base64_encode($filter);
+    			$this->_redirect('adminhtml/catalog_product/index',array('filter'=>$filter));
+    			return;
     		} catch (Exception $e) {
     			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
     		}

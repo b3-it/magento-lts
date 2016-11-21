@@ -74,17 +74,17 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
             'label'    => $helper->__('Website'),
             'required' => true,
             'values'   => Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray(),
-        			'value' 	=> $this->getImportDefaults('website')
+        	'value' 	=> $this->getImportDefaults('website')
         	 ));
 
-    		if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+    	if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
 	        	$fieldset->addField('store', 'select', array(
 	            'name'     => 'default[store]',
 	            'title'    => $helper->__('Store'),
 	            'label'    => $helper->__('Store'),
 	            'required' => true,
-	            'values'   => Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray(),
-	        	'value' 	=> $this->getImportDefaults('store')
+	            'values'   => Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray(true),
+	        	//'value' 	=> $this->getImportDefaults('store','')
 	        	));
         	}
 
@@ -103,16 +103,16 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
             'title'    => $helper->__('No Tax Class'),
             'label'    => $helper->__('No Tax Class'),
             'required' => true,
-            'values'   => Mage::getSingleton('tax/class_source_product')->toOptionArray(),
+            'values'   => Mage::getSingleton('tax/class_source_product')->getAllOptions(true),
         	'value' 	=> $this->getImportDefaults('tax_class1')
         	));
 
         $fieldset->addField('tax_rate2', 'text', array(
         		'name'     => 'default[tax_rate2]',
-        		'title'    => $helper->__('Tax Rate for Reduced Tax'),
-        		'label'    => $helper->__('Tax Rate for Reduced Tax'),
-        		'value' 	=> $this->getImportDefaults('tax_rate2')
-        		//'required' => true,
+        		'title'    => $helper->__('Tax Rate for Reduced Tax [%]'),
+        		'label'    => $helper->__('Tax Rate for Reduced Tax [%]'),
+        		'value' 	=> $this->getImportDefaults('tax_rate2',"7"),
+        		'required' => true,
         		 
         ));
         
@@ -122,16 +122,16 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
         		'title'    => $helper->__('Reduced Tax Class'),
         		'label'    => $helper->__('Reduced Tax Class'),
         		'required' => true,
-        		'values'   => Mage::getSingleton('tax/class_source_product')->toOptionArray(),
+        		'values'   => Mage::getSingleton('tax/class_source_product')->getAllOptions(true),
         		'value' 	=> $this->getImportDefaults('tax_class2')
         ));
         
         $fieldset->addField('tax_rate3', 'text', array(
         		'name'     => 'default[tax_rate3]',
-        		'title'    => $helper->__('Tax Rate for Normal Tax'),
-        		'label'    => $helper->__('Tax Rate for Normal Tax'),
-        		'value' 	=> $this->getImportDefaults('tax_rate3')
-        		//'required' => true,
+        		'title'    => $helper->__('Tax Rate for Normal Tax [%]'),
+        		'label'    => $helper->__('Tax Rate for Normal Tax [%]'),
+        		'value' 	=> $this->getImportDefaults('tax_rate3',"19"),
+        		'required' => true,
               
         ));
         
@@ -140,7 +140,7 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
         		'title'    => $helper->__('Normal Tax Class'),
         		'label'    => $helper->__('Normal Tax Class'),
         		'required' => true,
-        		'values'   => Mage::getSingleton('tax/class_source_product')->toOptionArray(),
+        		'values'   => Mage::getSingleton('tax/class_source_product')->getAllOptions(true),
         		'value' 	=> $this->getImportDefaults('tax_class3')
         ));
         
@@ -148,38 +148,28 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
         
         $fieldset->addField('qty', 'text', array(
         		'name'     => 'default[qty]',
-        		'title'    => $helper->__('Quantity'),
-        		'label'    => $helper->__('Quantity'),
+        		'title'    => $helper->__('Default Quantity'),
+        		'label'    => $helper->__('Default Quantity'),
         		'note'	   => $helper->__("0 = switch off Stock Inventory"),
-        		'value'   => empty($this->getImportDefaults('los'))? $this->getImportDefaults('los') : '0',
-        		//'required' => true,
+        		'value'   => $this->getImportDefaults('los',"0"),
+        		'required' => true,
         
         ));
         
-//         $losId =  intval($this->getRequest()->getParam('los'));
-//         if($losId == 0)
-//         {
-// 	        $fieldset->addField('fetch', 'button', array(
-// 	        		'name'     => 'qty',
-// 	        		'title'    => $helper->__('Fetch Data'),
-// 	        		'label'    => $helper->__('Fetch Data'),
-// 	        		'value'	=>$helper->__('Start'),
-// 	        		'class' =>'button',
-// 	        		'onclick' => "fechData('".$this->_getFetchUrl()."');"
-// 	        		//'required' => true,
-	        
-// 	        ));
-//         }
-
-
-//        $form->setUseContainer(true);
-//        $this->setForm($form);
-
+		$fieldset->addField('fetch', 'button', array(
+	        		'name'     => 'qty',
+	        		'title'    => $helper->__('Fetch Data'),
+	        		'label'    => $helper->__('Fetch Data'),
+	        		'value'	=>$helper->__('Start'),
+	        		'class' =>'form-button',
+	        		'onclick' => 'editForm.submit();'
+	        ));
+        
         return parent::_prepareForm();
     }
     
     
-    private function getImportDefaults($key = NULL)
+    private function getImportDefaults($key = NULL, $default = "")
     {
     	$session = Mage::getSingleton("admin/session");
     	$defaults = $session->getImportDefaults();
@@ -190,7 +180,7 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
     	   	return $defaults[$key];
     	}
     	
-    	return "";
+    	return $default;
     }
     
     

@@ -29,7 +29,7 @@
 		<layout>
 			<updates>
 				<pdftemplate>
-					<file>egovs_pdftemplate.xml</file>
+					<file>egovs/pdftemplate.xml</file>
 				</pdftemplate>
 			</updates>
 		</layout>

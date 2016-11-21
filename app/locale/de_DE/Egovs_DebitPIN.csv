@@ -53,5 +53,4 @@
 "REGISTER_FIRST","Sie können Ihre PIN erst ändern, wenn Sie sich für das Lastschriftverfahren registriert haben.<br><br>Um sich für das Lastschriftverfahren mit PIN zu registrieren, klicken Sie bitte"
 "PIN_REGISTRATION_SUCCESSFULL","Sie wurden erfolgreich für die Zahlung per Lastschrift registriert. Um mit der Anmeldung fortzufahren, drucken Sie bitte das unten angegebene Formular aus und senden dieses korrekt ausgefüllt zu uns. Sie erteilen uns damit die schriftliche Einzugsermächtigung.<br><br>Download: "
 "REGISTRATION_DOCUMENT","Anmeldeformular"
-
-					
+"Payment method is not available.","Diese Bezahlmethode steht nicht zur Verfügung."

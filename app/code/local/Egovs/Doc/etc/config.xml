@@ -35,9 +35,9 @@
 		            <Egovs_Doc>
 		                <files>
 		                    <default>Egovs_Doc.csv</default>
-                    </files>
-                </Egovs_Doc>
-            </modules>
+                    	</files>
+                	</Egovs_Doc>
+            	</modules>
 		    </translate>
 		    <acl>
 		        <resources>
@@ -135,12 +135,18 @@
 
         <egovs_doc>
             <categories>
-                <Allgemein>
-                    <label>Allgemein</label>
-                </Allgemein>
-                <Kundenverwaltung>
-                    <label>Kundenverwaltung</label>
-                </Kundenverwaltung>
+                <Einfuehrung>
+                    <label>Einführung</label>
+                </Einfuehrung>
+                <Handbuecher>
+                    <label>Handbücher</label>
+                </Handbuecher>
+                <DWDModule>
+                    <label>DWD-Module</label>
+                </DWDModule>
+                <PolarionTesttool>
+                    <label>Polarion-Testtool</label>
+                </PolarionTesttool>
             </categories>
         </egovs_doc>
     </global>

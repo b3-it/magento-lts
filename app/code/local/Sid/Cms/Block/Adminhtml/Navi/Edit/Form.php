@@ -42,10 +42,10 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Form extends Mage_Adminhtml_Block_Widget
       ));
       
       
-      $fieldset = $form->addFieldset('navi_pages', array('legend'=>Mage::helper('sidcms')->__('Pages')));
+      $fieldset = $form->addFieldset('navi_pages', array('legend'=>Mage::helper('sidcms')->__('Pages available')));
       
       $fieldset->addField('cms_pages', 'multiselect', array(
-      		'label'     => Mage::helper('sidcms')->__('Seiten'),
+      		'label'     => Mage::helper('sidcms')->__('Pages'),
       		//'required'  => true,
       		'values'    => $this->getPages(),
       		'name'      => 'cms_pages',
@@ -59,6 +59,7 @@ class Sid_Cms_Block_Adminhtml_Navi_Edit_Form extends Mage_Adminhtml_Block_Widget
       		'value' => Mage::helper ( 'sidcms' )->__ ( 'Insert' ),
       		'name' => 'copy_cms_pages',
       		'onclick' => "addPages();",
+      		'class'	=> 'form-button',
       		'label' => Mage::helper ( 'sidcms' )->__ ( 'Copy selected Pages to Navigation' ),
       ) );
       

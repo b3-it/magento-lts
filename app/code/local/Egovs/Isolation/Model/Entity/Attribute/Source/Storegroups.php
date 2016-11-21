@@ -28,7 +28,7 @@ class Egovs_Isolation_Model_Entity_Attribute_Source_Storegroups extends Mage_Eav
         	if($helper->getUserIsAdmin())
         	{
 	        	$this->_options[] = array(
-	                    'label' =>'not Set',
+	                    'label' =>$helper->__('not assigned to special store'),
 	                    'value' =>'0'
 	                );
         	}
@@ -62,10 +62,15 @@ class Egovs_Isolation_Model_Entity_Attribute_Source_Storegroups extends Mage_Eav
      *
      * @return array
      */
-    public function getOptionArray()
+    public function getOptionArray($appendEmpty = false)
     {
         $_options = array();
-        foreach ($this->getAllOptions() as $option) {
+        $allOptions = $this->getAllOptions();
+        if($appendEmpty){
+        	$_options[''] = Mage::helper('isolation')->__('-- Please Select a Store --');
+        	array_shift($allOptions);
+        }
+        foreach ($allOptions as $option) {
             $_options[$option['value']] = $option['label'];
         }
         return $_options;

@@ -5,3 +5,8 @@
 "Edit Credential","Zugriffsdaten bearbeiten"
 "Credential","Zugangsdaten"
 "Maximum saleable quantity is 1","Die maximal verkaufbare Menge ist 1"
+"ICD has been informed removing credetials!","Der ICD wurde informiert um den Zugang zu entfernen."
+"Item %s could not canceld within ICD (Id: %s).","Der Zugang konnte nicht entfernt werden (Id: %s)."
+"Subscription has ben closed!","Das Abonnement wurde geschlossen."
+"Some newer subscription has ben found!","Es wurden neuere Abonnements gefunden!"
+"Period","Periode"

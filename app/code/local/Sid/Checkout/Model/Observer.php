@@ -62,4 +62,28 @@ class Sid_Checkout_Model_Observer
             Mage::getSingleton('checkout/session')->getQuoteId($quote->getId());
         }
     }
+    
+    public function onSalesOrderPlaceAfter($observer)
+    {
+    	$request = Mage::app()->getRequest();
+    	$vergabenr = $request->getParam('vergabenummer'); 
+    	$order = $observer->getEvent()->getOrder();
+    	$losId = 0;
+    	if($order){
+	    	foreach($order->getAllItems() as $item){
+	    		if($losId == 0){
+	    			$product = Mage::getModel('catalog/product')->load($item->getProductId());
+	    			$losId = $product->getFramecontractLos();
+	    		}
+	    	}
+	    	
+	    	$los = Mage::getModel('framecontract/los')->load($losId);
+    	
+    	
+    		$order->setVergabenummer($vergabenr);
+    		if($los){
+    			$order->setFramecontract($los->getFramecontractContractId());
+    		}
+    	}
+    }
 }

@@ -34,7 +34,7 @@ class Egovs_Acl_Model_Productacl extends Mage_Core_Model_Abstract
 	
 	
 	/**
-	 * Rechte abhÃ¤ngig vom Produktstatus
+	 * Rechte abhängig vom Produktstatus
 	 * @param $Product
 	 */
 	public function getProductStatusString(Mage_Catalog_Model_Product $Product)

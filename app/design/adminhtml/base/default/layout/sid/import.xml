@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+ 
+    <adminhtml_sidimport_import_index>
+          <update handle="jquery_load_handle"/>
+         <reference name="head">
+          <action method="addJs"><script>sid/import/import.admin.js</script></action>
+        </reference>
+    </adminhtml_sidimport_import_index>
+
+</layout>

@@ -211,6 +211,9 @@
     <Egovs_Vies>
       <active>true</active>
       <codePool>local</codePool>
+      <depends>
+         <Mage_Customer />
+       </depends>
     </Egovs_Vies>
     <Egovs_Zahlpartnerkonten>
       <active>false</active>

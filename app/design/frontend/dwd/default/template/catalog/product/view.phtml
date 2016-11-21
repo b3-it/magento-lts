@@ -84,16 +84,13 @@
 
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                    <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                 <?php endif;?>
             </div>
 
             <?php echo $this->getChildHtml('related_products') ?>
 
             <div class="clearer"></div>
-            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-            <?php endif;?>
-
             <div class="product-collateral toggle-content tabs">
               <?php if ($detailedInfoGroup = $this->getChildGroup('detailed_info', 'getChildHtml')):?>
                 <dl id="collateral-tabs" class="collateral-tabs">

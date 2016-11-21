@@ -2,6 +2,8 @@
 <layout>
     <default>
         <reference name="head">
+            <remove name="silver_track" />
+            
             <action method="removeItem">
                 <type>skin_js</type>
                 <name>js/app_egov.js</name>
@@ -11,6 +13,11 @@
                 <name>js/app_dwd.js</name>
             </action>
         </reference>
+
+        <reference name="header">
+            <block type="core/template" name="dwd_login_logout_links" as="dwdLoginLogoutLinks" template="page/html/login-logout-buttons.phtml" />
+        </reference>
+
         <reference name="left">
             <remove name="catalog.leftnav" />
             <remove name="cart_sidebar" />
@@ -26,7 +33,24 @@
         </reference>
         
         <reference name="product.info.additional">
-            <remove name="product_tag_list"/>
+            <remove name="product_tag_list" />
+        </reference>
+        
+        <reference name="content">
+            <!-- zusätzliche Miniatur-Ansichten entfernen -->
+            <remove name="product.info.media" />
         </reference>
     </default>
+    
+    <checkout_cart_index>
+        <!-- Rabattcodes im Warenkorb raus -->
+        <reference name="checkout.cart">
+            <action method="unsetChild"><name>coupon</name></action>
+        </reference>
+        
+        <!-- Neue Rabattcodes in Warenkorb, sind aktuell nur für DWD -->
+        <reference name="checkout.cart">
+            <block type="mpcheckout/cart_coupon" name="checkout.cart.coupon" as="coupon" after="methods" template="checkout/cart/coupon.phtml"/>
+        </reference>
+    </checkout_cart_index>
 </layout>

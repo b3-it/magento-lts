@@ -31,7 +31,7 @@
     <?php if ($this->getOrderOptions()): ?>
         <dl class="item-options">
         <?php foreach ($this->getOrderOptions() as $_option): ?>
-            <dt><?php echo $_option['label'] ?></dt>
+            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
             <dd>
             <?php if (isset($_option['custom_view']) && $_option['custom_view']): ?>
                 <?php echo $_option['value'];?>
@@ -58,6 +58,11 @@
     <?php if ($options = $this->getProducts()): ?>
         <dl class="item-options">
             <dt><?php echo $this->getListAsHtml('Product(s)', $options); ?></dt>
+        </dl>
+    <?php endif; ?>
+    <?php if ($options = $this->getStartDate()): ?>
+        <dl class="item-options">
+            <dt><?php echo $this->__('Start date: %s', $this->htmlEscape($options));?></dt>
         </dl>
     <?php endif; ?>
     <?php if ($options = $this->getFormats()): ?>

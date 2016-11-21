@@ -253,12 +253,14 @@ class Egovs_Extstock_Block_Adminhtml_Extstock_Grid extends Mage_Adminhtml_Block_
 
 		return $this;
 	}
-/*
-	public function getThisUrl($action)
-	{
-		return 'adminhtml/extstock_extstock/'.$action;
-	}
-	*/
+
+	/**
+	 *
+	 * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+	 * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+	 *
+	 * @return void
+	 */
 	protected function _filterBestellwertCondition($collection, $column) {
 		if (!$value = $column->getFilter()->getValue()) {
 			return;

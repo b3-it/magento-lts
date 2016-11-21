@@ -132,7 +132,7 @@ class Egovs_GermanTax_Block_Adminhtml_Tools_Analyse_Sales_Order_Grid extends Mag
         }
         
         $this->addColumn('is_virtual', array(
-        		'header' => Mage::helper('sales')->__('Virtuel'),
+        		'header' => Mage::helper('sales')->__('Virtual'),
         		'index' => 'is_virtual',
         		'type'    => 'options',
         		'width' =>60,
