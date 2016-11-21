@@ -35,7 +35,7 @@
 	color: $grundfarbe-blau;
 }
 
-#product-base-block {
+#product-base-block, #product-options-wrapper {
     margin-bottom: $global-boxmargin;
 }
 
@@ -994,7 +994,9 @@
 .product-options dd {
     padding: 0 0 10px 0;
     margin: 0 0 5px;
-    border-bottom: $global-box-border solid $global-border-color;
+    &:not(:last_child) {
+        border-bottom: $global-box-border solid $grundfarbe-blgr;
+    }
 }
 
 .product-options dl.last dd.last {

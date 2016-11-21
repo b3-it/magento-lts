@@ -20,6 +20,11 @@
         .col-main {
             padding-top: 20px;
         }
+        
+        .account-login {
+            position: relative;
+            top: -25px;
+        }
     }
 	
 	.col2-set {
@@ -223,6 +228,7 @@ body.customer-account {
         }
         .col-main {
             padding-top: 0;
+            padding-bottom: 50px;
         }
     }
     
@@ -334,7 +340,7 @@ body.customer-account {
             }
         }
 
-        .billing-agreements > p, #recurring-profiles-empty,
+        > div > p, #recurring-profiles-empty,
         #review-list-empty, #customer-tag-list-empty,
         #customer-token-list-empty, #customer-download-list-empty {
             @extend .egov-default-message;
