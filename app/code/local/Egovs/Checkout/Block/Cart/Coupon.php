@@ -10,6 +10,24 @@
  */
 class Egovs_Checkout_Block_Cart_Coupon extends Mage_Checkout_Block_Cart_Coupon
 {
+	/**
+	 * Store associated with rule entities information map
+	 *
+	 * @var array
+	 * @see Mage_SalesRule_Model_Resource_Rule_Collection
+	 */
+	protected $_associatedEntitiesMap = array(
+			'website' => array(
+					'associations_table' => 'salesrule/website',
+					'rule_id_field'      => 'rule_id',
+					'entity_id_field'    => 'website_id'
+			),
+			'customer_group' => array(
+					'associations_table' => 'salesrule/customer_group',
+					'rule_id_field'      => 'rule_id',
+					'entity_id_field'    => 'customer_group_id'
+			)
+	);
 
 	protected function _isCouponRuleAvaillable($websiteId = null, $customerGroupId = null) {
 		if (is_null($websiteId)) {
@@ -27,12 +45,32 @@ class Egovs_Checkout_Block_Cart_Coupon extends Mage_Checkout_Block_Cart_Coupon
 		//reinit
 		$salesRuleCollection->getSelect()->from(array('main_table' => $salesRuleCollection->getMainTable()));
 
-		$salesRuleCollection->addFieldToFilter('website_ids', array('finset' => (int)$websiteId))
-            ->addFieldToFilter('customer_group_ids', array('finset' => (int)$customerGroupId))
-            ->addFieldToFilter('coupon_type', Mage_SalesRule_Model_Rule::COUPON_TYPE_SPECIFIC)
-            ->addFieldToFilter('is_active', 1);
+		$salesRuleCollection->addFieldToFilter('coupon_type', Mage_SalesRule_Model_Rule::COUPON_TYPE_SPECIFIC);
+		
+        $this->addWebsiteFilter(intval($websiteId));
+        
+        $now = Mage::getModel('core/date')->date('Y-m-d');
+        
+        $entityInfo = $this->_getAssociatedEntityInfo('customer_group');
+        $connection = $this->getConnection();
+        $this->getSelect()
+        	->joinInner(
+        			array('customer_group_ids' => $this->getTable($entityInfo['associations_table'])),
+        			$connection->quoteInto(
+        				'main_table.' . $entityInfo['rule_id_field']
+        				. ' = customer_group_ids.' . $entityInfo['rule_id_field']
+        				. ' AND customer_group_ids.' . $entityInfo['entity_id_field'] . ' = ?',
+        				(int)$customerGroupId
+        				),
+        			array()
+        		)
+        	//sind die nicht falsch herum --> CORE-BUG? @see addWebsiteGroupDateFilter
+//         	->where('from_date is null or from_date <= ?', $now)
+//         	->where('to_date is null or to_date >= ?', $now)
+        ;
+        
+        $this->addIsActiveFilter();
 
-		$now = Mage::getModel('core/date')->date('Y-m-d');
 		$filterIsNull = array('null' => true);
 		$filterlteq = array('from' => $now);
 		$filtergteq = array('to'=> $now);
@@ -40,8 +78,10 @@ class Egovs_Checkout_Block_Cart_Coupon extends Mage_Checkout_Block_Cart_Coupon
 		$salesRuleCollection->addFieldToFilter('from_date', array($filterIsNull,$filtergteq ))
 			->addFieldToFilter('to_date', array($filterIsNull, $filterlteq));
 
-		//$debug = $salesRuleCollection->getSelectCountSql()->assemble();
-		//die($debug);
+		if (Mage::getStoreConfig('dev/log/level') == Zend_Log::DEBUG) {
+			$debug = $salesRuleCollection->getSelectCountSql()->assemble();
+			Mage::log("Coupon SalesRuleSql::\n$debug", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+		}
 		if ($salesRuleCollection->getSize() > 0) {
 			return true;
 		}
