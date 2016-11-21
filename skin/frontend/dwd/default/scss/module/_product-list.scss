@@ -244,14 +244,6 @@ p.product-name {
     }
 }
 
-.widget-new-products {
-    .products-grid .product-image {
-        width: 75%;
-        margin-bottom: 15px;
-        margin-left: 10%;
-    }
-}
-
 // ---------------------------------------------
 
 @include bp(min-width, 960px) {

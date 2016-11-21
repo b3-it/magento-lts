@@ -166,25 +166,3 @@ body .promos > li {
 /* -------------------------------------------- *
  * New Products Section
  */
-
-/* Hiding the reviews content via CSS because we can't modify the template, */
-/* since it may be used in other places where those elements are needed */
-.cms-index-index .products-grid .ratings,
-.cms-index-index .products-grid .actions,
-.cms-index-noroute .products-grid .ratings,
-.cms-index-noroute .products-grid .actions {
-    display: none;
-}
-
-.cms-index-index h2.subtitle {
-    padding: 6px 0;
-    text-align: center;
-    color: $c-text-primary;
-    font-weight: 600;
-    border-bottom: 1px solid $c-module-border;
-    border-top: 1px solid $c-module-border;
-}
-
-.cms-index-noroute h2.subtitle {
-    display: none;
-}
