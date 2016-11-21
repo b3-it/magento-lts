@@ -22,6 +22,15 @@ $j(document).ready(function(){
                            .addClass('no-display')
                            .css('display', 'none');
 	}
+
+	if ( $j('#product_addtocart_form p.delivery-time').length ) {
+		$j('#grouped-product-avalible-moved').html( $j('#product_addtocart_form p.delivery-time').html() )
+                                             .removeClass('no-display')
+                                             .css('display', 'block');
+        $j('#product_addtocart_form p.delivery-time').html('')
+                                                     .addClass('no-display')
+                                                     .css('display', 'none');
+	}
 	
 	// Auf Größen-Anpassung des Fensters reagieren
 	$j(window).resize(function() {

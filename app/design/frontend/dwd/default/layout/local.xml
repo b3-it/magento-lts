@@ -33,7 +33,12 @@
         </reference>
         
         <reference name="product.info.additional">
-            <remove name="product_tag_list"/>
+            <remove name="product_tag_list" />
+        </reference>
+        
+        <reference name="content">
+            <!-- zusätzliche Miniatur-Ansichten entfernen -->
+            <remove name="product.info.media" />
         </reference>
     </default>
     
