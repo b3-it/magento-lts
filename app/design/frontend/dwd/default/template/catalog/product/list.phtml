@@ -57,7 +57,7 @@
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
                          alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
 
-              <?php if( $this->isProductNew($_product) ) : ?>
+              <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
                 <div class="product-new-block">
                     <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
                 </div>
@@ -162,7 +162,7 @@
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize_grid); ?>"
                          alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
                 </a>
-              <?php if( $this->isProductNew($_product) ) : ?>
+              <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
                 <div class="product-new-block">
                     <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
                 </div>
