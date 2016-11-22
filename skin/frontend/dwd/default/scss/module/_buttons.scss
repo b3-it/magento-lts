@@ -24,8 +24,13 @@
 .button.disabled,
 .button:disabled {
     background: $grundfarbe-blgr;
+    color: $grundfarbe-blau;
     opacity: 0.6;
     cursor: not-allowed;
+    
+    &:hover, &:active, &:focus {
+        color: $grundfarbe-blau;
+    }
 }
 
 /* Adjacent buttons */

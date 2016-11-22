@@ -1327,15 +1327,15 @@ span.weee {
     display: none;
     position: absolute;
     z-index: 300;
-    width: 200px;
+    width: 350px;
     padding: 8px;
-    border: 1px solid $c-action;
-    background-color: #F6F6F6;
+    border: $global-active-border solid $grundfarbe-blau;
+    background-color: $grundfarbe-weiss;
     top: 21px;
     left: -100px;
 
     &:after {
-        @include triangle(up, 7px, $c-action);
+        @include triangle(up, 7px, $grundfarbe-blau);
         left: (100px + -3px);
         top: -7px;
     }
