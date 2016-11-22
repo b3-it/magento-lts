@@ -405,9 +405,13 @@
         display: none;
         font-size: 0.9rem;        
         
-        span.in-stock, span.not-in-stock {
+        span.in-stock, span.not-in-stock, .value {
             font-size: 1.2rem;
             color: $grundfarbe-blau;
+        }
+        
+        .label {
+            font-size: 0.9rem;
         }
     }
     
