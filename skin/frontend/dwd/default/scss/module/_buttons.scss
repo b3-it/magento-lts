@@ -23,7 +23,7 @@
 /* Disabled - class for anchor, state for form elements */
 .button.disabled,
 .button:disabled {
-    background: $global-lightcolor;
+    background: $grundfarbe-blgr;
     opacity: 0.6;
     cursor: not-allowed;
 }
@@ -39,7 +39,7 @@
 // extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
 @mixin touch-button {
     color: $global-button-font-color;
-    background-color: $global-lightcolor;
+    background-color: $grundfarbe-blgr;
     padding: 5px 10px;
 }
 
