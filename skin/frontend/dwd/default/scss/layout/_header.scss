@@ -500,12 +500,23 @@ a.skip-link {
  * Global Header Navigation
  * ============================================ */
 .account-cart-wrapper {
-    text-align: right;
+    display: inline-block;
+    float: right;
     
     > div {
-    	display: inline-block;
     	vertical-align: top;
-    	position: relative;
+        display: inline-block;
+        float: left;
+        margin-right: 1px;
+        
+        &.header-minicart .count {
+            top: -1px;
+            right: -1px;
+        }
+        
+        &.header-minicart #header-cart.skip-active {
+            right: 10.5%;
+        }
     }
 }
 
