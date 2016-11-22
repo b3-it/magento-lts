@@ -124,12 +124,15 @@
             margin-bottom: 0px;
         }
 
-        ul li label {
-            width: 45%;
+        ul:not(.group-select) li label {
             display: inline-block;
             position: relative;
             top: -2px;
             margin-left: 3px;
+        }
+        
+        ul:not(.group-select) li label {
+            width: 45%;
         }
     }
 
@@ -140,7 +143,7 @@
 
     .col-main {
         .order_pre {
-            color: $grundfarbe-blau;
+            color: $textfarbe-mittel;
             font-weight: bold;
             margin-right: 10px;
             font-size: $global-h4-size;
