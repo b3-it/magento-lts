@@ -41,12 +41,35 @@ footer {
     clear: both;
     margin: 0px auto;
     max-width: $global-fullpage-width;
+    width: 100%;
+    display: block;
 }
 
 address {
     color: $grundfarbe-weiss;
-    text-align: right;
+    display: inline-block;
     font-size: $global-fontsize-small;
+    
+    &.copyright {
+        width: auto;
+        margin-top: 20px;
+    }
+}
+
+#footer-navigation {
+	bottom: -90px;
+    display: inline-block;
+    float: right;
+    position: relative;
+	
+	li {
+	    display: inline-block;
+	    padding: 0 10px;
+	}
+	
+	a {
+	    @include link-weiss;
+	}
 }
 
 #footer-block-legal {
@@ -78,28 +101,21 @@ address {
         @include link-weiss;
         background: transparent;
     }
-
-    .block-title,
-    .block-title span {
+    
+    .block-title, .block-title strong {
         color: $grundfarbe-weiss;
+    	font-size: 1rem;
     }
-   
+
     .block-title {
-    	font-size: $global-h4-size;
         font-weight: normal;
         text-transform: uppercase;
-        margin: 0 0 25px;
+        margin: 0 0 15px;
         padding-top: 0px;
     }
 
     .block-title strong {
         font-weight: bold;
-    }
-
-    .copyright {
-        width: auto;
-        position: relative;
-        top: -5px;
     }
 
     .links {
@@ -110,7 +126,7 @@ address {
         text-align: left;
 
         li {
-            line-height: $global-footer-lineheight;
+            line-height: 1.1rem !important;
         }
     }
 

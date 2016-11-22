@@ -40,6 +40,22 @@
             <!-- zusätzliche Miniatur-Ansichten entfernen -->
             <remove name="product.info.media" />
         </reference>
+        
+        <reference name="footer">
+            <remove name="cms_footer_links" />
+            <remove name="footer_links" />
+            <remove name="footer_links2" />
+            
+            <block type="cms/block" name="dwd_cms_footer_rechts" before="-">
+                <action method="setBlockId"><block_id>dwd_footer_rechts</block_id></action>
+            </block>
+            <block type="cms/block" name="dwd_cms_footer_mitte" before="dwd_cms_footer_rechts">
+                <action method="setBlockId"><block_id>dwd_footer_mitte</block_id></action>
+            </block>
+            <block type="cms/block" name="dwd_cms_footer_links" before="dwd_cms_footer_mitte">
+                <action method="setBlockId"><block_id>dwd_footer_links</block_id></action>
+            </block>
+        </reference>
     </default>
     
     <checkout_cart_index>

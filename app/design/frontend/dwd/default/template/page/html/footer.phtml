@@ -1,7 +1,7 @@
 ﻿<?php
 /**
  * @category    design
- * @package     egov_default
+ * @package     dwd_default
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -22,12 +22,13 @@
 	<div class="footer-container bottom-row">
 	    <div class="footer-wrapper">
 	        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('dwd_footer_block')->toHTML(); ?>
+	        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('dwd_footer_navigation')->toHTML(); ?>
 	        <address class="copyright">
 	        <?php
+	            echo $this->getCopyright() . ' ';
 	            if ( $this->canShowVersion() == true ) {
 	          	    echo $this->__('(Version %s) ', $this->getVersion());
 	            }    
-	            echo $this->getCopyright();
 	        ?>
 	        </address>
 	    </div>
