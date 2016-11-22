@@ -12,6 +12,10 @@
 class Sid_Import_Model_Builder_Item_Article2005 extends B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article
 {
 
+	/**
+	 * (non-PHPdoc)
+	 * @see B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article::getAttributeRow()
+	 */
 	public function getAttributeRow($default = array())
 	{
 		
@@ -21,6 +25,7 @@ class Sid_Import_Model_Builder_Item_Article2005 extends B3it_XmlBind_Bmecat2005_
 			$default['framecontract_qty'] = $this->getStockQuantity();
 		}
 		
+		$default = parent::getAttributeRow($default);
 		
 		return $default;
 	}

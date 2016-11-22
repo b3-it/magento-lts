@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Egovs_Isolation>
-      <version>0.1.0</version>
+      <version>0.1.1</version>
     </Egovs_Isolation>
   </modules>
 
