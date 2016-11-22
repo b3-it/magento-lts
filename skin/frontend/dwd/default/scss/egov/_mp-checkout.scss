@@ -140,15 +140,15 @@
 
     .col-main {
         .order_pre {
-            color: $global-fontcolor-dark;
+            color: $grundfarbe-blau;
             font-weight: bold;
             margin-right: 10px;
-            font-size: $global-checkout-success-order-text;
+            font-size: $global-h4-size;
         }
         .order_number {
             color: $grundfarbe-blau;
             font-weight: bold;
-            font-size: $global-checkout-success-order-number;
+            font-size: $global-h3-size;
         }
         
         @include bp(max-width, $bp-medium) {
