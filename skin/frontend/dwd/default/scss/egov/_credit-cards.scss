@@ -2,22 +2,8 @@
     margin-bottom: 15px;
 }
 
+#widget_credit_cards, .widget_credit_cards,
 #credit_cards, .credit_cards {
-    border: 0 none;
-    float: left;
-    height: 27px;
-    margin: -20px -10px 0 0;
-    width: 120px;
-
-    img {
-        border: 0 none;
-        margin-top: 3px;
-        width: 40px;
-        display: inline-block;
-    }
-}
-
-#widget_credit_cards, .widget_credit_cards {
     border: 0 none;
     height: 100%;
     width: 100%;
@@ -25,9 +11,16 @@
     img {
         border: 0 none;
         margin-top: 3px;
-        width: 40px;
+        width: 23%;
         display: inline-block;
     }
+}
+
+#credit_cards, .credit_cards {
+    float: left;
+    height: 27px;
+    margin: -20px -10px 0 0;
+    width: 120px;
 }
 
 #widget_logo_master_card {
@@ -45,6 +38,7 @@
 #pay-logo-before {
 	@extend .fa;
 	@extend .fa-credit-card;
+	color: $zusatzfarbe-blau;
 }
 #pay-logo-two {
 	@extend .fa;
@@ -53,4 +47,5 @@
     left: -15%;
     position: relative;
     top: 10%;
+    color: $grundfarbe-blau
 }
