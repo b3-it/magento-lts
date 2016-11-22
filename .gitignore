@@ -42,6 +42,7 @@ ehthumbs.db
 # Zertifikate
 lib/ePayment
 
-/app/etc_dwd
-/app/etc_stala
+/app/etc_*
+/app/etc/etc.xml
 /info.php
+*.exe
