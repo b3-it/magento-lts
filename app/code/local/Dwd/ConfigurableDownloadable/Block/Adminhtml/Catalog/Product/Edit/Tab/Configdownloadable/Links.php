@@ -143,7 +143,7 @@ class Dwd_ConfigurableDownloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Conf
     	$this->getMassactionBlock()->setFormFieldName('link_ids');
     	$this->getMassactionBlock()->addItem('delete', array(
     			'label'=> Mage::helper('adminhtml')->__('Delete'),
-    			'url'  => $this->getUrl('configdownloadable/adminhtml_configdownloadable_product_edit/massDelete', array('id' => $this->getProduct()->getId(), '_secure' => true)),
+    			'url'  => $this->getUrl('adminhtml/configdownloadable_product_edit/massDelete', array('id' => $this->getProduct()->getId(), '_secure' => true)),
     			'confirm' => Mage::helper('adminhtml')->__('Are you sure?')
     	));
     	return $this;
@@ -241,7 +241,7 @@ class Dwd_ConfigurableDownloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Conf
      * @return string
      */
     public function getGridUrl() {
-    	$url =$this->getUrl('configdownloadable/adminhtml_configdownloadable_product_edit/grid', array('_current'=>true));
+    	$url =$this->getUrl('adminhtml/configdownloadable_product_edit/grid', array('_current'=>true));
     	return $url;
     }
 
