@@ -513,9 +513,12 @@ a.skip-link {
             top: -1px;
             right: -1px;
         }
-        
         &.header-minicart #header-cart.skip-active {
             right: 10.5%;
+        }
+        
+        &#header-account-link #header-account.skip-active {
+            right: 26%;
         }
     }
 }
