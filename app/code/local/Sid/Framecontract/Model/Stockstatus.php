@@ -11,6 +11,8 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 	{
 		$collection = Mage::helper('framecontract')->getStockStatusCollection();
 		
+		
+		
 		$qty = intval(Mage::getStoreConfig("framecontract/contract_qty/qty"));
 		$expr = new Zend_Db_Expr('IF(qty.value <> 0, ((qty.value - stock.qty) / qty.value * 100), 0) >= ' . $qty);
 		$expr2 = new Zend_Db_Expr('losdetail.stock_status_send = 0');
@@ -28,6 +30,8 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 		$data = array();
 		$data['items'] = array();
 		$this->setLog('Found '.count($collection->getItems()).' low Stock Items (less than '.$qty.'%) in DB');
+		$this->setLog($collection->getSelect()->__toString());
+		die();
 		foreach($collection->getItems() as $item)
 		{
 			if($lastStore && $lastStore != $item->getStoreGroup())
