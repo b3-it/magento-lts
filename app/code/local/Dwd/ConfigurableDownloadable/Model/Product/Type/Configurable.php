@@ -368,7 +368,7 @@ class Dwd_ConfigurableDownloadable_Model_Product_Type_Configurable extends Mage_
     				->addFieldToFilter('data_valid_to', array('from'=>$periodeItem->getStartDate(), 'to' => $periodeItem->getEndDate()))
     			;
     		}
-    		$this->setLog(sprintf("getLinksForSale SQL: \n%s", $_linkCollection->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+    		Mage::log(sprintf("getLinksForSale SQL: \n%s", $_linkCollection->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     		$linksCollectionById = array();    		
 	    	foreach ($_linkCollection as $link) {
 	    		/* @var Dwd_ConfigurableDownloadable_Model_Extendedlink $link */

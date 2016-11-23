@@ -17,6 +17,7 @@ class Sid_Import_Model_RestImport
 			$storage->setImportType($product->import_type);
 			$storage->setPrice($product->price);
 			$storage->setImportdata($product->data);
+			$storage->setName($product->name);
 			$storage->save();
 			
 			
