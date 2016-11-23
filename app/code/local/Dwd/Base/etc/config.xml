@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dwd_Base>
+            <version>0.0.0.1</version>
+        </Dwd_Base>
+    </modules>
+    <global>
+        <resources>
+            <dwdbase_setup>
+                <setup>
+                    <module>Dwd_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dwdbase_setup>
+        </resources>
+    </global>
+</config>
