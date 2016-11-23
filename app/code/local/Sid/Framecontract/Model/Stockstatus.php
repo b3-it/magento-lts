@@ -31,7 +31,7 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 		$data['items'] = array();
 		$this->setLog('Found '.count($collection->getItems()).' low Stock Items (less than '.$qty.'%) in DB');
 		$this->setLog($collection->getSelect()->__toString());
-		die();
+
 		foreach($collection->getItems() as $item)
 		{
 			if($lastStore && $lastStore != $item->getStoreGroup())
