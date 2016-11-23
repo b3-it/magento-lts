@@ -26,6 +26,10 @@
         <Dwd_Periode />
       </depends>
     </Dwd_AutoFileAssignment>
+    <Dwd_Base>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Dwd_Base>
     <Dwd_ConfigurableDownloadable>
       <active>false</active>
       <codePool>local</codePool>

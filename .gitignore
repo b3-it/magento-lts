@@ -45,4 +45,5 @@ lib/ePayment
 /app/etc_*
 /app/etc/etc.xml
 /info.php
+/var/importexport/*
 *.exe
