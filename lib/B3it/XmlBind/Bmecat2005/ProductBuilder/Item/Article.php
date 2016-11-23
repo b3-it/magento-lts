@@ -18,6 +18,8 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	 *  */ 
 	protected $_xmlProduct = null;
 
+	
+	
 	/**
 	 * Konstruktor mit der bmecat2005/Artikel xml Struktur
 	 * @param B3it_XmlBind_Bmecat2005_TNewCatalog_Article $xml
@@ -92,6 +94,9 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	}
 	
 	
+	/**
+	 * Die Attribute aus der XML Struktur lesen und als Array zurückgeben
+	 */
 	public function getAttributeRow($default = array())
 	{
 		$name = array();
@@ -114,7 +119,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 		$default['weight'] = 0;
 		$default['supplier_sku'] = $this->_xmlProduct->getSupplierAid()->getValue();
 		$default['ean'] = $this->_xmlProduct->getArticleDetails()->getEan()->getValue();
-				
+					
 		foreach($this->_xmlProduct->getAllArticlePriceDetails() as $detail)
 		{
 			foreach($detail->getAllArticlePrice() as $price)
@@ -124,6 +129,13 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 		}
 		
 		return $default;
+	}
+	
+	
+	
+	public function getStockQuantity()
+	{
+		return intval($this->_xmlProduct->getArticleOrderDetails()->getQuantityMax()->getValue());
 	}
 	
 	/**
