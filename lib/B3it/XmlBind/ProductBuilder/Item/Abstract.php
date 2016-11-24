@@ -24,6 +24,29 @@ abstract class  B3it_XmlBind_ProductBuilder_Item_Abstract
 	
 	protected $_productType = 'simple';
 	
+	
+	/**
+	 * der Builder dem das Item hinzu gefügt wird
+	 * @var B3it_XmlBind_ProductBuilder_Abstract
+	 */
+	protected $_builder = null;
+	   
+	/**
+	 * der Builder
+	 * @return B3it_XmlBind_ProductBuilder_Abstract
+	 */
+	public function getBuilder() 
+	{
+	  return $this->_builder;
+	}
+	
+	public function setBuilder($value) 
+	{
+	  $this->_builder = $value;
+	}
+	
+	
+	
 	/**
 	 * entity_id des Produktes
 	 * @var int
@@ -68,6 +91,13 @@ abstract class  B3it_XmlBind_ProductBuilder_Item_Abstract
 	 * Steuersatz des Produktes ermitteln
 	 */
 	public abstract function getTaxRate();
+	
+	
+	
+	/**
+	 * Lagermenge als int
+	 */
+	public abstract function getStockQuantity();
 	
 	
 	/**

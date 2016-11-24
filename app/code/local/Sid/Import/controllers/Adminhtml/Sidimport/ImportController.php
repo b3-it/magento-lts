@@ -117,10 +117,17 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     			
     			foreach ($importIds as $importId) {
     				$import = Mage::getModel('sidimport/storage')->load($importId);
-    				
-    				$article = new Sid_Import_Model_Builder_Item_Article2005($import->getImportdata(),true);
-    				$builder->addItem($article);
-    				
+    				$type = $import->getImportType();
+    				if ($type == "bmecat2005_article") {
+    					$article = new Sid_Import_Model_Builder_Item_Article2005($import->getImportdata(),true);
+    					$builder->addItem($article);
+    				} else if ($type == "bmecat2005_product") {
+    					$article = new Sid_Import_Model_Builder_Item_Product2005($import->getImportdata(),true);
+    					$builder->addItem($article);
+    				} else {
+    					throw new Exception("unknown BME import type '{$type}'!");
+    					//TODO do exception!!!
+    				}
     			}
     			
     			$builder->save($imageLoader);

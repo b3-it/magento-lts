@@ -136,6 +136,10 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 		$sold = new Zend_Db_Expr('qty.value - stock.qty as sold');		
 		$sold_p = new Zend_Db_Expr('IF(qty.value <> 0, ((qty.value - stock.qty)/qty.value * 100), 0) as sold_p');
 	
+		$manage_stock = Mage::getStoreConfig('cataloginventory/item_options/manage_stock');
+		
+		$manageStockExpr = new Zend_Db_Expr('stock.manage_stock = 1 OR ( stock.use_config_manage_stock = 1 AND '.$manage_stock.'=1)' );
+		
 		/* @var $collection Mage_Catalog_Model_Resource_Product_Collection */
 		$collection = Mage::getModel('catalog/product')->getCollection();
 	
@@ -151,7 +155,7 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 		->join(array('stock'=>$collection->getTable('cataloginventory/stock_item')),'stock.product_id=e.entity_id',array('stock_qty'=>'qty'))
 		
 		->where('status.value = '. Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
-		->where('stock.manage_stock = 1')
+		->where($manageStockExpr)
 		;
 		
 		if($StoreId !== null){

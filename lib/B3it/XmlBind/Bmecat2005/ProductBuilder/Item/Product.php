@@ -3,18 +3,18 @@
  * 
  *  Daten für die Produkterstellung aus bmecat2005/Artikel liefern
  *  @category Egovs
- *  @package  B3it_XmlBind_Bmecat2005_Builder_Item_Article
+ *  @package  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product
  *  @author Frank Rochlitzer <​f.rochlitzer@b3-it.de>
  *  @author Holger Kögel <​h.koegel@b3-it.de>
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_ProductBuilder_Item_Abstract
+class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_ProductBuilder_Item_Abstract
 {
 	//
 	/**
 	 * die aus dem xml erzeugte Klasse
-	 *  @var B3it_XmlBind_Bmecat2005_TNewCatalog_Article 
+	 *  @var B3it_XmlBind_Bmecat2005_TNewCatalog_Product
 	 *  */ 
 	protected $_xmlProduct = null;
 
@@ -22,11 +22,11 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	
 	/**
 	 * Konstruktor mit der bmecat2005/Artikel xml Struktur
-	 * @param B3it_XmlBind_Bmecat2005_TNewCatalog_Article $xml
+	 * @param B3it_XmlBind_Bmecat2005_TNewCatalog_Product $xml
 	 */
 	public function __construct($xml, $bindXml = false){
 		if($bindXml){
-			$model = new B3it_XmlBind_Bmecat2005_TNewCatalog_Article();
+			$model = new B3it_XmlBind_Bmecat2005_TNewCatalog_Product();
 			$model->bindXml($xml);
 			$this->_xmlProduct = $model;
 		}
@@ -40,7 +40,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	 * @see B3it_XmlBind_Bmecat2005_Builder_Item_Abstract::_getSku()
 	 */
 	protected function _getSku(){
-		$sku = $this->_xmlProduct->getSupplierAid()->getValue();
+		$sku = $this->_xmlProduct->getSupplierPid()->getValue();
 		return $sku;
 	}
 	
@@ -100,7 +100,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	public function getAttributeRow($default = array())
 	{
 		$name = array();
-		foreach ($this->_xmlProduct->getArticleDetails()->getAllDescriptionShort() as $value)
+		foreach ($this->_xmlProduct->getProductDetails()->getAllDescriptionShort() as $value)
 		{
 			$name[] = $value->getValue();
 		}
@@ -109,20 +109,20 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 		$default['short_description'] = implode(' ', $name);
 		
 		$name = array();
-		foreach ($this->_xmlProduct->getArticleDetails()->getAllDescriptionLong() as $value)
+		foreach ($this->_xmlProduct->getProductDetails()->getAllDescriptionLong() as $value)
 		{
 			$name[] = $value->getValue();
 		}
 		
 		$default['description'] = implode(' ', $name);
-		$default['manufacturer_name'] = $this->_xmlProduct->getArticleDetails()->getManufacturerName()->getValue();
+		$default['manufacturer_name'] = $this->_xmlProduct->getProductDetails()->getManufacturerName()->getValue();
 		$default['weight'] = 0;
-		$default['supplier_sku'] = $this->_xmlProduct->getSupplierAid()->getValue();
-		$default['ean'] = $this->_xmlProduct->getArticleDetails()->getEan()->getValue();
+		$default['supplier_sku'] = $this->_xmlProduct->getSupplierPid()->getValue();
+		$default['ean'] = $this->_xmlProduct->getProductDetails()->getEan()->getValue();
 					
-		foreach($this->_xmlProduct->getAllArticlePriceDetails() as $detail)
+		foreach($this->_xmlProduct->getAllProductPriceDetails() as $detail)
 		{
-			foreach($detail->getAllArticlePrice() as $price)
+			foreach($detail->getAllProductPrice() as $price)
 			{
 				$default['price'] = $price->getPriceAmount()->getValue();
 			}
@@ -135,7 +135,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	
 	public function getStockQuantity()
 	{
-		return intval($this->_xmlProduct->getArticleOrderDetails()->getQuantityMax()->getValue());
+		return intval($this->_xmlProduct->getProductOrderDetails()->getQuantityMax()->getValue());
 	}
 	
 	/**
@@ -145,9 +145,9 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	public function getRelatedProducts()
 	{
 		$linked = array();
-		foreach($this->_xmlProduct->getAllArticleReference() as $ref)
+		foreach($this->_xmlProduct->getAllProductReference() as $ref)
 		{
-			$link = $ref->getArtIdTo()->getValue();
+			$link = $ref->getProdIdTo()->getValue();
 			if(!empty($link)){
 				$attr = $ref->getAttribute('type');
 				$linked[] = $link;
@@ -162,9 +162,9 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 	 */
 	public function getTaxRate()
 	{
-		foreach($this->_xmlProduct->getAllArticlePriceDetails() as $detail)
+		foreach($this->_xmlProduct->getAllProductPriceDetails() as $detail)
 		{
-			foreach($detail->getAllArticlePrice() as $price)
+			foreach($detail->getAllProductPrice() as $price)
 			{
 				return $price->getTax()->getValue();
 			}

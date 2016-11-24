@@ -64,7 +64,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		$batchId = $order->getId().'_'.time();
 		$lineNr = 0;
 		
-		$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract())->getVendor();
+		$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
 		$vendor = $contract->getVendor();
 		
 		/* @var $head Sid_Haushalt_Model_Export_Type_Lg04_Head */

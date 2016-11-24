@@ -32,17 +32,36 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	
 	protected $_imageLoader = null;
 	
-	
+	/**
+	 * Prefix für das speichnern der Bilder (Ordner), falls nicht angegeben wird die Magento Mechnik verwendet 
+	 * @var string
+	 */
 	protected $_ImageDispersionPrefix = "";
-	    
-	public function getImageDispersionPrefix() 
-	{
-	  return $this->_ImageDispersionPrefix;
-	}
-	
+	   
+	/**
+	 * Prefix für das speichnern der Bilder (Ordner), falls nicht angegeben wird die Magento Mechnik verwendet
+	 * @var string
+	 */
 	public function setImageDispersionPrefix($value) 
 	{
 	  $this->_ImageDispersionPrefix = $value;
+	}
+	
+	
+	/**
+	 * default Wert falls nicht angegeben; 0 schaltet die Lagerverwaltung aus 
+	 * @var integer
+	 */
+	protected $_StockQuantity = 0;
+	    
+	public function getStockQuantity() 
+	{
+	  return $this->_StockQuantity;
+	}
+	
+	public function setStockQuantity($value) 
+	{
+	  $this->_StockQuantity = $value;
 	}
 	
 	
@@ -53,6 +72,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	public function addItem(B3it_XmlBind_ProductBuilder_Item_Abstract $item )
 	{
 		$this->_items[$item->getSku($this->_skuPrefix)] = $item;
+		$item->setBuilder($this);
 	}
 	
 	
@@ -217,6 +237,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$attributesRowsDefault = $this->_getAttributeDefaultRow();
 			$attributesRowsIn[$sku] = $item->getAttributeRow($attributesRowsDefault);
 			$attributesRowsIn[$sku]['tax_class_id'] = $this->_getTaxClassId($item->getTaxRate());
+			
 		}
 		
 		$attributesData = $this->_prepareAttributes($attributesRowsIn);
@@ -309,6 +330,20 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$row['product_id'] = $item->getEntityId();
 			$row['stock_id'] = 1;
 			$stockData = array_merge($row,$defaultStockData);
+
+			if($item->getStockQuantity() == 0){
+				$qty = $this->_StockQuantity;
+			}else{
+				$qty = $item->getStockQuantity();
+			}
+			
+			if($qty == 0){
+				$stockData['manage_stock'] = 0;
+				$stockData['use_config_manage_stock'] = 0;
+			}else{
+				$stockData['qty'] = $qty;
+			}
+			
 			$data[] = $stockData;
 		}
 	
@@ -592,6 +627,28 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		if ($categoryData) {
 			$this->_connection->insertMultiple($tableName, $categoryData);
 		}
+	}
+	
+	
+	public function getFirstEntityId()
+	{
+		reset($this->_items);
+		$item = current($this->_items);
+		if($item){
+			return $item->getEntityId();
+		}
+		return null;
+	}
+	
+	public function getLastEntityId()
+	{
+		end($this->_items);
+		$item = current($this->_items);
+		reset($this->_items);
+		if($item){
+			return $item->getEntityId();
+		}
+		return null;
 	}
 	
 	protected function _getDispretionPath($fileName)
