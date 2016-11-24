@@ -34,7 +34,7 @@ $j(document).ready(function () {
         // Skalierungs-Faktor
         var scaleFactor = Math.sqrt(pageContainer) / Math.sqrt(pageFullSize);
         // Berechnete Schrift-Größe
-        var newSize = preferredFont * scaleFactor;
+        var newSize = (preferredFont * scaleFactor) - 50;
 
         $j('.header-position').css("font-size", newSize + '%');
     };
