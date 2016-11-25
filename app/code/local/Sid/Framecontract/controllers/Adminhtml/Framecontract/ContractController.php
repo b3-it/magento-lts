@@ -208,7 +208,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 	private function sendEMail($contract,$los)
 	{
 		//Email senden
-		$template = 'framecontract/email/upload_request_template';
+		$template = 'framecontract/email/catalog_upload_request_template';
 		$recipients = array();
 		$recipients[] = array('name' => $contract->getVendor()->getOperator(),'email'=>$contract->getVendor()->getEmail());
 		

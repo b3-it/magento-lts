@@ -24,7 +24,7 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 			->order('store_group');
 		
 		
-		$template = "framecontract/contract_qty/email_template";
+		$template = "framecontract/contract_qty/warning_email_template";
 		$lastStore = null;
 		$lastItem = null;
 		$data = array();

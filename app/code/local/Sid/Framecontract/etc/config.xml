@@ -236,16 +236,16 @@
         </helpers>
         <template>
             <email>
-                <framecontract_catalog_upload_request_email_template translate="label" module="framecontract">
+                <framecontract_email_catalog_upload_request_template translate="label" module="framecontract">
                     <label>Catalog Upload Request</label>
                     <file>sid/framecontract/catalog_upload_request.html</file>
                     <type>html</type>
-                </framecontract_catalog_upload_request_email_template>
-                <framecontract_warning_contract_qty_email_template translate="label" module="framecontract">
+                </framecontract_email_catalog_upload_request_template>
+                <framecontract_contract_qty_warning_email_template translate="label" module="framecontract">
                     <label>Warning for Contract Qty</label>
                     <file>sid/framecontract/warning_contract_qty.html</file>
                     <type>html</type>
-                </framecontract_warning_contract_qty_email_template>
+                </framecontract_contract_qty_warning_email_template>
              </email>
         </template>
     </global>
@@ -272,11 +272,11 @@
 	<default>
         <framecontract>
             <email>
-                <upload_request_template>framecontract_catalog_upload_request_email_template</upload_request_template>
+                <catalog_upload_request_template>framecontract_email_catalog_upload_request_template</catalog_upload_request_template>
             </email>
             <contract_qty>
                 <qty>85</qty>
-                <email_template>framecontract_warning_contract_qty_email_template</email_template>
+                <warning_email_template>framecontract_contract_qty_warning_email_template</warning_email_template>
             </contract_qty>
         </framecontract>
     </default>
