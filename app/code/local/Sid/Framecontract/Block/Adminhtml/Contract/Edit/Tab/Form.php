@@ -115,7 +115,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
 		  $fieldset->addField('framecontract_vendor_id', 'select', array(
 	          'label'     => Mage::helper('framecontract')->__('Vendor'),
 	          'required'  => true,
-		  	  'values'    => Mage::getModel('framecontract/vendor')->toSelectArray(),
+		  	  'values'    => Mage::getModel('framecontract/vendor')->toSelectArray(true),
 	          'name'      => 'framecontract_vendor_id',
 		  ));
 	  }

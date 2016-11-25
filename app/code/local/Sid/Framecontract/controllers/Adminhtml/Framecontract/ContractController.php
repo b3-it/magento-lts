@@ -115,14 +115,23 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 	
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
+			$von = Varien_Date::toTimestamp($data['start_date']);
+			$bis =Varien_Date::toTimestamp($data['end_date']);
 			
-
-	  			
 	  			
 			$model = Mage::getModel('framecontract/contract');		
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 			
+				
+			//datum verifizieren
+			if(($von >= $bis)|| ($bis <= time())){
+				Mage::getSingleton('adminhtml/session')->addError(Mage::helper('framecontract')->__('End of Contract is not valid!'));
+				Mage::getSingleton('adminhtml/session')->setFormData($data);
+				$this->_redirect('*/*/edit', array('id' => $model->getId()));
+				return;
+			}
+				
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())

@@ -64,9 +64,13 @@ class Sid_Framecontract_Model_Vendor extends Mage_Core_Model_Abstract
         $this->_init('framecontract/vendor');
     }
     
-    public function toSelectArray()
+    public function toSelectArray($emptyValue = false)
     {
     	$res = array();
+    	if($emptyValue)
+    	{
+    		$res[] = array('label'=>Mage::helper('adminhtml')->__('-- Please Select --'),'value'=>'');
+    	}
     	foreach($this->getResourceCollection()->getItems() as $item)
     	{
     		$res[] = array('label'=>$item->getCompany(),'value'=>$item->getId());

@@ -63,7 +63,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit extends Mage_Adminhtml_Blo
         	}
 
         	document.addEventListener(\'DOMContentLoaded\', function() {
-              updateOperator();
+              //updateOperator();
           }, false);
         	//]]>
         	';

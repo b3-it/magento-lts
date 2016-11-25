@@ -58,6 +58,7 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	$ORDER_HEADER->order_info->parties->billingParty->address->zip->setValue($billing->getPostcode());
     	$ORDER_HEADER->order_info->parties->billingParty->address->country->setValue($billing->getCountry());
     	$ORDER_HEADER->order_info->parties->billingParty->address->street->setValue($billing->getStreetFull());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->email->setValue($order->getCustomerEmail());
     	
     	//versandadresse
     	if(!$order->getIsVirtual()){
