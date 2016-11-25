@@ -118,7 +118,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ProductController extends Mage_A
                 $tableCondition, 'value'
             );
 
-            $default = Netzarbeiter_GroupsCatalog_Helper_Data::USE_DEFAULT;
+            $default = Netzarbeiter_GroupsCatalog2_Helper_Data::USE_DEFAULT;
 
             $commonConditionsSql = sprintf(
                     $attributeValueCol . " = '%1\$s' OR " .
