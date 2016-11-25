@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_Framecontract>
-            <version>0.1.11</version>
+            <version>0.1.12</version>
         </Sid_Framecontract>
     </modules>
     <frontend>
@@ -261,7 +261,7 @@
 			</framecontract>
 			<framecontract_contract_warning_qty>
                 <schedule>
-                    <cron_expr>* 4 * * *</cron_expr>
+                    <cron_expr>* * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>framecontract/cron::sendStockWarning</model>

@@ -15,7 +15,7 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 		
 		$qty = intval(Mage::getStoreConfig("framecontract/contract_qty/qty"));
 		$expr = new Zend_Db_Expr('IF(qty.value <> 0, ((qty.value - stock.qty) / qty.value * 100), 0) >= ' . $qty);
-		$expr2 = new Zend_Db_Expr('losdetail.stock_status_send = 0');
+		$expr2 = new Zend_Db_Expr('e.stock_status_send = 0');
 		
 		$collection->getSelect()
 			->join(array('losdetail' => $collection->getTable('framecontract_los')),'losdetail.los_id = los.value')
@@ -29,9 +29,10 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 		$lastItem = null;
 		$data = array();
 		$data['items'] = array();
-		$this->setLog('Found '.count($collection->getItems()).' low Stock Items (less than '.$qty.'%) in DB');
+//		$this->setLog('Found '.count($collection->getItems()).' low Stock Items (less than '.$qty.'%) in DB');
 		$this->setLog($collection->getSelect()->__toString());
-
+		
+		$sendItems = array();
 		foreach($collection->getItems() as $item)
 		{
 			if($lastStore && $lastStore != $item->getStoreGroup())
@@ -42,8 +43,7 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 				
 				//mail senden
 				Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $lastStore);
-				//status am los speichern
-				Mage::getModel('framecontract/los')->load($lastItem->getLosId())->setStockStatusSend(1)->save();
+				
 				//neu initialisieren
 				$data = array();
 				$data['items'] = array();
@@ -53,7 +53,8 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 			$lastStore = $item->getStoreGroup();
 			$data['items'][] = $item;
 			$lastItem = $item;
-			
+			//status am los speichern
+			$sendItems[] = $item->getId();
 		}
 		
 		if(count($data['items']) > 0)
@@ -64,10 +65,10 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 					
 			//mail senden
 			Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $lastStore);
-			//status am los speichern
-			Mage::getModel('framecontract/los')->load($lastItem->getLosId())->setStockStatusSend(1)->save();
+			
 		}
 		
+		$this->_saveItemsStockStatusSend($sendItems);
 		//die($collection->getSelect()->__toString());
 		return $this;
 	}
@@ -89,4 +90,12 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 		return implode(' ', $res);
 	}
 	
+	/**
+	 * am Produkt speichern om eine Mail über den Lagerbestand gesendet wurde
+	 * @param array $itemIds
+	 */
+	protected function _saveItemsStockStatusSend($itemIds){
+		$model = Mage::getModel('framecontract/contract')->getResource();
+		$model->saveItemsStockStatusSend($itemIds);
+	}
 }

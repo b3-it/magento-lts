@@ -39,6 +39,18 @@ class Sid_Framecontract_Model_Mysql4_Contract extends Mage_Core_Model_Mysql4_Abs
     	return $values;
     }
     
-    
+    /**
+     * am Produkt speichern om eine Mail über den Lagerbestand gesendet wurde
+     * @param array $itemIds
+     */
+    public function saveItemsStockStatusSend(array $itemIds)
+    {
+    	if(count($itemIds) > 0)
+    	{
+    		$itemIds = implode(',', $itemIds);
+	    	$write = $this->_getWriteAdapter();
+	    	$write->update($this->getTable('catalog/product'), array('stock_status_send' => '1'),'entity_id IN ('.$itemIds.')');
+    	}
+    }
 
 }

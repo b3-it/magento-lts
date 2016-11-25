@@ -16,7 +16,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit extends Mage_Adminhtml_Blo
         //if ($this->_isAllowedAction('emails'))
         {
             $this->addButton('send_notification', array(
-                'label'     => Mage::helper('framecontract')->__('Send Email'),
+                'label'     => Mage::helper('framecontract')->__('Send Contract Information via Email'),
                 'onclick'   => 'confirmSetLocation(\''
                 . Mage::helper('framecontract')->__('Are you sure you want to send email to vendor?')
                 . '\', \'' . $this->getSendUrl() . '\')'
