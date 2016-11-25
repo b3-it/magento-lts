@@ -14,7 +14,9 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminh
 	      		'title' => Mage::helper('catalog')->__('Store'),
 	      		'name'  => 'store_group',
 	      		'value' => '',
-	      		'values'=> Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray()
+	      		'class'     => 'required-entry',
+	      		'required'  => true,
+	      		'values'=> Mage::getModel('isolation/entity_attribute_source_storegroups')->getOptionArray(true)
 	      ));
      }
       

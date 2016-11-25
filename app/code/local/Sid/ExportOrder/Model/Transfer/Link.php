@@ -58,7 +58,7 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     		$link->setSendFilename('Orders_'.date('d-m-Y_H-i-s').'.zip');
     		$link->save();
     		
-    		$zip = new ZipArchive;
+    		$zip = new ZipArchive();
     		$res = $zip->open($link->getDirectory().$link->getFilename(), ZipArchive::CREATE);
     		if ($res === TRUE) {
     			foreach($content as $name => $xml)
