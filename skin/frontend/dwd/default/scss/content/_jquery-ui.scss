@@ -274,7 +274,6 @@ button.ui-button::-moz-focus-inner {
 .ui-selectmenu-button.ui-button {
 	text-align: left;
 	white-space: nowrap;
-	width: 14em;
 }
 .ui-selectmenu-icon.ui-icon {
 	float: right;
@@ -328,7 +327,7 @@ button.ui-button::-moz-focus-inner {
 works properly when clicked or hovered */
 html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
-	border: $global-active-border solid $textfarbe-mittel;
+	border: $global-active-border solid $grundfarbe-grau;
 	background-color: $grundfarbe-weiss;
 	color: $textfarbe-mittel;
 	font-weight: normal;

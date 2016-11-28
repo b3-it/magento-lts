@@ -1515,6 +1515,11 @@ span.weee {
     	margin: 0;
     }
     
+    .ui-widget {
+        position: relative;
+        top: -2px;
+    }
+    
     .limiter {
         top: 5px !important;
     }
