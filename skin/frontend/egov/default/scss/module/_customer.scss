@@ -26,12 +26,20 @@
         .buttons-set {
             text-align: left;
             border-top: 0;
+            width: 95%;
 
             button,
             .button {
+                display: inline-block;
                 float: none;
-                min-width: 50%;
+                white-space: nowrap;
+                width: 46%;
                 margin: 0;
+            }
+            
+            button.button {
+                margin-left: 10px;
+                float: right;
             }
         }
 
@@ -224,7 +232,7 @@ body.customer-account {
             }
         }
         .col-left-first {
-            margin-top: -15px;
+            margin-top: -10px;
         }
     }
     

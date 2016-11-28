@@ -11,7 +11,7 @@
 </div>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <form action="<?php echo $this->getUrl('customer/account/editPost') ?>" method="post" autocomplete="off" id="form-validate" class="scaffold-form" enctype="multipart/form-data">
-    <div class="fieldset">
+    <div id="account-block" class="fieldset" style="width:100%;">
         <?php echo $this->getBlockHtml('formkey')?>
         <h2 class="legend"><?php echo $this->__('Account Information') ?></h2>
         <ul class="form-list">
@@ -52,7 +52,7 @@
         </ul>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
     </div>
-    <div class="fieldset" style="display:none;">
+    <div id="password-block" class="fieldset" style="display:none;">
         <h2 class="legend"><?php echo $this->__('Change Password') ?></h2>
         <ul class="form-list">
             <li>
@@ -97,18 +97,26 @@
 //<![CDATA[
     var dataForm = new VarienForm('form-validate', true);
     function setPasswordForm(arg){
-        if(arg){
-            $('current_password').up(3).show();
+    	if(arg){
+        	if ( $j( document ).width() >= 500 ) {
+        		$j('#account-block').css('width', '48%');
+        	}
+        	else {
+        		$j('#account-block').css('width', '100%');
+        	}
+
             $('current_password').addClassName('required-entry');
             $('password').addClassName('required-entry');
             $('confirmation').addClassName('required-entry');
 
         }else{
-            $('current_password').up(3).hide();
+        	$j('#account-block').css('width', '100%');
+
             $('current_password').removeClassName('required-entry');
             $('password').removeClassName('required-entry');
             $('confirmation').removeClassName('required-entry');
         }
+        $j('#password-block').toggle();
     }
 
     <?php if($this->getCustomer()->getChangePassword()): ?>
