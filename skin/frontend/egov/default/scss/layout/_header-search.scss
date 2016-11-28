@@ -12,17 +12,6 @@
 .skip-search {
 	top: 5px;
 
-    &:not(.skip-active):hover {
-        .icon {
-            background-position: -50+4px (-150px + ($toolbar-icon-padding-offset/2));
-        }
-    }
-
-    .icon {
-        @extend .icon-sprite;
-        background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
-    }
-   
     @include bp(min-width, 911px) {
     	display: none;
     }

@@ -14,20 +14,11 @@
 
     &:not(.skip-active):hover {
         text-decoration: none;
-
-        .icon {
-            background-position: -50px+4px ($toolbar-icon-padding-offset/2);
-        }
     }
 }
 
 .skip-nav .label {
     display: inline;
-}
-
-.skip-nav .icon {
-    @extend .icon-sprite;
-    background-position: 0+4px ($toolbar-icon-padding-offset/2);
 }
 
 // ---------------------------------------------
