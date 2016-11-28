@@ -46,7 +46,7 @@
 
                 label {
                     font-weight: bold;
-                    /* display: block; */
+                    display: block;
                 }
 
                 .column-left {
@@ -92,6 +92,14 @@
         div.validation-advice {
             position: relative;
             top: -5px;
+        }
+        
+        .buttons-set button.button {
+            width: auto;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
         }
 
         .back-button {
