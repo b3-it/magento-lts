@@ -44,7 +44,65 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 		return $sku;
 	}
 	
+	/**
+	 * feststellen ob Bundleprodukt
+	 * @see B3it_XmlBind_ProductBuilder_Item_Abstract::isBundle()
+	 */
+	public function isBundle()
+	{
+		return false;
+		
+		
+		return (count($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep()) > 0);
+	}
 	
+	
+	
+	/**
+	 * 
+	 * @param B3it_XmlBind_ProductBuilder_Item_Abstract $item
+	 * @return array[]
+	 */
+	public function getBundleOptions($item)
+	{
+		$options = array();
+		$k =0;
+		foreach($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep() as $step)
+		{
+			$required = (intval($step->getMinOccurance()->getValue()) > 0);
+			$type = (intval($step->getMaxOccurance()->getValue()) == 1) ? 'radio' : 'checkbox';
+			$label = "";
+			foreach($step->getStepHeader() as $h){
+				$label .= $h->getValue(). ' ';
+			}
+			$option['label'] = trim($label);
+			$option['type'] = $type; 
+			$option['required'] = $required;
+			$option['position'] = $k++;
+			$option['selections'] = array();
+			
+			$n = 0;
+			foreach($step->getConfigParts()->getAllPartAlternative() as $part)
+			{
+				$product_item = $item->getBuilder()->getItemBySku($part->getSupplierPidref()->getValue());
+				if($product_item){
+					$bind['parent_product_id'] = $item->getEntityId();
+					$bind['product_id'] = $product_item->getEntityId();
+					$bind['position'] = $n++;
+					//$bind['is_default'] = $is_default;
+					$bind['selection_price_type'] = 0;
+					$bind['selection_price_value'] = 0;
+					$bind['selection_qty'] = 1;
+					$bind['selection_can_change_qty'] = 0;
+					$option['selections'][] = $bind;
+				}
+			}
+			
+			$options[] = $option;
+		}
+		
+		return $options;
+	}
 	
 	
 	public function getMediaData()

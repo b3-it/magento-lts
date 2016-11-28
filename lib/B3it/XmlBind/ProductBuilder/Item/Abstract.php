@@ -45,6 +45,10 @@ abstract class  B3it_XmlBind_ProductBuilder_Item_Abstract
 	  $this->_builder = $value;
 	}
 	
+	public function isBundle()
+	{
+		return false;
+	}
 	
 	
 	/**

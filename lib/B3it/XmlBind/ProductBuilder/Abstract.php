@@ -13,7 +13,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 
 	/**
 	 * Die xml Produkte
-	 * @var array B3it_XmlBind_Bmecat2005_Builder_Item_Abstract
+	 * @var array B3it_XmlBind_ProductBuilder_Item_Abstract
 	 */
 	protected $_items = array();
 	
@@ -23,6 +23,10 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	
 	protected $_entityTypeId = null;
 	
+	/**
+	 * 
+	 * @var Varien_Db_Adapter_Interface
+	 */
 	protected $_connection   = null;
 	
 	protected $_webSiteId = 1;
@@ -118,6 +122,69 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		$this->_saveMediaGallery();
 		$this->_saveCategory();
 		$this->_saveLinks(Mage_Catalog_Model_Product_Link::LINK_TYPE_RELATED);
+		
+		
+		foreach($this->_items as $sku => $item)
+		{
+			if($item->isBundle()){
+				$this->_saveBundleDetails($item);
+			}
+		}
+		
+		
+	}
+	
+	/**
+	 * 
+	 * @param B3it_XmlBind_ProductBuilder_Item_Abstract $item
+	 */
+	protected function _saveBundleDetails($item)
+	{
+		$options = $item->getBundleOptions();
+		foreach($options as $option)
+		{
+			$entity_id = $item->getEntityId();
+			$label = $option['label'];
+			$type = $option['type']; 
+			$required = $option['required'];	
+			$option_id = $this->__saveBundleOption($entity_id, $label, $type, $required, $option['position']);
+			
+			foreach($option['selections'] as $selection)
+			{
+				$this->__saveBundleSelection($option_id, $selection);
+			}
+			
+		}
+	}
+	
+	private function __saveBundleOption($entity_id, $label, $type, $required, $position = 0)
+	{
+		$table = 'catalog_product_bundle_option';
+		$bind = array();
+		$bind['parent_id'] = $entity_id;
+		$bind['required'] = $required;
+		$bind['type'] = $type;
+		$bind['position'] = $position;
+		$this->_connection->insert($table, $bind);
+		$lastInsertId = $connection->lastInsertId();
+		
+		$table = 'catalog_product_bundle_option_value';
+		$bind = array();
+		$bind['option_id'] = $lastInsertId;
+		$bind['title'] = $label;
+		$bind['store_id'] = '0';
+		$this->_connection->insert($table, $bind);
+		
+		return $lastInsertId;
+	}
+	
+	
+	private function __saveBundleSelection($option_id, $bind)
+	{
+		$table = 'catalog_product_bundle_selection';
+		$bind = array();
+		$bind['option_id'] = $option_id;
+		$this->_connection->insert($table, $bind);
 	}
 	
 	/**
@@ -650,6 +717,21 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		}
 		return null;
 	}
+	
+	/**
+	 * die sku ohne prefix
+	 * @param string $sku
+	 */
+	public function getItemBySku($sku)
+	{
+		$sku = $this->_skuPrefix.$sku;
+		if(isset($this->_items[$sku])){
+			return $this->_items[$sku];
+		}
+		
+		return null;
+	}
+	
 	
 	protected function _getDispretionPath($fileName)
 	{
