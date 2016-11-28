@@ -68,7 +68,11 @@ class Egovs_Isolation_Model_Entity_Attribute_Source_Storegroups extends Mage_Eav
         $allOptions = $this->getAllOptions();
         if($appendEmpty){
         	$_options[''] = Mage::helper('isolation')->__('-- Please Select a Store --');
-        	array_shift($allOptions);
+        	$helper  = Mage::helper('isolation');
+        	if($helper->getUserIsAdmin())
+        	{
+        		array_shift($allOptions);
+        	}
         }
         foreach ($allOptions as $option) {
             $_options[$option['value']] = $option['label'];

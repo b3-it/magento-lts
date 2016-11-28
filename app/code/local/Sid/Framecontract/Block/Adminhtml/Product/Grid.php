@@ -44,16 +44,21 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
 		if (! isset($this->_visibleProductIds))
 		{
 			$collection = Mage::getModel('catalog/product')->getCollection()
+				->addAttributeToSelect('groupscatalog2_groups');
 				//->addStoreFilter($this->getRequest()->getParam('store'))
 			;
 			$group = $this->getRequest()->getParam('group');
 			if($group)
 			{
-				Mage::helper('groupscatalog')->addGroupsFilterToProductCollection($collection, $group);
+				$this->_visibleProductIds = array();
+				//die($collection->getSelect()->__toString());
+				foreach ($collection as $product){
+					$value = explode(',', $product->getData('groupscatalog2_groups'));
+					if (!in_array($group, $value)){
+						$this->_visibleProductIds[] = $product->getId();
+					}
+				}
 			}
-			$this->_visibleProductIds = array();
-			//die($collection->getSelect()->__toString());
-			foreach ($collection as $product) $this->_visibleProductIds[] = $product->getId();
 		}
 		return $this->_visibleProductIds;
 
@@ -63,7 +68,8 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
 	{
 				
 		$collection = Mage::getModel('catalog/product')->getCollection()
-			->addAttributeToSelect(array('name', 'sku','framecontract_los','groupscatalog_hide_group'));
+			->addAttributeToSelect(array('name', 'sku','framecontract_los','groupscatalog2_groups'))
+			;
 		
 		$eav = Mage::getResourceModel('eav/entity_attribute');
 		$eav = $eav->getIdByCode('catalog_product', 'framecontract_los');
@@ -71,24 +77,27 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
 		
 		$collection->getSelect()
 			->join(array('los' => $collection->getTable('catalog/product').'_int'),'los.entity_id = e.entity_id AND los.attribute_id='.$eav,array('framecontract_los'=>'value'))
-			//->join(array('contract'=>$collection->getTable('framecontract/contract')),'contract.framecontract_contract_id = los.value',array('framecontract_contract_id'))
 			;
 
-		//die($collection->getSelect()->__toString());
+// 		die($collection->getSelect()->__toString());
 		$this->setCollection($collection);
 		return parent::_prepareCollection();
 	}
 
+	
+	
+	
 	protected function _prepareColumns()
 	{
 		
 		$this->addColumn('is_visible', array(
-				'header_css_class' => 'a-center',
+				'header'    => Mage::helper('catalog')->__('Visible'),
+				//'header_css_class' => 'a-center',
 				'type'       => 'checkbox',
 				'name'       => 'is_visible',
 				//'values'     => $this->_getSelectedProducts(),
 				'align'      => 'center',
-				'index'      => 'groupscatalog_hide_group',
+				'index'      => 'groupscatalog2_groups',
 				//'inline_css' => 'checkbox netzarbeiter-visible-products',
 				'renderer'   => 'framecontract/adminhtml_widget_grid_column_renderer_groups',
 				'row_clicked_callback' => 'visibleProducts.rowClick',
