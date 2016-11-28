@@ -41,6 +41,9 @@ $j(document).ready(function(){
 	
 	// Artikel-Namen und Artikel-Nummern abkürzen
 	cutAllArticleTitleLine();
+	
+	// jQuery-UI für DropDown-Boxen
+	$j("select").selectmenu();
 });
 
 function setTabIndex(arr)

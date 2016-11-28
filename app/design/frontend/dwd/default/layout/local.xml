@@ -10,6 +10,10 @@
             </action>
             <action method="addItem">
                 <type>skin_js</type>
+                <name>js/jquery-ui.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
                 <name>js/app_dwd.js</name>
             </action>
         </reference>
