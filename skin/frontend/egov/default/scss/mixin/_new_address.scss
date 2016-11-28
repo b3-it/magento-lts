@@ -93,6 +93,14 @@
             position: relative;
             top: -5px;
         }
+        
+        .buttons-set button.button {
+            width: auto;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
+        }
 
         .back-button {
             float: left;
