@@ -19,6 +19,23 @@ class Sid_Framecontract_Model_Cron extends Mage_Core_Model_Abstract
 			$contract->setStatus(Sid_Framecontract_Model_Status::STATUS_DISABLED)->save();
 			
 		}
+		
+		//ablufdatum der Links setzen
+		$collection = Mage::getModel('framecontract/los')->getCollection();
+		$collection->getSelect()
+			->where("link_valid_to_modified < '". date('Y-m-d',time() - (24 * 60 * 60))."'")
+			->orwhere('link_valid_to_modified is null');
+		
+		foreach($collection->getItems() as $los)
+		{
+			$n = intval($los->getLinkValidTo());
+			if($n > 0){
+				$n--;
+				$los->setLinkValidTo($n)
+					->setLinkValidToModified(now())
+					->save();
+			}
+		}
 	}
     
 	/**
