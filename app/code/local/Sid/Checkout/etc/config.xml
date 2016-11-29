@@ -152,6 +152,11 @@
                 </observers>
             </sales_order_place_after>
         </events>
+        <global_search>
+            <vergabenummer>
+                <class>sidcheckout/search_vergabenummer</class>
+            </vergabenummer>
+        </global_search>
     </adminhtml>
     <default>
        <sid_checkout>
