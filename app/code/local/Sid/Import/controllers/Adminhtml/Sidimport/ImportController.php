@@ -14,10 +14,39 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
         return Mage::getSingleton('admin/session')->isAllowed('system/convert/supplierportal_import');
     }
 
+    
+    private function __testimport()
+    {
+    	$xml = file_get_contents(__DIR__.'/bmecat-bundle.xml');
+    	$products = new B3it_XmlBind_Bmecat2005_Bmecat();
+    	$products->bindXml($xml);
+    	/* @var $builder Sid_Import_Model_Itw */
+    	$builder = Mage::getModel('sidimport/builder_itw');
+    	$builder->setSkuPrefix("los1");
+       
+    	$builder->setImageDispersionPrefix('L');
+    	
+    	 
+    	$taxclass = array();
+    	$taxclass[0] = 1;
+    	$taxclass[19] = 1;
+    	$taxclass[7] = 1;
+    	
+    	$builder->setTaxRates($taxclass);
+    	 
+    	foreach ($products->getTNewCatalog()->getAllProduct() as $import) {
+    		
+    			$article = new Sid_Import_Model_Builder_Item_Product2005($import);
+    			$builder->addItem($article);
+    		
+    	}
+    	$builder->save(null);
+    }
+    
   
     
     public function indexAction() {
-    	
+    		//$this->__testimport();
     		$this->loadLayout();
     		$this->_setActiveMenu('system/convert');
     

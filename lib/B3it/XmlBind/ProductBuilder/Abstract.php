@@ -140,7 +140,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	 */
 	protected function _saveBundleDetails($item)
 	{
-		$options = $item->getBundleOptions();
+		$options = $item->getBundleOptions($item);
 		foreach($options as $option)
 		{
 			$entity_id = $item->getEntityId();
@@ -166,7 +166,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		$bind['type'] = $type;
 		$bind['position'] = $position;
 		$this->_connection->insert($table, $bind);
-		$lastInsertId = $connection->lastInsertId();
+		$lastInsertId = $this->_connection->lastInsertId();
 		
 		$table = 'catalog_product_bundle_option_value';
 		$bind = array();
@@ -182,7 +182,6 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	private function __saveBundleSelection($option_id, $bind)
 	{
 		$table = 'catalog_product_bundle_selection';
-		$bind = array();
 		$bind['option_id'] = $option_id;
 		$this->_connection->insert($table, $bind);
 	}

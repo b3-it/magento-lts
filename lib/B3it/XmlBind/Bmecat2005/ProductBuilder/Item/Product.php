@@ -44,13 +44,29 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 		return $sku;
 	}
 	
+	
+	/**
+	 * Liefert der Magento Produkttype
+	 * @return string
+	 */
+	public function getProductType()
+	{
+		if($this->isBundle())
+		{
+			return 'bundle';
+		}
+		return $this->_productType;
+	}
+	
+	
+	
 	/**
 	 * feststellen ob Bundleprodukt
 	 * @see B3it_XmlBind_ProductBuilder_Item_Abstract::isBundle()
 	 */
 	public function isBundle()
 	{
-		return false;
+		//return false;
 		
 		
 		return (count($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep()) > 0);
@@ -72,7 +88,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 			$required = (intval($step->getMinOccurance()->getValue()) > 0);
 			$type = (intval($step->getMaxOccurance()->getValue()) == 1) ? 'radio' : 'checkbox';
 			$label = "";
-			foreach($step->getStepHeader() as $h){
+			foreach($step->getAllStepHeader() as $h){
 				$label .= $h->getValue(). ' ';
 			}
 			$option['label'] = trim($label);
