@@ -52,7 +52,8 @@
 //<![CDATA[
 var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">' +
 							'<input type="hidden" id="contract_los_{{number}}_is_delete" name="lose[{{number}}][is_delete]" value="" />'+
-							'<input style="width:50px;"  type="text" disabled="disabled" name="lose[{{number}}][los_id]" value="{{los_id}}" />'+
+							'<input type="hidden" name="lose[{{number}}][los_id]" value="{{los_id}}" />'+
+							'<input style="width:50px;"  type="text" disabled="disabled" value="{{los_id}}" />'+
 							'</td>'+
 							'<td><input class="input-text los-input required-entry" id="contract_los_{{number}}_label" value="{{title}}" name="lose[{{number}}][title]" /></td>'+
 							'<td class="a-center"><input class="input-text los-input"  id="contract_los_{{number}}_pos" value="{{note}}" name="lose[{{number}}][note]" /></td>' +

@@ -34,7 +34,7 @@ class Sid_Import_Model_Imageloader extends B3it_XmlBind_ProductBuilder_Imageload
 		}
 		
 		
-		$url =   trim(Mage::getStoreConfig('framecontract/supplierportal/url'),'/');
+		$url =   rtrim(Mage::getStoreConfig('framecontract/supplierportal/url'),'/');
 		$url .= "/image/{$this->LosId}/{$filename}";
 		$client = new Varien_Http_Client($url);
 		$client->setMethod(Varien_Http_Client::GET);
@@ -43,11 +43,13 @@ class Sid_Import_Model_Imageloader extends B3it_XmlBind_ProductBuilder_Imageload
 			$response = $client->request();
 			if ($response->isSuccessful()) {
 				
-				$targetDir = trim($targetDir,'/');
+				$targetDir = rtrim($targetDir,'/');
 				if(!file_exists($targetDir)){
-					mkdir($targetDir);
+					mkdir($targetDir, 0750, true);
 				}
-				
+				if (!is_writable($destinationFolder)) {
+		            Mage::log('Destination folder is not writable or does not exists: '.$destinationFolder);
+		        }
 				$data = $response->getBody();
 				file_put_contents($targetDir."/".$filename, $data);
 		
