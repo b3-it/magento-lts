@@ -175,6 +175,7 @@
     		</params>
     	</lg04>
     </sid_haushaltsysteme>
+    <!-- 
      <crontab>
         <jobs>
             <order2haushalt>
@@ -187,6 +188,7 @@
             </order2haushalt>
         </jobs>
     </crontab>
+     -->
     <default>
         <sidhaushalt>
             <hhexport>
