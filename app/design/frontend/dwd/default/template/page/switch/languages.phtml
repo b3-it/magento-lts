@@ -41,10 +41,10 @@
     <?php /** @var $_lang Mage_Core_Model_Store */?>
     <?php foreach ($this->getStores() as $_lang): ?>
     	<?php
-    	$_region = new Zend_Locale($_lang->getLocaleCode());
-    	$_region = $_region->getRegion(); ?>
+    	$_lng = new Zend_Locale($_lang->getLocaleCode());
+    	$_lng = ucfirst($_lng->getLanguage()); ?>
         <?php $_selected = ($_lang->getId() == $this->getCurrentStoreId()) ? ' selected="selected"' : '' ?>
-        <option value="<?php echo $_lang->getCurrentUrl() ?>" data-code="<?php echo $_region ?>" <?php echo $_selected ?>><?php echo $this->escapeHtml($_lang->getName()) ?></option>
+        <option value="<?php echo $_lang->getCurrentUrl() ?>" data-code="<?php echo $_lng ?>" <?php echo $_selected ?>><?php echo $this->escapeHtml($_lang->getName()) ?></option>
     <?php endforeach; ?>
     </select>
 </div>
