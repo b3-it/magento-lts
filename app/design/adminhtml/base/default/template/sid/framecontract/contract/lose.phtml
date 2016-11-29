@@ -25,6 +25,8 @@
    <table id="sid-lose-grid">
    <thead>
    <tr class="headings">
+      	
+    <th class="type-id" style="width:50px;" ><?php echo($this->__('ID'))?></th>
    	<th class="type-title"><?php echo($this->__('Title'))?><span class="required"> *</span></th>
    	<th class="type-note"><?php echo($this->__('Note'))?></th>
    	<th class="type-status"><?php echo($this->__('Status'))?></th>
@@ -50,9 +52,9 @@
 //<![CDATA[
 var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">' +
 							'<input type="hidden" id="contract_los_{{number}}_is_delete" name="lose[{{number}}][is_delete]" value="" />'+
-							'<input type="hidden" name="lose[{{number}}][los_id]" value="{{los_id}}" />'+
-							'<input class="input-text los-input required-entry" id="contract_los_{{number}}_label" value="{{title}}" name="lose[{{number}}][title]" />'+
+							'<input style="width:50px;"  type="text" disabled="disabled" name="lose[{{number}}][los_id]" value="{{los_id}}" />'+
 							'</td>'+
+							'<td><input class="input-text los-input required-entry" id="contract_los_{{number}}_label" value="{{title}}" name="lose[{{number}}][title]" /></td>'+
 							'<td class="a-center"><input class="input-text los-input"  id="contract_los_{{number}}_pos" value="{{note}}" name="lose[{{number}}][note]" /></td>' +
 							'<td class="a-center"><select   id="contract_los_{{number}}_field" name="lose[{{number}}][status]">' +
 							'	<?php foreach ($this->getStatus() as $key=>$value): ?>' +
