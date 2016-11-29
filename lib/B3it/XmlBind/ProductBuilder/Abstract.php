@@ -12,6 +12,18 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 {
 
 	/**
+	 * Entity invalidated indexes.
+	 *
+	 * @var Mage_ImportExport_Model_Import_Entity_Abstract
+	 */
+	protected static $_entityInvalidatedIndexes = array (
+		'catalog_product_price',
+		'catalog_category_product',
+		'catalogsearch_fulltext',
+		'catalog_product_flat'
+	);
+
+	/**
 	 * Die xml Produkte
 	 * @var array B3it_XmlBind_ProductBuilder_Item_Abstract
 	 */
@@ -131,7 +143,12 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			}
 		}
 		
-		
+		foreach (self::$_entityInvalidatedIndexes as $indexer) {
+			$indexProcess = Mage::getSingleton('index/indexer')->getProcessByCode($indexer);
+			if ($indexProcess) {
+				$indexProcess->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
+			}
+		}
 	}
 	
 	/**
