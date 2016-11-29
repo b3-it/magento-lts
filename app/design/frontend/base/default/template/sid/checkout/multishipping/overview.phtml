@@ -29,7 +29,7 @@
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" onsubmit="return showLoader();">
-<fieldset class="multiple-checkout">
+<fieldset class="multiple-checkout"  style="display:block; clear:left;" > 
 	<?php echo $this->getChildHtml('agreements') ?>
 	
     <div class="col2-set">
