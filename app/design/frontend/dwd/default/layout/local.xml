@@ -77,4 +77,10 @@
             <block type="mpcheckout/cart_coupon" name="checkout.cart.coupon" as="coupon" after="methods" template="checkout/cart/coupon.phtml"/>
         </reference>
     </checkout_cart_index>
+    
+    <catalogsearch_result_index>
+        <reference name="left_first">
+            <remove name="catalogsearch.leftnav" />
+        </reference>
+    </catalogsearch_result_index>
 </layout>
