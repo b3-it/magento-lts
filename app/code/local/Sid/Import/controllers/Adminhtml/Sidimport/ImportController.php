@@ -174,6 +174,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     			$this->_redirect('*/catalog_product/index',array('product_filter'=>$filter));
     			return;
     		} catch (Exception $e) {
+    			Mage::logException($e);
     			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
     		}
     	}
