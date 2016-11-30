@@ -98,6 +98,11 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     public $ImageSrcDir = null;
     
     
+    /**
+     * Attribute bei denen die Werte ohne Überprüfung übernommen werden sollen
+     * @var array
+     */
+    protected $_acceptAttributeValues = array('store_group');
     
     /**
      * Pairs of attribute set ID-to-name.
@@ -1958,6 +1963,37 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     	return parent::validateData();
     }
     
+    
+    public function prepareAttributesForSave(array $rowData, $withDefaultValue = true)
+    {
+    	$resultAttrs = array();
+    
+    	foreach ($this->_getProductAttributes($rowData) as $attrCode => $attrParams) {
+    		if(array_search($attrCode, $this->_acceptAttributeValues) !== false){
+    			$resultAttrs[$attrCode] = $rowData[$attrCode];
+    		}else{
+	    		if (!$attrParams['is_static']) {
+	    			if (isset($rowData[$attrCode]) && strlen($rowData[$attrCode])) {
+	    				$resultAttrs[$attrCode] =
+	    				('select' == $attrParams['type'] || 'multiselect' == $attrParams['type'])
+	    				? $attrParams['options'][strtolower($rowData[$attrCode])]
+	    				: $rowData[$attrCode];
+	    			} elseif ($withDefaultValue && null !== $attrParams['default_value']) {
+	    				$resultAttrs[$attrCode] = $attrParams['default_value'];
+	    			}
+	    		}
+    		}
+    	}
+    	return $resultAttrs;
+    }
+    
+    public function isAttributeValid($attrCode, array $attrParams, array $rowData, $rowNum)
+    {
+    	if(array_search($attrCode, $this->_acceptAttributeValues) !== false){
+    		return true;
+    	}
+    	return parent::isAttributeValid($attrCode, $attrParams, $rowData, $rowNum);
+    }
 
     private function _str2num($str) 
  	{ 
