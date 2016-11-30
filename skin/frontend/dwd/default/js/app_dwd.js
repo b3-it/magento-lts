@@ -1,7 +1,28 @@
 var toggleBlocks = new Array();
 
+//Definieren der Break-Points für JavaScript-Aktionen
+var egov_break = {
+    lngSwitch: 760,    // Store-Language Switcher
+    welcome  : 785,    // Welcome
+    navbar   : 785,    // Navigation
+    rightCol : 1000,   // Rechte Maginal-Spalte
+    topSearch: 911     // Suchen-Leiste im Header
+};
+
+
 // Allgemeine JS-Funktionen
 $j(document).ready(function(){
+    // Custom-Scrollbar im Skin-Design
+    $j('body').niceScroll({
+        'cursorcolor'       : '#2D4B9B',
+        'cursorwidth'       : '15px',
+        'cursorborderradius': '3px'
+    });
+    
+    $j('#mobile-cart > a').attr('data-target-element', '#mobile-header-cart');
+    $j('#mobile-cart > a').attr('id', 'mobile-cart-menu');
+    $j('#mobile-cart > div').attr('id', 'mobile-header-cart');
+	
 	if ( $j('body').hasClass('cms-index-index') ) {
 		$j('#welcome-msg').html( $j('#welcome-hidden').html() );
 	}
@@ -32,6 +53,31 @@ $j(document).ready(function(){
                                                      .addClass('no-display')
                                                      .css('display', 'none');
 	}
+	
+    // Umlegen der Shop-Navigation
+    if ( $j('.col-left').length > 0 && $j('.page-header-container').length > 0 ) {
+    	enquire.register('screen and (max-width: ' + egov_break.navbar + 'px)', {
+            match: function() {
+                // in Mobil-Container schieben
+                $j('.nav-primary').appendTo( $j('#header-nav') );
+
+                // Damit die Navigation funktioniert, müssen die
+                // Container 'egov-nav' und 'header-nav' "umbenannt" werden
+                $j('#egov-nav').attr('id', 'egov-nav_old');
+                $j('#header-nav').attr('id', 'mobile-nav');
+                $j('.skip-nav').attr('href', '#egov-nav');
+            },
+            unmatch: function() {
+                // zurück an Ursprung
+                $j('.nav-primary').appendTo( $j('#egov-nav_old') );
+
+                // Ursprüngliche Benennung wieder herstellen
+                $j('#mobile-nav').attr('id', 'header-nav');
+                $j('#egov-nav_old').attr('id', 'egov-nav');
+                $j('.skip-nav').attr('href', '#header-nav');
+            }
+        });
+    }
 	
 	// Auf Größen-Anpassung des Fensters reagieren
 	$j(window).resize(function() {

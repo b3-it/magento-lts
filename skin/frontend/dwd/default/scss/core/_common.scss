@@ -751,9 +751,18 @@ div.block-reorder {
 }
 
 .col2-left-layout {
+	@include bp(max-width, $bp-small) {
+	    background-image: url($global-header-background-image);
+	    background-repeat:no-repeat;
+	    background-attachment: fixed;
+	    background-size: 100% 100%;
+	    padding: 10px;
+	}
+	
     .col-wrapper {
         width: $global-wrapper-width;
         position: relative;
+        background-color: $grundfarbe-weiss;
 
         .col-left {
             margin-right: $global-leftcol-rightmargin-percent;
@@ -761,7 +770,7 @@ div.block-reorder {
             position: relative;
             width: $global-leftcol-percent;
             
-            @include bp(max-width, 490px) {
+            @include bp(max-width, $bp-small) {
             	display: none;
             }
         }
@@ -771,13 +780,17 @@ div.block-reorder {
             width: $global-content-2col-left-percent;
             padding-top: $global-content-paddingtop;
             
-            @include bp(max-width, 490px) {
-            	width: 100% !important;
+            @include bp(max-width, $bp-small) {
+                width: 100%;
             }
         }
 
         p.note-msg {
             width: $global-content-2col-left-percent;
+        }
+        
+        @include bp(max-width, $bp-small) {
+            padding: 5px;
         }
     }
 }

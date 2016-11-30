@@ -146,7 +146,7 @@
 	    width: 23%;
 	}
 	
-	a, .skip-link {
+	a:not(.skip-link-close), .skip-link {
 	    @include hover-weiss-blau;
 	
 	    margin: 0;
@@ -176,6 +176,73 @@
         top: -50px;
         vertical-align: top;
         width: 75%
+	}
+	
+	#mobile-nav, #header-account, #mobile-search-form {
+        position: relative;
+	    background-color: $grundfarbe-blgr;
+	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	    width: 120%;
+	    left: -70px;
+	    top: 0;
+	}
+	
+	#header-account {
+	    border: none;
+	    
+	    ul {
+	        margin-left: 15px;
+	    }
+	    
+	    li:not(.last) {
+	        border-bottom-width: $global-active-border;
+        	border-bottom-color: $textfarbe-mittel;
+        	border-bottom-style: dotted;
+	    }
+	    
+	    a {
+	        @include link-navigation-mobile;
+	    }
+	}
+	
+	#mobile-header-cart.skip-active {
+	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	    width: 134%;
+	    left: -68px;
+	}
+	
+	#mobile-search-form {
+    	width: 135%;
+	}
+		
+	#search {
+	    width: 65%;
+	}
+	button.button {
+	    padding: 5px 20px;
+	}
+}
+
+#mobile-nav {
+	ol {
+	    @include main-navigation;
+	    padding-left: 15px;
+	    
+	    li.level0, a.level0 {
+	        display: block;
+	    }
+	    
+	    a, .level1 a {
+	        @include link-navigation-mobile;
+	    }
+	    
+	    a, li.level1 a, li.level1 li a {
+	        padding: 10px 12px 10px 0 !important;
+	    }
+
+        li.level0 li {
+            padding: 0;
+        }    
 	}
 }
 

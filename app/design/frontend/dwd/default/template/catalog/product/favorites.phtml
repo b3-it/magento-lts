@@ -22,15 +22,12 @@
     $_imgSize_list = 300;
     $_imgSize_grid = 210;
 ?>
-<?php if(!$_productCollection->count()): ?>
-<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
-<?php else: ?>
-<div class="category-products">
-    <?php // echo $this->getToolbarHtml() ?>
-    <?php // List mode ?>
-    <?php if($this->getMode()!='grid'): ?>
+
+<div class="category-products favorites-block">
+    <h2><?php echo $this->__('Our favorites'); ?></h2>
+    
     <?php $_iterator = 0; ?>
-    <ol class="products-list" id="products-list">
+    <ol class="products-list " id="products-list">
     <?php foreach ($_productCollection as $_product): ?>
         <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
             <div class="product-list-title">
@@ -148,10 +145,6 @@
     </ol>
     <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
 
-    <?php else: ?>
-
-    <?php // Grid Mode ?>
-
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php $_columnCount = $this->getColumnCount(); ?>
     <ul class="products-grid products-grid--max-<?php echo $_columnCount; ?>-col">
@@ -239,7 +232,6 @@
                                        alt="<?php echo $this->__('Add to Compare') ?>"
                                        title="<?php echo $this->__('Add to Compare') ?>">
                                         <span class="egov-compare"> </span>
-                                        <!-- <span class="egov-compare-1"> </span>/<span class="egov-compare-2"> </span> -->
                                     </a>
                                 </li>
                             <?php endif; ?>
@@ -249,14 +241,9 @@
             </li>
         <?php endforeach ?>
     </ul>
-    <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
-    <?php endif; ?>
 
-    <div class="toolbar-bottom">
-        <?php //echo $this->getToolbarHtml() ?>
-    </div>
 </div>
-<?php endif; ?>
+
 <?php
 // Provides a block where additional page components may be attached, primarily good for in-page JavaScript
 if ($this->getChild('after')) {

@@ -47,7 +47,7 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
 	        
 	        <div id="mobile-header">
 	            <div id="mobile-menu" class="header-link">
-            		<a href="#header-nav" class="skip-link skip-nav" data-target-element="#egov-nav">
+            		<a href="#header-nav" class="skip-link skip-nav" data-target-element="#mobile-nav">
                 		<span class="icon egov-list"></span>
                 		<span class="label"><?php echo $this->__('Menu'); ?></span>
             		</a>
@@ -57,18 +57,30 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
                         <span class="icon egov-user"></span>
                         <span class="label"><?php echo $this->__('Account'); ?></span>
                     </a>
-                    <div id="header-account" class="skip-content">
-                        <?php echo $this->getChildHtml('topLinks') ?>
-                    </div>
                 </div>
-	            <div id="mobile-cart" class="header-link">
+	            <div id="mobile-cart" class="header-link header-minicart">
 	                <?php echo $this->getChildHtml('minicart_head'); ?>
 	            </div>
 	            <div id="mobile-search" class="header-link">
-	                <a href="#header-search" class="skip-search">
+	                <a href="javascript:void(0);" id="mobile-search-menu" class="skip-link skip-search" data-target-element="#mobile-search-form">
                 		<span class="icon egov-search"></span>
             		</a>
 	            </div>
+	            
+                <!-- Benutzer-Menü -->
+                <div id="header-account" class="skip-content">
+                    <?php echo $this->getChildHtml('topLinks') ?>
+                </div>
+
+		        <!-- Navigation -->
+		        <div id="header-nav" class="skip-content">
+		            <?php echo $this->getChildHtml('topMenu') ?>
+		        </div>
+
+		        <!-- Search -->
+		        <div id="mobile-search-form" class="skip-content">
+		            <?php echo $this->getChildHtml('topSearch') ?>
+		        </div>
 	        </div>
 
 	      <?php if( ($action == 'index') AND ($action2 == 'home') ): echo ''; else: ?>
@@ -161,7 +173,7 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
         </span>
 
         <!-- Navigation -->
-        <div id="header-nav" class="skip-content">
+        <div id="header-nav_" class="skip-content">
             <?php echo $this->getChildHtml('topMenu') ?>
         </div>
 

@@ -17,6 +17,16 @@ footer {
     	/* Definiert in _style_images.scss */
     	@include dwd-gitter-rechts;
     	display: block;
+    	
+    	@include bp(max-width, $bp-small) {
+    	    background-image: none;
+    	}
+    }
+    
+    @include bp(max-width, $bp-small) {
+        background-image: linear-gradient(to right, $zusatzfarbe-gradient-1, $zusatzfarbe-gradient-2);
+        margin: 0;
+        padding: 45px 15px 50px 15px;
     }
 }
 
@@ -128,6 +138,15 @@ address {
 
         li {
             line-height: 1.1rem !important;
+        }
+        
+        @include bp(max-width, $bp-small) {
+            display: block;
+            width: 100%;
+
+            &:not(:last-child) {
+                margin-bottom: 20px;
+            }
         }
     }
 
