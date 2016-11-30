@@ -44,6 +44,32 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
 	        <h1>
 	            <?php echo Mage::getStoreConfig('general/store_information/name'); ?>
 	        </h1>
+	        
+	        <div id="mobile-header">
+	            <div id="mobile-menu" class="header-link">
+            		<a href="#header-nav" class="skip-link skip-nav" data-target-element="#egov-nav">
+                		<span class="icon egov-list"></span>
+                		<span class="label"><?php echo $this->__('Menu'); ?></span>
+            		</a>
+	            </div>
+                <div id="mobile-account-link" class="header-link">
+                    <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
+                        <span class="icon egov-user"></span>
+                        <span class="label"><?php echo $this->__('Account'); ?></span>
+                    </a>
+                    <div id="header-account" class="skip-content">
+                        <?php echo $this->getChildHtml('topLinks') ?>
+                    </div>
+                </div>
+	            <div id="mobile-cart" class="header-link">
+	                <?php echo $this->getChildHtml('minicart_head'); ?>
+	            </div>
+	            <div id="mobile-search" class="header-link">
+	                <a href="#header-search" class="skip-search">
+                		<span class="icon egov-search"></span>
+            		</a>
+	            </div>
+	        </div>
 
 	      <?php if( ($action == 'index') AND ($action2 == 'home') ): echo ''; else: ?>
 	        <div class="page-header-main-navigation">
