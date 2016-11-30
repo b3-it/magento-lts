@@ -83,4 +83,123 @@
         </reference>
     </sales_email_order_creditmemo_items>
     
+    <!--
+    Pro Produkttyp müssen die entsprechende Blöcke zur Anzeige von Preisen angepasst werden!
+    Wichtig für neue Produkttypen!! 
+     -->
+    <default>
+        <reference name="catalog_product_price_template">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+
+        <reference name="wishlist_sidebar">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </default>
+
+    <!-- Preisblock für Steuer und Versandkosten hinzufügen -->
+    <catalog_category_default>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_default>
+
+    <catalog_category_layered>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_layered>
+
+    <catalog_category_view>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_view>
+
+    <catalog_product_compare_index>
+        <reference name="catalog.compare.list">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_compare_index>
+
+    <catalog_product_view>
+        <reference name="catalog.product.related">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_view>
+
+    <catalogsearch_advanced_result>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_advanced_result>
+
+    <catalogsearch_result_index>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_result_index>
+
+    <tag_product_list>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </tag_product_list>
+
+    <tag_customer_view>
+        <reference name="customer_view">
+            <action method="addPriceBlockType">
+                <type>configdownloadable</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </tag_customer_view>
+
+    <PRODUCT_TYPE_configdownloadable>
+        <reference name="product.info.configdownloadable.extra">
+            <block type="configdownloadable/catalog_product_view_type" name="egovsready.deliverytime" template="egovs/ready/catalog/product/delivery_time.phtml" />
+        </reference>
+    </PRODUCT_TYPE_configdownloadable>
+    
 </layout>

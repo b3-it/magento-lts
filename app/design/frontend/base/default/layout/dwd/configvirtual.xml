@@ -31,6 +31,7 @@
        <label>Catalog Product View (Virtual)</label>
        <reference name="product.info">
        		<block type="configvirtual/catalog_product_view_type" name="product.info.configvirtual" as="product_type_data" template="dwd/configvirtual/catalog/product/type.phtml">
+                 <block type="cataloginventory/stockqty_default" name="product.info.configvirtual.extra" as="product_type_data_extra" template="cataloginventory/stockqty/default.phtml"/>
                  <block type="stationen/catalog_product_view_map" name="product.info.configvirtual.stationen" as="map" template="dwd/stationen/catalog/product/view/map.phtml"/>
                  <block type="stationen/catalog_product_view_list" name="product.info.configvirtual.cbstationen" as="list" template="dwd/stationen/catalog/product/view/list.phtml"/>
                  <block type="stationen/catalog_product_view_suggest" name="product.info.configvirtual.suggest" as="suggest" template="dwd/stationen/catalog/product/view/suggest.phtml"/>
@@ -38,10 +39,7 @@
             </block>
         </reference>
     </PRODUCT_TYPE_configvirtual>
-    
 
-    
-    
     <checkout_cart_index>
         <reference name="checkout.cart">
             <action method="addItemRender"><type>configvirtual</type><block>configvirtual/checkout_cart_item_renderer</block><template>dwd/configvirtual/checkout/cart/item/default.phtml</template></action>
@@ -85,4 +83,122 @@
         </reference>
     </sales_email_order_creditmemo_items>
     
+    <!--
+    Pro Produkttyp müssen die entsprechende Blöcke zur Anzeige von Preisen angepasst werden!
+    Wichtig für neue Produkttypen!! 
+     -->
+    <default>
+        <reference name="catalog_product_price_template">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+
+        <reference name="wishlist_sidebar">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </default>
+
+    <!-- Preisblock für Steuer und Versandkosten hinzufügen -->
+    <catalog_category_default>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_default>
+
+    <catalog_category_layered>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_layered>
+
+    <catalog_category_view>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_view>
+
+    <catalog_product_compare_index>
+        <reference name="catalog.compare.list">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_compare_index>
+
+    <catalog_product_view>
+        <reference name="catalog.product.related">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_view>
+
+    <catalogsearch_advanced_result>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_advanced_result>
+
+    <catalogsearch_result_index>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_result_index>
+
+    <tag_product_list>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </tag_product_list>
+
+    <tag_customer_view>
+        <reference name="customer_view">
+            <action method="addPriceBlockType">
+                <type>configvirtual</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </tag_customer_view>
+
+    <PRODUCT_TYPE_configvirtual>
+        <reference name="product.info.configvirtual.extra">
+            <block type="configvirtual/catalog_product_view_type" name="egovsready.deliverytime" template="egovs/ready/catalog/product/delivery_time.phtml" />
+        </reference>
+    </PRODUCT_TYPE_configvirtual>
 </layout>
