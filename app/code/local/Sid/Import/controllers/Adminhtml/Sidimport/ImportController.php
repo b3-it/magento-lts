@@ -171,7 +171,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     			$to = $builder->getLastEntityId();
     			$filter = "entity_id[from]={$from}&entity_id[to]={$to}";
     			$filter = base64_encode($filter);
-    			$this->_redirect('adminhtml/catalog_product/index',array('filter'=>$filter));
+    			$this->_redirect('*/catalog_product/index',array('product_filter'=>$filter));
     			return;
     		} catch (Exception $e) {
     			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
