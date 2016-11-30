@@ -22,8 +22,16 @@
     &:after {
        	/* Definiert in _style_images.scss */
       	@include dwd-gitter-rechts;
+      	
+      	@include bp(max-width, $bp-small) {
+      	    background-image: none;
+      	}
     }
-       
+    
+    @include bp(max-width, $bp-small) {
+        background-image: none;
+    }
+
     #top-row {
        	display: block;
        	height: 55px;
@@ -68,6 +76,10 @@
         &:after {
          	@include clearfix;
         }
+        
+        @include bp(max-width, $bp-small) {
+            display: none;
+        }
     }
 
 	.welcome-header {
@@ -83,6 +95,18 @@
 	        width: auto;
 	        height: 1.2em;
 	        overflow: hidden;
+	        
+	        @include bp(max-width, $bp-small) {
+	            font-size: 1.8rem;
+	            margin-top: 5px;
+	            vertical-align: top;
+	            white-space: nowrap;
+	            width: 75%;
+	        }
+	  	}
+	  	
+	  	@include bp(max-width, $bp-small) {
+	  	    height: $global-welcome-header - 20px;
 	  	}
     }
 }
@@ -99,16 +123,129 @@
     
 .page-header-container {
 	height: 80px;
+	
+	@include bp(max-width, $bp-small) {
+	    display: none;
+	}
 }
 
 .page-header-container, #top-row-content, #welcome-header-content {
     max-width: $global-fullpage-width;
-    min-width: $global-min-width;
     margin: 0px auto;
 }
 #welcome-header-content {
 	height: 100%;
 }
+#mobile-header {
+	display: none;
+
+	.header-link {
+	    display: inline-block;
+	    height: 100%;
+	    vertical-align: middle;
+	    width: 23%;
+	}
+	
+	a:not(.skip-link-close), .skip-link {
+	    @include hover-weiss-blau;
+	
+	    margin: 0;
+	    padding: 5px 0 0;
+	    width: 100%;
+	    border: 0;
+	    height: 100%;
+	    top: 0;
+	}
+	
+	.label {
+	    display: none;
+	}
+	.icon {
+	    background-image: none;
+	    display: block;
+	    text-indent: 0;
+	    margin: 0 auto;
+	    width: 30px;
+	}
+	
+	@include bp(max-width, $bp-small) {
+	    display: inline-block;
+	    height: 40px;
+	    left: 67px;
+        position: relative;
+        top: -50px;
+        vertical-align: top;
+        width: 75%
+	}
+	
+	#mobile-nav, #header-account, #mobile-search-form {
+        position: relative;
+	    background-color: $grundfarbe-blgr;
+	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	    width: 120%;
+	    left: -70px;
+	    top: 0;
+	}
+	
+	#header-account {
+	    border: none;
+	    
+	    ul {
+	        margin-left: 15px;
+	    }
+	    
+	    li:not(.last) {
+	        border-bottom-width: $global-active-border;
+        	border-bottom-color: $textfarbe-mittel;
+        	border-bottom-style: dotted;
+	    }
+	    
+	    a {
+	        @include link-navigation-mobile;
+	    }
+	}
+	
+	#mobile-header-cart.skip-active {
+	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	    width: 134%;
+	    left: -68px;
+	}
+	
+	#mobile-search-form {
+    	width: 135%;
+	}
+		
+	#search {
+	    width: 65%;
+	}
+	button.button {
+	    padding: 5px 20px;
+	}
+}
+
+#mobile-nav {
+	ol {
+	    @include main-navigation;
+	    padding-left: 15px;
+	    
+	    li.level0, a.level0 {
+	        display: block;
+	    }
+	    
+	    a, .level1 a {
+	        @include link-navigation-mobile;
+	    }
+	    
+	    a, li.level1 a, li.level1 li a {
+	        padding: 10px 12px 10px 0 !important;
+	    }
+
+        li.level0 li {
+            padding: 0;
+        }    
+	}
+}
+
 .page-header-main-navigation {
 	display: none;
 }
@@ -186,10 +323,6 @@ body:not(.cms-index-index) {
         top: -20px !important;
     }
 
-    .welcome-header {
-        top: $global-welcome-header-top + $global-logo-height !important;
-    }
-
     #egov-nav{
     	top: $mobile-header-mainnav-top !important;
     }
@@ -231,29 +364,6 @@ body:not(.cms-index-index) {
 .header-language-container,
 .page-header {
     font-family: $base-font-family;
-
-    .welcome-header {
-        @include bp(max-width, 910px) {
-            left: $global-welcome-left - 50;
-        }
-        @include bp(max-width, 790px) {
-            left: $global-welcome-left - 90;
-            top: 70px;
-        }
-        @include bp(max-width, 770px) {
-            left: $global-welcome-left - 120;
-            top: 30px;
-            width: auto;
-        }
-        @include bp(max-width, 630px) {
-            left: 100px;
-            top: 40px;
-        }
-        @include bp(max-width, 550px) {
-            left: 35px;
-            top: 40px;
-        }
-    }
 }
 
 /* ============================================ *
@@ -335,6 +445,12 @@ body:not(.cms-index-index) {
     		display: none;
     	}
     }
+    
+    @include bp(max-width, $bp-small) {
+        padding: 10px 0 10px 10px;
+        width: 62px;
+        height: 92px;
+    }
 }
 
 /* ============================================ *
@@ -351,7 +467,7 @@ body:not(.cms-index-index) {
 
 @include bp(max-width, 785px) {
     .page-header-container {
-        background-color: $global-header-gradientcolor-2;
+        background-color: transparent;
         background-image: url($global-header-background-image);
         background-repeat: no-repeat;
         background-position: center 0px;

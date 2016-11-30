@@ -17,8 +17,14 @@
     text-align: left;
     position: relative;
 
-    &:hover {
+    &:hover, &:active {
         text-decoration: none;
+        
+        .count {
+            @include bp(max-width, $bp-small) {
+                color: $grundfarbe-weiss;
+            }
+        }
     }
 
     .count {
@@ -33,6 +39,19 @@
 	    text-align: center;
 	    color: $grundfarbe-weiss;
 	    background-color: $grundfarbe-blau;
+	    
+	    @include bp(max-width, $bp-small) {
+	        margin: 0;
+	        padding: 0;
+	        background-color: transparent;
+	        height: auto;
+	        color: $grundfarbe-blau;
+	        font-weight: bold;
+	        font-size: 0.7rem;
+	        right: 48%;
+	        top: -5%;
+	        width: auto;
+	    }
     }
     &.no-count .count, .count.empty {
         display: none;
@@ -46,7 +65,7 @@
     }
 }
 
-#header-cart.skip-active {
+#header-cart.skip-active, #mobile-header-cart.skip-active {
     display: block;
     position: absolute;
     z-index: 2000;

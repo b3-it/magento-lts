@@ -18,17 +18,11 @@
 	#mobile-home-link {
         margin: 0;
 
-	    a:hover, a:active {
-            color: $global-linkcolor-active;
+        a {
+    	    @include link-navigation-mobile;
+    	    display: block;
         }
 
-        a {
-    	    width:100%;
-            padding: 10px 12px 10px 14px;
-            display: block;
-            overflow: hidden;
-        }
-       
         @include bp(min-width, 800px) {
             display: none;
         }

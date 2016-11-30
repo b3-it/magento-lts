@@ -91,6 +91,19 @@
 	}
 }
 
+@mixin link-navigation-mobile {
+	@include default-hidden-border;
+	background-color: $grundfarbe-weiss;
+	color: $textfarbe-mittel;
+	text-decoration: none;
+	
+	&:hover, &:active, &:focus{
+		outline-color: $textfarbe-mittel;
+		border-color: $textfarbe-mittel;
+		font-weight: bold;
+	}
+}
+
 @mixin input-field {
 	@include default-hidden-border;
 	background-color: $grundfarbe-weiss;

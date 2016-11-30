@@ -33,6 +33,10 @@
     border-style: solid;
     border-color: $grundfarbe-blau;
     
+    @include bp(max-width, $bp-small) {
+        top: 40px;
+    }
+    
    a {
     	@include hover-weiss-blau;
     	padding: 10px;
