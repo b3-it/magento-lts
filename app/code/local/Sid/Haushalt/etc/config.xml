@@ -60,13 +60,16 @@
                                         </sidhaushalt>
                                     </children>
                                 </convert>
+                                <!-- 
                                 <config>
                                     <children>
                                         <sidhaushalt translate="title" module="sidhaushalt">
                                             <title>Sidhaushalt</title>
                                         </sidhaushalt>
                                     </children>
+                                     
                                 </config>
+                                -->
                             </children>
                         </system>
                     </children>

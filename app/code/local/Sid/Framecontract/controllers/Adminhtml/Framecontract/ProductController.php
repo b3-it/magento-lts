@@ -55,7 +55,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ProductController extends Mage_A
         }
        // Mage::getSingleton('adminhtml/session')->addError(Mage::helper('framecontract')->__('Unable to find item to save'));
        
-       $this->_redirect('framecontract/adminhtml_product/index', array('_current' => true,'group'=>$group));
+       $this->_redirect('adminhtml/framecontract_product/index', array('_current' => true,'group'=>$group));
 	}
  
 	
@@ -68,7 +68,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ProductController extends Mage_A
 			{
 				if ($product->getId())
 				{
-					Mage::helper('groupscatalog')->setProductAccessibilityForGroup($product, $groupId, true);
+					Mage::helper('framecontract/groupscatalog')->setProductAccessibilityForGroup($product, $groupId, true);
 				}
 			}
  	}
@@ -82,7 +82,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ProductController extends Mage_A
 				$product->getResource()->load($product, $productId);
 				if ($product->getId())
 				{
-					Mage::helper('groupscatalog')->setProductAccessibilityForGroup($product, $groupId, false);
+					Mage::helper('framecontract/groupscatalog')->setProductAccessibilityForGroup($product, $groupId, false);
 				}
 			}
  	}
@@ -94,7 +94,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_ProductController extends Mage_A
 		{
 		
 
-            $attributeCode = 'groupscatalog_hide_group';
+            $attributeCode = 'groupscatalog2_groups';
             $attribute = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
 
 			if (! $attribute)

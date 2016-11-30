@@ -89,10 +89,12 @@ class Sid_Framecontract_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Bloc
 	
 	protected function _prepareColumns()
 	{
+		$group = $this->getRequest()->getParam('group');
+		
 		
 		$this->addColumn('is_visible', array(
-				'header'    => Mage::helper('catalog')->__('Visible'),
-				//'header_css_class' => 'a-center',
+				'header'    => ($group !== null) ? null: Mage::helper('catalog')->__('Visible'),
+				'header_css_class' =>  ($group !== null) ? 'a-center': '',
 				'type'       => 'checkbox',
 				'name'       => 'is_visible',
 				//'values'     => $this->_getSelectedProducts(),

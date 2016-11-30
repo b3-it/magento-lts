@@ -15,8 +15,8 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Grid_Column_Renderer_Groups
 		if ($filter = $this->getColumn()->getFilter()) {
 			$checked = $filter->getValue() ? 'checked="checked"' : '';
 		}
-		return '';
-		//return '<input type="checkbox" name="'.$this->getColumn()->getFieldName().'" onclick="checkBoxes(this);" class="checkbox" '.$checked.' title="'.Mage::helper('adminhtml')->__('Select All').'"/>';
+		//return '';
+		return '<input type="checkbox"  name="'.$this->getColumn()->getFieldName().'" onclick="checkBoxes(this);" class="checkbox" '.$checked.' title="'.Mage::helper('adminhtml')->__('Select All').'"/>';
 	}
 
 	

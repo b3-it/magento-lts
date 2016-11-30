@@ -81,4 +81,9 @@ class Sid_Haushalt_Adminhtml_Sidhaushalt_HaushaltController extends Mage_Adminht
         $response->sendResponse();
         die;
     }
+    
+    protected function _isAllowed()
+    {
+    	return Mage::getSingleton('admin/session')->isAllowed('system/convert/sidhaushalt');
+    }
 }

@@ -32,6 +32,7 @@
    	<th class="type-status"><?php echo($this->__('Status'))?></th>
    	<th class="type-link">Link erneuern</th>
    	<th class="type-send">Link versenden</th>
+   	<th class="type-send">noch Tage gültig</th>
    	<th class="type-button"/>
    	</tr>
    </thead>
@@ -64,6 +65,7 @@ var firstLosTemplate = '<tr id="contract_los_{{number}}"><td  class="a-center">'
 							'</select></td>'+
 							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][newkey]" /></td>'+
 							'<td><input type="checkbox" class="input-text" name="lose[{{number}}][sendlink]" /></td>'+
+							'<td><input type="date" style="width:50px;" class="required-entry" id="contract_los_{{number}}_link_valid_to" value="{{link_valid_to}}" name="lose[{{number}}][link_valid_to]" /></td>'+
 							'<td class="a-center"><button style="" onclick="" class="scalable delete los-input " type="button" title="löschen" id="contract_los_remove_{{number}}"><span><span><span>Los löschen</span></span></span></button>'+
 							'</td></tr>';
 
@@ -78,6 +80,7 @@ var contractLos = {
 		if(!data){
 			var data = new Object();
 			data.products = 0;
+			data.link_valid_to = 14;
 		} 
 
         data.number = this.itemCount;
