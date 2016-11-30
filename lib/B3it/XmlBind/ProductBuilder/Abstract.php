@@ -12,6 +12,18 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 {
 
 	/**
+	 * Entity invalidated indexes.
+	 *
+	 * @var Mage_ImportExport_Model_Import_Entity_Abstract
+	 */
+	protected static $_entityInvalidatedIndexes = array (
+		'catalog_product_price',
+		'catalog_category_product',
+		'catalogsearch_fulltext',
+		'catalog_product_flat'
+	);
+
+	/**
 	 * Die xml Produkte
 	 * @var array B3it_XmlBind_ProductBuilder_Item_Abstract
 	 */
@@ -131,7 +143,12 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			}
 		}
 		
-		
+		foreach (self::$_entityInvalidatedIndexes as $indexer) {
+			$indexProcess = Mage::getSingleton('index/indexer')->getProcessByCode($indexer);
+			if ($indexProcess) {
+				$indexProcess->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
+			}
+		}
 	}
 	
 	/**
@@ -140,7 +157,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	 */
 	protected function _saveBundleDetails($item)
 	{
-		$options = $item->getBundleOptions();
+		$options = $item->getBundleOptions($item);
 		foreach($options as $option)
 		{
 			$entity_id = $item->getEntityId();
@@ -166,7 +183,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		$bind['type'] = $type;
 		$bind['position'] = $position;
 		$this->_connection->insert($table, $bind);
-		$lastInsertId = $connection->lastInsertId();
+		$lastInsertId = $this->_connection->lastInsertId();
 		
 		$table = 'catalog_product_bundle_option_value';
 		$bind = array();
@@ -182,7 +199,6 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	private function __saveBundleSelection($option_id, $bind)
 	{
 		$table = 'catalog_product_bundle_selection';
-		$bind = array();
 		$bind['option_id'] = $option_id;
 		$this->_connection->insert($table, $bind);
 	}

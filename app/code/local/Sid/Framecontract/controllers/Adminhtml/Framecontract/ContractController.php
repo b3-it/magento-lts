@@ -183,10 +183,20 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 					$model->setNote($los['note']);
 					$model->setFramecontractContractId($contract->getId());
 					$id = $model->getId();
+					
+					if(intval($los['link_valid_to']) != $model->getLinkValidTo()){
+						$model->setLinkValidToModified(now());
+						$model->setLinkValidTo(intval($los['link_valid_to']));
+					}
+					
+					
+					
 					$model->save();
 					
 					if(!$id || isset($los['newkey']) ){
 						$model->setKey($this->getNewKey($contract, $model))->save();
+						$model->setLinkValidTo(14);
+						$model->setLinkValidToModified(now());
 					}
 					
 					if(isset($los['sendlink'])){

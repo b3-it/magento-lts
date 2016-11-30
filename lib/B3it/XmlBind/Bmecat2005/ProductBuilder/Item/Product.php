@@ -44,13 +44,29 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 		return $sku;
 	}
 	
+	
+	/**
+	 * Liefert der Magento Produkttype
+	 * @return string
+	 */
+	public function getProductType()
+	{
+		if($this->isBundle())
+		{
+			return 'bundle';
+		}
+		return $this->_productType;
+	}
+	
+	
+	
 	/**
 	 * feststellen ob Bundleprodukt
 	 * @see B3it_XmlBind_ProductBuilder_Item_Abstract::isBundle()
 	 */
 	public function isBundle()
 	{
-		return false;
+		//return false;
 		
 		
 		return (count($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep()) > 0);
@@ -70,15 +86,32 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 		foreach($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep() as $step)
 		{
 			$required = (intval($step->getMinOccurance()->getValue()) > 0);
-			$type = (intval($step->getMaxOccurance()->getValue()) == 1) ? 'radio' : 'checkbox';
+
+			$count = intval(count($step->getConfigParts()->getAllPartAlternative()));
+			$max = intval($step->getMaxOccurance()->getValue());
+
+			if ($max == 1 && $count == 1) {
+				$type = "checkbox";
+			} else if ($max == 1) {
+				$type = "radio";
+			} else {
+				$type = "checkbox";
+			}
+
 			$label = "";
-			foreach($step->getStepHeader() as $h){
+			foreach($step->getAllStepHeader() as $h){
 				$label .= $h->getValue(). ' ';
 			}
+			$option = array();
 			$option['label'] = trim($label);
 			$option['type'] = $type; 
 			$option['required'] = $required;
-			$option['position'] = $k++;
+
+			$k++;
+			$order = ($step->getStepOrder()->getValue());
+
+			$option['position'] = $order === "" ? $k : intval($order);
+
 			$option['selections'] = array();
 			
 			$n = 0;
@@ -86,10 +119,13 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 			{
 				$product_item = $item->getBuilder()->getItemBySku($part->getSupplierPidref()->getValue());
 				if($product_item){
+					$bind = array();
 					$bind['parent_product_id'] = $item->getEntityId();
 					$bind['product_id'] = $product_item->getEntityId();
 					$bind['position'] = $n++;
-					//$bind['is_default'] = $is_default;
+					if ($part->getDefaultFlag()->getValue() === "true") {
+						$bind['is_default'] = true;
+					}
 					$bind['selection_price_type'] = 0;
 					$bind['selection_price_value'] = 0;
 					$bind['selection_qty'] = 1;
@@ -186,6 +222,8 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 			}
 		}
 		
+		$default['price_type'] = $this->isBundle() ? 0 : 1;
+
 		return $default;
 	}
 	

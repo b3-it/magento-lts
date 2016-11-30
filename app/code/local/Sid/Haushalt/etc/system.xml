@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <config>
     <sections>
+    <!-- 
          <sidhaushalt translate="label" module="sidhaushalt">
          <label>Haushaltsystem</label>
             <tab>general</tab>
@@ -39,6 +40,7 @@
                 </hhexport>  
          </groups>
         </sidhaushalt>
+         -->
         <dev>
             <groups>
                 <modulelog>

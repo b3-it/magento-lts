@@ -119,4 +119,13 @@ class  Sid_Import_Model_Builder_Itw extends B3it_XmlBind_ProductBuilder_Abstract
 		return 0;
 	}
 	
+	
+	public function reindex()
+	{
+		$indexer = Mage::getResourceModel('catalog/product_indexer_price');
+		foreach($this->getAllEntityIds() as $id){
+			$indexer->reindexProductIds($id);
+		}
+	}
+	
 }
