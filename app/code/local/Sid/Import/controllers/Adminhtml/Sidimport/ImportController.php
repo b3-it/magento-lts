@@ -126,13 +126,14 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     			$imageLoader->setLosId($defaults['los']);
     			
     			
-    			/* @var $builder Sid_Import_Model_Itw */
+    			/* @var $builder Sid_Import_Model_Builder_Itw */
     			$builder = Mage::getModel('sidimport/builder_itw');
     			$builder->setSkuPrefix($defaults['sku_prefix'].$defaults['los']."/");
     			$builder->setCategoryId($defaults['category']);
     			$builder->setWebSiteId($defaults['website']);
     			$builder->setLos($defaults['los']);
     			$builder->setFramecontractQty($defaults['qty']);
+    			$builder->setStockQuantity($defaults['qty']);
     			$builder->setStore($defaults['store']);
     			$builder->setImageDispersionPrefix('L'.$defaults['los']);
     			 
