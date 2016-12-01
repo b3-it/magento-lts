@@ -462,13 +462,14 @@
     }
 }
 
-@include bp(max-width, 699px) {
-    .display-both-prices {
-        .cart-table {
-            thead th.cart-total-head,
-            td.product-cart-total {
-                display: none;
-            }
+@include bp(max-width, $bp-small) {
+    .cart-table {
+        thead th.cart-total-head,
+        td.product-cart-actions,
+        td.product-cart-price,
+        td.product-cart-total,
+        .cart-links {
+            display: none !important;
         }
     }
 }
@@ -623,6 +624,10 @@
         
         .product-cart-symbols {
         	display: inline-block;
+        	
+        	@include bp(max-width, $bp-medium) {
+        	    display: block;
+        	}
         }
 
         .price,
@@ -651,9 +656,22 @@
             .button {
             	padding: 3px 5px;
             	font-size: 11px;
+            	
+            	@include bp(max-width, $bp-small) {
+            	    float: none;
+            	    display: block;
+            	    width: 100% !important;
+            	    font-size: 1rem;
+            	    margin: 5px 0 !important;
+            	    padding: 18px 0;
+            	}
             }
             .egov-float-left {
-            	margin: 0 2px !important;
+            	margin: 0 2px;
+            	
+            	@include bp(max-width, $bp-small) {
+            	    margin: 0;
+            	}
             }
             .btn-update {
             	margin-right: 0;
@@ -858,7 +876,7 @@
 @include bp(max-width, $bp-medium) {
 
     .cart .cart-totals table tfoot td {
-        font-size: $f-size-xxl;
+        font-size: 0.9rem;
     }
 }
 
