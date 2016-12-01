@@ -26,26 +26,49 @@ footer {
     @include bp(max-width, $bp-small) {
         background-image: linear-gradient(to right, $zusatzfarbe-gradient-1, $zusatzfarbe-gradient-2);
         margin: 0;
-        padding: 45px 15px 50px 15px;
     }
 }
 
 .footer-container {
     background-color: $grundfarbe-blau;
+    
+    @include bp(max-width, $bp-small) {
+        margin: 0 15px 50px 15px;
+    }
 }
 .bottom-gradient {
     min-height: $global-footer-height;
     background-image: linear-gradient(to right, $zusatzfarbe-gradient-1, $zusatzfarbe-gradient-2);
     padding: 45px 0 35px;
+    
+    @include bp(max-width, $bp-small) {
+        padding: 45px 0 0 0;
+    }
 }
 .bottom-row {
   	padding: 20px 0 30px;
   	line-height: 1.55em;
+  	
+  	@include bp(max-width, $bp-small) {
+  	    margin: 0;
+  	    padding: 35px 15px 0 15px;
+  	}
 }
 
 /* -------------------------------------------- *
  * Footer
  */
+ 
+ .footer-before-container {
+     .widget-credit-cards {
+         display: none;
+         
+         @include bp(max-width, $bp-small) {
+             display: block;
+             margin-bottom: 0;
+         }
+     }
+ }
 
 .footer-wrapper {
     clear: both;
@@ -58,11 +81,19 @@ footer {
 address {
     color: $grundfarbe-weiss;
     display: inline-block;
-    font-size: $global-fontsize-small;
+    font-size: 0.8rem;
+    
+    @include bp(max-width, $bp-small) {
+       font-size: 0.9rem;
+    }
     
     &.copyright {
         width: auto;
         margin-top: 20px;
+        
+        @include bp(max-width, $bp-small)  {
+            display: none;
+        }
     }
 }
 
@@ -75,11 +106,23 @@ address {
 	li {
 	    display: inline-block;
 	    padding: 0 10px;
+	    
+	    @include bp(max-width, $bp-small) {
+	        margin: 0 4px;
+	        text-align: center;
+	        padding: 0;
+	    }
 	}
 	
 	a {
 	    @include link-weiss;
 	    font-size: 0.9rem;
+	}
+	
+	@include bp(max-width, $bp-small) {
+	    bottom: 0;
+	    width: 100%;
+	    margin-bottom: 15px;
 	}
 }
 
@@ -97,10 +140,22 @@ address {
     	margin-left: 10px;
     	position: relative;
     	top: -5px;
+    	
+    	@include bp(max-width, $bp-small) {
+    	    width: 70%;
+    	    font-size: 0.9rem;
+    	    line-height: 1.1rem;
+    	}
     }
     
     address {
     	text-align: left;
+    }
+    
+    @include bp(max-width, $bp-small) {
+        max-width: 100%;
+        display: block;
+        margin-bottom: 55px;
     }
 }
 
@@ -138,6 +193,11 @@ address {
 
         li {
             line-height: 1.1rem !important;
+            
+            @include bp(max-width, $bp-small) {
+                margin: 5px 0;
+                display: block;
+            }
         }
         
         @include bp(max-width, $bp-small) {

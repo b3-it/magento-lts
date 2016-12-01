@@ -16,6 +16,30 @@
         border-bottom: none;
         vertical-align: top;
     }
+    
+    .mobile-info-block {
+        display: none;
+        font-size: 0.8rem;
+        line-height: 1.1rem;
+        margin-top: 10px;
+        
+        .price-block {
+            margin-bottom: 10px;
+        }
+        .incl-tax {
+           font-size: 0.7rem;
+           margin: 0 5px;
+        }        
+        .items-options a {
+            display: inline-block;
+            position: absolute;
+            right: 10px;
+        }
+        
+        @include bp(max-width, $bp-small) {
+            display: block;
+        }
+    }
 
     thead {
         th {

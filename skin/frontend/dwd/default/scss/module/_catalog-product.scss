@@ -25,6 +25,10 @@
 .category-products {
     position: relative;
     top: -32px;
+    
+    @include bp(max-width, $bp-small) {
+        top: -15px;
+    }
 
     p.action .button {
         width: 95%;
@@ -42,6 +46,9 @@
 /* ============================================ *
  * Stations - Map
  * ============================================ */
+.ui-selectmenu-menu {
+	z-index: 1100 !important;
+}
 #suggest-select, .map_size {
 	width: 100%;
 }
@@ -49,8 +56,13 @@
      display: inline-block;
      width: 48.5%;
      
-     input, select {
+     input, select, #stationenListe-button {
          margin: 0;
+         width: 100%;
+     }
+     
+     @include bp(max-width, $bp-small) {
+         display: block;
          width: 100%;
      }
 }
@@ -78,6 +90,11 @@
 }
 .olAlphaImg {
 	cursor: pointer;
+}
+.olPopup {
+	@include bp(max-width, $bp-small) {
+	    left: 40% !important;
+	}
 }
 #map_quest_logo {
     text-align: right;
@@ -272,7 +289,7 @@
     }
 
     .col2-left-layout {
-        .product-name h1 {
+        .mobile-product-name h1, .product-name h1 {
 		    border-bottom: $global-active-border solid $textfarbe-mittel;
 		    color: $grundfarbe-blau;
 		    font-size: $global-h4-size;
@@ -286,6 +303,59 @@
             margin-bottom: 15px;
         }
         
+        .mobile-product-name {
+            height: 2rem;
+            
+            h1 {
+                overflow: hidden;
+                height: 100%;
+            }
+        }
+        
+        .add-to-cart {
+            @include bp(max-width, $bp-small) {
+                padding: 5px;
+                width: 100%;
+                display: block;
+                background-color: $grundfarbe-blgr;
+            }
+            
+            .qty-wrapper, .add-to-cart-buttons {
+                @include bp(max-width, $bp-small) {
+                    width: 48%;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+            
+            .add-to-cart-buttons {
+                @include bp(max-width, $bp-small) {
+                    position: relative;
+                    right: -2%;
+                }
+            }
+            
+            .qty {
+                @include bp(max-width, $bp-small) {
+               		width: 50% !important;
+            	}
+            }
+            
+            button {
+                @include bp(max-width, $bp-small) {
+                    margin: 0 !important;
+                }
+            }
+            
+            span.egov-cart {
+                &:before {
+                    @include bp(max-width, $bp-small) {
+                        content: '';
+                    }
+                }
+            }
+        }
+       
         .product-img-box, .short-description, .product-shop {
             display: table-cell;
             vertical-align: top;
@@ -294,17 +364,48 @@
             line-height: 1rem;
             color: $textfarbe-mittel;
         }
-        
+
         .product-img-box {
             padding-right: 30px;
             width: 27.5%;
+            
+            @include bp(max-width, $bp-small) {
+                display: none;
+            }
         }
+        .mobile-product-img-box {
+            display: none;
+            
+            @include bp(max-width, $bp-small) {
+                display: inline;
+                float: left;
+                margin: 0 10px 10px 0;
+                position: relative;
+                top: -0.1rem;
+                width: 40%;
+            }
+            
+            img {
+               width: 100%;
+            }
+        }
+        
         .short-description {
             padding-right: 20px;
+            
+            @include bp(max-width, $bp-small) {
+                display: block;
+            }
         }
         .product-shop {
             width: 30.5%;
             text-align: center;
+            
+            @include bp(max-width, $bp-small) {
+                display: block;
+                width: 100%;
+                text-align: left;
+            }
         }
         
         .short-description-title {
@@ -699,6 +800,10 @@
             > span.egov-cart {
                 font-size: $global-h6-size;
                 margin: 0;
+                
+                @include bp(max-width, $bp-small) {
+                    font-size: 1rem;
+                }
             }
         }
     }
