@@ -22,19 +22,17 @@ body.cms-home {
     .slideshow-container {
         margin-top: 0;
     }
+    
+    .products-list .product-new-block {
+        @include bp(max-width, $bp-small) {
+            left: -10px;
+            right: auto;
+        }
+    }
 }
 
 .favorites-block {
 	top: 0;
-	
-	> h2 {
-	    color: $grundfarbe-blau;
-	    width: 100%;
-	    border-bottom: $global-active-border solid $textfarbe-mittel;
-	    font-size: 1.1rem;
-	    margin-bottom: 51px;
-	    padding-bottom: 15px;
-	}
 	
 	ol, ul {
 	    list-style: outside none none;
@@ -43,31 +41,6 @@ body.cms-home {
 	
 	ol {
 	    display: none;
-	    
-	    li {
-	        margin-left: 0;
-	    }
-	    .product-primary, .product-action, .product_sku {
-	        display: none;
-	    }
-	    
-	    .product-list-title h2 {
-	        width: 87%;
-	        position: relative;
-	    }
-	    
-	    .product-list-title {
-	        background-color: transparent;
-	        height: auto;
-	        padding: 0 0 10px 0;
-	        margin: 0;
-	    }
-	    
-	    > li {
-	        border-top: 0;
-	        border-right: 0;
-	        border-left: 0;
-	    }
 	    
 	    @include bp(max-width, $bp-small) {
 	        display: block;

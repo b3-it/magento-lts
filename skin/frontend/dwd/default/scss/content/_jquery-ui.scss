@@ -278,6 +278,7 @@ button.ui-button::-moz-focus-inner {
 .ui-selectmenu-button.ui-button {
 	text-align: left;
 	white-space: nowrap;
+	max-width: 90vw;
 }
 .ui-selectmenu-icon.ui-icon {
 	float: right;

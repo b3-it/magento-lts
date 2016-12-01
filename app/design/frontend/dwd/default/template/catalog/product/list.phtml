@@ -39,6 +39,11 @@
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
 
                 ?>
+                <h2 class="mobile-product-name">
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
+                        <?php echo $_productName; ?>
+                    </a>
+                </h2>
                 <h2 class="product-name">
                     <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
                         <?php echo $_productName; ?>
@@ -57,13 +62,12 @@
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
                          alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
 
-              <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
-                <div class="product-new-block">
-                    <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
-                </div>
-
+	              <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
+	                <div class="product-new-block">
+	                    <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
+	                </div>
+	              <?php endif; ?>
                 </a>
-              <?php endif; ?>
               <?php // Links for Wishlist and Compare ?>
                 <div class="product-add-links">
                     <ul class="add-to-links">
@@ -119,6 +123,20 @@
                 </div>
 
                 <div class="product-price">
+                    <div class="mobile-product-block">
+	                    <?php // Product Image ?>
+		                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+		                    <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+		                         src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
+		                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+		
+		                  <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
+		                    <div class="product-new-block">
+		                        <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
+		                    </div>
+		                  <?php endif; ?>
+		                </a>
+	                </div>
                     <?php echo $this->getPriceHtml($_product, true) ?>
 	                <div class="product-action">
 	                    <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
@@ -156,7 +174,19 @@
     <?php $_columnCount = $this->getColumnCount(); ?>
     <ul class="products-grid products-grid--max-<?php echo $_columnCount; ?>-col">
         <?php $i=0; foreach ($_productCollection as $_product): ?>
+          <?php
+            $_productNameStripped = $this->stripTags($_product->getName(), null, true);
+            $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
+            if ( strlen($_productName) > $name_limit ) {
+                $_productName = mb_substr($_productName, 0, $name_limit) . '...';
+            }
+          ?>
             <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+                <h2 class="mobile-product-name">
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
+                        <?php echo $_productName; ?>
+                    </a>
+                </h2>
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <img id="product-collection-image-<?php echo $_product->getId(); ?>"
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize_grid); ?>"
@@ -168,13 +198,6 @@
                 </div>
               <?php endif; ?>
                 <div class="product-info">
-                    <?php
-                    $_productNameStripped = $this->stripTags($_product->getName(), null, true);
-                    $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
-                    if ( strlen($_productName) > $name_limit ) {
-                        $_productName = mb_substr($_productName, 0, $name_limit) . '...';
-                    }
-                    ?>
                     <h2 class="product-name">
                         <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
                             <?php echo $_productName; ?>

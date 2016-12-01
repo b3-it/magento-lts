@@ -119,6 +119,11 @@
 	color: $textfarbe-mittel;
 	margin-bottom: 15px;
 	display: block;
+	
+	@include bp(max-width, $bp-small) {
+	    text-align: center;
+	    font-weight: bold;
+	}
 }
     
 .page-header-container {
@@ -256,6 +261,10 @@ body:not(.cms-index-index) {
 	}
     .welcome-header h1 {
     	width: 285px;
+    	
+    	@include bp(max-width, $bp-small) {
+    	    width: 75%;
+    	}
     }
     #welcome-msg {
     	display: none;
@@ -301,6 +310,10 @@ body:not(.cms-index-index) {
         }
         #header-cart.skip-active {
         	right: 22%;
+        }
+        
+        @include bp(max-width, $bp-small) {
+            display: none;
         }
     }
 }

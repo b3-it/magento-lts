@@ -667,6 +667,10 @@ div.block-reorder {
 .main-container {
     max-width: $global-fullpage-width;
     margin-top: 30px;
+    
+    @include bp(max-width, $bp-small) {
+        margin: 0;
+    }
 }
 
 /* -------------------------------------------- *
@@ -756,7 +760,7 @@ div.block-reorder {
 	    background-repeat:no-repeat;
 	    background-attachment: fixed;
 	    background-size: 100% 100%;
-	    padding: 10px;
+	    padding: 10px 10px 0 10px;
 	}
 	
     .col-wrapper {
@@ -1591,6 +1595,10 @@ span.weee {
 	        float: right;
 	        padding: 2% 0 0 2%;
 	        margin-right: 0;
+	        
+	        @include bp(max-width, $bp-small) {
+	            display: none;
+	        }
 	    }
 	    .sort-by-switcher--asc {
 	        @extend .egov-arrow-down;
@@ -1602,6 +1610,13 @@ span.weee {
     
     .view-mode {
 	    float: left;
+	    
+	    .egov-grid {
+	        @include bp(max-width, $bp-small) {
+	            position: relative;
+	            left: -5px;
+	        }
+	    }
 	}
 }
 

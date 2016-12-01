@@ -29,6 +29,9 @@ $_shortDescr = str_replace(
 <div class="product-name">
     <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
 </div>
+<div class="mobile-product-name">
+    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+</div>
 <div class="product-sku">
     <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
 </div>
@@ -49,6 +52,9 @@ $_shortDescr = str_replace(
                 
               <?php if ($_product->getShortDescription()):?>
                 <div class="short-description">
+	                <div class="mobile-product-img-box">
+	                    <?php echo $this->getChildHtml('thumbnail'); ?>
+	                </div>
                     <div class="short-description-title"><?php echo $this->__('Short Description'); ?></div>
                     <div class="std short-description-info">
                         <?php echo $_helper->productAttribute($_product, $_shortDescr, 'short_description'); ?>
