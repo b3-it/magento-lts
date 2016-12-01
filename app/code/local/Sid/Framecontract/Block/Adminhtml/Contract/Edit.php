@@ -13,6 +13,17 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit extends Mage_Adminhtml_Blo
         $this->_updateButton('save', 'label', Mage::helper('framecontract')->__('Save Contract'));
         $this->_updateButton('delete', 'label', Mage::helper('framecontract')->__('Delete Contract'));
 
+        /* @var $contract Sid_Framecontract_Model_Contract*/
+        $contract = Mage::registry('contract_data');
+        $qty = 0;
+        if($contract && ($contract->getId() > 0)){
+        	$qty = count($contract->getProductIds());
+        }
+        
+        if($qty > 0){
+        	$this->removeButton('delete');
+        }
+        
         //if ($this->_isAllowedAction('emails'))
         {
             $this->addButton('send_notification', array(
