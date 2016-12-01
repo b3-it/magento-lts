@@ -28,6 +28,7 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
      */
     public function processOrder($order)
     {
+    	$this->setLog('Erstelle opentrans für order: '.$order->getId() );
     	$this->_xml = new DOMDocument('1.0', 'utf-8');
     	$this->_xml->formatOutput = true;
     	$this->_xml->preserveWhiteSpace = false;

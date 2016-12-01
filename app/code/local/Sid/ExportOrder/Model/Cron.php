@@ -115,6 +115,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   				continue;
   			}
   			
+  			/* @var $exportOrder Sid_ExportOrder_Model_Order */
   			$exportOrder = Mage::getModel('exportorder/order')->load($order->getId(),'order_id');
   			$exportOrder->processOrder($order);
   		}

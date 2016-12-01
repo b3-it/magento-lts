@@ -181,6 +181,10 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     			$orderIds = array();
     		}
     		
+    		if($skip){
+    			$this->setLog("Überspringe Formatierung Order Expr:'".$expr."'");
+    		}
+    		
     		if(!$skip){
 	    		$content[$order->getIncrementId()] = $format->processOrder($order);
 	    		$orderIds[] = $order->getId();
