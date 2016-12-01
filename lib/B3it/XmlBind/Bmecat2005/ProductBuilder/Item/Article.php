@@ -37,7 +37,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 
 	/**
 	 * (non-PHPdoc)
-	 * @see B3it_XmlBind_Bmecat2005_Builder_Item_Abstract::_getSku()
+	 * @see B3it_XmlBind_ProductBuilder_Item_Abstract::_getSku()
 	 */
 	protected function _getSku(){
 		$sku = $this->_xmlProduct->getSupplierAid()->getValue();

@@ -29,6 +29,8 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	 */
 	protected $_items = array();
 	
+	protected $_bundledItems = array();
+	
 	protected $_skuPrefix = "";
 	
 	protected $_eavAttributes = array();
@@ -83,7 +85,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	
 	/**
 	 * ein xml Produkt hinzufügen
-	 * @param B3it_XmlBind_Bmecat2005_Builder_Item_Abstract $item
+	 * @param B3it_XmlBind_ProductBuilder_Item_Abstract $item
 	 */
 	public function addItem(B3it_XmlBind_ProductBuilder_Item_Abstract $item )
 	{
@@ -157,8 +159,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	 */
 	protected function _saveBundleDetails($item)
 	{
-		$options = $item->getBundleOptions($item);
-		foreach($options as $option)
+		foreach($item->getBundleOptions() as $option)
 		{
 			$entity_id = $item->getEntityId();
 			$label = $option['label'];
@@ -211,10 +212,11 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	 */
 	protected function _saveProductEntity()
 	{
+		$defaultAttributeSetId = Mage::getModel('catalog/product')->getDefaultAttributeSetId();
 		
 		//entities speichern
 		$entityRowsIn = array();
-		/** @var $item B3it_XmlBind_Bmecat2005_Builder_Item_Abstract*/
+		/** @var B3it_XmlBind_ProductBuilder_Item_Abstract $item  */
 		foreach($this->_items as $sku => $item)
 		{
 			$entityRowsDefault = $this->_getEntityDefaultRow();
@@ -223,8 +225,19 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$entityRowsDefault['entity_type_id']   = $this->_getEntityTypeId();
 			$entityRowsDefault['created_at']       = now();
 			$entityRowsDefault['updated_at']       = now();
-			$entityRowsDefault['attribute_set_id'] = Mage::getModel('catalog/product')->getDefaultAttributeSetId();
+			$entityRowsDefault['attribute_set_id'] = $defaultAttributeSetId;
 			$entityRowsIn[$sku] = $entityRowsDefault;
+			
+			if ($item->isBundle() & $item->hasPriceAmount()) {
+				$entityRowsDefault = $this->_getEntityDefaultRow();
+				$entityRowsDefault['type_id']      = 'simple';
+				$entityRowsDefault['sku']          = $sku.":base";
+			    $entityRowsDefault['entity_type_id']   = $this->_getEntityTypeId();
+				$entityRowsDefault['created_at']       = now();
+				$entityRowsDefault['updated_at']       = now();
+				$entityRowsDefault['attribute_set_id'] = $defaultAttributeSetId;
+				$entityRowsIn[$sku.":base"] = $entityRowsDefault;
+			}
 		}
 		
 		
@@ -242,8 +255,14 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 					->where('sku IN (?)', array_keys($entityRowsIn))
 					);
 			foreach ($newProducts as $sku => $newId) { // fill up entity_id for new products
-				$item = $this->_items[$sku];
-				$item->setEntityId($newId);
+				if (static::endsWith($sku, ":base")) {
+					$this->_bundledItems[$sku] = $newId;
+				} else {
+					$item = $this->_items[$sku];
+					if (isset($item)) {
+						$item->setEntityId($newId);
+					}
+				}
 			}
 		}
 		return $this;
@@ -314,12 +333,21 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	{
 		//attribute speichern
 		$attributesRowsIn = array();
-		/** @var $item B3it_XmlBind_Bmecat2005_Builder_Item_Abstract*/
+		/** @var B3it_XmlBind_ProductBuilder_Item_Abstract $item */
 		foreach($this->_items as $sku => $item)
 		{
 			$attributesRowsDefault = $this->_getAttributeDefaultRow();
 			$attributesRowsIn[$sku] = $item->getAttributeRow($attributesRowsDefault);
 			$attributesRowsIn[$sku]['tax_class_id'] = $this->_getTaxClassId($item->getTaxRate());
+			
+			if ($item->isBundle() && $item->hasPriceAmount()) {
+				$baseSku = $sku.":base";
+				$attributesRowsDefault = $this->_getAttributeDefaultRow();
+				$attributesRowsIn[$baseSku] = $item->getAttributeRow($attributesRowsDefault);
+				$attributesRowsIn[$baseSku]['visibility'] = 1; // not visible
+				$attributesRowsIn[$baseSku]['price_type'] = 1; // fixed Price
+				$attributesRowsIn[$baseSku]['tax_class_id'] = $this->_getTaxClassId($item->getTaxRate());
+			}
 			
 		}
 		
@@ -330,9 +358,12 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$tableData = array();
 	
 			foreach ($skuData as $sku => $attributes) {
-				$item = $this->_items[$sku];
-				$productId = $item->getEntityId();
-	
+				if (static::endsWith($sku, ":base")) {
+					$productId = $this->_bundledItems[$sku];
+				} else {
+					$item = $this->_items[$sku];
+					$productId = $item->getEntityId();
+				}
 				foreach ($attributes as $attributeId => $storeValue) {
 						$tableData[] = array(
 								'entity_id'      => $productId,
@@ -429,13 +460,21 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			
 			$data[] = $stockData;
 		}
-	
-			
 
-			// Insert rows
-			if ($stockData) {
-				$this->_connection->insertMultiple($entityTable, $data);
-			}
+		// stock info for bundled base items
+		foreach ($this->_bundledItems as $sku => $id) {
+			$row = array();
+			$row['product_id'] = $id;
+			$row['stock_id'] = 1;
+			$stockData = array_merge($row,$defaultStockData);
+			
+			$data[] = $stockData;
+		}
+
+		// Insert rows
+		if ($stockData) {
+			$this->_connection->insertMultiple($entityTable, $data);
+		}
 		
 		return $this;
 	}
@@ -491,7 +530,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		}
 	
 		//foreach ($mediaGalleryData as $productSku => $mediaGalleryRows) {
-		/** @var $item B3it_XmlBind_Bmecat2005_Builder_Item_Abstract*/
+		/** @var B3it_XmlBind_ProductBuilder_Item_Abstract $item */
 		foreach($this->_items as $sku => $item){
 			$productId = $item->getEntityId();
 			$insertedGalleryImgs = array();
@@ -596,7 +635,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	protected function _prepareLinks($linkTypeId)
 	{
 		$allLinks = array();
-		/** @var $item B3it_XmlBind_Bmecat2005_Builder_Item_Abstract*/
+		/** @var B3it_XmlBind_ProductBuilder_Item_Abstract $item */
 		foreach($this->_items as $sku => $item){
 			$productId = $item->getEntityId();
 			if($linkTypeId == Mage_Catalog_Model_Product_Link::LINK_TYPE_RELATED){
@@ -748,6 +787,15 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		return null;
 	}
 	
+	public function getBundleBaseProductId($sku) {
+		$sku = $this->_skuPrefix.$sku;
+		if(isset($this->_bundledItems[$sku])){
+			return $this->_bundledItems[$sku];
+		}
+		
+		return null;
+	}
+	
 	
 	protected function _getDispretionPath($fileName)
 	{
@@ -767,5 +815,10 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$char ++;
 		}
 		return $dispretionPath;
+	}
+	
+	private static function endsWith($haystack, $needle) {
+	    // search forward starting from end minus needle length characters
+	    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
 	}
 }

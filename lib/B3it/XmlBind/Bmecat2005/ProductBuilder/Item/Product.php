@@ -14,9 +14,8 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 	//
 	/**
 	 * die aus dem xml erzeugte Klasse
-	 *  @var B3it_XmlBind_Bmecat2005_TNewCatalog_Product
-	 *  */ 
-	protected $_xmlProduct = null;
+	 *  @var B3it_XmlBind_Bmecat2005_TNewCatalog_Product $_xmlProduct
+	 *  */
 
 	
 	
@@ -37,7 +36,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 
 	/**
 	 * (non-PHPdoc)
-	 * @see B3it_XmlBind_Bmecat2005_Builder_Item_Abstract::_getSku()
+	 * @see B3it_XmlBind_ProductBuilder_Item_Abstract::_getSku()
 	 */
 	protected function _getSku(){
 		$sku = $this->_xmlProduct->getSupplierPid()->getValue();
@@ -66,23 +65,36 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 	 */
 	public function isBundle()
 	{
-		//return false;
-		
-		
 		return (count($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep()) > 0);
 	}
-	
-	
-	
+
+	public function hasPriceAmount() {
+		$hasBasisPrice = false;
+		foreach ($this->_xmlProduct->getAllProductPriceDetails() as $priceDetails) {
+			foreach ($priceDetails->getAllProductPrice() as $price) {
+				if (!empty($price->getPriceAmount()->getValue())) {
+					$hasBasisPrice = true;
+				}
+			}
+		}
+		return $hasBasisPrice;
+	}
+
+
 	/**
 	 * 
-	 * @param B3it_XmlBind_ProductBuilder_Item_Abstract $item
 	 * @return array[]
 	 */
-	public function getBundleOptions($item)
+	public function getBundleOptions()
 	{
 		$options = array();
-		$k =0;
+		$k = 0;
+
+		if ($this->hasPriceAmount()) {
+			$options[] = $this->__getBundleBaseOption();
+			$k++;
+		}
+
 		foreach($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep() as $step)
 		{
 			$required = (intval($step->getMinOccurance()->getValue()) > 0);
@@ -117,10 +129,10 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 			$n = 0;
 			foreach($step->getConfigParts()->getAllPartAlternative() as $part)
 			{
-				$product_item = $item->getBuilder()->getItemBySku($part->getSupplierPidref()->getValue());
+				$product_item = $this->getBuilder()->getItemBySku($part->getSupplierPidref()->getValue());
 				if($product_item){
 					$bind = array();
-					$bind['parent_product_id'] = $item->getEntityId();
+					$bind['parent_product_id'] = $this->getEntityId();
 					$bind['product_id'] = $product_item->getEntityId();
 					$bind['position'] = $n++;
 					if ($part->getDefaultFlag()->getValue() === "true") {
@@ -140,6 +152,29 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 		return $options;
 	}
 	
+	private function __getBundleBaseOption() {
+		// Basiskonfiguration
+		$baseId = $this->getBuilder()->getBundleBaseProductId($this->_getSku().":base");
+		$option = array();
+		$option['label'] = "Basiskonfiguration";
+		$option['type'] = "radio";
+		$option['required'] = true;
+		$option['position'] = 0;
+		$option['selections'] = array();
+
+		$bind = array();
+		$bind['parent_product_id'] = $this->getEntityId();
+		$bind['product_id'] = $baseId;
+		$bind['position'] = 0;
+		$bind['is_default'] = true;
+		$bind['selection_price_type'] = 0;
+		$bind['selection_price_value'] = 0;
+		$bind['selection_qty'] = 1;
+		$bind['selection_can_change_qty'] = 0;
+		$option['selections'][] = $bind;
+
+		return $option;
+	}
 	
 	public function getMediaData()
 	{
