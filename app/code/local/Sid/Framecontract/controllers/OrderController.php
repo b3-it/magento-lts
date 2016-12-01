@@ -73,6 +73,16 @@ class Sid_Framecontract_OrderController extends Mage_Core_Controller_Front_Actio
 		       		$creditmemo = $service->prepareInvoiceCreditmemo($invoice);
 		       		$creditmemo->setRefundRequested(true);
 		       		$creditmemo->setOfflineRequested(true);
+
+		       		/**
+		       		 * Process back to stock flags
+		       		 */
+		       		foreach ($creditmemo->getAllItems() as $creditmemoItem) {
+		       			if (true) {
+		       				$creditmemoItem->setBackToStock(true);
+		       			}
+		       		}
+
 		       		$creditmemo->register();
 		       		$transactionSave = Mage::getModel('core/resource_transaction')
 		       		->addObject($creditmemo)
