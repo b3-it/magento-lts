@@ -4,7 +4,7 @@
  * 
  *  Basisklasse für ein BMECat Produkt
  *  @category Egovs
- *  @package  B3it_XmlBind_Bmecat2005_Builder_Item_Abstract
+ *  @package  B3it_XmlBind_ProductBuilder_Item_Abstract
  *  @author Holger Kögel <​h.koegel@b3-it.de>
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
@@ -50,6 +50,9 @@ abstract class  B3it_XmlBind_ProductBuilder_Item_Abstract
 		return false;
 	}
 	
+	public function hasPriceAmount() {
+		return true;
+	}
 	
 	/**
 	 * entity_id des Produktes
