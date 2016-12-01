@@ -242,10 +242,22 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('framecontract/contract');
-				 
-				$model->setId($this->getRequest()->getParam('id'))
-					->delete();
+				/* @var $model Sid_Framecontract_Model_Contract*/
+				$model = Mage::getModel('framecontract/contract')->load($this->getRequest()->getParam('id'));
+				
+				
+				
+				$contract = Mage::registry('contract_data');
+				$qty = 0;
+				if($contract && ($model->getId() > 0)){
+					$qty = count($model->getProductIds());
+				}
+				
+				if($qty > 0){
+					throw new Exception("Remove Product first");
+				}
+				
+				$model->delete();
 					 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
 				$this->_redirect('*/*/');
