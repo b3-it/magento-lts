@@ -127,6 +127,7 @@
     a.break-link {
         @extend .egov-float-left;
         margin-left: $global-checkout-button-margin !important;
+        line-height: 33px;
     }
 
     h3 .spacer, h4 .spacer {

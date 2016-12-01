@@ -544,6 +544,7 @@ div.block-reorder {
         float: right;
         margin-left: 5px;
         min-width: 140px;
+        line-height: 33px;
         
         @include bp(max-width, $bp-small) {
             float: none;
