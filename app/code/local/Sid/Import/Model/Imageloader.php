@@ -33,9 +33,9 @@ class Sid_Import_Model_Imageloader extends B3it_XmlBind_ProductBuilder_Imageload
 			return false;
 		}
 		
-		
+		$enc = base64_encode($filename);
 		$url =   rtrim(Mage::getStoreConfig('framecontract/supplierportal/url'),'/');
-		$url .= "/image/{$this->LosId}/{$filename}";
+		$url .= "/image/{$this->LosId}/{$enc}";
 		$client = new Varien_Http_Client($url);
 		$client->setMethod(Varien_Http_Client::GET);
 		

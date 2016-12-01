@@ -849,78 +849,49 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 	            }
         }
         
-        $this->getQuote()->reserveOrderId();
-        $convertQuote = Mage::getModel('sales/convert_quote');
-        /* @var $convertQuote Mage_Sales_Model_Convert_Quote */
-        //$order = Mage::getModel('sales/order');
-        if ($this->getQuote()->isVirtual()) {
-            $order = $convertQuote->addressToOrder($billing);
-        }
-        else {
-            $order = $convertQuote->addressToOrder($shipping);
-        }
-        /* @var $order Mage_Sales_Model_Order */
-        $order->setBillingAddress($convertQuote->addressToOrderAddress($billing));
+        $service = Mage::getModel('sales/service_quote', $this->getQuote());
+        $service->submitAll();
 
-        if (!$this->getQuote()->isVirtual()) {
-            $order->setShippingAddress($convertQuote->addressToOrderAddress($shipping));
-        }
-
-        $order->setPayment($convertQuote->paymentToOrderPayment($this->getQuote()->getPayment()));
-
-        foreach ($this->getQuote()->getAllItems() as $item) {
-            $orderItem = $convertQuote->itemToOrderItem($item);
-            if ($item->getParentItem()) {
-                $orderItem->setParentItem($order->getItemByQuoteItemId($item->getParentItem()->getId()));
-            }
-            $order->addItem($orderItem);
-        }
-
-        /**
-         * We can use configuration data for declare new order status
-         */
-        Mage::dispatchEvent('checkout_type_onepage_save_order', array('order'=>$order, 'quote'=>$this->getQuote()));
-        // check again, if customer exists
         if ($this->getQuote()->getCheckoutMethod() == Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER) {
             if ($this->_customerEmailExists($customer->getEmail(), Mage::app()->getWebsite()->getId())) {
                 Mage::throwException(Mage::helper('checkout')->__('There is already a customer registered using this email address'));
             }
         }
-        $order->place();
         
-    	/**
-         * a flag to set that there will be redirect to third party after confirmation
-         * eg: paypal standard ipn
-         */
-        $redirectUrl = $this->getQuote()->getPayment()->getOrderPlaceRedirectUrl();
-        if(!$redirectUrl){
-            if($sendOrderEmail){
-            	$order->setEmailSent(true);
-            }
-        }
+        $this->getCheckout()->setLastQuoteId($this->getQuote()->getId())
+        	->setLastSuccessQuoteId($this->getQuote()->getId())
+        	->clearHelperData();
         
+        Mage::getSingleton('customer/session')->unsetData('addresspostdata');
+        Mage::getSingleton('customer/session')->unsetData('shippingaddresspostdata');
+        	
+        $order = $service->getOrder();
+        if ($order) {
+        	Mage::dispatchEvent('checkout_type_onepage_save_order_after',
+        			array('order'=>$order, 'quote'=>$this->getQuote()));
         
-        //20101216 Frank Rochlitzer
-        //TODO : Nur noch für Übergangszwecke vorhanden - kann nach Testphase entfernt werden
-        //############################################################################################
-        $kzeichen = $order->getPayment()->getData('kassenzeichen');
-        if (($kzeichen == null) || ($kzeichen == '')) {
-			Mage::log("Kassenzeichen nicht direkt in Payment gesetzt!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
-		
-		$kzeichen = Mage::getSingleton('core/session')->getData('kassenzeichen');
-			if (($kzeichen != null) && ($kzeichen != '')) {
-			$order->getPayment()
-				->setData('kassenzeichen',$kzeichen);
-			}			
-			
-			Mage::getSingleton('core/session')->unsetData('kassenzeichen');
-		}
-		
-		
-		//############################################################################################
-		
-		Mage::getSingleton('customer/session')->unsetData('addresspostdata');
-		Mage::getSingleton('customer/session')->unsetData('shippingaddresspostdata');
+	        /**
+	         * we only want to send to customer about new order when there is no redirect to third party
+	         */
+	        if (!$redirectUrl && $order->getCanSendNewEmailFlag() && $sendOrderEmail) {
+	        	try {
+	        		$order->queueNewOrderEmail();
+	        	} catch (Exception $e) {
+	        		Mage::logException($e);
+	        	}
+	        }
+	        
+	        // add order information to the session
+	        $this->getCheckout()->setLastOrderId($order->getId())
+	        	->setRedirectUrl($redirectUrl)
+	        	->setLastRealOrderId($order->getIncrementId());
+	        
+	        // as well a billing agreement can be created
+	        $agreement = $order->getPayment()->getBillingAgreement();
+	        if ($agreement) {
+	        	$this->getCheckout()->setLastBillingAgreementId($agreement->getId());
+	        }
+	    }
 		
         if ($this->getQuote()->getCheckoutMethod() == Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER) {
         	$customerBilling->setIsDefaultBilling(true);
@@ -931,7 +902,6 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
         		$customerShipping->setIsDefaultShipping(true);
         	}
             $customer->save();
-          
 
             $this->getQuote()->setCustomerId($customer->getId());
 
@@ -949,63 +919,30 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
             else {
                 $customer->sendNewAccountEmail();
             }
+            
+            if ($this->getQuote()->getCheckoutMethod(true)==Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER
+            		&& !Mage::getSingleton('customer/session')->isLoggedIn()) {
+            	/**
+            	 * we need to save quote here to have it saved with Customer Id.
+            	 * so when loginById() executes checkout/session method loadCustomerQuote
+            	 * it would not create new quotes and merge it with old one.
+            	 */
+            	$this->getQuote()->save();
+            	if ($customer->isConfirmationRequired()) {
+            		Mage::getSingleton('checkout/session')->addSuccess(Mage::helper('customer')->__('Account confirmation is required. Please, check your e-mail for confirmation link. To resend confirmation email please <a href="%s">click here</a>.',
+            				Mage::helper('customer')->getEmailConfirmationUrl($customer->getEmail())
+            				));
+            	} else {
+            		Mage::getSingleton('customer/session')->loginById($customer->getId());
+            	}
+            }
         }
-
-        $order->save();
-
-        Mage::dispatchEvent('checkout_type_onepage_save_order_after', array('order'=>$order, 'quote'=>$this->getQuote()));
-
         
         $profiles = null;
         Mage::dispatchEvent(
-            'checkout_submit_all_after',
-            array('order' => $order, 'quote' => $this->getQuote(), 'recurring_profiles' => $profiles)
+        		'checkout_submit_all_after',
+        		array('order' => $order, 'quote' => $this->getQuote(), 'recurring_profiles' => $profiles)
         );
-        
-        /**
-         * need to have somelogic to set order as new status to make sure order is not finished yet
-         * quote will be still active when we send the customer to paypal
-         */
-
-        $orderId = $order->getIncrementId();
-        $this->getCheckout()->setLastQuoteId($this->getQuote()->getId());
-        $this->getCheckout()->setLastOrderId($order->getId());
-        $this->getCheckout()->setLastRealOrderId($order->getIncrementId());
-        $this->getCheckout()->setRedirectUrl($redirectUrl);
-
-        /**
-         * we only want to send to customer about new order when there is no redirect to third party
-         */
-        if(!$redirectUrl){
-        	if($sendOrderEmail){
-            	$order->queueNewOrderEmail();
-        	}
-        }
-
-        if ($this->getQuote()->getCheckoutMethod(true)==Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER
-            && !Mage::getSingleton('customer/session')->isLoggedIn()) {
-            /**
-             * we need to save quote here to have it saved with Customer Id.
-             * so when loginById() executes checkout/session method loadCustomerQuote
-             * it would not create new quotes and merge it with old one.
-             */
-            $this->getQuote()->save();
-            if ($customer->isConfirmationRequired()) {
-                Mage::getSingleton('checkout/session')->addSuccess(Mage::helper('customer')->__('Account confirmation is required. Please, check your e-mail for confirmation link. To resend confirmation email please <a href="%s">click here</a>.',
-                    Mage::helper('customer')->getEmailConfirmationUrl($customer->getEmail())
-                ));
-            }
-            else {
-                Mage::getSingleton('customer/session')->loginById($customer->getId());
-            }
-        }
-
-        //Setting this one more time like control flag that we haves saved order
-        //Must be checkout on success page to show it or not.
-        $this->getCheckout()->setLastSuccessQuoteId($this->getQuote()->getId());
-
-        $this->getQuote()->setIsActive(false);
-        $this->getQuote()->save();
 
         return $this;
     }

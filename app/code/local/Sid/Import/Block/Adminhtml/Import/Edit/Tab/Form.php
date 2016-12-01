@@ -67,13 +67,20 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
          ));
         //if (!Mage::app()->isSingleStoreMode())
         //{
+	        $websites = Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray();
+	        if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+	        	$websites = array();
+	        	foreach(Mage::helper('isolation')->getUserWebsites() as $site){
+	        		$websites[] = array('value'=>$site->getId(), 'label' => $site->getName());
+	        	}
+	        }
 
         	$fieldset->addField('website', 'select', array(
             'name'     => "default[website]",
             'title'    => $helper->__('Website'),
             'label'    => $helper->__('Website'),
             'required' => true,
-            'values'   => Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray(),
+            'values'   => $websites,
         	'value' 	=> $this->getImportDefaults('website')
         	 ));
 
@@ -151,7 +158,7 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
         		'title'    => $helper->__('Default Quantity'),
         		'label'    => $helper->__('Default Quantity'),
         		'note'	   => $helper->__("0 = switch off Stock Inventory"),
-        		'value'   => $this->getImportDefaults('los',"0"),
+        		'value'   => $this->getImportDefaults('qty',"0"),
         		'required' => true,
         
         ));

@@ -71,4 +71,8 @@ class Sid_Framecontract_Adminhtml_Framecontract_TransmitController extends Mage_
         return $this->_storeId;
     }
     
+    protected function _isAllowed() {
+    	return Mage::getSingleton('admin/session')->isAllowed('framecontract/contract');
+    }
+    
 }

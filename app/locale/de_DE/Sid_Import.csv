@@ -9,3 +9,5 @@
 "Import Information","Informationen zum Import"
 "Product Selection for Import","Produktauswahl für Import"
 "Default Quantity","Default Menge"
+"Product with SKU with '%s' already exist!","Produkt mit SKU '%s' existiert bereits."
+"Product(s) with SKU '%s' already exist! Existing Products are not overwritten","Produkte mit der Artikelnummer '%s' existieren bereits! Existierende Produkte werden nicht überschrieben"
