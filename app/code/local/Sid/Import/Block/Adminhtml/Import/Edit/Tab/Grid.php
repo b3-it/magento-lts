@@ -16,10 +16,33 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Grid extends Mage_Adminhtml_Blo
 
   protected function _prepareCollection()
   {
+  	  $helper = Mage::helper('sidimport');
+  	  /**
+  	   * @var Mage_Core_Model_Resource_Db_Collection_Abstract $collection
+  	   */
       $collection = Mage::getModel('sidimport/storage')->getCollection();
       $this->_id = intval($this->getRequest()->getParam('los'));
-    
-     // $collection->getSelect()->where('los_id=?', intval($this->_id));
+      $productModel = Mage::getModel('catalog/product');
+
+      /**
+       * @var Mage_Core_Model_Session $session
+       */
+      $session = Mage::getSingleton("admin/session");
+      $prefix = $session->getImportDefaults()['sku_prefix'];
+
+      $exist = array();
+      foreach ($collection as $item) {
+      	$sku = $item->getSku();
+
+      	if ($productModel->loadByAttribute('sku', $prefix."/".$sku) !== false) {
+      		$exist[] = $sku;
+      	}
+      }
+
+      foreach ($exist as $sku) {
+      	$this->getMessagesBlock()->addNotice($helper->__("Product with SKU with '%s' already exist!",  $prefix."/".$sku));
+      }
+
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }

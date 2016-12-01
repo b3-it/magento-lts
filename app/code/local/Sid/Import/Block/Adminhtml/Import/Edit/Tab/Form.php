@@ -158,7 +158,7 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Form extends Mage_Adminhtml_Blo
         		'title'    => $helper->__('Default Quantity'),
         		'label'    => $helper->__('Default Quantity'),
         		'note'	   => $helper->__("0 = switch off Stock Inventory"),
-        		'value'   => $this->getImportDefaults('los',"0"),
+        		'value'   => $this->getImportDefaults('qty',"0"),
         		'required' => true,
         
         ));
