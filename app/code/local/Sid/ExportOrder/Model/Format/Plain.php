@@ -20,6 +20,7 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
     
     public function processOrder($order)
     {
+    	$this->setLog('Erstelle plain für order: '.$order->getId() );
     	$line_separator = $this->getLineSeparator() ? $this->getLineSeparator() : "\n";
     	$item_separator = $this->getItemSeparator() ? $this->getItemSeparator() : "\t";
     	
