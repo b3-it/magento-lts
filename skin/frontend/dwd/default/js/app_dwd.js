@@ -123,6 +123,15 @@ function cutAllArticleTitleLine()
 				cutString($j(this).html().trim(), $j(this), breite);
     		}
 		});
+
+		var breite = $j('.products-list h2.mobile-product-name').innerWidth();
+		// alle untergeordneten Elemente ermitteln (Name steht im Link)
+		$j('.products-list h2.mobile-product-name a').each(function(){
+			// Alle Artikel-Namen abschneiden
+		    if ( $j(this).width() > breite ) {
+		    	cutString($j(this).html().trim(), $j(this), breite);
+    		}
+		});
 	}
 }
 

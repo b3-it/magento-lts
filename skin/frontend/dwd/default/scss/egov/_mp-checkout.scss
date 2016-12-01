@@ -362,15 +362,15 @@
 @include bp(max-width, $bp-small) {
 	.mp-checkout {
         .checkout-progress li {
-            width: 24% !important;
+            width: 31% !important;
         }
 
 		.buttons-set a {
-		    width: 45% !important;
+		    width: 95% !important;
 		}
 		.buttons-set button {
 		    width: 95% !important;
-		    margin: 0 7px 0 0 !important;
+		    margin: 0 17px 0 0 !important;
 		}
 	}
 

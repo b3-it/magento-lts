@@ -24,8 +24,6 @@
 ?>
 
 <div class="category-products favorites-block">
-    <h2><?php echo $this->__('Our favorites'); ?></h2>
-    
     <?php $_iterator = 0; ?>
     <ol class="products-list " id="products-list">
     <?php foreach ($_productCollection as $_product): ?>
@@ -41,7 +39,7 @@
                         <?php echo $_productName; ?>
                     </a>
                 </h2>
-                <?php $_sku = $this->htmlEscape($_product->getSku()); ?>
+                <?php $_sku = $this->escapeHtml($_product->getSku()); ?>
                 <div class="product_sku" title="<?php echo $_sku; ?>">
                     <span><?php echo $this->__('Sku').': ' . $_sku; ?></span>
                 </div>
@@ -54,13 +52,12 @@
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
                          alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
 
-              <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
-                <div class="product-new-block">
-                    <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
-                </div>
-
+                  <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
+                    <div class="product-new-block">
+                        <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
+                    </div>
+                  <?php endif; ?>
                 </a>
-              <?php endif; ?>
               <?php // Links for Wishlist and Compare ?>
                 <div class="product-add-links">
                     <ul class="add-to-links">
@@ -116,7 +113,24 @@
                 </div>
 
                 <div class="product-price">
+                    <div class="mobile-product-block">
+	                    <?php // Product Image ?>
+		                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+		                    <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+		                         src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
+		                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+		
+		                  <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
+		                    <div class="product-new-block">
+		                        <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
+		                    </div>
+		                  <?php endif; ?>
+		                </a>
+	                </div>
                     <?php echo $this->getPriceHtml($_product, true) ?>
+	                <div class="delivery-information">
+	                    <?php echo $_product->getDeliveryTime(); ?>
+	                </div>
 	                <div class="product-action">
 	                    <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
 	                        <button type="button"
