@@ -23,8 +23,10 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function sendEmail($template, array $recipients, array $data = array(), $storeid = 0, $files = null)
 	{
-		$template = Mage::getStoreConfig($template, $storeid);
-		 
+		if(!is_numeric($template))
+		{
+			$template = Mage::getStoreConfig($template, $storeid);
+		}
 		$translate = Mage::getSingleton('core/translate');
 		/* @var $translate Mage_Core_Model_Translate */
 		$translate->setTranslateInline(false);
