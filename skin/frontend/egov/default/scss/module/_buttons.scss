@@ -26,6 +26,7 @@
 
     border-radius: 3px;
     -moz-border-radius: 3px;
+    line-height: 33px;
 
     padding: $global-btn-padding-v $global-btn-padding-h;
 
@@ -45,10 +46,27 @@
     }
 }
 
+.discount-form button {
+	line-height: 1.5em;
+}
+.cart-totals > button {
+	line-height: 1.32em;
+}
+.buttons-set > a.button {
+	float: left;
+}
+.buttons-set > .button {
+	line-height: 33px;
+}
+.form-search > button {
+    line-height: 1.32em;
+}
+
 a.button {
     color: $global-button-font-color;
     text-decoration: none;
     padding: $global-btn-padding-v $global-btn-padding-h;
+    line-height: 33px;
 }
 
 a.button:hover {
