@@ -869,7 +869,8 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
         if ($order) {
         	Mage::dispatchEvent('checkout_type_onepage_save_order_after',
         			array('order'=>$order, 'quote'=>$this->getQuote()));
-        
+        	
+        	$redirectUrl = $this->getQuote()->getPayment()->getOrderPlaceRedirectUrl();
 	        /**
 	         * we only want to send to customer about new order when there is no redirect to third party
 	         */
