@@ -25,7 +25,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 
 	/**
 	 * Die xml Produkte
-	 * @var array B3it_XmlBind_ProductBuilder_Item_Abstract
+	 * @var B3it_XmlBind_ProductBuilder_Item_Abstract[] $_items
 	 */
 	protected $_items = array();
 	
@@ -226,21 +226,26 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$entityRowsDefault['created_at']       = now();
 			$entityRowsDefault['updated_at']       = now();
 			$entityRowsDefault['attribute_set_id'] = $defaultAttributeSetId;
+
+			$entityRowsDefault['has_options']       = $item->isBundle();
+			$entityRowsDefault['required_options']  = $item->isBundle();
+
 			$entityRowsIn[$sku] = $entityRowsDefault;
 			
 			if ($item->isBundle() & $item->hasPriceAmount()) {
 				$entityRowsDefault = $this->_getEntityDefaultRow();
-				$entityRowsDefault['type_id']      = 'simple';
-				$entityRowsDefault['sku']          = $sku.":base";
+				$entityRowsDefault['type_id']          = 'simple';
+				$entityRowsDefault['sku']              = $sku.":base";
 			    $entityRowsDefault['entity_type_id']   = $this->_getEntityTypeId();
 				$entityRowsDefault['created_at']       = now();
 				$entityRowsDefault['updated_at']       = now();
 				$entityRowsDefault['attribute_set_id'] = $defaultAttributeSetId;
+				$entityRowsDefault['has_options']      = false;
+				$entityRowsDefault['required_options'] = false;
 				$entityRowsIn[$sku.":base"] = $entityRowsDefault;
 			}
 		}
-		
-		
+
 		static $entityTable = null;
 	
 		if (!$entityTable) {
@@ -249,7 +254,6 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		
 		if ($entityRowsIn) {
 			$this->_connection->insertMultiple($entityTable, $entityRowsIn);
-	
 			$newProducts = $this->_connection->fetchPairs($this->_connection->select()
 					->from($entityTable, array('sku', 'entity_id'))
 					->where('sku IN (?)', array_keys($entityRowsIn))
@@ -440,43 +444,57 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 
 		$data = array();
 		foreach($this->_items as $sku => $item){
-			$row = array();
-			$row['product_id'] = $item->getEntityId();
-			$row['stock_id'] = 1;
-			$stockData = array_merge($row,$defaultStockData);
-
-			if($item->getStockQuantity() == 0){
-				$qty = $this->_StockQuantity;
-			}else{
-				$qty = $item->getStockQuantity();
-			}
-			
-			if($qty == 0){
-				$stockData['manage_stock'] = 0;
-				$stockData['use_config_manage_stock'] = 0;
-			}else{
-				$stockData['qty'] = $qty;
-			}
-			
-			$data[] = $stockData;
+			$data[] = $this->__saveStockProduct($item->getEntityId(), $item, $defaultStockData);
 		}
 
 		// stock info for bundled base items
 		foreach ($this->_bundledItems as $sku => $id) {
-			$row = array();
-			$row['product_id'] = $id;
-			$row['stock_id'] = 1;
-			$stockData = array_merge($row,$defaultStockData);
-			
-			$data[] = $stockData;
+			$item = $this->_items[substr($sku, 0, -strlen(":base"))];
+			$data[] = $this->__saveStockProduct($id, $item, $defaultStockData);
 		}
 
 		// Insert rows
-		if ($stockData) {
+		if (!empty($data)) {
 			$this->_connection->insertMultiple($entityTable, $data);
 		}
 		
 		return $this;
+	}
+	
+	/**
+	 * @param integer $id
+	 * @param B3it_XmlBind_ProductBuilder_Item_Abstract $item
+	 * @param array $defaultStockData
+	 * @return array
+	 */
+	private function __saveStockProduct($id, $item, $defaultStockData) {
+		$row = array();
+		$row['product_id'] = $id;
+
+		$row['stock_id'] = 1;
+		$stockData = array_merge($row,$defaultStockData);
+
+		if($item->getStockQuantity() == 0){
+			$qty = $this->_StockQuantity;
+		}else{
+			$qty = $item->getStockQuantity();
+		}
+
+		if($qty == 0){
+			$stockData['manage_stock'] = 0;
+			$stockData['use_config_manage_stock'] = 0;
+		}else{
+			$stockData['qty'] = $qty;
+			$stockData['is_in_stock'] = 1;
+		}
+
+		// the bundle product always gets "in store"
+		if ($item->getEntityId() === $id && $item->isBundle()) {
+			$stockData['qty'] = 0;
+			$stockData['is_in_stock'] = 1;
+		}
+
+		return $stockData;
 	}
 	
 	protected function _saveProductWebsites()
@@ -495,9 +513,16 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$data[] = $row;
 		}
 		
+		foreach($this->_bundledItems as $sku => $id) {
+			$row = array();
+			$row['product_id'] = $id;
+			$row['website_id'] = $this->_webSiteId;
+			$data[] = $row;
+		}
+		
 		if ($data) {
-				$this->_connection->insertMultiple($tableName, $data);
-			}
+			$this->_connection->insertMultiple($tableName, $data);
+		}
 		
 		return $this;
 	}
@@ -508,8 +533,6 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	 */
 	protected function _saveMediaGallery()
 	{
-		
-	
 		static $mediaGalleryTableName = null;
 		static $mediaValueTableName = null;
 		static $mediaGalleryAttribute = null;
@@ -754,23 +777,20 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	
 	public function getFirstEntityId()
 	{
-		reset($this->_items);
-		$item = current($this->_items);
-		if($item){
-			return $item->getEntityId();
-		}
-		return null;
+		$ids = array_map(
+			function($item) { return $item->getEntityId(); },
+			array_values($this->_items));
+		$ids = array_merge($ids, array_values($this->_bundledItems));
+		return min($ids);
 	}
 	
 	public function getLastEntityId()
 	{
-		end($this->_items);
-		$item = current($this->_items);
-		reset($this->_items);
-		if($item){
-			return $item->getEntityId();
-		}
-		return null;
+		$ids = array_map(
+			function($item) { return $item->getEntityId(); },
+			array_values($this->_items));
+		$ids = array_merge($ids, array_values($this->_bundledItems));
+		return max($ids);
 	}
 	
 	/**

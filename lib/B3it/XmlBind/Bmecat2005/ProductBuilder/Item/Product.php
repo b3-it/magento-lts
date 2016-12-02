@@ -92,7 +92,6 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Product extends B3it_XmlBind_
 
 		if ($this->hasPriceAmount()) {
 			$options[] = $this->__getBundleBaseOption();
-			$k++;
 		}
 
 		foreach($this->_xmlProduct->getProductConfigDetails()->getAllConfigStep() as $step)
