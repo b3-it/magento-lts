@@ -653,6 +653,8 @@
 
 .product-image-gallery {
     position: relative;
+    max-height: 395px;
+    overflow: hidden;
 
     .gallery-image {
         display: none;

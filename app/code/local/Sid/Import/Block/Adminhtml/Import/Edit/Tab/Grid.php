@@ -39,8 +39,10 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Grid extends Mage_Adminhtml_Blo
       	}
       }
 
-      $sku = implode(',',$exist);
-      $this->getMessagesBlock()->addNotice($helper->__("Product(s) with SKU '%s' already exist! Existing Products are not overwritten", $sku));
+      if (!empty($exist)) {
+        $sku = implode(',',$exist);
+        $this->getMessagesBlock()->addNotice($helper->__("Product(s) with SKU '%s' already exist! Existing Products are not overwritten", $sku));
+      }
 
       $this->setCollection($collection);
       return parent::_prepareCollection();
