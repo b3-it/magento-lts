@@ -69,7 +69,8 @@ class Sid_Checkout_Block_Multishipping_Quoteitems extends Mage_Sales_Block_Items
             ->setName('ship['.$index.']['.$item->getQuoteItemId().'][address]')
             ->setId('adr_'.$item->getId())
             ->setValue($item->getCustomerAddressId())
-            ->setOptions($this->getAddressOptions());
+            ->setOptions($this->getAddressOptions())
+        	->setExtraParams('style="max-width:400px"');
 
         return $select->getHtml();
     }
