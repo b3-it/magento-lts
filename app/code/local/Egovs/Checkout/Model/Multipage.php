@@ -328,8 +328,13 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 		
 		
 		$this->getQuote ()->collectTotals ();
-		//20161202::Muss doppelt aufgerufen werden um StaLA Discounts korrekt vür Versand zu berechnen!
-		$this->getQuote ()->collectTotals ();
+		/**
+		 * 20161202::Muss doppelt aufgerufen werden um StaLA Discounts korrekt für Versand zu berechnen!
+		 * @see Mage_Checkout_Model_Cart::save
+		 */
+		$this->getQuote()->getBillingAddress();
+		$this->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+		$this->getQuote()->collectTotals();
 		$this->getQuote ()->save ();
 		
 		Mage::dispatchEvent ( 'egovs_mpcheckout_billing_address_set', array (
