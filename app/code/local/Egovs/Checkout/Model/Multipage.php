@@ -334,6 +334,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 		 */
 		$this->getQuote()->getBillingAddress();
 		$this->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+		$this->getQuote()->setTotalsCollectedFlag(false);
 		$this->getQuote()->collectTotals();
 		$this->getQuote ()->save ();
 		
