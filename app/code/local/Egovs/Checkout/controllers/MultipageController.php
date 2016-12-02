@@ -804,7 +804,6 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
                     return;
                 }
             }
-            
            
             $email = $this->getRequest()->getPost('sendOrderEmail');
             $this->_getCheckout()->saveOrder($email != null);
@@ -818,12 +817,10 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
                 Egovs_Checkout_Model_State::STEP_OVERVIEW
             );
             
-            
-            
-            
-            
             $this->_getCheckout()->getCheckoutSession()->clear();
             $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(true);
+            
+            $quote->save();
             
 	        if (isset($redirectUrl)) {
 	            $this->_redirectUrl($redirectUrl);
