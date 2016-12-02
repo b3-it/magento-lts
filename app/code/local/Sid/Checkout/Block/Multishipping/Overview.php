@@ -148,6 +148,7 @@ class Sid_Checkout_Block_Multishipping_Overview extends Mage_Sales_Block_Items_A
     public function getShippingAddressTotals($address)
     {
         $totals = $address->getTotals();
+        $result = array();
         foreach ($totals as $total) {
             if ($total->getCode()=='grand_total') {
                 if ($address->getAddressType() == Mage_Sales_Model_Quote_Address::TYPE_BILLING) {
@@ -157,8 +158,11 @@ class Sid_Checkout_Block_Multishipping_Overview extends Mage_Sales_Block_Items_A
                     $total->setTitle($this->__('Total for this address'));
                 }
             }
+            if($total->getCode()!='shipping'){
+            	$result[$total->getCode()] = $total;
+            }
         }
-        return $totals;
+        return $result;
     }
 
     public function getTotal()

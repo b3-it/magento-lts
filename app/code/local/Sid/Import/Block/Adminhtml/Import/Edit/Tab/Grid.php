@@ -28,7 +28,8 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Grid extends Mage_Adminhtml_Blo
        * @var Mage_Core_Model_Session $session
        */
       $session = Mage::getSingleton("admin/session");
-      $prefix = $session->getImportDefaults()['sku_prefix'];
+      $defaults = $session->getImportDefaults();
+      $prefix = $defaults['sku_prefix'].$defaults['los'];
 
       $exist = array();
       foreach ($collection as $item) {
@@ -40,7 +41,7 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Grid extends Mage_Adminhtml_Blo
       }
 
       if (!empty($exist)) {
-        $sku = implode(',',$exist);
+        $sku = implode(', ',$exist);
         $this->getMessagesBlock()->addNotice($helper->__("Product(s) with SKU '%s' already exist! Existing Products are not overwritten", $sku));
       }
 
