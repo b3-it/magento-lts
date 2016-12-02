@@ -52,10 +52,8 @@ class B3it_XmlBind_Bmecat2005_XmlBind {
             	$doc->appendChild($doc->importNode($child, true));
             	$this->bindXml($doc->saveXml(), $childModel);
                 
-            } else {
-            	
+            } else if (!empty($child->nodeValue)) {
             	$childModel->setValue($child->nodeValue);
-                
             }
         }
         
