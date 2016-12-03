@@ -82,6 +82,12 @@
         p:first-of-type {
             margin-bottom: $global-listmargin;
         }
+        
+        @include bp(max-width, $bp-small) {
+            .button {
+                width: 100%;
+            }
+        }
     }
 
     #postcode {
@@ -305,6 +311,20 @@
             font-size: $global-fontsize-small;
         }
     }
+    
+    .mobile-product-cart-sku {
+        display: none;
+        
+        @include bp(max-width, $bp-small) {
+            display: block;
+        }
+    }
+}
+
+.hide-on-mobile {
+    @include bp(max-width, $bp-small) {
+        display: none;
+    }
 }
 
 .cart-table {
@@ -315,6 +335,10 @@
         font-size: $global-fontsize;
         font-weight: 600;
         margin-bottom: 0;
+    }
+    
+    .product-collateral {
+        margin-top: 20px;
     }
 
     .product-cart-info {

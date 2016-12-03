@@ -55,7 +55,11 @@
 
                 label {
                     font-weight: bold;
-                    /* display: block; */
+                    
+                    @include bp(max-width, $bp-small) {
+                        display: inline-block;
+                        width: 90%;
+                    }
                 }
 
                 .column-left {
@@ -165,6 +169,11 @@
                 div.field {
                     display: inline-block;
                     width: 48%;
+                    
+                    @include bp(max-width, $bp-small) {
+                        display: block;
+                        width: 100%;
+                    }
                 }
 
                 div.name-prefix {
@@ -175,6 +184,10 @@
 
         li.halfwide {
             width: 48%;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
         }
 
         .customer-name-middlename {
@@ -185,6 +198,12 @@
                 vertical-align: top;
                 height: auto;
                 display: inline-block;
+            }
+        }
+        
+        .ui-selectmenu-button.ui-button {
+            @include bp(max-width, $bp-small) {
+                display: block;
             }
         }
     }

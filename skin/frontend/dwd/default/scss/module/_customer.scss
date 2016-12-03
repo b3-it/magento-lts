@@ -105,6 +105,10 @@
     .scaffold-form {
         label:first-child {
             width: 140px;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
         }
     }
 }
@@ -692,6 +696,10 @@ body.customer-account {
 .order-details > table {
     @extend .egov-base-totals;
     @extend .egov-base-table;
+    
+    .mobile-view {
+        display: none;
+    }
 
     thead th, tbody td {
         text-align: left !important;
@@ -824,15 +832,22 @@ ol#cart-sidebar-reorder {
 
 @include bp(max-width, $bp-medium) {
     body.customer-account {
-        .data-table {
+        .data-table {       
+            colgroup {
+                display: none;
+            }
+            
             &.orders {
-                th.ship,
-                td.ship,
-                td.status,
-                th.status {
+                .ship,
+                .view {
                     display: none;
                 }
             }
+        }
+        
+        .mobile-view {
+            display: inline-block !important;
+            margin: 0;
         }
     }
 

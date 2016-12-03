@@ -73,6 +73,11 @@ input[type="checkbox"], input[type="radio"] {
     top: 1px;
     left: 2px;
     margin-right: $global-radio-checkback-spacing;
+    
+    @include bp(max-width, $bp-small) {
+       top: 3px;
+       vertical-align: top;
+    }
 }
 
 input[type="radio"] {
@@ -720,7 +725,15 @@ div.block-reorder {
 }
 
 .col1-layout {
-    .col-main {
+	@include bp(max-width, $bp-small) {
+	    background-image: url($global-header-background-image);
+	    background-repeat:no-repeat;
+	    background-attachment: fixed;
+	    background-size: 100% 100%;
+	    padding: 10px 10px 0 10px;
+	}
+	
+	.col-main {
         padding-left: 0;
         background-image: url($global-content-top-image);
         background-repeat: no-repeat;
@@ -746,6 +759,12 @@ div.block-reorder {
             tbody th, tbody td, thead th {
                 padding: 5px;
             }
+        }
+
+        @include bp(max-width, $bp-small) {
+            padding: 5px;
+            background-color: $grundfarbe-weiss;
+            margin-bottom: 0 !important;
         }
     }
 

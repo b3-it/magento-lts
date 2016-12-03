@@ -69,11 +69,18 @@
 
             label {
                 width: 90% !important;
+                display: inline-block;
+                position: relative;
+                top: -2px;
+            }
+            
+            &:not(first-item) {
+                margin-top: 10px;
             }
         }
 
         li.agree-content {
-            margin-left: 27px;
+            margin-left: 25px;
 
             a {
                 @include link-blau;
@@ -122,6 +129,10 @@
         h3 {
             margin-top: 20px;
             margin-bottom: 0px;
+            
+            @include bp(max-width, $bp-small) {
+                margin-bottom: 10px;
+            }
         }
 
         ul:not(.group-select) li label {
@@ -129,9 +140,6 @@
             position: relative;
             top: -2px;
             margin-left: 3px;
-        }
-        
-        ul:not(.group-select) li label {
             width: 45%;
         }
     }
@@ -267,6 +275,12 @@
         #checkout-review-table {
             @extend .egov-base-table;
             margin-top: 20px;
+            
+            colgroup {
+                @include bp(max-width, $bp-small) {
+                    display: none;
+                }
+            }
 
             thead th, tbody td {
                 padding: $global-tdpadding;
@@ -275,6 +289,10 @@
             thead {
                 td:nth-child(5), td:nth-child(6) {
                     font-weight: bold;
+                }
+                
+                @include bp(max-width, $bp-small) {
+                    display: none;
                 }
             }
             
@@ -289,6 +307,26 @@
             
             h3 {
                 margin: 0;
+            }
+            
+            td:nth-child(2), td:nth-child(3), td:nth-child(4),
+            td:nth-child(5), td:nth-child(6) {
+                @include bp(max-width, $bp-small) {
+                   display: none;
+                }
+            }
+            
+            .mobile-product-name {
+                @include bp(max-width, $bp-small) {
+                    display: inline-block;
+                    width: 70%;
+                    vertical-align: top;
+                }
+            }
+            
+            .mobile-info-block {
+                width: 100%;
+                text-align: right;
             }
         }
 

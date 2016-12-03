@@ -9,6 +9,10 @@
 	position: relative;
 	top: 15px;
 	
+	@include bp(max-width, $bp-small) {
+	    top: -15px;
+	}
+	
 	address {
 	    font-size: 1rem;
 	    color: $textfarbe-mittel;
@@ -142,15 +146,6 @@
 .wishlist-index-index,
 .customer-account-index {
     .col2-left-layout {
-        .col-left {
-            top: -15px;
-
-            @include bp(max-width, 800px) {
-                float: none;
-                display: block;
-                width: 100%;
-            }
-        }
         .col-main {
             @include bp(max-width, 800px) {
                 float: none;

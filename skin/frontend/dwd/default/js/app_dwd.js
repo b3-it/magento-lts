@@ -78,15 +78,21 @@ $j(document).ready(function(){
             }
         });
     }
+    
+	// Artikel-Namen und Artikel-Nummern abkürzen
+	cutAllArticleTitleLine();
+	
+    // Benutzer-Navigation für Mobil
+    checkMobileCustomerNavigation();
 	
 	// Auf Größen-Anpassung des Fensters reagieren
 	$j(window).resize(function() {
 		// Artikel-Namen und Artikel-Nummern abkürzen
 		cutAllArticleTitleLine();
+		
+		// Benutzer-Navigation für Mobil
+		checkMobileCustomerNavigation()
 	});
-	
-	// Artikel-Namen und Artikel-Nummern abkürzen
-	cutAllArticleTitleLine();
 	
 	// jQuery-UI für DropDown-Boxen
 	$j("select").selectmenu();
@@ -97,6 +103,19 @@ function setTabIndex(arr)
     $j.each(arr, function(element, tabindex){
         $j('#' + element).attr('tabindex', tabindex);
     });
+}
+
+/**
+ * Prüfen, ob man sich im Benutzerkonto befindet und bei Bedarf die
+ * Benutzer-Navigation umkopieren
+ */
+function checkMobileCustomerNavigation()
+{
+	if ( $j('body').hasClass('customer-account') ) {
+    	if( ($j('.col-left').css('display') == 'none') && ( $j('#mobile-header #header-account li.first ul.level1').length < 1 ) ) {
+    		$j('#mobile-header #header-account li.first').append( '<ul class="level1">' + $j('#customer-account-navigation').html() + '</ul>' );
+    	}
+    }
 }
 
 /**

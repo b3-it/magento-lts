@@ -122,6 +122,10 @@
     tbody td:nth-child(2) {
         width: 160px;
         padding: 3px;
+        
+        @include bp(max-width, $bp-small) {
+            width: auto;
+        }
     }
 }
 

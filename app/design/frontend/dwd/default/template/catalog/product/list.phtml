@@ -37,7 +37,6 @@
                 <?php
                     $_productNameStripped = $this->stripTags($_product->getName(), null, true);
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
-
                 ?>
                 <h2 class="mobile-product-name">
                     <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
@@ -49,7 +48,7 @@
                         <?php echo $_productName; ?>
                     </a>
                 </h2>
-                <?php $_sku = $this->htmlEscape($_product->getSku()); ?>
+                <?php $_sku = $this->escapeHtml($_product->getSku()); ?>
                 <div class="product_sku" title="<?php echo $_sku; ?>">
                     <span><?php echo $this->__('Sku').': ' . $_sku; ?></span>
                 </div>
