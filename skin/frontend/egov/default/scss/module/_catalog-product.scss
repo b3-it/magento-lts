@@ -654,6 +654,7 @@
 .product-image-gallery {
     position: relative;
     max-height: 395px;
+    min-height: 250px;
     overflow: hidden;
 
     .gallery-image {
