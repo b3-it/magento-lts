@@ -41,8 +41,15 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Link_Form extends Mage_Adminhtml_
       		'name'      => 'transfer[template]',
       		'values' =>$templates->toOptionArray()
       ));
+      
+      
+      $data = Mage::registry('transfer')->getData();
+      if(empty($data['cron'])){
+      	$data['cron'] = '*/15 * * * *';
+      }
+      $form->setValues($data);
  
-      $form->setValues(Mage::registry('transfer')->getData());
+     
       return parent::_prepareForm();
   }
 }

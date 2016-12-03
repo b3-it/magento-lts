@@ -22,8 +22,8 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     {
     	$recipients = array();
     	$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
-    	Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
-    	 
+    	$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
+    	return $res; 
     }
     
     
@@ -70,9 +70,10 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     		} 
     		
     		$link->saveOrderIds($orderIds);
-    		$link->saveOrderStatus($orderIds, Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS);
+    		
     	}
     	
+    	$res = null;
     	
     	if($link)
     	{
@@ -81,11 +82,16 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     		Sid_ExportOrder_Model_History::createHistory($orderIds, 'Link erzeugt');
     		$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('link' =>$link->getUrl()));
     		if($res === false){
+    			$link->saveOrderStatus($orderIds, Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, 'Email mit Link nicht versendet', Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR);
     		}else{
+    			
+    			$link->saveOrderStatus($orderIds, Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, 'Email mit Link versendet',  Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS);
     		}
     	}
+    	
+    	return $res;
     
     }
     

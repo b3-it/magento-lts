@@ -1,5 +1,5 @@
 <!--@subject 
-Bestellung
+Lieferantenbestellung Rahmenvertrag mit Link
 @-->
 
 <!--@vars
@@ -33,16 +33,11 @@ a { color:#1E7EC8; }
                 <table cellspacing="0" cellpadding="0" border="0" width="650">
                     <tr>
                         <td valign="top">
-                            <p>
-                                Sehr geehrte Damen und Herren,
-                                <br/>
-                                Hiermit möchten wir folgendes bestellen 
-                                {{var content}}
-                                <br/>
-                                Vielen Dank
-                                <br/>
-                                Ihr {{config path="general/store_information/name"}}
-                            </p>
+                            <h2>Abruf aus Rahmenvertrag</h2> 
+							<hr />
+							<p>Aus dem Angebot Ihres Rahmenvertrages wurden die Positionen im Anhang abgerufen.<br>
+							Sollten Sie Fragen zu dieser Bestellung haben, senden Sie uns eine E-Mail an <a href="mailto:{{block type="imprint/field" value="email"}}" style="color:#1E7EC8;">{{block type="imprint/field" value="email"}}</a>.</p>
+                            <br/>
                         </td>
                     </tr>
                 </table>

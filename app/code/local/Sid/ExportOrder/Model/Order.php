@@ -123,6 +123,11 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    	
 	    	$msg = $transfer->send($content,$order);
 	    	
+	    	if($msg === false)
+	    	{
+	    		Mage::throwException("Lieferantenbestellung konnte nicht gesendet werden");
+	    	}
+	    	
 	    	$this->setMessage($msg)
 	    		->setUpdateTime(now())
 	    		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
@@ -174,9 +179,14 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     				$skip = !Mage::helper('exportorder')->canSchedule($expr);
     			}
     			if(count($content) > 0){	
-    				$transfer->sendOrders($content, $format, $orderIds, $vendor);
-    				$this->setLog(sprintf("send pendingOrders: %s", implode(',',$orderIds)));
-    			}
+    				$res = $transfer->sendOrders($content, $format, $orderIds, $vendor);
+	    			if($res === false){
+			    			$this->setLog(sprintf("error send pendingOrders: %s", implode(',',$orderIds)));
+			    		}
+			    		else{
+			    			$this->setLog(sprintf("send pendingOrders: %s", implode(',',$orderIds)));
+			    		}
+	    			}
     			$content = array();
     			$orderIds = array();
     		}
@@ -196,8 +206,13 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	
     	
     	if(count($content) > 0){
-    		$transfer->sendOrders($content, $format, $orderIds, $vendor);
-    		$this->setLog(sprintf("send pendingOrders: %s", implode(',',$orderIds)));
+    		$res = $transfer->sendOrders($content, $format, $orderIds, $vendor);
+    		if($res === false){
+    			$this->setLog(sprintf("error send pendingOrders: %s", implode(',',$orderIds)));
+    		}
+    		else{
+    			$this->setLog(sprintf("send pendingOrders: %s", implode(',',$orderIds)));
+    		}
     	}
     	
     	if(count($allOrderIds) > 0)

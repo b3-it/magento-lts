@@ -107,6 +107,16 @@
                     <file>sid/exportorder/order_plain.html</file>
                     <type>html</type>
                 </exportorder_vendor_order_plain>
+                <exportorder_vendor_order_attachment translate="label" module="exportorder">
+                    <label>Lieferantenbestellung mit Anhang</label>
+                    <file>sid/exportorder/order_attachment.html</file>
+                    <type>html</type>
+                </exportorder_vendor_order_attachment>
+                <exportorder_vendor_order_link translate="label" module="exportorder">
+                    <label>Lieferantenbestellung Link</label>
+                    <file>sid/exportorder/order_link.html</file>
+                    <type>html</type>
+                </exportorder_vendor_order_link>
                 <exportorder_vendor_error translate="label" module="exportorder">
                     <label>Lieferantenbestellung Fehlerinformation</label>
                     <file>sid/exportorder/error.html</file>

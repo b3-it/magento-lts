@@ -23,8 +23,12 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
 	public function sendEmail($template, array $recipients, array $data = array(), $storeid = 0, $attachments = null)
 	{
 		if(!is_numeric($template)){
-			$template = Mage::getStoreConfig($template, $storeid);
+			$templateId = intval( Mage::getStoreConfig($template, $storeid));
 		}
+		if($templateId){
+			$template = $templateId;
+		}
+		
 		 
 		$translate = Mage::getSingleton('core/translate');
 		/* @var $translate Mage_Core_Model_Translate */

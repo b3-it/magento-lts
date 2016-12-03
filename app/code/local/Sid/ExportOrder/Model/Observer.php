@@ -15,6 +15,9 @@ class Sid_ExportOrder_Model_Observer
         {
         	$model = Mage::getModel('exportorder/transfer_email')->load($vendor->getId(),'vendor_id');
         	$data = $vendor->getTransfer();
+        	if(empty($data['template'])){
+        		$data['template'] = 'exportorder_vendor_order_plain';
+        	}
         	$data['vendor_id'] = $vendor->getId();
         	$data['id'] = $model->getId();
         	$model->setData($data)->save();
@@ -25,6 +28,7 @@ class Sid_ExportOrder_Model_Observer
         {
         	$model = Mage::getModel('exportorder/transfer_post')->load($vendor->getId(),'vendor_id');
         	$data = $vendor->getTransfer();
+        	
         	$data['vendor_id'] = $vendor->getId();
         	$data['id'] = $model->getId();
         	$model->setData($data)->save();
@@ -34,6 +38,9 @@ class Sid_ExportOrder_Model_Observer
         {
         	$model = Mage::getModel('exportorder/transfer_link')->load($vendor->getId(),'vendor_id');
         	$data = $vendor->getTransfer();
+        	if(empty($data['template'])){
+        		$data['template'] = 'exportorder_vendor_order_link';
+        	}
         	$data['vendor_id'] = $vendor->getId();
         	$data['id'] = $model->getId();
         	$model->setData($data)->save();
