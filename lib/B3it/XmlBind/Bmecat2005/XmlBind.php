@@ -19,40 +19,46 @@ class B3it_XmlBind_Bmecat2005_XmlBind {
     	}
         $this->dom = new \DOMDocument();
         $this->dom->loadXML($xml);
-        
-        $refl  = new \ReflectionClass(get_class($model));
+
         $xpath = new \DOMXPath($this->dom);
         
         $query = "child::*";
         $childs = $xpath->query($query);
-        
+
+        $obj = $this->dom->documentElement;
+        $attributes = $obj->attributes;
+        if($attributes->length > 0 )
+        {
+        	foreach($attributes as $attribute)
+        	{
+        		$model->setAttribute($attribute->name,$attribute->nodeValue);
+        	}
+        }
+
         foreach ($childs as $child) {
-            $ns = "";
             $name= $child->nodeName;
-          	
-            $attributes = $child->attributes;
-            if($attributes->length > 0 )
-            {
-            	foreach($attributes as $attribute)
-            	{
-            		$model->setAttribute($attribute->name,$attribute->nodeValue);
-            	}
-            }
-            
-            
             $getclassName = "get".$this->getUcFirst($name);
             
             if (!method_exists($model, $getclassName)) {
             	throw new \RuntimeException("Model ".get_class($model)." does not have element ".$name);
             }
             $childModel = $model->$getclassName();
+
+            $attributes = $child->attributes;
+            if($attributes->length > 0 )
+            {
+            	foreach($attributes as $attribute)
+            	{
+            		$childModel->setAttribute($attribute->name,$attribute->nodeValue);
+            	}
+            }
             if ($this->hasChild($child)) {
             	
             	$doc = new \DOMDocument();
             	$doc->appendChild($doc->importNode($child, true));
             	$this->bindXml($doc->saveXml(), $childModel);
                 
-            } else if (!empty($child->nodeValue)) {
+            } else if (isset($child->nodeValue) && strlen($child->nodeValue) > 0) {
             	$childModel->setValue($child->nodeValue);
             }
         }
