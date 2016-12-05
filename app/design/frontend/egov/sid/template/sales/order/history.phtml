@@ -73,6 +73,7 @@
                 <?php if ($this->canCancel($_order)) : ?>
                     <a href="<?php echo $this->getCancelUrl($_order) ?>"
                        class="egov-delete"
+                       onclick="return confirm('<?php echo $this->__('You are sure to cancel these order?') ?>')"
                        alt="<?php echo $this->__('Cancel Order') ?>"
                        title="<?php echo $this->__('Cancel Order') ?>"> </a>
                 <?php endif ?>
@@ -82,7 +83,9 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<script type="text/javascript">decorateTable('my-orders-table');</script>
+<script type="text/javascript">
+decorateTable('my-orders-table');
+</script>
 <?php echo $this->getPagerHtml(); ?>
 <?php else: ?>
     <p><?php echo $this->__('You have placed no orders.'); ?></p>
