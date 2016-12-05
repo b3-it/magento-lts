@@ -13,7 +13,7 @@ $cms_blocks = array(
                 array(
                          'title'      => 'Top-Links für DWD-Layout',
                       	 'identifier' => 'dwd_top_links',
-                      	 'content'    => '<ul>
+                      	 'content'    => '<ul id="top-row-content-list">
 <li><a href="{{store url="impressum"}}">Impressum</a></li>
 <li><a href="{{store url="contactpage"}}">Kontakt</a></li>
 </ul>',

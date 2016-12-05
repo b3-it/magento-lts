@@ -94,8 +94,16 @@ $j(document).ready(function(){
 		checkMobileCustomerNavigation()
 	});
 	
+	// Grafischer Language-Switcher
+	$j('#select-language').touchSelect({
+		'elementClass' : '',
+		'elementParent': 'top-row-content-list',
+		'elementInsert': '<li />'
+	});
+
 	// jQuery-UI für DropDown-Boxen
 	$j("select").selectmenu();
+	
 });
 
 function setTabIndex(arr)

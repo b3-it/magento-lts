@@ -3,7 +3,11 @@
     <default>
         <reference name="head">
             <remove name="silver_track" />
-            
+ 
+            <action method="addJs">
+            	<script>egovs/jquery.touchSelect.js</script>
+           	</action>
+           
             <action method="removeItem">
                 <type>skin_js</type>
                 <name>js/app_egov.js</name>
