@@ -56,9 +56,9 @@
 	              <Egovs_Ready>
 	                  <files>
 	                      <default>Egovs_Ready.csv</default>
-	  				        </files>
-	  			      </Egovs_Ready>
-	  		    </modules>
+	  				  </files>
+	  			  </Egovs_Ready>
+            </modules>
 	  	  </translate>
     </adminhtml>
     <frontend>
@@ -69,6 +69,15 @@
                 </egovsready>
             </updates>
         </layout>
+        <translate>
+              <modules>
+                  <Egovs_Ready>
+                      <files>
+                          <default>Egovs_Ready.csv</default>
+                      </files>
+                  </Egovs_Ready>
+              </modules>
+        </translate>
     </frontend>
     <default>
         <customer>
