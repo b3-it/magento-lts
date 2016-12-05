@@ -460,6 +460,7 @@
         }
 
         .product-cart-symbols {
+            display: none;
         }
     }
 
@@ -647,10 +648,10 @@
         }
         
         .product-cart-symbols {
-        	display: inline-block;
+        	display: none;
         	
         	@include bp(max-width, $bp-medium) {
-        	    display: block;
+        	    display: none;
         	}
         }
 
