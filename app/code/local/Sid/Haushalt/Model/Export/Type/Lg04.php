@@ -15,9 +15,12 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 	public function getExportData()
 	{
 		$orders = Mage::getModel('sales/order')->getCollection();
-		$orders->getSelect()->where('entity_id IN (?)',implode(',',$this->_orderIds));
+		$ids = implode(',',$this->_orderIds);
+		$orders->getSelect()->where('entity_id IN ('.$ids.')');
+		//$sql = $orders->getSelect()->__toString();
 		$res = array();
 		/* @var $order Mage_Sales_Model_Order */ 
+		$orders = $orders->getItems();
 		foreach($orders as $order)
 		{
 			$format = $this->getOrderData($order);
@@ -52,7 +55,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 	{
 		
 		$res = $this->getConfigData('dim_2');
-		return $res.$this->getOrderData($this->getFormatedOrderDate($order,'Y'));
+		return $res.$order->getOrderData($this->getFormatedOrderDate($order,'Y'));
 	}
 	
 	
@@ -98,7 +101,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 			$lineNr++;
 			/* @var $pos Sid_Haushalt_Model_Export_Type_Lg04_Pos */
 			$pos = Mage::getModel('sidhaushalt/export_type_lg04_pos');
-			$pos->setAccount($this->getConfigData('account'));
+			$pos->setAccount($item->getProduct()->getU4Account());
 			$pos->setAmount($item->getBaseRowTotal());
 			$pos->setAmountSet('1');
 			$pos->setArtDescr($item->getName());
@@ -110,7 +113,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 			$pos->setDim2($this->getBudgedNumber($order, $item)); 
 			$pos->setDim3($item->getProduct()->getU4Dim1());
 			$pos->setDim6($this->getConfigData('dim_6'));
-			$pos->setDim7($this->getConfigData('account'));
+			$pos->setDim7($item->getProduct()->getU4Account());
 			$pos->setLineNo($lineNr);
 			$pos->setOrderId($order->getU4IncrementId());
 			$pos->setPeriod($this->getFormatedOrderDate($order,'Ym'));
