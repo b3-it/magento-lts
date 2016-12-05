@@ -19,6 +19,7 @@
 "Mage_Catalog::Sort By","Sortieren"
 "Mage_Catalog::%s Article(s)","%s Artikel"
 "Mage_Checkout::%s was added to your shopping cart.","%s wurde in den Warenkorb gelegt. Der erlaubte Gesamtbestellwert darf 1.000,00 € nicht überschreiten!"
+"Mage_Checkout::Buy for %s","Zahlungspflichtig bestellen"
 "Mage_Core::Please enter your email below and we'll send you confirmation link for it.","Bitte geben Sie Ihre E-Mail-Adresse an und wir werden Ihnen den Bestätigungslink schicken."
 "Mage_Core::Please enter your email below and we\'ll send you confirmation link for it.","Bitte geben Sie Ihre E-Mail-Adresse an und wir werden Ihnen den Bestätigungslink schicken."
 "Mage_Customer::Account confirmation is required. Please, check your e-mail for confirmation link. To resend confirmation email please <a href=""%s"">click here</a>.","Kontobestätigung ist erforderlich. Bitte beachten Sie dazu den Bestätigungslink in der E-Mail. Wenn Sie den Bestätigungslink nicht erhalten haben sollten, <a href=""%s"">klicken Sie hier</a> und geben Ihre E-Mail-Adresse erneut ein. Achten Sie auf Tippfehler."
