@@ -200,6 +200,11 @@
 
 .customer-account-create {
     @include new_address;
+    
+    .ui-selectmenu-button {
+        width: 95%;
+        display: block;
+    }
 
     .col2-left-layout {
         .account-create {
