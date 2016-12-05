@@ -68,6 +68,15 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Download extends Mage_Admi
       		'index'     => 'download_time',
       		'type'		=> 'datetime'
       ));
+      
+      $this->addColumn('link_status', array(
+      		'header' => Mage::helper('sales')->__('Link Status'),
+      		'index' => 'link_status',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'options' =>Sid_ExportOrder_Model_Linkstatus::getOptionArray(),
+      		'filter_index' => 'status'
+      ));
 
       $order = Mage::registry('order');
       $this->addColumn('action',
