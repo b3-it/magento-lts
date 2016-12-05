@@ -31,8 +31,9 @@ class Sid_Haushalt_Block_Adminhtml_Haushalt_Grid extends Mage_Adminhtml_Block_Wi
     	$collection = Mage::getResourceModel($this->_getCollectionClass());
     	
     	$collection->getSelect()
-    		->join(array('order_info'=>$collection->getTable('sidhaushalt/order_info')),'main_table.entity_id = order_info.order_id');
-    	
+    		->join(array('order_info'=>$collection->getTable('sidhaushalt/order_info')),'main_table.entity_id = order_info.order_id')
+    		->where('haushalts_system is not null');
+   	
     	$this->setCollection($collection);
       	return parent::_prepareCollection();
   }
