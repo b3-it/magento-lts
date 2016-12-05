@@ -140,7 +140,11 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 		
 		$linkid     = $this->getRequest()->getParam('linkid');
 		$link = Mage::getModel('exportorder/link')->load($linkid);
-		$link->delete();
+		$link->deleteFile()
+			->setLinkStatus(Sid_ExportOrder_Model_Linkstatus::STATUS_DISABLED)
+			->save();
+		
+		//$link->delete();
 		
 		$this->loadLayout(false);
 		$this->getResponse()->setBody(

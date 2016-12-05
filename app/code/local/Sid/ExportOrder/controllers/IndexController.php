@@ -18,7 +18,7 @@ class Sid_ExportOrder_IndexController extends Mage_Core_Controller_Front_Action
     	if(!empty($ident) && $this->_is_hex($ident))
     	{
     		$link = Mage::getModel('exportorder/link')->load($ident,'ident');
-    		if($link->getId()){
+    		if($link->getId() && $link->getLinkStatus() == Sid_ExportOrder_Model_Linkstatus::STATUS_ENABLED){
     			$file =  $link->getDirectory().$link->getFilename();
     			if(file_exists($file)){
     				try{
