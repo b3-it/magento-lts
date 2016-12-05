@@ -15,7 +15,7 @@ $cms_blocks = array(
                       	 'identifier' => 'dwd_top_links',
                       	 'content'    => '<ul>
 <li><a href="{{store url="impressum"}}">Impressum</a></li>
-<li><a href="{{store url="kontact"}}">Kontakt</a></li>
+<li><a href="{{store url="contactpage"}}">Kontakt</a></li>
 </ul>',
                     	 'isactive'   => 1,
 				         'stores'     => array(0)
