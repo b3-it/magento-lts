@@ -24,7 +24,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 		}
 		$this->prepare();
 		$this->run();
-		//für Transfermodel Link werden evtl. mehrere Bestellungen zusammen gefasst deshalt gesondert bearbeiten 
+		//für Transfermodel Link werden evtl. mehrere Bestellungen zusammen gefasst deshalb gesondert bearbeitet 
 		Mage::getModel('exportorder/order')->processPendingOrders();
 		$this->deleteOldLinks();
 	}

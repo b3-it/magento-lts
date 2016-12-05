@@ -47,40 +47,40 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	//rechnungsadresse
     	$billing = $order->getBillingAddress();
     	$ORDER_HEADER->order_info->parties->billingParty->party_id->setValue('B_'.$billing->getCustomerId());   	
-    	$ORDER_HEADER->order_info->parties->billingParty->address->name->setValue($billing->getCompany());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->name2->setValue($billing->getCompany2());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->name3->setValue($billing->getCompany3());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->name->setValue($this->_escape($billing->getCompany()));
+    	$ORDER_HEADER->order_info->parties->billingParty->address->name2->setValue($this->_escape($billing->getCompany2()));
+    	$ORDER_HEADER->order_info->parties->billingParty->address->name3->setValue($this->_escape($billing->getCompany3()));
     	
     	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->contact_id->setValue('BA_'.$billing->getCustomerAddressId());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->contact_name->setValue($billing->getLastname());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->first_name->setValue($billing->getFirstname());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->contact_name->setValue($this->_escape($billing->getLastname()));
+    	$ORDER_HEADER->order_info->parties->billingParty->address->contact_details->first_name->setValue($this->_escape($billing->getFirstname()));
     	
-    	$ORDER_HEADER->order_info->parties->billingParty->address->city->setValue($billing->getCity());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->zip->setValue($billing->getPostcode());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->country->setValue($billing->getCountry());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->street->setValue($billing->getStreetFull());
-    	$ORDER_HEADER->order_info->parties->billingParty->address->email->setValue($order->getCustomerEmail());
+    	$ORDER_HEADER->order_info->parties->billingParty->address->city->setValue($this->_escape($billing->getCity()));
+    	$ORDER_HEADER->order_info->parties->billingParty->address->zip->setValue($this->_escape($billing->getPostcode()));
+    	$ORDER_HEADER->order_info->parties->billingParty->address->country->setValue($this->_escape($billing->getCountry()));
+    	$ORDER_HEADER->order_info->parties->billingParty->address->street->setValue($this->_escape($billing->getStreetFull()));
+    	$ORDER_HEADER->order_info->parties->billingParty->address->email->setValue($this->_escape($order->getCustomerEmail()));
     	
     	//versandadresse
     	if(!$order->getIsVirtual()){
 	    	$shipping = $order->getShippingAddress();
 	    	$ORDER_HEADER->order_info->parties->shippingParty->party_id->setValue('S_'.$shipping->getCustomerId());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name->setValue($shipping->getCompany());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name2->setValue($shipping->getCompany2());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name3->setValue($shipping->getCompany3());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name->setValue($this->_escape($shipping->getCompany()));
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name2->setValue($this->_escape($shipping->getCompany2()));
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->name3->setValue($this->_escape($shipping->getCompany3()));
 	    	
 	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->contact_id->setValue('SA_'.$shipping->getCustomerAddressId());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->contact_name->setValue($shipping->getLastname());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->first_name->setValue($shipping->getFirstname());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->contact_name->setValue($this->_escape($shipping->getLastname()));
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->contact_details->first_name->setValue($this->_escape($shipping->getFirstname()));
 	    	
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->city->setValue($shipping->getCity());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->zip->setValue($shipping->getPostcode());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->country->setValue($shipping->getCountry());
-	    	$ORDER_HEADER->order_info->parties->shippingParty->address->street->setValue($shipping->getStreetFull());
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->city->setValue($this->_escape($shipping->getCity()));
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->zip->setValue($this->_escape($shipping->getPostcode()));
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->country->setValue($this->_escape($shipping->getCountry()));
+	    	$ORDER_HEADER->order_info->parties->shippingParty->address->street->setValue($this->_escape($shipping->getStreetFull()));
 	    	
 	    	$adr = Mage::getmodel('customer/address')->load($shipping->getCustomerAddressId());
 	    	if(!empty($adr->getDap())){
-	    		$txt = "Im Fall einer Lieferung 'frei Verwendungstelle' bitte hierher liefern: ".$adr->getDap();
+	    		$txt = "Im Fall einer Lieferung 'frei Verwendungstelle' bitte hierher liefern: ".$this->_escape($adr->getDap());
 	    		$ORDER_HEADER->order_info->parties->shippingParty->address->address_remarks->setValue($txt);
 	    	}
 	    	
@@ -92,15 +92,15 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
   		$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
     	$ORDER_HEADER->order_info->parties->supplierParty->party_id->setValue('C_'.$vendor->getData('framecontract_vendor_id'));
-    	$ORDER_HEADER->order_info->parties->supplierParty->address->name->setValue($vendor->getCompany());
-    	$ORDER_HEADER->order_info->parties->supplierParty->address->name2->setValue($vendor->getOperator());
+    	$ORDER_HEADER->order_info->parties->supplierParty->address->name->setValue($this->_escape($vendor->getCompany()));
+    	$ORDER_HEADER->order_info->parties->supplierParty->address->name2->setValue($this->_escape($vendor->getOperator()));
     	
     	
     	$ORDER_HEADER->order_info->order_parties_reference->buyer_idref->setValue('B_'.$billing->getCustomerId());
     	$ORDER_HEADER->order_info->order_parties_reference->supplier_idref->setValue('C_'.$vendor->getData('framecontract_vendor_id'));
     	
     	$ORDER_HEADER->order_info->customer_order_reference->customer_idref->setValue('?Kundennummer?');
-    	$ORDER_HEADER->order_info->customer_order_reference->order_descr->setValue($contract->getTitle());
+    	$ORDER_HEADER->order_info->customer_order_reference->order_descr->setValue($this->_escape($contract->getTitle()));
     	
     	//die Positionen
     	$ORDER_ITEM_LIST = new Sid_ExportOrder_Model_Format_Opentrans_OrderItemList($ORDER, $this->_xml);
@@ -165,11 +165,11 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     		$i++;
     		$order_item = $ORDER_ITEM_LIST->add();
     		$order_item->line_item_id->setValue($i);
-    		$order_item->product_id->supplier_pid->setValue($item->getProduct()->getSupplierSku());
-    		$order_item->product_id->description_short->setValue($item->getName());
-    		$order_item->product_id->international_pid->setValue($item->getProduct()->getEan());
-    		$order_item->product_id->buyer_pid->setValue($item->getSku());
-    		$order_item->product_id->manufacturer_info->setValue($item->getProduct()->getManufacturerName());
+    		$order_item->product_id->supplier_pid->setValue($this->_escape($item->getProduct()->getSupplierSku()));
+    		$order_item->product_id->description_short->setValue($this->_escape($item->getName()));
+    		$order_item->product_id->international_pid->setValue($this->_escape($item->getProduct()->getEan()));
+    		$order_item->product_id->buyer_pid->setValue($this->_escape($item->getSku()));
+    		$order_item->product_id->manufacturer_info->setValue($this->_escape($item->getProduct()->getManufacturerName()));
     		
     		
     		
@@ -180,6 +180,10 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
     	}
     }
     
+    protected function _escape($text)
+    {
+    	return html_entity_decode($text,ENT_XHTML,'UTF-8');
+    }
     
    
 }

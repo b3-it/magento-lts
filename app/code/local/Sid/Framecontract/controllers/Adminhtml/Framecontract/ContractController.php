@@ -200,8 +200,13 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 					}
 					
 					if(isset($los['sendlink'])){
-						Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Email was successfully send'));
-						$this->sendEMail($contract, $model);
+						$res = $this->sendEMail($contract, $model);
+						if($res !== false){
+							Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Email was successfully send.'));
+						}else{
+							Mage::getSingleton('adminhtml/session')->addError(Mage::helper('framecontract')->__('Email was not send.'));
+						}
+						
 					}
 				}
 			}
@@ -230,12 +235,15 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 		$data['url'] = trim(Mage::getStoreConfig('framecontract/supplierportal/url'),'/'); 
 		$data['url'] .= '/supplier?key=' . $los->getKey();
 		
-		Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid);
+		$res = Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid);
 		
-		//info speichern
-		$note = "Link zu Los versendet " . $los->getKey();
-		Mage::helper('framecontract')->saveEmailSendInformation($contract->getId(),$los->getId(), $recipients, $note );
+		if($res !== false){
+			//info speichern
+			$note = "Link zu Los versendet " . $los->getKey();
+			Mage::helper('framecontract')->saveEmailSendInformation($contract->getId(),$los->getId(), $recipients, $note );
+		}
 		
+		return $res;
 	}
 	
 	

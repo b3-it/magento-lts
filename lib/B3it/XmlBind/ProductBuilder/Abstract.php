@@ -20,7 +20,9 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		'catalog_product_price',
 		'catalog_category_product',
 		'catalogsearch_fulltext',
-		'catalog_product_flat'
+		'catalog_product_flat',
+		'catalog_product_attribute',
+		'groupscatalog2_product'
 	);
 
 	/**
@@ -142,6 +144,11 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		{
 			if($item->isBundle()){
 				$this->_saveBundleDetails($item);
+				$bundle = Mage::getModel('catalog/product')->load($item->getEntityId());
+				$bundle->setSkuType(0);
+				$bundle->setWeightType(0);
+				$bundle->setPriceView(0);
+				$bundle->save();
 			}
 		}
 		
@@ -149,8 +156,10 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$indexProcess = Mage::getSingleton('index/indexer')->getProcessByCode($indexer);
 			if ($indexProcess) {
 				$indexProcess->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
+				$indexProcess->reindexEverything();
 			}
 		}
+		
 	}
 	
 	/**

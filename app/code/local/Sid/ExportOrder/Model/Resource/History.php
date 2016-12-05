@@ -26,7 +26,7 @@ class Sid_ExportOrder_Model_Resource_History extends Mage_Core_Model_Resource_Db
     	$write = $this->_getWriteAdapter();
     	$data = array();
     	foreach ($orderIds as $id){
-    		$data[] = array('order_id'=>$id,'message'=>$message,'status'=>$status);
+    		$data[] = array('order_id'=>$id,'message'=>$message,'status'=>$status,'update_time'=> date('Y-m-d H:i:s'));
     	}
     	
     	$write->insertMultiple($this->getTable('exportorder/history'), $data);
