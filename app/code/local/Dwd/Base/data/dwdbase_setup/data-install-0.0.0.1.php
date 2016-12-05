@@ -13,9 +13,9 @@ $cms_blocks = array(
                 array(
                          'title'      => 'Top-Links für DWD-Layout',
                       	 'identifier' => 'dwd_top_links',
-                      	 'content'    => '<ul>
+                      	 'content'    => '<ul id="top-row-content-list">
 <li><a href="{{store url="impressum"}}">Impressum</a></li>
-<li><a href="{{store url="kontact"}}">Kontakt</a></li>
+<li><a href="{{store url="contactpage"}}">Kontakt</a></li>
 </ul>',
                     	 'isactive'   => 1,
 				         'stores'     => array(0)
@@ -23,7 +23,7 @@ $cms_blocks = array(
  				array(
  						'title'      => 'Footer-Info für den DWD',
  						'identifier' => 'dwd_footer_block',
-						'content'    => '<div id="footer-block-legal"><img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svgz\'}}" />
+						'content'    => '<div id="footer-block-legal"><img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\'}}" />
 <div>
 <p>Der {{block type="imprint/field" value="shop_name"}} ist eine Bundesoberbeh&ouml;rde im Gesch&auml;ftsbereich des Bundesministeriums f&uuml;r Verkehr und digitale Infrastruktur.</p>
 <address>{{block type="imprint/field" value="shop_name"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</address></div>

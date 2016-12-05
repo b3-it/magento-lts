@@ -34,8 +34,8 @@ class Sid_ExportOrder_IndexController extends Mage_Core_Controller_Front_Action
     			}
     		}
     	}
-    	
-    	die('<h1>File not found!</h1>');
+    	$this->norouteAction();
+    	return;
     }
     
     protected function _is_hex($hex_code) 
@@ -57,5 +57,14 @@ class Sid_ExportOrder_IndexController extends Mage_Core_Controller_Front_Action
     	$response->setBody($content);
     	$response->sendResponse();
     	die;
+    }
+    
+    /**
+     * Return core session object
+     *
+     * @return Mage_Core_Model_Session
+     */
+    protected function _getSession() {
+    	return Mage::getSingleton('core/session');
     }
 }

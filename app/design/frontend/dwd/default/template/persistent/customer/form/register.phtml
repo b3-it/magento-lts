@@ -325,26 +325,28 @@
         $j(document).ready(function(){
             $j('#firstname').focus();
         });
-
-        new Validation('form-validate');
-        if (Validation) {
-            Validation.addAllThese([
-                [
-                    'validate-company-taxvat',
-                    '<?php echo Mage::helper('paymentbase')->__('The Entry of Tax ID without specifying a company name is not possible. Please check your entries. If you are not able to specify a company name please re-enter first and last name in the field &quot;company&quot;') ?>',
-                    function() {
-                        var company = $F('company');
-                        var taxvat = $F('vat_id');
-
-                        if ( (company.length == 0) && (taxvat.length > 0) ) {
-                            return false;
-                        }
-                        else {
-                            return true;
-                        }
-                    }
-                ]
-            ]);
+        
+        if ( $j('#adress-new-taxvat').length ) {
+	        new Validation('form-validate');
+	        if (Validation) {
+	            Validation.addAllThese([
+	                [
+	                    'validate-company-taxvat',
+	                    '<?php echo Mage::helper('paymentbase')->__('The Entry of Tax ID without specifying a company name is not possible. Please check your entries. If you are not able to specify a company name please re-enter first and last name in the field &quot;company&quot;') ?>',
+	                    function() {
+	                        var company = $F('company');
+	                        var taxvat = $F('vat_id');
+	
+	                        if ( (company.length == 0) && (taxvat.length > 0) ) {
+	                            return false;
+	                        }
+	                        else {
+	                            return true;
+	                        }
+	                    }
+	                ]
+	            ]);
+	        }
         }
     </script>
 </div>
