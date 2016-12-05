@@ -163,12 +163,12 @@
     		  <att_1_id>C1</att_1_id>
     		  <att_2_id>B0</att_2_id>
     		  <att_3_id>Z10</att_3_id>
-    		  <att_6>NB</att_6>
+    		  <att_6_id>NB</att_6_id>
     		  <att_7_id>Z20</att_7_id>
     		  <client>SID</client>
     		  <dim_6>SID</dim_6>
     		  <!-- dim_2 ohne 2 Stell. Jahreszahl am Ende eintragen -->
-    		  <dim_2>SID</dim_2>
+    		  <dim_2>999999999999</dim_2>
     		  
     		  <accountable>FIKSIN</accountable>
     		  <increment_pool>
