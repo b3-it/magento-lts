@@ -94,16 +94,16 @@ $j(document).ready(function(){
 		checkMobileCustomerNavigation()
 	});
 	
+	// jQuery-UI für DropDown-Boxen
+	$j("select").selectmenu();
+	
 	// Grafischer Language-Switcher
 	$j('#select-language').touchSelect({
 		'elementClass' : '',
 		'elementParent': 'top-row-content-list',
-		'elementInsert': '<li />'
+		'elementInsert': '<li />',
+		'uiElement'    : 'select-language-button'
 	});
-
-	// jQuery-UI für DropDown-Boxen
-	$j("select").selectmenu();
-	
 });
 
 function setTabIndex(arr)

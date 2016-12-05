@@ -36,7 +36,8 @@
         'elementData'  : 'value',        // In welchem Attribut befindet sich das Click-Ziel
         'elementInsert': '<div />',      // Struktur des einzufuegenden Elementes (als Child wird ein Link erzeugt)
         'elementParent': null,           // Wenn das neue Element nicht einzeln steht, muss hier der Parent rein
-        'countOptions' : null            // Interne Variable mit der Anzahl der Optionen
+        'countOptions' : null,           // Interne Variable mit der Anzahl der Optionen
+        'uiElement'    : null            // Elemente-ID von jQuery-UI
 	};		
 
 	var touchSelect = function(container, options) {
@@ -58,9 +59,17 @@
         	this._removeElementFromPage();
         	this._removeOnChange();
         	
+        	if ( this.options.uiElement !== null ) {
+        		this._moveRemoveElement(this.options.uiElement);
+        	}
+        	
         	if ( this.options.countOptions == 2 ) {
         		this._buildToggleButtons();
         	}
+        },
+        
+        _openURL: function(url) {
+        	window.location.href = url;
         },
         
         /**
@@ -96,8 +105,17 @@
          */
         _removeElementFromPage: function() {
         	if ( $(this.container).css('display') !== 'none' ) {
-        		$(this.container).css('display', 'none');
+        		this._moveRemoveElement(this.options.elementID);
         	}
+        },
+        
+        _moveRemoveElement: function(element) {
+        	$('#' + element).css({
+    			'display' : 'none',
+    			'position': 'absolute',
+    			'top'     : '-1000px',
+    			'left'    : '-1000px'
+    		});
         },
 
         /**
@@ -140,6 +158,7 @@
         	neu.click(function(event){
         		event .preventDefault();
         		window.location.href = $('#' + elementNewID).attr('data-dest');
+        		//this._openURL( $('#' + elementNewID).attr('data-dest') );
         	});
         }
 	};
