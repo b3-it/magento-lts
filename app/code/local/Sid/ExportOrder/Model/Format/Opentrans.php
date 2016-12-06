@@ -83,8 +83,8 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 		$contact->getFirstName()->setValue($billing->getFirstname());
 
 		$address->getCity()->setValue($billing->getCity());
-		$address->getZip()->setValue($billing->getCountry());
-		$address->getCountry()->setValue($billing->getCity());
+		$address->getZip()->setValue($billing->getPostcode());
+		$address->getCountry()->setValue($billing->getCountry());
 		$address->getStreet()->setValue($billing->getStreetFull());
 		$address->getEmail()->setValue($order->getCustomerEmail());
 
@@ -107,8 +107,8 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 			$contact->getFirstName()->setValue($shipping->getFirstname());
 
 			$address->getCity()->setValue($shipping->getCity());
-			$address->getZip()->setValue($shipping->getCountry());
-			$address->getCountry()->setValue($shipping->getCity());
+			$address->getZip()->setValue($shipping->getPostcode());
+			$address->getCountry()->setValue($shipping->getCountry());
 			$address->getStreet()->setValue($shipping->getStreetFull());
 
 			$adr = Mage::getmodel('customer/address')->load($shipping->getCustomerAddressId());
