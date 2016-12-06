@@ -181,7 +181,7 @@
             		'data-dest': destinationURL,
             		'text'     : elementText
             	});
-        		
+
         		$('#' + this.options.elementParent).append(parentElem).css('cursor', 'pointer');
         		var neu = $('#parent-' + elementNewID).append(newElement).css('cursor', 'pointer');
         	}
