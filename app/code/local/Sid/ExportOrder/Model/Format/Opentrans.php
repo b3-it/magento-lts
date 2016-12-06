@@ -145,12 +145,13 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 			if ($item->getParentItemId() != null) {
 				continue;
 			}
+			$product = $item->getProduct();
 
 			$order_item = $orderList->getOrderItem();
 			$order_item->getLineItemId()->setValue($i++);
 
 			$productId = $order_item->getProductId();
-			$productId->getSupplierPid()->setValue($item->getProduct()->getSupplierSku());
+			$productId->getSupplierPid()->setValue($product->getSupplierSku());
 			$productId->getDescriptionShort()->setValue($item->getName());
 			$productId->getInternationalPid()->setValue($item->getProduct()->getEan());
 			$productId->getBuyerPid()->setValue($item->getSku());
@@ -166,10 +167,16 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 
 			$order_item->getQuantity()->setValue($item->getQtyOrdered());
 			$order_item->getOrderUnit()->setValue('C62');
-			$order_item->getProductPriceFix()->getPriceAmount()->setValue($item->getBasePrice());
+			$price = $order_item->getProductPriceFix();
+
+			$price->getPriceAmount()->setValue($item->getBasePrice());
+
+			$taxDetails = $price->getTaxDetailsFix();
+			$taxDetails->getTaxType()->setValue("VAT");
+			$taxDetails->getTax()->setValue($item->getTaxPercent() / 100);
+			$taxDetails->getTaxAmount()->setValue($item->getTaxAmount());
 
 			if (!empty($item->getProductOptions())) {
-				$product = $item->getProduct();
 				$options = $item->getProductOptions();
 
 				if (isset($options['bundle_options'])) {
@@ -192,6 +199,7 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 
 						$selidx = 0;
 						foreach ($selectionCollection as $selitem) {
+							/** @var Mage_Catalog_Model_Product $selitem */
 							$sku = $selitem->getSku();
 							// ignore base configuration object
 							if (static::endsWith($sku, ":base")) {
@@ -204,6 +212,16 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 
 							$c->getQuantity()->setValue($osel['qty']);
 							$c->getOrderUnit()->setValue('C62');
+
+							$price = $c->getProductPriceFix();
+
+							$price->getPriceAmount()->setValue($selitem->getBasePrice());
+
+							$taxDetails = $price->getTaxDetailsFix();
+							$taxDetails->getTaxType()->setValue("VAT");
+							$taxDetails->getTax()->setValue($selitem->getTaxPercent() / 100);
+							$taxDetails->getTaxAmount()->setValue($selitem->getTaxAmount());
+
 							$c->getProductPriceFix()->getPriceAmount()->setValue($osel['price']);
 
 							$productId = $c->getProductId();
