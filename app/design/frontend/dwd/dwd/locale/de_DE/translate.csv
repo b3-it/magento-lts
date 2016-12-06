@@ -7,6 +7,7 @@
 "Egovs_Base::Company Line 2","Firma Zeile 2 (50 Zeichen erlaubt)"
 "Egovs_Base::Company Line 3","Firma Zeile 3 (50 Zeichen erlaubt)"
 "Egovs_Base::Company","Firma (150 Zeichen erlaubt)"
+"Egovs_Checkout::Buy for %s","Zahlungspflichtig bestellen"
 "Egovs_Checkout::Easy access to your order history and status","Anderenfalls können Sie ihre Bestellung nicht abschließen."
 "Egovs_Checkout::Fast and easy check out","Bitte legen Sie Ihr Benutzerkonto vor dem ersten Gang zur Kasse über den Link ""Anmelden"" an."
 "Egovs_Checkout::Forgot your password?","Passwort vergessen?"

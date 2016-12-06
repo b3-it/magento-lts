@@ -10,6 +10,25 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method int getVendorId()
+ *  @method setVendorId(int $value)
+ *  @method string getIdent()
+ *  @method setIdent(string $value)
+ *  @method string getFilename()
+ *  @method setFilename(string $value)
+ *  @method string getSendFilename()
+ *  @method setSendFilename(string $value)
+ *  @method int getDownload()
+ *  @method setDownload(int $value)
+ *  @method  getDownloadTime()
+ *  @method setDownloadTime( $value)
+ *  @method  getCreateTime()
+ *  @method setCreateTime( $value)
+ */
 class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
 {
     public function _construct()
@@ -110,6 +129,11 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     
     protected function _beforeDelete()
     {
+    	$this->deleteFile();
+    }
+    
+    public function deleteFile()
+    {
     	$filename = $this->getDirectory().$this->getFilename();
     	/* @var collection Sid_ExportOrder_Model_Resource_Link_Order_Collection */
     	$collection = Mage::getModel('exportorder/link_order')->getCollection();
@@ -120,7 +144,7 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     	}
     	if(file_exists($filename))
     	{
-    		try 
+    		try
     		{
     			unlink($filename);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, sprintf('Datei %s gelöscht',$this->getSendFilename()));
@@ -128,10 +152,13 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     			Mage::logException($ex);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, $ex->getMessage());
     		}
-    		
+    	
     	}else{
     		Sid_ExportOrder_Model_History::createHistory($orderIds, sprintf('Datei %s nicht gefunden',$this->getSendFilename()));
     		$this->setLog(sprintf('Datei %s zum löschen nicht gefunden',$this->getSendFilename()));
     	}
+    	return $this;
     }
+    
+    
 }

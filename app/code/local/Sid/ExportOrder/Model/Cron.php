@@ -139,7 +139,9 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   		foreach($collection as $link)
   		{
   			$LinkIds[] = $link->getId();
-  			$link->delete();
+  			$link->deleteFile()
+			->setLinkStatus(Sid_ExportOrder_Model_Linkstatus::STATUS_DISABLED)
+			->save();
   			
   		}
   		

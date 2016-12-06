@@ -109,10 +109,13 @@
                     <?php echo $this->renderTotals($this->getShippingAddressTotals($_address)); ?>
                     <?php $contract = $this->getFrameContract($this->getShippingAddressItems($_address)); ?>
                     <tr class="last">
-					    <td style="" class="a-right" colspan="1">
+                     	<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+					    <td style=""  colspan="4">
+					    <?php else: ?>
+					    <td style=""  colspan="2" >
+					    <?php endif?>
 					        <strong>Vergabenummer</strong>
-					    </td>
-					    <td style="" class="a-right" colspan="3">
+					   
 					        <?php echo $contract->getTitle() ?>
 					        <?php echo $contract->getVendor()->getCompany()?>
 					    </td>
