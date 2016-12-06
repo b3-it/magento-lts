@@ -9,11 +9,7 @@
  * Primary Buttons
  * ============================================ */
 
-.button,
-.cart-table .product-cart-actions .button,
-#co-shipping-method-form .buttons-set .button,
-.footer .button {
-
+.button {
     color: $global-button-font-color;
     background-color: $global-button-color;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-rgba-1), color-stop($global-button-gradient, $global-rgba-2), color-stop(100%, $global-button-color));
@@ -26,65 +22,37 @@
 
     border-radius: 3px;
     -moz-border-radius: 3px;
-    line-height: 33px;
+    text-align: center;
+    padding: 12px 5px;
+    display: inline-block;
 
-    padding: $global-btn-padding-v $global-btn-padding-h;
-
-    &:hover {
+    &:hover, &:active, &:focus {
         background: $global-button-hovercolor $global-repeat-scroll;
         color: $global-button-font-hover-color;
         cursor: pointer;
     }
-    &:active {
-        background: $global-button-hovercolor $global-repeat-scroll;
-        color: $global-button-font-hover-color;
-    }
     &:focus {
-        background-color: $global-button-hovercolor $global-repeat-scroll;
-        color: $global-button-font-hover-color;
         outline: none;
     }
+    
+    &.disabled, &:disabled {
+        background: $global-lightcolor;
+    	opacity: 0.6;
+    	cursor: not-allowed;
+    }
+    
+    &:only-child {
+	    width: 100%;
+	    float: none;
+	}
+	&:last-child {
+	    float: right;
+	    margin: 0;
+	}
 }
 
-.discount-form button {
-	line-height: 1.5em;
-}
-.cart-totals > button {
-	line-height: 1.32em;
-}
-.buttons-set > a.button {
-	float: left;
-}
-.buttons-set > .button {
-	line-height: 33px;
-}
-.form-search > button {
-    line-height: 1.32em;
-}
-
-a.button {
-    color: $global-button-font-color;
-    text-decoration: none;
-    padding: $global-btn-padding-v $global-btn-padding-h;
-    line-height: 33px;
-}
-
-a.button:hover {
-    color: $global-button-font-hover-color;
-    background-color: $global-button-hovercolor $global-repeat-scroll;
-}
-
-/* Disabled - class for anchor, state for form elements */
-.button.disabled,
-.button:disabled {
-    background: $global-lightcolor;
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-/* Adjacent buttons */
-.button + .button {
-    margin-left: 5px;
+.calendar .button {
+	display: table-cell;
 }
 
 // This mixin gets applied to elements that are only buttons on smartphones (or sometimes tablets), such as layered
@@ -95,61 +63,4 @@ a.button:hover {
     color: $global-button-font-color;
     background-color: $global-lightcolor;
     padding: 5px 10px;
-}
-
-.button2 {
-    border: 0;
-    padding: 0 5px;
-    margin: 0;
-    background: transparent;
-    cursor: pointer;
-    vertical-align: middle;
-}
-
-.button2:focus {
-    outline: none;
-}
-
-.button2 span,
-.button2 span span {
-    line-height: 30px;
-    height: 30px;
-    text-decoration: underline;
-    text-transform: uppercase;
-    display: inline-block;
-    color: $global-button-font-color;
-    font-family: $base-font-family;
-
-    &:hover {
-        text-decoration: none;
-        color: $c-stimulus;
-    }
-}
-
-@include bp(max-width, $bp-medium) {
-    .buttons-set {
-        .button,
-        .button2,
-        a {
-            float: none;
-            width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-        }
-        .back-link {
-            display: block;
-            width: 100%;
-        }
-        .required {
-            display: none;
-        }
-    }
-}
-
-@include bp(max-width, $bp-xsmall) {
-    .buttons-set {
-        .button {
-            margin-bottom: $element-spacing;
-        }
-    }
 }

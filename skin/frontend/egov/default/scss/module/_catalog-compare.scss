@@ -12,11 +12,6 @@
 	margin-bottom: $global-boxmargin;
 }
 
-.block-compare .actions a {
-	@extend .button;
-	line-height: $global-lineheight !important;
-}
-
 .catalog-product-compare-index {
 	h1 {
 		display: block;
@@ -35,11 +30,6 @@
 
         .product-name:after {
             @include clearfix;
-        }
-
-        .actions a {
-            @extend .button;
-            line-height: $global-lineheight !important;
         }
     }
 

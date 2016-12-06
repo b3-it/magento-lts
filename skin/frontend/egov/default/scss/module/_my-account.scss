@@ -6,6 +6,10 @@
 //
 
 .my-account {
+	
+	.button {
+	    width: 25%;
+	}
 
     .dashboard {
         .box-head {
@@ -64,25 +68,6 @@
 
     #customer-tag-list {
         margin: $global-boxmargin 0px;
-    }
-
-    .buttons-set {
-        a {
-            @extend .button;
-            padding: $global-btn-padding-v $global-btn-padding-h;
-        }
-        
-        @include bp(max-width, $bp-medium) {
-        	a, button {
-        		height: 35px;
-        		text-align: center;
-        		vertical-align: middle;
-        		width: 40%;
-        	}
-            a {
-            	float: left;
-            }
-        }
     }
 
     .addresses-list {
@@ -146,8 +131,6 @@
     }
 
     button {
-        padding: 5px;
-
         small {
             position: relative;
             top: -3px;
@@ -197,7 +180,7 @@
 .customer-account-index {
     .col2-left-layout {
         top: $global-cms-top-position;
-        
+/*
         .buttons-set2 .button {
             width: 32.5%;
             
@@ -205,7 +188,7 @@
                 width: 99.5%;
             }
         }
-
+*/
         .col-left {
             top: -15px;
 

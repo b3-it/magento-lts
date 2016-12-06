@@ -108,7 +108,7 @@
 
     <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
     <div class="buttons-set">
-        <a href="<?php echo $this->getBackUrl() ?>" class="back-link">&laquo; <?php echo $this->__('Back to Shopping Cart') ?></a>
+        <a href="<?php echo $this->getBackUrl() ?>" class="button">&laquo; <?php echo $this->__('Back to Shopping Cart') ?></a>
         <?php if(count($cartitems) == 0){?>
         <button type="submit" class="button" onclick="$('can_continue_flag').value=1" ><span><?php echo $this->__('Continue to Overview') ?></span></button>
     	<?php }?>

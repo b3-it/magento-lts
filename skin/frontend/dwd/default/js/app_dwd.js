@@ -9,7 +9,6 @@ var egov_break = {
     topSearch: 911     // Suchen-Leiste im Header
 };
 
-
 // Allgemeine JS-Funktionen
 $j(document).ready(function(){
     // Custom-Scrollbar im Skin-Design
@@ -18,15 +17,15 @@ $j(document).ready(function(){
         'cursorwidth'       : '15px',
         'cursorborderradius': '3px'
     });
-    
+
     $j('#mobile-cart > a').attr('data-target-element', '#mobile-header-cart');
     $j('#mobile-cart > a').attr('id', 'mobile-cart-menu');
     $j('#mobile-cart > div').attr('id', 'mobile-header-cart');
-	
+
 	if ( $j('body').hasClass('cms-index-index') ) {
 		$j('#welcome-msg').html( $j('#welcome-hidden').html() );
 	}
-	
+
 	if ( $j('#grouped-product-avalible').length ) {
 		$j('#grouped-product-avalible-moved').html( $j('#grouped-product-avalible').html() )
 		                                     .removeClass('no-display')
@@ -53,7 +52,7 @@ $j(document).ready(function(){
                                                      .addClass('no-display')
                                                      .css('display', 'none');
 	}
-	
+
     // Umlegen der Shop-Navigation
     if ( $j('.col-left').length > 0 && $j('.page-header-container').length > 0 ) {
     	enquire.register('screen and (max-width: ' + egov_break.navbar + 'px)', {
@@ -78,7 +77,7 @@ $j(document).ready(function(){
             }
         });
     }
-    
+
 	// Artikel-Namen und Artikel-Nummern abkürzen
 	cutAllArticleTitleLine();
 	
@@ -93,7 +92,7 @@ $j(document).ready(function(){
 		// Benutzer-Navigation für Mobil
 		checkMobileCustomerNavigation()
 	});
-	
+
 	// jQuery-UI für DropDown-Boxen
 	$j("select").selectmenu();
 	

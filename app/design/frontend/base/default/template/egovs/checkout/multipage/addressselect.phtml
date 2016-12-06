@@ -151,7 +151,7 @@
         <span id="billing-please-wait" class="please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Please Wait') ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
         </span>
-        <a href="<?php echo $this->getBackUrl() ?>" class="back-link button"><?php echo $this->__('Back to Shopping Cart') ?></a>
+        <a href="<?php echo $this->getBackUrl() ?>" class="button"><?php echo $this->__('Back to Shopping Cart') ?></a>
         <button type="submit" class="button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><?php echo $this->__('Continue to Shipping Information') ?></span></button>
     </div>
 </fieldset>

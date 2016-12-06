@@ -80,9 +80,6 @@ body[class*="checkout-multishipping-"] {
     .col-1.col-narrow {
         width: 30%;
     }
-    .actions {
-        margin-bottom: 10px;
-    }
 
     .grand-total {
         text-align: right;
@@ -245,8 +242,10 @@ body[class*="checkout-multishipping-"] {
 
 @include bp(max-width, $bp-xsmall) {
     body[class*="checkout-multishipping-"] {
+/*
         .buttons-set .back-link {
             display: block;
         }
+*/
     }
 }

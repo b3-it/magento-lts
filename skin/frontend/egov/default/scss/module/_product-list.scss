@@ -13,18 +13,22 @@
  * Product List General
  */
 
-.category-title h1,
-body.catalogsearch-result-index .page-title h1 {
-}
-
 .category-image {
     margin-bottom: $global-boxpadding;
 }
 
 // Prevent button overlapping when buttons have long text, such as non-English translations
-.products-list .action .button,
 .products-grid .actions .button {
-    white-space: normal;
+    width: 100%;
+    
+    &.egov-cart {
+        font-size: 1.1rem;
+    }
+    
+    span {
+        font-family: $base-font-family;
+        font-size: 1.1rem;
+    }
 }
 
 /* -------------------------------------------- *
@@ -105,25 +109,8 @@ p.product-name {
     }
 
     .actions {
-        padding-top: $box-spacing;
         position: absolute;
         bottom: 0px;
-        min-height: $global-product-grid-action-height;
-        width: 100%;
-
-        a.button, button.button {
-            width: 100%;
-            font-size: $global-fontsize;
-            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
-
-            span {
-                font-family: $base-font-family;
-            }
-        }
-
-        a.button {
-            display: inline-block;
-        }
     }
 
     .ratings {
@@ -325,9 +312,7 @@ p.product-name {
 
         button.button, a.button {
             font-size: $global-fontsize;
-            width: $global-product-list-button-width;
-            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
-            text-align: center;
+            width: 25%;
 
             span {
                 font-family: $base-font-family;
@@ -405,10 +390,6 @@ p.product-name {
     .products-list {
         .product-primary {
             height: $global-product-list-desc_height + 10 !important;
-        }
-
-        button.button, a.button {
-            width: $global-product-list-button-width / $global-3col-factor !important;
         }
 
         .full {
@@ -702,15 +683,5 @@ p.product-name {
         &:after {
             @include clearfix;
         }
-    }
-}
-
-.block-layered-nav .actions {
-    margin-bottom: $global-boxpadding * 2;
-
-    a {
-        @extend .button;
-        float: right;
-        margin-right: $global-boxpadding;
     }
 }

@@ -33,6 +33,10 @@
     padding: 10px;
     z-index: 99;
     
+    button {
+        padding: 5px;
+    }
+    
     &.skip-active {
     	@include menu;
     	opacity: 0.9;

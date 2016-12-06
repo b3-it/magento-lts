@@ -790,13 +790,8 @@
     }
 
     .add-to-cart-buttons .button {
-        min-height: 35px;
         font-size: $global-fontsize-big;
-        float: left;
-        min-width: 160px;
-        width: 100%;
-        white-space: normal;
-        margin: 0;
+        padding: 5px;
     }
 
     .alert-price,

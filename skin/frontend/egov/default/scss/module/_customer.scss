@@ -23,7 +23,8 @@
     }
 	
 	.col2-set {
-        .buttons-set {
+/*
+	.buttons-set {
             text-align: left;
             border-top: 0;
             width: 95%;
@@ -42,7 +43,7 @@
                 float: right;
             }
         }
-
+*/
         .col-1 {
             ul {
                 list-style: disc;
@@ -284,14 +285,15 @@ body.customer-account {
 
 
     .my-account {
-        .buttons-set button.button, .buttons-set a.button {
+/*
+	.buttons-set button.button, .buttons-set a.button {
             @include bp(max-width, $bp-small) {
                 float: none;
                 margin: 10px 0;
                 width: 100%;
             }
         }
-    
+*/    
         .dashboard {
             position: relative;
             top: -20px;
@@ -397,10 +399,6 @@ body.customer-account {
             .block-content {
                 p.block-subtitle {
                     margin-bottom: $trim-small;
-                }
-
-                .actions {
-                    margin-top: $trim;
                 }
             }
         }

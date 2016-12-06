@@ -291,30 +291,6 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-bottom: 0;
 }
 
-.block .actions {
-    margin: $box-spacing 0 0;
-
-    &:after {
-        @include clearfix;
-    }
-
-    a {
-        float: left;
-    }
-    .button {
-        float: right;
-    }
-}
-
-.col-left,
-.col-right {
-    // Align the vertical height of the anchor to line up with the button
-    .block .actions .button ~ a {
-        line-height: 33px;
-        margin-right: 5px;
-    }
-}
-
 @include bp(max-width, $bp-medium) {
 
     .sidebar {
@@ -394,17 +370,6 @@ div.block-reorder {
         outline: $global-warning-color 2px solid;
     }
 
-    button.egov-float-left {
-        position: relative;
-        left: -3px;
-    }
-
-    button.btn-cart {
-        @extend .egov-float-right;
-        position: relative;
-        right: -3px;
-    }
-
     li {
         margin-top: $box-spacing;
         margin-bottom: 0;
@@ -446,26 +411,6 @@ div.block-reorder {
 /* ============================================ *
  * Buttons
  * ============================================ */
-
-/* Secondary Buttons */
-.cart .buttons-set .button,
-.cart-table .button,
-.sidebar .actions .button,
-.button.button-secondary {
-
-    &:hover {
-    }
-
-    &:active {
-    }
-
-    &:focus {
-    }
-}
-
-.sidebar .actions button.button {
-    white-space: normal;
-}
 
 /* -------------------------------------------- *
  * Paypal Button
@@ -516,7 +461,7 @@ div.block-reorder {
 /* -------------------------------------------- *
  * Button Sets
  */
-
+/*
 .buttons-set {
     display: block;
     margin: $box-spacing 0 0;
@@ -558,6 +503,7 @@ div.block-reorder {
         @include clearfix;
     }
 }
+*/
 
 /* -------------------------------------------- *
  * Icons
@@ -1400,10 +1346,12 @@ span.weee {
     &:after {
         @include clearfix;
     }
+    
+    dt, dd {
+        display: table-cell;
+    }
 
     dt {
-        float: left;
-        clear: left;
         font-weight: 600;
         padding-right: 5px;
         font-style: italic;
@@ -1414,7 +1362,6 @@ span.weee {
     }
 
     dd {
-        float: left;
         padding-left: 10px;
         margin: 0 0 6px;
     }
@@ -1429,6 +1376,7 @@ span.weee {
     cursor: help;
     height: 16px;
     line-height: 16px;
+    float: left;
 
     &:hover {
         text-decoration: none;
@@ -1446,13 +1394,13 @@ span.weee {
     z-index: 300;
     width: 200px;
     padding: 8px;
-    border: 1px solid $c-action;
+    border: $global-active-border solid $global-border-color;
     background-color: #F6F6F6;
     top: 21px;
     left: -100px;
 
     &:after {
-        @include triangle(up, 7px, $c-action);
+        @include triangle(up, 7px, $global-border-color);
         left: (100px + -3px);
         top: -7px;
     }
