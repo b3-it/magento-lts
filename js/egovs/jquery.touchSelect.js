@@ -29,9 +29,9 @@
 	 * Optionen setzen
 	 */
 	$.fn.touchSelect.options = {
-        'elementID'    : null,           // ID des Elementes
-        'elementTitle' : null,           // Info-Titel das Elementes
-        'elementClass' : null,           // CSS-Klassen für die Darstellung des Buttons
+        'elementID'    : null,           // ID fuer des Elementes
+        'elementTitle' : null,           // Info-Titel fuer das Elementes
+        'elementClass' : null,           // CSS-Klassen für die Darstellung des Elements
         'elementAttr'  : 'data-code',    // In welchem Attribut befinden sich die Schalter-Beschriftungen 
         'elementData'  : 'value',        // In welchem Attribut befindet sich das Click-Ziel
         'elementInsert': '<div />',      // Struktur des einzufuegenden Elementes (als Child wird ein Link erzeugt)
