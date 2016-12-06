@@ -715,14 +715,11 @@
     }
 
     .product-image img {
-        max-width: 100%;
-
-        // Since product detail page images are not cropped to a specific aspect ratio, in order to make the image not
-        // cut off on tall skinny screens, we are setting a max-height on the image
+        max-width: 215px;
         max-height: 750px;
-
-        // Centering the image for instances where max-height kicks in
         margin: 0px auto;
+        height: auto;
+        width: auto;
     }
 }
 
