@@ -103,7 +103,7 @@ $j(document).ready(function(){
 		'elementParent': 'top-row-content-list',
 		'elementInsert': '<li />',
 		'uiFindElement': true,
-		'flagsUse'     : true,
+		'flagsUse'     : false,
 		'flagsSubPath' : 'flags/world_22x14',
 		'flagsType'    : 'png'
 	});
