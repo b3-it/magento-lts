@@ -16,15 +16,15 @@ class Sid_ExportOrder_Block_Adminhtml_Format_Plain_Form extends Mage_Adminhtml_B
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-     
-      $form->addField('line_separator', 'text', array(
+      $fieldset = $form->addFieldset('vendor_form_format_details1', array('legend'=>Mage::helper('framecontract')->__('Format Details')));
+      $fieldset->addField('line_separator', 'text', array(
           'label'     => Mage::helper('exportorder')->__('Line Separator'),
           'class'     => 'required-entry',
           'required'  => true,
           'name'      => 'format[line_separator]',
       ));
       
-      $form->addField('item_separator', 'text', array(
+      $fieldset->addField('item_separator', 'text', array(
       		'label'     => Mage::helper('exportorder')->__('Item Separator'),
       		'class'     => 'required-entry',
       		'required'  => true,

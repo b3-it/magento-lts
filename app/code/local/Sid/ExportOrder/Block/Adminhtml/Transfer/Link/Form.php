@@ -17,15 +17,15 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Link_Form extends Mage_Adminhtml_
       $form = new Varien_Data_Form();
       $this->setForm($form);
       //$fieldset = $form->addFieldset('vendor_form_format_details', array('legend'=>Mage::helper('exportorder')->__('Item information')));
-     
-      $form->addField('email', 'text', array(
+      $fieldset = $form->addFieldset('vendor_form_transfer_details1', array('legend'=>Mage::helper('framecontract')->__('Transfer Details')));
+      $fieldset->addField('email', 'text', array(
       		'label'     => Mage::helper('exportorder')->__('Email'),
       		'class'     => 'required-entry',
       		'required'  => true,
       		'name'      => 'transfer[email]',
       ));
       
-      $form->addField('cron', 'text', array(
+      $fieldset->addField('cron', 'text', array(
       		'label'     => Mage::helper('exportorder')->__('Cron Expression'),
       		'class'     => 'required-entry',
       		'required'  => true,
@@ -34,7 +34,7 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Link_Form extends Mage_Adminhtml_
       ));
       
       $templates = Mage::getModel('adminhtml/system_config_source_email_template');
-      $form->addField('template', 'select', array(
+      $fieldset->addField('template', 'select', array(
       		'label'     => Mage::helper('exportorder')->__('Email Template'),
       		//'class'     => 'required-entry',
       		//'required'  => true,

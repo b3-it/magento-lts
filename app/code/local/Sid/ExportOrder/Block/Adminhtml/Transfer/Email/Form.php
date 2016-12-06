@@ -16,8 +16,8 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Email_Form extends Mage_Adminhtml
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-     
-      $form->addField('email', 'text', array(
+      $fieldset = $form->addFieldset('vendor_form_transfer_details1', array('legend'=>Mage::helper('framecontract')->__('Transfer Details')));
+      $fieldset->addField('email', 'text', array(
           'label'     => Mage::helper('exportorder')->__('Email'),
           'class'     => 'required-entry',
           'required'  => true,
@@ -25,7 +25,7 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Email_Form extends Mage_Adminhtml
       ));
       
       $templates = Mage::getModel('adminhtml/system_config_source_email_template');
-      $form->addField('template', 'select', array(
+      $fieldset->addField('template', 'select', array(
       		'label'     => Mage::helper('exportorder')->__('Email Template'),
       		//'class'     => 'required-entry',
       		//'required'  => true,

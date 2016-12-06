@@ -86,7 +86,7 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 			$transfer->setFormatModel($format);
 			$msg = $transfer->send($content,$order);
 		}
-		 
+		
 	}
 
 	public function downloadgridAction()

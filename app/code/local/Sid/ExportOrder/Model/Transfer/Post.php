@@ -61,21 +61,22 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 				curl_setopt($ch,CURLOPT_PROXYUSERPWD,$this->getUser().':'.$this->getPwd());
 			}
 
-			$data = array($this->getField() => $cfile);
+			$data = array('file' => $cfile);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
 			$output = curl_exec($ch);
-
+			$this->setLog($output);
 			curl_close($ch);
 		}
 		catch(Exception $ex)
 		{
 			$output = $ex->getMessage();
 			Mage::logException($ex);
-			return trim($output);
+			return false;
 		}
 
 		Sid_ExportOrder_Model_History::createHistory($order->getId(), 'per Post übertragen');
+		Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Antwort des Servers: ' . $output);
 
 		return trim($output);
 	}
