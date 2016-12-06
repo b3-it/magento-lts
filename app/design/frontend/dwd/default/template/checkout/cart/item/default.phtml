@@ -61,7 +61,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         </div>
 
         <?php if ($_options = $this->getOptionList()):?>
-        <div class="product-collateral toggle-content tabs">
+        <div class="mobile-product-collateral product-collateral toggle-content tabs">
             <dl id="collateral-tabs" class="collateral-tabs">
                 <dt class="tab current"><span><?php echo $this->__('Selected Product Options'); ?></span></dt>
 	            <dd class="tab-container current">
@@ -83,6 +83,23 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 			        </dl>
 	            </dd>
 	        </dl>
+        </div>
+
+		<div class="product-collateral item-options">
+			<?php foreach ($_options as $_option) : ?>
+			<?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+			<dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+			<dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
+			    <?php if (isset($_formatedOptionValue['full_view'])): ?>
+			    <div class="truncated_full_value">
+			        <dl class="item-options">
+			            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+			            <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+			        </dl>
+			    </div>
+			    <?php endif; ?>
+			</dd>
+			<?php endforeach; ?>
         </div>
         <?php endif;?>
 

@@ -40,6 +40,23 @@
         @include multi-buttons-definition;
     }
     
+    .mobile-product-collateral {
+        margin-top: 20px;
+        display: none;
+        
+        @include bp(max-width, $bp-small) {
+            display: block !important;
+        }
+    }
+    
+    .product-collateral {
+        margin-top: 20px;
+        
+        @include bp(max-width, $bp-small) {
+            display: none;
+        }
+    }
+
     .multiple-checkout {
         .col-2 {
             > div {
