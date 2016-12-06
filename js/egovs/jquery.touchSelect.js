@@ -6,14 +6,14 @@
 	 */
 	$.fn.touchSelect = function(options) {
 		var container = $(this);
-		
+
 		if (!container.data(instanceName)) {
 			options = $.extend({}, $.fn.touchSelect.options, options);
 			var instance = new touchSelect(container, options);
 			container.data(instanceName, instance);
 			return instance;
 		}
-		
+
 		return container.data(instanceName);
     }
 	
