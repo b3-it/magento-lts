@@ -20,7 +20,8 @@ class Sid_ExportOrder_Model_Transfer_Attachment extends Sid_ExportOrder_Model_Tr
     	$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
     	
     	$attachments = array();
-    	$filename = $order->getIncrementId().'.txt';
+    	
+    	$filename = $order->getIncrementId().$this->getFileExtention();
     	$attachments[] = array('filename' => $filename, 'content' => $content);
     	
     	

@@ -11,6 +11,31 @@
  */
 abstract class Sid_ExportOrder_Model_Transfer extends Mage_Core_Model_Abstract
 {
+	/**
+	 * @var Sid_ExportOrder_Model_Format
+	 */
+	protected $_formatModel = null;
+	
+	
+	public function setFormatModel($formatModel)
+	{
+		$this->_formatModel = $formatModel;
+	}
+	
+	
+	/**
+	 * gibt die Datei Extention mit . z..b ".xml"
+	 * @return string
+	 */
+	public function getFileExtention()
+	{
+		if(isset($this->_formatModel)){
+			return $this->_formatModel->getFileExtention();
+		}
+		
+		return '.txt';
+	}
+	
 	
 	/**
 	 * 

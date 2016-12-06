@@ -42,5 +42,15 @@ abstract class Sid_ExportOrder_Model_Format extends Mage_Core_Model_Abstract
 	{
 		return 'Order_'.date('d-m-Y_H-i-s').$this->_FileExtention;
 	}
+	
+	/**
+	 * gibt die Datei Extention mit . z..b ".xml"
+	 * @return string
+	 */
+	public function getFileExtention()
+	{
+		return $this->_FileExtention;
+	}
+	
     
 }

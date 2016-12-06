@@ -38,7 +38,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
     	try 
     	{
     	    	
-	    	$filename =$order->getIncrementId().'_'.date('d-m-Y_H-i-s').'xml';
+	    	$filename =$order->getIncrementId().'_'.date('d-m-Y_H-i-s').$this->getFileExtention();
 	    	$path =  Mage::getBaseDir('tmp').DS. $filename;
 	    	
 	    	file_put_contents($path, $content);

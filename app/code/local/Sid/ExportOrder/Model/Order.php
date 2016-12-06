@@ -120,7 +120,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    	}
 	    	
 	    	$content = $format->processOrder($order);
-	    	
+	    	$transfer->setFormatModel($format);
 	    	$msg = $transfer->send($content,$order);
 	    	
 	    	if($msg === false)
