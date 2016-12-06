@@ -48,15 +48,9 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
       		'class'     => 'required-entry',
       		'required'  => true,
       		'name'      => 'transfer[field]',
-      ));
-      
-      $form->addField('ident', 'text', array(
-      		'label'     => Mage::helper('exportorder')->__('Ident'),
-      		
-      		'name'      => 'transfer[ident]',
+      		'value'     => 'file'
       ));
 
- 
       $form->setValues(Mage::registry('transfer')->getData());
       return parent::_prepareForm();
   }
