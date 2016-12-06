@@ -113,6 +113,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Download extends Mage_Admi
 	      						)
 	      				),
       					'status'	=> 'link_status',
+      					'hide_on'	=> Sid_ExportOrder_Model_Linkstatus::STATUS_DISABLED,
 	      				'filter'    => false,
 	      				'sortable'  => false,
 	      				'index'     => 'stores',

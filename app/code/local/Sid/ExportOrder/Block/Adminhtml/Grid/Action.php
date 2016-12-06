@@ -39,7 +39,7 @@ class Sid_ExportOrder_Block_Adminhtml_Grid_Action extends Mage_Adminhtml_Block_W
     {
   		if($this->getColumn()->getStatus() != null)
   		{
-  			if($row[$this->getColumn()->getStatus()] == Sid_ExportOrder_Model_Linkstatus::STATUS_DISABLED)
+  			if($row[$this->getColumn()->getStatus()] == $this->getColumn()->getHideOn())
   			{
   				return "";
   			}
