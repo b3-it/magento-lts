@@ -36,7 +36,7 @@ class B3it_XmlBind_Opentrans21_XmlObject extends B3it_XmlBind_Opentrans21_XmlBin
 	
 	public function addValueToXml($xml)
 	{
-		$xml->nodeValue = html_entity_decode($this->getValue(),ENT_XHTML,'UTF-8');
+		$xml->nodeValue = htmlentities($this->getValue(),ENT_XML1,'UTF-8');
 		return $xml;
 	}
 }
