@@ -22,9 +22,15 @@ class Sid_ExportOrder_Model_Transfer_Email extends Sid_ExportOrder_Model_Transfe
     {
     	$recipients = array();
     	$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
-    	Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
+    	$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
     	
-    	Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Email versendet');
+    	if($res !== false){
+    		$txt = "Die Email wurde versendet";
+    	}else{
+    		$txt = "Fehler: Die Email wurde nicht versendet";
+    	}
+    	Sid_ExportOrder_Model_History::createHistory($order->getId(), $txt);
+    	return $res;
     }
     
     protected function _beforeSave()
