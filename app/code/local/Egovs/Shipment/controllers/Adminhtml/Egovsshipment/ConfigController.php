@@ -114,7 +114,7 @@ class Egovs_Shipment_Adminhtml_Egovsshipment_ConfigController extends Mage_Admin
      */
     public function exportBulkgoodsAction()
     {
-        $fileName   = Mage::helper('egovsshipment')->__('bulkgoods').'.csv';
+        $fileName   = Mage::helper('egovsshipment')->__('Bulkgoods').'.csv';
         /** @var $gridBlock Mage_Adminhtml_Block_Shipping_Carrier_Tablerate_Grid */
         $gridBlock  = $this->getLayout()->createBlock('egovsshipment/adminhtml_carrier_bulkgoods_grid');
         $website    = Mage::app()->getWebsite($this->getRequest()->getParam('website'));

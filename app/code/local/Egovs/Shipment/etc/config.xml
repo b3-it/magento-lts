@@ -151,10 +151,15 @@
             <freeshipmentbyprice>
             	<amount>2</amount>
             	<ignorevirtual>0</ignorevirtual>
+            	<active>false</active>
             </freeshipmentbyprice>
             <pickup>
             	<ignorevirtual>0</ignorevirtual>
+            	<active>false</active>
             </pickup>
+             <bulkgoods>
+                <active>false</active>
+            </bulkgoods>
     	</carriers>
     </default>
     <shipment_groups>
