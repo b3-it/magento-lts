@@ -299,6 +299,14 @@
             </egovsbase_setup>
         </resources>
         <events>
+            <page_block_html_topmenu_gethtml_before>
+                <observers>
+                    <catalog_add_topmenu_items>
+                        <class>egovsbase/catalog_observer</class>
+                        <method>addCatalogToTopmenuItems</method>
+                    </catalog_add_topmenu_items>
+                </observers>
+            </page_block_html_topmenu_gethtml_before>
             <checkout_cart_save_before>
                 <observers>
                     <germantax_checkout_cart_save_before>

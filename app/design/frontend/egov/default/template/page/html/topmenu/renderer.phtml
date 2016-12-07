@@ -69,7 +69,17 @@ foreach ($children as $child) {
 
     if (!empty($_hasChildren)) {
         $html[] = $spacer . '<ul id="sub-' . $file_id . '" class="level'. $childLevel .'">';
-
+		if ($child->getProductCount() < 1
+			&& (
+					!$child->getLandingPage()
+					|| (
+							$child->getLandingPage()
+							&& $child->getDisplayMode() == Mage_Catalog_Model_Category::DM_PRODUCT
+					)
+				)
+			){
+			$show_all_link = false;
+		}
         if ($show_all_link == TRUE) {
             $html[] = $spacer . '<li id="all-' . $file_id . '" class="level'. $nextChildLevel .' view-all">';
             $html[] = $spacer . '    <a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
