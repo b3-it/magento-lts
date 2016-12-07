@@ -18,6 +18,10 @@ class Sid_ExportOrder_Model_Transfer_Email extends Sid_ExportOrder_Model_Transfe
         $this->_init('exportorder/transfer_email');
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see Sid_ExportOrder_Model_Transfer::send()
+     */
     public function send($content, $order = null)
     {
     	$recipients = array();
@@ -26,6 +30,7 @@ class Sid_ExportOrder_Model_Transfer_Email extends Sid_ExportOrder_Model_Transfe
     	
     	if($res !== false){
     		$txt = "Die Email wurde versendet";
+    		$res = $txt;
     	}else{
     		$txt = "Fehler: Die Email wurde nicht versendet";
     	}

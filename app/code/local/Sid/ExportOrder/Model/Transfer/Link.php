@@ -26,8 +26,10 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     	
     	if($res !== false){
     		$txt = "Der Link wurde versendet";
+    		$res = $txt;
     	}else{
     		$txt = "Fehler: Der Link wurde nicht versendet";
+    		
     	}
     	Sid_ExportOrder_Model_History::createHistory($order->getId(), $txt);
     	
