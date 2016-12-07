@@ -95,7 +95,7 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
 
                 <!-- Account -->
                 <div id="header-account-link">
-                    <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
+                    <a id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
                         <span class="icon egov-user"></span>
                         <span class="label"><?php echo $this->__('Account'); ?></span>
                     </a>
@@ -145,7 +145,7 @@ $action2 = Mage::getSingleton('cms/page')->getIdentifier();
 
                 <!-- Account -->
                 <div id="header-account-link">
-                    <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account" onclick="window.location.href='<?php echo $this->helper('customer')->getAccountUrl(); ?>';">
+                    <a id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account" onclick="window.location.href='<?php echo $this->helper('customer')->getAccountUrl(); ?>';">
                         <span class="icon egov-user"></span>
                         <span class="label"><?php echo $this->__('Account'); ?></span>
                     </a>
