@@ -16,47 +16,41 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      //$fieldset = $form->addFieldset('vendor_form_format_details', array('legend'=>Mage::helper('exportorder')->__('Item information')));
-     
-      $form->addField('address', 'text', array(
+      $fieldset = $form->addFieldset('vendor_form_transfer_details1', array('legend'=>Mage::helper('framecontract')->__('Transfer Details')));
+      $fieldset->addField('address', 'text', array(
           'label'     => Mage::helper('exportorder')->__('Address'),
-          'class'     => 'required-entry',
+          'class'     => 'required-entry input-text',
           'required'  => true,
           'name'      => 'transfer[address]',
       ));
       
-      $form->addField('port', 'text', array(
+      $fieldset->addField('port', 'text', array(
       		'label'     => Mage::helper('exportorder')->__('Port'),
-      		
+      		'class'     => 'input-text',
       		'name'      => 'transfer[port]',
       ));      
       
-      $form->addField('user', 'text', array(
+      $fieldset->addField('user', 'text', array(
       		'label'     => Mage::helper('exportorder')->__('Username'),
-      		
+      		'class'     => 'input-text',
       		'name'      => 'transfer[user]',
       ));
       
-      $form->addField('pwd', 'text', array(
+      $fieldset->addField('pwd', 'text', array(
       		'label'     => Mage::helper('exportorder')->__('Password'),
-      		
+      		'class'     => 'input-text',
       		'name'      => 'transfer[pwd]',
       ));
-      
+      /*
       $form->addField('field', 'text', array(
       		'label'     => Mage::helper('exportorder')->__('Field'),
       		'class'     => 'required-entry',
       		'required'  => true,
       		'name'      => 'transfer[field]',
+      		'value'     => 'file'
       ));
+		*/
       
-      $form->addField('ident', 'text', array(
-      		'label'     => Mage::helper('exportorder')->__('Ident'),
-      		
-      		'name'      => 'transfer[ident]',
-      ));
-
- 
       $form->setValues(Mage::registry('transfer')->getData());
       return parent::_prepareForm();
   }

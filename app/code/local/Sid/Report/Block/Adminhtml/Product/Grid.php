@@ -69,7 +69,8 @@ class Sid_Report_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
       		//'width'     => '150px',
       		'index'     => 'los_id',
       		'type'      => 'options',
-      		'options'   => $ctr
+      		'options'   => $ctr,
+      		'filter_condition_callback' => array($this, '_filterCondition'),
       ));
       
       $currencyCode = $this->getCurrentCurrencyCode();
@@ -162,6 +163,13 @@ class Sid_Report_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
   		}
   	}
   
+  	if($column->getId() == 'los')
+  	{
+  		$condition = 'los.value = ?';
+  		if($condition){
+  			$collection->getSelect()->where($condition, $value);
+  		}
+  	}
   	return $this;
   	
   }

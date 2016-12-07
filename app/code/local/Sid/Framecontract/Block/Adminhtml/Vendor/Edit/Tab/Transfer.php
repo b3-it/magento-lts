@@ -37,10 +37,11 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Transfer extends Mage_Ad
                        }
       					onchangeTransferType();
                         </script>
+      		
                     ');
       
       
-      $fieldset = $form->addFieldset('vendor_form_transfer_details', array('legend'=>Mage::helper('framecontract')->__('Transfer Details')));
+      //$fieldset = $form->addFieldset('vendor_form_transfer_details', array('legend'=>Mage::helper('framecontract')->__('Transfer Details')));
 
       if ( Mage::getSingleton('adminhtml/session')->getFramecontractData() )
       {
@@ -51,4 +52,11 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Transfer extends Mage_Ad
       }
       return parent::_prepareForm();
   }
+  
+  protected function _afterToHtml($html)
+  {
+  		$html .= '<div id="vendor_form_transfer_details">';
+  		return $html;
+  }
+  
 }

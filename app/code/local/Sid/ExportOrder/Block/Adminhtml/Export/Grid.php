@@ -35,8 +35,10 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
   {
   	$collection = Mage::getResourceModel($this->_getCollectionClass());
   	$collection->getSelect()
-  		->joinleft(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('export_status'=>'status','message'));
-  		
+  		->joinleft(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('export_status'=>'status','message'))
+  		->columns(new Zend_Db_Expr(" (CASE main_table.status WHEN 'closed' THEN 2 WHEN 'canceled' THEN 2 ELSE 1 END)  as order_numstatus"))
+  	;
+//die($collection->getSelect()->__toString());  		
   	$this->setCollection($collection);
   	return parent::_prepareCollection();
   }
@@ -89,6 +91,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
   			'type'  => 'options',
   			'width' => '70px',
   			'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+  			'filter_index' => 'main_table.status'
   			
   	));
   	
@@ -148,6 +151,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
         				'header'    =>  Mage::helper('exportorder')->__('Action'),
         				'width'     => '100',
         				'type'      => 'action',
+        				'renderer' => "sid_exportorder/adminhtml_grid_action",
         				'getter'    => 'getId',
         				'actions'   => array(
         						array(
@@ -158,6 +162,8 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
         						)
         				),
         				'filter'    => false,
+        				'status'	=> 'order_numstatus',
+        				'hide_on'	=> 2,
         				'sortable'  => false,
         				'index'     => 'stores',
         				'is_system' => true,
@@ -173,11 +179,14 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
   {
   
   	$html = array();
-  	$html[]= "<script>";
+  	$html[]= "<script type=\"text/javascript\">";
   	$html[]= "function resend(id){";
   	$html[]= 'var url = "'.$this->getUrl('*/*/resend',array('id' => 'xxx')).'";';
   	$html[]= "url = url.replace('xxx',id);";
-  	$html[]= "new Ajax.Request(url, {method:'get'})";
+  	$html[]= "new Ajax.Request(url, {method:'get', onSuccess: function(transport) {";
+    $html[]= "$('messages').update(transport.responseText);";
+    //$html[]= "alert(transport.responseText);";
+  	$html[]= "}})";
   	$html[]= "}";
   	$html[]= "</script>";
   

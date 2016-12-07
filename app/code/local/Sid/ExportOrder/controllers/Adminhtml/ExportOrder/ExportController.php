@@ -83,9 +83,15 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 			$orderIds = array($order->getId());
 			$msg = $transfer->sendOrders($content, $format, $orderIds, $vendor->getId());
 		}else {
+			$transfer->setFormatModel($format);
 			$msg = $transfer->send($content,$order);
 		}
-		 
+		if($msg === false)
+		{
+			die($this->renderMessage('error',"Die Bestellung konnte nicht versendet werden!"));
+		}
+		
+		die($this->renderMessage('success',$msg));
 	}
 
 	public function downloadgridAction()
@@ -173,4 +179,11 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
     {
     	return Mage::getSingleton('admin/session')->isAllowed('admin/framecontract/export');
     }
+    
+    
+    protected function renderMessage($code,$text)
+    {
+    	return "<ul class=\"messages\"><li class=\"$code-msg\"><ul><li><span>$text</span></li></ul></li></ul>";
+    }
+    
 }

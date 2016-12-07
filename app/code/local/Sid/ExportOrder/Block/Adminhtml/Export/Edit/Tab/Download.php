@@ -79,27 +79,47 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Download extends Mage_Admi
       ));
 
       $order = Mage::registry('order');
-      $this->addColumn('action',
+//       $this->addColumn('action',
+//       		array(
+//       				'header'    =>  Mage::helper('exportorder')->__('Action'),
+//       				'width'     => '100',
+//       				'type'      => 'action',
+//       				'getter'    => 'getLinkId',
+//       				'actions'   => array(
+//       						array(
+//       								'caption'   => Mage::helper('exportorder')->__('Delete'),
+//       								//'url'       => array('base'=> '*/*/deleteLink','params'=>array('id' => $order->getId())),
+//       								'field'     => 'linkid',
+//       								'onclick'   => 'deleteLink($link_id)',
+//       						)
+//       				),
+//       				'filter'    => false,
+//       				'sortable'  => false,
+//       				'index'     => 'stores',
+//       				'is_system' => true,
+//       		));
+      
+      $this->addColumn('action1', 
       		array(
-      				'header'    =>  Mage::helper('exportorder')->__('Action'),
-      				'width'     => '100',
-      				'type'      => 'action',
-      				'getter'    => 'getLinkId',
-      				'actions'   => array(
-      						array(
-      								'caption'   => Mage::helper('exportorder')->__('Delete'),
-      								//'url'       => array('base'=> '*/*/deleteLink','params'=>array('id' => $order->getId())),
-      								'field'     => 'linkid',
-      								'onclick'   => 'deleteLink($link_id)',
-      						)
-      				),
-      				'filter'    => false,
-      				'sortable'  => false,
-      				'index'     => 'stores',
-      				'is_system' => true,
+	      		'header'    => Mage::helper('exportorder')->__('Action'),
+	      		'renderer' => "sid_exportorder/adminhtml_grid_action",
+	      		'getter'    => 'getLinkId',
+	      				'actions'   => array(
+	      						array(
+	      								'caption'   => Mage::helper('exportorder')->__('Delete'),
+	      								//'url'       => array('base'=> '*/*/deleteLink','params'=>array('id' => $order->getId())),
+	      								'field'     => 'linkid',
+	      								'onclick'   => 'deleteLink($link_id)',
+	      						)
+	      				),
+      					'status'	=> 'link_status',
+      					'hide_on'	=> Sid_ExportOrder_Model_Linkstatus::STATUS_DISABLED,
+	      				'filter'    => false,
+	      				'sortable'  => false,
+	      				'index'     => 'stores',
+	      				'is_system' => true,
       		));
-     
-	  
+
       return parent::_prepareColumns();
   }
 
