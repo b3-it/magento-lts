@@ -20,7 +20,7 @@
     @include bp(max-width, $bp-medium) {
     	display: inline-block;
     	top: 0;
-    	width: 38%;
+    	width: 20%;
     }
 }
 
@@ -79,6 +79,10 @@
     border-left: $global-box-border solid $global-input-bordercolor;
     border-radius: $global-radius 0 0 $global-radius;
 
+}
+
+#search_mini_form .button {
+	padding: 5px;
 }
 
 #search_mini_form .search-button {

@@ -1,0 +1,51 @@
+﻿//
+// @category    design
+// @package     dwd_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Primary Buttons
+ * ============================================ */
+
+.button {
+    @include grau-hover-blau;
+    padding: 18px 20px;
+    display: inline-block;
+    min-width: 15%;
+    text-align: center;
+
+    &.disabled, &:disabled {
+        background: $grundfarbe-blgr;
+        color: $grundfarbe-blau;
+    	opacity: 0.6;
+    	cursor: not-allowed;
+
+	    &:hover, &:active, &:focus {
+	        color: $grundfarbe-blau;
+	    }
+    }
+    &:only-child {
+	    width: 100%;
+	    float: none;
+	}
+	&:last-child {
+	    float: right;
+	    margin: 0;
+	}
+}
+
+.calendar .button {
+	display: table-cell;
+}
+
+// This mixin gets applied to elements that are only buttons on smartphones (or sometimes tablets), such as layered
+// nav links or checkbox labels.
+// Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
+// extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
+@mixin touch-button {
+    color: $global-button-font-color;
+    background-color: $grundfarbe-blgr;
+    padding: 5px 10px;
+}

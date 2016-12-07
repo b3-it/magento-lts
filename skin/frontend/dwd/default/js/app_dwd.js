@@ -101,10 +101,7 @@ $j(document).ready(function(){
 		'elementClass' : '',
 		'elementParent': 'top-row-content-list',
 		'elementInsert': '<li />',
-		'uiFindElement': true,
-		'flagsUse'     : true,
-		'flagsSubPath' : 'flags/world_22x14',
-		'flagsType'    : 'png'
+		'uiFindElement': true
 	});
 });
 

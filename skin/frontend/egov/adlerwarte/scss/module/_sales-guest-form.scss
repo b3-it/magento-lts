@@ -36,17 +36,4 @@
             width: 98%;
         }
     }
-
-    .buttons-set {
-        p.required {
-            position: relative;
-            top: -50px;
-            color: $global-warning-color;
-        }
-
-        button {
-            position: relative;
-            right: -85px;
-        }
-    }
 }

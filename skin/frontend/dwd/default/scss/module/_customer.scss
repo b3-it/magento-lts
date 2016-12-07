@@ -28,18 +28,6 @@
     }
 	
 	.col2-set {
-        .buttons-set {
-            text-align: left;
-            border-top: 0;
-
-            button,
-            .button {
-                float: none;
-                min-width: 50%;
-                margin: 0;
-            }
-        }
-
         .col-1 {
             ul {
                 list-style: disc;
@@ -961,10 +949,6 @@ ol#cart-sidebar-reorder {
 
             .order-details h2 {
                 margin-bottom: $trim-small;
-            }
-
-            .buttons-set {
-                border-top: 0;
             }
 
             .addresses-list {

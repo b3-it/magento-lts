@@ -763,11 +763,6 @@
         display: none;
     }
 
-    .buttons-set {
-        border: none;
-        margin: 0;
-    }
-
     .form-list {
         &:after {
             @include clearfix;
@@ -832,20 +827,6 @@
         }
     }
 
-    .shipping-form {
-        .buttons-set {
-            text-align: right;
-
-            button {
-                float: right !important;
-            }
-        }
-    }
-
-    #co-shipping-method-form .buttons-set .button {
-        float: left;
-        margin-left: 0;
-    }
     #co-shipping-method-form .sp-methods dd label {
         border: 1px solid $c-module-border;
         background-color: $c-module-background-hover;

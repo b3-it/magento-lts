@@ -32,14 +32,7 @@
             width: 100% !important;
         }
     }
-    
-    .buttons-set {
-        border-top: $global-active-border solid $grundfarbe-blgr;
-    }
-    .button {
-        @include multi-buttons-definition;
-    }
-    
+
     .mobile-product-collateral {
         margin-top: 20px;
         display: none;
@@ -397,9 +390,6 @@
     ul.checkout-progress {
         display:none;
     }
-    .buttons-set {
-        margin-bottom: $global-boxmargin;
-    }
 }
 
 @include bp(max-width, $bp-medium) {
@@ -419,14 +409,6 @@
         .checkout-progress li {
             width: 31% !important;
         }
-
-		.buttons-set a {
-		    width: 95% !important;
-		}
-		.buttons-set button {
-		    width: 95% !important;
-		    margin: 0 17px 0 0 !important;
-		}
 	}
 
     .col2-set {

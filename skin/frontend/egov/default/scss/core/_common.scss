@@ -459,53 +459,6 @@ div.block-reorder {
 }
 
 /* -------------------------------------------- *
- * Button Sets
- */
-/*
-.buttons-set {
-    display: block;
-    margin: $box-spacing 0 0;
-    padding-top: $box-spacing;
-    border-top: $global-active-border solid $global-border-color;
-    text-align: right;
-
-    p.required {
-        margin: 0;
-        margin-left: $gap;
-        line-height: 33px;
-        float: right;
-    }
-    .back-link {
-        float: left;
-        margin: 0;
-        line-height: 33px;
-    }
-    a:not(.button) {
-        line-height: 20px;
-        display: inline-block;
-        padding: 5px;
-    }
-    button.button {
-        float: right;
-        margin-left: 5px;
-        min-width: 140px;
-        line-height: 33px;
-        
-        @include bp(max-width, $bp-small) {
-            float: none;
-            display: block;
-            margin: 10px 0;
-            width: 100%;
-        }
-    }
-
-    &:after {
-        @include clearfix;
-    }
-}
-*/
-
-/* -------------------------------------------- *
  * Icons
  */
 

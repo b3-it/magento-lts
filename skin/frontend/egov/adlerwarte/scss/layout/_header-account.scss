@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     egov_adlerwarte
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -14,34 +14,48 @@
  */
 
 .skip-account {
-
     &:not(.skip-active):hover {
         .icon {
             background-image: none;
             text-indent: 0;
         }
     }
-
     .icon {
         background-image: none;
         text-indent: 0;
+    }
+    
+    @include bp(max-width, $bp-medium) {
+        width: 17.7%;
+    }
+    @include bp(max-width, $bp-small) {
+        left: 10%;
+        width: 20%;
     }
 }
 
 // ---------------------------------------------
 
-@include bp(min-width, $bp-medium + 1) {
+/* -------------------------------------------- *
+ * Account Links
+ */
 
-    .skip-account {
-        float: none;
-        width: auto;
-        vertical-align: top;
-        display: inline-block;
-        padding: 0 10px;
-        text-transform: uppercase;
-    }
+#header-account {
+    padding: 5px 0;
 
-    #header-account.skip-active {
+	li {
+	    display: block;
+	    line-height: 1rem;
+	    width: 100%;
+
+	    a {
+	        width: 100%;
+	        display: block;
+	        padding: 5px 10px 5px 20px;
+	    }
+	}
+
+    &.skip-active {
         @include menu;
         display: block;
         position: absolute;
@@ -50,58 +64,14 @@
         right: 155px;
         width: 200px;
         opacity: 0.9;
+        
+        @include bp(max-width, $bp-medium) {
+            width: 100%;
+            right: 0;
+        }
     }
-
-    #header-account a,
-    #egov-menu a {
-        display: block;
-        padding: 5px 10px;
-        color: $global-linkcolor;
-        line-height: 2;
-    }
-
-    #header-account a:hover,
-    #egov-menu a:hover {
-        color: $global-linkcolor-hover;
-    }
-
-    #egov-menu.skip-active{
-        @include menu;
-        display: block;
-        position: absolute;
-        z-index: 200;
-        top: 40px;
-        right: 485px;
-        width: 200px;
-        opacity: 0.9;
-    }
-}
-
-/* -------------------------------------------- *
- * Account Links
- */
- #header-account {
+ 
  	@include bp(max-width, $bp-medium) {
- 		top: 125px;
- 	}
- }
-
-#header-account,
-#egov-menu {
-    padding: 5px 0;
+  	    top: 125px;
+  	}
 }
-
-#header-account a,
-#egov-menu a {
-    position: relative;
-    display: block;
-    padding: 5px 10px 5px 20px;
-    line-height: 23px;
-}
-
-#header-account a:hover,
-#egov-menu a:hover {
-    color: $global-linkcolor-hover;
-    font-weight: bold;
-}
-

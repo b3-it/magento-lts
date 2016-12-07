@@ -9,6 +9,11 @@
  * Button-Set
  * ============================================ */
 
+// ==================================================================
+//  Button-Set mit Multi-Button-Klasse
+//  (1er-Button, 2er-Buttons und 3er-Buttons in einer Zeile definieren)
+// ==================================================================
+
 .buttons-set {
     display: block;
     border-top: $global-active-border solid $global-border-color;

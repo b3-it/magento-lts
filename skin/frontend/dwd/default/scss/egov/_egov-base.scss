@@ -58,12 +58,6 @@
             }
         }
     }
-    
-    tfoot {
-        .button {
-            @include multi-buttons-definition;
-        }
-    }
 
     tbody td,
     tbody th {

@@ -22,9 +22,17 @@ body.catalogsearch-result-index .page-title h1 {
 }
 
 // Prevent button overlapping when buttons have long text, such as non-English translations
-.products-list .action .button,
 .products-grid .actions .button {
-    white-space: normal;
+    width: 100%;
+    
+    &.egov-cart {
+        font-size: 1.1rem;
+    }
+    
+    span {
+        font-family: $base-font-family;
+        font-size: 1.1rem;
+    }
 }
 
 /* -------------------------------------------- *
@@ -106,25 +114,8 @@ p.product-name {
     }
 
     .actions {
-        padding-top: $box-spacing;
         position: absolute;
         bottom: 0px;
-        min-height: $global-product-grid-action-height;
-        width: 100%;
-
-        a.button, button.button {
-            width: 100%;
-            font-size: $global-fontsize;
-            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
-
-            span {
-                font-family: $base-font-family;
-            }
-        }
-
-        a.button {
-            display: inline-block;
-        }
     }
 
     .ratings {
@@ -721,15 +712,5 @@ p.product-name {
         &:after {
             @include clearfix;
         }
-    }
-}
-
-.block-layered-nav .actions {
-    margin-bottom: $global-boxpadding * 2;
-
-    a {
-        @extend .button;
-        float: right;
-        margin-right: $global-boxpadding;
     }
 }

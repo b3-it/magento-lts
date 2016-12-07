@@ -54,6 +54,10 @@ body {
 	border: none;
 }
 
+.buttons-set {
+    border-top: $global-active-border solid $grundfarbe-blgr !important;
+}
+
 button {
     @include grau-hover-blau;
     
@@ -400,26 +404,6 @@ div.block-reorder {
  * Buttons
  * ============================================ */
 
-/* Secondary Buttons */
-.cart .buttons-set .button,
-.cart-table .button,
-.sidebar .actions .button,
-.button.button-secondary {
-
-    &:hover {
-    }
-
-    &:active {
-    }
-
-    &:focus {
-    }
-}
-
-.sidebar .actions button.button {
-    white-space: normal;
-}
-
 /* -------------------------------------------- *
  * Paypal Button
  */
@@ -463,39 +447,6 @@ div.block-reorder {
         margin-right: 0;
         margin-left: 0;
         float: none;
-    }
-}
-
-/* -------------------------------------------- *
- * Button Sets
- */
-
-.buttons-set {
-    display: block;
-    margin: $box-spacing 0 0;
-    padding-top: $box-spacing;
-
-    p.required {
-        margin: 0;
-        margin-left: $gap;
-        line-height: 33px;
-        float: right;
-    }
-    .back-link {
-        float: left;
-    }
-    a:not(.button) {
-        line-height: 20px;
-        display: inline-block;
-        padding: 5px;
-    }
-    button.button {
-        @include grau-hover-blau;
-        //width: 100%;
-    }
-
-    &:after {
-        @include clearfix;
     }
 }
 

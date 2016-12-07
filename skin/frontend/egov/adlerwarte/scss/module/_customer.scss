@@ -17,17 +17,6 @@
     }
 
     .col2-set {
-        .buttons-set {
-            text-align: left;
-            border-top: 0;
-
-            button,
-            .button {
-                float: none;
-                margin-right: 4px;
-            }
-        }
-
         .col-1 {
             ul {
                 list-style: disc;
@@ -296,10 +285,6 @@ body.customer-account {
             .block-content {
                 p.block-subtitle {
                     margin-bottom: $trim-small;
-                }
-
-                .actions {
-                    margin-top: $trim;
                 }
             }
         }
@@ -846,10 +831,6 @@ ol#cart-sidebar-reorder {
 
             .order-details h2 {
                 margin-bottom: $trim-small;
-            }
-
-            .buttons-set {
-                border-top: 0;
             }
 
             .addresses-list {

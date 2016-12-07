@@ -15,7 +15,7 @@
     @include bp(max-width, $bp-medium) {
     	position: absolute;
     	top: 100px;
-    	right: 39%;
+    	right: 25.5%;
     	width: 75%;
     }
     @include bp(max-width, $bp-xsmall) {
@@ -27,6 +27,7 @@
 .header-minicart {
     display: inline-block;
     height: 100%;
+    float: right;
 
     @include bp(max-width, $bp-medium) {
         display: block;
@@ -309,6 +310,7 @@ div.block-cart {
 @include bp(max-width, $bp-xsmall) {
     .header-minicart a.skip-cart {
         z-index: 1;
+        width: 100%;
     }
 }
 

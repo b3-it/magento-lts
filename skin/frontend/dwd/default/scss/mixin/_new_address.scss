@@ -11,15 +11,6 @@
 
 @mixin new_address {
     form {
-        .buttons-set {
-            border-top: $global-active-border solid $grundfarbe-blgr;
-        }
-        
-        .button {
-            @include multi-buttons-definition;
-        }
-    
-    
         .half-space {
             margin: 10px 0px !important;
         }

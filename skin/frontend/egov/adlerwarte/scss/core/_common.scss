@@ -299,30 +299,6 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-bottom: 0;
 }
 
-.block .actions {
-    margin: $box-spacing 0 0;
-
-    &:after {
-        @include clearfix;
-    }
-
-    a {
-        float: left;
-    }
-    .button {
-        float: right;
-    }
-}
-
-.col-left,
-.col-right {
-    // Align the vertical height of the anchor to line up with the button
-    .block .actions .button ~ a {
-        line-height: 33px;
-        margin-right: 5px;
-    }
-}
-
 @include bp(max-width, $bp-medium) {
 
     .sidebar {
@@ -450,26 +426,6 @@ div.block-reorder {
  * Buttons
  * ============================================ */
 
-/* Secondary Buttons */
-.cart .buttons-set .button,
-.cart-table .button,
-.sidebar .actions .button,
-.button.button-secondary {
-
-    &:hover {
-    }
-
-    &:active {
-    }
-
-    &:focus {
-    }
-}
-
-.sidebar .actions button.button {
-    white-space: normal;
-}
-
 /* -------------------------------------------- *
  * Paypal Button
  */
@@ -513,43 +469,6 @@ div.block-reorder {
         margin-right: 0;
         margin-left: 0;
         float: none;
-    }
-}
-
-/* -------------------------------------------- *
- * Button Sets
- */
-
-.buttons-set {
-    clear: both;
-    margin: $box-spacing 0 0;
-    padding-top: $box-spacing;
-    border-top: 1px solid $c-module-border-light;
-    text-align: right;
-
-    p.required {
-        margin: 0;
-        margin-left: $gap;
-        line-height: 33px;
-        float: right;
-    }
-    .back-link {
-        float: left;
-        margin: 0;
-    }
-    a:not(.button) {
-        line-height: 20px;
-        display: inline-block;
-        padding: 5px;
-    }
-    button.button {
-        float: right;
-        margin-left: 5px;
-        min-width: 140px;
-    }
-
-    &:after {
-        @include clearfix;
     }
 }
 

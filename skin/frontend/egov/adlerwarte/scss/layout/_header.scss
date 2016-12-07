@@ -51,10 +51,9 @@
     font-family: $base-font-family;
 
     .welcome-header {
-        height: $global-welcome-header;
         position: relative;
-        bottom: 0 - $global-welcome-top;
-        left: $global-welcome-left;
+        top: 50px;
+        right: 10px;
         text-align: right;
         z-index: 999;
 
@@ -199,13 +198,10 @@
 
 .skip-links {
     clear: both;
-    overflow: hidden;
-    display: inline-block;
+    display: block;
     position: absolute;
     right: 10px;
-    width: 70%;
     top: 30px;
-    height: 100vh;
     
     @include bp(max-width, $bp-medium) {
         width: 80%;
@@ -362,8 +358,9 @@ a.skip-link {
  * Global Header Navigation
  * ============================================ */
 .account-cart-wrapper {
-    text-align: right;
+    float: right;
     height: 100px;
+    display: block;
 
     a {
         background-color: $global-active-color;
@@ -386,21 +383,20 @@ a.skip-link {
         display: inline-block;
         position: absolute;
         right: 0;
-        width: 58%;
+        width: 100%;
     }
 }
 
-.skip-egov{
+.skip-egov, .skip-account{
     display: inline-block;
     padding: 0 10px;
     text-transform: uppercase;
     vertical-align: top;
     width: auto;
-    
-    @include bp(min-width, $bp-medium + 1) {
-        float: none !important;
-    }
-    
+    float: left;
+}
+
+.skip-egov {
     @include bp(max-width, $bp-medium) {
     	display: none;
     }

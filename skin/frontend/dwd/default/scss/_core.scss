@@ -40,6 +40,8 @@
 
 // ----------------------------------------------
 // Layout
+@import "../../../egov/default/scss/layout/button-set";
+@import "layout/buttons";
 @import "../../../egov/default/scss/layout/global";
 @import "layout/header";
 @import "../../../egov/default/scss/layout/header-nav";
@@ -56,7 +58,6 @@
 //  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
-@import "module/buttons";
 @import "../../../egov/default/scss/module/select-language";
 @import "module/product-list";
 @import "module/catalog-product";

@@ -27,18 +27,9 @@
         background-image: none;
         text-indent: 0;
     }
-    @include bp(min-width, $bp-medium + 1) {
-    	width: auto;
-        padding: 0 10px;
-    }
+    
     @include bp(max-width, $bp-medium) {
-    	width: 130px;
-    }
-    @include bp(max-width, 650px) {
-    	width: 37%;
-    }
-    @include bp(max-width, 500px) {
-    	width: 32%;
+    	width: 135px;
     }
 }
 

@@ -11,75 +11,29 @@
     }
 }
 
-.account-login > .egov-account-login {
-    // Reset aller Einstellungen aus dem gobalen Bereich
-    .col-1, .col-2 {
-        margin: 0px;
-        padding: 0px;
-    }
+.account-login {
+    @include egov_loginform;
 }
 
 .egov-account-login {
-    overflow: hidden;
-    width: 97%;
-
-    form {
-        height: 100%;
-        position: relative;
-
-        input {
-            max-width: 90%;
-            width: 70%;
-        }
-    }
-    
-    h2 {
-	    color: $textfarbe-mittel;
-	    font-size: $global-h4-size;
-	    font-weight: bold;
-	    height: 51px;
-	    padding: 10px;
-	    margin-bottom: 5px;
-    }
-    
     .new-users, .registered-users {
         height: 30em;
-        width: 48%;
-        border: $global-box-border solid $grundfarbe-blgr !important;
-        
-        .content {
-            padding: 10px;
-        }
-        
-        .buttons-set {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            border: 0;
-            padding: 7px;
-        }
-        
-        .button {
-            margin: 0 !important;
-            width: 49%;
-            min-width: 49% !important;
-            padding: 18px 5px !important;
-            display: inline-block;
-            text-align: center;
-            float: none;
-            
-            @include bp(max-width, $bp-small) {
-                min-width: 100% !important;
-                width: 100% !important;
-                margin: 10px 0 !important;
-            }
-        }
-        
-        @include bp(max-width, $bp-large) {
-        	width: 100%;
-        	margin-bottom: 10px !important;
-        	display: block;
-        }
+        border: 1px solid $grundfarbe-blgr !important;
+
+        h2 {
+            color: $textfarbe-mittel;
+		    font-size: 1.4rem;
+		    font-weight: bold;
+		    height: 51px;
+		    margin-bottom: 5px;
+		    padding: 10px;
+		    border: 0;
+		    background: transparent;
+		}
+		
+		.content {
+		    height: 21em !important;
+		}
     }
 
     .form-list {
