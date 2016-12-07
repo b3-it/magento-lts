@@ -62,6 +62,12 @@ abstract class Sid_ExportOrder_Model_Transfer extends Mage_Core_Model_Abstract
 		return Mage::getModel('exportorder/transfer_email');
 	}
 
+	/**
+	 * 
+	 * @param string $content
+	 * @param unknown $order
+	 * @return bool | string in Fehlerfall false ansonsten eine Textmeldung 
+	 */
 	public abstract function send($content,$order = null);
 	
 	public function canSend()
