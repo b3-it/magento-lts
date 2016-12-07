@@ -623,6 +623,7 @@ a.skip-link {
 .skip-content.skip-active {
     display: block;
     background-color: $global-navigation-color;
+    position: relative;
 }
 
 /* ============================================ *
