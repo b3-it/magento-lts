@@ -188,7 +188,9 @@ class Egovs_Checkout_Block_Multipage_Shippingmethod extends Mage_Sales_Block_Ite
     		if($rank > $max) $max = $rank;
     	}
     	
-    	if(count($res > 0)) return $res[$max];
+    	if(count($res > 0) && (isset($res[$max]))){
+    		return $res[$max];
+    	}
     	
     	return $groups;
     }

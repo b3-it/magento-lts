@@ -34,11 +34,16 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 		$this->_init('exportorder/transfer_post');
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see Sid_ExportOrder_Model_Transfer::send()
+	 */
 	public function send($content,$order = null)
 	{
 		$output = "";
 		try
 		{
+			
 			$tmp = tmpfile();
 			$a = stream_get_meta_data($tmp);
 			$filename = $a['uri'];
@@ -66,12 +71,33 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 
 			$output = curl_exec($ch);
 			$this->setLog($output);
+			
+			if(curl_error($ch))
+			{
+				throw new Exception(curl_error($ch));
+			}
+			
+			$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			
+			if ($http_status !=200)
+			{
+				throw new Exception("HTTP Status: " . $http_status ." ".$output);
+			}
+			
+			$curl_errno= curl_errno($ch);
+			if($curl_errno > 0)
+			{
+				throw new Exception('Curl Error: '.curl_strerror($curl_errno));
+			}
+			
+			
+			
 			curl_close($ch);
 		}
 		catch(Exception $ex)
 		{
-			$output = $ex->getMessage();
 			Mage::logException($ex);
+			Sid_ExportOrder_Model_History::createHistory($order->getId(), "Fehler: Die Datei wurde nicht übertragen");
 			return false;
 		}
 

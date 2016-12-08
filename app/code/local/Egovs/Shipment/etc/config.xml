@@ -2,7 +2,7 @@
 <config>
 <modules>
     <Egovs_Shipment>
-        <version>0.1.0</version>
+        <version>0.1.0.0</version>
     </Egovs_Shipment>
 </modules>
 <default>
@@ -34,26 +34,69 @@
         <!-- Nur Für sich alleine Anzeigen -->
         <rank>1000</rank>
     </storepickup>
+    <bulkgoods>
+        <active>1</active>
+        <allowed_methods>bulkgoods</allowed_methods>
+        <methods>bulkgoods</methods>
+        <sallowspecific>0</sallowspecific>
+        <model>egovsshipment/bulkgoods</model>
+        <name></name>
+        <price>0.00</price>
+        <title>Sperrgut Versand</title>
+        <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+        <handling_type>F</handling_type>
+        <rank>1</rank>
+    </bulkgoods>
   </carriers>
 </default>
 <global>
-    <models>
-    <!--
-    	<freeshipmentbyprice>
-    		<class>Egovs_Shipment_Model</class>
-    	</freeshipmentbyprice>
-    	<storepickup>
-        		<class>Egovs_Shipment_Model</class>
-        </storepickup>
-        -->
-        <egovsshipment>
-        		<class>Egovs_Shipment_Model</class>
-        </egovsshipment>
-    </models>
+	<models>
+		<egovsshipment>
+			<class>Egovs_Shipment_Model</class>
+			<resourceModel>egovsshipment_resource</resourceModel>
+		</egovsshipment>
+		<egovsshipment_resource>
+			<class>Egovs_Shipment_Model_Resource</class>
+			<entities>
+				<bulkgoods>
+					<table>egovs_shipment_bulkgoods</table>
+				</bulkgoods>
+			</entities>
+		</egovsshipment_resource>
+	</models>
+	<resources>
+		<egovs_shipment>
+			<setup>
+				<module>Egovs_Shipment</module>
+				<class>Mage_Eav_Model_Entity_Setup</class>
+			</setup>
+		</egovs_shipment>
+
+		<egovs_shipment>
+			<setup>
+				<module>Egovs_Shipment</module>
+			</setup>
+			<connection>
+				<use>core_setup</use>
+			</connection>
+		</egovs_shipment>
+	</resources>
+        <sales>
+	        <quote>
+	            <item>
+	                <product_attributes>
+	                    <shipment_group/>
+	                </product_attributes> 
+	            </item>
+	        </quote>
+	    </sales>
     <helpers>
    		<freeshipmentbyprice>
        		<class>Egovs_Shipment_Helper</class>
    		</freeshipmentbyprice>
+   		<egovsshipment>
+            <class>Egovs_Shipment_Helper</class>
+        </egovsshipment>
  	</helpers>
     <blocks>
         <egovsshipment>
@@ -81,6 +124,17 @@
         </egovs_shipment>
     </routers>	
 </frontend>
+<admin>
+    <routers>
+            <adminhtml> 
+                <args>
+                    <modules>
+                        <Egovs_Shipment_Adminhtml after="Mage_Adminhtml">Egovs_Shipment_Adminhtml</Egovs_Shipment_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+</admin>
 <adminhtml>
        <translate>
             <modules>
@@ -97,10 +151,20 @@
             <freeshipmentbyprice>
             	<amount>2</amount>
             	<ignorevirtual>0</ignorevirtual>
+            	<active>false</active>
             </freeshipmentbyprice>
             <pickup>
             	<ignorevirtual>0</ignorevirtual>
+            	<active>false</active>
             </pickup>
+             <bulkgoods>
+                <active>false</active>
+            </bulkgoods>
     	</carriers>
     </default>
+    <shipment_groups>
+        <Bücher>Bücher</Bücher>
+        <Normal>Normal</Normal>
+        <Sperrgut>Sperrgut</Sperrgut>
+    </shipment_groups>
 </config>
