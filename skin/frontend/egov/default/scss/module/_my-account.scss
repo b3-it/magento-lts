@@ -154,16 +154,6 @@
     @include main-navigation;
 }
 
-.block-cart {
-    margin-bottom: $global-boxmargin;
-    background-color: $global-sidebar-cart-background;
-}
-
-.sidebar > .block-cart:first-child {
-    position: relative;
-    top: $global-sidebar-cart-top;
-}
-
 .addresses-primary,
 .addresses-additional {
     .box {
@@ -180,15 +170,7 @@
 .customer-account-index {
     .col2-left-layout {
         top: $global-cms-top-position;
-/*
-        .buttons-set2 .button {
-            width: 32.5%;
-            
-            @include bp(max-width, $bp-small) {
-                width: 99.5%;
-            }
-        }
-*/
+
         .col-left {
             top: -15px;
 

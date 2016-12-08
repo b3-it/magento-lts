@@ -657,46 +657,7 @@
             display: none;
         }
     }
-
-    .block-related {
-        width: 50%;
-        float: right;
-        clear: right;
-    }
-
 }
-
-@include bp(max-width, 1000px) {
-    .col3-layout {
-        .col-wrapper {
-            .col-left {
-                .block-tags,
-                .block-layered-nav {
-                    display: none;
-                }
-            }
-
-            .col-main {
-                .std,
-                .category-products {
-                    width: $global-maincol-title-percent;
-                }
-            }
-
-            .col-right {
-                float: none;
-                top: 0;
-                width: $global-maincol-title-percent;
-                right: 0;
-
-                .block-poll {
-                    display: none;
-                }
-            }
-        }
-    }
-}
-
 
 .product-img-box {
     height: 100%;
@@ -767,19 +728,13 @@
     padding-left: $trim/2;
 }
 
-.product-collateral,
-.product-view .block-related,
-.box-collateral {
-    margin-bottom: $box-spacing;
-}
-
 .product-view {
     .add-to-box:after,
     .add-to-cart:after {
         @include clearfix;
     }
     
-    form > div.price-box {
+    form > div.price-box, form > span.tax-details {
         display: none;
     } 
 
@@ -1232,73 +1187,6 @@
 
 .product-options-bottom .price-tax {
     float: left;
-}
-
-/* -------------------------------------------- *
- * Related Products
- */
-
-/* Block: Related */
-
-.block-related {
-
-    li {
-        margin-bottom: $element-spacing;
-    }
-
-    .block-title {
-        border-bottom: none;
-
-        h2 {
-            @include h2();
-            margin-bottom: 0;
-        }
-    }
-
-    .block-subtitle {
-        margin-bottom: $element-spacing;
-    }
-
-    .product {
-        margin-left: 20px;
-        position: relative;
-    }
-    .checkbox {
-        float: left;
-        margin-top: 36px;
-    }
-
-    .product-details {
-        margin-left: 90px;
-    }
-
-    .product-name {
-        margin-bottom: 3px;
-    }
-
-    .product-details .price-box {
-        margin: 2px 0 3px;
-
-        a,
-        p,
-        span {
-            float: left;
-            margin-left: 3px;
-
-            &:first-child {
-                margin-left: 0;
-                font-size: $global-fontsize-big;
-                padding-right: $global-boxpadding;
-                padding-left: $global-boxpadding;
-            }
-        }
-        &:after {
-            @include clearfix;
-        }
-    }
-    .link-wishlist {
-        display: none;
-    }
 }
 
 /* -------------------------------------------- *

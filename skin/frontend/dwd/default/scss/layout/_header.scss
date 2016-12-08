@@ -5,7 +5,6 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
-
 /* ============================================ *
  * Header
  * ============================================ */
@@ -114,6 +113,7 @@
 #welcome-hidden {
 	display: none;
 }
+
 #welcome-msg {
 	font-size: 1.4rem;
 	color: $textfarbe-mittel;
@@ -125,7 +125,7 @@
 	    font-weight: bold;
 	}
 }
-    
+
 .page-header-container {
 	height: 80px;
 	
@@ -138,13 +138,16 @@
     max-width: $global-fullpage-width;
     margin: 0px auto;
 }
+
 #welcome-header-content {
 	height: 100%;
 }
+
 #mobile-header {
 	display: none;
 
 	.header-link {
+	    cursor: pointer;
 	    display: inline-block;
 	    height: 100%;
 	    vertical-align: middle;
@@ -182,8 +185,8 @@
         vertical-align: top;
         width: 75%
 	}
-	
-	#mobile-nav, #header-account, #mobile-search-form {
+
+	#mobile-nav, #mobile-header-account, #mobile-search-form {
         position: relative;
 	    background-color: $grundfarbe-blgr;
 	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -191,8 +194,8 @@
 	    left: -70px;
 	    top: 0;
 	}
-	
-	#header-account {
+
+	#header-account, #mobile-header-account {
 	    border: none;
 	    
 	    ul {
@@ -209,17 +212,17 @@
 	        @include link-navigation-mobile;
 	    }
 	}
-	
+
 	#mobile-header-cart.skip-active {
 	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 	    width: 134%;
 	    left: -68px;
 	}
-	
+
 	#mobile-search-form {
     	width: 135%;
 	}
-		
+	
 	#search {
 	    width: 65%;
 	}
@@ -318,8 +321,6 @@ body:not(.cms-index-index) {
     }
 }
 
-@include bp(min-width, $bp-medium + 1) {
-}
 
 @include bp(max-width, 785px) {
     .page-header-container {
@@ -623,7 +624,7 @@ a.skip-link {
 .skip-content.skip-active {
     display: block;
     background-color: $global-navigation-color;
-    position: relative;
+    position: absolute;
 }
 
 /* ============================================ *

@@ -387,39 +387,3 @@
         }
     }
 }
-
-/* ============================================ *
- * Wishlist Sidebar
- * ============================================ */
-
-.block-wishlist {
-    margin-bottom: $global-boxmargin;
-
-    .mini-products-list > li:not(:last-child) {
-        padding-bottom: 5px;
-    }
-
-    .product-details .product-name {
-        padding-top: 0;
-        margin-bottom: 5px;
-    }
-
-    .price-box {
-        float: left;
-        margin: 0;
-    }
-
-    .price-box,
-    .price-box .price,
-    .link-cart {
-        font-size: $global-fontsize-small;
-    }
-
-    .link-cart {
-        float: left;
-        margin-right: 7px;
-        padding-right: 7px;
-        border-right: $global-box-border solid $global-border-color;
-    }
-
-}

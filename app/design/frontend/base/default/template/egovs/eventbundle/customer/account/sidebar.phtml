@@ -24,39 +24,42 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php foreach($this->getAvailableProducts() as $_item): ?>
-<?php if(count($_item->getProductOptions()) > 0):?>
 <div class="block block-eventbundle-reorder">
     <div class="block-title">
-        <strong>
+        <strong><?php echo $this->__('Event Products'); ?></strong>
+    </div>
+    <div class="block-content">
+      <?php foreach($this->getAvailableProducts() as $_item): ?>
+        <?php if(count($_item->getProductOptions()) > 0):?>
+        <div class="title eventbundle-product-title">
             <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->__('View Product') ?>">
                 <?php echo $this->htmlEscape($_item->getName()) ?>
             </a>
-        </strong>
-    </div>
-    <div class="block-content">
-    <?php foreach($_item->getProductOptions() as $option):?>
-        <ol class="eventbundle-items">
-            <li>
-                <span class="eventbundle-item-title"><?php echo $option->getTitle();?></span>
-                <ol class="eventbundle-subitems">
-                <?php if($option->getSelections()):?>
-                <?php foreach($option->getSelections() as $selection):?>
-                    <li>
-                        <a class="item-cart-link" href="<?php echo $this->getAddToCartUrl($selection)?>" title="<?php echo $this->__('Add to Chart') ?>">
-	                	    <?php echo $selection->getName();?>
-	                	</a>
-                        <div class="price">
-	                	    <?php echo $this->getFormatedPrice($selection);?>
-	                	</div>
-                    </li>
-                <?php endforeach;?>
-                <?php endif;?>
-                </ol>
-            </li>
-        </ol>
-    <?php endforeach;?>
+        </div>
+        <div class="options eventbundle-product-options">
+          <?php foreach($_item->getProductOptions() as $option):?>
+            <ol class="items">
+                <li>
+                    <span class="eventbundle-item-title"><?php echo $option->getTitle();?></span>
+                    <ol class="sub-items">
+                      <?php if($option->getSelections()):?>
+                        <?php foreach($option->getSelections() as $selection):?>
+                        <li>
+                            <a class="item-cart-link" href="<?php echo $this->getAddToCartUrl($selection)?>" title="<?php echo $this->__('Add to Chart') ?>">
+	                	        <?php echo $selection->getName();?>
+	                	    </a>
+                            <div class="price">
+	                	        <?php echo $this->getFormatedPrice($selection);?>
+	                	    </div>
+                        </li>
+                        <?php endforeach;?>
+                      <?php endif;?>
+                    </ol>
+                </li>
+            </ol>
+          <?php endforeach;?>
+        </div>
+        <?php endif;?>
+      <?php endforeach;?>
     </div>
 </div>
-<?php endif;?>
-<?php endforeach;?>

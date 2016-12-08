@@ -296,7 +296,11 @@
     }
 }
 
-#shopping-cart-table {
+#shopping-cart-table, #checkout-review-table {
+	h3 {
+	    color: $grundfarbe-blau !important;
+	}
+	
     a.egov-delete {
         font-size: $global-fontsize + 8;
     }

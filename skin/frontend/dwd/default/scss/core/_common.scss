@@ -152,11 +152,10 @@ h6, .h6 { @include h6; }
 
 p.note-msg {
     display: block;
-    border-width: $global-box-border;
-    border-style: solid;
-    border-color: $global-border-color;
+    border: $global-box-border solid $grundfarbe-blau;
     padding: $golbal-msgpadding;
-    background-color: $global-border-color-light;
+    background-color: $grundfarbe-weiss;
+    color: $grundfarbe-blau;
 }
 
 /* --------------------------------------------- *
@@ -176,49 +175,8 @@ p.note-msg {
 /* -------------------------------------------- *
  * Block Module
  */
-.block-viewed, .block-poll, .block-subscribe {
-    margin-bottom: $global-boxmargin;
-}
-
-.block {
-    border-width: $global-active-border;
-    border-style: solid;
-    border-color: $grundfarbe-blgr;
-    margin-bottom: $global-boxmargin;
-
-    .block-title {
-        color: $textfarbe-mittel;
-        font-size: $global-h4-size;
-        height: 51px;
-        padding: 10px;
-
-        span {
-            color: $global-h4-color;
-        }
-    }
-}
-
-.col-left-first .block:last-of-type {
+.col-left-first {
     margin-bottom: 0;
-}
-
-.block-title {
-    position: relative;
-    padding: 10px 0 0;
-    margin-bottom: 5px;
-
-    h2,
-    h3,
-    strong {
-        @include h4;
-        color: $global-footer-fontcolor;
-        margin-bottom: 0;
-    }
-    small {
-        font-size: 100%;
-        font-weight: normal;
-        color: $c-text-gray;
-    }
 }
 
 // On account pages, don't remove the top border in order to create separation between block and .block-account
@@ -228,104 +186,6 @@ body:not(.customer-account) .block:first-child .block-title {
 .block-subtitle {
     font-weight: bold;
     margin-bottom: $element-spacing;
-}
-
-.block-content {
-    padding: 15px;
-
-    input[type="text"], input[type="email"] {
-        @include input-field;
-        width: 100%;
-    }
-}
-
-.block-content.unpad {
-    padding: 0;
-}
-
-.block-content li.item {
-    margin: 0 0 $box-spacing 9px;
-}
-
-.block-content li.item:last-child {
-    margin-bottom: 0;
-}
-
-.block .actions {
-    margin: 20px 0 0;
-
-    &:after {
-        @include clearfix;
-    }
-
-    a, .button {
-        @include grau-hover-blau;
-        
-        width: 100%;
-        display: block;
-        font-size: 1rem;
-        text-align: center;
-        margin: 0 0 10px 0;
-        padding: 18px 0;
-        
-        span {
-            font-family: $base-font-family;
-        }
-    }
-}
-
-.col-left,
-.col-right {
-    // Align the vertical height of the anchor to line up with the button
-    .block .actions .button ~ a {
-        line-height: 33px;
-        margin-right: 5px;
-    }
-}
-
-@include bp(max-width, $bp-medium) {
-
-    .sidebar {
-        // Don't apply to layered nav, since it gets special treatment
-        .block:not(.block-layered-nav) {
-            margin-bottom: 0;
-
-            .block-title {
-                padding: 0;
-                margin-top: 0;
-                border-bottom: none;
-                border-top: none;
-                margin-bottom: 0;
-
-                > strong {
-                    @include accordionDtBase('right', $global-border-color);
-                    display: block;
-                    width: 100%;
-                    cursor: pointer;
-                    border-bottom: 0;
-                }
-
-                &.active {
-                    > strong {
-                        @include accordionDtBase('down', $global-border-color);
-                    }
-                }
-            }
-
-            .block-content {
-                padding: $box-spacing;
-                margin-top: 0;
-                border-width: 0 $global-box-border;
-                border-style: solid;
-                border-color: $global-border-color;
-            }
-        }
-        // This selector is highly fickle, because if a div gets added beneath the last normal block in a sidebar,
-        // it will break. However it is the simplest solution to applying this trivial style.
-        .block:last-of-type {
-            border-bottom: $global-box-border solid $global-border-color;
-        }
-    }
 }
 
 /* -------------------------------------------- *
@@ -344,33 +204,6 @@ body:not(.customer-account) .block:first-child .block-title {
 
 div.block-reorder {
     margin-top: $global-boxmargin;
-    width: $global-leftcol-width + 5;
-
-    .validation-advice {
-        display: block;
-        margin: 10px 0px;
-        color: $global-warning-color;
-        font-weight: bold;
-    }
-
-    input[type="checkbox"].validation-passed {
-        outline: $global-warning-color 2px solid;
-    }
-
-    button.egov-float-left {
-        position: relative;
-        left: -3px;
-    }
-
-    li {
-        margin-top: $box-spacing;
-        margin-bottom: 0;
-
-        input {
-            width: auto;
-            float: left;
-        }
-    }
 }
 
 
@@ -757,10 +590,6 @@ div.block-reorder {
             @include bp(max-width, $bp-small) {
                 width: 100%;
             }
-        }
-
-        p.note-msg {
-            width: $global-content-2col-left-percent;
         }
         
         @include bp(max-width, $bp-small) {

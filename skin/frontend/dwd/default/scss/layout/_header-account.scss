@@ -21,7 +21,8 @@
 }
 
 // ---------------------------------------------
-#header-account.skip-active {
+#header-account.skip-active, #header-account-start.skip-active,
+#mobile-header-account.skip-active {
     display: inline-block;
     position: absolute;
     text-align: left;
@@ -46,5 +47,12 @@
     }
 }
 
-@include bp(min-width, $bp-medium + 1) {
+#header-account-start.skip-active {
+	top: auto;
+	right: auto;
+	left: -15%;
+}
+
+#mobile-header-account.skip-active {
+	border: 0;
 }

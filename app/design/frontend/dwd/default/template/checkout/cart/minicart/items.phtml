@@ -21,7 +21,7 @@ if(empty($_cartQty)) {
 ?>
 <div class="minicart-wrapper">
     <div id="minicart-top-block">
-	    <a class="close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>">&times;</a>
+	    <a class="close skip-link-close" href="javascript:void(0);" title="<?php echo $this->quoteEscape($this->__('Close')); ?>" onclick="$j('#header-cart').removeClass('skip-active')">&times;</a>
 
 	    <div id="minicart-error-message" class="minicart-message"></div>
 	    <div id="minicart-success-message" class="minicart-message"></div>

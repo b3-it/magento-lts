@@ -366,6 +366,7 @@ p.product-name {
 
         .desc {
             margin-top: $element-spacing;
+            max-height: 40px;
         }
 
         .product-primary {
@@ -396,8 +397,16 @@ p.product-name {
 
 .col2-left-layout, .col2-right-layout {
     .products-list {
+        .product-shop {
+            height: auto;
+        }
         .product-primary {
-            height: $global-product-list-desc_height + 10 !important;
+            height: 45%;
+        }
+        .product-price {
+            height: 27%;
+            overflow: hidden;
+            margin-bottom: 15px;
         }
 
         .full {
@@ -531,165 +540,6 @@ p.product-name {
 
         &:hidden {
             display: none;
-        }
-    }
-}
-
-/* ============================================ *
- * Layered Navigation
- * ============================================ */
-.block-layered-nav {
-    margin-top: $global-boxmargin;
-
-    .block-title {
-        border-width: 0px 0px $global-box-border-bottom 0px;
-        border-color: $global-border-color;
-        border-style: solid;
-    }
-
-    .block-content {
-        margin: 0px;
-
-        #narrow-by-list {
-            dd {
-                border: 0px;
-
-                span.count {
-                    float: right;
-                }
-            }
-
-            dt {
-                border-width: $global-box-border 0px $global-box-border-bottom 0px;
-                border-color: $global-border-color;
-                border-style: solid;
-            }
-        }
-    }
-}
-
-.block-layered-nav .block-subtitle--filter {
-    // Will be shown at smaller viewports
-    display: none;
-    @include accordionDtBase;
-    cursor: pointer;
-}
-
-.block-layered-nav .block-content {
-    // Accordions are fully expanded until a smaller resolution.
-    @include accordion;
-}
-
-.block-layered-nav dl dd {
-    margin-bottom: $box-spacing;
-    margin-top: $box-spacing;
-
-    ol > li > span, ol > li > a {
-        padding: $global-boxpadding;
-        display: block;
-    }
-    ol > li > a .count {
-        color: $c-text-gray;
-    }
-}
-
-@include bp(min-width, $bp-medium+1) {
-    .block-layered-nav .block-content > dl > dt {
-        padding-left: 10px;
-
-        &:after {
-            display: none;
-        }
-    }
-}
-
-@include bp(max-width, $bp-medium) {
-    .sidebar .block.block-layered-nav {
-        border-bottom: none;
-    }
-
-    // We don't want "Shop By" to show when there are no filters applied, as the "Filter" link will suffice
-    .block-layered-nav--no-filters .block-title {
-        display: none;
-    }
-
-    // Remove the top padding and re-add it as margin-top so that the margin will collapse with elements above it
-    .block-layered-nav .block-content {
-        padding-top: 0;
-        margin-top: 15px;
-        @include accordionCollapse;
-    }
-
-    .block-layered-nav .block-subtitle--filter {
-        background-color: $c-action;
-        border: 0;
-        margin-bottom: 0;
-        display: block;
-        color: #FFFFFF;
-
-        &:after {
-            @include triangle(right, 4px, #FFFFFF);
-            right: 10px;
-            top: 50%;
-            margin-top: -5px;
-        }
-
-        &:hover {
-            background-color: $global-button-hovercolor;
-            color: #FFFFFF;
-        }
-
-        &.active:after {
-            @include triangle(down, 4px, #FFFFFF);
-            right: 10px;
-            top: 50%;
-            margin-top: -3px;
-        }
-    }
-
-    #narrow-by-list,
-    #narrow-by-list2 {
-        padding: $box-spacing;
-        border: 1px solid $c-module-border;
-        border-top: 0;
-    }
-
-    .block-layered-nav dl ol > li > a,
-    .block-layered-nav dl ol > li > span {
-        padding: 7px;
-        margin: 5px;
-    }
-
-    .block-layered-nav dl ol > li > a {
-        @include touch-button;
-
-        &:hover {
-            text-decoration: none;
-            background: $global-button-hovercolor;
-        }
-    }
-}
-
-.block-layered-nav .currently {
-    .block-subtitle {
-        display: block;
-        @include h4;
-        margin-left: $global-boxpadding;
-    }
-
-    ol {
-        padding-left: $global-boxpadding * 2;
-        margin-bottom: $global-boxpadding * 2;
-    }
-    ol li {
-        margin: 0px $global-boxpadding $global-boxpadding 0px;
-
-        .label {
-            font-weight: bold;
-        }
-
-        &:after {
-            @include clearfix;
         }
     }
 }

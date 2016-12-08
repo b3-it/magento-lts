@@ -40,7 +40,7 @@
 
 // ----------------------------------------------
 // Layout
-@import "../../../egov/default/scss/layout/button-set";
+@import "layout/button-set";
 @import "layout/buttons";
 @import "../../../egov/default/scss/layout/global";
 @import "layout/header";
@@ -49,6 +49,7 @@
 @import "layout/header-account";
 @import "layout/header-cart";
 @import "layout/footer";
+@import "layout/marginal-blocks";
 
 
 // ----------------------------------------------
@@ -78,7 +79,7 @@
 @import "../../../egov/default/scss/module/review";
 @import "../../../egov/default/scss/module/sales-order-print";
 @import "../../../egov/default/scss/module/slideshow";
-@import "module/wishlist";
+@import "../../../egov/default/scss/module/wishlist";
 @import "module/checkout-cart-minicart";
 @import "module/search";
 @import "../../../egov/default/scss/module/account-reviews";
@@ -87,7 +88,7 @@
 @import "../../../egov/default/scss/module/pricing_conditions";
 @import "../../../egov/default/scss/module/cookies";
 @import "../../../egov/default/scss/module/sales-guest-form";
-@import "module/tags";
+@import "../../../egov/default/scss/module/tags";
 @import "../../../egov/default/scss/module/captcha";
 @import "../../../egov/default/scss/module/account-orders";
 @import "../../../egov/default/scss/module/recurring-profiles";

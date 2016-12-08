@@ -204,56 +204,6 @@ p.note-msg {
     margin-top: $global-boxmargin;
 }
 
-.block-viewed, .block-poll, .block-subscribe {
-    margin-bottom: $global-boxmargin;
-}
-
-.block {
-    border-width: $global-checkout-borderwidth;
-    border-style: solid;
-    border-color: $global-border-color;
-    margin-bottom: $global-boxmargin;
-
-    .block-title {
-        background-color: $global-box-title-backgroundcolor;
-        border-bottom: $global-box-border-bottom solid $global-box-bordercolor;
-        padding-top: $global-box-title-padding-top;
-        padding-right: $global-box-title-padding-right;
-        padding-bottom: $global-box-title-padding-bottom;
-        padding-left: $global-box-title-padding-left;
-        color: $global-fontcolor-dark;
-        font-weight: normal;
-        font-size: $global-fontsize-big;
-
-        span {
-            color: $global-h4-color;
-        }
-    }
-}
-
-.col-left-first .block:last-of-type {
-    margin-bottom: 0;
-}
-
-.block-title {
-    position: relative;
-    padding: 10px 0 0;
-    margin-bottom: 5px;
-
-    h2,
-    h3,
-    strong {
-        @include h4;
-        color: $global-footer-fontcolor;
-        margin-bottom: 0;
-    }
-    small {
-        font-size: 100%;
-        font-weight: normal;
-        color: $c-text-gray;
-    }
-}
-
 // On account pages, don't remove the top border in order to create separation between block and .block-account
 body:not(.customer-account) .block:first-child .block-title {
     border-top: none;
@@ -265,77 +215,6 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-bottom: $element-spacing;
 }
 
-.block-content {
-    margin-top: $blobal-blockcontent-margintop;
-    margin-bottom: $blobal-blockcontent-marginbottom;
-    margin-left: $blobal-blockcontent-marginleft;
-    margin-right: $blobal-blockcontent-marginright;
-
-    input {
-    }
-
-    input[type="text"], input[type="email"] {
-        width: 100%;
-    }
-}
-
-.block-content.unpad {
-    padding: 0;
-}
-
-.block-content li.item {
-    margin: 0 0 $box-spacing 9px;
-}
-
-.block-content li.item:last-child {
-    margin-bottom: 0;
-}
-
-@include bp(max-width, $bp-medium) {
-
-    .sidebar {
-        // Don't apply to layered nav, since it gets special treatment
-        .block:not(.block-layered-nav) {
-            margin-bottom: 0;
-
-            .block-title {
-                padding: 0;
-                margin-top: 0;
-                border-bottom: none;
-                border-top: none;
-                margin-bottom: 0;
-
-                > strong {
-                    @include accordionDtBase('right', $global-border-color);
-                    display: block;
-                    width: 100%;
-                    cursor: pointer;
-                    border-bottom: 0;
-                }
-
-                &.active {
-                    > strong {
-                        @include accordionDtBase('down', $global-border-color);
-                    }
-                }
-            }
-
-            .block-content {
-                padding: $box-spacing;
-                margin-top: 0;
-                border-width: 0 $global-box-border;
-                border-style: solid;
-                border-color: $global-border-color;
-            }
-        }
-        // This selector is highly fickle, because if a div gets added beneath the last normal block in a sidebar,
-        // it will break. However it is the simplest solution to applying this trivial style.
-        .block:last-of-type {
-            border-bottom: $global-box-border solid $global-border-color;
-        }
-    }
-}
-
 /* -------------------------------------------- *
  * Secondary Navigation
  */
@@ -345,40 +224,12 @@ body:not(.customer-account) .block:first-child .block-title {
     top: -20px;
 }
 
-
-.block-viewed, .block-compare, .block-poll {
-	@include bp(max-width, $bp-medium) {
-	    margin-bottom: $global-boxmargin !important;
-	}
-}
-
 /* ============================================ *
  * Reorder-Box Styles
  * ============================================ */
 
 div.block-reorder {
     margin-top: $global-boxmargin;
-
-    .validation-advice {
-        display: block;
-        margin: 10px 0px;
-        color: $global-warning-color;
-        font-weight: bold;
-    }
-
-    input[type="checkbox"].validation-passed {
-        outline: $global-warning-color 2px solid;
-    }
-
-    li {
-        margin-top: $box-spacing;
-        margin-bottom: 0;
-
-        input {
-            width: auto;
-            float: left;
-        }
-    }
 }
 
 

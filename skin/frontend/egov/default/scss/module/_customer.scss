@@ -136,78 +136,15 @@ body.customer-account {
 
     .col2-left-layout {
         .col-left {
-            top: 0px;
-
-            .block-compare {
-                margin-top: $global-boxmargin;
-                
+            .block-compare {                
                 @include bp(max-width, $bp-medium) {
                     display: none;
                 }
             }
         }
-        .col-left-first {
-            margin-top: -10px;
-        }
     }
-    
-    .block-eventbundle-reorder {
-        .block-content {
-            @include bp(max-width, $bp-medium) {
-                border: 0 !important;
-            }
-        }
-        
-        ol, ul {
-            display: block;
-            width: 100%;
-            margin-bottom: $global-listmargin;
-        }
-        .eventbundle-item-title {
-            margin-bottom: $global-listmargin / 2;
-            text-decoration: underline;
-        }       
-        .item-cart-link, .price {
-            display: inline-block;
-        }
-        .item-cart-link {
-            width: 75%;
-            overflow: hidden;
-        }
-        .price {
-            position: absolute;
-            right: 5px;
-            
-            @include bp(max-width, $bp-medium) {
-                right: 15px;
-            }
-        }
-        
-        a {
-            border: $global-active-border solid transparent;
-            
-            &:hover, &:active, &:focus {
-                border-color: $global-linkcolor-active;
-            }
-        }
-        
-        @include bp(max-width, $bp-medium) {
-            width: 95%;
-            margin: 0 auto;
-        }
-    }
-
 
     .my-account {
-/*
-	.buttons-set button.button, .buttons-set a.button {
-            @include bp(max-width, $bp-small) {
-                float: none;
-                margin: 10px 0;
-                width: 100%;
-            }
-        }
-*/    
         .dashboard {
             position: relative;
             top: -20px;
@@ -296,54 +233,6 @@ body.customer-account {
 
     .data-table {
         margin-top: 5px;
-    }
-
-    .sidebar {
-        button {
-            margin-left: 0px;
-        }
-
-        .block {
-            ol#compare-items {
-                li {
-                    margin: $box-spacing 0;
-                }
-            }
-
-            .block-content {
-                p.block-subtitle {
-                    margin-bottom: $trim-small;
-                }
-            }
-        }
-
-        .block-cart {
-            .summary {
-                margin-bottom: $trim-small;
-            }
-        }
-
-        .block-reorder {
-            ol#cart-sidebar-reorder {
-                li {
-                    margin-top: $box-spacing;
-                    margin-bottom: 0;
-
-                    input {
-                        margin-right: 10px;
-                    }
-                }
-
-                p.product-name {
-                    display: inline;
-                    margin-bottom: 0;
-                }
-            }
-            
-            @include bp(max-width, $bp-medium) {
-                display: none;
-            }
-        }
     }
 }
 

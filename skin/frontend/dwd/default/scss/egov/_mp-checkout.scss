@@ -390,6 +390,10 @@
     ul.checkout-progress {
         display:none;
     }
+    
+    .button {
+        width: 25% !important;
+    }
 }
 
 @include bp(max-width, $bp-medium) {

@@ -8,9 +8,6 @@
 /* ============================================ *
  * Catalog - Compare
  * ============================================ */
-.block-compare, .block-compared {
-	margin-bottom: $global-boxmargin;
-}
 
 .catalog-product-compare-index {
 	h1 {
@@ -24,19 +21,6 @@
 		bottom: 0;
 		font-size: 0.4em;
 	}
-		
-	.block-compare {
-        margin-bottom: $global-boxmargin;
-
-        .product-name:after {
-            @include clearfix;
-        }
-
-        .actions a {
-            @extend .button;
-            line-height: $global-lineheight !important;
-        }
-    }
 
     .compare-table {
     	th, td {

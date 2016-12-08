@@ -216,8 +216,6 @@ body.customer-account {
             top: 0px;
 
             .block-compare {
-                margin-top: $global-boxmargin;
-                
                 @include bp(max-width, $bp-medium) {
                     display: none;
                 }
@@ -228,53 +226,6 @@ body.customer-account {
             padding-bottom: 50px;
         }
     }
-    
-    .block-eventbundle-reorder {
-        .block-content {
-            @include bp(max-width, $bp-medium) {
-                border: 0 !important;
-            }
-        }
-        
-        ol, ul {
-            display: block;
-            width: 100%;
-            margin-bottom: $global-listmargin;
-        }
-        .eventbundle-item-title {
-            margin-bottom: $global-listmargin / 2;
-            text-decoration: underline;
-        }       
-        .item-cart-link, .price {
-            display: inline-block;
-        }
-        .item-cart-link {
-            width: 75%;
-            overflow: hidden;
-        }
-        .price {
-            position: absolute;
-            right: 5px;
-            
-            @include bp(max-width, $bp-medium) {
-                right: 15px;
-            }
-        }
-        
-        a {
-            border: $global-active-border solid transparent;
-            
-            &:hover, &:active, &:focus {
-                border-color: $global-linkcolor-active;
-            }
-        }
-        
-        @include bp(max-width, $bp-medium) {
-            width: 95%;
-            margin: 0 auto;
-        }
-    }
-
 
     .my-account {
         .dashboard {

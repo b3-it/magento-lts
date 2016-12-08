@@ -16,38 +16,21 @@
 #addTagForm .form-add {
     margin-top: 10px;
 }
+
 .product-tags {
-    background-color: $c-module-background;
     border: $global-box-border solid $global-border-color;
-    float: left;
-    margin-bottom: 10px;
     padding: 5px 1% 10px;
     width: 98%;
 }
-.product-tags li {
-    float: left;
-    margin-right: 15px;
-}
-.product-tags li.last {
-    margin-right: 0px;
-}
-.tags-list {
-    float: left;
-    width: $global-content-2col-right-percent;
-    margin-bottom: 10px;
-}
-.tags-list > li {
-    float: left;
-    margin-right: 10px;
-}
-.block-tags {
-    margin-bottom: $global-boxmargin;
 
-    .actions > a {
-        font-size: $global-fontsize;
+.tags-list li, .product-tags li {
+    display: inline-block;
+    margin: 0 10px 0 0 !important;
+
+    &.last {
+        margin-right: 0px;
     }
 }
-
 .my-tag-edit {
     .button.btn-remove {
         padding: 0;

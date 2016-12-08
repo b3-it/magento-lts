@@ -49,9 +49,6 @@
     margin-bottom: $blobal-blockcontent-marginbottom;
 }
 
-.delivery-time {
-	margin-bottom: $global-boxmargin;
-}
 
 /* ============================================ *
  * Catalog - Product
@@ -512,13 +509,13 @@
 
     .add-to-cart-wrapper {
     }
-
+/*
     .block-related {
         width: 50%;
         float: right;
         clear: right;
     }
-
+*/
 }
 
 @include bp(max-width, 1000px) {
@@ -1220,6 +1217,9 @@
     margin: 0 0 $gap;
     padding: 0;
 }
+.product-options-bottom .price-tax {
+    float: left;
+}
 
 @include bp(max-width, $bp-xsmall) {
     .product-options-bottom .price-box .price-as-configured {
@@ -1228,77 +1228,6 @@
         .price-label {
             display: block;
         }
-    }
-}
-
-.product-options-bottom .price-tax {
-    float: left;
-}
-
-/* -------------------------------------------- *
- * Related Products
- */
-
-/* Block: Related */
-
-.block-related {
-
-    li {
-        margin-bottom: $element-spacing;
-    }
-
-    .block-title {
-        border-bottom: none;
-
-        h2 {
-            @include h2();
-            margin-bottom: 0;
-        }
-    }
-
-    .block-subtitle {
-        margin-bottom: $element-spacing;
-    }
-
-    .product {
-        margin-left: 20px;
-        position: relative;
-    }
-    .checkbox {
-        float: left;
-        margin-top: 36px;
-    }
-
-    .product-details {
-        margin-left: 90px;
-    }
-
-    .product-name {
-        margin-bottom: 3px;
-    }
-
-    .product-details .price-box {
-        margin: 2px 0 3px;
-
-        a,
-        p,
-        span {
-            float: left;
-            margin-left: 3px;
-
-            &:first-child {
-                margin-left: 0;
-                font-size: $global-fontsize-big;
-                padding-right: $global-boxpadding;
-                padding-left: $global-boxpadding;
-            }
-        }
-        &:after {
-            @include clearfix;
-        }
-    }
-    .link-wishlist {
-        display: none;
     }
 }
 
