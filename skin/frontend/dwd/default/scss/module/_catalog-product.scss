@@ -205,6 +205,13 @@
 }
 
 .catalog-product-view {
+	.validation-advice, .validation-failed {
+	    outline: $global-warning-color !important;
+	    border-color: $global-warning-color !important;
+	    color: $global-warning-color !important;
+	}
+	
+	
     .col1-layout {
         .col-main {
             padding-top: 13px;

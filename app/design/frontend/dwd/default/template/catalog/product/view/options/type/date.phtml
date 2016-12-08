@@ -24,6 +24,7 @@
 
         <script type="text/javascript">
             $j(document).ready(function(){
+            	$j('#options_<?php echo $_optionId ?>_date_trig').remove();
             	$j('#options_<?php echo $_optionId ?>_date').datepicker({
             		'dateFormat'     : "dd.mm.yy",
             		'dayNames'       : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
