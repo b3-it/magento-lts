@@ -93,7 +93,7 @@ class Sid_Cms_Model_Observer extends Varien_Object
 					$groups = $send['customergroup'];
 					if(count($groups) > 0){
 						
-						$groups= implode(',', $groups);
+						
 						$collection = Mage::getModel('customer/customer')->getCollection();
 						$collection
 							->addAttributeToSelect('firstname')
@@ -103,6 +103,7 @@ class Sid_Cms_Model_Observer extends Varien_Object
 						
 						//All Customer Groups = -1
 						if(array_search('-1', $groups) === false){
+							$groups= implode(',', $groups);
 							$collection->getSelect()->where('group_id IN(?)',$groups);
 						}
 							

@@ -39,7 +39,7 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Format extends Mage_Admi
                     ');
       
 
-      $fieldset = $form->addFieldset('vendor_form_format_details', array('legend'=>Mage::helper('framecontract')->__('Format Details')));
+//       $fieldset = $form->addFieldset('vendor_form_format_details', array('legend'=>Mage::helper('framecontract')->__('Format Details')));
 
       if ( Mage::getSingleton('adminhtml/session')->getFramecontractData() )
       {
@@ -49,5 +49,11 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Format extends Mage_Admi
           $form->setValues(Mage::registry('vendor_data')->getData());
       }
       return parent::_prepareForm();
+  }
+  
+  protected function _afterToHtml($html)
+  {
+  	$html .= '<div id="vendor_form_format_details">';
+  	return $html;
   }
 }

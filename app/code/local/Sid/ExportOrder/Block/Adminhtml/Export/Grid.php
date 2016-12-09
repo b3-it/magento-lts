@@ -179,11 +179,14 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Grid extends Mage_Adminhtml_Block_W
   {
   
   	$html = array();
-  	$html[]= "<script>";
+  	$html[]= "<script type=\"text/javascript\">";
   	$html[]= "function resend(id){";
   	$html[]= 'var url = "'.$this->getUrl('*/*/resend',array('id' => 'xxx')).'";';
   	$html[]= "url = url.replace('xxx',id);";
-  	$html[]= "new Ajax.Request(url, {method:'get'})";
+  	$html[]= "new Ajax.Request(url, {method:'get', onSuccess: function(transport) {";
+    $html[]= "$('messages').update(transport.responseText);";
+    //$html[]= "alert(transport.responseText);";
+  	$html[]= "}})";
   	$html[]= "}";
   	$html[]= "</script>";
   
