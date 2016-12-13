@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_pendelliste_index>
+        <reference name="content">
+            <block type="pendelliste/adminhtml_pendelliste" name="pendelliste" />
+        </reference>
+    </adminhtml_pendelliste_index>
+</layout>

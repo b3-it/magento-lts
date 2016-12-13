@@ -10,7 +10,7 @@ class Egovs_Giropay_Model_Config_Source_Cmsblock
         $_config = Mage::getConfig()->getModuleConfig('Egovs_Giropay');
         if (version_compare($_config->version, '2.1', '>=')) {
 	        foreach($collection->getItems() as $item) {
-	        	$res[] = array('value'=>$item->getData('identifier'),'label'=>$item->getData('identifier'));
+	        	$res[] = array('value'=>Mage::helper('core')->escapeHtml($item->getData('identifier')),'label'=>sprintf("%s [%s]", Mage::helper('core')->escapeHtml($item->getData('title')), Mage::helper('core')->escapeHtml($item->getData('identifier'))));
 	        }
         }
     	

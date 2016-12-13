@@ -18,6 +18,10 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
         $this->_init('exportorder/transfer_link');
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see Sid_ExportOrder_Model_Transfer::send()
+     */
     public function send($content, $order = null)
     {
     	$recipients = array();
