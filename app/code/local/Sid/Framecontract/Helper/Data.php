@@ -137,7 +137,7 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 	
 		$priceSum = new Zend_Db_Expr('ROUND(price.value * (qty.value - stock.qty),2) as totalprice');
 		$sold = new Zend_Db_Expr('qty.value - stock.qty as sold');		
-		$sold_p = new Zend_Db_Expr('IF(qty.value <> 0, ((qty.value - stock.qty)/qty.value * 100), 0) as sold_p');
+		$sold_p = new Zend_Db_Expr('IF(qty.value <> 0, ROUND(((qty.value - stock.qty)/qty.value * 100),2), 0) as sold_p');
 	
 		$manage_stock = Mage::getStoreConfig('cataloginventory/item_options/manage_stock');
 		
