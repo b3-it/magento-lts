@@ -98,7 +98,8 @@ class Sid_Checkout_Block_Multishipping_Quoteitems extends Mage_Sales_Block_Items
             foreach ($this->getCustomer()->getAddresses() as $address) {
                 $options[] = array(
                     'value' => $address->getId(),
-                    'label' => $address->format('oneline')
+                    //'label' => $address->format('oneline')
+               		'label' =>  $address->getName().' '. $address->getStreetFull()." ".  $address->getPostcode()." ". $address->getCity()." ". $address->getDap() , 
                 );
             }
             $this->setData('address_options', $options);
