@@ -1640,6 +1640,48 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
         }
         return $this;
     }
+    
+    /**
+     * Validate row attributes. Pass VALID row data ONLY as argument.
+     *
+     * @param array $rowData
+     * @param int $rowNum
+     * @param boolean $isNewProduct OPTIONAL.
+     * @return boolean
+     */
+    public function isRowValid(array $rowData, $rowNum, $isNewProduct = true)
+    {
+    	$error    = false;
+    	$rowScope = $this->_entityModel->getRowScope($rowData);
+    
+    	if (Mage_ImportExport_Model_Import_Entity_Product::SCOPE_NULL != $rowScope) {
+    		foreach ($this->_getProductAttributes($rowData) as $attrCode => $attrParams) {
+    			if(array_search($attrCode, $this->_acceptAttributeValues) !== false){
+    				continue;
+    			}
+    			// check value for non-empty in the case of required attribute?
+    			if (isset($rowData[$attrCode]) && strlen($rowData[$attrCode])) {
+    				$error |= !$this->_entityModel->isAttributeValid($attrCode, $attrParams, $rowData, $rowNum);
+    			} elseif (
+    					$this->_isAttributeRequiredCheckNeeded($attrCode)
+    					&& $attrParams['is_required']) {
+    						// For the default scope - if this is a new product or
+    						// for an old product, if the imported doc has the column present for the attrCode
+    						if (Mage_ImportExport_Model_Import_Entity_Product::SCOPE_DEFAULT == $rowScope &&
+    								($isNewProduct || array_key_exists($attrCode, $rowData))) {
+    									$this->_entityModel->addRowError(
+    											Mage_ImportExport_Model_Import_Entity_Product::ERROR_VALUE_IS_REQUIRED,
+    											$rowNum, $attrCode
+    											);
+    									$error = true;
+    								}
+    			}
+    		}
+    	}
+    	$error |= !$this->_isParticularAttributesValid($rowData, $rowNum);
+    
+    	return !$error;
+    }
 
     /**
      * Atttribute set ID-to-name pairs getter.
@@ -1955,7 +1997,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
 		$p['enable_googlecheckout']="0";
 		
 		$p['generate_meta']="1";
-		
+		$p['store_group'] = $this->_parameters['store'];
     	$this->_getSource()->setDefaultValues($p);
     	
     	
