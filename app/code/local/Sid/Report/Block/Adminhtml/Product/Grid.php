@@ -73,13 +73,17 @@ class Sid_Report_Block_Adminhtml_Product_Grid extends Mage_Adminhtml_Block_Widge
       		'filter_condition_callback' => array($this, '_filterCondition'),
       ));
       
-      $inclTax = Mage::getStoreConfig('tax/calculation/price_includes_tax');
-      $label = $inclTax? Mage::helper('sidreport')->__('incl. Tax'): Mage::helper('sidreport')->__('excl. Tax');
-      
+     
       $currencyCode = $this->getCurrentCurrencyCode();
       
+      if(Mage::getStoreConfig('tax/calculation/price_includes_tax')){
+      	$label = 'Gesamtpreis inkl. MwSt';
+      }else {
+      	$label = 'Gesamtpreis exkl. MwSt';
+      }
+      
       $this->addColumn('price', array(
-      		'header'    => Mage::helper('sidreport')->__('Gesammtpreis'). ' '. $label,
+      		'header'    => $label,// Mage::helper('sidreport')->__('Gesamtpreis'),
       		'align'     =>'left',
       		'index'     => 'totalprice',
       		'type'          => 'currency',

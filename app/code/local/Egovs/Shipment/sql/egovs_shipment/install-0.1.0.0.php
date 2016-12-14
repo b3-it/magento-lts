@@ -100,7 +100,7 @@ if (!$installer->getAttribute('catalog_product', 'shipment_group')) {
 			'type' => 'text',
 			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
 			'visible' => false,
-			//'required' => true,
+			'required' => false,
 			'is_user_defined' => true,
 			'searchable' => false,
 			'comparable' => false,

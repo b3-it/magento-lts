@@ -79,10 +79,16 @@ class Sid_Checkout_Block_Multishipping_Quoteitems extends Mage_Sales_Block_Items
     {
      	foreach ($this->getCustomer()->getAddresses() as $address) {
                if($address->getId() == $id){
-                    return $address->format('oneline');
+                    //return $address->format('oneline');
+                    return $this->formatAddress($address);
             }
      	}
      	return "";
+    }
+    
+    private function formatAddress($address)
+    {
+    	return $address->getName().', '. $address->getStreetFull().", ".  $address->getPostcode()." ". $address->getCity().", ". $address->getDap() ;
     }
     
   	public function getCustomer()
@@ -98,7 +104,8 @@ class Sid_Checkout_Block_Multishipping_Quoteitems extends Mage_Sales_Block_Items
             foreach ($this->getCustomer()->getAddresses() as $address) {
                 $options[] = array(
                     'value' => $address->getId(),
-                    'label' => $address->format('oneline')
+                    //'label' => $address->format('oneline')
+               		'label' =>  $this->formatAddress($address) , 
                 );
             }
             $this->setData('address_options', $options);
