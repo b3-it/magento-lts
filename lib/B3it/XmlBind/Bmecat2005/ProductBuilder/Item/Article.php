@@ -166,7 +166,7 @@ class  B3it_XmlBind_Bmecat2005_ProductBuilder_Item_Article extends B3it_XmlBind_
 		{
 			foreach($detail->getAllArticlePrice() as $price)
 			{
-				return $price->getTax()->getValue();
+				return $price->getTax()->getValue() * 100;
 			}
 		}
 	}

@@ -21,11 +21,11 @@ class Sid_Haushalt_Model_Lg04Pool extends Mage_Core_Model_Abstract
     
     public function getNextIncrementId($startValue, $stopValue)
     {
-    	$last = $this->getResource()->getLast(new Varien_Object());
+    	$last = $this->getResource()->getLast();
     	
     	$lg_04_increment_id = intval($startValue);
-    	if($last->getData('lg_04_increment_id') != null){
-    		$lg_04_increment_id = intval($last->getData('lg_04_increment_id'));
+    	if($last != null){
+    		$lg_04_increment_id = intval($last);
     	}
     	$lg_04_increment_id++;
     	$this->setData('lg_04_increment_id', $lg_04_increment_id)->save();

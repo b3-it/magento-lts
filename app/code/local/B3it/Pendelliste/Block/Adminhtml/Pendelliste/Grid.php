@@ -49,17 +49,17 @@ class B3it_Pendelliste_Block_Adminhtml_Pendelliste_Grid extends Mage_Adminhtml_B
       ));
 	  */
 
-      $this->addColumn('status', array(
-          'header'    => Mage::helper('pendelliste')->__('Status'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'status',
-          'type'      => 'options',
-          'options'   => array(
-              1 => 'Enabled',
-              2 => 'Disabled',
-          ),
-      ));
+//       $this->addColumn('status', array(
+//           'header'    => Mage::helper('pendelliste')->__('Status'),
+//           'align'     => 'left',
+//           'width'     => '80px',
+//           'index'     => 'status',
+//           'type'      => 'options',
+//           'options'   => array(
+//               1 => 'Enabled',
+//               2 => 'Disabled',
+//           ),
+//       ));
 	  
         $this->addColumn('action',
             array(
@@ -69,8 +69,8 @@ class B3it_Pendelliste_Block_Adminhtml_Pendelliste_Grid extends Mage_Adminhtml_B
                 'getter'    => 'getId',
                 'actions'   => array(
                     array(
-                        'caption'   => Mage::helper('pendelliste')->__('Edit'),
-                        'url'       => array('base'=> '*/*/edit'),
+                        'caption'   => Mage::helper('pendelliste')->__('Import'),
+                        'url'       => array('base'=> '*/*/import'),
                         'field'     => 'id'
                     )
                 ),

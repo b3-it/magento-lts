@@ -117,11 +117,11 @@
                     <file>sid/exportorder/order_link.html</file>
                     <type>html</type>
                 </exportorder_vendor_order_link>
-                <exportorder_vendor_error translate="label" module="exportorder">
+                <framecontract_email_exportorder_error_template translate="label" module="exportorder">
                     <label>Lieferantenbestellung Fehlerinformation</label>
                     <file>sid/exportorder/error.html</file>
                     <type>html</type>
-                </exportorder_vendor_error>
+                </framecontract_email_exportorder_error_template>
              </email>
         </template>
     </global>
@@ -236,5 +236,10 @@
                 <error>exportorder_vendor_error</error>
             </email>
         </exportorder>
+        <framecontract>
+            <email>
+                <exportorder_error_template>framecontract_email_exportorder_error_template</exportorder_error_template>
+            </email>
+        </framecontract>
     </default>
 </config>

@@ -125,6 +125,9 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 	
 	
 	protected abstract function _getTaxClassId($taxRate);
+	
+	
+	
 	/**
 	 * alle hinzugefügen Artikel Speichern
 	 */
@@ -351,6 +354,7 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 		{
 			$attributesRowsDefault = $this->_getAttributeDefaultRow();
 			$attributesRowsIn[$sku] = $item->getAttributeRow($attributesRowsDefault);
+			//taxrate in prozent => z.B. 19
 			$attributesRowsIn[$sku]['tax_class_id'] = $this->_getTaxClassId($item->getTaxRate());
 			
 			if ($item->isBundle() && $item->hasPriceAmount()) {
