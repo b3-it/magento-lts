@@ -52,7 +52,7 @@ $html = '<table style="font-size:10pt; border:0.3mm solid #000000;">
             ermächtige die unten genannte Bundeskasse, Zahlungen von meinem
             Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein
             Kreditinstitut an, die von der Bundeskasse auf mein Konto gezogenen
-            Lastschriften einzulösen.<br>Hinweis:
+            Lastschriften einzulösen.<br><u>Hinweis:</u>
             Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum,
             die Erstattung des belastenten Betrages verlangen. Es gelten dabei die mit meinem
             Kreditinstitut vereinbarten Bedingungen. Ich bin damit einverstanden, dass zur
@@ -72,7 +72,7 @@ $html = '<table style="font-size:10pt; border:0.3mm solid #000000;">
         <td style="height:15mm; width:156mm;">
             <table style="width:137mm;">
                 <tr>
-                    <td style="border-bottom:0.2mm solid #000000;">{{imprint.company_first}} {{imprint.company_second}}, {{imprint.street}}, {{imprint.zip}} {{imprint.city}}</td>
+                    <td style="border-bottom:0.2mm solid #000000;">{{imprint.bank_account_owner}}</td>
                 </tr>
             </table>
             <table style="width:137mm;">
@@ -338,9 +338,9 @@ $html = '<table style="font-size:10pt; border:0.3mm solid #000000;">
             <table style="width:150mm;" cellspacing="0" cellpadding="1">
                 <tr>
                     <td align="center" valign="bottom" style="width:5mm; height:5mm; border:0.2mm solid #000000;">{{if isMultiPayment}}{{else}}X{{/if}}</td>
-                    <td style="width:35mm; height:5mm; font-size:7pt;">&nbsp;4 - Einmalige Zahlung (B2C)</td>
+                    <td style="width:40mm; height:5mm; font-size:7pt;">&nbsp;4 - Einmalige Zahlung (B2C)</td>
                     <td align="center" valign="bottom" style="width:5mm; height:5mm; border:0.2mm solid #000000;">{{if isMultiPayment}}X{{else}}{{/if}}</td>
-                    <td style="width:35mm; height:5mm; font-size:7pt;">&nbsp;5 - Mehrmalige Zahlungen (B2C)</td>
+                    <td style="width:40mm; height:5mm; font-size:7pt;">&nbsp;5 - Mehrmalige Zahlungen (B2C)</td>
                 </tr>
             </table>
         </td>
@@ -386,7 +386,7 @@ $html = '<table style="font-size:10pt; border:0.3mm solid #000000;">
 &nbsp;<br>
 <table style="width:50mm;" cellspacing="0" cellpadding="1">
     <tr>
-        <td style="border-bottom:0.2mm solid #000000;">gez.&nbsp;{{if IsCompany}}{{CompanyRepresented}}{{else}}{{if AccountholderDiffers}}{{AccountholderFullname}}{{else}}{{DebitorFullname}}{{/if}}{{/if}}</td>
+        <td style="border-bottom:0.2mm solid #000000;">gez.&nbsp;{{AuthorisedSignatory}}</td>
     </tr>
     <tr>
         <td style="font-size:7pt;">Unterschrift Zahler/in</td>
