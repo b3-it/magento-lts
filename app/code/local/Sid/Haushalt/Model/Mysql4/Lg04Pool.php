@@ -19,18 +19,18 @@ class Sid_Haushalt_Model_Mysql4_Lg04Pool extends Mage_Core_Model_Resource_Db_Abs
     }
     
     
-    public function getLast($object)
+    public function getLast()
     {
     	$read = $this->_getReadAdapter();
-    	$sql = "SELECT max(lg_04_increment_id) FROM ".$this->getMainTable().";";
+    	$sql = "SELECT max(lg_04_increment_id) as `lg_04_increment_id` FROM ".$this->getMainTable().";";
     	$data = $read->fetchOne($sql);
     		
     	if ($data)
     	{
-    		$object->setData($data);
+    		return $data;
     	}
     	
-    	return $object;
+    	return null;
     }
  
 }

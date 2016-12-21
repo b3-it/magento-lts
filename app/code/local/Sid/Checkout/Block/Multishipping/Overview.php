@@ -75,6 +75,11 @@ class Sid_Checkout_Block_Multishipping_Overview extends Mage_Sales_Block_Items_A
     {
         return $this->getChildHtml('payment_info');
     }
+    
+    public function formatAddress($address)
+    {
+    	return $address->getName().'<br>'. $address->getStreetFull()."<br>". $address->getCompany()."<br>". $address->getCompany1()."<br>". $address->getPostcode()." ". $address->getCity()."<br> ". $address->getDap() ;
+    }
 
     /**
      * Get object with payment info posted data

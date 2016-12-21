@@ -12,6 +12,8 @@ CREATE TABLE {$this->getTable('b3it_pendelliste')} (
   `store_id` int(5) unsigned default 0,
   `task_id` int(11) unsigned NOT NULL,
   `model` varchar(255) NOT NULL default '',
+  `modelParams` varchar(255) NOT NULL default '',
+  `modelId` varchar(255) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
   `content` text NOT NULL default '',
   `status` smallint(6) NOT NULL default '0',

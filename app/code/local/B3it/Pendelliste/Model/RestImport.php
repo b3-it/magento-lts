@@ -11,20 +11,22 @@ class B3it_Pendelliste_Model_RestImport
         {
            	$storage->setUpdateTime(now());
            	$storage->setCreatedTime(now());
-           	$storage->setModel($task->model);
-           	$storage->setTitle($task->title);
-           	$storage->setTaskId($task->taskid);
+           	//$storage->setModel($task->model);
+           	$storage->setTitle($task->taskTemplate->title);
+           	$storage->setTaskId($task->id);
             $storage->save();
         }
     }
 
 	protected function _getTaskList()
 	{
+		
+		$result = array();
         $url = Mage::getStoreConfig('pendelliste/pendelliste_portal/url');
         $webshop_id = Mage::getStoreConfig('pendelliste/pendelliste_portal/webshop_id');
         if (isset($url) && !empty($url)) {
             $url =   rtrim($url,'/');
-            $url .= "/task/magento/{$webshop_id}/";
+            $url .= "/task/magento/{$webshop_id}";
             $client = new Varien_Http_Client($url);
             $client->setMethod(Varien_Http_Client::GET);
 
@@ -33,9 +35,12 @@ class B3it_Pendelliste_Model_RestImport
                 if ($response->isSuccessful()) {
                     $res = $response->getBody();
                     $res = json_decode($res);
-                    $tasks = $res->tasks;
+                    foreach($res as $item){
+                    	$result[] = $item;
+                    }
+                    //$tasks = $res->tasks;
 
-                    return $tasks;
+                    return $result;
                 }
             } catch (Exception $e) {
                 // TODO add more Exception!!!
@@ -45,5 +50,37 @@ class B3it_Pendelliste_Model_RestImport
         }
 
         return array();
+    }
+    
+    
+    public function getTask($id)
+    {
+    	$result = null;
+    	$url = Mage::getStoreConfig('pendelliste/pendelliste_portal/url');
+    	$webshop_id = Mage::getStoreConfig('pendelliste/pendelliste_portal/webshop_id');
+    	if (isset($url) && !empty($url)) {
+    		$url =   rtrim($url,'/');
+    		$url .= "/task/magento/attr/{$id}";
+    		$client = new Varien_Http_Client($url);
+    		$client->setMethod(Varien_Http_Client::GET);
+    
+    		try{
+    			$response = $client->request();
+    			if ($response->isSuccessful()) {
+    				$res = $response->getBody();
+    				$res = json_decode($res);
+    				
+    				$result = B3it_Pendelliste_Model_Import_Abstract::create($res->model, $res->modelParams, $res);
+    				
+    				return $result;
+    			}
+    		} catch (Exception $e) {
+    			// TODO add more Exception!!!
+    		}
+    	} else {
+    		// TODO add Exception!!!
+    	}
+    
+    	return null;
     }
 }

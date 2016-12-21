@@ -24,7 +24,7 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
 	{
 		$templateId = null;
 		if(!is_numeric($template)){
-			$templateId = intval( Mage::getStoreConfig($template, $storeid));
+			$templateId = ( Mage::getStoreConfig($template, $storeid));
 		}
 		if($templateId){
 			$template = $templateId;
