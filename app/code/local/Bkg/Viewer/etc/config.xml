@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Bkg_Viewer>
+			<version>0.1.0.0</version>
+		</Bkg_Viewer>
+	</modules>
+	<global>
+		<helpers>
+			<bkgviewer>
+				<class>Bkg_Viewer_Helper</class>
+			</bkgviewer>
+		</helpers>
+		<resources>
+			<bkgviewer_setup>
+				<setup>
+					<module>Bkg_Viewer</module>
+					<class>Mage_Catalog_Model_Resource_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</bkgviewer_setup>
+		</resources>
+		<blocks>
+			<bkgviewer>
+				<class>Bkg_Viewer_Block</class>
+			</bkgviewer>
+		</blocks>
+		<models>
+			<bkgviewer>
+				<class>Bkg_Viewer_Model</class>
+				<resourceModel>bkgviewer_resource</resourceModel>
+			</bkgviewer>
+			<bkgviewer_resource>
+				<class>Bkg_Viewer_Model_Resource</class>
+				<entities>
+					<composit_composit>
+						<table>bkg_viewer_composit_composit</table>
+					</composit_composit>
+					<composit_layer>
+						<table>bkg_viewer_composit_layer</table>
+					</composit_layer>
+					<service_service>
+						<table>bkg_viewer_service_service</table>
+					</service_service>
+					<service_layer>
+						<table>bkg_viewer_service_layer</table>
+					</service_layer>
+
+				</entities>
+			</bkgviewer_resource>
+		</models>
+	</global>
+	<frontend>
+	</frontend>
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Bkg_Viewer_Adminhtml after="Mage_Adminhtml">Bkg_Viewer_Adminhtml
+						</Bkg_Viewer_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+		<menu>
+			<bkgviewer module="bkgviewer">
+				<title>Bkg Viewer</title>
+				<sort_order>50</sort_order>
+				<children>
+					<bkgviewer_service_service module="bkgviewer">
+						<title>Service Service</title>
+						<sort_order>10</sort_order>
+						<action>adminhtml/viewer_service_service/index</action>
+					</bkgviewer_service_service>
+					<bkgviewer_service_layer module="bkgviewer">
+						<title>Service Layer</title>
+						<sort_order>20</sort_order>
+						<action>adminhtml/viewer_service_layer/index</action>
+					</bkgviewer_service_layer>
+
+				</children>
+			</bkgviewer>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<bkgviewer module="bkgviewer">
+							<title>Bkg Viewer</title>
+							<sort_order>10</sort_order>
+							<children>
+								<bkgviewer_service_service module="bkgviewer">
+									<title>Service Service</title>
+									<sort_order>10</sort_order>
+								</bkgviewer_service_service>
+								<bkgviewer_service_layer module="bkgviewer">
+									<title>Service Layer</title>
+									<sort_order>20</sort_order>
+								</bkgviewer_service_layer>
+
+							</children>
+						</bkgviewer>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<translate>
+			<modules>
+				<Bkg_Viewer>
+					<files>
+						<default>Bkg/Viewer.csv</default>
+					</files>
+				</Bkg_Viewer>
+			</modules>
+		</translate>
+		<layout>
+			<updates>
+				<bkgviewer>
+					<file>bkg/viewer.xml</file>
+				</bkgviewer>
+			</updates>
+		</layout>
+	</adminhtml>
+</config>
