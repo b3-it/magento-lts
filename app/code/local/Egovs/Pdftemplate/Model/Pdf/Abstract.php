@@ -856,7 +856,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
     
     protected function getEPayblConfig($store)
     {
-    	$imprint = Mage::getStoreConfig('payment/paymentbase', $store);
+    	$imprint = Mage::getStoreConfig('payment_services/paymentbase', $store);
     	return $imprint;
     }
     
