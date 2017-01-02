@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * XML Bind  für Opentrans 2.1
+ * XML Bind  für WMS 1.3
  * @category   	B3it
  * @package    	B3it_XmlBind_Wms13_
  * @name       	Identifier

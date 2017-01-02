@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * XML Bind  für Opentrans 2.1
+ * XML Bind  für WMS 1.3
  * @category   	B3it
  * @package    	B3it_XmlBind_Wms13_
  * @name       	Exception
@@ -13,12 +13,49 @@ class B3it_XmlBind_Wms13_Exception extends B3it_XmlBind_Wms13_XmlObject
 {
 	
 	
+	
+	/* @var B3it_XmlBind_Wms13_Format */
+	private $__FormatA = array();
+
 
 	
 
 	
 
 	
+	
+
+	/**
+	 * Create new B3it_XmlBind_Wms13_Format and add it to list
+	 * @return B3it_XmlBind_Wms13_Format
+	 */
+	public function getFormat()
+	{
+		$res = new B3it_XmlBind_Wms13_Format();
+		$this->__FormatA[] = $res;
+			
+		return $res;
+	}
+	
+	/**
+	 * @param $value B3it_XmlBind_Wms13_Format
+	 * @return B3it_XmlBind_Wms13_Exception
+	 */
+	public function setFormat($value)
+	{
+		$this->__FormatA[] = $value;
+		return $this;
+	}
+	
+	/**
+	 * @return B3it_XmlBind_Wms13_Format[]
+	 */
+	public function getAllFormat()
+	{
+		return $this->__FormatA;
+	}
+
+
 
 
 
@@ -32,6 +69,11 @@ class B3it_XmlBind_Wms13_Exception extends B3it_XmlBind_Wms13_XmlObject
 			$xml->setAttribute($key,$value);
 		}
 		
+		if($this->__FormatA != null){
+			foreach($this->__FormatA as $item){
+				$item->toXml($xml);
+			}
+		}
 
 
 		return $xml;
