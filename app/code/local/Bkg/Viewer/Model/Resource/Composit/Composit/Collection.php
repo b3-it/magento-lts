@@ -15,4 +15,6 @@ class Bkg_Viewer_Model_Resource_Composit_Composit_Collection extends Mage_Core_M
         parent::_construct();
         $this->_init('bkgviewer/composit_composit');
     }
+    
+ 
 }

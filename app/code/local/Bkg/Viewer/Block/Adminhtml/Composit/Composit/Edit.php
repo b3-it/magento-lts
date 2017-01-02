@@ -16,7 +16,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit extends Mage_Adminhtml_B
 
         $this->_objectId = 'id';
         $this->_blockGroup = 'bkgviewer';
-        $this->_controller = 'adminhtml_Composit_Composit';
+        $this->_controller = 'adminhtml_composit_composit';
 
         $this->_updateButton('save', 'label', Mage::helper('bkgviewer')->__('Save Item'));
         $this->_updateButton('delete', 'label', Mage::helper('bkgviewer')->__('Delete Item'));
@@ -28,11 +28,33 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit extends Mage_Adminhtml_B
             'class'     => 'save',
         ), -100);
 
+       	$url = $this->getUrl('adminhtml/viewer_service_service/layers',array('id'=>'layer_id'));
         $this->_formScripts[] = "
             function saveAndContinueEdit(){
                 editForm.submit($('edit_form').action+'back/edit/');
             }
+        		
+        	function reloadLayer()
+			{
+        		var url = '".$url."';
+				var id = \$j('#service option:selected').val();
+        		url = url.replace('layer_id',id);
+        		//alert(url);
+        		\$j.getJSON(url, function(data) {
+				    \$j('#service_layers option').remove();
+				    \$j.each(data, function(){
+				        \$j('#service_layers').append(new Option(this.name,this.value));
+					})
+        		})	
+				
+			}	
+        	
         ";
+    }
+    
+    protected function _getLayersUrl($id)
+    {
+    	return $this->getUrl('adminhtml/viewer_service_service/layers',array('id'=>$id));
     }
 
     public function getHeaderText()

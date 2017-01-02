@@ -15,4 +15,15 @@ class Bkg_Viewer_Model_Resource_Service_Service_Collection extends Mage_Core_Mod
         parent::_construct();
         $this->_init('bkgviewer/service_service');
     }
+    
+    public function getAsFormOptions()
+    {
+    	$res = array();
+    	foreach ($this->getItems() as $item)
+    	{
+    		$res[$item->getId()] = $item->getTitle();
+    	}
+    	 
+    	return $res;
+    }
 }

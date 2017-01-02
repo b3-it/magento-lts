@@ -44,8 +44,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
-			$this->_addContent($this->getLayout()->createBlock('bkgviewer/adminhtml_composit_composit_edit'))
-				->_addLeft($this->getLayout()->createBlock('bkgviewer/adminhtml_composit_composit_edit_tabs'));
+			$this->_addContent($this->getLayout()->createBlock('bkgviewer/adminhtml_composit_composit_edit'));
 
 			$this->renderLayout();
 		} else {

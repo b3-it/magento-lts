@@ -22,5 +22,44 @@
   */
 class Bkg_Viewer_Helper_Data extends Mage_Core_Helper_Abstract
 {
-
+	public function fetchData($url)
+	{
+		$ch = curl_init();
+		
+		// Follow any Location headers
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		//curl_setopt($ch, CURLOPT_GET, 1);
+		
+// 		if(!empty($this->getUser())){
+// 			$this->setLog('setze Username: '. $this->getUser());
+// 			curl_setopt($ch,CURLOPT_PROXYUSERPWD,$this->getUser().':'.$this->getPwd());
+// 		}
+		
+		$output = curl_exec($ch);
+		
+			
+		if(curl_error($ch))
+		{
+			throw new Exception(curl_error($ch));
+		}
+			
+		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			
+		if ($http_status !=200)
+		{
+			throw new Exception("HTTP Status: " . $http_status ." ".$output);
+		}
+			
+		$curl_errno= curl_errno($ch);
+		if($curl_errno > 0)
+		{
+			throw new Exception('Curl Error: '.curl_strerror($curl_errno));
+		}
+				
+		curl_close($ch);
+		return $output;
+	}
 }
