@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_viewer_service_service_index>
+        <reference name="content">
+            <block type="bkgviewer/adminhtml_service_service" name="bkgviewer" />
+        </reference>
+    </adminhtml_viewer_service_service_index>
+    <adminhtml_viewer_composit_composit_index>
+        <reference name="content">
+            <block type="bkgviewer/adminhtml_composit_composit" name="bkgviewer" />
+        </reference>
+    </adminhtml_viewer_composit_composit_index>
+   <adminhtml_viewer_composit_composit_edit>
+    <update handle="jquery_load_handle"/>
+        <reference name="head">
+          <action method="addJs"><script>lib/jstree/jstree.js</script></action>
+          <action method="addCss"><stylesheet>lib/jstree/themes/default/style.min.css</stylesheet></action>
+        </reference>
+    </adminhtml_viewer_composit_composit_edit>
+</layout>
