@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * XML Bind  für Opentrans 2.1
+ * XML Bind  für WMS 1.3
  * @category   	B3it
  * @package    	B3it_XmlBind_Wms13_
  * @name       	ExGeographicboundingbox_Eastboundlongitude
@@ -9,7 +9,7 @@
  * @copyright  	Copyright (c) 2016 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class B3it_XmlBind_Wms13_ExGeographicboundingbox_Eastboundlongitude extends B3it_XmlBind_Wms13_XmlObject
+class B3it_XmlBind_Wms13_ExGeographicboundingbox_Eastboundlongitude extends B3it_XmlBind_Wms13_Longitudetype
 {
 	
 	
@@ -33,6 +33,7 @@ class B3it_XmlBind_Wms13_ExGeographicboundingbox_Eastboundlongitude extends B3it
 		}
 		
 
+		$xml = parent::toXml($xml);
 
 		return $xml;
 	}
