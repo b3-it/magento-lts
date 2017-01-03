@@ -1,4 +1,4 @@
-﻿<?php
+﻿﻿<?php
 /**
  * Magento
  *
@@ -54,11 +54,10 @@
         <?php foreach ($_orders as $_order): ?>
         <tr>
             <td class="number">
-                <?php echo $_order->getRealOrderId() ?>
-                <a class="egov-view mobile-view"
+                <a class=""
                    href="<?php echo $this->getViewUrl($_order) ?>"
                    title="<?php echo $this->__('View Order') ?>"
-                   alt="<?php echo $this->__('View Order') ?>"> </a>
+                   alt="<?php echo $this->__('View Order') ?>"><?php echo $_order->getRealOrderId() ?></a>
             </td>
             <td class="date"><span class="nobr"><?php echo $this->formatDate($_order->getCreatedAtStoreDate()) ?></span></td>
             <td class="ship"><?php echo $_order->getShippingAddress() ? $this->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
@@ -66,10 +65,6 @@
             <td class="status"><em><?php echo $_order->getStatusLabel() ?></em></td>
             <td class="a-center view">
                 <span class="nobr">
-                <a class="egov-view"
-                   href="<?php echo $this->getViewUrl($_order) ?>"
-                   title="<?php echo $this->__('View Order') ?>"
-                   alt="<?php echo $this->__('View Order') ?>"> </a>
                 <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
                     <a href="<?php echo $this->getReorderUrl($_order) ?>"
                        class="link-reorder egov-reorder"

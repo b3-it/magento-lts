@@ -92,6 +92,10 @@
             		text-decoration: none;
             	}
             }
+
+            &.active a {
+                font-weight: bold;
+            }
         }
     }
 
@@ -124,6 +128,13 @@
         	@include bp(max-width, $bp-medium) {
         		padding: 0 15px 0 25px;
         	}
+        }
+    }
+
+    // hide view all links, because they can't be good disabled
+    li.egov-catalog-title {
+        li.view-all {
+            display: none;
         }
     }
 }

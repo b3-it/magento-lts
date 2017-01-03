@@ -15,7 +15,7 @@
 ?>
 <div class="account-login<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
     <?php echo $this->getMessagesBlock()->toHtml() ?>
-        <div class="col2-set egov-account-login">
+        <div class="col2-set dwd-account-login">
 
             <div class="page-title">
                 <h1><?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
@@ -31,14 +31,7 @@
                 <form action="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>" method="get" id="register-form" class="scaffold-form">
                     <h2><?php echo $this->__('New Here?') ?></h2>
                     <div class="content">
-                        <p class="form-instructions">
-                            <?php echo $this->__('Registration is free and easy!') ?>
-                        </p>
-                        <ul class="benefits">
-                            <li><?php echo $this->__('Faster checkout') ?></li>
-                            <li><?php echo $this->__('Save multiple shipping addresses') ?></li>
-                            <li><?php echo $this->__('View and track orders and more') ?></li>
-                        </ul>
+                        <p><?php echo $this->__("Mage_Customer::By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.") ?></p>
                     </div>
                     <div class="buttons-set">
                         <button type="submit" class="button" title="<?php echo $this->quoteEscape($this->__('Login')) ?>" name="send" id="send">
@@ -54,7 +47,7 @@
                 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" class="scaffold-form">
                     <?php echo $this->getBlockHtml('formkey'); ?>
                     <h2><?php echo $this->__('Already registered?') ?></h2>
-                    <div class="content fieldset">
+                    <div class="content">
                         <p class="form-instructions">
                             <?php echo $this->__('If you have an account with us, please log in.') ?>
                         </p>
@@ -64,7 +57,7 @@
 				            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
 			              <?php endif; ?>
 			            </div>
-			            
+			            <fieldset<?php if( $_secure != true ): ?> class="width"<?php endif; ?>>
                         <ul class="form-list">
                             <li>
                                 <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
@@ -87,6 +80,7 @@
                         <p class="required">
                             <?php echo $this->__('* Required Fields') ?>
                         </p>
+                        </fieldset>
                     </div>
                     <div class="buttons-set">
                         <a class="button" href="<?php echo $this->getForgotPasswordUrl() ?>">
