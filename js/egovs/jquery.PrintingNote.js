@@ -38,8 +38,12 @@ function checkJSON(m) {
  * 
  * @param   bool
  */
-function toggleLoading(show = false)
+function toggleLoading(show)
 {
+	if (show === undefined) {
+		show = false;
+	}
+	
 	if ( show == true ) {
 		// Seite "abdunkeln"
 	    $j('.wrapper').css('opacity', '0.5');
