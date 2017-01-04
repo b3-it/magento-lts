@@ -18,8 +18,6 @@ $parentLevel = $menuTree->getLevel();
 // Anpassen der Start-Ebene, da die Kategorie-Nav eine Hard geschrieben Ober-Navigation hat
 $childLevel = is_null($parentLevel) ? 1 : $parentLevel + 1;
 
-$show_all_link = TRUE;
-
 $counter = 1;
 $childrenCount = $children->count();
 
@@ -27,6 +25,8 @@ $parentPositionClass = $menuTree->getPositionClass();
 $itemPositionClassPrefix = $parentPositionClass ? $parentPositionClass . '-' : 'nav-';
 
 foreach ($children as $child) {
+	$show_all_link = TRUE;
+	
     $spacer = str_repeat('    ', $childLevel);
 	
 	$child->setLevel($childLevel);
