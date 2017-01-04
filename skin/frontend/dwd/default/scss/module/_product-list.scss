@@ -41,6 +41,7 @@ body.catalogsearch-result-index .page-title h1 {
 	    padding: 10px;
 		
 		margin-bottom: $global-product-spacing;
+		min-height: 205px;
 	}
 
     &:after {
@@ -87,6 +88,10 @@ body.catalogsearch-result-index .page-title h1 {
 	font-weight: bold;
 	line-height: $global-h5-size;
 	margin-bottom: 1rem;
+
+    //white-space: nowrap;
+    overflow: hidden;
+    //text-overflow: ellipsis;
 
     a {
         @include link-blau;

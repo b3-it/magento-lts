@@ -13,7 +13,7 @@
         max-width: 90vw;
     }
     
-    address {
+    div.main address {
         color: $textfarbe-mittel;
         text-align: left;
         font-size: 1rem;
@@ -61,7 +61,7 @@
         }
     }
 
-    .required {
+    p.required, label.required > em {
         color: $global-warning-color;
     }
 
@@ -104,12 +104,16 @@
     }
 
     .col-1, .col-2, h3, h4 {
-        border: 0px !important;
         background-color: transparent !important;
     }
 
     div.error-msg {
         width: 85%;
+    }
+
+    div.account-login {
+        position: relative;
+        top: -25px;
     }
 
     ul.checkout-progress {

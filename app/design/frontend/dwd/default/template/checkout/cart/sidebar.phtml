@@ -10,14 +10,15 @@
  * Shoping cart sidebar
  *
  * @see Mage_Checkout_Block_Cart_Sidebar
+ * @var $this Mage_Checkout_Block_Cart_Sidebar
  */
 
 ?>
 <?php if ($this->getIsNeedToDisplaySideBar()):?>
-<div class="block block-cart">
+<div class="block block-cart"  name="<?php echo $this->getParentBlock()->getNameInLayout()."/".$this->getNameInLayout(); ?>">
     <?php $_cartQty = $this->getSummaryCount() ?>
     <div class="block-title">
-        <strong><span><?php echo $this->__('My Cart') ?></span></strong>
+        <span><?php echo $this->__('My Cart') ?></span>
     </div>
     <div class="block-content">
     <?php if ($_cartQty>0): ?>

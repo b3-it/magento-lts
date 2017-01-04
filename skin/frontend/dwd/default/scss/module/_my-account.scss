@@ -100,7 +100,7 @@
         }
     }
 
-    p.required {
+    p.required, label.required > em {
         color: $global-warning-color;
     }
 

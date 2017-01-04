@@ -1207,3 +1207,33 @@
         display: none;
     }
 }
+
+div.block-cart {
+	font-size: 1rem;
+	margin-bottom: inherit;
+
+    .block-content {
+        padding: 0px 5px;
+
+        .summary {
+            padding: 0 10px;
+            p {
+                margin: inherit;
+            }
+        }
+    }
+
+    //hotfixing of egov inside of dwd
+    a.egov-cart {
+        font-size: 1rem;
+        font-family: inherit;
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        &::before {
+            font-family: "FontAwesome";
+            font-size: $global-fontsize + 12;
+            margin-right: $global-fontsize + 12;
+        }
+    }
+}

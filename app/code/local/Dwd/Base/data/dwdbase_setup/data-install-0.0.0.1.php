@@ -25,8 +25,8 @@ $cms_blocks = array(
  						'identifier' => 'dwd_footer_block',
 						'content'    => '<div id="footer-block-legal"><img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\'}}" />
 <div>
-<p>Der {{block type="imprint/field" value="shop_name"}} ist eine Bundesoberbeh&ouml;rde im Gesch&auml;ftsbereich des Bundesministeriums f&uuml;r Verkehr und digitale Infrastruktur.</p>
-<address>{{block type="imprint/field" value="shop_name"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</address></div>
+<p>Der Deutsche Wetterdienst ist eine Bundesoberbeh&ouml;rde im Gesch&auml;ftsbereich des Bundesministeriums f&uuml;r Verkehr und digitale Infrastruktur.</p>
+<address>{{block type="imprint/field" value="company_first"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</address></div>
 </div>',
 						'isactive'   => 1,
 				        'stores'     => array(0)
