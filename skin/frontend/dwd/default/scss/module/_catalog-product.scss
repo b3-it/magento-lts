@@ -743,7 +743,47 @@
     
     form > div.price-box, form > span.tax-details {
         display: none;
-    } 
+    }
+
+    .add-to-cart {
+        @include grau-hover-blau;
+        
+        height: 51px;
+        width: 205px;
+
+        label {
+            font-size: 1rem;
+            font-color: $grundfarbe-blau;
+            display: inline-block;
+            line-height: 1rem;
+            margin-top: -20px;
+            vertical-align: middle;
+        }
+        .qty {
+            font-size: 1rem;
+            line-height: 1rem;
+            border: 1px solid $grundfarbe-blau;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -20px;
+            width: 35px;
+            height: 2rem;
+        }
+        .btn-cart {
+       	    font-size: 1rem;
+            font-color: $grundfarbe-blau;
+            display: inline-block;
+            background: none;
+            float: none;
+            padding: 2px;
+            width: 50%;
+       	}
+        &:hover, &:active, &:focus {
+            .btn-cart {
+                color: $grundfarbe-weiss;
+            }
+        }
+    }
 
     .add-to-cart-buttons {
         button {
