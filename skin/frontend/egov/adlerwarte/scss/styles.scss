@@ -14,3 +14,9 @@ $mq-fixed-value: false;
 
 @import "framework";
 @import "core";
+
+// ----------------------------------------------
+// Content
+
+@import "../../default/scss/content/home";
+@import "content/category";
