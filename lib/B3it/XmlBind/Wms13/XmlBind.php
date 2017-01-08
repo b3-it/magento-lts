@@ -43,7 +43,8 @@ class B3it_XmlBind_Wms13_XmlBind
             $getclassName = "get".$this->getUcFirst($name);
             
             if (!method_exists($model, $getclassName)) {
-            	throw new \RuntimeException("Model ".get_class($model)." does not have element ".$name);
+            	//throw new \RuntimeException("Model ".get_class($model)." does not have element ".$name);
+            	continue;
             }
             $childModel = $model->$getclassName();
             

@@ -1,7 +1,6 @@
 function addPages() {
-    //var pages = $j('#cms_pages').val() || [];
-    var cms_pages = $j('#cms_pages');
-    var selected = cms_pages.find('option:selected');
+    var service_layers = $j('#service_layers');
+    var selected = service_layers.find('option:selected');
 	selected.each(function(){
         nodeOptions.addPage($j(this).val(),$j(this).text());
     });
@@ -11,7 +10,7 @@ function isEmptyElement(val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
 
-$j('#jstree_demo').jstree({
+$j('#jstree_layer').jstree({
 	  "core" : {
 	    "animation" : 0,
 	    "check_callback" : true,
@@ -43,22 +42,22 @@ $j('#jstree_demo').jstree({
 	  ]
 	});
 
-$j('#jstree_demo').on("changed.jstree", function (e, data) {
+$j('#jstree_layer').on("changed.jstree", function (e, data) {
 	if(data.selected.length) {
 		nodeOptions.show(data.instance.get_node(data.selected[0]));
 	}
 });
-$j('#jstree_demo').on("rename_node.jstree", function (e, data) {
+$j('#jstree_layer').on("rename_node.jstree", function (e, data) {
 	if(data.node) {
 		nodeOptions.rename(data.node,data.text);
 	}
 });
-$j('#jstree_demo').on("move_node.jstree", function (e, data) {
+$j('#jstree_layer').on("move_node.jstree", function (e, data) {
 	if(data.node) {
 		nodeOptions.move(data.node, data.position);
 	}
 });
-$j('#jstree_demo').on("ready.jstree", function (e, data) {
+$j('#jstree_layer').on("ready.jstree", function (e, data) {
 	init_db_nodes();
 });
 
@@ -75,7 +74,7 @@ var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class
 				'<input type="hidden" id="node_options_{{number}}_parent" name="node_options[{{number}}][parent]" value="{{parent}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_pos" name="node_options[{{number}}][pos]" value="{{pos}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_type" name="node_options[{{number}}][type]" value="{{type}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_page_id" name="node_options[{{number}}][page_id]" value="{{page_id}}" />'+
+				'<input type="hidden" id="node_options_{{number}}_serviceLayer" name="node_options[{{number}}][serviceLayer]" value="{{serviceLayer}}" />'+
 				'<input type="hidden" id="node_options_{{number}}_title" name="node_options[{{number}}][title]" value="{{title}}" />'+
 				'</div>';
 
@@ -84,7 +83,7 @@ var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class
 				
 var nodeOptions = {
 		div_id : "#hidden_navi_menu",
-		tree : $j("#jstree_demo"),
+		tree : $j("#jstree_layer"),
 		templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
 		templateText : nodeTemplate,
 		itemCount : 0,
@@ -176,9 +175,9 @@ var nodeOptions = {
 					data.type = "default"
 				}
 				data.number = this.itemCount;
-				var text = data.label;
+				var text = data.title;
 				if(data.type == 'page'){
-					text = text + " (" + data.title + ")";
+					text = text + " (" + data.service_title + ")";
 				}
 				sel = ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
 				if(sel && edit) {
@@ -211,7 +210,7 @@ var nodeOptions = {
 			data.number = this.itemCount;
 			data.type = 'page';
 			data.label = label;
-			data.page_id = id;
+			data.serviceLayer = id;
 			data.title = label;
 			sel = ref.create_node(sel,  {"type":"page","data":data, "text" : data.label});
 			
@@ -251,7 +250,7 @@ var nodeOptions = {
             	}
 				sel = sel[0];
 				var node = ref.get_node(sel);
-				if(node.data.type = 'page'){
+				if(node.data.type = 'layer'){
 					var node = ref.get_node(sel);
 					var elem = $j("#node_options_" + node.data.number + "_name");
 					node.text = elem.val();
