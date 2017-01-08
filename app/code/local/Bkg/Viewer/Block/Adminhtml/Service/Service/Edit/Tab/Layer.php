@@ -22,7 +22,9 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_Edit_Tab_Layer extends Mage_Adm
 	
 	protected function _prepareCollection()
 	{
+		$service = Mage::registry('serviceservice_data');
 		$collection = Mage::getModel('bkgviewer/service_layer')->getCollection();
+		$collection->getSelect()->where('service_id='.intval($service->getId()));
 		$this->setCollection($collection);
 		return parent::_prepareCollection();
 	}

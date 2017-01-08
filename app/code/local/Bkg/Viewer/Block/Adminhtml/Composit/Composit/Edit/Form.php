@@ -40,7 +40,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       $form->setUseContainer(true);
       $this->setForm($form);
       
-      $composit = Mage::registry('composit_data');
+      $composit = Mage::registry('compositcomposit_data');
       
       $fieldset = $form->addFieldset('navi', array('legend'=>Mage::helper('bkgviewer')->__('Composit')));
       
@@ -48,8 +48,8 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       		'label'     => Mage::helper('bkgviewer')->__('Name'),
       		'required'  => true,
       
-      		'name'      => 'name',
-      		//'value'	=> $navi->getTitle() ? $navi->getTitle() : Mage::helper('bkgviewer')->__('Navigation'),
+      		'name'      => 'title',
+      		'value'	=> $composit->getTitle() ? $composit->getTitle() : Mage::helper('bkgviewer')->__('Navigation'),
       		//'onchange'  => 'onchangeTransferType()',
       
       ));
@@ -62,19 +62,19 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       
       
       $fieldset->addField('service', 'select', array(
-      		'label'     => Mage::helper('bkgviewer')->__('Layer'),
+      		'label'     => Mage::helper('bkgviewer')->__('Service'),
       		//'required'  => true,
       		//'values'    => $this->getPages(),
       		'name'      => 'service',
       		'value'	=> '',
-      		'options' => $services->getAsFormOptions(),
+      		'options' => $services->getAsFormOptions(true),
       		'onchange'  => 'reloadLayer()',
       
       ));
       
       
       $fieldset->addField('service_layers', 'multiselect', array(
-      		'label'     => Mage::helper('bkgviewer')->__('Pages'),
+      		'label'     => Mage::helper('bkgviewer')->__('Layer'),
       		//'required'  => true,
       		//'values'    => $this->getPages(),
       		'name'      => 'service_layers',
@@ -83,6 +83,35 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       
       ));
       
+      $fieldset->addField('permanent', 'checkbox', array(
+      		'label'     => Mage::helper('bkgviewer')->__('permanent'),
+      		//'required'  => true,
+      		//'values'    => $this->getPages(),
+      		'name'      => 'permanent',
+      		'value'	=> ''
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      ));
+      
+      $fieldset->addField('betroffenheit_layer', 'checkbox', array(
+      		'label'     => Mage::helper('bkgviewer')->__('betroffenheit'),
+      		//'required'  => true,
+      		//'values'    => $this->getPages(),
+      		'name'      => 'betroffenheit_layer',
+      		'value'	=> ''
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      ));
+      
+      $fieldset->addField('entity_layer', 'checkbox', array(
+      		'label'     => Mage::helper('bkgviewer')->__('entity layer'),
+      		//'required'  => true,
+      		//'values'    => $this->getPages(),
+      		'name'      => 'entity_layer',
+      		'value'	=> ''
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      ));
      
       
       
@@ -91,7 +120,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       		'name' => 'copy_cms_pages',
       		'onclick' => "addPages();",
       		'class'	=> 'form-button',
-      		'label' => Mage::helper ( 'bkgviewer' )->__ ( 'Copy selected Pages to Navigation' ),
+      		'label' => Mage::helper ( 'bkgviewer' )->__ ( 'Copy selected Layer to Navigation' ),
       ) );
       
      

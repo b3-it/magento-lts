@@ -60,32 +60,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					/* Starting upload */
-					$uploader = new Varien_File_Uploader('filename');
-
-					// Any extention would work
-	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-					$uploader->setAllowRenameFiles(false);
-
-					// Set the file upload mode
-					// false -> get the file directly in the specified folder
-					// true -> get the file in the product like folders
-					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
-
-					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS ;
-					$uploader->save($path, $_FILES['filename']['name'] );
-
-				} catch (Exception $e) {
-
-		        }
-
-		        //this way the name is saved in DB
-	  			$data['filename'] = $_FILES['filename']['name'];
-			}
+			
 
 
 			$model = Mage::getModel('bkgviewer/composit_composit');
@@ -101,6 +76,10 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 				}
 
 				$model->save();
+				
+				if(isset($data['node_options'])){
+					$this->saveChilds($data['node_options'], $model->getId());
+				}
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkgviewer')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -119,6 +98,80 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
         }
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkgviewer')->__('Unable to find item to save'));
         $this->_redirect('*/*/');
+	}
+	
+	public function saveChilds($nodes,$compositId)
+	{
+		$loaded = array();
+		//model erzeugen oder laden
+		foreach($nodes as $node)
+		{
+			$model = Mage::getModel('bkgviewer/composit_layer');
+			if(!isset($node['id']) || empty($node['id']))
+			{
+				$model->save();
+				$node['id'] = $model->getId();
+				$node['model'] = $model;
+			}else {
+				$model = Mage::getModel('bkgviewer/composit_layer')->load($node['id']);
+				$node['model'] = $model;
+			}
+				
+			$model->setTitle($node['title'])
+			->setPos($node['pos'])
+			->setType($node['type'])
+			->setCompositId($compositId);
+				
+			if(!isset($node['serviceLayer']) || empty($node['serviceLayer']))
+			{
+				$model->unsetData('service_layer');
+			}else{
+	
+				$model->setServiceLayerId($node['serviceLayer']);
+			}
+			$loaded[] = $node;
+				
+		}
+	
+		//jetzt die Elternbeziehung und die Reihenfolge
+		foreach($loaded as $node)
+		{
+				
+			$model = $node['model'];
+			$parent = $this->findByNumber($loaded, $node['parent']);
+				
+			if($parent){
+				$model->setParentId($parent['model']->getId());
+			}else{
+				$model->setData('parent_id',null);
+			}
+				
+				
+			$model->save();
+				
+		}
+	
+		foreach($loaded as $node)
+		{
+			if($node['is_delete']){
+				$model = $node['model'];
+				$model->delete();
+			}
+		}
+	
+	
+	
+	}
+	
+	private function findByNumber($nodes,$number)
+	{
+		foreach ($nodes as $node){
+			if($node['number'] == $number){
+				return $node;
+			}
+		}
+	
+		return null;
 	}
 
 	public function deleteAction() {

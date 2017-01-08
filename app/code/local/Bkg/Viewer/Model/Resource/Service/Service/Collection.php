@@ -16,9 +16,12 @@ class Bkg_Viewer_Model_Resource_Service_Service_Collection extends Mage_Core_Mod
         $this->_init('bkgviewer/service_service');
     }
     
-    public function getAsFormOptions()
+    public function getAsFormOptions($appendEmpty = false)
     {
     	$res = array();
+    	if($appendEmpty){
+    		$res[0] = Mage::helper('bkgviewer')->__('-- please Select --');
+    	}
     	foreach ($this->getItems() as $item)
     	{
     		$res[$item->getId()] = $item->getTitle();

@@ -28,9 +28,9 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Tree extends Mage_Adminh
 	public function getNodes()
 	{
 		$res = array();
-		$composit = Mage::registry('composit_data');
+		$composit = Mage::registry('compositcomposit_data');
 		$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection();
-		//$res = $collection->getNodesAsArray($composit->getId(),true);
+		$res = $collection->getNodesAsArray($composit->getId(),true);
 		return $res;
 	}
   

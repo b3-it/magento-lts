@@ -31,6 +31,7 @@ class Bkg_Viewer_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_ENCODING ,"");
 		//curl_setopt($ch, CURLOPT_GET, 1);
 		
 // 		if(!empty($this->getUser())){

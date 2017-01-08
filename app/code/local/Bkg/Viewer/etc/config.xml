@@ -84,7 +84,7 @@
 						<action>adminhtml/viewer_service_layer/index</action>
 					</bkgviewer_service_layer>
 					<bkgviewer_composit_composit module="bkgviewer">
-						<title>composit_composit</title>
+						<title>Composit Composit</title>
 						<sort_order>30</sort_order>
 						<action>adminhtml/viewer_composit_composit/index</action>
 					</bkgviewer_composit_composit>					
@@ -110,7 +110,6 @@
 									<title>Service Layer</title>
 									<sort_order>20</sort_order>
 								</bkgviewer_service_layer>
-
 							</children>
 						</bkgviewer>
 					</children>

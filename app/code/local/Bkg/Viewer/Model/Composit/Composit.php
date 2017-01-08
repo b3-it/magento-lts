@@ -15,4 +15,12 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('bkgviewer/composit_composit');
     }
+    
+    public function getLayers()
+    {
+    	$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection;
+    	$collection->getSelect()->where('composit_id = '.$this->getId());
+    	
+    	return $collection->getItems();
+    }
 }

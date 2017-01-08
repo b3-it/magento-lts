@@ -33,10 +33,11 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/composit_layer')))
 		CREATE TABLE {$installer->getTable('bkgviewer/composit_layer')} (
 	  		`id` int(11) unsigned NOT NULL auto_increment,
 	  		`title` varchar(128) default '',
+	  		`type` varchar(45) default '',
 	  		`parent_id` int(11) unsigned,
 	  		`composit_id` int(11) unsigned,
 	  		`pos` smallint unsigned default 0,
-	  		`service_layer` int(11) unsigned ,
+	  		`service_layer_id` int(11) unsigned ,
 	  		PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -52,6 +53,8 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_service')))
     	`title` varchar(255) default '',
     	`format` varchar(128) default '',
     	`url` varchar(512) default '',
+    	`url_featureinfo` varchar(512) default '',
+    	`url_map` varchar(512) default '',
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -69,10 +72,10 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_layer')))
 	    `abstract` varchar(512) default '',
 	    `parent_id` int(11) unsigned,
 	    `service_id` int(11) unsigned,
-	    `bb_west` POINT,
-	    `bb_east` POINT,
-	    `bb_south` POINT,
-	    `bb_north` POINT,
+	    `bb_west` varchar(128),
+	    `bb_east` varchar(128),
+	    `bb_south` varchar(128),
+	    `bb_north` varchar(128),
 	    `style` varchar(255) default '',
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`service_id`) REFERENCES `{$this->getTable('bkgviewer/service_service')}`(`id`) ON DELETE CASCADE,
@@ -90,10 +93,8 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_crs')))
 			  `id` int(11) unsigned NOT NULL auto_increment,
 			  `name` varchar(255) default '',
 			  `layer_id` int(11) unsigned,
-			  `minx` POINT,
-			  `maxx` POINT,
-			  `miny` POINT,
-			  `maxy` POINT,
+			  `min` POINT,
+			  `max` POINT,
 			  PRIMARY KEY (`id`),
 			  FOREIGN KEY (`layer_id`) REFERENCES `{$this->getTable('bkgviewer/service_layer')}`(`id`) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -103,26 +104,26 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_crs')))
 
 
 
-/*
-if (!$installer->getAttribute('catalog_product', 'request')) {
-	$installer->addAttribute('catalog_product', 'request', array(
-			'label' => 'With Request',
+
+if (!$installer->getAttribute('catalog_product', 'geocomposit')) {
+	$installer->addAttribute('catalog_product', 'geocomposit', array(
+			'label' => 'Geo Composit',
 			'input' => 'select',
 			'type' => 'int',
 			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
-			'visible' => false,
+			'visible' => true,
 			//'required' => true,
 			'is_user_defined' => true,
 			'searchable' => false,
 			'comparable' => false,
 			'visible_on_front' => false,
 			'visible_in_advanced_search' => false,
-			'source'    => 'eav/entity_attribute_source_boolean',
+			'source'    => 'bkgviewer/entity_attribute_source_geocomposit',
 			'default' => '1',
 			//'option' => $option,
 			'group' => 'General',
-			'apply_to' => Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE,
+			//'apply_to' => Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE,
 	));
 }
-*/
+
 $installer->endSetup();
