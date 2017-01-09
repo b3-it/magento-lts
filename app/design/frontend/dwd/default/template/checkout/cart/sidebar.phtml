@@ -15,7 +15,7 @@
 
 ?>
 <?php if ($this->getIsNeedToDisplaySideBar()):?>
-<div class="block block-cart"  name="<?php echo $this->getParentBlock()->getNameInLayout()."/".$this->getNameInLayout(); ?>">
+<div class="block block-cart">
     <?php $_cartQty = $this->getSummaryCount() ?>
     <div class="block-title">
         <span><?php echo $this->__('My Cart') ?></span>
@@ -48,8 +48,9 @@
         <div class="actions">
             <?php echo $this->getChildHtml('extra_actions') ?>
 
-            <a class="button egov-cart" href="<?php echo $this->getUrl('checkout/cart'); ?>" title="<?php echo $this->__('View Shopping Cart'); ?>">
-                <span><?php echo $this->__('View Shopping Cart'); ?></span>
+            <a class="button" href="<?php echo $this->getUrl('checkout/cart'); ?>" title="<?php echo $this->__('View Shopping Cart'); ?>">
+                <span class="egov-cart"></span>
+                <span class="default-font"><?php echo $this->__('View Shopping Cart'); ?></span>
             </a>
         </div>
     <?php endif ?>

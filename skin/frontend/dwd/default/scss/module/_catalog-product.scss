@@ -205,12 +205,12 @@
 }
 
 .catalog-product-view {
-	.validation-advice, .validation-failed {
-	    outline: $global-warning-color !important;
-	    border-color: $global-warning-color !important;
-	    color: $global-warning-color !important;
+	.validation-advice {
+	    color: $global-warning-color;
 	}
-	
+	.validation-failed {
+	    border-color: $global-warning-color !important;
+	}
 	
     .col1-layout {
         .col-main {
@@ -736,94 +736,32 @@
 }
 
 .product-view {
-    .add-to-box:after,
-    .add-to-cart:after {
-        @include clearfix;
-    }
-    
     form > div.price-box, form > span.tax-details {
         display: none;
     }
 
-    .add-to-cart {
-        @include grau-hover-blau;
-        
-        height: 51px;
-        width: 205px;
-
-        label {
-            font-size: 1rem;
-            font-color: $grundfarbe-blau;
-            display: inline-block;
-            line-height: 1rem;
-            margin-top: -20px;
-            vertical-align: middle;
-        }
-        .qty {
-            font-size: 1rem;
-            line-height: 1rem;
-            border: 1px solid $grundfarbe-blau;
-            display: inline-block;
-            vertical-align: middle;
-            margin-top: -20px;
-            width: 35px;
-            height: 2rem;
-        }
-        .btn-cart {
-       	    font-size: 1rem;
-            font-color: $grundfarbe-blau;
-            display: inline-block;
-            background: none;
-            float: none;
-            padding: 2px;
-            width: 50%;
-       	}
-        &:hover, &:active, &:focus {
-            .btn-cart {
-                color: $grundfarbe-weiss;
-            }
-        }
-    }
-
-    .add-to-cart-buttons {
-        button {
-            @include grau-hover-blau;
-		    display: block;
-		    font-size: 1.2rem;
-		    height: 51px;
-		    margin: 10px 0 0;
-		    padding: 12px 0;
-		    text-align: center;
-		    width: 205px;
-		    
-            > span.egov-cart {
-                font-size: $global-h6-size;
-                margin: 0;
-                
-                @include bp(max-width, $bp-small) {
-                    font-size: 1rem;
-                }
-            }
-        }
-    }
+	.add-to-cart {
+	    width: 260px;
+	    background-color: $grundfarbe-blgr;
+	    padding-left: 10px;
+	
+	    .input-text {
+	        padding: 10px;
+	        width: 31%;
+	        border-color: $grundfarbe-blau;
+	        margin: 7px 0;
+	    }
+	    .button {
+	        float: none;
+	        width: 120px;
+	        padding: 7px 20px;
+            float: right;
+	    }
+	}
 
     /* Set a min-height so that the floated elements break appropriately */
     .product-options-bottom .price-box {
         min-height: 40px;
-    }
-
-    .product-options-bottom .price-box,
-    .add-to-cart-buttons .paypal-logo {
-        margin-bottom: 10px;
-    }
-    .product-options-bottom {
-        .qty-wrapper, .add-to-cart-buttons {
-            display: inline-block;
-            vertical-align: top;
-        }
-        .button {
-            margin: 0;
-        }
     }
 
     .add-to-cart .qty-wrapper label {
@@ -840,26 +778,6 @@
     .alert-price,
     .alert-stock {
         clear: both;
-    }
-}
-
-@include bp(max-width, $bp-xsmall) {
-    .product-view .add-to-cart-buttons {
-        .paypal-or {
-            line-height: 20px;
-        }
-
-        .paypal-logo,
-        .paypal-or,
-        .paypal-button,
-        .button {
-            text-align: center;
-            width: 100%;
-            display: block;
-            margin-right: 0;
-            margin-left: 0;
-            float: none;
-        }
     }
 }
 
@@ -1260,20 +1178,6 @@ div.block-cart {
             p {
                 margin: inherit;
             }
-        }
-    }
-
-    //hotfixing of egov inside of dwd
-    a.egov-cart {
-        font-size: 1rem;
-        font-family: inherit;
-        padding-top: 12px;
-        padding-bottom: 12px;
-
-        &::before {
-            font-family: "FontAwesome";
-            font-size: $global-fontsize + 12;
-            margin-right: $global-fontsize + 12;
         }
     }
 }
