@@ -56,7 +56,9 @@ class Bkg_Viewer_Block_Catalog_Product_View_Map extends Mage_Catalog_Block_Produ
     		}
     
     		$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection();
-    		$collection->getSelect()->where('composit_id='.intval($product->getGeocomposit()));
+    		$collection->getSelect()
+    			->where('composit_id='.intval($product->getGeocomposit()))
+    			->order('visual_pos');
     		$this->_compositLayers = $collection->getItems();
     	}
     	 

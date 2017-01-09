@@ -112,6 +112,16 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       		//'onchange'  => 'onchangeTransferType()',
       
       ));
+      
+      $fieldset->addField('visual_pos', 'text', array(
+      		'label'     => Mage::helper('bkgviewer')->__('visual_pos'),
+      		//'required'  => true,
+      		//'values'    => $this->getPages(),
+      		'name'      => 'visual_pos',
+      		'value'	=> '10'
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      ));
      
       
       

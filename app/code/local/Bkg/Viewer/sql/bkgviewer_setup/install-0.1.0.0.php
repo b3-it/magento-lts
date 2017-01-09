@@ -37,6 +37,7 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/composit_layer')))
 	  		`parent_id` int(11) unsigned,
 	  		`composit_id` int(11) unsigned,
 	  		`pos` smallint unsigned default 0,
+	  		`visual_pos` smallint unsigned default 0,
 	  		`service_layer_id` int(11) unsigned ,
 	  		PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
