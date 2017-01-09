@@ -210,6 +210,10 @@
 	}
 	.validation-failed {
 	    border-color: $global-warning-color !important;
+	    
+	    label {
+	        color: $global-warning-color;
+	    }
 	}
 	
     .col1-layout {
@@ -739,23 +743,41 @@
     form > div.price-box, form > span.tax-details {
         display: none;
     }
-
-	.add-to-cart {
-	    width: 260px;
-	    background-color: $grundfarbe-blgr;
+    
+    #add-to-cart-top, .add-to-cart {
+        background-color: $grundfarbe-blgr;
 	    padding-left: 10px;
-	
+	    
 	    .input-text {
 	        padding: 10px;
-	        width: 31%;
 	        border-color: $grundfarbe-blau;
 	        margin: 7px 0;
 	    }
+	}
+    
+    #add-to-cart-top {
+        width: 100%;
+
+	    .input-text {
+	        width: 21%;
+	    }
+	    
 	    .button {
-	        float: none;
+	        width: 100px;
+	        padding: 7px 5px;
+	    }
+    }
+
+	.add-to-cart {
+	    width: 260px;
+	
+	    .input-text {
+	        width: 30%;
+	    }
+
+	    .button {
 	        width: 120px;
 	        padding: 7px 20px;
-            float: right;
 	    }
 	}
 
@@ -1168,7 +1190,6 @@
 
 div.block-cart {
 	font-size: 1rem;
-	margin-bottom: inherit;
 
     .block-content {
         padding: 0px 5px;

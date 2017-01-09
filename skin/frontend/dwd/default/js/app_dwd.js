@@ -13,7 +13,7 @@ var egov_break = {
 $j(document).ready(function(){
     // Custom-Scrollbar im Skin-Design
     $j('body').niceScroll({
-        'cursorcolor'       : '#2D4B9B',
+        'cursorcolor'       : $j('#top-row').css('background-color'),
         'cursorwidth'       : '15px',
         'cursorborderradius': '3px'
     });
@@ -51,6 +51,26 @@ $j(document).ready(function(){
         $j('#product_addtocart_form > p.delivery-time').html('')
                                                      .addClass('no-display')
                                                      .css('display', 'none');
+	}
+	
+	if ( $j('.add-to-cart').length ) {
+		// Produktansicht gewählt => Button kopieren
+		$j('#add-to-cart-top').html( $j('.add-to-cart').html() );
+		
+		// ID und Events setzen, damit die Felder korrekt funktionieren
+		$j('#add-to-cart-top input[type="tel"]').attr({'id': 'qty-top', 'onBlure': 'syncSelectedQty(this.value)', 'onKeyUp': 'syncSelectedQty(this.value)'});
+		$j('#add-to-cart-top label').attr('for', 'qty-top');
+		$j('.add-to-cart input[type="tel"]').attr({'id': 'qty-bottom', 'onBlure': 'syncSelectedQty(this.value)', 'onKeyUp': 'syncSelectedQty(this.value)'});
+		$j('.add-to-cart label').attr('for', 'qty-bottom');
+		
+		// verstecktes Formularfeld erzeugen
+		var input = $j('<input />', {
+			'type' : 'hidden',
+			'id'   : 'qty',
+			'name' : 'qty',
+			'value': $j('#qty-top').val()
+		});
+		$j('form input:first-child').after( input );
 	}
 
     // Umlegen der Shop-Navigation
@@ -115,6 +135,26 @@ function setTabIndex(arr)
     $j.each(arr, function(element, tabindex){
         $j('#' + element).attr('tabindex', tabindex);
     });
+}
+
+/**
+ * Wenn in der Artikelansicht die Anzahl der Artikel geändert wird,
+ * so muss das FORM-Field aktualisiert werden und danach dieser Wert
+ * in beide Eingabefelder kopiert werden
+ */
+function syncSelectedQty(newValue)
+{
+	// neue Bestellmenge in eine Zahl umwandeln
+	var neu = parseInt(newValue);
+
+	if ( $j.isNumeric(neu) ) {
+		// alles korrekt => Wert setzen
+		$j('#qty').val( neu );
+	}
+	
+	// gesetzten Wert in die Eingabefelder schreiben
+	$j('#qty-top').val( $j('#qty').val() );
+	$j('#qty-bottom').val( $j('#qty').val() );
 }
 
 /**
