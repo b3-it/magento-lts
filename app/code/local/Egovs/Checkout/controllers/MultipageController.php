@@ -843,6 +843,12 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     }
 
 
+    private function __isDebug()
+    {
+    	$file = realpath(__DIR__.DS."..".DS."etc".DS.'debug.flag');
+    	return file_exists($file);
+    }
+    
     public function successviewAction() {
     	$lastQuoteId = $this->_getCheckout()->getCheckout()->getLastQuoteId();
     	$lastOrderId = $this->_getCheckout()->getCheckout()->getLastOrderId();
@@ -859,7 +865,9 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     	$this->loadLayout();
     	$this->_initLayoutMessages('checkout/session');
     	//erst am Ende deaktivieren
-    	$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
+    	if(!$this->__isDebug()){
+    		$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
+    	}
     	Mage::dispatchEvent('checkout_onepage_controller_success_action');
     	$this->renderLayout();
 
