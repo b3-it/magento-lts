@@ -49,12 +49,16 @@
 .ui-selectmenu-menu {
 	z-index: 1100 !important;
 }
+#map-block {
+	border: $global-active-border solid $grundfarbe-blau;
+	padding: $global-boxpadding-large;
+}
 #suggest-select, .map_size {
 	width: 100%;
 }
 #suggest, #list {
-     display: inline-block;
-     width: 48.5%;
+     display: block;
+     width: 100%;
      
      input, select, #stationenListe-button {
          margin: 0;
@@ -66,14 +70,11 @@
          width: 100%;
      }
 }
-#suggest {
-	margin-right: 1.5%;
+.map_pos, #suggest {
+	margin-bottom: $global-boxmargin;
 }
 #map a, #map_quest_logo a {
      background-color: transparent;
-}
-.map_pos {
-    margin-bottom: $global-boxmargin;
 }
 .map_size {
     height: 600px;
@@ -146,7 +147,7 @@
     z-index: 9999;
     
     ul {
-        width: 200%;
+        width: 100%;
     }
     
     li {
@@ -356,6 +357,11 @@
                 @include bp(max-width, $bp-small) {
                     margin: 0 !important;
                 }
+            }
+            
+            .button-full-width {
+                width: 70%;
+                float: none;
             }
             
             span.egov-cart {
@@ -766,6 +772,10 @@
 	        width: 100px;
 	        padding: 7px 5px;
 	    }
+	    
+	    .button-full-width {
+            width: 100%;
+        }
     }
 
 	.add-to-cart {
@@ -779,6 +789,11 @@
 	        width: 120px;
 	        padding: 7px 20px;
 	    }
+	}
+	
+	.background-transparent {
+	    background: transparent;
+	    padding: 0;
 	}
 
     /* Set a min-height so that the floated elements break appropriately */
@@ -994,7 +1009,7 @@
 .product-options {
     width: 100%;
     padding: 10px 15px 15px;
-    border: $global-box-border solid $grundfarbe-blgr;
+    border: $global-box-border solid $grundfarbe-blau;
     position: relative;
 }
 
@@ -1193,6 +1208,14 @@ div.block-cart {
 
     .block-content {
         padding: 0px 5px;
+        
+        .egov-cart {
+            font-size: 20px;
+        }
+        
+        .price {
+            font-size: 1rem;
+        }
 
         .summary {
             padding: 0 5px;

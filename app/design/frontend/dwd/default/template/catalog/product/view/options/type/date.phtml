@@ -24,11 +24,10 @@
     <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE_TIME
         || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE): ?>
 
-        <?php echo $this->getDateHtml() ?>
-
+        <input type="text" name="options[<?php echo $_optionId ?>][date]" id="options_<?php echo $_optionId ?>_date" value="" class="product-custom-option datetime-picker input-text" onchange="opConfig.reloadPrice()"/>
         <script type="text/javascript">
             $j(document).ready(function(){
-            	$j('#options_<?php echo $_optionId ?>_date_trig').remove();
+            	//$j('#options_<?php echo $_optionId ?>_date_trig').remove();
             	$j('#options_<?php echo $_optionId ?>_date').datepicker({
             		'changeMonth'    : true,
             		'changeYear'     : true,
@@ -46,7 +45,11 @@
             });
         </script>
     <?php endif; ?>
-        <input type="hidden" id="validate_datetime_<?php echo $_optionId ?>" name="validate_datetime_<?php echo $_optionId ?>" class="validate-datetime-<?php echo $_optionId ?>" value="" />
+        <input type="hidden"
+               id="validate_datetime_<?php echo $_optionId ?>"
+               name="validate_datetime_<?php echo $_optionId ?>"
+               class="validate-datetime-<?php echo $_optionId ?>"
+               value="" />
 
         <script type="text/javascript">
         //<![CDATA[

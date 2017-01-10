@@ -54,23 +54,27 @@ $j(document).ready(function(){
 	}
 	
 	if ( $j('.add-to-cart').length ) {
+		// Default-Funtion
+		var defaultFkt = 'syncSelectedQty(this.value)';
+		
 		// Produktansicht gewählt => Button kopieren
 		$j('#add-to-cart-top').html( $j('.add-to-cart').html() );
 		
 		// ID und Events setzen, damit die Felder korrekt funktionieren
-		$j('#add-to-cart-top input[type="tel"]').attr({'id': 'qty-top', 'onBlure': 'syncSelectedQty(this.value)', 'onKeyUp': 'syncSelectedQty(this.value)'});
+		$j('#add-to-cart-top input[type="tel"]').attr({'id': 'qty-top', 'name': 'qty-top', 'onBlure': defaultFkt, 'onKeyUp': defaultFkt});
 		$j('#add-to-cart-top label').attr('for', 'qty-top');
-		$j('.add-to-cart input[type="tel"]').attr({'id': 'qty-bottom', 'onBlure': 'syncSelectedQty(this.value)', 'onKeyUp': 'syncSelectedQty(this.value)'});
+		$j('.add-to-cart input[type="tel"]').attr({'id': 'qty-bottom', 'name': 'qty-bottom', 'onBlure': defaultFkt, 'onKeyUp': defaultFkt});
 		$j('.add-to-cart label').attr('for', 'qty-bottom');
 		
 		// verstecktes Formularfeld erzeugen
 		var input = $j('<input />', {
-			'type' : 'hidden',
-			'id'   : 'qty',
-			'name' : 'qty',
-			'value': $j('#qty-top').val()
+			'type'     : 'hidden',
+			'id'       : 'qty',
+			'name'     : 'qty',
+			'data-egov': 'automatic',
+			'value'    : $j('#qty-top').val()
 		});
-		$j('form input:first-child').after( input );
+		$j('#product_addtocart_form div.no-display').before( input );
 	}
 
     // Umlegen der Shop-Navigation
@@ -99,7 +103,7 @@ $j(document).ready(function(){
     }
 
 	// Artikel-Namen und Artikel-Nummern abkürzen
-	cutAllArticleTitleLine();
+	//cutAllArticleTitleLine();
 	
     // Benutzer-Navigation für Mobil
     checkMobileCustomerNavigation();
@@ -107,7 +111,7 @@ $j(document).ready(function(){
 	// Auf Größen-Anpassung des Fensters reagieren
 	$j(window).resize(function() {
 		// Artikel-Namen und Artikel-Nummern abkürzen
-		cutAllArticleTitleLine();
+		//cutAllArticleTitleLine();
 		
 		// Benutzer-Navigation für Mobil
 		checkMobileCustomerNavigation()

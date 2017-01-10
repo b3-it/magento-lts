@@ -38,7 +38,7 @@
     <p class="availability"><?php echo $this->__('Availability') ?>: <span class="out-of-stock"><?php echo $this->__('Out of stock') ?></span></p>
 <?php endif; ?>
 
-<div>
+<div id="map-block">
   <div id="suggest-select">
     <?php if($this->showSuggestBox()) { echo $this->getChildHtml('suggest');}?>
     <?php echo $this->getChildHtml('list')?>

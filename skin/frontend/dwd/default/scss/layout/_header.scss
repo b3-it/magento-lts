@@ -263,7 +263,7 @@ body:not(.cms-index-index) {
 		display: none;
 	}
     .welcome-header h1 {
-    	width: 280px;
+    	width: 265px;
     	
     	@include bp(max-width, $bp-small) {
     	    width: 75%;

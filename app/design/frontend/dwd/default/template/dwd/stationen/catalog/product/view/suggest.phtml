@@ -8,14 +8,15 @@ var stationen = [
 ];
 </script>
 <div id="suggest">
-  <input id="quicksearch" type="text" class="input-text" name="quicksuggest" value="" autocomplete="off" />
-  <div id="quick_autocomplete" class="search-autocomplete" style="display:none;"></div>
+    <label for="quicksearch"><?php echo $this->__('Enter location or area:'); ?></label>
+    <input id="quicksearch" type="text" class="input-text" name="quicksuggest" value="" autocomplete="off" />
+    <div id="quick_autocomplete" class="search-autocomplete" style="display:none;"></div>
 
-  <script type="text/javascript">
-  //<![CDATA[
-      var searchForm = new Quick.searchForm('quicksearch', '');
-      //searchForm.initAutocomplete('<?php echo $this->getSuggestUrl();?>', 'quick_autocomplete');
-  //]]>
-  </script>
+    <script type="text/javascript">
+    //<![CDATA[
+        var searchForm = new Quick.searchForm('quicksearch', '');
+        //searchForm.initAutocomplete('<?php echo $this->getSuggestUrl();?>', 'quick_autocomplete');
+    //]]>
+    </script>
 </div>
 <?php endif;?>

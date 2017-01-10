@@ -66,11 +66,10 @@
 .checkout-cart-index {
     .btn-proceed-checkout {
         width: 100%;
-        padding: 10px;
 
         #proceed-button-first {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: $global-boxpadding;
             font-size: $global-fontsize-big;
         }
     }
@@ -776,6 +775,10 @@
 
     .shipping-desc {
         display: none;
+    }
+    
+    .input-text, .ui-selectmenu-button {
+        width: 100%;
     }
 
     .form-list {
