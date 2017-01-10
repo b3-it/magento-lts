@@ -30,6 +30,8 @@
             $j(document).ready(function(){
             	$j('#options_<?php echo $_optionId ?>_date_trig').remove();
             	$j('#options_<?php echo $_optionId ?>_date').datepicker({
+            		'changeMonth'    : true,
+            		'changeYear'     : true,
             		'dateFormat'     : '<?php echo $this->getDateFormat(); ?>',
             		'dayNames'       : <?php echo json_encode(array_values($this->getDayNames())); ?>,
             		'dayNamesShort'  : <?php echo json_encode(array_map('ucfirst', array_keys($this->getDayNamesAbbr()))); ?>,
