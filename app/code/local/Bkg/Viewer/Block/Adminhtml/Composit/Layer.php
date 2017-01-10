@@ -18,4 +18,6 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Layer extends Mage_Adminhtml_Block_Wid
     $this->_addButtonLabel = Mage::helper('bkgviewer')->__('Add Item');
     parent::__construct();
   }
+  
+  
 }

@@ -26,6 +26,11 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 
 	public function editAction() {
 		$id     = $this->getRequest()->getParam('id');
+		$this->_edit($id);
+	}
+	
+	protected function _edit($id)
+	{
 		$model  = Mage::getModel('bkgviewer/service_service')->load($id);
 
 		if ($model->getId() || $id == 0) {
@@ -55,40 +60,36 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 	}
 
 	public function newAction() {
-		$this->_forward('edit');
+		$this->_initAction()
+		->renderLayout();
+	}
+	
+
+	
+	public function importAction() {
+		$data = $this->getRequest()->getPost();
+		$service = Mage::getModel('bkgviewer/service_service');
+		try{
+			if(empty($data['url']))
+			{
+				throw new Exception('empty url');
+			}
+			
+			$service->fetchLayers($data['url']);
+			$this->_edit($service->getId());
+			
+		} catch (Exception $e) {
+			Mage::getSingleton('adminhtml/session')->setFormData($data);
+			//Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkgviewer')->__('An Error ocours!'));
+			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+			$this->_redirect('*/*/new');
+			return;
+		}
+		return;
 	}
 
 	public function saveAction() {
-		if ($data = $this->getRequest()->getPost()) {
-
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					/* Starting upload */
-					$uploader = new Varien_File_Uploader('filename');
-
-					// Any extention would work
-	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-					$uploader->setAllowRenameFiles(false);
-
-					// Set the file upload mode
-					// false -> get the file directly in the specified folder
-					// true -> get the file in the product like folders
-					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
-
-					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS ;
-					$uploader->save($path, $_FILES['filename']['name'] );
-
-				} catch (Exception $e) {
-
-		        }
-
-		        //this way the name is saved in DB
-	  			$data['filename'] = $_FILES['filename']['name'];
-			}
-
-
+		$data = $this->getRequest()->getPost();
 			$model = Mage::getModel('bkgviewer/service_service');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
@@ -117,7 +118,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 return;
             }
-        }
+        
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkgviewer')->__('Unable to find item to save'));
         $this->_redirect('*/*/');
 	}
@@ -125,7 +126,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('bkgviewer/serviceservice');
+				$model = Mage::getModel('bkgviewer/service_service');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();
@@ -170,7 +171,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
         } else {
             try {
                 foreach ($serviceserviceIds as $serviceserviceId) {
-                    $serviceservice = Mage::getSingleton('bkgviewer/serviceservice')
+                    $serviceservice = Mage::getSingleton('bkgviewer/service_service')
                         ->load($bkgviewerId)
                         ->setStatus($this->getRequest()->getParam('status'))
                         ->setIsMassupdate(true)
@@ -186,6 +187,22 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
         $this->_redirect('*/*/index');
     }
 
+    public function layersAction()
+    {
+    	$id = intval($this->getRequest()->getParam('id'));
+    	$collection = Mage::getModel('bkgviewer/service_layer')->getCollection();
+    	$collection->getSelect()
+    		->where('service_id=?',$id);
+    	$res = array();
+    	foreach($collection->getItems() as $item)
+    	{
+    		$res[] = array('value'=>$item->getId(), 'name' => $item->getTitle());
+    	}
+    	
+    	die (json_encode($res));
+    }
+    
+    
     public function exportCsvAction()
     {
         $fileName   = 'serviceservice.csv';
@@ -204,6 +221,12 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
         $this->_sendUploadResponse($fileName, $content);
     }
 
+    protected function _isAllowed()
+    {
+    	return true;
+    	return Mage::getSingleton('admin/session')->isAllowed('');
+    }
+    
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
     {
         $response = $this->getResponse();

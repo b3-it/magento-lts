@@ -30,9 +30,23 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_Edit_Tab_Form extends Mage_Admi
       ));
       $fieldset->addField('url', 'text', array(
           'label'     => Mage::helper('bkgviewer')->__('Url'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
+          'class'     => 'required-entry',
+          'required'  => true,
           'name'      => 'url',
+      ));
+      
+      $fieldset->addField('url_featureinfo', 'text', array(
+      		'label'     => Mage::helper('bkgviewer')->__('Url GetFeatureinfo'),
+      		'class'     => 'required-entry',
+      		'required'  => true,
+      		'name'      => 'url_featureinfo',
+      ));
+      
+      $fieldset->addField('url_map', 'text', array(
+      		'label'     => Mage::helper('bkgviewer')->__('Url GetMap'),
+      		'class'     => 'required-entry',
+      		'required'  => true,
+      		'name'      => 'url_map',
       ));
 
 
