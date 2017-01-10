@@ -67,14 +67,6 @@ $cmsPages = array(
 		array(
 				'root_template' => 'three_columns',
 				'identifier'    => 'enable-cookies'
-		),
-		array(
-				'root_template' => 'three_columns',
-				'identifier'    => 'agb'
-		),
-		array(
-				'root_template' => 'three_columns',
-				'identifier'    => 'widerruf'
 		)
 );
 
