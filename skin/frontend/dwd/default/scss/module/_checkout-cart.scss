@@ -311,6 +311,10 @@
 	    color: $grundfarbe-blau !important;
 	}
 	
+	th .product-name, th .mobile-product-name {
+	    color: $grundfarbe-weiss;
+	}
+	
     a.egov-delete {
         font-size: $global-fontsize + 8;
     }
@@ -327,7 +331,6 @@
     }
     
     .product-name, .mobile-product-name {
-        color: $grundfarbe-weiss;
         font-size: 1rem;
         font-weight: normal;
     }
