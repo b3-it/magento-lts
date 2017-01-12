@@ -77,9 +77,9 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 				throw new Exception(curl_error($ch));
 			}
 			
-			$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			$http_status = intval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
 			
-			if ($http_status !=200)
+			if (($http_status < 200) || ($http_status > 210))
 			{
 				throw new Exception("HTTP Status: " . $http_status ." ".$output);
 			}
