@@ -31,11 +31,12 @@
             	$j('#options_<?php echo $_optionId ?>_date').datepicker({
             		'changeMonth'    : true,
             		'changeYear'     : true,
+            		'yearRange'      : '1900:<?php echo date('Y'); ?>',
+            		'maxDate'        : 0,
             		'dateFormat'     : '<?php echo $this->getDateFormat(); ?>',
             		'dayNames'       : <?php echo json_encode(array_values($this->getDayNames())); ?>,
             		'dayNamesShort'  : <?php echo json_encode(array_map('ucfirst', array_keys($this->getDayNamesAbbr()))); ?>,
             		'dayNamesMin'    : <?php echo json_encode(array_values($this->getDayNamesAbbr())); ?>,
-            		'maxDate'        : 0,
             		'monthNames'     : <?php echo json_encode(array_values($this->getMonthNames())); ?>,
             		'monthNamesShort': <?php echo json_encode(array_values($this->getMonthNamesAbbr())); ?>,
                     'firstDay'       : <?php echo $this->getFirstWDay();?>,

@@ -88,15 +88,17 @@
 
     .cart-empty {
         @extend .egov-default-message;
+        
+        .button {
+            float: none;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
+        }
 
         p:first-of-type {
             margin-bottom: $global-listmargin;
-        }
-        
-        @include bp(max-width, $bp-small) {
-            .button {
-                width: 100%;
-            }
         }
     }
 
