@@ -818,7 +818,8 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 	            $customer->setPassword($customer->decryptPassword($this->getQuote()->getPasswordHash()));
 	            $customer->setPasswordHash($customer->hashPassword($customer->getPassword()));
 	
-	            $this->getQuote()->setCustomer($customer);
+	            $this->getQuote()->setCustomer($customer)
+	            	->setCustomerId(true);
 	            break;
 	
 	        default:
