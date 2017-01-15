@@ -194,9 +194,10 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 					$model->save();
 					
 					if(!$id || isset($los['newkey']) ){
-						$model->setKey($this->getNewKey($contract, $model))->save();
-						$model->setLinkValidTo(14);
-						$model->setLinkValidToModified(now());
+						$model->setKey($this->getNewKey($contract, $model))
+							->setLinkValidTo(14)
+							->setLinkValidToModified(now())
+							->save();
 					}
 					
 					if(isset($los['sendlink'])){

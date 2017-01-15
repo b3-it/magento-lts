@@ -22,7 +22,7 @@ class Sid_ExportOrder_Model_Syncstatus extends Varien_Object
             self::SYNCSTATUS_PENDING    => Mage::helper('exportorder')->__('Pending'),
             self::SYNCSTATUS_SUCCESS   => Mage::helper('exportorder')->__('Success'),
         	self::SYNCSTATUS_ERROR   => Mage::helper('exportorder')->__('Error'),
-        	self::SYNCSTATUS_PERMANENTERROR   => Mage::helper('exportorder')->__('Permanent Error')
+        	//self::SYNCSTATUS_PERMANENTERROR   => Mage::helper('exportorder')->__('Permanent Error')
         );
     }
     
