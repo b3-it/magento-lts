@@ -38,6 +38,7 @@
     <p class="availability"><?php echo $this->__('Availability') ?>: <span class="out-of-stock"><?php echo $this->__('Out of stock') ?></span></p>
 <?php endif; ?>
 
+<?php if($this->showSuggestBox() OR $this->showMap()) : ?>
 <div id="map-block">
   <div id="suggest-select">
     <?php if($this->showSuggestBox()) { echo $this->getChildHtml('suggest');}?>
@@ -53,6 +54,8 @@
 
 </div>
 <br />
+<?php endif; ?>
+
 <?php echo $this->getChildHtml('periode') ?>
 <?php 
 	/*

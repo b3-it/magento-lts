@@ -170,6 +170,7 @@ p.note-msg {
 .product-name h1,
 .product-name .h1 {
     @include pageTitle;
+    font-weight: normal;
 }
 
 /* -------------------------------------------- *
@@ -1106,6 +1107,7 @@ span.weee {
         font-weight: 600;
         padding-right: 5px;
         font-style: italic;
+        width: 60%;
 
         &:after {
             content: ': ';

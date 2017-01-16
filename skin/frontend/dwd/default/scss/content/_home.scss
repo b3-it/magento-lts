@@ -154,14 +154,12 @@ body .promos > li {
     display: block;
     width: 100%;
     top: 10%;
-    font-weight: 500;
     font-size: 20px;
     font-family: $f-stack-special;
     @include single-text-shadow(1px, 1px, 3px, false, #555555);
 }
 
 .promos strong {
-    font-weight: 600;
     font-size: 26px;
     display: block;
 }
