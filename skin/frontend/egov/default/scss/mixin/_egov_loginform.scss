@@ -32,9 +32,11 @@ $col-box-height: 25em;
 	            height: $col-box-height - 8em;
 	
 	            .securityLabel {
+	                display: inline-block;
 	                position: absolute;
-                    right: 5px;
-                    rop: 35%;
+                    right: -5%;
+                    top: 40%;
+                    width: 20%;
 	            }
 	        }
 
