@@ -20,15 +20,3 @@ function selectStation(id)
     $j( "select#stationenListe" ).selectmenu( "refresh" );
     $j('#suggest #quicksearch').val( $j("select#stationenListe option:selected").text() );
 }
-
-/*
-function selectStationSuggest(id)
-{
-    $$('select#stationenListe option').each(function(o) {
-        if(o.readAttribute('value') == id) {
-	        o.selected = true;
-	    	throw $break;
-	    }
-   	});
-}
-*/

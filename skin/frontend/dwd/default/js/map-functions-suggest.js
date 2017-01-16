@@ -1,122 +1,72 @@
+var ulIDforSuggest = 'suggest-station-list';
+
 $j(document).ready(function(){
-	alert(stationen.length);
+	fillSuggestList();
+	resetStatusForSuggest();
 	
-	var suggest = $j('input#quicksearch');
-	
-	suggest.on('keyup', function(event){
+	$j('input#quicksearch').on('keyup', function(event){
 		resetStatusForSuggest();
-		var suchText = suggest.val();
+		var suchText = $j('input#quicksearch').val().toLowerCase();
+		var anzTreffer = 0;
+
+		$j('#' + ulIDforSuggest + ' li').each(function(index){
+			if ( $j(this).attr('data-name').indexOf(suchText) != -1 ) {
+				$j(this).toggle();
+				anzTreffer++;
+			}
+		});
+
+		// Nur Anzeigen, wenn es min. 1 Treffer gibt und der Suchbegriff min. 1 Zeichen hat
+        if ( anzTreffer > 0 && suchText.length > 0 ) {
+        	// Sichtbarkeit nur umschalten, wenn noch ausgeblendet
+        	if ( $j('#quick_autocomplete').css('display') == 'none' ) {
+				$j('#quick_autocomplete').toggle();
+			}
+		}
 	});
 });
 
+/**
+ * Aus dem vorhandenen Stations-Array eine UL-Liste erzeugen und diese in die Suggest-Box einfügen
+ */
+function fillSuggestList()
+{
+	// UL erzeugen
+	$j('#quick_autocomplete').append('<ul id="' + ulIDforSuggest + '"></ul>');
+	
+	var suggestList = $j('#' + ulIDforSuggest);
+
+	// Alle Stationen in die UL eintragen
+	$j.each(stationen, function(id, station){
+		var listItem = $j('<li />')
+		               .attr('id', station['id'])
+		               .attr('title', station['name'])
+		               .attr('data-name', station['name'].toLowerCase())
+		               .attr('onclick', 'selectSuggestStation($j(this));')
+		               .text(station['name'])
+		               .appendTo(suggestList);
+	});
+}
+
+/**
+ * Des Sichtbarkeits-Status aller Stationen zurücksetzen
+ */
 function resetStatusForSuggest()
 {
-	$j('#quick_autocomplete ul li').css('display', 'none');
+	$j('#' + ulIDforSuggest + ' li').css('display', 'none');
 }
 
-
-
-var Station = Class.create();
-Station.prototype = {
-  initialize: function(id, name) {
-    this.id = id;
-    this.name = name;
-  }
-};
-
-if (!window.Quick)
-{
-    var Quick = new Object();
-}
-
-Quick.searchForm = Class.create();
-Quick.searchForm.prototype = {
-    initialize : function(field, emptyText){
-
-        this.field  = $(field);
-        this.emptyText = emptyText;
-
-
-        Event.observe(this.field, 'focus', this.focus.bind(this));
-        Event.observe(this.field, 'blur', this.blur.bind(this));
-        Event.observe(this.field, 'keyup', this.onkeyup.bind(this));
-        this.blur();
-    },
-
-    submit : function(event){
-        if (this.field.value == this.emptyText || this.field.value == ''){
-            Event.stop(event);
-            return false;
-        }
-        return true;
-    },
-
-    focus : function(event){
-        if(this.field.value==this.emptyText){
-            this.field.value='';
-        }
-
-    },
-
-    blur : function(event){
-        if(this.field.value==''){
-            this.field.value=this.emptyText;
-        }
-    },
-
-    onkeyup : function(event){
-
-    	if($('quick_autocomplete') != null)
-    	{
-    		 $('quick_autocomplete').hide();
-    	}
-
-        if(this.field.value==''){
-            this.field.value=this.emptyText;
-            //selectStationSuggest(0);
-
-        }else
-        {
-
-            var n = 0;
-            var found = new Array();
-            for(i=0; i < stationen.length; i++)
-            {
-                var such = this.field.value.toLowerCase();
-                if(stationen[i].name.toLowerCase().match(such))
-                {
-                	found[n]=stationen[i];
-                	n++;
-                }
-            }
-
-            if(found.length == 1)
-            {
-            	this.field.value=found[0].name;
-            	//selectStationSuggest(found[0].id);
-
-            }
-            else if (found.length > 1)
-            {
-            	var content ="<ul>";
-            	for(i=0; i < found.length; i++)
-            	{
-            		content += '<li id=\"'+found[i].id+'\" title=\"'+found[i].name+'\" onclick="_selectAutocompleteItem($j(this));">'+found[i].name+'</li>';
-            	}
-            	content += "</ul>";
-                $('quick_autocomplete').update(content);
-                $('quick_autocomplete').show();
-            }
-        }
-    }
-}
-
-function _selectAutocompleteItem(element){
-    var selectID = element.attr('id');
-
-    $j('select#stationenListe > option[value="'+ selectID +'"]').attr('selected', 'selected');    
+/**
+ * Wenn eine Station ausgewählt/angeklickt wird, so müssen die betroffenen Elemente
+ * den aktuellen wert zugewiesen bekommen.
+ * Danach muss die Sichtbarkeit der Suggest-Box zurückgesetzt werden
+ */
+function selectSuggestStation(element){
+    $j('select#stationenListe > option[value="'+ element.attr('id') +'"]').attr('selected', 'selected');    
     $j('select#stationenListe').selectmenu("refresh");
 	
 	$j('#suggest #quicksearch').val( element.attr('title') );
+	
+	resetStatusForSuggest();
 	$j('#suggest #quick_autocomplete').toggle();
 }
