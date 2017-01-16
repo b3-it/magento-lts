@@ -18,8 +18,10 @@ $j(document).ready(function(){
         'cursorborderradius': '3px'
     });
 
-    $j('#mobile-cart > a').attr('data-target-element', '#mobile-header-cart');
-    $j('#mobile-cart > a').attr('id', 'mobile-cart-menu');
+    $j('#mobile-cart > a').attr({
+    	'id'                 : 'mobile-cart-menu',
+    	'data-target-element': '#mobile-header-cart'
+    });
     $j('#mobile-cart > div').attr('id', 'mobile-header-cart');
 
 	if ( $j('body').hasClass('cms-index-index') ) {

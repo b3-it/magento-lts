@@ -45,16 +45,19 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
         <div class="product-cart-sku">
             <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
         </div>
-      <?php if($station = $this->getStation($_item)):?>
-		<div class="product-cart-dwd-station">
-		    <span class="label"><?php echo $this->__('Station'); ?>:</span> <?php echo $station->getName(); ?>
-		</div>
-	  <?php endif;?>
-	  <?php if($periode = $this->getPeriode($_item)):?>
-		<div class="product-cart-dwd-periode">
-		    <span class="label"><?php echo $this->__('Periode'); ?>:</span> <?php echo $periode->getFormatedText(); ?>
-		</div>
-      <?php endif;?>
+      <?php if($this->getStation($_item) OR $this->getPeriode($_item)): ?>
+        <dl class="item-options">
+       <?php if($station = $this->getStation($_item)):?>
+		    <dt><?php echo $this->__('Station'); ?></dt>
+		    <dd><?php echo $station->getName(); ?></dd>
+	   <?php endif;?>
+	   <?php if($periode = $this->getPeriode($_item)):?>
+		    <dt><?php echo $this->__('Periode'); ?></dt>
+		    <dd><?php echo $periode->getFormatedText(); ?></dd>
+       <?php endif;?>
+        </dl>
+      <?php endif; ?>
+      
       <?php if ($_options = $this->getOptionList()):?>
         <dl class="item-options">
             <?php foreach ($_options as $_option) : ?>
