@@ -395,8 +395,12 @@
         display:none;
     }
     
-    .button {
+    .buttons-set .button {
         width: 25% !important;
+    }
+    
+    .form-search .button {
+        width: auto;
     }
 }
 

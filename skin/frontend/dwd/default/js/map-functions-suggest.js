@@ -1,3 +1,21 @@
+$j(document).ready(function(){
+	alert(stationen.length);
+	
+	var suggest = $j('input#quicksearch');
+	
+	suggest.on('keyup', function(event){
+		resetStatusForSuggest();
+		var suchText = suggest.val();
+	});
+});
+
+function resetStatusForSuggest()
+{
+	$j('#quick_autocomplete ul li').css('display', 'none');
+}
+
+
+
 var Station = Class.create();
 Station.prototype = {
   initialize: function(id, name) {
@@ -55,7 +73,7 @@ Quick.searchForm.prototype = {
 
         if(this.field.value==''){
             this.field.value=this.emptyText;
-            selectStationSuggest(0);
+            //selectStationSuggest(0);
 
         }else
         {
@@ -75,16 +93,15 @@ Quick.searchForm.prototype = {
             if(found.length == 1)
             {
             	this.field.value=found[0].name;
-            	selectStationSuggest(found[0].id);
+            	//selectStationSuggest(found[0].id);
 
             }
             else if (found.length > 1)
             {
-
             	var content ="<ul>";
             	for(i=0; i < found.length; i++)
             	{
-            		content += '<li id=\"'+found[i].id+'\" title=\"'+found[i].name+'\" onclick=\"_selectAutocompleteItem(this);\">'+found[i].name+'</li>';
+            		content += '<li id=\"'+found[i].id+'\" title=\"'+found[i].name+'\" onclick="_selectAutocompleteItem($j(this));">'+found[i].name+'</li>';
             	}
             	content += "</ul>";
                 $('quick_autocomplete').update(content);
@@ -95,9 +112,11 @@ Quick.searchForm.prototype = {
 }
 
 function _selectAutocompleteItem(element){
-	$('quick_autocomplete').hide();
-    if(element.title){
-    	$('quicksearch').value = element.title;
-    	selectStationSuggest(element.id);
-    }
+    var selectID = element.attr('id');
+
+    $j('select#stationenListe > option[value="'+ selectID +'"]').attr('selected', 'selected');    
+    $j('select#stationenListe').selectmenu("refresh");
+	
+	$j('#suggest #quicksearch').val( element.attr('title') );
+	$j('#suggest #quick_autocomplete').toggle();
 }

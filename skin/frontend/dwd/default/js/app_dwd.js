@@ -119,7 +119,7 @@ $j(document).ready(function(){
 
 	// jQuery-UI für DropDown-Boxen
 	$j("select").selectmenu({
-		change: function( event, ui ) {
+		'change': function( event, ui ) {
 			// need to get the real elements parent to trigger change event
 			$j(ui.item.element).parent().trigger("change");
 		}
