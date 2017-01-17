@@ -139,4 +139,13 @@
              </action>
         </reference>
     </customer_account>
+
+    <sales_order_view translate="label">
+        <reference name="order_totals">
+            <action method="setLabelProperties">
+                <value>colspan="3" class="a-right"</value>
+            </action>
+        </reference>
+    </sales_order_view>
+
 </layout>

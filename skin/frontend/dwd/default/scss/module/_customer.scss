@@ -256,8 +256,7 @@ body.customer-account {
         }
 
         .fieldset h2,
-        .addresses-list h2,
-        .order-details h2 {
+        .addresses-list h2 {
             width: 100%;
             display: inline-block;
         }
@@ -519,8 +518,9 @@ body.customer-account {
 
 .order-info {
     padding: $global-boxpadding;
-    border:$global-box-border solid $global-border-color;
+    border:$global-box-border solid $grundfarbe-blau;
     width: 100%;
+    margin-bottom: $global-boxmargin;
 
     dt,
     dd,
@@ -554,7 +554,7 @@ body.customer-account {
 
     + .order-info-box {
         padding-bottom: $global-boxpadding-large;
-        border-bottom: $global-box-border solid $global-border-color;
+        border-bottom: $global-box-border solid $grundfarbe-blau;
     }
 
     .col-1 {
@@ -627,6 +627,11 @@ body.customer-account {
 
     tbody td {
         background-color: $global-checkout-tdbackground;
+        
+        span.price {
+            display: inline-block;
+            float: right;
+        }
     }
 
     td.last {

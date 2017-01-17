@@ -5,12 +5,21 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.sales-order-view .my-account .title-buttons h1 {
+	margin: 0;
+}
+
 .my-account {
 	position: relative;
 	top: 15px;
 	
 	@include bp(max-width, $bp-small) {
 	    top: -15px;
+	}
+	
+	#order-buttons {
+	    display: inline-block;
+	    float: right;
 	}
 	
 	address {
