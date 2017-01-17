@@ -19,7 +19,13 @@
 	
 	#order-buttons {
 	    display: inline-block;
-	    float: right;
+        float: right;
+        position: relative;
+        top: -30px;
+        
+        a, span {
+            top: 0;
+        }
 	}
 	
 	address {
