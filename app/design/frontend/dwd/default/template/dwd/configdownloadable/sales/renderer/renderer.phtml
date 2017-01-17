@@ -182,32 +182,34 @@
     <?php endif; ?>
 		
     <td class="a-right">
-		<?php if ($this->getItem()->getQtyOrdered() > 0): ?>
-        <span class="nobr">
-            <?php //echo $this->__('Ordered'); echo ': '; ?><span class="price"><?php echo $this->getItem()->getQtyOrdered()*1 ?></span>
-        </span>
-		<?php endif; ?>
-	</td>
-	<?php if (!$_order->getIsVirtual()): ?>
-    <td class="a-right">	
-        <?php if ($this->getItem()->getQtyShipped() > 0): ?>
-            <?php //echo $this->__('Shipped'); echo ': '; ?><span class="price"><?php echo $this->getItem()->getQtyShipped()*1 ?></span>
-		<?php else: ?>
+      <?php if ($this->getItem()->getQtyOrdered() > 0): ?>
+        <div>
+            <?php echo $this->__('Ordered'); ?>: <span class="price"><?php echo $this->getItem()->getQtyOrdered()*1 ?></span>
+        </div>
+      <?php endif; ?>
+      <?php if (!$_order->getIsVirtual() ): ?>
+        <div>
+            <?php echo $this->__('Shipped'); ?>:
+          <?php if ($this->getItem()->getQtyShipped() > 0): ?>
+            <span class="price"><?php echo $this->getItem()->getQtyShipped()*1 ?></span>
+          <?php else: ?>
 			<span class="price">0</span>	
-        <?php endif; ?>
-	</td>
-	<?php endif; ?>
-	<td class="a-right">
-		<span class="nobr">
-        <?php if ($this->getItem()->getQtyCanceled() > 0): ?>
-            <?php //echo $this->__('Canceled'); echo ': '; ?> <span class="price"><?php echo $this->getItem()->getQtyCanceled()*1 ?></span>
-		<?php else: ?>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
+        <div>
+            <?php echo $this->__('Canceled'); ?>:
+          <?php if ($this->getItem()->getQtyCanceled() > 0): ?>
+            <span class="price"><?php echo $this->getItem()->getQtyCanceled()*1 ?></span>
+          <?php else: ?>
 			<span class="price">0</span>	
-        <?php endif; ?>
-        <?php if ($this->getItem()->getQtyRefunded() > 0): ?>
-            <br /><?php echo $this->__('Refunded'); ?>: <span class="price"><?php echo $this->getItem()->getQtyRefunded()*1 ?></span>
-        <?php endif; ?>
-        </span>
+          <?php endif; ?>
+        </div>
+      <?php if ($this->getItem()->getQtyRefunded() > 0): ?>
+        <div>
+            <?php echo $this->__('Refunded'); ?>: <span class="price"><?php echo $this->getItem()->getQtyRefunded()*1 ?></span>
+        </div>
+      <?php endif; ?>
     </td>
 	
 	<?php if ($this->helper('tax')->displayCartBothPrices() || $this->helper('tax')->displayCartPriceExclTax()): ?>
