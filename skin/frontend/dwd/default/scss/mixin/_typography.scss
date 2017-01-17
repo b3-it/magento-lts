@@ -37,7 +37,7 @@
     font-family: $base-font-family;
     font-size: $global-h3-size;
     font-style: normal;
-    line-height: 1.4;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
     
     @include bp(max-width, $bp-small) {
@@ -52,7 +52,7 @@
     font-family: $base-font-family;
     font-size: $global-h4-size;
     font-style: normal;
-    line-height: 1.4;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
 }
 
@@ -63,7 +63,7 @@
     font-family: $base-font-family;
     font-size: $global-h5-size;
     font-style: italic;
-    line-height: 1.4;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
     text-transform: uppercase;
 }
@@ -75,7 +75,7 @@
     font-family: $base-font-family;
     font-size: $global-h6-size;
     font-style: italic;
-    line-height: 1.4;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
 }
 
