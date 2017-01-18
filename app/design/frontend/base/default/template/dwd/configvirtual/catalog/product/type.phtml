@@ -38,16 +38,18 @@
     <p class="availability"><?php echo $this->__('Availability') ?>: <span class="out-of-stock"><?php echo $this->__('Out of stock') ?></span></p>
 <?php endif; ?>
 
-<?php if($this->showSuggestBox() OR $this->showMap()) : ?>
+<?php $_selectBox = $this->getChildHtml('list'); ?>
+
+<?php if(strlen($_selectBox)): ?>
 <div id="map-block">
   <div id="suggest-select">
     <?php if($this->showSuggestBox()) { echo $this->getChildHtml('suggest');}?>
-    <?php echo $this->getChildHtml('list')?>
+    <?php echo $_selectBox; ?>
   </div>
 
   <?php if($this->showMap()) : ?>
   <div class="map_size map_pos">
-  <?php echo $this->getChildHtml('map'); ?>
+    <?php echo $this->getChildHtml('map'); ?>
   </div>
   <?php endif; ?>
 </div>

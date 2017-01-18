@@ -46,9 +46,10 @@
         }
     }
     
-    p.product-name {
+    .product-name, .mobile-product-name {
         white-space: nowrap;
         overflow: hidden;
+        line-height: auto;
     }
 
     .product-image, .product-details {
