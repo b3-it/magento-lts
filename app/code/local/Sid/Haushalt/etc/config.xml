@@ -35,7 +35,7 @@
                     <convert>
                         <children>
                             <sidhaushalt module="sidhaushalt">
-                                <title>Sid Haushalt Export</title>
+                                <title>Haushalt Export</title>
                                 <sort_order>0</sort_order>
                                 <action>adminhtml/sidhaushalt_haushalt</action>
                             </sidhaushalt>

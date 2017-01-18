@@ -40,7 +40,7 @@
                             <source_model>adminhtml/system_config_source_email_template</source_model>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_store>1</show_in_store>
                         </vendor_template>
                         <catalog_upload_request_template translate="label">
                             <label>Catalog Upload Request Template</label>
@@ -58,7 +58,7 @@
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_store>1</show_in_store>
                         </notify_owner>
                         <!--  
                         <stock_warning translate="label">
@@ -86,7 +86,7 @@
                             <sort_order>20</sort_order>
                             <source_model>adminhtml/system_config_source_email_template</source_model>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
+                            <show_in_website>0</show_in_website>
                             <show_in_store>1</show_in_store>
                         </order_template>
                         <office_sender translate="label">
@@ -94,7 +94,7 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
+                            <show_in_website>0</show_in_website>
                             <show_in_store>1</show_in_store>
                         </office_sender>
                         <office_email translate="label">
@@ -103,7 +103,7 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
+                            <show_in_website>0</show_in_website>
                             <show_in_store>1</show_in_store>
                         </office_email>
                         <office_email_address translate="label">
@@ -112,7 +112,7 @@
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <show_in_store>1</show_in_store>
                         </office_email_address>
                       </fields>
         		</checkout_email> 

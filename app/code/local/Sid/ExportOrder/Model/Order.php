@@ -133,9 +133,6 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
 	    		->save();
 	    	
-	    		if(strlen($msg) > 0){
-	    			Mage::throwException($msg);
-	    		}
     	}
     	catch (Exception $ex)
     	{
