@@ -31,7 +31,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 <?php foreach($this->getStationsList() as $station){?>
     <item rdf:about="<?php echo $base_url; echo $station->getId();?>">
         <title><![CDATA[<?php echo $this->__('Station') ?>: <b><?php echo $station->getName()?></b>]]></title>
-        <description><![CDATA[<?php if ($station->getDescription()): echo $station->getDescription()?><br/><?php endif;?><span class="olMapClickLink" onClick="selectStation(<?php echo $station->getId()?>);"><?php echo $this->__('choose station') ?></span>]]></description>
+        <description><![CDATA[<?php if ($station->getDescription()): echo $station->getDescription()?><br/><?php endif;?><span class="olMapClickLink" onclick="selectMapStation(<?php echo $station->getId()?>);"><?php echo $this->__('choose station') ?></span>]]></description>
         <georss:point><?php echo $station->getLat()?> <?php echo $station->getLon()?></georss:point>
         <dc:creator>DWD Wettershop</dc:creator>
         <dc:date><?php echo $timenow ?></dc:date>

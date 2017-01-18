@@ -44,16 +44,14 @@
     <?php if($this->showSuggestBox()) { echo $this->getChildHtml('suggest');}?>
     <?php echo $this->getChildHtml('list')?>
   </div>
-  <br id="clear"/>
 
   <?php if($this->showMap()) : ?>
   <div class="map_size map_pos">
   <?php echo $this->getChildHtml('map'); ?>
   </div>
   <?php endif; ?>
-
 </div>
-<br />
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/map-functions.js'); ?>"></script>
 <?php endif; ?>
 
 <?php echo $this->getChildHtml('periode') ?>
