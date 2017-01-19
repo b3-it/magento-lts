@@ -69,9 +69,11 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 			foreach($files as $file)
 			{
-				$fileContents = file_get_contents($file->getDiskFilename());
-				$attachment = $mailTemplate->getMail()->createAttachment($fileContents);
-				$attachment->filename = $file->getfilenameOriginal();
+				//$fileContents = file_get_contents($file->getDiskFilename());
+				//$attachment = $mailTemplate->getMail()->createAttachment($fileContents);
+				//$attachment->filename = $file->getfilenameOriginal();
+				$attachment = $mailTemplate->getMail()->createAttachment($file['content']);
+				$attachment->filename = $file['filename'];
 			}
 		}
 		
