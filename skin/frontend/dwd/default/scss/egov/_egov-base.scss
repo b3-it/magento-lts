@@ -36,7 +36,7 @@
             right: 10px;
         }
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: block;
         }
     }
@@ -117,7 +117,7 @@
         width: 160px;
         padding: 3px;
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             width: auto;
         }
     }

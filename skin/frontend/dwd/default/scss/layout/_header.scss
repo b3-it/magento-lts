@@ -22,12 +22,12 @@
        	/* Definiert in _style_images.scss */
       	@include dwd-gitter-rechts;
       	
-      	@include bp(max-width, $bp-small) {
+      	@include bp(max-width, $bp-mobil) {
       	    background-image: none;
       	}
     }
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         background-image: none;
     }
 
@@ -76,7 +76,7 @@
          	@include clearfix;
         }
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: none;
         }
     }
@@ -96,7 +96,7 @@
 	        height: 1.2em;
 	        overflow: hidden;
 	        
-	        @include bp(max-width, $bp-small) {
+	        @include bp(max-width, $bp-mobil) {
 	            font-size: 1.8rem;
 	            margin-top: 5px;
 	            vertical-align: top;
@@ -105,7 +105,7 @@
 	        }
 	  	}
 	  	
-	  	@include bp(max-width, $bp-small) {
+	  	@include bp(max-width, $bp-mobil) {
 	  	    height: $global-welcome-header - 20px;
 	  	}
     }
@@ -121,7 +121,7 @@
 	margin-bottom: 15px;
 	display: block;
 	
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    text-align: center;
 	    font-weight: bold;
 	}
@@ -130,7 +130,7 @@
 .page-header-container {
 	height: 80px;
 	
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    display: none;
 	}
 }
@@ -177,7 +177,7 @@
 	    width: 30px;
 	}
 	
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    display: inline-block;
 	    height: 40px;
 	    left: 67px;
@@ -266,7 +266,7 @@ body:not(.cms-index-index) {
     .welcome-header h1 {
     	width: 265px;
     	
-    	@include bp(max-width, $bp-small) {
+    	@include bp(max-width, $bp-mobil) {
     	    width: 75%;
     	}
     }
@@ -316,63 +316,9 @@ body:not(.cms-index-index) {
         	right: 22%;
         }
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: none;
         }
-    }
-}
-
-
-@include bp(max-width, 785px) {
-    .page-header-container {
-        height: 110px + $global-logo-height;
-    }
-
-    .skip-links {
-        position: absolute;
-        top: 110px + $global-logo-height;
-        width:100%;
-    }
-
-    .store-language-container {
-        top: -20px !important;
-    }
-
-    #egov-nav{
-    	top: $mobile-header-mainnav-top !important;
-    }
-}
-
-@include bp(min-width, 800px) {
-	.col-left {
-        margin-top: 0;
-    }
-}
-
-@include bp(max-width, 799px) {
-
-    #egov-nav {
-        display: none;
-    }
-    
-    #egov-nav.skip-active {
-    	display: block;
-    }
-
-   	.col-main, .col-left, .col-right {
-       	display: block;
-   		float: none;
-   		width: 100%;
-   		margin: 0 0 $global-boxmargin 0;
-   	}
-
-    .col-left {
-        margin-top: $global-boxmargin;
-    }
-
-    #header-nav {
-    	position: relative;
-    	top: 70px;
     }
 }
 
@@ -386,10 +332,6 @@ body:not(.cms-index-index) {
  * ============================================ */
 
 .header-language-background {
-	@include bp(max-width, $bp-medium) {
-		display: none;
-	}
-	
     .header-language-container {
         margin-left: auto;
         margin-right: auto;
@@ -456,12 +398,12 @@ body:not(.cms-index-index) {
     
     .large {
     	margin-right: 0;
-    	@include bp(max-width, $bp-small) {
+    	@include bp(max-width, $bp-mobil) {
     		display: none;
     	}
     }
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         padding: 10px 0 10px 10px;
         width: 62px;
         height: 92px;
@@ -479,36 +421,6 @@ body:not(.cms-index-index) {
 }
 
 // ---------------------------------------------
-
-@include bp(max-width, 785px) {
-    .page-header-container {
-        background-color: transparent;
-        background-image: url($global-header-background-image);
-        background-repeat: no-repeat;
-        background-position: center 0px;
-
-        .store-language-container {
-            top: 45px;
-            right: 5px;
-        }
-    }
-
-    .skip-links {
-        .skip-egov {
-            display: none;
-        }
-        
-        .skip-cart {
-        	width: 100%;
-        }
-
-        .welcome-header {
-            left: 150px;
-            z-index: 99;
-        }
-    }
-}
-
 
 /* -------------------------------------------- *
  * Skip - Link
@@ -533,10 +445,6 @@ body:not(.cms-index-index) {
     .icon {
     	display: none;
     }
-    
-    @include bp(max-width, $bp-medium) {
-    	padding-top: 5px;
-    }
 }
 
 a.skip-link {
@@ -546,60 +454,6 @@ a.skip-link {
 .skip-egov:hover,
 .skip-link:not(.skip-active):hover {
     opacity: 0.8;
-}
-
-// ---------------------------------------------
-
-@include bp(max-width, $bp-medium) {
-
-    .skip-nav, .skip-account, .skip-cart {
-        float: left;
-        display: inline-block;
-    }
-
-    .skip-search {
-        display: inline-block;
-        right: 0;
-        position: relative;
-        //top: -5px;
-    }
-
-    .skip-link {
-        border-right: 1px solid #EDEDED;
-        width: 36%;
-    }
-    
-    .skip-account, .skip-cart {
-    	margin: 0;
-    }
-
-    .skip-link:last-child {
-        border-right: 0;
-    }
-}
-
-// ---------------------------------------------
-
-@include bp(max-width, 500px) {
-    .skip-search {
-    	top: 0;
-    }
-}
-
-/* -------------------------------------------- *
- * Skip Link - Active
- */
-@include bp(max-width, $bp-medium) {
-
-    .skip-link.skip-active {
-        background: #EDEDED;
-        color: inherit;
-    }
-
-    .skip-link.skip-active span {
-        color: inherit;
-    }
-
 }
 
 /* -------------------------------------------- *

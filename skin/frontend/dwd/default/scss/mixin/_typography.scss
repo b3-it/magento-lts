@@ -40,7 +40,7 @@
     line-height: 1.2;
     text-rendering: optimizeSpeed;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         font-size: 1rem;
     }
 }

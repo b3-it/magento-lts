@@ -18,26 +18,27 @@
         text-align: left;
         font-size: 1rem;
     }
- 
+ /*
     .col-left {
         @include bp(max-width, $bp-medium) {
             display: none;
         }
     }
-    
+*/
     .col-main {
         padding-top: 22px;
-        
+/*        
         @include bp(max-width, $bp-medium) {
             width: 100% !important;
         }
+*/
     }
 
     .mobile-product-collateral {
         margin-top: 20px;
         display: none;
-        
-        @include bp(max-width, $bp-small) {
+
+        @include bp(max-width, $bp-mobil) {
             display: block !important;
         }
     }
@@ -45,7 +46,7 @@
     .product-collateral {
         margin-top: 20px;
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: none;
         }
     }
@@ -144,7 +145,7 @@
             margin-top: 20px;
             margin-bottom: 0px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 margin-bottom: 10px;
             }
         }
@@ -175,7 +176,7 @@
             font-weight: bold;
             font-size: $global-h3-size;
         }
-        
+
         @include bp(max-width, $bp-medium) {
         	background-image: none !important;
         }
@@ -291,7 +292,7 @@
             margin-top: 20px;
             
             colgroup {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                     display: none;
                 }
             }
@@ -305,7 +306,7 @@
                     font-weight: bold;
                 }
                 
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                     display: none;
                 }
             }
@@ -325,13 +326,13 @@
             
             td:nth-child(2), td:nth-child(3), td:nth-child(4),
             td:nth-child(5), td:nth-child(6) {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                    display: none;
                 }
             }
             
             .mobile-product-name {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                     display: inline-block;
                     width: 70%;
                     vertical-align: top;
@@ -416,7 +417,7 @@
         }
     }
 }
-
+/*
 @include bp(max-width, $bp-medium) {
     .mp-checkout {
         .checkout-progress li {
@@ -428,8 +429,8 @@
         }
     }
 }
-
-@include bp(max-width, $bp-small) {
+*/
+@include bp(max-width, $bp-mobil) {
 	.mp-checkout {
         .checkout-progress li {
             width: 31% !important;

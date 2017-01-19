@@ -54,7 +54,7 @@ function selectMapStation(id)
  * die betroffenen Elemente die aktuelle Auswahl des Benutzers zugewiesen bekommen.
  * Danach muss die Sichtbarkeit der Suggest-Box zurückgesetzt werden.
  * 
- * @param    element   Eintrag, welcher ausgewähölt wurde
+ * @param    element   Eintrag, welcher ausgewählt wurde
  */
 function selectSuggestStation(id){
 	setSelectBox(id);

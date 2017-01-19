@@ -2,11 +2,11 @@ var toggleBlocks = new Array();
 
 //Definieren der Break-Points für JavaScript-Aktionen
 var egov_break = {
-    lngSwitch: 760,    // Store-Language Switcher
-    welcome  : 785,    // Welcome
-    navbar   : 785,    // Navigation
-    rightCol : 1000,   // Rechte Maginal-Spalte
-    topSearch: 911     // Suchen-Leiste im Header
+    //lngSwitch: 760,    // Store-Language Switcher
+    //welcome  : 785,    // Welcome
+    navbar   : 800,    // Navigation
+    //rightCol : 1000,   // Rechte Maginal-Spalte
+    //topSearch: 911     // Suchen-Leiste im Header
 };
 
 // Allgemeine JS-Funktionen

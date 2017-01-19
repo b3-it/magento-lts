@@ -24,7 +24,7 @@ body.cms-home {
     }
     
     .products-list .product-new-block {
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             left: -10px;
             right: auto;
         }
@@ -42,7 +42,7 @@ body.cms-home {
 	ol {
 	    display: none;
 	    
-	    @include bp(max-width, $bp-small) {
+	    @include bp(max-width, $bp-mobil) {
 	        display: block;
 	    }
 	}
@@ -50,7 +50,7 @@ body.cms-home {
 	ul {
 	    display: block;
 	    
-	    @include bp(max-width, $bp-small) {
+	    @include bp(max-width, $bp-mobil) {
 	        display: none;
 	    }
 	}
@@ -81,7 +81,7 @@ body.cms-home {
     display: block;
     font-size: 36px;
 }
-
+/*
 @include bp(max-width, $bp-medium) {
 
     .slideshow .banner-msg h2 {
@@ -107,11 +107,11 @@ body.cms-home {
         font-size: 16px;
     }
 }
-
+*/
 /* -------------------------------------------- *
  * Promotion Banner Section
  */
-
+/*
 .promos {
     margin: 0 0 $gap 0;
     padding: 0;
@@ -121,9 +121,9 @@ body.cms-home {
 .promos:after {
     @include clearfix;
 }
-
+*/
 /* Specifying the body only in order to override the .std ul li styling */
-
+/*
 body .promos > li {
     margin: 0 0 10px 0;
     list-style: none;
@@ -174,7 +174,7 @@ body .promos > li {
         font-size: 17px;
     }
 
-    /* Config: Three columns + flexible gutter */
+    // Config: Three columns + flexible gutter
     // Container: 480 - (2 * 30 trim wide) = 420
     // Math: (420 - (2 * 10 gutter)) / 3 items = 133.333333333
     body .promos > li {
@@ -197,7 +197,7 @@ body .promos > li {
         font-size: 24px;
     }
 }
-
+*/
 /* -------------------------------------------- *
  * New Products Section
  */

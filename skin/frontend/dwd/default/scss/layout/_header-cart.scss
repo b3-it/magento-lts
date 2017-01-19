@@ -21,7 +21,7 @@
         text-decoration: none;
         
         .count {
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 color: $grundfarbe-weiss;
             }
         }
@@ -40,7 +40,7 @@
 	    color: $grundfarbe-weiss;
 	    background-color: $grundfarbe-blau;
 	    
-	    @include bp(max-width, $bp-small) {
+	    @include bp(max-width, $bp-mobil) {
 	        margin: 0;
 	        padding: 0;
 	        background-color: transparent;
@@ -76,12 +76,13 @@
 /* -------------------------------------------- *
  * Skip Cart Notifier
  */
+/*
 @include bp(max-width, 499px) {
     .skip-cart .count {
         margin-left: -12px;
     }
 }
-
+*/
 /* -------------------------------------------- *
  * Mini Cart - Empty
  */
@@ -149,8 +150,6 @@
     width: 60px;
     height: 60px;
 }
-
-//.mini-cart-list .details { }
 
 .mini-cart-list .has-options {
     margin-bottom: 0;
