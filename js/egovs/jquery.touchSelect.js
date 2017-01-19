@@ -203,7 +203,7 @@
          * Wenn MEHR als 2 Optionen vorhanden sind, muss ein Drop-Down erzeugt werden
          */
         '_buildMultiToggleButtons': function() {
-        	alert('Work in Progress...');
+        	//alert('buildMultiToggleButtons :: Work in Progress...');
         }
 	};
 	

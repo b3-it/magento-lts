@@ -6,8 +6,8 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
-/** @var Mage_Page_Block_Html_Topmenu_Renderer $this */
-/** @var Varien_Data_Tree_Node $menuTree */
+/** @var $this Mage_Page_Block_Html_Topmenu_Renderer */
+/** @var $menuTree Varien_Data_Tree_Node */
 /** @var string $childrenWrapClass */
 
 $html = array();
@@ -42,7 +42,7 @@ foreach ($children as $child) {
     	$ext = $file_info['extension'];
     }
 
-    $file_id   = strtolower( basename( $file_name, '.' . $ext ) );
+    $file_id = strtolower( basename( $file_name, '.' . $ext ) );
 
     $outermostClassCode = 'level'. $childLevel;
     $_hasChildren = ($child->hasChildren()) ? 'has-children' : '';
@@ -56,7 +56,7 @@ foreach ($children as $child) {
         $_cssAppend = ' egov-arrow-sub-closed';
     }
     
-    $html[] = $spacer . '<li id="' . $file_id . '" '. $this->_getRenderedMenuItemAttributes($child) .'>';
+    $html[] = $spacer . '<li id="' . $file_id . '" ' . $this->_getRenderedMenuItemAttributes($child) . '>';
 
     $html[] = $spacer . '    <a href="'. $child->getUrl() .'" data-category-count="" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
               $this->escapeHtml($this->__($child->getName())) .'</a>';
