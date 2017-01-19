@@ -1,0 +1,114 @@
+<style>
+      .map {
+        height: 400px;
+        width: 600px;
+      }
+    </style>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+	 var controls = [
+                new ol.control.Attribution(),
+                new ol.control.MousePosition({
+                    undefinedHTML: 'outside',
+                    projection: 'EPSG:4326',
+                    coordinateFormat: function(coordinate) {
+                        return ol.coordinate.format(coordinate, '{x}, {y}', 4);
+                    }
+                }),
+                new ol.control.OverviewMap({
+                    collapsed: false
+                }),
+                new ol.control.ScaleLine(),
+                new ol.control.Zoom(),
+                new ol.control.ZoomSlider(),
+                //new ol.control.ZoomToExtent(),
+                //new ol.control.FullScreen()
+            ];
+	
+	
+
+      var map = new ol.Map({
+        target: 'map',
+		controls: controls,
+        layers: [
+        <?php foreach($this->getCompositLayers() as $layer): ?>
+			new ol.layer.Tile({
+			source: new ol.source.TileWMS({
+			url: '<?php echo $layer->getService()->getUrlMap() ?>',
+			params: {LAYERS: '<?php echo $layer->getServiceLayer()->getName() ?>', VERSION: '1.1.1'}
+			})
+			}),
+			<?php endforeach; ?>
+			],
+        view: new ol.View({
+          //center: ol.proj.transform([52, 12],'CRS:84' ,'EPSG:3857'),
+          center: [13.44, 51.01],
+          zoom: 10,
+		  projection: 'EPSG:4326' 
+        })
+      });
+
+	  var features = new ol.Collection();
+      var featureOverlay = new ol.layer.Vector({
+        source: new ol.source.Vector({features: features}),
+        style: new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: 'rgba(255, 255, 255, 0.2)'
+          }),
+          stroke: new ol.style.Stroke({
+            color: '#ffcc33',
+            width: 2
+          }),
+          image: new ol.style.Circle({
+            radius: 7,
+            fill: new ol.style.Fill({
+              color: '#ffcc33'
+            })
+          })
+        })
+      });
+	  
+      featureOverlay.setMap(map);
+	
+	var  draw = new ol.interaction.Draw({
+				features: features,
+				type: 'Polygon'
+			});
+		map.addInteraction(draw);
+	
+	features.on('add', function(evt){
+		var feature = evt.element;
+		//var coords = feature.getGeometry().getCoordinates();
+
+		formatArea(feature.getGeometry());
+		var sphere = new ol.Sphere(6378137);
+		var area_m = sphere.geodesicArea(coords);
+		var area_km = area_m / 1000 / 1000;
+		console.log('area: ', area_km, 'km²');
+		
+	});
+	
+	var wgs84Sphere = new ol.Sphere(6378137);
+	
+	var formatArea = function(polygon) {
+		  var area;
+{
+			var sourceProj = map.getView().getProjection();
+			var geom = /** @type {ol.geom.Polygon} */(polygon.clone().transform(
+				sourceProj, 'EPSG:4326'));
+			var coordinates = geom.getLinearRing(0).getCoordinates();
+			area = Math.abs(wgs84Sphere.geodesicArea(coordinates));
+		  }
+		  var output;
+		  if (area > 10000) {
+			output = (Math.round(area / 1000000 * 100) / 100) +
+				' ' + 'km<sup>2</sup>';
+		  } else {
+			output = (Math.round(area * 100) / 100) +
+				' ' + 'm<sup>2</sup>';
+		  }
+		  return output;
+	};
+	
+	 
+    </script>

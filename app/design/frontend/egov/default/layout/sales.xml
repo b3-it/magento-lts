@@ -131,7 +131,7 @@ Customer account home dashboard layout
                 <crumbinfo>
                     <label>My Orders</label>
                     <title>My Orders</title>
-                    <url>sales/order/history</url>
+                    <url>sales/order/history/</url>
                 </crumbinfo>
             </action>
             <action method="addCrumb">

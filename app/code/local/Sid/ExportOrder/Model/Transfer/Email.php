@@ -29,10 +29,10 @@ class Sid_ExportOrder_Model_Transfer_Email extends Sid_ExportOrder_Model_Transfe
     	$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
     	
     	if($res !== false){
-    		$txt = "Die Email wurde versendet";
+    		$txt = "Die Email wurde versendet.";
     		$res = $txt;
     	}else{
-    		$txt = "Fehler: Die Email wurde nicht versendet";
+    		$txt = "Fehler: Die Email wurde nicht versendet.";
     	}
     	Sid_ExportOrder_Model_History::createHistory($order->getId(), $txt);
     	return $res;

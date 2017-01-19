@@ -73,7 +73,7 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 		$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
 		$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
 		$transfer = $vendor->getTransferModel();
-	
+		$export =  Mage::getModel('exportorder/order')->load(intval($id),'order_id');
 		$format = $vendor->getExportFormatModel();
 		$content = $format->processOrder($order);
 		
@@ -88,7 +88,15 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 		}
 		if($msg === false)
 		{
+			$export->setMessage("Die Bestellung konnte nicht versendet werden!")
+				->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR)
+				->save();
 			die($this->renderMessage('error',"Die Bestellung konnte nicht versendet werden!"));
+		}
+		else {
+			$export->setMessage($msg)
+			->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
+			->save();
 		}
 		
 		die($this->renderMessage('success',$msg));

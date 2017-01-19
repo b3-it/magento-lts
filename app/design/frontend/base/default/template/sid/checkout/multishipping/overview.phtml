@@ -31,12 +31,12 @@
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" onsubmit="return showLoader();">
 <fieldset class="multiple-checkout"  style="display:block; clear:left;" > 
 	<?php echo $this->getChildHtml('agreements') ?>
-	
+	<br/>
     <div class="col2-set">
         <h3><?php echo $this->__('Billing Information') ?></h3>
         <div class="col-1">
+        	
             <?php $_address=$this->getBillingAddress() ?>
-            <h4><?php echo $this->__('Billing Address') ?> </h4>
             <address>
                 <?php echo $this->formatAddress($_address); ?>
             </address>
@@ -114,14 +114,14 @@
 					    <?php else: ?>
 					    <td style=""  colspan="2" >
 					    <?php endif?>
-					        <strong>Vergabenummer</strong>
+					        <strong><br/>Vergabenummer</strong>
 					   
 					        <?php echo $contract->getTitle() ?>
 					        <?php echo $contract->getVendor()->getCompany()?>
 					    </td>
 					    
 					    <td style="" class="a-right last" colspan="2">
-					        <input name="vergabenummer[<?php echo $_address->getId()?>]" />
+					        <br/><input name="vergabenummer[<?php echo $_address->getId()?>]" />
 					    </td>
 					</tr>
                     </tfoot>

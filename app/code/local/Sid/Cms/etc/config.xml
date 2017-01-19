@@ -199,6 +199,15 @@
 					</Sid_Cms>
 				</observers>
 			</cms_page_load_after>
+			<cms_page_save_before>
+				<observers>
+					<Sid_Cms>
+						<type>singleton</type>
+						<class>Sid_Cms_Model_Observer</class>
+						<method>onCmsPageSaveBefore</method>
+					</Sid_Cms>
+				</observers>
+			</cms_page_save_before>
 		</events>
 	</global>
 	<crontab>

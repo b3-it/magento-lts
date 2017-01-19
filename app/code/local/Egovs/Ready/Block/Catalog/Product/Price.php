@@ -29,7 +29,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 				|| strpos($pathInfo, 'catalogsearch/result') !== false
 		) {
 			if ($this->getProduct()->getDeliveryTime()) {
-				$html = '<p class="delivery-time">';
+				$html = '<p class="delivery-time time1">';
 				$html .= $this->__('Delivery Time') . ': ' . $this->getProduct()->getDeliveryTime();
 				$html .= '</p>';
 				$htmlObject->setSuffix($html);

@@ -309,6 +309,9 @@ class Egovs_Shipment_Model_Resource_Carrier_Bulkgoods extends Mage_Core_Model_Re
         // strip whitespace from the beginning and end of each row
         foreach ($row as $k => $v) {
             $row[$k] = trim($v);
+            if(mb_detect_encoding($row[$k], 'UTF-8', true) === false){
+            	$row[$k] = utf8_encode($row[$k]);
+            }
         }
 
         $group = $row[0];

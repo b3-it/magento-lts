@@ -80,6 +80,7 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
             'header'    => Mage::helper('sales')->__('Shipment #'),
             'index'     => 'increment_id',
             'type'      => 'number',
+        	'filter_index' => 'main_table.increment_id',
         ));
 
         $this->addColumn('created_at', array(

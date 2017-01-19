@@ -69,6 +69,21 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			$data = array('file' => $cfile);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
+// 			if (Mage::getStoreConfig('web/proxy/use_proxy') == true) {
+// 				$host = Mage::getStoreConfig('web/proxy/proxy_name');
+// 				$port = 8080;
+// 				if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')>0)) {
+// 					$port =  Mage::getStoreConfig('web/proxy/proxy_port');
+// 				}
+// 				curl_setopt($cs, CURLOPT_PROXY, $host . ":" . $port);
+// 				curl_setopt($cs, CURLOPT_HTTPPROXYTUNNEL, true);
+// 				//$this->useProxyAndHTTPS = true;
+// 				$user = Mage::getStoreConfig('web/proxy/proxy_user');
+// 				if (isset($user) && (strlen($user) > 0)) {
+// 					curl_setopt($cs, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('web/proxy/proxy_user_pwd'));
+// 				}
+// 			}
+			
 			$output = curl_exec($ch);
 			$this->setLog($output);
 			
@@ -77,9 +92,9 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 				throw new Exception(curl_error($ch));
 			}
 			
-			$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			$http_status = intval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
 			
-			if ($http_status !=200)
+			if (($http_status < 200) || ($http_status > 210))
 			{
 				throw new Exception("HTTP Status: " . $http_status ." ".$output);
 			}
