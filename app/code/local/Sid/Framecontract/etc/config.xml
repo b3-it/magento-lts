@@ -164,15 +164,7 @@
     </adminhtml>
     <global>
        <events>
-           	<checkout_submit_all_after>
-        		<observers>
-        			<Sid_Framecontract>
-        				<type>singleton</type>
-        				<class>Sid_Framecontract_Model_Observer</class>
-        				<method>onCreateOrder</method>
-        			</Sid_Framecontract>
-        		</observers>
-        	</checkout_submit_all_after>
+      
         </events>
         <models>
             <framecontract>

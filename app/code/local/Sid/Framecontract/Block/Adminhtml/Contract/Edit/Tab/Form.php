@@ -121,7 +121,7 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
 	          'name'      => 'framecontract_vendor_id',
 		  ));
 	  }
-	  
+	  /*
 	 $fieldset->addField('operator', 'text', array(
           'label'     => Mage::helper('framecontract')->__('Operator'),
           'required'  => true,
@@ -132,11 +132,11 @@ class Sid_Framecontract_Block_Adminhtml_Contract_Edit_Tab_Form extends Mage_Admi
 	  
 	  $fieldset->addField('order_email', 'text', array(
           'label'     => Mage::helper('framecontract')->__('Order EMail'),
-          'required'  => true,
-	  	  'class' =>'required-entry',
+          //'required'  => true,
+	  	  //'class' =>'required-entry',
           'name'      => 'order_email',
 	  ));
-	  
+	  */
 	  
   	$fieldset = $form->addFieldset('detail_form', array('legend'=>Mage::helper('framecontract')->__('Contract Details')));
     	    
