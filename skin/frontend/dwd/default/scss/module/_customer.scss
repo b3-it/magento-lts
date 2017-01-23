@@ -82,7 +82,7 @@
         }
     }
 
-    @include bp(max-width, $bp-medium) {
+    @include bp(max-width, $bp-mobil) {
         .col2-set p.required {
             display: none;
         }
@@ -90,11 +90,17 @@
 }
 
 .customer-account-create {
+    label {
+        @include bp(max-width, $bp-mobil) {
+            width: 100%;
+        }
+    }
+    
     .scaffold-form {
         label:first-child {
             width: 140px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
@@ -102,7 +108,13 @@
 }
 
 .customer-account-edit {
-    .scaffold-form{
+    label {
+        @include bp(max-width, $bp-mobil) {
+            width: 100%;
+        }
+    }
+	
+	.scaffold-form{
         div.fieldset {
             vertical-align: top;
             display: inline-block;
@@ -122,7 +134,7 @@
         }
         
         button.button, .back-link {
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                width: 45%;
                display: inline-block;
                margin: 0;
@@ -130,7 +142,7 @@
         }
         
         .back-link a {
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
@@ -767,10 +779,6 @@ ol#cart-sidebar-reorder {
 @include bp(max-width, $bp-mobil) {
     body.customer-account {
         .data-table {       
-            colgroup {
-                display: none;
-            }
-            
             &.orders {
                 .ship,
                 .view {
