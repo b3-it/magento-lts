@@ -131,9 +131,12 @@
     }
 
     .box {
-        /*border: 1px solid $global-lightcolor;*/
         margin: 0px;
         width: 90%;
+        
+        @include bp(max-width, $bp-mobil) {
+            width: 100%;
+        }
 
         .box-content {
             margin: 5px;

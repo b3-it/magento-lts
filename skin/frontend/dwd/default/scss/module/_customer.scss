@@ -216,7 +216,7 @@ body.customer-account {
             top: 0px;
 
             .block-compare {
-                @include bp(max-width, $bp-medium) {
+                @include bp(max-width, $bp-mobil) {
                     display: none;
                 }
             }
@@ -225,6 +225,12 @@ body.customer-account {
             padding-top: 0;
             padding-bottom: 50px;
         }
+    }
+
+    #mobile-customer-account-navigation {
+        border-top-width: $global-active-border;
+        border-top-color: $textfarbe-mittel;
+        border-top-style: dotted;
     }
 
     .my-account {
@@ -487,7 +493,7 @@ body.customer-account {
             }
         }
 
-        @include bp(max-width, $bp-medium) {
+        @include bp(max-width, $bp-mobil) {
             .col-1,
             .col-2 {
                 width: 100%;
@@ -500,7 +506,7 @@ body.customer-account {
             }
         }
 
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             .addresses-additional {
                 p {
                     a {
@@ -666,7 +672,7 @@ ol#cart-sidebar-reorder {
     }
 }
 
-@include bp(max-width, $bp-small) {
+@include bp(max-width, $bp-mobil) {
     #my-orders-table {
         .option-label {
             margin-left: 20px;
@@ -758,7 +764,7 @@ ol#cart-sidebar-reorder {
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-mobil) {
     body.customer-account {
         .data-table {       
             colgroup {
@@ -809,7 +815,7 @@ ol#cart-sidebar-reorder {
         }
 
         .welcome-msg {
-            font-family: $f-stack-serif;
+            font-family: $base-font-family;
 
             .hello {
                 font-style: italic;
@@ -841,7 +847,7 @@ ol#cart-sidebar-reorder {
     }
 }
 
-@include bp(max-width, $bp-small) {
+@include bp(max-width, $bp-mobil) {
     body.customer-account {
         .my-account {
             .form-list {

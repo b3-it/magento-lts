@@ -121,20 +121,6 @@
                 </div>
 
                 <div class="product-price">
-                    <div class="mobile-product-block">
-	                    <?php // Product Image ?>
-		                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
-		                    <img id="product-collection-image-<?php echo $_product->getId(); ?>"
-		                         src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
-		                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
-		
-		                  <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
-		                    <div class="product-new-block">
-		                        <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
-		                    </div>
-		                  <?php endif; ?>
-		                </a>
-	                </div>
                     <?php echo $this->getPriceHtml($_product, true) ?>
 	                <div class="product-action">
 	                    <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>

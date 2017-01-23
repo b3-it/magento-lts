@@ -58,17 +58,21 @@ footer {
 /* -------------------------------------------- *
  * Footer
  */
- 
- .footer-before-container {
-     .widget-credit-cards {
-         display: none;
-         
-         @include bp(max-width, $bp-mobil) {
-             display: block;
-             margin-bottom: 0;
-         }
-     }
- }
+.footer-before-container {
+    .widget-credit-cards {
+        display: none;
+
+        @include bp(max-width, $bp-mobil) {
+            display: block;
+            margin-bottom: 0;
+        }
+    }
+
+    @include bp(max-width, $bp-mobil) {
+        position: relative;
+        top: $global-boxmargin;
+    }
+}
 
 .footer-wrapper {
     clear: both;

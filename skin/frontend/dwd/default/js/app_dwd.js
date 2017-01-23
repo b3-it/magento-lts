@@ -103,6 +103,11 @@ $j(document).ready(function(){
             }
         });
     }
+    
+    // Benutzer-Konto kopieren
+    if ( $j('#customer-account-menu').length > 0 ) {
+    	$j('#mobile-header-account li.first').append( '<ul id="mobile-customer-account-navigation" class="level1">' + $j('#customer-account-navigation').html() + '</ul>' );
+    }
 
 	// Artikel-Namen und Artikel-Nummern abkürzen
 	//cutAllArticleTitleLine();

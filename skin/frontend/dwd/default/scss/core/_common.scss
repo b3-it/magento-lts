@@ -78,7 +78,7 @@ input[type="checkbox"], input[type="radio"] {
     left: 2px;
     margin-right: $global-radio-checkback-spacing;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
        top: 3px;
        vertical-align: top;
     }
@@ -242,47 +242,6 @@ div.block-reorder {
  * Paypal Button
  */
 
-.paypal-logo.paypal-after {
-    float: left;
-}
-
-.paypal-after .paypal-or {
-    float: left;
-}
-
-.paypal-or {
-    line-height: 34px;
-    margin: 0px 10px 5px;
-}
-
-.paypal-after .paypal-button {
-    float: left;
-}
-
-.paypal-button {
-    line-height: 0px;
-}
-
-.paypal-button img {
-    display: inline;
-}
-
-@include bp(max-width, 740px) {
-    .paypal-or {
-        line-height: 20px;
-    }
-
-    .paypal-logo,
-    .paypal-or,
-    .paypal-button {
-        text-align: center;
-        width: 100%;
-        display: block;
-        margin-right: 0;
-        margin-left: 0;
-        float: none;
-    }
-}
 
 /* -------------------------------------------- *
  * Icons
@@ -327,7 +286,7 @@ div.block-reorder {
     	color: $textfarbe-mittel;
     }
     
-    @include bp(max-width, $bp-medium) {
+    @include bp(max-width, $bp-mobil) {
     	display: none;
     }
 }
@@ -510,7 +469,7 @@ div.block-reorder {
 }
 
 .col1-layout {
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    background-image: url($global-header-background-image);
 	    background-repeat:no-repeat;
 	    background-attachment: fixed;
@@ -546,7 +505,7 @@ div.block-reorder {
             }
         }
 
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             padding: 5px;
             background-color: $grundfarbe-weiss;
             margin-bottom: 0 !important;
@@ -559,7 +518,7 @@ div.block-reorder {
 }
 
 .col2-left-layout {
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    background-image: url($global-header-background-image);
 	    background-repeat:no-repeat;
 	    background-attachment: fixed;
@@ -578,7 +537,7 @@ div.block-reorder {
             position: relative;
             width: $global-leftcol-percent;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
             	display: none;
             }
         }
@@ -588,12 +547,12 @@ div.block-reorder {
             width: $global-content-2col-left-percent;
             padding-top: $global-content-paddingtop;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             padding: 5px;
         }
     }
@@ -680,7 +639,7 @@ div.block-reorder {
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-mobil) {
     .col-left,
     .col-right,
     .col-main,
@@ -726,7 +685,7 @@ div.block-reorder {
         width: 50%;
         padding: $box-spacing-large;
 
-        @include bp(max-width, $bp-medium) {
+        @include bp(max-width, $bp-mobil) {
             padding: $box-spacing;
         }
     }
@@ -895,7 +854,7 @@ div.block-reorder {
 }
 
 // ---------------------------------------------
-
+/*
 @include bp(min-width, 915px) {
 
     .order-list-grid .col-1 {
@@ -914,7 +873,7 @@ div.block-reorder {
     }
 
 }
-
+*/
 /* -------------------------------------------- *
  * Page Popup
  */
@@ -1397,7 +1356,7 @@ span.weee {
 	        padding: 2% 0 0 2%;
 	        margin-right: 0;
 	        
-	        @include bp(max-width, $bp-small) {
+	        @include bp(max-width, $bp-mobil) {
 	            display: none;
 	        }
 	    }
@@ -1413,7 +1372,7 @@ span.weee {
 	    float: left;
 	    
 	    .egov-grid {
-	        @include bp(max-width, $bp-small) {
+	        @include bp(max-width, $bp-mobil) {
 	            position: relative;
 	            left: -5px;
 	        }
@@ -1559,7 +1518,6 @@ span.weee {
 }
 
 @include bp(max-width, $bp-large) {
-
     .col2-left-layout,
     .col2-right-layout,
     .col3-layout {
@@ -1569,14 +1527,9 @@ span.weee {
         }
 
         .pager {
-            float: left;
-
             .pages {
-                float: left;
+                float: right;
                 margin-left: 0;
-            }
-
-            .count-container {
             }
         }
     }

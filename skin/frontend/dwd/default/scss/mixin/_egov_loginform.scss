@@ -22,7 +22,7 @@ $col-box-height: 25em;
             margin: 0;
             border: $global-box-border solid $global-box-bordercolor;
             
-            @include bp(max-width, $bp-medium) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
                 display: block;
             }
@@ -50,7 +50,7 @@ $col-box-height: 25em;
 		            padding-left: 0;
 		            padding-right: 0;
 		            
-		            @include bp(max-width, $bp-medium) {
+		            @include bp(max-width, $bp-mobil) {
 					    min-width: 100%;
 					    margin-bottom: $box-spacing;
 					}
@@ -59,7 +59,7 @@ $col-box-height: 25em;
 		            	width: 46%;
 		            	float: none;
 		            	
-		            	@include bp(max-width, $bp-medium) {
+		            	@include bp(max-width, $bp-mobil) {
 					    	min-width: 100%;
 						}
 					}
