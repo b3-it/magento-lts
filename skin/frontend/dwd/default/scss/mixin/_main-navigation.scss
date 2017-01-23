@@ -23,7 +23,7 @@
     	    display: block;
         }
 
-        @include bp(min-width, 800px) {
+        @include bp(min-width, $bp-mobil + 1) {
             display: none;
         }
 	}
@@ -57,7 +57,7 @@
         &:last-child > a {
         }
     }
-   
+    
     li:last-child a {
         border-bottom: 0;
     }
@@ -125,7 +125,7 @@
         padding-left: 0 !important;
         
         a {
-        	@include bp(max-width, $bp-medium) {
+        	@include bp(max-width, $bp-mobil) {
         		padding: 0 15px 0 25px;
         	}
         }

@@ -211,6 +211,10 @@
 	    
 	    a {
 	        @include link-navigation-mobile;
+	        
+	        @include bp(max-width, $bp-mobil) {
+	            background-color: transparent;
+	        }
 	    }
 	}
 

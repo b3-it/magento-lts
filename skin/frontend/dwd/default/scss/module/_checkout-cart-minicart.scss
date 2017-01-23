@@ -20,7 +20,7 @@
     	border: 0;
     }
     
-    @include bp(max-width, 490px) {
+    @include bp(max-width, $bp-mobil) {
     	position: absolute;
     	top: 40px;
     	right: 0;
@@ -60,7 +60,7 @@
         width: 18%;
         float: left;
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             width: 18% !important;
         }
     }
@@ -144,7 +144,7 @@
 }
 
 .header-minicart {
-    @include bp(max-width, $bp-medium) {
+    @include bp(max-width, $bp-mobil) {
         display: inline-block;
         width: auto;
     }
@@ -274,7 +274,7 @@
         	padding: 14px;
         	width: 45%;
         	
-        	@include bp(max-width, $bp-small) {
+        	@include bp(max-width, $bp-mobil) {
         	    width: 49%;
         	    padding: 14px !important;
         	}
@@ -316,7 +316,7 @@
     top: 55px;
 }
 
-@include bp(min-width, $bp-medium + 1) {
+@include bp(min-width, $bp-mobil + 1) {
     .checkout-types.minicart {
         float: none;
         text-align: center;
@@ -330,7 +330,7 @@
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-mobil) {
     .header-minicart {
         .subtotal {
             .label {
@@ -421,7 +421,7 @@
     }
 }
 
-@include bp(max-width, $bp-small) {
+@include bp(max-width, $bp-mobil) {
     .header-minicart {
         .minicart-actions {
             .checkout-button {

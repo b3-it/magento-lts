@@ -82,7 +82,7 @@
         }
     }
 
-    @include bp(max-width, $bp-medium) {
+    @include bp(max-width, $bp-mobil) {
         .col2-set p.required {
             display: none;
         }
@@ -90,11 +90,17 @@
 }
 
 .customer-account-create {
+    label {
+        @include bp(max-width, $bp-mobil) {
+            width: 100%;
+        }
+    }
+    
     .scaffold-form {
         label:first-child {
             width: 140px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
@@ -102,7 +108,13 @@
 }
 
 .customer-account-edit {
-    .scaffold-form{
+    label {
+        @include bp(max-width, $bp-mobil) {
+            width: 100%;
+        }
+    }
+	
+	.scaffold-form{
         div.fieldset {
             vertical-align: top;
             display: inline-block;
@@ -122,7 +134,7 @@
         }
         
         button.button, .back-link {
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                width: 45%;
                display: inline-block;
                margin: 0;
@@ -130,7 +142,7 @@
         }
         
         .back-link a {
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
@@ -216,7 +228,7 @@ body.customer-account {
             top: 0px;
 
             .block-compare {
-                @include bp(max-width, $bp-medium) {
+                @include bp(max-width, $bp-mobil) {
                     display: none;
                 }
             }
@@ -225,6 +237,12 @@ body.customer-account {
             padding-top: 0;
             padding-bottom: 50px;
         }
+    }
+
+    #mobile-customer-account-navigation {
+        border-top-width: $global-active-border;
+        border-top-color: $textfarbe-mittel;
+        border-top-style: dotted;
     }
 
     .my-account {
@@ -487,7 +505,7 @@ body.customer-account {
             }
         }
 
-        @include bp(max-width, $bp-medium) {
+        @include bp(max-width, $bp-mobil) {
             .col-1,
             .col-2 {
                 width: 100%;
@@ -500,7 +518,7 @@ body.customer-account {
             }
         }
 
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             .addresses-additional {
                 p {
                     a {
@@ -666,7 +684,7 @@ ol#cart-sidebar-reorder {
     }
 }
 
-@include bp(max-width, $bp-small) {
+@include bp(max-width, $bp-mobil) {
     #my-orders-table {
         .option-label {
             margin-left: 20px;
@@ -758,13 +776,9 @@ ol#cart-sidebar-reorder {
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-mobil) {
     body.customer-account {
         .data-table {       
-            colgroup {
-                display: none;
-            }
-            
             &.orders {
                 .ship,
                 .view {
@@ -809,7 +823,7 @@ ol#cart-sidebar-reorder {
         }
 
         .welcome-msg {
-            font-family: $f-stack-serif;
+            font-family: $base-font-family;
 
             .hello {
                 font-style: italic;
@@ -841,7 +855,7 @@ ol#cart-sidebar-reorder {
     }
 }
 
-@include bp(max-width, $bp-small) {
+@include bp(max-width, $bp-mobil) {
     body.customer-account {
         .my-account {
             .form-list {

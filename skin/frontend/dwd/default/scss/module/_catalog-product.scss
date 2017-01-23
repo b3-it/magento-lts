@@ -26,7 +26,7 @@
     position: relative;
     top: -32px;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         top: -15px;
     }
 
@@ -65,7 +65,7 @@
          width: 100%;
      }
      
-     @include bp(max-width, $bp-small) {
+     @include bp(max-width, $bp-mobil) {
          display: block;
          width: 100%;
      }
@@ -93,7 +93,7 @@
 	cursor: pointer;
 }
 .olPopup {
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    left: 40% !important;
 	}
 }
@@ -154,7 +154,7 @@
         display: inline-block;
         width: 33%;
         
-        @include bp(max-width, $bp-medium) {
+        @include bp(max-width, $bp-mobil) {
             width: 48%;
             
             &:nth-child(2n+0) {
@@ -288,7 +288,7 @@
             top: $global-1-product-height - $gobal-cart-block-height - 140px;
             left: $global-product-image-1-width + 2%;
             
-            @include bp(max-width, $bp-medium) {
+            @include bp(max-width, $bp-mobil) {
             	position: relative;
             	top: auto;
             	left: auto;
@@ -324,7 +324,7 @@
         }
         
         .add-to-cart {
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 padding: 5px;
                 width: 100%;
                 display: block;
@@ -332,7 +332,7 @@
             }
             
             .qty-wrapper, .add-to-cart-buttons {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                     width: 48%;
                     display: inline-block;
                     vertical-align: top;
@@ -340,20 +340,20 @@
             }
             
             .add-to-cart-buttons {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                     position: relative;
                     right: -2%;
                 }
             }
             
             .qty {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                		width: 50% !important;
             	}
             }
             
             button {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                     margin: 0 !important;
                 }
             }
@@ -365,7 +365,7 @@
             
             span.egov-cart {
                 &:before {
-                    @include bp(max-width, $bp-small) {
+                    @include bp(max-width, $bp-mobil) {
                         content: '';
                     }
                 }
@@ -385,14 +385,14 @@
             padding-right: 30px;
             width: 27.5%;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: none;
             }
         }
         .mobile-product-img-box {
             display: none;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: inline;
                 float: left;
                 margin: 0 10px 10px 0;
@@ -409,15 +409,16 @@
         .short-description {
             padding-right: 20px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: block;
+                min-height: 170px;
             }
         }
         .product-shop {
             width: 30.5%;
             text-align: center;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: block;
                 width: 100%;
                 text-align: left;
@@ -778,6 +779,8 @@
     }
 
 	.add-to-cart {
+	    position: relative;
+        top: -15px;
 	    width: 260px;
 	
 	    .input-text {
@@ -856,14 +859,14 @@
     clear: both;
 }
 
-@include bp(min-width, $bp-medium + 1) {
+@include bp(min-width, $bp-mobil + 1) {
 
     .product-collateral {
         @include tabs;
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-mobil) {
 
     .product-collateral {
         @include accordion;
@@ -871,7 +874,7 @@
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-mobil) {
 
     .product-view .product-shop,
     .product-view .add-to-cart-wrapper,
@@ -885,7 +888,7 @@
     }
 }
 
-@include bp(min-width, $bp-medium + 1) {
+@include bp(min-width, $bp-mobil + 1) {
 
     .product-view .product-shop .product-name {
         display: block;
