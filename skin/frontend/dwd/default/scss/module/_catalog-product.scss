@@ -346,12 +346,6 @@
                 }
             }
             
-            .qty {
-                @include bp(max-width, $bp-mobil) {
-               		width: 50% !important;
-            	}
-            }
-            
             button {
                 @include bp(max-width, $bp-mobil) {
                     margin: 0 !important;
