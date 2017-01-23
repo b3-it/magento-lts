@@ -104,11 +104,6 @@ $j(document).ready(function(){
         });
     }
     
-    // Benutzer-Konto kopieren
-    if ( $j('#customer-account-menu').length > 0 ) {
-    	$j('#mobile-header-account li.first').append( '<ul id="mobile-customer-account-navigation" class="level1">' + $j('#customer-account-navigation').html() + '</ul>' );
-    }
-
 	// Artikel-Namen und Artikel-Nummern abkürzen
 	//cutAllArticleTitleLine();
 	
@@ -174,9 +169,13 @@ function syncSelectedQty(newValue)
  */
 function checkMobileCustomerNavigation()
 {
-	if ( $j('body').hasClass('customer-account') ) {
-    	if( ($j('.col-left').css('display') == 'none') && ( $j('#mobile-header #header-account li.first ul.level1').length < 1 ) ) {
-    		$j('#mobile-header #header-account li.first').append( '<ul class="level1">' + $j('#customer-account-navigation').html() + '</ul>' );
+    if ( $j('#customer-account-menu').length > 0 ) {
+    	if( $j('#mobile-header #header-account li.first ul.level1').length < 1 ) {
+    		$j('#mobile-header-account li.first').append(
+                '<ul id="mobile-customer-account-navigation" class="level1">' +
+                $j('#customer-account-navigation').html() +
+                '</ul>'
+            );
     	}
     }
 }
