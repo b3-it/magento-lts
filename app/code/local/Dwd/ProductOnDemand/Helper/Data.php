@@ -103,7 +103,7 @@ class Dwd_ProductOnDemand_Helper_Data extends Mage_Downloadable_Helper_Data
 	 * @return string
 	 */
 	public function getListAsHtml($label, $list) {
-		$html = "<dt>".$this->escapeHtml($this->__($label)).': '."</dt>";
+		$html = "<dt>".$this->escapeHtml($this->__($label))."</dt>";
 		$i = 0;
 	
 		foreach ($list as $item) {
