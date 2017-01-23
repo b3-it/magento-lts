@@ -120,6 +120,10 @@ body.catalogsearch-result-index .page-title h1 {
 	}
 }
 
+.product_sku {
+	overflow: hidden;
+}
+
 
 /* ============================================ *
  * Product Grid
@@ -386,6 +390,10 @@ body.catalogsearch-result-index .page-title h1 {
         .product-list-left-col {
             width: 27.5%;
             padding-right: 30px;
+            
+            @include bp(max-width, $bp-mobil) {
+                width: 10%;
+            }
 
             a.link-learn {
                 display: block;
@@ -408,7 +416,11 @@ body.catalogsearch-result-index .page-title h1 {
     }
     .product-new-block {
         bottom: -20px;
-        right: -10px
+        right: -10px;
+        
+        @include bp(max-width, $bp-mobil) {
+            width: 50%;
+        }
     }
 
     .product-primary, .product-price {
@@ -467,8 +479,8 @@ body.catalogsearch-result-index .page-title h1 {
         }
     }
     
-    .product-list-left-col, .product-primary, .product-action, .product_sku {
-	    @include bp(max-width, $bp-small) {
+    .product-primary, .product-action, .product_sku {
+	    @include bp(max-width, $bp-mobil) {
 	        display: none !important;
 	    }
 	}

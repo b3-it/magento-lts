@@ -411,6 +411,7 @@
             
             @include bp(max-width, $bp-mobil) {
                 display: block;
+                min-height: 170px;
             }
         }
         .product-shop {
