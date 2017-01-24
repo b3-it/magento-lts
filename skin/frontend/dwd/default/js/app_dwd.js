@@ -37,22 +37,22 @@ $j(document).ready(function(){
 		                               .css('display', 'none');
 	}
 
-	if ( $j('#map').length || $j('#product_addtocart_form > .availability') ) {
-		$j('#grouped-product-avalible-moved').html( $j('.availability').html() )
+	var block_availability = $j('#product_addtocart_form > .availability');
+	if ( $j('#map').length || block_availability ) {
+		$j('#grouped-product-avalible-moved').html( block_availability.html() )
                                              .removeClass('no-display')
                                              .css('display', 'block');
-        $j('.availability').html('')
-                           .addClass('no-display')
-                           .css('display', 'none');
+		block_availability.addClass('no-display')
+                          .css('display', 'none');
 	}
 
-	if ( $j('#product_addtocart_form > p.delivery-time').length ) {
-		$j('#grouped-product-avalible-moved').html( $j('#product_addtocart_form > p.delivery-time').html() )
+	var block_delivery = $j('#product_addtocart_form > p.delivery-time');
+	if ( block_delivery.length ) {
+		$j('#grouped-product-avalible-moved').html( block_delivery.html() )
                                              .removeClass('no-display')
                                              .css('display', 'block');
-        $j('#product_addtocart_form > p.delivery-time').html('')
-                                                     .addClass('no-display')
-                                                     .css('display', 'none');
+		block_delivery.addClass('no-display')
+                      .css('display', 'none');
 	}
 	
 	if ( $j('.add-to-cart').length ) {
@@ -169,7 +169,11 @@ function syncSelectedQty(newValue)
  */
 function checkMobileCustomerNavigation()
 {
-    if ( $j('#customer-account-menu').length > 0 ) {
+    if ( $j('#mobile-customer-account-navigation').length ) {
+    	return;
+    }
+	
+	if ( $j('#customer-account-menu').length > 0 ) {
     	if( $j('#mobile-header #header-account li.first ul.level1').length < 1 ) {
     		$j('#mobile-header-account li.first').append(
                 '<ul id="mobile-customer-account-navigation" class="level1">' +
