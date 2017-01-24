@@ -25,6 +25,12 @@
         
         .price-block {
             margin-bottom: 10px;
+			
+			.cart-price {
+			    display: inline-block;
+				float: right;
+				margin-right: 5px;
+			}
         }
         .incl-tax {
            font-size: 0.7rem;

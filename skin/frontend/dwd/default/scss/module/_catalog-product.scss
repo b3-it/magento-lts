@@ -346,12 +346,6 @@
                 }
             }
             
-            .qty {
-                @include bp(max-width, $bp-mobil) {
-               		width: 50% !important;
-            	}
-            }
-            
             button {
                 @include bp(max-width, $bp-mobil) {
                     margin: 0 !important;
@@ -859,23 +853,11 @@
     clear: both;
 }
 
-@include bp(min-width, $bp-mobil + 1) {
-
-    .product-collateral {
-        @include tabs;
-    }
-}
-
 @include bp(max-width, $bp-mobil) {
-
-    .product-collateral {
+	.product-collateral {
         @include accordion;
         @include accordionCollapse;
-    }
-}
-
-@include bp(max-width, $bp-mobil) {
-
+	}
     .product-view .product-shop,
     .product-view .add-to-cart-wrapper,
     .product-view .block-related,
@@ -889,7 +871,9 @@
 }
 
 @include bp(min-width, $bp-mobil + 1) {
-
+    .product-collateral {
+        @include tabs;
+    }
     .product-view .product-shop .product-name {
         display: block;
     }

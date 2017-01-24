@@ -35,15 +35,6 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
         </a>
     </td>
     <td class="product-cart-info">
-        <h2 class="mobile-product-name">
-          <?php if ($this->hasProductUrl()):?>
-            <a href="<?php echo $this->getProductUrl() ?>">
-                <?php echo $this->escapeHtml($this->getProductName()) ?>
-            </a>
-          <?php else: ?>
-            <?php echo $this->escapeHtml($this->getProductName()) ?>
-          <?php endif; ?>
-        </h2>
         <h2 class="product-name">
         <?php if ($this->hasProductUrl()):?>
             <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
@@ -54,48 +45,28 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
         <div class="product-cart-sku">
             <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
         </div>
-        <div class="mobile-product-cart-sku">
-            <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
-        </div>
-      <?php if($this->getStation($_item) OR $this->getPeriode($_item)): ?>
+       
         <dl class="item-options">
-       <?php if($station = $this->getStation($_item)):?>
-		    <dt><?php echo $this->__('Station'); ?></dt>
-		    <dd><?php echo $station->getName(); ?></dd>
-	   <?php endif;?>
-	   <?php if($periode = $this->getPeriode($_item)):?>
-		    <dt><?php echo $this->__('Periode'); ?></dt>
-		    <dd><?php echo $periode->getFormatedText(); ?></dd>
-       <?php endif;?>
+	       <?php if($stations = $this->getStations($_item)):?>
+			    <?php echo $this->getListAsHtml('Station(s)', $stations) ?>
+		   <?php endif;?>
+		   
+		   <?php if($products = $this->getProducts($_item)):?>
+			     <?php echo $this->getListAsHtml('Product(s)', $products); ?>
+		   <?php endif;?>
+		   
+		   <?php if ($startDate = $this->getStartDate($_item)):?>
+			     <dt><?php echo $this->__('Start date') ?></dt>
+			     <dd><?php echo $this->escapeHtml($startDate) ?></dd>
+		   <?php endif;?>
+		     
+		   <?php if($formats = $this->getFormats($_item)):?>
+			     <?php echo $this->getListAsHtml('Format(s)', $formats); ?>
+		   <?php endif;?>
         </dl>
-      <?php endif; ?>
       
       <?php if ($_options = $this->getOptionList()):?>
-        <div class="mobile-product-collateral product-collateral toggle-content tabs">
-            <dl id="collateral-tabs" class="collateral-tabs">
-                <dt class="tab current"><span><?php echo $this->__('Selected Product Options'); ?></span></dt>
-	            <dd class="tab-container current">
-			        <dl class="item-options">
-			            <?php foreach ($_options as $_option) : ?>
-			            <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-			                <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-			                <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
-			                <?php if (isset($_formatedOptionValue['full_view'])): ?>
-			                <div class="truncated_full_value">
-			                    <dl class="item-options">
-			                        <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-			                        <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
-			                    </dl>
-			                </div>
-			                <?php endif; ?>
-			            </dd>
-			            <?php endforeach; ?>
-			        </dl>
-	            </dd>
-	        </dl>
-        </div>
-
-        <dl class="product-collateral item-options">
+        <dl class="item-options">
             <?php foreach ($_options as $_option) : ?>
             <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
                 <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
@@ -172,7 +143,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 		           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
             </div>            
         </div>
-	</td>
+    </td>
 
     <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
     <td class="product-cart-price">

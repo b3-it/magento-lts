@@ -161,37 +161,7 @@
         float: right;
     }
 }
-/*
-.display-both-prices, .display-single-price {
-    @include oneColumnCartItems;
-}
 
-@include bp(max-width, $bp-large) {
-    .display-single-price {
-        @include oneColumnCartItems;
-    }
-}
-*/
-/*
-@include bp(max-width, 599px) {
-    .product-cart-sku {
-        display: none;
-    }
-
-    .display-both-prices,
-    .display-single-price {
-        .cart-forms,
-        .cart-totals-wrapper,
-        .crosssell {
-            padding-top: 0;
-            padding-left: 0;
-            padding-right: 0;
-            float: none;
-            width: 100%;
-        }
-    }
-}
-*/
 .display-single-price {
     &:after {
         @include clearfix;
@@ -316,6 +286,14 @@
 }
 
 #shopping-cart-table, #checkout-review-table {
+	thead, colgroup {
+	   @include bp(max-width, $bp-small) {
+	       display: none;
+	   }
+	}
+
+	.product-cart-image {}
+	
 	h3 {
 	    color: $grundfarbe-blau !important;
 	}
@@ -344,6 +322,12 @@
         font-weight: normal;
         line-height: 1.2rem;
     }
+	
+	.product-cart-sku {
+	    @include bp(max-width, $bp-mobil) {
+		    display: none;
+		}
+	}
     
     .mobile-product-cart-sku {
         display: none;
@@ -389,9 +373,6 @@
     .product-cart-info {
         padding-left: $global-tdpadding;
         text-align: left !important;
-    }
-
-    tr {
     }
 
     tfoot {
@@ -449,6 +430,10 @@
     .product-cart-total,
     .product-cart-price {
         text-align: center;
+		
+		@include bp(max-width, $bp-small) {
+		    display: none;
+		}
     }
 
     .cart-tax-total {
@@ -490,6 +475,10 @@
     .product-cart-actions {
         min-width: 50px;
         text-align: center;
+		
+		@include bp(max-width, $bp-small) {
+		    display: none;
+		}
 
         .qty {
             height: 30px;
@@ -511,6 +500,10 @@
 
     .item-options {
         padding-left: 15px;
+    }
+	
+	.cart-links {
+	    display: none !important;
     }
 }
 
@@ -600,7 +593,6 @@
 
         .product-cart-info,
         td[data-rwd-label] {
-            //float: right;
             width: percentage(3/4);
         }
 
@@ -608,7 +600,6 @@
         .product-cart-price {
             padding-bottom: 0;
             padding-top: 0;
-            //float: right;
         }
 
         .product-cart-remove,
@@ -713,6 +704,18 @@
             }
         }
     }
+}
+
+@include bp(max-width, $bp-small) {
+    .cart-table {
+	    .product-cart-image {
+		    width: auto;
+		}
+		
+		thead, colgroup {
+		    display: none !important;
+		}
+	}
 }
 
 /* ============================================ *
@@ -881,7 +884,6 @@
 }
 
 @include bp(max-width, $bp-mobil) {
-
     .cart .cart-totals table tfoot td {
         font-size: 0.9rem;
     }
