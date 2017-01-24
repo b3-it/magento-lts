@@ -32,12 +32,30 @@
         </a>
     </td>
     <td class="product-cart-info">
-          <h2 class="product-name">
-              <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->getProductName() ?></a>
-          </h2>
-          <div class="product-cart-sku">
-            <span class="label"><?php echo $this->__('Sku').': '.$this->htmlEscape($_item->getSku()) ?>
-	     </div>
+        <h2 class="mobile-product-name">
+          <?php if ($this->hasProductUrl()):?>
+            <a href="<?php echo $this->getProductUrl() ?>">
+                <?php echo $this->escapeHtml($this->getProductName()) ?>
+            </a>
+          <?php else: ?>
+            <?php echo $this->escapeHtml($this->getProductName()) ?>
+          <?php endif; ?>
+        </h2>
+        <h2 class="product-name">
+        <?php if ($this->hasProductUrl()):?>
+            <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+        <?php else: ?>
+            <?php echo $this->escapeHtml($this->getProductName()) ?>
+        <?php endif; ?>
+        </h2>
+
+        <div class="product-cart-sku">
+            <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
+        </div>
+        <div class="mobile-product-cart-sku">
+            <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
+        </div>
+
 	     <?php if($station = $this->getStation($_item)):?>
 		     <div id="card" class="std small dwd-orderitem-options">
 		            <?php echo $this->__('Station').': '.$station->getName(); ?>
@@ -50,7 +68,30 @@
 	     <?php endif;?>
 	     
 		<?php if ($_options = $this->getOptionList()):?>
-        <dl class="item-options">
+        <div class="mobile-product-collateral product-collateral toggle-content tabs">
+            <dl id="collateral-tabs" class="collateral-tabs">
+                <dt class="tab current"><span><?php echo $this->__('Selected Product Options'); ?></span></dt>
+	            <dd class="tab-container current">
+			        <dl class="item-options">
+			            <?php foreach ($_options as $_option) : ?>
+			            <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+			                <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+			                <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
+			                <?php if (isset($_formatedOptionValue['full_view'])): ?>
+			                <div class="truncated_full_value">
+			                    <dl class="item-options">
+			                        <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+			                        <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+			                    </dl>
+			                </div>
+			                <?php endif; ?>
+			            </dd>
+			            <?php endforeach; ?>
+			        </dl>
+	            </dd>
+	        </dl>
+        </div>
+        <dl class="product-collateral item-options">
             <?php foreach ($_options as $_option) : ?>
             <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
             <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
