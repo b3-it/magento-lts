@@ -765,6 +765,10 @@
 	    .button {
 	        width: 100px;
 	        padding: 7px 5px;
+	        
+	        @include bp(max-width, $bp-mobil) {
+	            float: none !important;
+	        }
 	    }
 	    
 	    .button-full-width {
@@ -827,7 +831,7 @@
     display: none;
 }
 
-@include bp(max-width, 599px) {
+@include bp(max-width, $bp-small) {
     .add-to-box .add-to-links {
         a {
             float: none;

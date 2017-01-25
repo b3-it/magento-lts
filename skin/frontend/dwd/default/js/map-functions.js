@@ -80,8 +80,13 @@ function setSelectBox(selectID)
  */
 function changeInputTextFromSelect()
 {
-	if ( $j(inputIDSuggest).length ) {
-		$j(inputIDSuggest).val( $j(selectStation + " option:selected").text() );
+	if ( $j(selectStation).val() == '' ) {
+		$j(inputIDSuggest).val('');
+	}
+	else {
+		if ( $j(inputIDSuggest).length ) {
+			$j(inputIDSuggest).val( $j(selectStation + " option:selected").text() );
+		}
 	}
 }
 
