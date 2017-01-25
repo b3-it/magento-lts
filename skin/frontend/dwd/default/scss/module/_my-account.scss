@@ -13,10 +13,6 @@
 	position: relative;
 	top: 15px;
 	
-	@include bp(max-width, $bp-small) {
-	    top: -15px;
-	}
-	
 	#order-buttons {
 	    display: inline-block;
         float: right;
@@ -114,6 +110,10 @@
             display: inline-block;
             float: none;
             width: 25%;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
         }
     }
 

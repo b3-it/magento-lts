@@ -706,6 +706,15 @@
     }
 }
 
+@include bp(max-width, $bp-mobil) {
+	.dwd-abo-index-view {
+	    .product-name a,
+	    .mobile-product-name a {
+	        font-size: 1.2rem;
+	    }	
+    }
+}
+
 @include bp(max-width, $bp-small) {
     .cart-table {
 	    .product-cart-image {
@@ -714,6 +723,19 @@
 		
 		thead, colgroup {
 		    display: none !important;
+		}
+	}
+	
+	.dwd-abo-index-view {
+	    .cart-table td.last,
+	    .cart-table td.dwd-abo-status {
+	        display: none;
+		}
+		td.dwd-abo-link {
+		    width: 10% !important;
+		}
+		.dwd-orderitem-options {
+		    margin-bottom: 10px;
 		}
 	}
 }
