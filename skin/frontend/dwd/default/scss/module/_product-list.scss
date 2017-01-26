@@ -199,10 +199,6 @@ body.catalogsearch-result-index .page-title h1 {
                 }
             }
         }
-        
-        @include bp(max-width, $bp-mobil) {
-            display: none;
-        }
     }
 
     .ratings {

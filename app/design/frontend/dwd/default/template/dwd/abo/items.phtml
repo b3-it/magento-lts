@@ -35,17 +35,16 @@
 <?php echo $this->getChildHtml('pager'); ?>
 <?php if(count($_items)): ?>
 <table id="my-orders-table" class="cart-table data-table linearize-table-large" summary="<?php echo $this->__('Items Subcribed') ?>">
-    <col style="" />
-    <col style="" />
-    <col style="" />
-    <col style="" />
-    <col style="" />
+    <colgroup>
+    	<col style="" />
+    	<col style="width:5%" />
+    	<col style="width:10%" />
+    </colgroup>
     <thead>
         <tr>
             <th><?php echo $this->__('Product features') . '<br />' . $this->__('order information') ?></th>
             <th><?php echo $this->__('Link') ?></th>
-            <th><?php echo $this->__('Status') ?></th>
-            <th><?php echo $this->__('Action') ?></th>
+            <th><?php echo $this->__('Status')  . ' /<br />' . $this->__('Action'); ?></th>
         </tr>
     </thead>
 
@@ -93,9 +92,12 @@
 	              <?php endif;?>
               	</div>
             </td>
-            <td class="dwd-abo-link"><a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link'); ?></a></td>
-            <td class="dwd-abo-status"><?php echo $this->getItemStatus($_item);?></td>
+            <td class="dwd-abo-link">
+                <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link'); ?></a>
+            </td>
             <td>
+                <?php echo $this->getItemStatus($_item);?>
+                <br /><br />
                 <?php if ($this->canAboCancel($_item)):?>
                 <a href="<?php echo $this->getCancelUrl($_item->getAboId())?>" onClick="return confirm('<?php echo $this->__('Are you sure you want to delete your subscription?')?>')" >
                     <?php echo $this->__('Cancel subscribe') ?>

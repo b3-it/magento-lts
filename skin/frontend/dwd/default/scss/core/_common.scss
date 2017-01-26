@@ -1355,10 +1355,6 @@ span.weee {
 	        float: right;
 	        padding: 2% 0 0 2%;
 	        margin-right: 0;
-	        
-	        @include bp(max-width, $bp-mobil) {
-	            display: none;
-	        }
 	    }
 	    .sort-by-switcher--asc {
 	        @extend .egov-arrow-down;
@@ -1490,8 +1486,8 @@ span.weee {
     }
 
     // When there are 5+ pages, it is important to hide this label in order to not break to three lines
-    .limiter label {
-        display: none;
+    .limiter {
+        display: block;
     }
 }
 

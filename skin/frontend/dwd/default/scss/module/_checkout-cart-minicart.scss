@@ -47,9 +47,10 @@
     }
     
     .product-name, .mobile-product-name {
-        white-space: nowrap;
         overflow: hidden;
         line-height: auto;
+        height: auto;
+        margin-bottom: 0;
     }
 
     .product-image, .product-details {

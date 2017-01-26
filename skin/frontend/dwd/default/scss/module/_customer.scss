@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     dwd_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -629,6 +629,32 @@ body.customer-account {
     }
 }
 
+.dwd-downloadable {
+	.mobile-order-prefix {
+	    display: none;
+	    
+	    @include bp(max-width, $bp-small) {
+	        display: inline;
+	    }
+	}
+	
+	.mobile-product-collateral {
+	    display: none;
+	    
+	    @include bp(max-width, $bp-small) {
+	        display: block;
+	    }
+	}
+	
+	colgroup, thead,
+	.dwd-downloadable-date, .dwd-downloadable-title,
+	.dwd-downloadable-status, .dwd-downloadable-downloads {
+	    @include bp(max-width, $bp-small) {
+	        display: none;
+	    }
+	}
+}
+
 #my-orders-table,
 .order-details > table {
     @extend .egov-base-totals;
@@ -778,7 +804,7 @@ ol#cart-sidebar-reorder {
 
 @include bp(max-width, $bp-mobil) {
     body.customer-account {
-        .data-table {       
+        .data-table {
             &.orders {
                 .ship,
                 .view {
@@ -870,12 +896,6 @@ ol#cart-sidebar-reorder {
 @include bp(max-width, $bp-xsmall) {
     body.customer-account {
         .my-account {
-            .page-title {
-                h1 {
-                    text-align: center;
-                }
-            }
-
             .title-buttons {
                 text-align: center;
 

@@ -149,6 +149,10 @@
             top: -2px;
             margin-left: 3px;
             width: 45%;
+            
+            @include bp(max-width, $bp-small) {
+                width: 92%;
+            }
         }
     }
 
@@ -218,14 +222,26 @@
             display: block;
             width: 100%;
         }
-        li.double-line {
+        
+        li, li.double-line {
             float: left;
             width: 48%;
-            margin-right: 15px;
+            
+            > div:not(.input-box) {
+                margin: 10px 5px;
+            }
+            
+            @include bp(max-width, $bp-small) {
+                float: none;
+                width: 100%;
+            }
         }
-        li {
-            float: left;
-            width: 48%;
+        li.double-line {
+            margin-right: 15px;
+            
+            @include bp(max-width, $bp-small) {
+                margin: 0;
+            }
 
             label {
                 width: 100%;
