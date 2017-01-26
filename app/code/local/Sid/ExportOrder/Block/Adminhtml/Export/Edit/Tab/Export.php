@@ -27,7 +27,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Export extends Mage_Adminh
   {
       $this->addColumn('message', array(
           'header'    => Mage::helper('exportorder')->__('Message'),
-          'align'     =>'right',
+          //'align'     =>'right',
           //'width'     => '50px',
           'index'     => 'message',
       ));

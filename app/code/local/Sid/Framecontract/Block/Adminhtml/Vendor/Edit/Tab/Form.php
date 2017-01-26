@@ -36,8 +36,8 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminh
       
      $fieldset->addField('order_email', 'text', array(
           'label'     => Mage::helper('framecontract')->__('Order EMail'),
-          'class'     => 'required-entry',
-          'required'  => true,
+          //'class'     => 'required-entry',
+          //'required'  => true,
           'name'      => 'order_email',
       ));
      
