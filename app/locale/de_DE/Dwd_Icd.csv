@@ -25,6 +25,7 @@
 "Initial Order","Erstbestellung"
 "Instant Credential Deployment","Bereitstellung von Anmeldeinformationen (ICD)"
 "Lifetime","Lifetime"
+"Link to application","Link zur Anwendung"
 "Login Name","Benutzername"
 "Maybe you have to specify the port explicit in the url eg. https://my.service.de:443/.","In der URL muß der Port mit angegeben werden z.B.: https://my.service.de:443/"
 "My Credentials","Meine Zugänge"
