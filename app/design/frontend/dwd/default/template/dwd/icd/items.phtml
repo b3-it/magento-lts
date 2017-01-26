@@ -20,15 +20,13 @@
         <col />
         <col />
         <col />
-        <col />
-    <colgroup>
+    </colgroup>
     <thead>
         <tr>
-            <th><?php echo $this->__('Product features') ?></th>            
-            <th><?php echo $this->__('Url') ?></th>
-            <th><?php echo $this->__('Status') ?></th>
-            <th><?php echo $this->__('Login Name') ?></th>
-            <th><?php echo $this->__('Action') ?></th>
+            <th class="dwd-downloadable-info"><?php echo $this->__('Product features') ?></th>            
+            <th class="dwd-downloadable-date"><?php echo $this->__('Url') ?></th>
+            <th class="dwd-downloadable-date"><?php echo $this->__('Login Name') ?></th>
+            <th><?php echo $this->__('Status') . ' /<br />' . $this->__('Action') ?></th>
         </tr>
     </thead>
 
@@ -49,24 +47,17 @@
         	    <div><?php echo $this->__('Run Time')  . ': ' . str_replace(' - ', $this->__(' to '), $this->getItemPeriode($_item)); ?></div>
         	    
         	    <div class="mobile-product-collateral">
-        	        <div><?php echo $this->__('Url') ?>: <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link'); ?></a></div>
-        	        <div><?php echo $this->__('Status')  . ': ' . $this->getItemStatus($_item); ?></div>
         	        <div><?php echo $this->__('Login Name')  . ': ' . $_item->getLogin(); ?></div>
-        	      <?php if($_item->getStatus()== Dwd_Icd_Model_OrderStatus::ORDERSTATUS_ACTIVE):?>
-        	        <div>
-        	            <a href="<?php echo $this->getUrl('dwd_icd/index/change',array('id'=>$_item->getAccountId()))?>">
-        	                <?php echo $this->__('Change <br /> Password') ?>
-        	            </a>
-        	        </div>
-        	      <?php endif;?>
+        	        <div><?php echo $this->__('Url') ?>: <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link'); ?></a></div>
         	    </div>
             </td>
             <td class="dwd-downloadable-date">
         	    <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link'); ?></a>
         	</td>
-        	<td class="dwd-downloadable-date"><?php echo $this->getItemStatus($_item);?></td>
         	<td class="dwd-downloadable-date"><?php echo $_item->getLogin();?></td>
-        	<td class="dwd-downloadable-date">
+        	<td>
+                <?php echo $this->getItemStatus($_item);?>
+                <br /><br />
         	  <?php if($_item->getStatus()== Dwd_Icd_Model_OrderStatus::ORDERSTATUS_ACTIVE):?>
         	    <a href="<?php echo $this->getUrl('dwd_icd/index/change',array('id'=>$_item->getAccountId()))?>">
         	        <?php echo $this->__('Change <br /> Password') ?>

@@ -102,6 +102,18 @@
         }
     }
     
+    .count-container {
+        width: 100%;
+        
+        .amount, .limiter {
+            display: inline-block;
+        }
+        
+        .amount {
+            float: left;
+        }
+    }
+    
     .new-adress-button {
         display: block;
         width: 100%;

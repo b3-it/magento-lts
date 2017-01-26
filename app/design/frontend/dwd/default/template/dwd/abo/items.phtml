@@ -43,7 +43,7 @@
     <thead>
         <tr>
             <th><?php echo $this->__('Product features') . '<br />' . $this->__('order information') ?></th>
-            <th><?php echo $this->__('Link') ?></th>
+            <th class="dwd-abo-link"><?php echo $this->__('Link') ?></th>
             <th><?php echo $this->__('Status')  . ' /<br />' . $this->__('Action'); ?></th>
         </tr>
     </thead>
@@ -79,23 +79,14 @@
                     (<?php echo $this->formatItemDate($_item->getInitialOrderDate());?>)
                 </div>
               <?php endif; ?>
-              <?php if ($this->canAboCancel($_item)):?>
-                <div class="std small dwd-orderitem-options">
-                	<?php echo $this->__('Cancelation until') . ": " . $this->formatItemDateTime($_item->getCancelationPeriodEnd());?>
-                </div>
-              <?php endif;?>
                 <div class="mobile-product-collateral">
-                  <?php if ($this->canAboCancel($_item)):?>
-	                <a href="<?php echo $this->getCancelUrl($_item->getAboId())?>" onClick="return confirm('<?php echo $this->__('Are you sure you want to delete your subscription?')?>')" >
-	                    <?php echo $this->__('Cancel subscribe') ?>
-	                </a>
-	              <?php endif;?>
+                  <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link'); ?></a>
               	</div>
             </td>
             <td class="dwd-abo-link">
                 <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link'); ?></a>
             </td>
-            <td>
+            <td class="dwd-abo-actions">
                 <?php echo $this->getItemStatus($_item);?>
                 <br /><br />
                 <?php if ($this->canAboCancel($_item)):?>

@@ -721,14 +721,13 @@
 		    width: auto;
 		}
 		
-		thead, colgroup {
+		colgroup {
 		    display: none !important;
 		}
 	}
 	
 	.dwd-abo-index-view {
-	    .cart-table td.last,
-	    .cart-table td.dwd-abo-status {
+	    .cart-table .dwd-abo-link {
 	        display: none;
 		}
 		td.dwd-abo-link {

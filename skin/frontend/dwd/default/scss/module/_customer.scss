@@ -646,7 +646,7 @@ body.customer-account {
 	    }
 	}
 	
-	colgroup, thead,
+	colgroup,
 	.dwd-downloadable-date, .dwd-downloadable-title,
 	.dwd-downloadable-status, .dwd-downloadable-downloads {
 	    @include bp(max-width, $bp-small) {
