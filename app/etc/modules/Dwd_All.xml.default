@@ -35,6 +35,7 @@
       <codePool>local</codePool>
       <depends>
         <Mage_Downloadable />
+        <Egovs_Checkout />
         <Dwd_Stationen />
         <Dwd_Periode />
       </depends>
@@ -43,6 +44,7 @@
       <active>false</active>
       <codePool>local</codePool>
       <depends>
+        <Egovs_Checkout />
         <Dwd_Stationen />
         <Dwd_Periode />
       </depends>
