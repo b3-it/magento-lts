@@ -60,7 +60,7 @@ body {
 
 button {
     @include grau-hover-blau;
-    
+
     span, .default-font {
         font-family: $base-font-family;
     }
@@ -77,7 +77,7 @@ input[type="checkbox"], input[type="radio"] {
     top: 1px;
     left: 2px;
     margin-right: $global-radio-checkback-spacing;
-    
+
     @include bp(max-width, $bp-mobil) {
        top: 3px;
        vertical-align: top;
@@ -268,24 +268,24 @@ div.block-reorder {
     overflow: hidden;
     margin: 0;
     font-family: $base-font-family;
-    
+
     li {
     	display: inline-block;
     }
-    
+
     a {
     	@include link-blau;
     }
-    
+
     span {
     	padding: 0 7px;
     }
-    
+
     strong {
     	font-weight: bold;
     	color: $textfarbe-mittel;
     }
-    
+
     @include bp(max-width, $bp-mobil) {
     	display: none;
     }
@@ -416,7 +416,7 @@ div.block-reorder {
 .main-container {
     max-width: $global-fullpage-width;
     margin-top: 30px;
-    
+
     @include bp(max-width, $bp-small) {
         margin: 0;
     }
@@ -476,7 +476,7 @@ div.block-reorder {
 	    background-size: 100% 100%;
 	    padding: 10px 10px 0 10px;
 	}
-	
+
 	.col-main {
         padding-left: 0;
         background-image: url($global-content-top-image);
@@ -525,7 +525,7 @@ div.block-reorder {
 	    background-size: 100% 100%;
 	    padding: 10px 10px 0 10px;
 	}
-	
+
     .col-wrapper {
         width: $global-wrapper-width;
         position: relative;
@@ -536,7 +536,7 @@ div.block-reorder {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
-            
+
             @include bp(max-width, $bp-mobil) {
             	display: none;
             }
@@ -546,12 +546,12 @@ div.block-reorder {
             overflow: hidden;
             width: $global-content-2col-left-percent;
             padding-top: $global-content-paddingtop;
-            
+
             @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
-        
+
         @include bp(max-width, $bp-mobil) {
             padding: 5px;
         }
@@ -1287,16 +1287,16 @@ span.weee {
     border-width: $global-active-border;
     padding: 0 10px;
     height: 40px;
-    
+
     select {
     	margin: 0;
     }
-    
+
     .ui-widget {
         position: relative;
         top: -2px;
     }
-    
+
     .limiter {
         top: 5px !important;
     }
@@ -1332,7 +1332,7 @@ span.weee {
             content: ':';
         }
     }
-    
+
     a {
     	@include hover-weiss-blau;
     	height: 1.7rem;
@@ -1340,15 +1340,15 @@ span.weee {
     	padding: 2px;
     	text-decoration: none;
     }
-    
+
     .sort-by {
-    	float: right;	    
+    	float: right;
 	    margin: 5px 0;
-	    
+
 	    label {
 	    	margin-top: 3px;
 	    }
-	
+
 	    .sort-by-switcher {
 	        position: relative;
 	        top: -4px;
@@ -1363,10 +1363,10 @@ span.weee {
 	        @extend .egov-arrow-up;
 	    }
     }
-    
+
     .view-mode {
 	    float: left;
-	    
+
 	    .egov-grid {
 	        @include bp(max-width, $bp-mobil) {
 	            position: relative;
@@ -1421,11 +1421,11 @@ span.weee {
     strong {
         display: none;
     }
-    
+
     li {
     	display: inline-block;
     }
-    
+
     a, .current {
     	display: inline-block;
 	    border: 0;
@@ -1437,16 +1437,16 @@ span.weee {
 	    height: 1.7rem;
 	    padding: 0;
     }
-    
+
     a {
      	@include grau-hover-blau;
     }
-    
+
     .current {
 	    cursor: default;
 	    @include hover-blau-weiss;
     }
-    
+
     .next, .previous {
 	    // New HP5BP technique: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757c9e03dda4e463fb0d4db5a5f82d7
 	    font: 0/0 a;
@@ -1454,7 +1454,7 @@ span.weee {
         background-color: transparent;
         @include hover-weiss-blau;
     }
-    
+
     .previous {
     	&:before {
     		@include triangle(left, 4px, $grundfarbe-blau);
@@ -1463,7 +1463,7 @@ span.weee {
         	@include triangle(left, 4px, $grundfarbe-weiss);
         }
     }
-    
+
     .next {
     	&:before {
     		@include triangle(right, 4px, $grundfarbe-blau);
@@ -1471,7 +1471,7 @@ span.weee {
         &:hover:before, &:active:before, &:focus:before {
         	@include triangle(right, 4px, $grundfarbe-weiss);
         }
-    } 
+    }
 }
 
 @include bp(max-width, $bp-xsmall) {
@@ -1481,13 +1481,19 @@ span.weee {
         display: none;
     }
 
+    .toolbar {
+        height: auto;
+        padding-top: 7px;
+    }
+
     .pages {
-        float: left;
+        float: none !important;
     }
 
     // When there are 5+ pages, it is important to hide this label in order to not break to three lines
     .limiter {
         display: block;
+        float: none !important;
     }
 }
 

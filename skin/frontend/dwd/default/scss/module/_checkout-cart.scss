@@ -43,7 +43,7 @@
     clear: right;
     width: 40%;
     padding-left: $global-boxmargin;
-    
+
     @include bp(max-width, $bp-mobil) {
         float: none;
         display: block;
@@ -94,10 +94,10 @@
 
     .cart-empty {
         @extend .egov-default-message;
-        
+
         .button {
             float: none;
-            
+
             @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
@@ -293,15 +293,15 @@
 	}
 
 	.product-cart-image {}
-	
+
 	h3 {
 	    color: $grundfarbe-blau !important;
 	}
-	
+
 	th .product-name, th .mobile-product-name {
 	    color: $grundfarbe-weiss;
 	}
-	
+
     a.egov-delete {
         font-size: $global-fontsize + 8;
     }
@@ -316,22 +316,22 @@
             font-size: $global-fontsize-small;
         }
     }
-    
+
     .product-name, .mobile-product-name {
         font-size: 1rem;
         font-weight: normal;
         line-height: 1.2rem;
     }
-	
+
 	.product-cart-sku {
 	    @include bp(max-width, $bp-mobil) {
 		    display: none;
 		}
 	}
-    
+
     .mobile-product-cart-sku {
         display: none;
-        
+
         @include bp(max-width, $bp-mobil) {
             display: block;
         }
@@ -352,19 +352,19 @@
         font-size: $global-fontsize;
         margin-bottom: 0;
     }
-    
+
     .mobile-product-collateral {
         margin-top: 20px;
         display: none;
-        
+
         @include bp(max-width, $bp-mobil) {
             display: block !important;
         }
     }
-    
+
     .product-collateral {
         margin-top: 20px;
-        
+
         @include bp(max-width, $bp-mobil) {
             display: none;
         }
@@ -430,7 +430,7 @@
     .product-cart-total,
     .product-cart-price {
         text-align: center;
-		
+
 		@include bp(max-width, $bp-small) {
 		    display: none;
 		}
@@ -475,7 +475,7 @@
     .product-cart-actions {
         min-width: 50px;
         text-align: center;
-		
+
 		@include bp(max-width, $bp-small) {
 		    display: none;
 		}
@@ -501,7 +501,7 @@
     .item-options {
         padding-left: 15px;
     }
-	
+
 	.cart-links {
 	    display: none !important;
     }
@@ -543,7 +543,7 @@
 
             &.product-cart-price {
                 text-align: left;
-                
+
                 @include bp(max-width, $bp-mobil) {
                 	text-align: right;
                 }
@@ -637,10 +637,10 @@
                 margin-bottom: 7px;
             }
         }
-        
+
         .product-cart-symbols {
         	display: none;
-        	
+
         	@include bp(max-width, $bp-mobil) {
         	    display: none;
         	}
@@ -668,11 +668,11 @@
             span.or {
                 display: none;
             }
-            
+
             .button {
             	padding: 3px 5px;
             	font-size: 11px;
-            	
+
             	@include bp(max-width, $bp-mobil) {
             	    float: none;
             	    display: block;
@@ -684,7 +684,7 @@
             }
             .egov-float-left {
             	margin: 0 2px;
-            	
+
             	@include bp(max-width, $bp-mobil) {
             	    margin: 0;
             	}
@@ -710,8 +710,9 @@
 	.dwd-abo-index-view {
 	    .product-name a,
 	    .mobile-product-name a {
-	        font-size: 1.2rem;
-	    }	
+	        font-size: 1rem;
+	        font-weight: normal;
+	    }
     }
 }
 
@@ -720,12 +721,12 @@
 	    .product-cart-image {
 		    width: auto;
 		}
-		
+
 		colgroup {
 		    display: none !important;
 		}
 	}
-	
+
 	.dwd-abo-index-view {
 	    .cart-table .dwd-abo-link {
 	        display: none;
@@ -765,7 +766,7 @@
     .shipping-desc {
         display: none;
     }
-    
+
     .input-text, .ui-selectmenu-button {
         width: 100%;
     }
@@ -891,7 +892,7 @@
         tbody tr:last-child th {
             padding-bottom: 10px;
         }
-        
+
         #grandtotal-incl-tax {
             font-weight: bold;
         }
@@ -946,11 +947,11 @@
         display: block;
         vertical-align: bottom;
         margin-top: 10px;
-        
+
         button {
             width: 45%;
             margin-right: 10%;
-            
+
             &.full-width {
                 margin: 0;
                 width: 100%;
