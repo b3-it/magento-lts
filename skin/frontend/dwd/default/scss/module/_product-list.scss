@@ -108,7 +108,6 @@ body.catalogsearch-result-index .page-title h1 {
 	display: none;
 	height: auto;
 	max-height: 3.5rem;
-    line-height: 1.2rem !important;
     overflow: hidden;
     text-align: left;
 
@@ -363,7 +362,6 @@ body.catalogsearch-result-index .page-title h1 {
 	        	white-space: nowrap;
 
 	        	@include bp(max-width, $bp-small) {
-	        	    overflow: auto;
 	        	    white-space: normal;
 	        	}
         	}
