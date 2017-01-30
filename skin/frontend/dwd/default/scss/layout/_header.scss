@@ -15,7 +15,6 @@
     background-repeat: no-repeat;
     background-position: 0 0;
     background-scroll: scroll;
-        
     line-height: $global-lineheight;
         
     &:after {
@@ -25,6 +24,10 @@
       	@include bp(max-width, $bp-mobil) {
       	    background-image: none;
       	}
+    }
+    
+    @include bp(max-width, $global-fullpage-width) {
+        background-size: 107% auto;
     }
     
     @include bp(max-width, $bp-mobil) {
@@ -95,6 +98,11 @@
 	        width: auto;
 	        height: 1.2em;
 	        overflow: hidden;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            position: absolute;
+	            top: 103px;
+	        }
 	        
 	        @include bp(max-width, $bp-mobil) {
 	            font-size: 1.8rem;
@@ -176,13 +184,13 @@
 	    margin: 0 auto;
 	    width: 30px;
 	}
-	
+
 	@include bp(max-width, $bp-mobil) {
 	    display: inline-block;
 	    height: 40px;
-	    left: 67px;
+	    left: auto;
         position: relative;
-        top: -50px;
+        top: 50px;
         vertical-align: top;
         width: 75%
 	}
@@ -270,8 +278,16 @@ body:not(.cms-index-index) {
     .welcome-header h1 {
     	width: 265px;
     	
+    	@include bp(max-width, $global-fullpage-width) {
+    	    left: 68px;
+            position: absolute;
+            top: 62px;
+    	}
+    	
     	@include bp(max-width, $bp-mobil) {
     	    width: 75%;
+    	    left: auto;
+    	    top: 0;
     	}
     }
     #welcome-msg {
@@ -285,6 +301,10 @@ body:not(.cms-index-index) {
     	position: relative;
     	text-align: right;
     	float: right;
+    	
+    	@include bp(max-width, $global-fullpage-width) {
+    	    margin-right: 25px;
+    	}
     	
     	> div {
     		display: inline-block;
@@ -493,6 +513,12 @@ a.skip-link {
     display: inline-block;
     float: right;
     
+    @include bp(max-width, $global-fullpage-width) {
+        margin-right: 10px;
+        position: relative;
+        top: -5px;
+    }
+    
     > div {
     	vertical-align: top;
         display: inline-block;
@@ -505,12 +531,22 @@ a.skip-link {
         }
         &.header-minicart #header-cart.skip-active {
             right: 10.5%;
+            
+            @include bp(max-width, $global-fullpage-width) {
+                right: 21.5%;
+            }
         }
         
         &#header-account-link #header-account.skip-active {
             right: 26%;
         }
     }
+}
+
+body.cms-index-index .account-cart-wrapper {
+	@include bp(max-width, $global-fullpage-width) {
+	    top: 0;
+	}
 }
 
 .skip-egov{

@@ -156,6 +156,10 @@ body.catalogsearch-result-index .page-title h1 {
     .product-new-block {
 		right: 0;
 		top: 160px;
+		
+		@include bp(max-width, $global-fullpage-width) {
+            top: 140px;
+        }
 
 		@include bp(max-width, $bp-mobil) {
 		    left: 0;

@@ -24,6 +24,10 @@ body.cms-home {
     }
     
     .products-list .product-new-block {
+        @include bp(max-width, $global-fullpage-width) {
+            top: 140px;
+        }
+
         @include bp(max-width, $bp-mobil) {
             left: -10px;
             right: auto;

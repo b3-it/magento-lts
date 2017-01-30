@@ -285,6 +285,10 @@ div.block-reorder {
     	font-weight: bold;
     	color: $textfarbe-mittel;
     }
+    
+    @include bp(max-width, $global-fullpage-width) {
+        background-color: $global-wrapper-color;
+    }
 
     @include bp(max-width, $bp-mobil) {
     	display: none;
@@ -416,6 +420,10 @@ div.block-reorder {
 .main-container {
     max-width: $global-fullpage-width;
     margin-top: 30px;
+    
+    @include bp(max-width, $global-fullpage-width) {
+        margin-top: 0;
+    }
 
     @include bp(max-width, $bp-small) {
         margin: 0;
@@ -518,7 +526,7 @@ div.block-reorder {
 }
 
 .col2-left-layout {
-	@include bp(max-width, $bp-mobil) {
+	@include bp(max-width, $global-fullpage-width) {
 	    background-image: url($global-header-background-image);
 	    background-repeat:no-repeat;
 	    background-attachment: fixed;
@@ -530,6 +538,10 @@ div.block-reorder {
         width: $global-wrapper-width;
         position: relative;
         background-color: $grundfarbe-weiss;
+        
+        @include bp(max-width, $global-fullpage-width) {
+            padding: 0 5px;
+        }
 
         .col-left {
             margin-right: $global-leftcol-rightmargin-percent;

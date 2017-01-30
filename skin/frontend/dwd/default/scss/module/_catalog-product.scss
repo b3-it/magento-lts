@@ -324,7 +324,7 @@
         }
         
         .add-to-cart {
-            @include bp(max-width, $bp-mobil) {
+            @include bp(max-width, $global-fullpage-width) {
                 padding: 5px;
                 width: 100%;
                 display: block;
@@ -332,7 +332,7 @@
             }
             
             .qty-wrapper, .add-to-cart-buttons {
-                @include bp(max-width, $bp-mobil) {
+                @include bp(max-width, $global-fullpage-width) {
                     width: 48%;
                     display: inline-block;
                     vertical-align: top;
@@ -340,14 +340,14 @@
             }
             
             .add-to-cart-buttons {
-                @include bp(max-width, $bp-mobil) {
+                @include bp(max-width, $global-fullpage-width) {
                     position: relative;
                     right: -2%;
                 }
             }
             
             button {
-                @include bp(max-width, $bp-mobil) {
+                @include bp(max-width, $global-fullpage-width) {
                     margin: 0 !important;
                 }
             }
@@ -359,7 +359,7 @@
             
             span.egov-cart {
                 &:before {
-                    @include bp(max-width, $bp-mobil) {
+                    @include bp(max-width, $global-fullpage-width) {
                         content: '';
                     }
                 }
@@ -374,7 +374,7 @@
             line-height: 1rem;
             color: $textfarbe-mittel;
         }
-
+        
         .product-img-box {
             padding-right: 30px;
             width: 27.5%;
@@ -412,7 +412,7 @@
             width: 30.5%;
             text-align: center;
             
-            @include bp(max-width, $bp-mobil) {
+            @include bp(max-width, $global-fullpage-width) {
                 display: block;
                 width: 100%;
                 text-align: left;
@@ -752,25 +752,24 @@
 	        padding: 10px;
 	        border-color: $grundfarbe-blau;
 	        margin: 7px 0;
+	        width: 10% !important;
+	    }
+
+	    .button {
+	        width: 100px;
+	        padding: 7px 5px;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            float: none !important;
+	            width: 200px !important;
+	            padding: 10px 5px !important;
+	        }
 	    }
 	}
     
     #add-to-cart-top {
         width: 100%;
 
-	    .input-text {
-	        width: 21%;
-	    }
-	    
-	    .button {
-	        width: 100px;
-	        padding: 7px 5px;
-	        
-	        @include bp(max-width, $bp-mobil) {
-	            float: none !important;
-	        }
-	    }
-	    
 	    .button-full-width {
             width: 100%;
         }

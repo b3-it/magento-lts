@@ -23,7 +23,7 @@ footer {
     	}
     }
     
-    @include bp(max-width, $bp-mobil) {
+    @include bp(max-width, $global-fullpage-width) {
         background-image: linear-gradient(to right, $zusatzfarbe-gradient-1, $zusatzfarbe-gradient-2);
         margin: 0;
     }
@@ -121,6 +121,10 @@ address {
 	a {
 	    @include link-weiss;
 	    font-size: 0.9rem;
+	}
+	
+	@include bp(max-width, $global-fullpage-width) {
+	    margin-right: 15px;
 	}
 	
 	@include bp(max-width, $bp-mobil) {
