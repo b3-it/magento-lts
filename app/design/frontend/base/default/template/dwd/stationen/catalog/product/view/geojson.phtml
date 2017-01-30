@@ -1,32 +1,35 @@
 <?php
 /* @var $this Dwd_Stationen_Block_Catalog_Product_View_Abstract */
-?>
-<?php if ($this->hasStationen()):?>
-{
-  "type": "FeatureCollection",
-  "crs": {
-    "type": "name",
-    "properties": {
-      "name": "EPSG:4326"
+
+if ($this->hasStationen()) {
+    $data = array(
+        "type" => "FeatureCollection",
+        "crs" => array(
+            "type" => "name",
+            "properties" => array(
+                  "name" => "EPSG:4326"
+            )
+        )
+    );
+
+    $features = array();
+    foreach($this->getStationsList() as $station) {
+        $features[] = array(
+            "type" => "Feature",
+            "properties" => array(
+                "id" => intval($station->getId()),
+                "name" => $station->getName()
+            ),
+            "geometry" => array(
+                "type" => "Point",
+                "coordinates" => array(
+                    floatval($station->getLon()),
+                    floatval($station->getLat())
+                )
+            )
+        );
     }
-  },
-  "features": [
-  <?php foreach($this->getStationsList() as $station){?>
-    {
-      "type": "Feature",
-      "properties": {
-        "id": <?php echo $station->getId(); ?>,
-        "name": "<?php echo $station->getName(); ?>"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          <?php echo $station->getLon()?>,
-          <?php echo $station->getLat()?>
-        ]
-      }
-    }
-  <?php }?>
-  ]
+    $data["features"] = $features;
+    echo json_encode($data);
 }
-<?php endif;?>
+?>
