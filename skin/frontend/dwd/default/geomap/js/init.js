@@ -1,61 +1,101 @@
-OpenLayers.Lang.setCode('de');
+var panZoom = new ol.control.PanZoom({
+  imgPath: SKIN_PATH + 'geomap/js/img',
+  slider: true // enables the slider
+}); 
 
-var map, zoom, georss, layer, marker_aktuell, arrayOSM;
+var openStreetMapLayer = new ol.layer.Tile({
+    source: new ol.source.OSM({
+      attributions: [
+        ol.source.OSM.ATTRIBUTION
+      ],
+      url: "http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    })
+  });
 
-arrayOSM = [
-            "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
-            "http://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
-            "http://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
-           ];
+ var jsonSource = new ol.source.Vector({
+    url: jsonUrl,
+    format: new ol.format.GeoJSON()
+ });
+ 
 
-var proj4326  = new OpenLayers.Projection("EPSG:4326");
-var projmerc  = new OpenLayers.Projection("EPSG:900913");
-var extentGer = new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34);
+ jsonStyleFunction = function(feature, resolution) {
+    zoom = map.getView().getZoom();
+    return new ol.style.Style({
+        image: new ol.style.Icon({
+            src: zoom <= 9 ? marker_klein : marker_gross
+        })
+    });
+};
 
-var size_1 = new OpenLayers.Size(10, 10);
-var size_2 = new OpenLayers.Size(22, 22);
+jsonLayer = new ol.layer.Vector({
+   source: jsonSource,
+   style: jsonStyleFunction
+ });
+ 
+ var map = new ol.Map({
+    controls: ol.control.defaults({
+        zoom: false
+    }).extend([
+        panZoom,
+        new ol.control.MousePosition({
+            coordinateFormat: ol.coordinate.createStringXY(4),
+            projection: 'EPSG:4326'
+        }),
+        new ol.control.ScaleLine
+    ]),
+    layers: [
+         openStreetMapLayer,
+         jsonLayer
+     ],
+     target: 'map',
+     view: new ol.View({
+       maxZoom: 10,
+       projection: 'EPSG:900913',
+       center: ol.proj.transform([10.44, 51.01], 'EPSG:4326', 'EPSG:900913'),
+       zoom: 6,
+       minZoom: 5
+     })
+   });
+ 
+ 
 
-var lon = 10.1279688;
-var lat = 51.5077286;
+ var overlayData = '<div class="olPopupContent"><div class="olLayerGeoRSSClose">[x]</div><div class="olLayerGeoRSSTitle">Station: <b></b></div><div class="olLayerGeoRSSDescription"><span class="olMapClickLink" onclick="">Station auswählen</span></div></div>';
 
-var marker_1 = new OpenLayers.Icon(marker_klein, size_1);
-var marker_2 = new OpenLayers.Icon(marker_gross, size_2);
+ var jsonOverlay = new ol.Overlay({
+   element: $j(overlayData).get(0),
+   offset: [10, 0],
+   positioning: 'bottom-center'
+ });
 
-zoom = 6;
+map.addOverlay(jsonOverlay);
 
-marker_aktuell = marker_klein;
 
-map = new OpenLayers.Map('map', {
-          controls : [
-                       new OpenLayers.Control.KeyboardDefaults(),
-                       new OpenLayers.Control.PanZoomBar(),
-                       new OpenLayers.Control.MousePosition(),
-                       new OpenLayers.Control.Attribution(),
-                       new OpenLayers.Control.Navigation(),
-                       new OpenLayers.Control.ScaleLine()
-                     ],
-          maxExtent        : extentGer,
-          maxResolution    : 156543,
-          units            : 'meters',
-          projection       : projmerc,
-          displayProjection: proj4326
-      });
+var select = new ol.interaction.Select({
+    layers: [jsonLayer],
+    toggleCondition: ol.events.condition.never,
+    multi: false
+ });
 
-//layer = new OpenLayers.Layer.OSM.Mapnik('Mapnik');
-layer = new OpenLayers.Layer.OSM("MapQuest-OSM Tiles", arrayOSM);
+select.on('select', function(e) {
+    features = e.target.getFeatures();
+    if (features.getLength() <= 0) {
+        return;
+    }
+    feature = features.item(0);
 
-georss = new OpenLayers.Layer.GeoRSS( 'GeoRSS',
-		                              rssUrl,
-                                      {
-                                        'projection'         : proj4326,
-                                        'internalProjection' : proj4326,
-                                        'externalProjection' : proj4326,
-                                        'visibility'         : true,
-                                        'icon'               : marker_1
-                                      }
-                                    );
+    element = $j(jsonOverlay.getElement());
+    element.find(".olLayerGeoRSSTitle > b").html(feature.get("name"));
+    element.find(".olMapClickLink").attr("onclick", "selectMapStation(" + feature.get("id") + ");");
 
-map.addLayers([layer, georss]);
-map.events.register( 'moveend', map, handleZoom );
+    jsonOverlay.setPosition(feature.getGeometry().getFirstCoordinate());
+ });
 
-setCenter( lon, lat, zoom );
+map.addInteraction(select);
+
+overlayClose = function() {
+    jsonOverlay.setPosition(undefined);
+    select.getFeatures().clear();
+    return false;
+};
+
+$j("#map .olLayerGeoRSSClose").on("click", overlayClose);
