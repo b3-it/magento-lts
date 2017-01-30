@@ -14,18 +14,28 @@ $j(document).ready(function(){
 			changeInputTextFromSelect();
 		}
 	});
+	
+	// Mindest-Zeichen-Länge aus dem Element holen und setzen
+	var minChar = parseInt( $j('#quicksearch').attr('data-minchar') );
+	
+	// Prüfen, ob das eine Zahl ist
+	if (minChar <= 0) {
+		minChar = 3;
+	}
 
 	$j(inputIDSuggest).on('keyup', function(event){
 		resetStatusForSuggest();
 		var suchText   = $j(inputIDSuggest).val().toLowerCase();
 		var anzTreffer = 0;
 
-		$j('#' + ulIDforSuggest + ' li').each(function(index){
-			if ( $j(this).attr('data-name').indexOf(suchText) != -1 ) {
-				$j(this).toggle();
-				anzTreffer++;
-			}
-		});
+		if ( suchText.length >= minChar ) {
+			$j('#' + ulIDforSuggest + ' li').each(function(index){
+				if ( $j(this).attr('data-name').indexOf(suchText) != -1 ) {
+					$j(this).toggle();
+					anzTreffer++;
+				}
+			});
+		}
 
 		// Nur Anzeigen, wenn es min. 1 Treffer gibt und der Suchbegriff min. 1 Zeichen hat
         if ( anzTreffer > 0 && suchText.length > 0 ) {

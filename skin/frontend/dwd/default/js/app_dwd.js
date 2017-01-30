@@ -134,6 +134,25 @@ $j(document).ready(function(){
 		'elementInsert': '<li />',
 		'uiFindElement': true
 	});
+
+    // Language-Umschalter in Mobil-Navigation einbauen
+    if ( $j('#mobile-home-link').length ) {
+    	$j('<li id="mobile-language-switch" class="level0"></li>').insertAfter( $j('#mobile-home-link') );
+    	
+    	$j('#select-language > option').each(function(){
+    		if ( $j(this).prop('selected') == false ) {
+    			// Link erzeugen
+    			var link = $j('<a />',{
+    				'href': $j(this).val(),
+    				'id'  : 'mobile-language-' + $j(this).attr('data-code'),
+    				'text': $j(this).attr('data-code')
+    			});
+    			
+    			// Link als Child einfügen
+  				$j('#mobile-language-switch').append(link);
+    		}
+    	});
+    }
 });
 
 function setTabIndex(arr)

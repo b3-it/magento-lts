@@ -12,24 +12,24 @@
 .my-account {
 	position: relative;
 	top: 15px;
-	
+
 	#order-buttons {
 	    display: inline-block;
         float: right;
         position: relative;
         top: -30px;
-        
+
         a, span {
             top: 0;
         }
 	}
-	
+
 	address {
 	    font-size: 1rem;
 	    color: $textfarbe-mittel;
 	    text-align: left;
 	}
-	
+
 	h2 {
 	    font-size: $global-h4-size;
 	}
@@ -101,28 +101,28 @@
             }
         }
     }
-    
+
     .count-container {
         width: 100%;
-        
+
         .amount, .limiter {
             display: inline-block;
         }
-        
+
         .amount {
             float: left;
         }
     }
-    
+
     .new-adress-button {
         display: block;
         width: 100%;
-        
+
         .button {
             display: inline-block;
             float: none;
             width: 25%;
-            
+
             @include bp(max-width, $bp-small) {
                 width: 100%;
             }
@@ -145,7 +145,7 @@
     .box {
         margin: 0px;
         width: 90%;
-        
+
         @include bp(max-width, $bp-mobil) {
             width: 100%;
         }
@@ -166,7 +166,7 @@
     .full-size {
         width: 100%;
     }
-    
+
     .button {
         float: none;
     }

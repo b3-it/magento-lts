@@ -1,7 +1,16 @@
+<?php $_minChars = 3; ?>
 <?php if ($this->hasStationen()):?>
 <div id="suggest">
     <label for="quicksearch"><?php echo $this->__('Enter location or area:'); ?></label>
-    <input id="quicksearch" type="text" class="input-text" name="quicksuggest" value="" autocomplete="off" />
+    <input id="quicksearch"
+           type="text"
+           placeholder="<?php echo $this->__('Please enter at least ' . $_minChars . ' characters'); ?>"
+           class="input-text"
+           name="quicksuggest"
+           value=""
+           autocomplete="off"
+           data-minchar="<?php echo $_minChars; ?>"
+     />
     <div id="quick_autocomplete" class="search-autocomplete" style="display:none;"></div>
 </div>
 <?php endif;?>
