@@ -11,4 +11,13 @@ class Dwd_Stationen_ListeController extends Mage_Core_Controller_Front_Action
     	$this->getResponse()->setBody($block->toHtml());
     	return;
     }
+    
+    public function jsonAction()
+    {
+    	$block = $this->getLayout()->createBlock('stationen/catalog_product_view_json');
+    	$this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
+    	$this->getResponse()->setBody($block->toHtml());
+    	return;
+    }
+    
 }

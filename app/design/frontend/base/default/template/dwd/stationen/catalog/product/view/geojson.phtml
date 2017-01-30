@@ -1,0 +1,32 @@
+<?php
+/* @var $this Dwd_Stationen_Block_Catalog_Product_View_Abstract */
+?>
+<?php if ($this->hasStationen()):?>
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4326"
+    }
+  },
+  "features": [
+  <?php foreach($this->getStationsList() as $station){?>
+    {
+      "type": "Feature",
+      "properties": {
+        "id": <?php echo $station->getId(); ?>,
+        "name": "<?php echo $station->getName(); ?>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          <?php echo $station->getLon()?>,
+          <?php echo $station->getLat()?>
+        ]
+      }
+    }
+  <?php }?>
+  ]
+}
+<?php endif;?>
