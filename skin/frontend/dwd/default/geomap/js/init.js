@@ -18,7 +18,7 @@ var mapLayer = new ol.layer.Tile({
     source: new ol.source.TileWMS({
         url: 'http://sg.geodatenzentrum.de/wms_dtk250?',
         projection: 'EPSG:4326',
-        attributions: '@ <a href="geodatenzentrum.de">geodatenzentrum.de</a>',
+        attributions: '@ <a href="http://geodatenzentrum.de">geodatenzentrum.de</a>',
         params: {LAYERS: 'DTK250', VERSION: '1.1.1'}
     })
 });

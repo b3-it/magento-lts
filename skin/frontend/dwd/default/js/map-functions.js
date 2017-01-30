@@ -3,6 +3,9 @@ var divIDSuggest   = 'div#quick_autocomplete';
 var inputIDSuggest = 'input#quicksearch';
 var selectStation  = 'select#stationenListe';
 
+var fakeSelectStation = "#stationenListe-button";
+var fakeSelectStationText = "#stationenListe-button > .ui-selectmenu-text";
+
 $j(document).ready(function(){
 	if ( $j(divIDSuggest).length ) {
 		fillSuggestList();
@@ -56,7 +59,7 @@ $j(document).ready(function(){
 function selectMapStation(id)
 {
 	setSelectBox(id);
-	changeInputTextFromSelect();
+	//changeInputTextFromSelect();
 	
 	overlayClose();
 }
@@ -70,8 +73,7 @@ function selectMapStation(id)
  */
 function selectSuggestStation(id){
 	setSelectBox(id);
-	changeInputTextFromSelect();
-	
+	$j(selectStation).selectmenu("refresh");
 	resetStatusForSuggest();
 	$j(divIDSuggest).toggle();
 }
@@ -83,8 +85,16 @@ function selectSuggestStation(id){
  */
 function setSelectBox(selectID)
 {
-	$j(selectStation + ' > option[value="'+ selectID +'"]').attr('selected', 'selected');    
-    $j(selectStation).selectmenu("refresh");
+	el = $j(selectStation + ' > option[value="'+ selectID +'"]');
+	el.attr('selected', 'selected');
+	text = el.text();
+	if (text != '') {
+		$j(inputIDSuggest).val(text);
+		// fake the select of the fake select box
+		$j(fakeSelectStation).attr('aria-labelledby', el.index() + 2); 
+		$j(fakeSelectStationText).text(text);
+	}
+    //$j(selectStation).selectmenu("refresh");
 }
 
 /**
