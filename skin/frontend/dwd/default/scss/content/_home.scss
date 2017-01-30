@@ -25,7 +25,7 @@ body.cms-home {
     
     .products-list .product-new-block {
         @include bp(max-width, $global-fullpage-width) {
-            top: 140px;
+            top: 65%;
         }
 
         @include bp(max-width, $bp-mobil) {

@@ -39,16 +39,19 @@
 .cart-forms,
 .cart-totals-wrapper,
 .crosssell {
-    float: right;
-    clear: right;
-    width: 40%;
-    padding-left: $global-boxmargin;
+    width: 48%;
+    vertical-align: top;
+    display: inline-block;
 
     @include bp(max-width, $bp-mobil) {
         float: none;
         display: block;
         width: 100%;
     }
+}
+
+.cart-forms {
+	margin-right: $global-boxmargin;
 }
 
 .cart-totals,

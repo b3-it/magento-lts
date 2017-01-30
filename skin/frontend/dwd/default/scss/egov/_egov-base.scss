@@ -51,7 +51,7 @@
         th {
             background-color: $grundfarbe-blau;
             color: $grundfarbe-weiss;
-            font-size: 1rem;
+            font-size: 0.9rem;
             height: 51px;
 
             span.product-name {
@@ -120,7 +120,7 @@
     }
 
     tbody td:nth-child(2) {
-        width: 160px;
+        width: 115px;
         padding: 3px;
         
         @include bp(max-width, $bp-mobil) {

@@ -4,7 +4,7 @@ var toggleBlocks = new Array();
 var egov_break = {
     //lngSwitch: 760,    // Store-Language Switcher
     //welcome  : 785,    // Welcome
-    navbar   : 800,    // Navigation
+    navbar   : 799,    // Navigation
     //rightCol : 1000,   // Rechte Maginal-Spalte
     //topSearch: 911     // Suchen-Leiste im Header
 };

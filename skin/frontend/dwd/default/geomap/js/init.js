@@ -3,7 +3,8 @@ var panZoom = new ol.control.PanZoom({
   slider: true // enables the slider
 }); 
 
-var openStreetMapLayer = new ol.layer.Tile({
+/*
+var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM({
       attributions: [
         ol.source.OSM.ATTRIBUTION
@@ -11,6 +12,16 @@ var openStreetMapLayer = new ol.layer.Tile({
       url: "http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     })
   });
+//*/
+
+var mapLayer = new ol.layer.Tile({
+    source: new ol.source.TileWMS({
+        url: 'http://sg.geodatenzentrum.de/wms_dtk250?',
+        projection: 'EPSG:4326',
+        attributions: '@ <a href="geodatenzentrum.de">geodatenzentrum.de</a>',
+        params: {LAYERS: 'DTK250', VERSION: '1.1.1'}
+    })
+});
 
  var jsonSource = new ol.source.Vector({
     url: jsonUrl,
@@ -44,20 +55,18 @@ jsonLayer = new ol.layer.Vector({
         new ol.control.ScaleLine
     ]),
     layers: [
-         openStreetMapLayer,
-         jsonLayer
+        mapLayer,
+        jsonLayer
      ],
-     target: 'map',
+     target: document.getElementById('map'),
      view: new ol.View({
-       maxZoom: 10,
+       maxZoom: 14,
        projection: 'EPSG:900913',
        center: ol.proj.transform([10.44, 51.01], 'EPSG:4326', 'EPSG:900913'),
-       zoom: 6,
-       minZoom: 5
+       zoom: 6.5,
+       minZoom: 6
      })
    });
- 
- 
 
  var overlayData = '<div class="olPopupContent"><div class="olLayerGeoRSSClose">[x]</div><div class="olLayerGeoRSSTitle">Station: <b></b></div><div class="olLayerGeoRSSDescription"><span class="olMapClickLink" onclick="">Station auswählen</span></div></div>';
 
@@ -91,6 +100,16 @@ select.on('select', function(e) {
  });
 
 map.addInteraction(select);
+
+map.on('pointermove', function(e) {
+    if (e.dragging) {
+      $(element).popover('destroy');
+      return;
+    }
+    var pixel = map.getEventPixel(e.originalEvent);
+    var hit = map.hasFeatureAtPixel(pixel);
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
+});
 
 overlayClose = function() {
     jsonOverlay.setPosition(undefined);

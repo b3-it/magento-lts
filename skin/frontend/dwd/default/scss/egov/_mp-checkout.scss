@@ -192,6 +192,11 @@
                 margin: 0px;
             }
             
+            @include bp(max-width, $global-fullpage-width) {
+                margin-right: 10px !important;
+   				width: 48.5%;
+            }
+            
             @include bp(max-width, $bp-mobil) {
                 width: 100%;
                 min-height: auto;
@@ -408,6 +413,10 @@
 .egovs-checkout-multipage-successview {
     ul.checkout-progress {
         display:none;
+    }
+    
+    .main-container {
+        padding: 0 10px 10px 10px;
     }
     
     .buttons-set .button {

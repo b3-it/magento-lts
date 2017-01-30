@@ -27,7 +27,7 @@
     }
     
     @include bp(max-width, $global-fullpage-width) {
-        background-size: 107% auto;
+        background-size: 150% auto;
     }
     
     @include bp(max-width, $bp-mobil) {
@@ -98,6 +98,7 @@
 	        width: auto;
 	        height: 1.2em;
 	        overflow: hidden;
+	        top: 10px;
 	        
 	        @include bp(max-width, $global-fullpage-width) {
 	            position: absolute;
@@ -110,6 +111,7 @@
 	            vertical-align: top;
 	            white-space: nowrap;
 	            width: 75%;
+	            top: 0;
 	        }
 	  	}
 	  	
@@ -303,7 +305,11 @@ body:not(.cms-index-index) {
     	float: right;
     	
     	@include bp(max-width, $global-fullpage-width) {
-    	    margin-right: 25px;
+    	    position: absolute;
+    	    margin-right: 10px;
+    	    height: 100px;
+    	    margin-top: 12px;
+    	    right: 10px;
     	}
     	
     	> div {

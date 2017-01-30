@@ -158,7 +158,7 @@ body.catalogsearch-result-index .page-title h1 {
 		top: 160px;
 		
 		@include bp(max-width, $global-fullpage-width) {
-            top: 140px;
+            top: 25%;
         }
 
 		@include bp(max-width, $bp-mobil) {
@@ -199,6 +199,10 @@ body.catalogsearch-result-index .page-title h1 {
                     font-family: "FontAwesome";
                     font-size: $global-fontsize + 7;
                     margin-right: $global-fontsize + 7;
+                    
+                    @include bp(max-width, $global-fullpage-width) {
+                        content: none;
+                    }
                 }
             }
         }

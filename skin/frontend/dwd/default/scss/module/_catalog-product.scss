@@ -105,11 +105,13 @@
     z-index: 1000;
 }
 .olPopupContent {
+	background-color: $grundfarbe-weiss;
+	
 	.olLayerGeoRSSTitle, .olLayerGeoRSSClose {
 	    display: block;
 	    background-color: $grundfarbe-blau;
 	    color: $grundfarbe-weiss;
-	    padding: 5px 10px;
+	    padding: 5px 50px 5px 10px;
 	}
 	.olLayerGeoRSSClose {
 	    @include hover-blau-weiss;
@@ -134,8 +136,9 @@
 		    font-size: 1.2rem;
 		    height: 51px;
 		    position: relative;
-		    left: 15%;
 		    top: 35%;
+		    display: inline-block;
+		    margin: 10px;
 		}
 	}
 }

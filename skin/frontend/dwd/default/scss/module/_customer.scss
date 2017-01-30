@@ -82,6 +82,17 @@
         }
     }
 
+    @include bp(max-width, $global-fullpage-width) {
+        #login-form .button {
+            width: 100%;
+            display: block;
+        }
+        
+        #login-form a.button {
+            margin-bottom: $box-spacing;
+        }
+    }
+
     @include bp(max-width, $bp-mobil) {
         .col2-set p.required {
             display: none;
