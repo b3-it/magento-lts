@@ -57,6 +57,8 @@ function selectMapStation(id)
 {
 	setSelectBox(id);
 	changeInputTextFromSelect();
+	
+	overlayClose();
 }
 
 /**

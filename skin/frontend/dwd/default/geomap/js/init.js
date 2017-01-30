@@ -23,19 +23,25 @@ var mapLayer = new ol.layer.Tile({
     })
 });
 
- var jsonSource = new ol.source.Vector({
+var jsonSource = new ol.source.Vector({
     url: jsonUrl,
     format: new ol.format.GeoJSON()
- });
- 
+});
 
- jsonStyleFunction = function(feature, resolution) {
+var imageBig   = new ol.style.Style({ 'image' : new ol.style.Icon({'src': marker_gross}) });
+var imageSmall = new ol.style.Style({ 'image' : new ol.style.Icon({'src': marker_klein}) });
+
+jsonStyleFunction = function(feature, resolution) {
     zoom = map.getView().getZoom();
+    
+    return zoom <= 9 ? imageSmall : imageBig;
+/*    
     return new ol.style.Style({
         image: new ol.style.Icon({
             src: zoom <= 9 ? marker_klein : marker_gross
         })
     });
+*/
 };
 
 jsonLayer = new ol.layer.Vector({
