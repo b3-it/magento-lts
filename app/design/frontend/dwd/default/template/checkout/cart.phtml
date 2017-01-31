@@ -40,7 +40,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                     <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
                     <th class="cart-name-head" rowspan="<?php echo $mergedCells; ?>">
                         <span class="product-name"><?php echo $this->__('Product Name') ?></span>
-                        <span class="mobile-product-name"><?php echo $this->__('Product Name') ?></span>
+                        <span class="mobile-product-name"><?php echo $this->__('Product Name and Product Information') ?></span>
                     </th>
                     <th class="a-center cart-price-head" colspan="<?php echo $mergedCells; ?>">
                         <span class=""><?php echo $this->__('Unit Price') ?></span>
@@ -111,6 +111,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             </tbody>
         </table>
         <script type="text/javascript">decorateTable('shopping-cart-table')</script>
+        <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/cart-functions.js'); ?>"></script>
     </form>
 
     <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>

@@ -135,6 +135,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 		        <?php echo $this->__('Qty'); ?>
 		        <input type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
 		               data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
+		               data-qty="<?php echo $_item->getId() ?>"
 		               title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
 		        <a class="remove egov-delete2"
 		           href="<?php echo $this->getDeleteUrl() ?>"
@@ -239,7 +240,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
     </td>
     <?php endif; ?>
     <td class="product-cart-qty">
-        <input type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
+        <input id="qty-<?php echo $_item->getId() ?>" type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
                data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
                title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
         <div class="product-cart-symbols">

@@ -43,7 +43,7 @@
     vertical-align: top;
     display: inline-block;
 
-    @include bp(max-width, $bp-mobil) {
+    @include bp(max-width, $global-fullpage-width) {
         float: none;
         display: block;
         width: 100%;
@@ -388,6 +388,12 @@
         tr > td:after {
             @include clearfix;
         }
+        
+        .button {
+           	@include bp(max-width, $global-fullpage-width) {
+           	    padding: 18px 10px;
+           	}
+        }
     }
 
     span.or {
@@ -524,7 +530,10 @@
         }
 
         td {
-
+            .mobile-product-name a {
+                font-size: 1rem;
+            }
+            
             &[data-rwd-label] {
                 padding-left: 15px;
                 margin-bottom: 6px;
@@ -601,7 +610,6 @@
         .cart-price-head, .product-cart-price,
         .cart-actions-head, .product-cart-actions,
         .cart-qty-head, .product-cart-qty,
-        .cart-total-head, .product-cart-total,
         .product-cart-remove {
             display: none;
         }
@@ -670,7 +678,7 @@
             .button {
             	padding: 3px 5px;
             	font-size: 11px;
-
+            	
             	@include bp(max-width, $bp-mobil) {
             	    float: none;
             	    display: block;

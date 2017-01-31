@@ -45,7 +45,7 @@
             right: 19%;
         }
         
-        @include bp(max-width, $bp-mobil) {
+        @include bp(max-width, $global-fullpage-width) {
             display: block;
         }
     }

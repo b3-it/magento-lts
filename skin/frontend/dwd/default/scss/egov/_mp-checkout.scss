@@ -127,6 +127,10 @@
                 color: $grundfarbe-blau;
             }
             
+            @include bp(max-width, $global-fullpage-width) {
+                width: 23%;
+            }
+            
             @include bp(max-width, $bp-mobil) {
                 width: 31%;
             }
@@ -193,8 +197,7 @@
             }
             
             @include bp(max-width, $global-fullpage-width) {
-                margin-right: 10px !important;
-   				width: 48.5%;
+   				width: 47%;
             }
             
             @include bp(max-width, $bp-mobil) {
@@ -311,7 +314,7 @@
             margin-top: 20px;
             
             colgroup {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $global-fullpage-width) {
                     display: none;
                 }
             }
@@ -321,8 +324,14 @@
             }
 
             thead {
-                td:nth-child(5), td:nth-child(6) {
+                th:nth-child(2),
+                th:nth-child(3), th:nth-child(4),
+                th:nth-child(5), th:nth-child(6) {
                     font-weight: bold;
+                    
+                    @include bp(max-width, $global-fullpage-width) {
+                        display: none;
+                    }
                 }
                 
                 @include bp(max-width, $bp-small) {
@@ -345,7 +354,7 @@
             
             td:nth-child(2), td:nth-child(3), td:nth-child(4),
             td:nth-child(5), td:nth-child(6) {
-                @include bp(max-width, $bp-mobil) {
+                @include bp(max-width, $global-fullpage-width) {
                    display: none;
                 }
             }
@@ -360,7 +369,6 @@
             
             .mobile-info-block {
                 width: 100%;
-                text-align: right;
             }
         }
 

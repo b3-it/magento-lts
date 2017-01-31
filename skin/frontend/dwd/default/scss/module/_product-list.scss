@@ -368,7 +368,7 @@ body.catalogsearch-result-index .page-title h1 {
         		overflow: hidden;
 	        	white-space: nowrap;
 
-	        	@include bp(max-width, $bp-small) {
+	        	@include bp(max-width, $global-fullpage-width) {
 	        	    white-space: normal;
 	        	}
         	}
@@ -376,7 +376,7 @@ body.catalogsearch-result-index .page-title h1 {
         	h2 {
         		width: 65%;
 
-        		@include bp(max-width, $bp-small) {
+        		@include bp(max-width, $global-fullpage-width) {
         		    width: 100%;
         		}
         	}
