@@ -35,7 +35,7 @@
 "Mage_Sales::Order Status","Status"
 "Mage_Sales::Order Total","Summe"
 "Mage_Sales::Shipping & Handling","Versandkosten"
-"Mage_Sales::Subtotal","Zwischensumme zzgl. Steuern"
+"Mage_Sales::Subtotal","Zwischensumme inkl. Steuern"
 "Mage_Tax::Excl. Tax","Netto"
 "Mage_Tax::Grand Total Excl. Tax","Gesamtsumme (Netto)"
 "Mage_Tax::Grand Total Incl. Tax","Gesamtsumme (Brutto)"

@@ -388,6 +388,7 @@
         }
         .mobile-product-img-box {
             display: none;
+            max-height: 190px;
             
             @include bp(max-width, $bp-mobil) {
                 display: inline;
