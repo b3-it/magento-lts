@@ -572,7 +572,18 @@ abstract class  B3it_XmlBind_ProductBuilder_Abstract
 			$insertedGalleryImgs = array();
 			$allAttribute =  array();
 			$usedAttribute = array();
-			foreach ($item->getMediaData() as $pos => $media){
+
+			$medias = $item->getMediaData();
+
+			if (count($medias) === 1) {
+				$m = $medias[0];
+				$medias = array();
+				foreach (array('image', 'small_image', 'thumbnail') as $type) {
+					$medias[] = array_merge($m, array('purpose' => $type));
+				}
+			}
+
+			foreach ($medias as $pos => $media){
 	
 				$sourceFile = $media['source'];
 				
