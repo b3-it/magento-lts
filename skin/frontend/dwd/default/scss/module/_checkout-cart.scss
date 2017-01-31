@@ -345,6 +345,10 @@
     }
 }
 
+.product-cart-symbols {
+    display: none;
+}
+
 .cart-table {
     @extend .egov-base-table;
 
@@ -499,10 +503,6 @@
         .button {
             margin-bottom: 5px;
         }
-
-        .product-cart-symbols {
-            display: none;
-        }
     }
 
     .item-options {
@@ -610,6 +610,7 @@
         .cart-price-head, .product-cart-price,
         .cart-actions-head, .product-cart-actions,
         .cart-qty-head, .product-cart-qty,
+        .cart-total-head, .product-cart-total,
         .product-cart-remove {
             display: none;
         }
@@ -642,14 +643,6 @@
                 margin-right: 7px;
                 margin-bottom: 7px;
             }
-        }
-
-        .product-cart-symbols {
-        	display: none;
-
-        	@include bp(max-width, $bp-mobil) {
-        	    display: none;
-        	}
         }
 
         .price,

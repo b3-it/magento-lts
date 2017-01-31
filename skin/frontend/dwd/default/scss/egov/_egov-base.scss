@@ -33,19 +33,15 @@
 			}
         }
         .incl-tax {
-           font-size: 0.7rem;
-           margin: 0 5px;
+           display: none;
         }        
         .items-options a {
             display: inline-block;
             position: absolute;
             right: 10px;
         }
-        .items-options a.remove {
-            right: 19%;
-        }
         
-        @include bp(max-width, $global-fullpage-width) {
+        @include bp(max-width, $bp-mobil) {
             display: block;
         }
     }
