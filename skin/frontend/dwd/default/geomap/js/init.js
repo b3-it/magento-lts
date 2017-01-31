@@ -3,7 +3,7 @@ var panZoom = new ol.control.PanZoom({
   slider: true // enables the slider
 }); 
 
-/*
+//*
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM({
       attributions: [
@@ -14,6 +14,7 @@ var mapLayer = new ol.layer.Tile({
   });
 //*/
 
+/*
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.TileWMS({
         url: 'http://sg.geodatenzentrum.de/wms_dtk250?',
@@ -22,6 +23,7 @@ var mapLayer = new ol.layer.Tile({
         params: {LAYERS: 'DTK250', VERSION: '1.1.1'}
     })
 });
+//*/
 
 var jsonSource = new ol.source.Vector({
     url: jsonUrl,
