@@ -3,8 +3,8 @@ var divIDSuggest   = 'div#quick_autocomplete';
 var inputIDSuggest = 'input#quicksearch';
 var selectStation  = 'select#stationenListe';
 
-var fakeSelectStation = "#stationenListe-button";
-var fakeSelectStationText = "#stationenListe-button > .ui-selectmenu-text";
+var fakeSelectStation     = "#stationenListe-button";
+var fakeSelectStationText = fakeSelectStation + " > .ui-selectmenu-text";
 
 $j(document).ready(function(){
 	if ( $j(divIDSuggest).length ) {
@@ -59,8 +59,6 @@ $j(document).ready(function(){
 function selectMapStation(id)
 {
 	setSelectBox(id);
-	//changeInputTextFromSelect();
-	
 	overlayClose();
 }
 
@@ -94,7 +92,6 @@ function setSelectBox(selectID)
 		$j(fakeSelectStation).attr('aria-labelledby', el.index() + 2); 
 		$j(fakeSelectStationText).text(text);
 	}
-    //$j(selectStation).selectmenu("refresh");
 }
 
 /**

@@ -411,6 +411,7 @@
                 min-height: 170px;
             }
         }
+
         .product-shop {
             width: 30.5%;
             text-align: center;
@@ -419,20 +420,23 @@
                 display: block;
                 width: 100%;
                 text-align: left;
+                padding: 0;
             }
         }
         
         .short-description-title {
             font-weight: bold;
         }
+
         .price {
             font-size: $global-h4-size;
             color: $grundfarbe-blau;
         }
+
         .delivery-time {
             font-size: 0.8rem;
         }
-        
+
         .product-additional-information {
             dt {
                 margin-top: 0;
@@ -452,7 +456,7 @@
                     width: 90%;
                 }
             }
-            
+
             .type-checkbox {
                 vertical-align: top;
                 display: block;
@@ -755,7 +759,6 @@
 	        padding: 10px;
 	        border-color: $grundfarbe-blau;
 	        margin: 7px 0;
-	        width: 10% !important;
 	    }
 
 	    .button {
@@ -769,27 +772,39 @@
 	        }
 	    }
 	}
-    
-    #add-to-cart-top {
+	
+	#add-to-cart-top {
         width: 100%;
 
 	    .button-full-width {
             width: 100%;
         }
-    }
 
+	    .input-text {
+	        width: 20%;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            width: 10%;
+	        }
+	    }
+	}
+	
 	.add-to-cart {
 	    position: relative;
         top: -15px;
 	    width: 260px;
 	
-	    .input-text {
-	        width: 30%;
-	    }
-
 	    .button {
 	        width: 120px;
 	        padding: 7px 20px;
+	    }
+
+	    .input-text {
+            width: 30%;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	             width: 10%;
+	        }
 	    }
 	}
 	

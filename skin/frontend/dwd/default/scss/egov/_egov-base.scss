@@ -41,6 +41,9 @@
             position: absolute;
             right: 10px;
         }
+        .items-options a.remove {
+            right: 19%;
+        }
         
         @include bp(max-width, $bp-mobil) {
             display: block;
