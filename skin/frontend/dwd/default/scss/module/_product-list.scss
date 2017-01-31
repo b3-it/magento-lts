@@ -29,18 +29,18 @@ body.catalogsearch-result-index .page-title h1 {
 	color: $textfarbe-mittel;
     font-size: 1rem;
     line-height: 1rem;
-    
+
     @include bp(max-width, $bp-mobil) {
         margin-top: 20px;
     }
-        
+
 	> li {
 		position: relative;
 	    border-width: 2 * $global-active-border;
 	    border-color: $grundfarbe-blau;
 	    border-style: solid;
 	    padding: 10px;
-		
+
 		margin-bottom: $global-product-spacing;
 		min-height: 160px;
 	}
@@ -48,7 +48,7 @@ body.catalogsearch-result-index .page-title h1 {
     &:after {
         @include clearfix;
     }
-    
+
     .product-image {
     	@include loadingOverlay();
         width: 100%;
@@ -106,15 +106,13 @@ body.catalogsearch-result-index .page-title h1 {
 
 .mobile-product-name {
 	display: none;
-	height: auto;
-	max-height: 2.5rem;
-    line-height: 1.1rem;
+	height: 3.2rem;
     overflow: hidden;
     text-align: left;
-	
+
 	@include bp(max-width, $bp-mobil) {
 	    display: block;
-    
+
 	    a {
 	        font-size: 0.8rem;
 	    }
@@ -133,13 +131,13 @@ body.catalogsearch-result-index .page-title h1 {
     > li {
     	float: left;
         text-align: center;
-        
+
         @include bp(max-width, $bp-mobil) {
             width: 48%;
             margin-right: 4%;
             padding: 5px;
         }
-                
+
         &:nth-child(odd) {
         	clear: left;
         }
@@ -147,7 +145,7 @@ body.catalogsearch-result-index .page-title h1 {
         	margin-right: 0;
         }
     }
-    
+
     .product-image {
     	margin-bottom: 10px;
     }
@@ -159,6 +157,10 @@ body.catalogsearch-result-index .page-title h1 {
 		right: 0;
 		top: 160px;
 		
+		@include bp(max-width, $global-fullpage-width) {
+            top: 25%;
+        }
+
 		@include bp(max-width, $bp-mobil) {
 		    left: 0;
 		    right: auto;
@@ -197,6 +199,10 @@ body.catalogsearch-result-index .page-title h1 {
                     font-family: "FontAwesome";
                     font-size: $global-fontsize + 7;
                     margin-right: $global-fontsize + 7;
+                    
+                    @include bp(max-width, $global-fullpage-width) {
+                        content: none;
+                    }
                 }
             }
         }
@@ -311,7 +317,7 @@ body.catalogsearch-result-index .page-title h1 {
 .products-list {
 	.mobile-product-block {
 	    display: none;
-	    
+
 	    @include bp(max-width, $bp-mobil) {
 	        display: inline;
 	        float: left;
@@ -319,10 +325,10 @@ body.catalogsearch-result-index .page-title h1 {
 	        width: 30%;
 	    }
 	}
-    
+
     > li {
         height: auto;
-        
+
         @include bp(max-width, $bp-mobil) {
             border-top: 0;
 	        border-right: 0;
@@ -331,11 +337,11 @@ body.catalogsearch-result-index .page-title h1 {
 	        margin-bottom: 10px;
 	        margin-left: 0;
         }
-        
+
         .mobile-product-name a {
             font-size: 1rem;
         }
-        
+
         .product-list-left-col, .product-shop {
         	display: table-cell;
         	vertical-align: top;
@@ -348,7 +354,7 @@ body.catalogsearch-result-index .page-title h1 {
         	margin-bottom: 10px;
         	background-color: $grundfarbe-blgr;
         	padding: 13px 10px;
-        	
+
         	@include bp(max-width, $bp-mobil) {
         	    background-color: transparent;
 	        	height: auto;
@@ -361,16 +367,15 @@ body.catalogsearch-result-index .page-title h1 {
         		line-height: 1.1rem;
         		overflow: hidden;
 	        	white-space: nowrap;
-	        	
+
 	        	@include bp(max-width, $bp-small) {
-	        	    overflow: auto;
 	        	    white-space: normal;
 	        	}
         	}
 
         	h2 {
         		width: 65%;
-        		
+
         		@include bp(max-width, $bp-small) {
         		    width: 100%;
         		}
@@ -388,7 +393,7 @@ body.catalogsearch-result-index .page-title h1 {
         .product-list-left-col {
             width: 27.5%;
             padding-right: 30px;
-            
+
             @include bp(max-width, $bp-mobil) {
                 width: 10%;
             }
@@ -399,13 +404,13 @@ body.catalogsearch-result-index .page-title h1 {
             }
         }
     }
-    
+
     li:first-child {
         @include bp(max-width, $bp-mobil) {
             border-top-width: 2 * $global-active-border;
             border-top-style: solid;
             border-top-color: $grundfarbe-blau;
-            padding-top: 15px;            
+            padding-top: 15px;
         }
     }
 
@@ -415,7 +420,7 @@ body.catalogsearch-result-index .page-title h1 {
     .product-new-block {
         bottom: -20px;
         right: -10px;
-        
+
         @include bp(max-width, $bp-mobil) {
             width: 50%;
         }
@@ -433,7 +438,7 @@ body.catalogsearch-result-index .page-title h1 {
        		line-height: 1.1rem;
        		text-align: left;
        	}
-       	
+
        	.desc {
        	    margin-bottom: 35px;
        	}
@@ -447,11 +452,11 @@ body.catalogsearch-result-index .page-title h1 {
       	fonz-size: 1rem;
        	line-height: 1.1rem;
        	color: $textfarbe-mittel;
-       	
+
        	@include bp(max-width, $bp-mobil) {
        	    line-height: 1.4rem;
        	}
-       	
+
        	.tax-details {
 	        @include bp(max-width, $bp-mobil) {
 	            font-size: 1rem;
@@ -462,27 +467,27 @@ body.catalogsearch-result-index .page-title h1 {
 	        margin-top: 10px;
 	        font-size: 0.9rem;
 	    }
-	          	
+
       	.price-box {
       		margin-bottom: 1rem;
-      	    
+
       		.price {
       		    font-size: $global-h4-size;
       		}
-      		
+
       		@include bp(max-width, $bp-mobil) {
       		    margin: 0;
 	            font-size: 1.4rem;
       		}
         }
     }
-    
+
     .product-primary, .product-action, .product_sku {
 	    @include bp(max-width, $bp-mobil) {
 	        display: none !important;
 	    }
 	}
-        
+
     button.button, a.button {
        	@include grau-hover-blau;
        	text-align: center;
@@ -493,16 +498,16 @@ body.catalogsearch-result-index .page-title h1 {
        	font-size: $global-h6-size;
        	padding: 15px 0;
     }
-    
+
     .link-learn, .product-action {
     	position: absolute;
     	bottom: 10px;
     	margin: 0;
     }
-    
+
     .product-action {
         width: 29.5%;
-        
+
         > button.egov-cart {
             font-size: 1rem;
             font-family: inherit;

@@ -4,7 +4,7 @@ var toggleBlocks = new Array();
 var egov_break = {
     //lngSwitch: 760,    // Store-Language Switcher
     //welcome  : 785,    // Welcome
-    navbar   : 800,    // Navigation
+    navbar   : 799,    // Navigation
     //rightCol : 1000,   // Rechte Maginal-Spalte
     //topSearch: 911     // Suchen-Leiste im Header
 };
@@ -134,6 +134,25 @@ $j(document).ready(function(){
 		'elementInsert': '<li />',
 		'uiFindElement': true
 	});
+
+    // Language-Umschalter in Mobil-Navigation einbauen
+    if ( $j('#mobile-home-link').length ) {
+    	$j('<li id="mobile-language-switch" class="level0"></li>').insertAfter( $j('#mobile-home-link') );
+    	
+    	$j('#select-language > option').each(function(){
+    		if ( $j(this).prop('selected') == false ) {
+    			// Link erzeugen
+    			var link = $j('<a />',{
+    				'href': $j(this).val(),
+    				'id'  : 'mobile-language-' + $j(this).attr('data-code'),
+    				'text': $j(this).attr('data-code')
+    			});
+    			
+    			// Link als Child einfügen
+  				$j('#mobile-language-switch').append(link);
+    		}
+    	});
+    }
 });
 
 function setTabIndex(arr)

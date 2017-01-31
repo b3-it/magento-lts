@@ -23,7 +23,7 @@ footer {
     	}
     }
     
-    @include bp(max-width, $bp-mobil) {
+    @include bp(max-width, $global-fullpage-width) {
         background-image: linear-gradient(to right, $zusatzfarbe-gradient-1, $zusatzfarbe-gradient-2);
         margin: 0;
     }
@@ -95,6 +95,10 @@ address {
         width: auto;
         margin-top: 20px;
         
+        @include bp(max-width, $global-fullpage-width) {
+            margin-left: 5px;
+        }
+        
         @include bp(max-width, $bp-mobil)  {
             display: none;
         }
@@ -102,10 +106,11 @@ address {
 }
 
 #footer-navigation {
-	bottom: -90px;
+    bottom: 30px;
     display: inline-block;
-    float: right;
-    position: relative;
+    position: absolute;
+    right: 0;
+    width: 35%;
 	
 	li {
 	    display: inline-block;
@@ -121,6 +126,10 @@ address {
 	a {
 	    @include link-weiss;
 	    font-size: 0.9rem;
+	}
+	
+	@include bp(max-width, $global-fullpage-width) {
+	    margin-right: 15px;
 	}
 	
 	@include bp(max-width, $bp-mobil) {
@@ -154,6 +163,10 @@ address {
     
     address {
     	text-align: left;
+    }
+    
+    @include bp(max-width, $global-fullpage-width) {
+        margin-left: 5px;
     }
     
     @include bp(max-width, $bp-mobil) {

@@ -267,7 +267,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
         <?php endif; ?>
     </td>
     <?php endif; ?>
-    <td class="product-cart-actions">
+    <td class="product-cart-qty">
         <input type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
                data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
                title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />

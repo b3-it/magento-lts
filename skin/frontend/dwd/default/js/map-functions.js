@@ -3,6 +3,9 @@ var divIDSuggest   = 'div#quick_autocomplete';
 var inputIDSuggest = 'input#quicksearch';
 var selectStation  = 'select#stationenListe';
 
+var fakeSelectStation     = "#stationenListe-button";
+var fakeSelectStationText = fakeSelectStation + " > .ui-selectmenu-text";
+
 $j(document).ready(function(){
 	if ( $j(divIDSuggest).length ) {
 		fillSuggestList();
@@ -14,18 +17,28 @@ $j(document).ready(function(){
 			changeInputTextFromSelect();
 		}
 	});
+	
+	// Mindest-Zeichen-Länge aus dem Element holen und setzen
+	var minChar = parseInt( $j('#quicksearch').attr('data-minchar') );
+	
+	// Prüfen, ob das eine Zahl ist
+	if (minChar <= 0) {
+		minChar = 3;
+	}
 
 	$j(inputIDSuggest).on('keyup', function(event){
 		resetStatusForSuggest();
 		var suchText   = $j(inputIDSuggest).val().toLowerCase();
 		var anzTreffer = 0;
 
-		$j('#' + ulIDforSuggest + ' li').each(function(index){
-			if ( $j(this).attr('data-name').indexOf(suchText) != -1 ) {
-				$j(this).toggle();
-				anzTreffer++;
-			}
-		});
+		if ( suchText.length >= minChar ) {
+			$j('#' + ulIDforSuggest + ' li').each(function(index){
+				if ( $j(this).attr('data-name').indexOf(suchText) != -1 ) {
+					$j(this).toggle();
+					anzTreffer++;
+				}
+			});
+		}
 
 		// Nur Anzeigen, wenn es min. 1 Treffer gibt und der Suchbegriff min. 1 Zeichen hat
         if ( anzTreffer > 0 && suchText.length > 0 ) {
@@ -46,7 +59,7 @@ $j(document).ready(function(){
 function selectMapStation(id)
 {
 	setSelectBox(id);
-	changeInputTextFromSelect();
+	overlayClose();
 }
 
 /**
@@ -58,8 +71,7 @@ function selectMapStation(id)
  */
 function selectSuggestStation(id){
 	setSelectBox(id);
-	changeInputTextFromSelect();
-	
+	$j(selectStation).selectmenu("refresh");
 	resetStatusForSuggest();
 	$j(divIDSuggest).toggle();
 }
@@ -71,8 +83,15 @@ function selectSuggestStation(id){
  */
 function setSelectBox(selectID)
 {
-	$j(selectStation + ' > option[value="'+ selectID +'"]').attr('selected', 'selected');    
-    $j(selectStation).selectmenu("refresh");
+	el = $j(selectStation + ' > option[value="'+ selectID +'"]');
+	el.attr('selected', 'selected');
+	text = el.text();
+	if (text != '') {
+		$j(inputIDSuggest).val(text);
+		// fake the select of the fake select box
+		$j(fakeSelectStation).attr('aria-labelledby', el.index() + 2); 
+		$j(fakeSelectStationText).text(text);
+	}
 }
 
 /**

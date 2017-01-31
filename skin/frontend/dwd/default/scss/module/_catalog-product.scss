@@ -105,11 +105,13 @@
     z-index: 1000;
 }
 .olPopupContent {
+	background-color: $grundfarbe-weiss;
+	
 	.olLayerGeoRSSTitle, .olLayerGeoRSSClose {
 	    display: block;
 	    background-color: $grundfarbe-blau;
 	    color: $grundfarbe-weiss;
-	    padding: 5px 10px;
+	    padding: 5px 50px 5px 10px;
 	}
 	.olLayerGeoRSSClose {
 	    @include hover-blau-weiss;
@@ -134,8 +136,9 @@
 		    font-size: 1.2rem;
 		    height: 51px;
 		    position: relative;
-		    left: 15%;
 		    top: 35%;
+		    display: inline-block;
+		    margin: 10px;
 		}
 	}
 }
@@ -324,7 +327,7 @@
         }
         
         .add-to-cart {
-            @include bp(max-width, $bp-mobil) {
+            @include bp(max-width, $global-fullpage-width) {
                 padding: 5px;
                 width: 100%;
                 display: block;
@@ -332,7 +335,7 @@
             }
             
             .qty-wrapper, .add-to-cart-buttons {
-                @include bp(max-width, $bp-mobil) {
+                @include bp(max-width, $global-fullpage-width) {
                     width: 48%;
                     display: inline-block;
                     vertical-align: top;
@@ -340,14 +343,14 @@
             }
             
             .add-to-cart-buttons {
-                @include bp(max-width, $bp-mobil) {
+                @include bp(max-width, $global-fullpage-width) {
                     position: relative;
                     right: -2%;
                 }
             }
             
             button {
-                @include bp(max-width, $bp-mobil) {
+                @include bp(max-width, $global-fullpage-width) {
                     margin: 0 !important;
                 }
             }
@@ -359,7 +362,7 @@
             
             span.egov-cart {
                 &:before {
-                    @include bp(max-width, $bp-mobil) {
+                    @include bp(max-width, $global-fullpage-width) {
                         content: '';
                     }
                 }
@@ -374,7 +377,7 @@
             line-height: 1rem;
             color: $textfarbe-mittel;
         }
-
+        
         .product-img-box {
             padding-right: 30px;
             width: 27.5%;
@@ -408,28 +411,32 @@
                 min-height: 170px;
             }
         }
+
         .product-shop {
             width: 30.5%;
             text-align: center;
             
-            @include bp(max-width, $bp-mobil) {
+            @include bp(max-width, $global-fullpage-width) {
                 display: block;
                 width: 100%;
                 text-align: left;
+                padding: 0;
             }
         }
         
         .short-description-title {
             font-weight: bold;
         }
+
         .price {
             font-size: $global-h4-size;
             color: $grundfarbe-blau;
         }
+
         .delivery-time {
             font-size: 0.8rem;
         }
-        
+
         .product-additional-information {
             dt {
                 margin-top: 0;
@@ -449,7 +456,7 @@
                     width: 90%;
                 }
             }
-            
+
             .type-checkbox {
                 vertical-align: top;
                 display: block;
@@ -753,41 +760,51 @@
 	        border-color: $grundfarbe-blau;
 	        margin: 7px 0;
 	    }
-	}
-    
-    #add-to-cart-top {
-        width: 100%;
 
-	    .input-text {
-	        width: 21%;
-	    }
-	    
 	    .button {
 	        width: 100px;
 	        padding: 7px 5px;
 	        
-	        @include bp(max-width, $bp-mobil) {
+	        @include bp(max-width, $global-fullpage-width) {
 	            float: none !important;
+	            width: 200px !important;
+	            padding: 10px 5px !important;
 	        }
 	    }
-	    
+	}
+	
+	#add-to-cart-top {
+        width: 100%;
+
 	    .button-full-width {
             width: 100%;
         }
-    }
 
+	    .input-text {
+	        width: 20%;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            width: 10%;
+	        }
+	    }
+	}
+	
 	.add-to-cart {
 	    position: relative;
         top: -15px;
 	    width: 260px;
 	
-	    .input-text {
-	        width: 30%;
-	    }
-
 	    .button {
 	        width: 120px;
 	        padding: 7px 20px;
+	    }
+
+	    .input-text {
+            width: 30%;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	             width: 10%;
+	        }
 	    }
 	}
 	

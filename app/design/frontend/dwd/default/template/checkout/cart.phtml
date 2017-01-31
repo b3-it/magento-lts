@@ -25,32 +25,33 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
     <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="shopping-cart-table" class="cart-table data-table">
-            <col width="50" />
-            <col />
-            <col />
-            <col />
-            <col />
-            <col width="20" />
+            <col width="50" class="" />
+            <col class="cart-name-head" />
+            <col class="cart-price-head" />
+            <col class="cart-qty-head" />
+            <col class="cart-total-head" />
+            <col class="cart-actions-head" width="20" />
         <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <col />
-            <col />
+            <col class="" />
+            <col class="" />
         <?php endif; ?>
             <thead>
                 <tr>
                     <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
-                    <th rowspan="<?php echo $mergedCells; ?>">
-                        <span class="nobr product-name"><?php echo $this->__('Product Name') ?></span>
+                    <th class="cart-name-head" rowspan="<?php echo $mergedCells; ?>">
+                        <span class="product-name"><?php echo $this->__('Product Name') ?></span>
+                        <span class="mobile-product-name"><?php echo $this->__('Product Name') ?></span>
                     </th>
                     <th class="a-center cart-price-head" colspan="<?php echo $mergedCells; ?>">
                         <span class=""><?php echo $this->__('Unit Price') ?></span>
                     </th>
-                    <th rowspan="<?php echo $mergedCells; ?>" class="a-center">
+                    <th class="cart-qty-head" rowspan="<?php echo $mergedCells; ?>" class="a-center">
                         <?php echo $this->__('Qty') ?>
                     </th>
                     <th class="a-center cart-total-head" colspan="<?php echo $mergedCells; ?>">
                         <?php echo $this->__('Line Total') ?>
                     </th>
-                    <th class="a-center" rowspan="<?php echo $mergedCells; ?>">
+                    <th class="a-center cart-actions-head" rowspan="<?php echo $mergedCells; ?>">
                     	<?php echo $this->__('Action') ?>
 					</th>
                 </tr>
