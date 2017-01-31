@@ -18,7 +18,7 @@
 "Mage_Catalog::Sort By","Sortieren"
 "Mage_Checkout::%s was added to your shopping cart.","%s wurde in den Warenkorb gelegt. Der erlaubte Gesamtbestellwert darf 1.000,00 € nicht überschreiten!"
 "Mage_Checkout::Empty Cart","Alle Artikel entfernen"
-"Mage_Checkout::Line Total","Zwischensumme (inkl. Steuern)"
+"Mage_Checkout::Line Total","Zeilensumme (inkl. Steuern)"
 "Mage_Checkout::Order now","Zahlungspflichtig bestellen"
 "Mage_Checkout::Unit Price","Einzelpreis (inkl. Steuern)"
 "Mage_Core::Please enter your email below and we'll send you confirmation link for it.","Bitte geben Sie Ihre E-Mail-Adresse an und wir werden Ihnen den Bestätigungslink schicken."
