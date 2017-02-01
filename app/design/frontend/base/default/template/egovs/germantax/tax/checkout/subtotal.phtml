@@ -53,7 +53,7 @@
         <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right subtotal-excl-tax subtotal-value">
-        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValueExclTax()) ?>
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
     </td>
 </tr>
 <?php elseif ($this->displayInclTax()) : ?>
@@ -62,7 +62,7 @@
         <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right subtotal-incl-tax subtotal-value">
-        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValueInclTax()) ?>
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
     </td>
 </tr>
 <?php else : ?>
