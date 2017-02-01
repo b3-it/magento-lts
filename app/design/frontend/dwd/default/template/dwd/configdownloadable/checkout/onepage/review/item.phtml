@@ -1,12 +1,10 @@
 <?php
 /**
- * @category   dwd_default
+ * @category   dwd_blank
  * @package    Mage
  * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
-
-/* @var $this Dwd_ConfigurableVirtual_Block_Checkout_Cart_Item_Renderer */
 
 $_item = $this->getItem();
 $_thumbnail = $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10');
@@ -14,7 +12,7 @@ $_productname = $this->escapeHtml($this->getProductName());
 ?>
 <tr>
 	<td>
-	    <img class="checkout-product-image" src="<?php echo $_thumbnail; ?>" alt="<?php echo $_productname; ?>" title="<?php echo $_productname; ?>" />
+        <img class="checkout-product-image" src="<?php echo $_thumbnail; ?>" alt="<?php echo $_productname; ?>" title="<?php echo $_productname; ?>" />
         <div class="product-details">
             <h3 class="product-name"><?php echo $_productname; ?></h3>
             <h3 class="mobile-product-name"><?php echo $_productname; ?></h3>
@@ -25,18 +23,21 @@ $_productname = $this->escapeHtml($this->getProductName());
                 <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
             </div>
         </div>
+
 		<div class="product-descriptor">
-	        <dl class="item-options">
-	       <?php if($station = $this->getStation($_item)):?>
-			    <dt><?php echo $this->__('Station'); ?></dt>
-			    <dd><?php echo $station->getName(); ?></dd>
-		   <?php endif;?>
-		   <?php if($periode = $this->getPeriode($_item)):?>
-			    <dt><?php echo $this->__('Periode'); ?></dt>
-			    <dd><?php echo $periode->getFormatedText(); ?></dd>
-	       <?php endif;?>
-	        </dl>
-	        <div><?php echo nl2br($_item->getProduct()->getShortDescription()) ?></div>
+             <div class="desc std">
+				   <?php if($station = $this->getStation($_item)):?>
+				     <span class="std small dwd-orderitem-options">
+				            <?php echo $this->__('Station').': '.$station->getName(); ?>
+				     </span>
+			     <?php endif;?>
+			   	<?php if($periode = $this->getPeriode($_item)):?>
+				     <span class="std small dwd-orderitem-options">
+				            <?php echo $this->__('Periode').': '.$periode->getFormatedText(); ?>
+				     </span>
+			     <?php endif;?>
+				<div><?php echo nl2br($_item->getProduct()->getShortDescription()) ?></div>
+			</div>
 		</div>				
 		
 		<?php if ($_options = $this->getOptionList()):?>
@@ -44,7 +45,7 @@ $_productname = $this->escapeHtml($this->getProductName());
 			<?php foreach ($_options as $_option) : ?>
 			<?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
 			<dt>
-				<?php echo $this->escapeHtml($_option['label']) ?>
+				<?php echo $this->htmlEscape($_option['label']) ?>
 			</dt>
 			<dd <?php if (isset($_formatedOptionValue['full_view'])): ?>
 				class="truncated" <?php endif; ?>>
@@ -53,7 +54,7 @@ $_productname = $this->escapeHtml($this->getProductName());
 				<div class="truncated_full_value">
 					<dl class="item-options">
 						<dt>
-							<?php echo $this->escapeHtml($_option['label']) ?>
+							<?php echo $this->htmlEscape($_option['label']) ?>
 						</dt>
 						<dd>
 							<?php echo $_formatedOptionValue['full_view'] ?>

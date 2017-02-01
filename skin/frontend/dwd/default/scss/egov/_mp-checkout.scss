@@ -103,7 +103,20 @@
 
     div.account-login {
         position: relative;
-        top: -25px;
+    }
+    
+    .dwd-account-login .buttons-set {
+        a {
+            @include bp(max-width, $global-fullpage-width) {
+                margin-bottom: 10px;
+            }
+        }
+        .button {
+            @include bp(max-width, $global-fullpage-width) {
+                width: 100% !important;
+                display: block;
+            }
+        }
     }
 
     ul.checkout-progress {
@@ -369,6 +382,10 @@
             
             .mobile-info-block {
                 width: 100%;
+                
+                @include bp(max-width, $global-fullpage-width) {
+                   display: block;
+                }
             }
         }
 

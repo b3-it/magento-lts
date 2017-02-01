@@ -129,7 +129,7 @@ address {
 	}
 	
 	@include bp(max-width, $global-fullpage-width) {
-	    margin-right: 15px;
+	    margin-right: 0;
 	}
 	
 	@include bp(max-width, $bp-mobil) {

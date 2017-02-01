@@ -316,7 +316,7 @@
             color: $textfarbe-mittel;
             margin-bottom: 15px;
         }
-        
+
         .mobile-product-name {
             height: auto;
 
@@ -328,12 +328,12 @@
         
         .add-to-cart {
             @include bp(max-width, $global-fullpage-width) {
-                padding: 5px;
+                padding: 10px 5px;
                 width: 100%;
                 display: block;
                 background-color: $grundfarbe-blgr;
             }
-            
+
             .qty-wrapper, .add-to-cart-buttons {
                 @include bp(max-width, $global-fullpage-width) {
                     width: 48%;
@@ -341,20 +341,20 @@
                     vertical-align: top;
                 }
             }
-            
+
             .add-to-cart-buttons {
                 @include bp(max-width, $global-fullpage-width) {
                     position: relative;
                     right: -2%;
                 }
             }
-            
+
             button {
                 @include bp(max-width, $global-fullpage-width) {
                     margin: 0 !important;
                 }
             }
-            
+
             .button-full-width {
                 width: 70%;
                 float: none;
@@ -754,7 +754,7 @@
     
     #add-to-cart-top, .add-to-cart {
         background-color: $grundfarbe-blgr;
-	    padding-left: 10px;
+	    padding: 10px 5px;
 	    
 	    .input-text {
 	        padding: 10px;
