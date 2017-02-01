@@ -230,6 +230,10 @@
                         <!-- Überschreibt Mage_Tax -->
                         <class>germantax/tax_sales_total_quote_tax</class>
                     </tax>
+                    <subtotal>
+                        <!-- Überschreibt Mage_Tax -->
+                        <renderer>germantax/checkout_subtotal</renderer>
+                    </subtotal>
                 </totals>
                 <nominal_totals>
                     <nominal_tax_subtotal>
