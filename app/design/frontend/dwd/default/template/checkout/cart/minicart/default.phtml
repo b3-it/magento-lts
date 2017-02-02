@@ -128,8 +128,9 @@
 	            <div class="mini-cart-label"><?php echo $this->__('Qty'); ?></div>
 	            <div class="mini-cart-items">
 	                <input id="qinput-<?php echo $_item->getId(); ?>"
-	                       type="number"
-	                       pattern="\d*"
+	                       type="text"
+	                       inputmode="numeric"
+	                       pattern="[0-9]*"
 	                       data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
 	                       data-item-id="<?php echo $_item->getId(); ?>"
 	                       data-cart-item-id="<?php echo $_item->getSku(); ?>"

@@ -133,7 +133,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
             </div>
             <div class="items-options">
 		        <?php echo $this->__('Qty'); ?>
-		        <input type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
+		        <input type="text" inputmode="numeric" pattern="[0-9]*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
 		               data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
 		               data-qty="<?php echo $_item->getId() ?>"
 		               title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
@@ -240,7 +240,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
     </td>
     <?php endif; ?>
     <td class="product-cart-qty">
-        <input id="qty-<?php echo $_item->getId() ?>" type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
+        <input id="qty-<?php echo $_item->getId() ?>" type="text" inputmode="numeric" pattern="[0-9]*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
                data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
                title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
         <div class="product-cart-symbols">

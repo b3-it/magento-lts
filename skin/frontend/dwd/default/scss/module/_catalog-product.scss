@@ -760,6 +760,10 @@
 	        padding: 10px;
 	        border-color: $grundfarbe-blau;
 	        margin: 7px 0;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            padding: 10px 3px;
+	        }
 	    }
 
 	    .button {

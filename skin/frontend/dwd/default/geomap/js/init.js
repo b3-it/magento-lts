@@ -3,7 +3,6 @@ var panZoom = new ol.control.PanZoom({
   slider: true // enables the slider
 }); 
 
-//*
 var mapLayer = new ol.layer.Tile({
     source: new ol.source.OSM({
       attributions: [
@@ -12,18 +11,6 @@ var mapLayer = new ol.layer.Tile({
       url: "http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     })
   });
-//*/
-
-/*
-var mapLayer = new ol.layer.Tile({
-    source: new ol.source.TileWMS({
-        url: 'http://sg.geodatenzentrum.de/wms_dtk250?',
-        projection: 'EPSG:4326',
-        attributions: '@ <a href="http://geodatenzentrum.de">geodatenzentrum.de</a>',
-        params: {LAYERS: 'DTK250', VERSION: '1.1.1'}
-    })
-});
-//*/
 
 var jsonSource = new ol.source.Vector({
     url: jsonUrl,
@@ -37,13 +24,6 @@ jsonStyleFunction = function(feature, resolution) {
     zoom = map.getView().getZoom();
     
     return zoom <= 9 ? imageSmall : imageBig;
-/*    
-    return new ol.style.Style({
-        image: new ol.style.Icon({
-            src: zoom <= 9 ? marker_klein : marker_gross
-        })
-    });
-*/
 };
 
 jsonLayer = new ol.layer.Vector({
