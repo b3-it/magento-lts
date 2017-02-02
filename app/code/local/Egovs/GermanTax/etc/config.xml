@@ -152,6 +152,11 @@
                     <tax_rule_grid>Egovs_GermanTax_Block_Adminhtml_Tax_Rule_Grid</tax_rule_grid>
                 </rewrite>
             </adminhtml>
+            <tax>
+                <rewrite>
+                    <sales_order_tax>Egovs_GermanTax_Block_Tax_Sales_Order_Tax</sales_order_tax>
+                </rewrite>
+            </tax>
         </blocks>
         <helpers>
             <germantax>
