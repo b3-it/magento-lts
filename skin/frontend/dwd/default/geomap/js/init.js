@@ -111,7 +111,7 @@ map.addInteraction(select);
 
 map.on('pointermove', function(e) {
     if (e.dragging) {
-      $(element).popover('destroy');
+      $(e).popover('destroy');
       return;
     }
     var pixel = map.getEventPixel(e.originalEvent);
