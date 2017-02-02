@@ -80,6 +80,14 @@
     height: 600px;
     font-size: 0.7rem;
 }
+
+#OpenLayers_Control_PanZoom_zoomin {
+	top: 66px !important;
+}
+.ol-panzoom .ol-zoomslider .ol-zoomslider-thumb {
+	margin: 0 -3px !important;
+}
+
 .olControlMousePosition {
     left: 6%;
 }
