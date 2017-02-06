@@ -83,13 +83,13 @@
 		    <?php $_secure = Mage::app()->getFrontController()->getRequest()->isSecure(); ?>
 		        <h2><?php echo $this->__('Login') ?></h2>
 		        <div class="content">
-		            <div class="securityLabel">
-			              <span>
-				                <strong><?php echo $this->__('Already registered?') ?></strong><br />
-				                <?php echo $this->__('If you have an account with us, please log in.') ?>
-			              </span>
-			            <?php if( $_secure ): ?>
-			              <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
+                    <p class="form-instructions">
+                        <?php echo $this->__('If you have an account with us, please log in.') ?>
+                    </p>
+
+                    <div class="securityLabel">
+		              <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
+			            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
 		              <?php endif; ?>
 		            </div>
 			          <fieldset<?php if( $_secure != true ): ?> class="width"<?php endif; ?>>

@@ -29,7 +29,7 @@ $col-box-height: 25em;
 
 	        .content {
 	            padding: $global-boxpadding-large;
-	            height: $col-box-height - 8em;
+	            height: $col-box-height - 3em;
 	
 	            .securityLabel {
 	                display: inline-block;
@@ -77,7 +77,7 @@ $col-box-height: 25em;
 	        }
         }
 
-		form input {
+		form:not(#register-form) input {
 	        max-width: 90%;
 	        width: 70% !important;
 	    }
