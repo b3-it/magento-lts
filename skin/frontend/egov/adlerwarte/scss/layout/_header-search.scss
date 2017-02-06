@@ -51,7 +51,8 @@
     }
     	
     @include bp(max-width, $bp-medium) {
-    	top: 130px;
+    	top: 145px;
+    	right: 0;
     }
 }
 

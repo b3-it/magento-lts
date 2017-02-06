@@ -27,10 +27,14 @@
     
     @include bp(max-width, $bp-medium) {
         width: 17.7%;
+        right: 0.5%;
     }
     @include bp(max-width, $bp-small) {
-        left: 10%;
+        left: 11%;
         width: 20%;
+    }
+    @include bp(max-width, $bp-xsmall) {
+        left: 5.5%;
     }
 }
 
@@ -67,7 +71,12 @@
         
         @include bp(max-width, $bp-medium) {
             width: 100%;
+            top: 145px;
             right: 0;
+        }
+        
+        @include bp(max-width, $bp-xsmall) {
+            top: 137px;
         }
     }
  

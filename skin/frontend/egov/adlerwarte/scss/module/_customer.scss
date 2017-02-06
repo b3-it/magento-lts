@@ -191,6 +191,10 @@ body.customer-account {
         .dashboard {
             position: relative;
             top: -15px;
+
+            @include bp(max-width, $bp-medium) {
+                top: -40px;
+            }
         }
 
         h2 {
