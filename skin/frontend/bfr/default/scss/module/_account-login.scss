@@ -7,8 +7,8 @@
 
 .customer-account-login {
     .main-container {
-        position: relative;
-        top: $global-cms-top-position;
+        //position: relative;
+        //top: $global-cms-top-position;
     }
 
     p.required {
@@ -25,14 +25,13 @@
 }
 
 .egovs-checkout-multipage-login .egov-account-login {
-    top: 15px;
+    top: -3px;
 }
 
 .egov-account-login {
     overflow: hidden;
-    width: 97%;
     position: relative;
-    top: -20px;
+    top: -10px;
 
     form {
         height: 100%;
@@ -81,47 +80,25 @@
 
         border-left: none !important;
         border-right: none !important;
+        
+        @include bp(max-width, $bp-small) {
+            width: 100%;
+            margin-bottom: 10px !important;
+        }
 
         .content {
             padding: 10px;
         }
-
+        
         .buttons-set {
+            border: 0;
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            margin: 0px;
-            padding: 0px;
+            bottom: 0;
         }
     }
-
-    .buttons-set {
-        width: auto;
-        float: right;
-    }
-
-    button.button {
-        padding: 5px 6px;
-        width: 140px;
-    }
-
-    a.button {
-        padding: 6px 6px;
-        width: 140px;
-    }
-
-    .button-recovery{
-        position: absolute;
-        left: 10px;
-        bottom: 15px;
-        margin: 0px;
-        padding: 0px;
-
-        a, a:hover, a:active {
-            color: $global-button-font-color;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    
+    .new-users .button {
+        width: 40%;
     }
 
     .form-list {
@@ -146,18 +123,5 @@
     	ul.info, p > strong {
     		display: none;
     	}
-        .content > fieldset > p {
-        	position: relative;
-        	top: -25px;
-        }
-    }
-}
-
-@include bp(max-width, 480px) {
-    .egov-account-login {
-        .new-users, .registered-users {
-            width: 100%;
-            margin-bottom: 10px !important;
-        }
     }
 }

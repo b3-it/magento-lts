@@ -11,11 +11,15 @@
 
 @mixin main-navigation {
 	@extend .egov-navheader-base;
-	
+
 	display: block;
 	margin-top: $global-category-margintop;
 	margin-right: $global-category-marginright;
 	margin-bottom: $global-boxmargin;
+	
+	@include bp(max-width, $bp-medium) {
+	    margin-bottom: 0;
+	}
 
 	#mobile-home-link {
         margin: 0;
@@ -31,7 +35,7 @@
             overflow: hidden;
         }
        
-        @include bp(min-width, 800px) {
+        @include bp(min-width, $bp-medium) {
             display: none;
         }
 	}
@@ -57,6 +61,7 @@
         }
     }
     
+    .no-touch #mobile-nav a:hover,
     .no-touch #header-account a:hover,
     .no-touch .nav-primary a:hover {
         background-color: $global-category-item-color;

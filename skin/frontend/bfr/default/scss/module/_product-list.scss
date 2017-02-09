@@ -25,12 +25,6 @@ body.catalogsearch-result-index .col-right {
     margin-bottom: $global-boxpadding;
 }
 
-// Prevent button overlapping when buttons have long text, such as non-English translations
-.products-list .action .button,
-.products-grid .actions .button {
-    white-space: normal;
-}
-
 .catalog-category-view .name-prefix,
 .catalogsearch-result-index .name-prefix {
     vertical-align: top;
@@ -40,21 +34,31 @@ body.catalogsearch-result-index .col-right {
 }
 
 .image-copyright-box {
-    //background-color: $global-category-gradient;
-    //height: 37px;
-    //position: absolute;
-    //bottom: 0;
-    //padding: $global-boxpadding-large;
     max-width: $global-product-list-image-width;
     width: auto;
     display: inline-flex;
     font-size: 0.7em;
+    
+    @include bp(max-width, $bp-small) {
+        overflow: hidden;
+        width: 95%;
+    }
 
     > span {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         color: $global-fontcolor-dark;
+    }
+}
+
+.product-action {
+	bottom: 15px;
+    position: absolute;
+    width: 60%;
+	
+	.button {
+	    float: none;
     }
 }
 
@@ -89,6 +93,11 @@ p.product-name {
     margin-bottom: 5px;
     font-size: $base-font-family;
     font-family: $global-fontsize;
+    
+    @include bp(max-width, $bp-small) {
+        overflow: hidden;
+        height: 10em;
+    }
 }
 
 /* ============================================ *
@@ -117,8 +126,15 @@ p.product-name {
         margin-bottom: 15px;
 
         img {
-            width: 100%;
             height: auto;
+    		margin: 0 auto;
+    		max-height: 145px;
+    		max-width: 215px;
+    		width: auto;
+    		
+    		@include bp(max-width, $bp-small) {
+    		    max-width: 90%;
+    		}
 
             &:hidden {
                 display: none;
@@ -132,26 +148,11 @@ p.product-name {
     }
 
     .actions {
-        padding-top: $box-spacing;
         position: absolute;
         bottom: 0px;
-        min-height: $global-product-grid-action-height;
-        width: 100%;
 
-        a.button, button.button {
+        .button {
             min-width: 150px;
-            max-width: 80%;
-            width: 50%;
-            font-size: $global-fontsize;
-            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
-
-            span {
-                font-family: $base-font-family;
-            }
-        }
-
-        a.button {
-            display: inline-block;
         }
     }
 
@@ -304,7 +305,7 @@ p.product-name {
     margin-bottom: $global-boxmargin;
 
     .full, .short {
-        height: 100px;
+        height: 35px;
         position: relative;
 
         .shorter {
@@ -356,16 +357,6 @@ p.product-name {
     & > li:last-child {
         padding-bottom: 0;
         border-bottom: none;
-    }
-
-    .product-action {
-        position: absolute;
-        bottom: $global-listmargin + 23px;
-        width: 60%;
-
-        button, a.button {
-            margin: 0;
-        }
     }
 
     .product-shop {
@@ -445,6 +436,10 @@ p.product-name {
         .desc {
             margin: $element-spacing 0 $element-spacing * 2 0;
             font-size: 1.2em;
+            
+            @include bp(max-width, $bp-small) {
+                display: none;
+            }
         }
 
         .product-primary {
@@ -779,15 +774,5 @@ p.product-name {
         &:after {
             @include clearfix;
         }
-    }
-}
-
-.block-layered-nav .actions {
-    margin-bottom: $global-boxpadding * 2;
-
-    a {
-        @extend .button;
-        float: right;
-        margin-right: $global-boxpadding;
     }
 }

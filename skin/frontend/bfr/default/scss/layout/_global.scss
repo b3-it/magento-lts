@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -22,13 +22,21 @@ body {
     background-color: $global-wrapper-color;
     position: relative;
     width: 100%;
+    
+    @include bp(max-width, $bp-medium) {
+        background-color: $global-page-color;
+    }
 
     .page {
-        min-height: 100vh;
         min-width: $global-min-page-width;
         max-width: $global-max-page-width;
         width: 94%;
         margin: 0 auto;
+        
+        @include bp(max-width, $bp-medium) {
+            width: 100%;
+            margin: 0;
+        }
     }
 
     .main-container {
@@ -36,6 +44,11 @@ body {
         border-width: medium 5px 5px;
         border-color: -moz-use-text-color #d7dbdc #d7dbdc;
         background-color: $global-page-color;
+        
+        @include bp(max-width, $bp-medium) {
+            top: 30px;
+            border: 0;
+        }
     }
 }
 

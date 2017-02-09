@@ -12,6 +12,8 @@
 .page-header {
     font-family: $base-font-family;
     background-color: $global-page-color;
+    clear: both;
+    z-index: 99;
 }
 
 .welcome-header {
@@ -46,47 +48,138 @@
     }
     
     @include bp(max-width, 1345px) {
-    	top: 40px;
+    	top: 30px;
     	height: 70px;
     	
     	h1 {
     		display: block;
     	}
     }
-}
 
-
-@include bp(min-width, $bp-medium + 1) {
-    .page-header {
-        clear: both;
+    @include bp(max-width, $bp-medium) {
+        left: 150px;
         z-index: 99;
     }
+}
 
-    .page-header-container {
-        max-width: $global-fullpage-width;
-        min-width: $global-min-width;
-        position: relative;
-        margin: 0px auto;
-        background-color: transparent !important;
+.page-header-container {
+    max-width: $global-fullpage-width;
+    //min-width: $global-min-width;
+    position: relative;
+    margin: 0px auto;
+    background-color: transparent !important;
+    
+    @include bp(max-width, $bp-medium) {
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center 0px;
+
+        height: 110px + $global-logo-height;
+    }
+    
+    @include bp(max-width, $bp-small) {
+        height: 200px;
+        background-image: none;
+    }
+    
+    .logo-top-row {
+        @include bp(max-width, $bp-small) {
+            height: 40%;
+        }
+    }
+    
+    .mobile-top-header {
+        margin-top: 13px;
+        vertical-align: top;
+        width: 40%;
+        position: absolute;
+        right: 5%;
+    
+        h1 {
+            overflow: hidden;
+            color: $global-linkcolor;
+            height: 40px;
+            font-size: 2.4em;
+        }
+        
+        #search_mini_form .button {
+            display: none;
+        }
+        
+        #search_mini_form input {
+            margin: 0;
+            border-radius: 4px;
+            width: 90%;
+        }
+        
+        .search-autocomplete::before {
+        }
+    }
+    
+    #mobile-header-search {
+        #header-search {
+            top: auto;
+            margin: 0;
+        }
+    }
+    
+    .mobile-welcome {
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center 10%;
+        background-size: 170% auto;
+        height: 30%;
+        width: 100%;
+        
+        .welcome-msg {
+            color: $global-fontcolor-light;
+            font-size: $global-pagetitle-size - 0.2em;
+            position: relative;
+            width: 80%;
+            left: 10%;
+            top: 25%;
+            line-height: 1.1;
+            text-align: left;
+        }
+    }
+    
+    .mobile-navigation {
+        width: 100%;
+        margin: 10px 0;
+        
+        @include bp(max-width, $bp-small) {
+            display: block;
+        }
+    }
+
+    .store-language-container {
+        top: 45px;
+        right: 5px;
+    }
+
+    .logo {
+        top: 10px;
+        left: 10px;
+        
+        @include bp(max-width, $bp-small) {
+            margin-left: 30px;
+            height: auto;
+        }
     }
 }
 
 @include bp(max-width, 785px) {
-	.page-header-container {
-        height: 110px + $global-logo-height;
-    }
-
     .skip-links {
         position: relative;
         top: 35px + $global-logo-height;
     }
 
     .store-language-container {
-        top: 40px + $global-logo-height !important;
+        top: 40px + $global-logo-height;
     }
 
     #egov-nav, #header-account {
-        top: 35px + $global-logo-height !important;
+        top: 35px + $global-logo-height;
     }
 }
 
@@ -97,7 +190,7 @@
     }
 
     .store-language-container {
-        top: 0px + $global-logo-height !important;
+        top: 0px + $global-logo-height;
     }
 }
 
@@ -113,6 +206,10 @@
     margin-top: $global-logo-top;
 
     @include default-border-box;
+    
+    @include bp(max-width, $bp-small) {
+        display: none;
+    }
 
     .header-function-row {
         display: block;
@@ -264,6 +361,8 @@
     overflow: hidden;
     border-top:$global-active-border solid $global-navigation-border-color;
     border-bottom: $global-active-border solid $global-navigation-border-color;
+    fill: $global-linkcolor-hover;
+    height: $global-header-height;
 
     background-image: url($global-header-background-image);
     background-repeat: no-repeat;
@@ -271,14 +370,15 @@
     background-size: 100%;
     background-position: center 0;
     
-    fill: $global-linkcolor-hover;
 
-    height: $global-header-height;
+    @include bp(min-width, $bp-medium + 1) {
+        border: 0;
+    }
 
     .links {
         float: right;
         margin: 0 15.5% 0 0;
-
+        
         ul {
             padding: 14px 0;
             border-top: 5px solid $global-wrapper-color;
@@ -317,75 +417,61 @@
         }
     }
     
+    .skip-egov {
+        @include bp(max-width, $bp-medium) {
+            display: none;
+        }
+    }
+    
     @include bp(max-width, 1345px) {
     	height: $global-header-height - 35px;
     }
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, $bp-medium + 1) {
-
-    .skip-links {
-        border: 0;
-    }
-
-}
-
-@include bp(max-width, 785px) {
-    .page-header-container {
-        background-color: $global-header-gradientcolor-2;
-        background-image: url($global-header-background-image);
-        background-repeat: no-repeat;
-        background-position: center 0px;
-
-        .store-language-container {
-            top: 45px;
-            right: 5px;
-        }
-
-        .logo {
-            top: 10px;
-            left: 10px;
-        }
-    }
-
-    .skip-links {
-        .skip-egov {
-            display: none;
-        }
-
-        .welcome-header {
-            left: 150px;
-            z-index: 99;
-        }
-    }
-
-    .main-container {
-        top: 30px !important;
+    
+    @include bp(max-width, $bp-small) {
+        display: none;
     }
 }
-
 
 /* -------------------------------------------- *
  * Skip - Link
  */
 
 .skip-link {
-    background-color: $global-wrapper-color;
-    float: right;
-    border-width: $global-active-border;
-    border-style: solid;
-    border-color: #DDDDDD;
+    background-color: $global-minicart-background;
+    border: $global-active-border solid #dddddd;
+    float: right;    
+    
+    @include bp(max-width, $bp-medium) {
+        border: 0;
+        background-color: $global-page-color;
+        border-left: $global-active-border solid $global-navigation-font-color;
+        width: 33.33% !important;
+    }
+}
+
+#mobile-header-minicart .skip-link {
+	border-right: $global-active-border solid $global-navigation-font-color;
 }
 
 a.skip-link {
     text-decoration: none;
+    padding: 0 10px;
+    
+    @include bp(max-width, $bp-medium) {
+        text-align: left;
+    }
 }
 
 .skip-egov:hover,
 .skip-link:not(.skip-active):hover {
     opacity: 0.8;
+	
+    @include bp(max-width, $bp-medium) {
+        background-color: $global-linkcolor-hover;
+        color: $global-fontcolor-light;
+        border: 0;
+        opacity: 1;
+    }
 }
 
 // ---------------------------------------------
@@ -405,25 +491,6 @@ a.skip-link {
         position: relative;
         top: -5px;
     }
-
-    .skip-link {
-        border-right: 1px solid #EDEDED;
-        width: 25%;
-    }
-
-    .skip-link:last-child {
-        border-right: 0;
-    }
-}
-
-// ---------------------------------------------
-
-@include bp(max-width, 500px) {
-
-    .skip-link {
-        width: 15%;
-    }
-
 }
 
 /* -------------------------------------------- *
@@ -448,8 +515,8 @@ a.skip-link {
 
 .skip-link .icon {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     vertical-align: middle;
 }
 

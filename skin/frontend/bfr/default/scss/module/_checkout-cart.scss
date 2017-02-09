@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -84,9 +84,6 @@
         }
     }
 
-    #postcode {
-    }
-
     .col2-left-layout {
         .col-main {
             .display-both-prices,
@@ -94,16 +91,6 @@
                 /* Abstand bei Warenkorb-Anzeige entfernen (-BoxMargin) */
                 position: relative;
                 top: 0 - $global-boxmargin;
-            }
-
-            .cart {
-                .cart-totals-wrapper, .shipping {
-                    .button {
-
-                        &:hover, &:active {
-                        }
-                    }
-                }
             }
         }
     }
@@ -178,7 +165,7 @@
 
 .cart .page-title {
     margin-bottom: 15px;
-    border-bottom: 1px solid $c-module-border-light;
+    border-bottom: 1px solid $global-active-color;
 
     &:after {
         @include clearfix;
@@ -346,7 +333,13 @@
         text-transform: uppercase;
         font-family: $f-stack-special;
     }
+    
+    .cart-total-head {
+        border-radius: 0 4px 0 0;
+    }
 
+    .product-cart-remove,
+    .cart-remove-head,
     .product-cart-image .cart-links,
     .product-cart-info .btn-remove,
     .product-cart-actions .button {
@@ -474,7 +467,7 @@
     }
 }
 
-@include bp(max-width, 599px) {
+@include bp(max-width, $bp-small) {
 
     .cart-table {
         colgroup, thead {

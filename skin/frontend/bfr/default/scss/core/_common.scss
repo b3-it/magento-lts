@@ -115,6 +115,14 @@ ul {
     padding: 0;
 }
 
+.showmobile {
+	display: none;
+	
+	@include bp(max-width, $bp-small) {
+	    display: inline-block;
+	}
+}
+
 /* ============================================ *
  * Default-Active marking
  * ============================================ */
@@ -457,30 +465,6 @@ div.block-reorder {
     }
 }
 
-/* ============================================ *
- * Buttons
- * ============================================ */
-
-/* Secondary Buttons */
-.cart .buttons-set .button,
-.cart-table .button,
-.sidebar .actions .button,
-.button.button-secondary {
-
-    &:hover {
-    }
-
-    &:active {
-    }
-
-    &:focus {
-    }
-}
-
-.sidebar .actions button.button {
-    white-space: normal;
-}
-
 /* -------------------------------------------- *
  * Paypal Button
  */
@@ -528,49 +512,6 @@ div.block-reorder {
 }
 
 /* -------------------------------------------- *
- * Button Sets
- */
-
-.buttons-set {
-    clear: both;
-    margin: $box-spacing 0 0;
-    padding-top: $box-spacing;
-    border-top: 1px solid $c-module-border-light;
-    text-align: right;
-
-    p.required {
-        margin: 0;
-        margin-left: $gap;
-        line-height: 33px;
-        float: right;
-    }
-    .back-link {
-        float: left;
-        margin: 0;
-        line-height: 33px;
-    }
-    a:not(.button) {
-        line-height: 20px;
-        display: inline-block;
-        padding: 5px;
-    }
-    button.button {
-        float: right;
-        margin-left: 5px;
-        min-width: 140px;
-
-        &:active, &:hover {
-            background: $global-button-hovercolor $global-repeat-scroll;
-            color: $global-button-font-hover-color;
-        }
-    }
-
-    &:after {
-        @include clearfix;
-    }
-}
-
-/* -------------------------------------------- *
  * Icons
  */
 
@@ -602,6 +543,10 @@ div.block-reorder {
 
     margin: 0 0 15px;
     padding: 10px 0 8px 10px;
+    
+    @include bp(max-width, $bp-medium) {
+        display: none;
+    }
 
     span {
         display: inline-block;
@@ -654,13 +599,6 @@ div.block-reorder {
 
 }
 
-@include bp(max-width, $bp-medium) {
-
-    .breadcrumbs {
-        display: none;
-    }
-
-}
 
 /* -------------------------------------------- *
  * Button - Remove / Previous
@@ -877,6 +815,10 @@ div.block-reorder {
         .col-left {
             margin-right: $global-2L-leftcol-marginright;
             width: $global-2L-leftcol-width;
+            
+            @include bp(max-width, $bp-small) {
+                display: none;
+            }
         }
 
         .col-main {
@@ -885,6 +827,11 @@ div.block-reorder {
             margin-right: $global-2L-content-marginright;
             position: relative;
             top: -9px;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+                top: 0;
+            }
         }
 
         p.note-msg {

@@ -105,12 +105,12 @@
             margin-left: 3px;
         }
     }
-
+/*
     a.egovslistbutton, a.egovsbutton {
         @extend .button;
         display: inline-block;
     }
-
+*/
     a.break-link {
         @extend .egov-float-left;
         margin-left: $global-checkout-button-margin !important;
@@ -173,10 +173,11 @@
         .overview_shipping, .successview_shipping {
             margin: 5px 0px 10px 10px;
         }
-        
+/*
         button.button {
         	width: 140px !important;
         }
+*/
     }
 
     .sepa-details {
@@ -333,21 +334,5 @@
 .egovs-checkout-multipage-successview {
     ul.checkout-progress {
         display:none;
-    }
-}
-
-@include bp(max-width, 480px) {
-    .mp-checkout {
-        .buttons-set {
-            a.egovslistbutton, button.button {
-                width: auto !important;
-                min-width: 120px;
-                text-align: center;
-            }
-
-            a.break-link {
-                margin-left: 0px !important;
-            }
-        }
     }
 }

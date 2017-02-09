@@ -57,13 +57,6 @@
         margin: $global-boxmargin 0px;
     }
 
-    .buttons-set {
-        a {
-            @extend .button;
-            padding: $global-btn-padding-v $global-btn-padding-h;
-        }
-    }
-
     .addresses-list {
         font-family: $base-font-family;
 

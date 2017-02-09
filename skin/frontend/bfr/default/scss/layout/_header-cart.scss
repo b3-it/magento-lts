@@ -23,6 +23,10 @@
     &:hover {
         text-decoration: none;
     }
+    
+    @include bp(max-width, $bp-medium) {
+        margin: 5px 0 0 0;
+    }
 
     .count {
         @include border-radius(49%);
@@ -71,7 +75,6 @@
         position: absolute;
         z-index: 200;
         top: 51px;
-        right: 28%;
         width: 400px;
         border: 0;
 
