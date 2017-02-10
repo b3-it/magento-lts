@@ -286,7 +286,7 @@ div.block-reorder {
     	font-weight: bold;
     	color: $textfarbe-mittel;
     }
-    
+
     @include bp(max-width, $global-fullpage-width) {
         background-color: $global-wrapper-color;
     }
@@ -362,6 +362,10 @@ div.block-reorder {
     }
 }
 
+.block-layered-nav {
+    display: none !important;
+}
+
 .block-layered-nav .currently,
 .mini-products-list,
 #compare-items {
@@ -421,7 +425,7 @@ div.block-reorder {
 .main-container {
     max-width: $global-fullpage-width;
     margin-top: 30px;
-    
+
     @include bp(max-width, $global-fullpage-width) {
         margin-top: 0;
     }
@@ -539,7 +543,7 @@ div.block-reorder {
         width: $global-wrapper-width;
         position: relative;
         background-color: $grundfarbe-weiss;
-        
+
         @include bp(max-width, $global-fullpage-width) {
             padding: 0 5px 5px 0;
         }
