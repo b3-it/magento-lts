@@ -66,7 +66,7 @@ class Sid_ExportOrder_Block_Adminhtml_Export_Edit_Tab_Form extends Mage_Adminhtm
       		'class'     => 'disabled',
       		'disabled'  => true,
       		'name'      => 'email',
-      		'value'	=>  $vendor->getOrderEmail(),
+      		'value'	=>  $vendor->getTransferModel()->getEmail(),
       ));
       
       

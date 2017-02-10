@@ -54,7 +54,24 @@ class Sid_Framecontract_Adminhtml_Framecontract_TransmitController extends Mage_
     	$data['contractnumber'] = $contract->getContractnumber();
     	$data['contract'] = $contract->getTitle();
     	
-    	Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid);
+    	$attachments = array();
+    	if($files)
+    	{
+	    	foreach($files->getItems() as $file)
+	    	{
+	    		$fileContents = file_get_contents($file->getDiskFilename());
+	    		$attachment = array();
+	    		$attachment['content'] = $fileContents;
+	    		$attachment['filename'] = $file->getfilenameOriginal();
+	    		$attachments[] = $attachment;
+	    	}
+    	}
+    	
+    	
+    	
+    	
+    	
+    	Mage::helper('framecontract')->sendEmail($template, $recipients, $data, $storeid,$attachments);
     	
     	//info speichern
     	$note = "Infos zum Rahmenvertrag versendet";

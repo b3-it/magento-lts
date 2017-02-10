@@ -88,8 +88,8 @@ class Egovs_Doc_Block_Adminhtml_Doc_Grid extends Mage_Adminhtml_Block_Widget_Gri
 				'header'    => Mage::helper('egovs_doc')->__('Date'),
 				'align'     =>'left',
 				'index'     => 'update_time',
-				'width'     => '100px',
-				'type' => 'date'
+				'width'     => '150px',
+				'type' => 'datetime'
 		));
    
       
