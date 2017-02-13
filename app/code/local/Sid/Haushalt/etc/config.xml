@@ -168,7 +168,7 @@
     		  <client>SID</client>
     		  <dim_6>SID</dim_6>
     		  <!-- dim_2 ohne 2 Stell. Jahreszahl am Ende eintragen -->
-    		  <dim_2>999999999999</dim_2>
+    		  <dim_2>99999999999999</dim_2>
     		  
     		  <accountable>FIKSIN</accountable>
     		  <increment_pool>
