@@ -75,7 +75,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 				throw new Exception('empty url');
 			}
 			
-			$service->fetchLayers($data['url']);
+			$service->fetchLayers($data['url'],$data['type']);
 			$this->_edit($service->getId());
 			
 		} catch (Exception $e) {
