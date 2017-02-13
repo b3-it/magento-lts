@@ -48,7 +48,7 @@ class Dwd_Ibewi_Block_Adminhtml_Order_Grid extends Mage_Adminhtml_Block_Widget_G
       	
   
 
- //die($collection->getSelect()->__toString());
+// die($collection->getSelect()->__toString());
       
  	  $this->setCollection($collection);
       return parent::_prepareCollection();
@@ -252,7 +252,7 @@ class Dwd_Ibewi_Block_Adminhtml_Order_Grid extends Mage_Adminhtml_Block_Widget_G
   		
         $timestamp += $add *60*60;
         
-  		return "'" . date($format, $timestamp) ."'";	
+  		return date($format, $timestamp);	
   		
   }
 

@@ -709,7 +709,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
         if (empty($data) || !$dom->loadXML($data)) {
         	$msg = Mage::helper('paymentbase')->__("Can't create XML DOM for Saferpay data\n%s", $data);
         	Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-        	Mage::helper('paymentbase')->sendMailToAdmin($msg, Mage::helper('paymentbase')->_("Can't create XML DOM for Saferpay data"));
+        	Mage::helper('paymentbase')->sendMailToAdmin($msg, Mage::helper('paymentbase')->__("Can't create XML DOM for Saferpay data"));
         	Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         	return false;
         }
