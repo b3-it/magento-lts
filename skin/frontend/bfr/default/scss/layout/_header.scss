@@ -445,8 +445,13 @@
         border: 0;
         background-color: $global-page-color;
         border-left: $global-active-border solid $global-navigation-font-color;
-        width: 33.33% !important;
     }
+}
+
+.skip-nav, .skip-account, .header-minicart {
+	@include bp(max-width, $bp-medium) {
+        width: 33.33% !important;
+	}
 }
 
 #mobile-header-minicart .skip-link {

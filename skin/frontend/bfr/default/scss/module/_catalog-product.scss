@@ -180,8 +180,8 @@ div#details-block {
             position: absolute;
             top: $global-1-product-height - $gobal-cart-block-height - 140px;
             left: $global-product-image-1-width + 2%;
-
-            .add-to-cart-buttons {
+            
+           .add-to-cart-buttons {
                 display: inline-block;
             }
         }
@@ -243,9 +243,21 @@ div#details-block {
                 position: absolute;
                 top: 0px;
 
-                .qty-wrapper {
+	            @include bp(max-width, $bp-small) {
+	                position: relative;
+	                top: auto;
+	                left: auto;
+	                width: 100%;
+	                display: block;
+	            }
+
+                 .qty-wrapper {
                     float: none;
                     margin: 0;
+                    
+                    @include bp(max-width, $bp-small) {
+                        width: 48%;
+                    }
                 }
 
                 .add-to-cart-buttons {
@@ -733,11 +745,20 @@ div#details-block {
         @include clearfix;
     }
 
-    .add-to-cart:after {
+    .add-to-cart {
         display: inline-block;
+        width: 60%;
+        
+        @include bp(max-width, $bp-small) {
+            width: auto;
+        }
     }
 
     .add-to-cart-buttons {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+    
         button {
             margin: 0;
             padding: 5px;
@@ -764,6 +785,10 @@ div#details-block {
         margin-right: 7px;
         float: left;
         display: inline-block;
+        
+        @include bp(max-width, $bp-small) {
+            width: 35%;
+        }
     }
 
     .add-to-cart .qty-wrapper label {
@@ -774,6 +799,10 @@ div#details-block {
         float: left;
         height: 40px;
         width: 107px;
+        
+        @include bp(max-width, $bp-small) {
+            width: 50%;
+        }
     }
 
     .add-to-cart .qty-wrapper #qtd {

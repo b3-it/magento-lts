@@ -26,6 +26,7 @@
     
     @include bp(max-width, $bp-medium) {
         margin: 5px 0 0 0;
+        width: 100%;
     }
 
     .count {

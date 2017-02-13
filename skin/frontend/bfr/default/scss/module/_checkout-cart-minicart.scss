@@ -16,10 +16,6 @@
 .header-minicart {
     display: inline-block;
 
-    @include bp(max-width, $bp-medium) {
-        display: block;
-    }
-
     .minicart-message {
         display: block;
         padding: $box-spacing;
@@ -88,6 +84,12 @@
             padding-top: 0px;
             font-weight: bold;
             text-align: left;
+            
+            @include bp(max-width, $bp-small) {
+                display: inline-block;
+                width: 60%;
+                vertical-align: top;
+            }
 
             a {
                 color: $global-linkcolor;
@@ -122,6 +124,10 @@
         position: relative;
         right: -70px;
         display: inline-block;
+        
+        @include bp(max-width, $bp-small) {
+            right: 0;
+        }
 
         tr:first-child {
             line-height: 25px;
@@ -276,6 +282,13 @@ div.block-cart {
 .header-minicart.skip-active .block-cart,
 .block-cart.skip-active {
     display: block;
+    
+    @include bp(max-width, $bp-small) {
+        left: 0;
+        position: absolute;
+        top: 182px;
+        width: 100%
+    }
 }
 
 @include bp(min-width, $bp-medium + 1) {

@@ -15,6 +15,10 @@
 }
 #addTagForm .form-add {
     margin-top: 10px;
+    
+    button {
+        float: none;
+    }
 }
 .product-tags {
     background-color: $c-module-background;

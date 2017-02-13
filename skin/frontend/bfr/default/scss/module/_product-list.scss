@@ -56,9 +56,17 @@ body.catalogsearch-result-index .col-right {
 	bottom: 15px;
     position: absolute;
     width: 60%;
+    
+    @include bp(max-width, $bp-small) {
+        width: 56%;
+    }
 	
 	.button {
 	    float: none;
+	    
+	    @include bp(max-width, $bp-small) {
+	        width: 100%;
+	    }
     }
 }
 
@@ -363,13 +371,16 @@ p.product-name {
         width: 100 - $global-product-list-imagesize;
         padding-left: $global-boxmargin;
         height: 100%;
-        /*flex: 1 1 100%;*/
 
         button.button, a.button {
             font-size: $global-fontsize;
             width: $global-product-list-button-width;
             padding: $global-btn-padding-v ($global-btn-padding-h / 2);
             text-align: center;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
 
             span {
                 font-family: $base-font-family;
@@ -379,6 +390,10 @@ p.product-name {
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
             line-height: 1.7em;
+            
+            @include bp(max-width, $bp-small) {
+                line-height: 1.6em;
+            }
 
             a {
                 font-size: 1.5em !important;
@@ -472,10 +487,6 @@ p.product-name {
     .products-list {
         .product-primary {
             height: $global-product-list-desc_height + 10 !important;
-        }
-
-        button.button, a.button {
-            width: $global-product-list-button-width !important;
         }
 
         .full {

@@ -1361,10 +1361,9 @@ span.weee {
     &:after {
         @include clearfix;
     }
-
+    
     dt {
-        float: left;
-        clear: left;
+        display: block;
         font-weight: 600;
         padding-right: 5px;
         font-style: italic;
@@ -1375,7 +1374,7 @@ span.weee {
     }
 
     dd {
-        float: left;
+        display: inline-block;
         padding-left: 10px;
         margin: 0 0 6px;
     }
@@ -1384,6 +1383,12 @@ span.weee {
 .truncated,
 .truncated a.dots {
     cursor: help;
+    
+    @include bp(max-width, $bp-small) {
+        vertical-align: top;
+        width: 60%;
+        text-align: left;
+    }
 }
 
 .truncated a.details {
@@ -1407,14 +1412,17 @@ span.weee {
     z-index: 300;
     width: 200px;
     padding: 8px;
-    border: 1px solid $c-action;
-    background-color: #F6F6F6;
+    border: 1px solid $global-linkcolor;
+    background-color: $global-navigation-color;
     top: 21px;
-    left: -100px;
+    
+    dd, dt {
+        display: inline-block;
+        float: none;
+    }
 
     &:after {
-        @include triangle(up, 7px, $c-action);
-        left: (100px + -3px);
+        @include triangle(up, 7px, $global-linkcolor);
         top: -7px;
     }
 }
