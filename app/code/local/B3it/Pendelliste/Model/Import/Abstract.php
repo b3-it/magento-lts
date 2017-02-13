@@ -12,27 +12,40 @@ abstract class  B3it_Pendelliste_Model_Import_Abstract extends Varien_Object
 {
     protected $_data = null;
     
-    public function setData($data)
+    public function setModelData($data)
     {
     	$this->_data = $data;
     	return $this;
     }
     
-    public function getData()
+    public function getModelData()
     {
     	return $this->_data;
+    }
+    
+    protected $_params = null;
+    
+    public function setParams($data)
+    {
+    	$this->_params = $data;
+    	return $this;
+    }
+    
+    public function getParams()
+    {
+    	return $this->_params;
     }
     
     
     public abstract function import();
     
     
-    public static function create($model,$modelParams,$data)
+    public static function create($modelName,$modelParams,$data,$params)
     {
     	$model = null;
     	
     	
-    	switch ($model)
+    	switch ($modelName)
     	{
     		case 'core_config_data': 
     			$model = Mage::getModel('pendelliste/import_coreConfigData');
@@ -41,7 +54,8 @@ abstract class  B3it_Pendelliste_Model_Import_Abstract extends Varien_Object
     	}
     	
     	if($model != null ){
-    		$model->setData($data);
+    		$model->setModelData($data);
+    		$model->setParams($params);
     	}
     	
     	return $model;
