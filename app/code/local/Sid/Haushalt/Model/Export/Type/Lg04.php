@@ -55,7 +55,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 	{
 		
 		$res = $this->getConfigData('dim_2');
-		return $res.$order->getOrderData($this->getFormatedOrderDate($order,'Y'));
+		return $res;//.$order->getOrderData($this->getFormatedOrderDate($order,'Y'));
 	}
 	
 	
