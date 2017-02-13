@@ -2032,7 +2032,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
      * @return string;
      */
     public function getMandatePdfTemplateStore() {
-    	$store = Mage::getStoreConfig("payment/paymentbase/mandate_pdf_template_store");
+    	$store = Mage::getStoreConfig("payment_services/paymentbase/mandate_pdf_template_store");
     	if (strpos($store, DIRECTORY_SEPARATOR) !== 0) {
     		$store = DIRECTORY_SEPARATOR.$store;
     	}
