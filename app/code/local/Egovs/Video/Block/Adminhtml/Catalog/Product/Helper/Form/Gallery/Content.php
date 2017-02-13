@@ -48,27 +48,21 @@ class Egovs_Video_Block_Adminhtml_Catalog_Product_Helper_Form_Gallery_Content ex
 		parent::__construct();
 		$this->setTemplate('egovs/catalog/product/helper/gallery.phtml');
 	}
-
+	
 	/**
-	 * Der Dateifilter wird um *.flv erweitert
-	 *
+	 * Der Dateifilter wird um Video-Files erweitert
+	 * 
 	 * @return Egovs_Video_Block_Adminhtml_Catalog_Product_Helper_Form_Gallery_Content
-	 *
-	 */
+	 * 
+	 */ 
 	protected function _prepareLayout() {
         parent::_prepareLayout();
 
-        $filters = $this->getUploader()->getConfig()->getFilters();
-        $filters['media'] = array(
-                	'label' => Mage::helper('adminhtml')->__('Media (.avi, .flv)'),
-                	'files' => array('*.avi', '*.flv')
-        );
-        $filters['html5'] = array(
-                	'label' => Mage::helper('adminhtml')->__('HTML5 (.ogg, .mp4, .webm, .wav, .ogv, .oga, .m4v, .m4a)'),
-                	'files' => array('*.ogg', '*.mp4', '*.webm', '*.wav', '*.ogv', '*.oga', '*.m4v', '*.m4a')
-        );
-
-        $this->getUploader()->getConfig()->setFilters($filters);
+        $browseConfig = $this->getUploader()->getButtonConfig();
+        $browseConfig
+	        ->setAttributes(array(
+	        		'accept' => $browseConfig->getMimeTypesByExtensions('gif, png, jpeg, jpg, avi, flv, mp4')
+        ));
 
         return $this;
     }
