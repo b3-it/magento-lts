@@ -78,6 +78,14 @@
 
     .cart-empty {
         @extend .egov-default-message;
+        
+        .button {
+            @include bp(max-width, $bp-small) {
+                float: none !important;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
 
         p:first-of-type {
             margin-bottom: $global-listmargin;
@@ -343,7 +351,7 @@
     .product-cart-image .cart-links,
     .product-cart-info .btn-remove,
     .product-cart-actions .button {
-        display: none;
+        display: none !important;
     }
 
     .product-cart-image {
@@ -415,6 +423,10 @@
     .product-cart-actions {
         min-width: 50px;
         text-align: center;
+        
+        @include bp(max-width, $bp-small) {
+            padding: 10px !important;
+        }
 
         .qty {
             height: 30px;
@@ -430,6 +442,9 @@
         }
 
         .product-cart-symbols {
+            @include bp(max-width, $bp-small) {
+                display: inline-block;
+            }
         }
     }
 
@@ -512,8 +527,6 @@
 
                 &:before {
                     content: attr(data-rwd-label) ":";
-                    font-size: $f-size-xs;
-                    font-family: $f-stack-special;
                     padding-right: 5px;
                     text-transform: uppercase;
                 }
@@ -521,6 +534,7 @@
 
             &.product-cart-price {
                 text-align: left;
+                border: 0 $global-active-border 0 0;
             }
         }
 
@@ -626,10 +640,24 @@
 
             #empty_cart_button {
                 float: right;
+                
+                @include bp(max-width, $bp-xsmall) {
+                    float: none;
+                    display: block;
+                    width: 100%;
+                    margin: 0 !important;
+                }
             }
 
             .btn-continue {
                 float: left;
+
+                @include bp(max-width, $bp-xsmall) {
+                    float: none;
+                    display: block;
+                    width: 100%;
+                    margin: 0 0 10px 0 !important;
+                }
             }
 
             .btn-update,
@@ -678,12 +706,6 @@
 
     .shipping-desc {
         display: none;
-    }
-
-    .buttons-set {
-        border: none;
-        margin: 0;
-        padding: 0;
     }
 
     .form-list {
@@ -750,20 +772,6 @@
         }
     }
 
-    .shipping-form {
-        .buttons-set {
-            text-align: right;
-
-            button {
-                float: right !important;
-            }
-        }
-    }
-
-    #co-shipping-method-form .buttons-set .button {
-        float: left;
-        margin-left: 0;
-    }
     #co-shipping-method-form .sp-methods dd label {
         border: 1px solid $c-module-border;
         background-color: $c-module-background-hover;

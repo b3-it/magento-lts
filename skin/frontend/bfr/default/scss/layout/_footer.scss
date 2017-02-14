@@ -113,6 +113,10 @@
             top: 50%;
             margin: 0;
         }
+        
+        @include bp(max-width, $bp-small) {
+            top: 30%;
+        }
     }
 
     .links {

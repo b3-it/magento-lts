@@ -29,10 +29,11 @@
         }
 
         a {
-    	    width:100%;
+    	    width: 98%;
             padding: 10px 12px 10px 14px;
             display: block;
             overflow: hidden;
+            border-bottom: $global-active-border solid $global-navigation-border-color;
         }
        
         @include bp(min-width, $bp-medium) {

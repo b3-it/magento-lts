@@ -99,6 +99,10 @@
     .box {
         margin: 0px;
         width: 90%;
+        
+        @include bp(max-width, $bp-xsmall) {
+            width: 100%;
+        }
 
         .box-title {
             padding: 0;

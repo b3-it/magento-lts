@@ -18,12 +18,32 @@ function setTabIndex(arr)
     });
 }
 
+/**
+ * Verlegt ein HTML-Element von einer Position an eine andere
+ */
 function moveElement(oldElement, newElement)
 {
 	if ( $j(oldElement).length ) {
 		$j(newElement).html( $j(oldElement).html() );
 		$j(oldElement).html('');
 	}
+}
+
+/**
+ * Prüfen, ob man sich im Benutzerkonto befindet und bei Bedarf die
+ * Benutzer-Navigation umkopieren
+ */
+function checkMobileCustomerNavigation()
+{
+	if ( $j('#customer-account-menu').length > 0 && $j('#header-account').length ) {
+    	if( $j('#header-account li.first ul.level1').length < 1 ) {
+    		$j('#header-account li.first').append(
+                '<ul id="mobile-customer-account-navigation" class="level1">' +
+                $j('#customer-account-navigation').html() +
+                '</ul>'
+            );
+    	}
+    }
 }
 
 $j(document).ready(function(){
@@ -35,6 +55,8 @@ $j(document).ready(function(){
     });
 	
 	removeZoom();
+	
+	checkMobileCustomerNavigation();
 
     $j('a.egov-product-image').click(function(){
         removeZoom();
