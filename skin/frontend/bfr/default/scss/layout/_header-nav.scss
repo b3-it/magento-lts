@@ -36,6 +36,10 @@
         position: relative;
         top: 5%;
     }
+    
+    @include bp(max-width, $bp-xsmall) {
+        display: none;
+    }
 }
 
 .skip-nav .icon {

@@ -29,6 +29,10 @@
 	&:last-child {
 	    float: right;
 	    margin: 0;
+	    
+	    @include bp(max-width, $bp-xsmall) {
+	        float: none;
+	    }
 	}
 }
 

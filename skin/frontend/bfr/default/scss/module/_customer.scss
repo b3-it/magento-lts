@@ -209,6 +209,10 @@ body.customer-account {
 
         select {
             width: 90%;
+            
+            @include bp(max-width, $bp-small) {
+                width: auto;
+            }
         }
 
         h2 {
@@ -233,6 +237,11 @@ body.customer-account {
                 position: absolute;
                 right: 0;
                 top: 0;
+                
+                @include bp(max-width, $bp-small) {
+                    position: relative;
+                    float: none;
+                }
             }
 
             a,
@@ -800,14 +809,14 @@ ol#cart-sidebar-reorder {
         .col2-set {
             .col-1,
             .col-2 {
-                width: 48%;
+                width: 49%;
                 padding-right: 0;
                 padding-left: 0;
             }
 
             .col-1 {
                 float: left;
-                margin-right: 4%;
+                margin-right: 2%;
             }
 
             .col-2 {

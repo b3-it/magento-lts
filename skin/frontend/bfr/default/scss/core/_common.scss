@@ -1620,6 +1620,7 @@ span.weee {
 // This will apply to the bottom toolbar
 .pager-no-toolbar ~ .pager-no-toolbar {
     margin-top: $box-spacing;
+    padding-top: $box-spacing;
 }
 
 .toolbar,
@@ -1809,10 +1810,6 @@ $toolbar-icon-padding-offset: 8px;
         display: none;
     }
 
-    .pages {
-        float: left;
-    }
-
     // When there are 5+ pages, it is important to hide this label in order to not break to three lines
     .limiter label {
         display: none;
@@ -1831,7 +1828,6 @@ $toolbar-icon-padding-offset: 8px;
             float: left;
 
             .pages {
-                float: left;
                 margin-left: 0;
             }
 
@@ -1855,7 +1851,6 @@ $toolbar-icon-padding-offset: 8px;
             float: left;
 
             .pages {
-                float: left;
                 margin-left: 0;
             }
 

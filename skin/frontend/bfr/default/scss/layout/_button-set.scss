@@ -58,6 +58,10 @@
 	        }
 	    }
 	}
+	
+	a.button {
+	    padding-top: 15px;
+	}
     
     &:after {
         @include clearfix;
