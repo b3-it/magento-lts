@@ -73,7 +73,7 @@ class Dwd_Icd_Model_Webservice_IcdServices extends Varien_Object
 	*/
 	protected function _getClientCertificate() {
 		if ($this->_clientCert == null) {
-// 			$this->_clientCert = Mage::getStoreConfig('payment/paymentbase/client_certificate');
+// 			$this->_clientCert = Mage::getStoreConfig('payment_services/paymentbase/client_certificate');
 			
 // 			$this->_clientCert = Mage::getBaseDir().$this->_clientCert;
 		}
@@ -88,7 +88,7 @@ class Dwd_Icd_Model_Webservice_IcdServices extends Varien_Object
 	 */
 	protected function _getCaCertificate() {
 		if ($this->_caCert == null) {
-// 			$this->_caCert = Mage::getStoreConfig('payment/paymentbase/ca_certificate');
+// 			$this->_caCert = Mage::getStoreConfig('payment_services/paymentbase/ca_certificate');
 			
 // 			$this->_caCert = Mage::getBaseDir().$this->_caCert;
 		}

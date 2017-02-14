@@ -494,7 +494,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 			$mail->setFromEmail($sender['email']);
 			$mail->setFromName($sender['name']);
 			
-			$sdm = Mage::getStoreConfig('payment/paymentbase/webshopdesmandanten');
+			$sdm = Mage::getStoreConfig('payment_services/paymentbase/webshopdesmandanten');
 			$subject = sprintf("%s::%s", $sdm, $subject);
 			$mail->setSubject($subject);
 			try {
