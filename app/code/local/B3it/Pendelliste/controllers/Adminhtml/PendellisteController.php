@@ -14,7 +14,7 @@ class B3it_Pendelliste_Adminhtml_PendellisteController extends Mage_Adminhtml_Co
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('pendelliste/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Import Manager'), Mage::helper('adminhtml')->__('Import Manager'));
 		
 		return $this;
 	}   
@@ -22,7 +22,7 @@ class B3it_Pendelliste_Adminhtml_PendellisteController extends Mage_Adminhtml_Co
 	public function indexAction() {
 		
 		$import = Mage::getModel('pendelliste/restImport');
-		$import->importTaskList();
+//		$import->importTaskList();
 		
 		
 		$this->_initAction()
@@ -33,16 +33,29 @@ class B3it_Pendelliste_Adminhtml_PendellisteController extends Mage_Adminhtml_Co
 	public function importAction()
 	{
 		$id     = $this->getRequest()->getParam('id');
-		$pendel  = Mage::getModel('pendelliste/pendelliste')->load($id);
-		$import = Mage::getModel('pendelliste/restImport');
-		$model = $import->getTask($pendel->getTaskId());
-		
-		if($model){
-			$model->import();
-		}
+		$this->Import($id);
 		
 	}
   
+	
+	protected function Import($id)
+	{
+		$pendel  = Mage::getModel('pendelliste/pendelliste')->load($id);
+		$import = Mage::getModel('pendelliste/restImport');
+		$models = $import->getTask($pendel->getTaskId());
+		
+		try
+		{
+			foreach($models as $model){
+				$model->import();
+			}
+			$this->_getSession()->addSuccess(
+					$this->__('Total of %d record(s) were successfully updated', count($pendellisteIds))
+					);
+		} catch (Exception $e) {
+			$this->_getSession()->addError($e->getMessage());
+		}
+	}
 	
     public function massStatusAction()
     {
@@ -52,11 +65,7 @@ class B3it_Pendelliste_Adminhtml_PendellisteController extends Mage_Adminhtml_Co
         } else {
             try {
                 foreach ($pendellisteIds as $pendellisteId) {
-                    $pendelliste = Mage::getSingleton('pendelliste/pendelliste')
-                        ->load($pendellisteId)
-                        ->setStatus($this->getRequest()->getParam('status'))
-                        ->setIsMassupdate(true)
-                        ->save();
+                	$this->Import($pendellisteId);
                 }
                 $this->_getSession()->addSuccess(
                     $this->__('Total of %d record(s) were successfully updated', count($pendellisteIds))

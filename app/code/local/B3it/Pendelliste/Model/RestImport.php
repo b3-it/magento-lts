@@ -9,11 +9,14 @@ class B3it_Pendelliste_Model_RestImport
         $storage->getResource()->clear();
         foreach($tasks as $task)
         {
+        	$storage->unsetData('id');
            	$storage->setUpdateTime(now());
            	$storage->setCreatedTime(now());
-           	//$storage->setModel($task->model);
+           	//$storage->setModel($task->taskTemplate->model);
            	$storage->setTitle($task->taskTemplate->title);
+           	$storage->setContent($task->showData);
            	$storage->setTaskId($task->id);
+           	//$storage->setTaskId($task->id);
             $storage->save();
         }
     }
@@ -26,7 +29,7 @@ class B3it_Pendelliste_Model_RestImport
         $webshop_id = Mage::getStoreConfig('pendelliste/pendelliste_portal/webshop_id');
         if (isset($url) && !empty($url)) {
             $url =   rtrim($url,'/');
-            $url .= "/task/magento/{$webshop_id}";
+            $url .= "/magento/{$webshop_id}";
             $client = new Varien_Http_Client($url);
             $client->setMethod(Varien_Http_Client::GET);
 
@@ -55,12 +58,12 @@ class B3it_Pendelliste_Model_RestImport
     
     public function getTask($id)
     {
-    	$result = null;
+    	$result = array();
     	$url = Mage::getStoreConfig('pendelliste/pendelliste_portal/url');
     	$webshop_id = Mage::getStoreConfig('pendelliste/pendelliste_portal/webshop_id');
     	if (isset($url) && !empty($url)) {
     		$url =   rtrim($url,'/');
-    		$url .= "/task/magento/attr/{$id}";
+    		$url .= "/magento/attr/{$id}";
     		$client = new Varien_Http_Client($url);
     		$client->setMethod(Varien_Http_Client::GET);
     
@@ -70,9 +73,12 @@ class B3it_Pendelliste_Model_RestImport
     				$res = $response->getBody();
     				$res = json_decode($res);
     				
-    				$result = B3it_Pendelliste_Model_Import_Abstract::create($res->model, $res->modelParams, $res);
+    				foreach($res->taskTemplate->modelParams as $param)
+    				{
+    					$result[] = B3it_Pendelliste_Model_Import_Abstract::create($param->model, $param->params, $res, $param);
+    				}
     				
-    				return $result;
+    				
     			}
     		} catch (Exception $e) {
     			// TODO add more Exception!!!
@@ -81,6 +87,6 @@ class B3it_Pendelliste_Model_RestImport
     		// TODO add Exception!!!
     	}
     
-    	return null;
+    	return $result;
     }
 }

@@ -28,6 +28,7 @@
 
 /**
  * @see Mage_Downloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Downloadable_Links
+ * @var $this Dwd_ConfigurableDownloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Configdownloadable_Dynlinks
  */
 ?>
 <?php $_product = $this->getProduct()?>
@@ -123,7 +124,7 @@
 				</tr><tr>
 					<td><strong><?php echo Mage::helper('configdownloadable')->__('Short day').": " ?></strong></td>
 					<td><?php echo Dwd_ConfigurableDownloadable_Model_Link::PLACEHOLDER_PERIODE_DAY_SHORT ?></td>
-				</tr>			
+				</tr>
 			</tbody>
 		</table>
 	</fieldset>
@@ -198,8 +199,8 @@ var linkTemplate = '<tr>'+
     '</td>'+
     '<td>'+
         '<div class="files">'+
-            '<div class="row">'+
-                '<label for="configdownloadable_link_{{id}}_pattern_type"><input type="radio" class="radio validate-one-required-by-name" id="configdownloadable_link_{{id}}_pattern_type" name="configdownloadable[link][{{id}}][type]" value="pattern"{{pattern_checked}} /> <?php echo Mage::helper('configdownloadable')->__('Pattern'); ?> </label><input type="text" class="required-entry input-text" name="configdownloadable[link][{{id}}][link_pattern]" value="{{link_pattern}}" />'+
+            '<div class="row a-right">'+
+                '<label for="configdownloadable_link_{{id}}_pattern_type" class="a-left"><input type="radio" class="radio validate-one-required-by-name" id="configdownloadable_link_{{id}}_pattern_type" name="configdownloadable[link][{{id}}][type]" value="pattern"{{pattern_checked}} /> <?php echo Mage::helper('configdownloadable')->__('Pattern'); ?> </label><input type="text" class="required-entry input-text" name="configdownloadable[link][{{id}}][link_pattern]" value="{{link_pattern}}" />'+
             '</div>'+
             '<div class="row">'+
             	'<p class="note"><?php echo Mage::helper('configdownloadable')->__("Don't use wildcards at the beginning of a schema!")?></p>'+
