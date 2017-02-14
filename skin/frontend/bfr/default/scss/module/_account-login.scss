@@ -55,7 +55,7 @@
         background: -moz-linear-gradient(top,  $gobal-header-rgba-1 0%, $gobal-header-rgba-2 $gobal-header-gradient);
         background: -webkit-linear-gradient(top,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
         background: linear-gradient(to bottom,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6d7dbdc', endColorstr='#00000000',GradientType=0 );
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gobal-header-rgba-1', endColorstr='$gobal-header-rgba-2',GradientType=0 );
 
 
         color: $global-fontcolor-dark;
@@ -83,22 +83,24 @@
         
         @include bp(max-width, $bp-small) {
             width: 100%;
-            margin-bottom: 10px !important;
+            margin-bottom: 20px !important;
+        }
+        
+        @include bp(max-width, $bp-xsmall) {
+            height: auto;
         }
 
         .content {
             padding: 10px;
         }
-        
-        .buttons-set {
-            border: 0;
-            position: absolute;
-            bottom: 0;
-        }
     }
     
     .new-users .button {
         width: 40%;
+        
+        @include bp(max-width, $bp-xsmall) {
+            width: 100%;
+        }
     }
 
     .form-list {

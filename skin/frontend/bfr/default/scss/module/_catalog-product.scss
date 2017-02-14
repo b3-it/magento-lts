@@ -960,9 +960,13 @@ div#details-block {
     float: right;
     position: relative;
     top: -10px;
+    
+    @include bp(max-width, $bp-xsmall) {
+        top: 10px;
+    }
 }
 
-@include bp(max-width, 599px) {
+@include bp(max-width, $bp-small) {
     .add-to-box .add-to-links {
         a {
             float: none;

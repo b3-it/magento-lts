@@ -10,7 +10,7 @@
 //Product.GalleryVideoSupport = Class.create();
 //Product.GalleryVideoSupport.prototype = Object.extend(Product.Gallery, {
 Product.GalleryVideoSupport = Class.create(Product.Gallery, {
-    initialize : function(containerId, uploader, imageTypes) {
+    initialize : function(containerId, imageTypes) {
     	//Wird für getElement(...) benötigt!
     	this.containerId = containerId, this.container = $(this.containerId);
     	this.templateVideo = new Template('<tr id="__id__" class="preview">' + this
@@ -18,7 +18,7 @@ Product.GalleryVideoSupport = Class.create(Product.Gallery, {
                         '(^|.|\\r|\\n)(__([a-zA-Z0-9_]+)__)', '')
     	);
     	
-    	Product.Gallery.prototype.initialize.call(this, containerId, uploader, imageTypes);    	
+    	Product.Gallery.prototype.initialize.call(this, containerId, imageTypes);    	
     },
     updateImages : function() {
         this.getElement('save').value = Object.toJSON(this.images);
@@ -36,7 +36,7 @@ Product.GalleryVideoSupport = Class.create(Product.Gallery, {
         this.updateUseDefault(false);
     },
     createImageRow : function(image) {
-    	var validVideoFileTypes = new Array('flv', 'avi', 'swf');
+    	var validVideoFileTypes = new Array('flv', 'avi', 'mp4');
     	var isVideo = false;
     	$(validVideoFileTypes).each(function(type) {
     		if (image.file.endsWith(type) || image.file.endsWith(type+".tmp")) {

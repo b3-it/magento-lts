@@ -44,7 +44,7 @@ require_once 'Mage/Adminhtml/controllers/Catalog/Product/GalleryController.php';
  */
 class Egovs_Video_Adminhtml_Catalog_Product_GalleryController extends Mage_Adminhtml_Catalog_Product_GalleryController
 {
-
+	
 	/**
 	 * Der Dateifilter wird um *.flv, *.avi, *.swf erweitert
 	 *

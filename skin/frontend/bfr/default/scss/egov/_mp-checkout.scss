@@ -41,6 +41,10 @@
 
             label {
                 width: 95%;
+                
+                @include bp(max-width, $bp-xsmall) {
+                    width: 92%;
+                }
             }
         }
 
@@ -80,6 +84,14 @@
             width: 7.5em;
             display: inline-block;
             vertical-align: top;
+            
+            @include bp(max-width, $bp-small) {
+                width: 32.8%;
+            }
+            
+            @include bp(max-width, $bp-xsmall) {
+                width: 32%;
+            }
         }
 
         li.active {
@@ -105,12 +117,7 @@
             margin-left: 3px;
         }
     }
-/*
-    a.egovslistbutton, a.egovsbutton {
-        @extend .button;
-        display: inline-block;
-    }
-*/
+
     a.break-link {
         @extend .egov-float-left;
         margin-left: $global-checkout-button-margin !important;
@@ -148,6 +155,12 @@
             min-height: 150px;
 
             border-bottom: $global-active-border dotted $global-box-bottomcolor;
+            
+            @include bp(max-width, $bp-small) {
+                display: block;
+                margin: 0;
+                width: 100%;
+            }
 
             h3 {
                 @extend .block-title;
@@ -162,6 +175,10 @@
 
         div.col-1 {
             margin-right: $global-checkout-marginright;
+            
+            @include bp(max-width, $bp-small) {
+                margin-bottom: $global-checkout-marginright;
+            }
         }
 
         h4 {
@@ -173,11 +190,6 @@
         .overview_shipping, .successview_shipping {
             margin: 5px 0px 10px 10px;
         }
-/*
-        button.button {
-        	width: 140px !important;
-        }
-*/
     }
 
     .sepa-details {
@@ -251,6 +263,10 @@
 
     .col1-wide {
         display: block;
+        
+        @include bp(max-width, $bp-xsmall) {
+            width: 93%;
+        }
 
         #checkout-review-table {
             @extend .egov-base-table;
@@ -334,5 +350,9 @@
 .egovs-checkout-multipage-successview {
     ul.checkout-progress {
         display:none;
+    }
+    
+    .col-main {
+        width: 100% !important;
     }
 }

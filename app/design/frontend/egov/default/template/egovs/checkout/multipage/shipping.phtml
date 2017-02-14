@@ -36,6 +36,7 @@
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
+<?php echo $this->getBlockHtml('formkey'); ?>
 <fieldset class="multiple-checkout">
 
 

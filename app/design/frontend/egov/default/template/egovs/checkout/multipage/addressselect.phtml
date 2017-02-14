@@ -32,7 +32,7 @@
  */
 ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
-
+<?php echo $this->getBlockHtml('formkey'); ?>
 <div class="page-title title-buttons">
     <h2><?php echo $this->__('Ship to this Address') ?></h2>
     <a class="egovsbutton" href="<?php echo $this->getNewAddressUrl() ?>"><span><?php echo $this->__('Enter a New Address') ?></span></a>

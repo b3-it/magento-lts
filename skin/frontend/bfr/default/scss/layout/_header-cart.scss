@@ -126,12 +126,6 @@
     display: none;
 }
 
-@include bp(max-width, 499px) {
-    .skip-cart .count {
-        margin-left: -12px;
-    }
-}
-
 @include bp(min-width, $bp-medium + 1) {
     .skip-link.skip-active .count {
         color: $global-fontcolor-light;

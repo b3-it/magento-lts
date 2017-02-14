@@ -242,23 +242,9 @@
     font-weight: 500;
 }
 
-@include bp(max-width, $bp-xsmall) {
-    .opc,
-    .paypal-express-review {
-        .buttons-set .button + .buttons-set .button {
-            margin-left: 0;
-        }
-    }
-}
-
 .opc #opc-login {
     .step {
         padding: 0px;
-    }
-
-    .buttons-set {
-        border-top: 0;
-        padding-top: 5px;
     }
 }
 

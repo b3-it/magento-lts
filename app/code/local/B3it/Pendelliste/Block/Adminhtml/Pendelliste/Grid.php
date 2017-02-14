@@ -40,26 +40,15 @@ class B3it_Pendelliste_Block_Adminhtml_Pendelliste_Grid extends Mage_Adminhtml_B
           'align'     =>'left',
           'index'     => 'title',
       ));
-
-	  /*
+      
       $this->addColumn('content', array(
-			'header'    => Mage::helper('pendelliste')->__('Item Content'),
-			'width'     => '150px',
-			'index'     => 'content',
+      		'header'    => Mage::helper('pendelliste')->__('Inhalt'),
+      		'align'     =>'left',
+      		'index'     => 'content',
+      		//'width'     => '50px',
       ));
-	  */
 
-//       $this->addColumn('status', array(
-//           'header'    => Mage::helper('pendelliste')->__('Status'),
-//           'align'     => 'left',
-//           'width'     => '80px',
-//           'index'     => 'status',
-//           'type'      => 'options',
-//           'options'   => array(
-//               1 => 'Enabled',
-//               2 => 'Disabled',
-//           ),
-//       ));
+
 	  
         $this->addColumn('action',
             array(
@@ -88,14 +77,10 @@ class B3it_Pendelliste_Block_Adminhtml_Pendelliste_Grid extends Mage_Adminhtml_B
 
     protected function _prepareMassaction()
     {
-        $this->setMassactionIdField('pendelliste_id');
+        $this->setMassactionIdField('task_id');
         $this->getMassactionBlock()->setFormFieldName('pendelliste');
 
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('pendelliste')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('pendelliste')->__('Are you sure?')
-        ));
+       
 
         $statuses = Mage::getSingleton('pendelliste/status')->getOptionArray();
 
@@ -116,7 +101,7 @@ class B3it_Pendelliste_Block_Adminhtml_Pendelliste_Grid extends Mage_Adminhtml_B
         return $this;
     }
 
-  public function getRowUrl($row)
+  public function xgetRowUrl($row)
   {
       return $this->getUrl('*/*/edit', array('id' => $row->getId()));
   }
