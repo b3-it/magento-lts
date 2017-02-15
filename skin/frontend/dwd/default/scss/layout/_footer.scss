@@ -100,7 +100,14 @@ address {
         }
         
         @include bp(max-width, $bp-mobil)  {
-            display: none;
+            display: block;
+            font-size: 0.8rem;
+        }
+        
+        @include bp(max-width, $bp-xsmall) {
+            height: 1.1rem;
+            margin: 0 0 10px;
+            overflow: hidden;
         }
     }
 }
@@ -112,7 +119,7 @@ address {
     right: 0;
     width: 35%;
 	
-	li {
+	li:not(.show-on-mobile) {
 	    display: inline-block;
 	    padding: 0 10px;
 	    
@@ -130,18 +137,20 @@ address {
 	
 	@include bp(max-width, $global-fullpage-width) {
 	    margin-right: 0;
+	    display: block;
 	}
 	
 	@include bp(max-width, $bp-mobil) {
 	    bottom: 0;
 	    width: 100%;
-	    margin-bottom: 15px;
+	    margin-bottom: 30px;
+	    padding-left: 10px;
 	}
 }
 
 #footer-block-legal {
 	display: inline-block;
-	max-width: 65%;
+	max-width: 100%;
 	color: $grundfarbe-weiss;
 	
 	img, > div {
@@ -173,6 +182,17 @@ address {
         max-width: 100%;
         display: block;
         margin-bottom: 55px;
+    }
+    
+    @include bp(max-width, $bp-xsmall) {
+        margin-bottom: 70px;
+    }
+    
+    #footer-text-top {
+        line-height: 1.1em;
+    }
+    #footer-text-bottom {
+        margin-top: 12px;
     }
 }
 

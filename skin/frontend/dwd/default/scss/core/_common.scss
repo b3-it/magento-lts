@@ -105,6 +105,14 @@ ul {
 	display: table-cell !important;
 }
 
+.show-on-mobile {
+	display: none;
+	
+	@include bp(max-width, $bp-mobil) {
+	    display: inline-block;
+	}
+}
+
 /* ============================================ *
  * Typography
  * ============================================ */
