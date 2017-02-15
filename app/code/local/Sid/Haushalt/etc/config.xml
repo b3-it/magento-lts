@@ -178,20 +178,6 @@
     		</params>
     	</lg04>
     </sid_haushaltsysteme>
-    <!-- 
-     <crontab>
-        <jobs>
-            <order2haushalt>
-                <schedule>
-                    <cron_expr>* * * * *</cron_expr>
-                </schedule>
-                <run>
-                    <model>sidhaushalt/cron::runCron</model>
-                </run>
-            </order2haushalt>
-        </jobs>
-    </crontab>
-     -->
     <default>
         <sidhaushalt>
             <hhexport>
