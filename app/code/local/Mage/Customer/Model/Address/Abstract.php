@@ -442,7 +442,7 @@ class Mage_Customer_Model_Address_Abstract extends Mage_Core_Model_Abstract
         	if (!Zend_Validate::is($this->getPostcode(), 'NotEmpty')) {
         		$this->addError($helper->__('Please enter the zip/postal code.'));
         	} else {
-        		if (Mage::helper('core')->isModuleEnabled('Egovs_Paymentbase')) {
+        		if (!$this->getPostcodeChecked() && Mage::helper('core')->isModuleEnabled('Egovs_Paymentbase')) {
         			$tmp = Mage::helper('paymentbase/validation')->validatePostcode($this->getPostcode(), $this->getCountryId());
         			$this->_errors = array_merge($this->_errors, $tmp);
         		}
