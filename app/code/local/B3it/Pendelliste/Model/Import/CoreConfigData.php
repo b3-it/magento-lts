@@ -8,14 +8,19 @@
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */ 
-abstract class  B3it_Pendelliste_Model_Import_CoreConfigData extends B3it_Pendelliste_Model_Import_Abstract
+class  B3it_Pendelliste_Model_Import_CoreConfigData extends B3it_Pendelliste_Model_Import_Abstract
 {
   public function import()
   {
   	if(isset($this->_data))
-  	$conf = Mage::getModel('core/config_data')->load();
-  	
-  	//kiene Id's für config
-  	return 0;
+  	{
+  		$path = $this->_params->params;
+  		$conf = Mage::getModel('core/config_data')->load($path,'path');
+  		$conf->setValue($this->_data->data);
+  		$conf->save();
+  		return $conf->getId();
+  	}
+  
+  	return null;
   }
 }
