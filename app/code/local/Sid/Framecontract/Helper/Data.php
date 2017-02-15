@@ -25,7 +25,11 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 	{
 		if(!is_numeric($template))
 		{
-			$template = Mage::getStoreConfig($template, $storeid);
+			$templateId = Mage::getStoreConfig($template, $storeid);
+		}
+		//prüfen ob pfad zur config oder TemplateIdentifier
+		if($templateId){
+			$template = $templateId;
 		}
 		$translate = Mage::getSingleton('core/translate');
 		/* @var $translate Mage_Core_Model_Translate */
@@ -137,9 +141,9 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 		$name = $eav->getIdByCode('catalog_product', 'name');
 		$price = $eav->getIdByCode('catalog_product', 'price');
 	
-		$priceSum = new Zend_Db_Expr('ROUND(price.value * (qty.value - stock.qty),2) as totalprice');
-		$sold = new Zend_Db_Expr('qty.value - stock.qty as sold');		
-		$sold_p = new Zend_Db_Expr('IF(qty.value <> 0, ROUND(((qty.value - stock.qty)/qty.value * 100),2), 0) as sold_p');
+		$priceSum = new Zend_Db_Expr('ROUND(price.value * (qty.value - stock.qty),2)');
+		$sold = new Zend_Db_Expr('qty.value - stock.qty');		
+		$sold_p = new Zend_Db_Expr('IF(qty.value <> 0, ROUND(((qty.value - stock.qty)/qty.value * 100),2), 0)');
 	
 		$manage_stock = Mage::getStoreConfig('cataloginventory/item_options/manage_stock');
 		
@@ -149,9 +153,9 @@ class Sid_Framecontract_Helper_Data extends Mage_Core_Helper_Abstract
 		$collection = Mage::getModel('catalog/product')->getCollection();
 	
 		$collection->getSelect()
-		->columns($sold)
-		->columns($priceSum)
-		->columns($sold_p)
+		->columns(array('sold'=>$sold))
+		->columns(array('totalprice'=>$priceSum))
+		->columns(array('sold_p'=>$sold_p))
 		->join(array('status'=>$collection->getTable('catalog/product').'_int'), 'status.entity_id=e.entity_id AND status.attribute_id ='.$status)
 		->join(array('los'=>$collection->getTable('catalog/product').'_int'), 'los.entity_id=e.entity_id AND los.attribute_id ='.$los,array('los_id'=>'value'))
 		->join(array('qty'=>$collection->getTable('catalog/product').'_int'), 'qty.entity_id=e.entity_id AND qty.attribute_id ='.$qty, array('contract_qty'=>'value'))
