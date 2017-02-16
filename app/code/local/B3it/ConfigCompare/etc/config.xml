@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <B3it_ConfigCompare>
+            <version>0.1.0</version>
+        </B3it_ConfigCompare>
+    </modules>
+    <admin>
+         <routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<B3it_ConfigCompare_Adminhtml after="Mage_Adminhtml">B3it_ConfigCompare_Adminhtml</B3it_ConfigCompare_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+			<menu>
+			<system>
+				<children>
+					<tools translate="title">
+						<children>
+							<configcompare translate="title" module="adminhtml">
+								<title>Compare Config</title>
+								<children>
+									<configcompare_export_configdata module="configcompare">
+										<title>CoreConfig exportieren</title>
+										<sort_order>20</sort_order>
+										<action>adminhtml/configcompare_export_coreconfigdata</action>
+									</configcompare_export_configdata>
+									<configcompare_import_configdata module="configcompare">
+										<title>CoreConfig importieren</title>
+										<sort_order>20</sort_order>
+										<action>adminhtml/configcompare_import_coreconfigdata</action>
+									</configcompare_import_configdata>
+								</children>
+							</configcompare>
+
+						</children>
+					</tools>
+				</children>
+			</system>
+		</menu>
+				<acl>
+			<resources>
+				<all>
+					<title>Allow everything</title>
+				</all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<tools>
+									<children>
+										<configcompare translate="title">
+											<title>Export Coreconfigdata</title>
+											<sort_order>10</sort_order>
+										</configcompare>
+									</children>
+								</tools>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<configcompare>
+					<file>b3it/configcompare.xml</file>
+				</configcompare>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <configcompare>
+                <class>B3it_ConfigCompare_Model</class>
+                <resourceModel>configcompare_mysql4</resourceModel>
+            </configcompare>
+            <configcompare_mysql4>
+                <class>B3it_ConfigCompare_Model_Mysql4</class>
+                <entities>
+                    <configcompare>
+                        <table>configcompare</table>
+                    </configcompare>
+                </entities>
+            </configcompare_mysql4>
+        </models>
+        <resources>
+            <configcompare_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </configcompare_write>
+            <configcompare_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </configcompare_read>
+        </resources>
+        <blocks>
+            <configcompare>
+                <class>B3it_ConfigCompare_Block</class>
+            </configcompare>
+        </blocks>
+        <helpers>
+            <configcompare>
+                <class>B3it_ConfigCompare_Helper</class>
+            </configcompare>
+        </helpers>
+    </global>
+</config>
