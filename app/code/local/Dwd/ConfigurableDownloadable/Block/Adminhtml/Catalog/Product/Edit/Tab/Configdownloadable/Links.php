@@ -4,8 +4,8 @@
  *
  * @category    Dwd
  * @package     Dwd_ConfigurableDownloadable
- * @author     	Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright	Copyright (c) 2012 - 2013 EDV Beratung Hempel
+ * @author     	Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 - 2015 B3-It Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Dwd_ConfigurableDownloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Configdownloadable_Links extends Mage_Adminhtml_Block_Widget_Grid
