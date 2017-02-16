@@ -23,6 +23,12 @@
 
 .cart .button {
     white-space: normal;
+    
+    @include bp(max-width, $bp-small) {
+        float: left;
+        width: 100%;
+        font-size: $f-size-xl;
+    }
 }
 
 .cart-forms,
@@ -83,6 +89,10 @@
             display: block;
             float: none;
             width: 25%;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
         }
 
         p:first-of-type {
@@ -302,8 +312,12 @@
     }
 
     button.egov-float-left {
-        margin-left:0px;
         margin-right:10px;
+        @include bp(max-width, $bp-small) {
+            margin-left: 2px;
+            margin-right: 2px;
+            margin-bottom: 5px;
+        }
     }
 
     .product-cart-info {
@@ -391,9 +405,15 @@
         float: left;
     }
 
-    .product-cart-total,
-    .product-cart-price {
+    .product-cart-total {
         text-align: right;
+    }
+    tbody td.product-cart-price {
+        text-align: right;
+        
+        @include bp(max-width, $bp-small) {
+            text-align: left;
+        }
     }
 
     .cart-tax-total {
@@ -450,6 +470,10 @@
         }
 
         .product-cart-symbols {
+            @include bp(max-width, $bp-small) {
+                display: inline-block;
+                float: right;
+            }
         }
     }
 
@@ -532,14 +556,6 @@
                     font-family: $f-stack-special;
                     padding-right: 5px;
                     text-transform: uppercase;
-                }
-            }
-
-            &.product-cart-price {
-                text-align: left;
-                
-                @include bp(max-width, $bp-medium) {
-                	text-align: right;
                 }
             }
         }
@@ -633,10 +649,6 @@
                 margin-bottom: 7px;
             }
         }
-        
-        .product-cart-symbols {
-        	display: inline-block;
-        }
 
         .price,
         .product-cart-price:before {
@@ -663,13 +675,11 @@
             
             .button {
             	padding: 3px 5px;
-            	font-size: 11px;
-            }
-            .egov-float-left {
-            	margin: 0 2px !important;
             }
             .btn-update {
-            	margin-right: 0;
+            	margin-right: 2px;
+            	margin-left: 2px;
+            	margin-bottom: 2px;
             }
         }
     }
@@ -920,6 +930,9 @@
 
     .field-wrapper {
         display: inline-block;
+        @include bp(max-width, $bp-small) {
+            width: 100%;
+        }
     }
 
     .validation-advice {
@@ -930,8 +943,13 @@
         display: inline-block;
         vertical-align: bottom;
 
+        @include bp(max-width, $bp-small) {
+            width: 100%;
+        }
+            
         button {
             padding: 6px;
+            margin-top: 5px;
         }
     }
 
@@ -940,6 +958,10 @@
         height: 30px;
         margin: 4px 10px 0 0;
         width: 190px;
+        
+        @include bp(max-width, $bp-small) {
+            width: 100%;
+        }
     }
 }
 
