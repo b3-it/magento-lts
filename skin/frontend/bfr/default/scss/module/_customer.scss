@@ -183,10 +183,13 @@
  * My Account Global Styles
  * ============================================ */
 body.customer-account {
-
     .col2-left-layout {
         .col-left {
-            top: 0px;
+            top: 0;
+            
+            @include bp(max-width, $bp-large) {
+                top: 30px;
+            }
 
             .block-compare {
                 margin-top: $global-boxmargin;
@@ -206,10 +209,6 @@ body.customer-account {
 
         select {
             width: 90%;
-            
-            @include bp(max-width, $bp-small) {
-                width: auto;
-            }
         }
 
         h2 {
@@ -713,16 +712,6 @@ ol#cart-sidebar-reorder {
 }
 
 @include bp(max-width, $bp-xlarge) {
-    .dashboard {
-        .col2-set {
-            .col-1,
-            .col-2 {
-                padding-right: $trim;
-                padding-bottom: 0;
-            }
-        }
-    }
-
     body.customer-account {
         .data-table {
             td.view a {
@@ -806,18 +795,14 @@ ol#cart-sidebar-reorder {
         .col2-set {
             .col-1,
             .col-2 {
-                width: 49%;
+                width: 100%;
                 padding-right: 0;
                 padding-left: 0;
-            }
-
-            .col-1 {
-                float: left;
-                margin-right: 2%;
-            }
-
-            .col-2 {
-                float: right;
+                display: block;
+                
+                > div {
+                    float: none !important;
+                }
             }
         }
     }

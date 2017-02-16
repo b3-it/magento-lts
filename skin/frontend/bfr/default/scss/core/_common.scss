@@ -356,6 +356,7 @@ body:not(.customer-account) .block:first-child .block-title {
 
 .col-left,
 .col-right {
+    position: relative;
     // Align the vertical height of the anchor to line up with the button
     .block .actions .button ~ a {
         line-height: 33px;
@@ -368,7 +369,6 @@ body:not(.customer-account) .block:first-child .block-title {
     .sidebar {
         // Don't apply to layered nav, since it gets special treatment
         .block:not(.block-layered-nav) {
-            margin-bottom: 0;
 
             .block-title {
                 padding: 0;
@@ -551,7 +551,11 @@ div.block-reorder {
     margin: 0 0 15px;
     padding: 10px 0 8px 10px;
     
-    @include bp(max-width, $bp-medium) {
+    @include bp(max-width, $bp-large) {
+        margin: 0;
+    }
+    
+    @include bp(max-width, $bp-small) {
         display: none;
     }
 
@@ -564,6 +568,10 @@ div.block-reorder {
     ul {
         display: inline-block;
         width: 91%;
+        
+        @include bp(max-width, $bp-large) {
+            width: auto;
+        }
 
         li {
             display: inline-block;
@@ -1715,6 +1723,10 @@ $toolbar-icon-padding-offset: 8px;
     & > .count-container {
         float: left;
         font-size: $global-fontsize;
+        
+        select {
+            width: auto !important;
+        }
     }
 
     .amount {
