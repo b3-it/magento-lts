@@ -15,4 +15,19 @@ class B3it_ConfigCompare_Model_ConfigCompare extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('configcompare/configcompare');
     }
+    
+    public function import($importXML)
+    {
+    	$this->getResource()->deleteAll();
+    	if($importXML)
+    	{
+    		foreach($importXML as $xmlItem)
+    		{
+    			$item = Mage::getModel('configcompare/configCompare');
+    			$item->setType($xmlItem->getName());
+    			$item->setValue($xmlItem->asXML());
+    			$item->save();
+    		}
+    	}
+    }
 }

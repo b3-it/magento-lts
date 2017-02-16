@@ -90,6 +90,15 @@
             </configcompare_mysql4>
         </models>
         <resources>
+        	<b3it_configcompare_setup>
+                <setup>
+                    <module>B3it_ConfigCompare</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </b3it_configcompare_setup>
             <configcompare_write>
                 <connection>
                     <use>core_write</use>

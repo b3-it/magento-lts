@@ -28,7 +28,8 @@ class B3it_ConfigCompare_Model_CoreConfigData extends Mage_Core_Model_Abstract
     	{
     		$notFound = array();
     		$this->collectionArray = $this->collection->toArray();
-    		foreach($importXML->item as $item){
+    		foreach($importXML as $xmlItem){
+    			$item = simplexml_load_string($xmlItem->getValue());
     			$key = $this->findInCollection((string)$item->path,(string)$item->scope_id,(string)$item->scope);
     			if($key !== null){
     				$myValue = str_replace(array("\r\n", "\r"),"\n", $this->collectionArray['items'][$key]['value']);

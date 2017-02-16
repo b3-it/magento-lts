@@ -23,12 +23,13 @@ class B3it_ConfigCompare_Adminhtml_Configcompare_Export_CoreconfigdataController
 		$xml = new DOMDocument('1.0', 'UTF-8'); 
 		$xml->preserveWhiteSpace = false;
 		
-		$xml_type = $xml->createElement( "configtype" );
-		$xml_type->setAttribute( "type", "core_config_data" );
+		$xml_type = $xml->createElement( "config" );
+		//$xml_type->setAttribute( "type", "core_config_data" );
+		
 		$xml->appendChild($xml_type);
 		
 		foreach($config->getItems() as $item){
-			$xml_item = $xml->createElement( "item");
+			$xml_item = $xml->createElement( "core_config_data");
 			$xml_type->appendChild($xml_item);
 			
 			$node = $xml->createElement( "scope",$item->getScope());

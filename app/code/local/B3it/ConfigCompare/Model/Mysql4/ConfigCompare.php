@@ -15,4 +15,14 @@ class B3it_ConfigCompare_Model_Mysql4_ConfigCompare extends Mage_Core_Model_Mysq
         // Note that the configcompare_id refers to the key field in your database table.
         $this->_init('configcompare/configcompare', 'configcompare_id');
     }
+    
+    public function deleteAll()
+    {
+    	$this->_beforeDelete($object);
+    	$this->_getWriteAdapter()->delete(
+    			$this->getMainTable()
+    			);
+    	$this->_afterDelete($object);
+    	return $this;
+    }
 }

@@ -25,14 +25,14 @@ class B3it_ConfigCompare_Adminhtml_Configcompare_Import_CoreconfigdataController
 				try {
 					$xml = file_get_contents($_FILES['filename']['tmp_name']);
 					$xml = simplexml_load_string($xml);
-						
+					Mage::getModel('configcompare/configCompare')->import($xml);
 				} catch (Exception $e) {
 					Mage::logException($e);
 				}				 
 			}
 		}
 		
-		Mage::register('import_data', $xml);
+		//Mage::register('import_data', $xml);
 
 		$this->_initAction();
 		$this->renderLayout();	

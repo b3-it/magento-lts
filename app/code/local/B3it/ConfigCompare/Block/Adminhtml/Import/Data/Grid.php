@@ -13,7 +13,12 @@
   protected function _prepareCollection()
   {
       //$collection =Mage::getModel('core/config_data')->getCollection();
-      $collection =Mage::getModel('configcompare/coreConfigData')->getCollectionDiff( Mage::registry('import_data'));
+  	  $collection =Mage::getModel('configcompare/configcompare')->getCollection();
+  	  
+  	  $collection->getSelect()->where("type='core_config_data'");
+  	  
+  	  
+      $collection =Mage::getModel('configcompare/coreConfigData')->getCollectionDiff($collection->getItems());
 
       $this->setCollection($collection);
       return parent::_prepareCollection();
