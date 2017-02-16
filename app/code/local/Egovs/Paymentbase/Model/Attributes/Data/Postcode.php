@@ -19,8 +19,18 @@ class Egovs_Paymentbase_Model_Attributes_Data_Postcode extends Mage_Customer_Mod
 			return $result;
 		}
 		
+		/** @var $address Mage_Customer_Model_Address */
+		$address = $this->getEntity();
+		if ($address && $address->getPostcodeChecked()) {
+			return $result;
+		}
+		
 		$countryId      = $this->getExtractedData('country_id');
 		$errors = Mage::helper('paymentbase/validation')->validatePostcode($value, $countryId);
+		
+		if ($address) {
+			$address->setPostcodeChecked(true);
+		}
 		
 		if (empty($errors)) {
 			return $result;

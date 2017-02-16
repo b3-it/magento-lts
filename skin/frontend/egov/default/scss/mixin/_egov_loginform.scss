@@ -11,6 +11,15 @@
 $col-box-height: 25em;
 
 @mixin egov_loginform {
+	
+	.egov-account-login {
+	       margin: 0;
+	       
+	       fieldset, p {
+	           margin: 0;
+	       }
+	}
+	
     .col2-set {
         width: 100%;
         border-bottom: 0px;
@@ -29,7 +38,7 @@ $col-box-height: 25em;
 
 	        .content {
 	            padding: $global-boxpadding-large;
-	            height: $col-box-height - 8em;
+	            height: $col-box-height - 4em;
 	
 	            .securityLabel {
 	                display: inline-block;
@@ -71,7 +80,7 @@ $col-box-height: 25em;
 
 		form input {
 	        max-width: 90%;
-	        width: 70% !important;
+	        width: 90%;
 	    }
 	    
         ul li {

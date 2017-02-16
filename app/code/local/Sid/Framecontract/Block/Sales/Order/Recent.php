@@ -72,13 +72,15 @@ class Sid_Framecontract_Block_Sales_Order_Recent extends Mage_Sales_Block_Order_
                 array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates())
             )
             ->addAttributeToSort('created_at', 'desc')
-            ->setPageSize('5')
-            ->load()
+            ->setPageSize('5');
+            //->load()
+            
         ;
 
          $orders->getSelect()
             ->joinleft(array('export'=>$orders->getTable('exportorder/order')),'export.order_id=main_table.entity_id',array('export_status'=>'status'));
-            
+        
+        $orders->load();
         $this->setOrders($orders);
     }
 
