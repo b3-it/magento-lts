@@ -229,6 +229,10 @@ p.note-msg {
     border-bottom-color: $global-box-bottomcolor;
     
     margin-bottom: $global-boxmargin;
+    
+    @include bp(max-width, $bp-large) {
+        border: 0;
+    }
 
     .block-title {
         border-bottom-width: $global-box-border-bottom;
@@ -240,21 +244,20 @@ p.note-msg {
         background: linear-gradient(to bottom,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6d7dbdc', endColorstr='#00000000',GradientType=0 );
 
-        padding-top: $global-box-title-padding-top !important;
-        padding-right: $global-box-title-padding-right !important;
-        padding-bottom: $global-box-title-padding-bottom !important;
-        padding-left: $global-box-title-padding-left !important;
+        padding-top: $global-box-title-padding-top;
+        padding-right: $global-box-title-padding-right;
+        padding-bottom: $global-box-title-padding-bottom;
+        padding-left: $global-box-title-padding-left;
 
         font-weight: normal;
         font-size: $global-fontsize-big;
+        
+        @include bp(max-width, $bp-large) {
+            background: none;
+        }
 
         span {
             color: $global-h4-color;
-        }
-    }
-
-    a {
-        &:active, &:hover {
         }
     }
 }
@@ -298,13 +301,30 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-bottom: $blobal-blockcontent-marginbottom;
     margin-left: $blobal-blockcontent-marginleft;
     margin-right: $blobal-blockcontent-marginright;
-
-    input {
+    
+    @include bp(max-width, $bp-large) {
+        padding: $box-spacing;
+        margin: 0;
+        border-width: 0  0 $global-box-border 0;
+        border-style: dotted;
+        border-color: $global-box-bottomcolor;
     }
 
     input[type="text"], input[type="email"] {
         width: 100%;
     }
+    
+    li {
+        a {
+            @extend .image-link;
+            
+            @include bp(max-width, $bp-large) {
+                display: block;
+                padding: 8px 0 8px 8px !important;
+                background-position: 0 10px !important;
+            }
+        }
+    } 
 }
 
 .block-content.unpad {
@@ -343,7 +363,7 @@ body:not(.customer-account) .block:first-child .block-title {
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-large) {
 
     .sidebar {
         // Don't apply to layered nav, since it gets special treatment
@@ -371,19 +391,6 @@ body:not(.customer-account) .block:first-child .block-title {
                     }
                 }
             }
-
-            .block-content {
-                padding: $box-spacing;
-                margin-top: 0;
-                border-width: 0 $global-box-border;
-                border-style: solid;
-                border-color: $global-border-color;
-            }
-        }
-        // This selector is highly fickle, because if a div gets added beneath the last normal block in a sidebar,
-        // it will break. However it is the simplest solution to applying this trivial style.
-        .block:last-of-type {
-            border-bottom: $global-box-border solid $global-border-color;
         }
     }
 }
@@ -681,6 +688,12 @@ div.block-reorder {
     }
 }
 
+.block-layered-nav {
+	position: absolute;
+	left: -1000px;
+	top: -1000px;
+}
+
 /* -------------------------------------------- *
  * Checkout Agreements
  */
@@ -816,6 +829,11 @@ div.block-reorder {
             margin-right: $global-2L-leftcol-marginright;
             width: $global-2L-leftcol-width;
             
+            @include bp(max-width, $bp-large) {
+                width: 30%;
+                margin-top: 30px;
+            }
+            
             @include bp(max-width, $bp-small) {
                 display: none;
             }
@@ -828,9 +846,13 @@ div.block-reorder {
             position: relative;
             top: -9px;
             
+            @include bp(max-width, $bp-large) {
+                width: 68%;
+                top: 0;
+            }
+            
             @include bp(max-width, $bp-small) {
                 width: 100%;
-                top: 0;
             }
         }
 

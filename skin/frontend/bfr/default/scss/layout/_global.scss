@@ -44,9 +44,9 @@ body {
         border-width: medium 5px 5px;
         border-color: -moz-use-text-color #d7dbdc #d7dbdc;
         background-color: $global-page-color;
+        position: relative;
         
         @include bp(max-width, $bp-medium) {
-            top: 30px;
             border: 0;
         }
     }

@@ -31,10 +31,10 @@
         width: 100%;
         background-image: url($global-header-background-image);
         background-repeat: no-repeat;
-        background-position: center -30%;
+        background-position: center 80%;
         background-size: 130% auto;
         transform: scaleY(-1);
-        height: 170px;
+        height: auto;
     }
     
     > div {
@@ -42,26 +42,23 @@
             height: 170px;
             transform: scaleY(-1);
             position: relative;
-            top: -180px;
+            top: -100px;
         }
     }
 
     .links li a {
+        @extend .image-link;
+    }
+    
+    @include bp(max-width, $bp-medium) {
+        width: 100%;
+        background-color: $global-wrapper-color;
+        border-top: 5px solid #d7dbdc;
+    }
+    
+    @include bp(max-width, $bp-small) {
         border: none;
-        color: $global-footer-linkcolor;
-        text-decoration: none;
-        padding-left: 10px;
-        background: transparent url($global-footer-link-image) no-repeat scroll 0 5px;
-        
-        @include bp(max-width, $bp-small) {
-            background: none;
-            color: $global-fontcolor-light;
-        }
-
-        &:hover, &:active {
-            text-decoration: underline;
-            border: none;
-        }
+        background-color: transparent;
     }
 }
 

@@ -16,7 +16,7 @@
         width: 25%;
     }
     
-    @include bp(min-width, $bp-medium + 1) {
+    @include bp(min-width, $bp-small + 1) {
         display: none;
     }
 
@@ -50,17 +50,24 @@
 /* ============================================ *
  * Nav - Skip Content
  * ============================================ */
-@include bp(max-width, $bp-medium) {
-    #egov-nav {
-        position: relative;
-        top: 35px;
+#egov-nav {
+	position: relative;
+	
+	@include bp(max-width, $bp-large) {
+	    top: 0;
+	}
+	@include bp(max-width, $bp-small) {
+	    top: 35px;
+	}
 
-        a {
-            display: block;
+	a {
+	    @include bp(max-width, $bp-small) {
+	        display: block;
             width: auto;
-        }
-    }
+	    }
+	}
 }
+
 
 /* ============================================ *
  * General Navigation Styles

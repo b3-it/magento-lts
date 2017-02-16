@@ -24,7 +24,7 @@
         text-decoration: none;
     }
     
-    @include bp(max-width, $bp-medium) {
+    @include bp(max-width, $bp-small) {
         margin: 5px 0 0 0;
         width: 100%;
     }
@@ -116,10 +116,6 @@
 }
 .skip-link.skip-active .count {
     color: $global-fontcolor-light;
-}
-
-// Using extra .skip-link selector to increase specificity
-.skip-link.skip-cart .count {
 }
 
 .skip-cart.no-count .count {

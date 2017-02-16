@@ -20,7 +20,7 @@
                     width: auto;
                 }
 
-                input[type="text"], input[type="password"] {
+                input[type="text"], input[type="password"], input[type="email"] {
                     width: 90%;
                     max-width: 90%;
                 }
@@ -29,13 +29,22 @@
 
         div.col-1, div.col-2 {
             width: 48%;
-            height: 32em;
+            height: 35em;
             padding: 0px !important;
+            
+            @include bp(max-width, $bp-large) {
+                height: auto;
+                width: 100%;
+            }
         }
 
         .content {
             padding: 5px;
             height: 25em;
+            
+            @include bp(max-width, $bp-large) {
+                height: auto;
+            }
 
             p {
                 margin: 10px 0px;

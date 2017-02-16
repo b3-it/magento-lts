@@ -105,4 +105,11 @@ $j(document).ready(function(){
     		moveElement('#mobile-header-search', '#full-search');
     	}
     });
+    
+    if ( $j('#small-view-switcher').length && $j('#big-view-switcher').length ) {
+    	var inhalt = $j('#small-view-switcher').html();
+    	if( inhalt.length == 0 ) {
+    		$j('#small-view-switcher').html( $j('#big-view-switcher').html() );
+    	}
+    }
 });

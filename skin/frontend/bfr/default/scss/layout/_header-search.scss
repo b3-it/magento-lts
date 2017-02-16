@@ -21,7 +21,7 @@
         background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
     }
     
-    @include bp(min-width, $bp-large) {
+    @include bp(min-width, $bp-small + 1) {
         display: none;
     }
 }

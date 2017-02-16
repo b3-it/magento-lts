@@ -17,7 +17,7 @@
 	margin-right: $global-category-marginright;
 	margin-bottom: $global-boxmargin;
 	
-	@include bp(max-width, $bp-medium) {
+	@include bp(max-width, $bp-small) {
 	    margin-bottom: 0;
 	}
 
@@ -36,7 +36,7 @@
             border-bottom: $global-active-border solid $global-navigation-border-color;
         }
        
-        @include bp(min-width, $bp-medium) {
+        @include bp(min-width, $bp-small + 1) {
             display: none;
         }
 	}

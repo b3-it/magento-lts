@@ -36,7 +36,7 @@
     }
 }
 
-@include bp(max-width, 785px) {
+@include bp(max-width, $bp-medium) {
     .page-header-container {
         height: 110px + $global-logo-height;
     }
@@ -57,12 +57,6 @@
 
     #egov-nav{
     	top: $mobile-header-mainnav-top !important;
-    }
-}
-
-@include bp(min-width, 800px) {
-	.col-left {
-        margin-top: 0;
     }
 }
 

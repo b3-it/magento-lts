@@ -39,3 +39,21 @@
 .calendar .button {
 	display: table-cell;
 }
+
+.image-link {
+	border: none;
+    color: $global-footer-linkcolor;
+    text-decoration: none;
+    padding-left: 10px;
+    background: transparent url($global-footer-link-image) no-repeat scroll 0 5px;
+        
+    @include bp(max-width, $bp-small) {
+        background: none;
+        color: $global-fontcolor-light;
+    }
+
+    &:hover, &:active {
+        text-decoration: underline;
+        border: none;
+    }
+}

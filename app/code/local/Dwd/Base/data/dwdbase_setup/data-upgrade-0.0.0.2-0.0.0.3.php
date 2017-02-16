@@ -89,7 +89,6 @@ $eng_cmsblocks = array (
 
 foreach( $eng_cmsblocks as $data ) {
     $block = Mage::getModel('cms/block');
-    $engBlock = Mage::getModel('cms/block');
 
     // look for blocks only in default store
     if ( !$block->setStoreId(0)->load($data['identifier'])->isEmpty() ) {
@@ -99,7 +98,9 @@ foreach( $eng_cmsblocks as $data ) {
         $block->save();
     }
 
-    $engBlock->setData($data)->save();
+    $block->setData($data)->save();
 }
 
 $installer->endSetup();
+
+

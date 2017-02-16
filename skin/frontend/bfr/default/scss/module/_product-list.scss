@@ -39,7 +39,7 @@ body.catalogsearch-result-index .col-right {
     display: inline-flex;
     font-size: 0.7em;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-large) {
         overflow: hidden;
         width: 95%;
     }
@@ -57,7 +57,7 @@ body.catalogsearch-result-index .col-right {
     position: absolute;
     width: 60%;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-large) {
         width: 56%;
     }
     
@@ -68,7 +68,7 @@ body.catalogsearch-result-index .col-right {
 	.button {
 	    float: none;
 	    
-	    @include bp(max-width, $bp-small) {
+	    @include bp(max-width, $bp-large) {
 	        width: 100%;
 	    }
     }
@@ -383,7 +383,7 @@ p.product-name {
             padding: $global-btn-padding-v $global-btn-padding-h;
             text-align: center;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-large) {
                 width: 100%;
             }
 
@@ -401,7 +401,7 @@ p.product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
             line-height: 1.7em;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-large) {
                 line-height: 1.6em;
             }
 
@@ -467,7 +467,7 @@ p.product-name {
             margin: $element-spacing 0 $element-spacing * 2 0;
             font-size: 1.2em;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-large) {
                 display: none;
             }
         }
