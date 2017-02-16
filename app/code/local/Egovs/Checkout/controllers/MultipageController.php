@@ -288,6 +288,11 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     	
     	try {
     		if ($this->getRequest()->isPost()) {
+    			if (!$this->_validateFormKey()) {
+    				$this->_redirect('*/*/addresses');
+    				return;
+    			}
+    			
     			$data = $this->getRequest()->getPost('billing', array());
     			
     			foreach( $_widget_keys AS $post_key ) {
@@ -434,6 +439,11 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
    	public function shippingPostAction() {
         try {
     		if ($this->getRequest()->isPost()) {
+    			if (!$this->_validateFormKey()) {
+    				$this->_redirect('*/*/shipping');
+    				return;
+    			}
+    			
     			$data = $this->getRequest()->getPost('shipping', array());
     			if(isset($data['base_address'])){ unset($data['base_address']);}
     			$customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
@@ -571,6 +581,11 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     
     public function shippingmethodPostAction()
     {
+    	if (!$this->_validateFormKey()) {
+    		$this->_redirect('*/*/shippingmethod');
+    		return;
+    	}
+    	
         $shippingMethods = $this->getRequest()->getPost('shipping_method');
         try {
             Mage::dispatchEvent(
@@ -625,6 +640,11 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     
     
     public function billingPostAction() {
+
+    	if (!$this->_validateFormKey()) {
+    		$this->_redirect('*/*/billing');
+    		return;
+    	}
     	
         $paymentMethods = $this->getRequest()->getPost('payment');
        
@@ -775,6 +795,11 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
     public function overviewPostAction()
     {
+    	if (!$this->_validateFormKey()) {
+    		$this->_redirect('*/*/overview');
+    		return;
+    	}
+    	
     	$quote = $this->_getCheckout()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError()) {
             $this->_redirect('checkout/cart');

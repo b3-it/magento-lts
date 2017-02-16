@@ -51,6 +51,11 @@
 					<media_js>Egovs_Video_Helper_Media_Js</media_js>
 				</rewrite>
 			</adminhtml>
+			<uploader>
+			     <rewrite>
+                    <file>Egovs_Video_Helper_Uploader_File</file>
+                </rewrite>
+			</uploader>
 		</helpers>
 	</global>
 </config>

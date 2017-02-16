@@ -36,7 +36,7 @@
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form" class="multiple-checkout">
-
+	<?php echo $this->getBlockHtml('formkey'); ?>
     <?php foreach ($this->getAddresses() as $_index => $_address): ?>
 
     <div class="col2-set">

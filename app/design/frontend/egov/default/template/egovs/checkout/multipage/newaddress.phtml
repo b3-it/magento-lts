@@ -23,6 +23,7 @@
         <h1><?php echo $this->__('Enter New Address') ?></h1>
     </div>
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
+    	<?php echo $this->getBlockHtml('formkey'); ?>
         <input type="hidden" name="billing[address_id]" value="new" id="billing:address_id" />
     <?php if (!$this->canShip()): ?>
         <input type="hidden" name="billing[use_for_shipping]" value="1" />
