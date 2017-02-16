@@ -3,8 +3,21 @@
 $installer = $this;
 $installer->startSetup();
 
-$default = Mage::app()->getStore('default')->getId();
-$english = Mage::app()->getStore('english')->getId();
+try {
+    $default = Mage::app()->getStore('default')->getId();
+} catch (Mage_Core_Model_Store_Exception $e) {
+    $e = Mage::exception('Mage_Core_Model_Store',"Store 'default' not found!");
+    Mage::logException($e);
+    throw $e;
+}
+
+try {
+    $english = Mage::app()->getStore('english')->getId();
+}  catch (Mage_Core_Model_Store_Exception $e) {
+    $e = Mage::exception('Mage_Core_Model_Store',"Store 'english' not found!");
+    Mage::logException($e);
+    throw $e;
+}
 
 $eng_cmsblocks = array (
     array(
@@ -87,19 +100,35 @@ $eng_cmsblocks = array (
     )
 );
 
-foreach( $eng_cmsblocks as $data ) {
-    $block = Mage::getModel('cms/block');
-    $engBlock = Mage::getModel('cms/block');
+$hasCmsData = function ($id, $storeId) {
+    $store = array($storeId);
+    $model = Mage::getModel('cms/block');
+    $collection = $model->getCollection()
+    ->addFieldToFilter('identifier', $id)
+    ->addStoreFilter($storeId)
+    ->addFieldToFilter('store_id', array('in' => $store));
+    $cmsItem = $collection->getFirstItem();
+    if ($cmsItem && $cmsItem->getBlockId()) {
+        $cmsItem->load();
+        return $cmsItem;
+    } else {
+        return null;
+    }
+};
 
+foreach( $eng_cmsblocks as $data ) {
     // look for blocks only in default store
-    if ( !$block->setStoreId(0)->load($data['identifier'])->isEmpty() ) {
+    if (( $block = $hasCmsData($data['identifier'], 0)) &&
+        !$hasCmsData($data['identifier'], $default)) {
         $oldTitle = $block->getData('title');
         $block->setData('title', $oldTitle.' (deutsch)');
         $block->setData('stores', array($default));
         $block->save();
     }
-
-    $engBlock->setData($data)->save();
+    // create english blocks if they didnt exist yet
+    if (!$hasCmsData($data['identifier'], $english)) {
+        Mage::getModel('cms/block')->setData($data)->save();
+    }
 }
 
 $installer->endSetup();
