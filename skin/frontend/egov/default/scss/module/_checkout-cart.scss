@@ -313,6 +313,10 @@
         
         a.egov-delete {
             display: none;
+            @include bp(max-width, $bp-small) {
+                display: inline-block;
+                font-size: $global-fontsize + 4;
+            }
         }
     }
 }
@@ -483,7 +487,7 @@
     }
 }
 
-@include bp(max-width, 599px) {
+@include bp(max-width, $bp-small) {
 
     .cart-table {
         colgroup, thead {
