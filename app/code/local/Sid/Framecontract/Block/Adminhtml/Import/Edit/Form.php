@@ -58,10 +58,16 @@ class Sid_Framecontract_Block_Adminhtml_Import_Edit_Form extends Mage_Adminhtml_
         		'required' => false
         ));
 
+  
         $form->getElement('image_upload')->setRenderer(
         		$this->getLayout()->createBlock('framecontract/adminhtml_import_uploader')
         );
-
+  
+        /*
+        $form->getElement('image_upload')->setRenderer(
+        		$this->getLayout()->createBlock('framecontract/adminhtml_import_edit_uploader')
+        		);
+*/
 
         $fieldset = $form->addFieldset('base_fieldset', array('legend' => $helper->__('Import Settings')));
 

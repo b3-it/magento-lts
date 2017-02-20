@@ -13,6 +13,9 @@ class B3it_Ids_Model_Observer
 	public function onFrontControllerInitBefore($observer)
 	{
 		if (!Mage::isInstalled()) return;
+		
+		if(Mage::getStoreConfig('admin/ids/enable_ids') != 1) return;
+		
 		$front = $observer->getFront();
 		$ids = Mage::getModel('b3it_ids/idsComponent');
 		$ids->detect($front);

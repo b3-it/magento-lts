@@ -46,7 +46,9 @@ class Sid_Haushalt_Model_Export_Abstract extends Mage_Core_Model_Abstract
      */
     public function getFilename()
     {
-    	return $this->_filePrefix.'_'.date('d-m-Y_H-i-s').$this->_fileExt;
+    	$date = Mage::app()->getLocale()->date($sDate, null, null, true);
+    	$date = $date->toString('dd-MM-yyyy_HH-mm-ss');
+    	return $this->_filePrefix.'_'.$date.$this->_fileExt;
     }
     
     /**
