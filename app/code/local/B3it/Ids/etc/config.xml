@@ -91,7 +91,7 @@
 	    			<enable_ids>0</enable_ids>
 	    			<threshold_log>3</threshold_log>
 	    			<threshold_email>9</threshold_email>
-	    			<threshold_deny>81</threshold_deny>
+	    			<threshold_deny>16</threshold_deny>
 	    			<die_on_deny>0</die_on_deny>
 	    			<die_on_deny_message>A security problem has been detected, please contact the shop admin.</die_on_deny_message>
 	    		</ids>
