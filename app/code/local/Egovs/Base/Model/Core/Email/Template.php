@@ -137,6 +137,17 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 				break;
 		}
 		
+		$mail = $this->getMail();
+		
+		if ($returnPathEmail !== null) {
+			if ($this->getSenderName()) {
+				$mail->setReplyTo($returnPathEmail, $this->getSenderName());
+			} else {
+				$mail->setReplyTo($returnPathEmail);
+			}
+			$mail->setReturnPath($returnPathEmail);
+		}
+		
 		if ($this->hasQueue() && $this->getQueue() instanceof Mage_Core_Model_Email_Queue) {
 			/** @var $emailQueue Mage_Core_Model_Email_Queue */
 			$emailQueue = $this->getQueue();
@@ -149,16 +160,14 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 					'from_name'         => $this->getSenderName(),
 					'reply_to'          => $this->getMail()->getReplyTo(),
 					'return_to'         => $this->getMail()->getReturnPath(),
-			))
-			->addRecipients($emails, $names, Mage_Core_Model_Email_Queue::EMAIL_TYPE_TO)
-			->addRecipients($this->_bccEmails, array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
+				))
+				->addRecipients($emails, $names, Mage_Core_Model_Email_Queue::EMAIL_TYPE_TO)
+				->addRecipients($this->_bccEmails, array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
 			$emailQueue->addMessageToQueue();
 		
 			return true;
 		}
 		
-		
-		$mail = $this->getMail();
 		$adr = $this->_normalizeNamesEmail($emails, $names);
 		if (count($adr) > 1) {
 			foreach ($adr as $emailOne) {

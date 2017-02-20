@@ -73,17 +73,17 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
                     Zend_Mail::setDefaultTransport($mailTransport);
                 }
 
-                $mailer = $this->_getBaseMail();
+                $mailer = $this->_getBaseMail()->getMail();
                 foreach ($message->getRecipients() as $recipient) {
                     list($email, $name, $type) = $recipient;
                     switch ($type) {
                         case self::EMAIL_TYPE_BCC:
-                            $mailer->getMail()->addBcc($email, '=?utf-8?B?' . base64_encode($name) . '?=');
+                            $mailer->addBcc($email, '=?utf-8?B?' . base64_encode($name) . '?=');
                             break;
                         case self::EMAIL_TYPE_TO:
                         case self::EMAIL_TYPE_CC:
                         default:
-                            $mailer->getMail()->addTo($email, '=?utf-8?B?' . base64_encode($name) . '?=');
+                            $mailer->addTo($email, '=?utf-8?B?' . base64_encode($name) . '?=');
                             break;
                     }
                 }
@@ -101,7 +101,7 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
                 	 * Zend_Mime::ENCODING_QUOTEDPRINTABLE ist der Default-Wert,
                 	 * dieser darf nach RFC1521 aber nur ASCII enthalten!
                 	 */
-                	$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($text), null, Zend_Mime::ENCODING_BASE64);
+                	$mailer->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($text), null, Zend_Mime::ENCODING_BASE64);
                 } else {
                 	$boundary = '--END_OF_HTML_MAIL';
                 	$boundaryLocation = strpos($text, $boundary);
@@ -109,21 +109,21 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
                 		$shtml = substr($text, 0, $boundaryLocation);
                 		$stext = str_replace($boundary, '', substr($text, $boundaryLocation));
                 		$stext = trim(strip_tags($stext));
-                		$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($stext), null, Zend_Mime::ENCODING_BASE64);
-                		$mailer->getMail()->setBodyHTML($shtml);
+                		$mailer->setBodyText(Mage::helper('egovsbase')->htmlEntityDecode($stext), null, Zend_Mime::ENCODING_BASE64);
+                		$mailer->setBodyHTML($shtml);
                 	} else {
                 		/*
                 		 * 28.06.2012::Frank Rochlitzer
                 		 * Codierung ist notwendig, da Mail sonst nicht korrekt als Multipart content gesendet wird
                 		 */
-                		$mailer->getMail()->setBodyText(Mage::helper('egovsbase')->__('This mail is in HTML format, please use an HTML ready mail client.'), null, Zend_Mime::ENCODING_BASE64);
-                		$mailer->getMail()->setBodyHTML($text);
+                		$mailer->setBodyText(Mage::helper('egovsbase')->__('This mail is in HTML format, please use an HTML ready mail client.'), null, Zend_Mime::ENCODING_BASE64);
+                		$mailer->setBodyHTML($text);
                 	}
                 }
                 
 
-                $mailer->getMail()->setSubject('=?utf-8?B?' . base64_encode($parameters->getSubject()) . '?=');
-                $mailer->getMail()->setFrom($parameters->getFromEmail(), $parameters->getFromName());
+                $mailer->setSubject('=?utf-8?B?' . base64_encode($parameters->getSubject()) . '?=');
+                $mailer->setFrom($parameters->getFromEmail(), $parameters->getFromName());
                 if ($parameters->getReplyTo() !== null) {
                     $mailer->setReplyTo($parameters->getReplyTo());
                 }
@@ -136,18 +136,20 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
                 $attachments->getSelect()->where('message_id='.$message->getId());
                 foreach($attachments->getItems() as $att)
                 {
-                	$mailer->getMail()->createAttachment($att->getBody(),$att->getMimeType(),$att->getDisposition(),$att->getEncoding(),$att->getFilename());
+                	$mailer->createAttachment($att->getBody(),$att->getMimeType(),$att->getDisposition(),$att->getEncoding(),$att->getFilename());
                 }
                 
                 
                 try {
-                    $mailer->send();
+                	$this->_getBaseMail()->send();
                     unset($mailer);
+                    unset($this->_baseMail);
                     $message->setProcessedAt(Varien_Date::formatDate(true));
                     $message->save();
                 }
                 catch (Exception $e) {
                     unset($mailer);
+                    unset($this->_baseMail);
                     $oldDevMode = Mage::getIsDeveloperMode();
                     Mage::setIsDeveloperMode(true);
                     Mage::logException($e);
