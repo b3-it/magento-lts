@@ -58,12 +58,6 @@
                         <p class="form-instructions">
                             <?php echo $this->__('If you have an account with us, please log in.') ?>
                         </p>
-
-			            <div class="securityLabel">
-			              <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
-				            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
-			              <?php endif; ?>
-			            </div>
 			            
                         <ul class="form-list">
                             <li>
@@ -84,9 +78,14 @@
                             <?php echo $this->getChildHtml('persistent.remember.me'); ?>
                         </ul>
                         <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
-                        <p class="required">
+                        <span class="required">
                             <?php echo $this->__('* Required Fields') ?>
-                        </p>
+                        </span>
+                        <span class="securityLabel">
+			              <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
+				            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
+			              <?php endif; ?>
+			            </span>
                     </div>
                     <div class="buttons-set">
                         <a class="button" href="<?php echo $this->getForgotPasswordUrl() ?>">

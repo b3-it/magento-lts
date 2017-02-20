@@ -86,11 +86,7 @@
 		        	<span>
 		                <?php echo $this->__('If you have an account with us, please log in.') ?>
 	              	</span>
-		            <div class="securityLabel">
-			            <?php if( $_secure ): ?>
-			            	<img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
-		            	<?php endif; ?>
-		            </div>
+		            
 			          <fieldset<?php if( $_secure != true ): ?> class="width"<?php endif; ?>>
 				            <ul class="form-list">
 		                    <li>
@@ -106,7 +102,12 @@
 		                        </div>
 		                    </li>
 		                </ul>
-		                <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+		                <span class="required"><?php echo $this->__('* Required Fields') ?></span>
+		                <span class="securityLabel">
+				            <?php if( $_secure ): ?>
+				            	<img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
+			            	<?php endif; ?>
+			            </span>
 		            </fieldset>
 	          </div>
     	      <div class="buttons-set">

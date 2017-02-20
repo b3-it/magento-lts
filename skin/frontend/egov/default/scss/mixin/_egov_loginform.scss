@@ -42,10 +42,15 @@ $col-box-height: 25em;
 	
 	            .securityLabel {
 	                display: inline-block;
-	                position: absolute;
-                    right: -5%;
-                    top: 40%;
-                    width: 20%;
+	                float: right;
+	                
+	                img {
+	                   height: 6em;
+	                }
+	            }
+	            
+	            .required {
+	               color: $global-warning-color;
 	            }
 	        }
 
@@ -79,18 +84,13 @@ $col-box-height: 25em;
         }
 
 		form input {
-	        max-width: 90%;
-	        width: 90%;
+	        max-width: 100%;
+	        width: 100%;
 	    }
 	    
         ul li {
             input[type="radio"], label {
                 width: auto;
-            }
-
-            input[type="text"], input[type="password"] {
-                width: 90%;
-                max-width: 90%;
             }
         }
 
@@ -110,7 +110,7 @@ $col-box-height: 25em;
 
         .registered-users {
             fieldset {
-                width: 60%;
+                width: 100%;
             }
             
             fieldset.width {
