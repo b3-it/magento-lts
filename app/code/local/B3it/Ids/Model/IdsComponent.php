@@ -25,13 +25,7 @@ require_once('IDS'.DS.'Monitor.php');
 
 class B3it_Ids_Model_IdsComponent extends Varien_Object
 {
-	
-	private $threshold = array(
-			'log'      => 3,
-			'mail'     => 9,
-			'deny'     => 81
-	);
-	
+	private $__ip = null; 
 	
 	public function detect($data)
 	{
@@ -72,12 +66,12 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 					if(isset($reaction['log'])){
 						$this->log($result,$reaction);
 					}
-					if(isset($reaction['mail'])){
+					if(isset($reaction['email'])){
 						$this->mail($result,$reaction);
 					}
 					if(isset($reaction['deny'])){
-						
-						die('Deny4You');
+						if(Mage::getStoreConfig('admin/ids/die_on_deny') != 1) return;
+						die(Mage::getStoreConfig('admin/ids/die_on_deny_message'));
 					}
 			}	
 			}
@@ -85,30 +79,36 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			
 	}
 	
-	
-	
-	private function log($result, $reaction)
+	private function __getIP()
 	{
-		
-			$ip = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
+		if($this->__ip == null)
+		{
+			$this->__ip  = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
 			$_SERVER['SERVER_ADDR'] :
 			(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
 					$_SERVER['HTTP_X_FORWARDED_FOR'] :
 					'127.0.0.1');
-				
+		}
+		return $this->__ip ;
+	}
+	
+	
+	private function log($result, $reaction)
+	{
 			foreach ($result as $event) {
+				$ids = Mage::getModel('b3it_ids/idsEvent');
 				$data = array(
 						'name'      => $event->getName(),
-						'value'     => mysql_escape_string(stripslashes($event->getValue())),
+						'value'     => (stripslashes($event->getValue())),
 						'page'      => $_SERVER['REQUEST_URI'],
 						//'userid'    => $user,
 						'session'   => session_id() ? session_id() : '0',
-						'ip'        => $ip,
+						'ip'        => $this->__getIP(),
 						'reaction'  => implode(', ',$reaction),
 						//'impact'    => $result->getImpact()
 						'impact'    => $event->getImpact()
 				);
-				$ids = Mage::getModel('b3it_ids/idsEvent');
+				
 				$ids->setData($data);
 				$ids->save();
 				foreach ($event->getFilters() as $filter) {
@@ -119,52 +119,25 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 					$idsfilter->setTags(implode(', ', $filter->getTags()));
 					$idsfilter->setRuleId($filter->getId());
 					$idsfilter->save();
-						
 				}
-			}
-			
-			
-			if(isset($reaction['deny'])){		
-				Mage::log("DENY : ".$ip,Zend_Log::ALERT,"ids.log",true);
 			}
 	}
 	
 	private function mail($result, $reaction)
 	{
-	
-		$ip = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
-		$_SERVER['SERVER_ADDR'] :
-		(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
-				$_SERVER['HTTP_X_FORWARDED_FOR'] :
-				'127.0.0.1');
-	
-		
 		$msg = array();
-		$msg[] ="IP: ".$ip; 
-		
+		$msg[] ="IP: ".$this->__getIP(); 
+		$msg[] = 'Page: ' .$_SERVER['REQUEST_URI'];
+		$msg[] = 'Reaction: ' .implode(', ',$reaction);
 		foreach ($result as $event) {
-			$data = array(
-					'name'      => $event->getName(),
-					'value'     => mysql_escape_string(stripslashes($event->getValue())),
-					'page'      => $_SERVER['REQUEST_URI'],
-					//'userid'    => $user,
-					'session'   => session_id() ? session_id() : '0',
-					'ip'        => $ip,
-					'reaction'  => implode(', ',$reaction),
-					//'impact'    => $result->getImpact()
-					'impact'    => $event->getImpact()
-			);
-			$msg[] = 'page' .$_SERVER['REQUEST_URI'];
-			$msg[] = 'reaction' .implode(', ',$reaction);
-			
-			$msg = impolde(', ',$msg);
-			$this->sendMailToAdmin($msg);
-		}
+			$msg[] = 'Name: ' . $event->getName();
+			$msg[] = 'Impact: ' . $event->getImpact();
+			}	
 			
 			
-		if(isset($reaction['deny'])){
-			Mage::log("DENY : ".$ip,Zend_Log::ALERT,"ids.log",true);
-		}
+		$msg = implode(', ',$msg);
+		$this->sendMailToAdmin($msg);
+		
 	}
 	
 	
@@ -174,17 +147,28 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 	
 		$impact = $result->getImpact();
 		
+		$max = 0;
 		
-		if ($impact >= $this->threshold['deny']) {
+		foreach($result as $event)
+		{
+			if($event->getImpact() > $max){
+				$max = $event->getImpact();
+			}
+		}
+		
+		$impact = $max;
+		
+		if ($impact >= Mage::getStoreConfig('admin/ids/threshold_deny')) {
 			$res['log'] = 'log';
 			$res['email'] = 'email';
 			$res['deny'] = 'deny';
+			Mage::log("DENY : ".$this->__getIP(),Zend_Log::ALERT,"ids.log",true);
 			return $res;
-		} elseif ($impact >= $this->threshold['mail']) {
+		} elseif ($impact >= Mage::getStoreConfig('admin/ids/threshold_email')) {
 			$res['log'] = 'log';
 			$res['email'] = 'email';
 			return $res;
-		} elseif ($impact >= $this->threshold['log']) {
+		} elseif ($impact >= Mage::getStoreConfig('admin/ids/threshold_log')) {
 			$res['log'] = 'log';
 			return $res;
 		} 
