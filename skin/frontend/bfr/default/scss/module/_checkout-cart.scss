@@ -80,8 +80,11 @@
         @extend .egov-default-message;
         
         .button {
+            display: inline-block;
+            float: none;
+            padding-top: 15px;
+        
             @include bp(max-width, $bp-small) {
-                float: none !important;
                 width: 100%;
                 max-width: 100%;
             }
@@ -125,6 +128,12 @@
     .cart-totals-wrapper,
     .crosssell {
         width: 50%;
+        
+        @include bp(max-width, $bp-medium) {
+            width: 100%;
+            displax: block;
+            padding: 0;
+        }
     }
 
     .crosssell {

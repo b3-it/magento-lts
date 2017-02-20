@@ -228,6 +228,10 @@
 .store-language-container {
     width: 100%;
     height: 100%;
+    
+    @include bp(max-width, $bp-xsmall) {
+        padding-top: 8px;
+    }
 
     label {
         display: none;
@@ -235,10 +239,19 @@
     select {
         margin: 10px;
         width: 90%;
+        
+        @include bp(max-width, $bp-xsmall) {
+            font-size: $global-fontsize-small;
+        }
     }
 }
 
 .header-language-background {
+	color: $global-fontcolor-light;
+	
+	@include bp(max-width, $bp-medium) {
+	    display: none;
+	}
 
     .header-language-container {
         margin-left: auto;
@@ -247,6 +260,10 @@
 
     &:after {
         @include clearfix;
+    }
+    
+    a {
+        color: $global-fontcolor-light;
     }
 
     .form-language,
@@ -258,30 +275,6 @@
     .welcome-msg {
         float: right;
     }
-}
-
-@include bp(max-width, $bp-xsmall) {
-    .store-language-container {
-        padding-top: 8px;
-
-        select {
-            // Setting this font-size will causing zooming on iOs devices, but it keeps header more tidy
-            font-size: $global-fontsize-small;
-        }
-    }
-}
-
-.header-language-background,
-.header-language-background a {
-    color: $global-fontcolor-light;
-}
-
-@include bp(max-width, $bp-medium) {
-
-    .header-language-background {
-        display: none;
-    }
-
 }
 
 /* ============================================ *
@@ -302,28 +295,21 @@
 
     .small {
         display: block;
+        
+        @include bp(min-width, $bp-medium + 1) {
+            display: none;
+        }
     }
     .large {
         display: none;
+        
+        @include bp(min-width, $bp-medium + 1) {
+            display: block;
+        }
     }
 
     &:hover {
         opacity: 0.8;
-    }
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, $bp-medium + 1) {
-
-    .logo {
-
-        .small {
-            display: none;
-        }
-        .large {
-            display: block;
-        }
     }
 }
 
@@ -341,20 +327,20 @@
     background-repeat: no-repeat;
     background-color: $global-header-background-color;
     background-size: 100%;
-    background-position: center 0;    
+    background-position: center 0;  
 
     @include bp(min-width, $bp-medium + 1) {
         border: 0;
     }
     
     @include bp(max-width, $bp-large) {
-        background-position: center 15px;
+        background-position: center 20px;
     }
 
     .links {
         float: right;
         margin: 0 15.5% 0 0;
-        max-width: 610px;
+        max-width: 670px;
         
         @include bp(max-width, $bp-large) {
             margin: 0 auto;
@@ -504,19 +490,15 @@ a.skip-link {
     width: 22px;
     height: 22px;
     vertical-align: middle;
+    
+    @include bp(min-width, $bp-xsmall) {
+        margin-right: 3px;
+    }
 }
 
 .skip-link.skip-nav .icon,
 .skip-link.skip-cart:not(.no-count) .icon {
     margin-right: 3px;
-}
-
-@include bp(min-width, 500px) {
-
-    .skip-link .icon {
-        margin-right: 3px;
-    }
-
 }
 
 /* -------------------------------------------- *
@@ -525,16 +507,10 @@ a.skip-link {
 
 .skip-link .label {
     display: none;
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, 500px) {
-
-    .skip-link .label {
+    
+    @include bp(min-width, $bp-xsmall) {
         display: inline;
     }
-
 }
 
 /* ============================================ *

@@ -40,11 +40,7 @@
             }
 
             label {
-                width: 95%;
-                
-                @include bp(max-width, $bp-xsmall) {
-                    width: 92%;
-                }
+                width: 90%;
             }
         }
 
@@ -156,10 +152,11 @@
 
             border-bottom: $global-active-border dotted $global-box-bottomcolor;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-medium) {
                 display: block;
                 margin: 0;
                 width: 100%;
+                min-height: auto;
             }
 
             h3 {

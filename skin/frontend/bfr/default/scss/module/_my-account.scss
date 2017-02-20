@@ -158,7 +158,11 @@
 
 .sidebar > .block-cart:first-child {
     position: relative;
-    top: $global-sidebar-cart-top;
+    top: -21px;
+    
+    @include bp(max-width, $bp-medium) {
+        display: none;
+    }
 }
 
 .addresses-primary,

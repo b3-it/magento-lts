@@ -46,6 +46,10 @@
 }
 .block-tags {
     margin-top: $global-boxmargin;
+    
+    @include bp(max-width, $bp-medium) {
+        display: none;
+    }
 
     .actions > a {
         font-size: $global-fontsize;

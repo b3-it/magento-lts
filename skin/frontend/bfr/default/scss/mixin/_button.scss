@@ -23,6 +23,10 @@
     max-width: 300px;
     height: 50px;
     padding: $global-btn-padding-v $global-btn-padding-h;
+    
+    @include bp(max-width, $bp-xsmall) {
+        max-width: 100%;
+    }
 
     &:hover, &:active, &:focus {
         background-color: $global-button-hovercolor;

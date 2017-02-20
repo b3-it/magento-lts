@@ -274,6 +274,11 @@ div.block-cart {
                     padding: 0px;
                 }
             }
+            
+            a {
+                background-image: none;
+                padding-left: 0;
+            }
         }
     }
 }
@@ -282,10 +287,14 @@ div.block-cart {
 .header-minicart.skip-active .block-cart,
 .block-cart.skip-active {
     display: block;
+    position: absolute;
+    
+    @include bp(max-width, $bp-medium) {
+        top: 52px;
+    }
     
     @include bp(max-width, $bp-small) {
         left: 0;
-        position: absolute;
         top: 182px;
         width: 100%
     }
@@ -315,7 +324,7 @@ div.block-cart {
             z-index: 999;
 
             &:before {
-                background-color: #EDEDED;
+                background-color: $global-minicart-background;
             }
         }
 
@@ -333,6 +342,10 @@ div.block-cart {
 
         .minicart-actions {
             padding-bottom: 33px;
+            
+            button {
+                width: 40%;
+            }
 
             .cart-link {
                 bottom: 0;
@@ -368,7 +381,7 @@ div.block-cart {
     }
 }
 
-@include bp(max-width, 740px) {
+@include bp(max-width, $bp-medium) {
     .header-minicart {
         .minicart-actions {
             .cart-link {
