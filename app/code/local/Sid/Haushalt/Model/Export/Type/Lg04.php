@@ -111,7 +111,7 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 			$pos->setCurrency($order->getBaseCurrencyCode());
 			$pos->setDim1($item->getProduct()->getU4Dim1());
 			$pos->setDim2($this->getBudgedNumber($order, $item)); 
-			$pos->setDim3($item->getProduct()->getU4Dim1());
+			$pos->setDim3($item->getProduct()->getU4Dim3());
 			$pos->setDim6($this->getConfigData('dim_6'));
 			$pos->setDim7($item->getProduct()->getU4Account());
 			$pos->setLineNo($lineNr);
