@@ -87,6 +87,10 @@
         @include bp(max-width, $bp-small) {
             height: 40%;
         }
+        
+        @include bp(max-width, $bp-xsmall) {
+            height: 50%;
+        }
     }
     
     .mobile-top-header {
@@ -95,12 +99,33 @@
         width: 40%;
         position: absolute;
         right: 5%;
+        
+        @include bp(max-width, $bp-xsmall) {
+            right: auto;
+            top: 30px;
+            left: 118px;
+            width: 60%;
+        }
     
         h1 {
             overflow: hidden;
             color: $global-linkcolor;
             height: 40px;
             font-size: 2.4em;
+            
+            @include bp(max-width, $bp-small) {
+                position: relative;
+                left: -147px;
+                white-space: nowrap;
+                width: 320px;
+            }
+            
+            @include bp(max-width, $bp-xsmall) {
+                font-size: 2em;
+                height: 30px;
+                left: 0;
+                width: auto;
+            }
         }
         
         #search_mini_form .button {
@@ -114,6 +139,15 @@
         }
         
         .search-autocomplete::before {
+        }
+    }
+    
+    .mobile-top-store {
+        position: relative;
+        top: 3px;
+        
+        @include bp(max-width, $bp-xsmall) {
+            top: -38px;
         }
     }
     
@@ -141,6 +175,10 @@
             top: 25%;
             line-height: 1.1;
             text-align: left;
+            
+            @include bp(max-width, $bp-xsmall) {
+                left: 2%;
+            }
         }
     }
     
@@ -163,7 +201,7 @@
         left: 10px;
         
         @include bp(max-width, $bp-small) {
-            margin-left: 30px;
+            margin-left: 10px;
             height: auto;
         }
     }
@@ -286,6 +324,10 @@
     margin-left: $global-logo-left;
     margin-bottom: $global-logo-bottom;
     height: $global-logo-height;
+    
+    @include bp(max-width, $bp-medium) {
+        margin-left: 5%;
+    }
 
     @include hidden-border;
 
