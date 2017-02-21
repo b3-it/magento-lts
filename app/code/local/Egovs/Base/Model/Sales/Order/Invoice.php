@@ -1,5 +1,39 @@
 <?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_Core
+ * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
 
+/**
+ * Rechnung
+ *
+ * @category	Egovs
+ * @package		Egovs_Base
+ * @author		Holger Kögel <h.koegel@b3-it.de>
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 - 2017 B3 IT Systeme GmbH <https://www.b3-it.de>
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoice
 {
 
@@ -90,14 +124,21 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
         );
         
         $pdf = Mage::getModel('pdftemplate/pdf_invoice');
-        if($pdf)
-        {
+        if ($pdf) {
         	$pdf = $pdf->getPdf(array($this));
 			$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_EMAIL;
 			$mailer->setAttachment($pdf->render(),$pdf->Name);
         }
         
-        $mailer->send();
+        /** @var $emailQueue Egovs_Base_Model_Core_Email_Queue */
+        $emailQueue = Mage::getModel('egovsbase/core_email_queue');
+        $emailQueue->setEntityId($this->getId())
+	        ->setEntityType('invoice')
+	        ->setEventType('new_invoice')
+	        ->setIsForceCheck(true);
+        
+        $mailer->setQueue($emailQueue)->send();
+
         $this->setEmailSent(true);
         $this->_getResource()->saveAttribute($this, 'email_sent');
 
@@ -171,15 +212,20 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
         );
         
         $pdf = Mage::getModel('pdftemplate/pdf_invoice');
-        if($pdf)
-        {
+        if ($pdf) {
         	$pdf = $pdf->getPdf(array($this));
 			$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_EMAIL;
 			$mailer->setAttachment($pdf->render(),$pdf->Name);
         }
         
+        /** @var $emailQueue Egovs_Base_Model_Core_Email_Queue */
+        $emailQueue = Mage::getModel('egovsbase/core_email_queue');
+        $emailQueue->setEntityId($this->getId())
+	        ->setEntityType('invoice')
+	        ->setEventType('update_invoice')
+	        ->setIsForceCheck(true);
         
-        $mailer->send();
+        $mailer->setQueue($emailQueue)->send();
 
         return $this;
     }

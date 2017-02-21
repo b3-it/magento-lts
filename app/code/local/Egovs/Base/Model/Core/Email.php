@@ -5,8 +5,8 @@
  *
  * @category	Egovs
  * @package		Egovs_Base
- * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright	Copyright (c) 2012 - 2013 EDV Beratung Hempel
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 - 2017 B3 IT Systeme GmbH <https://www.b3-it.de>
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  */

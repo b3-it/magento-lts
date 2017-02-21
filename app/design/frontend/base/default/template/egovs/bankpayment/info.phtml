@@ -16,14 +16,12 @@
 /* @var $this Egovs_BankPayment_Block_Info */
 ?>
 <div>
-	<?php if ($this->getAccountHolder()): ?>
-    	<?php echo $this->getMethod()->getTitle(); ?><br />
-    <?php endif;?>
+    <?php echo $this->getMethod()->getTitle(); ?><br />
     <?php if ($this->getAccountHolder()
     		  || $this->getAccountNumber()
     		  || $this->getSortCode()
     		  || $this->getBankName()
-    		  || ($this->getIBAN() && $this->getBIC())
+    		  || $this->getIBAN()
      ): ?>
     	<div id="bankpayment_account_info" style="font-style: italic;"><?php echo $this->__('Account info'); ?></div>
     <?php endif;?>

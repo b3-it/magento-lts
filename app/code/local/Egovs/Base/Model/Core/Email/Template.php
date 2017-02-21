@@ -1,4 +1,14 @@
 <?php
+/**
+ * Erweitert die Core-Mail Funktion um das Senden über SMTP, Mime-Kompatibilität und UTF-8 Kodierung
+ *
+ * @category	Egovs
+ * @package		Egovs_Base
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 - 2017 B3 IT Systeme GmbH <https://www.b3-it.de>
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ */
 class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Template
 {
 	protected $_baseMail = null;
@@ -149,7 +159,7 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		}
 		
 		if ($this->hasQueue() && $this->getQueue() instanceof Mage_Core_Model_Email_Queue) {
-			/** @var $emailQueue Mage_Core_Model_Email_Queue */
+			/** @var $emailQueue Egovs_Base_Model_Core_Email_Queue */
 			$emailQueue = $this->getQueue();
 			$emailQueue->setMessageBody($text);
 			$emailQueue->setMessageParameters(array(
