@@ -7,7 +7,7 @@
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */ 
-class B3it_ConfigCompare_Model_CoreConfigData extends Mage_Core_Model_Abstract
+class B3it_ConfigCompare_Model_CoreConfigData extends B3it_ConfigCompare_Model_Compare
 {
 	private $collection = null;
 	private $collectionArray = null;
@@ -71,5 +71,25 @@ class B3it_ConfigCompare_Model_CoreConfigData extends Mage_Core_Model_Abstract
     	return null;
     }
     
+    public function export($xml, $xml_node)
+    {
+    	$config = Mage::getModel('core/config_data')->getCollection();
+    	foreach($config->getItems() as $item){
+    		$xml_item = $xml->createElement( "core_config_data");
+    		$xml_node->appendChild($xml_item);
+    			
+    			
+    		$fields = array('scope', 'scope_id', 'path');
+    		foreach($fields as $field)
+    		{
+    			$this->_addElement($xml, $xml_item, $item, $field);
+    		}
     
+    		$data = $xml->createCDATASection($item->getValue());
+    		$node = $xml->createElement("value");
+    		$node->appendChild($data);
+    		$xml_item->appendChild($node);
+    
+    	}
+    }
 }

@@ -4,17 +4,15 @@ class B3it_ConfigCompare_Block_Adminhtml_Import_Data extends Mage_Adminhtml_Bloc
 
 	public function __construct()
 	{
+		//	die('cc');
 		parent::__construct();
 		 
 		$this->_objectId = 'id';
-		$this->_blockGroup = 'dwd_abo';
-		$this->_controller = 'adminhtml_abo';
-	
-		$this->_updateButton('save', 'label', Mage::helper('dwd_abo')->__('Save Item'));
-		$this->_updateButton('delete', 'label', Mage::helper('dwd_abo')->__('Delete Item'));
-	
-		
-	
+		$this->_blockGroup = 'configcompare';
+		$this->_controller = 'adminhtml_import';
+		$this->_mode = 'data';
+		$this->removeButton('reset');
+		$this->removeButton('back');
 		$this->removeButton('delete');
 	}
   
@@ -22,11 +20,11 @@ class B3it_ConfigCompare_Block_Adminhtml_Import_Data extends Mage_Adminhtml_Bloc
    protected function _toHtml()
     {
     	
-    	$grid = $this->getLayout()->createBlock('configcompare/adminhtml_import_data_grid');
+    	//$grid = $this->getLayout()->createBlock('configcompare/adminhtml_import_data_grid');
     	$form = $this->getLayout()->createBlock('configcompare/adminhtml_import_data_form');
-    	$url = $this->getUrl("adminhtml/configcompare_import_coreconfigdata",array('_current'=>true));
+    	$url = $this->getUrl("adminhtml/configcompare_import",array('_current'=>true));
     	$html =  '<form enctype="multipart/form-data" method="POST" action="'.$url.'" > <div><input name="form_key" type="hidden" value="'.
-    	Mage::getSingleton('core/session')->getFormKey().'" /></div>'.$form->toHtml() . "</form> " .$grid->toHtml()." " ;
+    	Mage::getSingleton('core/session')->getFormKey().'" /></div>'.$form->toHtml() . "</form>  " ;
     	return $html;
     }
 }

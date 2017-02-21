@@ -8,7 +8,7 @@
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */ 
-class B3it_ConfigCompare_Adminhtml_Configcompare_Import_CoreconfigdataController extends B3it_ConfigCompare_Controller_Adminhtml_Abstract
+class B3it_ConfigCompare_Adminhtml_Configcompare_ImportController extends B3it_ConfigCompare_Controller_Adminhtml_Abstract
 {
 
 	protected function _initAction() {
@@ -26,27 +26,19 @@ class B3it_ConfigCompare_Adminhtml_Configcompare_Import_CoreconfigdataController
 					$xml = file_get_contents($_FILES['filename']['tmp_name']);
 					$xml = simplexml_load_string($xml);
 					Mage::getModel('configcompare/configCompare')->import($xml);
+					$this->_redirect('*/configcompare_compare');
 				} catch (Exception $e) {
 					Mage::logException($e);
 				}				 
 			}
 		}
 		
-		//Mage::register('import_data', $xml);
-
 		$this->_initAction();
-		$this->renderLayout();	
+		$this->renderLayout();
 		return $this;
 		
 	}
 	
-	public function gridAction()
-	{
-		$this->loadLayout();
-		$this->getResponse()->setBody(
-				$this->getLayout()->createBlock('configcompare/adminhtml_import_data_grid')->toHtml()
-		);
-	}
-
+	
 
 }

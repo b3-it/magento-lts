@@ -18,11 +18,10 @@ class B3it_ConfigCompare_Model_Mysql4_ConfigCompare extends Mage_Core_Model_Mysq
     
     public function deleteAll()
     {
-    	$this->_beforeDelete($object);
     	$this->_getWriteAdapter()->delete(
     			$this->getMainTable()
     			);
-    	$this->_afterDelete($object);
+
     	return $this;
     }
 }

@@ -19,44 +19,25 @@ class B3it_ConfigCompare_Adminhtml_Configcompare_Export_CoreconfigdataController
  
 	public function indexAction() {
 		
-		$config = Mage::getModel('core/config_data')->getCollection();
+		
 		$xml = new DOMDocument('1.0', 'UTF-8'); 
 		$xml->preserveWhiteSpace = false;
 		
-		$xml_type = $xml->createElement( "config" );
-		//$xml_type->setAttribute( "type", "core_config_data" );
+		$xml_config = $xml->createElement( "config" );
+		$xml->appendChild($xml_config);
 		
-		$xml->appendChild($xml_type);
+		Mage::getModel('configcompare/coreConfigData')->export($xml, $xml_config);
+		Mage::getModel('configcompare/cmsPages')->export($xml, $xml_config);
+		Mage::getModel('configcompare/cmsBlocks')->export($xml, $xml_config);
 		
-		foreach($config->getItems() as $item){
-			$xml_item = $xml->createElement( "core_config_data");
-			$xml_type->appendChild($xml_item);
-			
-			$node = $xml->createElement( "scope",$item->getScope());
-			$xml_item->appendChild($node);
-			
-			$node = $xml->createElement( "scope_id",$item->getScopeId());
-			$xml_item->appendChild($node);
-			
-			$node = $xml->createElement( "path",$item->getPath());
-			$xml_item->appendChild($node);
-			
-			
-			$data = $xml->createCDATASection($item->getValue());
-			$node = $xml->createElement("value");
-			$node->appendChild($data);
-			
-			//$node = $xml->createElement("value", $item->getValue());
-			$xml_item->appendChild($node);
-			
-		}
 		
 		$xml->formatOutput = true;
 		$content = $xml->savexml();
-		
+		//echo '<pre>'; die($content);
 		$this->_sendUploadResponse('core_config_data.xml', $content, $contentType='application/octet-stream');
 		
 	}
+	
 
 
 }

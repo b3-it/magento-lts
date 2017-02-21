@@ -1,5 +1,5 @@
 <?php
- class B3it_ConfigCompare_Block_Adminhtml_Import_Data_Grid extends Mage_Adminhtml_Block_Widget_Grid
+ class B3it_ConfigCompare_Block_Adminhtml_Compare_Tab_Coredata extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
