@@ -4,7 +4,7 @@
   public function __construct()
   {
       parent::__construct();
-      $this->setId('configcompareGrid');
+      $this->setId('coredataGrid');
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
       $this->setNoFilterMassactionColumn(true);
@@ -21,7 +21,22 @@
       $collection =Mage::getModel('configcompare/coreConfigData')->getCollectionDiff($collection->getItems());
 
       $this->setCollection($collection);
-      return parent::_prepareCollection();
+        parent::_prepareCollection();
+      
+      return $collection->filter();
+  }
+
+  
+  protected function _setFilterValues($data)
+  {
+  	foreach ($this->getColumns() as $columnId => $column) {
+  		if (isset($data[$columnId])
+  				&& (!empty($data[$columnId]) || strlen($data[$columnId]) > 0)) {
+  					$this->getCollection()->addFieldToFilter($columnId , $data[$columnId]);
+  					$column->getFilter()->setValue($data[$columnId]);
+  				}
+  	}
+  	return $this;
   }
 
   protected function _prepareColumns()
@@ -78,7 +93,7 @@
   
   public function getGridUrl()
   {
-  	return $this->getUrl('*/*/grid');
+  	return $this->getUrl('*/*/coredatagrid');
   }
 
  

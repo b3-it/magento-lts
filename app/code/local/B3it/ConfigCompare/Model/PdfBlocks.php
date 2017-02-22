@@ -9,32 +9,28 @@
  */ 
 
 
-class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compare
+class B3it_ConfigCompare_Model_PdfBlocks extends B3it_ConfigCompare_Model_Compare
 {
 	
-	protected $_attributesCompare  = array('stores','is_active');
-	protected $_attributesExport  = array('identifier','stores','is_active');
+	protected $_attributesCompare  = array('payment','customer_group','shipping','store_id','prio','pos','status','tax_rule');
+	protected $_attributesExport  = array('ident','payment','customer_group','shipping','store_id','prio','pos',' tatus','tax_rule');
     
 	public function getCollection()
 	{
-		$collection = Mage::getModel('cms/block')->getCollection();
-		
-		$stores = new Zend_Db_Expr('(SELECT block_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/block_store'). ' GROUP BY block_id ORDER BY store_id)');
-		$collection->getSelect()
-		->joinleft(array('store'=>$stores),'store.block_id = main_table.block_id',array('stores'));
+		$collection = Mage::getModel('pdftemplate/blocks')->getCollection();
 		return $collection;
 	}
     
     public function getCollectionDiff($importXML)
     {
-    	$this->_collection  =  $this->getCollection();
-    	if($importXML)
+    	$this->_collection  = $this->getCollection();
+    	//if($importXML)
     	{
     		$notFound = array();
     		$this->_collectionArray = $this->_collection->toArray();
     		foreach($importXML as $xmlItem){
     			$item = simplexml_load_string($xmlItem->getValue());
-    			$key = $this->_findInCollection((string)$item->identifier,(string)$item->stores);
+    			$key = $this->__findInCollection((string)$item->ident,(string)$item->store_id, (string)$item->customer_group, (string)$item->shipping, (string)$item->payment,(string)$item->tax_rule );
     			if($key !== null){
     				$diff = $this->_compareDiff($this->_collectionArray['items'][$key]['content'], (string)$item->content);
     				$diff2 = $this->_compareDiff($this->_collectionArray['items'][$key]['title'], (string)$item->title);
@@ -96,6 +92,27 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     		$node->appendChild($data);
     		$xml_item->appendChild($node);
     	}
+    }
+    
+    
+    
+    private function __findInCollection($ident, $store_id, $customer_group, $shipping, $payment, $tax_rule){
+    	foreach($this->_collectionArray['items'] as $key => $item){
+    		if($item['ident'] == $ident){
+    			if($item['store_id'] == $store_id){
+	    			if($item['customer_group'] == $customer_group){
+	    				if($item['shipping'] == $shipping){
+	    					if($item['payment'] == $payment){
+	    						if($item['tax_rule'] == $tax_rule){
+	    							return $key;
+	    						}
+	    					}
+	    				}
+	    			}
+    			}
+    		}
+    	}
+    	return null;
     }
     
 }

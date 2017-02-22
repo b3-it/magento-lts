@@ -9,19 +9,22 @@
  */ 
 
 
-class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compare
+class B3it_ConfigCompare_Model_TaxCalculations extends B3it_ConfigCompare_Model_Compare
 {
 	
-	protected $_attributesCompare  = array('stores','is_active');
-	protected $_attributesExport  = array('identifier','stores','is_active');
+	protected $_attributesCompare  = array('tax_country_id', 'tax_region_id', 'tax_postcode', 'rate', 'zip_is_range', 'zip_from', 'zip_to', 'code', 'priority', 'position', 'calculate_subtotal', 'customer_group', 'product');
+	protected $_attributesExport  = array('tax_country_id', 'tax_region_id', 'tax_postcode', 'rate', 'zip_is_range', 'zip_from', 'zip_to', 'code', 'priority', 'position', 'calculate_subtotal', 'customer_group', 'product');
     
 	public function getCollection()
 	{
-		$collection = Mage::getModel('cms/block')->getCollection();
-		
-		$stores = new Zend_Db_Expr('(SELECT block_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/block_store'). ' GROUP BY block_id ORDER BY store_id)');
+		$collection = Mage::getModel('tax/calculation')->getCollection();
 		$collection->getSelect()
-		->joinleft(array('store'=>$stores),'store.block_id = main_table.block_id',array('stores'));
+			->join(array('rate'=>$collection->getTable('tax/tax_calculation_rate')),'main_table.tax_calculation_rate_id = rate.tax_calculation_rate_id')
+			->join(array('rule'=>$collection->getTable('tax/tax_calculation_rule')),'main_table.tax_calculation_rule_id = rule.tax_calculation_rule_id')
+			->join(array('group'=>$collection->getTable('tax/tax_class')),'main_table.customer_tax_class_id = group.class_id',array('customer_group'=>'class_name'))
+			->join(array('product'=>$collection->getTable('tax/tax_class')),'main_table.product_tax_class_id = product.class_id',array('product'=>'class_name'))
+		;
+		//die($collection->getSelect()->__toString());
 		return $collection;
 	}
     
@@ -34,20 +37,15 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     		$this->_collectionArray = $this->_collection->toArray();
     		foreach($importXML as $xmlItem){
     			$item = simplexml_load_string($xmlItem->getValue());
-    			$key = $this->_findInCollection((string)$item->identifier,(string)$item->stores);
+    			$key = $this->__findInCollection((string)$item->code);
     			if($key !== null){
-    				$diff = $this->_compareDiff($this->_collectionArray['items'][$key]['content'], (string)$item->content);
-    				$diff2 = $this->_compareDiff($this->_collectionArray['items'][$key]['title'], (string)$item->title);
+    				//$diff = $this->_compareDiff($this->_collectionArray['items'][$key]['code'], (string)$item->code);
     				$diff3 = $this->_getAttributeDiff($this->_collectionArray['items'][$key], (array)$item);
-    				if(($diff === true) && ($diff2 === true) && ($diff3 === true)) {
+    				if(($diff3 === true)) {
     					unset($this->_collectionArray['items'][$key]);
     				}else{
-    					if($diff !== true){
-    						$this->_collectionArray['items'][$key]['diff'] = $diff;
-    					}
-    					if($diff2 !== true){
-    						$this->_collectionArray['items'][$key]['title'] = $diff2;
-    					}
+    					
+    					
     					if($diff3 !== true){
     						$this->_collectionArray['items'][$key]['attribute'] = $diff3;
     					}
@@ -76,7 +74,7 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     {
     	$collection =  $this->getCollection();
     	foreach($collection->getItems() as $item){
-    		$xml_item = $xml->createElement( "cms_block");
+    		$xml_item = $xml->createElement( "tax_calculation");
     		$xml_node->appendChild($xml_item);
     
     		
@@ -85,17 +83,17 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     		{
     			$this->_addElement($xml, $xml_item, $item, $field);
     		}
-    
-    		$data = $xml->createCDATASection($item->getTitle());
-    		$node = $xml->createElement("title");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    
-    		$data = $xml->createCDATASection($item->getContent());
-    		$node = $xml->createElement("content");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
     	}
+    }
+    
+    private function __findInCollection($code){
+    	foreach($this->_collectionArray['items'] as $key => $item){
+    		if($item['code'] == $code){
+    				return $key;
+
+    		}
+    	}
+    	return null;
     }
     
 }

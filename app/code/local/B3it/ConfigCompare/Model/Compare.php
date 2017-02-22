@@ -46,10 +46,10 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     }
     
     
-    protected function _getAttributeDiff($fields = array(), $from, $to)
+    protected function _getAttributeDiff($from, $to)
     {
     	$res = array();
-    	foreach($fields as $field)
+    	foreach($this->_attributesCompare as $field)
     	{
     		if((string)$from[$field] != (string)$to[$field]){
     			$res[] = $field. ': ' . $this->_compareDiff($from[$field], $to[$field]); 

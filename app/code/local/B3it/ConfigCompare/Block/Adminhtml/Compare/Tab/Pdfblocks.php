@@ -1,10 +1,10 @@
 <?php
- class B3it_ConfigCompare_Block_Adminhtml_Compare_Tab_Cmspages extends Mage_Adminhtml_Block_Widget_Grid
+ class B3it_ConfigCompare_Block_Adminhtml_Compare_Tab_Pdfblocks extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
       parent::__construct();
-      $this->setId('cmspagesGrid');
+      $this->setId('pdfblocksGrid');
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
       $this->setNoFilterMassactionColumn(true);
@@ -13,10 +13,10 @@
   protected function _prepareCollection()
   {
       $collection  = Mage::getModel('configcompare/configcompare')->getCollection();
-  	  $collection->getSelect()->where("type='cms_page'");
+  	  $collection->getSelect()->where("type='pdf_block'");
   	  
   	  
-      $collection = Mage::getModel('configcompare/cmsPages')->getCollectionDiff($collection->getItems());
+      $collection =Mage::getModel('configcompare/pdfBlocks')->getCollectionDiff($collection->getItems());
 
       $this->setCollection($collection);
       parent::_prepareCollection();
@@ -36,7 +36,7 @@
   	}
   	return $this;
   }
-  
+
   protected function _prepareColumns()
   {
   	
@@ -44,7 +44,7 @@
           'header'    => Mage::helper('configcompare')->__('Identifier'),
           //'align'     =>'right',
           'width'     => '120px',
-          'index'     => 'identifier',
+          'index'     => 'ident',
       	
       ));
       
@@ -54,27 +54,19 @@
       		'width'     => '120px',
       		'index'     => 'title',
       		'renderer'  => 'configcompare/adminhtml_widget_grid_column_renderer_diff'
-      		 
       ));
       
-      $this->addColumn('stores', array(
-      		'header'    => Mage::helper('configcompare')->__('Stores'),
-      		//'align'     =>'right',
-      		'width'     => '120px',
-      		'index'     => 'stores',
-      		 
-      ));
-      
+
       $this->addColumn('attribute', array(
       		'header'    => Mage::helper('configcompare')->__('Attribute'),
       		//'align'     =>'right',
       		'width'     => '120px',
       		'index'     => 'attribute',
       		'renderer'  => 'configcompare/adminhtml_widget_grid_column_renderer_diff'
-      		 
+     
       ));
       
-     
+      
       $this->addColumn('diff', array(
       		'header'    => Mage::helper('configcompare')->__('Content'),
       	//	 'width'     => '120px',
@@ -86,13 +78,9 @@
   }
 
   
-
-  
- 
-  
   public function getGridUrl()
   {
-  	return $this->getUrl('*/*/cmspagesgrid');
+  	return $this->getUrl('*/*/pdfblocksgrid');
   }
 
  

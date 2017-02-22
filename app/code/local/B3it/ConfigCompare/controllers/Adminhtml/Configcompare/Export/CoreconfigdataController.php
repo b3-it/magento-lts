@@ -29,6 +29,9 @@ class B3it_ConfigCompare_Adminhtml_Configcompare_Export_CoreconfigdataController
 		Mage::getModel('configcompare/coreConfigData')->export($xml, $xml_config);
 		Mage::getModel('configcompare/cmsPages')->export($xml, $xml_config);
 		Mage::getModel('configcompare/cmsBlocks')->export($xml, $xml_config);
+		Mage::getModel('configcompare/pdfSections')->export($xml, $xml_config);
+		Mage::getModel('configcompare/emailTemplates')->export($xml, $xml_config);
+		Mage::getModel('configcompare/taxCalculations')->export($xml, $xml_config);
 		
 		
 		$xml->formatOutput = true;

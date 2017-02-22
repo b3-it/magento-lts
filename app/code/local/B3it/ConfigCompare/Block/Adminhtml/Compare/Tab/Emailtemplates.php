@@ -1,10 +1,10 @@
 <?php
- class B3it_ConfigCompare_Block_Adminhtml_Compare_Tab_Cmspages extends Mage_Adminhtml_Block_Widget_Grid
+ class B3it_ConfigCompare_Block_Adminhtml_Compare_Tab_Emailtemplates extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
       parent::__construct();
-      $this->setId('cmspagesGrid');
+      $this->setId('emailtemplatesGrid');
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
       $this->setNoFilterMassactionColumn(true);
@@ -13,13 +13,13 @@
   protected function _prepareCollection()
   {
       $collection  = Mage::getModel('configcompare/configcompare')->getCollection();
-  	  $collection->getSelect()->where("type='cms_page'");
+  	  $collection->getSelect()->where("type='email_template'");
   	  
   	  
-      $collection = Mage::getModel('configcompare/cmsPages')->getCollectionDiff($collection->getItems());
+      $collection =Mage::getModel('configcompare/emailTemplates')->getCollectionDiff($collection->getItems());
 
       $this->setCollection($collection);
-      parent::_prepareCollection();
+        parent::_prepareCollection();
       
       return $collection->filter();
   }
@@ -36,33 +36,15 @@
   	}
   	return $this;
   }
-  
   protected function _prepareColumns()
   {
   	
-      $this->addColumn('identifier', array(
+      $this->addColumn('template_code', array(
           'header'    => Mage::helper('configcompare')->__('Identifier'),
           //'align'     =>'right',
           'width'     => '120px',
-          'index'     => 'identifier',
+          'index'     => 'template_code',
       	
-      ));
-      
-      $this->addColumn('Title', array(
-      		'header'    => Mage::helper('configcompare')->__('Title'),
-      		//'align'     =>'right',
-      		'width'     => '120px',
-      		'index'     => 'title',
-      		'renderer'  => 'configcompare/adminhtml_widget_grid_column_renderer_diff'
-      		 
-      ));
-      
-      $this->addColumn('stores', array(
-      		'header'    => Mage::helper('configcompare')->__('Stores'),
-      		//'align'     =>'right',
-      		'width'     => '120px',
-      		'index'     => 'stores',
-      		 
       ));
       
       $this->addColumn('attribute', array(
@@ -71,10 +53,17 @@
       		'width'     => '120px',
       		'index'     => 'attribute',
       		'renderer'  => 'configcompare/adminhtml_widget_grid_column_renderer_diff'
-      		 
+     
       ));
       
-     
+      $this->addColumn('template_subject', array(
+      		'header'    => Mage::helper('configcompare')->__('Subject'),
+      		//'align'     =>'right',
+      		'width'     => '120px',
+      		'index'     => 'template_subject',
+      		'renderer'  => 'configcompare/adminhtml_widget_grid_column_renderer_diff'
+      ));
+   
       $this->addColumn('diff', array(
       		'header'    => Mage::helper('configcompare')->__('Content'),
       	//	 'width'     => '120px',
@@ -86,13 +75,9 @@
   }
 
   
-
-  
- 
-  
   public function getGridUrl()
   {
-  	return $this->getUrl('*/*/cmspagesgrid');
+  	return $this->getUrl('*/*/emailtemplatesgrid');
   }
 
  

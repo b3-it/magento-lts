@@ -41,6 +41,30 @@ class B3it_ConfigCompare_Block_Adminhtml_Compare_Tabs extends Mage_Adminhtml_Blo
       		'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_cmsblocks')->toHtml(),
       ));
      
+      $this->addTab('form_section4', array(
+      		'label'     => Mage::helper('configcompare')->__('Pdf Sections'),
+      		'title'     => Mage::helper('configcompare')->__('Pdf Sections'),
+      		'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_pdfsections')->toHtml(),
+      ));
+       
+      $this->addTab('form_section5', array(
+      		'label'     => Mage::helper('configcompare')->__('Pdf Blocks'),
+      		'title'     => Mage::helper('configcompare')->__('Pdf Blocks'),
+      		'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_pdfblocks')->toHtml(),
+      ));
+      
+      $this->addTab('form_section6', array(
+      		'label'     => Mage::helper('configcompare')->__('E-Mail Templates'),
+      		'title'     => Mage::helper('configcompare')->__('E-Mail Templates'),
+      		'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_emailtemplates')->toHtml(),
+      ));
+       
+      $this->addTab('form_section7', array(
+      		'label'     => Mage::helper('configcompare')->__('Tax Calculation'),
+      		'title'     => Mage::helper('configcompare')->__('Tax Calculation'),
+      		'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_taxcalculation')->toHtml(),
+      ));
+       
       return parent::_beforeToHtml();
   }
 }

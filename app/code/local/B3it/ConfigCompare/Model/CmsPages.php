@@ -12,13 +12,23 @@
 class B3it_ConfigCompare_Model_CmsPages extends B3it_ConfigCompare_Model_Compare
 {
 	
-	protected $_attributes = array('stores', 'root_template', 'meta_keywords', 'meta_description', 'identifier', 'content_heading', 'is_active', 'sort_order', 'layout_update_xml', 'custom_theme', 'custom_root_template', 'custom_layout_update_xml', 'custom_theme_from', 'custom_theme_to', 'activate_time', 'deactivate_time', 'customergroups_hide');
+	protected $_attributesCompare = array('root_template', 'meta_keywords', 'meta_description', 'identifier', 'content_heading', 'is_active', 'sort_order', 'layout_update_xml', 'custom_theme', 'custom_root_template', 'custom_layout_update_xml', 'custom_theme_from', 'custom_theme_to', 'activate_time', 'deactivate_time', 'customergroups_hide');
+	protected $_attributesExport = array('stores','root_template', 'meta_keywords', 'meta_description', 'identifier', 'content_heading', 'is_active', 'sort_order', 'layout_update_xml', 'custom_theme', 'custom_root_template', 'custom_layout_update_xml', 'custom_theme_from', 'custom_theme_to', 'activate_time', 'deactivate_time', 'customergroups_hide');
 			
-    
+	public function getCollection()
+	{
+		$collection = Mage::getModel('cms/page')->getCollection();
+		
+		$stores = new Zend_Db_Expr('(SELECT page_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/page_store'). ' GROUP BY page_id ORDER BY store_id)');
+		$collection->getSelect()
+		->joinleft(array('store'=>$stores),'store.page_id = main_table.page_id',array('stores'));
+		//die($collection->getSelect()->__toString());		
+		return $collection;
+	}
     
     public function getCollectionDiff($importXML)
     {
-    	$this->_collection  = Mage::helper('configcompare')->getCmsPageCollection();
+    	$this->_collection  =  $this->getCollection();
     	if($importXML)
     	{
     		$notFound = array();
@@ -29,7 +39,7 @@ class B3it_ConfigCompare_Model_CmsPages extends B3it_ConfigCompare_Model_Compare
     			if($key !== null){
     				$diff = $this->_compareDiff($this->_collectionArray['items'][$key]['content'], (string)$item->content);
     				$diff2 = $this->_compareDiff($this->_collectionArray['items'][$key]['title'], (string)$item->title);
-    				$diff3 = $this->_getAttributeDiff($this->_attributes, $this->_collectionArray['items'][$key], (array)$item);
+    				$diff3 = $this->_getAttributeDiff($this->_collectionArray['items'][$key], (array)$item);
 	    			if(($diff === true) && ($diff2 === true) && ($diff3 === true)) {
 	    				unset($this->_collectionArray['items'][$key]);
 	    			}else{
@@ -65,12 +75,12 @@ class B3it_ConfigCompare_Model_CmsPages extends B3it_ConfigCompare_Model_Compare
     
     public function export($xml, $xml_node)
     {
-    	$collection = Mage::helper('configcompare')->getCmsPageCollection();
+    	$collection =  $this->getCollection();
     	foreach($collection->getItems() as $item){
     		$xml_item = $xml->createElement( "cms_page");
     		$xml_node->appendChild($xml_item);
     
-    		foreach($this->_attributes as $field)
+    		foreach($this->_attributesExport as $field)
     		{
     			$this->_addElement($xml, $xml_item, $item, $field);
     		}

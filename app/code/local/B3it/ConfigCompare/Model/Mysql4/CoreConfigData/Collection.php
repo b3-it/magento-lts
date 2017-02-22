@@ -10,7 +10,7 @@
  */ 
 class B3it_ConfigCompare_Model_Mysql4_CoreConfigData_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
-	
+	protected $_filters = array();
 	
     public function _construct()
     {
@@ -38,6 +38,32 @@ class B3it_ConfigCompare_Model_Mysql4_CoreConfigData_Collection extends Mage_Cor
     	$item->setOtherValue($item->getValue());
     	$item->unsetData('value');
     	$this->addItem($item);
+    }
+    
+    public function addFieldToFilter($field, $condition = null)
+    {
+        	$this->_filters[$field] = $condition;
+    }
+    
+    
+    public function filter()
+    {
+    	if(count($this->_filters) == 0) return $this;
+    	foreach($this->_items as $key => $value)
+    	{
+    		$flag = false;
+    		foreach($this->_filters as $field => $cond){
+    			if(strpos($value[$field], $cond) !== false){
+    				$flag = true;
+    				continue;
+    			}
+    		}
+    		if(!$flag){
+    			unset($this->_items[$key]);
+    		}
+    	}
+    	
+    	return $this;
     }
     
 }

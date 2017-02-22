@@ -9,32 +9,32 @@
  */ 
 
 
-class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compare
+class B3it_ConfigCompare_Model_PdfSections extends B3it_ConfigCompare_Model_Compare
 {
 	
-	protected $_attributesCompare  = array('stores','is_active');
-	protected $_attributesExport  = array('identifier','stores','is_active');
+	protected $_attributesCompare  = array('description', 'type', 'status', 'position', 'font', 'fontsize', 'top', 'left', 'width', 'height', 'sectiontype', 'position', 'occurrence');
+	protected $_attributesExport  =  array('ident','description', 'type', 'status', 'font', 'fontsize', 'top', 'left', 'width', 'height', 'sectiontype', 'position', 'occurrence' );
     
 	public function getCollection()
 	{
-		$collection = Mage::getModel('cms/block')->getCollection();
-		
-		$stores = new Zend_Db_Expr('(SELECT block_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/block_store'). ' GROUP BY block_id ORDER BY store_id)');
+		$collection = Mage::getModel('pdftemplate/section')->getCollection();
 		$collection->getSelect()
-		->joinleft(array('store'=>$stores),'store.block_id = main_table.block_id',array('stores'));
+			->join(array('section'=>$collection->getTable('pdftemplate/template')),'main_table.pdftemplate_template_id = section.pdftemplate_template_id');
+		
+		
 		return $collection;
 	}
     
     public function getCollectionDiff($importXML)
     {
-    	$this->_collection  =  $this->getCollection();
+    	$this->_collection  = $this->getCollection();
     	if($importXML)
     	{
     		$notFound = array();
     		$this->_collectionArray = $this->_collection->toArray();
     		foreach($importXML as $xmlItem){
     			$item = simplexml_load_string($xmlItem->getValue());
-    			$key = $this->_findInCollection((string)$item->identifier,(string)$item->stores);
+    			$key = $this->__findInCollection((string)$item->title,(string)$item->type, (string) $item->sectiontype);
     			if($key !== null){
     				$diff = $this->_compareDiff($this->_collectionArray['items'][$key]['content'], (string)$item->content);
     				$diff2 = $this->_compareDiff($this->_collectionArray['items'][$key]['title'], (string)$item->title);
@@ -71,12 +71,24 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     	
     }
 
+    private function __findInCollection($path ,$type, $sectiontype){
+    	foreach($this->_collectionArray['items'] as $key => $item){
+    		if($item['title'] == $path){
+    			if($item['sectiontype'] == $sectiontype){
+	    			if($item['type'] == $type){
+	    				return $key;
+	    			}
+    			}
+    		}
+    	}
+    	return null;
+    }
     
     public function export($xml, $xml_node)
     {
-    	$collection =  $this->getCollection();
+    	$collection = $this->getCollection();
     	foreach($collection->getItems() as $item){
-    		$xml_item = $xml->createElement( "cms_block");
+    		$xml_item = $xml->createElement( "pdf_section");
     		$xml_node->appendChild($xml_item);
     
     		

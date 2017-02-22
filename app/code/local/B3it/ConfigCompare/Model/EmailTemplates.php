@@ -9,19 +9,18 @@
  */ 
 
 
-class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compare
+class B3it_ConfigCompare_Model_Emailtemplates extends B3it_ConfigCompare_Model_Compare
 {
 	
-	protected $_attributesCompare  = array('stores','is_active');
-	protected $_attributesExport  = array('identifier','stores','is_active');
+	protected $_attributesCompare  = array('template_code', 'template_styles', 'template_type', 'template_sender_name', 'template_sender_email','orig_template_code', 'orig_template_variables');
+	protected $_attributesExport  =  array('template_code', 'template_styles', 'template_type', 'template_sender_name', 'template_sender_email','orig_template_code', 'orig_template_variables');
+
     
 	public function getCollection()
 	{
-		$collection = Mage::getModel('cms/block')->getCollection();
+		$collection = Mage::getModel('core/email_template')->getCollection();
 		
-		$stores = new Zend_Db_Expr('(SELECT block_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/block_store'). ' GROUP BY block_id ORDER BY store_id)');
-		$collection->getSelect()
-		->joinleft(array('store'=>$stores),'store.block_id = main_table.block_id',array('stores'));
+		
 		return $collection;
 	}
     
@@ -34,10 +33,10 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     		$this->_collectionArray = $this->_collection->toArray();
     		foreach($importXML as $xmlItem){
     			$item = simplexml_load_string($xmlItem->getValue());
-    			$key = $this->_findInCollection((string)$item->identifier,(string)$item->stores);
+    			$key = $this->__findInCollection((string)$item->template_code);
     			if($key !== null){
-    				$diff = $this->_compareDiff($this->_collectionArray['items'][$key]['content'], (string)$item->content);
-    				$diff2 = $this->_compareDiff($this->_collectionArray['items'][$key]['title'], (string)$item->title);
+    				$diff2 = $this->_compareDiff($this->_collectionArray['items'][$key]['template_subject'], (string)$item->template_subject);
+    				$diff = $this->_compareDiff($this->_collectionArray['items'][$key]['template_text'], (string)$item->template_text);
     				$diff3 = $this->_getAttributeDiff($this->_collectionArray['items'][$key], (array)$item);
     				if(($diff === true) && ($diff2 === true) && ($diff3 === true)) {
     					unset($this->_collectionArray['items'][$key]);
@@ -76,7 +75,7 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     {
     	$collection =  $this->getCollection();
     	foreach($collection->getItems() as $item){
-    		$xml_item = $xml->createElement( "cms_block");
+    		$xml_item = $xml->createElement( "email_template");
     		$xml_node->appendChild($xml_item);
     
     		
@@ -86,16 +85,24 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     			$this->_addElement($xml, $xml_item, $item, $field);
     		}
     
-    		$data = $xml->createCDATASection($item->getTitle());
-    		$node = $xml->createElement("title");
+    		$data = $xml->createCDATASection($item->getTemplateSubject());
+    		$node = $xml->createElement("template_subject");
     		$node->appendChild($data);
     		$xml_item->appendChild($node);
     
-    		$data = $xml->createCDATASection($item->getContent());
-    		$node = $xml->createElement("content");
+    		$data = $xml->createCDATASection($item->getTemplateText());
+    		$node = $xml->createElement("template_text");
     		$node->appendChild($data);
     		$xml_item->appendChild($node);
     	}
     }
     
+    private function __findInCollection($path){
+    	foreach($this->_collectionArray['items'] as $key => $item){
+    		if($item['template_code'] == $path){
+    				return $key;
+    		}
+    	}
+    	return null;
+    }
 }
