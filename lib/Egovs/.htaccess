@@ -1,0 +1,5 @@
+AuthUserFile /home/users/nhempel/.passwd_tools
+
+AuthName "eGovs - System-Tools"
+AuthType Basic
+require valid-user
