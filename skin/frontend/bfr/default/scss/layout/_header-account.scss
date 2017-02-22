@@ -48,6 +48,14 @@
     @include bp(max-width, $bp-medium) {
  	    top: $mobile-header-accountnav-top;
     }
+    
+    @include bp(max-width, $bp-small) {
+ 	    top: $mobile-header-accountnav-top - 18px;
+    }
+    
+    @include bp(max-width, $bp-xsmall) {
+ 	    top: $mobile-header-accountnav-top;
+    }
 }
 
 #mobile-nav.skip-active {

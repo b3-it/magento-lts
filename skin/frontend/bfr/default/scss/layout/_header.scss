@@ -176,14 +176,11 @@
             line-height: 1.1;
             text-align: left;
             
-            @include bp(max-width, $bp-xsmall) {
+            @include bp(max-width, $bp-small) {
                 overflow: hidden;
                 display: block;
                 height: 2.3em;
                 width: 97%;
-            }
-            
-            @include bp(max-width, $bp-xsmall) {
                 left: 2%;
             }
         }
