@@ -69,15 +69,21 @@ foreach ($children as $child) {
 
     if (!empty($_hasChildren)) {
         $html[] = $spacer . '<ul id="sub-' . $file_id . '" class="level'. $childLevel .'">';
-		if ($child->getProductCount() < 1
-			&& (
-					!$child->getLandingPage()
-					|| (
-							$child->getLandingPage()
-							&& $child->getDisplayMode() == Mage_Catalog_Model_Category::DM_PRODUCT
-					)
+		if (
+				(
+					$child->getDisplayMode() == Mage_Catalog_Model_Category::DM_PRODUCT
+					&& $child->getProductCount() < 1
 				)
-			){
+			|| (
+					$child->getDisplayMode() == Mage_Catalog_Model_Category::DM_PAGE
+					&& !$child->getLandingPage()
+				)
+			|| (
+					$child->getDisplayMode() == Mage_Catalog_Model_Category::DM_MIXED
+					&& !$child->getLandingPage()
+					&& $child->getProductCount() < 1
+				)
+			) {
 			$show_all_link = false;
 		}
         if ($show_all_link == TRUE) {
