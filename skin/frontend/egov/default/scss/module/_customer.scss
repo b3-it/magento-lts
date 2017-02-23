@@ -499,45 +499,14 @@ body.customer-account {
     }
 }
 
-#my-orders-table,
-.order-details > table {
-    @extend .egov-base-totals;
-    @extend .egov-base-table;
-
-    thead th, tbody td {
-        text-align: left !important;
-        padding: $global-tdpadding;
-    }
-
-    tbody td {
-        background-color: $global-checkout-tdbackground;
-    }
-
-    td.last {
-        text-align: right !important;
-    }
-
-    .option-label {
-        margin-left: $box-spacing;
-        font-weight: 600;
-        font-style: italic;
-    }
-
-    .option-value {
-        margin-left: $box-spacing * 2;
-    }
-
-    tr.bundle:not(:last-child) td {
-        border-bottom: none;
-        border-top: none;
-    }
+#my-orders-table tbody td.date {
+        width: auto;
+        min-width: 100px;
 }
 
-ol#cart-sidebar-reorder {
-    li {
-        margin-top: $box-spacing;
-        margin-bottom: 0px;
-        margin-left: 0px;
+#my-orders-table tbody td[data-rwd-label] {
+	@include bp(max-width, $bp-small) {
+	   width: 100%;
     }
 }
 
@@ -574,7 +543,6 @@ ol#cart-sidebar-reorder {
         tbody:last-child tr:last-child {
             td {
                 padding-bottom: 10px;
-                border-bottom: 0;
 
                 &:last-child {
                     padding-bottom: $trim-small;
@@ -585,6 +553,61 @@ ol#cart-sidebar-reorder {
         tfoot tr.shipping {
             margin-top: 0;
         }
+        
+        tbody td[data-rwd-label] {
+            text-align: left;
+            padding-left: 30px;
+        }
+        
+        tbody td {
+           border-style: hidden;
+        }
+    }
+    
+    .my-account .order-details a.button {
+        width: 100%;
+    }
+}
+
+#my-orders-table,
+.order-details > table {
+    @extend .egov-base-totals;
+    @extend .egov-base-table;
+
+    thead th, tbody td {
+        text-align: left !important;
+        padding: $global-tdpadding;
+    }
+
+    tbody td {
+        background-color: $global-checkout-tdbackground;
+    }
+
+    td.last {
+        text-align: right;
+    }
+
+    .option-label {
+        margin-left: $box-spacing;
+        font-weight: 600;
+        font-style: italic;
+    }
+
+    .option-value {
+        margin-left: $box-spacing * 2;
+    }
+
+    tr.bundle:not(:last-child) td {
+        border-bottom: none;
+        border-top: none;
+    }
+}
+
+ol#cart-sidebar-reorder {
+    li {
+        margin-top: $box-spacing;
+        margin-bottom: 0px;
+        margin-left: 0px;
     }
 }
 
@@ -707,6 +730,10 @@ ol#cart-sidebar-reorder {
             }
         }
     }
+    
+    .my-account .order-details a.button {
+        width: 100%;
+    }
 }
 
 @include bp(max-width, $bp-small) {
@@ -779,11 +806,6 @@ ol#cart-sidebar-reorder {
 
     .data-table {
         &.orders {
-            .link-reorder,
-            .date {
-                display: none;
-            }
-
             td.view {
                 text-align: right;
             }
