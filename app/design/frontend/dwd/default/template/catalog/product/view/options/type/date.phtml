@@ -5,6 +5,10 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+
+/**
+ * @var $this Mage_Catalog_Block_Product_View_Options_Type_Date
+ */
 ?>
 <?php $_option = $this->getOption() ?>
 <?php $_optionId = $_option->getId() ?>
@@ -20,26 +24,33 @@
     <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE_TIME
         || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE): ?>
 
-        <?php echo $this->getDateHtml() ?>
-
+        <input type="text" name="options[<?php echo $_optionId ?>][date]" id="options_<?php echo $_optionId ?>_date" value="" class="product-custom-option datetime-picker input-text" onchange="opConfig.reloadPrice()"/>
         <script type="text/javascript">
             $j(document).ready(function(){
-            	$j('#options_<?php echo $_optionId ?>_date_trig').remove();
+            	//$j('#options_<?php echo $_optionId ?>_date_trig').remove();
             	$j('#options_<?php echo $_optionId ?>_date').datepicker({
-            		'dateFormat'     : "dd.mm.yy",
-            		'dayNames'       : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
-            		'dayNamesShort'  : ["Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam"],
-            		'dayNamesMin'    : ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+            		'changeMonth'    : true,
+            		'changeYear'     : true,
+            		'yearRange'      : '1900:<?php echo date('Y'); ?>',
             		'maxDate'        : 0,
-            		'monthNames'     : ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-            		'monthNamesShort': ["Jan", "Feb", "März", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
-            		'nextText'       : 'Später',
-            		'prevText'       : 'Früher'
+            		'dateFormat'     : '<?php echo $this->getDateFormat(); ?>',
+            		'dayNames'       : <?php echo json_encode(array_values($this->getDayNames())); ?>,
+            		'dayNamesShort'  : <?php echo json_encode(array_map('ucfirst', array_keys($this->getDayNamesAbbr()))); ?>,
+            		'dayNamesMin'    : <?php echo json_encode(array_values($this->getDayNamesAbbr())); ?>,
+            		'monthNames'     : <?php echo json_encode(array_values($this->getMonthNames())); ?>,
+            		'monthNamesShort': <?php echo json_encode(array_values($this->getMonthNamesAbbr())); ?>,
+                    'firstDay'       : <?php echo $this->getFirstWDay();?>,
+            		'nextText'       : '<?php echo Mage::helper('catalog')->__('Next'); ?>',
+            		'prevText'       : '<?php echo Mage::helper('catalog')->__('Prev'); ?>'
             	});
             });
         </script>
     <?php endif; ?>
-        <input type="hidden" id="validate_datetime_<?php echo $_optionId ?>" name="validate_datetime_<?php echo $_optionId ?>" class="validate-datetime-<?php echo $_optionId ?>" value="" />
+        <input type="hidden"
+               id="validate_datetime_<?php echo $_optionId ?>"
+               name="validate_datetime_<?php echo $_optionId ?>"
+               class="validate-datetime-<?php echo $_optionId ?>"
+               value="" />
 
         <script type="text/javascript">
         //<![CDATA[

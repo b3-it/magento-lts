@@ -30,7 +30,7 @@
         padding-left: 0;
         padding-right: 0;
 
-	    @include bp(max-width, $bp-small) {
+	    @include bp(max-width, $bp-mobil) {
 	        float: none;
 	        display: block;
             margin-left: 0;
@@ -42,7 +42,7 @@
 	        min-width: 31%;
 	        width: 31%;
 	        
-	        @include bp(max-width, $bp-small) {
+	        @include bp(max-width, $bp-mobil) {
 	            width: 100%;
 	            margin-bottom: $box-spacing;
 	        }
@@ -52,7 +52,7 @@
 	        min-width: 27%;
 	        width: 27%;
 	        
-	        @include bp(max-width, $bp-small) {
+	        @include bp(max-width, $bp-mobil) {
 	            width: 100%;
 	            margin-bottom: $box-spacing;
 	        }

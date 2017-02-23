@@ -95,7 +95,7 @@ class Dwd_ProductOnDemand_Helper_Data extends Mage_Downloadable_Helper_Data
 	}
 	
 	/**
-	 * Erzeuft aus einem Array einen String
+	 * Erzeugt aus einem Array einen String mit <dt> und <dd> tags für ein <dl> tag. 
 	 *
 	 * @param string $label Label, wird in Funktion übersetzt
 	 * @param array  $list  Liste
@@ -103,15 +103,17 @@ class Dwd_ProductOnDemand_Helper_Data extends Mage_Downloadable_Helper_Data
 	 * @return string
 	 */
 	public function getListAsHtml($label, $list) {
-		$html = $this->__($label).': ';
+		$html = "<dt>".$this->escapeHtml($this->__($label))."</dt>";
 		$i = 0;
 	
 		foreach ($list as $item) {
+			$html .= "<dd>";
 			if (0 == $i) {
-				$html .= "$item";
+				$html .= $this->escapeHtml("$item");
 			} else {
-				$html .= ", $item";
+				$html .= $this->escapeHtml(", $item");
 			}
+			$html .= "</dd>";
 			$i++;
 		}
 	

@@ -16,7 +16,7 @@
         border-bottom: none;
         vertical-align: top;
     }
-    
+
     .mobile-info-block {
         display: none;
         font-size: 0.8rem;
@@ -25,10 +25,15 @@
         
         .price-block {
             margin-bottom: 10px;
+			
+			.cart-price {
+			    display: inline-block;
+				float: right;
+				margin-right: 5px;
+			}
         }
         .incl-tax {
-           font-size: 0.7rem;
-           margin: 0 5px;
+           display: none;
         }        
         .items-options a {
             display: inline-block;
@@ -36,7 +41,7 @@
             right: 10px;
         }
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: block;
         }
     }
@@ -45,7 +50,7 @@
         th {
             background-color: $grundfarbe-blau;
             color: $grundfarbe-weiss;
-            font-size: 1rem;
+            font-size: 0.9rem;
             height: 51px;
 
             span.product-name {
@@ -114,10 +119,10 @@
     }
 
     tbody td:nth-child(2) {
-        width: 160px;
+        width: 115px;
         padding: 3px;
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             width: auto;
         }
     }

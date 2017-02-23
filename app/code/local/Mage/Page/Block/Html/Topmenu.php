@@ -223,7 +223,11 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
         return $classes;
     }
 
-    
+    /**
+     * Return Id of Active Category
+     * 
+     * @return integer
+     */
     public function getCurrentCategoryId()
     {
     	$cat = Mage::registry('current_category');
@@ -232,6 +236,7 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
     	}
     	return 0;
     }
+
     /**
      * Retrieve cache key data
      *

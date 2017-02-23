@@ -162,6 +162,7 @@
 .ui-datepicker td {
 	border: 0;
 	padding: 1px;
+	width: 14.3%;  /* Breite der Datumszellen vereinheitlicht */
 }
 .ui-datepicker td span,
 .ui-datepicker td a {
@@ -334,6 +335,7 @@
 	overflow: auto;
 	overflow-x: hidden;
 	padding-bottom: 1px;
+	max-height: 300px;
 }
 .ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {
 	font-size: 1em;
@@ -356,7 +358,6 @@
 .ui-selectmenu-button.ui-button {
 	text-align: left;
 	white-space: nowrap;
-	width: 14em;
 }
 .ui-selectmenu-icon.ui-icon {
 	float: right;

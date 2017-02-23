@@ -9,40 +9,36 @@
 /* ============================================ *
  * Header
  * ============================================ */
+.page-header-container {
+    max-width: $global-fullpage-width;
+    min-width: $global-min-width;
+    position: relative;
+    margin: 0px auto;
+    padding-top: 100px;
+    height: 240px;
+    background-color: $global-wrapper-color;
+    background-image: none !important;
+    border-bottom: 1px solid #eeeeee;
+    
+    @include bp(max-width, $bp-large) {
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center 0px;
+        height: 230px;
+        padding: 0;
+    }
 
-@include bp(min-width, $bp-medium + 1) {
-    .page-header-container {
-        max-width: $global-fullpage-width;
-        min-width: $global-min-width;
-        position: relative;
-        margin: 0px auto;
-        padding-top: 100px;
-        height: 240px;
-        background-color: $global-wrapper-color;
-        background-image: none !important;
-        border-bottom: 1px solid #eeeeee;
+    @include bp(max-width, $bp-medium) {
+        height: 110px + $global-logo-height;
+        min-width: auto;
     }
 }
+
+
 
 @include bp(max-width, $bp-medium) {
-    .page-header-container {
-        height: 110px + $global-logo-height;
-    }
-
-    .skip-links {
-        position: relative;
-        top: 35px + $global-logo-height;
-    }
-
     #egov-nav, #header-account {
         top: 35px + $global-logo-height !important;
-    }
-}
-
-@include bp(max-width, 800px) {
-    .skip-links {
-        position: relative;
-        top: 75px + $global-logo-height;
     }
 }
 
@@ -51,11 +47,12 @@
     font-family: $base-font-family;
 
     .welcome-header {
-        position: relative;
-        top: 50px;
+        position: absolute;
+        top: 150px;
         right: 10px;
         text-align: right;
         z-index: 999;
+        width: 600px;
 
         h1 {
             display: block;
@@ -66,10 +63,9 @@
             height: 1em;
             margin-top: 12px;
         }
-
+        
         @include bp(max-width, $bp-medium) {
-            top: 170px;
-            position: absolute;
+            top: 155px;
             width: 100%;
             text-align: left;
             z-index: 0;
@@ -141,7 +137,6 @@
 }
 
 @include bp(max-width, $bp-medium) {
-
     .header-language-background {
         display: none;
     }
@@ -166,7 +161,7 @@
     
     @include bp(max-width, $bp-medium) {
     	width: auto;
-    	top: 80px;
+    	top: 70px;
     }
 
     .small {
@@ -174,6 +169,12 @@
         
         @include bp(max-width, $bp-medium) {
         	display: block;
+        }
+        
+        @include bp(max-width, $bp-small) {
+            position: relative;
+            top: 5px;
+            height: 80px;
         }
     }
     .large {
@@ -202,22 +203,23 @@
     position: absolute;
     right: 10px;
     top: 30px;
-    
+
     @include bp(max-width, $bp-medium) {
+        width: 65%;
+        right: -35%;
+        position: relative;
+        top: -45px;
+    }
+    
+    @include bp(max-width, $bp-small) {
         width: 80%;
+        right: -20%;
     }
 }
 
 // ---------------------------------------------
 
 @include bp(max-width, 980px) {
-    .page-header-container {
-        background-image: url($global-header-background-image);
-        background-repeat: no-repeat;
-        background-position: center 0px;
-        height: 230px;
-    }
-   
     .skip-search {
    	    display: none;
    	}
@@ -253,7 +255,6 @@ a.skip-link {
 // ---------------------------------------------
 
 @include bp(max-width, $bp-medium) {
-
     .skip-search {
         float: right;
         position: relative;

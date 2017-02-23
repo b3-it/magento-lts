@@ -26,7 +26,7 @@
     position: relative;
     top: -32px;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         top: -15px;
     }
 
@@ -49,36 +49,45 @@
 .ui-selectmenu-menu {
 	z-index: 1100 !important;
 }
+#map-block {
+	border: $global-active-border solid $grundfarbe-blau;
+	padding: $global-boxpadding-large;
+}
 #suggest-select, .map_size {
 	width: 100%;
 }
 #suggest, #list {
-     display: inline-block;
-     width: 48.5%;
+     display: block;
+     width: 100%;
      
      input, select, #stationenListe-button {
          margin: 0;
          width: 100%;
      }
      
-     @include bp(max-width, $bp-small) {
+     @include bp(max-width, $bp-mobil) {
          display: block;
          width: 100%;
      }
 }
-#suggest {
-	margin-right: 1.5%;
+.map_pos, #suggest, #list, #map-block {
+	margin-bottom: $global-boxmargin;
 }
 #map a, #map_quest_logo a {
      background-color: transparent;
-}
-.map_pos {
-    margin-bottom: $global-boxmargin;
 }
 .map_size {
     height: 600px;
     font-size: 0.7rem;
 }
+
+#OpenLayers_Control_PanZoom_zoomin {
+	top: 66px !important;
+}
+.ol-panzoom .ol-zoomslider .ol-zoomslider-thumb {
+	margin: 0 -3px !important;
+}
+
 .olControlMousePosition {
     left: 6%;
 }
@@ -92,7 +101,7 @@
 	cursor: pointer;
 }
 .olPopup {
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    left: 40% !important;
 	}
 }
@@ -104,11 +113,13 @@
     z-index: 1000;
 }
 .olPopupContent {
+	background-color: $grundfarbe-weiss;
+	
 	.olLayerGeoRSSTitle, .olLayerGeoRSSClose {
 	    display: block;
 	    background-color: $grundfarbe-blau;
 	    color: $grundfarbe-weiss;
-	    padding: 5px 10px;
+	    padding: 5px 50px 5px 10px;
 	}
 	.olLayerGeoRSSClose {
 	    @include hover-blau-weiss;
@@ -133,8 +144,9 @@
 		    font-size: 1.2rem;
 		    height: 51px;
 		    position: relative;
-		    left: 15%;
 		    top: 35%;
+		    display: inline-block;
+		    margin: 10px;
 		}
 	}
 }
@@ -146,14 +158,14 @@
     z-index: 9999;
     
     ul {
-        width: 200%;
+        width: 100%;
     }
     
     li {
         display: inline-block;
         width: 33%;
         
-        @include bp(max-width, $bp-medium) {
+        @include bp(max-width, $bp-mobil) {
             width: 48%;
             
             &:nth-child(2n+0) {
@@ -205,12 +217,16 @@
 }
 
 .catalog-product-view {
-	.validation-advice, .validation-failed {
-	    outline: $global-warning-color !important;
-	    border-color: $global-warning-color !important;
-	    color: $global-warning-color !important;
+	.validation-advice {
+	    color: $global-warning-color;
 	}
-	
+	.validation-failed {
+	    border-color: $global-warning-color !important;
+	    
+	    label {
+	        color: $global-warning-color;
+	    }
+	}
 	
     .col1-layout {
         .col-main {
@@ -283,7 +299,7 @@
             top: $global-1-product-height - $gobal-cart-block-height - 140px;
             left: $global-product-image-1-width + 2%;
             
-            @include bp(max-width, $bp-medium) {
+            @include bp(max-width, $bp-mobil) {
             	position: relative;
             	top: auto;
             	left: auto;
@@ -300,7 +316,6 @@
 		    border-bottom: $global-active-border solid $textfarbe-mittel;
 		    color: $grundfarbe-blau;
 		    font-size: $global-h4-size;
-		    font-weight: 600;
 		    margin-bottom: 3px;
 		    padding-bottom: 3px;
         }
@@ -309,10 +324,10 @@
             color: $textfarbe-mittel;
             margin-bottom: 15px;
         }
-        
+
         .mobile-product-name {
-            height: 2rem;
-            
+            height: auto;
+
             h1 {
                 overflow: hidden;
                 height: 100%;
@@ -320,43 +335,42 @@
         }
         
         .add-to-cart {
-            @include bp(max-width, $bp-small) {
-                padding: 5px;
+            @include bp(max-width, $global-fullpage-width) {
+                padding: 10px 5px;
                 width: 100%;
                 display: block;
                 background-color: $grundfarbe-blgr;
             }
-            
+
             .qty-wrapper, .add-to-cart-buttons {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $global-fullpage-width) {
                     width: 48%;
                     display: inline-block;
                     vertical-align: top;
                 }
             }
-            
+
             .add-to-cart-buttons {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $global-fullpage-width) {
                     position: relative;
                     right: -2%;
                 }
             }
-            
-            .qty {
-                @include bp(max-width, $bp-small) {
-               		width: 50% !important;
-            	}
-            }
-            
+
             button {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $global-fullpage-width) {
                     margin: 0 !important;
                 }
+            }
+
+            .button-full-width {
+                width: 70%;
+                float: none;
             }
             
             span.egov-cart {
                 &:before {
-                    @include bp(max-width, $bp-small) {
+                    @include bp(max-width, $global-fullpage-width) {
                         content: '';
                     }
                 }
@@ -371,19 +385,20 @@
             line-height: 1rem;
             color: $textfarbe-mittel;
         }
-
+        
         .product-img-box {
             padding-right: 30px;
             width: 27.5%;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: none;
             }
         }
         .mobile-product-img-box {
             display: none;
+            max-height: 190px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: inline;
                 float: left;
                 margin: 0 10px 10px 0;
@@ -393,39 +408,44 @@
             }
             
             img {
-               width: 100%;
+               height: 170px;
             }
         }
         
         .short-description {
             padding-right: 20px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: block;
+                min-height: 200px;
             }
         }
+
         .product-shop {
             width: 30.5%;
             text-align: center;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $global-fullpage-width) {
                 display: block;
                 width: 100%;
                 text-align: left;
+                padding: 0;
             }
         }
         
         .short-description-title {
             font-weight: bold;
         }
+
         .price {
             font-size: $global-h4-size;
             color: $grundfarbe-blau;
         }
+
         .delivery-time {
             font-size: 0.8rem;
         }
-        
+
         .product-additional-information {
             dt {
                 margin-top: 0;
@@ -445,7 +465,7 @@
                     width: 90%;
                 }
             }
-            
+
             .type-checkbox {
                 vertical-align: top;
                 display: block;
@@ -736,54 +756,79 @@
 }
 
 .product-view {
-    .add-to-box:after,
-    .add-to-cart:after {
-        @include clearfix;
-    }
-    
     form > div.price-box, form > span.tax-details {
         display: none;
-    } 
-
-    .add-to-cart-buttons {
-        button {
-            @include grau-hover-blau;
-		    display: block;
-		    font-size: 1.2rem;
-		    height: 51px;
-		    margin: 10px 0 0;
-		    padding: 12px 0;
-		    text-align: center;
-		    width: 205px;
-		    
-            > span.egov-cart {
-                font-size: $global-h6-size;
-                margin: 0;
-                
-                @include bp(max-width, $bp-small) {
-                    font-size: 1rem;
-                }
-            }
-        }
     }
+    
+    #add-to-cart-top, .add-to-cart {
+        background-color: $grundfarbe-blgr;
+	    padding: 10px 5px;
+	    
+	    .input-text {
+	        padding: 10px;
+	        border-color: $grundfarbe-blau;
+	        margin: 7px 0;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            padding: 10px 3px;
+	        }
+	    }
+
+	    .button {
+	        width: 100px;
+	        padding: 7px 5px;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            float: none !important;
+	            width: 200px !important;
+	            padding: 10px 5px !important;
+	        }
+	    }
+	}
+	
+	#add-to-cart-top {
+        width: 100%;
+
+	    .button-full-width {
+            width: 100%;
+        }
+
+	    .input-text {
+	        width: 20%;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	            width: 10%;
+	        }
+	    }
+	}
+	
+	.add-to-cart {
+	    position: relative;
+        top: -15px;
+	    width: 260px;
+	
+	    .button {
+	        width: 120px;
+	        padding: 7px 20px;
+	    }
+
+	    .input-text {
+            width: 30%;
+	        
+	        @include bp(max-width, $global-fullpage-width) {
+	             width: 10%;
+	        }
+	    }
+	}
+	
+	.background-transparent {
+	    background: transparent;
+	    padding: 0;
+	}
 
     /* Set a min-height so that the floated elements break appropriately */
     .product-options-bottom .price-box {
         min-height: 40px;
-    }
-
-    .product-options-bottom .price-box,
-    .add-to-cart-buttons .paypal-logo {
-        margin-bottom: 10px;
-    }
-    .product-options-bottom {
-        .qty-wrapper, .add-to-cart-buttons {
-            display: inline-block;
-            vertical-align: top;
-        }
-        .button {
-            margin: 0;
-        }
     }
 
     .add-to-cart .qty-wrapper label {
@@ -803,26 +848,6 @@
     }
 }
 
-@include bp(max-width, $bp-xsmall) {
-    .product-view .add-to-cart-buttons {
-        .paypal-or {
-            line-height: 20px;
-        }
-
-        .paypal-logo,
-        .paypal-or,
-        .paypal-button,
-        .button {
-            text-align: center;
-            width: 100%;
-            display: block;
-            margin-right: 0;
-            margin-left: 0;
-            float: none;
-        }
-    }
-}
-
 /* This is the "or" that separates the "Add to Cart" and "Add to X" links */
 .add-to-box .or {
     display: none;
@@ -836,7 +861,7 @@
     display: none;
 }
 
-@include bp(max-width, 599px) {
+@include bp(max-width, $bp-small) {
     .add-to-box .add-to-links {
         a {
             float: none;
@@ -862,23 +887,11 @@
     clear: both;
 }
 
-@include bp(min-width, $bp-medium + 1) {
-
-    .product-collateral {
-        @include tabs;
-    }
-}
-
-@include bp(max-width, $bp-medium) {
-
-    .product-collateral {
+@include bp(max-width, $bp-mobil) {
+	.product-collateral {
         @include accordion;
         @include accordionCollapse;
-    }
-}
-
-@include bp(max-width, $bp-medium) {
-
+	}
     .product-view .product-shop,
     .product-view .add-to-cart-wrapper,
     .product-view .block-related,
@@ -891,8 +904,10 @@
     }
 }
 
-@include bp(min-width, $bp-medium + 1) {
-
+@include bp(min-width, $bp-mobil + 1) {
+    .product-collateral {
+        @include tabs;
+    }
     .product-view .product-shop .product-name {
         display: block;
     }
@@ -1014,7 +1029,7 @@
 .product-options {
     width: 100%;
     padding: 10px 15px 15px;
-    border: $global-box-border solid $grundfarbe-blgr;
+    border: $global-box-border solid $grundfarbe-blau;
     position: relative;
 }
 
@@ -1205,5 +1220,28 @@
 
     .ratings {
         display: none;
+    }
+}
+
+div.block-cart {
+	font-size: 1rem;
+
+    .block-content {
+        padding: 0px 5px;
+        
+        .egov-cart {
+            font-size: 20px;
+        }
+        
+        .price {
+            font-size: 1rem;
+        }
+
+        .summary {
+            padding: 0 5px;
+            p {
+                margin: inherit;
+            }
+        }
     }
 }

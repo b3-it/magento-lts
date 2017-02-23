@@ -41,7 +41,7 @@ function setOverlayIcons(grafik, size)
 
         var marker = newfeature.createMarker();
 
-        marker.events.register('click'     , newfeature, georss.markerClick);
+        marker.events.register('click', newfeature, georss.markerClick);
 
         georss.removeMarker(feature.marker);
         georss.addMarker(marker);

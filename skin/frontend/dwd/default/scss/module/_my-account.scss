@@ -5,20 +5,31 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.sales-order-view .my-account .title-buttons h1 {
+	margin: 0;
+}
+
 .my-account {
 	position: relative;
 	top: 15px;
-	
-	@include bp(max-width, $bp-small) {
-	    top: -15px;
+
+	#order-buttons {
+	    display: inline-block;
+        float: right;
+        position: relative;
+        top: -30px;
+
+        a, span {
+            top: 0;
+        }
 	}
-	
+
 	address {
 	    font-size: 1rem;
 	    color: $textfarbe-mittel;
 	    text-align: left;
 	}
-	
+
 	h2 {
 	    font-size: $global-h4-size;
 	}
@@ -91,6 +102,33 @@
         }
     }
 
+    .count-container {
+        width: 100%;
+
+        .amount, .limiter {
+            display: inline-block;
+        }
+
+        .amount {
+            float: left;
+        }
+    }
+
+    .new-adress-button {
+        display: block;
+        width: 100%;
+
+        .button {
+            display: inline-block;
+            float: none;
+            width: 25%;
+
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
+        }
+    }
+
     .col-1, .col-2 {
         padding-right: 0px !important;
 
@@ -100,14 +138,17 @@
         }
     }
 
-    p.required {
+    p.required, label.required > em {
         color: $global-warning-color;
     }
 
     .box {
-        /*border: 1px solid $global-lightcolor;*/
         margin: 0px;
         width: 90%;
+
+        @include bp(max-width, $bp-mobil) {
+            width: 100%;
+        }
 
         .box-content {
             margin: 5px;
@@ -124,6 +165,10 @@
 
     .full-size {
         width: 100%;
+    }
+
+    .button {
+        float: none;
     }
 }
 
@@ -147,11 +192,17 @@
 .customer-account-index {
     .col2-left-layout {
         .col-main {
-            @include bp(max-width, 800px) {
+            @include bp(max-width, $bp-mobil) {
                 float: none;
                 display: block;
                 width: 100%;
             }
         }
     }
+}
+
+.sales-order-invoice {
+	#order-buttons {
+	    top: -45px;
+	}
 }

@@ -35,18 +35,17 @@
         </reference>
     </checkout_cart_index>
     
-      <xegovs_checkout_multipage_overview>
+    <egovs_checkout_multipage_overview>
         <reference name="checkout_overview">
             <action method="addItemRender"><type>prondemand</type><block>prondemand/checkout_cart_item_renderer</block><template>dwd/prondemand/checkout/onepage/review/item.phtml</template></action>
         </reference>
-       
-   </xegovs_checkout_multipage_overview>
+    </egovs_checkout_multipage_overview>
    
-     <xegovs_checkout_multipage_successview>
+    <egovs_checkout_multipage_successview>
          <reference name="checkout_successview">
            <action method="addItemRender"><type>prondemand</type><block>prondemand/checkout_cart_item_renderer</block><template>dwd/prondemand/checkout/onepage/review/item.phtml</template></action>
         </reference> 
-   </xegovs_checkout_multipage_successview> 
+    </egovs_checkout_multipage_successview> 
     
     <downloadable_customer_products translate="label">
         <reference name="my.account.wrapper">

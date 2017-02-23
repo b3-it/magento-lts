@@ -31,6 +31,10 @@
     @include bp(max-width, $bp-medium) {
     	width: 135px;
     }
+    
+    @include bp(max-width, $bp-small) {
+    	width: 100%;
+    }
 }
 
 // ---------------------------------------------
@@ -65,50 +69,48 @@
     color: $global-fontcolor-light;
     line-height: 24px;
     text-align: center;
+    
+    @include bp(min-width, $bp-medium + 1) {
+        @include border-radius(0px);
+        background: none;
+        top: 57px;
+        margin-left: 0px;
+        font-size: $f-size;
+        width: auto;
+
+        &:before {
+            content: '(';
+        }
+        &:after {
+            content: ')';
+        }
+    }
+    @include bp(max-width, $bp-large) {
+        top: 50%;
+    }
+    @include bp(max-width, $bp-xsmall) {
+        margin-left: -12px;
+        top: 40%
+    }
+    
+    &:hover {
+        @include bp(min-width, $bp-medium + 1) {
+            text-decoration: none;
+        }
+    }
 }
 .skip-link.skip-active .count {
     color: $global-fontcolor-light;
-}
-
-// Using extra .skip-link selector to increase specificity
-.skip-link.skip-cart .count {
 }
 
 .skip-cart.no-count .count {
     display: none;
 }
 
-@include bp(max-width, 499px) {
-    .skip-cart .count {
-        margin-left: -12px;
-    }
-}
-
 @include bp(min-width, $bp-medium + 1) {
     .skip-cart {
         color: $global-linkcolor;
         text-transform: uppercase;
-
-        &:hover {
-            text-decoration: none;
-        }
-
-        .count {
-            @include border-radius(0px);
-            //position: static;
-            background: none;
-            top: 57px;
-            margin-left: 0px;
-            font-size: $f-size;
-            width: auto;
-
-            &:before {
-                content: '(';
-            }
-            &:after {
-                content: ')';
-            }
-        }
     }
     .skip-cart .count,
     .skip-link.skip-active .count {

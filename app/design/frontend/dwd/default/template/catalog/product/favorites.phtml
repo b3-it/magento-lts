@@ -16,7 +16,6 @@
 <?php
     $_productCollection=$this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
-    $name_limit = 30;
     $sku_limit = 24;
     $desc_limit = 110;
     $_imgSize_list = 300;
@@ -117,20 +116,6 @@
                 </div>
 
                 <div class="product-price">
-                    <div class="mobile-product-block">
-	                    <?php // Product Image ?>
-		                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
-		                    <img id="product-collection-image-<?php echo $_product->getId(); ?>"
-		                         src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
-		                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
-		
-		                  <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
-		                    <div class="product-new-block">
-		                        <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
-		                    </div>
-		                  <?php endif; ?>
-		                </a>
-	                </div>
                     <?php echo $this->getPriceHtml($_product, true) ?>
 	                <div class="delivery-information">
 	                    <?php echo $_product->getDeliveryTime(); ?>
@@ -146,13 +131,14 @@
 	                            </span>
 	                        </button>
 	                    <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
-	                        <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>"
-	                           class="button egov-view"
-	                           href="<?php echo $_product->getProductUrl() ?>">
+	                        <button type="button"
+	                                title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
+	                                class="button btn-cart egov-cart"
+	                                onclick="setLocation('<?php echo $_product->getProductUrl() ?>')">
 	                            <span>
-	                                <?php echo $this->__('View Details') ?>
+	                                <?php echo $this->__('Add to Cart') ?>
 	                            </span>
-	                        </a>
+	                        </button>
 	                    <?php else: ?>
 	                        <p class="action availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
 	                    <?php endif; ?>
@@ -182,9 +168,6 @@
                     <?php
                     $_productNameStripped = $this->stripTags($_product->getName(), null, true);
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
-                    if ( strlen($_productName) > $name_limit ) {
-                        $_productName = mb_substr($_productName, 0, $name_limit) . '...';
-                    }
                     ?>
                     <h2 class="product-name">
                         <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
@@ -226,11 +209,12 @@
                                 <span><?php echo $this->__('Add to Cart') ?></span>
                             </button>
                         <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
-                            <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>"
-                               class="button egov-view"
-                               href="<?php echo $_product->getProductUrl() ?>">
-                                <span><?php echo $this->__('View Details') ?></span>
-                            </a>
+                            <button type="button"
+                                    title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
+                                    class="button btn-cart egov-cart"
+                                    onclick="setLocation('<?php echo $_product->getProductUrl() ?>')">
+                                <span><?php echo $this->__('Add to Cart') ?></span>
+                            </button>
                         <?php else: ?>
                             <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
                         <?php endif; ?>

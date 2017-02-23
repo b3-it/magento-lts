@@ -47,7 +47,7 @@
                 label {
                     font-weight: bold;
                     
-                    @include bp(max-width, $bp-small) {
+                    @include bp(max-width, $bp-mobil) {
                         display: inline-block;
                         width: 90%;
                     }
@@ -105,7 +105,7 @@
             display: inline-block;
             margin-bottom: 15px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
@@ -161,7 +161,7 @@
                     display: inline-block;
                     width: 48%;
                     
-                    @include bp(max-width, $bp-small) {
+                    @include bp(max-width, $bp-mobil) {
                         display: block;
                         width: 100%;
                     }
@@ -176,7 +176,7 @@
         li.halfwide {
             width: 48%;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
             }
         }
@@ -193,7 +193,7 @@
         }
         
         .ui-selectmenu-button.ui-button {
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 display: block;
             }
         }

@@ -31,13 +31,13 @@ class Bkg_Viewer_Model_Service_Service extends Mage_Core_Model_Abstract
     }
     
     
-    public function fetchLayers($url,$type='WMS')
+    public function fetchLayers($url)
     {
     	$helper = Mage::helper('bkgviewer');
     	//try 
     	{
     		$url = trim($url,'?');
-    		$url .= "?Request=GetCapabilities&SERVICE=".$type."&VERSION=1.3.0";
+    		$url .= "?Request=GetCapabilities&SERVICE=WMS&VERSION=1.3.0";
     		$xml = $helper->fetchData($url);
     		$wms = new B3it_XmlBind_Wms13_WmsCapabilities();
     		$capa = $wms->getCapability();

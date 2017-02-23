@@ -2,24 +2,26 @@ var toggleBlocks = new Array();
 
 //Definieren der Break-Points für JavaScript-Aktionen
 var egov_break = {
-    lngSwitch: 760,    // Store-Language Switcher
-    welcome  : 785,    // Welcome
-    navbar   : 785,    // Navigation
-    rightCol : 1000,   // Rechte Maginal-Spalte
-    topSearch: 911     // Suchen-Leiste im Header
+    //lngSwitch: 760,    // Store-Language Switcher
+    //welcome  : 785,    // Welcome
+    navbar   : 799,    // Navigation
+    //rightCol : 1000,   // Rechte Maginal-Spalte
+    //topSearch: 911     // Suchen-Leiste im Header
 };
 
 // Allgemeine JS-Funktionen
 $j(document).ready(function(){
     // Custom-Scrollbar im Skin-Design
     $j('body').niceScroll({
-        'cursorcolor'       : '#2D4B9B',
+        'cursorcolor'       : $j('#top-row').css('background-color'),
         'cursorwidth'       : '15px',
         'cursorborderradius': '3px'
     });
 
-    $j('#mobile-cart > a').attr('data-target-element', '#mobile-header-cart');
-    $j('#mobile-cart > a').attr('id', 'mobile-cart-menu');
+    $j('#mobile-cart > a').attr({
+    	'id'                 : 'mobile-cart-menu',
+    	'data-target-element': '#mobile-header-cart'
+    });
     $j('#mobile-cart > div').attr('id', 'mobile-header-cart');
 
 	if ( $j('body').hasClass('cms-index-index') ) {
@@ -35,22 +37,46 @@ $j(document).ready(function(){
 		                               .css('display', 'none');
 	}
 
-	if ( $j('#map').length || $j('#product_addtocart_form > .availability') ) {
-		$j('#grouped-product-avalible-moved').html( $j('.availability').html() )
+	var block_availability = $j('#product_addtocart_form > .availability');
+	if ( $j('#map').length || block_availability ) {
+		$j('#grouped-product-avalible-moved').html( block_availability.html() )
                                              .removeClass('no-display')
                                              .css('display', 'block');
-        $j('.availability').html('')
-                           .addClass('no-display')
-                           .css('display', 'none');
+		block_availability.addClass('no-display')
+                          .css('display', 'none');
 	}
 
-	if ( $j('#product_addtocart_form > p.delivery-time').length ) {
-		$j('#grouped-product-avalible-moved').html( $j('#product_addtocart_form > p.delivery-time').html() )
+	var block_delivery = $j('#product_addtocart_form > p.delivery-time');
+	if ( block_delivery.length ) {
+		$j('#grouped-product-avalible-moved').html( block_delivery.html() )
                                              .removeClass('no-display')
                                              .css('display', 'block');
-        $j('#product_addtocart_form > p.delivery-time').html('')
-                                                     .addClass('no-display')
-                                                     .css('display', 'none');
+		block_delivery.addClass('no-display')
+                      .css('display', 'none');
+	}
+	
+	if ( $j('.add-to-cart').length ) {
+		// Default-Funtion
+		var defaultFkt = 'syncSelectedQty(this.value)';
+		
+		// Produktansicht gewählt => Button kopieren
+		$j('#add-to-cart-top').html( $j('.add-to-cart').html() );
+		
+		// ID und Events setzen, damit die Felder korrekt funktionieren
+		$j('#add-to-cart-top input[type="tel"]').attr({'id': 'qty-top', 'name': 'qty-top', 'onBlure': defaultFkt, 'onKeyUp': defaultFkt});
+		$j('#add-to-cart-top label').attr('for', 'qty-top');
+		$j('.add-to-cart input[type="tel"]').attr({'id': 'qty-bottom', 'name': 'qty-bottom', 'onBlure': defaultFkt, 'onKeyUp': defaultFkt});
+		$j('.add-to-cart label').attr('for', 'qty-bottom');
+		
+		// verstecktes Formularfeld erzeugen
+		var input = $j('<input />', {
+			'type'     : 'hidden',
+			'id'       : 'qty',
+			'name'     : 'qty',
+			'data-egov': 'automatic',
+			'value'    : $j('#qty-top').val()
+		});
+		$j('#product_addtocart_form div.no-display').before( input );
 	}
 
     // Umlegen der Shop-Navigation
@@ -77,9 +103,9 @@ $j(document).ready(function(){
             }
         });
     }
-
+    
 	// Artikel-Namen und Artikel-Nummern abkürzen
-	cutAllArticleTitleLine();
+	//cutAllArticleTitleLine();
 	
     // Benutzer-Navigation für Mobil
     checkMobileCustomerNavigation();
@@ -87,14 +113,19 @@ $j(document).ready(function(){
 	// Auf Größen-Anpassung des Fensters reagieren
 	$j(window).resize(function() {
 		// Artikel-Namen und Artikel-Nummern abkürzen
-		cutAllArticleTitleLine();
+		//cutAllArticleTitleLine();
 		
 		// Benutzer-Navigation für Mobil
 		checkMobileCustomerNavigation()
 	});
 
 	// jQuery-UI für DropDown-Boxen
-	$j("select").selectmenu();
+	$j("select").selectmenu({
+		'change': function( event, ui ) {
+			// need to get the real elements parent to trigger change event
+			$j(ui.item.element).parent().trigger("change");
+		}
+	});
 	
 	// Grafischer Language-Switcher
 	$j('#select-language').touchSelect({
@@ -103,6 +134,25 @@ $j(document).ready(function(){
 		'elementInsert': '<li />',
 		'uiFindElement': true
 	});
+
+    // Language-Umschalter in Mobil-Navigation einbauen
+    if ( $j('#mobile-home-link').length ) {
+    	$j('<li id="mobile-language-switch" class="level0"></li>').insertAfter( $j('#mobile-home-link') );
+    	
+    	$j('#select-language > option').each(function(){
+    		if ( $j(this).prop('selected') == false ) {
+    			// Link erzeugen
+    			var link = $j('<a />',{
+    				'href': $j(this).val(),
+    				'id'  : 'mobile-language-' + $j(this).attr('data-code'),
+    				'text': $j(this).attr('data-code')
+    			});
+    			
+    			// Link als Child einfügen
+  				$j('#mobile-language-switch').append(link);
+    		}
+    	});
+    }
 });
 
 function setTabIndex(arr)
@@ -113,14 +163,42 @@ function setTabIndex(arr)
 }
 
 /**
+ * Wenn in der Artikelansicht die Anzahl der Artikel geändert wird,
+ * so muss das FORM-Field aktualisiert werden und danach dieser Wert
+ * in beide Eingabefelder kopiert werden
+ */
+function syncSelectedQty(newValue)
+{
+	// neue Bestellmenge in eine Zahl umwandeln
+	var neu = parseInt(newValue);
+
+	if ( $j.isNumeric(neu) ) {
+		// alles korrekt => Wert setzen
+		$j('#qty').val( neu );
+	}
+	
+	// gesetzten Wert in die Eingabefelder schreiben
+	$j('#qty-top').val( $j('#qty').val() );
+	$j('#qty-bottom').val( $j('#qty').val() );
+}
+
+/**
  * Prüfen, ob man sich im Benutzerkonto befindet und bei Bedarf die
  * Benutzer-Navigation umkopieren
  */
 function checkMobileCustomerNavigation()
 {
-	if ( $j('body').hasClass('customer-account') ) {
-    	if( ($j('.col-left').css('display') == 'none') && ( $j('#mobile-header #header-account li.first ul.level1').length < 1 ) ) {
-    		$j('#mobile-header #header-account li.first').append( '<ul class="level1">' + $j('#customer-account-navigation').html() + '</ul>' );
+    if ( $j('#mobile-customer-account-navigation').length ) {
+    	return;
+    }
+	
+	if ( $j('#customer-account-menu').length > 0 ) {
+    	if( $j('#mobile-header #header-account li.first ul.level1').length < 1 ) {
+    		$j('#mobile-header-account li.first').append(
+                '<ul id="mobile-customer-account-navigation" class="level1">' +
+                $j('#customer-account-navigation').html() +
+                '</ul>'
+            );
     	}
     }
 }
