@@ -743,7 +743,47 @@
     
     form > div.price-box, form > span.tax-details {
         display: none;
-    } 
+    }
+
+    .add-to-cart {
+        @include grau-hover-blau;
+        
+        height: 51px;
+        width: 205px;
+
+        label {
+            font-size: 1rem;
+            font-color: $grundfarbe-blau;
+            display: inline-block;
+            line-height: 1rem;
+            margin-top: -20px;
+            vertical-align: middle;
+        }
+        .qty {
+            font-size: 1rem;
+            line-height: 1rem;
+            border: 1px solid $grundfarbe-blau;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -20px;
+            width: 35px;
+            height: 2rem;
+        }
+        .btn-cart {
+       	    font-size: 1rem;
+            font-color: $grundfarbe-blau;
+            display: inline-block;
+            background: none;
+            float: none;
+            padding: 2px;
+            width: 50%;
+       	}
+        &:hover, &:active, &:focus {
+            .btn-cart {
+                color: $grundfarbe-weiss;
+            }
+        }
+    }
 
     .add-to-cart-buttons {
         button {
@@ -1205,5 +1245,35 @@
 
     .ratings {
         display: none;
+    }
+}
+
+div.block-cart {
+	font-size: 1rem;
+	margin-bottom: inherit;
+
+    .block-content {
+        padding: 0px 5px;
+
+        .summary {
+            padding: 0 5px;
+            p {
+                margin: inherit;
+            }
+        }
+    }
+
+    //hotfixing of egov inside of dwd
+    a.egov-cart {
+        font-size: 1rem;
+        font-family: inherit;
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        &::before {
+            font-family: "FontAwesome";
+            font-size: $global-fontsize + 12;
+            margin-right: $global-fontsize + 12;
+        }
     }
 }

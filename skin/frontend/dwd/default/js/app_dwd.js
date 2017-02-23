@@ -94,7 +94,12 @@ $j(document).ready(function(){
 	});
 
 	// jQuery-UI für DropDown-Boxen
-	$j("select").selectmenu();
+	$j("select").selectmenu({
+		change: function( event, ui ) {
+			// need to get the real elements parent to trigger change event
+			$j(ui.item.element).parent().trigger("change");
+		}
+	});
 	
 	// Grafischer Language-Switcher
 	$j('#select-language').touchSelect({

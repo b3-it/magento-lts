@@ -19,6 +19,17 @@
     td.last {
         padding: 0px;
     }
+
+    td.product-cart-remove {
+        text-align: center !important;
+    }
+
+    th.cart-price-head {
+        max-width: 100px;
+    }
+    th.cart-total-head {
+        max-width: 120px;
+    }
 }
 
 .cart .button {
