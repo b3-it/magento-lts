@@ -24,15 +24,15 @@
     	display: none;
     }
     @include bp(max-width, $bp-medium) {
-    	left: 35%;
-        width: 18%;
+    	left: 33.5%;
+        width: 14%;
     }
     @include bp(max-width, $bp-small) {
        left: 47%;
        width: 16%;
     }
     @include bp(max-width, $bp-xsmall) {
-       left: 42.5%;
+       left: 44.5%;
        width: 17%;
     }
     

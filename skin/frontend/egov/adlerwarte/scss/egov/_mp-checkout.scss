@@ -164,7 +164,6 @@
             @extend .block;
             vertical-align: top;
             padding: 0px;
-            width: 45%;
             min-height: 120px;
             
             @include bp(max-width, $bp-medium) {
