@@ -22,27 +22,6 @@
     display: block;
     clear: both;
 
-    h1, .welcome-msg {
-        color: $global-fontcolor-light;
-        display: inline;
-        position: relative;
-    }
-    
-    .welcome-msg {
-        font-size: $global-pagetitle-size;
-        
-        @include bp(min-width, $max-desktop + 1) {
-        	position: absolute;
-        	top: 27px;
-        	right: 0;
-        }
-        
-        @include bp(max-width, $max-desktop) {
-   	    	top: 10px;
-   	    	left: 1px;
-        }
-    }
-    
     @include bp(min-width, $max-desktop + 1) {
     	top: $global-header-height - 80px;
     }
@@ -60,6 +39,31 @@
     @include bp(max-width, $bp-small) {
         left: 150px;
         z-index: 99;
+    }
+
+    h1, .welcome-msg {
+        color: $global-fontcolor-light;
+        display: inline;
+        position: relative;
+    }
+    
+    .welcome-msg {
+        font-size: $global-pagetitle-size;
+        
+        @include bp(min-width, $max-desktop + 1) {
+        	position: absolute;
+        	top: 27px;
+        	right: 0;
+        }
+        
+        @include bp(max-width, $max-desktop) {
+   	    	top: 5px;
+   	    	left: 1px;
+   	    	display: block;
+   	    	line-height: 1.1em;
+   	    	height: 1.2em;
+   	    	overflow: hidden;
+        }
     }
 }
 
@@ -102,9 +106,10 @@
         
         @include bp(max-width, $bp-xsmall) {
             right: auto;
-            top: 30px;
+            top: 7px;
             left: 118px;
             width: 60%;
+            margin: 0;
         }
     
         h1 {
@@ -136,6 +141,10 @@
             margin: 0;
             border-radius: 4px;
             width: 90%;
+            
+            @include bp(max-width, $bp-xsmall) {
+                width: 100%;
+            }
         }
         
         .search-autocomplete::before {
@@ -147,7 +156,14 @@
         top: 3px;
         
         @include bp(max-width, $bp-xsmall) {
-            top: -38px;
+            top: 20px;
+            left: -95px;
+        }
+        
+        select {
+            @include bp(max-width, $bp-xsmall) {
+                margin: 0;
+            }
         }
     }
     
@@ -453,13 +469,32 @@
 .skip-link {
     background-color: $global-minicart-background;
     border: $global-active-border solid #dddddd;
-    float: right;    
+    float: right; 
     
     @include bp(max-width, $bp-small) {
         border: 0;
         background-color: $global-page-color;
         border-left: $global-active-border solid $global-navigation-font-color;
     }
+    
+    .icon {
+	    display: inline-block;
+	    width: 22px;
+	    height: 22px;
+	    vertical-align: middle;
+	    
+	    @include bp(min-width, $bp-xsmall) {
+	        margin-right: 3px;
+	    }
+	}
+	
+	.label {
+	    display: none;
+	    
+	    @include bp(min-width, $bp-xsmall) {
+	        display: inline;
+	    }
+	}
 }
 
 .skip-nav, .skip-account, .header-minicart {
@@ -531,32 +566,9 @@ a.skip-link {
  * Skip Link - Icon
  */
 
-.skip-link .icon {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    vertical-align: middle;
-    
-    @include bp(min-width, $bp-xsmall) {
-        margin-right: 3px;
-    }
-}
-
 .skip-link.skip-nav .icon,
 .skip-link.skip-cart:not(.no-count) .icon {
     margin-right: 3px;
-}
-
-/* -------------------------------------------- *
- * Skip Link - Label
- */
-
-.skip-link .label {
-    display: none;
-    
-    @include bp(min-width, $bp-xsmall) {
-        display: inline;
-    }
 }
 
 /* ============================================ *
