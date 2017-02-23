@@ -48,7 +48,7 @@
 
     .welcome-header {
         position: absolute;
-        top: 120px;
+        top: 150px;
         right: 10px;
         text-align: right;
         z-index: 999;
@@ -64,10 +64,6 @@
             margin-top: 12px;
         }
         
-        @include bp(max-width, $bp-xlarge) {
-            top: 150px;
-        }
-
         @include bp(max-width, $bp-medium) {
             top: 155px;
             width: 100%;
