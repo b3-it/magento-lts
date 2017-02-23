@@ -39,8 +39,8 @@ $col-box-height: 25em;
                     width: 20%;
                     
                     @include bp(max-width, $bp-medium) {
-                        top: 55%;
-                        right: 0;
+                        top: 60%;
+                        right: 5%;
                     }
                     @include bp(max-width, $bp-small) {
                         right: 10%;
@@ -110,6 +110,10 @@ $col-box-height: 25em;
         .registered-users {
             fieldset {
                 width: 60%;
+                
+                @include bp(max-width, $bp-medium) {
+                    width: auto;
+                }
             }
             
             fieldset.width {
