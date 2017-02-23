@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Dwd_ConfigurableVirtual>
-            <version>0.0.1.3</version>
+            <version>0.0.1.4</version>
         </Dwd_ConfigurableVirtual>
     </modules>
     <adminhtml>

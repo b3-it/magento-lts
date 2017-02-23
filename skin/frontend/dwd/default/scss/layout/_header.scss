@@ -15,19 +15,22 @@
     background-repeat: no-repeat;
     background-position: 0 0;
     background-scroll: scroll;
-        
     line-height: $global-lineheight;
         
     &:after {
        	/* Definiert in _style_images.scss */
       	@include dwd-gitter-rechts;
       	
-      	@include bp(max-width, $bp-small) {
+      	@include bp(max-width, $bp-mobil) {
       	    background-image: none;
       	}
     }
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $global-fullpage-width) {
+        background-size: 150% auto;
+    }
+    
+    @include bp(max-width, $bp-mobil) {
         background-image: none;
     }
 
@@ -76,7 +79,7 @@
          	@include clearfix;
         }
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: none;
         }
     }
@@ -89,22 +92,30 @@
 	    h1 {
 	        color: $grundfarbe-blau;
 	        display: inline-block;
-	        font-size: $global-h2-size;
+	        font-size: 2.5rem;
+	        font-weight: 600;
 	        position: relative;
 	        width: auto;
 	        height: 1.2em;
 	        overflow: hidden;
+	        top: 10px;
 	        
-	        @include bp(max-width, $bp-small) {
+	        @include bp(max-width, $global-fullpage-width) {
+	            position: absolute;
+	            top: 103px;
+	        }
+	        
+	        @include bp(max-width, $bp-mobil) {
 	            font-size: 1.8rem;
 	            margin-top: 5px;
 	            vertical-align: top;
 	            white-space: nowrap;
 	            width: 75%;
+	            top: 0;
 	        }
 	  	}
 	  	
-	  	@include bp(max-width, $bp-small) {
+	  	@include bp(max-width, $bp-mobil) {
 	  	    height: $global-welcome-header - 20px;
 	  	}
     }
@@ -115,12 +126,12 @@
 }
 
 #welcome-msg {
-	font-size: 1.4rem;
+	font-size: 1.1rem;
 	color: $textfarbe-mittel;
 	margin-bottom: 15px;
 	display: block;
 	
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    text-align: center;
 	    font-weight: bold;
 	}
@@ -129,7 +140,7 @@
 .page-header-container {
 	height: 80px;
 	
-	@include bp(max-width, $bp-small) {
+	@include bp(max-width, $bp-mobil) {
 	    display: none;
 	}
 }
@@ -175,13 +186,13 @@
 	    margin: 0 auto;
 	    width: 30px;
 	}
-	
-	@include bp(max-width, $bp-small) {
+
+	@include bp(max-width, $bp-mobil) {
 	    display: inline-block;
 	    height: 40px;
-	    left: 67px;
+	    left: auto;
         position: relative;
-        top: -50px;
+        top: 50px;
         vertical-align: top;
         width: 75%
 	}
@@ -210,6 +221,10 @@
 	    
 	    a {
 	        @include link-navigation-mobile;
+	        
+	        @include bp(max-width, $bp-mobil) {
+	            background-color: transparent;
+	        }
 	    }
 	}
 
@@ -263,10 +278,18 @@ body:not(.cms-index-index) {
 		display: none;
 	}
     .welcome-header h1 {
-    	width: 280px;
+    	width: 265px;
     	
-    	@include bp(max-width, $bp-small) {
+    	@include bp(max-width, $global-fullpage-width) {
+    	    left: 68px;
+            position: absolute;
+            top: 62px;
+    	}
+    	
+    	@include bp(max-width, $bp-mobil) {
     	    width: 75%;
+    	    left: auto;
+    	    top: 0;
     	}
     }
     #welcome-msg {
@@ -280,6 +303,14 @@ body:not(.cms-index-index) {
     	position: relative;
     	text-align: right;
     	float: right;
+    	
+    	@include bp(max-width, $global-fullpage-width) {
+    	    position: absolute;
+    	    margin-right: 10px;
+    	    height: 100px;
+    	    margin-top: 12px;
+    	    right: 10px;
+    	}
     	
     	> div {
     		display: inline-block;
@@ -315,63 +346,9 @@ body:not(.cms-index-index) {
         	right: 22%;
         }
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: none;
         }
-    }
-}
-
-
-@include bp(max-width, 785px) {
-    .page-header-container {
-        height: 110px + $global-logo-height;
-    }
-
-    .skip-links {
-        position: absolute;
-        top: 110px + $global-logo-height;
-        width:100%;
-    }
-
-    .store-language-container {
-        top: -20px !important;
-    }
-
-    #egov-nav{
-    	top: $mobile-header-mainnav-top !important;
-    }
-}
-
-@include bp(min-width, 800px) {
-	.col-left {
-        margin-top: 0;
-    }
-}
-
-@include bp(max-width, 799px) {
-
-    #egov-nav {
-        display: none;
-    }
-    
-    #egov-nav.skip-active {
-    	display: block;
-    }
-
-   	.col-main, .col-left, .col-right {
-       	display: block;
-   		float: none;
-   		width: 100%;
-   		margin: 0 0 $global-boxmargin 0;
-   	}
-
-    .col-left {
-        margin-top: $global-boxmargin;
-    }
-
-    #header-nav {
-    	position: relative;
-    	top: 70px;
     }
 }
 
@@ -385,10 +362,6 @@ body:not(.cms-index-index) {
  * ============================================ */
 
 .header-language-background {
-	@include bp(max-width, $bp-medium) {
-		display: none;
-	}
-	
     .header-language-container {
         margin-left: auto;
         margin-right: auto;
@@ -455,12 +428,12 @@ body:not(.cms-index-index) {
     
     .large {
     	margin-right: 0;
-    	@include bp(max-width, $bp-small) {
+    	@include bp(max-width, $bp-mobil) {
     		display: none;
     	}
     }
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         padding: 10px 0 10px 10px;
         width: 62px;
         height: 92px;
@@ -478,36 +451,6 @@ body:not(.cms-index-index) {
 }
 
 // ---------------------------------------------
-
-@include bp(max-width, 785px) {
-    .page-header-container {
-        background-color: transparent;
-        background-image: url($global-header-background-image);
-        background-repeat: no-repeat;
-        background-position: center 0px;
-
-        .store-language-container {
-            top: 45px;
-            right: 5px;
-        }
-    }
-
-    .skip-links {
-        .skip-egov {
-            display: none;
-        }
-        
-        .skip-cart {
-        	width: 100%;
-        }
-
-        .welcome-header {
-            left: 150px;
-            z-index: 99;
-        }
-    }
-}
-
 
 /* -------------------------------------------- *
  * Skip - Link
@@ -532,10 +475,6 @@ body:not(.cms-index-index) {
     .icon {
     	display: none;
     }
-    
-    @include bp(max-width, $bp-medium) {
-    	padding-top: 5px;
-    }
 }
 
 a.skip-link {
@@ -545,60 +484,6 @@ a.skip-link {
 .skip-egov:hover,
 .skip-link:not(.skip-active):hover {
     opacity: 0.8;
-}
-
-// ---------------------------------------------
-
-@include bp(max-width, $bp-medium) {
-
-    .skip-nav, .skip-account, .skip-cart {
-        float: left;
-        display: inline-block;
-    }
-
-    .skip-search {
-        display: inline-block;
-        right: 0;
-        position: relative;
-        //top: -5px;
-    }
-
-    .skip-link {
-        border-right: 1px solid #EDEDED;
-        width: 36%;
-    }
-    
-    .skip-account, .skip-cart {
-    	margin: 0;
-    }
-
-    .skip-link:last-child {
-        border-right: 0;
-    }
-}
-
-// ---------------------------------------------
-
-@include bp(max-width, 500px) {
-    .skip-search {
-    	top: 0;
-    }
-}
-
-/* -------------------------------------------- *
- * Skip Link - Active
- */
-@include bp(max-width, $bp-medium) {
-
-    .skip-link.skip-active {
-        background: #EDEDED;
-        color: inherit;
-    }
-
-    .skip-link.skip-active span {
-        color: inherit;
-    }
-
 }
 
 /* -------------------------------------------- *
@@ -634,6 +519,12 @@ a.skip-link {
     display: inline-block;
     float: right;
     
+    @include bp(max-width, $global-fullpage-width) {
+        margin-right: 10px;
+        position: relative;
+        top: -5px;
+    }
+    
     > div {
     	vertical-align: top;
         display: inline-block;
@@ -646,12 +537,22 @@ a.skip-link {
         }
         &.header-minicart #header-cart.skip-active {
             right: 10.5%;
+            
+            @include bp(max-width, $global-fullpage-width) {
+                right: 21.5%;
+            }
         }
         
         &#header-account-link #header-account.skip-active {
             right: 26%;
         }
     }
+}
+
+body.cms-index-index .account-cart-wrapper {
+	@include bp(max-width, $global-fullpage-width) {
+	    top: 0;
+	}
 }
 
 .skip-egov{

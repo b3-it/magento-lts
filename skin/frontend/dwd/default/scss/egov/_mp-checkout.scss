@@ -18,26 +18,16 @@
         text-align: left;
         font-size: 1rem;
     }
- 
-    .col-left {
-        @include bp(max-width, $bp-medium) {
-            display: none;
-        }
-    }
-    
+
     .col-main {
         padding-top: 22px;
-        
-        @include bp(max-width, $bp-medium) {
-            width: 100% !important;
-        }
     }
 
     .mobile-product-collateral {
         margin-top: 20px;
         display: none;
-        
-        @include bp(max-width, $bp-small) {
+
+        @include bp(max-width, $bp-mobil) {
             display: block !important;
         }
     }
@@ -45,7 +35,7 @@
     .product-collateral {
         margin-top: 20px;
         
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             display: none;
         }
     }
@@ -113,7 +103,20 @@
 
     div.account-login {
         position: relative;
-        top: -25px;
+    }
+    
+    .dwd-account-login .buttons-set {
+        a {
+            @include bp(max-width, $global-fullpage-width) {
+                margin-bottom: 10px;
+            }
+        }
+        .button {
+            @include bp(max-width, $global-fullpage-width) {
+                width: 100% !important;
+                display: block;
+            }
+        }
     }
 
     ul.checkout-progress {
@@ -136,6 +139,14 @@
                 border-top-color: $grundfarbe-blau;
                 color: $grundfarbe-blau;
             }
+            
+            @include bp(max-width, $global-fullpage-width) {
+                width: 23%;
+            }
+            
+            @include bp(max-width, $bp-mobil) {
+                width: 31%;
+            }
         }
     }
 
@@ -144,7 +155,7 @@
             margin-top: 20px;
             margin-bottom: 0px;
             
-            @include bp(max-width, $bp-small) {
+            @include bp(max-width, $bp-mobil) {
                 margin-bottom: 10px;
             }
         }
@@ -155,6 +166,10 @@
             top: -2px;
             margin-left: 3px;
             width: 45%;
+            
+            @include bp(max-width, $bp-small) {
+                width: 92%;
+            }
         }
     }
 
@@ -175,7 +190,7 @@
             font-weight: bold;
             font-size: $global-h3-size;
         }
-        
+
         @include bp(max-width, $bp-medium) {
         	background-image: none !important;
         }
@@ -192,6 +207,15 @@
 
             h3 {
                 margin: 0px;
+            }
+            
+            @include bp(max-width, $global-fullpage-width) {
+   				width: 47%;
+            }
+            
+            @include bp(max-width, $bp-mobil) {
+                width: 100%;
+                min-height: auto;
             }
         }
 
@@ -219,14 +243,26 @@
             display: block;
             width: 100%;
         }
-        li.double-line {
+        
+        li, li.double-line {
             float: left;
             width: 48%;
-            margin-right: 15px;
+            
+            > div:not(.input-box) {
+                margin: 10px 5px;
+            }
+            
+            @include bp(max-width, $bp-small) {
+                float: none;
+                width: 100%;
+            }
         }
-        li {
-            float: left;
-            width: 48%;
+        li.double-line {
+            margin-right: 15px;
+            
+            @include bp(max-width, $bp-small) {
+                margin: 0;
+            }
 
             label {
                 width: 100%;
@@ -291,7 +327,7 @@
             margin-top: 20px;
             
             colgroup {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $global-fullpage-width) {
                     display: none;
                 }
             }
@@ -301,8 +337,14 @@
             }
 
             thead {
-                td:nth-child(5), td:nth-child(6) {
+                th:nth-child(2),
+                th:nth-child(3), th:nth-child(4),
+                th:nth-child(5), th:nth-child(6) {
                     font-weight: bold;
+                    
+                    @include bp(max-width, $global-fullpage-width) {
+                        display: none;
+                    }
                 }
                 
                 @include bp(max-width, $bp-small) {
@@ -325,13 +367,13 @@
             
             td:nth-child(2), td:nth-child(3), td:nth-child(4),
             td:nth-child(5), td:nth-child(6) {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $global-fullpage-width) {
                    display: none;
                 }
             }
             
             .mobile-product-name {
-                @include bp(max-width, $bp-small) {
+                @include bp(max-width, $bp-mobil) {
                     display: inline-block;
                     width: 70%;
                     vertical-align: top;
@@ -340,7 +382,10 @@
             
             .mobile-info-block {
                 width: 100%;
-                text-align: right;
+                
+                @include bp(max-width, $global-fullpage-width) {
+                   display: block;
+                }
             }
         }
 
@@ -395,35 +440,28 @@
         display:none;
     }
     
-    .button {
+    .main-container {
+        padding: 0 10px 10px 10px;
+    }
+    
+    .buttons-set .button {
         width: 25% !important;
     }
-}
-
-@include bp(max-width, $bp-medium) {
-    .mp-checkout {
-        .checkout-progress li {
-            width: 13% !important;
-        }
-        
-        label {
-            width: auto !important;
-        }
+    
+    .form-search .button {
+        width: auto;
     }
-}
-
-@include bp(max-width, $bp-small) {
-	.mp-checkout {
-        .checkout-progress li {
-            width: 31% !important;
-        }
-	}
-
-    .col2-set {
-        .col-1, .col-2 {
-            width: 100% !important;
-            margin: 0 !important;
-            min-height: auto !important;
+    
+    .credential-block {
+        border: 4px solid $zusatzfarbe-rot;
+        padding: $global-boxpadding;
+        margin: $global-boxmargin 0;
+        
+        td.login-info {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: $zusatzfarbe-rot;
+            text-align: right;
         }
     }
 }

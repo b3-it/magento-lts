@@ -20,16 +20,22 @@ $col-box-height: 25em;
             min-height: $col-box-height;
             padding: 0;
             margin: 0;
-            border: $global-box-border solid $global-box-bordercolor;
+            border: $global-box-border solid $grundfarbe-grau;
             
-            @include bp(max-width, $bp-medium) {
+            @include bp(max-width, $bp-mobil) {
                 width: 100%;
                 display: block;
+                min-height: auto;
+                margin-bottom: $global-boxmargin;
             }
 
 	        .content {
 	            padding: $global-boxpadding-large;
 	            height: $col-box-height - 8em;
+	            
+	            @include bp(max-width, $bp-mobil) {
+	                height: auto;
+	            }
 	
 	            .securityLabel {
 	                position: absolute;
@@ -50,7 +56,7 @@ $col-box-height: 25em;
 		            padding-left: 0;
 		            padding-right: 0;
 		            
-		            @include bp(max-width, $bp-medium) {
+		            @include bp(max-width, $bp-mobil) {
 					    min-width: 100%;
 					    margin-bottom: $box-spacing;
 					}
@@ -59,7 +65,7 @@ $col-box-height: 25em;
 		            	width: 46%;
 		            	float: none;
 		            	
-		            	@include bp(max-width, $bp-medium) {
+		            	@include bp(max-width, $bp-mobil) {
 					    	min-width: 100%;
 						}
 					}

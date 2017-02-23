@@ -459,11 +459,7 @@ class Dwd_ConfigurableDownloadable_Model_Product_Type_Configurable extends Mage_
         		$periode_id = array_shift($ids);
         		$buyRequest->setPeriode($periode_id);
         		$this->getProduct($product)->addCustomOption('periode_id', $periode_id);
-        		 
         	}
-        	
-        	
-        	
         }
     	
     	$linksForSale = $this->getLinksForSale($this->getProduct($product));

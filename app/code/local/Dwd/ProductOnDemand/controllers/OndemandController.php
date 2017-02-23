@@ -144,6 +144,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$linkItem['type'] = Mage_Downloadable_Helper_Download::LINK_TYPE_URL;
 		$linkId = $product->getTypeInstance(true)->setProduct($product)->addLinkItem($linkItem);
 		$params['links'] = array($linkId);
+		$params[Mage_Core_Model_Url::FORM_KEY] = Mage::getSingleton('core/session')->getFormKey();
 
 		$this->_forward('add', 'cart', 'checkout', $params);
 	}
@@ -211,7 +212,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 
 		if ($debug) {
 			$url = sprintf('%s?westeTypID=%s&webshopURL=%s', $redirect, urlencode($id), urlencode($back));
-			Mage::log(sprintf('pod::webshopURL:%s', $back), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+			Mage::log(sprintf('pod::WebshopURL:%s', $back), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		} else {
 			$url = $redirect;
 		}

@@ -78,13 +78,11 @@
 						<sort_order>10</sort_order>
 						<action>adminhtml/viewer_service_service/index</action>
 					</bkgviewer_service_service>
-					<!-- 
 					<bkgviewer_service_layer module="bkgviewer">
 						<title>Service Layer</title>
 						<sort_order>20</sort_order>
 						<action>adminhtml/viewer_service_layer/index</action>
 					</bkgviewer_service_layer>
-					 -->
 					<bkgviewer_composit_composit module="bkgviewer">
 						<title>Composit Composit</title>
 						<sort_order>30</sort_order>

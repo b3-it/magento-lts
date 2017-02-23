@@ -36,19 +36,6 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_New_Form extends Mage_Adminhtml
       		'value'	=> 'http://localhost.local/bestand_niedersachsen_wms.xml',
       		'note'	=> 'getCapabilities'
       ));
-      
-      $fieldset->addField('type', 'radios', array(
-      		'label'     => Mage::helper('bkgviewer')->__('type'),
-      		//'class'     => 'required-entry',
-      		//'required'  => true,
-      		'name'      => 'type',
-      		'values' => array(
-      				array('label'=>'Web Map Service','value'=>'WMS'),
-      				array('label'=>'Web Feature Service','value'=>'WFS')
-      		)
-      		//'value'	=> 'http://localhost.local/bestand_niedersachsen_wms.xml',
-      		//'note'	=> 'getCapabilities'
-      ));
     
  
       

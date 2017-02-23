@@ -10,7 +10,6 @@ class Dwd_Stationen_Block_Catalog_Product_View_Abstract extends Mage_Catalog_Blo
     {
     	if($this->_StationsList == null)
     	{
-    		
     		$set_id = $this->getProduct()->getStationenSet();
     		if( !$set_id) {$set_id = 0;}
     		$this->_StationsList = array();

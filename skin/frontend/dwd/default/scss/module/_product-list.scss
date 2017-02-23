@@ -15,6 +15,7 @@
 
 .category-title h1,
 body.catalogsearch-result-index .page-title h1 {
+	margin-bottom: 0px;
 }
 
 .category-image {
@@ -28,26 +29,26 @@ body.catalogsearch-result-index .page-title h1 {
 	color: $textfarbe-mittel;
     font-size: 1rem;
     line-height: 1rem;
-    
-    @include bp(max-width, $bp-small) {
+
+    @include bp(max-width, $bp-mobil) {
         margin-top: 20px;
     }
-        
+
 	> li {
 		position: relative;
 	    border-width: 2 * $global-active-border;
 	    border-color: $grundfarbe-blau;
 	    border-style: solid;
 	    padding: 10px;
-		
+
 		margin-bottom: $global-product-spacing;
-		min-height: 205px;
+		min-height: 160px;
 	}
 
     &:after {
         @include clearfix;
     }
-    
+
     .product-image {
     	@include loadingOverlay();
         width: 100%;
@@ -88,10 +89,7 @@ body.catalogsearch-result-index .page-title h1 {
 	font-weight: bold;
 	line-height: $global-h5-size;
 	margin-bottom: 1rem;
-
-    //white-space: nowrap;
     overflow: hidden;
-    //text-overflow: ellipsis;
 
     a {
         @include link-blau;
@@ -101,25 +99,28 @@ body.catalogsearch-result-index .page-title h1 {
 }
 
 .product-name {
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         display: none;
     }
 }
 
 .mobile-product-name {
 	display: none;
-	height: 2.5rem;
-    line-height: 1.1rem;
+	height: 3.2rem;
     overflow: hidden;
     text-align: left;
-	
-	@include bp(max-width, $bp-small) {
+
+	@include bp(max-width, $bp-mobil) {
 	    display: block;
-    
+
 	    a {
 	        font-size: 0.8rem;
 	    }
 	}
+}
+
+.product_sku {
+	overflow: hidden;
 }
 
 
@@ -130,13 +131,13 @@ body.catalogsearch-result-index .page-title h1 {
     > li {
     	float: left;
         text-align: center;
-        
-        @include bp(max-width, $bp-small) {
+
+        @include bp(max-width, $bp-mobil) {
             width: 48%;
             margin-right: 4%;
             padding: 5px;
         }
-                
+
         &:nth-child(odd) {
         	clear: left;
         }
@@ -144,7 +145,7 @@ body.catalogsearch-result-index .page-title h1 {
         	margin-right: 0;
         }
     }
-    
+
     .product-image {
     	margin-bottom: 10px;
     }
@@ -156,7 +157,11 @@ body.catalogsearch-result-index .page-title h1 {
 		right: 0;
 		top: 160px;
 		
-		@include bp(max-width, $bp-small) {
+		@include bp(max-width, $global-fullpage-width) {
+            top: 25%;
+        }
+
+		@include bp(max-width, $bp-mobil) {
 		    left: 0;
 		    right: auto;
 		    top: 125px;
@@ -194,12 +199,12 @@ body.catalogsearch-result-index .page-title h1 {
                     font-family: "FontAwesome";
                     font-size: $global-fontsize + 7;
                     margin-right: $global-fontsize + 7;
+                    
+                    @include bp(max-width, $global-fullpage-width) {
+                        content: none;
+                    }
                 }
             }
-        }
-        
-        @include bp(max-width, $bp-small) {
-            display: none;
         }
     }
 
@@ -312,35 +317,31 @@ body.catalogsearch-result-index .page-title h1 {
 .products-list {
 	.mobile-product-block {
 	    display: none;
-	    
-	    @include bp(max-width, $bp-small) {
+
+	    @include bp(max-width, $bp-mobil) {
 	        display: inline;
 	        float: left;
 	        margin-right: 15px;
 	        width: 30%;
 	    }
 	}
-    
+
     > li {
         height: auto;
-        
-        @include bp(max-width, $bp-small) {
+
+        @include bp(max-width, $bp-mobil) {
             border-top: 0;
 	        border-right: 0;
 	        border-left: 0;
-	        padding-bottom: 15px;
-	        margin-bottom: 15px;
+	        padding-bottom: 10px;
+	        margin-bottom: 10px;
 	        margin-left: 0;
         }
-        
-        .mobile-product-name {
-            height: 1.3rem;
-            
-            a {
-                font-size: 1rem;
-            }
+
+        .mobile-product-name a {
+            font-size: 1rem;
         }
-        
+
         .product-list-left-col, .product-shop {
         	display: table-cell;
         	vertical-align: top;
@@ -353,8 +354,8 @@ body.catalogsearch-result-index .page-title h1 {
         	margin-bottom: 10px;
         	background-color: $grundfarbe-blgr;
         	padding: 13px 10px;
-        	
-        	@include bp(max-width, $bp-small) {
+
+        	@include bp(max-width, $bp-mobil) {
         	    background-color: transparent;
 	        	height: auto;
 	        	padding: 0 0 10px 0;
@@ -362,25 +363,30 @@ body.catalogsearch-result-index .page-title h1 {
         	}
 
         	h2, .product_sku {
-        		position: absolute;
         		margin: 0;
         		line-height: 1.1rem;
         		overflow: hidden;
 	        	white-space: nowrap;
+
+	        	@include bp(max-width, $global-fullpage-width) {
+	        	    white-space: normal;
+	        	}
         	}
 
         	h2 {
         		width: 65%;
-        		
-        		@include bp(max-width, $bp-small) {
-        		    width: 97%;
-        		    position: relative;
+
+        		@include bp(max-width, $global-fullpage-width) {
+        		    width: 100%;
         		}
         	}
 
 	        .product_sku {
+	            position: absolute;
 	        	right: 10px;
+	        	top: 15px;
 	        	width: 29.5%;
+	        	font-size: 0.95rem;
 	        }
         }
 
@@ -388,19 +394,23 @@ body.catalogsearch-result-index .page-title h1 {
             width: 27.5%;
             padding-right: 30px;
 
+            @include bp(max-width, $bp-mobil) {
+                width: 10%;
+            }
+
             a.link-learn {
                 display: block;
                 padding: $global-boxpadding 0px;
             }
         }
     }
-    
+
     li:first-child {
-        @include bp(max-width, $bp-small) {
+        @include bp(max-width, $bp-mobil) {
             border-top-width: 2 * $global-active-border;
             border-top-style: solid;
             border-top-color: $grundfarbe-blau;
-            padding-top: 15px;            
+            padding-top: 15px;
         }
     }
 
@@ -409,7 +419,11 @@ body.catalogsearch-result-index .page-title h1 {
     }
     .product-new-block {
         bottom: -20px;
-        right: -10px
+        right: -10px;
+
+        @include bp(max-width, $bp-mobil) {
+            width: 50%;
+        }
     }
 
     .product-primary, .product-price {
@@ -424,7 +438,7 @@ body.catalogsearch-result-index .page-title h1 {
        		line-height: 1.1rem;
        		text-align: left;
        	}
-       	
+
        	.desc {
        	    margin-bottom: 35px;
        	}
@@ -438,13 +452,13 @@ body.catalogsearch-result-index .page-title h1 {
       	fonz-size: 1rem;
        	line-height: 1.1rem;
        	color: $textfarbe-mittel;
-       	
-       	@include bp(max-width, $bp-small) {
+
+       	@include bp(max-width, $bp-mobil) {
        	    line-height: 1.4rem;
        	}
-       	
+
        	.tax-details {
-	        @include bp(max-width, $bp-small) {
+	        @include bp(max-width, $bp-mobil) {
 	            font-size: 1rem;
 	        }
 	    }
@@ -453,27 +467,27 @@ body.catalogsearch-result-index .page-title h1 {
 	        margin-top: 10px;
 	        font-size: 0.9rem;
 	    }
-	          	
+
       	.price-box {
       		margin-bottom: 1rem;
-      	    
+
       		.price {
       		    font-size: $global-h4-size;
       		}
-      		
-      		@include bp(max-width, $bp-small) {
+
+      		@include bp(max-width, $bp-mobil) {
       		    margin: 0;
 	            font-size: 1.4rem;
       		}
         }
     }
-    
-    .product-list-left-col, .product-primary, .product-action, .product_sku {
-	    @include bp(max-width, $bp-small) {
+
+    .product-primary, .product-action, .product_sku {
+	    @include bp(max-width, $bp-mobil) {
 	        display: none !important;
 	    }
 	}
-        
+
     button.button, a.button {
        	@include grau-hover-blau;
        	text-align: center;
@@ -484,16 +498,16 @@ body.catalogsearch-result-index .page-title h1 {
        	font-size: $global-h6-size;
        	padding: 15px 0;
     }
-    
+
     .link-learn, .product-action {
     	position: absolute;
     	bottom: 10px;
     	margin: 0;
     }
-    
+
     .product-action {
         width: 29.5%;
-        
+
         > button.egov-cart {
             font-size: 1rem;
             font-family: inherit;
@@ -503,7 +517,6 @@ body.catalogsearch-result-index .page-title h1 {
             &::before {
                 font-family: "FontAwesome";
                 font-size: $global-fontsize + 7;
-                margin-right: $global-fontsize + 7;
             }
         }
     }
@@ -520,9 +533,6 @@ body.catalogsearch-result-index .page-title h1 {
             margin-top: 4px;
         }
     }
-}
-
-@include bp(min-width, $bp-xsmall + 1) {
 }
 
 @include bp(max-width, 600px) {

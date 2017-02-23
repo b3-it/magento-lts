@@ -23,10 +23,12 @@ $cms_blocks = array(
  				array(
  						'title'      => 'Footer-Info für den DWD',
  						'identifier' => 'dwd_footer_block',
-						'content'    => '<div id="footer-block-legal"><img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\'}}" />
+						'content'    => '<div id="footer-block-legal">
+<img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\'}}" />
 <div>
 <p>Der Deutsche Wetterdienst ist eine Bundesoberbeh&ouml;rde im Gesch&auml;ftsbereich des Bundesministeriums f&uuml;r Verkehr und digitale Infrastruktur.</p>
-<address>{{block type="imprint/field" value="company_first"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</address></div>
+<p>{{block type="imprint/field" value="company_first"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</p>
+</div>
 </div>',
 						'isactive'   => 1,
 				        'stores'     => array(0)
