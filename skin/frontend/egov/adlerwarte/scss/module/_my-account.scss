@@ -7,7 +7,7 @@
 
 .my-account {
 
-    a {
+    a:not(.button) {
         color: $global-h1-color;
     }
 
