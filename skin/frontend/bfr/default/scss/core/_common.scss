@@ -212,7 +212,7 @@ p.note-msg {
  */
 
 .col-left-first {
-    margin-top: 38px;
+    margin-top: 20px;
 }
 
 .block-viewed, .block-poll {
@@ -345,12 +345,11 @@ body:not(.customer-account) .block:first-child .block-title {
     &:after {
         @include clearfix;
     }
-
-    a {
-        float: left;
-    }
+    
     .button {
-        float: right;
+        float: none;
+        max-width: 100%;
+        padding-top: 14px;
     }
 }
 

@@ -50,7 +50,7 @@
     }
     
     @include bp(max-width, $bp-small) {
- 	    top: $mobile-header-accountnav-top - 18px;
+ 	    top: $mobile-header-accountnav-top - 28px;
     }
     
     @include bp(max-width, $bp-xsmall) {

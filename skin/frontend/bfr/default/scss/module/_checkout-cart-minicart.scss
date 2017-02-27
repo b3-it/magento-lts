@@ -295,7 +295,7 @@ div.block-cart {
     
     @include bp(max-width, $bp-small) {
         left: 0;
-        top: $mobile-header-accountnav-top - 18px;
+        top: $mobile-header-accountnav-top - 28px;
         width: 100%
     }
     
