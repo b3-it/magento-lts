@@ -274,10 +274,7 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    margin-top: $blobal-blockcontent-margintop;
-    margin-bottom: $blobal-blockcontent-marginbottom;
-    margin-left: $blobal-blockcontent-marginleft;
-    margin-right: $blobal-blockcontent-marginright;
+    margin: 10px;
 
     input {
     }
