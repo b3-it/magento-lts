@@ -83,6 +83,12 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 							<span><?php echo $this->__('Update Collection List') ?></span>
 						</button>
 
+                    </td>
+                </tr>
+                 <tr>
+                    <td colspan="50" class="a-right cart-footer-actions">
+                      
+
 						<?php if($this->getAddAllToCartUrl() && $this->hasSaleableItems()): ?>
 							<a href="<?php echo $this->getAddAllToCartUrl() ?>" class="button btn-update">
 								<span><?php echo $this->__('Add All to Cart') ?></span>
