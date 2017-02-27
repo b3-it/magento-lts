@@ -204,7 +204,7 @@
             .product-info-box {
             	width: 57%;
             }
-            	
+
             .tax-details {
                 .shipping-cost-details {
                     display: block;
@@ -286,12 +286,12 @@
                 }
             }
         }
-       
+
         .product-options-bottom {
             .add-to-cart {
             	margin-top: $global-boxmargin / 2;
             }
-            
+
             .add-to-cart-buttons {
                 display: inline-block;
                 max-width: 180px;
@@ -997,7 +997,8 @@
 }
 
 #product-attribute-row-weight,
-#product-attribute-row-size {
+#product-attribute-row-size,
+#product-attribute-row-productfiledescription {
 	display: none;
 }
 
