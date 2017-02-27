@@ -22,15 +22,17 @@
 	<div class="footer-container bottom-row">
 	    <div class="footer-wrapper">
 	        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('dwd_footer_block')->toHTML(); ?>
-	        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('dwd_footer_navigation')->toHTML(); ?>
-	        <address class="copyright">
-	        <?php
-	            echo $this->getCopyright() . ' ';
-	            if ( $this->canShowVersion() == true ) {
-	          	    echo $this->__('(Version %s) ', $this->getVersion());
-	            }    
-	        ?>
-	        </address>
+	        <div id="dwd-footer-bottom-row">
+	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('dwd_footer_navigation')->toHTML(); ?>
+	            <address class="copyright">
+		        <?php
+		            echo $this->getCopyright() . ' ';
+		            if ( $this->canShowVersion() == true ) {
+		          	    echo $this->__('(Version %s) ', $this->getVersion());
+		            }    
+		        ?>
+	            </address>
+	        </div>
 	    </div>
 	</div>
 </footer>

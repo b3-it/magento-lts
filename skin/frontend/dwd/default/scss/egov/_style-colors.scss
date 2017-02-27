@@ -36,12 +36,12 @@ $global-navigation-border-color: #EDEDED;                              // Randfa
 
 $global-active-color: #2F4327;                                         // Standard-Rand-Farbe des aktiven Elements
 
-$global-h1-color: $textfarbe-mittel;                                   // Farbe der Überschrift H1
-$global-h2-color: $textfarbe-mittel;                                   // Farbe der Überschrift H2
+$global-h1-color: $grundfarbe-blau;                                    // Farbe der Überschrift H1
+$global-h2-color: $grundfarbe-blau;                                    // Farbe der Überschrift H2
 $global-h3-color: $textfarbe-mittel;                                   // Farbe der Überschrift H3
-$global-h4-color: $textfarbe-mittel;                                   // Farbe der Überschrift H4
-$global-h5-color: $textfarbe-mittel;                                   // Farbe der Überschrift H5 (nicht verwendet!)
-$global-h6-color: $textfarbe-mittel;                                   // Farbe der Überschrift H6 (nicht verwendet!)
+$global-h4-color: $grundfarbe-blau;                                    // Farbe der Überschrift H4
+$global-h5-color: $grundfarbe-blau;                                    // Farbe der Überschrift H5
+$global-h6-color: $textfarbe-mittel;                                   // Farbe der Überschrift H6
 
 $global-cart-color: #59814C;                                           // Textfarbe für Preise im Warenkorb
 $global-cart-subtotal: #59814C;                                        // Textfarbe für Summen im Warenkorb
@@ -103,7 +103,7 @@ $global-footer-fontcolor: #4D4D4D;                                     // Schrif
 $global-header-gradientcolor-1: #7EAA6F;                               // Start-Gradientfarbe im Header
 $global-header-gradientcolor-2: $global-linkcolor;                     // End-Gradientfarbe im Header
 
-$global-box-title-backgroundcolor: #E0E6D7;                            // Hintergrund der Titelleiste aller normalen Boxen
+$global-box-title-backgroundcolor: #2D4B9B;                            // Hintergrund der Titelleiste aller normalen Boxen
 $global-box-content-backgroundcolor: #FFFFFF;                          // Hintergrund des Inhaltes aller normalen Boxen
 $global-box-bordercolor: #C1D0BB;                                      // Randfarbe aller normalen Boxen
 

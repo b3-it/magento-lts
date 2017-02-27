@@ -1,0 +1,75 @@
+<?php
+/**
+ * @category    design
+ * @package     dwd_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * @see Dwd_Icd_Block_Customer_Credentials_Items
+ */
+/* @var $this Dwd_Icd_Block_Customer_Credentials_Items */
+?>
+<?php $_items = $this->getItemsCollection(); ?>
+<?php echo $this->getChildHtml('pager'); ?>
+<?php if(count($_items)): ?>
+<table id="my-orders-table" class="data-table dwd-downloadable" summary="<?php echo $this->__('Items Ordered') ?>">
+    <colgroup>
+        <col />
+        <col />
+        <col />
+        <col />
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="dwd-downloadable-info"><?php echo $this->__('Product features') ?></th>            
+            <th class="dwd-downloadable-date"><?php echo $this->__('Url') ?></th>
+            <th class="dwd-downloadable-date"><?php echo $this->__('Login Name') ?></th>
+            <th><?php echo $this->__('Status') . ' /<br />' . $this->__('Action') ?></th>
+        </tr>
+    </thead>
+
+    <?php foreach ($_items as $_item): ?>
+    <?php if ($_item->getParentItem()) continue; ?>
+    <tbody>
+        <tr>
+            <td class="dwd-downloadable-info">
+                <div><?php echo $_item->getName();?></div>
+        	    <div><?php echo $this->__('SKU short') . ': ' . $_item->getSku(); ?></div>
+        	    <div><?php echo $this->__('Order')  . ': ' . $_item->getBestellnummer() . ' (' . $this->formatItemDate($_item->getOrderDate()) . ')'; ?></div>
+        	  <?php if ( $_item->getOriginalIncrementId() ): ?> 
+        	    <div><?php echo $this->__('Initial Order')  . ': ' . $_item->getOriginalIncrementId() ?></div>
+        	  <?php endif;?>
+        	  <?php if( $_item->getStation() != '' ): ?>
+        	    <div><?php echo $this->__('Station')  . ': ' . $_item->getStation() . ' (' . $_item->getStationskennung() . ')'; ?></div>
+        	  <?php endif;?>
+        	    <div><?php echo $this->__('Run Time')  . ': ' . str_replace(' - ', $this->__(' to '), $this->getItemPeriode($_item)); ?></div>
+        	    
+        	    <div class="mobile-product-collateral">
+        	        <div><?php echo $this->__('Login Name')  . ': ' . $_item->getLogin(); ?></div>
+        	        <div><?php echo $this->__('Url') ?>: <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link to application'); ?></a></div>
+        	    </div>
+            </td>
+            <td class="dwd-downloadable-date">
+        	    <a href="<?php echo $this->getApplicationUrl($_item);?>" target="_blank"><?php echo $this->__('Link to application'); ?></a>
+        	</td>
+        	<td class="dwd-downloadable-date"><?php echo $_item->getLogin();?></td>
+        	<td>
+                <?php echo $this->getItemStatus($_item);?>
+                <br /><br />
+        	  <?php if($_item->getStatus()== Dwd_Icd_Model_OrderStatus::ORDERSTATUS_ACTIVE):?>
+        	    <a href="<?php echo $this->getUrl('dwd_icd/index/change',array('id'=>$_item->getAccountId()))?>">
+        	        <?php echo $this->__('Change <br /> Password') ?>
+        	    </a>
+        	  <?php endif;?>
+        	</td>
+        </tr>
+    </tbody>
+    <?php endforeach; ?>
+</table>
+<script type="text/javascript">decorateTable('my-orders-table', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})</script>
+<?php else: ?>
+	<p><?php echo Mage::helper('downloadable')->__('You have not purchased any credentials yet.'); ?></p>
+<?php endif;?>
+<?php echo $this->getChildHtml('pager'); ?>

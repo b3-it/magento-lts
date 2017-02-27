@@ -71,6 +71,18 @@
         </reference>
     </default>
     
+    <catalog_product_view translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </catalog_product_view>
+    
+    <catalogsearch_result_index translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </catalogsearch_result_index>
+    
     <checkout_cart_index>
         <!-- Rabattcodes im Warenkorb raus -->
         <reference name="checkout.cart">
@@ -109,4 +121,128 @@
             </action>
         </reference>
     </catalog_product_view>
+
+    
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName"><name>billing_agreements</name></action>
+            <action method="removeLinkByName"><name>recurring_profiles</name></action>
+            <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
+        </reference>
+
+        <!-- cart_sidebar does need to be over the account navigation -->
+
+        <reference name="left_first">
+            <action method="insert">
+                <blockName>cart_sidebar_dwd</blockName>
+            </action>
+        </reference>
+
+        <reference name="left">
+            <action method="unsetChild">
+                <alias>cart_sidebar_dwd</alias>
+             </action>
+        </reference>
+    </customer_account>
+
+    <sales_order_view translate="label">
+        <reference name="order_totals">
+            <action method="setLabelProperties">
+                <value>colspan="3" class="a-right"</value>
+            </action>
+        </reference>
+    </sales_order_view>
+    <sales_order_print translate="label">
+        <reference name="order_totals">
+            <action method="setLabelProperties">
+                <value>colspan="3" class="a-right"</value>
+            </action>
+        </reference>
+    </sales_order_print>
+
+    <sales_order_invoice translate="label">
+        <reference name="invoice_totals">
+            <action method="setLabelProperties">
+                <value>colspan="3" class="a-right"</value>
+            </action>
+        </reference>
+    </sales_order_invoice>
+    <sales_order_printinvoice translate="label">
+        <reference name="invoice_totals">
+            <action method="setLabelProperties">
+                <value>colspan="3" class="a-right"</value>
+            </action>
+        </reference>
+    </sales_order_printinvoice>
+
+    <egovs_checkout_multipage_overview>
+        <reference name="checkout_overview">
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>stationen/checkout_cart_item_renderer_configurable</block>
+                <template>dwd/configvirtual/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configdownloadable</type>
+                <block>configdownloadable/checkout_cart_item_renderer</block>
+                <template>dwd/configdownloadable/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configvirtual</type>
+                <block>configvirtual/checkout_cart_item_renderer</block>
+                <template>dwd/configvirtual/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>prondemand</type>
+                <block>prondemand/checkout_cart_item_renderer</block>
+                <template>dwd/prondemand/checkout/onepage/review/item.phtml</template>
+            </action>
+        </reference>
+    </egovs_checkout_multipage_overview>
+
+    <egovs_checkout_multipage_successview>
+        <reference name="checkout_successview">
+            <action method="addItemRender">
+                <type>configdownloadable</type>
+                <block>configdownloadable/checkout_cart_item_renderer</block>
+                <template>dwd/configdownloadable/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configvirtual</type>
+                <block>configvirtual/checkout_cart_item_renderer</block>
+                <template>dwd/configvirtual/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>stationen/checkout_cart_item_renderer_configurable</block>
+                <template>dwd/configvirtual/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>prondemand</type>
+                <block>prondemand/checkout_cart_item_renderer</block>
+                <template>dwd/prondemand/checkout/onepage/review/item.phtml</template>
+            </action>
+        </reference>
+    </egovs_checkout_multipage_successview>
+    
+    <pdftemplate_pdf_item_renderer>
+        <reference name="pdftemplate_pdf_item_renderer">
+            <action method="addItemRenderer">
+                <type>configvirtual</type>
+                <block>configvirtual/sales_item_renderer_pdf_configvirtual</block>
+                <template>dwd/configvirtual/sales/items/renderer/pdf/configvirtual.phtml</template>
+            </action>
+            <action method="addItemRenderer">
+                <type>configdownloadable</type>
+                <block>configdownloadable/sales_item_renderer_pdf_configdownloadable</block>
+                <template>dwd/configdownloadable/sales/items/renderer/pdf/configdownloadable.phtml</template>
+            </action>
+            <action method="addItemRenderer">
+                <type>prondemand</type>
+                <block>prondemand/sales_item_renderer_pdf_prondemand</block>
+                <template>dwd/prondemand/sales/items/renderer/pdf/prondemand.phtml</template>
+            </action>
+        </reference>
+    </pdftemplate_pdf_item_renderer>
+
 </layout>

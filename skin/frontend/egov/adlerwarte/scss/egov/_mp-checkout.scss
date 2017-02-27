@@ -160,21 +160,28 @@
     }
 
     .col2-set {
-
         div.col-1, div.col-2 {
             @extend .block;
             vertical-align: top;
             padding: 0px;
-            width: 45%;
             min-height: 120px;
+            
+            @include bp(max-width, $bp-medium) {
+                width: 100%;
+                margin: 0 0 $global-boxmargin 0;
+            }
 
             h3 {
                 margin: 0px;
             }
         }
 
-        .sp-methods .form-list {
+        .form-list {
             padding: 0;
+            
+            @include bp(max-width, $bp-medium) {
+                margin-top: $global-boxmargin;
+            }
         }
 
         .full-wide {

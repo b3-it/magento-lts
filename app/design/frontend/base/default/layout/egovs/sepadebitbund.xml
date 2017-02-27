@@ -11,5 +11,28 @@
             <action method="addJs"><script>egovs/sepa/de.js</script></action>
             <action method="addJs"><script>egovs/sepa/checkiban.js</script></action>
         </reference>
-    </egovs_checkout_multipage_billingdetails> 
+    </egovs_checkout_multipage_billingdetails>
+    
+    <sepadebitbund_change_index>
+        <update handle="customer_account"/>
+        
+        <reference name="head">
+            <action method="addJs"><script>egovs/sepa/de.js</script></action>
+            <action method="addJs"><script>egovs/sepa/checkiban.js</script></action>
+        </reference>
+        
+        <reference name="content">
+            <block type="sepadebitbund/account_index" name="sepadebitbund" template="egovs/debit/sepa_bund/customer_account_change.phtml" >
+                <block type="sepadebitbund/account_info" name="info"/>
+                <block type="sepadebitbund/account_form" name="form"/>
+            </block>
+        </reference>
+    </sepadebitbund_change_index>
+  
+    
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="sepadebitbund"><name>sepadebitbund_change</name><path>sepadebitbund/change/index</path><label>Change SEPA Mandate</label></action>
+        </reference>
+    </customer_account>
 </layout>

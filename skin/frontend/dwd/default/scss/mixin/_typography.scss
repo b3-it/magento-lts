@@ -11,11 +11,9 @@
 
 @mixin h1 {
     margin: 0;
-    /* margin-bottom: 0.7em; */  // Deaktiviert, damit die Welcome-Schrift korrekt sitzt
     color: $global-h1-color;
     font-family: $base-font-family;
     font-size: $global-h1-size;
-    font-weight: 600;
     font-style: normal;
     line-height: 1.2;
     text-rendering: optimizeLegibility;
@@ -27,7 +25,6 @@
     color: $global-h2-color;
     font-family: $base-font-family;
     font-size: $global-h2-size;
-    font-weight: 400;
     font-style: normal;
     line-height: 1.2;
     text-rendering: optimizeLegibility;
@@ -39,12 +36,11 @@
     color: $global-h3-color;
     font-family: $base-font-family;
     font-size: $global-h3-size;
-    font-weight: 400;
     font-style: normal;
-    line-height: 1.4;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         font-size: 1rem;
     }
 }
@@ -55,9 +51,8 @@
     color: $global-h4-color;
     font-family: $base-font-family;
     font-size: $global-h4-size;
-    font-weight: bold;
     font-style: normal;
-    line-height: 1.4;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
 }
 
@@ -67,9 +62,8 @@
     color: $global-h5-color;
     font-family: $base-font-family;
     font-size: $global-h5-size;
-    font-weight: bold;
-    font-style: italic;
-    line-height: 1.4;
+    font-style: normal;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
     text-transform: uppercase;
 }
@@ -80,9 +74,8 @@
     color: $global-h6-color;
     font-family: $base-font-family;
     font-size: $global-h6-size;
-    font-weight: bold;
-    font-style: italic;
-    line-height: 1.4;
+    font-style: normal;
+    line-height: 1.2;
     text-rendering: optimizeSpeed;
 }
 

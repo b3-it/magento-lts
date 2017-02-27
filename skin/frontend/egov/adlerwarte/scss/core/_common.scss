@@ -274,10 +274,7 @@ body:not(.customer-account) .block:first-child .block-title {
 }
 
 .block-content {
-    margin-top: $blobal-blockcontent-margintop;
-    margin-bottom: $blobal-blockcontent-marginbottom;
-    margin-left: $blobal-blockcontent-marginleft;
-    margin-right: $blobal-blockcontent-marginright;
+    margin: 10px;
 
     input {
     }
@@ -777,17 +774,26 @@ div.block-reorder {
             position: relative;
             width: $global-leftcol-percent;
             
+            @include bp(max-width, $bp-medium) {
+                width: 30%;
+            }
+            
             @include bp(max-width, $bp-xsmall) {
             	display: block;
             	float: none;
             	margin: 0;
             	width: 100%;
+            	margin-bottom: $global-rightcol-margintop / 2;
             }
         }
 
         .col-main {
             overflow: hidden;
             width: $global-content-2col-left-percent;
+            
+            @include bp(max-width, $bp-medium) {
+                width: 67%;
+            }
             
             @include bp(max-width, $bp-xsmall) {
             	width: 100%;
@@ -807,11 +813,16 @@ div.block-reorder {
         top: $global-wrapper-top;
 
     	  .col-right {
-            //right: $global-rightcol-rightmargin-percent;
             position: relative;
             width: $global-rightcol-percent;
             top: $global-rightcol-margintop;
             margin-bottom: $global-rightcol-margintop;
+            
+            @include bp(max-width, $bp-large) {
+                top: 0;
+                width: 100%;
+                margin-bottom: $global-rightcol-margintop / 2;
+            }
         }
         .col-main {
             padding-left: 0; /* Remove the 15px padding */

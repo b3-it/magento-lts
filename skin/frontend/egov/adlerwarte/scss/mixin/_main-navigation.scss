@@ -44,12 +44,6 @@
         padding: 0;
         cursor: pointer;
         
-        @include bp(max-width, $bp-medium) {
-        	position: relative;
-        	top: -85px;
-        }
-        
-        
         > a {
             @extend .egov-navigation-base;
             width:100%;

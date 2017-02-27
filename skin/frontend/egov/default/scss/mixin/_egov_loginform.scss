@@ -11,15 +11,6 @@
 $col-box-height: 25em;
 
 @mixin egov_loginform {
-	
-	.egov-account-login {
-	       margin: 0;
-	       
-	       fieldset, p {
-	           margin: 0;
-	       }
-	}
-	
     .col2-set {
         width: 100%;
         border-bottom: 0px;
@@ -38,19 +29,14 @@ $col-box-height: 25em;
 
 	        .content {
 	            padding: $global-boxpadding-large;
-	            height: $col-box-height - 4em;
+	            height: $col-box-height - 8em;
 	
 	            .securityLabel {
 	                display: inline-block;
-	                float: right;
-	                
-	                img {
-	                   height: 6em;
-	                }
-	            }
-	            
-	            .required {
-	               color: $global-warning-color;
+	                position: absolute;
+                    right: -5%;
+                    top: 40%;
+                    width: 20%;
 	            }
 	        }
 
@@ -84,13 +70,18 @@ $col-box-height: 25em;
         }
 
 		form input {
-	        max-width: 100%;
-	        width: 100%;
+	        max-width: 90%;
+	        width: 70% !important;
 	    }
 	    
         ul li {
             input[type="radio"], label {
                 width: auto;
+            }
+
+            input[type="text"], input[type="password"] {
+                width: 90%;
+                max-width: 90%;
             }
         }
 
@@ -110,7 +101,7 @@ $col-box-height: 25em;
 
         .registered-users {
             fieldset {
-                width: 100%;
+                width: 60%;
             }
             
             fieldset.width {

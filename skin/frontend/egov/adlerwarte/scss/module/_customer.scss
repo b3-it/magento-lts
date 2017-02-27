@@ -191,6 +191,10 @@ body.customer-account {
         .dashboard {
             position: relative;
             top: -15px;
+
+            @include bp(max-width, $bp-medium) {
+                top: -40px;
+            }
         }
 
         h2 {
@@ -575,6 +579,76 @@ body.customer-account {
         strong {
             font-weight: normal;
         }
+    }
+}
+
+#my-orders-table tbody td.date {
+        width: auto;
+        min-width: 100px;
+}
+
+#my-orders-table tbody td[data-rwd-label] {
+	@include bp(max-width, $bp-small) {
+	   width: 100%;
+    }
+}
+
+@include bp(max-width, $bp-small) {
+    #my-orders-table {
+        .option-label {
+            margin-left: 20px;
+        }
+
+        .option-value {
+            margin-left: 35px;
+        }
+
+        td[data-rwd-label=Qty] .nobr {
+            br {
+                display: none;
+            }
+
+            strong {
+                margin-right: $box-spacing;
+            }
+        }
+
+        tr.bundle {
+            border-color: $c-module-border-light;
+        }
+
+        tr.bundle.child {
+            td[data-rwd-label] {
+                padding-left: 60px;
+            }
+        }
+
+        tbody:last-child tr:last-child {
+            td {
+                padding-bottom: 10px;
+
+                &:last-child {
+                    padding-bottom: $trim-small;
+                }
+            }
+        }
+
+        tfoot tr.shipping {
+            margin-top: 0;
+        }
+
+        tbody td[data-rwd-label] {
+            text-align: left;
+            padding-left: 30px;
+        }
+
+        tbody td {
+           border-style: hidden;
+        }
+    }
+
+    .my-account .order-details a.button {
+        width: 100%;
     }
 }
 

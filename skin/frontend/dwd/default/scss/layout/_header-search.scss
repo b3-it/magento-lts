@@ -23,7 +23,7 @@
         background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
     }
    
-    @include bp(min-width, 911px) {
+    @include bp(min-width, $bp-mobil + 1) {
     	display: none;
     }
 }
@@ -95,7 +95,10 @@
     height: 28px;
     border: 0;
     border-radius: 0;
+}
 
+#1-column #search {
+	wisth: 70%;
 }
 
 #search_mini_form .search-button {

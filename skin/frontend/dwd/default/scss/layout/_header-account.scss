@@ -34,7 +34,7 @@
     border-style: solid;
     border-color: $grundfarbe-blau;
     
-    @include bp(max-width, $bp-small) {
+    @include bp(max-width, $bp-mobil) {
         top: 40px;
     }
     
