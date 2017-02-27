@@ -12,7 +12,7 @@ try {
 }
 
 try {
-    $english = Mage::app()->getStore('english')->getId();
+    $english = Mage::app()->getStore('wettershop_en')->getId();
 }  catch (Mage_Core_Model_Store_Exception $e) {
     $e = Mage::exception('Mage_Core_Model_Store',"Store 'english' not found!");
     Mage::logException($e);
