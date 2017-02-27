@@ -22,6 +22,11 @@
  
     &:hover {
         text-decoration: none;
+        
+        .count{
+            background-color: $global-fontcolor-light;
+            color: $global-cart-color;
+        }
     }
     
     @include bp(max-width, $bp-small) {

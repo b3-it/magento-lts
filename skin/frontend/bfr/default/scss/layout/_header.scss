@@ -101,11 +101,11 @@
     }
     
     .mobile-top-header {
-        margin-top: 13px;
+        margin-top: 6px;
         vertical-align: top;
         width: 40%;
         position: absolute;
-        right: 5%;
+        left: 20%;
         
         @include bp(max-width, $bp-xsmall) {
             right: auto;
@@ -122,8 +122,6 @@
             font-size: 2.4em;
             
             @include bp(max-width, $bp-small) {
-                position: relative;
-                left: -147px;
                 white-space: nowrap;
                 width: 320px;
             }
@@ -156,7 +154,8 @@
     
     .mobile-top-store {
         position: relative;
-        top: 3px;
+        left: 45%;
+        top: -1px;
         
         @include bp(max-width, $bp-xsmall) {
             top: 20px;
@@ -175,6 +174,11 @@
             top: auto;
             margin: 0;
         }
+    }
+    
+    #mobile-cart-menu {
+        margin: 0;
+        top: 0;
     }
     
     .mobile-welcome {
@@ -300,7 +304,7 @@
     select {
         margin: 10px;
         width: 90%;
-        padding: 6px;
+        padding: 5px;
         
         @include bp(max-width, $bp-xsmall) {
             font-size: $global-fontsize-small;
