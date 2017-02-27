@@ -22,30 +22,35 @@
 
     h1, .welcome-msg {
         color: $global-fontcolor-light;
-        display: inline;
+        display: inline-block;
         position: relative;
+        vertical-align: bottom;
     }
     
     .welcome-msg {
         font-size: $global-pagetitle-size;
+        text-align: right;
+        max-width: 58%;
+        line-height: $global-pagetitle-size;
+        height: $global-pagetitle-size;
+        overflow: hidden;
         
-        @include bp(min-width, 1346px) {
-        	position: absolute;
-        	top: 27px;
+        @include bp(min-width, $bfr-desktop-max + 1) {
+        	top: -2px;
         	right: 0;
         }
         
-        @include bp(max-width, 1345px) {
+        @include bp(max-width, $bfr-desktop-max) {
    	    	top: 10px;
    	    	left: 1px;
         }
     }
     
-    @include bp(min-width, 1346px) {
+    @include bp(min-width, $bfr-desktop-max + 1) {
     	top: $global-header-height - 80px;
     }
     
-    @include bp(max-width, 1345px) {
+    @include bp(max-width, $bfr-desktop-max) {
     	top: 40px;
     	height: 70px;
     	
@@ -71,7 +76,7 @@
     }
 }
 
-@include bp(max-width, 785px) {
+@include bp(max-width, $bp-medium) {
 	.page-header-container {
         height: 110px + $global-logo-height;
     }
@@ -317,7 +322,7 @@
         }
     }
     
-    @include bp(max-width, 1345px) {
+    @include bp(max-width, $bfr-desktop-max) {
     	height: $global-header-height - 35px;
     }
 }
@@ -332,7 +337,7 @@
 
 }
 
-@include bp(max-width, 785px) {
+@include bp(max-width, $bp-medium) {
     .page-header-container {
         background-color: $global-header-gradientcolor-2;
         background-image: url($global-header-background-image);
