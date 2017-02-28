@@ -374,7 +374,7 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 			$this->setQuoteItemId($salesItem->getId());
 		}
 		if (!$this->hasFrameContract) {
-			$this->setFrameContract($salesItem->getProduct()->getFramecontract());
+			$this->setFrameContract($salesItem->getProduct()->getFramecontractLos());
 		}
 		if (!$this->hasCustomerId()) {
 			$this->setCustomerId($salesItem->getCustomerId());
@@ -395,13 +395,14 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	 *
 	 * @return Sid_Wishlist_Model_Quote_Item_Abstract
 	 */
-	public function setFrameContract($frameContractId) {
-		$frameContract = Mage::getModel('framecontract/contract')->load($frameContractId);
+	public function setFrameContract($frameContractLosId) {
+		$frameContractLos = Mage::getModel('framecontract/los')->load($frameContractLosId);
 	
+		$frameContract = Mage::getModel('framecontract/contract')->load($frameContractLos->getData('framecontract_contract_id'));
 		if (!$frameContract->isEmpty()) {
-			$this->setFrameContractId($frameContractId);
+			$this->setFrameContractId($frameContract->getId());
 			$this->setFrameContractTitle($frameContract->getTitle());
-			$this->setFrameContractNumber($frameContract->getNumber());
+			$this->setFrameContractNumber($frameContract->getContractnumber());
 		}
 	
 		return $this;

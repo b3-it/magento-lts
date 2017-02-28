@@ -269,6 +269,15 @@
             </customer_address>
  
         </fieldsets>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <framecontract_los/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
     </global>
     <crontab>
 		<jobs>
