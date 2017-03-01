@@ -1,6 +1,6 @@
 ﻿//
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -164,12 +164,26 @@ body .promos > li {
 
 /* Hiding the reviews content via CSS because we can't modify the template, */
 /* since it may be used in other places where those elements are needed */
-.cms-index-index .products-grid .ratings,
-.cms-index-index .products-grid .actions,
-.cms-index-noroute .products-grid .ratings,
-.cms-index-noroute .products-grid .actions {
-    display: none;
+.cms-index-index .products-grid {
+	li {
+	    list-style-type: none;
+	}
+	a {
+	    color: $global-footer-linkcolor;
+	    text-decoration: none;
+	}
+	img {
+	    max-height: 100%;
+	    max-width: 100%;
+	}
+	.product-info {
+	    min-height: 130px !important;
+	}
+	.ratings, .add-to-links {
+	    display: none;
+	}
 }
+
 
 .cms-index-index h2.subtitle {
     padding: 6px 0;

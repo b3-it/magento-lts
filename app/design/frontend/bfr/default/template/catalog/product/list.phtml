@@ -95,7 +95,7 @@
                     </h2>
                     <div class="product_sku">
                         <?php
-                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+                        $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
 
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = substr($_sku, 0, $sku_limit) . '...';
@@ -198,7 +198,7 @@
                     </h2>
                     <div class="product_sku">
                         <?php
-                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+                        $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
 
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = substr($_sku, 0, $sku_limit) . '...';

@@ -1606,7 +1606,7 @@ span.weee {
     margin-bottom: $b-margin-bottom;
 }
 
-.std ul li {
+.std ul:not(.products-grid) li {
     margin-left: 2em;
 }
 
