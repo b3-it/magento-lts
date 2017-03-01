@@ -37,9 +37,10 @@ class Bfr_Mach_Block_Adminhtml_History_Grid extends Mage_Adminhtml_Block_Widget_
   		->joinLeft(array('kopf'=>$collection->getTable('bfr_mach/history')),'kopf.order_id = main_table.entity_id AND kopf.deprecated = 0 AND kopf.export_type ='.Bfr_Mach_Model_ExportType::TYPE_KOPF, array('kopf_created_time'=> 'kopf.download_time'))
   		->joinLeft(array('pos'=>$collection->getTable('bfr_mach/history')),'pos.order_id = main_table.entity_id AND pos.deprecated = 0 AND pos.export_type ='.Bfr_Mach_Model_ExportType::TYPE_POSITION, array('pos_created_time'=> 'pos.download_time'))
   		->joinLeft(array('zuord'=>$collection->getTable('bfr_mach/history')),'zuord.order_id = main_table.entity_id AND zuord.deprecated = 0 AND zuord.export_type ='.Bfr_Mach_Model_ExportType::TYPE_ZUORDNUNG, array('zuord_created_time'=> 'zuord.download_time'))
-  		->columns(new Zend_Db_Expr('IF(kopf.download_time AND zuord.download_time AND pos.download_time,1,0) AS export_status'));
+  		->columns(new Zend_Db_Expr('IF(kopf.download_time AND zuord.download_time AND pos.download_time,1,0) AS export_status'))
+  		->where('status IN (\''.Mage_Sales_Model_Order::STATE_PROCESSING.'\', \''.Mage_Sales_Model_Order::STATE_COMPLETE.'\')');
   	;
-  	
+ //die($collection->getSelect()->__toString()); 	
   	$this->setCollection($collection);
   	return parent::_prepareCollection();
   }

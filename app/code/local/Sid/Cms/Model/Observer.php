@@ -74,7 +74,7 @@ class Sid_Cms_Model_Observer extends Varien_Object
 			$show = $page->getData('customergroups_show');
 			if(is_array($show)){
 				$show = implode(',', $show);
-			}else{
+			}else if (empty($show)) {
 				$show ="-1";
 			}
 			$page->setData('customergroups_show', $show);

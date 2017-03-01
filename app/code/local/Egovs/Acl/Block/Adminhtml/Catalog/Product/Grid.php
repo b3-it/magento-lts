@@ -12,6 +12,7 @@ class Egovs_Acl_Block_Adminhtml_Catalog_Product_Grid extends Mage_Adminhtml_Bloc
     	$canVisitDisabled = Mage::getSingleton('admin/session')->isAllowed('admin/catalog/products/disabledproducts');
     	$canVisitEnabled = Mage::getSingleton('admin/session')->isAllowed('admin/catalog/products/enabledproducts');    
     	
+    	$acl = Mage::getSingleton('acl/productacl');
     	if($canVisitDisabled && !$canVisitEnabled) $collection->addAttributeToFilter('status',$acl->getDisableStatus());
     	if(!$canVisitDisabled && $canVisitEnabled) $collection->addAttributeToFilter('status',$acl->getEnableStatus());
       
