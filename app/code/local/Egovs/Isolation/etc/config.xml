@@ -388,7 +388,27 @@
             <method>onNaviLoad</method>
           </cms_navi_load_observer>
         </observers>
-      </cms_navi_load_after>    
+      </cms_navi_load_after>
+      <infoletter_queue_collection_load_before>
+        <observers>
+          <infoletter_collectionload_observer>
+            <class>isolation/observer_infoletter</class>
+            <method>onInfoletterCollectionLoad</method>
+          </infoletter_collectionload_observer>
+        </observers>
+      </infoletter_queue_collection_load_before>
+      <infoletter_queue_load_after>
+        <observers>
+          <infoletter_queue_load_after_observer>
+            <class>isolation/observer_infoletter</class>
+            <method>onInfoletterLoad</method>
+          </infoletter_queue_load_after_observer>
+        </observers>
+      </infoletter_queue_load_after>    
+      
+      
+      
+      
     </events>
   </adminhtml>
 

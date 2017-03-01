@@ -12,6 +12,21 @@
  */
 class Egovs_Infoletter_Model_Resource_Queue_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
+	
+	/**
+	 * Event prefix
+	 *
+	 * @var string
+	 */
+	protected $_eventPrefix    = 'infoletter_queue_collection';
+	
+	/**
+	 * Event object
+	 *
+	 * @var string
+	 */
+	protected $_eventObject    = 'collection';
+	
     public function _construct()
     {
         parent::_construct();

@@ -25,6 +25,23 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
 
 	
 	/**
+	 * Prefix of model events names
+	 *
+	 * @var string
+	 */
+	protected $_eventPrefix = 'infoletter_queue';
+	
+	/**
+	 * Parameter name in event
+	 *
+	 * In observe method you can use $observer->getEvent()->getObject() in this case
+	 *
+	 * @var string
+	 */
+	protected $_eventObject = 'object';
+	
+	
+	/**
 	 * Get the base mail instance
 	 *
 	 * @return Egovs_Base_Model_Core_Basemail

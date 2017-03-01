@@ -15,8 +15,8 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('newsletter/infoletter')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+			->_setActiveMenu('newsletter/infoletter_queue')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Newsletter'), Mage::helper('adminhtml')->__('Infoletter'));
 
 		return $this;
 	}
@@ -38,11 +38,7 @@ class Egovs_Infoletter_Adminhtml_Infoletter_QueueController extends Mage_Adminht
 
 			Mage::register('queue_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('infoletter/items');
-
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
+			$this->_initAction();
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 

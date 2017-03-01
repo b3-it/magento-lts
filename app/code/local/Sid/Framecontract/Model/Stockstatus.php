@@ -85,7 +85,7 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 	private function _formatItemsHTML($items)
 	{
 		$res = array();
-		$res[] = "<table><tr><td> Product </td><td> Artikelnummer </td><td> Bestellt </td><td> Bestellt [%]</td><tr>";
+		$res[] = "<table><tr><td> Produkt </td><td> Artikelnummer </td><td> Bestellt </td><td> Bestellt [%]</td></tr>";
 		
 		foreach ($items as $item)
 		{
