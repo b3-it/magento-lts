@@ -1597,7 +1597,7 @@ span.weee {
     margin-bottom: $b-margin-bottom;
 }
 
-.std ol li {
+.std ol:not(.products-list) li {
     margin-left: 2em;
 }
 
