@@ -12,6 +12,7 @@
     border: 0 none;
     height: 100%;
     width: 100%;
+    text-align: center;
     
     @include bp(max-width, $bp-mobil) {
         position: relative;
