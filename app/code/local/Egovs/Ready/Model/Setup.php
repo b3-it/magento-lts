@@ -40,6 +40,7 @@ class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 			// update
 			$data['stores'] = $cms->getStoreId();	
 			$data['page_id'] = $cms->getId();
+			$data['content'] = $cms->getContent();
 			$cms->setData($data)->save();
 		}
 	}
@@ -57,6 +58,7 @@ class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 			// update;
 			$data['stores'] = $cms->getStoreId();
 			$data['block_id'] = $cms->getId();
+			$data['content'] = $cms->getContent();
 			$cms->setData($data)->save();
 		}
 	}
