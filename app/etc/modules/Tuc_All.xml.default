@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+     <TuChemnitz_Voucher>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>          
+            </depends>
+        </TuChemnitz_Voucher>
+    </modules>
+</config>
