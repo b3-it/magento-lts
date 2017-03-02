@@ -82,8 +82,16 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     protected function _addElement($xml, $xml_node ,$item, $field)
     {
     	//$func = 'get'
-    	$node = $xml->createElement($field,$item->getData($field));
+    	//$node = $xml->createElement($field,$item->getData($field));
+    	//$xml_node->appendChild($node);
+    	
+    	
+    	$data = $xml->createCDATASection($item->getData($field));
+    	$node = $xml->createElement($field);
+    	$node->appendChild($data);
     	$xml_node->appendChild($node);
+    	
+    	
     }
     
 }

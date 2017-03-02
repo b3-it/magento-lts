@@ -13,7 +13,7 @@ class B3it_ConfigCompare_Model_PdfBlocks extends B3it_ConfigCompare_Model_Compar
 {
 	
 	protected $_attributesCompare  = array('payment','customer_group','shipping','store_id','prio','pos','status','tax_rule');
-	protected $_attributesExport  = array('ident','payment','customer_group','shipping','store_id','prio','pos',' tatus','tax_rule');
+	protected $_attributesExport  = array('ident','payment','customer_group','shipping','store_id','prio','pos','status','tax_rule');
     
 	public function getCollection()
 	{
@@ -72,7 +72,7 @@ class B3it_ConfigCompare_Model_PdfBlocks extends B3it_ConfigCompare_Model_Compar
     {
     	$collection =  $this->getCollection();
     	foreach($collection->getItems() as $item){
-    		$xml_item = $xml->createElement( "cms_block");
+    		$xml_item = $xml->createElement( "pdf_block");
     		$xml_node->appendChild($xml_item);
     
     		

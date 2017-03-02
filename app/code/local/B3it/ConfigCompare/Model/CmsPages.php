@@ -12,8 +12,8 @@
 class B3it_ConfigCompare_Model_CmsPages extends B3it_ConfigCompare_Model_Compare
 {
 	
-	protected $_attributesCompare = array('root_template', 'meta_keywords', 'meta_description', 'identifier', 'content_heading', 'is_active', 'sort_order', 'layout_update_xml', 'custom_theme', 'custom_root_template', 'custom_layout_update_xml', 'custom_theme_from', 'custom_theme_to', 'activate_time', 'deactivate_time', 'customergroups_hide');
-	protected $_attributesExport = array('stores','root_template', 'meta_keywords', 'meta_description', 'identifier', 'content_heading', 'is_active', 'sort_order', 'layout_update_xml', 'custom_theme', 'custom_root_template', 'custom_layout_update_xml', 'custom_theme_from', 'custom_theme_to', 'activate_time', 'deactivate_time', 'customergroups_hide');
+	protected $_attributesCompare = array('root_template', 'meta_keywords', 'meta_description', 'identifier', 'content_heading', 'is_active', 'sort_order', 'layout_update_xml', 'custom_theme', 'custom_root_template', 'custom_layout_update_xml', 'custom_theme_from', 'custom_theme_to');
+	protected $_attributesExport = array('stores','root_template', 'meta_keywords', 'meta_description', 'identifier', 'content_heading', 'is_active', 'sort_order', 'layout_update_xml', 'custom_theme', 'custom_root_template', 'custom_layout_update_xml', 'custom_theme_from', 'custom_theme_to');
 			
 	public function getCollection()
 	{
