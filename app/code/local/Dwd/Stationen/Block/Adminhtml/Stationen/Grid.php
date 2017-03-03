@@ -133,7 +133,7 @@ class Dwd_Stationen_Block_Adminhtml_Stationen_Grid extends Mage_Adminhtml_Block_
           'header'    => Mage::helper('stationen')->__('Updated At'),
           'align'     =>'left',
           'index'     => 'updated_at',
-      	  'type'	=> 'date',	
+      	  'type'	=> 'datetime',	
       	  'width'	=> '80px',
       ));
 
