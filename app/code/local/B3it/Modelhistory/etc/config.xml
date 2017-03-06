@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @package    
+ * @copyright  Copyright (c) 2017 B3 IT Systeme GmbH
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <B3it_Modelhistory>
+            <version>0.0.1.0</version>
+        </B3it_Modelhistory>
+    </modules>
+    <admin>
+         <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <B3it_Modelhistory_Adminhtml after="Mage_Adminhtml">B3it_Modelhistory_Adminhtml</B3it_Modelhistory_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <menu>
+            <system>
+                <children>
+                    <tools translate="title">
+                        <children>
+                            <modelhistory translate="title" module="adminhtml">
+                                <title>Model History</title>
+                                <children>
+                                    <modelhistory_model module="adminhtml">
+                                        <title>Model</title>
+                                        <sort_order>20</sort_order>
+                                        <action>adminhtml/modelhistory_modelhistory</action>
+                                    </modelhistory_model>
+                                    <modelhistory_config module="adminhtml">
+                                        <title>Config</title>
+                                        <sort_order>20</sort_order>
+                                        <action>adminhtml/modelhistory_config</action>
+                                    </modelhistory_config>
+                                </children>
+                            </modelhistory>
+                        </children>
+                    </tools>
+                </children>
+            </system>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <tools>
+                                    <children>
+                                        <modelhistory translate="title">
+                                            <title>Modelhistory</title>
+                                            <sort_order>10</sort_order>
+                                        </modelhistory>
+                                    </children>
+                                </tools>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <events>
+            <model_delete_after>
+                <observers>
+                    <b3it_modelhistory_trace_observer>
+                        <type>singleton</type>
+                        <class>b3it_modelhistory/observer</class>
+                        <method>doTrace</method>
+                    </b3it_modelhistory_trace_observer>
+                </observers>
+            </model_delete_after>
+            <model_save_after>
+                <observers>
+                    <b3it_modelhistory_trace_observer>
+                        <type>singleton</type>
+                        <class>b3it_modelhistory/observer</class>
+                        <method>doTrace</method>
+                    </b3it_modelhistory_trace_observer>
+                </observers>
+            </model_save_after>
+            <core_config_data_save_commit_after>
+                <observers>
+                    <b3it_modelhistory_trace_observer>
+                        <type>singleton</type>
+                        <class>b3it_modelhistory/observer</class>
+                        <method>doTrace</method>
+                    </b3it_modelhistory_trace_observer>
+                </observers>
+            </core_config_data_save_commit_after>
+        </events>
+        <layout>
+            <updates>
+                <configcompare>
+                    <file>b3it/modelhistory.xml</file>
+                </configcompare>
+            </updates>
+        </layout>
+    </adminhtml>
+    <global>
+        <models>
+            <b3it_modelhistory>
+                <class>B3it_Modelhistory_Model</class>
+                <resourceModel>b3it_modelhistory_resource</resourceModel>
+            </b3it_modelhistory>
+            <b3it_modelhistory_resource>
+                <class>B3it_Modelhistory_Model_Resource</class>
+                <entities>
+                    <history_entries>
+                        <table>history_entries</table>
+                    </history_entries>
+                    <history_config>
+                        <table>history_config</table>
+                    </history_config>
+                </entities>
+            </b3it_modelhistory_resource>
+        </models>
+
+        <resources>
+            <b3itmodelhistory_setup>
+                <setup>
+                    <module>B3it_Modelhistory</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </b3itmodelhistory_setup>
+        </resources>
+        <blocks>
+            <modelhistory>
+                <class>B3it_Modelhistory_Block</class>
+            </modelhistory>
+        </blocks>
+    </global>
+</config>
