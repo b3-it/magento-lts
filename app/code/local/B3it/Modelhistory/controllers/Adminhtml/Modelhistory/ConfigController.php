@@ -12,7 +12,11 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_ConfigController extends Mage_Adm
         $this->renderLayout();
         return $this;
     }
-    
+
+    public function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/tools/modelhistory/modelhistory_config');
+    }
 
     public function restoreAction() {
         return;

@@ -10,9 +10,13 @@ class B3it_Modelhistory_Block_Adminhtml_Modelhistory_Grid extends Mage_Adminhtml
         $model = Mage::getModel('b3it_modelhistory/history');
         $collection = $model->getCollection();
 
-        $collection->addAttributeToSort('model');
-        $collection->addAttributeToSort('model_id');
-        $collection->addAttributeToSort('rev', 'desc');
+        // complex default sorting
+        if (!$this->getParam($this->getVarNameSort(), $this->_defaultSort)) {
+            $collection->addAttributeToSort('model');
+            $collection->addAttributeToSort('model_id');
+            $collection->addAttributeToSort('rev', 'desc');
+        }
+
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -85,26 +89,28 @@ class B3it_Modelhistory_Block_Adminhtml_Modelhistory_Grid extends Mage_Adminhtml
             'column_css_class' => 'finediff'
         ));
 
-        $this->addColumn('action',
-            array(
-                'header'    => Mage::helper('core')->__('Action'),
-                'width'     => '50px',
-                'type'      => 'action',
-                'getter'    => 'getId',
-                'actions'   => array(
-                    array(
-                        'caption' => Mage::helper('core')->__('Restore'),
-                        'url'     => array(
-                            'base' => '*/*/restore'
-                            //'params'=>array('store'=>$this->getRequest()->getParam('store'))
-                        ),
-                        'field'   => 'id',
-                        'confirm' => true
-                    )
-                ),
-                'filter'    => false,
-                'sortable'  => false,
-                'renderer' => 'B3it_Modelhistory_Block_Adminhtml_Widget_Grid_Column_Renderer_Actions'
-            ));
+//         $this->addColumn('action',
+//             array(
+//                 'header'    => Mage::helper('core')->__('Action'),
+//                 'width'     => '50px',
+//                 'type'      => 'action',
+//                 'getter'    => 'getId',
+//                 'actions'   => array(
+//                     array(
+//                         'caption' => Mage::helper('core')->__('Restore'),
+//                         'url'     => array(
+//                             'base' => '*/*/restore'
+//                             //'params'=>array('store'=>$this->getRequest()->getParam('store'))
+//                         ),
+//                         'field'   => 'id',
+//                         'confirm' => true
+//                     )
+//                 ),
+//                 'filter'    => false,
+//                 'sortable'  => false,
+//                 'renderer' => 'B3it_Modelhistory_Block_Adminhtml_Widget_Grid_Column_Renderer_Actions'
+//             ));
+
+        return parent::_prepareColumns();
     }
 }
