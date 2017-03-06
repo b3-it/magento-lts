@@ -10,18 +10,18 @@
 
 
 class B3it_ConfigCompare_Model_PdfSections extends B3it_ConfigCompare_Model_Compare
-{
+{    
+	protected $_attributesExcludeExport  = array('pdftemplate_section_id', 'pdftemplate_template_id', 'created_at' , 'updated_at');
+	protected $_attributesExcludeCompare  = array('pdftemplate_section_id', 'pdftemplate_template_id','created_at' , 'updated_at', 'content', 'title');
 	
-	protected $_attributesCompare  = array('description', 'type', 'status', 'position', 'font', 'fontsize', 'top', 'left', 'width', 'height', 'sectiontype', 'position', 'occurrence');
-	protected $_attributesExport  =  array('ident','description', 'type', 'status', 'font', 'fontsize', 'top', 'left', 'width', 'height', 'sectiontype', 'position', 'occurrence' );
-    
+	
 	public function getCollection()
 	{
 		$collection = Mage::getModel('pdftemplate/section')->getCollection();
 		$collection->getSelect()
 			->join(array('section'=>$collection->getTable('pdftemplate/template')),'main_table.pdftemplate_template_id = section.pdftemplate_template_id');
 		
-		
+	//die($collection->getSelect()->__toString());	
 		return $collection;
 	}
     
@@ -84,30 +84,5 @@ class B3it_ConfigCompare_Model_PdfSections extends B3it_ConfigCompare_Model_Comp
     	return null;
     }
     
-    public function export($xml, $xml_node)
-    {
-    	$collection = $this->getCollection();
-    	foreach($collection->getItems() as $item){
-    		$xml_item = $xml->createElement( "pdf_section");
-    		$xml_node->appendChild($xml_item);
-    
-    		
-    			
-    		foreach($this->_attributesExport as $field)
-    		{
-    			$this->_addElement($xml, $xml_item, $item, $field);
-    		}
-    
-    		$data = $xml->createCDATASection($item->getTitle());
-    		$node = $xml->createElement("title");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    
-    		$data = $xml->createCDATASection($item->getContent());
-    		$node = $xml->createElement("content");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    	}
-    }
-    
+   
 }

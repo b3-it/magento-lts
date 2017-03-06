@@ -12,9 +12,8 @@
 class B3it_ConfigCompare_Model_Emailtemplates extends B3it_ConfigCompare_Model_Compare
 {
 	
-	protected $_attributesCompare  = array('template_code', 'template_styles', 'template_type', 'template_sender_name', 'template_sender_email','orig_template_code', 'orig_template_variables');
-	protected $_attributesExport  =  array('template_code', 'template_styles', 'template_type', 'template_sender_name', 'template_sender_email','orig_template_code', 'orig_template_variables');
-
+	protected $_attributesExcludeExport  = array('template_id', 'modified_at' );
+	protected $_attributesExcludeCompare  = array('template_id', 'modified_at' , 'template_subject', 'template_text');
     
 	public function getCollection()
 	{
@@ -71,31 +70,7 @@ class B3it_ConfigCompare_Model_Emailtemplates extends B3it_ConfigCompare_Model_C
     }
 
     
-    public function export($xml, $xml_node)
-    {
-    	$collection =  $this->getCollection();
-    	foreach($collection->getItems() as $item){
-    		$xml_item = $xml->createElement( "email_template");
-    		$xml_node->appendChild($xml_item);
-    
-    		
-    			
-    		foreach($this->_attributesExport as $field)
-    		{
-    			$this->_addElement($xml, $xml_item, $item, $field);
-    		}
-    
-    		$data = $xml->createCDATASection($item->getTemplateSubject());
-    		$node = $xml->createElement("template_subject");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    
-    		$data = $xml->createCDATASection($item->getTemplateText());
-    		$node = $xml->createElement("template_text");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    	}
-    }
+
     
     private function __findInCollection($path){
     	foreach($this->_collectionArray['items'] as $key => $item){
