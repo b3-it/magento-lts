@@ -311,16 +311,62 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
 
         // remove empty keys from new data
         $result_data = array_filter($data, function ($value, $key) use ($origData) {
+            if ($this->_conditionalExcludeKey($key, $origData[$key], $value, 0)) {
+                return false;
+            }
+
             if ($value === '' && (!isset($origData[$key]) || $origData[$key] !== '')) {
+                return false;
+            } else if ($value === false && (!isset($origData[$key]) || $origData[$key] !== false)) {
                 return false;
             } else {
                 return true;
             }
         }, ARRAY_FILTER_USE_BOTH);
 
+        // filter origData
+        $origData = array_filter($origData, function ($value, $key) use ($result_data) {
+            if ($value === null && !isset($result_data[$key])) {
+                return false;
+            } else if ($this->_conditionalExcludeKey($key, $value, $result_data[$key], 0)) {
+                return false;
+            } else {
+                return true;
+            }
+        }, ARRAY_FILTER_USE_BOTH);
+        
+        // filter variables that only did change type from string to integer
+        array_walk($result_data, function (&$value, $key) use ($origData) {
+            if (isset($origData[$key]) && $origData[$key] == $value) {
+                $value = $origData[$key];
+            }
+        });
+
+        // TODO some specifice fixing, need to expanded later for other models
+        if ($source instanceof Mage_Admin_Model_User) {
+            // remove some flags
+            unset($result_data['page']);
+            unset($result_data['limit']);
+
+            if (!is_null($origData)) {
+                $keys = array('created', 'reload_acl_flag', 'logdate', 'lognum');
+                foreach ($keys as $key) {
+                    if (isset($origData[$key])) {
+                        $result_data[$key] = $origData[$key];
+                    }
+                }
+            }
+        } else if ($source instanceof Mage_Admin_Model_Roles) {
+            unset($result_data['name']);
+        }
+
         ksort($result_data);
         if (!is_null($origData)) {
             ksort($origData);
+            // data is equal after filter
+            if ($result_data === $origData) {
+                return;
+            }
         }
 
         $sessionInformation = $this->_getSessionInformation();
@@ -470,9 +516,6 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      * @return void
      */
     protected function _onCoreConfigDataSaveCommitAfter($observer) {
-        //var_dump("_onCoreConfigDataSaveCommitAfter");
-        //var_dump($observer);
-        //die();
         
         /* @var $source Mage_Core_Model_Abstract */
         $source = $observer->getConfigData();
@@ -679,13 +722,18 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             || $key == 'is_default_shipping' && $newValue == true && empty($origValue)
             || $key == 'customer_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
             || $key == 'store_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
+            || $key == 'current_password'
             || $key == 'password'
             || $key == 'new_password'
             || $key == 'password_confirmation'
             || $key == 'form_key') {
             return true;
         }
-        
+
+        if (strpos($key, 'tab_admin') !== false) {
+            return true;
+        }
+
         return false;
     }
 

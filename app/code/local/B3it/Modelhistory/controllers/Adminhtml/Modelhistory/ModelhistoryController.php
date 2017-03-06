@@ -13,6 +13,11 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_ModelhistoryController extends Ma
         return $this;
     }
 
+    public function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/tools/modelhistory/modelhistory_model');
+    }
+
     public function restoreAction() {
         return;
 

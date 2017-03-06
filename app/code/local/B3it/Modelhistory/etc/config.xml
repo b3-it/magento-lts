@@ -71,6 +71,16 @@
                                         <modelhistory translate="title">
                                             <title>Modelhistory</title>
                                             <sort_order>10</sort_order>
+                                            <children>
+                                               <modelhistory_model module="adminhtml">
+                                                    <title>Model</title>
+                                                    <sort_order>20</sort_order>
+                                                </modelhistory_model>
+                                                <modelhistory_config module="adminhtml">
+                                                    <title>Config</title>
+                                                    <sort_order>20</sort_order>
+                                                </modelhistory_config>
+                                            </children>
                                         </modelhistory>
                                     </children>
                                 </tools>
@@ -111,9 +121,9 @@
         </events>
         <layout>
             <updates>
-                <configcompare>
+                <modelhistory>
                     <file>b3it/modelhistory.xml</file>
-                </configcompare>
+                </modelhistory>
             </updates>
         </layout>
     </adminhtml>
