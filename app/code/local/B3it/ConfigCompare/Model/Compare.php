@@ -17,6 +17,10 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
 	protected $_collection = null;
 	protected $_collectionArray = null;
 	
+	protected $_attributesCompare  = array();
+	protected $_attributesExcludeExport  = array('id');
+	protected $_attributesExcludeCompare  = array('id');
+	
 	
     public function _construct()
     {
@@ -49,10 +53,15 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     protected function _getAttributeDiff($from, $to)
     {
     	$res = array();
-    	foreach($this->_attributesCompare as $field)
+    	$fields = array_keys(array_merge($from, $to));
+    	foreach($fields as $field)
     	{
-    		if((string)$from[$field] != (string)$to[$field]){
-    			$res[] = $field. ': ' . $this->_compareDiff($from[$field], $to[$field]); 
+    		if(array_search($field, $this->_attributesExcludeCompare) === false){
+    			$_from = isset($from[$field]) ? $from[$field]: '';
+    			$_to = isset($to[$field]) ? $to[$field]: '';
+	    		if((string)$_from != (string)$_to){
+	    			$res[] = $field. ': ' . $this->_compareDiff($_from, $_to); 
+	    		}
     		}
     	}
     	
@@ -82,8 +91,39 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     protected function _addElement($xml, $xml_node ,$item, $field)
     {
     	//$func = 'get'
-    	$node = $xml->createElement($field,$item->getData($field));
+    	//$node = $xml->createElement($field,$item->getData($field));
+    	//$xml_node->appendChild($node);
+    	
+    	
+    	$data = $xml->createCDATASection($item->getData($field));
+    	$node = $xml->createElement($field);
+    	$node->appendChild($data);
     	$xml_node->appendChild($node);
+    	
+    	
+    }
+    
+    public function getExportCollection()
+    {
+    	return $this->getCollection();
+    }
+    
+    
+    public function export($xml, $xml_node, $label="not_defined")
+    {
+    	$collection =  $this->getExportCollection();
+    	foreach($collection->getItems() as $item){
+    		$xml_item = $xml->createElement( $label);
+    		$xml_node->appendChild($xml_item);
+    
+    		$data = $item->getData();
+        	foreach($data as $field => $value)
+    		{
+    			if(array_search($field, $this->_attributesExcludeExport) === false){
+    				$this->_addElement($xml, $xml_item, $item, $field);
+    			}
+    		}
+    	}
     }
     
 }

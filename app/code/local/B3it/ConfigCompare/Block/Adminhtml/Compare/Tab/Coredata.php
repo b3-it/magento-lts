@@ -13,7 +13,7 @@
   protected function _prepareCollection()
   {
       //$collection =Mage::getModel('core/config_data')->getCollection();
-  	  $collection =Mage::getModel('configcompare/configcompare')->getCollection();
+  	  $collection =Mage::getModel('configcompare/configCompare')->getCollection();
   	  
   	  $collection->getSelect()->where("type='core_config_data'");
   	  

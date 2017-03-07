@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_modelhistory_modelhistory_index>
+        <reference name="content">
+            <block type="modelhistory/adminhtml_modelhistory" name="modelhistory" />
+        </reference>
+    </adminhtml_modelhistory_modelhistory_index>
+    <adminhtml_modelhistory_config_index>
+        <reference name="content">
+            <block type="modelhistory/adminhtml_config" name="config" />
+        </reference>
+    </adminhtml_modelhistory_config_index>
+</layout>

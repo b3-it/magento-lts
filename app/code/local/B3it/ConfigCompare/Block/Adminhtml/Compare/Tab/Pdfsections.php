@@ -12,7 +12,7 @@
 
   protected function _prepareCollection()
   {
-      $collection  = Mage::getModel('configcompare/configcompare')->getCollection();
+      $collection  = Mage::getModel('configcompare/configCompare')->getCollection();
   	  $collection->getSelect()->where("type='pdf_section'");
   	  
   	  

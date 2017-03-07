@@ -11,10 +11,10 @@
 
 class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compare
 {
+	protected $_attributesExcludeExport  = array('block_id', 'creation_time' , 'update_time');
+	protected $_attributesExcludeCompare  = array('block_id', 'creation_time' , 'update_time', 'content', 'title');
 	
-	protected $_attributesCompare  = array('stores','is_active');
-	protected $_attributesExport  = array('identifier','stores','is_active');
-    
+	
 	public function getCollection()
 	{
 		$collection = Mage::getModel('cms/block')->getCollection();
@@ -72,30 +72,6 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
     }
 
     
-    public function export($xml, $xml_node)
-    {
-    	$collection =  $this->getCollection();
-    	foreach($collection->getItems() as $item){
-    		$xml_item = $xml->createElement( "cms_block");
-    		$xml_node->appendChild($xml_item);
-    
-    		
-    			
-    		foreach($this->_attributesExport as $field)
-    		{
-    			$this->_addElement($xml, $xml_item, $item, $field);
-    		}
-    
-    		$data = $xml->createCDATASection($item->getTitle());
-    		$node = $xml->createElement("title");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    
-    		$data = $xml->createCDATASection($item->getContent());
-    		$node = $xml->createElement("content");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    	}
-    }
+
     
 }

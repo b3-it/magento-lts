@@ -12,6 +12,8 @@ class B3it_ConfigCompare_Model_CoreConfigData extends B3it_ConfigCompare_Model_C
 	private $collection = null;
 	private $collectionArray = null;
 	
+	protected $_attributesExcludeExport  = array('config_id');
+	protected $_attributesExcludeCompare  = array('config_id');
 	
     public function _construct()
     {
@@ -19,7 +21,10 @@ class B3it_ConfigCompare_Model_CoreConfigData extends B3it_ConfigCompare_Model_C
         $this->_init('configcompare/coreConfigData');
     }
     
-    
+    public function getExportCollection()
+    {
+    	 return Mage::getModel('core/config_data')->getCollection();
+    }
     
     public function getCollectionDiff($importXML)
     {
@@ -71,25 +76,5 @@ class B3it_ConfigCompare_Model_CoreConfigData extends B3it_ConfigCompare_Model_C
     	return null;
     }
     
-    public function export($xml, $xml_node)
-    {
-    	$config = Mage::getModel('core/config_data')->getCollection();
-    	foreach($config->getItems() as $item){
-    		$xml_item = $xml->createElement( "core_config_data");
-    		$xml_node->appendChild($xml_item);
-    			
-    			
-    		$fields = array('scope', 'scope_id', 'path');
-    		foreach($fields as $field)
-    		{
-    			$this->_addElement($xml, $xml_item, $item, $field);
-    		}
-    
-    		$data = $xml->createCDATASection($item->getValue());
-    		$node = $xml->createElement("value");
-    		$node->appendChild($data);
-    		$xml_item->appendChild($node);
-    
-    	}
-    }
+
 }
