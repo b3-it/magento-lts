@@ -133,7 +133,8 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   		
   		$collection = Mage::getModel('exportorder/link')->getCollection();
   		$collection->getSelect()
-  			->where("DATE_ADD(create_time, INTERVAL " . $days . " DAY) < NOW() ");
+  			->where("DATE_ADD(create_time, INTERVAL " . $days . " DAY) < NOW() ")
+  			->where('link_status ='.Sid_ExportOrder_Model_Linkstatus::STATUS_ENABLED);
   		
   		$LinkIds = array();
   		foreach($collection as $link)
