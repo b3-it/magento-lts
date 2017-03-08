@@ -25,6 +25,7 @@ class GiroCheckout_SDK_CreditCardTransaction extends GiroCheckout_SDK_AbstractAp
         'recurring' => FALSE,
         'urlRedirect' => TRUE,
         'urlNotify' => TRUE,
+        'pptoken' => FALSE,
     );
 
     /*

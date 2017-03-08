@@ -15,12 +15,18 @@ class GiroCheckout_SDK_Config
     if (null === self::$instance) {
       self::$instance = new self;
 
-  //set default values
+      // Set default values
       self::$instance->setConfig('CURLOPT_CAINFO',null);
       self::$instance->setConfig('CURLOPT_SSL_VERIFYPEER',TRUE);
       self::$instance->setConfig('CURLOPT_SSL_VERIFYHOST',2);
       self::$instance->setConfig('CURLOPT_CONNECTTIMEOUT',3);
 
+      // Optional proxy parameters
+      self::$instance->setConfig('CURLOPT_PROXY', null);
+      self::$instance->setConfig('CURLOPT_PROXYPORT', null);
+      self::$instance->setConfig('CURLOPT_PROXYUSERPWD', null);
+
+      // Debug mode and log
       self::$instance->setConfig('DEBUG_MODE',FALSE);
       self::$instance->setConfig('DEBUG_LOG_PATH',dirname(__FILE__).'/log');
     }
@@ -55,12 +61,20 @@ class GiroCheckout_SDK_Config
       case 'CURLOPT_SSL_VERIFYHOST':
       case 'CURLOPT_CONNECTTIMEOUT':
 
-      //debug
+      // Proxy
+      case 'CURLOPT_PROXY':
+      case 'CURLOPT_PROXYPORT':
+      case 'CURLOPT_PROXYUSERPWD':
+
+      // Debug
       case 'DEBUG_LOG_PATH':
-      case 'DEBUG_MODE':      $this->config[$key] = $value;
-                              return true;
-                              break;
-      default: return false;
+      case 'DEBUG_MODE':
+        $this->config[$key] = $value;
+        return true;
+        break;
+
+      default:
+        return false;
     }
   }
 

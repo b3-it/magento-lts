@@ -1,12 +1,12 @@
 <?php
 /**
- * Provides configuration for an eps API call.
+ * Provides configuration for a Paypage API call.
  *
  * @package GiroCheckout
  * @version $Revision: 24 $ / $Date: 2014-05-22 14:30:12 +0200 (Do, 22 Mai 2014) $
  */
 
-class GiroCheckout_SDK_EpsTransaction extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
+class GiroCheckout_SDK_PaypageTransaction extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
 
     /*
      * Includes any parameter field of the API call. True parameter are mandatory, false parameter are optional.
@@ -19,10 +19,16 @@ class GiroCheckout_SDK_EpsTransaction extends GiroCheckout_SDK_AbstractApi imple
         'amount' => TRUE,
         'currency' => TRUE,
         'purpose' => TRUE,
-        'bic' => FALSE,
-        'urlRedirect' => TRUE,
-        'urlNotify' => TRUE,
-        'pptoken' => FALSE,
+        'description' => TRUE,
+        'type' => FALSE,
+        'locale' => 'de',
+        'paymethods' => FALSE,
+        'pkn' => FALSE,
+        'test' => TRUE,
+        'successUrl' => TRUE,
+        'backUrl' => TRUE,
+        'failUrl' => TRUE,
+        'notifyUrl' => FALSE,
     );
 
     /*
@@ -32,7 +38,7 @@ class GiroCheckout_SDK_EpsTransaction extends GiroCheckout_SDK_AbstractApi imple
         'rc'=> TRUE,
         'msg' => TRUE,
         'reference' => FALSE,
-        'redirect' => FALSE,
+        'url' => FALSE,
     );
 
     /*
@@ -61,7 +67,7 @@ class GiroCheckout_SDK_EpsTransaction extends GiroCheckout_SDK_AbstractApi imple
     /*
      * The request url of the GiroCheckout API for this request.
      */
-    protected $requestURL = "https://payment.girosolution.de/girocheckout/api/v2/transaction/start";
+    protected $requestURL = "https://payment.girosolution.de/girocheckout/api/v2/paypage/init";
 
     /*
      * If true the request method needs a notify page to receive the transactions result.

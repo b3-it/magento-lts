@@ -1,27 +1,30 @@
 <?php
 /**
- * Provides configuration for an eps API call.
+ * Provides configuration for an BlueCode API call.
  *
  * @package GiroCheckout
  * @version $Revision: 24 $ / $Date: 2014-05-22 14:30:12 +0200 (Do, 22 Mai 2014) $
  */
 
-class GiroCheckout_SDK_EpsTransaction extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
+class GiroCheckout_SDK_BlueCodeTransaction extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
 
     /*
      * Includes any parameter field of the API call. True parameter are mandatory, false parameter are optional.
      * For further information use the API documentation.
      */
     protected $paramFields = array(
-        'merchantId'=> TRUE,
-        'projectId' => TRUE,
-        'merchantTxId' => TRUE,
-        'amount' => TRUE,
-        'currency' => TRUE,
-        'purpose' => TRUE,
-        'bic' => FALSE,
-        'urlRedirect' => TRUE,
-        'urlNotify' => TRUE,
+        'merchantId'      => TRUE,
+        'projectId'       => TRUE,
+        'merchantTxId'    => TRUE,  // Bluecode OrderID
+        'amount'          => TRUE,
+        'currency'        => TRUE,
+        'branch'          => TRUE,
+        'slip'            => TRUE,
+        'slipDateTime'    => TRUE,
+        'purpose'         => TRUE,  // Bluecode description
+        'recurringID'     => FALSE,
+        'urlRedirect'     => TRUE,
+        'urlNotify'       => TRUE,
         'pptoken' => FALSE,
     );
 

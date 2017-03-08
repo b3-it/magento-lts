@@ -1,36 +1,28 @@
 <?php
 /**
- * Provides configuration for an giropay API call.
+ * Provides configuration for an credit card API call.
  *
  * @package GiroCheckout
- * @version $Revision: 172 $ / $Date: 2016-10-17 22:56:02 -0300 (Mon, 17 Oct 2016) $
  */
 
-class GiroCheckout_SDK_GiropayTransactionWithGiropayID extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
+class GiroCheckout_SDK_MaestroTransaction extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
 
     /*
      * Includes any parameter field of the API call. True parameter are mandatory, false parameter are optional.
      * For further information use the API documentation.
      */
     protected $paramFields = array(
-        'merchantId'=> TRUE,
+        'merchantId' => TRUE,
         'projectId' => TRUE,
         'merchantTxId' => TRUE,
         'amount' => TRUE,
         'currency' => TRUE,
         'purpose' => TRUE,
-        'bic' => FALSE,
-        'iban' => FALSE,
-        'info1Label' => FALSE,
-        'info1Text' => FALSE,
-        'info2Label' => FALSE,
-        'info2Text' => FALSE,
-        'info3Label' => FALSE,
-        'info3Text' => FALSE,
-        'info4Label' => FALSE,
-        'info4Text' => FALSE,
-        'info5Label' => FALSE,
-        'info5Text' => FALSE,
+        'type' => FALSE,
+        'locale' => FALSE,
+        'mobile' => FALSE,
+        'pkn' => FALSE,
+        'recurring' => FALSE,
         'urlRedirect' => TRUE,
         'urlNotify' => TRUE,
         'pptoken' => FALSE,
@@ -56,7 +48,6 @@ class GiroCheckout_SDK_GiropayTransactionWithGiropayID extends GiroCheckout_SDK_
         'gcAmount' => TRUE,
         'gcCurrency' => TRUE,
         'gcResultPayment' => TRUE,
-        'gcResultAVS' => TRUE,
         'gcHash' => TRUE,
     );
 
@@ -89,9 +80,4 @@ class GiroCheckout_SDK_GiropayTransactionWithGiropayID extends GiroCheckout_SDK_
      * The result code number of a successful transaction
      */
     protected $paymentSuccessfulCode = 4000;
-
-    /*
-     * The result code number of a successful avs check
-     */
-    protected $avsSuccessfulCode = 4020;
 }

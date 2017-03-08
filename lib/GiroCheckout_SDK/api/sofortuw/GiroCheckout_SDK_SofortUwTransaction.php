@@ -21,6 +21,7 @@ class GiroCheckout_SDK_SofortUwTransaction extends GiroCheckout_SDK_AbstractApi 
       'purpose'         => TRUE,
       'urlRedirect'     => TRUE,
       'urlNotify'       => TRUE,
+      'pptoken'         => FALSE,
     );
 
     /*
@@ -59,8 +60,7 @@ class GiroCheckout_SDK_SofortUwTransaction extends GiroCheckout_SDK_AbstractApi 
     /*
      * The request url of the GiroCheckout API for this request.
      */
-    //protected $requestURL = "https://payment.girosolution.de/girocheckout/api/v2/transaction/start";
-    protected $requestURL = "https://dev.girosolution.de/girocheckout/api/v2/transaction/start";
+    protected $requestURL = "https://payment.girosolution.de/girocheckout/api/v2/transaction/start";
 
     /*
      * If true the request method needs a notify page to receive the transactions result.

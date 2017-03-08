@@ -22,26 +22,26 @@ class GiroCheckout_SDK_Tools {
    * @return string
    *
    */
-    public static function getCreditCardLogoName($visa_msc = false, $amex = false, $jcb = false) {
+  public static function getCreditCardLogoName($visa_msc = false, $amex = false, $jcb = false) {
 
-      if( $visa_msc == false && $amex == false  && $jcb == false ) {
-        return null;
-      }
-      
-      $logoName = '';
-
-      if( $visa_msc ) {
-        $logoName .= 'visa_msc_';
-      }
-      if( $amex ) {
-        $logoName .= 'amex_';
-      }
-      if( $jcb ) {
-        $logoName .= 'jcb_';
-      }
-      
-      $logoName .= '40px.jpg';
-
-      return $logoName;
+    if( $visa_msc == false && $amex == false  && $jcb == false ) {
+      return null;
     }
+
+    $logoName = '';
+
+    if( $visa_msc ) {
+      $logoName .= 'visa_msc_';
+    }
+    if( $amex ) {
+      $logoName .= 'amex_';
+    }
+    if( $jcb ) {
+      $logoName .= 'jcb_';
+    }
+
+    $logoName .= '40px.jpg';
+
+    return $logoName;
+  }
 }
