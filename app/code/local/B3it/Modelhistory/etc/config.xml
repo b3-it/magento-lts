@@ -20,6 +20,14 @@
             <version>0.0.1.0</version>
         </B3it_Modelhistory>
     </modules>
+    <default>
+       <b3it_modelhistory>
+           <cron>
+               <config_delete_days>100</config_delete_days>
+               <model_delete_days>100</model_delete_days>
+           </cron>
+       </b3it_modelhistory>
+    </default>
     <admin>
          <routers>
             <adminhtml>
@@ -66,6 +74,13 @@
                     <children>
                         <system>
                             <children>
+                                <config>
+                                    <children>
+                                        <b3it_modelhistory>
+                                            <title>B3it Modelhistory Section</title>
+                                        </b3it_modelhistory>
+                                    </children>
+                                </config>
                                 <tools>
                                     <children>
                                         <modelhistory translate="title">
@@ -162,5 +177,30 @@
                 <class>B3it_Modelhistory_Block</class>
             </modelhistory>
         </blocks>
+        <helpers>
+            <b3it_modelhistory>
+                <class>B3it_Modelhistory_Helper</class>
+            </b3it_modelhistory>
+        </helpers>
     </global>
+    <crontab>
+        <jobs>
+            <cleanup_config>
+                <schedule>
+                    <cron_expr>0 3 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>b3it_modelhistory/config::cleanup</model>
+                </run>
+            </cleanup_config>
+            <cleanup_model>
+                <schedule>
+                    <cron_expr>0 3 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>b3it_modelhistory/history::cleanup</model>
+                </run>
+            </cleanup_model>
+        </jobs>
+    </crontab>
 </config>

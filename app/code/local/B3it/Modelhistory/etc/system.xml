@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magento
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @package    Egovs_Admin
+ * @copyright  Copyright (c) 2014 B3 IT Systeme GmbH
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <tabs>
+        <b3it translate="label">
+            <label>B3it Configuration Tab</label>
+            <sort_order>1</sort_order>
+        </b3it>
+    </tabs>
+    <sections>
+        <b3it_modelhistory translate="label">
+            <label>B3IT Modelhistory Settings</label>
+            <tab>b3it</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <cron translate="label">
+                    <label>Cron Config</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <config_delete_days>
+                            <label>Config Delete Days</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>keep it empty to disable delete</comment>
+                        </config_delete_days>
+                        <model_delete_days>
+                            <label>Model Delete Days</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>keep it empty to disable delete</comment>
+                        </model_delete_days>
+                    </fields>
+                </cron>
+            </groups>
+        </b3it_modelhistory>
+    </sections>
+</config>

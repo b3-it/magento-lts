@@ -140,7 +140,7 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
     				}
     			}
     		} else if (isset($options['options'])) {
-    			$features = $order_item->getProductFeatures();
+    			$features = $item->getProductFeatures();
     			foreach ($options['options'] as $o) {
     				$res[] = $o['label'].': '. $o['value'];
     				
