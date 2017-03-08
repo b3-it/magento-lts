@@ -10,11 +10,19 @@
  * ============================================ */
 
 #addTagForm button {
-    margin-top: 5px;
-    margin-bottom: 10px;
+    display: inline-block;
+    float: none;
 }
 #addTagForm .form-add {
-    margin-top: 10px;
+    margin: 10px 0;
+    
+    label {
+        margin-bottom: 5px;
+    }
+    .input-box {
+        position: relative;
+        top: -10px;
+    }
 }
 
 .product-tags {

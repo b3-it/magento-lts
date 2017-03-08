@@ -466,6 +466,10 @@ p.product-name {
     }
 }
 
+.product-essential > form > div.block-related {
+	padding: 0;
+}
+
 /* ============================================ *
  * Mini Product List
  * ============================================ */
@@ -491,6 +495,21 @@ p.product-name {
 
         &:after {
             @include clearfix();
+        }
+    }
+    
+    .product {
+        padding-left: 22px;
+        
+        .product-image {
+            margin-right: 5px;
+        }
+        .product-details {
+            margin-left: 85px;
+            
+            .product-name {
+                padding: 0;
+            }
         }
     }
 }
