@@ -1,6 +1,13 @@
 <?php
 trait B3it_Modelhistory_Model_Resource_CollectionTrait {
 
+    public function addAttributeToFilter($attribute, $condition = null) {
+        $conditionSql = $this->_getConditionSql($attribute, $condition);
+
+        $this->getSelect()->where($conditionSql, null, Varien_Db_Select::TYPE_CONDITION);
+        return $this;
+    }
+    
     /**
      * Add attribute to sort order
      *

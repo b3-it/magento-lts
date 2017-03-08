@@ -4,11 +4,44 @@ class  B3it_Modelhistory_Block_Adminhtml_Widget_Grid_Column_Renderer_Diff extend
 
     public function render(Varien_Object $row)
     {
-        $value = $this->_getValue($row);
+        $newValue = $this->_getValue($row);
 
         $oldValue = $row->getData('old_value');
 
-        $opCodes = FineDiff::getDiffOpcodes($oldValue, $value);
+        $shortDiff = $this->getColumn()->getShortDiff();
+
+        if (isset($oldValue) && isset($newValue) && $shortDiff) {
+            $newValue = json_decode($newValue, true);
+            $oldValue = json_decode($oldValue, true);
+
+            $oldValueResult = array_filter($oldValue, function ($value, $key) use ($newValue) {
+                if (isset($newValue[$key]) && $newValue[$key] === $value) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }, ARRAY_FILTER_USE_BOTH);
+
+            $newValueResult = array_filter($newValue, function ($value, $key) use ($oldValue) {
+                if (isset($oldValue[$key]) && $oldValue[$key] === $value) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }, ARRAY_FILTER_USE_BOTH);
+
+            if (empty($oldValueResult)) {
+                $oldValueResult = (object) null;
+            }
+            if (empty($newValueResult)) {
+                $newValueResult = (object) null;
+            }
+
+            $oldValue = json_encode($oldValueResult, JSON_UNESCAPED_UNICODE);
+            $newValue = json_encode($newValueResult, JSON_UNESCAPED_UNICODE);
+        }
+
+        $opCodes = FineDiff::getDiffOpcodes($oldValue, $newValue);
 
         return FineDiff::renderDiffToHTMLFromOpcodes($oldValue, $opCodes);
     }

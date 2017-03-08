@@ -106,7 +106,8 @@ class B3it_Modelhistory_Block_Adminhtml_Config_Grid extends Mage_Adminhtml_Block
             'index'     => 'value',
             'width'     => '150px',
             'renderer'  => 'B3it_Modelhistory_Block_Adminhtml_Widget_Grid_Column_Renderer_Diff',
-            'column_css_class' => 'finediff'
+            'column_css_class' => 'finediff',
+            'short_diff' => false
         ));
 
 //         $this->addColumn('action',
