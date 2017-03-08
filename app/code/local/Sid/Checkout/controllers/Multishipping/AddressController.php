@@ -61,6 +61,7 @@ class Sid_Checkout_Multishipping_AddressController extends Mage_Core_Controller_
     {
         $this->_getState()->setActiveStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_SELECT_ADDRESSES);
         $this->loadLayout();
+        $this->getLayout()->getBlock('root')->addBodyClass('customer-account-create');
         $this->_initLayoutMessages('customer/session');
         if ($addressForm = $this->getLayout()->getBlock('customer_address_edit')) {
             $addressForm->setTitle(Mage::helper('checkout')->__('Create Shipping Address'))
