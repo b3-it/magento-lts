@@ -59,7 +59,9 @@ class B3it_ConfigCompare_Model_PdfBlocks extends B3it_ConfigCompare_Model_Compar
 	    		$this->_collection->add($item);
 	    	}
 	    	foreach($notFound as $item){
-	    		$this->_collection->add((array)$item);
+	    		$item = (array)$item;
+	    		$item['attribute'] =  $this->_getAttributeDiff(array(), $item);
+	    		$this->_collection->add($item);
 	    	}
 	    	$this->_collection->setIsLoaded();
     	}

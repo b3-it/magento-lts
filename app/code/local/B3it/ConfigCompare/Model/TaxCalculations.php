@@ -21,21 +21,61 @@ class B3it_ConfigCompare_Model_TaxCalculations extends B3it_ConfigCompare_Model_
 	
 	public function getCollection()
 	{
+		/**
+		 * SELECT 
+				    `main_table`.*,
+				    `rate`.*,
+				    `rule`.`code` AS `rule_name`,
+				    GROUP_CONCAT(CONCAT(rate.tax_country_id, '_', rate.rate)) AS `rate`,
+				    GROUP_CONCAT(cgroup.class_name) AS `customer_group`,
+				    GROUP_CONCAT(product.class_name) AS `product`,
+				    CONCAT(MD5(rule.code),
+				            '_',
+				            MD5(CONCAT(rate.tax_country_id, '_', rate.rate)),
+				            '_',
+				            MD5(GROUP_CONCAT(cgroup.class_name)),
+				            '_',
+				            MD5(GROUP_CONCAT(product.class_name))) AS `ident`,
+				    CONCAT(rule.code,
+				            '__',
+				            CONCAT(rate.tax_country_id, '_', rate.rate),
+				            '__',
+				            GROUP_CONCAT(cgroup.class_name),
+				            '__',
+				            GROUP_CONCAT(product.class_name)) AS `ident_hr`
+				FROM
+				    `tax_calculation` AS `main_table`
+				        INNER JOIN
+				    `tax_calculation_rate` AS `rate` ON main_table.tax_calculation_rate_id = rate.tax_calculation_rate_id
+				        INNER JOIN
+				    `tax_calculation_rule` AS `rule` ON main_table.tax_calculation_rule_id = rule.tax_calculation_rule_id
+				        INNER JOIN
+				    `tax_class` AS `cgroup` ON main_table.customer_tax_class_id = cgroup.class_id
+				        INNER JOIN
+				    `tax_class` AS `product` ON main_table.product_tax_class_id = product.class_id
+				where `rule`.`tax_calculation_rule_id` = 15
+				GROUP BY `rule`.`tax_calculation_rule_id`
+
+		 * 
+		 */
 		$collection = Mage::getModel('tax/calculation')->getCollection();
 		$collection->getSelect()
-			->join(array('rate'=>$collection->getTable('tax/tax_calculation_rate')),'main_table.tax_calculation_rate_id = rate.tax_calculation_rate_id')
-			->join(array('rule'=>$collection->getTable('tax/tax_calculation_rule')),'main_table.tax_calculation_rule_id = rule.tax_calculation_rule_id',array())
-			->join(array('group'=>$collection->getTable('tax/tax_class')),'main_table.customer_tax_class_id = group.class_id',array('customer_group'=>'class_name'))
-			->join(array('product'=>$collection->getTable('tax/tax_class')),'main_table.product_tax_class_id = product.class_id',array('product'=>'class_name'))
-			->columns(array('rate' => new Zend_Db_Expr('group_concat(concat(rate.tax_country_id,\'_\',rate.rate))')))
-			->columns(array('ident' => new Zend_Db_Expr('concat(md5(rule.code),\'_\' ,md5(group.class_name),\'_\',md5(product.class_name))')))
-			->group(array('rule.tax_calculation_rule_id', 'main_table.customer_tax_class_id', 'main_table.product_tax_class_id'))
+			->join(array('rate'=>$collection->getTable('tax/tax_calculation_rate')),'main_table.tax_calculation_rate_id = rate.tax_calculation_rate_id',array())
+			->join(array('rule'=>$collection->getTable('tax/tax_calculation_rule')),'main_table.tax_calculation_rule_id = rule.tax_calculation_rule_id',array('rule_name'=>'code'))
+			->join(array('cgroup'=>$collection->getTable('tax/tax_class')),'main_table.customer_tax_class_id = cgroup.class_id',array())
+			->join(array('product'=>$collection->getTable('tax/tax_class')),'main_table.product_tax_class_id = product.class_id',array())
+			->columns(array('rate' => new Zend_Db_Expr('GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate))')))
+			->columns(array('customer_group' => new Zend_Db_Expr('GROUP_CONCAT(cgroup.class_name)')))
+			->columns(array('product' => new Zend_Db_Expr('GROUP_CONCAT(product.class_name)')))
+			->columns(array('ident' => new Zend_Db_Expr('concat(md5(GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate))),\'_\' ,md5(rule.code),\'_\' ,md5(GROUP_CONCAT(cgroup.class_name)),\'_\',md5(GROUP_CONCAT(product.class_name)))')))
+			->columns(array('ident_hr' => new Zend_Db_Expr('concat(GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate)),\'__\',rule.code,\'__\' ,GROUP_CONCAT(cgroup.class_name),\'__\',GROUP_CONCAT(product.class_name))')))
+			->group(array('rule.tax_calculation_rule_id'))
 		;
 		
 			
 			
 			
-		//die($collection->getSelect()->__toString());
+	//die($collection->getSelect()->__toString());
 		return $collection;
 	}
     
@@ -62,6 +102,7 @@ class B3it_ConfigCompare_Model_TaxCalculations extends B3it_ConfigCompare_Model_
     					}
     				}
     			} else {
+    				//not found = die jenigen die in der Datei aber nicht in DB vorhanden sind
 	    			$notFound[] = $item;
 	    		}
     		}
@@ -72,7 +113,9 @@ class B3it_ConfigCompare_Model_TaxCalculations extends B3it_ConfigCompare_Model_
 	    		$this->_collection->add($item);
 	    	}
 	    	foreach($notFound as $item){
-	    		$this->_collection->add((array)$item);
+	    		$item = (array)$item;
+	    		$item['attribute'] =  $this->_getAttributeDiff(array(), $item);
+	    		$this->_collection->add($item);
 	    	}
 	    	$this->_collection->setIsLoaded();
     	}
