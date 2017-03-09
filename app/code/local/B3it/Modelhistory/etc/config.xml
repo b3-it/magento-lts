@@ -26,6 +26,9 @@
                <config_delete_days>100</config_delete_days>
                <model_delete_days>100</model_delete_days>
            </cron>
+           <diff>
+               <short_diff>1</short_diff>
+           </diff>
        </b3it_modelhistory>
     </default>
     <admin>
