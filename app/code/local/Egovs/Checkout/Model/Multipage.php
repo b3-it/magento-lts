@@ -485,12 +485,12 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 				if (Mage::helper('core')->isModuleEnabled('Egovs_Vies')) {
 					if (!Mage::app()->getStore()->isAdmin()) {
 						$validationMessage = Mage::helper('customer')->getVatValidationUserMessage($address, $customer->getDisableAutoGroupChange(), $result);
-		
+						$errorGroup = Mage::getStoreConfig(Mage_Customer_Helper_Data::XML_PATH_CUSTOMER_VIV_ERROR_GROUP);
 						if (!$validationMessage->getIsError()) {
 							//Mage::getSingleton('customer/session')->addSuccess($validationMessage->getMessage());
 							$address->setVatIsValid(true);
 							$customer->setTaxvatValid(true);
-						} else {
+						} elseif (empty($errorGroup)) {
 							//Mage::getSingleton('customer/session')->addError($validationMessage->getMessage());
 							$type = 'base';
 							if ($address->getAddressType() != 'base_address') {
