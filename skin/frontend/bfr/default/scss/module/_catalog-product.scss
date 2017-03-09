@@ -680,6 +680,7 @@ div#details-block {
 // On smaller devices, we want to further limit the height of the image, to prevent cropping
 @include bp(max-width, $bp-xsmall) {
     .product-img-box .product-image img {
+        height: auto;
         max-height: 450px;
     }
 }
