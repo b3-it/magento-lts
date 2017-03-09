@@ -73,7 +73,7 @@ $cms_blocks = array(
 <ul>
 <li><a href="{{store url="agb"}}">AGB</a></li>
 <li><a href="{{store url="widerruf"}}">Widerruf</a></li>
-<li><a href="{{store url=""}}">Streitbeilegung</a></li>
+<li><a href="http://ec.europa.eu/consumers/odr/">Streitbeilegung</a></li>
 <li><a href="{{store url="lieferung"}}">Lieferung</a></li>
 <li><a href="{{store url="zahlung"}}">Zahlungsarten</a></li>
 <li><a href="{{store url="bestellung"}}">Bestellvorgang</a></li>

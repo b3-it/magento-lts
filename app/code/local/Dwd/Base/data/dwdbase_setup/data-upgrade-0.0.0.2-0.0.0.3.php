@@ -47,14 +47,14 @@ $eng_cmsblocks = array (
         'title'      => 'DWD Footer Info-Block rechts (english)',
         'identifier' => 'dwd_footer_rechts',
         'content'    => '<div class="links">
-<div class="block-title"><strong><span>Vergangenes Wetter</span></strong></div>
+<div class="block-title"><strong><span>Past weather</span></strong></div>
 <ul>
-<li><a href="{{store url="vergangenes-wetter-klimainfos/deutschland-allgemein.html"}}">Germany general</a></li>
-<li><a href="{{store url="vergangenes-wetter-klimainfos/deutschland-speziell.html"}}">Germany special</a></li>
-<li><a href="{{store url="vergangenes-wetter-klimainfos/global.html"}}">Global</a></li>
-<li><a href="{{store url="vergangenes-wetter-klimainfos/geburtstagswetterkarte.html"}}">Birthday wetter map</a></li>
-<li><a href="{{store url="wissenschaftliche-publikationen.html"}}">Publicationen</a></li>
-<li><a href="{{store url="free-information"}}">Free informationen</a></li>
+<li><a href="{{store url="vergangenes-wetter-klimainfos/deutschland-allgemein.html" _store=default}}">Germany general</a></li>
+<li><a href="{{store url="vergangenes-wetter-klimainfos/deutschland-speziell.html" _store=default}}">Germany special</a></li>
+<li><a href="{{store url="vergangenes-wetter-klimainfos/global.html" _store=default}}">Global</a></li>
+<li><a href="{{store url="vergangenes-wetter-klimainfos/geburtstagswetterkarte.html" _store=default}}">Birthday wetter map</a></li>
+<li><a href="{{store url="wissenschaftliche-publikationen.html" _store=default}}">Publicationen</a></li>
+<li><a href="{{store url="free-information" _store=default}}">Free informationen</a></li>
 </ul>
 </div>',
         'isactive'   => 1,
@@ -66,10 +66,10 @@ $eng_cmsblocks = array (
         'content'    => '<div class="links">
 <div class="block-title"><strong><span>Current weather</span></strong></div>
 <ul>
-<li><a href="{{store url="aktuelles-wetter-vorhersagen/agrarwetter.html"}}">Agrar weather</a></li>
-<li><a href="{{store url="aktuelles-wetter-vorhersagen/flugwetter.html"}}">Flight weather</a></li>
-<li><a href="{{store url="aktuelles-wetter-vorhersagen/seewetter.html"}}">Sea weather</a></li>
-<li><a href="{{store url="aktuelles-wetter-vorhersagen/strassenwetter.html"}}">Street weather</a></li>
+<li><a href="{{store url="default/aktuelles-wetter-vorhersagen/agrarwetter.html" _store=default}}">Agricultural weather</a></li>
+<li><a href="{{store url="aktuelles-wetter-vorhersagen/flugwetter.html"}}">Aeronautical meteorology</a></li>
+<li><a href="{{store url="default/aktuelles-wetter-vorhersagen/seewetter.html" _store=default}}">Sea weather</a></li>
+<li><a href="{{store url="default/aktuelles-wetter-vorhersagen/strassenwetter.html" _store=default}}">Road weather</a></li>
 </ul>
 </div>',
         'isactive'   => 1,
@@ -82,11 +82,11 @@ $eng_cmsblocks = array (
 <div class="block-title"><strong>Weather shop</strong></div>
 <ul>
 <li><a href="{{store url="agb"}}">Terms and conditions</a></li>
-<li><a href="{{store url="widerruf"}}">Recall</a></li>
-<li><a href="{{store url=""}}">Dispute resolution</a></li>
+<li><a href="{{store url="widerruf"}}">Right of withdrawal</a></li>
+<li><a href="http://ec.europa.eu/consumers/odr/">Dispute resolution</a></li>
 <li><a href="{{store url="lieferung"}}">Delivery</a></li>
-<li><a href="{{store url="zahlung"}}">Payment</a></li>
-<li><a href="{{store url="bestellung"}}">Ordering process</a></li>
+<li><a href="{{store url="zahlung"}}">Payments</a></li>
+<li><a href="{{store url="bestellung"}}">How to order</a></li>
 <li><a href="{{store url="faq"}}">FAQ</a></li>
 <li><a href="{{store url="catalogsearch/term/popular/"}}">Popular search</a></li>
 <li><a href="{{store url="catalog/seo_sitemap/category"}}">Sitemap</a></li>
@@ -100,7 +100,7 @@ $eng_cmsblocks = array (
         'identifier' => 'dwd_footer_navigation',
         'content'    => '<ul id="footer-navigation">
 <li class="show-on-mobile"><a href="{{store url="impressum"}}">Imprint</a></li>
-<li><a href="{{store url="datenschutz"}}">Data security</a></li>
+<li><a href="{{store url="datenschutz"}}">Data Protection</a></li>
 <li><a href="{{store url="disclaimer"}}">Disclaimer</a></li>
 <li><a href="{{store url="agb"}}">Terms and conditions</a></li>
 <li><a href="{{store url="copyright"}}">Copyright</a></li>
