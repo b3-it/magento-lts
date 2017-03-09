@@ -80,6 +80,9 @@ class B3it_Modelhistory_Block_Adminhtml_Modelhistory_Grid extends Mage_Adminhtml
             'type'      => 'number'
         ));
         //*/
+        
+        $shortDiff = Mage::getStoreConfig('b3it_modelhistory/diff/short_diff');
+        
         $this->addColumn('value', array(
             'header'    => Mage::helper('core')->__('Diff'),
             'align'     =>'left',
@@ -87,7 +90,7 @@ class B3it_Modelhistory_Block_Adminhtml_Modelhistory_Grid extends Mage_Adminhtml
             'width'     => '150px',
             'renderer'  => 'B3it_Modelhistory_Block_Adminhtml_Widget_Grid_Column_Renderer_Diff',
             'column_css_class' => 'finediff',
-            'short_diff' => true
+            'short_diff' => $shortDiff
         ));
 
 //         $this->addColumn('action',
