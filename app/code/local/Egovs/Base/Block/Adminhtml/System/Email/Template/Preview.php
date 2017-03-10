@@ -74,7 +74,7 @@ class Egovs_Base_Block_Adminhtml_System_Email_Template_Preview extends Mage_Admi
 				//js attributes
 				'/(ondblclick|onclick|onkeydown|onkeypress|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onload|onunload|onerror)\s*=[^<]*(?=\>)/Uis',
 				//tags
-				'/<\/?(script|meta|link|frame|iframe).*>/Uis',
+				'/<\/?(script|link|frame|iframe).*>/Uis',
 				//base64 usage
 				'/src\s*=[^<]*base64[^<]*(?=\>)/Uis',
 		);

@@ -286,7 +286,7 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 				//Styles in HEAD einfügen
 				if ($this->getTemplateStyles()) {
 					$dom = new DOMDocument();
-					if ($dom->loadHTML($this->getTemplateText())) {
+					if ($dom->loadHTML($html, LIBXML_HTML_NODEFDTD)) {
 						$domElements = $dom->getElementsByTagName('head');
 						$head = null;
 						if ($domElements && $domElements->length > 0) {
