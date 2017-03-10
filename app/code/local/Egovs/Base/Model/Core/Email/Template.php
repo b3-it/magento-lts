@@ -71,8 +71,6 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		
 		$this->setTemplateText($templateText);
 		
-	
-		
 		return $this;
 	}
 
@@ -262,5 +260,66 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		}
 		
 		return $res;
+	}
+	
+	protected function _applyInlineCss($html) {
+		try {
+			// Check to see if the {{inlinecss file=""}} directive set a CSS file to inline
+			$inlineCssFile = $this->getInlineCssFile();
+			// Only run Emogrify if HTML exists
+			if (strlen($html) && $inlineCssFile) {
+				$cssToInline = $this->_getCssFileContent($inlineCssFile);
+				$emogrifier = new Pelago\Emogrifier();
+				$emogrifier->setHtml($html);
+				$emogrifier->setCss($cssToInline);
+				// Don't parse inline <style> tags, since existing tag is intentionally for no-inline styles
+				$emogrifier->disableInlineStyleAttributesParsing();
+		
+				$processedHtml = $emogrifier->emogrify();
+			} elseif (strlen($html)) {
+				if (preg_match('/<!--@styles\s*(.*?)\s*@-->/s', $html, $matches)) {
+					$this->setTemplateStyles($matches[1]);
+					$html = str_replace($matches[0], '', $html);
+					$this->setTemplateText($html);
+				}
+				
+				//Styles in HEAD einfügen
+				if ($template->getTemplateStyles()) {
+					$dom = new DOMDocument();
+					if ($dom->loadHTML($template->getTemplateText())) {
+						$domElements = $dom->getElementsByTagName('head');
+						$head = null;
+						if ($domElements && $domElements->length > 0) {
+							$head = $domElements->item(0);
+						} else {
+							$domElements = $dom->getElementsByTagName('html');
+							if ($domElements && $domElements->length > 0) {
+								$head = $dom->createElement('head');
+								$body = $dom->getElementsByTagName('body');
+								if ($body && $body->length > 0) {
+									$body = $body->item(0);
+								} else {
+									$body = null;
+								}
+								$head = $domElements->item(0)->insertBefore($head, $body);
+							}
+						}
+				
+						if ($head) {
+							$style = $dom->createElement('style', $template->getTemplateStyles());
+							$style->setAttribute('type', 'text/css');
+							$head->appendChild($style);
+							$html = $dom->saveHTML();
+						}
+					}
+				}
+				$processedHtml = $html;
+			} else {
+				$processedHtml = $html;
+			}
+		} catch (Exception $e) {
+			$processedHtml = '{CSS inlining error: ' . $e->getMessage() . '}' . PHP_EOL . $html;
+		}
+		return $processedHtml;
 	}
 }
