@@ -274,6 +274,7 @@
                     <sales_order_create_customer_grid>Egovs_Base_Block_Adminhtml_Sales_Order_Create_Customer_Grid</sales_order_create_customer_grid>
                     <customer_edit_tab_account>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account</customer_edit_tab_account>
                     <customer_edit_tab_addresses>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
+                    <system_email_template_preview>Egovs_Base_Block_Adminhtml_System_Email_Template_Preview</system_email_template_preview>
                 </rewrite>
             </adminhtml>
         </blocks>
