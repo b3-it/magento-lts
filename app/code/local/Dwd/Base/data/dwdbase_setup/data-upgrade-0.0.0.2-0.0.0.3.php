@@ -66,10 +66,10 @@ $eng_cmsblocks = array (
         'content'    => '<div class="links">
 <div class="block-title"><strong><span>Current weather</span></strong></div>
 <ul>
-<li><a href="{{store url="default/aktuelles-wetter-vorhersagen/agrarwetter.html" _store=default}}">Agricultural weather</a></li>
+<li><a href="{{store url="aktuelles-wetter-vorhersagen/agrarwetter.html" _store=default}}">Agricultural weather</a></li>
 <li><a href="{{store url="aktuelles-wetter-vorhersagen/flugwetter.html"}}">Aeronautical meteorology</a></li>
-<li><a href="{{store url="default/aktuelles-wetter-vorhersagen/seewetter.html" _store=default}}">Sea weather</a></li>
-<li><a href="{{store url="default/aktuelles-wetter-vorhersagen/strassenwetter.html" _store=default}}">Road weather</a></li>
+<li><a href="{{store url="aktuelles-wetter-vorhersagen/seewetter.html" _store=default}}">Sea weather</a></li>
+<li><a href="{{store url="aktuelles-wetter-vorhersagen/strassenwetter.html" _store=default}}">Road weather</a></li>
 </ul>
 </div>',
         'isactive'   => 1,
