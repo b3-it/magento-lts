@@ -34,7 +34,7 @@ $eng_cmsblocks = array (
         'title'      => 'Footer-Info für den DWD (english)',
         'identifier' => 'dwd_footer_block',
         'content'    => '<div id="footer-block-legal">
-<img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\'}}" />
+<img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\' _secure=1}}" />
 <div>
 <p id="footer-text-top">The German Weather Service is a federal authority in the business area of the Federal Ministry of Transport and Digital Infrastructure.</p>
 <p id="footer-text-bottom">{{block type="imprint/field" value="company_first"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</p>
