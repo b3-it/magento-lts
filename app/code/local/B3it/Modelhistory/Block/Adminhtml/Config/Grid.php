@@ -9,15 +9,9 @@ class B3it_Modelhistory_Block_Adminhtml_Config_Grid extends Mage_Adminhtml_Block
          */
         $model = Mage::getModel('b3it_modelhistory/config');
         $collection = $model->getCollection();
-
-        // complex default sorting
-        if (!$this->getParam($this->getVarNameSort(), $this->_defaultSort)) {
-            $collection->addAttributeToSort('path');
-            $collection->addAttributeToSort('store_code');
-            $collection->addAttributeToSort('website_code');
-            $collection->addAttributeToSort('date', 'desc');
-        }
-
+        
+        $this->_defaultSort = "date";
+        
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -72,15 +66,6 @@ class B3it_Modelhistory_Block_Adminhtml_Config_Grid extends Mage_Adminhtml_Block
             'options'   => array(1 => "hinzugefügt", 2 => "geändert", 3 => "gelöscht")
         ));
         
-        /*/
-        $this->addColumn('rev', array(
-            'header'    => Mage::helper('core')->__('Revision'),
-            'align'     => 'left',
-            'index'     => 'rev',
-            'type'      => 'number'
-        ));
-        //*/
-        
         $this->addColumn('user', array(
             'header'    => Mage::helper('core')->__('User'),
             'align'     => 'left',
@@ -95,10 +80,17 @@ class B3it_Modelhistory_Block_Adminhtml_Config_Grid extends Mage_Adminhtml_Block
             'header'    => Mage::helper('core')->__('Datum'),
             'align'     => 'left',
             'index'     => 'date',
-            'type'      => 'datetime',
-            'renderer'  => 'B3it_Modelhistory_Block_Adminhtml_Widget_Grid_Column_Renderer_Datetime',
-            'use_time_zone' => false
+            'type'      => 'datetime'
         ));
+        
+        //*/
+        $this->addColumn('rev', array(
+            'header'    => Mage::helper('core')->__('Revision'),
+            'align'     => 'left',
+            'index'     => 'rev',
+            'type'      => 'number'
+        ));
+        //*/
 
         $this->addColumn('value', array(
             'header'    => Mage::helper('core')->__('Diff'),

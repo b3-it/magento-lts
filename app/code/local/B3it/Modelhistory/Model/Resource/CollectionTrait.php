@@ -69,4 +69,13 @@ trait B3it_Modelhistory_Model_Resource_CollectionTrait {
         }
         return $this;
     }
+    
+
+    public function getSelectCountSql()
+    {
+        $countSelect = parent::getSelectCountSql();
+        // Adding some custom features
+        $countSelect->columns('rev');
+        return $countSelect;
+    }
 }

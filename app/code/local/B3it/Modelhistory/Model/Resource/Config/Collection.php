@@ -7,4 +7,5 @@ class B3it_Modelhistory_Model_Resource_Config_Collection extends Mage_Core_Model
     {
         $this->_init('b3it_modelhistory/config');
     }
+    
 }

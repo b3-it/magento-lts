@@ -7,6 +7,7 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_ConfigController extends Mage_Adm
     }
 
     public function indexAction() {
+        Mage::getModel("b3it_modelhistory/config")->cleanup(null);
         $this->_initAction();
 
         $this->renderLayout();

@@ -231,7 +231,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
     protected function _onModelSaveAfter($observer)
     {
         
-        /* @var $source Mage_Core_Model_Abstract */
+        /** @var Mage_Core_Model_Abstract $source */
         $source = $observer->getObject();
         $this->_source = $source;
         
@@ -403,6 +403,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             'value' => json_encode($result_data, JSON_UNESCAPED_UNICODE),
             'old_value' => json_encode($origData, JSON_UNESCAPED_UNICODE),
             'rev' => $rev,
+            'date' => now(),
             'type' => $new ? self::TYPE_CREATED : self::TYPE_CHANGED
         );
 
@@ -467,6 +468,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                 'value' => '',
                 'old_value' => $old_value,
                 'rev' => $rev,
+                'date' => now(),
                 'type' => self::TYPE_DELETED
             );
             
@@ -498,6 +500,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                 'value' => '',
                 'old_value' => $old_value,
                 'secret' => $sessionInformation->getSecretKey(),
+                'date' => now(),
                 'type' => self::TYPE_DELETED
             );
 
@@ -591,6 +594,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             'value' => $data->getValue(),
             'old_value' => $data->getOldValue(),
             'rev' => $rev,
+            'date' => now(),
             'type' => $objectNew ? self::TYPE_CREATED : self::TYPE_CHANGED
         );
 
@@ -726,6 +730,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             || $key == 'password'
             || $key == 'new_password'
             || $key == 'password_confirmation'
+            || $key == 'password_hash'
             || $key == 'form_key') {
             return true;
         }

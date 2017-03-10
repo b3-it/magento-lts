@@ -21,15 +21,15 @@
         </B3it_Modelhistory>
     </modules>
     <default>
-       <b3it_modelhistory>
-           <cron>
+       <admin>
+           <b3it_modelhistory_cron>
                <config_delete_days>100</config_delete_days>
                <model_delete_days>100</model_delete_days>
-           </cron>
-           <diff>
+           </b3it_modelhistory_cron>
+           <b3it_modelhistory_diff>
                <short_diff>1</short_diff>
-           </diff>
-       </b3it_modelhistory>
+           </b3it_modelhistory_diff>
+       </admin>
     </default>
     <admin>
          <routers>
@@ -77,13 +77,6 @@
                     <children>
                         <system>
                             <children>
-                                <config>
-                                    <children>
-                                        <b3it_modelhistory>
-                                            <title>B3it Modelhistory Section</title>
-                                        </b3it_modelhistory>
-                                    </children>
-                                </config>
                                 <tools>
                                     <children>
                                         <modelhistory translate="title">
