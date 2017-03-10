@@ -284,9 +284,9 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 				}
 				
 				//Styles in HEAD einfügen
-				if ($template->getTemplateStyles()) {
+				if ($this->getTemplateStyles()) {
 					$dom = new DOMDocument();
-					if ($dom->loadHTML($template->getTemplateText())) {
+					if ($dom->loadHTML($this->getTemplateText())) {
 						$domElements = $dom->getElementsByTagName('head');
 						$head = null;
 						if ($domElements && $domElements->length > 0) {
@@ -306,7 +306,7 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 						}
 				
 						if ($head) {
-							$style = $dom->createElement('style', $template->getTemplateStyles());
+							$style = $dom->createElement('style', $this->getTemplateStyles());
 							$style->setAttribute('type', 'text/css');
 							$head->appendChild($style);
 							$html = $dom->saveHTML();
