@@ -18,6 +18,25 @@ class B3it_ConfigCompare_Controller_Adminhtml_Abstract extends Mage_Adminhtml_Co
         $response->sendResponse();
         die;
     }
+    
+    public function getUser()
+    {
+    	return Mage::getSingleton('admin/session')->getUser();
+    }
 	
 
+    public function getIsRootUser()
+    {
+    	$user = $this->getUser();
+    	if($user && $user->getUsername() == 'root'){
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    protected function _isAllowed()
+    {
+    	return $this->getIsRootUser();
+    }
 }

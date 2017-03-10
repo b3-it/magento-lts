@@ -57,10 +57,14 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     	foreach($fields as $field)
     	{
     		if(array_search($field, $this->_attributesExcludeCompare) === false){
-    			$_from = isset($from[$field]) ? $from[$field]: '';
-    			$_to = isset($to[$field]) ? $to[$field]: '';
+    			$_from = isset($from[$field]) ? (string)$from[$field]: '';
+    			$_to = isset($to[$field]) ? (string)$to[$field]: '';
+    			
 	    		if((string)$_from != (string)$_to){
-	    			$res[] = $field. ': ' . $this->_compareDiff($_from, $_to); 
+	    			$diff = $this->_compareDiff($_from, $_to); 
+	    			if($diff !== true){
+	    				$res[] = $field. ': ' . $diff;
+	    			}
 	    		}
     		}
     	}

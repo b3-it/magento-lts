@@ -41,10 +41,10 @@
   {
   	 
       $this->addColumn('Title', array(
-      		'header'    => Mage::helper('configcompare')->__('Code'),
+      		'header'    => Mage::helper('configcompare')->__('Name'),
       		//'align'     =>'right',
       		'width'     => '120px',
-      		'index'     => 'code',
+      		'index'     => 'rule_name',
       		//'renderer'  => 'configcompare/adminhtml_widget_grid_column_renderer_diff'
       ));
       

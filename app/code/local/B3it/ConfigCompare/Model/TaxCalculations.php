@@ -64,11 +64,12 @@ class B3it_ConfigCompare_Model_TaxCalculations extends B3it_ConfigCompare_Model_
 			->join(array('rule'=>$collection->getTable('tax/tax_calculation_rule')),'main_table.tax_calculation_rule_id = rule.tax_calculation_rule_id',array('rule_name'=>'code'))
 			->join(array('cgroup'=>$collection->getTable('tax/tax_class')),'main_table.customer_tax_class_id = cgroup.class_id',array())
 			->join(array('product'=>$collection->getTable('tax/tax_class')),'main_table.product_tax_class_id = product.class_id',array())
-			->columns(array('rate' => new Zend_Db_Expr('GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate))')))
-			->columns(array('customer_group' => new Zend_Db_Expr('GROUP_CONCAT(cgroup.class_name)')))
-			->columns(array('product' => new Zend_Db_Expr('GROUP_CONCAT(product.class_name)')))
-			->columns(array('ident' => new Zend_Db_Expr('concat(md5(GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate))),\'_\' ,md5(rule.code),\'_\' ,md5(GROUP_CONCAT(cgroup.class_name)),\'_\',md5(GROUP_CONCAT(product.class_name)))')))
-			->columns(array('ident_hr' => new Zend_Db_Expr('concat(GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate)),\'__\',rule.code,\'__\' ,GROUP_CONCAT(cgroup.class_name),\'__\',GROUP_CONCAT(product.class_name))')))
+			->columns(array('Rate' => new Zend_Db_Expr('GROUP_CONCAT(DISTINCT CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate) ORDER BY rate.code)')))
+			->columns(array('CustomerGroupClass' => new Zend_Db_Expr('GROUP_CONCAT(distinct cgroup.class_name ORDER BY cgroup.class_name)')))
+			->columns(array('ProductClass' => new Zend_Db_Expr('GROUP_CONCAT(distinct product.class_name ORDER BY product.class_name)')))
+			//->columns(array('ident' => new Zend_Db_Expr('concat(md5(GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate) ORDER BY rate.code)),\'_\' ,md5(rule.code),\'_\' ,md5(GROUP_CONCAT(cgroup.class_name ORDER BY cgroup.class_name)),\'_\',md5(GROUP_CONCAT(product.class_name ORDER BY product.class_name)))')))
+			->columns(array('ident' => new Zend_Db_Expr('md5(rule.code)')))
+			//->columns(array('ident_hr' => new Zend_Db_Expr('concat(GROUP_CONCAT(CONCAT(rate.code, \'_\',rate.tax_country_id, \'_\', rate.rate) ORDER BY rate.code),\'__\',rule.code,\'__\' ,GROUP_CONCAT(cgroup.class_name ORDER BY cgroup.class_name),\'__\',GROUP_CONCAT(product.class_name ORDER BY product.class_name))')))
 			->group(array('rule.tax_calculation_rule_id'))
 		;
 		
