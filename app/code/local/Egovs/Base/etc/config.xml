@@ -237,17 +237,17 @@
             <sales>
                 <rewrite>
                     <order_invoice>Egovs_Base_Model_Sales_Order_Invoice</order_invoice>
-                </rewrite>
-                <rewrite>
                     <order_creditmemo>Egovs_Base_Model_Sales_Order_Creditmemo</order_creditmemo>
-                </rewrite>
-                <rewrite>
                     <observer>Egovs_Base_Model_Sales_Observer</observer>
-                </rewrite>
-                <rewrite>
                     <quote>Egovs_Base_Model_Sales_Quote</quote>
+                    <email_template>Egovs_Base_Model_Sales_Email_Template</email_template>
                 </rewrite>
             </sales>
+            <adminhtml>
+                <rewrite>
+                    <email_template>Egovs_Base_Model_Adminhtml_Email_Template</email_template>
+                </rewrite>
+            </adminhtml>
         </models>
         <blocks>
             <egovsbase>
@@ -274,6 +274,7 @@
                     <sales_order_create_customer_grid>Egovs_Base_Block_Adminhtml_Sales_Order_Create_Customer_Grid</sales_order_create_customer_grid>
                     <customer_edit_tab_account>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account</customer_edit_tab_account>
                     <customer_edit_tab_addresses>Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
+                    <system_email_template_preview>Egovs_Base_Block_Adminhtml_System_Email_Template_Preview</system_email_template_preview>
                 </rewrite>
             </adminhtml>
         </blocks>
