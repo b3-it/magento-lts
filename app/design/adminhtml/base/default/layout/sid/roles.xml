@@ -28,4 +28,11 @@
             <block type="adminhtml/template" template="customer/edit/js.phtml" name="customer.edit.js" as="customer_edit_js"></block>
         </reference>
     </adminhtml_sidroles_customer_edit>
+    
+   <adminhtml_sidroles_customer_carts>
+   	<remove name="root"></remove>
+   	 <block type="adminhtml/customer_edit_tab_carts" name="admin.customer.carts"  output="toHtml">
+        </block>
+
+    </adminhtml_sidroles_customer_carts>
 </layout>
