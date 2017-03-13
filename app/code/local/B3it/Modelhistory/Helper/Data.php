@@ -18,13 +18,10 @@ class B3it_Modelhistory_Helper_Data extends Mage_Core_Helper_Data
      */
     public function cleanupConfig($schedule) {
         $days = Mage::getStoreConfig('admin/b3it_modelhistory_cron/config_delete_days');
-        
-        $days = 0;
-        /*
+
         if (!$days) {
             return;
         }
-        //*/
 
         // sub days using utc
         $newDate = Mage::app()->getLocale()->date(null,null,null,false)->subDay(intval($days));
@@ -75,6 +72,7 @@ class B3it_Modelhistory_Helper_Data extends Mage_Core_Helper_Data
         $maxRevCollection->addFieldToSelect('model');
         $maxRevCollection->addFieldToSelect('model_id');
         $maxRevCollection->addExpressionFieldToSelect('maxrev', 'MAX(main_table.rev)');
+        $maxRevCollection->getSelect()->group('main_table.model');
         $maxRevCollection->getSelect()->group('main_table.model_id');
 
         $collection->getSelect()->join(array('e' => $maxRevCollection->getSelect()), 'main_table.model=e.model && main_table.model_id=e.model_id && main_table.rev != e.maxrev', '');

@@ -7,7 +7,6 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_ModelhistoryController extends Ma
     }
 
     public function indexAction() {
-        //Mage::getModel("b3it_modelhistory/history")->cleanup(null);
         $this->_initAction();
 
         $this->renderLayout();
