@@ -292,8 +292,8 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 				
 				//Styles in HEAD einfügen
 				if ($this->getTemplateStyles()) {
-					$dom = new DOMDocument();
-					if ($dom->loadHTML($html, LIBXML_HTML_NODEFDTD)) {
+					$dom = new DOMDocument('1.0', 'UTF-8');
+					if ($dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NODEFDTD)) {
 						$domElements = $dom->getElementsByTagName('head');
 						$head = null;
 						if ($domElements && $domElements->length > 0) {
@@ -316,6 +316,25 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 							$style = $dom->createElement('style', $this->getTemplateStyles());
 							$style->setAttribute('type', 'text/css');
 							$head->appendChild($style);
+							
+							$contentTypeExists = false;
+							$metas = $dom->getElementsByTagName('meta');
+							foreach ($metas as $meta) {
+								if (!$meta->hasAttribute('content')) {
+									continue;
+								}
+								$contentTypeExists = true;
+								break;
+							}
+								
+							if (!$contentTypeExists) {
+								$meta = $dom->createElement('meta');
+								$meta->setAttribute('http-equiv', 'Content-Type');
+								$meta->setAttribute('content', 'text/html; charset=utf-8');
+								$head->appendChild($meta);
+								//Explizit UTF-8 verwenden
+								$dom->encoding = 'UTF-8';
+							}
 							$html = $dom->saveHTML();
 						}
 					}
