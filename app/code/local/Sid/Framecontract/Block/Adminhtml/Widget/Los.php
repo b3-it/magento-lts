@@ -60,7 +60,7 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
 			$this->_contracts = array();
 			$collection = Mage::getModel('framecontract/contract')->getCollection();
 			$collection->getSelect()->order('main_table.title');
-			$this->_contracts[0] = "-- Bitte Wählen --"; 
+			$this->_contracts[0] = "-- Bitte wählen --"; 
 			foreach($collection->getItems() as $item)
 			{
 				$lose = Mage::getModel('framecontract/los')->getCollection();
