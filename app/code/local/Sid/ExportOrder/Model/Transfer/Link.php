@@ -102,6 +102,7 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     			
     			$link->saveOrderStatus($orderIds, Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, 'Email mit Link versendet',  Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS);
+    			$res = 'Email mit Link versendet';
     		}
     	}
     	

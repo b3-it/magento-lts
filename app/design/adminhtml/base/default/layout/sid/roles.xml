@@ -31,8 +31,14 @@
     
    <adminhtml_sidroles_customer_carts>
    	<remove name="root"></remove>
-   	 <block type="adminhtml/customer_edit_tab_carts" name="admin.customer.carts"  output="toHtml">
-        </block>
-
-    </adminhtml_sidroles_customer_carts>
+   	 <block type="adminhtml/customer_edit_tab_carts" name="admin.customer.carts"  output="toHtml" />
+   </adminhtml_sidroles_customer_carts>
+   <adminhtml_sidroles_customer_orders>
+    <remove name="root"></remove>
+     <block type="adminhtml/customer_edit_tab_orders" name="admin.customer.orders"  output="toHtml" />
+   </adminhtml_sidroles_customer_orders>
+   <adminhtml_sidroles_customer_wishlist>
+    <remove name="root"></remove>
+     <block type="adminhtml/customer_edit_tab_wishlist" name="admin.customer.wishlist"  output="toHtml" />
+   </adminhtml_sidroles_customer_wishlist>   
 </layout>
