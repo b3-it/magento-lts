@@ -882,7 +882,9 @@ div#details-block {
 }
 
 .product-view .add-to-links {
-    margin: 0px;
+    display: none;
+/*
+	margin: 0px;
     display: inline-block;
     width: 100%;
     padding-top: $global-boxpadding-large;
@@ -911,6 +913,7 @@ div#details-block {
     li:last-child a {
         border-right: 0px;
     }
+*/
 }
 
 .product-view .sharing-links {
