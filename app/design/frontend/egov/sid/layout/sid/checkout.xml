@@ -101,6 +101,9 @@ will be rendered on all checkout pages
 
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-addresses</className></action>
+            <action method="addBodyClass"><className>egovs-checkout-multipage-addresses</className></action>
+            <action method="addBodyClass"><className>mp-checkout</className></action>
         </reference>
         <reference name="content">
             <block type="sidcheckout/multishipping_state" name="checkout_state" template="checkout/multishipping/state.phtml"/>
