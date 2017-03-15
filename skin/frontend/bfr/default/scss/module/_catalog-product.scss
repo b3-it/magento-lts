@@ -917,7 +917,9 @@ div#details-block {
 }
 
 .product-view .sharing-links {
-    float: left;
+    display: none;
+/*
+	float: left;
 
     &:after {
         @include clearfix;
@@ -953,16 +955,19 @@ div#details-block {
     a.link-twitter {
         background-position: 0px (-375px + 3px);
     }
+*/
 }
 
 .product-view .product-options-bottom .sharing-links {
-    float: right;
+/*
+	float: right;
     position: relative;
     top: -10px;
     
     @include bp(max-width, $bp-xsmall) {
         top: 10px;
     }
+*/
 }
 
 @include bp(max-width, $bp-small) {
