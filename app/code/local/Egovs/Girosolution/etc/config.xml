@@ -83,9 +83,9 @@
         </events>
         <layout>
             <updates>
-                <sepadebitbund>
+                <egovs_girosolution>
                     <file>egovs/girosolution.xml</file>
-                </sepadebitbund>
+                </egovs_girosolution>
             </updates>
         </layout>
     </frontend>
