@@ -250,6 +250,11 @@
             </sales>
         </models>
         <blocks>
+            <page>
+                <rewrite>
+                    <html>Egovs_Base_Block_Page_Html</html>
+                </rewrite>
+            </page>
             <egovsbase>
                 <class>Egovs_Base_Block</class>
             </egovsbase>

@@ -173,7 +173,7 @@ var linkTemplate = '<tr>'+
     '<td>'+
         '<div class="files">'+
             '<div class="row a-right">'+
-                '<label for="downloadable_link_{{id}}_file_type" class="a-left><input type="radio" class="radio validate-one-required-by-name" id="downloadable_link_{{id}}_file_type" name="downloadable[link][{{id}}][type]" value="file"{{file_checked}} /> <?php echo Mage::helper('downloadable')->__('File:')?></label>'+
+                '<label for="downloadable_link_{{id}}_file_type" class="a-left"><input type="radio" class="radio validate-one-required-by-name" id="downloadable_link_{{id}}_file_type" name="downloadable[link][{{id}}][type]" value="file"{{file_checked}} /> <?php echo Mage::helper('downloadable')->__('File:')?></label>'+
             '<input type="hidden" class="validate-downloadable-file" id="downloadable_link_{{id}}_file_save" name="downloadable[link][{{id}}][file]" value="{{file_save}}" />'+
                 '<?php echo $this->getBrowseButtonHtml(); ?>'+
                 '<?php echo $this->getDeleteButtonHtml(); ?>'+

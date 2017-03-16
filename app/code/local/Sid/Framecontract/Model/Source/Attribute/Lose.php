@@ -35,8 +35,9 @@ class Sid_Framecontract_Model_Source_Attribute_Lose extends Mage_Eav_Model_Entit
     public function getAllOptions($addEmpty = true)
     {
         if (is_null($this->_options)) {
+        	$this->_options = array();
         	if($addEmpty) {
-	            $this->_options = array();
+	            
 	            $this->_options[] =  array(
 	                    'label' => '',
 	                    'value' =>  ''

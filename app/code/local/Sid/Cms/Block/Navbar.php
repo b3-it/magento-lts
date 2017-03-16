@@ -79,9 +79,16 @@ class Sid_Cms_Block_Navbar extends Mage_Core_Block_Template
 	public function getNodeHtml($node, $level = 0)
 	{
 		$level++;
+		
+		$display = "";
+		$class = "egov-arrow-main-open";
+		if($level == 2){
+			$display = "style=\"display: none\"";
+			$class = "egov-arrow-main-closed";
+		}
 		$html = array();
 		if($node->getType() == 'default'){
-			$html[] = '<a href="javascript:void(0);" class="egov-arrow-main-open">'. $node->getLabel().'</a>';
+			$html[] = '<a href="javascript:void(0);" class="'.$class.'">'. $node->getLabel().'</a>';
 		}elseif($node->getType() == 'page'){
 			if($node->getIsActive() == Mage_Cms_Model_Page::STATUS_ENABLED){
 				$page = Mage::getModel('cms/page')->load($node->getPageId());
@@ -95,10 +102,10 @@ class Sid_Cms_Block_Navbar extends Mage_Core_Block_Template
 		
 		if(count($node->getChildren()) > 0)
 		{
-			$html[] = '<ul>';
+			$html[] = '<ul '.$display.'>';
 			foreach($node->getChildren() as $child)
 			{
-				$html[] = '<li class="level'.$level.'">';
+				$html[] = '<li class="level'.$level.'"  >';
 				$html[] = $this->getNodeHtml($child, $level);
 				$html[] = "</li>";
 			}
