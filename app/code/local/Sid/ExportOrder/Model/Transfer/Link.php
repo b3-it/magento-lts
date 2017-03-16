@@ -22,11 +22,13 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
      * (non-PHPdoc)
      * @see Sid_ExportOrder_Model_Transfer::send()
      */
-    public function send($content, $order = null)
+    public function send($content, $order = null, $data = array())
     {
     	$recipients = array();
     	$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
-    	$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('content' =>$content));
+    	
+    	$data['content'] = $content;
+    	$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients, $data);
     	
     	if($res !== false){
     		$txt = "Der Link wurde versendet";

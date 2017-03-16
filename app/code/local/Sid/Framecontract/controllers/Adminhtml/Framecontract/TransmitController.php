@@ -52,7 +52,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_TransmitController extends Mage_
     	$data = array();	
     	$data['title'] = $contract->getTitle();
     	$data['contractnumber'] = $contract->getContractnumber();
-    	$data['contract'] = $contract->getTitle();
+    	$data['contract'] = $contract;
     	
     	$attachments = array();
     	if($files)

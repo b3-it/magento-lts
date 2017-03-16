@@ -84,7 +84,9 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 			$msg = $transfer->sendOrders($content, $format, $orderIds, $vendor->getId());
 		}else {
 			$transfer->setFormatModel($format);
-			$msg = $transfer->send($content,$order);
+			$data = array();
+			$data['contract'] = $contract;
+			$msg = $transfer->send($content,$order, $data);
 		}
 		if($msg === false)
 		{
