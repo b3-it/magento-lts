@@ -99,7 +99,7 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     			$link->saveOrderStatus($orderIds, Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, 'Email mit Link nicht versendet', Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR);
     		}else{
-    			
+    			$res = 'Email mit Link versendet';
     			$link->saveOrderStatus($orderIds, Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, 'Email mit Link versendet',  Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS);
     		}
