@@ -40,5 +40,18 @@
    <adminhtml_sidroles_customer_wishlist>
     <remove name="root"></remove>
      <block type="adminhtml/customer_edit_tab_wishlist" name="admin.customer.wishlist"  output="toHtml" />
-   </adminhtml_sidroles_customer_wishlist>   
+   </adminhtml_sidroles_customer_wishlist>
+    <adminhtml_sidroles_customer_viewcart>
+   	<remove name="root"></remove>
+   	 <block type="adminhtml/customer_edit_tab_view_cart" name="admin.customer.view.cart"  output="toHtml" />
+   </adminhtml_sidroles_customer_viewcart>
+    <adminhtml_sidroles_customer_lastorders>
+    <remove name="root"></remove>
+     <block type="adminhtml/customer_edit_tab_view_orders" name="admin.customer.view.orders"  output="toHtml" />
+   </adminhtml_sidroles_customer_lastorders>
+    
+    <adminhtml_sidroles_customer_viewwishlist>
+    <remove name="root"></remove>
+     <block type="adminhtml/customer_edit_tab_view_wishlist" name="admin.customer.view.wishlist"  output="toHtml" />
+   </adminhtml_sidroles_customer_viewwishlist>
 </layout>
