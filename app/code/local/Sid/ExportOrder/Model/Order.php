@@ -149,6 +149,10 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	
     }
     
+    /**
+     * Die Bestellungen die als Link gesammelt versendet werden
+     * @param string $transfer
+     */
     public function processPendingOrders($transfer = 'link')
     {
     	$collection = Mage::getResourceModel('sales/order_collection');

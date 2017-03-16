@@ -31,11 +31,11 @@ class Sid_ExportOrder_Model_Resource_Link extends Mage_Core_Model_Resource_Db_Ab
     	$write->insertMultiple($this->getTable('exportorder/link_order'), $data);
     }
     
-    public function saveOrderStatus($object, $orderIds, $status)
+    public function saveOrderStatus($object, $orderIds, $status, $message)
     {
     	$read = $this->_getWriteAdapter();
     	$orderIds = implode(',', $orderIds);
-    	$read->update($this->getTable('exportorder/order'), array('status' => $status,'update_time'=>now()), 'order_id IN('.$orderIds.')' );
+    	$read->update($this->getTable('exportorder/order'), array('message'=>$message, 'status' => $status,'update_time'=>now()), 'order_id IN('.$orderIds.')' );
     }
     
    

@@ -77,11 +77,11 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     	}
     }
     
-    public function saveOrderStatus($orderIds, $status)
+    public function saveOrderStatus($orderIds, $status, $message)
     {
     	if(is_array($orderIds) && (count($orderIds) > 0))
     	{
-    		$this->_getResource()->saveOrderStatus($this, $orderIds, $status);
+    		$this->_getResource()->saveOrderStatus($this, $orderIds, $status, $message);
     	}
     }
     
