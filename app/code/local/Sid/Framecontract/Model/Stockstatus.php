@@ -85,11 +85,13 @@ class Sid_Framecontract_Model_Stockstatus extends Varien_Object
 	private function _formatItemsHTML($items)
 	{
 		$res = array();
-		$res[] = "<table><tr><td> Produkt </td><td> Artikelnummer </td><td> Bestellt </td><td> Bestellt [%]</td></tr>";
+		$res[] = "<table><tr><td> Produkt </td><td> Artikelnummer </td><td> Bestellt </td><td> Bestellt [%]</td><td>Rahemenvertrag</td><td>Los</td></tr>";
 		
 		foreach ($items as $item)
 		{
-			$res[] = sprintf("<tr><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr>",$item->getName(),$item->getSku(), $item->getSold(), $item->getSoldP());
+			$contract = Mage::getModel('framecontract/contract')->load($item->getFramecontractContractId());
+			$los = Mage::getModel('framecontract/los')->load($item->getLosId());
+			$res[] = sprintf("<tr><td>%s</td><td>%s</td><td>%d</td><td>%d</td><td>%s</td><td>%s</td></tr>",$item->getName(),$item->getSku(), $item->getSold(), $item->getSoldP(),$contract->getTitle(),$los->getTitle());
 			
 		}
 		
