@@ -1,5 +1,5 @@
 <?php
-class Sid_Framecontract_Model_Api2_Contract_Rest_Admin_V1 extends Sid_Framecontract_Model_Api2_Losinfo
+class Sid_Framecontract_Model_Api2_Contract_Rest_Admin_V1 extends Sid_Framecontract_Model_Api2_Contract
 {
 
 	
@@ -26,7 +26,7 @@ class Sid_Framecontract_Model_Api2_Contract_Rest_Admin_V1 extends Sid_Framecontr
 		
 		$model->setContractManager($sender);
 		
-        return $model;
+        return $model->getData();
     }
 	
 	
