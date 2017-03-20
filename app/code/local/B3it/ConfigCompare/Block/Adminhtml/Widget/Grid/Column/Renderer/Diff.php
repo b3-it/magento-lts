@@ -16,7 +16,7 @@ class  B3it_ConfigCompare_Block_Adminhtml_Widget_Grid_Column_Renderer_Diff exten
         $data = parent::_getValue($row);
         $string = is_null($data) ? $defaultValue : $data;
         
-       
+        $string = htmlspecialchars($string);
         if(strlen($string) > 300){
 	        $id = rand(1,10000);
 	        $btn  = '<button id="btn_p_'.$id.'" type = "button" onclick="$(\''.$id.'\').removeClassName(\'col_diff_small\'); $(\'btn_p_'.$id.'\').hide(); $(\'btn_m_'.$id.'\').show();">+</button>';
