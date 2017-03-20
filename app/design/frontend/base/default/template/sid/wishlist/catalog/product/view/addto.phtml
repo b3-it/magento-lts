@@ -31,7 +31,7 @@
 <ul class="add-to-links">
 <?php if ($this->helper('sidwishlist')->isAllow()) : ?>
 	<li>
-		<a href="<?php echo $this->helper('sidwishlist')->getAddUrl($_product) ?>"
+		<a href="<?php echo $this->helper('sidwishlist')->getAddUrl($_product, array('_secure' => $this->_isSecure())) ?>"
 		class="link-wishlist"
 		alt="<?php echo $this->__('Add to Collector List') ?>"
 		title="<?php echo $this->__('Add to Collector List') ?>"
