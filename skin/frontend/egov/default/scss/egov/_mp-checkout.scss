@@ -41,7 +41,7 @@
     }
 
     p.required {
-        margin: $global-boxmargin 0;
+        margin: $global-boxmargin 0 0 0;
     }
 
     ul.group-select {
@@ -142,20 +142,13 @@
     }
 
     .col2-set {
-/*
-        div.col-1, div.col-2 {
-            @extend .block;
-            vertical-align: top;
-            padding: 0px;
-            width: 45%;
-            min-height: 100px;
 
-            h3 {
-                margin: 0px;
-            }
+        div.col-1 {
+            padding: $global-boxpadding $global-boxmargin 0px $global-boxmargin;
         }
-*/
+        
         div.col-2 {
+            padding: $global-boxpadding $global-boxmargin 0px $global-boxmargin;
             width: 45%;
         }
         
