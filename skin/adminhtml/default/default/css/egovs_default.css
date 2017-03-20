@@ -57,3 +57,19 @@ div.sidcms-main-col{
 .sidcms-columns{
     background: rgba(0, 0, 0, 0) url("images/side_col_bg.gif") repeat-y scroll 417px 0;
 }
+del {
+    color: red;
+    background: #fdd;
+    text-decoration: none;
+}
+ins {
+    color: green;
+    background: #dfd;
+    text-decoration: none;
+}
+
+.col_diff_small
+{
+	height:50px; 
+	overflow:hidden;
+}
