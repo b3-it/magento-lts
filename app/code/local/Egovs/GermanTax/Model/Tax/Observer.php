@@ -42,7 +42,7 @@ class Egovs_GermanTax_Model_Tax_Observer
 					->setRegionId($baseAddress->getRegionId())
 					->setPostcode($baseAddress->getPostcode())
 				;
-				if ($baseAddress->hasVatId() && $baseAddress->getVatId()) {
+				if (Mage::helper('germantax')->hasValidVatId($baseAddress)) {
 					$request->setTaxvat(1);
 				} else {
 					$request->unsetData('taxvat');
@@ -158,6 +158,7 @@ class Egovs_GermanTax_Model_Tax_Observer
 			//&& $firstAddress->getRegionId() == $secondAddress->getRegionId()
 			//&& $firstAddress->getCompany() == $secondAddress->getCompany()
 			&& $firstAddress->getVatId() == $secondAddress->getVatId()
+			//&& $firstAddress->getVatIsValid() == $secondAddress->getVatIsValid()
 		) {
 			return true;
 		}

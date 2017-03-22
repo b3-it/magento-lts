@@ -159,4 +159,18 @@ class Egovs_GermanTax_Helper_Data extends Mage_Tax_Helper_Data
             return $price;
         }
     }
+    
+    /**
+     * Prüft ob eine Adresse eine valide VatID besitzt
+     * 
+     * @param Varien_Object $address
+     * @return boolean
+     */
+    public function hasValidVatId($address) {
+    	if (!$address || !($address instanceof Varien_Object)) {
+    		return false;
+    	}
+    	
+    	return ($address->getVatId() && $address->getVatIsValid() && $address->getVatRequestSuccess());
+    }
 }
