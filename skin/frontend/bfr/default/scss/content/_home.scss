@@ -169,7 +169,7 @@ body .promos > li {
 	li {
 	    list-style-type: none;
 	}
-	a {
+	a:not(.button) {
 	    color: $global-footer-linkcolor;
 	    text-decoration: none;
 	}
