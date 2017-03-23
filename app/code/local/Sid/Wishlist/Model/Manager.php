@@ -124,7 +124,8 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 				);
 				return true;				
 			}
-			$result = $quote->addProduct($product);
+			$params = new Varien_Object($this->getSession()->getParams());
+			$result = $quote->addProduct($product, $params);
 			
 			if (is_string($result)) {
 				throw new Sid_Wishlist_Model_Quote_NoProductException($this->__($result));
