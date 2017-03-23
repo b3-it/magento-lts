@@ -64,16 +64,22 @@
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                     <?php echo $this->getPriceHtml($_product, true, '-widget-new-list') ?>
                     <div class="product-action">
-                        <?php if ($_product->isSaleable()): ?>
+                          <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
                             <button type="button"
-                                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>"
+                                    title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
                                     class="button btn-cart egov-cart"
                                     onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
                                 <span><?php echo $this->__('Add to Cart') ?></span>
                             </button>
-                        <?php else: ?>
+                          <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
+                            <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>"
+                               class="button egov-view"
+                               href="<?php echo $_product->getProductUrl() ?>">
+                                <span><?php echo $this->__('View Details') ?></span>
+                            </a>
+                          <?php else: ?>
                             <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                        <?php endif; ?>
+                          <?php endif; ?>
                     </div>
                 </div>
             </li>
