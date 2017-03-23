@@ -1,5 +1,5 @@
 <?php
-namespace Pelago;
+//namespace Pelago;
 
 /**
  * This class provides functions for converting CSS styles into inline style attributes in your HTML code.
@@ -14,7 +14,7 @@ namespace Pelago;
  * @author Roman Ožana <ozana@omdesign.cz>
  * @author Sander Kruger <s.kruger@invessel.com>
  */
-class Emogrifier
+class Pelago_Emogrifier
 {
 	/**
 	 * @var int
@@ -1543,15 +1543,7 @@ class Emogrifier
 		// the normal error handling continues when handler return false
 		return false;
 	}
-}
-
-/**
- * Only for backward compatibility
- *
- * @deprecated since 0.1.1
- *
- */
-class Pelago_Emogrifier extends Emogrifier {
+	
 	/**
 	 * Disables parsing of inline style tags
 	 * Only for backward compatibility
