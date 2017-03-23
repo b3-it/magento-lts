@@ -791,23 +791,26 @@ final class Mage
             return;
         }
 
+        //Default log level
+        $logLevel = Zend_Log::NOTICE;
         try {
             $logActive = self::getStoreConfig('dev/log/active');
             if (empty($file)) {
                 $file = self::getStoreConfig('dev/log/file');
             }
+            $logLevel = Mage::getStoreConfig('dev/log/log_level');
         }
         catch (Exception $e) {
             $logActive = true;
         }
 
-        if (!self::$_isDeveloperMode && !$logActive && !$forceLog) {
+        if ((($level > $logLevel && $logActive) || !self::$_isDeveloperMode && !$logActive) && !$forceLog) {
             return;
         }
 
         static $loggers = array();
 
-        $level  = is_null($level) ? Zend_Log::DEBUG : $level;
+        $level  = is_null($level) ? Zend_Log::NOTICE : $level;
         $file = empty($file) ? 'system.log' : $file;
 
         try {
