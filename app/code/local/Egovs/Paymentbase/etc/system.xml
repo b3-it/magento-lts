@@ -542,42 +542,42 @@
                             <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase" readonly="1">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bank_account_owner>
                         <bank_account translate="label">
                             <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase" readonly="1">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bank_account>
                         <bank_code_number translate="label">
                             <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase" readonly="1">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bank_code_number>
                         <bank_name translate="label">
                             <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase" readonly="1">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bank_name>
                         <swift translate="label">
                             <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase" readonly="1">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </swift>
                         <iban translate="label">
                             <frontend_model>paymentbase/adminhtml_system_config_form_field_depend</frontend_model>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase" readonly="1">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase" readonly="1">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </iban>
                         <auto_sync_epaybl_data_now translate="label" module="paymentbase">

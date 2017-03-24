@@ -85,7 +85,7 @@
                             <comment>If empty or disabled, value from imprint will be used.</comment>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bankaccountholder>
                         <bankaccountnumber translate="label comment">
@@ -100,7 +100,7 @@
                             <comment>If empty or disabled, value from imprint will be used.</comment>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bankaccountnumber>
                         <sortcode translate="label comment">
@@ -115,7 +115,7 @@
                             <comment>If empty or disabled, value from imprint will be used.</comment>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </sortcode>
                         <bankname translate="label comment">
@@ -130,7 +130,7 @@
                             <comment>If empty or disabled, value from imprint will be used.</comment>
                             <egovsdepend>
                                     <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                    <auto_sync_epaybl_data path="payment/paymentbase">0</auto_sync_epaybl_data>
+                                    <auto_sync_epaybl_data path="payment_services/paymentbase">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bankname>
                         <bankiban translate="label comment">
@@ -145,7 +145,7 @@
                             <comment>If empty or disabled, value from imprint will be used.</comment>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bankiban>
                         <bankbic translate="label comment">
@@ -160,7 +160,7 @@
                             <comment>If empty or disabled, value from imprint will be used.</comment>
                             <egovsdepend>
                                 <!-- Falls Auto sync disabled dann ist Feld manuell änderbar -->
-                                <auto_sync_epaybl_data path="payment/paymentbase">0</auto_sync_epaybl_data>
+                                <auto_sync_epaybl_data path="payment_services/paymentbase">0</auto_sync_epaybl_data>
                             </egovsdepend>
                         </bankbic>
                         <paywithinxdays translate="label">
