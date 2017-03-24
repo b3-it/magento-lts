@@ -94,6 +94,7 @@
 				<payment_action>egovs_pending_bankpayment</payment_action>
 				<title>Vorkasse</title>
 				<allowspecific>0</allowspecific>
+				<show_bank_details>1</show_bank_details>
 				<paywithinxdays>15</paywithinxdays>
 				<!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
 				<delete_customer_after_transaction>1</delete_customer_after_transaction>
