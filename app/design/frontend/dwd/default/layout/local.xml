@@ -30,6 +30,7 @@
         <reference name="left">
             <remove name="catalog.leftnav" />
             <remove name="cart_sidebar" />
+            <remove name="left.newsletter" />
             
             <block type="checkout/cart_sidebar" name="cart_sidebar_dwd" template="checkout/cart/sidebar.phtml" before="-">
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
