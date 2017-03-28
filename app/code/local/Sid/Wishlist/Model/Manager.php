@@ -300,6 +300,7 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 		}
 		$email->setSender($customer->getName(), $customer->getEmail())
 			->setWishlist($this->getQuote())
+			->setCustomer($customer)
 			->setMessage($message)
 			->setLink(mage::getUrl('*/*/view', array('share_code' => $this->getQuote()->getSharingCode())))
 			->sendEmail()
