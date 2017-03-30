@@ -10,6 +10,8 @@
  */
 class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
 {
+	protected $_cashbox = null;
+	
     public function _construct()
     {
         parent::_construct();
@@ -91,7 +93,7 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     public function getOpenJournal($customerId = null)
     {
     	if($customerId == null){
-    		$customerId = $this->getCustomerId();
+    		$customerId = $this->_getCustomer()->getId();
     	}
     	 
     	$collection = $this->getCollection();
@@ -102,5 +104,33 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     	if(count($collection->getItems()) == 0) return null;
     	 
     	return $collection->getFirstItem();
+    }
+    
+    protected function _getCustomer()
+    {
+    	if($this->_customer == null){
+    		$this->_customer = Mage::getSingleton('customer/session')->getCustomer();
+    	}
+    	return $this->_customer;
+    }
+    
+    public function getCashbox()
+    {
+    	if($this->_cashbox == null)
+    	{
+    		$this->_cashbox = Mage::getModel('gka_barkasse/cashbox')->load($this->getCashboxId());
+    	}
+    	return $this->_cashbox;
+    }
+    
+    public function getAllItems()
+    {
+    	$collection = Mage::getModel('gka_barkasse/kassenbuch_journalitems')->getCollection();
+    	$collection->getSelect()
+    	->join(array('order' => $collection->getTable('sales/order')),'order.entity_id=main_table.order_id')
+    	->where('journal_id=?',$this->getId())
+    	->order('number');
+    	
+    	return $collection->getItems();
     }
 }

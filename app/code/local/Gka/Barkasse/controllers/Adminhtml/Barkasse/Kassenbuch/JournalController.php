@@ -54,6 +54,21 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 		}
 	}
 
+	public function pdfAction() {
+		$id     =  intval($this->getRequest()->getParam('id'));
+		$model  = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
+	
+		if ($model->getId() || $id == 0) {
+			$pdf = Mage::getModel('gka_barkasse/kassenbuch_journal_pdf');
+			//$pdf->preparePdf();
+			$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW;
+			$pdf->getPdf(array($model))->render();
+		} else {
+			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('gka_barkasse')->__('Item does not exist'));
+			$this->_redirect('*/*/');
+		}
+	}
+	
 	public function newAction() {
 		$this->_forward('edit');
 	}

@@ -21,7 +21,7 @@ if (!$installer->tableExists($installer->getTable('gka_barkasse/kassenbuch_cashb
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `title` varchar(128) default '',
 	  `customer_id` int(11) unsigned default null,
-	  `store_id` int(11) unsigned default null,
+	  `store_id` SMALLINT(5) unsigned default null,
 	  `customer` varchar(128) default '',
 
 	  PRIMARY KEY (`id`),
@@ -65,10 +65,8 @@ if (!$installer->tableExists($installer->getTable('gka_barkasse/kassenbuch_journ
 	  	`id` int(11) unsigned NOT NULL auto_increment,
     	`number` int(11) unsigned default 0,
         `booking_date` datetime default null,
-        `booking_amount` decimal(12,4) default 0,
         `journal_id` int(11) unsigned default 0,
         `order_id` int(11) unsigned default null,
-        `order_cancel` smallint(6) unsigned default '0',
         `source` smallint(6) unsigned default 0,
 	  PRIMARY KEY (`id`),
      FOREIGN KEY (`journal_id`) REFERENCES `{$this->getTable('gka_barkasse/kassenbuch_journal')}`(`id`) ON DELETE SET NULL

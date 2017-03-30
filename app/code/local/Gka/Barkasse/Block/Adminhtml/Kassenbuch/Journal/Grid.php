@@ -121,6 +121,25 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
                 'index'     => 'stores',
                 'is_system' => true,
         ));
+        
+        $this->addColumn('action1',
+        		array(
+        				'header'    =>  Mage::helper('gka_barkasse')->__('Protokoll'),
+        				'width'     => '100',
+        				'type'      => 'action',
+        				'getter'    => 'getId',
+        				'actions'   => array(
+        						array(
+        								'caption'   => Mage::helper('gka_barkasse')->__('Pdf'),
+        								'url'       => array('base'=> '*/*/pdf'),
+        								'field'     => 'id'
+        						)
+        				),
+        				'filter'    => false,
+        				'sortable'  => false,
+        				'index'     => 'stores',
+        				'is_system' => true,
+        		));
 
 		$this->addExportType('*/*/exportCsv', Mage::helper('gka_barkasse')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('gka_barkasse')->__('XML'));

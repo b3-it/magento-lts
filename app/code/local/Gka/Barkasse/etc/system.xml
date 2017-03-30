@@ -87,6 +87,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </max_order_total>
+                        <pdf_report>
+                        	<label>PDF Template für Kassenabschlussprotokoll</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>100</sort_order>
+                            <source_model>pdftemplate/system_config_source_templates</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pdf_report>
                         <delete_customer_after_transaction translate="label" module="paymentbase">
                             <label>Delete customer after payment transaction</label>
                             <frontend_type>select</frontend_type>
