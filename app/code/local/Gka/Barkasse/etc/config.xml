@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Gka_Barkasse>
+            <version>0.1.0.0</version>
+        </Gka_Barkasse>
+    </modules>
+    <global>
+        <helpers>
+            <gka_barkasse>
+                <class>Gka_Barkasse_Helper</class>
+            </gka_barkasse>
+             <epaybl_cashpayment>
+                <class>Gka_Barkasse_Helper</class>
+            </epaybl_cashpayment>            
+        </helpers>
+        <resources>
+            <gka_barkasse_setup>
+                <setup>
+                    <module>Gka_Barkasse</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gka_barkasse_setup>
+        </resources>
+        <blocks>
+          <gka_barkasse>
+              <class>Gka_Barkasse_Block</class>
+          </gka_barkasse>
+        </blocks>
+        <models>
+            <gka_barkasse>
+                <class>Gka_Barkasse_Model</class>
+                <resourceModel>gka_barkasse_resource</resourceModel>
+            </gka_barkasse>
+            <gka_barkasse_resource>
+                <class>Gka_Barkasse_Model_Resource</class>
+                <entities>
+                  <kassenbuch_journal>
+                    <table>gka_barkasse_kassenbuch_journal</table>
+                  </kassenbuch_journal>
+                  <kassenbuch_journal_items>
+                    <table>gka_barkasse_kassenbuch_journal_items</table>
+                  </kassenbuch_journal_items>
+                  <kassenbuch_cashbox>
+                    <table>gka_barkasse_kassenbuch_cashbox</table>
+                  </kassenbuch_cashbox>
+
+                </entities>
+            </gka_barkasse_resource>
+        </models>
+        <pdftemplate>
+          <types>
+              <report_cashbox>Cashbox Report</report_cashbox>
+          </types>
+        </pdftemplate>
+        <events>
+            <checkout_type_onepage_save_order_after>
+                <observers>
+                    <gka_barkasse_save_order_after>
+                        <type>singleton</type>
+                        <class>gka_barkasse/observer</class>
+                        <method>onCheckoutSubmitAllAfter</method>
+                    </gka_barkasse_save_order_after>
+                </observers>
+            </checkout_type_onepage_save_order_after>
+        </events>
+    </global>
+    <frontend>
+      <routers>
+            <gka_barkasse>
+                <use>standard</use>
+                <args>
+                    <module>Gka_Barkasse</module>
+                    <frontName>gka_barkasse</frontName>
+                </args>
+            </gka_barkasse>
+        </routers>
+        <layout>
+            <updates>
+                <gka_barkasse>
+                  <file>gka/barkasse.xml</file>
+                </gka_barkasse>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+              <Gka_Barkasse>
+                  <files>
+                      <default>gka/barkasse.csv</default>
+                  </files>
+              </Gka_Barkasse>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <Gka_Barkasse_Adminhtml after="Mage_Adminhtml">Gka_Barkasse_Adminhtml</Gka_Barkasse_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
+    <adminhtml>
+      <menu>
+          <gkabarkasse module="gka_barkasse">
+              <title>Gka Barkasse</title>
+              <sort_order>50</sort_order>
+              <children>
+                  <gkabarkasse_kassenbuch_journal module="gka_barkasse">
+                      <title>Kassenbuch Journal</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/barkasse_kassenbuch_journal/index</action>
+                  </gkabarkasse_kassenbuch_journal>
+                  <gkabarkasse_kassenbuch_journal_items module="gka_barkasse">
+                      <title>Kassenbuch Journal_items</title>
+                      <sort_order>20</sort_order>
+                      <action>adminhtml/barkasse_kassenbuch_journalitems/index</action>
+                  </gkabarkasse_kassenbuch_journal_items>
+                  <gkabarkasse_kassenbuch_cashbox module="gka_barkasse">
+                      <title>Kassenbuch Cashbox</title>
+                      <sort_order>30</sort_order>
+                      <action>adminhtml/barkasse_kassenbuch_cashbox/index</action>
+                  </gkabarkasse_kassenbuch_cashbox>
+
+              </children>
+          </gkabarkasse>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <gkabarkasse module="gka_barkasse">
+                          <title>Gka Barkasse</title>
+                          <sort_order>10</sort_order>
+                          <children>
+                                <gkabarkasse_kassenbuch_journal module="gka_barkasse">
+                                  <title>Kassenbuch Journal</title>
+                                  <sort_order>10</sort_order>
+                              </gkabarkasse_kassenbuch_journal>
+                                <gkabarkasse_kassenbuch_journal_items module="gka_barkasse">
+                                  <title>Kassenbuch Journal_items</title>
+                                  <sort_order>20</sort_order>
+                              </gkabarkasse_kassenbuch_journal_items>
+                                <gkabarkasse_kassenbuch_cashbox module="gka_barkasse">
+                                  <title>Kassenbuch Cashbox</title>
+                                  <sort_order>30</sort_order>
+                              </gkabarkasse_kassenbuch_cashbox>
+
+                          </children>
+                      </gkabarkasse>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
+        <translate>
+            <modules>
+                <Gka_Barkasse>
+                    <files>
+                        <default>gka/barkasse.csv</default>
+                    </files>
+                </Gka_Barkasse>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <gkabarkasse>
+              <file>gka/barkasse.xml</file>
+            </gkabarkasse>
+          </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <payment>
+            <epaybl_cashpayment>
+                <currency>EUR</currency>
+                <model>gka_barkasse/cashpayment</model>
+                <payment_action>authorize</payment_action>
+                <title>Barkasse</title>
+                <order_status>processing</order_status>
+                <allowspecific>0</allowspecific>
+                <autoclose>0</autoclose>
+                <!-- Providerset für Produktivbetrieb -->
+                <!--<providerset>17</providerset>-->
+                <!-- Providerset für Testbetrieb -->
+                <providerset>6</providerset>
+                <cancel_order_after_active>1</cancel_order_after_active>
+                <cancel_order_after>30</cancel_order_after>
+                <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
+                <delete_customer_after_transaction>1</delete_customer_after_transaction>
+                <group>epaybl</group>
+            </epaybl_cashpayment>
+        </payment>
+    </default>
+</config>

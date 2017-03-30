@@ -1,0 +1,35 @@
+<?php $_helper = $this->helper('gka_barkasse'); ?>
+<?php $_kassenbuchjournal = $this->getKassenbuchJournal(); ?>
+<div>
+
+	<?php if(!$_kassenbuchjournal):?>
+	<div id="new_journal">
+		<form action="<?php echo $this->getOpenUrl();?>" method="post">
+		
+		<label for="cashbox"><?php echo $_helper->__('Cashbox')?></label>
+		<?php echo $this->getCashboxHtml();?>
+		
+		<label for="opening_balance"><?php echo $_helper->__('Opening Balance')?></label>
+		<input id="opening_balance" name="opening_balance"></input>
+		
+		<button type="submit"><?php echo $_helper->__('Open')?></button>
+		</form>
+	
+	</div>	
+	<?php else: ?>
+	<div id = "close_journal">
+		<form action="<?php echo $this->getCloseUrl();?>" method="post">
+		
+		<input type="hidden" name="id" value="<?php echo $_kassenbuchjournal->getId()?>"></input>
+		<label for="closing_balance"><?php echo $_helper->__('Closing Balance')?></label>
+		<input id="closing_balance" name="closing_balance"></input>
+		
+		<button type="submit"><?php echo $_helper->__('Close')?></button>
+		
+		</form>
+	</div>
+	<?php endif;?>
+
+ <?php echo $this->getChildHtml("journal_details") ?>
+
+</div>

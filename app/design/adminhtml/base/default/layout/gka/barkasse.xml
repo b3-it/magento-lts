@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_barkasse_kassenbuch_journal_index>
+        <reference name="content">
+            <block type="gka_barkasse/adminhtml_kassenbuch_journal" name="kassenbuch_journal" />
+        </reference>
+    </adminhtml_barkasse_kassenbuch_journal_index>
+    <adminhtml_barkasse_kassenbuch_journalitems_index>
+        <reference name="content">
+            <block type="gka_barkasse/adminhtml_kassenbuch_journalitems" name="kassenbuch_journalitems" />
+        </reference>
+    </adminhtml_barkasse_kassenbuch_journalitems_index>
+    <adminhtml_barkasse_kassenbuch_cashbox_index>
+        <reference name="content">
+            <block type="gka_barkasse/adminhtml_kassenbuch_cashbox" name="kassenbuch_cashbox" />
+        </reference>
+    </adminhtml_barkasse_kassenbuch_cashbox_index>
+
+</layout>
