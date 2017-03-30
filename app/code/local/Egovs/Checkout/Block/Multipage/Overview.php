@@ -248,4 +248,9 @@ class Egovs_Checkout_Block_Multipage_Overview extends Mage_Sales_Block_Items_Abs
         $colspan = $this->helper('tax')->displayCartBothPrices() ? 5 : 3;
         return $this->getChild('totals')->setTotals($totals)->renderTotals(-1, $colspan);
     }
+    
+    public function getBaseAddress()
+    {
+    	return $this->getCheckout()->getQuote()->getBaseAddress();
+    }
 }

@@ -121,7 +121,10 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    	
 	    	$content = $format->processOrder($order);
 	    	$transfer->setFormatModel($format);
-	    	$msg = $transfer->send($content,$order);
+	    	$data = array();
+	    	$data['contract'] = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
+	    	$data['order'] = $order;
+	    	$msg = $transfer->send($content,$order,$data);
 	    	
 	    	if($msg === false)
 	    	{
@@ -149,6 +152,10 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	
     }
     
+    /**
+     * Die Bestellungen die als Link gesammelt versendet werden
+     * @param string $transfer
+     */
     public function processPendingOrders($transfer = 'link')
     {
     	$collection = Mage::getResourceModel('sales/order_collection');

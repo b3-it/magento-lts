@@ -232,7 +232,8 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 		$storeid = $store->getId();
 		
 		$data = array();
-		$data['contract'] = $contract->getTitle().'/'.$los->getTitle();
+		$data['contract'] = $contract;
+		$data['los'] = $los;
 		$data['url'] = trim(Mage::getStoreConfig('framecontract/supplierportal/url'),'/'); 
 		$data['url'] .= '/supplier?key=' . $los->getKey();
 		

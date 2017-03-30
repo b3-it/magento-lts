@@ -66,9 +66,10 @@ abstract class Sid_ExportOrder_Model_Transfer extends Mage_Core_Model_Abstract
 	 * 
 	 * @param string $content
 	 * @param unknown $order
+	 * @param array $data assoziatives Array für die Email Variablen
 	 * @return bool | string in Fehlerfall false ansonsten eine Textmeldung 
 	 */
-	public abstract function send($content,$order = null);
+	public abstract function send($content,$order = null, $data = array());
 	
 	public function canSend()
 	{

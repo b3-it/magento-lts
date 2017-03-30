@@ -148,8 +148,47 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 				'checked'	=> false,
 		));
 		
+		
+		
+		// TODO feststellen ob attribute aus default Store geladen wurden und checkbox anzeigen
+		$store = $this->getProduct()->getStoreId();
+		if( $store != 0)
+		{
+			$productId = $this->getProduct()->getId();
+			
+			$val1 = $this->_getAttributeStoreValue(Egovs_ProductFile_Helper_Data::PRODUCT_FILE, $productId, $store);
+			$val2 = $this->_getAttributeStoreValue(Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE, $productId, $store);
+			$val3 = $this->_getAttributeStoreValue('productfiledescription', $productId, $store);
+			$hasStoreSettings = ($val1 != null) || ($val2 != null) || ($val3 != null) ;
+			
+					
+			$fieldset->addField('use_default', 'checkbox', array(
+					'label'		=> $this->__('Use Default Value'),
+					'name'		=> 'use_default_productfile',
+					'checked'	=> !$hasStoreSettings,
+			));
+		}
+		
 		return parent::_prepareForm();
 	}
+	
+	
+	protected function _getAttributeStoreValue($attributeCode, $productId, $storeId)
+	{
+		/** @var $attribute Mage_Catalog_Model_Resource_Eav_Attribute */
+		$attribute = $this->getProduct()->getResource()->getAttribute($attributeCode);
+		if($attribute == null) return null;
+		$read = $attribute->getResource()->getReadConnection();
+		$sql = sprintf("SELECT value FROM %s WHERE attribute_id = %u AND entity_id= %u AND store_id= %u", $attribute->getBackendTable(), $attribute->getId(), $productId, $storeId);
+		$data = $read->fetchRow($sql);
+		
+		if(isset($data['value']))
+		{
+			return $data['value'];
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * Return Tab Label

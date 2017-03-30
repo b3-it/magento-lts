@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sid_Framecontract>
-            <version>0.1.14</version>
+            <version>0.1.15</version>
         </Sid_Framecontract>
     </modules>
     <frontend>

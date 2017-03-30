@@ -1,5 +1,5 @@
 <?php
-class Sid_Framecontract_Model_Api2_Los_Rest_Admin_V1 extends Sid_Framecontract_Model_Api2_Losinfo
+class Sid_Framecontract_Model_Api2_Los_Rest_Admin_V1 extends Sid_Framecontract_Model_Api2_Los
 {
 	
 
@@ -8,8 +8,6 @@ class Sid_Framecontract_Model_Api2_Los_Rest_Admin_V1 extends Sid_Framecontract_M
        
         $ident = $this->getRequest()->getParam('ident');
 		$los = Mage::getModel('framecontract/los')->load($ident,'key');
-        return $los;
+        return  $los->getData();
     }
-	
-	
 }

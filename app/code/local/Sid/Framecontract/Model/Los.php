@@ -1,5 +1,29 @@
 <?php
 
+/**
+ * die Lose zum Rahmenvertrag
+ * @author h.koegel
+ *
+ */
+
+/**
+ *  @method int getLosId()
+ *  @method setLosId(int $value)
+ *  @method int getFramecontractContractId()
+ *  @method setFramecontractContractId(int $value)
+ *  @method string getTitle()
+ *  @method setTitle(string $value)
+ *  @method string getNote()
+ *  @method setNote(string $value)
+ *  @method int getStatus()
+ *  @method setStatus(int $value)
+ *  @method string getKey()
+ *  @method setKey(string $value)
+ *  @method int getLinkValidTo()
+ *  @method setLinkValidTo(int $value)
+ *  @method  getLinkValidToModified()
+ *  @method setLinkValidToModified( $value)
+ */
 class Sid_Framecontract_Model_Los extends Mage_Core_Model_Abstract
 {
     public function _construct()

@@ -41,10 +41,12 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
 	{
 		foreach($this->getFrameContract() as $id => $contract)
 		{
-			foreach($contract['lose']['items'] as $los)
-			{
-				if($los['los_id'] == $losId){
-					return $id;
+			if(count($contract['lose']) > 0){
+				foreach($contract['lose']['items'] as $los)
+				{
+					if($los['los_id'] == $losId){
+						return $id;
+					}
 				}
 			}
 		}
@@ -60,7 +62,7 @@ class Sid_Framecontract_Block_Adminhtml_Widget_Los extends Varien_Data_Form_Elem
 			$this->_contracts = array();
 			$collection = Mage::getModel('framecontract/contract')->getCollection();
 			$collection->getSelect()->order('main_table.title');
-			$this->_contracts[0] = "-- Bitte wählen --"; 
+			$this->_contracts[0] = array('label' => "-- Bitte wählen --",'lose' =>array()); 
 			foreach($collection->getItems() as $item)
 			{
 				$lose = Mage::getModel('framecontract/los')->getCollection();

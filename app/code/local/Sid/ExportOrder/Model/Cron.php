@@ -51,6 +51,9 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
 		return (count($collection->getItems()) > 0);
   	}
 
+  	/**
+  	 * Bestelldetails von sales_flat_order nach export_order kopieren - falls nicht vorhanden
+  	 */
   	private function prepare()
   	{
   		$oderCollection = Mage::getModel('sales/order')->getCollection();

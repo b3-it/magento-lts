@@ -29,6 +29,23 @@
 			</div>
 	</fieldset>
 	<fieldset class="multiple-checkout">
+		<?php $_address=$this->getBaseAddress() ?>
+		<?php if (Mage::helper('core')->isModuleEnabled('Egovs_GermanTax') && $_address):?>
+			<div class="col2-set">
+				<h3>
+					<?php echo $this->__('Tax Information') ?>
+				</h3>
+				<div class="col-1">	
+					<h4>
+						<?php echo $this->__('Base Address') ?>
+					</h4>
+					<address>
+						<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
+					</address>
+				</div>
+				<div></div>
+			</div>
+		<?php endif;?>
 		<div class="col2-set">
 			<h3>
 				<?php echo $this->__('Billing Information') ?>

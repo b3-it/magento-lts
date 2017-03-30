@@ -416,4 +416,14 @@ class Egovs_BankPayment_Model_Bankpayment extends Egovs_Paymentbase_Model_Abstra
 
         return $this;
     }
+    
+    /**
+     * Gibt an ob die Bankverbindung bei den Zahlungsinformationen
+     * angezeigt werden soll.
+     * 
+     * @return boolean
+     */
+    public function showBankDetails() {
+    	return (bool)$this->getConfigData('show_bank_details');
+    }
 }
