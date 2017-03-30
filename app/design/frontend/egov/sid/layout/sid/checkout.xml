@@ -75,9 +75,9 @@ Default layout, loads most of the pages
 
                 <block type="core/text_list" name="checkout.cart.methods" as="methods" />
              
-				
+<!--				
                 <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
-				<!-- 
+				 
                 <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
  -->
