@@ -1,0 +1,846 @@
+@mixin stitches-sprite($x: 0, $y: 0, $width: 0, $height: 0) {
+    background-position: $x $y;
+    height: $height;
+}
+
+#country, #region_id {
+    option {
+        background-repeat: no-repeat;
+        padding-left: 18px;
+        line-height: 18px;
+    }
+    option[value=""] {
+        background-image: none;
+    }
+}
+
+#region_id {
+    option {
+        background-image: url('../../../../../media/flags/germany_16x12/spritesheet.png');
+    }
+
+    option[value="80"] {
+        @include stitches-sprite(-5px, -5px, 16px, 12px);
+    }
+    option[value="81"] {
+        @include stitches-sprite(-5px, -27px, 16px, 12px);
+    }
+    option[value="82"] {
+        @include stitches-sprite(-5px, -49px, 16px, 12px);
+    }
+    option[value="83"] {
+        @include stitches-sprite(-5px, -71px, 16px, 12px);
+    }
+    option[value="84"] {
+        @include stitches-sprite(-5px, -93px, 16px, 12px);
+    }
+    option[value="85"] {
+        @include stitches-sprite(-5px, -115px, 16px, 12px);
+        //@include stitches-sprite(-5px, -137px, 16px, 12px);
+        //@include stitches-sprite(-5px, -159px, 16px, 12px);
+    }
+    option[value="86"] {
+        @include stitches-sprite(-5px, -181px, 16px, 12px);
+    }
+    option[value="87"] {
+        @include stitches-sprite(-5px, -203px, 16px, 12px);
+    }
+    option[value="79"]{
+        @include stitches-sprite(-5px, -225px, 16px, 12px);
+    }
+    option[value="88"] {
+        @include stitches-sprite(-5px, -247px, 16px, 12px);
+        //@include stitches-sprite(-5px, -269px, 16px, 12px);
+    }
+    option[value="89"] {
+        @include stitches-sprite(-5px, -291px, 16px, 12px);
+    }
+    option[value="90"] {
+        @include stitches-sprite(-5px, -313px, 16px, 12px);
+    }
+    option[value="91"] {
+        @include stitches-sprite(-5px, -335px, 16px, 12px);
+    }
+    option[value="92"] {
+        @include stitches-sprite(-5px, -357px, 16px, 12px);
+    }
+    option[value="93"] {
+        @include stitches-sprite(-5px, -379px, 16px, 12px);
+        //@include stitches-sprite(-5px, -401px, 16px, 12px);
+    }
+    option[value="94"] {
+        @include stitches-sprite(-5px, -423px, 16px, 12px);
+    }
+}
+
+#country {
+    option {
+        background-image: url('../../../../../media/flags/world_16x12/spritesheet.png');
+    }
+
+    option[value="AF"] {
+        @include stitches-sprite(-5px, -49px, 16px, 12px);
+    }
+    option[value="AL"] {
+        @include stitches-sprite(-5px, -115px, 16px, 12px);
+    }
+    option[value="DZ"] {
+        @include stitches-sprite(-5px, -1325px, 16px, 12px);
+    }
+    option[value="UM"] {
+        @include stitches-sprite(-5px, -5131px, 16px, 12px);
+    }
+    option[value="AS"] {
+        @include stitches-sprite(-5px, -225px, 16px, 12px);
+    }
+    option[value="VI"] {
+        @include stitches-sprite(-5px, -5307px, 16px, 12px);
+    }
+    option[value="AD"] {
+        @include stitches-sprite(-5px, -5px, 16px, 12px);
+    }
+    option[value="AO"] {
+        @include stitches-sprite(-5px, -181px, 16px, 12px);
+    }
+    option[value="AI"] {
+        @include stitches-sprite(-5px, -93px, 16px, 12px);
+    }
+    option[value="AQ"] {
+        background-image: none;
+    }
+    option[value="AG"] {
+        @include stitches-sprite(-5px, -71px, 16px, 12px);
+    }
+    option[value="AR"] {
+        @include stitches-sprite(-5px, -203px, 16px, 12px);
+    }
+    option[value="AM"] {
+        @include stitches-sprite(-5px, -137px, 16px, 12px);
+    }
+    option[value="AW"] {
+        @include stitches-sprite(-5px, -291px, 16px, 12px);
+    }
+    option[value="AZ"] {
+        @include stitches-sprite(-5px, -335px, 16px, 12px);
+    }
+    option[value="AU"] {
+        @include stitches-sprite(-5px, -269px, 16px, 12px);
+    }
+    option[value="BS"] {
+        @include stitches-sprite(-5px, -643px, 16px, 12px);
+    }
+    option[value="BH"] {
+        @include stitches-sprite(-5px, -489px, 16px, 12px);
+    }
+    option[value="BD"] {
+        @include stitches-sprite(-5px, -401px, 16px, 12px);
+    }
+    option[value="BB"] {
+        @include stitches-sprite(-5px, -379px, 16px, 12px);
+    }
+    option[value="BY"] {
+        @include stitches-sprite(-5px, -731px, 16px, 12px);
+    }
+    option[value="BE"] {
+        @include stitches-sprite(-5px, -423px, 16px, 12px);
+    }
+    option[value="BZ"] {
+        @include stitches-sprite(-5px, -753px, 16px, 12px);
+    }
+    option[value="BJ"] {
+        @include stitches-sprite(-5px, -533px, 16px, 12px);
+    }
+    option[value="BM"] {
+        @include stitches-sprite(-5px, -555px, 16px, 12px);
+    }
+    option[value="BT"] {
+        @include stitches-sprite(-5px, -665px, 16px, 12px);
+    }
+    option[value="BO"] {
+        @include stitches-sprite(-5px, -599px, 16px, 12px);
+    }
+    option[value="BA"] {
+        @include stitches-sprite(-5px, -357px, 16px, 12px);
+    }
+    option[value="BW"] {
+        @include stitches-sprite(-5px, -709px, 16px, 12px);
+    }
+    option[value="BV"] {
+        @include stitches-sprite(-5px, -687px, 16px, 12px);
+    }
+    option[value="BR"] {
+        @include stitches-sprite(-5px, -621px, 16px, 12px);
+    }
+    option[value="VG"] {
+        @include stitches-sprite(-5px, -5285px, 16px, 12px);
+    }
+    option[value="IO"] {
+        @include stitches-sprite(-5px, -2359px, 16px, 12px);
+    }
+    option[value="BN"] {
+        @include stitches-sprite(-5px, -577px, 16px, 12px);
+    }
+    option[value="BG"] {
+        @include stitches-sprite(-5px, -467px, 16px, 12px);
+    }
+    option[value="BF"] {
+        @include stitches-sprite(-5px, -445px, 16px, 12px);
+    }
+    option[value="BI"] {
+        @include stitches-sprite(-5px, -511px, 16px, 12px);
+    }
+    option[value="CL"] {
+        @include stitches-sprite(-5px, -973px, 16px, 12px);
+    }
+    option[value="CN"] {
+        @include stitches-sprite(-5px, -1017px, 16px, 12px);
+    }
+    option[value="CK"] {
+        @include stitches-sprite(-5px, -951px, 16px, 12px);
+    }
+    option[value="CR"] {
+        @include stitches-sprite(-5px, -1061px, 16px, 12px);
+    }
+    option[value="CI"] {
+        @include stitches-sprite(-5px, -929px, 16px, 12px);
+    }
+    option[value="KP"] {
+        @include stitches-sprite(-5px, -2689px, 16px, 12px);
+    }
+    option[value="DE"] {
+        @include stitches-sprite(-5px, -1215px, 16px, 12px);
+    }
+    option[value="DM"] {
+        @include stitches-sprite(-5px, -1281px, 16px, 12px);
+    }
+    option[value="DO"] {
+        @include stitches-sprite(-5px, -1303px, 16px, 12px);
+    }
+    option[value="DJ"] {
+        @include stitches-sprite(-5px, -1237px, 16px, 12px);
+    }
+    option[value="DK"] {
+        @include stitches-sprite(-5px, -1259px, 16px, 12px);
+    }
+    option[value="EC"] {
+        @include stitches-sprite(-5px, -1347px, 16px, 12px);
+    }
+    option[value="SV"] {
+        @include stitches-sprite(-5px, -4669px, 16px, 12px);
+    }
+    option[value="ER"] {
+        @include stitches-sprite(-5px, -1457px, 16px, 12px);
+    }
+    option[value="EE"] {
+        @include stitches-sprite(-5px, -1369px, 16px, 12px);
+    }
+    option[value="FK"] {
+        @include stitches-sprite(-5px, -1589px, 16px, 12px);
+    }
+    option[value="FJ"] {
+        @include stitches-sprite(-5px, -1567px, 16px, 12px);
+    }
+    option[value="FI"] {
+        @include stitches-sprite(-5px, -1545px, 16px, 12px);
+    }
+    option[value="FR"] {
+        @include stitches-sprite(-5px, -1655px, 16px, 12px);
+    }
+    option[value="GF"] {
+        @include stitches-sprite(-5px, -1787px, 16px, 12px);
+    }
+    option[value="PF"] {
+        @include stitches-sprite(-5px, -3899px, 16px, 12px);
+    }
+    option[value="TF"] {
+        @include stitches-sprite(-5px, -4779px, 16px, 12px);
+    }
+    option[value="FO"] {
+        @include stitches-sprite(-5px, -1633px, 16px, 12px);
+    }
+    option[value="GA"] {
+        @include stitches-sprite(-5px, -1677px, 16px, 12px);
+    }
+    option[value="GM"] {
+        @include stitches-sprite(-5px, -1897px, 16px, 12px);
+    }
+    option[value="GE"] {
+        @include stitches-sprite(-5px, -1765px, 16px, 12px);
+    }
+    option[value="GH"] {
+        @include stitches-sprite(-5px, -1831px, 16px, 12px);
+    }
+    option[value="GI"] {
+        @include stitches-sprite(-5px, -1853px, 16px, 12px);
+    }
+    option[value="GD"] {
+        @include stitches-sprite(-5px, -1743px, 16px, 12px);
+    }
+    option[value="GR"] {
+        @include stitches-sprite(-5px, -1985px, 16px, 12px);
+    }
+    option[value="GL"] {
+        @include stitches-sprite(-5px, -1875px, 16px, 12px);
+    }
+    option[value="GP"] {
+        @include stitches-sprite(-5px, -1941px, 16px, 12px);
+    }
+    option[value="GU"] {
+        @include stitches-sprite(-5px, -2051px, 16px, 12px);
+    }
+    option[value="GT"] {
+        @include stitches-sprite(-5px, -2029px, 16px, 12px);
+    }
+    option[value="GG"] {
+        @include stitches-sprite(-5px, -1809px, 16px, 12px);
+    }
+    option[value="GN"] {
+        @include stitches-sprite(-5px, -1919px, 16px, 12px);
+    }
+    option[value="GW"] {
+        @include stitches-sprite(-5px, -2073px, 16px, 12px);
+    }
+    option[value="GY"] {
+        @include stitches-sprite(-5px, -2095px, 16px, 12px);
+    }
+    option[value="HT"] {
+        @include stitches-sprite(-5px, -2205px, 16px, 12px);
+    }
+    option[value="HM"] {
+        @include stitches-sprite(-5px, -2139px, 16px, 12px);
+    }
+    option[value="HN"] {
+        @include stitches-sprite(-5px, -2161px, 16px, 12px);
+    }
+    option[value="IN"] {
+        @include stitches-sprite(-5px, -2337px, 16px, 12px);
+    }
+    option[value="ID"] {
+        @include stitches-sprite(-5px, -2249px, 16px, 12px);
+    }
+    option[value="IQ"] {
+        @include stitches-sprite(-5px, -2381px, 16px, 12px);
+    }
+    option[value="IR"] {
+        @include stitches-sprite(-5px, -2403px, 16px, 12px);
+    }
+    option[value="IE"] {
+        @include stitches-sprite(-5px, -2271px, 16px, 12px);
+    }
+    option[value="IS"] {
+        @include stitches-sprite(-5px, -2425px, 16px, 12px);
+    }
+    option[value="IM"] {
+        @include stitches-sprite(-5px, -2315px, 16px, 12px);
+    }
+    option[value="IL"] {
+        @include stitches-sprite(-5px, -2293px, 16px, 12px);
+    }
+    option[value="IT"] {
+        @include stitches-sprite(-5px, -2447px, 16px, 12px);
+    }
+    option[value="JM"] {
+        @include stitches-sprite(-5px, -2491px, 16px, 12px);
+    }
+    option[value="JP"] {
+        @include stitches-sprite(-5px, -2535px, 16px, 12px);
+    }
+    option[value="YE"] {
+        @include stitches-sprite(-5px, -5439px, 16px, 12px);
+    }
+    option[value="JE"] {
+        @include stitches-sprite(-5px, -2469px, 16px, 12px);
+    }
+    option[value="JO"] {
+        @include stitches-sprite(-5px, -2513px, 16px, 12px);
+    }
+    option[value="KY"] {
+        @include stitches-sprite(-5px, -2755px, 16px, 12px);
+    }
+    option[value="KH"] {
+        @include stitches-sprite(-5px, -2601px, 16px, 12px);
+    }
+    option[value="CM"] {
+        @include stitches-sprite(-5px, -995px, 16px, 12px);
+    }
+    option[value="CA"] {
+        @include stitches-sprite(-5px, -775px, 16px, 12px);
+    }
+    option[value="CV"] {
+        @include stitches-sprite(-5px, -1127px, 16px, 12px);
+    }
+    option[value="KZ"] {
+        @include stitches-sprite(-5px, -2777px, 16px, 12px);
+    }
+    option[value="QA"] {
+        @include stitches-sprite(-5px, -4163px, 16px, 12px);
+    }
+    option[value="KE"] {
+        @include stitches-sprite(-5px, -2557px, 16px, 12px);
+    }
+    option[value="KI"] {
+        @include stitches-sprite(-5px, -2623px, 16px, 12px);
+    }
+    option[value="CC"] {
+        @include stitches-sprite(-5px, -819px, 16px, 12px);
+    }
+    option[value="CO"] {
+        @include stitches-sprite(-5px, -1039px, 16px, 12px);
+    }
+    option[value="KM"] {
+        @include stitches-sprite(-5px, -2645px, 16px, 12px);
+    }
+    option[value="CG"] {
+        @include stitches-sprite(-5px, -885px, 16px, 12px);
+    }
+    option[value="CD"] {
+        @include stitches-sprite(-5px, -841px, 16px, 12px);
+    }
+    option[value="HR"] {
+        @include stitches-sprite(-5px, -2183px, 16px, 12px);
+    }
+    option[value="CU"] {
+        @include stitches-sprite(-5px, -1105px, 16px, 12px);
+    }
+    option[value="KW"] {
+        @include stitches-sprite(-5px, -2733px, 16px, 12px);
+    }
+    option[value="LA"] {
+        @include stitches-sprite(-5px, -2799px, 16px, 12px);
+    }
+    option[value="LS"] {
+        @include stitches-sprite(-5px, -2931px, 16px, 12px);
+    }
+    option[value="LV"] {
+        @include stitches-sprite(-5px, -2997px, 16px, 12px);
+    }
+    option[value="LB"] {
+        @include stitches-sprite(-5px, -2821px, 16px, 12px);
+    }
+    option[value="LR"] {
+        @include stitches-sprite(-5px, -2909px, 16px, 12px);
+    }
+    option[value="LY"] {
+        @include stitches-sprite(-5px, -3019px, 16px, 12px);
+    }
+    option[value="LI"] {
+        @include stitches-sprite(-5px, -2865px, 16px, 12px);
+    }
+    option[value="LT"] {
+        @include stitches-sprite(-5px, -2953px, 16px, 12px);
+    }
+    option[value="LU"] {
+        @include stitches-sprite(-5px, -2975px, 16px, 12px);
+    }
+    option[value="MG"] {
+        @include stitches-sprite(-5px, -3151px, 16px, 12px);
+    }
+    option[value="MW"] {
+        @include stitches-sprite(-5px, -3459px, 16px, 12px);
+    }
+    option[value="MY"] {
+        @include stitches-sprite(-5px, -3503px, 16px, 12px);
+    }
+    option[value="MV"] {
+        @include stitches-sprite(-5px, -3437px, 16px, 12px);
+    }
+    option[value="ML"] {
+        @include stitches-sprite(-5px, -3217px, 16px, 12px);
+    }
+    option[value="MT"] {
+        @include stitches-sprite(-5px, -3393px, 16px, 12px);
+    }
+    option[value="MA"] {
+        @include stitches-sprite(-5px, -3041px, 16px, 12px);
+    }
+    option[value="MH"] {
+        @include stitches-sprite(-5px, -3173px, 16px, 12px);
+    }
+    option[value="MQ"] {
+        @include stitches-sprite(-5px, -3327px, 16px, 12px);
+    }
+    option[value="MR"] {
+        @include stitches-sprite(-5px, -3349px, 16px, 12px);
+    }
+    option[value="MU"] {
+        @include stitches-sprite(-5px, -3415px, 16px, 12px);
+    }
+    option[value="YT"] {
+        @include stitches-sprite(-5px, -5461px, 16px, 12px);
+    }
+    option[value="MK"] {
+        @include stitches-sprite(-5px, -3195px, 16px, 12px);
+    }
+    option[value="MX"] {
+        @include stitches-sprite(-5px, -3481px, 16px, 12px);
+    }
+    option[value="FM"] {
+        @include stitches-sprite(-5px, -1611px, 16px, 12px);
+    }
+    option[value="MC"] {
+        @include stitches-sprite(-5px, -3063px, 16px, 12px);
+    }
+    option[value="MN"] {
+        @include stitches-sprite(-5px, -3261px, 16px, 12px);
+    }
+    option[value="ME"] {
+        @include stitches-sprite(-5px, -3107px, 16px, 12px);
+    }
+    option[value="MS"] {
+        @include stitches-sprite(-5px, -3371px, 16px, 12px);
+    }
+    option[value="MZ"] {
+        @include stitches-sprite(-5px, -3525px, 16px, 12px);
+    }
+    option[value="MM"] {
+        @include stitches-sprite(-5px, -3239px, 16px, 12px);
+    }
+    option[value="NA"] {
+        @include stitches-sprite(-5px, -3547px, 16px, 12px);
+    }
+    option[value="NR"] {
+        @include stitches-sprite(-5px, -3767px, 16px, 12px);
+    }
+    option[value="NP"] {
+        @include stitches-sprite(-5px, -3745px, 16px, 12px);
+    }
+    option[value="NC"] {
+        @include stitches-sprite(-5px, -3569px, 16px, 12px);
+        //@include stitches-sprite(-5px, -3591px, 16px, 12px);
+    }
+    option[value="NZ"] {
+        @include stitches-sprite(-5px, -3811px, 16px, 12px);
+    }
+    option[value="NI"] {
+        @include stitches-sprite(-5px, -3679px, 16px, 12px);
+    }
+    option[value="NL"] {
+        @include stitches-sprite(-5px, -3701px, 16px, 12px);
+    }
+    option[value="AN"] {
+        @include stitches-sprite(-5px, -159px, 16px, 12px);
+    }
+    option[value="NE"] {
+        @include stitches-sprite(-5px, -3613px, 16px, 12px);
+    }
+    option[value="NG"] {
+        @include stitches-sprite(-5px, -3657px, 16px, 12px);
+    }
+    option[value="NU"] {
+        @include stitches-sprite(-5px, -3789px, 16px, 12px);
+    }
+    option[value="NF"] {
+        @include stitches-sprite(-5px, -3635px, 16px, 12px);
+    }
+    option[value="NO"] {
+        @include stitches-sprite(-5px, -3723px, 16px, 12px);
+    }
+    option[value="MP"] {
+        @include stitches-sprite(-5px, -3305px, 16px, 12px);
+    }
+    option[value="OM"] {
+        @include stitches-sprite(-5px, -3833px, 16px, 12px);
+    }
+    option[value="PK"] {
+        @include stitches-sprite(-5px, -3965px, 16px, 12px);
+    }
+    option[value="PW"] {
+        @include stitches-sprite(-5px, -4119px, 16px, 12px);
+    }
+    option[value="PS"] {
+        @include stitches-sprite(-5px, -4075px, 16px, 12px);
+    }
+    option[value="PA"] {
+        @include stitches-sprite(-5px, -3855px, 16px, 12px);
+    }
+    option[value="PG"] {
+        @include stitches-sprite(-5px, -3921px, 16px, 12px);
+    }
+    option[value="PY"] {
+        @include stitches-sprite(-5px, -4141px, 16px, 12px);
+    }
+    option[value="PE"] {
+        @include stitches-sprite(-5px, -3877px, 16px, 12px);
+    }
+    option[value="PH"] {
+        @include stitches-sprite(-5px, -3943px, 16px, 12px);
+    }
+    option[value="PN"] {
+        @include stitches-sprite(-5px, -4031px, 16px, 12px);
+    }
+    option[value="PL"] {
+        @include stitches-sprite(-5px, -3987px, 16px, 12px);
+    }
+    option[value="PT"] {
+        @include stitches-sprite(-5px, -4097px, 16px, 12px);
+    }
+    option[value="PR"] {
+        @include stitches-sprite(-5px, -4053px, 16px, 12px);
+    }
+    option[value="KR"] {
+        @include stitches-sprite(-5px, -2711px, 16px, 12px);
+    }
+    option[value="MD"] {
+        @include stitches-sprite(-5px, -3085px, 16px, 12px);
+    }
+    option[value="RW"] {
+        @include stitches-sprite(-5px, -4273px, 16px, 12px);
+    }
+    option[value="RO"] {
+        @include stitches-sprite(-5px, -4207px, 16px, 12px);
+    }
+    option[value="RU"] {
+        @include stitches-sprite(-5px, -4251px, 16px, 12px);
+    }
+    option[value="RE"] {
+        @include stitches-sprite(-5px, -4185px, 16px, 12px);
+    }
+    option[value="SB"] {
+        @include stitches-sprite(-5px, -4317px, 16px, 12px);
+    }
+    option[value="ZM"] {
+        @include stitches-sprite(-5px, -5505px, 16px, 12px);
+    }
+    option[value="WS"] {
+        @include stitches-sprite(-5px, -5417px, 16px, 12px);
+    }
+    option[value="SM"] {
+        @include stitches-sprite(-5px, -4559px, 16px, 12px);
+    }
+    option[value="SA"] {
+        @include stitches-sprite(-5px, -4295px, 16px, 12px);
+    }
+    option[value="SE"] {
+        @include stitches-sprite(-5px, -4405px, 16px, 12px);
+    }
+    option[value="CH"] {
+        @include stitches-sprite(-5px, -907px, 16px, 12px);
+    }
+    option[value="SN"] {
+        @include stitches-sprite(-5px, -4581px, 16px, 12px);
+    }
+    option[value="RS"] {
+        @include stitches-sprite(-5px, -4229px, 16px, 12px);
+    }
+    option[value="SC"] {
+        @include stitches-sprite(-5px, -4339px, 16px, 12px);
+    }
+    option[value="SL"] {
+        @include stitches-sprite(-5px, -4537px, 16px, 12px);
+    }
+    option[value="ZW"] {
+        @include stitches-sprite(-5px, -5527px, 16px, 12px);
+    }
+    option[value="SG"] {
+        @include stitches-sprite(-5px, -4427px, 16px, 12px);
+    }
+    option[value="SK"] {
+        @include stitches-sprite(-5px, -4515px, 16px, 12px);
+    }
+    option[value="SI"] {
+        @include stitches-sprite(-5px, -4471px, 16px, 12px);
+    }
+    option[value="SO"] {
+        @include stitches-sprite(-5px, -4603px, 16px, 12px);
+    }
+    option[value="HK"] {
+        @include stitches-sprite(-5px, -2117px, 16px, 12px);
+    }
+    option[value="MO"] {
+        @include stitches-sprite(-5px, -3283px, 16px, 12px);
+    }
+    option[value="ES"] {
+        @include stitches-sprite(-5px, -1479px, 16px, 12px);
+    }
+    option[value="LK"] {
+        @include stitches-sprite(-5px, -2887px, 16px, 12px);
+    }
+    option[value="BL"] {
+        background-image: none;
+    }
+    option[value="SH"] {
+        @include stitches-sprite(-5px, -4449px, 16px, 12px);
+    }
+    option[value="KN"] {
+        @include stitches-sprite(-5px, -2667px, 16px, 12px);
+    }
+    option[value="LC"] {
+        @include stitches-sprite(-5px, -2843px, 16px, 12px);
+    }
+    option[value="MF"] {
+        @include stitches-sprite(-5px, -3129px, 16px, 12px);
+    }
+    option[value="PM"] {
+        @include stitches-sprite(-5px, -4009px, 16px, 12px);
+    }
+    option[value="VC"] {
+        @include stitches-sprite(-5px, -5241px, 16px, 12px);
+    }
+    option[value="SD"] {
+        @include stitches-sprite(-5px, -4383px, 16px, 12px);
+    }
+    option[value="SR"] {
+        @include stitches-sprite(-5px, -4625px, 16px, 12px);
+    }
+    option[value="SJ"] {
+        @include stitches-sprite(-5px, -4493px, 16px, 12px);
+    }
+    option[value="SZ"] {
+        @include stitches-sprite(-5px, -4713px, 16px, 12px);
+    }
+    option[value="SY"] {
+        @include stitches-sprite(-5px, -4691px, 16px, 12px);
+    }
+    option[value="ST"] {
+        @include stitches-sprite(-5px, -4647px, 16px, 12px);
+    }
+    option[value="ZA"] {
+        @include stitches-sprite(-5px, -5483px, 16px, 12px);
+    }
+    option[value="GS"] {
+        @include stitches-sprite(-5px, -2007px, 16px, 12px);
+    }
+    option[value="TJ"] {
+        @include stitches-sprite(-5px, -4845px, 16px, 12px);
+    }
+    option[value="TW"] {
+        @include stitches-sprite(-5px, -5043px, 16px, 12px);
+    }
+    option[value="TZ"] {
+        @include stitches-sprite(-5px, -5065px, 16px, 12px);
+    }
+    option[value="TH"] {
+        @include stitches-sprite(-5px, -4823px, 16px, 12px);
+    }
+    option[value="TL"] {
+        @include stitches-sprite(-5px, -4889px, 16px, 12px);
+    }
+    option[value="TG"] {
+        @include stitches-sprite(-5px, -4801px, 16px, 12px);
+    }
+    option[value="TK"] {
+        @include stitches-sprite(-5px, -4867px, 16px, 12px);
+    }
+    option[value="TO"] {
+        @include stitches-sprite(-5px, -4955px, 16px, 12px);
+    }
+    option[value="TT"] {
+        @include stitches-sprite(-5px, -4999px, 16px, 12px);
+    }
+    option[value="TD"] {
+        @include stitches-sprite(-5px, -4757px, 16px, 12px);
+    }
+    option[value="CZ"] {
+        @include stitches-sprite(-5px, -1193px, 16px, 12px);
+    }
+    option[value="TN"] {
+        @include stitches-sprite(-5px, -4933px, 16px, 12px);
+    }
+    option[value="TM"] {
+        @include stitches-sprite(-5px, -4911px, 16px, 12px);
+    }
+    option[value="TC"] {
+        @include stitches-sprite(-5px, -4735px, 16px, 12px);
+    }
+    option[value="TV"] {
+        @include stitches-sprite(-5px, -5021px, 16px, 12px);
+    }
+    option[value="TR"] {
+        @include stitches-sprite(-5px, -4977px, 16px, 12px);
+    }
+    option[value="UG"] {
+        @include stitches-sprite(-5px, -5109px, 16px, 12px);
+    }
+    option[value="UA"] {
+        @include stitches-sprite(-5px, -5087px, 16px, 12px);
+    }
+    option[value="HU"] {
+        @include stitches-sprite(-5px, -2227px, 16px, 12px);
+    }
+    option[value="UY"] {
+        @include stitches-sprite(-5px, -5175px, 16px, 12px);
+    }
+    option[value="UZ"] {
+        @include stitches-sprite(-5px, -5197px, 16px, 12px);
+    }
+    option[value="VU"] {
+        @include stitches-sprite(-5px, -5351px, 16px, 12px);
+    }
+    option[value="VA"] {
+        @include stitches-sprite(-5px, -5219px, 16px, 12px);
+    }
+    option[value="VE"] {
+        @include stitches-sprite(-5px, -5263px, 16px, 12px);
+    }
+    option[value="AE"] {
+        @include stitches-sprite(-5px, -27px, 16px, 12px);
+    }
+    option[value="US"] {
+        @include stitches-sprite(-5px, -5153px, 16px, 12px);
+    }
+    option[value="GB"] {
+        @include stitches-sprite(-5px, -1721px, 16px, 12px);
+    }
+    option[value="VN"] {
+        @include stitches-sprite(-5px, -5329px, 16px, 12px);
+    }
+    option[value="WF"] {
+        @include stitches-sprite(-5px, -5395px, 16px, 12px);
+    }
+    option[value="CX"] {
+        @include stitches-sprite(-5px, -1149px, 16px, 12px);
+    }
+    option[value="EH"] {
+        @include stitches-sprite(-5px, -1413px, 16px, 12px);
+    }
+    option[value="CF"] {
+        @include stitches-sprite(-5px, -863px, 16px, 12px);
+    }
+    option[value="CY"] {
+        @include stitches-sprite(-5px, -1171px, 16px, 12px);
+    }
+    option[value="EG"] {
+        @include stitches-sprite(-5px, -1391px, 16px, 12px);
+    }
+    option[value="GQ"] {
+        @include stitches-sprite(-5px, -1963px, 16px, 12px);
+    }
+    option[value="ET"] {
+        @include stitches-sprite(-5px, -1501px, 16px, 12px);
+    }
+    option[value="AX"] {
+        @include stitches-sprite(-5px, -313px, 16px, 12px);
+    }
+    option[value="AT"] {
+        @include stitches-sprite(-5px, -247px, 16px, 12px);
+    }
+}
+
+/*
+.sprite {
+    &.sprite-catalonia {
+        .stitches-sprite(-5px, -797px, 16px, 12px);
+    }
+    &.sprite-cs {
+        .stitches-sprite(-5px, -1083px, 16px, 12px);
+    }
+    &.sprite-england {
+        .stitches-sprite(-5px, -1435px, 16px, 12px);
+    }
+    &.sprite-eu {
+        .stitches-sprite(-5px, -1523px, 16px, 12px);
+    }
+    &.sprite-galicia {
+        .stitches-sprite(-5px, -1699px, 16px, 12px);
+    }
+    &.sprite-kg {
+        .stitches-sprite(-5px, -2579px, 16px, 12px);
+    }
+    &.sprite-scotland {
+        .stitches-sprite(-5px, -4361px, 16px, 12px);
+    }
+    &.sprite-wales {
+        .stitches-sprite(-5px, -5373px, 16px, 12px);
+    }
+}
+*/

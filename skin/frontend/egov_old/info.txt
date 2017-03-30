@@ -1,0 +1,8 @@
+2017-03-30
+
+Dies ist eine Kopie des ursprünglich für 1.9 entwickelten Sachsen-Designs.
+Es weisst diverse Fehler und Bugs auf, welche nur umständlich behoben werden können.
+Daher wurde am 13.3.2017 eine Neuentwicklung beschlossen.
+Um alte Separate Designs (DWD, BFR, Adlerwarte) nicht zu kompromitieren wurde dieser
+Skind-Ordner erzeugt. Er enthällt die Quellen mit dem Stand vom 30.3.2017 und wird NICHT
+kompiliert ober eingesetzt! 

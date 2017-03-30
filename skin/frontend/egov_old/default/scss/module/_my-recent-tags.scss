@@ -1,0 +1,69 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.box-tags {
+    div.box-head {
+        border-radius: $global-radius $global-radius 0px 0px;
+        background-color: $global-checkout-thbackground;
+
+        h2 {
+            color: $global-checkout-thfontcolor;
+            padding: $global-tdpadding;
+            font-weight: normal;
+        }
+
+        a {
+            @extend .button;
+            font-size: $global-fontsize-small;
+            float: right;
+            padding: 3px !important;
+            margin: 2px 5px 2px 0px;
+        }
+    }
+
+    #my_recent_tags {
+        width: 100%;
+        display: table;
+
+        li {
+            display: table-row;
+            width: 100%;
+
+            span.number, div.details {
+                display: table-cell;
+                vertical-align: top;
+                padding: $global-boxpadding;
+                border: $global-box-border solid $global-border-color;
+            }
+
+            span.number {
+                width: 30px;
+                text-align: center;
+            }
+
+            div.details {
+                h3.product-name {
+                    height: auto;
+                }
+
+                div.tags {
+                    strong, ul li {
+                        display: inline;
+                    }
+                }
+            }
+        }
+
+        .item {
+        }
+
+        .even {
+        }
+        .odd {
+        }
+    }
+}

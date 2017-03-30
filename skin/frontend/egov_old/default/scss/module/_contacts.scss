@@ -1,0 +1,106 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Contacts
+ * ============================================ */
+
+.contacts-index-index {
+    .main-container {
+        position: relative;
+        top: $global-cms-top-position;
+    }
+
+    h1 {
+    }
+
+    ul.form-list {
+        li {
+            margin-bottom: $global-listmargin;
+        }
+
+        li.fields {
+            div.field {
+                width: 49%;
+                display: inline-block;
+                vertical-align: top;
+            }
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            margin-bottom: 0px;
+        }
+
+        input[type="tel"] {
+            width: 49%;
+            margin-bottom: 0px;
+        }
+
+        textarea {
+            width: 98%;
+            margin-bottom: 0px;
+        }
+    }
+/*
+    .buttons-set {
+
+        p.required {
+            float: left;
+            color: $global-warning-color;
+        }
+
+        @include bp(max-width, $bp-small) {
+            max-width: 330px;
+            margin-left: 0;
+
+            button {
+                float: left;
+                margin-left: 0px;
+            }
+
+            p.required {
+                float: right;
+            }
+        }
+    }
+*/
+}
+
+#contactForm {
+
+    h2 {
+        display: none;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+
+    em {
+        color: $global-warning-color;
+        margin: 0px $fa-icon-margin 0px 0px;
+    }
+
+    .fieldset .legend + .required {
+        color: $global-warning-color;
+        margin: 0px 0px $global-listmargin 0px;
+    }
+
+    div.validation-advice {
+        width: 90%;
+        display: block;
+        color: $global-warning-color;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+
+    #contactForm {
+        padding-left: 0;
+    }
+}
