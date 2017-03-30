@@ -63,6 +63,7 @@ class Sid_Wishlist_Model_Email extends Mage_Core_Model_Abstract
         $data['message'] = $this->_message;
         $data['items'] = $this->__renderItems();
         $data['link'] = $this->_link;
+        $data['customer'] = $this->getCustomer();
         
         $mailTemplate->setReturnPath($this->_sender['email']);
         $mailTemplate->setDesignConfig(array('area'=>'frontend', 'store'=>$storeid));

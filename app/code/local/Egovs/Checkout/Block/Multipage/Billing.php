@@ -70,6 +70,8 @@ class Egovs_Checkout_Block_Multipage_Billing extends Mage_Payment_Block_Form_Con
     		/* @var $action Egovs_Checkout_MultipageController */
     		$action = $this->getAction();
     		$action->getRequest()->setPost('payment', array('method' =>current($methods)->getCode()));
+    		$action->getRequest()->setPost('form_key', Mage::getSingleton('core/session')->getFormKey());
+    		
     		$action->billingPostAction();
     	}
     	return $methods;

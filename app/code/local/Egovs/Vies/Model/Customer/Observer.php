@@ -134,6 +134,18 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 						$customerAddress->getCountryId(),
 						$customerAddress->getVatId()
 				);
+				$customerAddress->setVatIsValid((int)$result->getIsValid())
+					->setVatRequestId($result->getRequestIdentifier())
+					->setVatRequestDate($result->getRequestDate())
+					->setVatRequestSuccess($result->getRequestSuccess())
+				;
+				
+				/** @var $customerAddressResource Mage_Customer_Model_Resource_Address */
+				$customerAddressResource = $customerAddress->getResource();
+				$vatAttributes = array('vat_is_valid', 'vat_request_id', 'vat_request_date', 'vat_request_success');
+				foreach ($vatAttributes as $vatAttribute) {
+					$customerAddressResource->saveAttribute($customerAddress, $vatAttribute);
+				}
 	
 				$data = $customerAddress->getData();
 				$data['taxvat_valid'] = $result->getIsValid();
