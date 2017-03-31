@@ -222,6 +222,10 @@
     .store-language-container {
         top: 45px;
         right: 5px;
+
+        @include bp(max-width, $bp-small) {
+            width: 90px;
+        }
     }
 
     .logo {
@@ -306,6 +310,10 @@
         margin: 10px;
         width: 90%;
         padding: 5px;
+
+        @include bp(max-width, $bp-small) {
+            width: 100%;
+        }
 
         @include bp(max-width, $bp-xsmall) {
             font-size: $global-fontsize-small;
