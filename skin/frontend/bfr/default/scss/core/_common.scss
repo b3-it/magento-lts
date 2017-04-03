@@ -117,7 +117,7 @@ ul {
 
 .showmobile {
 	display: none;
-	
+
 	@include bp(max-width, $bp-small) {
 	    display: inline-block;
 	}
@@ -227,9 +227,9 @@ p.note-msg {
     border-bottom-width: $global-checkout-borderwidth;
     border-bottom-style: dotted;
     border-bottom-color: $global-box-bottomcolor;
-    
+
     margin-bottom: $global-boxmargin;
-    
+
     @include bp(max-width, $bp-large) {
         border: 0;
     }
@@ -251,7 +251,7 @@ p.note-msg {
 
         font-weight: normal;
         font-size: $global-fontsize-big;
-        
+
         @include bp(max-width, $bp-large) {
             background: none;
         }
@@ -301,7 +301,7 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-bottom: $blobal-blockcontent-marginbottom;
     margin-left: $blobal-blockcontent-marginleft;
     margin-right: $blobal-blockcontent-marginright;
-    
+
     @include bp(max-width, $bp-large) {
         padding: $box-spacing;
         margin: 0;
@@ -313,18 +313,18 @@ body:not(.customer-account) .block:first-child .block-title {
     input[type="text"], input[type="email"] {
         width: 100%;
     }
-    
+
     li {
         a {
             @extend .image-link;
-            
+
             @include bp(max-width, $bp-large) {
                 display: block;
                 padding: 8px 0 8px 8px !important;
                 background-position: 0 10px !important;
             }
         }
-    } 
+    }
 }
 
 .block-content.unpad {
@@ -345,7 +345,7 @@ body:not(.customer-account) .block:first-child .block-title {
     &:after {
         @include clearfix;
     }
-    
+
     .button {
         float: none;
         max-width: 100%;
@@ -549,11 +549,11 @@ div.block-reorder {
 
     margin: 0 0 15px;
     padding: 10px 0 8px 10px;
-    
+
     @include bp(max-width, $bp-large) {
         margin: 0;
     }
-    
+
     @include bp(max-width, $bp-small) {
         display: none;
     }
@@ -567,7 +567,7 @@ div.block-reorder {
     ul {
         display: inline-block;
         width: 91%;
-        
+
         @include bp(max-width, $bp-large) {
             width: auto;
         }
@@ -794,7 +794,7 @@ div.block-reorder {
     .std {
         max-width: $maximum-content-width;
         width: 100%;
-        
+
         img {
             max-width: 100%;
             height: auto;
@@ -835,12 +835,12 @@ div.block-reorder {
         .col-left {
             margin-right: $global-2L-leftcol-marginright;
             width: $global-2L-leftcol-width;
-            
+
             @include bp(max-width, $bp-large) {
                 width: 30%;
                 margin-top: 30px;
             }
-            
+
             @include bp(max-width, $bp-small) {
                 display: none;
             }
@@ -852,12 +852,12 @@ div.block-reorder {
             margin-right: $global-2L-content-marginright;
             position: relative;
             top: -9px;
-            
+
             @include bp(max-width, $bp-large) {
                 width: 68%;
                 top: 0;
             }
-            
+
             @include bp(max-width, $bp-small) {
                 width: 100%;
             }
@@ -1390,7 +1390,7 @@ span.weee {
     &:after {
         @include clearfix;
     }
-    
+
     dt {
         display: block;
         font-weight: 600;
@@ -1412,7 +1412,7 @@ span.weee {
 .truncated,
 .truncated a.dots {
     cursor: help;
-    
+
     @include bp(max-width, $bp-small) {
         vertical-align: top;
         width: 60%;
@@ -1444,10 +1444,11 @@ span.weee {
     border: 1px solid $global-linkcolor;
     background-color: $global-navigation-color;
     top: 21px;
-    
+
     dd, dt {
         display: inline-block;
         float: none;
+        line-height: 1em;
     }
 
     &:after {
@@ -1722,7 +1723,7 @@ $toolbar-icon-padding-offset: 8px;
     & > .count-container {
         float: left;
         font-size: $global-fontsize;
-        
+
         select {
             width: auto !important;
         }

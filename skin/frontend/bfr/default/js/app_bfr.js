@@ -53,22 +53,22 @@ $j(document).ready(function(){
         'cursorwidth'       : '15px',
         'cursorborderradius': '3px'
     });
-	
+
 	removeZoom();
-	
+
 	checkMobileCustomerNavigation();
 
     $j('a.egov-product-image').click(function(){
         removeZoom();
     });
-    
+
     // mobielen Warenkorb erzeugen
     $j('#mobile-header-minicart > a').attr({
     	'id'                 : 'mobile-cart-menu',
     	'data-target-element': '#mobile-header-cart'
     });
     $j('#mobile-header-minicart > div').attr('id', 'mobile-header-cart');
-    
+
     // Umlegen der Shop-Navigation
     if ( $j('.col-left').length > 0 && $j('.page-header-container').length > 0 ) {
     	enquire.register('screen and (max-width: ' + egov_break.navbar + 'px)', {
@@ -93,7 +93,11 @@ $j(document).ready(function(){
             }
         });
     }
-    
+
+    $j('div.minicart-wrapper a.skip-link-close').on('click', function(){
+        $j('a.skip-cart, div.block-cart').toggleClass('skip-active');
+    });
+
     // Ajax-Suche umlegen
     enquire.register('screen and (max-width: ' + egov_break.navbar + 'px)', {
     	match: function() {
@@ -105,7 +109,7 @@ $j(document).ready(function(){
     		moveElement('#mobile-header-search', '#full-search');
     	}
     });
-    
+
     if ( $j('#small-view-switcher').length && $j('#big-view-switcher').length ) {
     	var inhalt = $j('#small-view-switcher').html();
     	if( inhalt.length == 0 ) {

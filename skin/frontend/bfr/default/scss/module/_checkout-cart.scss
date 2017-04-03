@@ -78,12 +78,12 @@
 
     .cart-empty {
         @extend .egov-default-message;
-        
+
         .button {
             display: inline-block;
             float: none;
             padding-top: 15px;
-        
+
             @include bp(max-width, $bp-small) {
                 width: 100%;
                 max-width: 100%;
@@ -128,7 +128,7 @@
     .cart-totals-wrapper,
     .crosssell {
         width: 50%;
-        
+
         @include bp(max-width, $bp-medium) {
             width: 100%;
             displax: block;
@@ -319,6 +319,10 @@
         font-size: $global-fontsize;
         font-weight: 600;
         margin-bottom: 0;
+
+        @include bp(max-width, $bp-small){
+            overflow: hidden;
+        }
     }
 
     .product-cart-info {
@@ -350,7 +354,7 @@
         text-transform: uppercase;
         font-family: $f-stack-special;
     }
-    
+
     .cart-total-head {
         border-radius: 0 4px 0 0;
     }
@@ -432,7 +436,7 @@
     .product-cart-actions {
         min-width: 50px;
         text-align: center;
-        
+
         @include bp(max-width, $bp-small) {
             padding: 10px !important;
         }
@@ -525,7 +529,7 @@
             &[data-rwd-label] {
                 padding-left: 15px;
                 margin-bottom: 6px;
-                
+
                 @include bp(max-width, $bp-small) {
                     margin: 0;
                 }
@@ -649,7 +653,7 @@
 
             #empty_cart_button {
                 float: right;
-                
+
                 @include bp(max-width, $bp-xsmall) {
                     float: none;
                     display: block;

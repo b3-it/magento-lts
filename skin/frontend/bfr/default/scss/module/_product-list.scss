@@ -39,7 +39,7 @@ body.catalogsearch-result-index .col-right {
     width: auto;
     display: inline-flex;
     font-size: 0.7em;
-    
+
     @include bp(max-width, $bp-large) {
         overflow: hidden;
         width: 95%;
@@ -57,18 +57,18 @@ body.catalogsearch-result-index .col-right {
 	bottom: 15px;
     position: absolute;
     width: 60%;
-    
+
     @include bp(max-width, $bp-large) {
         width: 56%;
     }
-    
+
     @include bp(max-width, $bp-xsmall) {
         width: 53.5%;
     }
-	
+
 	.button {
 	    float: none;
-	    
+
 	    @include bp(max-width, $bp-large) {
 	        width: 100%;
 	    }
@@ -90,6 +90,7 @@ p.product-name {
     font-weight: normal;
     max-height: $global-lineheight * 3.7;
     height: auto;
+    overflow: hidden;
 
     a {
         color: $global-linkcolor;
@@ -106,7 +107,8 @@ p.product-name {
     margin-bottom: 5px;
     font-size: $base-font-family;
     font-family: $global-fontsize;
-    
+    overflow: hidden;
+
     @include bp(max-width, $bp-small) {
         overflow: hidden;
         height: 10em;
@@ -144,7 +146,7 @@ p.product-name {
     		max-height: 145px;
     		max-width: 215px;
     		width: auto;
-    		
+
     		@include bp(max-width, $bp-small) {
     		    max-width: 90%;
     		}
@@ -383,7 +385,7 @@ p.product-name {
             width: $global-product-list-button-width;
             padding: $global-btn-padding-v $global-btn-padding-h;
             text-align: center;
-            
+
             @include bp(max-width, $bp-large) {
                 width: 100%;
             }
@@ -392,16 +394,16 @@ p.product-name {
                 font-family: $base-font-family;
             }
         }
-        
+
         a.button {
             padding-top: $global-btn-padding-v + ($global-btn-padding-v / 2);
-	
+
         }
 
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
             line-height: 1.7em;
-            
+
             @include bp(max-width, $bp-large) {
                 line-height: 1.6em;
             }
@@ -444,7 +446,7 @@ p.product-name {
 
             .tax-details {
                 margin: 0 20px;
-                
+
                 @include bp(max-width, $bp-xsmall) {
                     display: block;
                     margin: 0;
@@ -466,7 +468,7 @@ p.product-name {
         .desc {
             margin: $element-spacing 0 $element-spacing * 2 0;
             font-size: 1.2em;
-            
+
             @include bp(max-width, $bp-large) {
                 display: none;
             }
