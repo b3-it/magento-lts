@@ -391,6 +391,7 @@ body:not(.cms-index-index) {
     display: inline-block;
 
     label {
+        color: $grundfarbe-weiss;
         display: none;
     }
     select {

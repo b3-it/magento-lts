@@ -32,6 +32,10 @@ footer {
 .footer-container {
     background-color: $grundfarbe-blau;
     
+    h2 {
+        color: $grundfarbe-weiss;
+    }
+    
     @include bp(max-width, $bp-mobil) {
         margin: 0 15px 50px 15px;
     }
