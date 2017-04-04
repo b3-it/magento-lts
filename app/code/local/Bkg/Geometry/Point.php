@@ -1,5 +1,5 @@
 <?php
-class Bkg_Geometry_Point 
+class Bkg_Geometry_Point extends Bkg_Geometry_Abstract
 {
 	protected $_x = '0.0';
 	protected $_y = '0.0';
@@ -35,6 +35,20 @@ class Bkg_Geometry_Point
 	public function toSql()
 	{
 		return new Zend_Db_Expr("(PointFromText('POINT(".$this->toString().")'))");
+	}
+	
+	public function load($data)
+	{
+		if(is_array($data)){
+			$this->_x = array_shift($data);
+			$this->_y = array_shift($data);
+			return $this;
+		}
+		
+		$data = explode(' ', $data);
+		$this->_x = array_shift($data);
+		$this->_y = array_shift($data);
+		return $this;
 	}
 	
 }

@@ -1,5 +1,5 @@
 <?php
-class Bkg_Geometry_Polygon 
+class Bkg_Geometry_Polygon extends Bkg_Geometry_Abstract
 {
 	/**
 	 * 
@@ -22,5 +22,33 @@ class Bkg_Geometry_Polygon
 	{
 		$this->_points[] = $point;
 		return $this;
+	}
+	
+	public function load($data)
+	{
+		$data = explode(',', $data);
+		
+		foreach($data as $d){
+			$p = new Bkg_Geometry_Point();
+			$p->load($d);
+			$this->addPoint($p);
+		}
+		
+		return $this;
+	}
+	
+	public function toString()
+	{
+		$res = array();
+		foreach($this->_points as $point){
+			$res[] = $point->toString();
+		}
+		
+		return implode(',', $res);
+	}
+	
+	public function toSql()
+	{
+		return new Zend_Db_Expr("(PolygonFromText('POLYGON(".$this->toString().")'))");
 	}
 }

@@ -50,6 +50,18 @@
 					<service_crs>
 						<table>bkg_viewer_service_crs</table>
 					</service_crs>
+					<service_tile_system>
+						<table>bkg_viewer_service_tile_system</table>
+					</service_tile_system>
+					<service_tile>
+						<table>bkg_viewer_service_tile</table>
+					</service_tile>
+					<service_vg_group>
+						<table>bkg_viewer_service_vg_group</table>
+					</service_vg_group>						
+					<service_vg>
+						<table>bkg_viewer_service_vg</table>
+					</service_vg>										
 				</entities>
 			</bkgviewer_resource>
 		</models>
@@ -74,20 +86,25 @@
 				<sort_order>50</sort_order>
 				<children>
 					<bkgviewer_service_service module="bkgviewer">
-						<title>Service Service</title>
+						<title>Service</title>
 						<sort_order>10</sort_order>
 						<action>adminhtml/viewer_service_service/index</action>
 					</bkgviewer_service_service>
 					<bkgviewer_service_layer module="bkgviewer">
-						<title>Service Layer</title>
+						<title>Layer</title>
 						<sort_order>20</sort_order>
 						<action>adminhtml/viewer_service_layer/index</action>
 					</bkgviewer_service_layer>
 					<bkgviewer_composit_composit module="bkgviewer">
-						<title>Composit Composit</title>
+						<title>Composit</title>
 						<sort_order>30</sort_order>
 						<action>adminhtml/viewer_composit_composit/index</action>
-					</bkgviewer_composit_composit>					
+					</bkgviewer_composit_composit>			
+					<bkgviewer_service_tilesystem module="bkgviewer">
+						<title>Tile System</title>
+						<sort_order>30</sort_order>
+						<action>adminhtml/viewer_service_tilesystem/index</action>
+					</bkgviewer_service_tilesystem>			
 				</children>
 			</bkgviewer>
 		</menu>
