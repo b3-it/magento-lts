@@ -12,6 +12,9 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
 {
 	protected $_cashbox = null;
 	
+	protected $_items = null;
+	
+	
     public function _construct()
     {
         parent::_construct();
@@ -118,19 +121,50 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     {
     	if($this->_cashbox == null)
     	{
-    		$this->_cashbox = Mage::getModel('gka_barkasse/cashbox')->load($this->getCashboxId());
+    		$this->_cashbox = Mage::getModel('gka_barkasse/kassenbuch_cashbox')->load($this->getCashboxId());
     	}
     	return $this->_cashbox;
     }
     
+    /**
+     * Collection für die einzelen Buchungen des Journals, join mit sales_flat_order
+     * @return object|Object
+     */
+     public function getItemsCollection()
+     {
+     	$collection = Mage::getModel('gka_barkasse/kassenbuch_journalitems')->getCollection();
+     	$collection->getSelect()
+     	->join(array('order' => $collection->getTable('sales/order')),'order.entity_id=main_table.order_id')
+     	->joinleft(array('payment' => $collection->getTable('sales/order_payment')),'payment.parent_id=main_table.order_id',array('kassenzeichen'))
+     	->where('journal_id=?',$this->getId());
+     	return $collection;
+     }
+    
+    
     public function getAllItems()
     {
-    	$collection = Mage::getModel('gka_barkasse/kassenbuch_journalitems')->getCollection();
-    	$collection->getSelect()
-    	->join(array('order' => $collection->getTable('sales/order')),'order.entity_id=main_table.order_id')
-    	->where('journal_id=?',$this->getId())
-    	->order('number');
-    	
-    	return $collection->getItems();
+    	if($this->_items == null)
+    	{
+    		$collection = $this->getItemsCollection();
+    		$collection->getSelect()->order('number');
+	    	$this->_items = $collection->getItems();
+    	}
+    	return $this->_items;
     }
+    
+    /**
+     * gesammt Summe aller Positionen
+     * @return number
+     */
+    public function getTotal()
+    {
+    	$total = 0;
+    	foreach($this->getAllItems() as $item)
+    	{
+    		$total += $item->getBaseGrandTotal();
+    	}
+    	
+    	return $total;
+    }
+    
 }

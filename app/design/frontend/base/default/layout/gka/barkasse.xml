@@ -53,49 +53,6 @@
     </gka_barkasse_kassenbuch_journal_index>
 
 
-<!-- kassenbuch_journalitems -->
-
-    <customer_account>
-        <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="gka_barkasse"><name>kassenbuch_journalitems</name><path>gka_barkasse/kassenbuch_journalitems/index</path><label>Kassenbuch Journalitems</label></action>
-        </reference>
-    </customer_account>
-
-    <gka_barkasse_kassenbuch_journalitems_index translate="label">
-        <label>Kassenbuch Journalitems</label>
-        <update handle="customer_account"/>
-        <reference name="my.account.wrapper">
-            <block type="gka_barkasse/kassenbuch_journalitems" name="kassenbuch_journalitems" template="gka/barkasse/kassenbuch/journalitems/index.phtml" >
-
-            </block>
-        </reference>
-        <reference name="root">
-            <action method="setHeaderTitle" translate="title" module="gka_barkasse"><title>Kassenbuch Journalitems</title></action>
-        </reference>
-    </gka_barkasse_kassenbuch_journalitems_index>
-
-
-<!-- kassenbuch_cashbox -->
-
-    <customer_account>
-        <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="gka_barkasse"><name>kassenbuch_cashbox</name><path>gka_barkasse/kassenbuch_cashbox/index</path><label>Kassenbuch Cashbox</label></action>
-        </reference>
-    </customer_account>
-
-    <gka_barkasse_kassenbuch_cashbox_index translate="label">
-        <label>Kassenbuch Cashbox</label>
-        <update handle="customer_account"/>
-        <reference name="my.account.wrapper">
-            <block type="gka_barkasse/kassenbuch_cashbox" name="kassenbuch_cashbox" template="gka/barkasse/kassenbuch/cashbox/index.phtml" >
-
-            </block>
-        </reference>
-        <reference name="root">
-            <action method="setHeaderTitle" translate="title" module="gka_barkasse"><title>Kassenbuch Cashbox</title></action>
-        </reference>
-    </gka_barkasse_kassenbuch_cashbox_index>
-
 
 
 </layout>

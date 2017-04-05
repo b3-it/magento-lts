@@ -12,7 +12,12 @@
             </gka_barkasse>
              <epaybl_cashpayment>
                 <class>Gka_Barkasse_Helper</class>
-            </epaybl_cashpayment>            
+            </epaybl_cashpayment>
+            <customer>
+                <rewrite>
+                    <data>Gka_Barkasse_Helper_Customer</data>
+                </rewrite>
+            </customer>
         </helpers>
         <resources>
             <gka_barkasse_setup>
@@ -117,11 +122,6 @@
                       <sort_order>10</sort_order>
                       <action>adminhtml/barkasse_kassenbuch_journal/index</action>
                   </gkabarkasse_kassenbuch_journal>
-                  <gkabarkasse_kassenbuch_journal_items module="gka_barkasse">
-                      <title>Kassenbuch Journal_items</title>
-                      <sort_order>20</sort_order>
-                      <action>adminhtml/barkasse_kassenbuch_journalitems/index</action>
-                  </gkabarkasse_kassenbuch_journal_items>
                   <gkabarkasse_kassenbuch_cashbox module="gka_barkasse">
                       <title>Kassenbuch Cashbox</title>
                       <sort_order>30</sort_order>
@@ -146,10 +146,6 @@
                                   <title>Kassenbuch Journal</title>
                                   <sort_order>10</sort_order>
                               </gkabarkasse_kassenbuch_journal>
-                                <gkabarkasse_kassenbuch_journal_items module="gka_barkasse">
-                                  <title>Kassenbuch Journal_items</title>
-                                  <sort_order>20</sort_order>
-                              </gkabarkasse_kassenbuch_journal_items>
                                 <gkabarkasse_kassenbuch_cashbox module="gka_barkasse">
                                   <title>Kassenbuch Cashbox</title>
                                   <sort_order>30</sort_order>
