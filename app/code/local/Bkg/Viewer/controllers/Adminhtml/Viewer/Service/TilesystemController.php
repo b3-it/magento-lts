@@ -31,8 +31,8 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_TilesystemController extends Mage_Admi
 	
 	protected function _edit($id)
 	{
+	
 		$model  = Mage::getModel('bkgviewer/service_tilesystem')->load($id);
-
 		if ($model->getId() || $id == 0) {
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
 			if (!empty($data)) {
@@ -71,14 +71,21 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_TilesystemController extends Mage_Admi
 		$service = Mage::getModel('bkgviewer/service_tilesystem');
 		try{
 			
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					$service->importFile($_FILES['filename']['tmp_name']);
-					unlink($_FILES['filename']['tmp_name']);
-				} catch (Exception $e) {
 			
-				}
+			
+			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
+				$uploader = new Varien_File_Uploader('filename');
+				$uploader->setAllowRenameFiles(false);
+				$uploader->setFilesDispersion(false);
+			
+				$path = Mage::helper('bkgviewer')->getWMSDir();
+				$uploader->save($path, $_FILES['filename']['name'] );
+			
+				$service->setFilename($_FILES['filename']['name']);
+				$service->importFile($path);
+				
 			}
+			
 			
 			if(empty($data['url']))
 			{

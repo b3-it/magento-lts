@@ -11,7 +11,7 @@
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 
-class Bkg_Viewer_Block_Adminhtml_Service_Tilesystem_New_Form extends Mage_Adminhtml_Block_Widget_Form
+class Bkg_Viewer_Block_Adminhtml_Service_Vggroup_New_Form extends Mage_Adminhtml_Block_Widget_Form
 {
   protected function _prepareForm()
   {
@@ -27,8 +27,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Tilesystem_New_Form extends Mage_Adminh
       $form->setUseContainer(true);
       $this->setForm($form);
       
-      $fieldset = $form->addFieldset('navi_form', array('legend'=>Mage::helper('bkgviewer')->__('Import Settings')));
-      /*
+      $fieldset = $form->addFieldset('navi_form', array('legend'=>Mage::helper('bkgviewer')->__('WMS Information')));
       $fieldset->addField('url', 'text', array(
       		'label'     => Mage::helper('bkgviewer')->__('Url'),
       		'class'     => 'required-entry',
@@ -37,7 +36,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Tilesystem_New_Form extends Mage_Adminh
       		'value'	=> 'http://localhost.local/bestand_niedersachsen_wms.xml',
       		'note'	=> 'getCapabilities'
       ));
-      */
+      
       $fieldset->addField('filename', 'file', array(
       		'label'     => Mage::helper('bkgviewer')->__('Filename'),
       		'class'     => 'required-entry',

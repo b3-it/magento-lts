@@ -9,7 +9,7 @@
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_Viewer_Block_Adminhtml_Service_Tilesystem_New extends Mage_Adminhtml_Block_Widget_Form_Container
+class Bkg_Viewer_Block_Adminhtml_Service_Vggroup_New extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()
     {
@@ -18,7 +18,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Tilesystem_New extends Mage_Adminhtml_B
         $this->_objectId = 'id';
         $this->_mode = 'new';
         $this->_blockGroup = 'bkgviewer';
-        $this->_controller = 'adminhtml_service_tilesystem';
+        $this->_controller = 'adminhtml_service_vggroup';
         
         $this->_updateButton('save', 'label', Mage::helper('bkgviewer')->__('Continue'));
         
@@ -28,7 +28,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Tilesystem_New extends Mage_Adminhtml_B
 
     public function getHeaderText()
     {
-        return Mage::helper('bkgviewer')->__('Tile System');
+        return Mage::helper('bkgviewer')->__('Insert WMS URL');
     }
 	
 	

@@ -24,7 +24,7 @@ class Bkg_Viewer_Model_Resource_Service_Tilesystem_Collection extends Mage_Core_
     	}
     	foreach ($this->getItems() as $item)
     	{
-    		$res[$item->getId()] = $item->getTitle();
+    		$res[$item->getIdent()] = $item->getIdent();
     	}
     	 
     	return $res;

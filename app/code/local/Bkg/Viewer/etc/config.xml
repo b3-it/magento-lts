@@ -102,9 +102,14 @@
 					</bkgviewer_composit_composit>			
 					<bkgviewer_service_tilesystem module="bkgviewer">
 						<title>Tile System</title>
-						<sort_order>30</sort_order>
+						<sort_order>40</sort_order>
 						<action>adminhtml/viewer_service_tilesystem/index</action>
 					</bkgviewer_service_tilesystem>			
+					<bkgviewer_service_vggroup module="bkgviewer">
+                        <title>Vg Group</title>
+                        <sort_order>50</sort_order>
+                        <action>adminhtml/viewer_service_vggroup/index</action>
+                    </bkgviewer_service_vggroup>         
 				</children>
 			</bkgviewer>
 		</menu>

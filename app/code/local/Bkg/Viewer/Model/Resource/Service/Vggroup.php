@@ -13,6 +13,6 @@ class Bkg_Viewer_Model_Resource_Service_Vggroup extends Mage_Core_Model_Resource
     public function _construct()
     {
         // Note that the id refers to the key field in your database table.
-        $this->_init('bkgviewer/service_vggroup', 'id');
+        $this->_init('bkgviewer/service_vg_group', 'id');
     }
 }

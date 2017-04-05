@@ -21,6 +21,19 @@ class Bkg_Viewer_Block_Catalog_Product_View_Map extends Mage_Catalog_Block_Produ
 		return $this;
     }
 
+    public function getTileSystem()
+    {
+    	$comp = $this->getComposit();
+    	if($comp){
+    		$ts =Mage::getModel('bkgviewer/service_tilesystem');
+    		$ts->load($comp->getTileSystem());
+    		
+    		return $ts;
+    	}
+    	
+    	return null;
+    }
+    
     public function getComposit()
     {
     	if($this->_composit == null){

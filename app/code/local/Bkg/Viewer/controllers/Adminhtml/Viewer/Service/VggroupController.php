@@ -8,7 +8,7 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_Viewer_Adminhtml_Viewer_Service_VgController extends Mage_Adminhtml_Controller_action
+class Bkg_Viewer_Adminhtml_Viewer_Service_VggroupController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
@@ -68,16 +68,20 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_VgController extends Mage_Adminhtml_Co
 	
 	public function importAction() {
 		$data = $this->getRequest()->getPost();
-		$service = Mage::getModel('bkgviewer/service_tilesystem');
+		$service = Mage::getModel('bkgviewer/service_vggroup');
 		try{
 			
 			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					$service->importFile($_FILES['filename']['tmp_name']);
-					unlink($_FILES['filename']['tmp_name']);
-				} catch (Exception $e) {
-			
-				}
+				$uploader = new Varien_File_Uploader('filename');
+				$uploader->setAllowRenameFiles(false);
+				$uploader->setFilesDispersion(false);
+
+				$path = Mage::helper('bkgviewer')->getWMSDir();
+				$uploader->save($path, $_FILES['filename']['name'] );
+
+	  			$service->setFilename($_FILES['filename']['name']);
+	  			$service->importFile($path);
+	  			
 			}
 			
 			if(empty($data['url']))
@@ -86,7 +90,8 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_VgController extends Mage_Adminhtml_Co
 			}
 			
 			//$service->fetchLayers($data['url']);
-			$this->_edit($service->getId());
+			$this->_redirect('*/*/edit',array('id'=>$service->getId()));
+			//$this->_edit($service->getId());
 			
 		} catch (Exception $e) {
 			Mage::getSingleton('adminhtml/session')->setFormData($data);

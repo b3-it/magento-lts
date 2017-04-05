@@ -48,9 +48,10 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
        
     }
     
-    public function importFile($filename)
+    public function importFile($path)
     {
-    	$data = file_get_contents($filename);
+    	$path .= DS . $this->getFilename();
+    	$data = file_get_contents($path);
     	$this->_import($data);
         
     	return $this;
@@ -76,9 +77,9 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
 	    					$lines = [];
 	    					foreach ($polynode->getElementsByTagName('posList') as $listnode) {
 	    						$cords = array_chunk(explode(" ", trim($listnode->textContent)), 2);
-	    						$lines[]= '('.implode(', ', array_map(function($c) {
+	    						$lines[]= implode(', ', array_map(function($c) {
 	    							return implode(' ', $c);
-	    						}, $cords)).')';
+	    						}, $cords));
 	    					}
 	    					$text = implode(', ', $lines);
 	    					$polygon = new Bkg_Geometry_Polygon();
@@ -92,7 +93,7 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
 	    				{
 		    				$tile = Mage::getModel('bkgviewer/service_tile');
 		    				$tile
-		    				->setShape($polygon->toSql())
+		    				->setGEOShape($polygon)
 		    				->setSystemId($this->getId())
 		    				->setIdent($id)
 		    				->save();
@@ -106,15 +107,6 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
 	    		}
     		}
     	}
-    	
-    	
-    	
-    	
-    	foreach($items as $item){
-    		
-    	}
-    	
-    	$this->setShape($data);
     }
     
     

@@ -8,7 +8,7 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-class Bkg_Viewer_Model_Resource_Service_Vg extends Mage_Core_Model_Resource_Db_Abstract
+class Bkg_Viewer_Model_Resource_Service_Vg extends Bkg_Geometry_Model_Resource_Abstract
 {
     public function _construct()
     {

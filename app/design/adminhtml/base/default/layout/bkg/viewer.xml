@@ -24,7 +24,7 @@
         <reference name="content">
             <block type="bkgviewer/adminhtml_service_tilesystem_new" name="bkgviewer" />
         </reference>
-    </adminhtml_viewer_service_tilesystem_new>    
+    </adminhtml_viewer_service_tilesystem_new>
    <adminhtml_viewer_composit_composit_edit>
     <update handle="jquery_load_handle"/>
         <reference name="head">
@@ -32,4 +32,15 @@
           <action method="addCss"><stylesheet>lib/jstree/themes/default/style.min.css</stylesheet></action>
         </reference>
     </adminhtml_viewer_composit_composit_edit>
+    
+   <adminhtml_viewer_service_vggroup_index>
+        <reference name="content">
+            <block type="bkgviewer/adminhtml_service_vggroup" name="bkgviewer" />
+        </reference>
+    </adminhtml_viewer_service_vggroup_index>
+    <adminhtml_viewer_service_vggroup_new>
+        <reference name="content">
+            <block type="bkgviewer/adminhtml_service_vggroup_new" name="bkgviewer" />
+        </reference>
+    </adminhtml_viewer_service_vggroup_new>    
 </layout>

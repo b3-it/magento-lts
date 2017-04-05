@@ -1,5 +1,5 @@
 <?php
-class Bkg_Geometry_Multipolygon extends Bkg_Geometry_Abstract
+class Bkg_Geometry_Multipolygon extends Bkg_Geometry_Geometry
 {
 	/**
 	 * 
@@ -24,12 +24,12 @@ class Bkg_Geometry_Multipolygon extends Bkg_Geometry_Abstract
 		return $this;
 	}
 	
-	public function load($data)
+	public function load($data, $format = Bkg_Geometry_Format::RAW)
 	{
 		throw new Exception('Not implemented yet!');
 	}
 	
-	public function toString()
+	public function toString($format = Bkg_Geometry_Format::RAW)
 	{
 		$res = array();
 		foreach($this->_polygons as $polygon){
@@ -41,6 +41,7 @@ class Bkg_Geometry_Multipolygon extends Bkg_Geometry_Abstract
 	
 	public function toSql()
 	{
-		return new Zend_Db_Expr("(MultiPolygonFromText('MULTIPOLYGON(".$this->toString().")'))");
+		$txt = "(MultiPolygonFromText('MULTIPOLYGON((".$this->toString()."))'))";
+		return new Zend_Db_Expr($txt);
 	}
 }

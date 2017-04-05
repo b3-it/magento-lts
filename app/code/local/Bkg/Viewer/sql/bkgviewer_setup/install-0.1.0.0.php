@@ -23,7 +23,7 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_tile_system
 	  `name` varchar(255) default '',
 	  `ident` varchar(255) default '',
 	  `crs` varchar(255) default '',
-	  `file` varchar(255) default '',
+	  `filename` varchar(255) default '',
 	  `url` varchar(255) default '',
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -55,6 +55,9 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_vg_group'))
 	CREATE TABLE {$installer->getTable('bkgviewer/service_vg_group')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `name` varchar(255) default '',
+	  `filename` varchar(255) default '',
+	  `ident` varchar(255) default '',
+	  `crs` varchar(255) default '',
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -71,7 +74,7 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_vg')))
 	  `name` varchar(255) default '',
 	  `ident` varchar(255) default '',
 	  `crs` varchar(255) default '',
-	  `group_id` int(11) unsigned NOT NULL
+	  `group_id` int(11) unsigned NOT NULL,
 	  `shape` MULTIPOLYGON,
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`group_id`) REFERENCES `{$this->getTable('bkgviewer/service_vg_group')}`(`id`) ON DELETE CASCADE
@@ -89,10 +92,10 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/composit_composit')
 	  		`id` int(11) unsigned NOT NULL auto_increment,
 	  		`title` varchar(255) default '',
 	  		`active` smallint unsigned default 0,
-	  		`tile_system_id` int(11) unsigned default null,
+	  		`tile_system` varchar(255) default '',
+	  		`vg_system` varchar(255) default '',
 	  		`betroffenheit` varchar(512) default '',
-	  		PRIMARY KEY (`id`),
-	  		 FOREIGN KEY (`tile_system_id`) REFERENCES `{$this->getTable('bkgviewer/service_tile_system')}`(`id`) ON DELETE SET NULL
+	  		PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 			");
