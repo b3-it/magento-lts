@@ -24,6 +24,7 @@
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_SepaMandat $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatreferenzMitBLP(string $customerID, string $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    anlegenKassenzeichenMitZahlverfahrenlisteMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, $lieferAdresse, string $buchungsText, $zahlverfahrenListe, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameter)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis                     aktiviereTempKassenzeichen(string $wId, string $mandantNr, string $saferpayReferenzID, sring $typZahlung)
  *
  */
 class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
@@ -567,7 +568,12 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 		}
 		if (!is_null($zahlverfahrenListe)) {
 			if (is_string($zahlverfahrenListe)) {
-				$zahlverfahrenListe = array($zahlverfahrenListe);
+				if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+					$zahlverfahrenListe = array(new Egovs_Paymentbase_Model_Webservice_Types_StringList($zahlverfahrenListe));
+				} else {
+					//ePayBL 2.x
+					$zahlverfahrenListe = array($zahlverfahrenListe);
+				}
 			}
 			$parameter['zahlverfahrenListe'] = empty($zahlverfahrenListe) ? null : $zahlverfahrenListe;
 		}
@@ -577,7 +583,17 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 			
 		return $erg;
 	}
-	
+	/**
+	 * 
+	 * @param unknown $wId
+	 * @param unknown $mandantNr
+	 * @param unknown $saferpayReferenzID
+	 * @param unknown $kartenTyp
+	 * 
+	 * @return mixed
+	 * 
+	 * @deprecated since ePayBL 3.x
+	 */
 	protected function _aktiviereTempKreditkartenKassenzeichen($wId, $mandantNr, $saferpayReferenzID, $kartenTyp = null) {
 		$parameter = array ();
 		$parameter['wId'] = (string) $wId;
@@ -592,6 +608,16 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 		return $erg;
 	}
 	
+	/**
+	 * 
+	 * @param unknown $wId
+	 * @param unknown $mandantNr
+	 * @param unknown $saferpayReferenzID
+	 * 
+	 * @return mixed
+	 * 
+	 * @deprecated since ePayBL 3.x
+	 */
 	protected function _aktiviereTempGiropayKassenzeichen($wId, $mandantNr, $saferpayReferenzID) {	
 		$parameter = array ();
 		$parameter['wId'] = (string) $wId;
@@ -600,6 +626,18 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	
 		$erg = $this->_getSoapClient()->__call($this->_parseCallingMethodName(__METHOD__), $this->_toSoapParam($parameter));
 	
+		return $erg;
+	}
+	
+	protected function _aktiviereTempKassenzeichen($wId, $mandantNr, $saferpayReferenzID, $typZahlung) {
+		$parameter = array ();
+		$parameter['wId'] = (string) $wId;
+		$parameter['mandantNr'] = (string) $this->getMandantNr();
+		$parameter['saferpayReferenzID'] = (string) $saferpayReferenzID;
+		$parameter['typZahlung'] = (string) $typZahlung;
+		
+		$erg = $this->_getSoapClient()->__call($this->_parseCallingMethodName(__METHOD__), $this->_toSoapParam($parameter));
+		
 		return $erg;
 	}
 	
