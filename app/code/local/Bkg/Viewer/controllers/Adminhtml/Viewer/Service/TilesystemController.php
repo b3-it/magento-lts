@@ -33,6 +33,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_TilesystemController extends Mage_Admi
 	{
 	
 		$model  = Mage::getModel('bkgviewer/service_tilesystem')->load($id);
+		
 		if ($model->getId() || $id == 0) {
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
 			if (!empty($data)) {

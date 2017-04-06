@@ -44,14 +44,10 @@ class Bkg_Geometry_Polygon extends Bkg_Geometry_Geometry
 	
 	public function load($data, $format = Bkg_Geometry_Format::RAW)
 	{
+		$linestring = new Bkg_Geometry_LineString();
+		$linestring->load($data);
 		
-		$data = explode(',', $data);
-		
-		foreach($data as $d){
-			$p = new Bkg_Geometry_Point();
-			$p->load($d);
-			$this->addPoint($p);
-		}
+		$this->setExterior($linestring);
 		
 		return $this;
 	}
