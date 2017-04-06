@@ -47,8 +47,10 @@ class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
 		unset($options['wsdl']);
 	
 		try {
+			//Bei Zertifikatfehlern gibt PHP Soap die Meldung als Warning aus.
+			//der SoapClient setzt das error_reporting jedoch immer auf 0 -> siehe mageCoreErrorHandler!
+			set_error_handler(array(Mage::helper('paymentbase'), 'epayblErrorHandler'));
 			//The documentation about classes/objects misses that you actually can prevent exposing errors in the constructor by using @new
-			//Funktioniert @new nur in PHP 5.3?
 			/** @see http://www.php.net/manual/de/language.operators.errorcontrol.php **/
 			$this->_soapClient = @new Zend_Soap_Client_Common(array($this, '_doRequest'), $wsdl, $options);
 		} catch (Exception $e) {
@@ -57,7 +59,9 @@ class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
 				Zend_Log::ERR,
 				Egovs_Helper::EXCEPTION_LOG_FILE
 			);
+			restore_error_handler();
 			throw $e;
 		}
+		restore_error_handler();
 	}
 }
