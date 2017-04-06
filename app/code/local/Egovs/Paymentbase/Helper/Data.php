@@ -2210,4 +2210,15 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
     	return "";
     	
     }
+    
+    /**
+     * Gibt die verwendete ePayBL Version zurück
+     * 
+     * @param int|Mage_Core_Model_Store $store
+     * 
+     * @return NULL|string
+     */
+    public function getEpayblVersionInUse($store = null) {
+    	return Mage::getStoreConfig('payment_services/paymentbase/epaybl_to_use', $store);
+    }
 }
