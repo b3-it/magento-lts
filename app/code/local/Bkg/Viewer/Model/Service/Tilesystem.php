@@ -77,14 +77,14 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
 	    					$lines = [];
 	    					foreach ($polynode->getElementsByTagName('posList') as $listnode) {
 	    						$cords = array_chunk(explode(" ", trim($listnode->textContent)), 2);
-	    						$lines[]= implode(', ', array_map(function($c) {
-	    							return implode(' ', $c);
-	    						}, $cords));
+	    						$linestring = new Bkg_Geometry_LineString();
+	    						$linestring->load($cords);
 	    					}
 	    					$text = implode(', ', $lines);
-	    					$polygon = new Bkg_Geometry_Polygon();
-	    					$polygons[] = $polygon->load($text);
-	    	
+	    					
+	    					$polygon  = new Bkg_Geometry_Polygon();
+	    					$polygon->setExterior($linestring);
+	    					$polygons[] = $polygon;
 	    				}
 	    			}
 	    	
