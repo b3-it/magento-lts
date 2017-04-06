@@ -1,4 +1,7 @@
-
+<?php $helper = Mage::helper('bkgviewer');?>
+<?php echo($helper->getWMSDir().DS.$this->getComposit()->getTileSystemWithCRS()->getFilename()); ?>
+<?php echo($helper->getWMSDir().DS.$this->getComposit()->getVgSystemWithCRS()->getFilename()); ?>
+<?php $this->getComposit()->getTilesIntersection(); ?>
 <style>
       .map {
         height: 400px;

@@ -3,29 +3,48 @@ class Bkg_Geometry_Polygon extends Bkg_Geometry_Geometry
 {
 	/**
 	 * 
-	 * @var array Bkg_Geometry_Point
+	 * @var Bkg_Geometry_Linstring
 	 */
-	protected $_points = array();
+	protected $_exterior;
 	
-	public function getPoints()
+	/**
+	 *
+	 * @var array Bkg_Geometry_Linstring
+	 */
+	protected $_interior = array();
+	
+	
+	public function getInterior()
 	{
-		return $this->_points;
+		return $this->_interior;
 	}
 	
-	public function setPoints($points)
+	public function setInterior($linestrings)
 	{
-		$this->_points = $points;
+		$this->_interior = $linestrings;
 		return $this;
 	}
 	
-	public function addPoint($point)
+	public function addInterior($linestring)
 	{
-		$this->_points[] = $point;
+		$this->_interior[] = $linestring;
+		return $this;
+	}
+	
+	public function getExterior()
+	{
+		return $this->_exterior;
+	}
+	
+	public function setExterior($linestring)
+	{
+		$this->_exterior = $linestring;
 		return $this;
 	}
 	
 	public function load($data, $format = Bkg_Geometry_Format::RAW)
 	{
+		
 		$data = explode(',', $data);
 		
 		foreach($data as $d){
@@ -40,16 +59,28 @@ class Bkg_Geometry_Polygon extends Bkg_Geometry_Geometry
 	public function toString($format = Bkg_Geometry_Format::RAW)
 	{
 		$res = array();
-		foreach($this->_points as $point){
-			$res[] = $point->toString();
+		$res[] = $this->_exterior->toString();
+		foreach($this->_interior as $line){
+			$res[] = $line->toString();
 		}
 		
-		return implode(',', $res);
+		$res = implode(',', $res);
+		
+		$res = '('.$res.')';
+		
+		
+		if($format == Bkg_Geometry_Format::WKT)
+		{
+			$res = 'POLYGON'.$res;
+		}
+		
+		
+		return $res;
 	}
 	
 	public function toSql()
 	{
-		$sql = "(PolygonFromText('POLYGON((".$this->toString()."))'))";
+		$sql = "(PolygonFromText('".$this->toString(Bkg_Geometry_Format::WKT)."'))";
 		return new Zend_Db_Expr($sql);
 	}
 }

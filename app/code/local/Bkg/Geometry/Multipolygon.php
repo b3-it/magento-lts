@@ -33,15 +33,25 @@ class Bkg_Geometry_Multipolygon extends Bkg_Geometry_Geometry
 	{
 		$res = array();
 		foreach($this->_polygons as $polygon){
-			$res[] = '('. $polygon->toString() .')';
+			$res[] = $polygon->toString();
 		}
 		
-		return implode(',', $res);
+		$res = implode(',', $res);
+		
+		$res = '('.$res.')';
+		
+		if($format == Bkg_Geometry_Format::WKT)
+		{
+			$res = 'MULTIPOLYGON'.$res;
+		}
+		
+		
+		return $res;
 	}
 	
 	public function toSql()
 	{
-		$txt = "(MultiPolygonFromText('MULTIPOLYGON((".$this->toString()."))'))";
+		$txt = "(MultiPolygonFromText('".$this->toString(Bkg_Geometry_Format::WKT)."'))";
 		return new Zend_Db_Expr($txt);
 	}
 }

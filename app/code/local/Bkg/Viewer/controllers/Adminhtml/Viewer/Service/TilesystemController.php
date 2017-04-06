@@ -93,7 +93,8 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_TilesystemController extends Mage_Admi
 			}
 			
 			//$service->fetchLayers($data['url']);
-			$this->_edit($service->getId());
+			//$this->_edit($service->getId());
+			$this->_redirect('*/*/edit',array('id'=>$service->getId()));
 			
 		} catch (Exception $e) {
 			Mage::getSingleton('adminhtml/session')->setFormData($data);

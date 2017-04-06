@@ -27,6 +27,11 @@ class Bkg_Viewer_Block_Adminhtml_Service_Vggroup_Edit_Tabs extends Mage_Adminhtm
           'content'   => $this->getLayout()->createBlock('bkgviewer/adminhtml_service_vggroup_edit_tab_form')->toHtml(),
       ));
       
+      $this->addTab('form_section2', array(
+      		'label'     => Mage::helper('bkgviewer')->__('VG Member'),
+      		'title'     => Mage::helper('bkgviewer')->__('Information'),
+      		'content'   => $this->getLayout()->createBlock('bkgviewer/adminhtml_service_vggroup_edit_tab_grid')->toHtml(),
+      ));
      
 
       return parent::_beforeToHtml();
