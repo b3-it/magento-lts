@@ -7,7 +7,7 @@
  * @category	Egovs
  * @package		Egovs_Paymentbase
  * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2011-2016 B3 IT Systeme GmbH <http://www.b3-it.de>
+ * @copyright	Copyright (c) 2011-2016 B3 IT Systeme GmbH <https://www.b3-it.de>
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
@@ -27,6 +27,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	
 	
 	const ATTRIBUTE_SEPA_ADDITIONAL = 'sepa_additional_data';
+	
+	const EPAYBL_3_X_VERSION = 3;
+	
+	const EPAYBL_2_X_VERSION = 2;
 
 	/**
 	 * Client zur Soap - Kommunikation
@@ -2032,7 +2036,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
      * @return string;
      */
     public function getMandatePdfTemplateStore() {
-    	$store = Mage::getStoreConfig("payment/paymentbase/mandate_pdf_template_store");
+    	$store = Mage::getStoreConfig("payment_services/paymentbase/mandate_pdf_template_store");
     	if (strpos($store, DIRECTORY_SEPARATOR) !== 0) {
     		$store = DIRECTORY_SEPARATOR.$store;
     	}
