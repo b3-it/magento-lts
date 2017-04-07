@@ -20,6 +20,7 @@ class GiroCheckout_SDK_PaydirektCapture extends GiroCheckout_SDK_AbstractApi imp
         'currency' => TRUE,
         'purpose' => TRUE,
         'reference' => TRUE,
+        'merchantReconciliationReferenceNumber' => FALSE,
         'final' => FALSE
     );
 

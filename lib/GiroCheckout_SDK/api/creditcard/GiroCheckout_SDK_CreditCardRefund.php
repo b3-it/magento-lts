@@ -27,7 +27,7 @@ class GiroCheckout_SDK_CreditCardRefund extends GiroCheckout_SDK_AbstractApi imp
         'rc'=> TRUE,
         'msg' => TRUE,
         'reference' => TRUE,
-        'referenceParent' => TRUE,
+        'referenceParent' => FALSE,
         'merchantTxId' => TRUE,
         'backendTxId' => TRUE,
         'amount' => TRUE,

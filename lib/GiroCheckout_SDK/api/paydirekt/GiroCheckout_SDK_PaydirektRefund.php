@@ -19,7 +19,8 @@ class GiroCheckout_SDK_PaydirektRefund extends GiroCheckout_SDK_AbstractApi impl
         'amount' => TRUE,
         'currency' => TRUE,
         'purpose' => TRUE,
-        'reference' => TRUE
+        'reference' => TRUE,
+        'merchantReconciliationReferenceNumber' => FALSE,
     );
 
     /*
