@@ -510,18 +510,10 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 			$objResult = $objResult->ergebnis;
 		}
 		
-		if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis
-			&& (
-					(isset($objResult->code) && intval($objResult->code) < 0)
-					|| (isset($objResult->text->code) && intval($objResult->text->code) < 0)
-			)) {
+		if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis && $objResult->getCodeAsInt() < 0) {
 			//Kunde nicht vorhanden -> nur loggen!
-			if (isset($objResult->code) && intval($objResult->code) != -199) {
-				$error = sprintf('Code: %s : %s', $objResult->code, $objResult->kurzText);
-				//Egovs_Paymentbase_Helper_Data::parseAndThrow($error, 'paymentbase');
-				Mage::log($error, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-			} elseif(isset($objResult->text->code) && intval($objResult->text->code) != -199) {
-				$error = sprintf('Code: %s : %s', $objResult->text->code, $objResult->text->kurzText);
+			if ($objResult->getCodeAsInt() != -199) {
+				$error = sprintf('Code: %s : %s', $objResult->getCode(), $objResult->getShortText());
 				//Egovs_Paymentbase_Helper_Data::parseAndThrow($error, 'paymentbase');
 				Mage::log($error, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			} else {

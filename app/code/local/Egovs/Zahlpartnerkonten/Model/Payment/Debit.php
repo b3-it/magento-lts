@@ -141,7 +141,7 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Debit extends Egovs_Debit_Model_Debi
 		catch (Exception $ex) {
 			if (Mage::helper('zpkonten')->isUseZpkonto($this->_getOrder()->getCustomer()) != true) {
 				if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis) {
-					$this->_getKZModel()->setComment($objResult->ergebnis->langText);
+					$this->_getKZModel()->setComment($objResult->ergebnis->getLongText());
 				}
 				$this->_getKZModel()->setStatus(Egovs_Zahlpartnerkonten_Model_Status::STATUS_ERROR)
 					->save();

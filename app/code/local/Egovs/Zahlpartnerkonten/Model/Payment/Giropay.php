@@ -131,7 +131,7 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Giropay extends Egovs_Giropay_Model_
     		 */
     		if ($this->_fails < self::MAX_RETRIES
     			&& $objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis
-    			&& intval($objResult->ergebnis->code) == -594
+    			&& $objResult->ergebnis->getCodeAsInt() == -594
     			) {
     			$msg = Mage::helper('zpkonten')->__('There was an error while activating the new accounting list for Kassenzeichen %s, we have to create a new Zahlpartnerkonto.', $this->_getKZModel()->getKassenzeichen());
     			$this->_getKZModel()->setStatus(Egovs_Zahlpartnerkonten_Model_Status::STATUS_ERROR)

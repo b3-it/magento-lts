@@ -13,7 +13,7 @@ require_once "Egovs/Saferpay/controllers/SaferpayController.php";
 class Egovs_Zahlpartnerkonten_SaferpayController extends Egovs_Saferpay_SaferpayController
 {
 	/**
-	 * Ruft aktiviereTempKreditkartenKassenzeichen am ePayBL-Server auf
+	 * Ruft aktiviereTempKassenzeichen am ePayBL-Server auf
 	 *
 	 * Implementation der abstrakten Methode
 	 *
@@ -42,7 +42,9 @@ class Egovs_Zahlpartnerkonten_SaferpayController extends Egovs_Saferpay_Saferpay
 			$order->addStatusHistoryComment(Mage::helper('zpkonten')->__($e->getMessage()));
 			return false;
 		}
-		
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $objSOAPClient->aktiviereTempKassenzeichen(sprintf('%s/%s', $objSOAPClient->getBewirtschafterNr(), $order->getPayment()->getKassenzeichen()), $idp->getAttribute('ID'), $PROVIDERNAME);
+		}
 		return $objSOAPClient->aktiviereTempKreditkartenKassenzeichen(sprintf('%s/%s', $objSOAPClient->getBewirtschafterNr(), $order->getPayment()->getKassenzeichen()), $mandantNr, $idp->getAttribute('ID'), $PROVIDERNAME);
 	}
 }

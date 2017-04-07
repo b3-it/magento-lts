@@ -24,7 +24,7 @@
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_SepaMandat $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatreferenzMitBLP(string $customerID, string $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    anlegenKassenzeichenMitZahlverfahrenlisteMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, $lieferAdresse, string $buchungsText, $zahlverfahrenListe, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameter)
- * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis                     aktiviereTempKassenzeichen(string $wId, string $mandantNr, string $saferpayReferenzID, sring $typZahlung)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis                     aktiviereTempKassenzeichen(string $wId, string $saferpayReferenzID, sring $typZahlung)
  *
  */
 class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
@@ -662,7 +662,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 		return $erg;
 	}
 	
-	protected function _aktiviereTempKassenzeichen($wId, $mandantNr, $saferpayReferenzID, $typZahlung) {
+	protected function _aktiviereTempKassenzeichen($wId, $saferpayReferenzID, $typZahlung) {
 		$parameter = array ();
 		$parameter['wId'] = (string) $wId;
 		$parameter['mandantNr'] = (string) $this->getMandantNr();

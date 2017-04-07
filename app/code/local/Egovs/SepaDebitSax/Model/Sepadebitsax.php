@@ -238,10 +238,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			}
 			$client->saveError();
 			$sMailText .= "Code: {$objResult->getResult()->getResultCode()->getCode()}\n";
-			//$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
 			$sMailText .= "Beschreibung: {$objResult->getResult()->getResultCode()->getDescription()}\n";
-			//$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-			//$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n";
 			$result = intval($objResult->getResult()->getResultCode()->getCode());
 		} elseif ($objResult instanceof SoapFault) {
 			$sMailText .= "SOAP: " . $objResult->getMessage(). "\n\n";
@@ -862,17 +859,24 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		
 		
 		try {
-			$objResult =  $this->_getSoapClient()
-				->aktiviereTempKreditkartenKassenzeichen($wId, '',$EPaymentId, "SEPASDD");
+			if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+				$soapFunction = 'aktiviereTempKassenzeichen';
+				$objResult =  $this->_getSoapClient()
+					->aktiviereTempKassenzeichen($wId, $EPaymentId, "SEPASDD");
+			} else {
+				$soapFunction = 'aktiviereTempKreditkartenKassenzeichen';
+				$objResult =  $this->_getSoapClient()
+					->aktiviereTempKreditkartenKassenzeichen($wId, '',$EPaymentId, "SEPASDD");
+			}
 		} 
 		catch (Exception $e) {
 			Mage::log($e->getMessage(), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			throw $e;
 		}
-		$this->_parseError($objResult, $objResult, "aktiviereTempKreditkartenKassenzeichen");
+		$this->_parseError($objResult, $objResult, $soapFunction);
 		
 		if (!$objResult || !isset($objResult->istOk) || $objResult->istOk != true) {
-			Mage::throwException('aktiviereTempKreditkartenKassenzeichen unknown Error');
+			Mage::throwException("$soapFunction unknown Error");
 		}
 		
 		$mandateMaturityDate = $payment->getData(Egovs_SepaDebitSax_Helper_Data::ATTRIBUTE_SEPA_MATURITY);
@@ -880,12 +884,12 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 				
 		try {
 			$objResult =  $this->_getSoapClient()
-			->lesenTransaktion($EPaymentId);
+				->lesenTransaktion($EPaymentId);
 		} catch (Exception $e) {
 			Mage::log($e->getMessage(), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			throw $e;
 		}
-		$this->_parseError($objResult, $objResult->ergebnis,"lesenTransaktion");
+		$this->_parseError($objResult, $objResult->ergebnis, "lesenTransaktion");
 		
 		$epayBlMaturityDate = $objResult->buchungsListe->faelligkeitsdatum;
 		
@@ -1007,11 +1011,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			if ($objResult instanceof SoapFault) {
 				$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
 			} else {
-				$sMailText .= "Code: {$ergebnis->code}\n";
-				$sMailText .= "Titel: {$ergebnis->kurzText}\n";
-				$sMailText .= "Beschreibung: {$ergebnis->langText}\n";
-				
-				
+				$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($ergebnis);
 			}
 			Mage::helper("paymentbase")->sendMailToAdmin("Fehler in WebService-Funktion: $soapFunction\n\n".$sMailText);
 				

@@ -407,7 +407,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 	         * Die notify Action wird direkt von Saferpay aufgerufen (URL wird vorher übergeben)
 	         * 
 	         */
-	        Mage::log("$module::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+	        Mage::log("$module::NOTIFY_ACTION:WS aktiviereTempKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 			
         	if ($idp->getAttribute('PROVIDERID') == 77) {
 				$_providerName = "AMEX";
@@ -422,7 +422,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 			// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 			$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
 			$objResult = null;
-			for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!isset($objResult->istOk) || $objResult->istOk != true); $i++) {
+			for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && ($objResult->isOk() != true); $i++) {
 				Mage::log(sprintf("$module::NOTIFY_ACTION:Try %s to activate kassenzeichen...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				try {
 					//Aktiviert z. B. das Kassenzeichen
@@ -434,9 +434,9 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 			Mage::log(sprintf("$module::NOTIFY_ACTION:Tried to activate Kassenzeichen, validating result...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 						
 			// wenn Web-Service nicht geklappt hat
-			if (!$objResult || $objResult->istOk != true) {
+			if (!$objResult || !$objResult->isOk()) {
 				$kassenzeichen = 'empty';
-				$subject = "$module::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() nicht erfolgreich";
+				$subject = "$module::NOTIFY_ACTION:WS aktiviereTempKassenzeichen() nicht erfolgreich";
 				$sMailText = '';
 				if ($order->getPayment()->hasData('kassenzeichen')) {
 					$kassenzeichen = $order->getPayment()->getKassenzeichen();
@@ -475,7 +475,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
             //20131113::Frank Rochlitzer
             //Bei Verbindungsfehler während aktivierenKassenzeichen wurde trotzdem die Order auf bezahlt gesetzt!
             if ($order->canInvoice() && $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
-            	&& $objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis && $objResult->istOk == true
+            	&& $objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis && $objResult->isOk()
             ) {
                 // it's a valid order
                 Mage::log("$module::Order is valid, preparing invoice...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);

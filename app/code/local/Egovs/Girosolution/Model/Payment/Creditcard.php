@@ -98,6 +98,9 @@ class Egovs_Girosolution_Model_Payment_Creditcard extends Egovs_Paymentbase_Mode
 	}
 	
 	protected function _callSoapClientImpl($objSOAPClient, $wId, $mandantNr, $refId, $providerName) {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $objSOAPClient->aktiviereTempKassenzeichen($wId, $refId, $providerName);
+		}
 		return $objSOAPClient->aktiviereTempKreditkartenKassenzeichen($wId, $mandantNr, $refId, $providerName);
 	}
 	

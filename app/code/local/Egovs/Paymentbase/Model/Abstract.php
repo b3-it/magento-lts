@@ -319,11 +319,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			} elseif (!$objResult || is_null($objResult) || !$objResult->ergebnis) {
 				$sMailText .= "Error: No result returned\n";
 			} else {
-				$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-				$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-				$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-				$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-				$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n\n";
+				$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebni);
 			}
 
 			$sMailText .= "ePayBL-Kundennummer: {$this->_getECustomerId()}\n";
@@ -370,8 +366,8 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			if (method_exists($this, '_customErrorHandler')) {
 				call_user_func(array($this,'_customErrorHandler'), $objResult);
 			} else {
-				if ($objResult && isset($objResult->ergebnis) && Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->code) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->code) {
-					$this->parseAndThrow('ERROR:'.$objResult->ergebnis->code);
+				if ($objResult && isset($objResult->ergebnis) && Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) {
+					$this->parseAndThrow('ERROR:'.$objResult->ergebnis->getCode());
 				} elseif ($objResult instanceof SoapFault) {
 					$this->parseAndThrow('ERROR_-999989');
 				} else {

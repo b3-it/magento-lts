@@ -92,9 +92,9 @@ class Egovs_Debit_Model_Debit extends Egovs_Paymentbase_Model_Debit
 	 */
 	protected function _customErrorHandler($objResult) {
 		// Fehlermeldung suchen
-		if ($objResult && Mage::helper('debit')->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->code) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->code) {
+		if ($objResult && Mage::helper('debit')->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) {
 			$mail = "";
-			$iErrorCode = intval($objResult->ergebnis->code);
+			$iErrorCode = $objResult->ergebnis->getCodeAsInt();
 			if ($iErrorCode == -405 || ($iErrorCode <= -510 && $iErrorCode >= -511)) {
 				$mail = Mage::helper("paymentbase")->getAdminMail();
 			} elseif (($iErrorCode <= -406 && $iErrorCode >= -411 )
@@ -106,7 +106,7 @@ class Egovs_Debit_Model_Debit extends Egovs_Paymentbase_Model_Debit
 			} else {
 				$mail = Mage::helper("paymentbase")->getCustomerSupportMail();
 			}
-			Mage::throwException(Mage::helper('debit')->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->code, $mail));
+			Mage::throwException(Mage::helper('debit')->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode(), $mail));
 		} else {
 			Mage::throwException(Mage::helper('debit')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getCustomerSupportMail()));
 		}
