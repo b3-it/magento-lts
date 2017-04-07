@@ -1580,15 +1580,26 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Kundenergebnis) {
 					$objResult = $objResult->ergebnis;
 				}
+				$_tempObjResult = null;
+				if (isset($objResult->text)) {
+					//ePayBL 3.x
+					$_tempObjResult = $objResult;
+					$objResult = $objResult->text;
+				}
 				$sMailText .= "Code: {$objResult->code}\n";
 				$sMailText .= "Titel: {$objResult->kurzText}\n";
 				$sMailText .= "Beschreibung: {$objResult->langText}\n";
-				$sMailText .= "ePaymentId: {$objResult->EPaymentId}\n";
-				$sMailText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
-
-				if (intval($objResult->code) == -199) {
+				
+				if (isset($objResult->code) && intval($objResult->code) == -199) {
 					$sendMail = false;
 				}
+				
+				if (!is_null($_tempObjResult)) {
+					//Workaround für ePayBL 3.x
+					$objResult = $_tempObjResult;
+				}
+				$sMailText .= "ePaymentId: {$objResult->EPaymentId}\n";
+				$sMailText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
 			}
 			// neue Kundennummer
 			$sMailText .= "Kundennummer (eGov): $eCustomerId\n"; //Kundennummer ist hier zwischengespeichert
@@ -1638,9 +1649,22 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			} elseif (!$objResult) {
 				$sErrorText .= $this->__("Error: Couldn't check status of ePayment server, no result returned!")."\n";
 			} else {
+				$_tempObjResult = null;
+				if (isset($objResult->text)) {
+					//ePayBL 3.x
+					$_tempObjResult = $objResult;
+					$objResult = $objResult->text;
+				}
+				
 				$sErrorText .= "Code: {$objResult->code}\n";
 				$sErrorText .= "Titel: {$objResult->kurzText}\n";
 				$sErrorText .= "Beschreibung: {$objResult->langText}\n";
+				
+				if (!is_null($_tempObjResult)) {
+					//Workaround für ePayBL 3.x
+					$objResult = $_tempObjResult;
+				}
+				
 				$sErrorText .= "ePaymentId: {$objResult->EPaymentId}\n";
 				$sErrorText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
 			}
@@ -1685,9 +1709,22 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			} elseif (!$objResult) {
 				$sErrorText .= $this->__("Error: Couldn't check status of ePayment server, no result returned!")."\n";
 			} else {
+				$_tempObjResult = null;
+				if (isset($objResult->text)) {
+					//ePayBL 3.x
+					$_tempObjResult = $objResult;
+					$objResult = $objResult->text;
+				}
+				
 				$sErrorText .= "Code: {$objResult->code}\n";
 				$sErrorText .= "Titel: {$objResult->kurzText}\n";
 				$sErrorText .= "Beschreibung: {$objResult->langText}\n";
+				
+				if (!is_null($_tempObjResult)) {
+					//Workaround für ePayBL 3.x
+					$objResult = $_tempObjResult;
+				}
+				
 				$sErrorText .= "ePaymentId: {$objResult->EPaymentId}\n";
 				$sErrorText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
 			}
@@ -1744,8 +1781,14 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$arrResult = Mage::getModel('paymentbase/webservice_types_response_kassenzeichenInfoErgebnis');
 			$arrResult->ergebnis = Mage::getModel('paymentbase/webservice_types_response_ergebnis');
 			$arrResult->ergebnis->istOK = false;
-			$arrResult->ergebnis->langText = $e->getMessage();
-			$arrResult->ergebnis->code = -9999;
+			if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+				$arrResult->ergebnis->text = Mage::getModel('paymentbase/webservice_types_text');
+				$arrResult->ergebnis->text->langText = $e->getMessage();
+				$arrResult->ergebnis->text->code = -9999;
+			} else {
+				$arrResult->ergebnis->langText = $e->getMessage();
+				$arrResult->ergebnis->code = -9999;
+			}
 		}
 		
 		if ($arrResult instanceof SoapFault) {
@@ -1754,11 +1797,22 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$arrResult = Mage::getModel('paymentbase/webservice_types_response_kassenzeichenInfoErgebnis');
 			$arrResult->ergebnis = Mage::getModel('paymentbase/webservice_types_response_ergebnis');
 			$arrResult->ergebnis->istOK = false;
-			$arrResult->ergebnis->langText = $e->getMessage();
-			if ($e->getCode()) {
-				$arrResult->ergebnis->code = $e->getCode();
+			
+			if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+				$arrResult->ergebnis->text = Mage::getModel('paymentbase/webservice_types_text');
+				$arrResult->ergebnis->text->langText = $e->getMessage();
+				if ($e->getCode()) {
+					$arrResult->ergebnis->text->code = $e->getCode();
+				} else {
+					$arrResult->ergebnis->text->code = -9999;
+				}
 			} else {
-				$arrResult->ergebnis->code = -9999;
+				$arrResult->ergebnis->langText = $e->getMessage();
+				if ($e->getCode()) {
+					$arrResult->ergebnis->code = $e->getCode();
+				} else {
+					$arrResult->ergebnis->code = -9999;
+				}
 			}
 		}
 
