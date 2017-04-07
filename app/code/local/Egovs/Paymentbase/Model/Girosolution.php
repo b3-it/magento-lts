@@ -271,6 +271,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	
 		//Buchungsliste erstellen
 		$arrBuchungsliste = $this->createAccountingListParts();
+		
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			$arrBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungList($arrBuchungsliste);
+		}
 	
 		// Objekt für Buchungsliste erstellen
 		$objBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe(

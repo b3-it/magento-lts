@@ -871,6 +871,12 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	 */
 	public function createAccountingList($payment, $amount, $bkz = null, $maturity = null, $arrBuchungsliste = null, $grandTotal = null, $currency = null) {
 		// Objekt für Buchungsliste erstellen
+		if (is_null($arrBuchungsliste)) {
+			$arrBuchungsliste = $this->createAccountingListParts();
+		}
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			$arrBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungList($arrBuchungsliste);
+		}
 		$objBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe(
 				// Gesamtsumme
 				is_null($grandTotal) ? (float) $this->_getOrder()->getBaseGrandTotal() : $grandTotal,
@@ -879,7 +885,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				// Fälligkeit
 				is_null($maturity) ? strftime('%Y-%m-%dT%H:%M:%SZ') : $maturity,
 				// Buchungsliste
-				is_null($arrBuchungsliste) ? $this->createAccountingListParts() : $arrBuchungsliste,
+				$arrBuchungsliste,
 				// Bewirtschafter
 				$this->_getBewirtschafterNr(),
 				// Kennzeichen Mahnverfahren aus Konfiguration
