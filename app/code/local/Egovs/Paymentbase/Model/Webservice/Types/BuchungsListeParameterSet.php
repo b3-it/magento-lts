@@ -4,13 +4,13 @@
  *
  * SäHO Erweiterung
  *
- * @property array $buchungsListeParameter Parameter
+ * @property array                                                               $buchungsListeParameter     Parameter für ePayBL 2.x
+ * @property Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterList $buchungsListeParameterList Parameter für ePayBL 3.x
  *
  * @category	Egovs
  * @package		Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2012 EDV Beratung Hempel
- * @copyright	Copyright (c) 2012 TRW-NET
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 -2017 B3 IT Systeme GmbH https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
@@ -18,7 +18,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet extends
 	/**
 	 * Konstruktor
 	 * 
-	 * @param array<Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameter>|array<Key,Value> $buchungsListeParameter Array von Buchungslistenparametern
+	 * @param Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterList|array<Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameter>|array<Key,Value> $buchungsListeParameter BuchungsListeParameterList für ePayBL 3.x sonst Array von Buchungslistenparametern
 	 * 
 	 * @throws Exception
 	 */
@@ -41,19 +41,22 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet extends
 		}
 		if (!is_array($buchungsListeParameter)) {
 			if (empty($buchungsListeParameter)) {
-				$this->buchungsListeParameter = array();
-				return;
+				$buchungsListeParameter = array();
+			} else {
+				$buchungsListeParameter = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameter($buchungsListeParameter, '');
+				$buchungsListeParameter = array($buchungsListeParameter);
 			}
-			$buchungsListeParameter = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameter($buchungsListeParameter, '');
-			$buchungsListeParameter = array($buchungsListeParameter);
 		}
-		
-		$this->buchungsListeParameter = $buchungsListeParameter;
-// 		parent::SoapVar($buchungsListeParameter, SOAP_ENC_OBJECT, 'BuchungsListeParameterSet', Egovs_Paymentbase_Model_Webservice_PaymentServices::EPAYMENT_NAMESPACE);
-// 		$this->enc_value = $this;
-// 		$this->enc_type = SOAP_ENC_OBJECT;
-// 		$this->enc_stype = 'BuchungsListeParameterSet';
-// 		$this->enc_ns = Egovs_Paymentbase_Model_Webservice_PaymentServices::EPAYMENT_NAMESPACE;
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			$buchungsListeParameter = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterList($buchungsListeParameter);
+			
+			$this->buchungsListeParameterList = $buchungsListeParameter;
+		} else {
+			/*
+			 * ePayBL 2.x
+			 */
+			$this->buchungsListeParameter = $buchungsListeParameter;
+		}
 		parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
 	}
 	
@@ -63,7 +66,11 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet extends
 	 * @return boolean
 	 */
 	public function isEmpty() {
-		if (!isset($this->buchungsListeParameter) || empty($this->buchungsListeParameter)) {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			if (!isset($this->buchungsListeParameterList) || $this->buchungsListeParameterList->isEmpty()) {
+				return true;
+			}
+		} elseif (!isset($this->buchungsListeParameter) || empty($this->buchungsListeParameter)) {
 			return true;
 		}
 		

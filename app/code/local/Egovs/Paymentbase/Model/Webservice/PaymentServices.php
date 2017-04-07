@@ -569,7 +569,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 		if (!is_null($zahlverfahrenListe)) {
 			if (is_string($zahlverfahrenListe)) {
 				if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
-					$zahlverfahrenListe = array(new Egovs_Paymentbase_Model_Webservice_Types_StringList($zahlverfahrenListe));
+					$zahlverfahrenListe = new Egovs_Paymentbase_Model_Webservice_Types_StringList($zahlverfahrenListe);
 				} else {
 					//ePayBL 2.x
 					$zahlverfahrenListe = array($zahlverfahrenListe);

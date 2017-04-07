@@ -1,8 +1,8 @@
 <?php
 /**
- * Klasse für die StringList-Struktur an der ePayBL
+ * Klasse für die StringList-Struktur an der ePayBL 3.x
  * 
- * @property string $stringList String
+ * @property string[] $stringList Array von Strings
  * 
  * @category	Egovs
  * @package		Egovs_Paymentbase
@@ -15,14 +15,17 @@ class Egovs_Paymentbase_Model_Webservice_Types_StringList extends Egovs_Paymentb
 	/**
 	 * Konstruktor
 	 * 
-	 * @param string $code    Code
-	 * @param string $sprache Sprache
+	 * @param string[] $stringList Liste von Strings
 	 * 
 	 * @return void
 	 */
 	public function Egovs_Paymentbase_Model_Webservice_Types_StringList(
 			$stringList = null
 	) {
+		if (is_string($stringList) || !is_array($stringList)) {
+			$stringList = array($stringList);
+		}
+		
 		$this->stringList = $stringList;
         
         parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
@@ -45,7 +48,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_StringList extends Egovs_Paymentb
 	protected function _getParamLength($name) {
 		switch ($name) {
 			default:
-				$length = 255;
+				$length = 0;
 		}
 		
 		return $length;
