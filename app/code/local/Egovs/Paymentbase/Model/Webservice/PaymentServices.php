@@ -4,8 +4,8 @@
  * 
  * @category	Egovs
  * @package		Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2012 -2013 EDV Beratung Hempel
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 -2017 B3 IT Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  * 
  * @method bool 																			 	    isAlive(string $mandantNr)
@@ -48,7 +48,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	protected static $_alwaysResetSoapClient = false; 
 	
 	/**
-	 * Mapped die WSDL Klassen zu PHP-Klassen
+	 * Mapped die WSDL Klassen zu PHP-Klassen für ePayBL 2.x
 	 * 
 	 * Funktioniert nur im WSDL-Modus des SoapClients
 	 * 
@@ -77,6 +77,25 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 			'SepaAmendment' => 'Egovs_Paymentbase_Model_Webservice_Types_SepaAmendment',
 			'EinzugsermaechtigungErgebnis' => 'Egovs_Paymentbase_Model_Webservice_Types_Response_EinzugsermaechtigungErgebnis',
 			
+	);
+	
+	/**
+	 * Mapped die zusätzlichen WSDL Klassen zu PHP-Klassen für ePayBL 3.x
+	 *
+	 * Funktioniert nur im WSDL-Modus des SoapClients
+	 *
+	 * @var array
+	 */
+	protected $_classmapV3 = array(
+			'BankList' => 'Egovs_Paymentbase_Model_Webservice_Types_BankList',
+			'BuchungList' => 'Egovs_Paymentbase_Model_Webservice_Types_BuchungList',
+			'BuchungsListeParameterList' => 'Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterList',
+			'KundenStatusAenderungsList' => 'Egovs_Paymentbase_Model_Webservice_Types_KundenStatusAenderungList',
+			'KundenStatusAenderungsErgebnis' => 'Egovs_Paymentbase_Model_Webservice_Types_Response_KundenStatusAenderungsErgebnis',
+			'StringList' => 'Egovs_Paymentbase_Model_Webservice_Types_StringList',
+			'Zahlungseingaenge' => 'Egovs_Paymentbase_Model_Webservice_Types_Response_Zahlungseingaenge',
+			'ZahlungseingangsElement' => 'Egovs_Paymentbase_Model_Webservice_Types_Response_ZahlungseingangsElement',
+			'ZahlungseingangsElementList' => 'Egovs_Paymentbase_Model_Webservice_Types_Response_ZahlungseingangsElementList',
 	);
 	
 	protected $_deniedMethods = array (
@@ -244,7 +263,11 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 			}
 			//ePayBL unterstützt nur Soap < 1.2
 			$this->_soapClient->setSoapVersion(SOAP_1_1);
-			$this->_soapClient->setClassmap($this->_classmap);
+			$_classmap = $this->_classmap;
+			if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+				$_classmap = array_merge($_classmap, $this->_classmapV3);
+			}
+			$this->_soapClient->setClassmap($_classmap);
 		}
 	
 		return $this->_soapClient;
