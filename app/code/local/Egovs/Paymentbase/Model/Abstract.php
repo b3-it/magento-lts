@@ -214,56 +214,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 
 		return $this->__webshopDesMandanten;
 	}
-	/**
-	 * Berechnet den Netto Discount, Discount für Steuern und Item total tax
-	 *
-	 * @param Mage_Sales_Model_Order_Item $item Einzelnes Bestellelement
-	 * 
-	 * @return array
-	 * 
-	 * @deprecated Use {@link Egovs_Paymentbase_Model_Abstract::createAccountingListParts} instead!
-	 */
-	protected function _calcDiscountTaxValues($item) {
-		$values = array();
-		/** Siehe dazu auch Trac Ticket #619
-		 * http://www.kawatest.de:8080/trac/ticket/619
-		 * Siehe dazu auch Trac Ticket #689
-		 * http://www.kawatest.de:8080/trac/ticket/689
-		 * 
-		 * 20121009::Frank Rochlitzer
-		 * $item->getTaxBeforeDiscount() existiert nicht mehr siehe Mage_Sales_Model_Quote_Item_Abstract::calcTaxAmount
-		 */
-		
-		//TODO : Katalopreise enthalten Steuern testen
-		/*
-		 * HIDDEN TAX AMOUNT ist der Steuerbetrag des Rabatts
-		 * HIDDEN TAX AMOUNT existiert nur unter folgenden Bedingungen:
-		 * 	- Katalogpreise enthalten Steuern
-		 *  - Kundensteuer Nach Rabatt
-		 *  - Rabattbetrag!!
-		 */
-		$values['fDiscountMWST'] = $item->getDiscountAmount() > 0 && $item->getHiddenTaxAmount() > 0
-			? $item->getHiddenTaxAmount() // entspricht Mage::helper('tax')->getCalculator()->calcTaxAmount($item->getDiscountAmount(), $item->getTaxPercent(), true)
-			: 0.0
-		;
-		
-		
-		if (Mage::helper('tax')->discountTax($item->getStore())) {
-			//Rabatt als Bruttobetrag (Inklusive Steuern)
-			$values['fDiscountNetto'] = $item->getDiscountAmount();
-		} else {
-			//Rabatt als Nettobetrag (Zuzüglich Steuern)
-			$values['fDiscountNetto'] = $item->getDiscountAmount() - $values['fDiscountMWST'];
-		}
-
-		if (Mage::helper('tax')->applyTaxAfterDiscount($item->getStore())) {
-			$values['fMWST'] = round($item->getTaxAmount(), 2);
-		} else {
-			$values['fMWST'] = round($item->getTaxAmount() - $values['fDiscountMWST'], 2);
-		}
-
-		return $values;
-	}
+	
 	/**
 	 * Aktuelle Order
 	 * 
