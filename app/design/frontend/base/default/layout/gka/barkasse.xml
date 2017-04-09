@@ -50,6 +50,10 @@
         <reference name="root">
             <action method="setHeaderTitle" translate="title" module="gka_barkasse"><title>Kassenbuch Journal</title></action>
         </reference>
+        <reference name="head">
+            <action method="addJs"><script>mage/adminhtml/grid.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/hash.js</script></action>
+        </reference>
     </gka_barkasse_kassenbuch_journal_index>
 
 

@@ -38,6 +38,17 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     }
     
     
+ 	public function gridAction()
+    {
+    	if(!$this->_validateFormKey()){
+    		$this->_redirect('customer/account/logout');
+    		return;
+    	}
+        $this->loadLayout(false);
+        $this->getResponse()->setBody(
+        		$this->getLayout()->createBlock('gka_barkasse/kassenbuch_journal_grid')->toHtml()
+        );
+    }
     
     public function openAction()
     {

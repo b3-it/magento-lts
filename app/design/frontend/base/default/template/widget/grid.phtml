@@ -36,6 +36,12 @@
  */
 $numColumns = sizeof($this->getColumns());
 ?>
+
+<script type="text/javascript">
+    var FORM_KEY = '<?php echo $this->getFormKey();?>';
+</script>
+
+
 <?php if($this->getCollection()): ?>
     <?php if($this->canDisplayContainer()): ?>
         <?php if($this->getGridHeader()): ?>

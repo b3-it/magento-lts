@@ -13,13 +13,11 @@
              <epaybl_cashpayment>
                 <class>Gka_Barkasse_Helper</class>
             </epaybl_cashpayment>
-            <!--
             <customer>
                 <rewrite>
                     <data>Gka_Barkasse_Helper_Customer</data>
                 </rewrite>
             </customer>
-            -->
         </helpers>
         <resources>
             <gka_barkasse_setup>
