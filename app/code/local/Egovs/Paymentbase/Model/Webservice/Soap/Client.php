@@ -65,13 +65,18 @@ class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
 		restore_error_handler();
 	}
 	
-	public function __doRequest($request, $location, $action, $version, $one_way = 0)
-	{
-		$response = parent::__doRequest($request, $location, $action, $version, $one_way);
+	/**
+	 * Perform result pre-processing
+	 *
+	 * @param array $result Server response String
+	 * 
+	 * @return string
+	 */
+	protected function _preProcessResult($result) {
 		// strip away everything but the xml.
-		$response = preg_replace('/^.*(<\?xml.*>|<soap\:Envelope.*>)[^>]*$/s', '$1', $response);
-		$response = $this->_preProcessXml($response);
-		return $response;
+		$response = preg_replace('/^.*(<\?xml.*>|<soap\:Envelope.*>)[^>]*$/s', '$1', $result);
+		$result = $this->_preProcessXml($result);
+		return $result;
 	}
 	
 	protected function _preProcessXml($xmlData) {
