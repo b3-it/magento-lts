@@ -185,6 +185,10 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     protected function _processIncomingPayments() {
     	//Wenn Rechnung bezahlt wurde
     	if ($this->getKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo <= 0.0) {
+    		//Reset möglicher Teilzahlungen
+    		$this->_getOrder()->setBaseTotalPaid(0);
+    		$this->_getOrder()->setTotalPaid(0);
+    		
     		if ($this->getKassenzeichenInfo()->saldo < 0.0 && $this->_notBalanced <= self::MAX_UNBALANCED) {
     			Mage::getSingleton('adminhtml/session')->addNotice(
     				Mage::helper('paymentbase')->__('The balance of invoice #%s for order #%s is %s', $this->getInvoice()->getIncrementId(), $this->_getOrder()->getIncrementId(), $this->getKassenzeichenInfo()->saldo)
