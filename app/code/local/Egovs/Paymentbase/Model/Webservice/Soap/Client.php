@@ -4,8 +4,8 @@
  *
  * @category	Egovs
  * @package		Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2012 -2013 EDV Beratung Hempel
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 -2017 B3 IT Systeme GmbH https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
@@ -52,7 +52,7 @@ class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
 			set_error_handler(array(Mage::helper('paymentbase'), 'epayblErrorHandler'));
 			//The documentation about classes/objects misses that you actually can prevent exposing errors in the constructor by using @new
 			/** @see http://www.php.net/manual/de/language.operators.errorcontrol.php **/
-			$this->_soapClient = @new Zend_Soap_Client_Common(array($this, '_doRequest'), $wsdl, $options);
+			$this->_soapClient = @new Egovs_Paymentbase_Model_Webservice_Soap_Client_Common(array($this, '_doRequest'), $wsdl, $options);
 		} catch (Exception $e) {
 			Mage::log(
 				sprintf("Error::%s: %s in %s Line: %d", $e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine()),
@@ -66,27 +66,26 @@ class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
 	}
 	
 	/**
-	 * Perform result pre-processing
+	 * Do request proxy method.
 	 *
-	 * @param array $result Server response String
-	 * 
-	 * @return string
+	 * May be overridden in subclasses
+	 *
+	 * @internal
+	 * @param Zend_Soap_Client_Common $client
+	 * @param string $request
+	 * @param string $location
+	 * @param string $action
+	 * @param int    $version
+	 * @param int    $one_way
+	 * @return mixed
 	 */
-	protected function _preProcessResult($result) {
-		// strip away everything but the xml.
-		$response = preg_replace('/^.*(<\?xml.*>|<soap\:Envelope.*>)[^>]*$/s', '$1', $result);
-		$result = $this->_preProcessXml($result);
-		return $result;
-	}
-	
-	protected function _preProcessXml($xmlData) {
-		$doc = new DOMDocument; // declare a new DOMDocument Object
-		$doc->preserveWhiteSpace = false;
-		$doc->loadxml($xmlData); //load the xml request
-		
-		$doc->formatOutput = true;
-		$xmlData = $doc->savexml(); //re-assigned the new XML to $xmlData.
-		
-		return $xmlData;
+	public function _doRequest(Zend_Soap_Client_Common $client, $request, $location, $action, $version, $one_way = null)
+	{
+		// Perform request as is
+		if ($one_way == null) {
+			return call_user_func(array($client,'_doRequest'), $request, $location, $action, $version);
+		} else {
+			return call_user_func(array($client,'_doRequest'), $request, $location, $action, $version, $one_way);
+		}
 	}
 }
