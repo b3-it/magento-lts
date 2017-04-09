@@ -788,7 +788,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 		$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
 		$objResult = null;
-		for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && !$objResult->isOk(); $i++) {
+		for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && ($objResult && !$objResult->isOk()); $i++) {
 			Mage::log(sprintf("{$this->getCode()}::Try %s to activate kassenzeichen...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 			try {
 				//Aktiviert z. B. das Kassenzeichen

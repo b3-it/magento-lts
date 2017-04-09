@@ -118,7 +118,7 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 					
 					// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 					$objResult = null;
-					for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && !$objResult->isOk(); $i++) {
+					for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && ($objResult && !$objResult->isOk()); $i++) {
 						$this->_log(sprintf("NOTIFY_ACTION:Try %s to activate kassenzeichen...", $i+1));
 						try {
 							//Aktiviert z. B. das Kassenzeichen
