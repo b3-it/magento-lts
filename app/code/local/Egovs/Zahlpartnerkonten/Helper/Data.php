@@ -84,8 +84,8 @@ class Egovs_Zahlpartnerkonten_Helper_Data extends Egovs_Paymentbase_Helper_Data
      * @return boolean
      */
     public function kassenzeichenExists($kassenzeichenInfo) {
-    	if ($kassenzeichenInfo && isset($kassenzeichenInfo->ergebnis) && isset($kassenzeichenInfo->ergebnis->code)) {
-    		$code = intval($kassenzeichenInfo->ergebnis->code);
+    	if ($kassenzeichenInfo && isset($kassenzeichenInfo->ergebnis) && $kassenzeichenInfo->ergebnis->getCode()) {
+    		$code = $kassenzeichenInfo->ergebnis->getCodeAsInt();
     		if ($code == 0) {
     			return true;
     		}    		

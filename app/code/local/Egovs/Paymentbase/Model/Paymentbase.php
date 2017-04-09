@@ -133,12 +133,12 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 					if ($kInfo->ergebnis->istOk == false) {
 						$msg = sprintf(
 								"%s; Error code: %s; Kassenzeichen: %s",
-								$this->getKassenzeichenInfo()->ergebnis->langText,
-								$this->getKassenzeichenInfo()->ergebnis->code,
+								$this->getKassenzeichenInfo()->ergebnis->getLongText(),
+								$this->getKassenzeichenInfo()->ergebnis->getCode(),
 								$kzeichen
 						);
-						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->code])) {
-							$errors[$this->getKassenzeichenInfo()->ergebnis->code] = $msg;
+						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])) {
+							$errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] = $msg;
 							Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 							Mage::getSingleton('adminhtml/session')->addError($msg);
 						}
