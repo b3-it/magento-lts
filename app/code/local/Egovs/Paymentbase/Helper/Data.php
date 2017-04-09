@@ -963,7 +963,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				// EShopKundenNr, wie sie innerhalb der eGov-Plattform gefuehrt werden soll
 				$customer,
 				// Sprache
-				'DE',
+				'de',
 				// Titel
 				null,
 				// Anrede
@@ -1381,7 +1381,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				// EShopKundenNr, wie sie innerhalb der eGov-Plattform gefuehrt werden soll
 				$this->getECustomerId($customer),
 				// Sprache
-				'DE',
+				'de',
 				// Titel
 				null,
 				// Anrede

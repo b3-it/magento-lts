@@ -402,19 +402,10 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
     		} else {
     			if (isset($erg) && isset($erg->ergebnis)) {
     				$kassenzeichen = isset($erg->buchungsListe) ? ", Kassenzeichen: {$erg->buchungsListe->kassenzeichen}" : '';
+    				$this->_writeLog($method, "istOK: {$erg->ergebnis->istOk}, Code: {$erg->ergebnis->getCode()}, Nachricht: {$erg->ergebnis->getShortText()} $kassenzeichen");
+    			} elseif (isset($erg) && isset($erg->istOK)) {
     				//ePayBL 2.x
-    				if (isset($erg->ergebnis->code)) {
-    					$this->_writeLog($method, "istOK: {$erg->ergebnis->istOk}, Code: {$erg->ergebnis->code}, Nachricht: {$erg->ergebnis->kurzText} $kassenzeichen");
-    				} elseif (isset($erg->ergebnis->text)) {
-    					//ePayBL 3.x
-    					$this->_writeLog($method, "istOK: {$erg->ergebnis->istOk}, Code: {$erg->ergebnis->text->code}, Nachricht: {$erg->ergebnis->text->kurzText} $kassenzeichen");
-    				}
-    			} elseif (isset($erg) && isset($erg->code)) {
-    				//ePayBL 2.x
-    				$this->_writeLog($method, "istOK: {$erg->istOk}, Code: {$erg->code}, Nachricht: {$erg->kurzText}");
-    			} elseif (isset($erg) && isset($erg->text)) {
-    				//ePayBL 3.x
-    				$this->_writeLog($method, "istOK: {$erg->istOk}, Code: {$erg->text->code}, Nachricht: {$erg->text->kurzText}");
+    				$this->_writeLog($method, "istOK: {$erg->istOk}, Code: {$erg->getCode()}, Nachricht: {$erg->getShortText()}");
     			} else {
     				$this->_writeLog($method, 'Unkown error');
     			}
@@ -500,7 +491,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 		}
 		
 		if ($erg instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis) {
-			if ($erg->ergebnis->code == '-0199') {
+			if ($erg->ergebnis->getCodeAsInt() == -199) {
 				$erg->kunde = $kunde;
 			}
 			
