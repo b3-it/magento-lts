@@ -17,7 +17,7 @@ class Sid_Cms_Block_Adminhtml_Navi extends Mage_Adminhtml_Block_Widget_Grid_Cont
     $this->_controller = 'adminhtml_navi';
     $this->_blockGroup = 'sidcms';
     $this->_headerText = Mage::helper('sidcms')->__('CMS Navigation');
-    $this->_addButtonLabel = Mage::helper('sidcms')->__('Add Menu');
+    $this->_addButtonLabel = Mage::helper('sidcms')->__('Add Navigation Menu');
     parent::__construct();
   }
 }
