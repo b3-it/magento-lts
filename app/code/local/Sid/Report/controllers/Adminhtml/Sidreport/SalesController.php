@@ -127,19 +127,7 @@ class Sid_Report_Adminhtml_Sidreport_SalesController extends Mage_Adminhtml_Cont
 
     protected function _isAllowed()
     {
-        switch ($this->getRequest()->getActionName()) {
-            case 'sales':
-                return $this->_getSession()->isAllowed('report/salesroot/frame_contract_report');
-                break;
-            case 'exportSalesCsv':
-                return $this->_getSession()->isAllowed('report/salesroot/frame_contract_report');
-                break;
-            case 'exportSalesExcel':
-                return $this->_getSession()->isAllowed('report/salesroot/frame_contract_report');
-                break;
-                
-
-        }
+    	return Mage::getSingleton('admin/session')->isAllowed('report/salesroot/frame_contract_report');
     }
 
     /**
