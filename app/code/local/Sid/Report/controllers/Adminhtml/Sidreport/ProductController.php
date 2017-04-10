@@ -32,7 +32,7 @@ class Sid_Report_Adminhtml_Sidreport_ProductController extends Mage_Adminhtml_Co
 
 	protected function _isAllowed()
 	{
-		return Mage::getSingleton('admin/session')->isAllowed('report/salesroot/frame_contract_product_report');
+		return Mage::getSingleton('admin/session')->isAllowed('report/products/frame_contract_product_report');
 		
 	}
 
