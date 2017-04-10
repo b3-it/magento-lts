@@ -32,26 +32,14 @@ class Sid_Report_Adminhtml_Sidreport_ProductController extends Mage_Adminhtml_Co
 
 	protected function _isAllowed()
 	{
-		return true;
-		switch ($this->getRequest()->getActionName()) {
-			case 'stock':
-				return $this->_getSession()->isAllowed('report/products/frame_contract_product_report');
-				break;
-			case 'exportSalesCsv':
-				return $this->_getSession()->isAllowed('report/products/frame_contract_product_report');
-				break;
-			case 'exportSalesExcel':
-				return $this->_getSession()->isAllowed('report/products/frame_contract_product_report');
-				break;
-	
-	
-		}
+		return Mage::getSingleton('admin/session')->isAllowed('report/salesroot/frame_contract_product_report');
+		
 	}
 
     public function exportCsvAction()
     {
         $fileName   = 'product.csv';
-        $content    = $this->getLayout()->createBlock('report/adminhtml_product_grid')
+        $content    = $this->getLayout()->createBlock('sidreport/adminhtml_product_grid')
             ->getCsv();
 
         $this->_sendUploadResponse($fileName, $content);
@@ -60,7 +48,7 @@ class Sid_Report_Adminhtml_Sidreport_ProductController extends Mage_Adminhtml_Co
     public function exportXmlAction()
     {
         $fileName   = 'product.xml';
-        $content    = $this->getLayout()->createBlock('report/adminhtml_product_grid')
+        $content    = $this->getLayout()->createBlock('sidreport/adminhtml_product_grid')
             ->getXml();
 
         $this->_sendUploadResponse($fileName, $content);
