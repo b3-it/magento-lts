@@ -56,6 +56,8 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
     protected function _prepareCollection()
     {
         $filterData = $this->getFilterData();
+        //die PageSize setzen da sonst nur ein Teil angezeigt wird (LIMIT 5) ZV_FM-1157
+        $this->setSubReportSize(false);
         parent::_prepareCollection();
  
         $this->getCollection()->initReport('sidreport/sales_collection');
