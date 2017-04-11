@@ -64,7 +64,8 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
 	    $this->getCollection()->getReportModel()->setCustomerGroup($this->getFilter('customer_group'));
 	    $this->getCollection()->getReportModel()->setDienststelle($this->getFilter('dienststelle'));
 	    $this->getCollection()->setInterval($this->getFilter('from'),$this->getFilter('to'));
-//die( $this->getCollection()->getReportModel()->getSelect()->__toString());	    
+//die( $this->getCollection()->getReportModel()->getSelect()->__toString());	 
+	  
         return $this;
     }
     
@@ -164,4 +165,12 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
         
         return parent::_prepareColumns();
     }
+    
+    protected function _afterToHtml($html)
+    {
+    	$s = $this->getCollection()->getReportModel()->getSelect()->__toString();
+    	$this->setLog($s);
+    	return parent::_afterToHtml($html);
+    }
+ 
 }
