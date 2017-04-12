@@ -63,8 +63,12 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     
     public function gridAction()
     {
+    	$this->loadLayout(false);
+    	$this->renderLayout();
+    	/*
     	$this->getResponse()->setBody(
     			$this->getLayout()->createBlock('sidimport/adminhtml_import_edit_tab_grid')->toHtml());
+    			*/
     }
     
 	public function saveAction() {
