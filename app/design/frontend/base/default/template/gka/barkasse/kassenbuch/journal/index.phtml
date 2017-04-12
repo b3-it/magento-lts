@@ -18,6 +18,7 @@
 	</div>	
 	<?php else: ?>
 	<div id = "close_journal">
+		<h2>Ein Kassenbuch für die Kasse '<?php echo $_kassenbuchjournal->getCashboxTitle()?>' ist geöffnet.</h2>
 		<form action="<?php echo $this->getCloseUrl();?>" method="post">
 		
 		<input type="hidden" name="id" value="<?php echo $_kassenbuchjournal->getId()?>"></input>

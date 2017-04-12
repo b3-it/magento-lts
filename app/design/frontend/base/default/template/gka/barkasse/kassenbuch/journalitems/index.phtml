@@ -1,16 +1,10 @@
 <?php $_helper = $this->helper('gka_barkasse'); ?>
-<?php $_kassenbuchjournalitems = $this->getKassenbuchJournalitems(); ?>
-<div>
 
-  <?php echo $_helper->__('Id');?>:
-  <?php echo $_kassenbuchjournalitems->getData('id');?>
-    <?php echo $_helper->__('Nubmer');?>:
-  <?php echo $_kassenbuchjournalitems->getData('number');?>    <?php echo $_helper->__('Booking Date');?>:
-  <?php echo $_kassenbuchjournalitems->getData('booking_date');?>    <?php echo $_helper->__('Booking Amount');?>:
-  <?php echo $_kassenbuchjournalitems->getData('booking_amount');?>    <?php echo $_helper->__('Journal ID');?>:
-  <?php echo $_kassenbuchjournalitems->getData('journal_id');?>    <?php echo $_helper->__('Order ID');?>:
-  <?php echo $_kassenbuchjournalitems->getData('order_id');?>    <?php echo $_helper->__('Cancel');?>:
-  <?php echo $_kassenbuchjournalitems->getData('order_cancel');?>    <?php echo $_helper->__('Source');?>:
-  <?php echo $_kassenbuchjournalitems->getData('source');?>  
+<div>
+<a href="<?php echo $this->getBackUrl();?>"><?php echo $_helper->__('Back')?></a>
+
+
+ <?php echo $this->getChildHtml("journal_details") ?>
 
 </div>
+
