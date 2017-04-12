@@ -118,7 +118,9 @@ class Sid_Framecontract_Adminhtml_Framecontract_ContractController extends Mage_
 			$von = Varien_Date::toTimestamp($data['start_date']);
 			$bis =Varien_Date::toTimestamp($data['end_date']);
 			
-	  			
+	  		if(isset($data['contractnumber'])){
+	  			$data['contractnumber'] = trim($data['contractnumber']);
+	  		}
 			$model = Mage::getModel('framecontract/contract');		
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
