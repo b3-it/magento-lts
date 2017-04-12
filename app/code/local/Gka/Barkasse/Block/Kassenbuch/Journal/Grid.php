@@ -22,13 +22,16 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
 
   protected function _prepareCollection()
   {
-  	$userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
   	$collection = Mage::getModel('gka_barkasse/kassenbuch_journal')->getCollection();
+  	$expr = new Zend_Db_Expr('(SELECT sum(id) as sum_id, sum(booking_amount) as sum_booking_amount, journal_id FROM '.$collection->getTable('gka_barkasse/kassenbuch_journal_items').' GROUP BY journal_id)');	
+  	$userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
+  	
   	$collection->getSelect()
+  	->joinLeft(array('items'=>$expr), 'items.journal_id=main_table.id',array('sum_id','sum_booking_amount'))
   	->where('customer_id = ' . $userId)
   	->where('status = '.Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED);
   		
-  	
+  	//die($collection->getSelect()->__toString());
   	;
     $this->setCollection($collection);
     return parent::_prepareCollection();
@@ -76,6 +79,20 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
           //'width'     => '150px',
           'index'     => 'closing_balance',
       ));
+      
+      $this->addColumn('sum_booking_amount', array(
+      		'header'    => Mage::helper('gka_barkasse')->__('Total'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'sum_booking_amount',
+      ));
+      
+      $this->addColumn('sum_id', array(
+      		'header'    => Mage::helper('gka_barkasse')->__('Count'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'sum_id',
+      ));
       /*
       $this->addColumn('customer_id', array(
           'header'    => Mage::helper('gka_barkasse')->__('Owner ID'),
@@ -114,8 +131,8 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
                 'getter'    => 'getId',
                 'actions'   => array(
                     array(
-                        'caption'   => Mage::helper('gka_barkasse')->__('Edit'),
-                        'url'       => array('base'=> '*/*/edit'),
+                        'caption'   => Mage::helper('gka_barkasse')->__('Details'),
+                        'url'       => array('base'=> '*/kassenbuch_journalitems/index'),
                         'field'     => 'id'
                     )
                 ),

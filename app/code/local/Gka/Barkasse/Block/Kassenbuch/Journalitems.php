@@ -15,11 +15,8 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems extends Mage_Core_Block_Templat
   		return parent::_prepareLayout();
     }
 
-     public function getKassenbuchJournalitems()
+     public function getBackUrl()
      {
-        if (!$this->hasData('kassenbuchjournal_items')) {
-            $this->setData('kassenbuchjournal_items', Mage::registry('kassenbuchjournal_items_data'));
-        }
-        return $this->getData('kassenbuchjournal_items');
-    }
+     	return $this->getUrl('gka_barkasse/kassenbuch_journal/index');
+     }
 }
