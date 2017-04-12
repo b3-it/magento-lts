@@ -14,20 +14,6 @@ class Gka_Barkasse_Kassenbuch_JournalitemsController extends Mage_Core_Controlle
 
     public function indexAction()
     {
-      $id     =  intval($this->getRequest()->getParam('id'));
-      $model  = Mage::getModel('gka_barkasse/kassenbuch_journalitems')->load($id);
-
-      if ($model->getId() || $id == 0)
-      {
-        Mage::register('kassenbuchjournal_items_data', $model);
-      }else{
-        Mage::getSingleton('core/session')->addError($this->__('Internal Error'));
-        Mage::log('gka_barkasse/kassenbuch_journalitems not found ID:'.$id);
-        $this->_redirect('customer/account');
-        return;
-      }
-
-
       $this->loadLayout();
       $this->renderLayout();
     }
@@ -46,5 +32,17 @@ class Gka_Barkasse_Kassenbuch_JournalitemsController extends Mage_Core_Controlle
           $this->_customer = Mage::getSingleton('customer/session')->getCustomer();
         }
         return $this->_custommer;
+    }
+    
+    public function gridAction()
+    {
+    	if(!$this->_validateFormKey()){
+    		$this->_redirect('customer/account/logout');
+    		return;
+    	}
+    	$this->loadLayout(false);
+    	$this->getResponse()->setBody(
+    			$this->getLayout()->createBlock('gka_barkasse/kassenbuch_journalitems_grid')->toHtml()
+    			);
     }
 }
