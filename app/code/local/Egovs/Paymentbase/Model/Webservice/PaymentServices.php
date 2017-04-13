@@ -403,9 +403,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
     			if (isset($erg) && isset($erg->ergebnis)) {
     				$kassenzeichen = isset($erg->buchungsListe) ? ", Kassenzeichen: {$erg->buchungsListe->kassenzeichen}" : '';
     				$this->_writeLog($method, "istOK: {$erg->ergebnis->istOk}, Code: {$erg->ergebnis->getCode()}, Nachricht: {$erg->ergebnis->getShortText()} $kassenzeichen");
-    			} elseif (isset($erg) && isset($erg->istOK)) {
-    				//ePayBL 2.x
-    				$this->_writeLog($method, "istOK: {$erg->istOk}, Code: {$erg->getCode()}, Nachricht: {$erg->getShortText()}");
+    			} elseif (isset($erg) && $erg->isOk()) {
+    				$this->_writeLog($method, "istOK: {$erg->isOk()}, Code: {$erg->getCode()}, Nachricht: {$erg->getShortText()}");
     			} else {
     				$this->_writeLog($method, 'Unkown error');
     			}
