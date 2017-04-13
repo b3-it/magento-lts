@@ -412,16 +412,20 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 	         * 
 	         */
 	        Mage::log("$module::NOTIFY_ACTION:WS aktiviereTempKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-			
-        	if ($idp->getAttribute('PROVIDERID') == 77) {
-				$_providerName = "AMEX";
-			} elseif ($idp->getAttribute('PROVIDERID') == 102) {
-				$_providerName = "Visa";
-			} elseif ($idp->getAttribute('PROVIDERID') == 104) {
-				$_providerName = "Master";
-			} else {
-				$_providerName = "AMEX";
-			}
+	        $_providerId = intval($idp->getAttribute('PROVIDERID'));
+	        switch ($_providerId) {
+	        	case 102:
+	        	case 2:
+	        		$_providerName = "Visa";
+	        		break;
+	        	case 104:
+	        	case 1:
+	        		$_providerName = "Master";
+	        		break;
+	        	case 77:
+	        	default:
+	        		$_providerName = 'AMEX';
+	        }
 
 			// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 			$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
