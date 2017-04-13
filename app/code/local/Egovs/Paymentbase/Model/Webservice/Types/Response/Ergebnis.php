@@ -84,8 +84,8 @@ class Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis
 	 * @return boolean
 	 */
 	public function isOk() {
-		if (isset($this->istOK)) {
-			return (bool) $this->istOK;
+		if (isset($this->istOk)) {
+			return (bool) $this->istOk;
 		}
 		
 		return false;
