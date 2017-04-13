@@ -477,7 +477,7 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 		$this->_getSaferPayUrl();
 				
 		if ($this->getDebug ()) {
-			rtrim($this->_fieldsArr ['NOTIFYURL'], '"');
+			$this->_fieldsArr ['NOTIFYURL'] = rtrim($this->_fieldsArr ['NOTIFYURL'], '"');
 			$this->_fieldsArr ['NOTIFYURL'] .= '&XDEBUG_SESSION_START"';
 			/*
 			 * build a xml-like form of the attributes that get stored in
