@@ -280,6 +280,10 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
     	//20150126::Frank Rochlitzer:Wir setzen den Status immer => falls APC fehlschlägt
     	//Sobald der Status nicht mehr PENDING_PAYMENT ist, wurde die Order schon behandelt!
     	//Der Status ist mit dem State identisch benannt.
+    	if ($this->_getOrder()->isEmpty()) {
+    		Mage::log("$module::NOTIFY_ACTION:Order is empty, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+    		return;
+    	}
     	if ($this->_getOrder()->getData('status') != Mage_Sales_Model_Order::STATE_PENDING_PAYMENT) {
     		Mage::log("$module::NOTIFY_ACTION:Saferpay notify already called, omitting!", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
     		return;
