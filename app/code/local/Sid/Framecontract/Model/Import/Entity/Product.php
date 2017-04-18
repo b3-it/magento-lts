@@ -1895,7 +1895,11 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
 	        $zeile = $rowNum +1; 
 	        if(!$this->isvalidFile_name($filename))
 	        {
-	        	$this->missingImages[] = $filename." (Zeile: ".$zeile.") ist nicht gültig";
+	        	if( strlen(trim($filename)) == 0){
+	        		$this->missingImages[] = "Der Dateiname in Zeile ".$zeile." fehlt!";
+	        	}else{
+	        		$this->missingImages[] =  "Der Dateiname. '".$filename."' (Zeile: ".$zeile.") ist nicht gültig!";
+	        	}
 	        }
 	        else if(!file_exists($path. DS .$filename))
 	        {
