@@ -15,9 +15,15 @@ class Gka_Barkasse_Model_Observer extends Varien_Object
 
 	public function onCheckoutSubmitAllAfter($observer)
 	{
+		/** @var $order Mage_Sales_Model_Order */
 		$order = $observer->getOrder();
 		
 		if($order == null) return;
+		
+		
+		if($order->getPayment()->getMethod() != 'epaybl_cashpayment'){
+			return;
+		}
 		
 		$journal  = Mage::getModel('gka_barkasse/kassenbuch_journal')->getOpenJournal($order->getCustomerId());
 		$journalItem = Mage::getModel('gka_barkasse/kassenbuch_journalitems');

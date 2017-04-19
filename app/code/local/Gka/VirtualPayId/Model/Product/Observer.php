@@ -19,7 +19,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 	}
 	
 	
-	public function xonSalesOrderSaveAfter($observer) {
+	public function onSalesOrderSaveAfter($observer) {
 		/* @var $order Mage_Sales_Model_Order */
 		$order = $observer->getOrder();
 	
@@ -27,44 +27,6 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		if (!$order || $order->isEmpty()) {
 			return;
 		}
-	
-	
-		$state = $order->getState();
-		if(($state != Mage_Sales_Model_Order::STATE_COMPLETE)
-				&& ($state != Mage_Sales_Model_Order::STATE_PROCESSING)
-				&& ($state != Mage_Sales_Model_Order::STATE_CANCELED)
-				&& ($state != Mage_Sales_Model_Order::STATE_CLOSED))
-		{
-			return;
-		}
-	
-	
-		//nur bei Status änderung weitermachen
-		$origState = 'dummy';
-		if(count($order->getOrigData()) > 0)
-		{
-			$orig = $order->getOrigData();
-			$origState = $orig['state'];
-		}
-	
-	
-		$this->setLog('onSalesOrderSaveAfter: ID=' .$order->getId(). ', state='. $state .', origState='.$origState);
-	
-		//falls keine Änderung -> keine Aktion
-		if($origState == $state)
-		{
-			return;
-		}
-	
-		//hier den Fall Stornierung abhandeln
-		if((($origState != Mage_Sales_Model_Order::STATE_CANCELED)|| ($origState != Mage_Sales_Model_Order::STATE_CLOSED)) &&
-				(($state == Mage_Sales_Model_Order::STATE_CANCELED)  || ($state == Mage_Sales_Model_Order::STATE_CLOSED)))
-		{
-	
-			//$this->_cancelOrderItems($order->getAllItems());
-			return;
-		}
-	
 	
 		foreach($order->getAllItems() as $orderitem)
 		{
@@ -98,8 +60,13 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		}
 	
 		
-	
-	
+		$br = $orderitem->getBuyRequest();
+		
+		Mage::getModel('virtualpayid/payid')
+			->setOrderItemId($orderitem->getId())
+			->setKassenzeichen($br->getPayId())
+			->save();
+		
 	
 		return $this;
 	}

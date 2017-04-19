@@ -21,27 +21,23 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
     }
     
     
-    protected function _prepareProduct(Varien_Object $buyRequest, $product, $processMode) {
+    protected function _prepareProduct(Varien_Object $buyRequest, $product, $processMode) 
+    {
+    	$buyRequest->setQty(1);
+    
+    	$result = parent::_prepareProduct($buyRequest, $product, $processMode);
+    			
     	$pay_id = $buyRequest->getPayId();
     	if($pay_id)
     	{
     		$this->getProduct($product)->addCustomOption('pay_id', $pay_id);
-    
     	}
+    	 
     	
-    	
-    	$buyRequest->setQty(1);
-    
-    	$result = parent::_prepareProduct($buyRequest, $product, $processMode);
-    		
     	if (is_string($result)) {
     		return $result;
     	}
-    
-    
     	return $result;
-    
-    
     }
     
     

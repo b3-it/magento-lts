@@ -33,16 +33,12 @@
 		</div>
 		<div class="product-descriptor">
              <div class="desc std">
-				   <?php if($station = $this->getStation($_item)):?>
+				   <?php if($payid = $this->getPayId($_item)):?>
 				     <span class="std small dwd-orderitem-options">
-				            <?php echo $this->__('Station').': '.$station->getName(); ?>
+				            <?php echo $this->__('Payment Identification').': '.$payid; ?>
 				     </span>
 			     <?php endif;?>
-			   	<?php if($periode = $this->getPeriode($_item)):?>
-				     <span class="std small dwd-orderitem-options">
-				            <?php echo $this->__('Periode').': '.$periode->getFormatedText(); ?>
-				     </span>
-			     <?php endif;?>
+			   
 				<div><?php echo nl2br($_item->getProduct()->getShortDescription()) ?></div>
 			</div>
 		</div>				

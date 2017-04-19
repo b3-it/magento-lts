@@ -1,12 +1,11 @@
 <?php
-class Gka_VirtualPayId_Block_Sales_Item_Renderer extends Mage_Sales_Block_Order_Item_Renderer_Default
+
+class Gka_VirtualPayId_Block_Sales_Email_Items_Order_Type extends Mage_Sales_Block_Order_Email_Items_Order_Default
 {
-	
 	public function getPayId(Mage_Sales_Model_Order_Item $item)
 	{
 		$br = $item->getBuyRequest();
 		return $br->getPayId();
-		
+	
 	}
-
 }

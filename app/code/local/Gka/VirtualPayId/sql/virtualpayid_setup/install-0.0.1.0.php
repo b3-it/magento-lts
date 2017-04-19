@@ -29,7 +29,7 @@ $table = $installer->getConnection()
 		'order_item_id', $installer->getTable('sales/order_item'), 'item_id',
 		Varien_Db_Ddl_Table::ACTION_SET_NULL, Varien_Db_Ddl_Table::ACTION_CASCADE
 	)
-	->setComment('Tuc Voucher Table')
+	->setComment('Payment Indentification Table')
 ;
 
 

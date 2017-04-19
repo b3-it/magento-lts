@@ -29,12 +29,17 @@
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
     <td><h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
    	<!-- configvirtual -->
-         <?php if ($payid = $this->getPayId($_item)): ?>
+         <?php if ($station = $this->getStationLabel()): ?>
         <dl class="item-options">
-            <dt><?php Mage::helper('gka_virtualpayid')->__('Payment Identification')?>: <?php echo $payid; ?></dt>            
+            <dt>Station: <?php echo $station; ?></dt>            
         </dl>
     <?php endif; ?>
-
+    <?php if ($periode = $this->getFormatedPeriode()): ?>
+        <dl class="item-options">
+            <dt>Periode: <?php echo $periode; ?></dt>
+            
+        </dl>
+    <?php endif; ?>
         <!-- EOF configvirtual -->
     
     

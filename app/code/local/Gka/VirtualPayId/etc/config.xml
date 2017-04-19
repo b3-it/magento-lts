@@ -10,7 +10,7 @@
             <modules>
                 <Gka_VirtualPayId>
                     <files>
-                        <default>Gka_VirtualPayId.csv</default>
+                        <default>gka/virtualpayid.csv</default>
                     </files>
                 </Gka_VirtualPayId>
             </modules>
@@ -27,20 +27,10 @@
         <layout>
             <updates>
                 <virtualpayid>
-                    <file>tuc_voucher.xml</file>
+                    <file>gka/virtualpayid.xml</file>
                 </virtualpayid>
             </updates>
         </layout>
-        <events>
-            <catalog_product_save_after>
-                <observers>
-                    <tuc_voucher_observer>
-                        <class>virtualpayid/product_observer</class>
-                        <method>prepareProductSave</method>
-                    </tuc_voucher_observer>
-                </observers>
-            </catalog_product_save_after>      
-        </events>
     </adminhtml>
     
     <global>
@@ -132,26 +122,15 @@
             </virtualpayid_setup>
         </resources>
         <events>   
-            <!--
             <checkout_type_onepage_save_order_after>
                 <observers>
-                    <checkout_tuc_tan>
+                    <virtual_pay_id>
                         <type>singleton</type>
                         <class>virtualpayid/product_observer</class>
-                        <method>allocateTan</method>
-                    </checkout_tuc_tan>
-                </observers>
-            </checkout_type_onepage_save_order_after>
-            -->
-            <xsales_order_save_commit_after>
-                <observers>
-                    <invoice_pay_tuc_tan>
-                        <type>singleton</type>
-                        <class>virtualpayid/product_observer</class>
-                        <method>sendVoucher</method>
-                    </invoice_pay_tuc_tan>
+                        <method>onSalesOrderSaveAfter</method>
+                    </virtual_pay_id>
                 </observers>  
-            </xsales_order_save_commit_after> 
+            </checkout_type_onepage_save_order_after> 
         </events>
     </global>
     <frontend>
@@ -159,7 +138,7 @@
             <modules>
                 <Gka_VirtualPayId>
                     <files>
-                        <default>Gka_VirtualPayId.csv</default>
+                        <default>gka/virtualpayid.csv</default>
                     </files>
                 </Gka_VirtualPayId>
             </modules>
