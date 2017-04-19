@@ -124,7 +124,7 @@ class Egovs_Base_Model_Core_Email_Mailer extends Mage_Core_Model_Email_Template_
             		//'return_to'         => $this->getMail()->getReturnPath(),
             ))
             ->addRecipients($emailInfo->getToEmails(), $emailInfo->getToNames(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_TO)
-            //->addRecipients($this->_bccEmails, array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
+            ->addRecipients($emailInfo->getBccEmails(), array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
             ;
             
             if($this->_Attachment)
