@@ -8,7 +8,9 @@ class Gka_VirtualPayId_Block_Checkout_Cart_Item_Renderer extends Mage_Checkout_B
 	   	if($item->getProduct())
 	   	{
 	   		$pay_id = $item->getProduct()->getCustomOption('pay_id');
-	   		return $pay_id->getValue();
+	   		if($pay_id){
+	   			return $pay_id->getValue();
+	   		}
 	   	}
 	   	return "";
    } 
