@@ -150,8 +150,8 @@
         <jobs>
             <dwd_fix_sync>
                 <schedule>
-                    <xcron_expr>3,13,23,33,43,53 * * * *</xcron_expr>
-                    <cron_expr>* * * * *</cron_expr>
+                    <cron_expr>3,13,23,33,43,53 * * * *</cron_expr>
+                    <xcron_expr>* * * * *</xcron_expr>
                 </schedule>
                 <run>
                     <model>dwd_fix/cron::runSync</model>
