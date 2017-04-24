@@ -118,9 +118,9 @@
 					        <children>
 					            <config>
 					                <children>
-					                    <dwd_icd>
-					                        <title>ICD Connections</title>
-					                    </dwd_icd>
+					                    <dwd_fix>
+					                        <title>DWD Fix</title>
+					                    </dwd_fix>
 					                </children>
 					            </config>
 					        </children>
