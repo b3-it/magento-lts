@@ -29,6 +29,7 @@ class Gka_Barkasse_Model_Observer extends Varien_Object
 		$journalItem = Mage::getModel('gka_barkasse/kassenbuch_journalitems');
 		
 		$journalItem->setBookingDate(now())
+		->setBookingAmount($order->getBaseGrandTotal())
 		->setJournalId($journal->getId())
 		->setOrderId($order->getId())
 		->setSource(0)

@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_Checkout
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Gka_Checkout>
+            <version>0.1.3</version>
+        </Gka_Checkout>
+    </modules>
+    <global>
+        <blocks>
+            <gkacheckout>
+                <class>Gka_Checkout_Block</class>
+            </gkacheckout>
+            <checkout>
+            	<rewrite>
+                	<links>Gka_Checkout_Block_Links</links>
+                	<cart_sidebar>Gka_Checkout_Block_Cart_Sidebar</cart_sidebar>
+                </rewrite>
+            </checkout>
+        </blocks>
+        <helpers>
+            <gkacheckout>
+                <class>Gka_Checkout_Helper</class>
+            </gkacheckout>
+        </helpers>
+        <models>
+            <gkacheckout>
+                <class>Gka_Checkout_Model</class>
+                <resourceModel>checkout_resource</resourceModel>
+            </gkacheckout>
+            
+        </models>
+        <resources>
+             <gkacheckout_setup>
+                <setup>
+                    <module>Gka_Checkout</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gkacheckout_setup>
+        </resources>
+        <rewrite>
+		 <seven_catalog_daniel>
+		 <from><![CDATA[#^/checkout/cart/add/(.*)$#]]></from>
+		 <to>/gkacheckout/cart/add/</to>
+		 </seven_catalog_daniel>
+		 </rewrite>
+    </global>
+    <frontend>
+        <secure_url>
+            <checkout>/gkacheckout/</checkout>
+        </secure_url>
+        <events>
+            <customer_login>
+                <observers>
+                    <loadCustomerQuote>
+                        <class>checkout/observer</class>
+                        <method>loadCustomerQuote</method>
+                    </loadCustomerQuote>
+                </observers>
+            </customer_login>
+            <customer_logout>
+                <observers>
+                    <unsetAll>
+                        <class>checkout/observer</class>
+                        <method>unsetAll</method>
+                    </unsetAll>
+                </observers>
+            </customer_logout>
+            <sales_quote_save_after>
+                <observers>
+                    <set_checkout_quote_id>
+                        <class>checkout/observer</class>
+                        <method>salesQuoteSaveAfter</method>
+                    </set_checkout_quote_id>
+                </observers>
+            </sales_quote_save_after>
+        </events>
+        <routers>
+            <checkout>
+                <use>standard</use>
+                <args>
+                    <module>Gka_Checkout</module>
+                    <frontName>gkacheckout</frontName>
+                </args>
+            </checkout>
+            <frontend>
+            </frontend>
+        </routers>
+        <translate>
+            <modules>
+                <Gka_Checkout>
+                    <files>
+                        <default>Gka_Checkout.csv</default>
+                    </files>
+                </Gka_Checkout>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <checkout>
+                    <file>gka/checkout.xml</file>
+                </checkout>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Gka_Checkout>
+                    <files>
+                        <default>Gka_Checkout.csv</default>
+                    </files>
+                </Gka_Checkout>
+            </modules>
+        </translate>
+        <events>
+           <sales_order_place_after>
+                <observers>
+                    <gkacheckout_sales_order_place_after>
+                        <type>singleton</type>
+                        <class>gkacheckout/observer</class>
+                        <method>onSalesOrderPlaceAfter</method>
+                    </gkacheckout_sales_order_place_after>
+                </observers>
+            </sales_order_place_after>
+        </events>
+    </adminhtml>
+</config>

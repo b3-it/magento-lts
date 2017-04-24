@@ -65,6 +65,7 @@ if (!$installer->tableExists($installer->getTable('gka_barkasse/kassenbuch_journ
 	  	`id` int(11) unsigned NOT NULL auto_increment,
     	`number` int(11) unsigned default 0,
         `booking_date` datetime default null,
+        `booking_amount`  decimal(12,4) default 0,
         `journal_id` int(11) unsigned default 0,
         `order_id` int(11) unsigned default null,
         `source` smallint(6) unsigned default 0,
