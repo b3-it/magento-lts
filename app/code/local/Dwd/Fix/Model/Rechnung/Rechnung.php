@@ -11,8 +11,6 @@
 class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
 {
 	
-	private $__von = 1;
-	private $__bis = 2;
 	private $__limit = 10;
 	
 	
@@ -33,19 +31,31 @@ class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
     
     public function process()
     {
+    	
+    	$von = intval(Mage::getStoreConfig('dwd_fix/fix/min'));
+    	$bis = intval(Mage::getStoreConfig('dwd_fix/fix/max'));
+    	
+    	if(($von < 1) || ($bis < 1) || ($bis < $von)){
+    		Mage::log('DWD Fix Bereichsgrenzen richtig nicht angegeben!', Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+    		return $this;
+    	}
+    	
+    	
     	$collection = Mage::getModel('sales/order')->getCollection();
     	$expr = new Zend_Db_Expr('(SELECT order_id FROM dwd_fix_rechnung_rechnung)');
     	$collection->getSelect()
-    	->where('entity_id >=?',$this->__von)
-    	->where('entity_id <=?',$this->__bis)
+    	->where('entity_id >=?',$von)
+    	->where('entity_id <=?',$bis)
     	->where('entity_id NOT IN (?)',$expr)
     	;
     	
     	//die($collection->getSelect()->__toString());
-    	
+    	$order_ids = array();
     	foreach($collection as $order){
     		$this->_processOrder($order);
+    		$order_ids[] = $order->getId();
     	}
+    	Mage::log('DWD Fix processing Orders: '. implode(',', $order_ids), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	
     }
     

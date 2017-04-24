@@ -14,7 +14,7 @@ class Dwd_Fix_Block_Adminhtml_Rechnung_Rechnung extends Mage_Adminhtml_Block_Wid
   {
     $this->_controller = 'adminhtml_rechnung_rechnung';
     $this->_blockGroup = 'dwd_fix';
-    $this->_headerText = Mage::helper('dwd_fix')->__('Rechnung Rechnung Manager');
+    $this->_headerText = Mage::helper('dwd_fix')->__('Rechnung Manager');
     $this->_addButtonLabel = Mage::helper('dwd_fix')->__('Send Invoices');
     parent::__construct();
   }

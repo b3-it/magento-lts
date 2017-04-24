@@ -24,6 +24,9 @@ class Dwd_Fix_Model_Cron extends Mage_Core_Model_Abstract
 		}
 		
 		
+		if(Mage::getStoreConfig('dwd_fix/fix/enable') == 0){
+			return true;
+		}
 		
 		
 		$last_run = date("Y-m-d H:i:s", (time()- (60 * 60)));
@@ -48,10 +51,9 @@ class Dwd_Fix_Model_Cron extends Mage_Core_Model_Abstract
 		}
 		
 		try {
-			$this->setLog("DWD Fix service started");
+			
 			Mage::log('DWD Fix service started', Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 			Mage::getModel('dwd_fix/rechnung_rechnung')->process();
-			$this->setLog("DWD Fix service finished");
 			Mage::log('DWD Fix service finished', Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		} catch (Exception $e) {
 			Mage::logException($e);

@@ -88,7 +88,7 @@
               <sort_order>50</sort_order>
               <children>
                   <dwdfix_rechnung_rechnung module="dwd_fix">
-                      <title>Rechnung Rechnung</title>
+                      <title>Rechnung</title>
                       <sort_order>10</sort_order>
                       <action>adminhtml/fix_rechnung_rechnung/index</action>
                   </dwdfix_rechnung_rechnung>
@@ -108,15 +108,26 @@
                           <sort_order>10</sort_order>
                           <children>
                                 <dwdfix_rechnung_rechnung module="dwd_fix">
-                                  <title>Rechnung Rechnung</title>
+                                  <title>Rechnung</title>
                                   <sort_order>10</sort_order>
                               </dwdfix_rechnung_rechnung>
 
                           </children>
                       </dwdfix>
+                      <system>
+					        <children>
+					            <config>
+					                <children>
+					                    <dwd_icd>
+					                        <title>ICD Connections</title>
+					                    </dwd_icd>
+					                </children>
+					            </config>
+					        </children>
+					    </system>
                   </children>
-              </admin>
-          </resources>
+              </admin> 
+        </resources>
       </acl>
         <translate>
             <modules>
@@ -139,7 +150,8 @@
         <jobs>
             <dwd_fix_sync>
                 <schedule>
-                    <cron_expr>5,15,25,35,45,55 * * * *</cron_expr>
+                    <xcron_expr>3,13,23,33,43,53 * * * *</xcron_expr>
+                    <cron_expr>* * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>dwd_fix/cron::runSync</model>

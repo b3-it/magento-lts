@@ -14,8 +14,8 @@ class Dwd_Fix_Adminhtml_Fix_Rechnung_RechnungController extends Mage_Adminhtml_C
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('rechnungrechnung/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('RechnungRechnung Manager'), Mage::helper('adminhtml')->__('RechnungRechnung Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('RechnungRechnung Manager'));
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Rechnung Manager'), Mage::helper('adminhtml')->__('Rechnung Manager'));
+		$this->_title(Mage::helper('adminhtml')->__('Rechnung Manager'));
 		return $this;
 	}
 
