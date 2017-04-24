@@ -155,9 +155,10 @@ class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
     	$pdf = Mage::getModel('pdftemplate/pdf_invoice');
     	if($pdf)
     	{
+    		$name = 'Rechnung_' .Mage::getSingleton('core/date')->date('d_m_Y__H_i_s').'_'.$invoice->getId().'.pdf';
     		$pdf = $pdf->getPdf(array($invoice));
     		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_EMAIL;
-    		$mailer->setAttachment($pdf->render(),$pdf->Name);
+    		$mailer->setAttachment($pdf->render(),$name);
     	}
     
     	$mailer->send();
