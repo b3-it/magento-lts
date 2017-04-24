@@ -316,10 +316,10 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				
 			if ($objResult instanceof SoapFault) {
 				$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
-			} elseif (!$objResult || is_null($objResult) || !$objResult->ergebnis) {
+			} elseif (!$objResult || is_null($objResult) || !isset($objResult->ergebnis)) {
 				$sMailText .= "Error: No result returned\n";
 			} else {
-				$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebni);
+				$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
 			}
 
 			$sMailText .= "ePayBL-Kundennummer: {$this->_getECustomerId()}\n";
