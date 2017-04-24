@@ -32,7 +32,7 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
     	{
     		$this->getProduct($product)->addCustomOption('pay_id', $pay_id);
     	}
-    	 
+
     	
     	if (is_string($result)) {
     		return $result;

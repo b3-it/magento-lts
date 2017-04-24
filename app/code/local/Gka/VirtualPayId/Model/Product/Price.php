@@ -16,7 +16,7 @@ class Gka_VirtualPayId_Model_Product_Price extends Mage_Catalog_Model_Product_Ty
     
     public function getBasePrice($product, $qty = null)
     {
-    	$price = (float)1;
+    	$price = (float)0;
     	return $price;
     }
 }

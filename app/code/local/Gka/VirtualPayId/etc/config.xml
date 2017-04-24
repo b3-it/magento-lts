@@ -130,7 +130,15 @@
                         <method>onSalesOrderSaveAfter</method>
                     </virtual_pay_id>
                 </observers>  
-            </checkout_type_onepage_save_order_after> 
+            </checkout_type_onepage_save_order_after>
+           <sales_quote_item_set_product>
+                <observers>
+                    <virtualpayid_product_observer_item_save_commit_after>
+                        <class>virtualpayid/product_observer</class>
+                        <method>onSalesQuoteItemSetProduct</method>
+                    </virtualpayid_product_observer_item_save_commit_after>
+                </observers>
+              </sales_quote_item_set_product>
         </events>
     </global>
     <frontend>
@@ -150,7 +158,15 @@
                 </virtualpayid>
             </updates>
         </layout>
-        
+         <routers>
+            <virtualpayid>
+                <use>standard</use>
+                <args>
+                    <module>Gka_VirtualPayId</module>
+                    <frontName>virtualpayid</frontName>
+                </args>
+            </virtualpayid>
+        </routers>
     </frontend>
     <admin>
         <fieldsets>

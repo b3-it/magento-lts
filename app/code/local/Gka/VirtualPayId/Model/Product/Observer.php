@@ -3,17 +3,11 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 {
 	
 	
-	/**
-	 * TANs für Tuc voucher importieren
-	 *
-	 * @param Varien_Object $observer
-	 * 
-	 * @return void
-	 */
+
 	public function prepareProductSave($observer) {
 		$request = $observer->getEvent()->getRequest();
 		$product = $observer->getEvent()->getProduct();
-		$tans = array();
+	
 		
 		return $this;
 	}
@@ -71,5 +65,30 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		return $this;
 	}
 	
+	
+	/**
+	 * Wenn Produkt in Quote gesetzt wird
+	 *
+	 * @param Varien_Event_Observer $observer Observer
+	 *
+	 * @return Dwd_ConfigurableDownloadable_Model_Product_Observer
+	 */
+	public function onSalesQuoteItemSetProduct($observer) {
+		$orderItem = $observer->getQuoteItem();
+		$product = $observer->getProduct();
+		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
+			return $this;
+		}
+	
+		$br = $orderItem->getBuyRequest();
+		$specialPrice = (float)($br->getAmount());
+
+		
+		if ($specialPrice > 0) {
+				$orderItem->setCustomPrice($specialPrice);
+				$orderItem->setOriginalCustomPrice($specialPrice);
+				$orderItem->getProduct()->setIsSuperMode(true);
+		}
+	}
 
 }
