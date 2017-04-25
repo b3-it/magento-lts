@@ -130,10 +130,10 @@ class Egovs_BankPayment_Block_Info extends Mage_Payment_Block_Info
     }
     
     public function showBankDetails() {
-    	if ($value = call_user_func(array($this->getMethod(), __FUNCTION__))) {
-    		return $value;
+    	if (!$this->getMethod() || !method_exists($this->getMethod(), __FUNCTION__)) {
+    		return true;
     	}
     	
-    	return true;
+    	return call_user_func(array($this->getMethod(), __FUNCTION__));
     }
 }
