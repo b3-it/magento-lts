@@ -256,6 +256,10 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         
         $new = $source->isObjectNew();
         
+        if ($origData === null) {
+            $origData = [];
+        }
+        
         if ($source instanceof Mage_Customer_Model_Address && ! empty($id) && ! empty($origData)) {
             if (isset($this->_cached[$className])) {
                 // Type bereits vorhanden
