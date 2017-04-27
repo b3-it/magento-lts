@@ -11,7 +11,7 @@
 class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
 {
 	
-	private $__limit = 10;
+	private $__limit = 2;
 	
 	
 	
@@ -47,6 +47,7 @@ class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
     	->where('entity_id >=?',$von)
     	->where('entity_id <=?',$bis)
     	->where('entity_id NOT IN (?)',$expr)
+    	->limit($this->__limit)
     	;
     	
     	//die($collection->getSelect()->__toString());
