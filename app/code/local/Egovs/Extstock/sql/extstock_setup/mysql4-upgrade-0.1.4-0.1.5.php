@@ -28,11 +28,22 @@
 $installer = $this;
 $installer->startSetup();
 
-$installer->getConnection()->insertMultiple(
-    $installer->getTable('admin/permission_block'),
-    array(
-        array('block_name' => 'extstock/adminhtml_email_lowstock', 'is_allowed' => 1),
-    )
+
+$addRows =    array(
+		array('block_name' => 'extstock/adminhtml_email_lowstock', 'is_allowed' => 1)
 );
+
+$table = $installer->getTable('admin/permission_block');
+
+
+foreach($addRows as $row)
+{
+	$sql = "SELECT * FROM $table WHERE block_name = '" . $row['block_name']."'";
+	if(count($installer->getConnection()->fetchAll($sql)) == 0)
+	{
+		$installer->getConnection()->insert($table,$row);
+	}
+	
+}
 
 $installer->endSetup();
