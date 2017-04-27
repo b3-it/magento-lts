@@ -55,23 +55,24 @@ class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
     	foreach($collection as $order){
     		$this->_processOrder($order);
     		$order_ids[] = $order->getId();
+    		Mage::getModel('dwd_fix/rechnung_rechnung')
+    		->setOrderId($order->getId())
+    		->setSend(now())
+    		->save();
     	}
-    	Mage::log('DWD Fix processing Orders: '. implode(',', $order_ids), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+    	Mage::log('DWD Fix processing Orders: '. implode(',', $order_ids), Zend_Log::INFO, Egovs_Helper::LOG_FILE);
     	
     }
     
     
     protected function _processOrder(Mage_Sales_Model_Order $order)
     {
-    	$invoices = $order->getInvoiceCollection();
+    	$invoices = $order->getInvoiceCollection()->getItems();
     	foreach($invoices as $invoice){
     		try
     		{
     			$this->_sendEmail($order,$invoice);
-    			Mage::getModel('dwd_fix/rechnung_rechnung')
-    			->setOrderId($order->getId())
-    			->setSend(now())
-    			->save();
+    			
     		}catch(Exception $ex)
     		{
     			Mage::logException($ex);
