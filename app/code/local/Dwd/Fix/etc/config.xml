@@ -150,7 +150,7 @@
         <jobs>
             <dwd_fix_sync>
                 <schedule>
-                    <cron_expr>3,13,23,33,43,53 * * * *</cron_expr>
+                    <cron_expr>* * * * *</cron_expr>
                     <xcron_expr>* * * * *</xcron_expr>
                 </schedule>
                 <run>
