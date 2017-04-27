@@ -124,6 +124,16 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
      */
     public function indexAction()
     {
+    	
+    	
+    	//quote_item_adresss_item leeren
+    	$quote = $this->_getQuote();
+    	$addresses = $quote->getAllAddresses();
+    	foreach($addresses as $address){
+    		$items = $address->getItemsCollection();
+    		$items->walk('delete');
+    	}
+    	
         $cart = $this->_getCart();
         if ($cart->getQuote()->getItemsCount()) {
             $cart->init();
@@ -135,6 +145,9 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
             }
         }
 
+      
+        
+        
         // Compose array of messages to add
         $messages = array();
         foreach ($cart->getQuote()->getMessages() as $message) {
@@ -150,14 +163,14 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
          */
         $this->_getSession()->setCartWasUpdated(true);
 
-        Varien_Profiler::start(__METHOD__ . 'cart_display');
+        //Varien_Profiler::start(__METHOD__ . 'cart_display');
         $this
             ->loadLayout()
             ->_initLayoutMessages('checkout/session')
             ->_initLayoutMessages('catalog/session')
             ->getLayout()->getBlock('head')->setTitle($this->__('Shopping Cart'));
         $this->renderLayout();
-        Varien_Profiler::stop(__METHOD__ . 'cart_display');
+        //Varien_Profiler::stop(__METHOD__ . 'cart_display');
     }
 
     /**
