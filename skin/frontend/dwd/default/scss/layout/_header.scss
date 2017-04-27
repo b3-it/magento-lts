@@ -69,8 +69,7 @@
     	        	background-color: $zusatzfarbe-blau;
     	        	
        	        	a {
-       	        		//color: $grundfarbe-weiss;
-       	        		color: $grundfarbe-blau;
+       	        		color: $grundfarbe-weiss;
       	        	}
       	        }
   	  	    }
@@ -393,7 +392,6 @@ body:not(.cms-index-index) {
 
     label {
         color: $grundfarbe-weiss;
-        background-color: $grundfarbe-blau;
         display: none;
     }
     select {

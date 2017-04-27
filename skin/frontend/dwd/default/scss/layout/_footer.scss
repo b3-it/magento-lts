@@ -17,12 +17,12 @@ footer {
     	/* Definiert in _style_images.scss */
     	@include dwd-gitter-rechts;
     	display: block;
-
+    	
     	@include bp(max-width, $bp-mobil) {
     	    background-image: none;
     	}
     }
-
+    
     @include bp(max-width, $global-fullpage-width) {
         background-image: linear-gradient(to right, $zusatzfarbe-gradient-1, $zusatzfarbe-gradient-2);
         margin: 0;
@@ -35,7 +35,7 @@ footer {
     h2 {
         color: $grundfarbe-weiss;
     }
-
+    
     @include bp(max-width, $bp-mobil) {
         margin: 0 15px 50px 15px;
     }
@@ -44,7 +44,7 @@ footer {
     min-height: $global-footer-height;
     background-image: linear-gradient(to right, $zusatzfarbe-gradient-1, $zusatzfarbe-gradient-2);
     padding: 45px 0 35px;
-
+    
     @include bp(max-width, $bp-mobil) {
         padding: 45px 0 0 0;
     }
@@ -52,7 +52,7 @@ footer {
 .bottom-row {
   	padding: 20px 0 30px;
   	line-height: 1.55em;
-
+  	
   	@include bp(max-width, $bp-mobil) {
   	    margin: 0;
   	    padding: 35px 15px 0 15px;
@@ -90,28 +90,21 @@ address {
     color: $grundfarbe-weiss;
     display: inline-block;
     font-size: 0.8rem;
-
+    
     @include bp(max-width, $bp-mobil) {
        font-size: 0.9rem;
     }
-
+    
     &.copyright {
         width: auto;
         margin-top: 20px;
-
+        
         @include bp(max-width, $global-fullpage-width) {
             margin-left: 5px;
         }
-
+        
         @include bp(max-width, $bp-mobil)  {
-            display: block;
-            font-size: 0.8rem;
-        }
-
-        @include bp(max-width, $bp-xsmall) {
-            height: 1.1rem;
-            margin: 0 0 10px;
-            overflow: hidden;
+            display: none;
         }
     }
 }
@@ -122,41 +115,39 @@ address {
     position: absolute;
     right: 0;
     width: 35%;
-
-	li:not(.show-on-mobile) {
+	
+	li {
 	    display: inline-block;
 	    padding: 0 10px;
-
+	    
 	    @include bp(max-width, $bp-mobil) {
 	        margin: 0 4px;
 	        text-align: center;
 	        padding: 0;
 	    }
 	}
-
+	
 	a {
 	    @include link-weiss;
 	    font-size: 0.9rem;
 	}
-
+	
 	@include bp(max-width, $global-fullpage-width) {
 	    margin-right: 0;
-	    display: block;
 	}
-
+	
 	@include bp(max-width, $bp-mobil) {
 	    bottom: 0;
 	    width: 100%;
-	    margin-bottom: 30px;
-	    padding-left: 10px;
+	    margin-bottom: 15px;
 	}
 }
 
 #footer-block-legal {
 	display: inline-block;
-	max-width: 100%;
+	max-width: 65%;
 	color: $grundfarbe-weiss;
-
+	
 	img, > div {
 		display: inline-block;
 		vertical-align: top;
@@ -166,38 +157,26 @@ address {
     	margin-left: 10px;
     	position: relative;
     	top: -5px;
-
+    	
     	@include bp(max-width, $bp-mobil) {
     	    width: 70%;
     	    font-size: 0.9rem;
     	    line-height: 1.1rem;
     	}
     }
-
+    
     address {
     	text-align: left;
     }
-
+    
     @include bp(max-width, $global-fullpage-width) {
         margin-left: 5px;
     }
-
+    
     @include bp(max-width, $bp-mobil) {
         max-width: 100%;
         display: block;
         margin-bottom: 55px;
-    }
-
-    @include bp(max-width, $bp-xsmall) {
-        margin-bottom: 70px;
-    }
-
-    #footer-text-top {
-        line-height: 1.1em;
-        max-width: 600px;
-    }
-    #footer-text-bottom {
-        margin-top: 12px;
     }
 }
 
@@ -209,7 +188,7 @@ address {
         @include link-weiss;
         background: transparent;
     }
-
+    
     .block-title, .block-title strong {
         color: $grundfarbe-weiss;
     	font-size: 1rem;
@@ -235,13 +214,13 @@ address {
 
         li {
             line-height: 1.1rem !important;
-
+            
             @include bp(max-width, $bp-mobil) {
                 margin: 5px 0;
                 display: block;
             }
         }
-
+        
         @include bp(max-width, $bp-mobil) {
             display: block;
             width: 100%;
