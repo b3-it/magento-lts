@@ -235,6 +235,11 @@ Multi address shipping checkout overview
 
     <checkout_multishipping_overview>
         <update handle="checkout_multishipping"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-overview</className></action>
+        </reference>
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="sidcheckout/multishipping_overview" name="checkout_overview" template="sid/checkout/multishipping/overview.phtml">
@@ -256,6 +261,12 @@ Multi address shipping checkout success
 
     <checkout_multishipping_success>
         <update handle="checkout_multishipping"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-success</className></action>
+        </reference>
+
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="sidcheckout/multishipping_success" name="checkout_success" template="checkout/multishipping/success.phtml"/>
