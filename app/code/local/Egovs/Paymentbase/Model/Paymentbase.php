@@ -234,7 +234,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     		/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
     		$this->_getOrder()->setTotalPaid(min(max(0, $this->_getOrder()->getStore()->convertPrice($this->getKassenzeichenInfo()->betragZahlungseingaenge)), $this->_getOrder()->getGrandTotal()));
     	
-    		$this->_getOrder()->save();
+    		$this->_getOrder()->getResource()->saveAttribute($this->_getOrder(), array('base_total_paid', 'total_paid'));
     	}
     }
     
