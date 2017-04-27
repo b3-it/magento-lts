@@ -12,8 +12,6 @@
 .page-header {
     font-family: $base-font-family;
     background-color: $global-page-color;
-    clear: both;
-    z-index: 99;
 }
 
 .welcome-header {
@@ -22,226 +20,94 @@
     display: block;
     clear: both;
 
-    @include bp(min-width, $max-desktop + 1) {
-    	top: $global-header-height - 80px;
-    }
-
-    @include bp(max-width, $max-desktop) {
-    	top: 30px;
-    	height: 70px;
-    	margin: 0 10px;
-
-    	h1 {
-    		display: block;
-    	}
-    }
-
-    @include bp(max-width, $bp-small) {
-        left: 150px;
-        z-index: 99;
-    }
-
     h1, .welcome-msg {
         color: $global-fontcolor-light;
         display: inline-block;
         position: relative;
+        vertical-align: bottom;
     }
-
+    
     .welcome-msg {
         font-size: $global-pagetitle-size;
+        text-align: right;
+        max-width: 58%;
+        line-height: $global-pagetitle-size;
+        height: $global-pagetitle-size;
         overflow: hidden;
-
-        @include bp(min-width, $max-desktop + 1) {
-        	position: absolute;
-        	top: 8px;
+        
+        @include bp(min-width, $bfr-desktop-max + 1) {
+        	top: -2px;
         	right: 0;
-        	line-height: 1.5em;
-        	max-width: 58%;
-        	height: 1.5em;
-        	vertical-align: bottom;
         }
-
-        @include bp(max-width, $max-desktop) {
-   	    	top: 5px;
+        
+        @include bp(max-width, $bfr-desktop-max) {
+   	    	top: 10px;
    	    	left: 1px;
-   	    	display: block;
-   	    	line-height: 1.1em;
-   	    	height: 1.2em;
         }
+    }
+    
+    @include bp(min-width, $bfr-desktop-max + 1) {
+    	top: $global-header-height - 80px;
+    }
+    
+    @include bp(max-width, $bfr-desktop-max) {
+    	top: 40px;
+    	height: 70px;
+    	
+    	h1 {
+    		display: block;
+    	}
     }
 }
 
-.page-header-container {
-    max-width: $global-fullpage-width;
-    position: relative;
-    margin: 0px auto;
-    background-color: transparent;
 
-    @include bp(max-width, $bp-large) {
-        background-repeat: no-repeat;
-        background-position: center 0px;
+@include bp(min-width, $bp-medium + 1) {
+    .page-header {
+        clear: both;
+        z-index: 99;
     }
 
-    @include bp(max-width, $bp-medium) {
-        height: 250px;
-    }
-
-    @include bp(max-width, $bp-small) {
-        height: 200px;
-        background-image: none;
-    }
-
-    .logo-top-row {
-        @include bp(max-width, $bp-small) {
-            height: 40%;
-        }
-
-        @include bp(max-width, $bp-xsmall) {
-            height: 50%;
-        }
-    }
-
-    .mobile-top-header {
-        margin-top: 6px;
-        vertical-align: top;
-        width: 40%;
-        position: absolute;
-        left: 20%;
-
-        @include bp(max-width, $bp-xsmall) {
-            right: auto;
-            top: 7px;
-            left: 118px;
-            width: 60%;
-            margin: 0;
-        }
-
-        h1 {
-            overflow: hidden;
-            color: $global-linkcolor;
-            height: 40px;
-            font-size: 2.4em;
-
-            @include bp(max-width, $bp-small) {
-                white-space: nowrap;
-                width: 320px;
-            }
-
-            @include bp(max-width, $bp-xsmall) {
-                font-size: 2em;
-                height: 30px;
-                left: 0;
-                width: auto;
-            }
-        }
-
-        #search_mini_form .button {
-            display: none;
-        }
-
-        #search_mini_form input {
-            margin: 0;
-            border-radius: 4px;
-            width: 90%;
-
-            @include bp(max-width, $bp-xsmall) {
-                width: 100%;
-            }
-        }
-
-        .search-autocomplete::before {
-        }
-    }
-
-    .mobile-top-store {
+    .page-header-container {
+        max-width: $global-fullpage-width;
+        min-width: $global-min-width;
         position: relative;
-        left: 45%;
-        top: -1px;
+        margin: 0px auto;
+        background-color: transparent !important;
+    }
+}
 
-        @include bp(max-width, $bp-xsmall) {
-            top: 20px;
-            left: -95px;
-        }
-
-        select {
-            @include bp(max-width, $bp-xsmall) {
-                margin: 0;
-            }
-        }
+@include bp(max-width, $bp-medium) {
+	.page-header-container {
+        height: 110px + $global-logo-height;
     }
 
-    #mobile-header-search {
-        #header-search {
-            top: auto;
-            margin: 0;
-        }
-    }
-
-    #mobile-cart-menu {
-        margin: 0;
-        top: 0;
-    }
-
-    .mobile-welcome {
-        background-image: url($global-header-background-image);
-        background-repeat: no-repeat;
-        background-position: center 10%;
-        background-size: 170% auto;
-        height: 30%;
-        width: 100%;
-
-        .welcome-msg {
-            color: $global-fontcolor-light;
-            font-size: $global-pagetitle-size - 0.2em;
-            position: relative;
-            width: 80%;
-            left: 10%;
-            top: 25%;
-            line-height: 1.1;
-            text-align: left;
-
-            @include bp(max-width, $bp-small) {
-                overflow: hidden;
-                display: block;
-                height: 2.1em;
-                width: 97%;
-                left: 2%;
-            }
-        }
-    }
-
-    .mobile-navigation {
-        width: 100%;
-        margin: 0 0 10px 0;
-
-        @include bp(max-width, $bp-small) {
-            display: block;
-        }
+    .skip-links {
+        position: relative;
+        top: 35px + $global-logo-height;
     }
 
     .store-language-container {
-        top: 45px;
-        right: 5px;
-
-        @include bp(max-width, $bp-small) {
-            width: 90px;
-        }
+        top: 40px + $global-logo-height !important;
     }
 
-    .logo {
-        top: 10px;
-        left: 10px;
-
-        @include bp(max-width, $bp-small) {
-            margin-left: 10px;
-            height: auto;
-        }
+    #egov-nav, #header-account {
+        top: 35px + $global-logo-height !important;
     }
 }
 
+@include bp(max-width, 800px) {
+    .skip-links {
+        position: relative;
+        top: 75px + $global-logo-height;
+    }
+
+    .store-language-container {
+        top: 0px + $global-logo-height !important;
+    }
+}
 
 /* ============================================ *
- * Block für Such-Feld und Language switcher
+ * Block f�r Such-Feld und Language switcher
  * ============================================ */
 #header-function-block {
     display: block;
@@ -252,14 +118,6 @@
     margin-top: $global-logo-top;
 
     @include default-border-box;
-
-    @include bp(max-width, $bp-small) {
-        display: none;
-    }
-
-    @include bp(max-width, $bp-large) {
-        margin-right: 5%;
-    }
 
     .header-function-row {
         display: block;
@@ -299,34 +157,16 @@
     width: 100%;
     height: 100%;
 
-    @include bp(max-width, $bp-xsmall) {
-        padding-top: 8px;
-    }
-
     label {
         display: none;
     }
     select {
         margin: 10px;
         width: 90%;
-        padding: 5px;
-
-        @include bp(max-width, $bp-small) {
-            width: 100%;
-        }
-
-        @include bp(max-width, $bp-xsmall) {
-            font-size: $global-fontsize-small;
-        }
     }
 }
 
 .header-language-background {
-	color: $global-fontcolor-light;
-
-	@include bp(max-width, $bp-medium) {
-	    display: none;
-	}
 
     .header-language-container {
         margin-left: auto;
@@ -335,10 +175,6 @@
 
     &:after {
         @include clearfix;
-    }
-
-    a {
-        color: $global-fontcolor-light;
     }
 
     .form-language,
@@ -352,6 +188,30 @@
     }
 }
 
+@include bp(max-width, $bp-xsmall) {
+    .store-language-container {
+        padding-top: 8px;
+
+        select {
+            // Setting this font-size will causing zooming on iOs devices, but it keeps header more tidy
+            font-size: $global-fontsize-small;
+        }
+    }
+}
+
+.header-language-background,
+.header-language-background a {
+    color: $global-fontcolor-light;
+}
+
+@include bp(max-width, $bp-medium) {
+
+    .header-language-background {
+        display: none;
+    }
+
+}
+
 /* ============================================ *
  * Logo
  * ============================================ */
@@ -362,10 +222,6 @@
     margin-bottom: $global-logo-bottom;
     height: $global-logo-height;
 
-    @include bp(max-width, $bp-medium) {
-        margin-left: 5%;
-    }
-
     @include hidden-border;
 
     img {
@@ -374,17 +230,9 @@
 
     .small {
         display: block;
-
-        @include bp(min-width, $bp-medium + 1) {
-            display: none;
-        }
     }
     .large {
         display: none;
-
-        @include bp(min-width, $bp-medium + 1) {
-            display: block;
-        }
     }
 
     &:hover {
@@ -392,6 +240,26 @@
     }
 }
 
+// ---------------------------------------------
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .logo {
+
+        .small {
+            display: none;
+        }
+        .large {
+            display: block;
+        }
+    }
+}
+@include bp(max-width, 910px) {
+    .logo {
+        position: relative;
+        top: 20px;
+    }
+}
 
 /* ============================================ *
  * Skip Links
@@ -399,32 +267,22 @@
 .skip-links {
     clear: both;
     overflow: hidden;
-    fill: $global-linkcolor-hover;
-    height: $global-header-height;
+    border-top:$global-active-border solid $global-navigation-border-color;
+    border-bottom: $global-active-border solid $global-navigation-border-color;
 
     background-image: url($global-header-background-image);
     background-repeat: no-repeat;
     background-color: $global-header-background-color;
     background-size: 100%;
     background-position: center 0;
+    
+    fill: $global-linkcolor-hover;
 
-    @include bp(min-width, $bp-medium + 1) {
-        border: 0;
-    }
-
-    @include bp(max-width, $bp-large) {
-        background-position: center 20px;
-    }
+    height: $global-header-height;
 
     .links {
         float: right;
         margin: 0 15.5% 0 0;
-        max-width: 670px;
-
-        @include bp(max-width, $bp-large) {
-            margin: 0 auto;
-            float: none;
-        }
 
         ul {
             padding: 14px 0;
@@ -463,91 +321,82 @@
             }
         }
     }
+    
+    @include bp(max-width, $bfr-desktop-max) {
+    	height: $global-header-height - 35px;
+    }
+}
 
-    .skip-egov {
-        @include bp(max-width, $bp-medium) {
-            display: none;
+// ---------------------------------------------
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .skip-links {
+        border: 0;
+    }
+
+}
+
+@include bp(max-width, $bp-medium) {
+    .page-header-container {
+        background-color: $global-header-gradientcolor-2;
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center 0px;
+
+        .store-language-container {
+            top: 45px;
+            right: 5px;
+        }
+
+        .logo {
+            top: 10px;
+            left: 10px;
         }
     }
 
-    @include bp(max-width, $max-desktop) {
-    	height: $global-header-height - 35px;
+    .skip-links {
+        .skip-egov {
+            display: none;
+        }
+
+        .welcome-header {
+            left: 150px;
+            z-index: 99;
+        }
     }
 
-    @include bp(max-width, $bp-small) {
-        display: none;
+    .main-container {
+        top: 30px !important;
     }
 }
+
 
 /* -------------------------------------------- *
  * Skip - Link
  */
 
 .skip-link {
-    background-color: $global-minicart-background;
-    border: $global-active-border solid #dddddd;
+    background-color: $global-wrapper-color;
     float: right;
-
-    @include bp(max-width, $bp-small) {
-        border: 0;
-        background-color: $global-page-color;
-        border-left: $global-active-border solid $global-navigation-font-color;
-    }
-
-    .icon {
-	    display: inline-block;
-	    width: 22px;
-	    height: 22px;
-	    vertical-align: middle;
-
-	    @include bp(min-width, $bp-xsmall) {
-	        margin-right: 3px;
-	    }
-	}
-
-	.label {
-	    display: none;
-
-	    @include bp(min-width, $bp-xsmall) {
-	        display: inline;
-	    }
-	}
-}
-
-.skip-nav, .skip-account, .header-minicart {
-	@include bp(max-width, $bp-small) {
-        width: 33.33% !important;
-	}
-}
-
-#mobile-header-minicart .skip-link {
-	border-right: $global-active-border solid $global-navigation-font-color;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: #DDDDDD;
 }
 
 a.skip-link {
     text-decoration: none;
-    padding: 0 10px;
-
-    @include bp(max-width, $bp-small) {
-        text-align: left;
-    }
 }
 
 .skip-egov:hover,
 .skip-link:not(.skip-active):hover {
     opacity: 0.8;
-
-    @include bp(max-width, $bp-small) {
-        background-color: $global-linkcolor-hover;
-        color: $global-fontcolor-light;
-        border: 0;
-        opacity: 1;
-    }
 }
 
 // ---------------------------------------------
 
-@include bp(max-width, $bp-small) {
+@include bp(max-width, $bp-medium) {
+
     .skip-nav, .skip-account, .skip-cart {
         float: left;
     }
@@ -561,6 +410,25 @@ a.skip-link {
         position: relative;
         top: -5px;
     }
+
+    .skip-link {
+        border-right: 1px solid #EDEDED;
+        width: 25%;
+    }
+
+    .skip-link:last-child {
+        border-right: 0;
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, 500px) {
+
+    .skip-link {
+        width: 15%;
+    }
+
 }
 
 /* -------------------------------------------- *
@@ -583,9 +451,42 @@ a.skip-link {
  * Skip Link - Icon
  */
 
+.skip-link .icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
 .skip-link.skip-nav .icon,
 .skip-link.skip-cart:not(.no-count) .icon {
     margin-right: 3px;
+}
+
+@include bp(min-width, 500px) {
+
+    .skip-link .icon {
+        margin-right: 3px;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Label
+ */
+
+.skip-link .label {
+    display: none;
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, 500px) {
+
+    .skip-link .label {
+        display: inline;
+    }
+
 }
 
 /* ============================================ *
@@ -605,6 +506,10 @@ a.skip-link {
 /* ============================================ *
  * Global Header Navigation
  * ============================================ */
+
+@include bp(max-width, $bp-medium) {
+}
+
 .skip-egov{
     display: inline-block;
     float: none !important;

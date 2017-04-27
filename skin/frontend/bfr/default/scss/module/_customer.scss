@@ -79,6 +79,10 @@
     }
 }
 
+.block-reorder a.button {
+	padding-top: 10px !important;
+}
+
 .customer-account-create {
     label {
         display: block;
@@ -185,6 +189,18 @@
 /* ============================================ *
  * My Account Global Styles
  * ============================================ */
+.customer-account-edit .page-title,
+.sales-order-history .page-title,
+.title-buttons {
+	position: relative;
+    top: -15px;
+}
+
+.wishlist-index-index .title-buttons,
+.checkout-cart-index .title-buttons {
+	top: 0;
+}
+
 body.customer-account {
     .col2-left-layout {
         .col-left {
@@ -202,7 +218,14 @@ body.customer-account {
             margin-top: 0;
         }
     }
-
+    
+    .page-title {
+        .button {
+            height: 30px;
+            top: 0 !important;
+            padding: 5px !important;
+        }
+    }
 
     .my-account {
         .dashboard {
