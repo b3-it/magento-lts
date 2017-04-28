@@ -23,7 +23,9 @@ class Dwd_Fix_Block_Adminhtml_Rechnung_Rechnung_Grid extends Mage_Adminhtml_Bloc
   {
       $collection = Mage::getModel('dwd_fix/rechnung_rechnung')->getCollection();
       $collection->getSelect()
-      ->join(array('order'=>$collection->getTable('sales/order')),'order.entity_id=main_table.order_id');
+      ->join(array('order'=>$collection->getTable('sales/order')),'order.entity_id=main_table.order_id')
+      ->joinleft(array('invoice'=>$collection->getTable('sales/invoice')),'order.entity_id=invoice.order_id',array('invoice_id'=>'entity_id','invoice_increment_id'=>'increment_id'))
+      ->columns(array('has_invoice'=>new Zend_Db_Expr('(SELECT IF (invoice_id > 0,1,0))')));
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -37,11 +39,35 @@ class Dwd_Fix_Block_Adminhtml_Rechnung_Rechnung_Grid extends Mage_Adminhtml_Bloc
           'index'     => 'id',
       ));
 
-      $this->addColumn('invoice', array(
+      $this->addColumn('order', array(
           'header'    => Mage::helper('dwd_fix')->__('Bestellung'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'increment_id',
+      ));
+      
+      $this->addColumn('invoice', array(
+      		'header'    => Mage::helper('dwd_fix')->__('Invoice'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'invoice_increment_id',
+      ));
+      
+      
+      $yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+      $yesno = array();
+      foreach ($yn as $n)
+      {
+      	$yesno[$n['value']] = $n['label'];
+      }
+      
+      $this->addColumn('hasinvoice', array(
+      		'header'    => Mage::helper('dwd_fix')->__('Bestellung vorhanden'),
+      		//'align'     =>'left',
+      		'width'     => '80px',
+      		'index'     => 'has_invoice',
+      		'type'      => 'options',
+      		'options'   => $yesno
       ));
       
       $this->addColumn('date', array(
@@ -51,6 +77,17 @@ class Dwd_Fix_Block_Adminhtml_Rechnung_Rechnung_Grid extends Mage_Adminhtml_Bloc
       		'index'     => 'created_at',
       		'type' => 'datetime'
       ));
+      
+      $this->addColumn('status', array(
+      		'header' => Mage::helper('sales')->__('Status'),
+      		'index' => 'status',
+      		'type'  => 'options',
+      		'width' => '70px',
+      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
+      
+      
+      
       $this->addColumn('send', array(
           'header'    => Mage::helper('dwd_fix')->__('Versendet'),
           //'align'     =>'left',
