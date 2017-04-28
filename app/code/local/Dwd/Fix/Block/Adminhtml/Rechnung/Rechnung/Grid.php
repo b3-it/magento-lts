@@ -62,12 +62,13 @@ class Dwd_Fix_Block_Adminhtml_Rechnung_Rechnung_Grid extends Mage_Adminhtml_Bloc
       }
       
       $this->addColumn('hasinvoice', array(
-      		'header'    => Mage::helper('dwd_fix')->__('Bestellung vorhanden'),
+      		'header'    => Mage::helper('dwd_fix')->__('Rechnung vorhanden'),
       		//'align'     =>'left',
       		'width'     => '80px',
       		'index'     => 'has_invoice',
       		'type'      => 'options',
-      		'options'   => $yesno
+      		'options'   => $yesno,
+      		'filter_condition_callback' => array($this, '_filterCondition'),
       ));
       
       $this->addColumn('date', array(
@@ -113,6 +114,22 @@ class Dwd_Fix_Block_Adminhtml_Rechnung_Rechnung_Grid extends Mage_Adminhtml_Bloc
     	}
     	return $this->getUrl('*/*/*', $params);
 
+    }
+    
+    protected function _filterCondition($collection, $column)
+    {
+    	$value = $column->getFilter()->getValue();
+    	if ($value === null) {
+    		return;
+    	}
+    	 
+    	$condition = intval($value);
+    	if($condition == 1){
+    		$collection->getSelect()->where('invoice.entity_id > 0');
+    	}
+    	if($condition == 0){
+    		$collection->getSelect()->where('invoice.entity_id is NULL');
+    	}
     }
 
  
