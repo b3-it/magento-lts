@@ -92,7 +92,7 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
         ) {
             $this->getResponse()->setRedirect($backUrl);
         } else {
-            if (($this->getRequest()->getActionName() == 'add') && !$this->getRequest()->getParam('in_cart')) {
+            if ((strtolower($this->getRequest()->getActionName()) == 'add') && !$this->getRequest()->getParam('in_cart')) {
                 $this->_getSession()->setContinueShoppingUrl($this->_getRefererUrl());
             }
             $this->_redirect('checkout/cart');
@@ -139,6 +139,8 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
         $messages = array();
         foreach ($cart->getQuote()->getMessages() as $message) {
             if ($message) {
+                // Escape HTML entities in quote message to prevent XSS
+                $message->setCode(Mage::helper('core')->escapeHtml($message->getCode()));
                 $messages[] = $message;
             }
         }
@@ -166,6 +168,10 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
     public function addAction()
     {
 
+    	if (!$this->_validateFormKey()) {
+    		$this->_goBack();
+    		return;
+    	}
     	$customer = $this->getCustomerSession()->getCustomer();
     	if(($customer == null) || ($customer->getId() == null))
     	{
