@@ -55,6 +55,7 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
 
     public function getBillingAddress()
     {
+    	$adr = $this->getCheckout()->getQuote();
         return $this->getCheckout()->getQuote()->getBillingAddress();
     }
 
@@ -145,44 +146,10 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
         return $this->getCheckout()->getQuote()->getGrandTotal();
     }
 
-    public function getAddressesEditUrl()
-    {
-        return $this->getUrl('*/*/backtoaddresses',array('_secure'=>true));
-    }
-
-    public function getEditShippingAddressUrl($address)
-    {
-        return $this->getUrl('*/edit/editShipping', array('id'=>$address->getCustomerAddressId(),'_secure'=>true));
-    }
-
-    public function getEditBillingAddressUrl($address)
-    {
-        return $this->getUrl('*/edit/editBilling', array('id'=>$address->getCustomerAddressId(),'_secure'=>true));
-    }
-
-    public function getEditShippingUrl()
-    {
-        return $this->getUrl('*/*/backtoshipping',array('_secure'=>true));
-    }
-    
-    public function getEditShippingmethodUrl()
-    {
-        return $this->getUrl('*/*/backtoshippingmethod',array('_secure'=>true));
-    }
-
-    public function getPostActionUrl()
-    {
-        return $this->getUrl('*/*/overviewPost',array('_secure'=>true));
-    }
-
-    public function getEditBillingUrl()
-    {
-        return $this->getUrl('*/*/backtobilling',array('_secure'=>true));
-    }
 
     public function getBackUrl()
     {
-        return $this->getUrl('*/*/backtobilling',array('_secure'=>true));
+        return $this->getUrl('*/*/start',array('_secure'=>true));
     }
 
     /**

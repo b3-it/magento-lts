@@ -35,11 +35,13 @@ class Gka_Checkout_Model_Observer
 {
     public function unsetAll()
     {
+    	return $this;
         Mage::getSingleton('checkout/session')->unsetAll();
     }
 
     public function loadCustomerQuote()
     {
+    	return $this;
         try {
             Mage::getSingleton('checkout/session')->loadCustomerQuote();
         }
@@ -56,6 +58,7 @@ class Gka_Checkout_Model_Observer
 
     public function salesQuoteSaveAfter($observer)
     {
+    	return $this;
         $quote = $observer->getEvent()->getQuote();
         /* @var $quote Mage_Sales_Model_Quote */
         if ($quote->getIsCheckoutCart()) {
@@ -65,31 +68,9 @@ class Gka_Checkout_Model_Observer
     
     public function onSalesOrderPlaceAfter($observer)
     {
+    	return $this;
     	$request = Mage::app()->getRequest();
-    	$vergabenr = $request->getParam('vergabenummer'); 
     	$order = $observer->getEvent()->getOrder();
-    	$losId = 0;
-    	if($order){
-	    	foreach($order->getAllItems() as $item){
-	    		if($losId == 0){
-	    			$product = Mage::getModel('catalog/product')->load($item->getProductId());
-	    			$losId = $product->getFramecontractLos();
-	    		}
-	    	}
-	    	
-	    	$los = Mage::getModel('framecontract/los')->load($losId);
     	
-	    	 if(Mage::helper('sidcheckout')->isModuleEnabled('Sid_Haushalt')){
-	        	$lg = Mage::getModel('sidhaushalt/lg04Pool');
-	        	$min = Mage::getConfig()->getNode('sid_haushaltsysteme/lg04/params/increment_pool/min')->__toString();
-	        	$max = Mage::getConfig()->getNode('sid_haushaltsysteme/lg04/params/increment_pool/max')->__toString();
-	        	$order->setData('u4_increment_id', $lg->getNextIncrementId($min,$max));
-	        }
-    	
-    		$order->setVergabenummer($vergabenr);
-    		if($los){
-    			$order->setFramecontract($los->getFramecontractContractId());
-    		}
-    	}
     }
 }

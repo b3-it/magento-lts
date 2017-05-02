@@ -31,16 +31,25 @@
  * @package    Mage_Checkout
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Gka_Checkout_Model_Type_Multishipping_State extends Mage_Checkout_Model_Type_Multishipping_State
+class Gka_Checkout_Model_Type_Singlepage_State extends Mage_Checkout_Model_Type_Multishipping_State
 {
 
   
+	const STEP_START 			= 'singlepage_addresses';
+	//const STEP_SHIPPING         = 'singlepage_shipping';
+	//const STEP_BILLING          = 'singlepage_billing';
+	const STEP_OVERVIEW         = 'singlepage_overview';
+	const STEP_SUCCESS          = 'singlepage_success';
+	
+	
+	
+	
     public function __construct()
     {
-        parent::__construct();
+        
         $this->_steps = array(
-            self::STEP_SELECT_ADDRESSES => new Varien_Object(array(
-                'label' => Mage::helper('checkout')->__('Select Addresses')
+            self::STEP_START => new Varien_Object(array(
+                'label' => Mage::helper('checkout')->__('Addresses')
             )),
            
             self::STEP_OVERVIEW => new Varien_Object(array(
@@ -55,22 +64,50 @@ class Gka_Checkout_Model_Type_Multishipping_State extends Mage_Checkout_Model_Ty
             $step->setIsComplete(false);
         }
 
-        $this->_checkout = Mage::getSingleton('checkout/type_multishipping');
+        $this->_checkout = Mage::getSingleton('gkacheckout/type_singlepage');
         $this->_steps[$this->getActiveStep()]->setIsActive(true);
     }
-
- 
-  
-
- 
-
-    /**
-     * Retrieve checkout session
-     *
-     * @return Mage_Checkout_Model_Session
-     */
-    public function getCheckoutSession()
+    
+    public function getActiveStep()
     {
-        return Mage::getSingleton('checkout/session');
+    	$step = $this->getCheckoutSession()->getCheckoutState();
+    	if (isset($this->_steps[$step])) {
+    		return $step;
+    	}
+    	return self::STEP_START;
     }
+    
+    
+    public function resetState()
+    {
+    	
+    	foreach ($this->_steps as $step) {
+    		$step->setIsComplete(false);
+    		$step->setIsActive(false);
+    	}
+    	$this->_steps[self::STEP_START]->setIsActive(true);
+    	return $this;
+    }
+    
+    public function next($next, $current = null)
+    {
+    	if($current == null){
+    		$current = $this->getActiveStep();
+    	}
+    	if(isset($this->_steps[$current]) && (($this->_steps[$current]->getIsActive())) ){
+    		
+    		$this->_steps[$current]
+    			->setIsActive(false)
+    			->setIsComplete(true);
+    		
+    		$this->_steps[$next]
+    			->setIsActive(true)
+    			->setIsComplete(false);
+    	
+    	}
+    	
+    	throw new Exception('Wrong State!');
+    	
+    }
+
 }

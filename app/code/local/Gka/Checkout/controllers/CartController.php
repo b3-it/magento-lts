@@ -174,12 +174,7 @@ class Gka_Checkout_CartController extends Mage_Core_Controller_Front_Action
     		return;
     	}
     	
-    	if((!Sid_Roles_Model_Customer_Authority::getIsAuthorizedOrderer($customer)))
-    	{
-    		$this->_getSession()->addError($this->__('You are not authorized to put items into cart.'));
-    		$this->_goBack();
-    		return;
-    	}
+    	
         $cart   = $this->_getCart();
         $params = $this->getRequest()->getParams();
         try {

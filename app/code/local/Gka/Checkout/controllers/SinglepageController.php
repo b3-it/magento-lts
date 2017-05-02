@@ -29,7 +29,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
      */
     protected function _getState()
     {
-        return Mage::getSingleton('gkacheckout/type_multishipping_state');
+        return Mage::getSingleton('gkacheckout/type_singlepage_state');
     }
 
     /**
@@ -206,13 +206,8 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return;
     	}
 
-        $this->_getState()->unsCompleteStep(
-            Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
-        );
-
-        $this->_getState()->setActiveStep(
-            Mage_Checkout_Model_Type_Multishipping_State::STEP_SELECT_ADDRESSES
-        );
+    	$this->_getState()->resetState();
+    	
         if (!$this->_getCheckout()->validateMinimumAmount()) {
             $message = $this->_getCheckout()->getMinimumAmountDescription();
             $this->_getCheckout()->getCheckoutSession()->addNotice($message);
@@ -239,10 +234,15 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     		$this->_redirect('*/*/start', array('_secure'=>true));
     		return;
     	}
+    	$quote = $this->_getCheckout()->getQuote();
+    	
     	
     	try{
     		$this->_getCheckout()->setBillingAddress($billing);
     		$this->_getCheckout()->setPaymentMethod($payment['method']);
+    		//$this->_getState()->unsCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
+    		$this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
+    		$this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
     	}
     	catch(Exception $e) {
             $this->_getCheckoutSession()->addException(
@@ -289,8 +289,15 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
-        $this->_getState()->setActiveStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_OVERVIEW);
-
+        if (!$this->_getState()->getCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START)) {
+        	$this->_redirect('*/*/start', array('_secure'=>true));
+        	return $this;
+        }
+        
+        
+        $this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
+        $this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
+        
         try {
         	
         	
@@ -320,18 +327,25 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         try {
             
           
+        	if (!$this->_getState()->getCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START)) {
+        		$this->_redirect('*/*/overview', array('_secure'=>true));
+        		return $this;
+        	}
+        	
+        	
+        	
        
-            //$this->_getCheckout()->setShippingMethods();
+            $this->_getCheckout()->setShippingMethod();
             //$this->_getCheckout()->setPaymentMethod();
             $this->_getCheckout()->createOrders();
-            $this->_getState()->setActiveStep(
-                Mage_Checkout_Model_Type_Multishipping_State::STEP_SUCCESS
-            );
-            $this->_getState()->setCompleteStep(
-                Mage_Checkout_Model_Type_Multishipping_State::STEP_OVERVIEW
-            );
+           
             $this->_getCheckout()->getCheckoutSession()->clear();
             $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(true);
+            
+            $this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_SUCCESS);
+            $this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
+            
+            
             $this->_redirect('*/*/success', array('_secure'=>true));
         } catch (Mage_Payment_Model_Info_Exception $e) {
             $message = $e->getMessage();
@@ -356,6 +370,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             Mage::helper('checkout')
                 ->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-shipping');
             $this->_getCheckoutSession()->addError($this->__('Order place error.'));
+            $this->_redirect('*/cart', array('_secure'=>true));
         }
     }
 
@@ -366,7 +381,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
      */
     public function successAction()
     {
-        if (!$this->_getState()->getCompleteStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_OVERVIEW)) {
+        if (!$this->_getState()->getCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW)) {
             $this->_redirect('*/*/addresses', array('_secure'=>true));
             return $this;
         }
