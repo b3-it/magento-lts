@@ -1,36 +1,5 @@
 <?php
-/**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category    Mage
- * @package     Mage_Checkout
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 
-/**
- * Multishipping checkout model
- *
- * @category    Mage
- * @package     Mage_Checkout
- * @author      Magento Core Team <core@magentocommerce.com>
- */
 class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstract
 {
 
@@ -52,10 +21,8 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     }
 
     /**
-     * Initialize multishipping checkout.
-     * Split virtual/not virtual items between default billing/shipping addresses
-     *
-     * @return Mage_Checkout_Model_Type_Multishipping
+     * Initialize checkout.
+     * @return Gka_Checkout_Model_Type_Singlepage
      */
     protected function _init()
     {
@@ -109,70 +76,6 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
         return $this;
     }
 
-   
-    
- 
-    
-    
-    public function resetAssigned()
-    {
-    	$this->getCheckoutSession()->unsetData('assigned');
-    	return $this;
-    }
-    
-    public function getAssigned()
-    {
-    	$assigned = $this->getCheckoutSession()->getData('assigned',false);
-        if($assigned == null) $assigned = array();
-        return $assigned;
-    }
-    
-    
-    private function getQuoteItemQty($quoteitem)
-    {
-    	$qty = $quoteitem->getQty();
-    	foreach ( $this->getAssigned() as $assigned) 
-        {
-        	if($quoteitem->getId() == $assigned['quoteitemid'])
-        	{
-        		$qty -= $assigned['qty'];
-        	}
-        }
-        
-        return $qty;
-    }
-    
-    
-
-    
-    private function getNewShippingAddress($customerAddressId)
-    {
-    	$adr = Mage::getModel('customer/address')->load($customerAddressId);
-        $address = Mage::getModel('sales/quote_address')->importCustomerAddress($adr);
-        $address->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_SHIPPING)
-                 ->setSameAsBilling(false)
-                 ->setQuote($this->getQuote());
-         $this->getQuote()->addAddress($address)->save();
-         return $address;
-    }
-    
- 
-    /**
-     * Reimport customer billing address to quote
-     *
-     * @param int $addressId customer address id
-     * @return Mage_Checkout_Model_Type_Multishipping
-     */
-    public function setQuoteCustomerBillingAddress($addressId)
-    {
-        if ($address = $this->getCustomer()->getAddressById($addressId)) {
-            $this->getQuote()->getBillingAddress($addressId)
-                ->importCustomerAddress($address)
-                ->collectTotals();
-            $this->getQuote()->collectTotals()->save();
-        }
-        return $this;
-    }
 
     /**
      * Set payment method info to quote payment
@@ -269,26 +172,6 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
         if (!empty($paymentMethod) && !$paymentMethod->isAvailable($quote)) {
             Mage::throwException($helper->__('Please specify payment method.'));
         }
-
-        /*
-        $addresses = $quote->getAllShippingAddresses();
-        foreach ($addresses as $address) {
-            $addressValidation = $address->validate();
-            if ($addressValidation !== true) {
-                Mage::throwException($helper->__('Please check shipping addresses information.'));
-            }
-            //$address->setShippingMethod($this->getShippingMethod())->save();
-            $method= $address->getShippingMethod();
-            $rate  = $address->getShippingRateByCode($method);
-            if (!$method || !$rate) {
-                Mage::throwException($helper->__('Please specify shipping methods for all addresses.'));
-            }
-        }
-        */
-        //$addressValidation = $quote->getBillingAddress()->validate();
-        //if ($addressValidation !== true) {
-        //    Mage::throwException($helper->__('Please check billing address information.'));
-        //}
         return $this;
     }
 
