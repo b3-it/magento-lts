@@ -44,6 +44,10 @@
             position: relative;
             top: -100px;
         }
+        
+        @include bp(max-width, $bp-xsmall) {
+            top: -40px;
+        }
     }
 
     .links li a {
