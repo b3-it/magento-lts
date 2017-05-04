@@ -90,7 +90,7 @@ Default layout, loads most of the pages
     </checkout_cart_index>
 
 	<checkout_singlepage_start>
-        <update handle="checkout_multishipping"/>
+        <update handle="checkout_singlepage"/>
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="gkacheckout/singlepage_start" name="checkout_start" template="checkout/singlepage/start.phtml">
@@ -108,7 +108,7 @@ Multi address shipping checkout main layout,
 will be rendered on all checkout pages
 -->
 
-    <checkout_multishipping>
+    <checkout_singlepage>
         <!-- Mage_Checkout -->
         <remove name="right"/>
         <remove name="left"/>
@@ -117,9 +117,9 @@ will be rendered on all checkout pages
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
         <reference name="content">
-            <block type="gkacheckout/multishipping_state" name="checkout_state" template="checkout/multishipping/state.phtml"/>
+            <block type="gkacheckout/singlepage_state" name="checkout_state" template="checkout/multishipping/state.phtml"/>
         </reference>
-    </checkout_multishipping>
+    </checkout_singlepage>
 
     <checkout_multishipping_login>
         <update handle="customer_account_login"/>
