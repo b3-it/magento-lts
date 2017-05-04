@@ -2,11 +2,11 @@
 <!--
 /**
  * @category    design
- * @package     egov_default
+ * @package     gka_default
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <theme>
-    <parent>rwd/default</parent>
+    <parent>egov/default</parent>
 </theme>

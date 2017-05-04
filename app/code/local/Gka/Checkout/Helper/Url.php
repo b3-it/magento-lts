@@ -51,5 +51,8 @@ class Gka_Checkout_Helper_Url extends Mage_Core_Helper_Url
         return $this->_getUrl('gkacheckout/singlepage');
     }
 
- 
+    public function getMSLoginUrl()
+    {
+    	return $this->_getUrl('checkout/multishipping/login', array('_secure'=>true, '_current'=>true));
+    }
 }

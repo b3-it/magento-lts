@@ -146,7 +146,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
      */
     public function startAction()
     {
-    	$this->_getCheckout()->resetAssigned();
+    	//$this->_getCheckout()->resetAssigned();
     	
     	if($this->_getState()->getActiveStep() == Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW)
     	{
