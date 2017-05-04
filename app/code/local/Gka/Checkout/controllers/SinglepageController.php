@@ -201,7 +201,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
     	
-        $this->_getCheckout()->resetAssigned();
+        //$this->_getCheckout()->resetAssigned();
         $this->_redirect('*/*/overview', array('_secure'=>true));
     	return $this;
        

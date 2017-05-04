@@ -1,16 +1,16 @@
 ﻿//
 // @category    design
-// @package     egov_gka
+// @package     gka_default
 // @copyright   Copyright (c) 2017 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
 // ==============================================
-// Application Core / No MQ for Lte-IE8 Use
+// Core Application / Full MQ Support
 // ==============================================
 
-$mq-support: false;
-$mq-fixed-value: 1024px;
+$mq-support: true;
+$mq-fixed-value: false;
 
 @import "framework";
 @import "core";
@@ -18,4 +18,5 @@ $mq-fixed-value: 1024px;
 // ----------------------------------------------
 // Content
 
-@import "../../default/scss/content/home";
+@import "../../../egov/default/scss/content/home";
+@import "../../../egov/default/scss/content/category";

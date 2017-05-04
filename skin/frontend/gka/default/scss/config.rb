@@ -1,5 +1,5 @@
 ﻿# note: this should never truly be refernced since we are using relative assets
-http_path = "/skin/frontend/egov/gka/"
+http_path = "/skin/frontend/gka/default/"
 css_dir = "../css"
 sass_dir = "../scss"
 images_dir = "../images"
