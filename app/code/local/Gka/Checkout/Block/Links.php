@@ -23,5 +23,22 @@ class Gka_Checkout_Block_Links extends Mage_Core_Block_Template
         return $this;
     }
 
- 
+    /**
+     * Add link on checkout page to parent block
+     *
+     * @return Mage_Checkout_Block_Links
+     */
+    public function addCheckoutLink()
+    {
+    	if (!$this->helper('checkout')->canOnepageCheckout()) {
+    		return $this;
+    	}
+    
+    	$parentBlock = $this->getParentBlock();
+    	if ($parentBlock && Mage::helper('core')->isModuleOutputEnabled('Mage_Checkout')) {
+    		$text = $this->__('Checkout');
+    		$parentBlock->addLink($text, 'gkacheckout/singlepage', $text, true, array(), 60, null, 'class="top-link-checkout"');
+    	}
+    	return $this;
+    }
 }

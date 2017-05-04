@@ -1,0 +1,104 @@
+ <h2><?php echo $this->__('Billing Address') ?></h2>
+<fieldset>
+    <ul class="form-list">
+
+    <li id="billing-new-address-form">
+        <fieldset>
+          
+            <ul>
+                <li class="fields"><?php echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')->setObject(new Varien_Object())->setForceUseCustomerRequiredAttributes(false)->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?></li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="billing:company"><?php echo $this->__('Company') ?></label>
+                        <div class="input-box">
+                            <input type="text" id="billing:company" name="billing[company]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Company')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
+                        </div>
+                    </div>
+ 
+                </li>
+        <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
+                <li class="wide">
+                    <label for="billing:street1" class="required"><em>*</em><?php echo $this->__('Address') ?></label>
+                    <div class="input-box">
+                        <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" name="billing[street][]" id="billing:street1" value="" class="input-text <?php echo $_streetValidationClass ?>" />
+                    </div>
+                </li>
+        <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+        <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+                <li class="wide">
+                    <div class="input-box">
+                        <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" name="billing[street][]" id="billing:street<?php echo $_i ?>" value="" class="input-text <?php echo $_streetValidationClass ?>" />
+                    </div>
+                </li>
+        <?php endfor; ?>
+                <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
+                <li class="wide">
+                    <label for="billing:vat_id"><?php echo $this->__('VAT Number') ?></label>
+                    <div class="input-box">
+                        <input type="text" id="billing:vat_id" name="billing[vat_id]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('VAT Number')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
+                    </div>
+                </li>
+                <?php endif; ?>
+                <li class="fields">
+                    <div class="field">
+                        <label for="billing:city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
+                        <div class="input-box">
+                            <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('City')) ?>" name="billing[city]" value="" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="billing:city" />
+                        </div>
+                    </div>
+                   
+                </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="billing:postcode" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
+                        <div class="input-box">
+                            <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Zip/Postal Code')) ?>" name="billing[postcode]" id="billing:postcode" value="" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="billing:country_id" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                        <div class="input-box">
+                            <?php echo $this->getCountryHtmlSelect('billing') ?>
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="billing:telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="billing[telephone]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Telephone')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="billing:telephone" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="billing:fax"><?php echo $this->__('Fax') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="billing[fax]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Fax')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>" id="billing:fax" />
+                        </div>
+                    </div>
+                </li>
+
+        <?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
+            <?php if ($_gender->isEnabled()): ?>
+                <li class="fields">
+                
+                <?php if ($_gender->isEnabled()): ?>
+                    <div class="field">
+                        <?php echo $_gender->setGender($this->getQuote()->getCustomerGender())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+                    </div>
+                <?php endif ?>
+                </li>
+            <?php endif ?>
+
+
+
+            </ul>
+        </fieldset>
+    </li>
+    </ul>
+
+    <div class="buttons-set" id="billing-buttons-container">
+        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+    </div>
+</fieldset>
+
+
