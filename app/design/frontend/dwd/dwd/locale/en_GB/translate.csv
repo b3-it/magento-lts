@@ -1,3 +1,5 @@
+"Order now","Buy now"
+
 "Dwd_Icd::Back to Manage Data Access","Back to My Credentials"
 "Dwd_Icd::Billing Address","Billing address"
 "Dwd_Icd::Billing Information","Billing information"
@@ -34,6 +36,8 @@
 "Egovs_GermanTax::Shipping Information","Shipping information"
 "Egovs_GermanTax::Shipping Method","Shipping method"
 "Egovs_GermanTax::Tax Information","Tax information"
+"Egovs_GermanTax::Subtotal (Incl. Tax)","Subtotal (Incl. Vat)"
+"Egovs_GermanTax::Subtotal (Excl. Tax)","Subtotal (Excl. Vat)"
 "Egovs_SepaDebitBund::Authorised signatory (First- Lastname)","I confirm that I am an authorised signatory for the above account.<br /><br />(Signatory's first and last name)"
 "Egovs_SepaDebitBund::Debitor differs from banking account holder?","Debtor differs from bank account holder?"
 "Egovs_SepaDebitBund::Use mandate multiple times","Recurrent payment"

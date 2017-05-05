@@ -66,6 +66,11 @@
 
     php_flag session.auto_start off
 
+    # https://trac.kawatest.de/ticket/1647
+    php_flag session.gc_probability 1
+    php_flag session.gc_divisor 100
+    php_flag session.gc_maxlifetime 86400
+
 ############################################
 ## enable resulting html compression
 
