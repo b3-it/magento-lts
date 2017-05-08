@@ -175,8 +175,14 @@ Product view
         <reference name="head">
             <action method="addJs"><script>varien/product.js</script></action>
             <action method="addJs"><script>varien/configurable.js</script></action>
-            <action method="addJs"><script>lib/ol/ol.js</script></action>
+            <action method="addJs"><script>lib/ol/ol-debug.js</script></action>
+            <action method="addJs"><script>bkg/jsts.min.js</script></action>
             <action method="addItem"><type>js_css</type><name>lib/ol/ol.css</name></action>
+            <action method="addJs"><script>bkg/ol.tooglectrl.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-ui-1.12.1.js</script></action>
+            <action method="addItem"><type>js_css</type><name>lib/jquery/jquery-ui-1.12.1.css</name></action>
+            <action method="addJs"><script>bkg/map.js</script></action>
+            <action method="addItem"><type>js_css</type><name>bkg/map.css</name></action>
             <action method="addItem"><type>skin_js</type><script>js/lib/elevatezoom/jquery.elevateZoom-3.0.8.min.js</script></action>
 
             <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/><!--<if/><condition>can_load_calendar_js</condition>--></action>

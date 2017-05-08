@@ -1,0 +1,26 @@
+
+
+.ol-scale-line {
+	left: unset;
+	right: 8px;
+}
+
+.toogleModeCtrl {
+	top: -2.5em;
+}
+.toogleSelectCtrl {
+	top: -2.5em;
+	left: 5.5em;
+}
+
+.map > .ol-viewport {
+/*
+    overflow important is needed,
+    because openlayers does set overflow:hidden on the element itself
+ */
+	overflow: inherit !important;
+	margin-top: 2.5em;
+}
+.ol-control > .ui-helper-hidden-accessible {
+	position: absolute;
+}

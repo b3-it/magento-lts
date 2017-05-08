@@ -1,118 +1,466 @@
-<?php $helper = Mage::helper('bkgviewer');?>
-<?php echo($helper->getWMSDir().DS.$this->getComposit()->getTileSystemWithCRS()->getFilename()); ?>
-<?php echo($helper->getWMSDir().DS.$this->getComposit()->getVgSystemWithCRS()->getFilename()); ?>
-<?php $this->getComposit()->getTilesIntersection(); ?>
+<?php
+/**
+ * @var Bkg_Viewer_Block_Catalog_Product_View_Map $this
+ */
+?>
+<script type="text/javascript">
+var tileurl = '<?php echo Mage::getUrl('bkg_viewer/composit/tilesystem', array('id' => $this->getComposit()->getId())); ?>';
+var vgurl = '<?php echo Mage::getUrl('bkg_viewer/composit/vgsystem', array('id' => $this->getComposit()->getId())); ?>';
+var intersectionurl = '<?php echo Mage::getUrl('bkg_viewer/composit/intersection', array('id' => $this->getComposit()->getId())); ?>';
+</script>
 <style>
       .map {
         height: 400px;
         width: 600px;
       }
     </style>
+    <ul>
+    <?php
+        // add Layer as List for ul. the id are important because they are used to trigger on the checkboxes
+        foreach($this->getCompositLayers() as $layer) {
+            echo "<li>";
+            $id = $layer->getServiceLayer()->getName();
+            
+            echo '<input id="'.$id.'" checked="checked" type="checkbox">';
+            echo '<label for="'.$id.'">'.$layer->getServiceLayer()->getAbstract().'</label>';
+            
+            echo "</li>";
+        }
+        $ts = $this->getComposit()->getTileSystemWithCRS();
+        echo "<li>";
+        $id = $ts->getIdent();
+        echo '<input id="'.$id.'" checked="checked" type="checkbox">';
+        echo '<label for="'.$id.'">'.$ts->getName().'</label>';
+        
+        echo "</li>";
+        $vg = $this->getComposit()->getVgSystemWithCRS();
+        echo "<li>";
+        $id = $vg->getName();
+        
+        echo '<input id="'.$id.'" checked="checked" type="checkbox">';
+        echo '<label for="'.$id.'">'.$vg->getName().'</label>';
+        
+        echo "</li>";
+    ?>
+    </ul>
     <div id="map" class="map"></div>
+    <div class="column">
+		<p id="gridsize">Gittergröße: <span id="gridSizeValue"></span></p>
+		<span class="ulTitle">Gitter: <span id="gridCount"></span></span>
+		<ul id="grids"></ul>
+		<span class="ulTitle">Bundesländer: <span id="statesCount"></span></span>
+		<ul id="states"></ul>
+	</div>
     <script type="text/javascript">
-	 var controls = [
-                new ol.control.Attribution(),
-                new ol.control.MousePosition({
-                    undefinedHTML: 'outside',
-                    projection: 'EPSG:4326',
-                    coordinateFormat: function(coordinate) {
-                        return ol.coordinate.format(coordinate, '{x}, {y}', 4);
-                    }
-                }),
-                new ol.control.OverviewMap({
-                    collapsed: false
-                }),
-                new ol.control.ScaleLine(),
-                new ol.control.Zoom(),
-                new ol.control.ZoomSlider(),
-                //new ol.control.ZoomToExtent(),
-                //new ol.control.FullScreen()
-            ];
-	
-	
 
-      var map = new ol.Map({
-        target: 'map',
-		controls: controls,
-        layers: [
-        <?php foreach($this->getCompositLayers() as $layer): ?>
-			new ol.layer.Tile({
-			source: new ol.source.TileWMS({
-			url: '<?php echo $layer->getService()->getUrlMap() ?>',
-			params: {LAYERS: '<?php echo $layer->getServiceLayer()->getName() ?>', VERSION: '1.1.1'}
-			})
-			}),
-			<?php endforeach; ?>
-			],
-        view: new ol.View({
-          //center: ol.proj.transform([52, 12],'CRS:84' ,'EPSG:3857'),
-          center: [13.44, 51.01],
-          zoom: 10,
-		  projection: 'EPSG:4326' 
-        })
-      });
+    jQuery(function( $ ) {
+    	jsonData = null;
+    	var ol3Parser = new jsts.io.OL3Parser();
+    	$.getJSON(intersectionurl, function(json) {
+    		jsonData = json;
+    	});
+        $('#map').openLayer();
 
-	  var features = new ol.Collection();
-      var featureOverlay = new ol.layer.Vector({
-        source: new ol.source.Vector({features: features}),
-        style: new ol.style.Style({
-          fill: new ol.style.Fill({
-            color: 'rgba(255, 255, 255, 0.2)'
-          }),
-          stroke: new ol.style.Stroke({
-            color: '#ffcc33',
-            width: 2
-          }),
-          image: new ol.style.Circle({
-            radius: 7,
+        <?php
+        $i = 0;
+        foreach($this->getCompositLayers() as $layer) {
+            $id = $layer->getServiceLayer()->getName();
+            echo "source".$i." = new ol.source.TileWMS({
+                attributions: '',
+                url: '".$layer->getService()->getUrlMap()."',
+                params: {LAYERS: '".$id."', VERSION: '1.1.1'}
+            });".PHP_EOL;
+            
+            // load WMSCapabilities to get Attributions from source if able
+            // because of ajax that is done after the tileWMS is loaded
+            echo "$.ajax('".$layer->getService()->getUrl()."').then(function(response) {".PHP_EOL;
+            echo "wms = new ol.format.WMSCapabilities().read(response);".PHP_EOL;
+            echo "wms['Capability']['Layer']['Layer'].forEach(function(layer) {".PHP_EOL;
+            echo "if (layer['Name'] == '".$id."') {".PHP_EOL;
+            echo "auth = layer['AuthorityURL'][0];".PHP_EOL;
+            echo "source".$i.".setAttributions('&copy; <a href=\"'+auth['OnlineResource']+'\">'+auth['name']+'</a>');".PHP_EOL;
+            echo "};".PHP_EOL;
+            echo "});".PHP_EOL;
+            echo "});".PHP_EOL;
+            
+            echo "tile".$i." = $('#map').openLayer().addTile(source".$i.");".PHP_EOL;
+            echo "$('#".$id."').change(function(evt) {tile".$i.".setVisible(evt.target.checked);});".PHP_EOL;
+            $i++;
+        }
+        ?>
+
+        var transformFunction = function(src, path, projection) {
+        	$.ajax(path).then(function(response) {
+        		srcProjection = src.getFormat().readProjection(response);
+        		data = src.getFormat().readFeatures(response);
+
+        		for (var i=0;i<data.length;i++) {
+        			data[i].getGeometry().transform(srcProjection, projection);
+        		}
+        		
+        		src.addFeatures(data);
+        	});
+         };
+
+        var vectorSource = new ol.source.Vector({
+            format: new ol.format.WFS({
+    	        gmlFormat: new ol.format.GML3()
+    	    }),
+            loader: function(extent, resolution, projection) {
+    			transformFunction(this, vgurl, projection);
+    		}
+    	});
+
+    	var vectorLayer = $('#map').openLayer().addVector(vectorSource, new ol.style.Style({
+      		stroke: new ol.style.Stroke({
+      			color: 'red',
+      			width: 1
+      		})
+        }));
+        // combine layer selection with visible of that layer
+    	$('#<?php echo $this->getComposit()->getVgSystemWithCRS()->getName();?>').change(function(evt) { vectorLayer.setVisible(evt.target.checked); });
+
+        var gridSource = new ol.source.Vector({
+            format: new ol.format.WFS({
+    	        gmlFormat: new ol.format.GML3()
+    	    }),
+    	    loader: function(extent, resolution, projection) {
+    			transformFunction(this, tileurl, projection);
+    		}
+    	});
+
+
+    	var gridVector = $('#map').openLayer().addVector(gridSource, new ol.style.Style({
+      		stroke: new ol.style.Stroke({
+      			color: 'green',
+      			width: 1
+      		})
+        }));
+
+		$('#<?php echo $this->getComposit()->getTileSystemWithCRS()->getIdent();?>').change(function(evt) { gridVector.setVisible(evt.target.checked); });
+
+
+		var myDrawSource = new ol.source.Vector({wrapX: false});
+		var mySelectionsSource = new ol.source.Vector({wrapX: false});
+        var myFinalGridSource = new ol.source.Vector({wrapX: false});
+
+        $('#map').openLayer().addVector(mySelectionsSource, new ol.style.Style({
             fill: new ol.style.Fill({
-              color: '#ffcc33'
+              color: 'rgba(255, 0, 0, 0.5)'
+            }),
+            stroke: new ol.style.Stroke({
+              color: 'rgba(255, 0, 0, 1)',
+              width: 1
             })
-          })
-        })
-      });
-	  
-      featureOverlay.setMap(map);
-	
-	var  draw = new ol.interaction.Draw({
-				features: features,
-				type: 'Polygon'
-			});
-		map.addInteraction(draw);
-	
-	features.on('add', function(evt){
-		var feature = evt.element;
-		//var coords = feature.getGeometry().getCoordinates();
+        }));
+        
+    	$('#map').openLayer().addVector(myFinalGridSource, new ol.style.Style({
+    	    fill: new ol.style.Fill({
+    	      color: 'rgba(255, 255, 0, 0.5)'
+    	    }),
+    	    stroke: new ol.style.Stroke({
+    	      color: 'rgba(255, 255, 0, 1)',
+    	      width: 1
+    	    })
+    	}));
+    	
+    	// layers can't be easy set later
+    	$('#map').openLayer().addControl(new ol.control.OverviewMap({
+    		collapsed: false,
+    		layers: [vectorLayer]
+    	}));
 
-		formatArea(feature.getGeometry());
-		var sphere = new ol.Sphere(6378137);
-		var area_m = sphere.geodesicArea(coords);
-		var area_km = area_m / 1000 / 1000;
-		console.log('area: ', area_km, 'km²');
-		
-	});
-	
-	var wgs84Sphere = new ol.Sphere(6378137);
-	
-	var formatArea = function(polygon) {
-		  var area;
-{
-			var sourceProj = map.getView().getProjection();
-			var geom = /** @type {ol.geom.Polygon} */(polygon.clone().transform(
-				sourceProj, 'EPSG:4326'));
-			var coordinates = geom.getLinearRing(0).getCoordinates();
-			area = Math.abs(wgs84Sphere.geodesicArea(coordinates));
-		  }
-		  var output;
-		  if (area > 10000) {
-			output = (Math.round(area / 1000000 * 100) / 100) +
-				' ' + 'km<sup>2</sup>';
-		  } else {
-			output = (Math.round(area * 100) / 100) +
-				' ' + 'm<sup>2</sup>';
-		  }
-		  return output;
-	};
-	
+
+    	$('#map').openLayer().addControl(new toogleModeCtrl({
+    		inputName: 'radio-toogleMode',
+    		className: 'toogleModeCtrl',
+    		fields: {
+    			'plus': "+",
+    			'minus': "-"
+    		}
+    	}));
+
+    	$('#map').openLayer().addControl(new toogleModeCtrl({
+    		inputName: 'radio-toogleSelect',
+    		className: 'toogleSelectCtrl',
+    		fields: {
+    			'grid': "Grid",
+    			'vg': "Vg",
+    			'poly': "Poly",
+    			'rect': "Rect"
+    		}
+    	}));
+
+
+    	var selectGrid = new ol.interaction.Select({
+    		layers: [gridVector],
+    		multi: true
+    	});
+
+    	selectGrid.on('select', function(e) {
+    		//mySelectionsSource.clear();
+    		staates = [];
+    		gridNames = [];
+    		grids = e.target.getFeatures();
+    		grids.forEach(function(grid) {
+    			gridNames.push(grid.get("ID"));
+    			var geom = grid.getGeometry();
+    			var extent = geom.getExtent();
+    			if (vectorLayer.getVisible()) {
+    				vectorSource.forEachFeatureInExtent(extent,function(aa){
+    					if (polyIntersectsPoly(geom, aa.getGeometry()) === true) {
+    						staates.push(aa.get("GEN"));
+    						//mySelectionsSource.addFeature(aa);
+    					}
+    				});
+    			}
+    		});
+
+    		if (jQuery('#radio-plus:checked').length > 0) {
+    			grids.forEach(function(grid) {
+    				if (myFinalGridSource.getFeatures().indexOf(grid) === -1) {
+    					myFinalGridSource.addFeature(grid);
+    				}
+    			});
+    		} else if (jQuery('#radio-minus:checked').length > 0) {
+    			grids.forEach(function(grid) {
+    				if (myFinalGridSource.getFeatures().indexOf(grid) !== -1) {
+    					myFinalGridSource.removeFeature(grid);
+    				}
+    			});
+    		}
+    		
+    		e.target.getFeatures().clear();
+
+    		updateGridState();
+    	});
+
+
+    	var selectState = new ol.interaction.Select({
+    		layers: [vectorLayer],
+    		multi: true
+    	});
+    	selectState.on('select', function(e) {
+    		//myGridSelectionsSource.clear();
+    		grids = [];
+    		allGridNames = [];
+    		
+    		addMode = jQuery('#radio-plus:checked').length > 0;
+    		delMode = jQuery('#radio-minus:checked').length > 0;
+    		
+    		// !DONT! use polyIntersectsPoly in this function
+    		// use precalculated data from json data
+    		
+    		e.target.getFeatures().forEach(function(states) {
+    			gridnames = jsonData[states.get("GEN")];
+
+    			var geom = states.getGeometry();
+    			var extent = geom.getExtent();
+
+    			gridSource.forEachFeatureInExtent(extent,function(aa){
+    				if (addMode && myFinalGridSource.getFeatures().indexOf(aa) !== -1) {
+    					return;
+    				} else if (delMode && myFinalGridSource.getFeatures().indexOf(aa) === -1) {
+    					return;
+    				}
+
+    				name = aa.get("ID");
+    				if((grids.indexOf(aa) === -1) && (gridnames.indexOf(name) !== -1)) {
+    					grids.push(aa);
+    					allGridNames.push(name);
+    					if (addMode) {
+    						myFinalGridSource.addFeature(aa);
+    					} else if (delMode) {
+    						myFinalGridSource.removeFeature(aa);
+    					}
+    				}
+    			});
+    		});
+
+    		e.target.getFeatures().clear();
+
+    		updateGridState();
+    	});
+
+    	var select = selectGrid;
+
+
+    	var drawPolygon = new ol.interaction.Draw({
+    		source: myDrawSource,
+    		type: "Polygon",
+    	});
+
+    	var drawRect = new ol.interaction.Draw({
+    		source: myDrawSource,
+    		type: "Circle",
+    		geometryFunction: ol.interaction.Draw.createBox()
+    	});
+
+    	[drawPolygon, drawRect].forEach(function(draw) {
+    		draw.on('drawend',function(e){
+        		myDrawSource.clear();
+        		//myGridSelectionsSource.clear();
+        		var geomA = e.feature.getGeometry();
+        		var extent = geomA.getExtent();
+
+
+        		var grids = [];
+        		var gridsNames = [];
+        		
+        		gridSource.forEachFeatureInExtent(extent,function(aa){
+        			if (polyIntersectsPoly(geomA, aa.getGeometry()) === true){
+        				//names.push(aa.get("GEN"));
+        				if(grids.indexOf(aa) === -1) {
+        					gridsNames.push(aa.get("ID"));
+        					grids.push(aa);
+        				}
+        			}
+        		});
+
+        		if ($('#radio-plus:checked').length > 0) {
+        			grids.forEach(function(grid) {
+        				if (myFinalGridSource.getFeatures().indexOf(grid) === -1) {
+        					myFinalGridSource.addFeature(grid);
+        				}
+        			});
+        		} else if ($('#radio-minus:checked').length > 0) {
+        			grids.forEach(function(grid) {
+        				if (myFinalGridSource.getFeatures().indexOf(grid) !== -1) {
+        					myFinalGridSource.removeFeature(grid);
+        				}
+        			});
+        		}
+
+        		if (vectorLayer.getVisible()) {
+        			var names = [];
+        			vectorSource.forEachFeatureInExtent(extent,function(aa){
+        				var found = false;
+
+        				var index, len;
+        				for (index = 0, len = grids.length; index < len; ++index) {
+        					bb = grids[index];
+        					// first check if the extend of the grid and the extend of the polygom intersects
+        					if (ol.extent.intersects(bb.getGeometry().getExtent(),aa.getGeometry().getExtent()) === true) {
+        						// then do a real check if the polygon does intersect
+        						if (polyIntersectsPoly(bb.getGeometry(),aa.getGeometry()) === true){
+        							//data.push([bb.get("ID"), aa.get("GEN")]);
+        							found = true;
+        							break;
+        						}
+        					}
+        				}
+        				
+        				if (found === true) {
+        					if(mySelectionsSource.getFeatures().indexOf(aa) === -1) {
+        						names.push(aa.get("GEN"));
+        						mySelectionsSource.addFeature(aa);
+        					}
+        				}
+        			});
+        		}
+        		updateGridState();
+    		}, this);
+
+
+
+    	});
+
+    	$('#map').openLayer().addInteraction(selectGrid);
+
+    	$('input[name=radio-toogleSelect]').on('change', function(evt) {
+    		id = evt.target.id;
+    		
+    		$('#map').openLayer().getOverlays().clear();
+    		//jQuery("#grids").empty();
+    		//jQuery("#gridSizeValue").empty();
+    		myDrawSource.clear();
+    		//mySelectionsSource.clear();
+    		//myGridSelectionsSource.clear();
+    		if (select !== null) {
+    			if (select instanceof ol.interaction.Select) {
+    				select.getFeatures().clear();
+    			}
+    			$('#map').openLayer().removeInteraction(select);
+    		}
+    		if (id == 'radio-grid') {
+    			select = selectGrid;
+    		} else if (id == 'radio-vg') {
+    			select = selectState;
+    		} else if (id == 'radio-poly') {
+    			select = drawPolygon;
+    		} else if (id == 'radio-rect') {
+    			select = drawRect;
+    		} else {
+    			select = null;
+    		}
+    		if (select !== null) {
+    			$('#map').openLayer().addInteraction(select);
+    		}
+    	});
+
+    	
+    	function updateGridState() {
+    		mySelectionsSource.clear()
+
+    		jQuery("#grids").empty();
+    		//grids = [];
+    		gridNames = [];
+
+    		i = 0;
+    		myFinalGridSource.getFeatures().forEach(function(grid) {
+    			i += 1;
+    			//grids.push(grid);
+    			name = grid.get("ID");
+    			gridNames.push(name);
+    			jQuery("#grids").append( "<li>" + name + "</li>" );
+    		});
+    		jQuery("#gridCount").html(i);
+    		//str = myFinalGridSource.getFeatures().length * gridSizeValue;
+    		//jQuery("#gridSizeValue").html(str + " km<sup>2</sup>");
+
+    		jQuery("#states").empty();
+    		if (vectorLayer.getVisible()) {
+    			var names = [];
+    			vectorSource.forEachFeature(function(aa){
+    				var found = false;
+    				stateGridNames = jsonData[aa.get("GEN")];
+    				
+    				var index, len;
+    				
+    				for (index = 0, len = stateGridNames.length; index < len; ++index) {
+    					if (gridNames.indexOf(stateGridNames[index]) !== -1) {
+    						found = true;
+    						break;
+    					}
+    				}
+
+    				if (found === true) {
+    					name = aa.get("GEN");
+    					if (mySelectionsSource.getFeatures().indexOf(aa) === -1) {
+    						mySelectionsSource.addFeature(aa);
+    					}
+    					if (names.indexOf(name) === -1) {
+    						names.push(name);
+    					}
+    				}
+    			});
+
+    			// can't add name directly, might be possible that a polygon with the same name exist more than once
+    			var index, len;
+    			for (index = 0, len = names.length; index < len; ++index) {
+    				jQuery("#states").append( "<li>" + names[index] + "</li>" );
+    			}
+    			jQuery("#statesCount").html(len);
+    		} else {
+    			jQuery("#statesCount").empty();
+    		}
+    	}
+    	function polyIntersectsPoly(polygeomA, polygeomB) {
+        	// TODO add cache for the parsed geometries
+    		var geomA = ol3Parser.read(polygeomA);
+    		var geomB = ol3Parser.read(polygeomB);
+    		return geomA.intersects(geomB);
+    	};
+    });
 	 
     </script>
