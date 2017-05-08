@@ -15,7 +15,7 @@
 	    </Gka_Ready>
 	    <Gka_Checkout>
            <active>true</active>
-           <codePool>local</codePool>
+           <codePool>local</codePool>     	    	
 	    </Gka_Checkout>
 	    <Gka_UserStore>
            <active>true</active>
