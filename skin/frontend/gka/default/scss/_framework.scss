@@ -20,7 +20,7 @@
 @import "egov/fontbase";
 @import "egov/style-size";
 @import "../../../egov/default/scss/egov/style-images";
-@import "../../../egov/default/scss/egov/style-colors";
+@import "egov/style-colors";
 
 // ----------------------------------------------
 // Vars
@@ -40,7 +40,7 @@
 @import "../../../egov/default/scss/mixin/multi-column";
 @import "../../../egov/default/scss/mixin/clearfix";
 @import "../../../egov/default/scss/mixin/default-form";
-@import "../../../egov/default/scss/mixin/egov_loginform";
+@import "mixin/egov_loginform";
 @import "../../../egov/default/scss/mixin/image-replacement";
 @import "../../../egov/default/scss/mixin/menu";
 @import "../../../egov/default/scss/mixin/main-navigation";

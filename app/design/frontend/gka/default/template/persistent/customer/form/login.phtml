@@ -1,7 +1,7 @@
 ﻿<?php
 /**
  * @category    design
- * @package     egov_default
+ * @package     gka_default
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -18,39 +18,11 @@
         <div class="col2-set egov-account-login">
 
             <div class="page-title">
-                <h1><?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
-                        <?php echo $this->__('Login or Create an Account') ?>
-                    <?php else: ?>
-                        <?php echo $this->__('Login'); ?>
-                    <?php endif; ?></h1>
+                <h1><?php echo $this->__('Login'); ?></h1>
             </div>
-
-
-            <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
-            <div class="col-1 new-users">
-                <form action="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>" method="get" id="register-form" class="scaffold-form">
-                    <h2><?php echo $this->__('New Here?') ?></h2>
-                    <div class="content">
-                        <p class="form-instructions">
-                            <?php echo $this->__('Registration is free and easy!') ?>
-                        </p>
-                        <ul class="benefits">
-                            <li><?php echo $this->__('Faster checkout') ?></li>
-                            <li><?php echo $this->__('Save multiple shipping addresses') ?></li>
-                            <li><?php echo $this->__('View and track orders and more') ?></li>
-                        </ul>
-                    </div>
-                    <div class="buttons-set">
-                        <button type="submit" class="button" title="<?php echo $this->quoteEscape($this->__('Login')) ?>" name="send" id="send">
-                            <?php echo $this->__('Create an Account') ?>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <?php endif; ?>
 
             <?php // This column should be col-1 if the registration column is not displayed ?>
-            <div class="<?php if ($this->helper('customer')->isRegistrationAllowed()): ?>col-2<?php else: ?>col-1<?php endif; ?> registered-users">
+            <div class="col-2 registered-users">
                 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" class="scaffold-form">
                     <?php echo $this->getBlockHtml('formkey'); ?>
                     <h2><?php echo $this->__('Already registered?') ?></h2>

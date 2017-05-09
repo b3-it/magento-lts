@@ -41,7 +41,7 @@
 // ----------------------------------------------
 // Layout
 @import "../../../egov/default/scss/layout/button-set";
-@import "../../../egov/default/scss/layout/buttons";
+@import "layout/buttons";
 @import "../../../egov/default/scss/layout/global";
 @import "../../../egov/default/scss/layout/header";
 @import "../../../egov/default/scss/layout/header-nav";
@@ -83,7 +83,7 @@
 @import "../../../egov/default/scss/module/checkout-cart-minicart";
 @import "../../../egov/default/scss/module/search";
 @import "../../../egov/default/scss/module/account-reviews";
-@import "../../../egov/default/scss/module/account-login";
+@import "module/account-login";
 @import "../../../egov/default/scss/module/cms";
 @import "../../../egov/default/scss/module/pricing_conditions";
 @import "../../../egov/default/scss/module/cookies";
