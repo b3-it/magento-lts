@@ -199,7 +199,8 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
      *
      * @param unknown_type $data
      * @param unknown_type $customerAddressId
-     * @return unknown
+     * 
+     * @return boolean|string
      */
     public function saveBilling($data, $customerAddressId) {
 		if (empty ( $data )) {
@@ -218,7 +219,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 			$customerAddress = Mage::getModel ( 'customer/address' )->load ( $customerAddressId );
 			if ($customerAddress->getId ()) {
 				if ($customerAddress->getCustomerId () != $this->getQuote ()->getCustomerId ()) {
-					return Mage::getModel ( 'core/message_error', Mage::helper ( 'checkout' )->__ ( 'Customer Address is not valid.' ) );
+					return Mage::helper ( 'checkout' )->__ ( 'Customer Address is not valid.' );
 				}
 				
 				if (isset ( $data ['use_for_shipping'] ) && $data ['use_for_shipping'] == 1 && ! $this->isVirtual ()) {
@@ -253,7 +254,6 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 				}
 			} elseif (($validateRes = $this->validateAddress ( $data )) !== true) {
 				Mage::throwException ( $validateRes );
-				return;
 			}
 			
 			if (isset ( $data ['year'] ) && isset ( $data ['month'] ) && isset ( $data ['day'] )) {
