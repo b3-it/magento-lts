@@ -1,0 +1,165 @@
+//
+// Grid-Tabelle aus dem BE für das FE erzeugt
+//
+
+
+table.actions, table.massaction, form {
+	button {
+	    @extend .button;
+	    
+	    padding: 2px 7px;
+	    width: auto !important;
+	}
+}
+
+div.my-account div form > button {
+	float: none;
+}
+
+table.actions {
+    margin: 20px 0;
+    width: 100%;
+    
+    input, select {
+    	vertical-align: middle;
+    	line-height: auto;
+    	width: 40px;
+    	padding: 1px 3px;
+    	line-height: 1.5em;
+	}
+	
+	img {
+	    display: inline-block;
+	}
+    
+    td {
+        vertical-align: top;
+        
+        &.a-right {
+            text-align: right !important;
+        }
+    }
+    
+	td.export, td.filter-actions {
+	    display: inline-block;
+	    width: 49.5%;
+	    margin-top: 10px;
+	}
+	
+	td.export .button {
+	    float: none;
+	}
+	
+	.scalable {
+	    margin: 0 0 0 10px !important;
+	}
+	
+    .arrow {
+        margin: 0 3px;
+    	vertical-align: middle;
+    }
+    
+    input.page {
+	    width: 2em !important;
+    }
+    
+    .separator {
+	    font-size: 0.9em;
+    	padding: 0 $global-boxpadding;
+	}
+	
+	select {
+        margin: 0 4px;
+        min-width: 4em !important;
+        max-width: 10em !important;
+        min-height: 17px;
+	}
+}
+
+table.massaction {
+	width: 100%;
+	
+	td {
+	    display: block;
+	    padding: 2px 0;
+	}
+	
+	.select {
+	    display: inline;
+	    width: auto;
+	    min-height: 17px;
+	}
+	
+	fieldset {
+	    width: 210px;
+	    display: inline-block;
+	    float: right;
+	}
+}
+
+div.grid {
+	margin-top: 20px;
+	
+	.hor-scroll {
+	    margin-bottom: -4px;
+	    overflow: auto;
+	    padding-bottom: $global-boxpadding;
+	    width: 100%;
+	}
+	
+	table {
+	    border-color: $global-checkout-tableborder;
+	    border-style: solid;
+	    border-width: 0 0 0 $global-checkout-borderwidth;
+
+	    th {
+	        border-color: $global-checkout-tableborder;
+	        border-style: solid;
+    		border-width: $global-checkout-borderwidth $global-checkout-borderwidth $global-checkout-borderwidth 0;
+    		white-space: normal;
+	        vertical-align: top;
+	        background-color: $global-checkout-thbackground;
+	        color: $global-checkout-thfontcolor;
+	        
+	        input, select {
+	            padding: 0;
+	        }
+	        
+	        a {
+	            color: $global-checkout-thfontcolor;
+	            
+	            &.sort-arrow-asc span.sort-title {
+	                background-image: url("images/grid_sort_asc.gif");
+	            }
+	            &.sort-arrow-desc span.sort-title {
+	                background-image: url("images/grid_sort_desc.gif");
+	            }
+	        }
+	    }
+	    
+	    td {
+	        border-color: $global-checkout-tableborder;
+    		border-style: solid;
+    		border-width: 0 $global-checkout-borderwidth $global-checkout-borderwidth 0;
+	    }
+	    
+	    th, td {
+	        padding: $global-boxpadding;
+	    }
+	    
+	    img {
+	        display: inline-block;
+	        float: right;
+	    }
+	
+	    .range-line {
+	        width: 100px;
+	        height: 25px;
+	        
+	        input {
+	            width: 60%;
+	            display: inline-block;
+	        }
+	    }
+	}
+}

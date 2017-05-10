@@ -31,7 +31,7 @@
 
 // ----------------------------------------------
 // Core
-@import "../../../egov/default/scss/core/common";
+@import "core/common";
 
 
 // ----------------------------------------------
@@ -99,7 +99,7 @@
 @import "../../../egov/default/scss/module/my-account";
 @import "../../../egov/default/scss/module/my-recent-tags";
 @import "../../../egov/default/scss/module/sid-wishlist";
-@import "../../../egov/default/scss/module/grid-table";
+@import "module/grid-table";
 
 // ----------------------------------------------
 // Override

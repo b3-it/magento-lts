@@ -35,6 +35,10 @@
  *  getVarNamePage()
  */
 $numColumns = sizeof($this->getColumns());
+
+$select_pager  = 'pager_' . $this->getCollection()->getPageSize();
+$$select_pager = ' selected="selected"';
+
 ?>
 
 <script type="text/javascript">
@@ -46,7 +50,7 @@ $numColumns = sizeof($this->getColumns());
     <?php if($this->canDisplayContainer()): ?>
         <?php if($this->getGridHeader()): ?>
         <div class="content-header">
-            <table cellspacing="0">
+            <table>
                 <tr>
                     <td style="width:50%;"><h2><?php echo $this->getGridHeader(); ?></h2></td>
                 </tr>
@@ -59,16 +63,17 @@ $numColumns = sizeof($this->getColumns());
         <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php endif; ?>
 <?php if($this->getPagerVisibility() || $this->getExportTypes() || $this->getFilterVisibility()): ?>
-    <table cellspacing="0" class="actions">
-        <tr>
+    <table class="actions">
         <?php if($this->getPagerVisibility()): ?>
+        <tr>
             <td class="pager">
-            <?php echo $this->__('Page') ?>
-
-            <?php $_curPage  = $this->getCollection()->getCurPage() ?>
-            <?php $_lastPage = $this->getCollection()->getLastPageNumber() ?>
-            <?php if($_curPage>1): ?>
-                <a href="#" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Previous page')) ?>" onclick="<?php echo $this->getJsObjectName() ?>.setPage('<?php echo ($_curPage-1) ?>');return false;"><img src="<?php echo $this->getSkinUrl('images/pager_arrow_left.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Go to Previous page')) ?>" class="arrow"/></a>
+            <?php
+                echo $this->__('Page');
+                
+                $_curPage  = $this->getCollection()->getCurPage();
+                $_lastPage = $this->getCollection()->getLastPageNumber();
+                if($_curPage>1): ?>
+                <a href="javascript:void(0);" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Previous page')); ?>" onclick="<?php echo $this->getJsObjectName(); ?>.setPage('<?php echo ($_curPage-1) ?>');return false;"><img src="<?php echo $this->getSkinUrl('images/pager_arrow_left.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Go to Previous page')) ?>" class="arrow" /></a>
             <?php else: ?>
                 <img src="<?php echo $this->getSkinUrl('images/pager_arrow_left_off.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Go to Previous page')) ?>" class="arrow"/>
             <?php endif; ?>
@@ -83,13 +88,13 @@ $numColumns = sizeof($this->getColumns());
 
             <?php echo $this->__('of %s pages', $this->getCollection()->getLastPageNumber()) ?>
             <span class="separator">|</span>
-            <?php echo $this->__('View') ?>
-            <select name="<?php echo $this->getVarNameLimit() ?>" onchange="<?php echo $this->getJsObjectName() ?>.loadByElement(this)">
-                <option value="20"<?php if($this->getCollection()->getPageSize()==20): ?> selected="selected"<?php endif; ?>>20</option>
-                <option value="30"<?php if($this->getCollection()->getPageSize()==30): ?> selected="selected"<?php endif; ?>>30</option>
-                <option value="50"<?php if($this->getCollection()->getPageSize()==50): ?> selected="selected"<?php endif; ?>>50</option>
-                <option value="100"<?php if($this->getCollection()->getPageSize()==100): ?> selected="selected"<?php endif; ?>>100</option>
-                <option value="200"<?php if($this->getCollection()->getPageSize()==200): ?> selected="selected"<?php endif; ?>>200</option>
+            <?php echo $this->__('View'); ?>
+            <select name="<?php echo $this->getVarNameLimit(); ?>" onchange="<?php echo $this->getJsObjectName(); ?>.loadByElement(this)">
+                <option value="20"<?php echo $pager_20; ?>>20</option>
+                <option value="30"<?php echo $pager_30; ?>>30</option>
+                <option value="50"<?php echo $pager_50; ?>>50</option>
+                <option value="100"<?php echo $pager_50; ?>>100</option>
+                <option value="200"<?php echo $pager_100; ?>>200</option>
             </select>
             <?php echo $this->__('per page') ?><span class="separator">|</span>
             <?php echo $this->__('Total %d records found', $this->getCollection()->getSize()) ?>
@@ -100,9 +105,11 @@ $numColumns = sizeof($this->getColumns());
                 <?php endforeach ?>
             <?php endif; ?>
         </td>
+    </tr>
     <?php endif ?>
+    <tr>
     <?php if($this->getExportTypes()): ?>
-        <td class="export a-right">
+        <td class="export">
             <img src="<?php echo $this->getSkinUrl('images/icon_export.gif') ?>" alt="" class="v-middle"/>&nbsp; <?php echo $this->__('Export to:') ?>
             <select name="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="width:8em;">
             <?php foreach ($this->getExportTypes() as $_type): ?>
@@ -115,7 +122,7 @@ $numColumns = sizeof($this->getColumns());
         <td class="filter-actions a-right">
             <?php echo $this->getMainButtonsHtml() ?>
         </td>
-        </tr>
+    </tr>
     </table>
 <?php endif; ?>
 <?php if($this->getMassactionBlock()->isAvailable()): ?>
@@ -123,7 +130,7 @@ $numColumns = sizeof($this->getColumns());
 <?php endif ?>
 <div class="grid">
     <div class="hor-scroll">
-    <table cellspacing="0" class="data" id="<?php echo $this->getId() ?>_table">
+    <table class="data" id="<?php echo $this->getId() ?>_table">
         <?php foreach ($this->getColumns() as $_column): ?>
         <col <?php echo $_column->getHtmlProperty() ?> />
         <?php endforeach; ?>
@@ -215,13 +222,13 @@ $numColumns = sizeof($this->getColumns());
     <?php echo $this->getJsObjectName() ?> = new varienGrid('<?php echo $this->getId() ?>', '<?php echo $this->getGridUrl() ?>', '<?php echo $this->getVarNamePage() ?>', '<?php echo $this->getVarNameSort() ?>', '<?php echo $this->getVarNameDir() ?>', '<?php echo $this->getVarNameFilter() ?>');
     <?php echo $this->getJsObjectName() ?>.useAjax = '<?php echo $this->getUseAjax() ?>';
     <?php if($this->getRowClickCallback()): ?>
-        <?php echo $this->getJsObjectName() ?>.rowClickCallback = <?php echo $this->getRowClickCallback() ?>;
+        <?php echo $this->getJsObjectName() ?>.rowClickCallback = '<?php echo $this->getRowClickCallback() ?>';
     <?php endif; ?>
     <?php if($this->getCheckboxCheckCallback()): ?>
-        <?php echo $this->getJsObjectName() ?>.checkboxCheckCallback = <?php echo $this->getCheckboxCheckCallback() ?>;
+        <?php echo $this->getJsObjectName() ?>.checkboxCheckCallback = '<?php echo $this->getCheckboxCheckCallback() ?>';
     <?php endif; ?>
     <?php if($this->getRowInitCallback()): ?>
-        <?php echo $this->getJsObjectName() ?>.initRowCallback = <?php echo $this->getRowInitCallback() ?>;
+        <?php echo $this->getJsObjectName() ?>.initRowCallback = '<?php echo $this->getRowInitCallback() ?>';
         <?php echo $this->getJsObjectName() ?>.initGridRows();
     <?php endif; ?>
     <?php if($this->getMassactionBlock()->isAvailable()): ?>
