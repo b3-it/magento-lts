@@ -57,9 +57,9 @@
                          alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
 
                   <?php if( Mage::helper('egovsbase/catalog_product_data')->isProductNew($_product) ) : ?>
-                    <div class="product-new-block">
+                    <span class="product-new-block">
                         <img src="<?php echo $this->getSkinUrl('images/artikel-neu.png'); ?>" alt="<?php echo $this->__('New Product'); ?>" title="<?php echo $this->__('New Product'); ?>" />
-                    </div>
+                    </span>
                   <?php endif; ?>
                 </a>
               <?php // Links for Wishlist and Compare ?>
@@ -69,7 +69,6 @@
                             <li>
                                 <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
                                    class="link-wishlist egov-star egov-float-left"
-                                   alt="<?php echo $this->__('Add to Wishlist') ?>"
                                    title="<?php echo $this->__('Add to Wishlist') ?>"> </a>
                             </li>
                         <?php endif; ?>
@@ -77,7 +76,6 @@
                             <li>
                                 <a href="<?php echo $_compareUrl ?>"
                                    class="link-compare egov-float-right"
-                                   alt="<?php echo $this->__('Add to Compare') ?>"
                                    title="<?php echo $this->__('Add to Compare') ?>">
                                     <span class="egov-compare"> </span>
                                 </a>
@@ -225,7 +223,6 @@
                                 <li>
                                     <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
                                        class="link-wishlist egov-star egov-float-left"
-                                       alt="<?php echo $this->__('Add to Wishlist') ?>"
                                        title="<?php echo $this->__('Add to Wishlist') ?>"> </a>
                                 </li>
                             <?php endif; ?>
@@ -233,7 +230,6 @@
                                 <li>
                                     <a href="<?php echo $_compareUrl ?>"
                                        class="link-compare egov-float-right"
-                                       alt="<?php echo $this->__('Add to Compare') ?>"
                                        title="<?php echo $this->__('Add to Compare') ?>">
                                         <span class="egov-compare"> </span>
                                     </a>

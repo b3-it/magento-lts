@@ -59,13 +59,11 @@
                     <a href="<?php echo $this->getOrderUrl(null, 'asc') ?>"
                        class="sort-by-switcher sort-by-switcher--desc"
                        title="<?php echo Mage::helper('core')->quoteEscape($this->__('Set Ascending Direction')) ?>"
-                       alt="<?php echo $this->__('Set Ascending Direction') ?>"
                        title="<?php echo $this->__('Set Ascending Direction') ?>"> </a>
                 <?php else: ?>
                     <a href="<?php echo $this->getOrderUrl(null, 'desc') ?>"
                        class="sort-by-switcher sort-by-switcher--asc"
                        title="<?php echo Mage::helper('core')->quoteEscape($this->__('Set Descending Direction')) ?>"
-                       alt="<?php echo $this->__('Set Descending Direction') ?>"
                        title="<?php echo $this->__('Set Descending Direction') ?>"> </a>
                 <?php endif; ?>
             </div>

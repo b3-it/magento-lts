@@ -19,7 +19,7 @@
                 <div class="product-list-left-col">
                     <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="product-image">
                         <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize(500) ?>" alt="<?php echo $this->stripTags($_product->getName(), null, true) ?>" />
-                        <div class="image-copyright-box"><span><?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?></span></div>
+                        <span class="image-copyright-box"><span><?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?></span></span>
                     </a>
                     <div class="product-add-links">
                         <ul class="add-to-links">

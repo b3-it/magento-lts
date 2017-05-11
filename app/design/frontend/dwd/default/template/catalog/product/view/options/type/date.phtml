@@ -13,14 +13,15 @@
 <?php $_option = $this->getOption() ?>
 <?php $_optionId = $_option->getId() ?>
 <dt class="option-block type-<?php echo $_option->getType(); ?>">
-    <div class="option-block-label">
+    <span class="option-block-label">
         <label>
             <?php if ($_option->getIsRequire()) echo '<em class="required">*</em>' ?>
             <?php echo  $this->escapeHtml($_option->getTitle()) ?>
         </label>
         <?php echo $this->getFormatedPrice() ?>
-    </div>
-    <div class="option-block-elements">
+    </span>
+    <br />
+    <span class="option-block-elements">
     <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE_TIME
         || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE): ?>
 
@@ -89,5 +90,5 @@
     <?php endif; ?>
         //]]>
         </script>
-    </div>
+    </span>
 </dt>

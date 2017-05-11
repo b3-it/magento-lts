@@ -96,7 +96,7 @@ billing.onSave = function(evt){
 }
 //]]>
 </script>
-<?php endif ?>
+<?php endif; ?>
 <?php if ($this->isMessagesAvailable() || $this->isItemsAvailable()): ?>
 <?php switch ($this->getType()): ?>
 <?php case 'onepage_checkout': ?>
@@ -330,5 +330,5 @@ billing.onSave = function(evt){
     //]]>
     </script>
     <?php break; ?>
-<?php endswitch ?>
+<?php endswitch; ?>
 <?php endif; ?>
