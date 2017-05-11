@@ -140,7 +140,10 @@
 			</div>
 		</div>
 		<?php endif; ?>
-
+<?php if($this->isCashPayment()):?>
+<label for="givenamount">Gegeben</label>
+	<input name="givenamount" id="givenamount" />
+<?php endif;?>
 		<div class="col1-wide">
 
 			<table class="data-table" id="checkout-review-table">

@@ -2,8 +2,8 @@
 /**
  * 
  *  Abfangen der Bestellung und speichern der Anmeldedaten
- *  @category Egovs
- *  @package  Bfr_EventManager_Model_Observer
+ *  @category Gka
+ *  @package  Gka_Barkasse_Model_Observer
  *  @author Frank Rochlitzer <​f.rochlitzer@b3-it.de>
  *  @author Holger Kögel <​h.koegel@b3-it.de>
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
@@ -28,10 +28,13 @@ class Gka_Barkasse_Model_Observer extends Varien_Object
 		$journal  = Mage::getModel('gka_barkasse/kassenbuch_journal')->getOpenJournal($order->getCustomerId());
 		$journalItem = Mage::getModel('gka_barkasse/kassenbuch_journalitems');
 		
+		$givenamount = floatval($order->getGivenAmount());
+		
 		$journalItem->setBookingDate(now())
 		->setBookingAmount($order->getBaseGrandTotal())
 		->setJournalId($journal->getId())
 		->setOrderId($order->getId())
+		->setGivenAmount($givenamount)
 		->setSource(0)
 		->save();
 	}

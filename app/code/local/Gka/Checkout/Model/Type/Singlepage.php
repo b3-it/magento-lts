@@ -251,7 +251,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
      *
      * @return Mage_Checkout_Model_Type_Multishipping
      */
-    public function createOrders()
+    public function createOrder($givenamount)
     {
         $orderIds = array();
         $this->_validate();
@@ -262,7 +262,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
         try {
         
         	$order = $this->_prepareOrder($address);
-
+			$order->setGivenAmount($givenamount);
                
             Mage::dispatchEvent(
                     'checkout_type_multishipping_create_orders_single',
