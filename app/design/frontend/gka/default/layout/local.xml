@@ -21,7 +21,15 @@
             <remove name="cart_sidebar" />
         </reference>
     </default>
-    
+
+    <checkout_singlepage_start>
+        <reference name="root">
+            <action method="addBodyClass">
+                <classname>mp-checkout</classname>
+            </action>
+        </reference>
+    </checkout_singlepage_start>
+
     <gka_barkasse_kassenbuch_journal_index translate="label">
         <reference name="head">
             <!-- Funktions-Code für Kalender im Grid hinzufügen -->
