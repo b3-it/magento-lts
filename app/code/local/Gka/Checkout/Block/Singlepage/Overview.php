@@ -162,6 +162,12 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
         return $this->getUrl('*/cart',array('_secure'=>true));
     }
 
+    public function getPostActionUrl()
+    {
+    	return $this->getUrl('*/singlepage/overviewPost',array('_secure'=>true));
+    }
+    
+    
     /**
      * Retrieve virtual product collection array
      *
