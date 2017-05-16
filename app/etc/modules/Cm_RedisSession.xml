@@ -1,8 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE config>
 <config>
-  <modules>
-    <Cm_RedisSession>
-      <active>false</active>
-      <codePool>community</codePool>
-    </Cm_RedisSession>
-  </modules>
+    <modules>
+        <Cm_RedisSession>
+            <active>false</active>
+            <codePool>community</codePool>
+        </Cm_RedisSession>
+    </modules>
 </config>
