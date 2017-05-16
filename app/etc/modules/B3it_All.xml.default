@@ -13,5 +13,9 @@
             <active>false</active>
             <codePool>local</codePool>
         </B3it_Maintenance>
+		<B3it_ConfigCompare>
+			<active>false</active>
+			<codePool>local</codePool>
+		</B3it_ConfigCompare>    
     </modules>
 </config>
