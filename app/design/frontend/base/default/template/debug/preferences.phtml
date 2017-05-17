@@ -7,9 +7,9 @@ $helper = Mage::helper('debug');
 ?>
 
 <h4><?php echo $this->__('Visible Panels') ?></h4>
-<form method="post" action="<?php echo $this->getFormUrl() ?>" name="preferences-form">
+<form method="post" action="<?php echo $this->getFormUrl() ?>" id="preferences-form">
     <?php foreach ($panels as $panel): ?>
-    <input type="checkbox" name="<?php echo strtolower($panel['title']) ?>" id="<?php echo $panel['dom_id'] . '_visibility' ?>"
+    <input type="checkbox" id="<?php echo strtolower($panel['title']) ?>" id="<?php echo $panel['dom_id'] . '_visibility' ?>"
         <?php if ($helper->isPanelVisible($panel['title'])): ?>checked<?php endif ?>>
     <label for="<?php echo $panel['dom_id'] . '_visibility' ?>"><?php echo $panel['title'] ?></label><br>
     <?php endforeach ?>

@@ -74,7 +74,7 @@
     </td>
     <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
     <td class="a-center">
-        <input type="checkbox" value="1" title="<?php echo Mage::helper('checkout')->__("Check if you want move the following Product to Wishlist: "). $this->getProductName()?>" name="cart[<?php echo $_item->getId() ?>][wishlist]" class="checkbox" />
+        <input type="checkbox" value="1" title="<?php echo Mage::helper('checkout')->__("Check if you want move the following Product to Wishlist: "). $this->getProductName()?>" id="cart[<?php echo $_item->getId() ?>][wishlist]" class="checkbox" />
     </td>
     <?php endif ?>
     <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
@@ -92,7 +92,7 @@
     </td>
     <?php endif; ?>
     <td class="a-center">
-        <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" title="<?php echo Mage::helper('checkout')->__("Please put in Quantity for: "). $this->getProductName()?>" size="4" class="input-text qty" maxlength="8" />
+        <input id="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" title="<?php echo Mage::helper('checkout')->__("Please put in Quantity for: "). $this->getProductName()?>" size="4" class="input-text qty" maxlength="8" />
     </td>
     <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
     <td class="a-right">

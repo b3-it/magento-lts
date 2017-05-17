@@ -30,7 +30,7 @@
 <table style="width:100%;">
     <tr>
         <td><label for="tracking_number"><?php echo Mage::helper('sales')->__('Tracking Number') ?></label></td>
-        <td width="100%">
+        <td style="width:100%;">
             <?php $_numbers = $this->getOrder()->getTrackingNumbers(); ?>
             <?php if ($_numbers): ?>
                 <?php foreach ($_numbers as $_number): ?>
@@ -39,7 +39,7 @@
                     <span id="order_tracking_info_response_<?php echo $_number ?>"></span>
                 <?php endforeach; ?>
             <?php endif; ?>
-            <input class="input-text" type="text" id="tracking_number" name="tracking_number" value="" style="width:120px;"/>
+            <input class="input-text" type="text" id="tracking_number" id="tracking_number" value="" style="width:120px;"/>
             <?php echo $this->getSaveButtonHtml() ?>
         </td>
     </tr>

@@ -15,9 +15,9 @@ function start_upload() {
 </script>
 
 <form>
-    <input id="image_upload_token" name="image_upload_token" type="hidden" value="<?php echo $this->getToken();?>"/>
+    <input id="image_upload_token" id="image_upload_token" type="hidden" value="<?php echo $this->getToken();?>"/>
     <div style="width:420px; float:left;">
-        <input id="file_upload" name="file_upload" type="file" />
+        <input id="file_upload" id="file_upload" type="file" />
     </div>
     <div id="result" class="uploadify-result"></div>
     <br style="clear:left;"/>

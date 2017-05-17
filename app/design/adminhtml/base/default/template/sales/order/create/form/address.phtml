@@ -51,7 +51,7 @@ endif; ?>
     <div id = "<?php echo $_addressChoiceContainerId ?>" class="order-choose-address">
         <?php echo Mage::helper('sales')->__('Select from existing customer addresses:') ?><br/>
         <?php $_id = $this->getForm()->getHtmlIdPrefix() . 'customer_address_id' ?>
-        <select id="<?php echo $_id ?>"  name="<?php echo $this->getForm()->getHtmlNamePrefix()?>[customer_address_id]" style="width:97.5%;" onchange="order.selectAddress(this, '<?php echo $_fieldsContainerId ?>')">
+        <select id="<?php echo $_id ?>"  id="<?php echo $this->getForm()->getHtmlNamePrefix()?>[customer_address_id]" style="width:97.5%;" onchange="order.selectAddress(this, '<?php echo $_fieldsContainerId ?>')">
             <option value=""><?php echo Mage::helper('sales')->__('Add New Address') ?></option>
             <?php foreach ($this->getAddressCollection() as $_address): ?>
             <?php //if($this->getAddressAsString($_address)!=$this->getAddressAsString($this->getAddress())): ?>
@@ -64,7 +64,7 @@ endif; ?>
         </select>
         <br/>
         <?php if($this->getIsShipping()): ?>
-            <input type="checkbox" id="order-shipping_as_billing" name="shipping_as_billing" value="1" onclick="order.setShippingAsBilling(this.checked)" <?php if($this->getIsAsBilling()): ?>checked<?php endif; ?>/>
+            <input type="checkbox" id="order-shipping_as_billing" id="shipping_as_billing" value="1" onclick="order.setShippingAsBilling(this.checked)" <?php if($this->getIsAsBilling()): ?>checked<?php endif; ?>/>
             <label for="order-shipping_as_billing" class="no-float"><?php echo Mage::helper('sales')->__('Same As Billing Address') ?></label>
         <?php else: ?>
             &nbsp;
@@ -76,7 +76,7 @@ endif; ?>
             <?php echo $this->getForm()->toHtml() ?>
         </div>
         <div class="order-save-in-address-book">
-            <input name="<?php echo $this->getForm()->getHtmlNamePrefix()?>[save_in_address_book]" type="checkbox" id="<?php echo $this->getForm()->getHtmlIdPrefix()?>save_in_address_book" value="1" <?php if (!$this->getDontSaveInAddressBook() && $this->getAddress()->getSaveInAddressBook()):?> checked="checked"<?php endif;?>/>
+            <input id="<?php echo $this->getForm()->getHtmlNamePrefix()?>[save_in_address_book]" type="checkbox" id="<?php echo $this->getForm()->getHtmlIdPrefix()?>save_in_address_book" value="1" <?php if (!$this->getDontSaveInAddressBook() && $this->getAddress()->getSaveInAddressBook()):?> checked="checked"<?php endif;?>/>
             <label for="<?php echo $this->getForm()->getHtmlIdPrefix()?>save_in_address_book"><?php echo Mage::helper('sales')->__('Save in address book') ?></label>
         </div>
     </div>

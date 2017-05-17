@@ -16,7 +16,7 @@
     <dl class="last">
             <dt><label><?php echo $this->__('Select Period')?><span class="required">&nbsp;*</span></label></dt>
 	<dd class="last">
-    <select onchange="changePeriodePrice()" title="" class=" required-entry product-custom-option" id="periode" name="periode">
+    <select onchange="changePeriodePrice()" title="" class=" required-entry product-custom-option" id="periode" id="periode">
     	<option price="--" value=""><?php echo $this->__('-- please select --')?></option>
     	<?php foreach($this->getPerioden() as $periode) {?>
     				<option price="<?php echo $this->getPrice($periode)?>" finalprice="<?php echo $this->getFormatedFinalPrice($periode)?>" value="<?php echo $periode->getEntityId()?>">	
@@ -39,7 +39,7 @@
 	<dd class="last">
     
     	<?php foreach($this->getPerioden() as $periode) {?>
-    		<input name="periode" type="hidden" value="<?php echo $periode->getEntityId()?>"/><?php echo $periode->getLabel()?>&nbsp; <?php echo $this->getFormatedFinalPrice($periode)?>
+    		<input id="periode" type="hidden" value="<?php echo $periode->getEntityId()?>"/><?php echo $periode->getLabel()?>&nbsp; <?php echo $this->getFormatedFinalPrice($periode)?>
     	<?php }?>
     	</dd>
         </dl>

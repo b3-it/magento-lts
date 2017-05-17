@@ -1,6 +1,6 @@
 <div class="entry-edit">
 	<div class="entry-edit-head">
-	<input type="hidden" name="tab_adminuser_role_customergroups" value="1" />
+	<input type="hidden" id="tab_adminuser_role_customergroups" value="1" />
 	<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Customer Group')?></h4>
 	</div>
 	<div id="user_base_fieldset" class="fieldset ">
@@ -9,7 +9,7 @@
 	<tr>
 	<td class="label"><?php echo $this->__('Allow All Customer Groups')?></td>
 		<td class="value">
-			<select name="allow_all_customergroups">
+			<select id="allow_all_customergroups">
 			<?php if($this->getAllowAllCustomergroups()){?>
 				<option value="0"><?php echo $this->__('No')?></option>
 				<option selected="selected"  value="1"><?php echo $this->__('Yes')?></option>
@@ -41,16 +41,16 @@
 		
 		<td align="center">
 			<?php if($group['read'] == 1){?>
-				<input name="customergroups[<?php echo $group['id']; ?>][read]" type="checkbox" checked="checked"/>
+				<input id="customergroups[<?php echo $group['id']; ?>][read]" type="checkbox" checked="checked"/>
 			<?php } else { ?>
-			<input name="customergroups[<?php echo $group['id']; ?>][read]" type="checkbox" />
+			<input id="customergroups[<?php echo $group['id']; ?>][read]" type="checkbox" />
 			<?php }?>
 		</td>
 		<td align="center">
 			<?php if($group['write'] == 1){?>
-				<input name="customergroups[<?php echo $group['id']; ?>][write]" type="checkbox" checked="checked"/>
+				<input id="customergroups[<?php echo $group['id']; ?>][write]" type="checkbox" checked="checked"/>
 			<?php } else { ?>
-			<input name="customergroups[<?php echo $group['id']; ?>][write]" type="checkbox" />
+			<input id="customergroups[<?php echo $group['id']; ?>][write]" type="checkbox" />
 			<?php }?>
 		</td>
 		<td><?php echo $group['label'];?></td>

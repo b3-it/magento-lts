@@ -5,7 +5,7 @@
 <fieldset>
 <div class="grid">
 	<div class="hor-scroll">
-<table class="data" cellspacing="0">
+<table class="data">
 <col width="1">
 <col width="1">
 <col >
@@ -13,11 +13,11 @@
 <col width="1">
 <thead>
 	<tr class="headings">
-    	<th><span class="nobr"><a class="not-sort" title="asc" name="entity_id"><span class="sort-title">ID</span></a></span></th>
-    	 <th><span class="nobr"><a class="not-sort" title="asc" name="sku" ><span class="sort-title"><?php echo $this->__('Sku')?></span></a></span></th>
-        <th><span class="nobr"><a class="not-sort" title="asc" name="name" ><span class="sort-title"><?php echo $this->__('Name')?></span></a></span></th>
-        <th><span class="nobr"><a class="not-sort" title="asc" name="name" ><span class="sort-title"><?php echo $this->__('Qty')?></span></a></span></th>
-        <th><span class="nobr"><a class="not-sort" title="asc" name="name"><span class="sort-title"><?php echo $this->__('Delete')?></span></a></span></th>
+    	<th><span class="nobr"><a class="not-sort" title="asc" id="entity_id"><span class="sort-title">ID</span></a></span></th>
+    	 <th><span class="nobr"><a class="not-sort" title="asc" id="sku" ><span class="sort-title"><?php echo $this->__('Sku')?></span></a></span></th>
+        <th><span class="nobr"><a class="not-sort" title="asc" id="name" ><span class="sort-title"><?php echo $this->__('Name')?></span></a></span></th>
+        <th><span class="nobr"><a class="not-sort" title="asc" id="name" ><span class="sort-title"><?php echo $this->__('Qty')?></span></a></span></th>
+        <th><span class="nobr"><a class="not-sort" title="asc" id="name"><span class="sort-title"><?php echo $this->__('Delete')?></span></a></span></th>
         
     </tr>
 </thead>
@@ -29,10 +29,10 @@
 <?php else: $even=true;?>
 <tr>
 <?php endif;?>
-	<td><input type="hidden" name="create_order[items][id][]" value="<?php echo $item->getId()?>" /> <?php echo $item->getId()?></td>
+	<td><input type="hidden" id="create_order[items][id][]" value="<?php echo $item->getId()?>" /> <?php echo $item->getId()?></td>
 	<td><?php echo $item->getSku()?></td>
 	<td><?php echo $item->getName()?></td>
-	<td><input id="qty_<?php echo $i?>" type="text" name="create_order[items][qty][]" value="<?php echo $item->getQty()?>"  onchange="changeItem(<?php echo $item->getId()?>,'qty_<?php echo $i?>')"/></td>
+	<td><input id="qty_<?php echo $i?>" type="text" id="create_order[items][qty][]" value="<?php echo $item->getQty()?>"  onchange="changeItem(<?php echo $item->getId()?>,'qty_<?php echo $i?>')"/></td>
 	<td><button onClick="removeContractItem('<?php echo $item->getId()?>',event); return false;" ><img id="delete_button2" alt="Remove Item" src="<?php echo $this->getSkinUrl('images/cancel_icon.gif') ?>"/></button></td>
 </tr>
 <?php endforeach;?>

@@ -51,8 +51,8 @@
         <form id="wishlist-allcart-form" action="<?php echo $this->getUrl('*/*/allcart') ?>" method="post">
             <?php echo $this->getBlockHtml('formkey') ?>
             <div class="no-display">
-                <input type="hidden" name="wishlist_id" id="wishlist_id" value="<?php echo $this->getWishlistInstance()->getId() ?>" />
-                <input type="hidden" name="qty" id="qty" value="" />
+                <input type="hidden" id="wishlist_id" id="wishlist_id" value="<?php echo $this->getWishlistInstance()->getId() ?>" />
+                <input type="hidden" id="qty" id="qty" value="" />
             </div>
         </form>
 

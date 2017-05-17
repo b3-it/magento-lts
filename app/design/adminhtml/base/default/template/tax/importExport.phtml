@@ -25,7 +25,7 @@
  */
 ?>
 <div class="content-header">
-    <table cellspacing="0">
+    <table>
         <tr>
             <td><h3 class="icon-head head-tax-rate-importExport"><?php echo Mage::helper('tax')->__('Import / Export Tax Rates') ?></h3></td>
         </tr>
@@ -41,7 +41,7 @@
             </div>
             <fieldset>
                 <legend><?php echo Mage::helper('tax')->__('Import Tax Rates') ?></legend>
-                <input type="file" name="import_rates_file" class="input-file required-entry"/>
+                <input type="file" id="import_rates_file" class="input-file required-entry"/>
                 <?php echo $this->getButtonHtml('Import Tax Rates', "this.form.submit()") ?>
             </fieldset>
         </form>

@@ -5,7 +5,7 @@
 <?php if ($this->hasStationen()):?>
 <div id="list" >
     <div id="station_wahl"><?php echo $this->__('choose Station')?></div>
-    <select id="stationenListe" name="station">
+    <select id="stationenListe" id="station">
         <option value=""><?php echo $this->__('-- please select --')?></option>
       <?php foreach($this->getStationsList() as $station){?>
         <option value="<?php echo $station->getId()?>"><?php echo $station->getName()?></option>

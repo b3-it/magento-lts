@@ -29,13 +29,13 @@ var id = 0;
 var authorTemplate =
     '<tr>'+
         '<td style="margin-bottom:5px;">'+
-            '<input class="input-text required-entry" style="width:160px;" name="authors[name][]" id="authors_name_{{id}}" value="{{name}}"/>'+
+            '<input class="input-text required-entry" style="width:160px;" id="authors[name][]" id="authors_name_{{id}}" value="{{name}}"/>'+
         '</td>'+
         '<td style="margin-bottom:5px;">'+
-            '<input class="input-text required-entry" style="width:140px;" name="authors[user][]" id="authors_user_{{id}}" value="{{user}}"/>'+
+            '<input class="input-text required-entry" style="width:140px;" id="authors[user][]" id="authors_user_{{id}}" value="{{user}}"/>'+
         '</td>'+
         '<td style="margin-bottom:5px;">'+
-            '<input class="input-text required-entry validate-email" style="width:160px;" name="authors[email][]" id="authors_email_{{id}}" value="{{email}}"/>'+
+            '<input class="input-text required-entry validate-email" style="width:160px;" id="authors[email][]" id="authors_email_{{id}}" value="{{email}}"/>'+
         '</td>'+
         '<td style="margin-bottom:5px;">'+
             '<?php echo $this->jsQuoteEscape($this->getRemoveRowButtonHtml('tr')) ?>'+

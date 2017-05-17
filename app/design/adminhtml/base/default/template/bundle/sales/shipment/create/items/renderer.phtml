@@ -76,7 +76,7 @@
         </td>
         <td class="last">
             <?php if ($this->isShipmentSeparately($_item)): ?>
-                <input type="text" class="input-text" name="shipment[items][<?php echo $_item->getOrderItemId() ?>]" value="<?php echo $_item->getQty()*1 ?>" />
+                <input type="text" class="input-text" id="shipment[items][<?php echo $_item->getOrderItemId() ?>]" value="<?php echo $_item->getQty()*1 ?>" />
             <?php else: ?>
                 &nbsp;
             <?php endif; ?>

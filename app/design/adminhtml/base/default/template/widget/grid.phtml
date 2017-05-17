@@ -40,7 +40,7 @@ $numColumns = sizeof($this->getColumns());
     <?php if($this->canDisplayContainer()): ?>
         <?php if($this->getGridHeader()): ?>
         <div class="content-header">
-            <table cellspacing="0">
+            <table>
                 <tr>
                     <td style="width:50%;"><h2><?php echo $this->getGridHeader(); ?></h2></td>
                 </tr>
@@ -53,7 +53,7 @@ $numColumns = sizeof($this->getColumns());
         <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php endif; ?>
 <?php if($this->getPagerVisibility() || $this->getExportTypes() || $this->getFilterVisibility()): ?>
-    <table cellspacing="0" class="actions">
+    <table class="actions">
         <tr>
         <?php if($this->getPagerVisibility()): ?>
             <td class="pager">
@@ -67,7 +67,7 @@ $numColumns = sizeof($this->getColumns());
                 <img src="<?php echo $this->getSkinUrl('images/pager_arrow_left_off.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Go to Previous page')) ?>" class="arrow"/>
             <?php endif; ?>
 
-            <input type="text" name="<?php echo $this->getVarNamePage() ?>" value="<?php echo $_curPage ?>" class="input-text page" onkeypress="<?php echo $this->getJsObjectName() ?>.inputPage(event, '<?php echo $_lastPage ?>')"/>
+            <input type="text" id="<?php echo $this->getVarNamePage() ?>" value="<?php echo $_curPage ?>" class="input-text page" onkeypress="<?php echo $this->getJsObjectName() ?>.inputPage(event, '<?php echo $_lastPage ?>')"/>
 
             <?php if($_curPage < $_lastPage): ?>
                 <a href="#" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Next page')) ?>" onclick="<?php echo $this->getJsObjectName() ?>.setPage('<?php echo ($_curPage+1) ?>');return false;"><img src="<?php echo $this->getSkinUrl('images/pager_arrow_right.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Go to Next page')) ?>" class="arrow"/></a>
@@ -78,7 +78,7 @@ $numColumns = sizeof($this->getColumns());
             <?php echo $this->__('of %s pages', $this->getCollection()->getLastPageNumber()) ?>
             <span class="separator">|</span>
             <?php echo $this->__('View') ?>
-            <select name="<?php echo $this->getVarNameLimit() ?>" onchange="<?php echo $this->getJsObjectName() ?>.loadByElement(this)">
+            <select id="<?php echo $this->getVarNameLimit() ?>" onchange="<?php echo $this->getJsObjectName() ?>.loadByElement(this)">
                 <option value="20"<?php if($this->getCollection()->getPageSize()==20): ?> selected="selected"<?php endif; ?>>20</option>
                 <option value="30"<?php if($this->getCollection()->getPageSize()==30): ?> selected="selected"<?php endif; ?>>30</option>
                 <option value="50"<?php if($this->getCollection()->getPageSize()==50): ?> selected="selected"<?php endif; ?>>50</option>
@@ -98,7 +98,7 @@ $numColumns = sizeof($this->getColumns());
     <?php if($this->getExportTypes()): ?>
         <td class="export a-right">
             <img src="<?php echo $this->getSkinUrl('images/icon_export.gif') ?>" alt="" class="v-middle"/>&nbsp; <?php echo $this->__('Export to:') ?>
-            <select name="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="width:8em;">
+            <select id="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="width:8em;">
             <?php foreach ($this->getExportTypes() as $_type): ?>
                 <option value="<?php echo $_type->getUrl() ?>"><?php echo $_type->getLabel() ?></option>
             <?php endforeach; ?>
@@ -117,7 +117,7 @@ $numColumns = sizeof($this->getColumns());
 <?php endif ?>
 <div class="grid">
     <div class="hor-scroll">
-    <table cellspacing="0" class="data" id="<?php echo $this->getId() ?>_table">
+    <table class="data" id="<?php echo $this->getId() ?>_table">
         <?php foreach ($this->getColumns() as $_column): ?>
         <col <?php echo $_column->getHtmlProperty() ?> />
         <?php endforeach; ?>

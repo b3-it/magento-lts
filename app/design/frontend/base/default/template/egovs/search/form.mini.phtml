@@ -30,7 +30,7 @@
     <label for="search"><?php echo $this->__('Search:') ?></label>
     <!--Sprungziel Tastatursteuerung -->
 	<span id="<?php echo $this->helper('bitv')->getJumpTarget($this);?>">
-     <input id="search" type="text" class="input-text" name="<?php echo $this->helper('catalogSearch')->getQueryParamName() ?>" title="Geben Sie hier den Suchbegriff ein." value="<?php echo $this->helper('catalogSearch')->getEscapedQueryText() ?>" />
+     <input id="search" type="text" class="input-text" id="<?php echo $this->helper('catalogSearch')->getQueryParamName() ?>" title="Geben Sie hier den Suchbegriff ein." value="<?php echo $this->helper('catalogSearch')->getEscapedQueryText() ?>" />
     </span>
     
     <button type="submit" class="button"><span><?php echo $this->__('Search ') ?></span></button>

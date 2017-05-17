@@ -40,7 +40,7 @@ $numColumns = sizeof($this->getColumns());
     <?php if($this->canDisplayContainer()): ?>
         <?php if($this->getGridHeader()): ?>
         <div class="content-header">
-            <table cellspacing="0">
+            <table>
                 <tr>
                     <td style="width:50%;"><h2><?php echo $this->getGridHeader(); ?></h2></td>
                 </tr>
@@ -56,23 +56,23 @@ $numColumns = sizeof($this->getColumns());
         <?php if($this->getStoreSwitcherVisibility()): ?>
             <?php echo $this->getStoreSwitcherHtml() ?>
         <?php endif ?>
-        <table cellspacing="0" class="actions">
+        <table class="actions">
             <tr>
         <?php if($this->getDateFilterVisibility()): ?>
             <td class="a-left filter">
                 <div class="f-left">
-                    <div><?php echo $this->__('From') ?>:&nbsp;<input class="input-text no-changes required-entry" type="text" id="period_date_from" name="report_from" value="<?php echo $this->getFilter('report_from') ?>" style="width:5em" /> <img src="<?php echo $this->getSkinUrl('images/grid-cal.gif') ?>" title="<?php echo $this->__('Select Date') ?>" id="period_date_from_trig" alt="<?php echo $this->__('Select Date') ?>" class="v-middle"/>&nbsp;&nbsp;</div>
+                    <div><?php echo $this->__('From') ?>:&nbsp;<input class="input-text no-changes required-entry" type="text" id="period_date_from" id="report_from" value="<?php echo $this->getFilter('report_from') ?>" style="width:5em" /> <img src="<?php echo $this->getSkinUrl('images/grid-cal.gif') ?>" title="<?php echo $this->__('Select Date') ?>" id="period_date_from_trig" alt="<?php echo $this->__('Select Date') ?>" class="v-middle"/>&nbsp;&nbsp;</div>
                     <div id="period_date_from_advaice"></div>
                 </div>
 
                 <div class="f-left">
-                    <div><?php echo $this->__('To') ?>:&nbsp;<input  class="input-text no-changes required-entry" type="text" id="period_date_to" name="report_to"  value="<?php echo $this->getFilter('report_to') ?>" style="width:5em" /> <img src="<?php echo $this->getSkinUrl('images/grid-cal.gif') ?>" class="v-middle" title="<?php echo $this->__('Select Date') ?>"id="period_date_to_trig" alt="<?php echo $this->__('Select Date') ?>"/>&nbsp;&nbsp;</div>
+                    <div><?php echo $this->__('To') ?>:&nbsp;<input  class="input-text no-changes required-entry" type="text" id="period_date_to" id="report_to"  value="<?php echo $this->getFilter('report_to') ?>" style="width:5em" /> <img src="<?php echo $this->getSkinUrl('images/grid-cal.gif') ?>" class="v-middle" title="<?php echo $this->__('Select Date') ?>"id="period_date_to_trig" alt="<?php echo $this->__('Select Date') ?>"/>&nbsp;&nbsp;</div>
                     <div id="period_date_to_advaice"></div>
                 </div>
 
                 <div class="f-left">
                     <?php echo $this->__('Show by') ?>:
-                    <select name="report_period" id="report_period" style="width:6em;">
+                    <select id="report_period" id="report_period" style="width:6em;">
                     <?php foreach ($this->getPeriods() as $_value=>$_label): ?>
                         <option value="<?php echo $_value ?>" <?php if($this->getFilter('report_period')==$_value): ?> selected<?php endif; ?>><?php echo $_label ?></option>
                     <?php endforeach; ?>
@@ -131,7 +131,7 @@ $numColumns = sizeof($this->getColumns());
         <?php if($this->getExportVisibility()): ?>
             <td class="a-right">
                 <img src="<?php echo $this->getSkinUrl('images/icon_export.gif') ?>" alt="" class="v-middle"/>&nbsp; <?php echo $this->__('Export to:') ?>
-                <select name="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="width:8em;">
+                <select id="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="width:8em;">
                 <?php foreach ($this->getExportTypes() as $_type): ?>
                     <option value="<?php echo $_type->getUrl() ?>"><?php echo $_type->getLabel() ?></option>
                 <?php endforeach; ?>
@@ -144,7 +144,7 @@ $numColumns = sizeof($this->getColumns());
     <?php endif; ?>
 
     <div class="grid">
-    <table cellspacing="0" class="data" id="<?php echo $this->getId() ?>_table">
+    <table class="data" id="<?php echo $this->getId() ?>_table">
         <col/>
         <?php foreach ($this->getColumns() as $_column): ?>
         <col <?php echo $_column->getHtmlProperty() ?>/>

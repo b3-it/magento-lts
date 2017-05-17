@@ -39,7 +39,7 @@
 <tr>
     <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
     <td colspan="10" class="grid tier"><div id="period_tier_label" style="display:none; text-align:left; width:100%;"><?php echo Mage::helper('periode')->__('Tier Price') ?></div>
-    <table cellspacing="0" class="data border" id="period_tier_price_table" style="margin-left:5px; width:260px;">
+    <table class="data border" id="period_tier_price_table" style="margin-left:5px; width:260px;">
         <?php if ($_showWebsite): ?>
         <col width="135" />
         <?php endif; ?>
@@ -68,10 +68,10 @@
 //<![CDATA[
 
 var AboTierPriceRowTemplate = '<tr>'
-    + '<td class="nobr"><input class="<?php echo $_htmlClass ?> qty required-entry validate-greater-than-zero" type="text" name="<?php echo $_htmlName ?>[{{index}}][price_qty]" value="{{qty}}" id="periode_tier_price_row_{{index}}_qty" />'
+    + '<td class="nobr"><input class="<?php echo $_htmlClass ?> qty required-entry validate-greater-than-zero" type="text" id="<?php echo $_htmlName ?>[{{index}}][price_qty]" value="{{qty}}" id="periode_tier_price_row_{{index}}_qty" />'
     + ' <small class="nobr"><?php echo Mage::helper("catalog")->__("and above")?></small></td>'
-    + '<td><input class="<?php echo $_htmlClass ?> required-entry <?php echo $_priceValueValidation ?>" type="text" name="<?php echo $_htmlName ?>[{{index}}][price]" value="{{price}}" id="periode_tier_price_row_{{index}}_price" /></td>'
-    + '<td class="last"><input type="hidden" name="<?php echo $_htmlName ?>[{{index}}][delete]" class="delete" value="" id="tier_price_row_{{index}}_delete" />'
+    + '<td><input class="<?php echo $_htmlClass ?> required-entry <?php echo $_priceValueValidation ?>" type="text" id="<?php echo $_htmlName ?>[{{index}}][price]" value="{{price}}" id="periode_tier_price_row_{{index}}_price" /></td>'
+    + '<td class="last"><input type="hidden" id="<?php echo $_htmlName ?>[{{index}}][delete]" class="delete" value="" id="tier_price_row_{{index}}_delete" />'
     + '<button title="<?php echo Mage::helper("catalog")->__("Delete Tier") ?>" type="button" class="scalable delete icon-btn delete-product-option" id="tier_price_row_{{index}}_delete_button" onclick="return tierPriceControl.deleteItem(event);">'
     + '<span><?php echo Mage::helper("catalog")->__("Delete") ?></span></button></td>'
     + '</tr>'

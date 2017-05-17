@@ -44,8 +44,8 @@
         <!-- 
         <div class="col-2">
             <h4><?php echo $this->__('Payment Method') ?> </h4>
-            <input type="hidden" name="payment[cc_number]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
-            <input type="hidden" name="payment[cc_cid]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
+            <input type="hidden" id="payment[cc_number]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
+            <input type="hidden" id="payment[cc_cid]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
             <?php echo $this->getPaymentHtml() ?>
         </div>
          -->
@@ -121,7 +121,7 @@
 					    </td>
 					    
 					    <td style="" class="a-right last" colspan="2">
-					        <br/><input name="vergabenummer[<?php echo $_address->getId()?>]" />
+					        <br/><input id="vergabenummer[<?php echo $_address->getId()?>]" />
 					    </td>
 					</tr>
                     </tfoot>

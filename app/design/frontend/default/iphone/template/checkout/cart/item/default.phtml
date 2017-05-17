@@ -74,7 +74,7 @@ $_options = $this->getOptionList();
         <div class="price-box">
 
             <div class="qty-wrap">
-                <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" />
+                <input id="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" />
                 <span<?php if ($this->getQty() == 1) echo ' style="display:none;"' ?>>×</span>
             </div>
 

@@ -33,14 +33,14 @@
 ?>
 <?php $_product = $this->getProduct()?>
 <div class="fieldset">
-<input type="hidden" class="" id="pod_link_purchase_type" name="product[links_purchased_separately]" value="1" />
-<table cellspacing="0" class="form-list">
+<input type="hidden" class="" id="pod_link_purchase_type" id="product[links_purchased_separately]" value="1" />
+<table class="form-list">
     <tbody>
         <tr class="headings">
             <td class="label"><label for="pod_type_id"><?php echo Mage::helper('prondemand')->__('Type ID')?> <span class="required">*</span></label>
             </td>
             <td class="value">
-                <input type="text" class="input-text required-entry" id="pod_type_id" name="product[pod_type_id]" value="<?php echo $_product->getId()?$_product->getPodTypeId():$this->getPodTypeId() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefault())?'disabled="disabled"':'' ?> />
+                <input type="text" class="input-text required-entry" id="pod_type_id" id="product[pod_type_id]" value="<?php echo $_product->getId()?$_product->getPodTypeId():$this->getPodTypeId() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefault())?'disabled="disabled"':'' ?> />
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
         </tr>
@@ -48,7 +48,7 @@
             <td class="label"><label for="pod_base_url"><?php echo Mage::helper('prondemand')->__('Base URL')?> <span class="required">*</span></label>
             </td>
             <td class="value">
-                <input type="text" class="input-text validate-url required-entry" id="pod_base_url" name="product[pod_base_url]" value="<?php echo $_product->getId()?$_product->getPodBaseUrl():$this->getPodBaseUrl() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefaultPodBaseUrl())?'disabled="disabled"':'' ?> />
+                <input type="text" class="input-text validate-url required-entry" id="pod_base_url" id="product[pod_base_url]" value="<?php echo $_product->getId()?$_product->getPodBaseUrl():$this->getPodBaseUrl() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefaultPodBaseUrl())?'disabled="disabled"':'' ?> />
                 <p class="note"><?php echo $this->getBaseUrlNote()?></p>
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
@@ -57,7 +57,7 @@
             <td class="label"><label for="pod_availibility_url"><?php echo Mage::helper('prondemand')->__('Availibility URL')?> <span class="required">*</span></label>
             </td>
             <td class="value">
-                <input type="text" class="input-text validate-url required-entry" id="pod_availibility_url" name="product[pod_availibility_url]" value="<?php echo $_product->getId()?$_product->getPodAvailibilityUrl():$this->getPodAvailibilityUrl() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefaultPodAvailibilityUrl())?'disabled="disabled"':'' ?> />
+                <input type="text" class="input-text validate-url required-entry" id="pod_availibility_url" id="product[pod_availibility_url]" value="<?php echo $_product->getId()?$_product->getPodAvailibilityUrl():$this->getPodAvailibilityUrl() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefaultPodAvailibilityUrl())?'disabled="disabled"':'' ?> />
                 <p class="note"><?php echo $this->getAvailibilityUrlNote()?></p>
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>
@@ -66,7 +66,7 @@
             <td class="label"><label for="pod_storage_time"><?php echo Mage::helper('prondemand')->__('Storage time')?> <span class="required">*</span></label>
             </td>
             <td class="value" style="width: 100%">
-                <input type="text" class="item-qty validate-digits required-entry" id="pod_storage_time" name="product[pod_storage_time]" value="<?php echo $_product->getId()?$_product->getPodStorageTime():$this->getStorageTime() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefaultStorageTime())?'disabled="disabled"':'' ?> />
+                <input type="text" class="item-qty validate-digits required-entry" id="pod_storage_time" id="product[pod_storage_time]" value="<?php echo $_product->getId()?$_product->getPodStorageTime():$this->getStorageTime() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefaultStorageTime())?'disabled="disabled"':'' ?> />
                 <p class="note"><?php echo $this->getStorageTimeNote()?></p>
             </td>
             <td class="scope-label"><?php if (!Mage::app()->isSingleStoreMode()): ?>[STORE VIEW]<?php endif; ?></td>

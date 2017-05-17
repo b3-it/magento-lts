@@ -30,7 +30,7 @@ $numColumns = sizeof($this->getColumns());
 ?>
 <?php if($this->getCollection()): ?>
 <div class="grid np">
-<table cellspacing="0" style="border:0;" id="<?php echo $this->getId() ?>_table">
+<table style="border:0;" id="<?php echo $this->getId() ?>_table">
     <?php foreach ($this->getColumns() as $_column): ?>
     <col <?php echo $_column->getHtmlProperty() ?> />
     <?php endforeach; ?>

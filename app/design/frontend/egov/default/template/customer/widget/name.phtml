@@ -54,9 +54,9 @@ For checkout/onepage/shipping.phtml:
         </label>
         <div class="input-box">
             <?php if ($this->getPrefixOptions() === false): ?>
-                <input tabindex="0" type="text" id="<?php echo $this->getFieldId('prefix')?>" name="<?php echo $this->getFieldName('prefix')?>" value="<?php echo $this->escapeHtml($this->getObject()->getPrefix()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('prefix')) ?>" class="input-text <?php echo $this->getValidationClass('prefix') ?>" <?php echo $this->getFieldParams() ?> />
+                <input tabindex="0" type="text" id="<?php echo $this->getFieldId('prefix')?>" id="<?php echo $this->getFieldName('prefix')?>" value="<?php echo $this->escapeHtml($this->getObject()->getPrefix()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('prefix')) ?>" class="input-text <?php echo $this->getValidationClass('prefix') ?>" <?php echo $this->getFieldParams() ?> />
             <?php else: ?>
-                <select tabindex="0" id="<?php echo $this->getFieldId('prefix')?>" name="<?php echo $this->getFieldName('prefix')?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('prefix')) ?>" class="<?php echo $this->getValidationClass('prefix') ?>" <?php echo $this->getFieldParams() ?>>
+                <select tabindex="0" id="<?php echo $this->getFieldId('prefix')?>" id="<?php echo $this->getFieldName('prefix')?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('prefix')) ?>" class="<?php echo $this->getValidationClass('prefix') ?>" <?php echo $this->getFieldParams() ?>>
                 <?php foreach ($this->getPrefixOptions() as $_option): ?>
                     <option value="<?php echo $_option?>"<?php if ($this->getObject()->getPrefix()==$_option):?> selected="selected"<?php endif; ?>><?php echo $this->__($_option)?></option>
                 <?php endforeach; ?>
@@ -73,7 +73,7 @@ For checkout/onepage/shipping.phtml:
             <?php echo $this->getStoreLabel('firstname') ?>
         </label>
         <div class="input-box">
-            <input tabindex="1" type="text" id="<?php echo $this->getFieldId('firstname')?>" name="<?php echo $this->getFieldName('firstname')?>" value="<?php echo $this->escapeHtml($this->getObject()->getFirstname()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('firstname')) ?>" maxlength="255" class="input-text <?php echo $this->getValidationClass('firstname') ?>" <?php echo $this->getFieldParams() ?> />
+            <input tabindex="1" type="text" id="<?php echo $this->getFieldId('firstname')?>" id="<?php echo $this->getFieldName('firstname')?>" value="<?php echo $this->escapeHtml($this->getObject()->getFirstname()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('firstname')) ?>" maxlength="255" class="input-text <?php echo $this->getValidationClass('firstname') ?>" <?php echo $this->getFieldParams() ?> />
         </div>
     </div>
   <?php endif; ?>
@@ -86,7 +86,7 @@ For checkout/onepage/shipping.phtml:
             <?php echo $this->getStoreLabel('middlename') ?>
         </label>
         <div class="input-box">
-            <input tabindex="2" type="text" id="<?php echo $this->getFieldId('middlename')?>" name="<?php echo $this->getFieldName('middlename')?>" value="<?php echo $this->escapeHtml($this->getObject()->getMiddlename()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('middlename')) ?>" class="input-text <?php echo $this->getValidationClass('middlename') ?>" <?php echo $this->getFieldParams() ?> />
+            <input tabindex="2" type="text" id="<?php echo $this->getFieldId('middlename')?>" id="<?php echo $this->getFieldName('middlename')?>" value="<?php echo $this->escapeHtml($this->getObject()->getMiddlename()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('middlename')) ?>" class="input-text <?php echo $this->getValidationClass('middlename') ?>" <?php echo $this->getFieldParams() ?> />
         </div>
     </div>
   <?php endif; ?>
@@ -98,7 +98,7 @@ For checkout/onepage/shipping.phtml:
             <?php echo $this->getStoreLabel('lastname') ?>
         </label>
         <div class="input-box">
-            <input tabindex="3" type="text" id="<?php echo $this->getFieldId('lastname')?>" name="<?php echo $this->getFieldName('lastname')?>" value="<?php echo $this->escapeHtml($this->getObject()->getLastname()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('lastname')) ?>" maxlength="255" class="input-text <?php echo $this->getValidationClass('lastname') ?>" <?php echo $this->getFieldParams() ?> />
+            <input tabindex="3" type="text" id="<?php echo $this->getFieldId('lastname')?>" id="<?php echo $this->getFieldName('lastname')?>" value="<?php echo $this->escapeHtml($this->getObject()->getLastname()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('lastname')) ?>" maxlength="255" class="input-text <?php echo $this->getValidationClass('lastname') ?>" <?php echo $this->getFieldParams() ?> />
         </div>
     </div>
   <?php endif; ?>
@@ -111,9 +111,9 @@ For checkout/onepage/shipping.phtml:
         </label>
         <div class="input-box">
         <?php if ($this->getSuffixOptions() === false): ?>
-            <input tabindex="4" type="text" id="<?php echo $this->getFieldId('suffix')?>" name="<?php echo $this->getFieldName('suffix')?>" value="<?php echo $this->escapeHtml($this->getObject()->getSuffix()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('suffix')) ?>" class="input-text <?php echo $this->getValidationClass('suffix') ?>" <?php echo $this->getFieldParams() ?> />
+            <input tabindex="4" type="text" id="<?php echo $this->getFieldId('suffix')?>" id="<?php echo $this->getFieldName('suffix')?>" value="<?php echo $this->escapeHtml($this->getObject()->getSuffix()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('suffix')) ?>" class="input-text <?php echo $this->getValidationClass('suffix') ?>" <?php echo $this->getFieldParams() ?> />
         <?php else: ?>
-            <select tabindex="4" id="<?php echo $this->getFieldId('suffix')?>" name="<?php echo $this->getFieldName('suffix')?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('suffix')) ?>" class="<?php echo $this->helper('customer/address')->getAttributeValidationClass('suffix') ?>" <?php echo $this->getFieldParams() ?>>
+            <select tabindex="4" id="<?php echo $this->getFieldId('suffix')?>" id="<?php echo $this->getFieldName('suffix')?>" title="<?php echo Mage::helper('core')->quoteEscape($this->getStoreLabel('suffix')) ?>" class="<?php echo $this->helper('customer/address')->getAttributeValidationClass('suffix') ?>" <?php echo $this->getFieldParams() ?>>
             <?php foreach ($this->getSuffixOptions() as $_option): ?>
                 <option value="<?php echo $_option?>"<?php if ($this->getObject()->getSuffix()==$_option):?> selected="selected"<?php endif; ?>><?php echo $this->__($_option)?></option>
             <?php endforeach; ?>

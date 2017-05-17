@@ -50,7 +50,7 @@ $shippingAddress = $this->getShippingAddress();
                     <div class="field">
                         <label for="customer:email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
                         <div class="input-box">
-                            <input type="text" name="customer-email" id="customer:email" value="<?php echo $this->escapeHtml($billingBlock->getAddress()->getEmail()) ?>" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />
+                            <input type="text" id="customer-email" id="customer:email" value="<?php echo $this->escapeHtml($billingBlock->getAddress()->getEmail()) ?>" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />
                         </div>
                     </div>
                 </li>

@@ -28,7 +28,7 @@
 <div class="page-create-order">
 <p class="switcher">
 <label for="currency_switcher"><?php echo Mage::helper('sales')->__('Order Currency:') ?></label>
-<select id="currency_switcher" name="order[currency]" onchange="order.setCurrencyId(this.value); order.setCurrencySymbol(this.options[this.selectedIndex].getAttribute('symbol'));">
+<select id="currency_switcher" id="order[currency]" onchange="order.setCurrencyId(this.value); order.setCurrencySymbol(this.options[this.selectedIndex].getAttribute('symbol'));">
     <?php foreach ($this->getAvailableCurrencies() as $_code): ?>
     <option value="<?php echo $_code ?>"<?php if($_code==$this->getCurrentCurrencyCode()): ?> selected="selected"<?php endif; ?> title="<?php echo $this->getCurrencySymbol($_code) ?>"><?php echo $this->getCurrencyName($_code) ?></option>
     <?php endforeach; ?>
@@ -76,7 +76,7 @@
             <div class="entry-edit-head"><h4><?php echo Mage::helper('sales')->__('Vergabenummer') ?></h4></div>
             <fieldset id="order-comment">
             <label for="vergabenummer">Vergabenummer</label><br>
-            <input style="width:98%;"  id="vergabenummer" name="vergabenummer" />
+            <input style="width:98%;"  id="vergabenummer" id="vergabenummer" />
             </fieldset>
         </div>
         <div class="box-right entry-edit">

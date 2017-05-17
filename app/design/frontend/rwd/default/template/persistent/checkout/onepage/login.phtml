@@ -58,18 +58,18 @@
             <ul class="form-list">
                 <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
                 <li class="control">
-                    <input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()!=Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER): ?> checked="checked"<?php endif; ?> class="radio" /><label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
+                    <input type="radio" id="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()!=Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER): ?> checked="checked"<?php endif; ?> class="radio" /><label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
                 </li>
                 <?php endif; ?>
                 <?php if( $this->helper('customer')->isRegistrationAllowed() ): ?>
                 <li class="control">
-                    <input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" />
+                    <input type="radio" id="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" />
                     <label for="login:register"><?php echo $this->__('Register and Checkout') ?></label>
                 </li>
                 <?php endif; ?>
             </ul>
         <?php else: ?>
-            <input type="hidden" name="checkout_method" id="login:register" value="register" checked="checked" />
+            <input type="hidden" id="checkout_method" id="login:register" value="register" checked="checked" />
         <?php endif; ?>
         <div class="buttons-set">
             <p class="required">&nbsp;</p>
@@ -96,13 +96,13 @@
                 <li>
                     <label for="login-email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
                     <div class="input-box">
-                        <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" class="input-text required-entry validate-email" id="login-email" name="login[username]" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" />
+                        <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" class="input-text required-entry validate-email" id="login-email" id="login[username]" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" />
                     </div>
                 </li>
                 <li>
                     <label for="login-password" class="required"><em>*</em><?php echo $this->__('Password') ?></label>
                     <div class="input-box">
-                        <input type="password" class="input-text validate-password required-entry" id="login-password" name="login[password]" />
+                        <input type="password" class="input-text validate-password required-entry" id="login-password" id="login[password]" />
                     </div>
                 </li>
                 <li>
@@ -112,7 +112,7 @@
                 <?php echo $this->getChildHtml('persistent.remember.me'); ?>
             </ul>
             <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
-            <input name="context" type="hidden" value="checkout" />
+            <input id="context" type="hidden" value="checkout" />
         </div>
         </form>
         <div class="buttons-set">

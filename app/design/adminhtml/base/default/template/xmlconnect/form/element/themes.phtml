@@ -39,8 +39,8 @@ $defaultThemesArray = $_themesHelper->getDefaultThemes();
         <label for="theme_selector_id" class="f-left theme-selector-title"><?php echo $this->__('Preset Theme'); ?></label>
 
         <div class="no-display">
-            <input type="hidden" name="conf[extra][theme]" id="theme_selector_id_value" value="<?php echo $themeId; ?>"/>
-            <input type="hidden" name="current_theme" id="theme_selector_id_value_flat" value="<?php echo $themeId; ?>"/>
+            <input type="hidden" id="conf[extra][theme]" id="theme_selector_id_value" value="<?php echo $themeId; ?>"/>
+            <input type="hidden" id="current_theme" id="theme_selector_id_value_flat" value="<?php echo $themeId; ?>"/>
         </div>
 
         <div id="themeSelectorList">
@@ -62,7 +62,7 @@ $defaultThemesArray = $_themesHelper->getDefaultThemes();
                 <h3>Save as...</h3>
                 <div class="popup-content">
                     <label for="input_save_as"><?php echo $this->__('Theme label:'); ?></label>
-                    <input id="input_save_as" type="text" class="input-text" name="input_save_as" autocomplete="off" value="" />
+                    <input id="input_save_as" type="text" class="input-text" id="input_save_as" autocomplete="off" value="" />
                     <div class="validation-advice" id="advice-required-theme-name" style="display:none;"><?php echo $this->__('Theme label can\'t be empty'); ?></div>
                     <button type="button" class="scalable save" id="save_as_theme">
                         <span><?php echo $this->__('Save'); ?></span>
@@ -105,7 +105,7 @@ $id2observe     = array();
                 <label class="field_label" for="<?php echo $field['id']; ?>">
                     <span id="box_<?php echo $field['id']; ?>" class="color" style="background:<?php echo $field['value'] ?>;display:block;width:20px;height:20px;">&nbsp;</span>
                 </label>
-                <input style="background:#fff !important;color:#000 !important;margin:2px 0 0 6px;width:75px;float:left;" autocomplete="off" id="<?php echo $field['id']; ?>" name="<?php echo $field['name'] ?>" value="<?php echo $field['value'] ?>" class=" color {required:false,hash:true} input-text" type="text">
+                <input style="background:#fff !important;color:#000 !important;margin:2px 0 0 6px;width:75px;float:left;" autocomplete="off" id="<?php echo $field['id']; ?>" id="<?php echo $field['name'] ?>" value="<?php echo $field['value'] ?>" class=" color {required:false,hash:true} input-text" type="text">
             </td>
         </tr>
         <?php $id2observe[] = $field['id']; ?>

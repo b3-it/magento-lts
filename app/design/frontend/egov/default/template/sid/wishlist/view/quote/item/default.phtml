@@ -160,7 +160,7 @@
     </td>
     <?php endif; ?>
     <td class="a-center">
-        <input name="collection[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>"  title='<?php echo Mage::helper('sidwishlist')->__("Quantity Requested: "). $this->getProductName()?>' size="4" class="input-text qty" maxlength="8" />
+        <input id="collection[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>"  title='<?php echo Mage::helper('sidwishlist')->__("Quantity Requested: "). $this->getProductName()?>' size="4" class="input-text qty" maxlength="8" />
     </td>
     <?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
     <td class="a-center">
@@ -279,7 +279,7 @@
     <?php endif; ?>
     <td>
     	<div class="input-box">
-			<select name="collection[<?php echo $_item->getId() ?>][status]" 
+			<select id="collection[<?php echo $_item->getId() ?>][status]" 
 				id="status" title="<?php echo $this->__('Status') ?>"
 				class="validate-select <?php if (!$this->isEditableForRequester()) echo 'disabled'; ?>"
 				<?php if (!$this->isEditableForRequester()) echo 'disabled="disabled"'; ?>
@@ -288,7 +288,7 @@
 			</select>
 		</div>
 		<div class="input-box">
-			<textarea name="description[<?php echo $_item->getId() ?>]" rows="3" cols="5"
+			<textarea id="description[<?php echo $_item->getId() ?>]" rows="3" cols="5"
 				onfocus="focusComment(this)"
 				onblur="focusComment(this)"
 				title="<?php echo $this->__('Comment') ?>"
@@ -310,7 +310,7 @@
 		        ?>
 				<?php if ($_item->canHaveQty() && $isVisibleProduct): ?>
 					<p>
-						<input type="text" class="input-text qty" name="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $this->getAvailableQty() * 1 ?>" />
+						<input type="text" class="input-text qty" id="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $this->getAvailableQty() * 1 ?>" />
 					</p>
 				<?php endif; ?>
 				<?php if ($product->isSaleable()): ?> 

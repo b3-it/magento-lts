@@ -34,7 +34,7 @@
  */
 ?>
 <div class="content-header">
-    <table cellspacing="0">
+    <table>
         <tr>
             <td><h3><?php echo Mage::helper('adminhtml')->__($this->getTitle()) ?></h3></td><td class="form-buttons"><?php echo $this->getSaveButtonHtml() ?></td>
          </tr>
@@ -51,8 +51,8 @@
     }
     </script>
 
-    <input type="hidden" id="catalog_action" name="catalog_action" value="" />
-    <input type="hidden" id="jscss_action" name="jscss_action" value="" />
+    <input type="hidden" id="catalog_action" id="catalog_action" value="" />
+    <input type="hidden" id="jscss_action" id="jscss_action" value="" />
 
     <?php echo $this->getChildHtml('form') ?>
     <div class="entry-edit">
@@ -60,7 +60,7 @@
             <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Catalog') ?></h4>
         </div>
         <fieldset id="catalog">
-            <table cellspacing="0" class="form-list">
+            <table class="form-list">
                 <tbody>
                     <?php foreach ($this->getCatalogData() as $_item): ?>
                     <?php /* disable reindex buttons. functionality moved to index management*/?>
@@ -91,7 +91,7 @@
         </div>
 
         <fieldset id="jscss">
-            <table cellspacing="0" class="form-list">
+            <table class="form-list">
                 <tbody>
                     <tr>
                         <td class="label"><label><?php echo $this->__('JavaScript/CSS Cache') ?></label></td>

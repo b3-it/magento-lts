@@ -59,12 +59,12 @@
     var cmsPageTemplate = '<tr id="config_data[{{trId}}][tr]">' +
         '<td class="label">' +
             '<span class="field-row">' +
-                '<input type="text" name="config_data[pages:{{pageFieldName}}][label]" value="{{labelFieldValue}}" class="label onclick_text input-text" id="config_data[pages:{{pageFieldName}}][label]">' +
+                '<input type="text" id="config_data[pages:{{pageFieldName}}][label]" value="{{labelFieldValue}}" class="label onclick_text input-text" id="config_data[pages:{{pageFieldName}}][label]">' +
             '</span>' +
         '</td>' +
         '<td class="value">' +
             '<span class="field-row">' +
-                '<select name="config_data[pages:{{pageFieldName}}][id]" id="config_data[pages:{{pageFieldName}}][id]" class=" select">' +
+                '<select id="config_data[pages:{{pageFieldName}}][id]" id="config_data[pages:{{pageFieldName}}][id]" class=" select">' +
                     '<option value="">' +
                     '{{optionsList}}' +
                 '</select>' +
@@ -78,12 +78,12 @@
     var newPageTemplate = '<tr id="config_data[{{newId}}][tr]">' +
         '<td class="label">' +
             '<span class="field-row">' +
-                '<input type="text" name="config_data[new_pages][{{newId}}][label]" class="label onclick_text input-text" id="config_data[new_pages][{{newId}}][label]">' +
+                '<input type="text" id="config_data[new_pages][{{newId}}][label]" class="label onclick_text input-text" id="config_data[new_pages][{{newId}}][label]">' +
             '</span>' +
         '</td>' +
         '<td class="value">' +
             '<span class="field-row">' +
-                '<select name="config_data[new_pages][{{newId}}][id]" id="config_data[new_pages][{{newId}}][id]" class=" select">' +
+                '<select id="config_data[new_pages][{{newId}}][id]" id="config_data[new_pages][{{newId}}][id]" class=" select">' +
                     '<option value="">' +
                     '{{optionsList}}' +
                 '</select>' +

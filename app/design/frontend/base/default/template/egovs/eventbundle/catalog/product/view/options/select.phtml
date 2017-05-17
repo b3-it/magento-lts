@@ -54,7 +54,7 @@
         <label class="qty<?php echo $_canChangeQty?'':' qty-hidden' ?>" for="bundle-option-<?php echo $_option->getId() ?>-qty-input">
             <?php echo $this->__('Qty:') ?>
         </label>
-        <input onkeyup="bundle.changeOptionQty(this, event)" onblur="bundle.changeOptionQty(this, event)" <?php echo $_canChangeQty?'':'disabled="disabled"' ?> id="bundle-option-<?php echo $_option->getId() ?>-qty-input" class="input-text qty<?php echo $_canChangeQty?'':' qty-hidden' ?>" type="text" name="bundle_option_qty[<?php echo $_option->getId() ?>]" value="<?php echo $_defaultQty ?>" />
+        <input onkeyup="bundle.changeOptionQty(this, event)" onblur="bundle.changeOptionQty(this, event)" <?php echo $_canChangeQty?'':'disabled="disabled"' ?> id="bundle-option-<?php echo $_option->getId() ?>-qty-input" class="input-text qty<?php echo $_canChangeQty?'':' qty-hidden' ?>" type="text" id="bundle_option_qty[<?php echo $_option->getId() ?>]" value="<?php echo $_defaultQty ?>" />
     </div>
 </dt>
 <dd<?php if ($_option->decoratedIsLast){?> class="last"<?php }?>>
@@ -64,9 +64,9 @@
         <?php if ($_selections[0]->getSelectionCanChangeQty()): ?>
             <?php $tierPriceHtml = $this->getTierPriceHtml($_selections[0]); ?>
         <?php endif; ?>
-        <input type="hidden" name="bundle_option[<?php echo $_option->getId() ?>]" value="<?php echo $_selections[0]->getSelectionId() ?>" />
+        <input type="hidden" id="bundle_option[<?php echo $_option->getId() ?>]" value="<?php echo $_selections[0]->getSelectionId() ?>" />
       <?php else:?>
-        <select onchange="bundle.changeSelection(this)" id="bundle-option-<?php echo $_option->getId() ?>" name="bundle_option[<?php echo $_option->getId() ?>]" class="bundle-option-<?php echo $_option->getId() ?><?php if ($_option->getRequired()) echo ' required-entry' ?> bundle-option-select">
+        <select onchange="bundle.changeSelection(this)" id="bundle-option-<?php echo $_option->getId() ?>" id="bundle_option[<?php echo $_option->getId() ?>]" class="bundle-option-<?php echo $_option->getId() ?><?php if ($_option->getRequired()) echo ' required-entry' ?> bundle-option-select">
             <option value=""><?php echo $this->__('Choose a selection...') ?></option>
             <?php foreach($_selections as $_selection): ?>
               <?php if ($this->isInStock($_selection)):?>

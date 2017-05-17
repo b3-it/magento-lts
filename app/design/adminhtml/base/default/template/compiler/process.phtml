@@ -25,7 +25,7 @@
  */
 ?>
 <div class="content-header">
-    <table cellspacing="0">
+    <table>
         <tr>
             <td style="width:50%;"><h3 class="icon-head head-compilation"><?php echo $this->getHeader() ?></h3></td>
             <td class="form-buttons">
@@ -38,7 +38,7 @@
     </table>
 </div>
 <div class="entry-edit">
-<form name="compilation_form" id="compilation_form" method="post" action="<?php echo $this->getRunFormAction(); ?>">
+<form id="compilation_form" id="compilation_form" method="post" action="<?php echo $this->getRunFormAction(); ?>">
 <?php echo $this->getBlockHtml('formkey')?>
 <?php if (!$this->canRunCompilation()): ?>
     <div id="messages"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
@@ -49,7 +49,7 @@
     </div>
     <fieldset>
         <legend><?php echo Mage::helper('compiler')->__('Compilation State') ?></legend>
-        <table cellspacing="0" class="form-list" style="width:100%">
+        <table class="form-list" style="width:100%">
             <tr>
                 <td class="label"><label ><?php echo Mage::helper('compiler')->__('Compiler Status')?></label></td>
                 <td class="value">

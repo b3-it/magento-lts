@@ -49,15 +49,15 @@
         <div class="login-box">
             <form method="post" action="" id="loginForm">
                 <div class="login-form">
-                    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
+                    <input id="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
                     <h2><?php echo Mage::helper('adminhtml')->__('Log in to Admin Panel') ?></h2>
                     <div id="messages">
                         <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     </div>
                     <div class="input-box input-left"><label for="username"><?php echo Mage::helper('adminhtml')->__('User Name:') ?></label><br/>
-                        <input type="text" id="username" name="login[username]" value="" class="required-entry input-text" /></div>
+                        <input type="text" id="username" id="login[username]" value="" class="required-entry input-text" /></div>
                     <div class="input-box input-right"><label for="login"><?php echo Mage::helper('adminhtml')->__('Password:') ?></label><br />
-                        <input type="password" id="login" name="login[password]" class="required-entry input-text" value="" /></div>
+                        <input type="password" id="login" id="login[password]" class="required-entry input-text" value="" /></div>
                     <div class="clear"></div>
                     <div class="form-buttons">
                         <a class="left" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/index/forgotpassword', array('_nosecret' => true)) ?>"><?php echo Mage::helper('adminhtml')->__('Forgot your password?') ?></a><br/>

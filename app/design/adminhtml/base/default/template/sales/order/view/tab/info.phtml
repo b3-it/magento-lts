@@ -31,7 +31,7 @@
         <?php echo $this->getChildHtml('order_messages') ?>
     </div>
     <?php echo $this->getChildHtml('order_info') ?>
-    <input type="hidden" name="order_id" value="<?php echo $_order->getId() ?>"/>
+    <input type="hidden" id="order_id" value="<?php echo $_order->getId() ?>"/>
     <?php if ($_order->getIsVirtual()): ?>
     <div class="box-right">
     <?php else: ?>
@@ -108,16 +108,16 @@
     
     <form id="printing_note" method="POST" action="<?php echo $this->getUrl('adminhtml/sales_invoice_printingnote/save');?>">
 	
-	<input type="hidden" value="<?php echo $this->getOrder()->getId()?>" name="order_id" />
+	<input type="hidden" value="<?php echo $this->getOrder()->getId()?>" id="order_id" />
 
     <span class="field-row">
         <label class="normal" for="history_comment"><?php echo Mage::helper('sales')->__('Printing Note 1') ?></label>
-        <input type="text" name="printnote1" value="<?php echo $this->getOrder()->getPrintnote1();?>" style="width:99%;" id="history_comment"/>
+        <input type="text" id="printnote1" value="<?php echo $this->getOrder()->getPrintnote1();?>" style="width:99%;" id="history_comment"/>
     </span>
     
     <span class="field-row">
         <label class="normal" for="history_comment"><?php echo Mage::helper('sales')->__('Printing Note 2') ?></label>
-        <input type="text" name="printnote2" value="<?php echo $this->getOrder()->getPrintnote2();?>" style="width:99%;" id="history_comment"/>
+        <input type="text" id="printnote2" value="<?php echo $this->getOrder()->getPrintnote2();?>" style="width:99%;" id="history_comment"/>
     </span>
     <div class="f-right">
         <button style="" onclick="submitPrintingNote();" class="scalable save" type="button" id="submit_printingnote_button"><span><?php echo Mage::helper('sales')->__('Submit Notes') ?></span></button>

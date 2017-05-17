@@ -27,7 +27,7 @@
 
 <?php if ($websites = $this->getWebsites()): ?>
 <label for="store_switcher"><?php echo $this->__('Choose Store View:') ?></label>
-<select name="store_switcher" id="store_switcher">
+<select id="store_switcher" id="store_switcher">
     <?php foreach ($websites as $website): ?>
         <?php $showWebsite=false; ?>
         <?php foreach ($website->getGroups() as $group): ?>

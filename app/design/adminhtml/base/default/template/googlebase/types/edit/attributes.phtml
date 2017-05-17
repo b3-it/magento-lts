@@ -78,7 +78,7 @@ Gbase.Attribute.prototype = {
 }
 
 var attributesSelectTemplate = '<div id="<?php echo $this->getFieldId() ?>_{{index}}"  class="option-box"> ' +
-    '<table class="option-header" cellpadding="0" cellspacing="0">' +
+    '<table class="option-header" cellpadding="0">' +
         '<thead>' +
             '<tr>' +
                 '<th class="opt-type"><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('googlebase')->__('Attribute')) ?></th>' +
@@ -89,7 +89,7 @@ var attributesSelectTemplate = '<div id="<?php echo $this->getFieldId() ?>_{{ind
         '<tbody>' +
             '<tr>' +
                 '<td><?php echo $this->getAttributesSelectHtml(true) ?>' +
-                '<input type="hidden" name="<?php echo $this->getFieldName() ?>[{{index}}][delete]" value="" class="delete">' +
+                '<input type="hidden" id="<?php echo $this->getFieldName() ?>[{{index}}][delete]" value="" class="delete">' +
                 '</td>' +
                 '<td><?php echo $this->getGbaseAttributesSelectHtml() ?></td>' +
                 '<td>&nbsp;<?php echo $this->getDeleteButtonHtml() ?></td>' +

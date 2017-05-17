@@ -32,7 +32,7 @@
                 <img src="<?php echo Mage::getSingleton('catalog/product_media_config')->getMediaUrl($item['image']); ?>" width="45" height="45" alt="" />
             </div>
         <?php endif; ?>
-        <input type="hidden" name="<?php echo $item['id']; ?>" value="<?php echo $this->escapeHtml($item['name']) ?>">
+        <input type="hidden" id="<?php echo $item['id']; ?>" value="<?php echo $this->escapeHtml($item['name']) ?>">
         <strong><?php echo $this->escapeHtml($this->__('%s id:', $item['label']) . ' ' . $item['item_id']); ?></strong>
         <p><?php echo $this->escapeHtml($item['name']) ?></p>
         <span class="informal"><?php echo $this->escapeHtml($item['description']) ?></span>

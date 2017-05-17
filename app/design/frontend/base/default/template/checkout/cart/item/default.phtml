@@ -178,7 +178,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <?php endif; ?>
     <?php endif; ?>
     <td class="a-center">
-        <input name="cart[<?php echo $_item->getId() ?>][qty]"
+        <input id="cart[<?php echo $_item->getId() ?>][qty]"
                data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
                value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" />
     </td>

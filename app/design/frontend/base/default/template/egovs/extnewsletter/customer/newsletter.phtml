@@ -34,7 +34,7 @@
     <ul class="form-list">
     <?php foreach($this->getProducts() as $product){?>
         <li>
-        <input type="checkbox" name="extnewsletter[]" id="subscription" value="<?php echo $product['value'] ?>" title="<?php echo $product['label'] ?>"
+        <input type="checkbox" id="extnewsletter[]" id="subscription" value="<?php echo $product['value'] ?>" title="<?php echo $product['label'] ?>"
         <?php if($product['checked']): ?> checked="checked"<?php endif; ?> class="checkbox" /> 
         <label for="subscription"><?php echo $product['label'] ?></label>
         </li>
@@ -44,7 +44,7 @@
     <ul class="form-list">
     <?php foreach($this->getIssues() as $issue){?>
         <li>
-        <input type="checkbox" name="extnewsletterissues[]" id="subscription" value="<?php echo $issue['value'] ?>" title="<?php echo $issue['label'] ?>"
+        <input type="checkbox" id="extnewsletterissues[]" id="subscription" value="<?php echo $issue['value'] ?>" title="<?php echo $issue['label'] ?>"
         <?php if($issue['checked']): ?> checked="checked"<?php endif; ?> class="checkbox" /> 
         <label for="subscription"><?php echo $issue['label'] ?></label>
         </li>

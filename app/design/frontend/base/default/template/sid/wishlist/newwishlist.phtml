@@ -26,9 +26,9 @@
 
 <div class="std default-form" id="jumptarget<?php echo $this->getNameInLayout();?>">
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="wishlist-new-form">
-        <input type="hidden" name="wishlist[id]" value="new" id="wishlist:id" />
+        <input type="hidden" id="wishlist[id]" value="new" id="wishlist:id" />
       <?php if (!$this->customerHasWishlists()): ?>
-        <input type="hidden" name="wishlist[is_default]" value="1" />
+        <input type="hidden" id="wishlist[is_default]" value="1" />
       <?php endif; ?>
 
         <h2 class="legend"><?php echo $this->__('New Collector List') ?></h2>
@@ -38,7 +38,7 @@
                 <?php echo $this->__('Name') ?>
             </label>
             <?php echo $this->getFieldRequiredHtml('name')?>
-            <input type="text" id="wishlist:name" name="wishlist[name]"
+            <input type="text" id="wishlist:name" id="wishlist[name]"
                    value="<?php echo $this->escapeHtml($this->getWishlist()->getName()) ?>"
                    title="<?php echo $this->__('Name') ?>"
                    class="input-text"
@@ -46,7 +46,7 @@
         </div>
         <div class="field">
             <input type="checkbox"
-                   name="wishlist[is_default]"
+                   id="wishlist[is_default]"
                    id="wishlist:is_default"
                    value="1"
                    <?php if (!$this->customerHasWishlists()) : ?>
@@ -61,7 +61,7 @@
     	         <?php echo $this->__('Description') ?>
     	     </label>
     	     <?php echo $this->getFieldRequiredHtml('description')?>
-    	     <textarea id="wishlist:description" name="wishlist[description]" title="<?php echo $this->__('Description') ?>">
+    	     <textarea id="wishlist:description" id="wishlist[description]" title="<?php echo $this->__('Description') ?>">
     	         <?php echo $this->escapeHtml($this->getWishlist()->getDescription()); ?>
     	     </textarea>
     	 </div>

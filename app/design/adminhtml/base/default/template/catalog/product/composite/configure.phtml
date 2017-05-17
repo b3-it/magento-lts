@@ -26,7 +26,7 @@
  ?>
 <div id="popup-window-mask" style="display:none;"></div>
 <div id="product_composite_configure" class="product-configure-popup" style="display:none;">
-    <iframe name="product_composite_configure_iframe" id="product_composite_configure_iframe" src="#" style="width:0; height:0; border:0px solid #fff; position:absolute; top:-1000px; left:-1000px" onload="window.productConfigure && productConfigure.onLoadIFrame()"></iframe>
+    <iframe id="product_composite_configure_iframe" id="product_composite_configure_iframe" src="#" style="width:0; height:0; border:0px solid #fff; position:absolute; top:-1000px; left:-1000px" onload="window.productConfigure && productConfigure.onLoadIFrame()"></iframe>
     <form action="" method="post" id="product_composite_configure_form" enctype="multipart/form-data" onsubmit="productConfigure.onConfirmBtn(); return false;" target="product_composite_configure_iframe">
         <div class="entry-edit">
             <div class="entry-edit-head">
@@ -43,8 +43,8 @@
                 <button type="submit" class="scalable"><span><span><span><?php echo Mage::helper('catalog')->__('OK') ?></span></span></span></button>
             </div>
         </div>
-        <input type="hidden" name="as_js_varname" value="iFrameResponse" />
-        <input type="hidden" name="form_key" value="<?php echo $this->getFormKey() ?>" />
+        <input type="hidden" id="as_js_varname" value="iFrameResponse" />
+        <input type="hidden" id="form_key" value="<?php echo $this->getFormKey() ?>" />
     </form>
     <div id="product_composite_configure_confirmed" style="display:none;"></div>
 

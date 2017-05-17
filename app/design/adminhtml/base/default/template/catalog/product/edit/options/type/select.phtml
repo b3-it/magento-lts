@@ -27,8 +27,8 @@
 
 <script type="text/javascript">
 //<![CDATA[
-OptionTemplateSelect = '<table class="border" cellpadding="0" cellspacing="0">'+
-        '<input type="hidden" class="required-option-select-type-rows" name="validation_{{option_id}}_result" value="" >'+
+OptionTemplateSelect = '<table class="border" cellpadding="0">'+
+        '<input type="hidden" class="required-option-select-type-rows" id="validation_{{option_id}}_result" value="" >'+
         '<thead>'+
         '<tr class="headings">'+
             '<th class="type-title"><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Title')) ?> <span class="required">*</span></th>'+
@@ -52,18 +52,18 @@ OptionTemplateSelect = '<table class="border" cellpadding="0" cellspacing="0">'+
 
 OptionTemplateSelectRow = '<tr id="product_option_{{id}}_select_{{select_id}}">'+
             '<td>'+
-            '<input type="hidden" name="product[options][{{id}}][values][{{select_id}}][option_type_id]" value="{{option_type_id}}">'+
-            '<input type="hidden" id="product_option_{{id}}_select_{{select_id}}_is_delete" name="product[options][{{id}}][values][{{select_id}}][is_delete]" value="">'+
-            '<input type="text" class="required-entry input-text select-type-title" id="product_option_{{id}}_select_{{select_id}}_title" name="product[options][{{id}}][values][{{select_id}}][title]" value="{{title}}">{{checkboxScopeTitle}}</td>'+
+            '<input type="hidden" id="product[options][{{id}}][values][{{select_id}}][option_type_id]" value="{{option_type_id}}">'+
+            '<input type="hidden" id="product_option_{{id}}_select_{{select_id}}_is_delete" id="product[options][{{id}}][values][{{select_id}}][is_delete]" value="">'+
+            '<input type="text" class="required-entry input-text select-type-title" id="product_option_{{id}}_select_{{select_id}}_title" id="product[options][{{id}}][values][{{select_id}}][title]" value="{{title}}">{{checkboxScopeTitle}}</td>'+
             <?php if ($this->getCanReadPrice() !== false) : ?>
-            '<td><input type="text" class="input-text validate-number product-option-price" id="product_option_{{id}}_select_{{select_id}}_price" name="product[options][{{id}}][values][{{select_id}}][price]" value="{{price}}"<?php if ($this->getCanEditPrice() === false) : ?> disabled="disabled"<?php endif; ?>></td>' +
+            '<td><input type="text" class="input-text validate-number product-option-price" id="product_option_{{id}}_select_{{select_id}}_price" id="product[options][{{id}}][values][{{select_id}}][price]" value="{{price}}"<?php if ($this->getCanEditPrice() === false) : ?> disabled="disabled"<?php endif; ?>></td>' +
             '<td><?php echo $this->getPriceTypeSelectHtml() ?>{{checkboxScopePrice}}</td>' +
             <?php else : ?>
-            '<input type="hidden" id="product_option_{{id}}_select_{{select_id}}_price" name="product[options][{{id}}][values][{{select_id}}][price]">' +
-            '<input type="hidden" name="product[options][{{id}}][values][{{select_id}}][price_type]" id="product_option_{{id}}_select_{{select_id}}_price_type">' +
+            '<input type="hidden" id="product_option_{{id}}_select_{{select_id}}_price" id="product[options][{{id}}][values][{{select_id}}][price]">' +
+            '<input type="hidden" id="product[options][{{id}}][values][{{select_id}}][price_type]" id="product_option_{{id}}_select_{{select_id}}_price_type">' +
             <?php endif; ?>
-            '<td><input type="text" class="input-text" name="product[options][{{id}}][values][{{select_id}}][sku]" value="{{sku}}"></td>'+
-            '<td><input type="text" class="validate-zero-or-greater input-text" name="product[options][{{id}}][values][{{select_id}}][sort_order]" value="{{sort_order}}"></td>'+
+            '<td><input type="text" class="input-text" id="product[options][{{id}}][values][{{select_id}}][sku]" value="{{sku}}"></td>'+
+            '<td><input type="text" class="validate-zero-or-greater input-text" id="product[options][{{id}}][values][{{select_id}}][sort_order]" value="{{sort_order}}"></td>'+
             '<td class="last"><span title="Delete row"><?php echo $this->getDeleteButtonHtml() ?></span></td>'+
         '</tr>';
 

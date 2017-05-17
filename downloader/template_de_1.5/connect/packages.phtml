@@ -86,7 +86,7 @@
         </li>
         <li>
             <span class="step-count">2</span> &nbsp;
-            <label for="install_package_id">Extension Key zur Installation einf&uuml;gen:</label> <input type="text" id="install_package_id" name="install_package_id" style="width:300px"/>
+            <label for="install_package_id">Extension Key zur Installation einf&uuml;gen:</label> <input type="text" id="install_package_id" id="install_package_id" style="width:300px"/>
             <button type="submit">Installieren</button>
         </li>
     </ul>
@@ -101,13 +101,13 @@
     <h4>Modul Paket hochladen (.tgz Archiv)</h4>
 </div>
 <form action="<?php echo $this->url('connectInstallPackageUpload')?>" method="post" target="connect_iframe" onsubmit="onSubmit(this)" enctype="multipart/form-data">
-    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
+    <input id="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
     <ul class="bare-list">
         <li><span class="step-count">1</span> &nbsp; Herunterladen oder Paket erstellen.</li>
         <li>
             <span class="step-count">2</span> &nbsp; Modul Paket hochladen:
             <label for="file"></label>
-            <input type="file" id="file" name="file"/>
+            <input type="file" id="file" id="file"/>
             <button type="submit">Hochladen &amp; Installieren</button>
         </li>
     </ul>
@@ -135,8 +135,8 @@
 
 <form id="connect_packages_<?php echo $i ?>" class="connect-packages" action="<?php echo $this->url('connectPackagesPost')?>" method="post" target="connect_iframe">
     <div class="no-display">
-        <input type="hidden" id="ignore_local_modification" name="ignore_local_modification" value=""/>
-        <input type="hidden" name="form_id" value="connect_packages_<?php echo $i ?>"/>
+        <input type="hidden" id="ignore_local_modification" id="ignore_local_modification" value=""/>
+        <input type="hidden" id="form_id" value="connect_packages_<?php echo $i ?>"/>
     </div>
     <p class="nm"><button type="button" onclick="formSubmit('connect_packages_<?php echo $i ?>')" class="f-right">&Auml;nderungen &uuml;bernehmen</button></p>
     <h2 class="page-head">Channel: <?php echo $channelConfig->getChannelLabel($channel); ?></h2>
@@ -171,7 +171,7 @@
                 <td class="first"><?php echo $pkgName?></td>
                 <td class="a-center"><?php echo $pkg['version'].' ('.$pkg['stability'].')'?>&nbsp;</td>
                 <?php if (!empty($_GET['updates'])): ?><td class="a-center"><?php echo $pkg['upgrade_latest']?>&nbsp;</td><?php endif; ?>
-                <td><select class="select" name="actions[<?php echo $channel.'|'.$pkgName ?>]">
+                <td><select class="select" id="actions[<?php echo $channel.'|'.$pkgName ?>]">
                     <option selected="selected"></option>
                     <?php if(isset($pkg['actions']) && is_array($pkg['actions'])): ?>
                         <?php foreach ($pkg['actions'] as $k=>$v): ?>
@@ -207,7 +207,7 @@ $$('#connect_packages_'+<?php echo $i?>+' select').each(function(el){el.value=''
 
 <?php echo $this->template('connect/iframe.phtml') ?>
 
-<a name="connect_iframe_result"></a>
+<a id="connect_iframe_result"></a>
 <div id="connect_iframe_success" style="display:none">
     <?php $this->set('messages', array('success'=>array('Vorgang abgeschlossen. Achten Sie auf die Ausgabe im schwarzen Fenster um wichtige Informationen zum Vorgang zu erhalten.'))) ?>
     <?php echo $this->template('messages.phtml') ?>

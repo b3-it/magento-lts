@@ -26,7 +26,7 @@
 ?>
 <div class="block block-subscribe">
     <div class="block-title">
-        <h2><?php echo $this->__('Newsletter') ?><a name="newsletter-box"></a></h2>
+        <h2><?php echo $this->__('Newsletter') ?><a id="newsletter-box"></a></h2>
     </div>
     <form action="<?php echo $this->getUrl('extnewsletter/subscriber/new') ?>" method="post" id="newsletter-validate-detail">
         <fieldset class="block-content">
@@ -41,13 +41,13 @@
             */ ?>
             <label for="newsletter"><?php echo $this->__('Sign up for our newsletter:') ?></label>
             <div class="input-box">
-               <input name="email" type="text" id="newsletter" class="input-text required-entry validate-email" />
+               <input id="email" type="text" id="newsletter" class="input-text required-entry validate-email" />
             </div>
             
               <p>
-			    <input type="radio" name="newstype" value="allnews" checked="checked">All News<br>
-			    <input type="radio" name="newstype" value="productnews">Mine Product News only<br>
-			    <input type="radio" name="newstype" value="generalnews">Genaral News
+			    <input type="radio" id="newstype" value="allnews" checked="checked">All News<br>
+			    <input type="radio" id="newstype" value="productnews">Mine Product News only<br>
+			    <input type="radio" id="newstype" value="generalnews">Genaral News
 			  </p>
             <button type="submit" class="button"><span><?php echo $this->__('Subscribe') ?></span></button>
         </fieldset>

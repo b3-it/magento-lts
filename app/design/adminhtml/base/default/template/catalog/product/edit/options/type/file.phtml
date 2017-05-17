@@ -26,7 +26,7 @@
 ?>
 <script type="text/javascript">
 
-OptionTemplateFile = '<table class="border" cellpadding="0" cellspacing="0">'+
+OptionTemplateFile = '<table class="border" cellpadding="0">'+
         '<tr class="headings">'+
             <?php if ($this->getCanReadPrice() !== false) : ?>
             '<th class="type-price">' + <?php echo $this->helper('core')->jsonEncode(Mage::helper('catalog')->__('Price')); ?> + '</th>' +
@@ -38,17 +38,17 @@ OptionTemplateFile = '<table class="border" cellpadding="0" cellspacing="0">'+
         '</tr>' +
         '<tr>' +
             <?php if ($this->getCanReadPrice() !== false) : ?>
-            '<td><input class="input-text validate-zero-or-greater" type="text" name="product[options][{{option_id}}][price]" value="{{price}}"<?php if ($this->getCanEditPrice() === false) : ?> disabled="disabled"<?php endif; ?>></td>' +
+            '<td><input class="input-text validate-zero-or-greater" type="text" id="product[options][{{option_id}}][price]" value="{{price}}"<?php if ($this->getCanEditPrice() === false) : ?> disabled="disabled"<?php endif; ?>></td>' +
             '<td>' + <?php echo $this->helper('core')->jsonEncode($this->getPriceTypeSelectHtml()) ?> + '</td>' +
             <?php else : ?>
-            '<input type="hidden" name="product[options][{{option_id}}][price]">' +
-            '<input type="hidden" name="product[options][{{option_id}}][price_type]" id="product_option_{{option_id}}_price_type">' +
+            '<input type="hidden" id="product[options][{{option_id}}][price]">' +
+            '<input type="hidden" id="product[options][{{option_id}}][price_type]" id="product_option_{{option_id}}_price_type">' +
             <?php endif; ?>
-            '<td><input type="text" class="input-text" name="product[options][{{option_id}}][sku]" value="{{sku}}"></td>' +
-            '<td><input class="input-text" type="text" name="product[options][{{option_id}}][file_extension]" value="{{file_extension}}"></td>' +
-            '<td class="type-last last" nowrap><input class="input-text" type="text" name="product[options][{{option_id}}][image_size_x]" value="{{image_size_x}}">' +
+            '<td><input type="text" class="input-text" id="product[options][{{option_id}}][sku]" value="{{sku}}"></td>' +
+            '<td><input class="input-text" type="text" id="product[options][{{option_id}}][file_extension]" value="{{file_extension}}"></td>' +
+            '<td class="type-last last" nowrap><input class="input-text" type="text" id="product[options][{{option_id}}][image_size_x]" value="{{image_size_x}}">' +
                 <?php echo $this->helper('core')->jsonEncode(Mage::helper('catalog')->__('x')) ?> +
-                '<input class="input-text" type="text" name="product[options][{{option_id}}][image_size_y]" value="{{image_size_y}}">' +
+                '<input class="input-text" type="text" id="product[options][{{option_id}}][image_size_y]" value="{{image_size_y}}">' +
                  <?php echo $this->helper('core')->jsonEncode(Mage::helper('catalog')->__('px.')) ?> +
             '<br/>' + <?php echo $this->helper('core')->jsonEncode(Mage::helper('catalog')->__('leave blank if its not an image')) ?> + '</td>' +
         '</tr>'+

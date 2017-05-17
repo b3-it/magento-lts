@@ -1,11 +1,11 @@
 <fieldset>
 <h3>Customer</h3>
 <p><?php echo $this->getCustomerTitle()?></p>
-<input type="hidden" name="create_contract[customer_id]" value="<?php echo $this->getCustomer()->getId()?>"/>
+<input type="hidden" id="create_contract[customer_id]" value="<?php echo $this->getCustomer()->getId()?>"/>
 
 <div id="create_contract_billing_adr">
 <h3>Billing Address</h3>
-<select name="create_contract[billing_adr]">
+<select id="create_contract[billing_adr]">
 	<?php foreach ($this->getCustomerAddresses() as $adr):?>
 	<option value="<?php echo $adr->getId()?>"><?php echo trim($adr->getCompany() ." ".$adr->getFirstname() ." ". $adr->getLastname())?></option>
 	<?php endforeach;?>
@@ -15,7 +15,7 @@
 
 <div id="create_contract_shipping_adr">
 <h3>Shipping Address</h3>
-<select name="create_contract[shipping_adr]">
+<select id="create_contract[shipping_adr]">
 	<?php foreach ($this->getCustomerAddresses() as $adr):?>
 	<option value="<?php echo $adr->getId()?>"><?php echo trim($adr->getCompany() ." ".$adr->getFirstname() ." ". $adr->getLastname())?></option>
 	<?php endforeach;?>

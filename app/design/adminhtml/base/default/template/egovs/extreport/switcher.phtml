@@ -25,7 +25,7 @@
  */
 ?>
 <p class="switcher"><label for="group_switcher"><?php echo $this->__('Show Report for') ?>:</label>
-<select name="group_switcher" id="group_switcher" class="left-col-block" onchange="return switchGroup(this);">
+<select id="group_switcher" id="group_switcher" class="left-col-block" onchange="return switchGroup(this);">
     <option value=""><?php echo $this->__('All customer groups') ?></option>
     
     <?php foreach ($this->getGroupCollection() as $_cgroup): ?>           

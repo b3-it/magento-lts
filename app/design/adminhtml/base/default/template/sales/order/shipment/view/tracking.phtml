@@ -26,7 +26,7 @@
 ?>
 <?php /** @var $this Mage_Adminhtml_Block_Sales_Order_Shipment_View_Tracking */ ?>
 <div class="field-row grid" id="shipment_tracking_info">
-<table cellspacing="0" class="data">
+<table class="data">
     <col width="100" />
     <col />
     <col />
@@ -42,14 +42,14 @@
     <tfoot>
         <tr>
             <td>
-                <select name="carrier" class="select" style="width:110px" onchange="selectCarrier(this)">
+                <select id="carrier" class="select" style="width:110px" onchange="selectCarrier(this)">
                     <?php foreach ($this->getCarriers() as $_code=>$_name): ?>
                     <option value="<?php echo $_code ?>"><?php echo $this->escapeHtml($_name) ?></option>
                     <?php endforeach; ?>
                 </select>
             </td>
-            <td><input class="input-text" type="text" id="tracking_title" name="title" value="" /></td>
-            <td><input class="input-text" type="text" id="tracking_number" name="number" value="" /></td>
+            <td><input class="input-text" type="text" id="tracking_title" id="title" value="" /></td>
+            <td><input class="input-text" type="text" id="tracking_number" id="number" value="" /></td>
             <td class="last"><?php echo $this->getSaveButtonHtml() ?></td>
         </tr>
     </tfoot>

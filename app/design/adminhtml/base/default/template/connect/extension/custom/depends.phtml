@@ -49,15 +49,15 @@
                 
                     
                     <td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:200px;" name="depends[package][name][]" value="<?php echo $self->getValue('depends/package/name/'.$_i) ?>"/>
+                        <input class="input-text" style="width:200px;" id="depends[package][name][]" value="<?php echo $self->getValue('depends/package/name/'.$_i) ?>"/>
                     </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:200px;" name="depends[package][channel][]" value="<?php echo $self->getValue('depends/package/channel/'.$_i) ?>"/>
+                        <input class="input-text" style="width:200px;" id="depends[package][channel][]" value="<?php echo $self->getValue('depends/package/channel/'.$_i) ?>"/>
                     </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:50px;" name="depends[package][min][]" value="<?php echo $self->getValue('depends/package/min/'.$_i) ?>"/>
+                        <input class="input-text" style="width:50px;" id="depends[package][min][]" value="<?php echo $self->getValue('depends/package/min/'.$_i) ?>"/>
                     </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:50px;" name="depends[package][max][]" value="<?php echo $self->getValue('depends/package/max/'.$_i) ?>"/>
+                        <input class="input-text" style="width:50px;" id="depends[package][max][]" value="<?php echo $self->getValue('depends/package/max/'.$_i) ?>"/>
                     </td><td style="margin-bottom:5px;">
-                        <textarea class="<?php echo $filesClass ?>" style="width:300px;display:none" name="depends[package][files][]"><?php echo $self->getValue('depends/package/files/'.$_i)?> </textarea>                                                
+                        <textarea class="<?php echo $filesClass ?>" style="width:300px;display:none" id="depends[package][files][]"><?php echo $self->getValue('depends/package/files/'.$_i)?> </textarea>                                                
                         <?php echo $self->getAddFileDepsRowButtonHtml("tr", $filesClass) ?>                        
                     </td><td style="margin-bottom:5px;">                    
                         <?php echo $self->getRemoveRowButtonHtml('tr') ?>
@@ -100,15 +100,15 @@
                 <tr id="depends_extensions_template" style="display:none">
 <?php function showDependsExtensionsTemplate($self, $_i=0) { ?>
                     <td style="margin-bottom:5px;">
-                        <select name="depends[extension][name][]" style="width:100px">
+                        <select id="depends[extension][name][]" style="width:100px">
                         <?php foreach ($self->getExtensions() as $_value=>$_label): ?>
                             <option value="<?php echo $_value ?>" <?php echo $self->getSelected('depends/extension/name/'.$_i, $_value) ?>><?php echo $_label ?></option>
                         <?php endforeach ?>
                         </select>
                     </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:50px;" name="depends[extension][min][]" value="<?php echo $self->getValue('depends/extension/min/'.$_i) ?>"/>
+                        <input class="input-text" style="width:50px;" id="depends[extension][min][]" value="<?php echo $self->getValue('depends/extension/min/'.$_i) ?>"/>
                     </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:50px;" name="depends[extension][max][]" value="<?php echo $self->getValue('depends/extension/max/'.$_i) ?>"/>
+                        <input class="input-text" style="width:50px;" id="depends[extension][max][]" value="<?php echo $self->getValue('depends/extension/max/'.$_i) ?>"/>
                     </td><td style="margin-bottom:5px;">
                         <?php echo $self->getRemoveRowButtonHtml('tr') ?>
                     </td>

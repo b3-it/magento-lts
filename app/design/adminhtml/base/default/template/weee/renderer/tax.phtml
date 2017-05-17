@@ -31,7 +31,7 @@
 <tr>
     <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
     <td colspan="10" class="grid weee">
-    <table cellspacing="0" class="data border" id="<?php echo $_htmlId; ?>_table">
+    <table class="data border" id="<?php echo $_htmlId; ?>_table">
         <?php if ($_multiWebsite): ?>
         <col width="135" />
         <?php endif; ?>
@@ -47,28 +47,28 @@
             </tr>
             <tr id="<?php echo $_htmlId ?>_add_template" class="template no-display">
                 <td <?php if (!$_multiWebsite): ?>style="display:none"<?php endif; ?>>
-                <select disabled="no-template" class="<?php echo $_htmlClass ?> required-entry" name="<?php echo $_htmlName ?>[__index__][website_id]" id="#{prefix}_weee_tax_row___index___website">
+                <select disabled="no-template" class="<?php echo $_htmlClass ?> required-entry" id="<?php echo $_htmlName ?>[__index__][website_id]" id="#{prefix}_weee_tax_row___index___website">
                     <?php foreach ($this->getWebsites() as $_websiteId => $_info): ?>
                     <option value="<?php echo $_websiteId ?>"><?php echo $_info['name'] ?><?php if (!empty($_info['currency'])): ?> [<?php echo $_info['currency'] ?>]<?php endif; ?></option>
                     <?php endforeach ?>
                 </select>
                 </td>
                 <td class="nobr">
-                <select disabled="no-template" class="<?php echo $_htmlClass ?> country required-entry" name="<?php echo $_htmlName ?>[__index__][country]" id="#{prefix}_weee_tax_row___index___country">
+                <select disabled="no-template" class="<?php echo $_htmlClass ?> country required-entry" id="<?php echo $_htmlName ?>[__index__][country]" id="#{prefix}_weee_tax_row___index___country">
                     <?php foreach ($this->getCountries() as $_country): ?>
                     <option value="<?php echo $_country['value'] ?>"><?php echo htmlspecialchars($_country['label']) ?></option>
                     <?php endforeach ?>
                 </select>
                 <br />
-                <select disabled="no-template" class="<?php echo $_htmlClass ?> state" name="<?php echo $_htmlName ?>[__index__][state]" id="#{prefix}_weee_tax_row___index___state">
+                <select disabled="no-template" class="<?php echo $_htmlClass ?> state" id="<?php echo $_htmlName ?>[__index__][state]" id="#{prefix}_weee_tax_row___index___state">
                     <option value="0">*</option>
                 </select>
                 </td>
                 <td>
-                    <input disabled="no-template" class="<?php echo $_htmlClass ?> required-entry validate-greater-than-zero" type="text" name="<?php echo $_htmlName ?>[__index__][price]" value="'#{price}'" />
+                    <input disabled="no-template" class="<?php echo $_htmlClass ?> required-entry validate-greater-than-zero" type="text" id="<?php echo $_htmlName ?>[__index__][price]" value="'#{price}'" />
                 </td>
                 <td class="last">
-                    <input type="hidden" name="<?php echo $_htmlName ?>[__index__][delete]" class="delete" disabled="no-template" value=""  id="#{prefix}_weee_tax_row___index___delete" />
+                    <input type="hidden" id="<?php echo $_htmlName ?>[__index__][delete]" class="delete" disabled="no-template" value=""  id="#{prefix}_weee_tax_row___index___delete" />
                     <button title="Delete WEEE Tax" class="scalable delete icon-btn delete-product-option" onclick="weeeTaxControl.deleteItem('<?php echo $_htmlId ?>', event);return false"><span><span><span>Delete</span></span></span></button>
                 </td>
             </tr>

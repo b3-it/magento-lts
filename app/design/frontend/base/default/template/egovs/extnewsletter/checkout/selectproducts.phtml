@@ -1,15 +1,15 @@
 <?php if ($this->getIsAutoSubscribeNewsletter()) : ?>
-	<input type="hidden" name="extnewsletter[0]" id="extnewsletter_0" value="1" />
+	<input type="hidden" id="extnewsletter[0]" id="extnewsletter_0" value="1" />
 	<?php if ($this->getIsAutoSubscribeProduct()) : ?>
 		<?php foreach ($this->getProducts() as $_product) : ?>
-				<input type="hidden" id="extnewsletter_<?php echo $_product->getId() ?>" name="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
+				<input type="hidden" id="extnewsletter_<?php echo $_product->getId() ?>" id="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
 			<?php endforeach;?>
 	<?php else: ?>
 		<h4 class="checknewsletter"><?php echo $this->__('Please inform me about these:')?></h4>
 		<ul class="form-list group-select">
 			<?php foreach ($this->getProducts() as $_product) : ?>
 				<li>
-					<input class="checkbox" type="checkbox" id="extnewsletter_<?php echo $_product->getId() ?>" name="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
+					<input class="checkbox" type="checkbox" id="extnewsletter_<?php echo $_product->getId() ?>" id="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
 					<label for="extnewsletter_<?php echo $_product->getId() ?>">
 						<?php echo $this->__('news about product: %s',$_product->getName()) ?>
 					</label>
@@ -21,20 +21,20 @@
 	<h4 class="checknewsletter"><?php echo $this->__('Please inform me about these:')?></h4>
 	<ul class="form-list group-select">
 	    <li class="extnewsletter_anmeldung">
-		    <input class="checkbox" type="checkbox" name="extnewsletter[0]" id="extnewsletter_0" value="0" />
+		    <input class="checkbox" type="checkbox" id="extnewsletter[0]" id="extnewsletter_0" value="0" />
 		    <label for="extnewsletter_0"><?php echo $this->__('general topics')?></label>
 		    <div><?php echo $this->__('general description')?></div>
 	    </li>
 		<?php if ($this->getIsAutoSubscribeProduct()) : ?>
 			<?php foreach ($this->getProducts() as $_product) : ?>
 				<li>
-					<input type="hidden" id="extnewsletter_<?php echo $_product->getId() ?>" name="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
+					<input type="hidden" id="extnewsletter_<?php echo $_product->getId() ?>" id="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
 				</li>
 			<?php endforeach;?>
 		<?php else: ?>
 			<?php foreach ($this->getProducts() as $_product) : ?>
 				<li>
-					<input class="checkbox" type="checkbox" id="extnewsletter_<?php echo $_product->getId() ?>" name="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
+					<input class="checkbox" type="checkbox" id="extnewsletter_<?php echo $_product->getId() ?>" id="extnewsletter[<?php echo $_product->getId() ?>]" value="1" />
 					<label for="extnewsletter_<?php echo $_product->getId() ?>">
 						<?php echo $this->__('news about product: %s',$_product->getName()) ?>
 					</label>

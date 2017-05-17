@@ -10,7 +10,7 @@
 				});
 	}
 </script>
-<select id="stationenListe" name="station">
+<select id="stationenListe" id="station">
 <?php foreach($this->getStationsList() as $station){?> 
 <option value="<?php echo $station->getId()?>"><?php echo $station->getName()?></option> 			
 <?php }?>

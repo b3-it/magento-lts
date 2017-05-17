@@ -31,7 +31,7 @@
 ?>
 <script type="text/javascript">
 // <![CDATA[
-var imageTemplate = '<input type="hidden" name="{{file_field}}[image][{{id}}][image_id]" value="{{image_id}}" />'+
+var imageTemplate = '<input type="hidden" id="{{file_field}}[image][{{id}}][image_id]" value="{{image_id}}" />'+
         '<div class="banner-image">'+
             '<div class="row a-right">' +
                 '<div class="flex">' +
@@ -43,7 +43,7 @@ var imageTemplate = '<input type="hidden" name="{{file_field}}[image][{{id}}][im
                     '<div class="clear"></div>'+
                 '</div>'+
             '</div>'+
-            '<input type="hidden" class="validate-banner-file-{{id}}" id="{{file_field}}_{{id}}_file_save" name="{{file_field}}[image][{{id}}][file]" value="{{file_save}}" />'+
+            '<input type="hidden" class="validate-banner-file-{{id}}" id="{{file_field}}_{{id}}_file_save" id="{{file_field}}[image][{{id}}][file]" value="{{file_save}}" />'+
         '</div>';
 
 function prepareImageItems(imageType, deviceId) {
