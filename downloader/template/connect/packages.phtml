@@ -35,7 +35,7 @@
         <label for="maintenance">Put store on the maintenance mode while installing/upgrading/backup creation</label>
     </li>
     <li>
-        <table cellpadding="0" cellspacing="0">
+        <table>
             <tr>
                 <td rowspan="2" valign="top">
                     <input type="checkbox" id="is_backup" value="1"  /> &nbsp;
@@ -187,7 +187,7 @@ function connectPrepare(form) {
     <p class="f-right"><label for="clean_sessions">Clear all sessions after successfull install or upgrade: <input type="checkbox" id="clean_sessions"/></label></p>
     <div class="clear"></div>
 
-    <table cellspacing="0" cellpadding="0" width="100%">
+    <table style="width:100%;">
         <?php if (!empty($_GET['updates'])): ?>
             <col width="190" />
             <col width="60" />
