@@ -52,10 +52,10 @@
             <td class="gallery" align="center" style="vertical-align:bottom;">
             <a href="<?php echo $image->setType($type)->getSourceUrl() ?>" target="_blank" onclick="imagePreview('<?php echo $this->getElement()->getHtmlId() ?>_image_<?php echo $type ?>_<?php echo $image->getValueId() ?>');return false;">
             <img id="<?php echo $this->getElement()->getHtmlId() ?>_image_<?php echo $type ?>_<?php echo $image->getValueId() ?>" src="<?php echo $image->setType($type)->getSourceUrl() ?>?<?php echo time() ?>" alt="<?php echo $image->getValue() ?>" height="25" class="small-image-preview v-middle"/></a><br/>
-            <input type="file" id="<?php echo $this->getElement()->getName() ?>_<?php echo $type ?>[<?php echo $image->getValueId() ?>]" size="1"></td>
+            <input type="file" name="<?php echo $this->getElement()->getName() ?>_<?php echo $type ?>[<?php echo $image->getValueId() ?>]" size="1"></td>
         <?php endforeach; ?>
-        <td class="gallery" align="center" style="vertical-align:bottom;"><input type="text" id="<?php echo $this->getElement()->getParentName() ?>[position][<?php echo $image->getValueId() ?>]" value="<?php echo $image->getPosition() ?>" id="<?php echo $this->getElement()->getHtmlId() ?>_position_<?php echo $image->getValueId() ?>" size="3"/></td>
-        <td class="gallery" align="center" style="vertical-align:bottom;"><?php echo $this->getDeleteButtonHtml($image->getValueId()) ?><input type="hidden" id="<?php echo $this->getElement()->getParentName() ?>[delete][<?php echo $image->getValueId() ?>]" id="<?php echo $this->getElement()->getHtmlId() ?>_delete_<?php echo $image->getValueId() ?>"/></td>
+        <td class="gallery" align="center" style="vertical-align:bottom;"><input type="text" name="<?php echo $this->getElement()->getParentName() ?>[position][<?php echo $image->getValueId() ?>]" value="<?php echo $image->getPosition() ?>" id="<?php echo $this->getElement()->getHtmlId() ?>_position_<?php echo $image->getValueId() ?>" size="3"/></td>
+        <td class="gallery" align="center" style="vertical-align:bottom;"><?php echo $this->getDeleteButtonHtml($image->getValueId()) ?><input type="hidden" name="<?php echo $this->getElement()->getParentName() ?>[delete][<?php echo $image->getValueId() ?>]" id="<?php echo $this->getElement()->getHtmlId() ?>_delete_<?php echo $image->getValueId() ?>"/></td>
         </tr>
     <?php endforeach; ?>
 <?php endif; ?>
@@ -80,7 +80,7 @@ function addNewImage()
 
     id--;
     num_of_images++;
-    new_file_input = '<input type="file" id="<?php echo $this->getElement()->getName() ?>_%j%[%id%]" size="1">';
+    new_file_input = '<input type="file" name="<?php echo $this->getElement()->getName() ?>_%j%[%id%]" size="1">';
 
     // Sort order input
     var new_row_input = document.createElement( 'input' );

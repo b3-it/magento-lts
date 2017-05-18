@@ -64,12 +64,12 @@
 			            	<ul class="form-list">
 			                <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
 				                <li>
-				                    <input type="radio" id="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" />
+				                    <input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" />
 				                    <label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
 				                </li>
 			                <?php endif; ?>
 				                <li>
-				                    <input type="radio" id="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" />
+				                    <input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" />
 				                    <label for="login:register"><?php echo $this->__('Register') ?></label>
 				                </li>
 				            </ul><br />
@@ -82,7 +82,7 @@
 				                <li><?php echo $this->__('Easy access to your order history and status') ?></li>
 				            </ul>   
 				        <?php else: ?>
-				            <input type="hidden" id="checkout_method" id="login:register" value="register" checked="checked" />
+				            <input type="hidden" name="checkout_method" id="login:register" value="register" checked="checked" />
 				        <?php endif; ?>
 		        		<br />
 						<p class="secureInfo">
@@ -117,13 +117,13 @@
 			                <li>
 			                    <div class="input-box">
 			                        <label for="login-email"><?php echo $this->__('Email Address') ?> <span class="required">*</span></label><br />
-			                        <input type="text" class="input-text required-entry validate-email" id="login-email" id="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" />
+			                        <input type="text" class="input-text required-entry validate-email" id="login-email" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" />
 			                    </div>
 			                </li>
 			                <li>
 			                    <div class="input-box">
 			                        <label for="login-password"><?php echo $this->__('Password') ?> <span class="required">*</span></label><br />
-			                        <input type="password" class="input-text required-entry" id="login-password" id="login[password]" />
+			                        <input type="password" class="input-text required-entry" id="login-password" name="login[password]" />
 			                    </div>
 			                </li>
 			            </ul>

@@ -51,7 +51,7 @@
     <span class="time-picker"><?php echo $this->getTimeHtml() ?></span>
 <?php endif; ?>
 
-    <input type="hidden" id="validate_datetime_<?php echo $_optionId ?>" class="validate-datetime-<?php echo $_optionId ?>" value="" />
+    <input type="hidden" name="validate_datetime_<?php echo $_optionId ?>" class="validate-datetime-<?php echo $_optionId ?>" value="" />
     <script type="text/javascript">
     //<![CDATA[
 <?php if ($_option->getIsRequire()): ?>

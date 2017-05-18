@@ -27,7 +27,7 @@
 <div>
     <div class="grid">
         <div class="hor-scroll">
-            <table class="data">
+            <table cellspacing="0" class="data">
                 <thead>
                 <tr class="headings">
                     <th class=" no-link"><span class="nobr"><?php echo Mage::helper('sales')->__('Product Name') ?></span></th>
@@ -36,7 +36,7 @@
                         <span class="nobr"><?php echo Mage::helper('sales')->__('Customs Value') ?></span>
                     </th>
                     <th class="a-center no-link" width="100">
-                        <span class="nobr"><input type="checkbox" id="" onclick="packaging.checkAllItems(this);" class="checkbox" title="<?php echo Mage::helper('sales')->__('Select All') ?>"></span>
+                        <span class="nobr"><input type="checkbox" name="" onclick="packaging.checkAllItems(this);" class="checkbox" title="<?php echo Mage::helper('sales')->__('Select All') ?>"></span>
                     </th>
                     <th class=" no-link" width="100"><span class="nobr"><?php echo Mage::helper('sales')->__('Qty Ordered') ?></span></th>
                     <th class=" no-link last" width="100"><span class="nobr"><?php echo Mage::helper('sales')->__('Qty') ?></span></th>
@@ -69,17 +69,17 @@
                             }
                         ?>
                         <td <?php echo $customsValueDisplay ?>>
-                            <input type="text" id="customs_value" class="input-text <?php echo $customsValueValidation ?>" value="<?php echo $this->formatPrice($item->getPrice()); ?>" size="10" onblur="packaging.recalcContainerWeightAndCustomsValue(this);">
+                            <input type="text" name="customs_value" class="input-text <?php echo $customsValueValidation ?>" value="<?php echo $this->formatPrice($item->getPrice()); ?>" size="10" onblur="packaging.recalcContainerWeightAndCustomsValue(this);">
                         </td>
                         <td class="a-center ">
-                            <input type="checkbox" id="" value="<?php echo $item->getId() ? $item->getId() : $item->getOrderItemId(); ?>" class="checkbox">
+                            <input type="checkbox" name="" value="<?php echo $item->getId() ? $item->getId() : $item->getOrderItemId(); ?>" class="checkbox">
                         </td>
                         <td class="a-center ">
                             <?php echo $item->getOrderItem()->getQtyOrdered()*1; ?>
                         </td>
                         <td class="a-right last">
-                            <input type="hidden" id="price" value="<?php echo $item->getPrice(); ?>">
-                            <input type="text" id="qty" value="<?php echo $item->getQty()*1; ?>" class="input-text qty<?php if ($item->getOrderItem()->getIsQtyDecimal()): ?> qty-decimal<?php endif ?>">&nbsp;
+                            <input type="hidden" name="price" value="<?php echo $item->getPrice(); ?>">
+                            <input type="text" name="qty" value="<?php echo $item->getQty()*1; ?>" class="input-text qty<?php if ($item->getOrderItem()->getIsQtyDecimal()): ?> qty-decimal<?php endif ?>">&nbsp;
                             <button type="button" class="scalable delete icon-btn" onclick="packaging.deleteItem(this);" style="display:none;">
                                 <span><span><span><?php echo Mage::helper('sales')->__('Delete') ?></span></span></span>
                             </button>

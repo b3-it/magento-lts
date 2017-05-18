@@ -53,7 +53,7 @@
                             <?php if ($groups = $this->getShippingRateGroups()):?>
                                 <?php $currentRate = $this->getCurrentShippingRate(); ?>
                                 <fieldset>
-                                    <select id="shipping_method" id="shipping_method" style="width:250px;" class="required-entry">
+                                    <select name="shipping_method" id="shipping_method" style="width:250px;" class="required-entry">
                                         <?php if (!$currentRate):?>
                                             <option value=""><?php echo $this->__('Please select a shipping method...') ?></option>
                                         <?php endif;?>

@@ -35,7 +35,7 @@ var idGlobal = 0;
  * @return string
  */
 function getTdLabelInnerHtml(id) {
-    return '<span class="field-row"><input id="'+id+'" type="text" class="label onclick_text input-text" value="" id="conf[new_pages][labels][]"></span>';
+    return '<span class="field-row"><input id="'+id+'" type="text" class="label onclick_text input-text" value="" name="conf[new_pages][labels][]"></span>';
 }
 
 /**
@@ -44,7 +44,7 @@ function getTdLabelInnerHtml(id) {
  * @return string
  */
 function getTdValueInnerHtml() {
-    var html = '<span class="field-row"><select class=" select" id="conf[new_pages][ids][]">'
+    var html = '<span class="field-row"><select class=" select" name="conf[new_pages][ids][]">'
     <?php foreach($this->getOptions() as $page): ?>
         + '<option value="<?php echo $this->jsQuoteEscape($this->htmlEscape($page['value'])); ?>"><?php echo $this->jsQuoteEscape($this->htmlEscape($page['label']));?></option>'
     <?php endforeach; ?>

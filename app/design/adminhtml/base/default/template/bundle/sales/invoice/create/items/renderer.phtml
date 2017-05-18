@@ -174,7 +174,7 @@
         </td>
         <td>
             <?php if ($this->canShowPriceInfo($_item)): ?>
-                <table class="qty-table">
+                <table cellspacing="0" class="qty-table">
                     <tr>
                         <td><?php echo Mage::helper('sales')->__('Ordered') ?></td>
                         <td><strong><?php echo $_item->getOrderItem()->getQtyOrdered()*1 ?></strong></td>
@@ -205,7 +205,7 @@
                     <?php endif; ?>
                 </table>
             <?php elseif ($this->isShipmentSeparately($_item)): ?>
-                <table class="qty-table">
+                <table cellspacing="0" class="qty-table">
                     <tr>
                         <td><?php echo Mage::helper('sales')->__('Ordered') ?></td>
                         <td><strong><?php echo $_item->getOrderItem()->getQtyOrdered()*1 ?></strong></td>
@@ -224,7 +224,7 @@
         <td class="a-center">
             <?php if ($this->canShowPriceInfo($_item)): ?>
                 <?php if ($this->canEditQty()) : ?>
-                    <input type="text" class="input-text qty-input" id="invoice[items][<?php echo $_item->getOrderItemId() ?>]" value="<?php echo $_item->getQty()*1 ?>" />
+                    <input type="text" class="input-text qty-input" name="invoice[items][<?php echo $_item->getOrderItemId() ?>]" value="<?php echo $_item->getQty()*1 ?>" />
                 <?php else : ?>
                     <?php echo $_item->getQty()*1 ?>
                 <?php endif; ?>

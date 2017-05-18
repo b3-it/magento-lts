@@ -15,8 +15,8 @@
 </div>
 <div class="std">
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-sidwishlists">
-        <input type="hidden" id="continue" value="0" id="can_continue_flag" />
-    	<input type="hidden" id="new_wishlist" value="0" id="add_new_wishlist_flag" />
+        <input type="hidden" name="continue" value="0" id="can_continue_flag" />
+    	<input type="hidden" name="new_wishlist" value="0" id="add_new_wishlist_flag" />
 
     	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 

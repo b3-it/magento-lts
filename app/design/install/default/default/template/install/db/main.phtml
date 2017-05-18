@@ -53,7 +53,7 @@ function showContent(select)
         <li>
             <div class="input-box">
                 <label for="prefix"><?php echo $this->__('Database Type') ?></label><br />
-                <select id="config[db_model]" onchange="showContent(this)">
+                <select name="config[db_model]" onchange="showContent(this)">
                     <?php foreach($dbTypeOptions as $block): ?>
                         <option value="<?php echo $block->getIdPrefix()?>" <?php if($this->getFormData()->getDbModel() == $block->getIdPrefix()):?>selected="selected"<?php endif;?>><?php echo $block->getTitle()?></option>
                     <?php endforeach; ?>

@@ -152,7 +152,7 @@ originModel.prototype = {
             var value = this.regionElement.value;
             var disabled = this.regionElement.disabled;
             if (data.length) {
-                var html = '<select id="'+this.regionElement.name+'" id="'+this.regionElement.id+'" class="required-entry select" title="'+this.regionElement.title+'"'+(disabled?" disabled":"")+'>';
+                var html = '<select name="'+this.regionElement.name+'" id="'+this.regionElement.id+'" class="required-entry select" title="'+this.regionElement.title+'"'+(disabled?" disabled":"")+'>';
                 for (var i in data) {
                     if(data[i].label) {
                         html+= '<option value="'+data[i].value+'"';
@@ -169,7 +169,7 @@ originModel.prototype = {
                 parentNode.innerHTML = html;
                 this.regionElement = $(regionElementId);
             } else if (this.reload) {
-                var html = '<input type="text" id="'+this.regionElement.name+'" id="'+this.regionElement.id+'" class="input-text" title="'+this.regionElement.title+'"'+(disabled?" disabled":"")+'>';
+                var html = '<input type="text" name="'+this.regionElement.name+'" id="'+this.regionElement.id+'" class="input-text" title="'+this.regionElement.title+'"'+(disabled?" disabled":"")+'>';
                 var parentNode = this.regionElement.parentNode;
                 var regionElementId = this.regionElement.id;
                 parentNode.innerHTML = html;

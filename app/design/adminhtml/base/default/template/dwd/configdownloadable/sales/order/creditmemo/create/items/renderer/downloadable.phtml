@@ -73,13 +73,13 @@
     <?php if ($this->canParentReturnToStock($_item)) : ?>
         <td class="a-center">
         <?php if ($this->canReturnItemToStock($_item)) : ?>
-            <input type="checkbox" id="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][back_to_stock]" value="1"<?php if ($_item->getBackToStock()):?> checked<?php endif;?>/>
+            <input type="checkbox" name="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][back_to_stock]" value="1"<?php if ($_item->getBackToStock()):?> checked<?php endif;?>/>
         <?php endif; ?>
         </td>
     <?php endif; ?>
     <td class="a-center">
     <?php if ($this->canEditQty()) : ?>
-        <input type="text" class="input-text qty-input" id="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][qty]" value="<?php echo $_item->getQty()*1 ?>"/>
+        <input type="text" class="input-text qty-input" name="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][qty]" value="<?php echo $_item->getQty()*1 ?>"/>
     <?php else : ?>
         <?php echo $_item->getQty()*1 ?>
     <?php endif; ?>

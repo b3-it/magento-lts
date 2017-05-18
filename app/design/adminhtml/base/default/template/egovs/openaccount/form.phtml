@@ -25,7 +25,7 @@
             <input type="text" title="<?php echo Mage::helper('payment')->__('Credit Period') ?>" 
             	class="required-entry input-text validate-zero-or-greater validate-digits" 
             	id="<?php echo $_code ?>_credit_period" 
-            	id="payment[paywithinxdays]" 
+            	name="payment[paywithinxdays]" 
             	value="<?php echo $this->getInfoData('paywithinxdays') ?>"/>
         </div>
     </li>

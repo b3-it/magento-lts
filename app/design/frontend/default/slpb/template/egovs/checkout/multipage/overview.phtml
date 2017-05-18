@@ -31,8 +31,8 @@
                 <span class="separator">|</span>
                 <a href="<?php echo $this->getEditBillingUrl() ?>"><?php echo $this->__('Change') ?></a>
             </h4>
-            <input type="hidden" id="payment[cc_number]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
-            <input type="hidden" id="payment[cc_cid]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
+            <input type="hidden" name="payment[cc_number]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
+            <input type="hidden" name="payment[cc_cid]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
             <?php echo $this->getPaymentHtml() ?>
         </div>
     </div>
@@ -112,7 +112,7 @@
 	  </div>
 
     <p>
-        <input type="hidden" id="sendOrderEmail" id="sendOrderEmail" value="1"/>
+        <input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/>
         <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
     </p>
     <div>

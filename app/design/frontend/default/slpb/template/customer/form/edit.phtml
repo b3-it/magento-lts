@@ -39,7 +39,7 @@
         <li>
             <div class="input-box">
                 <label for="email"><?php echo $this->__('Email Address') ?> <span class="required">*</span></label><br />
-                <input type="text" id="email" id="email" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry validate-email" />
+                <input type="text" name="email" id="email" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry validate-email" />
             </div>
         </li>
     <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
@@ -51,7 +51,7 @@
         <li><?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?></li>
     <?php endif ?>
         <li>
-            <input type="checkbox" id="change_password" id="change_password" value="1" onclick="setPasswordForm(this.checked)" title="<?php echo $this->__('Change Password') ?>"<?php if($this->getCustomer()->getChangePassword()==1): ?> checked="checked"<?php endif; ?> class="checkbox" /> <label for="change_password"><?php echo $this->__('Change Password') ?></label>
+            <input type="checkbox" name="change_password" id="change_password" value="1" onclick="setPasswordForm(this.checked)" title="<?php echo $this->__('Change Password') ?>"<?php if($this->getCustomer()->getChangePassword()==1): ?> checked="checked"<?php endif; ?> class="checkbox" /> <label for="change_password"><?php echo $this->__('Change Password') ?></label>
         </li>
     </ul>
 </fieldset>
@@ -61,17 +61,17 @@
         <li>
             <div class="input-box">
                 <label for="current_password"><?php echo $this->__('Current Password') ?></label><br />
-                <input type="password" class="input-text" id="current_password" id="current_password" />
+                <input type="password" class="input-text" name="current_password" id="current_password" />
             </div>
         </li>
         <li>
             <div class="input-box">
                 <label for="password"><?php echo $this->__('New Password') ?></label><br />
-                <input type="password" class="input-text validate-password" id="password" id="password" />
+                <input type="password" class="input-text validate-password" name="password" id="password" />
             </div>
             <div class="input-box">
                 <label for="confirmation"><?php echo $this->__('Confirm New Password') ?></label><br />
-                <input type="password" class="input-text validate-cpassword" id="confirmation" id="confirmation" />
+                <input type="password" class="input-text validate-cpassword" name="confirmation" id="confirmation" />
             </div>
         </li>
     </ul>

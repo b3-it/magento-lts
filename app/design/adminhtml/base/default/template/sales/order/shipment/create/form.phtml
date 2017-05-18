@@ -101,7 +101,7 @@
                 toggleCreateLabelCheckbox();
             });
             packaging.setItemQtyCallback(function(itemId){
-                var item = $$('[id="shipment[items]['+itemId+']"]')[0];
+                var item = $$('[name="shipment[items]['+itemId+']"]')[0];
                 if (item && !isNaN(item.value)) {
                     return item.value;
                 }

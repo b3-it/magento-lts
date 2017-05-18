@@ -50,13 +50,13 @@ function changeIdent($id) {
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
-<input type="radio" id="billing[customerident]" id="customeridentNumber" value="0" checked="checked" onclick="changeIdent(0)">Kundennummer<br>
-<input type="radio" id="billing[customerident]" id="customeridentAddress" value="1" onclick="changeIdent(1)">Adresse<br>
+<input type="radio" name="billing[customerident]" id="customeridentNumber" value="0" checked="checked" onclick="changeIdent(0)">Kundennummer<br>
+<input type="radio" name="billing[customerident]" id="customeridentAddress" value="1" onclick="changeIdent(1)">Adresse<br>
 <fieldset id="numberident">
 <div class="input-box name-lastname">
 	<label for="billing:customernumber">Kundennummer</label>
 	<br />
-	<input type="text" id="billing:customernumber" id="billing[customernumber]" value="" title="" class="input-text"  />
+	<input type="text" id="billing:customernumber" name="billing[customernumber]" value="" title="" class="input-text"  />
 </div>
 </fieldset>
 
@@ -68,14 +68,14 @@ function changeIdent($id) {
     <li id="billing-new-address-form">
         <fieldset>
             <legend><?php echo $this->__('Address') ?></legend>
-            <input type="hidden" id="billing[address_id]" value="new" id="billing:address_id" />
+            <input type="hidden" name="billing[address_id]" value="new" id="billing:address_id" />
             <ul>
                 
                 <li>
                    <div class="input-box name-prefix">
         			<label for="billing:prefix">
             		<?php echo $this->__('Prefix') ?></label><br />
-			        <select id="billing:prefix" id="billing[prefix]" title="<?php echo $this->__('Prefix') ?>">
+			        <select id="billing:prefix" name="billing[prefix]" title="<?php echo $this->__('Prefix') ?>">
 			        <?php foreach ($this->getPrefixOptions() as $_option): ?>
 			            <option value="<?php echo $_option?>"<?php if ($this->getAddress()->getPrefix()==$_option):?> selected="selected"<?php endif; ?>><?php echo $this->__($_option)?></option>
 			        <?php endforeach ?>
@@ -85,32 +85,32 @@ function changeIdent($id) {
                     <div class="input-box name-firstname">
         			<label for="billing:firstname">
             		<?php echo $this->__('First Name') ?><span class="required">*</span></label><br />
-			        <input type="text" id="billing:firstname" id="billing[firstname]" value="<?php echo $this->htmlEscape($this->getAddress()->getFirstname()) ?>" title="<?php echo $this->__('First Name') ?>" class="input-text "  />
+			        <input type="text" id="billing:firstname" name="billing[firstname]" value="<?php echo $this->htmlEscape($this->getAddress()->getFirstname()) ?>" title="<?php echo $this->__('First Name') ?>" class="input-text "  />
 			    	</div>
 			    	<div class="input-box name-lastname">
 				        <label for="billing:lastname">
 				            <?php echo $this->__('Last Name') ?><span class="required">*</span></label>
 				        <br />
-				        <input type="text" id="billing:lastname" id="billing[lastname]" value="<?php echo $this->htmlEscape($this->getAddress()->getLastname()) ?>" title="<?php echo $this->__('Last Name') ?>" class="input-text"  />
+				        <input type="text" id="billing:lastname" name="billing[lastname]" value="<?php echo $this->htmlEscape($this->getAddress()->getLastname()) ?>" title="<?php echo $this->__('Last Name') ?>" class="input-text"  />
 				    </div>
                 </li>
 
                 <li>
                 
                 <label for="billing:street1"><?php echo $this->__('Address') ?><span class="required">*</span></label><br />
-                    <input type="text" title="<?php echo $this->__('Street Address') ?>" id="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text required-entry" /></li>
+                    <input type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text required-entry" /></li>
 
                 
     		
                 <li>
                     <div class="input-box">
                         <label for="billing:city"><?php echo $this->__('City') ?> <span class="required">*</span><br />
-                        <input type="text" title="<?php echo $this->__('City') ?>" id="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="billing:city" /></div>
+                        <input type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="billing:city" /></div>
                     
                
                     <div class="input-box">
                         <label for="billing:postcode"><?php echo $this->__('Zip/Postal Code') ?><span class="required">*</span></label><br />
-                        <input type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" id="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" /></div>
+                        <input type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" /></div>
        
               
                 </li>

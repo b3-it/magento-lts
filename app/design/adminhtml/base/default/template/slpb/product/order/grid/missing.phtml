@@ -1,7 +1,7 @@
 <?php if(count($this->getMissingProducts())> 0):?>
 	<div id="missing_products" class="content-header"><h3 class="icon-head head-order"><?php echo $this->__('Total quantity of products')?></h3></div>
 	<div class="grid">
-		<table class="data">
+		<table class="data" cellspacing="0">
 		<thead><tr class="headings"><th><?php echo $this->__('sku')?></th><th><?php echo $this->__('Name')?></th><th><?php echo $this->__('Qty')?></th></tr></thead>
 		<tbody>
 		<?php foreach ($this->getMissingProducts() as $k=>$v):?>

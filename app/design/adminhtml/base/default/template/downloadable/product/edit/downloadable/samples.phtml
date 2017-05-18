@@ -33,18 +33,18 @@
 
 <?php $_product = $this->getProduct() ?>
 <div class="fieldset">
-    <table class="form-list">
+    <table cellspacing="0" class="form-list">
         <tbody>
             <tr class="headings">
                 <td class="label"><label for="name"><?php echo Mage::helper('downloadable')->__('Title')?></label>
                 </td>
                 <td class="value">
-                    <input type="text" class="input-text" id="product[samples_title]" value="<?php echo $_product->getId()?$_product->getSamplesTitle():$this->getSamplesTitle() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefault())?'disabled="disabled"':'' ?> />
+                    <input type="text" class="input-text" name="product[samples_title]" value="<?php echo $_product->getId()?$_product->getSamplesTitle():$this->getSamplesTitle() ?>" <?php echo ($_product->getStoreId() && $this->getUsedDefault())?'disabled="disabled"':'' ?> />
                 </td>
                 <td class="scope-label"><?php echo !Mage::app()->isSingleStoreMode() ? Mage::helper('adminhtml')->__('[STORE VIEW]') : ''; ?></td>
                 <td class="value use-default">
                 <?php if($_product->getStoreId()): ?>
-                    <input id="sample_title_default" type="checkbox" id="use_default[]" value="samples_title" onclick="toggleValueElements(this, this.parentNode.parentNode)" <?php echo $this->getUsedDefault()?'checked="checked"':'' ?> />
+                    <input id="sample_title_default" type="checkbox" name="use_default[]" value="samples_title" onclick="toggleValueElements(this, this.parentNode.parentNode)" <?php echo $this->getUsedDefault()?'checked="checked"':'' ?> />
                     <label class="normal" for="sample_title_default">Use Default Value</label>
                 <?php endif; ?>
                 </td>
@@ -54,7 +54,7 @@
     <br />
     <div class="grid">
         <div class="hor-scroll">
-            <table class="data border">
+            <table cellspacing="0" class="data border">
                 <col />
                 <col width="1" />
                 <col width="1" />
@@ -83,16 +83,16 @@
 //<![CDATA[>
 var sampleTemplate = '<tr>'+
                         '<td>'+
-                            '<input type="hidden" class="__delete__" id="downloadable[sample][{{id}}][is_delete]" value="" />'+
-                            '<input type="hidden" id="downloadable[sample][{{id}}][sample_id]" value="{{sample_id}}" />'+
-                            '<input type="text" class="required-entry input-text" id="downloadable[sample][{{id}}][title]" value="{{title}}" />'+
-                            '<?php echo $_product->getStoreId()?'<br /><input type="checkbox" id="downloadable_sample_{{id}}_title" id="downloadable[sample][{{id}}][use_default_title]" value="1" /><label class="normal" for="downloadable_sample_{{id}}_title">Use Default Value</label>':'' ?>'+
+                            '<input type="hidden" class="__delete__" name="downloadable[sample][{{id}}][is_delete]" value="" />'+
+                            '<input type="hidden" name="downloadable[sample][{{id}}][sample_id]" value="{{sample_id}}" />'+
+                            '<input type="text" class="required-entry input-text" name="downloadable[sample][{{id}}][title]" value="{{title}}" />'+
+                            '<?php echo $_product->getStoreId()?'<br /><input type="checkbox" id="downloadable_sample_{{id}}_title" name="downloadable[sample][{{id}}][use_default_title]" value="1" /><label class="normal" for="downloadable_sample_{{id}}_title">Use Default Value</label>':'' ?>'+
                         '</td>'+
                         '<td>'+
                             '<div class="files-wide">'+
                                 '<div class="row a-right">'+
-                                    '<label for="downloadable_sample_{{id}}_file_type" class="a-left"><input type="radio" class="radio validate-one-required-by-name" id="downloadable_sample_{{id}}_file_type" id="downloadable[sample][{{id}}][type]" value="file"{{file_checked}} /> File:</label>'+
-                                    '<input type="hidden" class="validate-downloadable-file" id="downloadable_sample_{{id}}_file_save" id="downloadable[sample][{{id}}][file]" value="{{file_save}}" />'+
+                                    '<label for="downloadable_sample_{{id}}_file_type" class="a-left"><input type="radio" class="radio validate-one-required-by-name" id="downloadable_sample_{{id}}_file_type" name="downloadable[sample][{{id}}][type]" value="file"{{file_checked}} /> File:</label>'+
+                                    '<input type="hidden" class="validate-downloadable-file" id="downloadable_sample_{{id}}_file_save" name="downloadable[sample][{{id}}][file]" value="{{file_save}}" />'+
                                     '<?php echo $this->getBrowseButtonHtml(); ?>'+
                                     '<?php echo $this->getDeleteButtonHtml(); ?>'+
                                     '<div id="downloadable_sample_{{id}}_file" class="uploader a-left">' +
@@ -102,7 +102,7 @@ var sampleTemplate = '<tr>'+
                                     '</div>'+
                                 '</div>'+
                                 '<div class="row">'+
-                                    '<label for="downloadable_sample_{{id}}_url_type"><input type="radio" class="radio validate-one-required-by-name" id="downloadable_sample_{{id}}_url_type" id="downloadable[sample][{{id}}][type]" value="url"{{url_checked}} /> URL:</label> <input type="text" class="validate-downloadable-url input-text" id="downloadable[sample][{{id}}][sample_url]" value="{{sample_url}}" />'+
+                                    '<label for="downloadable_sample_{{id}}_url_type"><input type="radio" class="radio validate-one-required-by-name" id="downloadable_sample_{{id}}_url_type" name="downloadable[sample][{{id}}][type]" value="url"{{url_checked}} /> URL:</label> <input type="text" class="validate-downloadable-url input-text" name="downloadable[sample][{{id}}][sample_url]" value="{{sample_url}}" />'+
                                 '</div>'+
                                 '<div>'+
                                     '<span id="downloadable_sample_{{id}}_container"></span>'+
@@ -110,7 +110,7 @@ var sampleTemplate = '<tr>'+
                             '</div>'+
 
                         '</td>'+
-                        '<td class="a-center"><input type="text" id="downloadable[sample][{{id}}][sort_order]" value="{{sort_order}}" class="input-text sort" /></td>'+
+                        '<td class="a-center"><input type="text" name="downloadable[sample][{{id}}][sort_order]" value="{{sort_order}}" class="input-text sort" /></td>'+
                         '<td>'+
                             '<button type="button" class="scalable delete icon-btn delete-sample-item"><span><span><span>Delete</span></span></span></button>'+
                         '</td>'+

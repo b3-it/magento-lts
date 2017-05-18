@@ -41,7 +41,7 @@
         	<?php if($_option->getSelections()):?>
             <?php foreach ($_option->getSelections() as $_selection): ?>    
             <?php if(!$_selection->getStockItem()->getIsInStock()):?>
-            	<input type="hidden" id="out_of_stock_items[]" value="<?php echo $_selection->getSelectionId()?>" /> 
+            	<input type="hidden" name="out_of_stock_items[]" value="<?php echo $_selection->getSelectionId()?>" /> 
             <?php endif;?>           
         	<?php endforeach; ?>
         	<?php endif;?>

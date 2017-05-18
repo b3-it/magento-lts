@@ -29,7 +29,7 @@
         <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Entity Attributes'); ?></h4>
     </div>
     <form id="export_filter_form" action="<?php echo $this->getUrl('*/*/export') ?>" method="post">
-        <input id="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
+        <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
         <div id="export_filter_grid_container" class="fieldset"><!-- --></div>
     </form>
     <div class="a-right">

@@ -37,8 +37,8 @@
 //<![CDATA[
     opFile<?php echo $_rand; ?> = {
         initializeFile: function(inputBox) {
-            this.inputFile = inputBox.select('input[id="<?php echo $_fileName; ?>"]')[0];
-            this.inputFileAction = inputBox.select('input[id="<?php echo $_fieldNameAction; ?>"]')[0];
+            this.inputFile = inputBox.select('input[name="<?php echo $_fileName; ?>"]')[0];
+            this.inputFileAction = inputBox.select('input[name="<?php echo $_fieldNameAction; ?>"]')[0];
             this.fileNameBox = inputBox.up('dd').select('.<?php echo $_fileNamed ?>')[0];
         },
 
@@ -88,8 +88,8 @@
         <?php endif; ?>
     <?php endif; ?>
     <div class="input-box" <?php echo $_fileExists ? 'style="display:none"' : '' ?>>
-        <input type="file" id="<?php echo $_fileName; ?>" class="product-custom-option<?php echo $_option->getIsRequire() ? ' required-entry' : '' ?>" <?php echo $_fileExists ? 'disabled="disabled"' : '' ?> onchange="opConfig.reloadPrice()" />
-        <input type="hidden" id="<?php echo $_fieldNameAction; ?>" value="<?php echo $_fieldValueAction; ?>" />
+        <input type="file" name="<?php echo $_fileName; ?>" class="product-custom-option<?php echo $_option->getIsRequire() ? ' required-entry' : '' ?>" <?php echo $_fileExists ? 'disabled="disabled"' : '' ?> onchange="opConfig.reloadPrice()" />
+        <input type="hidden" name="<?php echo $_fieldNameAction; ?>" value="<?php echo $_fieldValueAction; ?>" />
         <?php if ($_option->getFileExtension()): ?>
         <p class="no-margin"><?php echo Mage::helper('catalog')->__('Allowed file extensions to upload')?>: <strong><?php echo $_option->getFileExtension() ?></strong></p>
         <?php endif; ?>

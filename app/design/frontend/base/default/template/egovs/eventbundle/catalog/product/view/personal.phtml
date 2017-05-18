@@ -40,7 +40,7 @@
             </label>
         </div>
         <div class="option-block-elements">
-            <input type="text" id="personal_options[<?php echo($field->getId())?>]" class="input-text product-custom-option <?php echo $field->getRequired() ? ' required-entry' : '' ?> <?php echo $field->getMaxLength() ? ' validate-length maximum-length-'.$field->getMaxLength() : '' ?> product-custom-option" id="options[<?php echo $field->getId() ?>]" value="<?php echo $this->escapeHtml($this->getDefaultValue()) ?>" id="options_<?php echo($field->getId())?>_text" >
+            <input type="text" name="personal_options[<?php echo($field->getId())?>]" class="input-text product-custom-option <?php echo $field->getRequired() ? ' required-entry' : '' ?> <?php echo $field->getMaxLength() ? ' validate-length maximum-length-'.$field->getMaxLength() : '' ?> product-custom-option" name="options[<?php echo $field->getId() ?>]" value="<?php echo $this->escapeHtml($this->getDefaultValue()) ?>" id="options_<?php echo($field->getId())?>_text" >
           <?php if ($field->getMaxLength()): ?>
             <p class="note">
                 <?php echo Mage::helper('catalog')->__('Maximum number of characters:')?>

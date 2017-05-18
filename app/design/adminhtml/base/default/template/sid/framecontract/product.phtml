@@ -32,9 +32,9 @@
 <form id="editForm" method="post" action="<?php echo $this->getSaveUrl();?>">
 <div class="content-header">
 
-<input id="form_key" type="hidden" value="<?php echo $this->getFormKey()?>" />
-<input id="group" type="hidden" value="<?php echo $this->getGroupId()?>" />
-<table>
+<input name="form_key" type="hidden" value="<?php echo $this->getFormKey()?>" />
+<input name="group" type="hidden" value="<?php echo $this->getGroupId()?>" />
+<table cellspacing="0">
     <tr>
         <td style="width:50%;"><h3 class="icon-head head-products"><?php echo Mage::helper('framecontract')->__('Manage Visibility of Products') ?></h3></td>
         <td class="a-right">

@@ -53,8 +53,8 @@
     </div>
     <fieldset id="<?php echo $this->getHtmlId() ?>">
         <legend><?php echo Mage::helper('catalog')->__('Super product attributes configuration') ?></legend>
-        <input type="hidden" id="<?php echo $this->getHtmlId() ?>_save_links" id="configurable_products_data" value=""/>
-        <input type="hidden" id="<?php echo $this->getHtmlId() ?>_save_attributes" id="configurable_attributes_data" />
+        <input type="hidden" id="<?php echo $this->getHtmlId() ?>_save_links" name="configurable_products_data" value=""/>
+        <input type="hidden" id="<?php echo $this->getHtmlId() ?>_save_attributes" name="configurable_attributes_data" />
 
         <ul class="messages">
             <li class="notice-msg">
@@ -150,4 +150,4 @@ Validation.add(
 )
 </script>
 
-<div><input type="hidden" id="affect_configurable_product_attributes" value="1" /></div>
+<div><input type="hidden" name="affect_configurable_product_attributes" value="1" /></div>

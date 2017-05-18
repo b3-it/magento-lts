@@ -12,7 +12,7 @@
     <div class="add-to-cart<?php if($_product->isGrouped()): ?> background-transparent<?php endif; ?>">
         <?php if(!$_product->isGrouped()): ?>
             <label for="qty"><?php echo $this->__('Qty:') ?>:</label>
-            <input type="text" inputmode="numeric" pattern="[0-9]*" id="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+            <input type="text" inputmode="numeric" pattern="[0-9]*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
         <?php endif; ?>
             <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart<?php if($_product->isGrouped()): ?> button-full-width<?php endif; ?>" onclick="productAddToCartForm.submit(this)">
                 <span class="default-font">

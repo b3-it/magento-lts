@@ -26,7 +26,7 @@
 ?>
 <?php if( $this->getRating() && $this->getRating()->getSize()): ?>
     <div class="product-review-box">
-        <table id="product-review-table">
+        <table cellspacing="0" id="product-review-table">
             <thead>
                 <tr>
                     <th>&nbsp;</th>
@@ -45,7 +45,7 @@
                 <?php $_iterator = 1; ?>
                 <?php $_options = ( $_rating->getRatingOptions() ) ? $_rating->getRatingOptions() : $_rating->getOptions() ?>
                 <?php foreach ($_options as $_option): ?>
-                    <td<?php if($_iterator == 5): ?> class="last"<?php endif; ?>><input type="radio" id="ratings[<?php echo ( $_rating->getVoteId() ) ? $_rating->getVoteId() : $_rating->getId() ?>]" id="<?php echo $this->escapeHtml($_rating->getRatingCode()) ?>_<?php echo $_option->getValue() ?>" value="<?php echo $_option->getId() ?>" <?php if( $this->isSelected($_option, $_rating)): ?>checked="checked"<?php endif; ?> /></td>
+                    <td<?php if($_iterator == 5): ?> class="last"<?php endif; ?>><input type="radio" name="ratings[<?php echo ( $_rating->getVoteId() ) ? $_rating->getVoteId() : $_rating->getId() ?>]" id="<?php echo $this->escapeHtml($_rating->getRatingCode()) ?>_<?php echo $_option->getValue() ?>" value="<?php echo $_option->getId() ?>" <?php if( $this->isSelected($_option, $_rating)): ?>checked="checked"<?php endif; ?> /></td>
                 <?php $_iterator++ ?>
                 <?php endforeach; ?>
                 </tr>
@@ -53,7 +53,7 @@
             <?php endforeach; ?>
             </tbody>
         </table>
-        <input type="hidden" id="validate_rating" class="validate-rating" value="" />
+        <input type="hidden" name="validate_rating" class="validate-rating" value="" />
     </div>
 <script type="text/javascript">
 //<![CDATA[

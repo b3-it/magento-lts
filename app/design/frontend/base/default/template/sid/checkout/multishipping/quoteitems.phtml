@@ -95,7 +95,7 @@
                 <td><?php echo $this->htmlEscape($_item->getQty()) ?>
                 	<input type="hidden" id="qty_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getQty()) ?>"  />
                  	<input type="hidden" id="adr_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getAddressId()) ?>"  />
-                 	<input type="hidden" id="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->htmlEscape($_item->getQty()) ?>" size="2" class="input-text qty" />
+                 	<input type="hidden" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->htmlEscape($_item->getQty()) ?>" size="2" class="input-text qty" />
                  </td>
                 <td><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable'); else: echo $this->getAddressesHtml($_item->getAddressId()); endif; ?></td>
                 <td><button onclick="putbackItem(this,<?php echo $_item->getQuoteItemId() ?>);return;" class="button" type="reset"><span><?php echo $this->__('Unassign Address')?></span></button></td>

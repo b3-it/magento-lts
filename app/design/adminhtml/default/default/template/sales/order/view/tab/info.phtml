@@ -31,7 +31,7 @@
         <?php echo $this->getChildHtml('order_messages') ?>
     </div>
     <?php echo $this->getChildHtml('order_info') ?>
-    <input type="hidden" id="order_id" value="<?php echo $_order->getId() ?>"/>
+    <input type="hidden" name="order_id" value="<?php echo $_order->getId() ?>"/>
     <?php if ($_order->getIsVirtual()): ?>
     <div class="box-right">
     <?php else: ?>
@@ -105,15 +105,15 @@
         <div class="entry-edit-head"><h4><?php echo $this->__('Printing Notes') ?></h4></div>
             <fieldset>
                 <form id="printing_note" method="POST" action="<?php echo $this->getUrl('adminhtml/sales_invoice_printingnote/save');?>">
-                    <input type="hidden" value="<?php echo $this->getOrder()->getId()?>" id="order_id" />
+                    <input type="hidden" value="<?php echo $this->getOrder()->getId()?>" name="order_id" />
                     <span class="field-row">
                         <label class="normal" for="printnote1"><?php echo Mage::helper('sales')->__('Printing Note 1') ?></label>
-                        <input type="text" id="printnote1" id="printnote1" value="<?php echo $this->getOrder()->getPrintnote1();?>" style="width:99%;" />
+                        <input type="text" id="printnote1" name="printnote1" value="<?php echo $this->getOrder()->getPrintnote1();?>" style="width:99%;" />
                     </span>
     
                     <span class="field-row">
                         <label class="normal" for="printnote2"><?php echo Mage::helper('sales')->__('Printing Note 2') ?></label>
-                        <input type="text" id="printnote2" id="printnote2" value="<?php echo $this->getOrder()->getPrintnote2();?>" style="width:99%;" />
+                        <input type="text" id="printnote2" name="printnote2" value="<?php echo $this->getOrder()->getPrintnote2();?>" style="width:99%;" />
                     </span>
                     <div class="f-right">
                         <button class="scalable save" type="button" id="submit_printingnote_button">

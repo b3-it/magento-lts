@@ -33,17 +33,17 @@
 
         <div class="action-select">
             <label for="action_type_select"><?php echo $this->__('1. Please select type of the action:'); ?></label>
-            <select id="action_type_select" id="action_type_product" class="select" onchange="actionHelper.showActionByType();">
+            <select id="action_type_select" name="action_type_product" class="select" onchange="actionHelper.showActionByType();">
                 <option value="product"><?php echo $this->__('Product'); ?></option>
                 <option value="cms"><?php echo $this->__('CMS Page'); ?></option>
                 <option value="category"><?php echo $this->__('Category'); ?></option>
             </select>
         </div>
-        <form id="image_action_form" id="image_action_form">
+        <form name="image_action_form" id="image_action_form">
 
             <div id="action_selector_cms" class="action">
                 <p><?php echo $this->__('2. Please select a page'); ?>:</p>
-                <select id="action_type_cms" id="action_type_cms" class="select"">
+                <select id="action_type_cms" name="action_type_cms" class="select"">
                     <option value="0"></option>
                     <?php $pages = Mage::getResourceModel('xmlconnect/cms_page_collection')->toOptionIdArray(); ?>
                     <?php if (!count($pages)):?>
@@ -60,7 +60,7 @@
                     <img src="<?php echo $this->getSkinUrl('images/ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Loading...')) ?>" class="v-middle"/>
                 </span>
                 <?php $defProductSearch = $this->__('2. Type Product Name') ?>
-                <input id="xmlconnect_product_search" id="query" type="text" class="input-text" value="<?php echo $defProductSearch ?>" onfocus="if(this.value=='<?php echo $defProductSearch ?>')this.value=''; " onblur="if(this.value=='')this.value='<?php echo $defProductSearch ?>';" />
+                <input id="xmlconnect_product_search" name="query" type="text" class="input-text" value="<?php echo $defProductSearch ?>" onfocus="if(this.value=='<?php echo $defProductSearch ?>')this.value=''; " onblur="if(this.value=='')this.value='<?php echo $defProductSearch ?>';" />
                 <div id="xmlconnect_product_search_autocomplete" class="autocomplete"></div>
             </div>
 
@@ -69,7 +69,7 @@
                     <img src="<?php echo $this->getSkinUrl('images/ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Loading...')) ?>" class="v-middle"/>
                 </span>
                 <?php $defCategorySearch = $this->__('2. Type Category Name') ?>
-                <input id="xmlconnect_category_search" id="query" type="text" class="input-text" value="<?php echo $defCategorySearch ?>" onfocus="if(this.value=='<?php echo $defCategorySearch ?>')this.value=''; " onblur="if(this.value=='')this.value='<?php echo $defCategorySearch ?>';" />
+                <input id="xmlconnect_category_search" name="query" type="text" class="input-text" value="<?php echo $defCategorySearch ?>" onfocus="if(this.value=='<?php echo $defCategorySearch ?>')this.value=''; " onblur="if(this.value=='')this.value='<?php echo $defCategorySearch ?>';" />
                 <div id="xmlconnect_category_search_autocomplete" class="autocomplete"></div>
             </div>
 

@@ -29,7 +29,7 @@
  * Template for Mage_Adminhtml_Block_Widget_Accordion
  */
 ?>
-<dl id="tab_content_<?php echo $this->getHtmlId() ?>" id="tab_content_<?php echo $this->getHtmlId() ?>" class="accordion">
+<dl id="tab_content_<?php echo $this->getHtmlId() ?>" name="tab_content_<?php echo $this->getHtmlId() ?>" class="accordion">
 <?php foreach ($this->getItems() as $_item): ?>
     <?php echo $this->getChildHtml($_item->getId()) ?>
 <?php endforeach ?>

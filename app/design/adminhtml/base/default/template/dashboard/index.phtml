@@ -89,7 +89,7 @@ function toggleCal(id) {
 </script>
 <?php endif; ?>
 <div class="content-header">
-    <table>
+    <table cellspacing="0">
         <tr>
             <td><h3 class="head-dashboard"><?php echo $this->__('Dashboard') ?></h3></td>
         </tr>
@@ -97,7 +97,7 @@ function toggleCal(id) {
 </div>
 <div class="dashboard-container">
     <?php echo $this->getChildHtml('store_switcher') ?>
-    <table style="width:100%;">
+    <table cellspacing="25" width="100%">
         <tr>
             <td><?php echo $this->getChildHtml('sales') ?>
                 <div class="entry-edit">

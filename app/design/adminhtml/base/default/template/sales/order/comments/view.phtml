@@ -28,14 +28,14 @@
 <div id="comments_block">
     <span class="field-row">
         <label class="normal" for="history_comment"><?php echo Mage::helper('sales')->__('Comment Text') ?></label>
-        <textarea id="comment[comment]" rows="3" cols="5" style="height:6em; width:99%;" id="history_comment"></textarea>
+        <textarea name="comment[comment]" rows="3" cols="5" style="height:6em; width:99%;" id="history_comment"></textarea>
     </span>
     <div class="f-left">
         <?php if ($this->canSendCommentEmail()): ?>
-            <input id="comment[is_customer_notified]" type="checkbox" id="history_notify" value="1" />
+            <input name="comment[is_customer_notified]" type="checkbox" id="history_notify" value="1" />
             <label class="normal" for="history_notify"><?php echo Mage::helper('sales')->__('Notify Customer by Email') ?></label><br />
         <?php endif; ?>
-        <input id="comment[is_visible_on_front]" type="checkbox" id="history_visible" value="1" /><label class="normal" for="history_visible"> <?php echo Mage::helper('sales')->__('Visible on Frontend') ?></label>
+        <input name="comment[is_visible_on_front]" type="checkbox" id="history_visible" value="1" /><label class="normal" for="history_visible"> <?php echo Mage::helper('sales')->__('Visible on Frontend') ?></label>
     </div>
     <div class="f-right">
         <?php echo $this->getChildHtml('submit_button') ?>

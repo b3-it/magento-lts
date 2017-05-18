@@ -3,7 +3,7 @@
     <ol class="checkout-agreements">
       <?php foreach($this->getItems() as $item){?>
         <li>
-            <input class="checkbox" type="checkbox" id="agreementtext[<?php echo $item['value']?>]" id="agreementtext[<?php echo $item['value']?>]"value="" />
+            <input class="checkbox" type="checkbox" name="agreementtext[<?php echo $item['value']?>]" id="agreementtext[<?php echo $item['value']?>]"value="" />
             <label for="agreementtext[<?php echo $item['value']?>]">
                 <?php echo $item['content'] ?>
                 <span class="required">*</span>

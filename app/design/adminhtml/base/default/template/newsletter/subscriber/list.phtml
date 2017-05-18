@@ -25,7 +25,7 @@
  */
 ?>
 <div class="content-header">
-    <table>
+    <table cellspacing="0">
         <tr>
             <td style="width:50%;"><h3><?php echo Mage::helper('newsletter')->__('Newsletter Subscribers') ?></h3></td>
         </tr>
@@ -36,7 +36,7 @@
 </div>
 <?php if(count($this->getQueueAsOptions())>0 && $this->getShowQueueAdd()): ?>
 <div class="form-buttons">
-    <select id="queueList" id="queue">
+    <select id="queueList" name="queue">
     <?php foreach ($this->getQueueAsOptions() as $_queue): ?>
         <option value="<?php echo $_queue['value'] ?>"><?php echo $_queue['label'] ?> #<?php echo $_queue['value'] ?></option>
     <?php endforeach; ?>

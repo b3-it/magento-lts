@@ -1,5 +1,5 @@
 <p class="switcher"><label for="store_switcher"><?php echo $this->__('Choose Customer Group') ?></label>
-<select id="group_switcher" id="group_switcher" onchange="return switchGroup(this);">
+<select name="group_switcher" id="group_switcher" onchange="return switchGroup(this);">
 <!--  <option value=""> All Groups </option>-->
 <?php foreach ($this->getCustomerGroups() as $key => $value) {?>
 <option value="<?php echo $key?>" <?php if($key == $this->getSelectedGroup()) echo 'selected="selected"'?>> <?php  echo $value?> </option>

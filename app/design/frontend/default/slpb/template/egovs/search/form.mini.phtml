@@ -29,7 +29,7 @@
     <legend><?php echo $this->__('Search Site') ?></legend>
     <label for="search"></label>
 
-    <input id="search" type="text" class="input-text" id="<?php echo $this->helper('catalogSearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogSearch')->getEscapedQueryText() ?>" />
+    <input id="search" type="text" class="input-text" name="<?php echo $this->helper('catalogSearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogSearch')->getEscapedQueryText() ?>" />
     
     <button type="submit" class="button"><span><?php echo $this->__('Search ') ?></span></button>
     <div id="search_autocomplete" class="search-autocomplete"></div>

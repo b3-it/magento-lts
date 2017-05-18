@@ -70,10 +70,10 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                         </button>
                     <?php endif; ?>
 
-                        <button class="button btn-empty egov-float-left" type="button"  id="update_cart_action" onclick="setLocation('<?php echo $this->getDeleteAllUrl()?>')" data-cart-empty value="empty_cart" title="<?php echo $this->quoteEscape($this->__('Empty Cart')); ?>" id="empty_cart_button">
+                        <button class="button btn-empty egov-float-left" type="button"  name="update_cart_action" onclick="setLocation('<?php echo $this->getDeleteAllUrl()?>')" data-cart-empty value="empty_cart" title="<?php echo $this->quoteEscape($this->__('Empty Cart')); ?>" id="empty_cart_button">
                             <?php echo $this->__('Empty Cart'); ?>
                         </button>
-                        <button class="button btn-update" type="submit" id="update_cart_action" data-cart-item-update value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>">
+                        <button class="button btn-update" type="submit" name="update_cart_action" data-cart-item-update value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>">
                             <?php echo $this->__('Update Shopping Cart'); ?>
                         </button>
 

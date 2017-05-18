@@ -26,9 +26,9 @@
     $types_flash = array('flv', 'avi');
     $types_html5 = array('ogg', 'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a');
 
-    $thumb_width  = 90;  // Breite des Vorschaubildes fï¿½r Videos
-    $thumb_height = 90;  // Hï¿½he des Vorschaubildes fï¿½r Video
-    $pre_image    = 90;  // Grï¿½ï¿½e des Vorschaubildes fï¿½r normale Bilder
+    $thumb_width  = 90;  // Breite des Vorschaubildes für Videos
+    $thumb_height = 90;  // Höhe des Vorschaubildes für Video
+    $pre_image    = 90;  // Größe des Vorschaubildes für normale Bilder
 
 ?>
 
@@ -67,12 +67,12 @@
                                 class="egov-product-flash"
                                 width="<?php echo $thumb_width; ?>"
                                 height="<?php echo $thumb_height; ?>">
-                            <param id="movie" value="<?php echo $js_url; ?>flash/player_flv.swf" />
-                            <param id="wmode" value="transparent" />
-                            <param id="quality" value="high" />
-                            <param id="allowFullScreen" value="true" />
-                            <param id="allowScriptAccess" value="always" />
-                            <param id="flashvars" value="flv=<?php echo $full_url; ?>" />
+                            <param name="movie" value="<?php echo $js_url; ?>flash/player_flv.swf" />
+                            <param name="wmode" value="transparent" />
+                            <param name="quality" value="high" />
+                            <param name="allowFullScreen" value="true" />
+                            <param name="allowScriptAccess" value="always" />
+                            <param name="flashvars" value="flv=<?php echo $full_url; ?>" />
                         </object>
                       <?php elseif ( in_array($file_info['extension'], $types_html5) ): ?>
                         <video id="egov_product_video_<?php echo $i; ?>"

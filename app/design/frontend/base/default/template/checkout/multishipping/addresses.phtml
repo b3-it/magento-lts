@@ -38,8 +38,8 @@
             <h1><?php echo $this->__('Ship to Multiple Addresses') ?></h1>
             <button data-action="add-new-customer-address" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Enter a New Address')) ?>" class="button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><?php echo $this->__('Enter a New Address') ?></span></span></button>
         </div>
-        <input type="hidden" id="continue" value="0" id="can_continue_flag" />
-        <input type="hidden" id="new_address" value="0" id="add_new_address_flag" />
+        <input type="hidden" name="continue" value="0" id="can_continue_flag" />
+        <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
         <h2><?php echo $this->__('Please select shipping address for applicable items') ?></h2>
         <table class="data-table" id="multiship-addresses-table">
             <col />
@@ -70,7 +70,7 @@
                 <?php if ($_item->getQuoteItem()) :?>
                 <tr>
                     <td><?php echo $this->getItemHtml($_item->getQuoteItem())?></td>
-                    <td><input type="text" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" id="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" /></td>
+                    <td><input type="text" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" /></td>
                     <td><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.'); else: echo $this->getAddressesHtmlSelect($_item, $_index); endif; ?></td>
                     <td class="a-center"><a href="<?php echo $this->getItemDeleteUrl($_item) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>" class="btn-remove2"><?php echo $this->__('Remove Item') ?></a></td>
                 </tr>

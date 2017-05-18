@@ -30,7 +30,7 @@
         <div><?php echo Mage::helper('sales')->__('Add Order Comments') ?></div>
         <span class="field-row">
             <label class="normal" for="history_status"><?php echo Mage::helper('sales')->__('Status') ?></label><br/>
-            <select id="history[status]" class="select" id="history_status">
+            <select name="history[status]" class="select" id="history_status">
             <?php foreach ($this->getStatuses() as $_code=>$_label): ?>
                 <option value="<?php echo $_code ?>"<?php if($_code==$this->getOrder()->getStatus()): ?> selected="selected"<?php endif; ?>><?php echo $_label ?></option>
             <?php endforeach; ?>
@@ -38,13 +38,13 @@
         </span>
         <span class="field-row">
             <label class="normal" for="history_comment"><?php echo Mage::helper('sales')->__('Comment') ?></label>
-            <textarea id="history[comment]" rows="3" cols="5" style="height:6em; width:99%;" id="history_comment"></textarea>
+            <textarea name="history[comment]" rows="3" cols="5" style="height:6em; width:99%;" id="history_comment"></textarea>
         </span>
         <div class="f-left">
             <?php if ($this->canSendCommentEmail()): ?>
-                <input id="history[is_customer_notified]" type="checkbox" id="history_notify" value="1" /><label class="normal" for="history_notify"> <?php echo Mage::helper('sales')->__('Notify Customer by Email') ?></label><br />
+                <input name="history[is_customer_notified]" type="checkbox" id="history_notify" value="1" /><label class="normal" for="history_notify"> <?php echo Mage::helper('sales')->__('Notify Customer by Email') ?></label><br />
             <?php endif; ?>
-            <input id="history[is_visible_on_front]" type="checkbox" id="history_visible" value="1" /><label class="normal" for="history_visible"> <?php echo Mage::helper('sales')->__('Visible on Frontend') ?></label>
+            <input name="history[is_visible_on_front]" type="checkbox" id="history_visible" value="1" /><label class="normal" for="history_visible"> <?php echo Mage::helper('sales')->__('Visible on Frontend') ?></label>
         </div>
         <div class="f-right">
             <?php echo $this->getChildHtml('submit_button') ?>

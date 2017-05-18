@@ -47,18 +47,18 @@
 <form action="<?php echo $this->getSaveUrl() ?>" method="post" id="newsletter_template_edit_form">
     <?php echo $this->getBlockHtml('formkey')?>
     <div class="no-display">
-        <input type="hidden" id="change_flag_element" id="_change_type_flag" value="" />
-        <input type="hidden" id="save_as_flag" id="_save_as_flag" value="<?php echo $this->getSaveAsFlag() ?>" />
+        <input type="hidden" id="change_flag_element" name="_change_type_flag" value="" />
+        <input type="hidden" id="save_as_flag" name="_save_as_flag" value="<?php echo $this->getSaveAsFlag() ?>" />
     </div>
     <?php echo $this->getForm() ?>
 </form>
 <form action="<?php echo $this->getPreviewUrl() ?>" method="post" id="newsletter_template_preview_form" target="_blank">
     <?php echo $this->getBlockHtml('formkey')?>
     <div class="no-display">
-        <input type="hidden" id="preview_type" id="type" value="<?php echo $this->isTextType()?1:2 ?>" />
-        <input type="hidden" id="preview_text" id="text" value="" />
-        <input type="hidden" id="preview_styles" id="styles" value="" />
-        <input type="hidden" id="preview_id" id="id" value="" />
+        <input type="hidden" id="preview_type" name="type" value="<?php echo $this->isTextType()?1:2 ?>" />
+        <input type="hidden" id="preview_text" name="text" value="" />
+        <input type="hidden" id="preview_styles" name="styles" value="" />
+        <input type="hidden" id="preview_id" name="id" value="" />
     </div>
 </form>
 <script type="text/javascript">

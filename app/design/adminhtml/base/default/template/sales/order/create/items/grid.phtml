@@ -33,7 +33,7 @@
 <?php $_items = $this->getItems() ?>
 <?php if (empty($_items)): ?>
     <div class="grid" id="order-items_grid">
-        <table class="data order-tables">
+        <table cellspacing="0" class="data order-tables">
             <col />
             <col width="100" />
             <col width="40" />
@@ -68,7 +68,7 @@
     </p>
     <?php endif; ?>
     <div class="grid" id="order-items_grid">
-        <table class="data order-tables">
+        <table cellspacing="0" class="data order-tables">
             <col />
             <col width="100" />
             <col width="100" />
@@ -216,9 +216,9 @@
                             <label class="normal" for="item_use_custom_price_<?php echo $_item->getId() ?>"><?php echo $this->helper('sales')->__('Custom Price') ?>*</label>
                             </div>
                             <?php endif; ?>
-                            <input id="item_custom_price_<?php echo $_item->getId() ?>" id="item[<?php echo $_item->getId() ?>][custom_price]" value="<?php echo sprintf("%.2f", $this->getOriginalEditablePrice($_item))?>"<?php if (!$_isCustomPrice): ?> style="display:none" disabled="disabled"<?php endif; ?> class="input-text item-price"/>
+                            <input id="item_custom_price_<?php echo $_item->getId() ?>" name="item[<?php echo $_item->getId() ?>][custom_price]" value="<?php echo sprintf("%.2f", $this->getOriginalEditablePrice($_item))?>"<?php if (!$_isCustomPrice): ?> style="display:none" disabled="disabled"<?php endif; ?> class="input-text item-price"/>
                         </td>
-                        <td><input id="item[<?php echo $_item->getId() ?>][qty]" class="input-text item-qty" value="<?php echo $_item->getQty()*1 ?>" maxlength="12" /></td>
+                        <td><input name="item[<?php echo $_item->getId() ?>][qty]" class="input-text item-qty" value="<?php echo $_item->getQty()*1 ?>" maxlength="12" /></td>
                         <td class="price">
 
 
@@ -304,7 +304,7 @@
                         </td>
                         <td class="price">
                             <?php echo $this->formatPrice(-$_item->getDiscountAmount()) ?><br />
-                            <input id="item_use_discount_<?php echo $_item->getId() ?>" id="item[<?php echo $_item->getId() ?>][use_discount]"<?php if (!$_item->getNoDiscount()): ?>checked="checked"<?php endif; ?> value="1" type="checkbox" />
+                            <input id="item_use_discount_<?php echo $_item->getId() ?>" name="item[<?php echo $_item->getId() ?>][use_discount]"<?php if (!$_item->getNoDiscount()): ?>checked="checked"<?php endif; ?> value="1" type="checkbox" />
                             <label for="item_use_discount_<?php echo $_item->getId() ?>" class="normal"><?php echo $this->helper('sales')->__('Apply') ?></label>
                         </td>
                         <td class="price">
@@ -395,7 +395,7 @@
 
                         </td>
                         <td class="last">
-                            <select id="item[<?php echo $_item->getId() ?>][action]" style="width:100px;">
+                            <select name="item[<?php echo $_item->getId() ?>][action]" style="width:100px;">
                                 <option value=""></option>
                                 <option value="remove"><?php echo $this->helper('sales')->__('Remove') ?></option>
                                 <?php if($this->getCustomerId() && $this->getMoveToCustomerStorage()): ?>
@@ -421,7 +421,7 @@
                 <?php endforeach; ?>
         </table>
     </div>
-    <table style="width:100%;">
+    <table cellspacing="0" width="100%">
         <col width="50%" />
         <col width="50%" />
         <tr>

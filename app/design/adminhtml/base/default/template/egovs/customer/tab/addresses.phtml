@@ -50,15 +50,15 @@
             </address>
             <div class="address-type">
             	<span class="address-type-line">
-			        <input type="radio" <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> value="<?php echo $_address->getId() ?>" id="address_item_base<?php echo $_address->getId() ?>" id="account[base_address]" title="<?php echo Mage::helper('customer')->__('Set as Base Address') ?>"<?php if($_address->getId()==$customer->getBaseAddress()): ?> checked="checked"<?php endif; ?>/>
+			        <input type="radio" <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> value="<?php echo $_address->getId() ?>" id="address_item_base<?php echo $_address->getId() ?>" name="account[base_address]" title="<?php echo Mage::helper('customer')->__('Set as Base Address') ?>"<?php if($_address->getId()==$customer->getBaseAddress()): ?> checked="checked"<?php endif; ?>/>
 			         &nbsp;<label for="address_item_base<?php echo $_address->getId() ?>"><?php echo Mage::helper('customer')->__('Base Address') ?></label>
 			    </span>
                 <span class="address-type-line">
-                    <input type="radio" <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> value="<?php echo $_address->getId() ?>" id="address_item_billing<?php echo $_address->getId() ?>" id="account[default_billing]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Billing Address')) ?>"<?php if($_address->getId()==$customer->getDefaultBilling()): ?> checked="checked"<?php endif; ?>/>
+                    <input type="radio" <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> value="<?php echo $_address->getId() ?>" id="address_item_billing<?php echo $_address->getId() ?>" name="account[default_billing]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Billing Address')) ?>"<?php if($_address->getId()==$customer->getDefaultBilling()): ?> checked="checked"<?php endif; ?>/>
                     &nbsp;<label for="address_item_billing<?php echo $_address->getId() ?>"><?php echo Mage::helper('customer')->__('Default Billing Address') ?></label>
                 </span>
                 <span class="address-type-line">
-                    <input type="radio"  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> value="<?php echo $_address->getId() ?>" id="address_item_shipping<?php echo $_address->getId() ?>" id="account[default_shipping]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Shipping Address')) ?>"<?php if($_address->getId()==$customer->getDefaultShipping()): ?> checked="checked"<?php endif; ?>/>
+                    <input type="radio"  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> value="<?php echo $_address->getId() ?>" id="address_item_shipping<?php echo $_address->getId() ?>" name="account[default_shipping]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Shipping Address')) ?>"<?php if($_address->getId()==$customer->getDefaultShipping()): ?> checked="checked"<?php endif; ?>/>
                     &nbsp;<label for="address_item_shipping<?php echo $_address->getId() ?>"><?php echo Mage::helper('customer')->__('Default Shipping Address') ?></label>
                 </span>
             </div>
@@ -82,15 +82,15 @@
         <address><?php echo Mage::helper('customer')->__('New Customer Address') ?></address>
         <div class="address-type">
         	<span class="address-type-line">
-                <input  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> type="radio" value="<?php echo $_templatePrefix ?>" id="address_item_base<?php echo $_templatePrefix ?>" id="account[base_address]" title="<?php echo Mage::helper('customer')->__('Set as Base Address') ?>" />
+                <input  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> type="radio" value="<?php echo $_templatePrefix ?>" id="address_item_base<?php echo $_templatePrefix ?>" name="account[base_address]" title="<?php echo Mage::helper('customer')->__('Set as Base Address') ?>" />
                 &nbsp;<label for="address_item_base<?php echo $_templatePrefix ?>"><?php echo Mage::helper('customer')->__('Base Address') ?></label>
             </span>
             <span class="address-type-line">
-                <input  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> type="radio" value="<?php echo $_templatePrefix ?>" id="address_item_billing<?php echo $_templatePrefix ?>" id="account[default_billing]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Billing Address')) ?>"/>
+                <input  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> type="radio" value="<?php echo $_templatePrefix ?>" id="address_item_billing<?php echo $_templatePrefix ?>" name="account[default_billing]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Billing Address')) ?>"/>
                 &nbsp;<label for="address_item_billing<?php echo $_templatePrefix ?>"><?php echo Mage::helper('customer')->__('Default Billing Address') ?></label>
             </span>
             <span class="address-type-line">
-                <input  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> type="radio" value="<?php echo $_templatePrefix ?>" id="address_item_shipping<?php echo $_templatePrefix ?>" id="account[default_shipping]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Shipping Address')) ?>"/>
+                <input  <?php if ($this->isReadonly()):?> disabled="disabled"<?php endif;?> type="radio" value="<?php echo $_templatePrefix ?>" id="address_item_shipping<?php echo $_templatePrefix ?>" name="account[default_shipping]" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Set as Default Shipping Address')) ?>"/>
                 &nbsp;<label for="address_item_shipping<?php echo $_templatePrefix ?>"><?php echo Mage::helper('customer')->__('Default Shipping Address') ?></label>
             </span>
         </div>
@@ -121,7 +121,7 @@
                         ->addValuesToNameSuffixElement($_address->getSuffix());
             ?>
             <?php echo $this->getForm()->getHtml() ?>
-            <input type="hidden" id="address[<?php echo $_address->getId() ?>][_deleted]" id="deleted_address_item_<?php echo $_address->getId() ?>" />
+            <input type="hidden" name="address[<?php echo $_address->getId() ?>][_deleted]" id="deleted_address_item_<?php echo $_address->getId() ?>" />
             </div>
             <?php endforeach; ?>
         <?php else: ?>
@@ -607,7 +607,7 @@ addressesModel.prototype = {
 
         if (data.length) {
             // Create visible selectbox 'region_id' and hidden 'region'
-            var html = '<select id="' + regionIdHtmlName + '" id="' + regionIdHtmlId + '" class="required-entry select" title="' + this.regionElement.title + '">';
+            var html = '<select name="' + regionIdHtmlName + '" id="' + regionIdHtmlId + '" class="required-entry select" title="' + this.regionElement.title + '">';
             for (var i in data){
                 if(data[i].label) {
                     html+= '<option value="'+data[i].value+'"';
@@ -619,7 +619,7 @@ addressesModel.prototype = {
             }
             html += '</select>';
 
-            html += '<input type="hidden" id="' + regionHtmlName + '" id="' + regionHtmlId + '"/>';
+            html += '<input type="hidden" name="' + regionHtmlName + '" id="' + regionHtmlId + '"/>';
 
             if (reqLabel) {
                 reqLabel.each(function(item){Element.show(item)});
@@ -628,8 +628,8 @@ addressesModel.prototype = {
             newInputId = regionIdHtmlId;
         } else {
             // Create visible text input 'region' and hidden 'region_id'
-            var html = '<input type="text" id="' + regionHtmlName + '" id="' + regionHtmlId + '" class="input-text" title="' + this.regionElement.title + '" />';
-            html += '<input type="hidden" id="' + regionIdHtmlName + '" id="' + regionIdHtmlId + '"/>';
+            var html = '<input type="text" name="' + regionHtmlName + '" id="' + regionHtmlId + '" class="input-text" title="' + this.regionElement.title + '" />';
+            html += '<input type="hidden" name="' + regionIdHtmlName + '" id="' + regionIdHtmlId + '"/>';
 
             if (reqLabel) {
                 reqLabel.each(function(item){Element.hide(item)});

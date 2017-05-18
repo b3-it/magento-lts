@@ -50,7 +50,7 @@
             <ul id="poll-answers">
                 <?php foreach( $poll_answers as $answer ): ?>
                 <li>
-                    <input type="radio" id="vote" class="radio poll_vote" id="vote_<?php echo $answer->getId() ?>" value="<?php echo $answer->getAnswerId() ?>" />
+                    <input type="radio" name="vote" class="radio poll_vote" id="vote_<?php echo $answer->getId() ?>" value="<?php echo $answer->getAnswerId() ?>" />
                     <span class="label"><label for="vote_<?php echo $answer->getId() ?>"><?php echo $this->escapeHtml($answer->getAnswerTitle()) ?></label></span>
                 </li>
                 <?php endforeach; ?>

@@ -50,19 +50,19 @@
         <?php foreach($wishlist as $item): ?>
             <tr>
                 <td>
-                    <input type="hidden" value="1" id="wishlist[<?php echo $item->getItemId() ?>]" />
+                    <input type="hidden" value="1" name="wishlist[<?php echo $item->getItemId() ?>]" />
                     <a href="<?php echo $this->getUrl('catalog/product/view/id/'.$item->getProduct()->getId()) ?>"><?php echo $this->escapeHtml($item->getProduct()->getName()) ?></a>
                 </td>
                 <td><?php echo $item->getStatus() ?></td>
-                <td><input type="checkbox" value="1" id="to_cart[<?php echo $item->getItemId() ?>]" class="checkbox" /></td>
-                <td><input type="checkbox" value="1" id="remove[<?php echo $item->getItemId() ?>]" class="checkbox" /></td>
+                <td><input type="checkbox" value="1" name="to_cart[<?php echo $item->getItemId() ?>]" class="checkbox" /></td>
+                <td><input type="checkbox" value="1" name="remove[<?php echo $item->getItemId() ?>]" class="checkbox" /></td>
             </tr>
         <?php endforeach ?>
         </tbody>
     </table>
     <div class="buttons-set">
         <a href="<?php echo Mage::getBaseUrl() ?>">&laquo; <?php echo $this->__('Continue Shopping') ?></a>
-        <input type="submit" value="<?php echo Mage::helper('core')->quoteEscape($this->__('Update')) ?>" class="input-button" id="do" />
+        <input type="submit" value="<?php echo Mage::helper('core')->quoteEscape($this->__('Update')) ?>" class="input-button" name="do" />
     </div>
 </form>
 <?php else: ?>

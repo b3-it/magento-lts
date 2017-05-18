@@ -60,7 +60,7 @@
                 </td>
                 <td>
                     <div style="margin: 6px 0 0 4px;">
-                        <input type="text" id="backup_name" id="backup_name" style="width: 318px;" maxlength="50"/>
+                        <input type="text" name="backup_name" id="backup_name" style="width: 318px;" maxlength="50"/>
                         <div class="notice-msg">Please use only letters (a-z or A-Z), numbers (0-9) or<br/> space in this field. Other characters are not allowed.</div>
                     </div>
                 </td>
@@ -122,14 +122,14 @@ function connectPrepare(form) {
 //-->
 </script>
 <form action="<?php echo $this->url('connectPreparePackagePost')?>" method="post" onsubmit="return connectPrepare(this)">
-    <input id="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
+    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
     <ul class="bare-list">
         <li>
             <span class="step-count">1</span> &nbsp; Search for modules via <a href="http://connect.magentocommerce.com/" target="Magento_Connect">Magento Connect</a>.
         </li>
         <li>
             <span class="step-count">2</span> &nbsp;
-            <label for="install_package_id">Paste extension key to install:</label> <input type="text" id="install_package_id" id="install_package_id" style="width:300px"/>
+            <label for="install_package_id">Paste extension key to install:</label> <input type="text" id="install_package_id" name="install_package_id" style="width:300px"/>
             <button type="submit">Install</button>
         </li>
     </ul>
@@ -144,13 +144,13 @@ function connectPrepare(form) {
     <h4>Direct package file upload</h4>
 </div>
 <form action="<?php echo $this->url('connectInstallPackageUpload')?>" method="post" target="connect_iframe" onsubmit="onSubmit(this)" enctype="multipart/form-data">
-    <input id="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
+    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
     <ul class="bare-list">
         <li><span class="step-count">1</span> &nbsp; Download or build package file.</li>
         <li>
             <span class="step-count">2</span> &nbsp; Upload package file:
             <label for="file"></label>
-            <input type="file" id="file" id="file"/>
+            <input type="file" id="file" name="file"/>
             <button type="submit">Upload</button>
         </li>
     </ul>
@@ -177,10 +177,10 @@ function connectPrepare(form) {
 <?php foreach ($packages as $channel=>$pkgs): ?>
 
 <form id="connect_packages_<?php echo $i ?>" class="connect-packages" action="<?php echo $this->url('connectPackagesPost')?>" method="post" target="connect_iframe">
-    <input id="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
+    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
     <div class="no-display">
-        <input type="hidden" id="ignore_local_modification" id="ignore_local_modification" value=""/>
-        <input type="hidden" id="form_id" value="connect_packages_<?php echo $i ?>"/>
+        <input type="hidden" id="ignore_local_modification" name="ignore_local_modification" value=""/>
+        <input type="hidden" name="form_id" value="connect_packages_<?php echo $i ?>"/>
     </div>
     <p class="nm"><button type="button" onclick="formSubmit('connect_packages_<?php echo $i ?>')" class="f-right">Commit Changes</button></p>
     <h2 class="page-head">Channel: <?php echo $channelConfig->getChannelLabel($channel); ?></h2>
@@ -215,7 +215,7 @@ function connectPrepare(form) {
                 <td class="first"><?php echo $pkgName?></td>
                 <td class="a-center"><?php echo $pkg['version'].' ('.$pkg['stability'].')'?>&nbsp;</td>
                 <?php if (!empty($_GET['updates'])): ?><td class="a-center"><?php echo $pkg['upgrade_latest']?>&nbsp;</td><?php endif; ?>
-                <td><select class="select" id="actions[<?php echo $channel.'|'.$pkgName ?>]">
+                <td><select class="select" name="actions[<?php echo $channel.'|'.$pkgName ?>]">
                     <option selected="selected"></option>
                     <?php if(isset($pkg['actions']) && is_array($pkg['actions'])): ?>
                         <?php foreach ($pkg['actions'] as $k=>$v): ?>
@@ -251,7 +251,7 @@ $$('#connect_packages_' + <?php echo $i?> + ' select').each(function(el){el.valu
 
 <?php echo $this->template('connect/iframe.phtml') ?>
 
-<a id="connect_iframe_result"></a>
+<a name="connect_iframe_result"></a>
 <div id="connect_iframe_success" style="display:none">
     <?php $this->set('messages', array('success'=>array('Procedure completed. Please check the output frame for useful information and refresh the page to see changes.'))) ?>
     <?php echo $this->template('messages.phtml') ?>

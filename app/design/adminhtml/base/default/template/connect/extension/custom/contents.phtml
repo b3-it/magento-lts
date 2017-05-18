@@ -46,7 +46,7 @@
                 <tr id="contents_template" style="display:none">
 <?php function showContentsTemplate($self, $_i=0) { ?>
                     <td style="margin-bottom:5px;">
-                        <select id="contents[target][]" style="width:170px">
+                        <select name="contents[target][]" style="width:170px">
                             <optgroup label="Magento">
                             <?php foreach ($self->getMageTargets() as $_value=>$_label): ?>
                                 <option value="<?php echo $_value ?>" <?php echo $self->getSelected('contents/target/'.$_i, $_value) ?>><?php echo $_label ?></option>
@@ -54,16 +54,16 @@
                             </optgroup>
                         </select>
                      </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:150px" id="contents[path][]" value="<?php echo $self->getValue('contents/path/'.$_i) ?>"/>
+                        <input class="input-text" style="width:150px" name="contents[path][]" value="<?php echo $self->getValue('contents/path/'.$_i) ?>"/>
                      </td><td style="margin-bottom:5px;">
-                        <select id="contents[type][]" style="width:100px">
+                        <select name="contents[type][]" style="width:100px">
                             <option value="file" <?php echo $self->getSelected('contents/type/'.$_i, 'file') ?>><?php echo Mage::helper('adminhtml')->__("File") ?></option>
                             <option value="dir" <?php echo $self->getSelected('contents/type/'.$_i, 'dir') ?>><?php echo Mage::helper('adminhtml')->__("Recursive Dir") ?></option>
                         </select>
                      </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:100px" id="contents[include][]" value="<?php echo $self->getValue('contents/include/'.$_i) ?>"/>
+                        <input class="input-text" style="width:100px" name="contents[include][]" value="<?php echo $self->getValue('contents/include/'.$_i) ?>"/>
                      </td><td style="margin-bottom:5px;">
-                        <input class="input-text" style="width:100px"  id="contents[ignore][]" value="<?php echo $self->getValue('contents/ignore/'.$_i) ?>"/>
+                        <input class="input-text" style="width:100px"  name="contents[ignore][]" value="<?php echo $self->getValue('contents/ignore/'.$_i) ?>"/>
                      </td><td style="margin-bottom:5px;">
                         <?php echo $self->getRemoveRowButtonHtml('tr') ?>
                      </td>
