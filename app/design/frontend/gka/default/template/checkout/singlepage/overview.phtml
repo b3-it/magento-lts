@@ -71,10 +71,8 @@
 						 href="<?php echo $this->getEditBillingUrl() ?>"
 						 title="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
-				<input type="hidden" name="payment[cc_number]"
-					value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
-				<input type="hidden" name="payment[cc_cid]"
-					value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
+				<input type="hidden" name="payment[cc_number]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
+				<input type="hidden" name="payment[cc_cid]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
 				<?php echo $this->getPaymentHtml() ?>
 			</div>
 		</div>
@@ -137,8 +135,14 @@
 		</div>
 		<?php endif; ?>
 <?php if($this->isCashPayment()):?>
-<label for="givenamount">Gegeben</label>
-	<input name="givenamount" id="givenamount" />
+        <div class="col2-set">
+			<div class="col-1">
+                <h4><?php echo $this->__('Singular amount'); ?></h4>
+	            <div class="input-box">
+    	            <input name="givenamount" id="givenamount" value="" class="input-text" style="width:90%;" />
+    	        </div>
+	        </div>
+	    </div>
 <?php endif;?>
 		<div class="col1-wide">
 

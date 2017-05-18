@@ -18,7 +18,7 @@ var egov_break = {
 $j(document).ready(function () {
     // Custom-Scrollbar im Skin-Design
     $j('body').niceScroll({
-        'cursorcolor'       : '#2F4327',
+        'cursorcolor'       : '#003366',
         'cursorwidth'       : '15px',
         'cursorborderradius': '3px'
     });

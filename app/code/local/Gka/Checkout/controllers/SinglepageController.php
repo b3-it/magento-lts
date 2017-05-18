@@ -178,7 +178,8 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     	$payment = $this->getRequest()->getPost('payment', array());;
     	
     	if(!isset($payment['method'])){
-    		Mage::getSingleton('core/session')->addError('Payment Method not set!');
+    		//Mage::getSingleton('core/session')->addError('Payment Method not set!');
+    		Mage::getSingleton('core/session')->addError($this->__("Payment Method not set!"));
     		$this->_redirect('*/*/start', array('_secure'=>true));
     		return;
     	}

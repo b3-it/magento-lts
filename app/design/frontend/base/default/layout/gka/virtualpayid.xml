@@ -41,19 +41,18 @@
         </reference>
     </checkout_cart_index>
     
-      <egovs_checkout_singlepage_overview>
+    <egovs_checkout_singlepage_overview>
         <reference name="checkout_overview">
             <action method="addItemRender"><type>virtualpayid</type><block>virtualpayid/checkout_cart_item_renderer</block><template>gka/virtualpayid/checkout/onepage/review/item.phtml</template></action>
         </reference>
-       
-   </egovs_checkout_singlepage_overview>
+    </egovs_checkout_singlepage_overview>
    
-     <egovs_checkout_singlepage_successview>
-         <reference name="checkout_successview">
-           <action method="addItemRender"><type>virtualpayid</type><block>virtualpayid/checkout_cart_item_renderer</block><template>gka/virtualpayid/checkout/onepage/review/item.phtml</template></action>
-        </reference> 
-   </egovs_checkout_singlepage_successview> 
-    
+    <egovs_checkout_singlepage_successview>
+        <reference name="checkout_successview">
+            <action method="addItemRender"><type>virtualpayid</type><block>virtualpayid/checkout_cart_item_renderer</block><template>gka/virtualpayid/checkout/onepage/review/item.phtml</template></action>
+        </reference>
+    </egovs_checkout_singlepage_successview> 
+
     <sales_order_view>
         <reference name="order_items">
             <action method="addItemRender"><type>virtualpayid</type><block>virtualpayid/sales_item_renderer</block><template>gka/virtualpayid/sales/items/renderer/renderer.phtml</template></action>

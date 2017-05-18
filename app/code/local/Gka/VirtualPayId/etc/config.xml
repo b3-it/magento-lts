@@ -11,7 +11,7 @@
             <modules>
                 <Gka_VirtualPayId>
                     <files>
-                        <default>gka/virtualpayid.csv</default>
+                        <default>Gka_VirtualPayId.csv</default>
                     </files>
                 </Gka_VirtualPayId>
             </modules>
@@ -143,11 +143,11 @@
         </events>
     </global>
     <frontend>
-       <translate>
+        <translate>
             <modules>
                 <Gka_VirtualPayId>
                     <files>
-                        <default>gka/virtualpayid.csv</default>
+                        <default>Gka_VirtualPayId.csv</default>
                     </files>
                 </Gka_VirtualPayId>
             </modules>
