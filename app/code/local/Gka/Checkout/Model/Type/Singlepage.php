@@ -285,7 +285,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
                 ->setIsActive(false)
                 ->save();
 
-            Mage::dispatchEvent('checkout_submit_all_after', array('orders' => array($order), 'quote' => $this->getQuote()));
+            Mage::dispatchEvent('checkout_submit_all_after', array('order' => $order, 'quote' => $this->getQuote()));
 
             return $this;
         } catch (Exception $e) {

@@ -63,7 +63,7 @@
           </types>
         </pdftemplate>
         <events>
-            <checkout_type_onepage_save_order_after>
+            <checkout_submit_all_after>
                 <observers>
                     <gka_barkasse_save_order_after>
                         <type>singleton</type>
@@ -71,7 +71,7 @@
                         <method>onCheckoutSubmitAllAfter</method>
                     </gka_barkasse_save_order_after>
                 </observers>
-            </checkout_type_onepage_save_order_after>
+            </checkout_submit_all_after>
         </events>
     </global>
     <frontend>
@@ -182,7 +182,7 @@
                 <model>gka_barkasse/cashpayment</model>
                 <payment_action>authorize</payment_action>
                 <title>Barkasse</title>
-                <order_status>processing</order_status>
+                <xxorder_status>processing</xxorder_status>
                 <allowspecific>0</allowspecific>
                 <autoclose>0</autoclose>
                 <!-- Providerset für Produktivbetrieb -->
