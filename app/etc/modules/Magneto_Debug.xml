@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
     <modules>
         <Magneto_Debug>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </Magneto_Debug>
     </modules>

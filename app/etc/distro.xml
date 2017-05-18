@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <default>
+        <general>
+            <locale>
+                <code>de_DE</code>
+                <timezone>Europe/Berlin</timezone>
+            </locale>
+        </general>
+    </default>
+</config>
