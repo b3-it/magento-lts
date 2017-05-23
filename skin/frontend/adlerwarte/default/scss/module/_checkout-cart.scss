@@ -312,6 +312,10 @@
         .item-options{
             font-size: $global-fontsize-small;
         }
+        
+        a.egov-delete {
+            display: none;
+        }
     }
 }
 

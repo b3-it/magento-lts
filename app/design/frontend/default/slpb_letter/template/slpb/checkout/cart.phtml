@@ -22,7 +22,7 @@
  * @package    Mage
  * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- * Anpassungen für slpb_Quickform
+ * Anpassungen fï¿½r slpb_Quickform
  */
 ?>
 <?php
@@ -42,7 +42,7 @@
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
-<table cellspacing="0" border="0" id="shopping-cart-table" class="data-table box-table shopping-cart">
+<table style="border:0;" id="shopping-cart-table" class="data-table box-table shopping-cart">
     <col width="40" />
     <col width="75" />
     <col />
@@ -104,7 +104,7 @@ function deleteAll(url)
         	</td>
             <td colspan="100" class="a-right">
                 <button class="form-button-alt" type="submit"><span><?php echo $this->__('Update Shopping Cart') ?></span></button>
-				<!-- auskommentiert für Quickform nicht benötigt Jonas 2010-12-03  
+				<!-- auskommentiert fï¿½r Quickform nicht benï¿½tigt Jonas 2010-12-03  
 				<?php if($this->getContinueShoppingUrl()): ?>
 					<div style="float:left;">
     		            <a href="<?php echo $this->getContinueShoppingUrl() ?>" class="slpblistbutton"><span><?php echo $this->__('Continue Shopping') ?></span></a>

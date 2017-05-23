@@ -84,7 +84,7 @@ code {
 <title>PHP Fine Diff</title>
 </head>
 <body>
-<a href="https://github.com/gorhill/PHP-FineDiff"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+<a href="https://github.com/gorhill/PHP-FineDiff"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" /></a>
 <h1>PHP Fine Diff</h1>
 <div>
 <p style="margin-right:5em">This page demonstrate the <a href="finediff-code.php"><code>FineDiff</code></a> class (as in &ldquo;<b>fine</b> granularity <b>diff</b>&rdquo;) I wrote &ndash; starting from scratch &ndash; to generate a <u>lossless</u> (won't eat your line breaks), <u>compact</u> opcodes string listing the sequence of atomic actions (copy/delete/insert) necessary to transform one string into another (thereafter referred as the &ldquo;From&rdquo; and &ldquo;To&rdquo; string). The &ldquo;To&rdquo; string can be rebuilt by running the opcodes string on the &ldquo;From&rdquo; string. The <code>FineDiff</code> class allows to specify the granularity, and up to character-level granularity is possible, in order to generate the smallest diff possible (at the <i>potential</i> cost of increased CPU cycles.)</p>

@@ -62,7 +62,7 @@
 	                            <label for="super_group_<?php echo $_item->getId(); ?>" class="qty-label">
 	                                <?php echo $this->__('Quantity'); ?>
 	                            </label>
-	                            <input id="super_group_<?php echo $_item->getId(); ?>" type="text" inputmode="numeric" pattern="[0-9]*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+	                            <input type="text" id="super_group_<?php echo $_item->getId(); ?>" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" inputmode="numeric" pattern="[0-9]*" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
 	                        <?php else: ?>
 	                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
 	                        <?php endif; ?>

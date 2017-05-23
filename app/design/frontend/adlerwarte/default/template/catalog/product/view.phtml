@@ -22,9 +22,10 @@
 <div class="product-name">
     <h1>
         <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
-        <div class="product-sku">
+        <br />
+        <span class="product-sku">
             <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
-        </div>
+        </span>
     </h1>
 </div>
 <div class="product-view">

@@ -16,10 +16,10 @@
 {{template config_path="design/email/header"}}
 {{inlinecss file="email-inline.css"}}
 
-<table cellpadding="0" cellspacing="0" border="0">
+<table style="border:0;">
     <tr>
         <td>
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table style="border:0;">
                 <tr>
                     <td class="action-content">
                         <h1>{{htmlescape var=$customer.name}},</h1>
@@ -30,7 +30,7 @@
                             <strong>Password:</strong> {{htmlescape var=$customer.password}}
                         </p>
                         <p>Click here to confirm your email and instantly log in (the link is valid only once):</p>
-                        <table cellspacing="0" cellpadding="0" class="action-button" >
+                        <table class="action-button" >
                             <tr>
                                 <td>
                                     <a href="{{store url="customer/account/confirm/" _query_id=$customer.id _query_key=$customer.confirmation _query_back_url=$back_url}}"><span>Confirm Account</span></a>
