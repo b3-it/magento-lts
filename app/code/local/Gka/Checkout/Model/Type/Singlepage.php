@@ -259,10 +259,6 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     	$service->submitAll();
     	
     	
-//     	$this->_checkoutSession->setLastQuoteId($this->getQuote()->getId())
-//     	->setLastSuccessQuoteId($this->getQuote()->getId())
-//     	->clearHelperData();
-    	
     	$order = $service->getOrder();
         
         
