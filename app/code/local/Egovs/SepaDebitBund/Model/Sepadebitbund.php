@@ -76,11 +76,7 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 			if ($objResult->ergebnis->istOk) {
 				return $objResult->sepaMandat;
 			}
-			$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-			$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-			$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-			$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-			$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n\n";
+			$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
 		} elseif ($objResult instanceof SoapFault) {
 			$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
 		} else {
@@ -91,9 +87,6 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 			
 		Mage::throwException(Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getCustomerSupportMail()));
 	}
-	
-	
-	
 	
 	protected function _removeCurrentMandate($mandate) {
 		if (!is_string($mandate)) {
@@ -122,12 +115,8 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 				return $this;
 			}
 			
-			$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-			$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-			$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-			$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-			$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n\n";
-			switch (intval($objResult->ergebnis->code)) {
+			$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
+			switch ($objResult->ergebnis->getCodeAsInt()) {
 				case -5201:
 					//SEPA-Daten-Fehler, der NICHT begründet ist im Fehlschlagen einer Datenbankoperation: Das Mandat zu einer Mandanten-Nummer und Mandat-Referenz ist NICHT vorhanden.
 					Mage::log("{$this->getCode()}::Fehler in WebService-Funktion: $soapFunction\n". $sMailText, Zend_Log::WARN, Egovs_Helper::LOG_FILE);
@@ -227,12 +216,8 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 			if ($objResult->ergebnis->istOk) {
 				return $objResult->sepaMandat;
 			}
-			$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-			$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-			$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-			$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-			$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n";
-			$result = intval($objResult->ergebnis->code);
+			$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
+			$result = $objResult->ergebnis->getCodeAsInt();
 		} elseif ($objResult instanceof SoapFault) {
 			$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
 		} else {

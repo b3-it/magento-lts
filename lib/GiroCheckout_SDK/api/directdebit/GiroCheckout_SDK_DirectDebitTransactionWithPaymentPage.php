@@ -3,7 +3,7 @@
  * Provides configuration for an direct debit API call.
  *
  * @package GiroCheckout
- * @version $Revision: 139 $ / $Date: 2016-04-27 16:25:30 -0300 (Mi, 27 Apr 2016) $
+ * @version $Revision: 172 $ / $Date: 2016-10-17 22:56:02 -0300 (Mon, 17 Oct 2016) $
  */
 
 class GiroCheckout_SDK_DirectDebitTransactionWithPaymentPage extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
@@ -29,6 +29,7 @@ class GiroCheckout_SDK_DirectDebitTransactionWithPaymentPage extends GiroCheckou
         'pkn' => FALSE,
         'urlRedirect' => TRUE,
         'urlNotify' => TRUE,
+        'pptoken' => FALSE,
     );
 
 

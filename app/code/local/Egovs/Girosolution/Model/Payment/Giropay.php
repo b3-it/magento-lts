@@ -84,6 +84,9 @@ class Egovs_Girosolution_Model_Payment_Giropay extends Egovs_Paymentbase_Model_G
 	
 	protected function _callSoapClientImpl($objSOAPClient, $wId, $mandantNr, $refId, $providerName) {
 		$providerName = "GIROPAY";
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $objSOAPClient->aktiviereTempKassenzeichen($wId, $refId, $providerName);
+		}
 		return $objSOAPClient->aktiviereTempGiropayKassenzeichen($wId, $mandantNr, $refId, $providerName);
 	}
 	

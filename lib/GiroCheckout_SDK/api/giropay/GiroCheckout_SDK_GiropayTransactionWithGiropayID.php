@@ -3,7 +3,7 @@
  * Provides configuration for an giropay API call.
  *
  * @package GiroCheckout
- * @version $Revision: 136 $ / $Date: 2016-04-25 18:54:50 -0300 (Mo, 25 Apr 2016) $
+ * @version $Revision: 172 $ / $Date: 2016-10-17 22:56:02 -0300 (Mon, 17 Oct 2016) $
  */
 
 class GiroCheckout_SDK_GiropayTransactionWithGiropayID extends GiroCheckout_SDK_AbstractApi implements GiroCheckout_SDK_InterfaceApi {
@@ -33,6 +33,7 @@ class GiroCheckout_SDK_GiropayTransactionWithGiropayID extends GiroCheckout_SDK_
         'info5Text' => FALSE,
         'urlRedirect' => TRUE,
         'urlNotify' => TRUE,
+        'pptoken' => FALSE,
     );
 
     /*

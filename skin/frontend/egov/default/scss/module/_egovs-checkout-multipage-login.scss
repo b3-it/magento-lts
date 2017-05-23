@@ -8,6 +8,26 @@
 .egovs-checkout-multipage-login {
     @include egov_loginform;
     
+    .col2-set {
+	    fieldset,
+	    div.col-1,
+	    div.col-2,
+	    p {
+	        margin: 0;
+	        padding: 0;
+	    }
+	    
+	    .col-1, .col-2 {
+	        .content {
+	            height: $col-box-height - 2em;
+	        }
+	    }
+    }
+    
+    .col2-set .registered-users fieldset {
+        width: 90%;
+    }
+    
     @include bp(max-width, 800px) {
     	.col-wrapper {
             margin-top: 20px;

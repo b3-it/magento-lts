@@ -54,6 +54,28 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       
       ));
       
+      $services = Mage::getModel('bkgviewer/service_tilesystem')->getCollection();
+      $fieldset->addField('tile_system', 'select', array(
+      		'label'     => Mage::helper('bkgviewer')->__('Tile System'),
+      		'required'  => true,
+      		'options' => $services->getAsFormOptions(true),
+      		'name'      => 'tile_system',
+      		'value'	=> $composit->getTileSystem()
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      ));
+      
+      $services = Mage::getModel('bkgviewer/service_vggroup')->getCollection();
+      $fieldset->addField('vg_system', 'select', array(
+      		'label'     => Mage::helper('bkgviewer')->__('Vg Group'),
+      		'required'  => true,
+      		'options' => $services->getAsFormOptions(true),
+      		'name'      => 'vg_system',
+      		'value'	=> $composit->getVgSystem(),
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      ));
+      
       
       $fieldset = $form->addFieldset('navi_layers', array('legend'=>Mage::helper('bkgviewer')->__('Layers available')));
       

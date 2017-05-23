@@ -87,11 +87,20 @@ class Egovs_Girosolution_Model_Payment_Creditcard extends Egovs_Paymentbase_Mode
 	 * @see Egovs_Paymentbase_Model_Girosolution::_getGirosolutionRedirectUrl()
 	 */
 	protected function _getGirosolutionRedirectUrl() {
-		//Es müsen immer Pseudokartennummern erzeugt werden.
-		$this->_fieldsArr['pkn'] = 'create';
+		/**
+		 * 20170308::Frank Rochlitzer
+		 * ZV_AM-813 ZV_AM-814 Unterstützung zur Konfiguration von Pseudokartennummern-Nutzung
+		 */
+		if (Mage::getStoreConfigFlag("payment/{$this->getCode()}/use_pseudo")) {
+			//Pseudokartennummern
+			$this->_fieldsArr['pkn'] = 'create';
+		}
 	}
 	
 	protected function _callSoapClientImpl($objSOAPClient, $wId, $mandantNr, $refId, $providerName) {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $objSOAPClient->aktiviereTempKassenzeichen($wId, $refId, $providerName);
+		}
 		return $objSOAPClient->aktiviereTempKreditkartenKassenzeichen($wId, $mandantNr, $refId, $providerName);
 	}
 	

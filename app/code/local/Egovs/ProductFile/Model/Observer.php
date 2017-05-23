@@ -46,7 +46,8 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 				/*
 				 * Delete product file data if checkbox is set
 				 */
-				if (isset($post[Egovs_ProductFile_Helper_Data::PRODUCT_DELETE_FILE]) && $post[Egovs_ProductFile_Helper_Data::PRODUCT_DELETE_FILE] == "1") {
+				if ((isset($post[Egovs_ProductFile_Helper_Data::PRODUCT_DELETE_FILE]) && $post[Egovs_ProductFile_Helper_Data::PRODUCT_DELETE_FILE] == "1") ||
+					(isset($post['use_default_productfile']))){
 					if (file_exists($path . $product->getProductfile()) && !is_dir($path . $product->getProductfile())) {
 						unlink($path . $product->getProductfile());
 					}
@@ -57,9 +58,10 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 					if (file_exists($path . "resized" . DS . $product->getProductimage()) && !is_dir($path . "resized" . DS . $product->getProductimage())) {
 						unlink($path . "resized" . DS . $product->getProductimage());
 					}					
-					$product->setProductfile('');
-					$product->setProductimage('');
-					$product->setProductfiledescription('');
+					
+					$product->setData('productfile',false);
+					$product->setData('productimage',false);
+					$product->setData('productfiledescription',false);
 					return;
 				}
 				

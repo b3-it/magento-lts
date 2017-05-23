@@ -3,7 +3,7 @@
  * Provides configuration for an iDEAL API call.
  *
  * @package GiroCheckout
- * @version $Revision: 24 $ / $Date: 2014-05-22 08:30:12 -0400 (Do, 22 Mai 2014) $
+ * @version $Revision: 190 $ / $Date: 2017-02-08 18:21:45 -0300 (Wed, 08 Feb 2017) $
  */
 class GiroCheckout_SDK_IdealPayment extends GiroCheckout_SDK_AbstractApi{
 
@@ -17,9 +17,10 @@ class GiroCheckout_SDK_IdealPayment extends GiroCheckout_SDK_AbstractApi{
                                 'amount' => TRUE,
                                 'currency' => TRUE,
                                 'purpose' => TRUE,
-                                'issuer' => TRUE,
+                                'issuer' => FALSE,
                                 'urlRedirect' => TRUE,
                                 'urlNotify' => TRUE,
+                                'pptoken' => FALSE,
                             );
 
     /*

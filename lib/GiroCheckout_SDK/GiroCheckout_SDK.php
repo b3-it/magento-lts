@@ -6,11 +6,17 @@
  * View examples for API calls.
  *
  * @package GiroCheckout
- * @version $Revision: 153 $ / $Date: 2016-06-08 16:33:53 -0300 (Mi, 08 Jun 2016) $
+ * @version $Revision: 197 $ / $Date: 2017-03-02 12:12:12 -0300 (Thu, 02 Mar 2017) $
  */
-define('__GIROCHECKOUT_SDK_VERSION__', '2.0.2');
+define('__GIROCHECKOUT_SDK_VERSION__', '2.1.8');
 
-spl_autoload_register( array('GiroCheckout_SDK_Autoloader', 'load'), TRUE, TRUE );
+if( version_compare( phpversion(), '5.3.0', '<' ) ) {
+  // Don't use third parameter for PHP < 5.3
+  spl_autoload_register(array('GiroCheckout_SDK_Autoloader', 'load'), TRUE);
+}
+else {
+  spl_autoload_register(array('GiroCheckout_SDK_Autoloader', 'load'), TRUE, TRUE);
+}
 
 if( defined('__GIROCHECKOUT_SDK_DEBUG__') && __GIROCHECKOUT_SDK_DEBUG__ === TRUE ) {
   GiroCheckout_SDK_Config::getInstance()->setConfig('DEBUG_MODE',TRUE);
@@ -19,20 +25,22 @@ if( defined('__GIROCHECKOUT_SDK_DEBUG__') && __GIROCHECKOUT_SDK_DEBUG__ === TRUE
 class GiroCheckout_SDK_Autoloader {
 	public static function load($classname) {
 		$filename = $classname . '.php';
-
 		$pathsArray = array ('api',
 				'helper',
 				'./',
+				'api/bluecode',
 				'api/giropay',
 				'api/directdebit',
 				'api/creditcard',
+        'api/maestro',
 				'api/eps',
 				'api/ideal',
 				'api/paypal',
 				'api/tools',
 				'api/girocode',
 				'api/paydirekt',
-				'api/sofortuw'
+				'api/sofortuw',
+				'api/paypage'
     );
 
 		foreach($pathsArray as $path) {

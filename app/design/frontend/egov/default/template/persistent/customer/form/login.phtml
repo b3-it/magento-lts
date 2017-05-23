@@ -25,7 +25,6 @@
                     <?php endif; ?></h1>
             </div>
 
-
             <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
             <div class="col-1 new-users">
                 <form action="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>" method="get" id="register-form" class="scaffold-form">

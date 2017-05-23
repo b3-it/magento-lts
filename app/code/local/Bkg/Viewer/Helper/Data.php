@@ -63,4 +63,13 @@ class Bkg_Viewer_Helper_Data extends Mage_Core_Helper_Abstract
 		curl_close($ch);
 		return $output;
 	}
+	
+	public function getWMSDir()
+	{
+		$dir = Mage::getBaseDir('media') . DS .'wms';
+		if(!file_exists($dir)){
+			mkdir($dir);
+		}
+		return $dir;
+	}
 }
