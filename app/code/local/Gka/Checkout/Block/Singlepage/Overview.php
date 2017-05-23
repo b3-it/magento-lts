@@ -66,12 +66,12 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
 
   	public function getItems()
     {
-		return Mage::getSingleton('checkout/session')->getQuote()->getAllVisibleItems();
+		return $this->getCheckout()->getQuote()->getAllVisibleItems();
     }
 
     public function getTotals()
     {
-        return Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+        return $this->getCheckout()->getQuote()->getTotals();
     }
     
     
