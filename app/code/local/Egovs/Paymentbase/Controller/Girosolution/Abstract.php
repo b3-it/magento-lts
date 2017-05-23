@@ -3,7 +3,7 @@
  * Abstract Payment Controller für Girosolution
  * 
  * !!!!Achtung!!!!: 
- * Die Funktion aktiviereTempXXXKassenzeichen() wird über _callSoapClientImpl(...) aufgerufen.
+ * Die Funktion aktiviereTempKassenzeichen() wird über _callSoapClientImpl(...) aufgerufen.
  * Die Funktion _callSoapClientImpl(...) wird jedoch nur in der NOTIFY ACTION aufgerufen, welche
  * direkt vom Zahlungsprovider aus angesprochen wird.
  * Änderungen an der ORDER werden nur in der NOTIFY ACTION vorgenommen.

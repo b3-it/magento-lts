@@ -81,7 +81,8 @@ class Egovs_Paymentbase_Model_Webservice_Types_Kunde extends Egovs_Paymentbase_M
 		Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		
 		$this->EShopKundenNr = (string) $EShopKundenNr;
-		$this->sprache = $sprache;
+		//ISO 639
+		$this->sprache = strtolower($sprache);
 		
 		if ($anrede != null)
 			$this->anrede = $anrede;

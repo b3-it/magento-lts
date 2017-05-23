@@ -124,6 +124,9 @@ class Egovs_PayplaceGiropay_Model_Giropay extends Egovs_Paymentbase_Model_Paypla
 	}
 	
 	public function aktiviereKassenzeichen($wId, $refId, $providerId) {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $this->_getSoapClient()->aktiviereTempKassenzeichen($wId, $refId, 'GIROPAY');
+		}
 		return $this->_getSoapClient()->aktiviereTempGiropayKassenzeichen($wId, null, $refId);
 	}
 	

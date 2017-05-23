@@ -3,7 +3,7 @@
  * Interface API has to be implemented, if a a new payment method has to be created
  *
  * @package GiroCheckout
- * @version $Revision: 24 $ / $Date: 2014-05-22 08:30:12 -0400 (Do, 22 Mai 2014) $
+ * @version $Revision: 174 $ / $Date: 2016-11-09 16:44:31 -0300 (Wed, 09 Nov 2016) $
  */
 
 interface GiroCheckout_SDK_InterfaceApi {
@@ -63,4 +63,9 @@ interface GiroCheckout_SDK_InterfaceApi {
      * Returns the parameter name of the hash in the notify or redirect API call from GiroConnect.
      */
     public function getNotifyHashName();
+
+    /**
+     * Do some special validations for this payment method.
+     */
+    public function validateParams( $p_aParams, &$p_strError );
 } 

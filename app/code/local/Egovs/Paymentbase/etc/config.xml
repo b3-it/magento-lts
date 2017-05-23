@@ -450,6 +450,7 @@
                 <mandate_pdf_template_store>/mandates</mandate_pdf_template_store>
                 <href_max_length>100</href_max_length>
                 <company_lastname>1</company_lastname>
+                <epaybl_to_use>2</epaybl_to_use>
             </paymentbase>
             <saferpay>
     	        <active>1</active>

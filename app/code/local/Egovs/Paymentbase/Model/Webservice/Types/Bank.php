@@ -8,9 +8,9 @@
  * @copyright	Copyright (c) 2015 B3 IT Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  * 
- * @property string(8)  $BLZ Bankleitzahl
+ * @property string(8)  $blz Bankleitzahl
  * @property string(25) $name Bankname
- * @property string(11) $BIC BIC
+ * @property string(11) $bic BIC
  * @property boolean    $supportsSCT Flag ob die Bank SEPA Credit Transfer unterstützt.
  * @property boolean    $supportsSDD Flag ob die Bank SEPA Direct Debit für Privatkunden unterstützt.
  * @property boolean    $supportsB2B Flag ob die Bank SEPA Direct Debit für Firmenkunden unterstützt.
@@ -27,7 +27,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung(
+	public function Egovs_Paymentbase_Model_Webservice_Types_Bank(
 			$bic = null,
 			$name = null
 	) {
@@ -37,12 +37,33 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 			case 1:
 				if (is_array($args[0])) {
 					foreach ($args[0] as $k => $v) {
-						$this->$k = $v;
+						if (stripos($k, 'bic') !== false) {
+							if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+								$this->bic = $v;
+							} else {
+								//ePayBL 2.x
+								$this->BIC = $v;
+							}
+						} elseif (stripos($k, 'blz') !== false) {
+							if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+								$this->blz = $v;
+							} else {
+								//ePayBL 2.x
+								$this->BLZ = $v;
+							}
+						} else {
+							$this->{$k} = $v;
+						}
 					}
 				}
 				break;
 			case 2:
-				$this->BIC = $args[0];
+				if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+					$this->bic = $args[0];
+				} else {
+					//ePayBL 2.x
+					$this->BIC = $args[0];
+				}
 				$this->name = $args[1];
 				break;
 			default:
@@ -72,9 +93,11 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	protected function _getParamLength($name) {
 		switch ($name) {
 			case 'BLZ':
+			case 'blz':
 				$length = 8;
 				break;
 			case 'BIC':
+			case 'bic':
 				$length = 11;
 				break;
 			case 'name':
@@ -88,6 +111,11 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	}
 	
 	public function getBic() {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $this->bic;
+		}
+		
+		//ePayBL 2.x
 		return $this->BIC;
 	}
 	
@@ -96,6 +124,11 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	}
 	
 	public function getBLZ() {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $this->blz;
+		}
+		
+		//ePayBL 2.x
 		return $this->BLZ;
 	}
 }

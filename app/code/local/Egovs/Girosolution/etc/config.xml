@@ -83,9 +83,9 @@
         </events>
         <layout>
             <updates>
-                <sepadebitbund>
+                <egovs_girosolution>
                     <file>egovs/girosolution.xml</file>
-                </sepadebitbund>
+                </egovs_girosolution>
             </updates>
         </layout>
     </frontend>
@@ -120,6 +120,7 @@
                 <currency>EUR</currency>
                 <model>egovs_girosolution/payment_creditcard</model>
                 <payment_action>authorize</payment_action>
+                <use_pseudo>1</use_pseudo>
                 <title>Kreditkarte per Girosolution</title>
                 <order_status>processing</order_status>
                 <allowspecific>0</allowspecific>

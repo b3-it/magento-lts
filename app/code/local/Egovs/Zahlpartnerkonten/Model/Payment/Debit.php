@@ -49,6 +49,12 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Debit extends Egovs_Debit_Model_Debi
 
 	public function createAccountingList($payment, $amount, $bkz = null, $maturity = null, $arrBuchungsliste = null, $grandTotal = null, $currency = null) {
 		// Objekt für Buchungsliste erstellen
+		if (is_null($arrBuchungsliste)) {
+			$arrBuchungsliste = $this->createAccountingListParts();
+		}
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			$arrBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungList($arrBuchungsliste);
+		}
 		$objBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe(
 				// Gesamtsumme
 				is_null($grandTotal) ? (float) $this->_getOrder()->getGrandTotal() : $grandTotal,
@@ -57,7 +63,7 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Debit extends Egovs_Debit_Model_Debi
 				// Fälligkeit
 				is_null($maturity) ? strftime('%Y-%m-%dT%H:%M:%SZ') : $maturity,
 				// Buchungsliste
-				is_null($arrBuchungsliste) ? $this->createAccountingListParts() : $arrBuchungsliste,
+				$arrBuchungsliste,
 				// Bewirtschafter
 				$this->_getBewirtschafterNr(),
 				// Kennzeichen Mahnverfahren aus Konfiguration
@@ -135,7 +141,7 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Debit extends Egovs_Debit_Model_Debi
 		catch (Exception $ex) {
 			if (Mage::helper('zpkonten')->isUseZpkonto($this->_getOrder()->getCustomer()) != true) {
 				if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis) {
-					$this->_getKZModel()->setComment($objResult->ergebnis->langText);
+					$this->_getKZModel()->setComment($objResult->ergebnis->getLongText());
 				}
 				$this->_getKZModel()->setStatus(Egovs_Zahlpartnerkonten_Model_Status::STATUS_ERROR)
 					->save();

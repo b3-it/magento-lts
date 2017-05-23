@@ -271,6 +271,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	
 		//Buchungsliste erstellen
 		$arrBuchungsliste = $this->createAccountingListParts();
+		
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			$arrBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungList($arrBuchungsliste);
+		}
 	
 		// Objekt für Buchungsliste erstellen
 		$objBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe(
@@ -779,12 +783,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		 * Die notify Action wird direkt von Girosolution aufgerufen (URL wird vorher übergeben)
 		 *
 		 */
-		Mage::log("{$this->getCode()}::WS aktiviereTempXXXKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+		Mage::log("{$this->getCode()}::WS aktiviereTempKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 			
 		// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 		$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
 		$objResult = null;
-		for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!isset($objResult->istOk) || $objResult->istOk != true); $i++) {
+		for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!$objResult || !$objResult->isOk()); $i++) {
 			Mage::log(sprintf("{$this->getCode()}::Try %s to activate kassenzeichen...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 			try {
 				//Aktiviert z. B. das Kassenzeichen
@@ -797,9 +801,9 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$order = $this->_getOrder();
 		
 		// wenn Web-Service nicht geklappt hat
-		if (!$objResult || $objResult->istOk != true) {
+		if (!$objResult || !$objResult->isOk()) {
 			$kassenzeichen = 'empty';
-			$subject = "{$this->getCode()}::WS aktiviereTempXXXKassenzeichen() nicht erfolgreich";
+			$subject = "{$this->getCode()}::WS aktiviereTempKassenzeichen() nicht erfolgreich";
 			$sMailText = '';
 			if ($order->getPayment()->hasData('kassenzeichen')) {
 				$kassenzeichen = $order->getPayment()->getKassenzeichen();

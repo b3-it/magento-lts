@@ -28,7 +28,7 @@
  * @property string(4)   $sequenceType Sequenztyp des Mandates, erlaubt sind FRST, RCUR, FNAL und OOFF. (Pflicht)
  * @property date        $dateOfLastUsage Datum der letzten Benutzung des Mandates. (Pflicht)
  * @property boolean     $aktiv true = Mandat ist aktiv. false = Mandat ist inaktiv (Pflicht)
- * @property string(70)  $abweichenderKontoinhaber Name des Kontoinhabers, wenn dieser vom Namen des Kunden bzw. vom Namen des Kontoinhabers abweicht. (Optional, nur bei externen Mandaten!)
+ * @property string(25)  $abweichenderKontoinhaber Name des Kontoinhabers, wenn dieser vom Namen des Kunden bzw. vom Namen des Kontoinhabers abweicht. (Optional, nur bei externen Mandaten!)
  * @property Egovs_Paymentbase_Model_Webservice_Types_SepaAmendment $amendment Das Amendment des Sepamandates. (Optional)
  * @property int         $frequency Wird nicht benutzt. Für zukünftige Verwendung. (Optional)
  * @property float       $betrag Wird nicht benutzt. Für zukünftige Verwendung. (Optional)

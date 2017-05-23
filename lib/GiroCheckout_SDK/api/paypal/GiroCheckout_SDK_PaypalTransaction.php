@@ -3,7 +3,7 @@
  * Provides configuration for an PayPal API call.
  *
  * @package GiroCheckout
- * @version $Revision: 24 $ / $Date: 2014-05-22 08:30:12 -0400 (Do, 22 Mai 2014) $
+ * @version $Revision: 172 $ / $Date: 2016-10-17 22:56:02 -0300 (Mon, 17 Oct 2016) $
  */
 class GiroCheckout_SDK_PaypalTransaction extends GiroCheckout_SDK_AbstractApi{
 
@@ -19,6 +19,7 @@ class GiroCheckout_SDK_PaypalTransaction extends GiroCheckout_SDK_AbstractApi{
                                 'purpose' => TRUE,
                                 'urlRedirect' => TRUE,
                                 'urlNotify' => TRUE,
+                                'pptoken' => FALSE,
                             );
 
     /*

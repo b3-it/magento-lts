@@ -58,6 +58,7 @@
 "Enter your exclude URLs line by line. To exclude Proxy for ePayBL and Saferpay use toggles above! Example: ec.europa.eu","Fügen Sie hier die auszuschliessenden URLs jeweils in eine Zeile untereinander ein. Um den Proxy für ePayBL und Saferpay zu verwenden, benutzen Sie die oberen Optionen! Beispiel: ec.europa.eu"
 "ePayBL Customer ID:","ePayBL Kundennummer"
 "ePayBL Payment Methods","ePayBL Zahlmethoden"
+"ePayBL version to use","ePayBL Version"
 "Error: Couldn't check status of ePayment server, no result returned!","Fehler: Konnte Status des ePayment-Servers nicht prüfen, es gab keinen Ergebniscode!"
 "ERROR_DEBIT_ENTRY_ADRESS_NOT_VERIF","Ihre Rechnungsadresse des konnte nicht validiert werden."
 "ERROR_DEBIT_ENTRY_ADRESS_NOT_VERIF_TITLE","Adress Verifizierungsfehler"
@@ -261,12 +262,9 @@
 "Value","Wert"
 "View mandate","Mandat aufrufen"
 "Wrong correlation to Haushaltsstelle.","Kombination mit der Haushaltsstelle nicht möglich."
+"Which ePayBL version should be used?","Legt die zu nutzende ePayBL Version fest."
 "You can not add this product at your cart. Please use a different order.","Dieses Produkt kann dem aktuellen Warenkorb nicht hinzugefügt werden. Bitte führen Sie zum Kauf eine weitere Bestellung durch."
 "Your Login Name","Ihr Login Name"
 "Your Login Password","Ihr Login Passwort"
 "Your payment has been received","Ihre Zahlung ist bei uns eingegangen."
 "Your Payplace Merchant ID","Ihre Payplace Händler-ID"
-// methodenspezifische Fehler, Webservice: Kundenstammdatenpflege
-// methodenspezifische Fehler, Webservice: Lastschrift
-// methodenspezifische Fehler, Webservice: Überweisung
-// Payplace

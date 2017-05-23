@@ -116,6 +116,9 @@ class Egovs_PayplacePaypage_Model_Paypage extends Egovs_Paymentbase_Model_Paypla
 	}
 	
 	public function aktiviereKassenzeichen($wId, $refId, $providerId) {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $this->_getSoapClient()->aktiviereTempKassenzeichen($wId, $refId, $providerId);
+		}
 		return $this->_getSoapClient()->aktiviereTempKreditkartenKassenzeichen($wId, null, $refId, $providerId);
 	}
 	

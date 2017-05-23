@@ -331,7 +331,6 @@ class Egovs_Openaccountpayment_Model_Openaccount extends Egovs_Paymentbase_Model
 
 		//das kassenzeichen sollte erst abgeholt werden wenn das ergebniss geprueft wurde
 		$payment->setData('kassenzeichen', $objResult->buchungsListe->kassenzeichen);
-		//print_r($objResult->buchungsListe->kassenzeichen);
 		$this->loeschenKunde();
 		
 		return $this;
