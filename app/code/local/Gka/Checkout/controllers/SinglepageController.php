@@ -189,7 +189,6 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     	try{
     		$this->_getCheckout()->setBillingAddress($billing);
     		$this->_getCheckout()->setPaymentMethod($payment['method']);
-    		//$this->_getState()->unsCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
     		$this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
     		$this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
     	}
@@ -248,7 +247,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         $this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
         
         try {
-         	//$this->_getCheckout()->setShippingMethods();
+         	$this->_getCheckout()->setShippingMethod();
             $this->loadLayout();
             $this->_initLayoutMessages('checkout/session');
             $this->_initLayoutMessages('customer/session');

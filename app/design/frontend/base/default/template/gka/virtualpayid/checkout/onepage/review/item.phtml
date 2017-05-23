@@ -24,13 +24,21 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php $_item = $this->getItem()?>
+<?php
+$_item = $this->getItem();
+$_thumbnail = $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10');
+$_productname = $this->escapeHtml($this->getProductName());
+?>
 <tr>
 	<td>
-		<div>
-			<span class="product-name"> <?php echo $this->htmlEscape($this->getProductName()) ?> </span>
-			<span class="std_small dwd-orderitem-options"> (<?php echo $this->__('Sku').': '.$this->htmlEscape($_item->getSku()) ?>)</span>
-		</div>
+        <img class="checkout-product-image" src="<?php echo $_thumbnail; ?>" alt="<?php echo $_productname; ?>" title="<?php echo $_productname; ?>" />
+        <div class="product-details">
+            <h3 class="product-name"><?php echo $_productname; ?></h3>
+            <div class="product-cart-sku">
+                <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
+            </div>
+        </div>
+
 		<div class="product-descriptor">
              <div class="desc std">
 				   <?php if($payid = $this->getPayId($_item)):?>

@@ -39,11 +39,8 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
             /**
              * Remove all addresses
              */
-            $addresses  = $quote->getAllAddresses();
-            foreach ($addresses as $address) {
-                $quote->removeAddress($address->getId());
-            }
-
+            $quote->removeAllAddresses();
+            
             if ($defaultShipping = $this->getCustomerDefaultShippingAddress()) {
                 $quote->getShippingAddress()->importCustomerAddress($defaultShipping);
 
@@ -203,7 +200,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
 	    	->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_BILLING)
 	    	->setQuote($this->getQuote())
 	    	->save();
-	    	$this->getQuote()->setBillingAddress($address)->save();
+	    	
     	}
     	else
     	{
@@ -214,6 +211,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     		$address->setStreet($data['street'])
     			->save();
     	}
+    	$this->getQuote()->setBillingAddress($address)->save();
     	
     	return $this;
     }
@@ -231,7 +229,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     		->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_SHIPPING)
     		->setQuote($this->getQuote())
     		->save();
-    		$this->getQuote()->setShippingAddress($address)->save();
+    		
     	}
     	else
     	{
@@ -242,7 +240,8 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     		$address->setStreet($data['street'])
     		->save();
     	}
-    	 
+    	$this->getQuote()->setShippingAddress($address)->save();
+    	
     	return $this;
     }
     
@@ -253,46 +252,28 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
      */
     public function createOrder($givenamount)
     {
-        $orderIds = array();
-        $this->_validate();
-
-        $address = $this->getQuote()->getBillingAddress();;
+    	
+    	$this->getQuote()->getBillingAddress()->setShouldIgnoreValidation(true);
+    	$this->getQuote()->collectTotals();
+    	$service = Mage::getModel('sales/service_quote', $this->getQuote());
+    	$service->submitAll();
+    	
+    	
+//     	$this->_checkoutSession->setLastQuoteId($this->getQuote()->getId())
+//     	->setLastSuccessQuoteId($this->getQuote()->getId())
+//     	->clearHelperData();
+    	
+    	$order = $service->getOrder();
         
         
-        try {
-        
-        	$order = $this->_prepareOrder($address);
-			$order->setGivenAmount($givenamount);
-               
-            Mage::dispatchEvent(
-                    'checkout_type_multishipping_create_orders_single',
-                    array('order'=>$order, 'address'=>$address)
-                );
-      
-
-             $order->place();
-             $order->save();
-             //if ($order->getCanSendNewEmailFlag()){
-             //       $order->sendNewOrderEmail();
-             //   }
-            $orderIds[$order->getId()] = $order->getIncrementId();
-
-
-            Mage::getSingleton('core/session')->setOrderIds($orderIds);
-            Mage::getSingleton('checkout/session')->setLastQuoteId($this->getQuote()->getId());
-
-            $this->getQuote()
-                ->setIsActive(false)
-                ->save();
-
-            Mage::dispatchEvent('checkout_submit_all_after', array('order' => $order, 'quote' => $this->getQuote()));
-
-            return $this;
-        } catch (Exception $e) {
-            //Mage::dispatchEvent('checkout_multishipping_refund_all', array('orders' => $orders));
-            Mage::logException($e);
-            throw $e;
+        if ($order) {
+        	Mage::dispatchEvent('checkout_submit_all_after', array('order' => $order, 'quote' => $this->getQuote()));
+        	if($givenamount){
+        		$order->setGivenAmount($givenamount)->save();
+        	}
         }
+        
+     
     }
 
     /**
