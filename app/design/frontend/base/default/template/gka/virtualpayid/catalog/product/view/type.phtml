@@ -36,49 +36,59 @@
 <?php endif; ?>
 
 <div>
-	<label for="kassenzeichen">Kassenzeichen</label>
-	<input name="pay_id" class="required-entry" id="pay_id">
-	<button type="button" onclick="fetchPrice();return false;" id="fetchprice"><?php echo $this->helper('virtualpayid')->__('Fetch Price')?></button>
+	<label for="kassenzeichen"><?php echo $this->__('Payment code') ?></label>
+	<input name="pay_id" class="required-entry" id="pay-id" value="" />
+	<button type="button" class="button" onclick="fetchPrice();" id="fetchprice">
+	    <?php echo $this->helper('virtualpayid')->__('Fetch Price')?>
+	</button>
 </div>
-<script type="text/javascript">
-    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
-</script>
-<script type="text/javascript">
-	var fetch_price_url = "<?php echo $this->getKzInfoUrl(); ?>";
-	var diff_price_msg = "<?php echo $this->__('Amounts are not equal!');?>";
 
-	Validation.add('validate-both-amounts', 'Please make sure your amounts match.', function(v, input) {
+<div id="price-container"></div>
+
+
+<script type="text/javascript">
+    var optionsPrice    = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+	var fetch_price_url = "<?php echo $this->getKzInfoUrl(); ?>";
+	var diff_price_msg  = "<?php echo $this->__('Amounts are not equal!'); ?>";
+	var validator_msg   = "<?php echo $this->__('Please make sure your amounts match.'); ?>";
+	var ajax_error_msg  = "<?php echo $this->__('Sorry, there was a problem!'); ?>";
+
+	Validation.add('validate-both-amounts', validator_msg, function(v, input) {
         var dependentInput = $(input.form[input.name == 'amount' ? 'confirmation' : 'amount']),
             isEqualValues  = input.value == dependentInput.value;
 
         if (isEqualValues && dependentInput.hasClassName('validation-failed')) {
             Validation.test(this.className, dependentInput);
         }
-
         return dependentInput.value == '' || isEqualValues;
     });
 
-
+	
 	function fetchPrice(){
-		var kz = $j('#pay_id').val();
-		
+		//var kz = $j('#pay-id').val();
+
 		$j.ajax({
-			url: fetch_price_url,
-			data: {'pay_id': $j('#pay_id').val()},
-			success: function (data) {
-	           $j('#price_container').html(data);
-	        },
-	        error: function (xhr, status) {
-	            alert("Sorry, there was a problem!");
-	        }
-			});
-		
+			'method': 'POST',
+			'url'   : fetch_price_url,
+			'cache' : false,
+			'data'  : {
+				'pay_id': $j('#pay-id').val()
+		    },
+            'beforeSend': function() {
+            }
+		})
+		.done(function (data) {
+            $j('#price-container').html(data);
+		})
+		.fail(function( jqXHR, textStatus ) {
+            alert( "Fehler: " + textStatus );
+            //alert(ajax_error_msg);
+        });		
 	}
 
 	function setPrice(amount = false)
 	{
-		if(amount === false )
-		{
+		if(amount === false ) {
 			amount = $j('#amount').val();
 		}
         optionsPrice.changePrice('config', {'price': amount, 'oldPrice': 0});
@@ -94,16 +104,10 @@
 			setPrice(0);
 		}else{
 			setPrice();
-		}
-
-		
+		}		
 	}
 
 </script>
-
-<div id="price_container">
-</div>
-
 
 <?php //echo $this->getChildHtml('product_type_data_extra') ?>
 <?php // echo $this->getPriceHtml($_product) ?>
