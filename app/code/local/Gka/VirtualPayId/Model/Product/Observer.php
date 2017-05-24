@@ -71,7 +71,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 	 *
 	 * @param Varien_Event_Observer $observer Observer
 	 *
-	 * @return Dwd_ConfigurableDownloadable_Model_Product_Observer
+	 * @return Gka_VirtualPayId_Model_Product_Observer
 	 */
 	public function onSalesQuoteItemSetProduct($observer) {
 		$orderItem = $observer->getQuoteItem();
@@ -88,6 +88,8 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 				$orderItem->setCustomPrice($specialPrice);
 				$orderItem->setOriginalCustomPrice($specialPrice);
 				$orderItem->getProduct()->setIsSuperMode(true);
+		}else{
+			//throw new Exception('Preis darf nicht null sein!');
 		}
 	}
 

@@ -20,8 +20,8 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Price extends Mage_Catalog_Blo
 				if ($kInfo->ergebnis->isOk() == false) {
 					$msg = sprintf(
 							"%s; Error code: %s; Kassenzeichen: %s",
-							$this->getKassenzeichenInfo()->ergebnis->getLongText(),
-							$this->getKassenzeichenInfo()->ergebnis->getCode(),
+							$kInfo->ergebnis->getLongText(),
+							$kInfo->ergebnis->getCode(),
 							$kz
 					);
 					Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
@@ -30,13 +30,22 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Price extends Mage_Catalog_Blo
 					if ($kInfo->saldo > 0.01) {
 						$this->setBasePrice($kInfo->saldo);
 						$this->setTemplate('gka/virtualpayid/catalog/product/view/price.phtml');
+						return $this;
+					}else{
+						$this->setTemplate('gka/virtualpayid/catalog/product/view/priceempty.phtml');
+						return $this;
 					}
 				}
 			}
 		}
 		
+		
+		
 		$this->setTemplate('gka/virtualpayid/catalog/product/view/pricemanual.phtml');
 		
 		return $this;
 	}
+	
+	
+	
 }

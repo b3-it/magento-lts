@@ -28,16 +28,27 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
     	$result = parent::_prepareProduct($buyRequest, $product, $processMode);
     			
     	$pay_id = $buyRequest->getPayId();
+    	$specialPrice = (float)($buyRequest->getAmount());
+    	
+    	
+    	
     	if($pay_id)
     	{
     		$this->getProduct($product)->addCustomOption('pay_id', $pay_id);
+    		if ($specialPrice > 0) {
+    			$orderItem->setCustomPrice($specialPrice);
+    			$orderItem->setOriginalCustomPrice($specialPrice);
+    			$orderItem->getProduct()->setIsSuperMode(true);
+    		}else{
+    			return Mage::helper('virtualpayid')->__('Price is missing!');
+    		}
+    		
+    		return $result;
     	}
 
     	
-    	if (is_string($result)) {
-    		return $result;
-    	}
-    	return $result;
+    	
+    	return Mage::helper('virtualpayid')->__('Payment ID is missing!');
     }
     
     
