@@ -42,11 +42,7 @@
             height: 170px;
             transform: scaleY(-1);
             position: relative;
-            top: -100px;
-        }
-        
-        @include bp(max-width, $bp-xsmall) {
-            top: -40px;
+            top: -50px;
         }
     }
 
