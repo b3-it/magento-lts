@@ -26,6 +26,37 @@ class Gka_Barkasse_Block_Kassenbuch_Journal extends Mage_Core_Block_Template
         return $this->getData('kassenbuchjournal');
     }
     
+    public function getLastKassenbuchJournal()
+    {
+    	$collection = Mage::getModel('gka_barkasse/kassenbuch_journal')->getCollection();
+    	$collection->getSelect()
+  		->where('customer_id = ' . $this->getCustomerId())
+  		->where('status = '.Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED)
+    	->order('id DESC');
+    	
+    	return $collection->getFirstItem();
+    }
+    
+    public function getLastBalance()
+    {
+    	$last = $this->getLastKassenbuchJournal();
+    	if($last){
+    		return $last->getClosingBalance();
+    	}
+    	
+    	return "";
+    }
+    
+    public function getOpeningBalance()
+    {
+    	return $this->getKassenbuchJournal()->getOpeningBalance();
+    }
+    
+    public function getTotal()
+    {
+    	return $this->getKassenbuchJournal()->getTotal();
+    }
+    
     public function getOpenUrl()
     {
     	return Mage::getUrl('gka_barkasse/kassenbuch_journal/open');

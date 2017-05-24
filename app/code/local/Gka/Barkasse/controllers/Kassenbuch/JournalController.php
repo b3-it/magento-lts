@@ -50,6 +50,32 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
         );
     }
     
+    
+    public function pdfAction() {
+    	
+    	$id     =  intval($this->getRequest()->getParam('id'));
+    	$customerId = $this->_getCustomer()->getId();
+    	
+    	$collection = Mage::getModel('gka_barkasse/kassenbuch_journal')->getCollection();
+    	$collection->getSelect()
+    	->where('customer_id = '.$customerId)
+    	->where('id = '. $id);
+    	
+    	//if(count($collection->getItems()) == 0) return null;
+    	
+    	$model =  $collection->getFirstItem();
+    	
+    	if ($model->getId() || $id == 0) {
+    		$pdf = Mage::getModel('gka_barkasse/kassenbuch_journal_pdf');
+    		//$pdf->preparePdf();
+    		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW;
+    		$pdf->getPdf(array($model))->render();
+    	} else {
+    		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('gka_barkasse')->__('Item does not exist'));
+    		$this->_redirect('*/*/');
+    	}
+    }
+    
     public function openAction()
     {
     	$opening_balance = intval($this->getRequest()->getParam('opening_balance'));
@@ -70,10 +96,15 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     
     public function closeAction()
     {
-    	$balance = intval($this->getRequest()->getParam('closing_balance'));
+    	//$balance = intval($this->getRequest()->getParam('closing_balance'));
+    	$withdrawal = floatval($this->getRequest()->getParam('withdrawal'));
     	$id      = intval($this->getRequest()->getParam('id'));
     	 
     	$model = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
+    	
+    	$balance = $model->getOpeningBalance() + $model->getTotal() - $withdrawal;
+    	
+    	$model->setWithdrawal($withdrawal);
        	$model->setClosingBalance($balance);
        	$model->setStatus(Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED);
     	$model->save();
