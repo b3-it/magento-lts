@@ -37,29 +37,31 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 	
 	public function processOrderItem($orderitem, $order)
 	{
-		if (!$orderitem->getId()) {
-			//order not saved in the database
-			return $this;
-		}
-		$product = $orderitem->getProduct();
+		return $this;
+		
+// 		if (!$orderitem->getId()) {
+// 			//order not saved in the database
+// 			return $this;
+// 		}
+// 		$product = $orderitem->getProduct();
 	
-		if (!$product) {
-			$product = Mage::getModel('catalog/product')
-			->setStoreId($order->getStoreId())
-			->load($orderitem->getProductId());
-		} 
+// 		if (!$product) {
+// 			$product = Mage::getModel('catalog/product')
+// 			->setStoreId($order->getStoreId())
+// 			->load($orderitem->getProductId());
+// 		} 
 		
-		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
-			return $this;
-		}
+// 		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
+// 			return $this;
+// 		}
 	
 		
-		$br = $orderitem->getBuyRequest();
+// 		$br = $orderitem->getBuyRequest();
 		
-		Mage::getModel('virtualpayid/payid')
-			->setOrderItemId($orderitem->getId())
-			->setKassenzeichen($br->getPayId())
-			->save();
+// 		Mage::getModel('virtualpayid/payid')
+// 			->setOrderItemId($orderitem->getId())
+// 			->setKassenzeichen($br->getPayId())
+// 			->save();
 		
 	
 		return $this;

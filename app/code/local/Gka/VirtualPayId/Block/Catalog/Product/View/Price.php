@@ -38,9 +38,7 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Price extends Mage_Catalog_Blo
 				}
 			}
 		}
-		
-		
-		
+		//fallback
 		$this->setTemplate('gka/virtualpayid/catalog/product/view/pricemanual.phtml');
 		
 		return $this;
