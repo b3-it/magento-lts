@@ -135,6 +135,17 @@
             }
         }
 
+        .store-language-container {
+            top: auto;
+            right: auto;
+            width: 70%;
+            padding: 0;
+
+            select {
+                margin: 0;
+            }
+        }
+
         #search_mini_form input {
             margin: 0;
             border-radius: 4px;
@@ -154,11 +165,11 @@
         left: 45%;
         top: -1px;
         width: 95%;
-        
+
         > div {
             display: inline-block;
             vertical-align: top;
-            width: 48%;
+            width: 95%;
             padding: 0;
             margin: 0;
             left: 0;
@@ -169,8 +180,9 @@
         #search_mini_form {
             #search {
                 width: 100%;
+                border-radius: 4px;
             }
-            
+
             .button {
                 display: none;
             }
@@ -510,7 +522,7 @@
     @include bp(max-width, $bp-small) {
         border: 0;
         background-color: $global-page-color;
-        border-left: $global-active-border solid $global-navigation-font-color;
+        border: 0;
     }
 
     .icon {
@@ -521,6 +533,18 @@
 
 	    @include bp(min-width, $bp-xsmall) {
 	        margin-right: 3px;
+	    }
+	}
+
+	.egov-user {
+	    @include bp(max-width, $bp-xsmall) {
+	        margin-left: 40%;
+	    }
+	}
+
+	.egov-cart {
+	    @include bp(max-width, $bp-xsmall) {
+	        margin-left: 70%;
 	    }
 	}
 
