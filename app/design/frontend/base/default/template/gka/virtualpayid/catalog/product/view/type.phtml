@@ -35,16 +35,16 @@
     <?php endif; ?>
 <?php endif; ?>
 
-<div>
-	<label for="kassenzeichen"><?php echo $this->__('Payment code') ?></label>
+<div id="virtual-pay-block">
+	<label for="pay_id"><?php echo $this->__('Payment code') ?></label>
 	<input name="pay_id" class="required-entry" id="pay-id" value="" />
+    <img src="<?php echo $this->getSkinUrl(); ?>images/opc-ajax-loader.gif" style="display:none;" class="ajax-spinner" />
 	<button type="button" class="button" onclick="fetchPrice();" id="fetchprice">
 	    <?php echo $this->helper('virtualpayid')->__('Fetch Price')?>
 	</button>
+	
+	<div id="price-container"></div>
 </div>
-
-<div id="price-container"></div>
-
 
 <script type="text/javascript">
     var optionsPrice    = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
@@ -52,62 +52,9 @@
 	var diff_price_msg  = "<?php echo $this->__('Amounts are not equal!'); ?>";
 	var validator_msg   = "<?php echo $this->__('Please make sure your amounts match.'); ?>";
 	var ajax_error_msg  = "<?php echo $this->__('Sorry, there was a problem!'); ?>";
-
-	Validation.add('validate-both-amounts', validator_msg, function(v, input) {
-        var dependentInput = $(input.form[input.name == 'amount' ? 'confirmation' : 'amount']),
-            isEqualValues  = input.value == dependentInput.value;
-
-        if (isEqualValues && dependentInput.hasClassName('validation-failed')) {
-            Validation.test(this.className, dependentInput);
-        }
-        return dependentInput.value == '' || isEqualValues;
-    });
-
-	
-	function fetchPrice(){
-		//var kz = $j('#pay-id').val();
-
-		$j.ajax({
-			'method': 'POST',
-			'url'   : fetch_price_url,
-			'cache' : false,
-			'data'  : {
-				'pay_id': $j('#pay-id').val()
-		    },
-            'beforeSend': function() {
-            }
-		})
-		.done(function (data) {
-            $j('#price-container').html(data);
-		})
-		.fail(function( jqXHR, textStatus ) {
-            alert( "Fehler: " + textStatus );
-            //alert(ajax_error_msg);
-        });		
-	}
-
-	function setPrice(amount = false)
-	{
-		if(amount === false ) {
-			amount = $j('#amount').val();
-		}
-        optionsPrice.changePrice('config', {'price': amount, 'oldPrice': 0});
-        optionsPrice.reload();
-	}
-	
-	function validateAmount()
-	{
-		var amount = $j('#amount').val();
-		var amount2 = $j('#confirmation').val();
-		if(amount != amount2){
-			//alert(diff_price_msg);
-			setPrice(0);
-		}else{
-			setPrice();
-		}		
-	}
-
 </script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/virtual_pay_id.js"></script>
+
 
 <?php //echo $this->getChildHtml('product_type_data_extra') ?>
 <?php // echo $this->getPriceHtml($_product) ?>

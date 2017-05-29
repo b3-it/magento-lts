@@ -61,7 +61,7 @@
 //     so we should try not to change this order once it is in place
 @import "../../../egov/default/scss/module/select-language";
 @import "../../../egov/default/scss/module/product-list";
-@import "../../../egov/default/scss/module/catalog-product";
+@import "module/catalog-product";
 @import "../../../egov/default/scss/module/catalog-msrp";
 @import "../../../egov/default/scss/module/catalog-seo-sitemap-category";
 @import "../../../egov/default/scss/module/catalog-compare";
