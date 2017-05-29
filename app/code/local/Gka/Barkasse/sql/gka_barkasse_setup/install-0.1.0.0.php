@@ -43,6 +43,7 @@ if (!$installer->tableExists($installer->getTable('gka_barkasse/kassenbuch_journ
         `closing` datetime default null,
         `opening_balance`  decimal(12,4) default 0,
         `closing_balance`  decimal(12,4) default 0,
+        `withdrawal`  decimal(12,4) default 0,
         `customer_id` int(11) unsigned default null,
         `cashbox_id` int(11) unsigned default null,
         `cashbox_title` varchar(128) default '',
@@ -153,7 +154,9 @@ $html = '<h2>Kassenabschlussprotokoll {{number}}</h2><h3>{{cashbox_title}} - {{(
 	<td style="width:80mm;">Eröffnungsbetrag</td><td style="width:80mm;">{{(price)opening_balance}}</td>
 	</tr><tr>		
 	<td style="width:80mm;">Abschlussbetrag</td><td style="width:80mm;">{{(price)closing_balance}}</td>
-	</tr><tr>		
+	</tr><tr>	
+	<td style="width:80mm;">Entnahme</td><td style="width:80mm;">{{(price)withdrawal}}</td>
+	</tr><tr>	
 	<td style="width:80mm;">Summe der Einzelbeträge</td><td style="width:80mm;">{{(price)total}}</td>
 	</tr>
 	</table>

@@ -82,6 +82,14 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
           'index'     => 'closing_balance',
       ));
       
+      $this->addColumn('withdrawal', array(
+      		'header'    => Mage::helper('gka_barkasse')->__('Withdrawal'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'withdrawal',
+      		'type'	=> 'price'
+      ));
+      
       $this->addColumn('sum_booking_amount', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Total'),
       		//'align'     =>'left',
@@ -143,6 +151,25 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
                 'index'     => 'stores',
                 'is_system' => true,
         ));
+        
+        $this->addColumn('action1',
+        		array(
+        				'header'    =>  Mage::helper('gka_barkasse')->__('Protokoll'),
+        				'width'     => '100',
+        				'type'      => 'action',
+        				'getter'    => 'getId',
+        				'actions'   => array(
+        						array(
+        								'caption'   => Mage::helper('gka_barkasse')->__('Pdf'),
+        								'url'       => array('base'=> '*/kassenbuch_journal/pdf'),
+        								'field'     => 'id'
+        						)
+        				),
+        				'filter'    => false,
+        				'sortable'  => false,
+        				'index'     => 'stores',
+        				'is_system' => true,
+        		));
 
 		$this->addExportType('*/*/exportCsv', Mage::helper('gka_barkasse')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('gka_barkasse')->__('XML'));

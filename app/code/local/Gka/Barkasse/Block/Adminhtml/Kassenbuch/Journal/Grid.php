@@ -28,12 +28,12 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
 
   protected function _prepareColumns()
   {
-      $this->addColumn('id', array(
-          'header'    => Mage::helper('gka_barkasse')->__('ID'),
-          'align'     =>'right',
-          'width'     => '50px',
-          'index'     => 'id',
-      ));
+//       $this->addColumn('id', array(
+//           'header'    => Mage::helper('gka_barkasse')->__('ID'),
+//           'align'     =>'right',
+//           'width'     => '50px',
+//           'index'     => 'id',
+//       ));
 
       $this->addColumn('number', array(
           'header'    => Mage::helper('gka_barkasse')->__('Number'),
@@ -66,12 +66,22 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'opening_balance',
+      		'type'	=> 'price'
       ));
       $this->addColumn('closing_balance', array(
           'header'    => Mage::helper('gka_barkasse')->__('Closing Balance'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'closing_balance',
+      		'type'	=> 'price'
+      ));
+      
+      $this->addColumn('withdrawal', array(
+      		'header'    => Mage::helper('gka_barkasse')->__('Withdrawal'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'withdrawal',
+      		'type'	=> 'price'
       ));
       /*
       $this->addColumn('customer_id', array(
@@ -111,7 +121,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
                 'getter'    => 'getId',
                 'actions'   => array(
                     array(
-                        'caption'   => Mage::helper('gka_barkasse')->__('Edit'),
+                        'caption'   => Mage::helper('gka_barkasse')->__('Details'),
                         'url'       => array('base'=> '*/*/edit'),
                         'field'     => 'id'
                     )

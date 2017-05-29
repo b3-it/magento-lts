@@ -9,25 +9,38 @@
 		<label for="cashbox"><?php echo $_helper->__('Cashbox')?></label>
 		<?php echo $this->getCashboxHtml();?>
 		
+		<br/>
+		<label for="last_balance"><?php echo $_helper->__('Last Balance')?></label>
+		<input id="last_balance" name="last_balance" readonly="readonly" value="<?php echo $this->getLastBalance()?>"></input>
+		<br/>
 		<label for="opening_balance"><?php echo $_helper->__('Opening Balance')?></label>
 		<input id="opening_balance" name="opening_balance"></input>
 		
 		<button type="submit"><?php echo $_helper->__('Open')?></button>
 		</form>
-	
+	<br/>
 	</div>	
 	<?php else: ?>
 	<div id = "close_journal">
 		<h2>Ein Kassenbuch für die Kasse '<?php echo $_kassenbuchjournal->getCashboxTitle()?>' ist geöffnet.</h2>
+		
 		<form action="<?php echo $this->getCloseUrl();?>" method="post">
 		
 		<input type="hidden" name="id" value="<?php echo $_kassenbuchjournal->getId()?>"></input>
-		<label for="closing_balance"><?php echo $_helper->__('Closing Balance')?></label>
-		<input id="closing_balance" name="closing_balance"></input>
-		
+		<br/>
+		<label for="opening"><?php echo $_helper->__('Opening Balance')?></label>
+		<input id="opening" name="opening" readonly="readonly" value="<?php echo $this->getOpeningBalance()?>"></input>
+		<br/>
+		<label for="saldo"><?php echo $_helper->__('Saldo')?></label>
+		<input id="saldo" name="saldo" readonly="readonly" value="<?php echo $this->getTotal()?>"></input>
+		<br/>
+		<label for="withdrawal"><?php echo $_helper->__('Withdrawal')?></label>
+		<input id="withdrawal" name="withdrawal"></input>
+		<br/>
 		<button type="submit"><?php echo $_helper->__('Close')?></button>
 		
 		</form>
+		<br/>
 	</div>
 	<?php endif;?>
 
