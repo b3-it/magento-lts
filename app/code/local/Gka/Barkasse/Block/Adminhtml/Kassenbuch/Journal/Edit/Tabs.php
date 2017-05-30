@@ -22,14 +22,14 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tabs extends Mage_Adm
   protected function _beforeToHtml()
   {
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('gka_barkasse')->__('Kassenbuch Journal Information'),
-          'title'     => Mage::helper('gka_barkasse')->__('Kassenbuch Journal Information'),
+          'label'     => Mage::helper('gka_barkasse')->__('Journal Details'),
+          'title'     => Mage::helper('gka_barkasse')->__('Journal Details'),
           'content'   => $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_journal_edit_tab_form')->toHtml(),
       ));
       
       $this->addTab('form_section1', array(
-      		'label'     => Mage::helper('gka_barkasse')->__('Detail Information'),
-      		'title'     => Mage::helper('gka_barkasse')->__('Detail Information'),
+      		'label'     => Mage::helper('gka_barkasse')->__('Buchungen'),
+      		'title'     => Mage::helper('gka_barkasse')->__('Buchungen'),
       		'content'   => $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_journal_edit_tab_items')->toHtml(),
       ));
 

@@ -42,9 +42,10 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit extends Mage_Adminhtm
     public function getHeaderText()
     {
         if( Mage::registry('kassenbuchjournal_data') && Mage::registry('kassenbuchjournal_data')->getId() ) {
-            return Mage::helper('gka_barkasse')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('kassenbuchjournal_data')->getId()));
+        	$journal = Mage::registry('kassenbuchjournal_data');
+        	return Mage::helper('gka_barkasse')->__("Deails von Kasse '%s' vom %s",$journal->getCashboxTitle(),$journal->getOpening());
         } else {
-            return Mage::helper('gka_barkasse')->__('Add Item');
+            return '';
         }
     }
 

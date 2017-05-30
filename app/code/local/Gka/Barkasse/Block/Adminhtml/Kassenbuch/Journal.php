@@ -14,9 +14,10 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal extends Mage_Adminhtml_Blo
   {
     $this->_controller = 'adminhtml_kassenbuch_journal';
     $this->_blockGroup = 'gka_barkasse';
-    $this->_headerText = Mage::helper('gka_barkasse')->__('Kassenbuch Journal Manager');
-    $this->_addButtonLabel = Mage::helper('gka_barkasse')->__('Add Item');
+    $this->_headerText = Mage::helper('gka_barkasse')->__('Kassenbuch Journal');
+    
     parent::__construct();
+    $this->_removeButton('add');
   }
   
   

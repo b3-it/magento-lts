@@ -115,16 +115,16 @@
     <adminhtml>
       <menu>
           <gkabarkasse module="gka_barkasse">
-              <title>Gka Barkasse</title>
+              <title>Barkasse</title>
               <sort_order>50</sort_order>
               <children>
                   <gkabarkasse_kassenbuch_journal module="gka_barkasse">
-                      <title>Kassenbuch Journal</title>
+                      <title>Kassenbuch</title>
                       <sort_order>10</sort_order>
                       <action>adminhtml/barkasse_kassenbuch_journal/index</action>
                   </gkabarkasse_kassenbuch_journal>
                   <gkabarkasse_kassenbuch_cashbox module="gka_barkasse">
-                      <title>Kassenbuch Cashbox</title>
+                      <title>Barkassen konfiguration</title>
                       <sort_order>30</sort_order>
                       <action>adminhtml/barkasse_kassenbuch_cashbox/index</action>
                   </gkabarkasse_kassenbuch_cashbox>

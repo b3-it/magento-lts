@@ -13,9 +13,9 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('kassenbuchjournal/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('KassenbuchJournal Manager'), Mage::helper('adminhtml')->__('KassenbuchJournal Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('KassenbuchJournal Manager'));
+			->_setActiveMenu('gkabarkasse/journal')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Kassenbuch Journal'), Mage::helper('adminhtml')->__('Kassenbuch Journal'));
+		$this->_title(Mage::helper('adminhtml')->__('Kassenbuch Journal'));
 		return $this;
 	}
 
