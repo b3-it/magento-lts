@@ -36,10 +36,45 @@ class Dwd_Ibewi_Model_Observer extends Varien_Object
 	        		$product = Mage::getModel('catalog/product')->load($product->getId());
 	        		$quoteItem->setIbewiMaszeinheit($product->getIbewiMaszeinheit());
 	        	}
+	        	
+	        	if($product->getKostentraeger()){
+	        		$quoteItem->setKostentraeger($product->getKostentraeger());
+	        	}
+	        	//fallback für grupped Produkte
+	        	else{
+	        		$product = Mage::getModel('catalog/product')->load($product->getId());
+	        		$quoteItem->setKostentraeger($product->getKostentraeger());
+	        	}
 	        }
     	}
         return $this;
     }
     
+    
+    /**
+     * Wird nach dem hinzufügen eines Items zu einer Quote aufgerufen.
+     *
+     * Die Quote wurde noch nicht gespeichert!
+     *
+     * @param Varien_Event_Observer $observer Observer-Daten
+     *
+     * @return void
+     */
+    public function onSalesQuoteAddItem($observer) {
+    	/* @var $item Mage_Sales_Model_Quote_Item */
+    	$additem = $observer->getQuoteItem();
+    	if (!$additem) {
+    		return;
+    	}
+    
+    	$quote = $additem->getQuote();
+    	foreach($quote->getAllItems() as $item)
+    	{
+	    	if ($item->getTaxClassId() != $additem->getTaxClassId()) {
+	    		
+	    		Mage::throwException(Mage::helper('germantax')->__('It is not possible to buy these items together. Please buy this item separately or remove all other items in your shopping cart.'));
+	    	}
+    	}
+    }
     
 }

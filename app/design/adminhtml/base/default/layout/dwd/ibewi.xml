@@ -20,5 +20,11 @@
             	<block type="ibewi/adminhtml_order" as="grid" name="grid" />
             </block>
         </reference>
-    </adminhtml_ibewi_order_index>    
+    </adminhtml_ibewi_order_index>
+    <adminhtml_ibewi_kostentraeger_attribute_index>
+        <reference name="content">
+            <block type="ibewi/adminhtml_kostentraeger_attribute" name="kostentraeger_attribute" />
+        </reference>
+    </adminhtml_ibewi_kostentraeger_attribute_index>
+ 
 </layout>

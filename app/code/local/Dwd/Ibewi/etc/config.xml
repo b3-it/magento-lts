@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Dwd_Ibewi>
-            <version>0.1.2</version>
+            <version>0.1.3</version>
         </Dwd_Ibewi>
     </modules>
     <frontend>
@@ -64,6 +64,19 @@
                     </ibewi>
                 </children>
             </report>
+			<catalog>
+				<children>
+					<attributes>
+							<children>
+								<dwdibewi_kostentraeger_attribute module="ibewi">
+									<title>Kostenträger</title>
+									<sort_order>10</sort_order>
+									<action>adminhtml/ibewi_kostentraeger_attribute/index</action>
+								</dwdibewi_kostentraeger_attribute>
+							</children>
+					</attributes>
+				</children>
+			</catalog>
         </menu>
         <acl>
             <resources>
@@ -118,6 +131,9 @@
                     <access>
                         <table>ibewi_access</table>
                     </access>
+                    <kostentraeger_attribute>
+                        <table>ibewi_kostentraeger_attribute</table>
+                    </kostentraeger_attribute>
                 </entities>
             </ibewi_mysql4>
         </models>
@@ -217,12 +233,19 @@
                 <ibewi_maszeinheit>
                     <to_order_item>*</to_order_item>
                 </ibewi_maszeinheit>
+                <kostentraeger>
+                    <to_order_item>*</to_order_item>
+                </kostentraeger>
             </sales_convert_quote_item>
             <sales_convert_order_item>
                 <ibewi_maszeinheit>
                     <to_quote_item>*</to_quote_item>
                     <to_invoice_item>*</to_invoice_item>
                 </ibewi_maszeinheit>
+                <kostentraeger>
+                    <to_quote_item>*</to_quote_item>
+                    <to_invoice_item>*</to_invoice_item>
+                </kostentraeger>
            </sales_convert_order_item>
         </fieldsets>
         <sales>
@@ -230,6 +253,7 @@
         		<item>
         			<product_attributes>
                         <ibewi_maszeinheit/>
+                        <kostentraeger/>
                     </product_attributes>
         		</item>
         	</quote>
@@ -243,6 +267,15 @@
                     </sales_quote_item_set_product>
                 </observers>
             </sales_quote_product_add_after>
+            <sales_quote_add_item>
+                <observers>
+                    <ibewi_quote_item_add>
+                        <type>singleton</type>
+                        <class>Dwd_Ibewi_Model_Observer</class>
+                        <method>onSalesQuoteAddItem</method>
+                    </ibewi_quote_item_add>
+                </observers>
+            </sales_quote_add_item>
              </events>
     </global>
 </config>
