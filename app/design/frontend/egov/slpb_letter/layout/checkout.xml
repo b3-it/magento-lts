@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <!--
 /**
  * Magento
@@ -72,9 +73,11 @@ Default layout, loads most of the pages
 	                <block type="core/text_list" name="checkout.cart.top_methods" as="top_methods">
 	                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
 	                </block>
-	
+
+	                <!-- <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/> -->
+
 	                <block type="mpcheckout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
-					<action method="setCheckoutUrl"><url>slpb_checkout/shopletter/addresses</url></action>
+					    <action method="setCheckoutUrl"><url>slpb_checkout/shopletter/addresses</url></action>
 					</block>
 	            </block>
             </block>

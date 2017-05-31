@@ -22,7 +22,7 @@
  * @package    Mage
  * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- * Anpassungen für slpb_Quickform
+ * Anpassungen fï¿½r slpb_Quickform
  */
 ?>
 <?php
@@ -72,13 +72,12 @@ function deleteAll(url)
 		window.location.href = url;
 	}
 }
-
 </script>
 
 <?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
     <thead>
         <tr>
-            <th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Remove') ?></th>
+            <th rowspan="<?php echo $mergedCells; ?>" class="a-center"></th>
             <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
             <th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?></th>
             <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
@@ -99,24 +98,7 @@ function deleteAll(url)
     </thead>
     <tfoot>
         <tr>
-        	<td class="a-center" id="_idDeleteAll">
-        		
-        	</td>
-            <td colspan="100" class="a-right">
-                <button class="form-button-alt" type="submit"><span><?php echo $this->__('Update Shopping Cart') ?></span></button>
-				<!-- auskommentiert für Quickform nicht benötigt Jonas 2010-12-03  
-				<?php if($this->getContinueShoppingUrl()): ?>
-					<div style="float:left;">
-    		            <a href="<?php echo $this->getContinueShoppingUrl() ?>" class="slpblistbutton"><span><?php echo $this->__('Continue Shopping') ?></span></a>
-					</div>
-				<?php endif; ?> Ende Quickform -->
-				<!-- Nach totals.phtml verschoben entsprechend sachsen-layout -->
-				<!-- <div style="float:right;">
-	  				<a href="<?php echo $this->getCheckoutUrl(); ?>"><?php echo $this->__('Checkout')?></a>
-				</div> -->
-
-	  			<!-- TODO: egovs_multipage-checkout-url irgendwoher beziehen? url-helper hat nichts wirkliches im angebot -->
-            </td>
+            <td colspan="10"></td>
         </tr>
     </tfoot>
     <tbody>
@@ -126,40 +108,56 @@ function deleteAll(url)
     </tbody>
 </table>
 
-<script type="text/javascript">
-decorateTable('shopping-cart-table');
-document.getElementById('_idDeleteAll').innerHTML = '<?php echo $this->getDeleteAllUrl();?>';
-</script>
+<div class="buttons-set">
+	<a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button"><span><?php echo $this->__('Delete All Items') ?></span></a>
 
+	<button class="button" type="submit"><span><?php echo $this->__('Update Shopping Cart') ?></span></button>
+</div>
+
+<script type="text/javascript">decorateTable('shopping-cart-table');</script>
 </form>
 
-
-<div class="shopping-cart-collaterals">
-    <div class="col2-set">
-        <?php echo $this->getChildHtml('crosssell') ?>
-        <div class="col-1">
-            <!--coupon nach totals -->
-            <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping');?>
-               <h4>Informationen zur Bereitstellungspauschale</h4>
-    <p><a href="<?php echo $this->getUrl('abholungspauschale') ?>">Hier finden Sie Informationen zur Berechnung der Bereitstellungspauschale.</a></p>
-            <?php endif; ?>
-            
+<div class="cart-forms">
+    <div class="shipping">
+        <div class="block-content">
+          <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping');?>
+            <h4><?php echo $this->__('Information on the supply fee'); ?></h4>
+            <p>
+                <a href="<?php echo $this->getUrl('abholungspauschale') ?>">
+                    <?php echo $this->__('Here you will find information on the calculation of the supply fee.'); ?>
+                </a>
+            </p>
+          <?php endif; ?>            
         </div>
-        <!--Totals in class col-2  -->
-        <div class="col-2">
-         <div class="shopping-cart-totals">
-	     <?php echo $this->getChildHtml('totals'); ?>
- 	     <?php if(!$this->hasError()): ?>
- 		   <ul class="checkout-types">
-         <?php echo $this->getChildHtml('methods') ?>
-   		   </ul>
-         <?php endif; ?>
-		</div>
-        <?php echo $this->getChildHtml('coupon') ?>
-       </div>
-    </div>
+    </div>    
 </div>
-<!--Totals von hier in class col-2  -->
+<div class="cart-totals-wrapper">
+    <div class="cart-totals" id="jumptarget<?php echo $this->getNameInLayout();?>">
+        <?php echo $this->getChildHtml('totals'); ?>
+
+      <?php if(!$this->hasError()): ?>
+        <button class="button btn-proceed-checkout btn-checkout"
+                onclick="window.location='<?php echo $this->getUrl('slpb_checkout/shopletter/addresses') ?>';"
+                title="<?php echo $this->__('Proceed to checkout'); ?>"
+                type="button">
+            <div id="proceed-button-first">
+                <?php echo $this->__('Order now'); ?>
+            </div>
+            (<?php echo $this->__('Checkout'); ?>)
+        </button>
+      <?php endif; ?>
+
+    </div>
+    <?php echo $this->getChildHtml('coupon') ?>
+</div>
+<?php echo $this->getChildHtml('crosssell') ?>
+
+
+<?php if(!$this->hasError()): ?>
+<ul class="checkout-types">
+    <?php echo $this->getChildHtml('methods') ?>
+</ul>
+<?php endif; ?>
 
 <div class="clear"></div>
 
