@@ -8,7 +8,7 @@ $installer->startSetup();
 
 	$data = array();
 	$data['general']['title'] = "Rechnung";
-	$data['general']['type'] = Egovs_Pdftemplate_Model_Type::TYPE_INVOICE;
+	$data['general']['type'] = 1; 
 	$data['general']['status'] = Egovs_Pdftemplate_Model_Status::STATUS_ENABLED;
 	
 	$html = '<table><tr>
@@ -117,7 +117,7 @@ $installer->startSetup();
 	
 		$data = array();
 	$data['general']['title'] = "Lieferschein";
-	$data['general']['type'] = Egovs_Pdftemplate_Model_Type::TYPE_DELIVERYNOTE;
+	$data['general']['type'] = 3;
 	$data['general']['status'] = Egovs_Pdftemplate_Model_Status::STATUS_ENABLED;
 	
 	$html = '<table><tr>
@@ -222,9 +222,9 @@ $installer->startSetup();
 	$this->CreateTemplate($data);
 
 	
-		$data = array();
+	$data = array();
 	$data['general']['title'] = "Gutschrift";
-	$data['general']['type'] = Egovs_Pdftemplate_Model_Type::TYPE_CREDITMEMO;
+	$data['general']['type'] = 2;
 	$data['general']['status'] = Egovs_Pdftemplate_Model_Status::STATUS_ENABLED;
 	
 	$html = '<table><tr>

@@ -6,7 +6,7 @@ $installer->startSetup();
 
 $data = array();
 $data['general']['title'] = "SEPA Mandat";
-$data['general']['type'] = Egovs_Pdftemplate_Model_Type::TYPE_SEPAMANDAT;
+$data['general']['type'] = 4;
 $data['general']['status'] = Egovs_Pdftemplate_Model_Status::STATUS_ENABLED;
 
 $html = '';
