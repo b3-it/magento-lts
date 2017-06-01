@@ -175,19 +175,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('kassenbuchjournal_id');
-
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('gka_barkasse')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('gka_barkasse')->__('Are you sure?')
-        ));
-
-        return $this;
-    }
+ 
 
 	public function getGridUrl($params = array())
     {
