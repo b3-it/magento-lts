@@ -72,6 +72,15 @@
                     </gka_barkasse_save_order_after>
                 </observers>
             </checkout_submit_all_after>
+            <customer_customer_authenticated>
+            <observers>
+                    <gka_barkasse_customer_authenticated>
+                        <type>singleton</type>
+                        <class>gka_barkasse/observer</class>
+                        <method>onCustomerAuthenticated</method>
+                    </gka_barkasse_customer_authenticated>
+                </observers>
+            </customer_customer_authenticated>
         </events>
     </global>
     <frontend>

@@ -258,20 +258,34 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     	$service = Mage::getModel('sales/service_quote', $this->getQuote());
     	$service->submitAll();
     	
+    	$this->getCheckout()->setLastQuoteId($this->getQuote()->getId())
+    	->setLastSuccessQuoteId($this->getQuote()->getId())
+    	->clearHelperData();
     	
     	$order = $service->getOrder();
         
-        
+    	$this->getQuote()->getItemsCollection()->clear();
+    	$this->getQuote()->save();
+    	
+    	
         if ($order) {
+        	Mage::getSingleton('core/session')->setOrderId($order->getIncrementId());
         	Mage::dispatchEvent('checkout_submit_all_after', array('order' => $order, 'quote' => $this->getQuote()));
         	if($givenamount){
         		$order->setGivenAmount($givenamount)->save();
         	}
         }
         
+       
      
     }
 
+    
+    public function getCheckout()
+    {
+    	return Mage::getSingleton('checkout/session');
+    }
+    
     /**
      * Collect quote totals and save quote object
      *
@@ -351,7 +365,8 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
      */
     public function getOrderIds($asAssoc = false)
     {
-        $idsAssoc = Mage::getSingleton('core/session')->getOrderIds();
+    	
+        $idsAssoc =array(Mage::getSingleton('core/session')->getOrderId());
         return $asAssoc ? $idsAssoc : array_keys($idsAssoc);
     }
     
