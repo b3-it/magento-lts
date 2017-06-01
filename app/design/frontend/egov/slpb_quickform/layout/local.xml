@@ -12,17 +12,17 @@
         </reference>
     </default>
     
-    <slpb_checkout_shopletter_addresses>
+    <slpb_checkout_shop_addresses>
         <reference name="root">
             <action method="addBodyClass"><classname>egovs-checkout-multipage-newaddress</classname></action>
             <action method="addBodyClass"><classname>mp-checkout</classname></action>
         </reference>
-    </slpb_checkout_shopletter_addresses>
+    </slpb_checkout_shop_addresses>
     
-    <slpb_checkout_shopletter_successview>
+    <slpb_checkout_shop_successview>
         <reference name="root">
             <action method="addBodyClass"><classname>egovs-checkout-multipage-successview</classname></action>
             <action method="addBodyClass"><classname>mp-checkout</classname></action>
         </reference>
-    </slpb_checkout_shopletter_successview>
+    </slpb_checkout_shop_successview>
 </layout>

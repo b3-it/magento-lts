@@ -40,8 +40,10 @@ function changeIdent() {
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" autocomplete="off">
-    <input type="radio" name="billing[customerident]" id="customeridentNumber" value="0" checked="checked" onclick="changeIdent()"><?php echo $this->__('Customernumber'); ?><br />
-    <input type="radio" name="billing[customerident]" id="customeridentAddress" value="1" onclick="changeIdent()"><?php echo $this->__('Address'); ?><br />
+    <div id="slpb-change-adress">
+        <div><input type="radio" name="billing[customerident]" id="customeridentNumber" value="0" checked="checked" onclick="changeIdent()"><?php echo $this->__('Customernumber'); ?></div>
+        <div><input type="radio" name="billing[customerident]" id="customeridentAddress" value="1" onclick="changeIdent()"><?php echo $this->__('Address'); ?></div>
+    </div>
     <fieldset id="numberident">
         <div class="input-box name-lastname">
 	        <label for="billing:customernumber"><?php echo $this->__('Customernumber'); ?></label>
@@ -54,7 +56,7 @@ function changeIdent() {
 	        <li class="fields fullwide">
 	            <?php echo $this->getBillingtext()?>
 	        </li>
-            <li class="fields fullwide" id="billing-new-address-form">
+            <li class="fields halfwide" id="billing-new-address-form">
                 <div class="input-box name-prefix">
         			   <label for="billing:prefix"><?php echo $this->__('Prefix') ?></label>
 			           <select id="billing:prefix" name="billing[prefix]" title="<?php echo $this->__('Prefix') ?>">
@@ -67,32 +69,34 @@ function changeIdent() {
    				</div>
 	        </li>
             <li class="fields fullwide" id="customer-name">
-                <div class="field name-firstname">
-        			<label for="billing:firstname"><?php echo $this->__('First Name') ?><span class="required">*</span></label>
-			        <div class="input-box">
-			            <input type="text" id="billing:firstname" name="billing[firstname]" value="<?php echo $this->htmlEscape($this->getAddress()->getFirstname()) ?>" title="<?php echo $this->__('First Name') ?>" class="input-text required-entry"  />
+                <div class="customer-name">
+                    <div class="field name-firstname">
+            			<label for="billing:firstname"><?php echo $this->__('First Name') ?><span class="required">*</span></label>
+		    	        <div class="input-box">
+			                <input type="text" id="billing:firstname" name="billing[firstname]" value="<?php echo $this->htmlEscape($this->getAddress()->getFirstname()) ?>" title="<?php echo $this->__('First Name') ?>" class="input-text required-entry"  />
+			            </div>
 			        </div>
-			    </div>
-			    <div class="field name-lastname">
-				    <label for="billing:lastname"><?php echo $this->__('Last Name') ?><span class="required">*</span></label>
-			        <div class="input-box">
-                        <input type="text" id="billing:lastname" name="billing[lastname]" value="<?php echo $this->htmlEscape($this->getAddress()->getLastname()) ?>" title="<?php echo $this->__('Last Name') ?>" class="input-text required-entry"  />
-			        </div>
+			        <div class="field name-lastname">
+				        <label for="billing:lastname"><?php echo $this->__('Last Name') ?><span class="required">*</span></label>
+			            <div class="input-box">
+                            <input type="text" id="billing:lastname" name="billing[lastname]" value="<?php echo $this->htmlEscape($this->getAddress()->getLastname()) ?>" title="<?php echo $this->__('Last Name') ?>" class="input-text required-entry"  />
+			            </div>
+				    </div>
 				</div>
             </li>
             <li class="fields fullwide">
-                            <label for="billing:street1"><?php echo $this->__('Address') ?><span class="required">*</span></label><br />
-                            <input type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text required-entry" />
+                <label for="billing:street1"><?php echo $this->__('Address') ?><span class="required">*</span></label>
+                <input type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text required-entry" />
             </li>
             <li class="fields fullwide">
-                            <div class="input-box">
-                                <label for="billing:postcode"><?php echo $this->__('Zip/Postal Code') ?><span class="required">*</span></label><br />
-                                <input type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" />
-                            </div>
-                            <div class="input-box">
-                                <label for="billing:city"><?php echo $this->__('City') ?> <span class="required">*</span></label>><br />
-                                <input type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="billing:city" />
-                            </div>
+                <div class="input-box">
+                    <label for="billing:postcode"><?php echo $this->__('Zip/Postal Code') ?><span class="required">*</span></label>
+                    <input type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" />
+                </div>
+                <div class="input-box">
+                    <label for="billing:city"><?php echo $this->__('City') ?> <span class="required">*</span></label>
+                    <input type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="billing:city" />
+                </div>
             </li>
         </ul>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>

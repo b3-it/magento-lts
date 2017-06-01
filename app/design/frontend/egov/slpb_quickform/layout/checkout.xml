@@ -61,7 +61,7 @@ Default layout, loads most of the pages
         <reference name="content">
         	<block type="slpbcheckout/quick_form" name="cart_quick" template="slpb/checkout/quick.phtml">
 	            <block type="slpbcheckout/cart" name="checkout.cart">
-	            	<action method="setCheckoutUrl"><url>slpb_checkout/shop/addresses</url></action>
+	            	<!-- <action method="setCheckoutUrl"><url>slpb_checkout/shop/addresses</url></action> -->
 	                <action method="setCartTemplate"><value>slpb/checkout/cart.phtml</value></action>
 	                <action method="setEmptyTemplate"><value>slpb/checkout/noItems.phtml</value></action>
 	                <action method="chooseTemplate"/>
@@ -73,16 +73,8 @@ Default layout, loads most of the pages
 	                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
 	                </block>
 	
-	                <!-- auskommentiert für Quickform Jonas 2010-12-03 <block type="core/text_list" name="checkout.cart.methods" as="methods">
-	                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
-	                </block>-->
-	
-	                <!--<block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>-->
-	                <!--<block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>-->
-	                <!--<block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>-->
-	
 	                <block type="mpcheckout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
-					 <action method="setCheckoutUrl"><url>slpb_checkout/shop/addresses</url></action>
+					    <action method="setCheckoutUrl"><url>slpb_checkout/shop/addresses</url></action>
 					</block>
 	            </block>
             </block>
