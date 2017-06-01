@@ -7,13 +7,13 @@
  * @package    	Dwd_Ibewi
  * @name        Dwd_Ibewi_Model_Observer
  * @author 		Holger Kögel <hkoegel@edv-beratung-hempel.de>
- * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @copyright  	Copyright (c) 2017 b3-it Systeme GmbH http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Dwd_Ibewi_Model_Observer extends Varien_Object
 {
  
-   //kopieren des Ibewi Wertes vom Produkt in die bestellung
+   //kopieren der Ibewi Werte Maßeinheit und Kostenträger vom Produkt in die Bestellung
     public function onQuoteItemSetProduct($observer)
     {
     	$product = null;
@@ -53,9 +53,9 @@ class Dwd_Ibewi_Model_Observer extends Varien_Object
     
     /**
      * Wird nach dem hinzufügen eines Items zu einer Quote aufgerufen.
-     *
      * Die Quote wurde noch nicht gespeichert!
      *
+     * Abweisen von verschiedenen Steuersätzen
      * @param Varien_Event_Observer $observer Observer-Daten
      *
      * @return void
