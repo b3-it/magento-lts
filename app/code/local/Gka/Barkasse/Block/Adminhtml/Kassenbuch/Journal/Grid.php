@@ -73,6 +73,13 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       		'type'	=> 'price'
       ));
       
+      $this->addColumn('sum_id', array(
+      		'header'    => Mage::helper('gka_barkasse')->__('Count'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'sum_id',
+      ));
+      
       $this->addColumn('sum_booking_amount', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Total Taking'),
       		//'align'     =>'left',
@@ -100,12 +107,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       
 
       
-      $this->addColumn('sum_id', array(
-      		'header'    => Mage::helper('gka_barkasse')->__('Count'),
-      		//'align'     =>'left',
-      		//'width'     => '150px',
-      		'index'     => 'sum_id',
-      ));
+
       /*
       $this->addColumn('customer_id', array(
           'header'    => Mage::helper('gka_barkasse')->__('Owner ID'),
