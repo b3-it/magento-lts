@@ -32,17 +32,31 @@
 		<label for="opening"><?php echo $_helper->__('Opening Balance')?></label>
 		<input id="opening" name="opening" readonly="readonly" value="<?php echo $this->getOpeningBalance()?>"></input>
 		<br/>
-		<label for="saldo"><?php echo $_helper->__('Saldo')?></label>
+		<label for="saldo"><?php echo $_helper->__('Total Taking')?></label>
 		<input id="saldo" name="saldo" readonly="readonly" value="<?php echo $this->getTotal()?>"></input>
 		<br/>
 		<label for="withdrawal"><?php echo $_helper->__('Withdrawal')?></label>
-		<input id="withdrawal" name="withdrawal"></input>
+		<input id="withdrawal" name="withdrawal" value="<?php echo $this->getTotal()?>"></input>
 		<br/>
-		<button type="submit"><?php echo $_helper->__('Close')?></button>
-		
+		Ich bestätige, dass sich nach der Entnahme <span id="balance">0</span> Euro in der Kasse befinden.
+		<br/>
+		<button type="submit"><?php echo $_helper->__('Kasse schließen')?></button>
+			
 		</form>
 		<br/>
 	</div>
+	
+	<script type="text/javascript">
+	
+		$j('#withdrawal').bind('keyup', function() 
+		{
+			var open = <?php echo $this->getOpeningBalance()?>;
+			var w = parseFloat($j('#withdrawal').val());
+			$j('#balance').text(open - w);
+		});
+		
+	</script>
+	
 	<?php endif;?>
 
  <?php echo $this->getChildHtml("journal_details") ?>
