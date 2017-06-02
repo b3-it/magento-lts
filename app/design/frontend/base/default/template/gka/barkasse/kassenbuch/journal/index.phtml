@@ -1,5 +1,6 @@
 <?php $_helper = $this->helper('gka_barkasse'); ?>
 <?php $_kassenbuchjournal = $this->getKassenbuchJournal(); ?>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
 <div>
 
 	<?php if(!$_kassenbuchjournal):?>

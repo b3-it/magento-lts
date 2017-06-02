@@ -167,4 +167,24 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     	return $total;
     }
     
+    /**
+     * Kann der Kunde ein Kassenbuches eröffnen?
+     * @param unknown $observer
+     */
+    public function isCustomerCanOpen($customerId)
+    {
+    	if($customerId){
+    		//nur für benutzer die eine Kassen haben
+    		if(Mage::getModel('gka_barkasse/kassenbuch_cashbox')->getCashbox($customerId) != null)
+    		{
+    			$journal  = Mage::getModel('gka_barkasse/kassenbuch_journal')->getOpenJournal($customerId);
+    			if(empty($journal)||(!$journal->getId())){
+    				return true;
+    			}
+    		}
+    	}
+    	
+    	return false;
+    }
+    
 }

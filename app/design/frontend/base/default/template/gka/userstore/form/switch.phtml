@@ -1,0 +1,15 @@
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div>
+Bitte wählen sie Ihren Store:
+
+<form action="<?php echo $this->getPostUrl(); ?>"  method="POST">
+	<select name="new_store">
+		<?php foreach($this->getStoresAllowed() as $store):?>
+		<option value="<?php echo $store->getId()?>"><?php echo $store->getName() ?></option>
+		<?php endforeach;?>
+	</select>
+	
+	<button type="submit">Wechseln</button>
+</form>
+
+</div>

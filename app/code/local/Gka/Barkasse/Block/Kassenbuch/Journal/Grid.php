@@ -75,11 +75,12 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
           //'width'     => '150px',
           'index'     => 'opening_balance',
       ));
-      $this->addColumn('closing_balance', array(
-          'header'    => Mage::helper('gka_barkasse')->__('Closing Balance'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'closing_balance',
+      
+      $this->addColumn('sum_booking_amount', array(
+      		'header'    => Mage::helper('gka_barkasse')->__('Total Taking'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'sum_booking_amount',
       ));
       
       $this->addColumn('withdrawal', array(
@@ -90,12 +91,16 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
       		'type'	=> 'price'
       ));
       
-      $this->addColumn('sum_booking_amount', array(
-      		'header'    => Mage::helper('gka_barkasse')->__('Total'),
-      		//'align'     =>'left',
-      		//'width'     => '150px',
-      		'index'     => 'sum_booking_amount',
+      $this->addColumn('closing_balance', array(
+          'header'    => Mage::helper('gka_barkasse')->__('Closing Balance'),
+          //'align'     =>'left',
+          //'width'     => '150px',
+          'index'     => 'closing_balance',
       ));
+      
+      
+      
+
       
       $this->addColumn('sum_id', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Count'),

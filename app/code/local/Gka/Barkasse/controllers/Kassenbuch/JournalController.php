@@ -14,7 +14,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
 
     public function indexAction()
     {
-      $id     =  intval($this->getRequest()->getParam('id'));
+       $id     =  intval($this->getRequest()->getParam('id'));
       
       $customer = $this->_getCustomer();
       $model = null;
@@ -78,8 +78,15 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     
     public function openAction()
     {
-    	$opening_balance = intval($this->getRequest()->getParam('opening_balance'));
+    	$opening_balance = floatval($this->getRequest()->getParam('opening_balance'));
     	$cashbox_id      = intval($this->getRequest()->getParam('cashbox_id'));
+    	
+    	if($opening_balance < $this->getLastBalance())
+    	{
+    		Mage::getSingleton('core/session')->addError($this->__('Startsaldo < Endsaldo!'));
+    		$this->_redirect('gka_barkasse/kassenbuch_journal/');
+    		return;
+    	}
     	
     	$model = Mage::getModel('gka_barkasse/kassenbuch_journal');
     	$model->setCashboxId($cashbox_id);
@@ -92,6 +99,27 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	return;
     	
     	
+    }
+    
+    public function getLastKassenbuchJournal()
+    {
+    	$collection = Mage::getModel('gka_barkasse/kassenbuch_journal')->getCollection();
+    	$collection->getSelect()
+    	->where('customer_id = ' . $this->_getCustomer()->getId())
+    	->where('status = '.Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED)
+    	->order('id DESC');
+    	 
+    	return $collection->getFirstItem();
+    }
+    
+    public function getLastBalance()
+    {
+    	$last = $this->getLastKassenbuchJournal();
+    	if($last){
+    		return $last->getClosingBalance();
+    	}
+    	 
+    	return 0;
     }
     
     public function closeAction()

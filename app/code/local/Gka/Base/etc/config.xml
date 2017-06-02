@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Gka_Base>
+            <version>0.1.0</version>
+        </Gka_Base>
+    </modules>
+    <frontend>
+            <routers>
+                <customer>
+                    <args>
+                        <modules>
+                            <gka_base before="Mage_Customer">Gka_Base</gka_base>
+                        </modules>
+                    </args>
+                </customer>
+            </routers>
+    </frontend>
+    <global>
+        <helpers>
+            <gkabase>
+                <class>Gka_Base_Helper</class>
+            </gkabase>
+        </helpers>
+    </global>
+</config>

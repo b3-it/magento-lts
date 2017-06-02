@@ -23,6 +23,10 @@
         </reference>
     </default>
 
+
+
+
+
     <customer_account>
         <reference name="customer_account_navigation">
             <action method="removeLinkByName"><name>billing_agreements</name></action>

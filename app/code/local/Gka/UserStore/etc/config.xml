@@ -19,7 +19,7 @@
         <layout>
             <updates>
                 <userstore>
-                    <file>userstore.xml</file>
+                    <file>gka/userstore.xml</file>
                 </userstore>
             </updates>
         </layout>

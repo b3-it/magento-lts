@@ -56,6 +56,14 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
           'width'     => '150px',
           'index'     => 'booking_amount',
       ));
+      
+      $this->addColumn('given_amount', array(
+      		'header'    => Mage::helper('gka_barkasse')->__('Given Amount'),
+      		//'align'     =>'left',
+      		'width'     => '150px',
+      		'index'     => 'given_amount',
+      ));
+      
       $this->addColumn('increment_id', array(
           'header'    => Mage::helper('gka_barkasse')->__('Order#'),
           //'align'     =>'left',

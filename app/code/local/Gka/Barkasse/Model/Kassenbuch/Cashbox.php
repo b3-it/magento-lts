@@ -15,4 +15,24 @@ class Gka_Barkasse_Model_Kassenbuch_Cashbox extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('gka_barkasse/kassenbuch_cashbox');
     }
+    
+    /**
+     * Ermitteln der Barkasse des aktuellen Kunden
+     * @param unknown $customerId
+     * @return NULL | Gka_Barkasse_Block_Kassenbuch_Journal
+     */
+    public function getCashbox($customerId = null)
+    {
+    	if($customerId == null){
+    		$customerId = $this->_getCustomer()->getId();
+    	}
+    
+    	$collection = $this->getCollection();
+    	$collection->getSelect()
+    	->where('customer_id = '.$customerId);
+    
+    	if(count($collection->getItems()) == 0) return null;
+    
+    	return $collection->getFirstItem();
+    }
 }
