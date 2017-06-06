@@ -128,11 +128,17 @@ div.grid {
 	        a {
 	            color: $global-checkout-thfontcolor;
 	            
+	            span.sort-title {
+	                background-position: right 50%;
+	                background-repeat: no-repeat;
+	                padding: 3px 12px 2px 8px;
+	            }
+	            
 	            &.sort-arrow-asc span.sort-title {
-	                background-image: url("images/grid_sort_asc.gif");
+	                background-image: url("../images/grid_sort_asc.gif");
 	            }
 	            &.sort-arrow-desc span.sort-title {
-	                background-image: url("images/grid_sort_desc.gif");
+	                background-image: url("../images/grid_sort_desc.gif");
 	            }
 	        }
 	    }
@@ -145,6 +151,10 @@ div.grid {
 	    
 	    th, td {
 	        padding: $global-boxpadding;
+	    }
+	    
+	    input[type="text"] {
+	        width: 95%;
 	    }
 	    
 	    img {

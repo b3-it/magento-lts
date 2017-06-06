@@ -83,7 +83,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	
     	if($opening_balance < $this->getLastBalance())
     	{
-    		Mage::getSingleton('core/session')->addError($this->__('Startsaldo < Endsaldo!'));
+    		Mage::getSingleton('core/session')->addError($this->__('The starting amount must not be less than the final amount of the previous day!'));
     		$this->_redirect('gka_barkasse/kassenbuch_journal/');
     		return;
     	}
@@ -95,7 +95,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	$model->save();
     	
     	Mage::getSingleton('core/session')->addSuccess($this->__('Cashbox opened!'));
-    	$this->_redirect('customer/account');
+    	$this->_redirect('gka_barkasse/kassenbuch_journal/index');
     	return;
     	
     	
@@ -126,7 +126,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     {
     	//$balance = intval($this->getRequest()->getParam('closing_balance'));
     	$withdrawal = floatval($this->getRequest()->getParam('withdrawal'));
-    	$id      = intval($this->getRequest()->getParam('id'));
+    	$id         = intval($this->getRequest()->getParam('id'));
     	 
     	$model = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
     	
@@ -138,7 +138,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	$model->save();
     	 
     	Mage::getSingleton('core/session')->addSuccess($this->__('Cashbox closed!'));
-    	$this->_redirect('customer/account');
+    	$this->_redirect('gka_barkasse/kassenbuch_journal/index');
     	return;
     	 
     	 

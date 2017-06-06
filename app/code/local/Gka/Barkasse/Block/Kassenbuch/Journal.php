@@ -97,6 +97,15 @@ class Gka_Barkasse_Block_Kassenbuch_Journal extends Mage_Core_Block_Template
     	return $this->_customer;
     }
     
+    public function getCustomer()
+    {
+    	if ( $customer = $this->_getCustomer() ) {
+            return $customer->getFirstname() . ' ' . $customer->getLastname();
+    	}
+    	
+    	return 'Unknown';
+    }
+    
     public function getCustomerId()
     {
     	$customer = $this->_getCustomer();

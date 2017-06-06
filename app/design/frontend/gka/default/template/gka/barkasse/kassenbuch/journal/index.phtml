@@ -8,6 +8,13 @@
 			<h1><?php echo $this->__("New billing period for billing"); ?></h1>
 	    </div>
 
+		<div>
+		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date('d.m.Y H:i:s'); ?></span>
+		</div>
+		<div>
+		    <?php echo $this->__('Editor'); ?>: <span id="editor"><?php echo $this->getCustomer(); ?></span>
+		</div>
+
 		<form action="<?php echo $this->getOpenUrl();?>" method="post" class="scaffold-form">
 		    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
 		    <div class="fieldset half-space">
