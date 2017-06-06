@@ -52,6 +52,13 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         return Mage::getSingleton('checkout/session');
     }
 
+    
+    private function __isDebug()
+    {
+    	$file = realpath(__DIR__.DS."..".DS."etc".DS.'debug.flag');
+    	return file_exists($file);
+    }
+    
     /**
      * Action predispatch
      *
@@ -81,6 +88,10 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
+        if ($action == 'PdfInvoice') {
+        	return $this;
+        }
+        
         if ($this->_getCheckoutSession()->getCartWasUpdated(true) &&
             !in_array($action, array('index', 'login', 'register', 'addresses', 'success'))
         ) {
@@ -92,7 +103,6 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
-        
         $quote = $this->_getCheckout()->getQuote();
         $a = $quote->hasItems();
         $b = $quote->getHasError();
@@ -364,6 +374,44 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         $this->setFlag('', 'redirectLogin', true);
     }
     
- 
+	 /***
+	  * Rechnung als Pdf Anzeigen
+	  * @return Mage_Adminhtml_Controller_Action
+	  */
+    public function PdfInvoiceAction()
+    {
+    	$orderId = $this->getRequest()->getParam('order_id');
+    	$flag = false;
+    	
+    	/** @var $invoices Mage_Sales_Model_Resource_Order_Invoice_Collection */
+    	$invoices = Mage::getResourceModel('sales/order_invoice_collection')
+    	->setOrderFilter($orderId);
+    	
+    	//sicherstellen das der Kunde auch seine Rechnung druckt
+    	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+    	$invoices->getSelect()
+    		->join(array('order'=>$invoices->getTable('sales/order')),'main_table.order_id = order.entity_id AND customer_id='.$customer_id);
+    	
+    	$invoices->load();
+    	if ($invoices->getSize()){
+    		$flag = true;
+    		if (!isset($pdf)){
+    			$pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
+    		} else {
+    			$pages = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
+    			$pdf->pages = array_merge ($pdf->pages, $pages->pages);
+    		}
+    	}
+    	
+    	if ($flag) {
+    		return $this->_prepareDownloadResponse(
+    				'docs'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf',
+    				$pdf->render(), 'application/pdf'
+    				);
+    	} else {
+    		Mage::getSingleton('customer/session')->addError($this->__('There are no printable documents related to selected orders.'));
+    		$this->_redirect('*/*/');
+    	}
+    }
     
 }

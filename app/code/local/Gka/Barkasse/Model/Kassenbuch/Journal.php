@@ -169,7 +169,7 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     
     /**
      * Kann der Kunde ein Kassenbuches eröffnen?
-     * @param unknown $observer
+     * @param unknown $customerId
      */
     public function isCustomerCanOpen($customerId)
     {
@@ -185,6 +185,27 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     	}
     	
     	return false;
+    }
+    /**
+     * Kassenbuches mit Id und CustomerId laden
+     * @param unknown $id
+     * @param unknown $customerId
+     * @return NULL | Gka_Barkasse_Block_Kassenbuch_Journal
+     */
+    public function loadById_Customer($id,$customerId = null)
+    {
+    	if($customerId == null){
+    		$customerId = $this->_getCustomer()->getId();
+    	}
+    
+    	$collection = $this->getCollection();
+    	$collection->getSelect()
+    	->where('customer_id = '.$customerId)
+    	->where('id = '. $id);
+    
+    	if(count($collection->getItems()) == 0) return null;
+    
+    	return $collection->getFirstItem();
     }
     
 }

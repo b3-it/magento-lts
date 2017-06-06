@@ -222,58 +222,7 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
         return $this->__kassenzeichen;
     }
     
-    /**
-     * Behandelt die unterschiedlichen Payment Actions
-     *
-     * Setzt unter anderem den State der Bestellung.<br>
-     * Bei ACTION_AUTHORIZE_CAPTURE (default) wird auch automatisch eine Rechnung erstellt.
-     *
-     * @param string        $paymentAction Die Payment-Action
-     * @param Varien_Object $stateObject   Das State Object
-     * 
-     * @return Egovs_BankPayment_Model_Bankpayment
-     * 
-     * @see Mage_Payment_Model_Method_Abstract::initialize()
-     */
-	public function initialize($paymentAction, $stateObject) {
-    	if ($paymentAction != self::ACTION_AUTHORIZE) {
-    		Mage::throwException(
-    			Mage::helper($this->getCode())->__('This payment action is not available!').' Action: '.$paymentAction
-    		);
-    	}
-    	$payment = $this->_getPayment();
-        
-    	$order = $payment->getOrder();
-    		
-    	$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
-    	
-    	switch ($paymentAction) {
-    		case Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE:
-    			//Rechnung muss hier händisch erstellt werden!
-    			$this->authorize($this->_getPayment(), $order->getBaseTotalDue());
-
-    			$this->setAmountAuthorized($order->getTotalDue());
-    			$this->setBaseAmountAuthorized($order->getBaseTotalDue());
-
-    			$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
-    			break;
-    		
-    		default:
-    			break;
-    	}
-    	
-    	$orderStatus = $this->getConfigData('order_status');
-
-    	if (!$orderStatus || $order->getIsVirtual()) {
-    		$orderStatus = $order->getConfig()->getStateDefaultStatus($orderState);
-    	}
-    	
-    	$stateObject->setState($orderState);
-    	$stateObject->setStatus($orderStatus);
-    	$stateObject->setIsNotified(false);
-    	
-    	return $this;
-    }
+ 
     
     /**
      * Authorize
@@ -324,6 +273,72 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
     }
     
     /**
+     * Behandelt die unterschiedlichen Payment Actions
+     *
+     * Setzt unter anderem den State der Bestellung.<br>
+     * Bei ACTION_AUTHORIZE_CAPTURE (default) wird auch automatisch eine Rechnung erstellt.
+     *
+     * @param string        $paymentAction Payment-Action
+     * @param Varien_Object $stateObject   Das Object welches den State, Status etc enthält
+     *
+     * @return Egovs_Openaccountpayment_Model_Openaccount
+     *
+     * (non-PHPdoc)
+     * @see Mage_Payment_Model_Method_Abstract::initialize()
+     */
+    public function initialize($paymentAction, $stateObject) {
+    	if ($paymentAction != self::ACTION_AUTHORIZE_CAPTURE
+    			&& $paymentAction != self::ACTION_AUTHORIZE
+    			) {
+    				Mage::throwException(
+    						Mage::helper($this->getCode())->__('This payment action is not available!').' Action: '.$paymentAction
+    						);
+    			}
+    			$payment = $this->_getPayment();
+    
+    			$order = $payment->getOrder();
+    
+    			$orderState = Mage_Sales_Model_Order::STATE_NEW;
+    				
+    			switch ($paymentAction) {
+    				case Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE:
+    					//Rechnung muss hier händisch erstellt werden!
+    					$this->authorize($this->_getPayment(), $order->getBaseTotalDue());
+    
+    					$this->setAmountAuthorized($order->getTotalDue());
+    					$this->setBaseAmountAuthorized($order->getBaseTotalDue());
+    
+    					$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
+    					break;
+    				case Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE_CAPTURE:
+    					$this->authorize($this->_getPayment(), $order->getBaseTotalDue());
+    					//Rechnung erstellen, aber nicht bezahlen!
+    					$invoice = $this->_invoice();
+    
+    					$this->setAmountAuthorized($order->getTotalDue());
+    					$this->setBaseAmountAuthorized($order->getBaseTotalDue());
+    
+    					$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
+    					break;
+    				default:
+    					break;
+    			}
+    				
+    			$orderStatus = $this->getConfigData('order_status');
+    
+    			if (!$orderStatus || $order->getIsVirtual()) {
+    				$orderStatus = $order->getConfig()->getStateDefaultStatus($orderState);
+    			}
+    				
+    			$stateObject->setState($orderState);
+    			$stateObject->setStatus($orderStatus);
+    			$stateObject->setIsNotified(false);
+    				
+    			return $this;
+    }
+    
+    
+    /**
      * Capture payment
      * 
      * Bringt die Bestellung abhängig vom Status der Rechnung in den State 'Verarbeitung'.
@@ -353,14 +368,17 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
     	if ($order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT) {
     		Mage::throwException(Mage::helper($this->getCode())->__("Invoice isn't paid yet")."!");
     	}
+    	
+    	
+    	
     	// Start store emulation process
     	$appEmulation = Mage::getSingleton('core/app_emulation');
     	$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($order->getStoreId());
     	
     	if ($order->getIsVirtual()) {
-    		$customerNote = $this->__("Your order is complete.<br/>If your order contains downloads, so you can now download these.");    		
+    		$customerNote = $this->__("Your order is complete.");    		
     	} else {
-    		$customerNote = $this->__("We received your payment and your order will now prepared for delivery.<br/>If your order contains downloads, so you can now download these.");
+    		$customerNote = $this->__("We received your payment.");
     	}
     	
     	// Stop store emulation process
@@ -368,11 +386,9 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
 
     	$order->sendOrderUpdateEmail(true, $customerNote);
     	
-    	$order->addStatusToHistory(
-    			$order->getStatus(),
+    	$order->addStatusHistoryComment(
     			$customerNote,
-    			true
-    	);
+    			$order->getStatus());
 
         return $this;
     }

@@ -25,11 +25,46 @@
  */
 
 
-class Gka_Checkout_Block_Success extends Mage_Core_Block_Template
+class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
 {
-    public function getRealOrderId()
+    protected $_order = null;
+    
+    
+    /**
+     * 
+     * @return Mage_Sales_Model_Order
+     */
+    protected function getOrder()
     {
-        $order = Mage::getModel('sales/order')->load($this->getLastOrderId());
-        return $order->getIncrementId();
+    	if($this->_order == null){
+    		$id = Mage::getSingleton('checkout/session')->getLastOrderId();
+    		if($id){
+    			$this->_order = Mage::getModel('sales/order')->load($id);
+    		}else{
+    			$this->_order = new Varien_Object();
+    		}
+    	}
+    	return $this->_order;
+    }
+    
+    
+    /**
+     * Retrieve identifier of created order
+     *
+     * @return string
+     */
+    public function getOrderId()
+    {
+        return $this->getOrder()->getId();
+    }
+    
+    /**
+     * Get url for order detale print
+     *
+     * @return string
+     */
+    public function getPrintUrl()
+    {
+    	return $this->getUrl('*/singlepage/PdfInvoice',array('_secure'=>true, 'order_id'=> $this->getOrder()->getId()));
     }
 }

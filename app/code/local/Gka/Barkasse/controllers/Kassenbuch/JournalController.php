@@ -127,10 +127,21 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	//$balance = intval($this->getRequest()->getParam('closing_balance'));
     	$withdrawal = floatval($this->getRequest()->getParam('withdrawal'));
     	$id         = intval($this->getRequest()->getParam('id'));
-    	 
-    	$model = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
     	
+    	$model = Mage::getModel('gka_barkasse/kassenbuch_journal')->loadById_Customer($id);
+    	if($model == null)
+    	{
+    		throw new Exception('Can not load Journal');
+    	}
     	$balance = $model->getOpeningBalance() + $model->getTotal() - $withdrawal;
+    	
+    	if($balance < 0)
+    	{
+    		Mage::getSingleton('core/session')->addError($this->__('Closing balance must be greather than zero!'));
+    		$this->_redirect('gka_barkasse/kassenbuch_journal/');
+    		return;
+    	}
+    	
     	
     	$model->setWithdrawal($withdrawal);
        	$model->setClosingBalance($balance);

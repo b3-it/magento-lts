@@ -295,7 +295,7 @@ Multi address shipping checkout success
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
-            <block type="checkout/multishipping_success" name="checkout_success" template="checkout/multishipping/success.phtml"/>
+            <block type="gkacheckout/singlepage_success" name="checkout_success" template="checkout/singlepage/success.phtml"/>
         </reference>
     </checkout_singlepage_success>
 

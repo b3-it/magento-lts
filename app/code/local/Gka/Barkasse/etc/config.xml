@@ -189,17 +189,10 @@
             <epaybl_cashpayment>
                 <currency>EUR</currency>
                 <model>gka_barkasse/cashpayment</model>
-                <payment_action>authorize</payment_action>
+                <payment_action>authorize_capture</payment_action>
                 <title>Barkasse</title>
-                <xxorder_status>processing</xxorder_status>
+                <order_status>processing</order_status>
                 <allowspecific>0</allowspecific>
-                <autoclose>0</autoclose>
-                <!-- Providerset für Produktivbetrieb -->
-                <!--<providerset>17</providerset>-->
-                <!-- Providerset für Testbetrieb -->
-                <providerset>6</providerset>
-                <cancel_order_after_active>1</cancel_order_after_active>
-                <cancel_order_after>30</cancel_order_after>
                 <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
                 <delete_customer_after_transaction>1</delete_customer_after_transaction>
                 <group>epaybl</group>

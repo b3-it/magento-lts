@@ -267,6 +267,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     	$this->getQuote()->getItemsCollection()->clear();
     	$this->getQuote()->save();
     	
+    	$this->getCheckout()->setLastOrderId($order->getId());
     	
         if ($order) {
         	Mage::getSingleton('core/session')->setOrderId($order->getIncrementId());

@@ -22,7 +22,7 @@ class Gka_Barkasse_Model_Observer extends Varien_Object
 		
 		
 		if($order->getPayment()->getMethod() != 'epaybl_cashpayment'){
-			//return;
+			return;
 		}
 		
 		$journal  = Mage::getModel('gka_barkasse/kassenbuch_journal')->getOpenJournal($order->getCustomerId());
