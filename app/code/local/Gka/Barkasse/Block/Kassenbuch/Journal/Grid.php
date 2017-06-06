@@ -41,17 +41,17 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
 
   protected function _prepareColumns()
   {
-      $this->addColumn('id', array(
-          'header'    => Mage::helper('gka_barkasse')->__('ID'),
-          'align'     =>'right',
-          'width'     => '50px',
-          'index'     => 'id',
-      ));
+//       $this->addColumn('id', array(
+//           'header'    => Mage::helper('gka_barkasse')->__('ID'),
+//           'align'     =>'right',
+//           'width'     => '50px',
+//           'index'     => 'id',
+//       ));
 
       $this->addColumn('number', array(
           'header'    => Mage::helper('gka_barkasse')->__('Number'),
           //'align'     =>'left',
-          //'width'     => '150px',
+          'width'     => '50px',
           'index'     => 'number',
       ));
 
@@ -77,7 +77,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
       ));
       
       $this->addColumn('sum_id', array(
-      		'header'    => Mage::helper('gka_barkasse')->__('Count'),
+      		'header'    => Mage::helper('gka_barkasse')->__('Deposits'),
       		//'align'     =>'left',
       		//'width'     => '150px',
       		'index'     => 'sum_id',
