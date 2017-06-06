@@ -74,7 +74,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       ));
       
       $this->addColumn('sum_id', array(
-      		'header'    => Mage::helper('gka_barkasse')->__('Count'),
+      		'header'    => Mage::helper('gka_barkasse')->__('Deposits'),
       		//'align'     =>'left',
       		//'width'     => '150px',
       		'index'     => 'sum_id',

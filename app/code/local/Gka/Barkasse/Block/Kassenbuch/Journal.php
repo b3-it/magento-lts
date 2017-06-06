@@ -12,6 +12,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal extends Mage_Core_Block_Template
 {
 	
 	protected $_customer = null;
+	protected $_CurrencySymbol = null;
 	
   	public function _prepareLayout()
     {
@@ -108,5 +109,14 @@ class Gka_Barkasse_Block_Kassenbuch_Journal extends Mage_Core_Block_Template
     }
     
     
+    public function getCurrencySymbol()
+    {
+    	if($this->_CurrencySymbol == null)
+    	{
+    		$this->_CurrencySymbol =  Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+    	}
+    	return $this->_CurrencySymbol;
+
+    }
 
 }
