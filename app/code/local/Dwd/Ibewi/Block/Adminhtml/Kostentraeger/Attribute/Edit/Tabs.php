@@ -16,7 +16,7 @@ class Dwd_Ibewi_Block_Adminhtml_Kostentraeger_Attribute_Edit_Tabs extends Mage_A
       parent::__construct();
       $this->setId('kostentraegerattribute_tabs');
       $this->setDestElementId('edit_form');
-      $this->setTitle(Mage::helper('ibewi')->__('Kostenträger'));
+      $this->setTitle(Mage::helper('ibewi')->__('Cost Unit'));
   }
 
   protected function _beforeToHtml()

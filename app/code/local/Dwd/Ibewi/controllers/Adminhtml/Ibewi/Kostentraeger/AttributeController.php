@@ -13,9 +13,9 @@ class Dwd_Ibewi_Adminhtml_Ibewi_Kostentraeger_AttributeController extends Mage_A
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('kostentraegerattribute/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('KostentraegerAttribute Manager'), Mage::helper('adminhtml')->__('KostentraegerAttribute Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('KostentraegerAttribute Manager'));
+			->_setActiveMenu('catalog/attributes')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Cost Unit'), Mage::helper('adminhtml')->__('Cost Unit'));
+		$this->_title(Mage::helper('adminhtml')->__('Cost Unit'));
 		return $this;
 	}
 

@@ -23,7 +23,7 @@ class Dwd_Ibewi_Block_Adminhtml_Kostentraeger_Attribute_Edit_Tab_Form extends Ma
           'name'      => 'title',
       ));
       $fieldset->addField('value', 'text', array(
-          'label'     => Mage::helper('ibewi')->__('Kostenträger'),
+          'label'     => Mage::helper('ibewi')->__('Cost Unit'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'value',

@@ -14,7 +14,7 @@ class Dwd_Ibewi_Block_Adminhtml_Kostentraeger_Attribute extends Mage_Adminhtml_B
   {
     $this->_controller = 'adminhtml_kostentraeger_attribute';
     $this->_blockGroup = 'ibewi';
-    $this->_headerText = Mage::helper('ibewi')->__('Kostenträger Attribute');
+    $this->_headerText = Mage::helper('ibewi')->__('Cost Unit');
     $this->_addButtonLabel = Mage::helper('ibewi')->__('Add Item');
     parent::__construct();
   }
