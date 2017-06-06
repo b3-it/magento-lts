@@ -26,6 +26,7 @@ class Dwd_Ibewi_Model_Entity_Attribute_Source_Kostentraeger extends Mage_Eav_Mod
         	
             $ship = Mage::getModel('ibewi/kostentraeger_attribute')->getCollection();
             $ship->getSelect()->order('pos');
+            $this->_options[] = array( 'label' =>Mage::helper('ibewi')->__('-- Please Select --'), 'value' =>'');
             foreach($ship->getItems() as $value)        	{
         		$this->_options[] = array( 'label' =>$value->getTitle(), 'value' => $value->getValue());
         	}
