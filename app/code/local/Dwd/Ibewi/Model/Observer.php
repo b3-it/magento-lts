@@ -55,25 +55,32 @@ class Dwd_Ibewi_Model_Observer extends Varien_Object
      * Wird nach dem hinzufügen eines Items zu einer Quote aufgerufen.
      * Die Quote wurde noch nicht gespeichert!
      *
-     * Abweisen von verschiedenen Steuersätzen
+     * Abweisen von verschiedenen Steuersätzen für Lieferungen
      * @param Varien_Event_Observer $observer Observer-Daten
      *
      * @return void
      */
     public function onSalesQuoteAddItem($observer) {
-    	/* @var $item Mage_Sales_Model_Quote_Item */
+    	/* @var $additem Mage_Sales_Model_Quote_Item */
     	$additem = $observer->getQuoteItem();
     	if (!$additem) {
     		return;
     	}
-    
+    	//nur für Lieferung
+    	if($additem->getIsVirtual()){
+    		return;
+    	}
+    	
     	$quote = $additem->getQuote();
+    	//SteuerKlasse mit allen lieferfähigen Artikeln im Warenkorb vergleichen
     	foreach($quote->getAllItems() as $item)
     	{
-	    	if ($item->getTaxClassId() != $additem->getTaxClassId()) {
-	    		
-	    		Mage::throwException(Mage::helper('germantax')->__('It is not possible to buy these items together. Please buy this item separately or remove all other items in your shopping cart.'));
-	    	}
+    		if(!$item->getIsVirtual())
+    		{
+		    	if ($item->getTaxClassId() != $additem->getTaxClassId()) {
+		    		Mage::throwException(Mage::helper('germantax')->__('It is not possible to buy these items together. Please buy this item separately or remove all other items in your shopping cart.'));
+		    	}
+    		}
     	}
     }
     

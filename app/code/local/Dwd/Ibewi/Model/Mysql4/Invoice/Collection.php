@@ -53,8 +53,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->join(array('order'=>'sales_flat_order'),'order.entity_id=invoice.order_id',
       		array('order_increment_id' => 'increment_id','order_date' => 'created_at','customer_id','shipping_address_id','billing_address_id'))
       	->joinleft(array('product'=>'catalog_product_entity'),'main_table.product_id=product.entity_id',array())
-      	//->joinleft(array('product_ibewi_maszeinheit'=>'catalog_product_entity_varchar'), 'product_ibewi_maszeinheit.entity_id=main_table.product_id AND product_ibewi_maszeinheit.attribute_id='.$eav->getIdByCode('catalog_product', 'ibewi_maszeinheit'), array('ibewi_maszeinheit'=>'value'))
-       	->columns('order_item.ibewi_maszeinheit as ibewi_maszeinheit')
+	       	->columns('order_item.ibewi_maszeinheit as ibewi_maszeinheit')
       	->joinleft(array('product_haushaltstelle_att'=>'catalog_product_entity_varchar'), 'product_haushaltstelle_att.entity_id=main_table.product_id AND product_haushaltstelle_att.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'), array())
       	->joinleft(array('product_haushaltstelle'=>$this->getTable('paymentbase/haushaltsparameter')), 'product_haushaltstelle.paymentbase_haushaltsparameter_id=product_haushaltstelle_att.value' , array('haushaltstelle'=>'value'))
       	->columns(new Zend_Db_Expr("0 as is_versand"))
@@ -103,11 +102,11 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       		array('order_increment_id' => 'increment_id','order_date' => 'created_at','customer_id','shipping_address_id','billing_address_id'))
       	->columns(new Zend_Db_Expr("'".$helper->getConfigValue('ibewi_maszeinheit_versand')."' as ibewi_maszeinheit"))
       	->columns($hh_versand)
+      	//kennzeichen für Versandposition
       	->columns(new Zend_Db_Expr("1 as is_versand"))
       	->columns(new Zend_Db_Expr("'' as kostentraeger"))
       	->columns(new Zend_Db_Expr("'' as kostenstelle"))
-      	//->columns(new Zend_Db_Expr("'".$helper->getConfigValue('kostenstelle_versand')."' as kostenstelle"))
-      	->columns($obj_versand)
+       	->columns($obj_versand)
       	->columns($tax_percent)
       	->columns(new Zend_Db_Expr('1 as is_virtual'))
       	->joinleft(array('payment'=>'sales_flat_order_payment'), 'order.entity_id=payment.parent_id', array('kassenzeichen'))  
@@ -136,9 +135,10 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
 	
 	protected function _afterLoad()
 	{
-		//die Produkte nach nettoumsatz filtern
+		//die Produkte nach Nettoumsatz sortieren
 		foreach($this->getItems() as $item){
-			//nur positione die kein Versand und nicht Virtuell sind
+			//nur positionen die nicht Versand und nicht Virtuell sind
+			//$item->getIsVersand kommt aus der SQL Union und kennzeichnet die Position des Versandes
 			if(($item->getIsVersand() == 0) && ($item->getIsVirtual() == 0)){
 				if(isset($this->_itemsPerOrder[$item->getOrderId()]))
 				{
