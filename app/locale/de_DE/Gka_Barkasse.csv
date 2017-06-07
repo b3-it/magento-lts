@@ -37,3 +37,5 @@
 "The starting amount must not be less than the final amount of the previous day!","Der Startbetrag darf nicht kleiner als der Endbetrag des Vortages sein!"
 "Total Taking","Gesamtentnahme"
 "Closing balance must be greather than zero!","Der Endsaldo muss größer 0.00 sein!"
+
+"TEXT_PROCESS_ERROR:-0609","Der Buchungstext einer Buchung der Buchungsliste ist zu lang oder zu kurz."

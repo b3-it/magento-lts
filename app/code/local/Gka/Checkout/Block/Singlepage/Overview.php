@@ -235,4 +235,13 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
     {
     	return $this->getCheckout()->getQuote()->getBaseAddress();
     }
+
+    public function getCurrencySymbol()
+    {
+    	if($this->_CurrencySymbol == null)
+    	{
+    		$this->_CurrencySymbol =  Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+    	}
+    	return $this->_CurrencySymbol;
+    }
 }

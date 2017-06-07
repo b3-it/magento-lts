@@ -29,17 +29,21 @@
         <h1 data-role="page-title"><?php echo $this->__('Order Success') ?></h1>
     </div>
     <h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
-    <p><?php echo $this->__('We are processing your order and you will soon receive an email with details of the order. Once the order has shipped you will receive another email with a link to track its progress.') ?></p>
-    <?php if($orderId = $this->getOrderId()): ?>
-    <p data-role="order-numbers">
-        <?php echo $this->__('Your order number is ') ?>
-        
-        <a href="<?php echo $this->getViewOrderUrl($orderId) ?>"><?php echo $this->getOrder()->getIncrementId() ?></a>
-        <a href="<?php echo $this->getPrintUrl() ?>">Druckansicht</a>
+    <p>
+        <?php echo $this->__('We are processing your order and you will soon receive an email with details of the order. Once the order has shipped you will receive another email with a link to track its progress.') ?>
     </p>
-    <?php endif; ?>
+  <?php if($orderId = $this->getOrderId()): ?>
+    <p data-role="order-numbers">
+        <?php echo $this->__('Your order number is ') ?> <a href="<?php echo $this->getViewOrderUrl($orderId) ?>"><?php echo $this->getOrder()->getIncrementId() ?></a>
+    </p>
+    <p data-role="print-pdf">
+        <a href="<?php echo $this->getPrintUrl() ?>"><?php echo $this->__('Print preview') ?></a>
+    </p>
+  <?php endif; ?>
     <?php echo $this->getChildHtml() ?>
     <div class="buttons-set">
-        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?>" class="button" onclick="setLocation('<?php echo $this->getContinueUrl() ?>')"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?>" class="button" onclick="setLocation('<?php echo $this->getContinueUrl() ?>')">
+            <span><?php echo $this->__('Continue Shopping') ?></span>
+        </button>
     </div>
 </div>

@@ -1,5 +1,8 @@
-<?php $_helper = $this->helper('gka_barkasse'); ?>
-<?php $_kassenbuchjournal = $this->getKassenbuchJournal(); ?>
+<?php
+$_helper = $this->helper('gka_barkasse');
+$_kassenbuchjournal = $this->getKassenbuchJournal();
+$_customerName = $this->_getCustomer()->getFirstname() . ' ' . $this->_getCustomer()->getLastname();
+?>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
 <div id="journal-block">
   <?php if(!$_kassenbuchjournal):?>
@@ -12,7 +15,7 @@
 		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date('d.m.Y H:i:s'); ?></span>
 		</div>
 		<div>
-		    <?php echo $this->__('Editor'); ?>: <span id="editor"><?php echo $this->getCustomer(); ?></span>
+		    <?php echo $this->__('Editor'); ?>: <span id="editor"><?php echo $_customerName; ?></span>
 		</div>
 
 		<form action="<?php echo $this->getOpenUrl();?>" method="post" class="scaffold-form">
@@ -120,7 +123,7 @@
 	<script type="text/javascript">
         var currency = '<?php echo $this->getCurrencySymbol(); ?>';
 	</script>
-	<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/barkasse.js"></script>
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>"></script>
   <?php endif;?>
 
  <?php echo $this->getChildHtml("journal_details") ?>
