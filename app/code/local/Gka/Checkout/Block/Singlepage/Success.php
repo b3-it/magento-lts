@@ -67,4 +67,14 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     {
     	return $this->getUrl('*/singlepage/PdfInvoice',array('_secure'=>true, 'order_id'=> $this->getOrder()->getId()));
     }
+    
+    /**
+     * Get url for view order details
+     *
+     * @return string
+     */
+    public function getViewOrderUrl()
+    {
+    	return $this->getUrl('sales/order/view/', array('order_id'=> $this->getOrder()->getId(), '_secure' => true));
+    }
 }

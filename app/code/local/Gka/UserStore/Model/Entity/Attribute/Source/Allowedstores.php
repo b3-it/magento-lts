@@ -3,6 +3,11 @@
 class Gka_UserStore_Model_Entity_Attribute_Source_Allowedstores
     extends Mage_Eav_Model_Entity_Attribute_Source_Abstract
 {   
+	
+	
+	protected $_customer = null;
+	
+	
     /**
      * Stores aus der Website anzeigen
      *
@@ -12,13 +17,14 @@ class Gka_UserStore_Model_Entity_Attribute_Source_Allowedstores
     {
         if (is_null($this->_options)) {
             $this->_options = array();
-              
             foreach (Mage::app()->getStores() as $store) {
-                /* @var $group Mage_Customer_Model_Group */
-                $this->_options[] = array(
-                    'value' => $store->getId(),
-                    'label' => $store->getName(),
-                );
+            	if( $this->_getCustomer()->isInStore($store)){
+	                /* @var $group Mage_Customer_Model_Group */
+	                $this->_options[] = array(
+	                    'value' => $store->getId(),
+	                    'label' => $store->getName(),
+	                );
+            	}
             }
         }
         return $this->_options;
@@ -86,5 +92,18 @@ class Gka_UserStore_Model_Entity_Attribute_Source_Allowedstores
             }
         }
         return null;
+    }
+    
+    /***
+     * @return Mage_Customer_Model_Customer
+     */
+    protected function _getCustomer()
+    {
+    	if($this->_customer == null)
+    	{
+    		$this->_customer =  Mage::registry('current_customer');
+    	}
+    	return $this->_customer;
+
     }
 }

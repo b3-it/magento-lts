@@ -35,4 +35,23 @@ $table = $installer->getConnection()
 
 $installer->getConnection()->createTable($table);
 
+
+$fieldList = array(
+		'haushaltsstelle',
+		'objektnummer',
+		'objektnummer_mwst',
+		'href',
+		'href_mwst',
+		'buchungstext',
+		'buchungstext_mwst'
+);
+
+foreach ($fieldList as $field) {
+    $applyTo = explode(',', $installer->getAttribute(Mage_Catalog_Model_Product::ENTITY, $field, 'apply_to'));
+    $applyTo[] = 'virtualpayid';
+    $installer->updateAttribute(Mage_Catalog_Model_Product::ENTITY, $field, 'apply_to', implode(',', $applyTo));
+}
+
+
+
 $installer->endSetup();
