@@ -56,17 +56,17 @@ class Dwd_Ibewi_Block_Adminhtml_Kostentraeger_Attribute_Grid extends Mage_Adminh
       ));
     
 
-      $statuses = Mage::getSingleton('ibewi/kostentraeger_yesno')->getOptionArray();
-      $this->addColumn('status', array(
-      		'header'    => Mage::helper('ibewi')->__('Standard'),
-      		'align'     => 'left',
-      		'width'     => '80px',
-      		'index'     => 'standard',
-      		'filter_index' => 'main_table.standard',
-      		'type'      => 'options',
-      		'options'   => $statuses
+//       $statuses = Mage::getSingleton('ibewi/kostentraeger_yesno')->getOptionArray();
+//       $this->addColumn('status', array(
+//       		'header'    => Mage::helper('ibewi')->__('Standard'),
+//       		'align'     => 'left',
+//       		'width'     => '80px',
+//       		'index'     => 'standard',
+//       		'filter_index' => 'main_table.standard',
+//       		'type'      => 'options',
+//       		'options'   => $statuses
       
-      ));
+//       ));
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('ibewi')->__('Action'),
