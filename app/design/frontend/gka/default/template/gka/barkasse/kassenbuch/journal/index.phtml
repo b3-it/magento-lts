@@ -2,6 +2,9 @@
 $_helper = $this->helper('gka_barkasse');
 $_kassenbuchjournal = $this->getKassenbuchJournal();
 $_customerName = $this->_getCustomer()->getFirstname() . ' ' . $this->_getCustomer()->getLastname();
+
+$_timeMask = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+$_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/(.)\\1+/', '$1', $_timeMask));
 ?>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
 <div id="journal-block">
@@ -12,7 +15,7 @@ $_customerName = $this->_getCustomer()->getFirstname() . ' ' . $this->_getCustom
 	    </div>
 
 		<div>
-		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date('d.m.Y H:i:s'); ?></span>
+		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date($_timeMask); ?></span>
 		</div>
 		<div>
 		    <?php echo $this->__('Editor'); ?>: <span id="editor"><?php echo $_customerName; ?></span>
@@ -62,7 +65,7 @@ $_customerName = $this->_getCustomer()->getFirstname() . ' ' . $this->_getCustom
 	    </div>
 	    	
 		<div>
-		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date('d.m.Y H:i:s', $_kassenbuchjournal->getOpening()); ?></span>
+		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date($_timeMask, $_kassenbuchjournal->getOpening()); ?></span>
 		</div>
 		<div>
 		    <?php echo $this->__('Editor'); ?>: <span id="editor"><?php echo $_kassenbuchjournal->getOwner(); ?></span>
