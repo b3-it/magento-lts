@@ -18,13 +18,23 @@
 	}
 	
 	#quicksearch {
-	    width: 90%;
+	    width: 87%;
 	    padding: 13px;
 	}
 	
 	button {
 	    @extend .button;
 	}
+}
+
+#slpb-suggest {
+	.sku {
+	    display: inline-block;
+	    width: 40px;
+	}
+	
+	.even {}
+	.odd {}
 }
 
 /* ============================================ *
