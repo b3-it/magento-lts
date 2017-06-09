@@ -36,11 +36,11 @@ class Dwd_Ibewi_Block_Adminhtml_Kostentraeger_Attribute_Edit_Tab_Form extends Ma
       		'name'      => 'pos',
       ));
     
-      $fieldset->addField('standard', 'select', array(
-      		'label'     => Mage::helper('ibewi')->__('Standard'),
-      		'name'      => 'standard',
-      		'values'    => Dwd_Ibewi_Model_Kostentraeger_Yesno::getOptionArray()
-      ));
+//       $fieldset->addField('standard', 'select', array(
+//       		'label'     => Mage::helper('ibewi')->__('Standard'),
+//       		'name'      => 'standard',
+//       		'values'    => Dwd_Ibewi_Model_Kostentraeger_Yesno::getOptionArray()
+//       ));
       
 
 
