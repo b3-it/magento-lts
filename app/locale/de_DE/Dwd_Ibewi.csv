@@ -24,3 +24,4 @@
 "Value","Wert"
 "Cost Unit","Kostenträger"
 "-- Please Select --","-- Bitte wählen --"
+"Cost Unit is used by these Products: %s.","Der Kostenträger wird bei folgenden Produkten genutzt: %s."

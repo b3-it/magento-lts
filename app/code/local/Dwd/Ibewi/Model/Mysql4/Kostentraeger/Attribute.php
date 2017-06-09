@@ -20,4 +20,24 @@ class Dwd_Ibewi_Model_Mysql4_Kostentraeger_Attribute extends Mage_Core_Model_Res
     	$this->_getWriteAdapter()->update($this->getMainTable(), array('standard' => 0)); 
     	return $this;
     }
+    
+    public function isUsedByProduct($object)
+    {
+    	/** @var $eav Mage_Eav_Model_Attribute */
+    	
+    	$eav = Mage::getModel('eav/entity_attribute')->loadByCode(Mage_Catalog_Model_Product::ENTITY, 'kostentraeger');
+    	
+    	$table = $eav->getBackendTable();
+    	$id = $eav->getId();
+    	$value = $object->getValue();
+    	
+    	
+    	$sql = "SELECT group_concat(entity_id) FROM {$table} WHERE attribute_id = {$id} AND value = '{$value}'";
+    	
+    	
+    	$read = $this->_getReadAdapter();
+    	$result = $read->fetchOne($sql);
+    	
+    	return $result;
+    }
 }

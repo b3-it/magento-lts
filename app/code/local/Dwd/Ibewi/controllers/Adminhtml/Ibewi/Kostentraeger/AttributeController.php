@@ -94,13 +94,20 @@ class Dwd_Ibewi_Adminhtml_Ibewi_Kostentraeger_AttributeController extends Mage_A
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('ibewi/kostentraegerattribute');
+				$model = Mage::getModel('ibewi/kostentraeger_attribute')->load($this->getRequest()->getParam('id'));
 
-				$model->setId($this->getRequest()->getParam('id'))
-					->delete();
-
-				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
-				$this->_redirect('*/*/');
+				$products = $model->isUsedByProduct();
+				if(strlen($products) > 0){
+					Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Cost Unit is used by these Products: %s.',$products));
+					$this->_redirect('*/*/');
+				}
+				
+				else{
+					$model->delete();
+	
+					Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
+					$this->_redirect('*/*/');
+				}
 			} catch (Exception $e) {
 				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
 				$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));

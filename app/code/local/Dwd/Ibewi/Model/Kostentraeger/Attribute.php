@@ -21,4 +21,8 @@ class Dwd_Ibewi_Model_Kostentraeger_Attribute extends Mage_Core_Model_Abstract
     	$this->getResource()->removeStandard4All();
     	return $this;
     }
+    public function isUsedByProduct()
+    {
+    	return $this->getResource()->isUsedByProduct($this);
+    }
 }
