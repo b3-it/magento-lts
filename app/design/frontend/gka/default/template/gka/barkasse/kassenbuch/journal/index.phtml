@@ -98,7 +98,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 			        		<label for="endsaldo"><?php echo $_helper->__('Closing balance of the cash desk')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="endsaldo" name="endsaldo" readonly="readonly" value="" class="input-text" />
+					        	<input type="text" id="endsaldo" name="endsaldo" readonly="readonly" value="<?php echo $this->getSaldo()?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>
@@ -126,7 +126,12 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 	<script type="text/javascript">
         var currency = '<?php echo $this->getCurrencySymbol(); ?>';
 	</script>
-	<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>"></script>
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>">
+	</script>
+	
+	<script type="text/javascript">
+		setDiffPrice($j('#withdrawal').val(),$j('#endsaldo').val(),  '#balance', true);
+	</script>
   <?php endif;?>
 
  <?php echo $this->getChildHtml("journal_details") ?>

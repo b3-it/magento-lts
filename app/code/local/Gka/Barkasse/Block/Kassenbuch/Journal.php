@@ -58,6 +58,11 @@ class Gka_Barkasse_Block_Kassenbuch_Journal extends Mage_Core_Block_Template
     	return $this->getKassenbuchJournal()->getTotal();
     }
     
+    public function getSaldo()
+    {
+    	return $this->getTotal() + $this->getOpeningBalance();
+    }
+    
     public function getOpenUrl()
     {
     	return Mage::getUrl('gka_barkasse/kassenbuch_journal/open');
