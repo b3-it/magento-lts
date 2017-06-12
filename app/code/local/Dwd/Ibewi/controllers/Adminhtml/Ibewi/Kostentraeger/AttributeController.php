@@ -116,6 +116,9 @@ class Dwd_Ibewi_Adminhtml_Ibewi_Kostentraeger_AttributeController extends Mage_A
 		$this->_redirect('*/*/');
 	}
 
-
+	protected function _isAllowed() {
+		return Mage::getSingleton('admin/session')->isAllowed('catalog/attributes/dwdibewi_kostentraeger_attribute');
+		
+	}
  
 }

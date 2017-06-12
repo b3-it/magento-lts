@@ -96,6 +96,19 @@
                                 </ibewi>
                             </children>
                         </report>
+						<catalog>
+							<children>
+								<attributes>
+									<children>
+										<dwdibewi_kostentraeger_attribute
+											module="ibewi">
+											<title>Cost Unit</title>
+											<sort_order>10</sort_order>
+										</dwdibewi_kostentraeger_attribute>
+									</children>
+								</attributes>
+							</children>
+						</catalog>
                     </children>
                 </admin>
             </resources>
