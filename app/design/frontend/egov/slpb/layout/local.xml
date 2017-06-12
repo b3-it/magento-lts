@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
+
 <layout version="0.1.0">
+    <default>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </default>
+    
     <checkout_cart_index>
         <!-- Rabattcodes im Warenkorb raus -->
         <remove name="checkout.cart.coupon" />
@@ -11,6 +19,12 @@
             <action method="unsetChild"><name>reorder</name></action>
         </reference>
     </catalog_category_default>
+    
+    <egovs_checkout_multipage_overview>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+    </egovs_checkout_multipage_overview>
 
     <customer_logged_in>
         <reference name="right">
