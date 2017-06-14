@@ -45,7 +45,7 @@
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
-	<table id="shopping-cart-table" class="data-table box-table shopping-cart">
+	<table id="shopping-cart-table" class="cart-table data-table">
 	    <col width="40" />
 	    <col width="75" />
 	    <col />
@@ -101,17 +101,19 @@
 	</table>
 	
 	<div class="buttons-set">
-		<a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button"><span><?php echo $this->__('Delete All Items') ?></span></a>
-		<button class="button" type="submit"><span><?php echo $this->__('Update Shopping Cart') ?></span></button>
+        <a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button">
+            <?php echo $this->__('Delete All Items') ?>
+        </a>
+        <button class="button btn-update" type="submit" name="update_cart_action" data-cart-item-update value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>">
+            <?php echo $this->__('Update Shopping Cart'); ?>
+        </button>
 	</div>
 	
 	<script type="text/javascript">decorateTable('shopping-cart-table');</script>
 	<script type="text/javascript">
-		function deleteAll(url)
-		{
+		function deleteAll(url) {
 			q = confirm("<?php echo Mage::helper('mpcheckout')->__('Delete All Items'); ?>?");
-			if(q == true)
-			{
+			if(q == true) {
 				window.location.href = url;
 			}
 		}
