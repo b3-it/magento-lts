@@ -237,7 +237,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 			}
 		} else {
 			unset ( $data ['address_id'] );
-			$data ['customer_address_id'] = null;
+			//$data ['customer_address_id'] = null;
 			if (! $this->getQuote ()->isVirtual ()) {
 				if (isset ( $data ['use_for_shipping'] ) && $data ['use_for_shipping'] == 1) {
 					$addressValidation = Mage::getModel ( 'mpcheckout/validateadr' )->validateShippingAddress ( $data );
