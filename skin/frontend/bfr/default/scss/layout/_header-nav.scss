@@ -12,6 +12,24 @@
 .skip-nav {
     width: 40%;
     
+    .label {
+	    display: inline;
+	    
+	    @include bp(max-width, $bp-medium) {
+	        position: relative;
+	        top: 5%;
+	    }
+	    
+	    @include bp(max-width, $bp-xsmall) {
+	        display: none;
+	    }
+	}
+	
+	.icon {
+	    @extend .egov-list;
+	    margin: $fa-icon-margin;
+	}
+    
     @include bp(min-width, $bp-xsmall) {
         width: 25%;
     }
@@ -22,29 +40,7 @@
 
     &:not(.skip-active):hover {
         text-decoration: none;
-
-        .icon {
-            background-position: -50px+4px ($toolbar-icon-padding-offset/2);
-        }
     }
-}
-
-.skip-nav .label {
-    display: inline;
-    
-    @include bp(max-width, $bp-medium) {
-        position: relative;
-        top: 5%;
-    }
-    
-    @include bp(max-width, $bp-xsmall) {
-        display: none;
-    }
-}
-
-.skip-nav .icon {
-    @extend .icon-sprite;
-    margin: $fa-icon-margin;
 }
 
 /* ============================================ *
