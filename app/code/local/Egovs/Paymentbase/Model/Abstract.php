@@ -214,56 +214,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 
 		return $this->__webshopDesMandanten;
 	}
-	/**
-	 * Berechnet den Netto Discount, Discount für Steuern und Item total tax
-	 *
-	 * @param Mage_Sales_Model_Order_Item $item Einzelnes Bestellelement
-	 * 
-	 * @return array
-	 * 
-	 * @deprecated Use {@link Egovs_Paymentbase_Model_Abstract::createAccountingListParts} instead!
-	 */
-	protected function _calcDiscountTaxValues($item) {
-		$values = array();
-		/** Siehe dazu auch Trac Ticket #619
-		 * http://www.kawatest.de:8080/trac/ticket/619
-		 * Siehe dazu auch Trac Ticket #689
-		 * http://www.kawatest.de:8080/trac/ticket/689
-		 * 
-		 * 20121009::Frank Rochlitzer
-		 * $item->getTaxBeforeDiscount() existiert nicht mehr siehe Mage_Sales_Model_Quote_Item_Abstract::calcTaxAmount
-		 */
-		
-		//TODO : Katalopreise enthalten Steuern testen
-		/*
-		 * HIDDEN TAX AMOUNT ist der Steuerbetrag des Rabatts
-		 * HIDDEN TAX AMOUNT existiert nur unter folgenden Bedingungen:
-		 * 	- Katalogpreise enthalten Steuern
-		 *  - Kundensteuer Nach Rabatt
-		 *  - Rabattbetrag!!
-		 */
-		$values['fDiscountMWST'] = $item->getDiscountAmount() > 0 && $item->getHiddenTaxAmount() > 0
-			? $item->getHiddenTaxAmount() // entspricht Mage::helper('tax')->getCalculator()->calcTaxAmount($item->getDiscountAmount(), $item->getTaxPercent(), true)
-			: 0.0
-		;
-		
-		
-		if (Mage::helper('tax')->discountTax($item->getStore())) {
-			//Rabatt als Bruttobetrag (Inklusive Steuern)
-			$values['fDiscountNetto'] = $item->getDiscountAmount();
-		} else {
-			//Rabatt als Nettobetrag (Zuzüglich Steuern)
-			$values['fDiscountNetto'] = $item->getDiscountAmount() - $values['fDiscountMWST'];
-		}
-
-		if (Mage::helper('tax')->applyTaxAfterDiscount($item->getStore())) {
-			$values['fMWST'] = round($item->getTaxAmount(), 2);
-		} else {
-			$values['fMWST'] = round($item->getTaxAmount() - $values['fDiscountMWST'], 2);
-		}
-
-		return $values;
-	}
+	
 	/**
 	 * Aktuelle Order
 	 * 
@@ -365,14 +316,10 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				
 			if ($objResult instanceof SoapFault) {
 				$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
-			} elseif (!$objResult || is_null($objResult) || !$objResult->ergebnis) {
+			} elseif (!$objResult || is_null($objResult) || !isset($objResult->ergebnis)) {
 				$sMailText .= "Error: No result returned\n";
 			} else {
-				$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-				$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-				$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-				$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-				$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n\n";
+				$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
 			}
 
 			$sMailText .= "ePayBL-Kundennummer: {$this->_getECustomerId()}\n";
@@ -419,8 +366,8 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			if (method_exists($this, '_customErrorHandler')) {
 				call_user_func(array($this,'_customErrorHandler'), $objResult);
 			} else {
-				if ($objResult && isset($objResult->ergebnis) && Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->code) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->code) {
-					$this->parseAndThrow('ERROR:'.$objResult->ergebnis->code);
+				if ($objResult && isset($objResult->ergebnis) && Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) {
+					$this->parseAndThrow('ERROR:'.$objResult->ergebnis->getCode());
 				} elseif ($objResult instanceof SoapFault) {
 					$this->parseAndThrow('ERROR_-999989');
 				} else {
@@ -920,6 +867,12 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	 */
 	public function createAccountingList($payment, $amount, $bkz = null, $maturity = null, $arrBuchungsliste = null, $grandTotal = null, $currency = null) {
 		// Objekt für Buchungsliste erstellen
+		if (is_null($arrBuchungsliste)) {
+			$arrBuchungsliste = $this->createAccountingListParts();
+		}
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			$arrBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungList($arrBuchungsliste);
+		}
 		$objBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe(
 				// Gesamtsumme
 				is_null($grandTotal) ? (float) $this->_getOrder()->getBaseGrandTotal() : $grandTotal,
@@ -928,7 +881,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				// Fälligkeit
 				is_null($maturity) ? strftime('%Y-%m-%dT%H:%M:%SZ') : $maturity,
 				// Buchungsliste
-				is_null($arrBuchungsliste) ? $this->createAccountingListParts() : $arrBuchungsliste,
+				$arrBuchungsliste,
 				// Bewirtschafter
 				$this->_getBewirtschafterNr(),
 				// Kennzeichen Mahnverfahren aus Konfiguration

@@ -4,8 +4,8 @@
  *
  * @category	Egovs
  * @package		Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2012 -2013 EDV Beratung Hempel
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright	Copyright (c) 2012 -2017 B3 IT Systeme GmbH https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
@@ -47,17 +47,45 @@ class Egovs_Paymentbase_Model_Webservice_Soap_Client extends Zend_Soap_Client
 		unset($options['wsdl']);
 	
 		try {
+			//Bei Zertifikatfehlern gibt PHP Soap die Meldung als Warning aus.
+			//der SoapClient setzt das error_reporting jedoch immer auf 0 -> siehe mageCoreErrorHandler!
+			set_error_handler(array(Mage::helper('paymentbase'), 'epayblErrorHandler'));
 			//The documentation about classes/objects misses that you actually can prevent exposing errors in the constructor by using @new
-			//Funktioniert @new nur in PHP 5.3?
 			/** @see http://www.php.net/manual/de/language.operators.errorcontrol.php **/
-			$this->_soapClient = @new Zend_Soap_Client_Common(array($this, '_doRequest'), $wsdl, $options);
+			$this->_soapClient = @new Egovs_Paymentbase_Model_Webservice_Soap_Client_Common(array($this, '_doRequest'), $wsdl, $options);
 		} catch (Exception $e) {
 			Mage::log(
 				sprintf("Error::%s: %s in %s Line: %d", $e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine()),
 				Zend_Log::ERR,
 				Egovs_Helper::EXCEPTION_LOG_FILE
 			);
+			restore_error_handler();
 			throw $e;
+		}
+		restore_error_handler();
+	}
+	
+	/**
+	 * Do request proxy method.
+	 *
+	 * May be overridden in subclasses
+	 *
+	 * @internal
+	 * @param Zend_Soap_Client_Common $client
+	 * @param string $request
+	 * @param string $location
+	 * @param string $action
+	 * @param int    $version
+	 * @param int    $one_way
+	 * @return mixed
+	 */
+	public function _doRequest(Zend_Soap_Client_Common $client, $request, $location, $action, $version, $one_way = null)
+	{
+		// Perform request as is
+		if ($one_way == null) {
+			return call_user_func(array($client,'_doRequest'), $request, $location, $action, $version);
+		} else {
+			return call_user_func(array($client,'_doRequest'), $request, $location, $action, $version, $one_way);
 		}
 	}
 }

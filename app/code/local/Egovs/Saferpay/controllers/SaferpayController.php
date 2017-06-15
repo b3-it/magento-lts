@@ -84,7 +84,7 @@ class Egovs_Saferpay_SaferpayController extends Egovs_Paymentbase_Controller_Abs
 	}
 
 	/**
-	 * Ruft aktiviereTempKreditkartenKassenzeichen am ePayBL-Server auf
+	 * Ruft aktiviereTempKassenzeichen am ePayBL-Server auf
 	 * 
 	 * Implementation der abstrakten Methode
 	 * 
@@ -98,6 +98,9 @@ class Egovs_Saferpay_SaferpayController extends Egovs_Paymentbase_Controller_Abs
 	 * @see Egovs_Paymentbase_Controller_Abstract::_callSoapClientImpl()
 	 */
 	protected function _callSoapClientImpl($objSOAPClient, $idp, $mandantNr, $_providerName) {
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $objSOAPClient->aktiviereTempKassenzeichen($idp->getAttribute('ORDERID'), $idp->getAttribute('ID'), $_providerName);
+		}
 		return $objSOAPClient->aktiviereTempKreditkartenKassenzeichen($idp->getAttribute('ORDERID'), $mandantNr, $idp->getAttribute('ID'), $_providerName);
 	}
 }

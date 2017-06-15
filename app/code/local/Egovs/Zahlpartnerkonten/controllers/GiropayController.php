@@ -13,7 +13,7 @@ require_once "Egovs/Giropay/controllers/GiropayController.php";
 class Egovs_Zahlpartnerkonten_GiropayController extends Egovs_Giropay_GiropayController
 {
 	/**
-	 * Ruft aktiviereTempKreditkartenKassenzeichen am ePayBL-Server auf
+	 * Ruft aktiviereTempKassenzeichen am ePayBL-Server auf
 	 *
 	 * Implementation der abstrakten Methode
 	 *
@@ -42,7 +42,9 @@ class Egovs_Zahlpartnerkonten_GiropayController extends Egovs_Giropay_GiropayCon
 			$order->addStatusHistoryComment(Mage::helper('zpkonten')->__($e->getMessage()));
 			return false;
 		}
-	
-		return $objSOAPClient->aktiviereTempGiropayKassenzeichen(sprintf('%s/%s', $objSOAPClient->getBewirtschafterNr(), $order->getPayment()->getKassenzeichen()), $mandantNr, $idp->getAttribute('ID'), $PROVIDERNAME);
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			return $objSOAPClient->aktiviereTempKassenzeichen(sprintf('%s/%s', $objSOAPClient->getBewirtschafterNr(), $order->getPayment()->getKassenzeichen()), $idp->getAttribute('ID'), "GIROPAY");
+		}
+		return $objSOAPClient->aktiviereTempGiropayKassenzeichen(sprintf('%s/%s', $objSOAPClient->getBewirtschafterNr(), $order->getPayment()->getKassenzeichen()), $mandantNr, $idp->getAttribute('ID'));
 	}
 }

@@ -118,7 +118,7 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 					
 					// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 					$objResult = null;
-					for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!isset($objResult->istOk) || $objResult->istOk != true); $i++) {
+					for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!$objResult || !$objResult->isOk()); $i++) {
 						$this->_log(sprintf("NOTIFY_ACTION:Try %s to activate kassenzeichen...", $i+1));
 						try {
 							//Aktiviert z. B. das Kassenzeichen
@@ -130,9 +130,9 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 					$this->_log(sprintf("NOTIFY_ACTION:Tried to activate Kassenzeichen, validating result...", $i+1), Zend_Log::DEBUG);
 					
 					// wenn Web-Service nicht geklappt hat
-					if (!$objResult || $objResult->istOk != true) {
+					if (!$objResult || !$objResult->isOk()) {
 						$kassenzeichen = 'empty';
-						$subject = "$module::NOTIFY_ACTION:WS aktiviereTempKassenzeichen() nicht erfolgreich";
+						$subject = "{$this->_module}::NOTIFY_ACTION:WS aktiviereTempKassenzeichen() nicht erfolgreich";
 						$sMailText = '';
 						if ($order->getPayment()->hasData('kassenzeichen')) {
 							$kassenzeichen = $order->getPayment()->getKassenzeichen();
@@ -209,7 +209,7 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 						if ($order->canCancel()) {
 							$order->cancel();
 						}
-						$order->sendOrderUpdateEmail(true, Mage::helper("$module")->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper('paymentbase')->getCustomerSupportMail()));
+						$order->sendOrderUpdateEmail(true, Mage::helper($this->_module)->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper('paymentbase')->getCustomerSupportMail()));
 						$this->_fault('data_invalid');
 					} else {
 						$order->addStatusToHistory($order->getState(), Mage::helper($this->_module)->__('Order is now ready for processing'));

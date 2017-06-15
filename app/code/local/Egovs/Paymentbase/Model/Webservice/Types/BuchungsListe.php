@@ -24,9 +24,8 @@
  * 
  * @category	Egovs
  * @package		Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright	Copyright (c) 2012 EDV Beratung Hempel
- * @copyright   Copyright (c) 2014 - 2016 B3 IT Systeme GmbH
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright   Copyright (c) 2012 - 2016 B3 IT Systeme GmbH https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
@@ -37,7 +36,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe extends Egovs_Payme
 	 * @param number $betrag                   Betrag
 	 * @param string $waehrungskennzeichen     Währungskennzeichen
 	 * @param string $faelligkeitsdatum        Datum der Fälligkeit im Format: YYYY-MM-ddTHH:MM:SSZ
-	 * @param array  $buchungen                Buchungen
+	 * @param array  $buchungen                BuchungList
 	 * @param string $bewirtschafterNr         Bewirtschafternummer
 	 * @param string $kennzeichenMahnverfahren Kennzeichen für Mahnverfahren
 	 * @param string $kassenzeichen            Kassenzeichen

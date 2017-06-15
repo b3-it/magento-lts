@@ -133,12 +133,12 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 					if ($kInfo->ergebnis->istOk == false) {
 						$msg = sprintf(
 								"%s; Error code: %s; Kassenzeichen: %s",
-								$this->getKassenzeichenInfo()->ergebnis->langText,
-								$this->getKassenzeichenInfo()->ergebnis->code,
+								$this->getKassenzeichenInfo()->ergebnis->getLongText(),
+								$this->getKassenzeichenInfo()->ergebnis->getCode(),
 								$kzeichen
 						);
-						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->code])) {
-							$errors[$this->getKassenzeichenInfo()->ergebnis->code] = $msg;
+						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])) {
+							$errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] = $msg;
 							Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 							Mage::getSingleton('adminhtml/session')->addError($msg);
 						}
@@ -209,15 +209,17 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     		//Hier Rechnungen noch auf bezahlt setzen!
     		//Muss nach State-Änderung der Order stehen!!
     		$this->_setInvoicePaymentStatus($this->_getOrder());
+    		$_betrag = max(0, $this->getKassenzeichenInfo()->betragZahlungseingaenge - $this->getKassenzeichenInfo()->betragStornos);
     		if ($this->getKassenzeichenInfo()->saldo < 0.0) {
-    			$this->_getOrder()->setBaseTotalPaid($this->getKassenzeichenInfo()->betragZahlungseingaenge);
+    			$this->_getOrder()->setBaseTotalPaid($_betrag);
     			/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
-    			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($this->getKassenzeichenInfo()->betragZahlungseingaenge));
+    			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($_betrag));
     		}
     		$this->_getOrder()->save();
     		$this->_paidKassenzeichen++;
     		$this->_grantedKassenzeichen[] = $this->_getKassenzeichen();
     	} elseif ($this->getKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo > 0.0 && $this->getKassenzeichenInfo()->saldo < $this->_getOrder()->getBaseGrandTotal()) {
+    		$_betrag = max(0, $this->getKassenzeichenInfo()->betragZahlungseingaenge - $this->getKassenzeichenInfo()->betragStornos);
     		//Nur für Teilzahlungen
     		if ($this->_notBalanced <= self::MAX_UNBALANCED) {
     			Mage::getSingleton('adminhtml/session')->addNotice(
@@ -230,9 +232,13 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     		$this->getInvoice()->addComment(Mage::helper('paymentbase')->__('The balance of this invoice is %s', $this->getKassenzeichenInfo()->saldo))
     			->save()
     		;
-    		$this->_getOrder()->setBaseTotalPaid(min(max(0, $this->getKassenzeichenInfo()->betragZahlungseingaenge), $this->_getOrder()->getBaseGrandTotal()));
+    		$this->_getOrder()->setBaseTotalPaid(
+    				min($_betrag, $this->_getOrder()->getBaseGrandTotal())
+    		);
     		/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
-    		$this->_getOrder()->setTotalPaid(min(max(0, $this->_getOrder()->getStore()->convertPrice($this->getKassenzeichenInfo()->betragZahlungseingaenge)), $this->_getOrder()->getGrandTotal()));
+    		$this->_getOrder()->setTotalPaid(
+    				min($this->_getOrder()->getStore()->convertPrice($_betrag), $this->_getOrder()->getGrandTotal())
+    		);
     	
     		$this->_getOrder()->getResource()->saveAttribute($this->_getOrder(), array('base_total_paid', 'total_paid'));
     	}
