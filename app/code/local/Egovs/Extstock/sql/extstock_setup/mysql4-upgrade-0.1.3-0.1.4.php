@@ -28,11 +28,19 @@
 $installer = $this;
 $installer->startSetup();
 
-$installer->getConnection()->insertMultiple(
-    $installer->getTable('admin/permission_variable'),
-    array(
-        array('variable_name' => 'extstock/adminhtml_email_lowstock', 'is_allowed' => 1),
-    )
+$addRows =    array(
+		array('variable_name' => 'extstock/adminhtml_email_lowstock', 'is_allowed' => 1)
 );
+
+$table = $installer->getTable('admin/permission_variable');
+
+foreach($addRows as $row)
+{
+	$sql = "SELECT * FROM $table WHERE variable_name = '" . $row['variable_name']."'";
+	if(count($installer->getConnection()->fetchAll($sql)) == 0)
+	{
+		$installer->getConnection()->insert($table,$row);
+	}
+}
 
 $installer->endSetup();

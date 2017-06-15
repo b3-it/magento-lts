@@ -149,16 +149,19 @@ class Slpb_Checkout_Block_Shop_Abstract extends Mage_Core_Block_Template
    
     public function isFieldRequired($key,$method = null)
     {
-    	if($method == null) $method = $this->getQuote()->getCheckoutMethod();
+    	if($method == null) {
+    		$method = $this->getQuote()->getCheckoutMethod();
+    	}
     	
     	return ($this->helper('mpcheckout/config')->isFieldRequired($key,$method));
     }
     
  	public function getFieldRequiredHtml($name,$method = null)
     {
-    	if($method == null) $method = $this->getQuote()->getCheckoutMethod();
-    	if($this->isFieldRequired($name,$method))
-    	{
+    	if($method == null) {
+    		$method = $this->getQuote()->getCheckoutMethod();
+    	}
+    	if($this->isFieldRequired($name,$method)) {
     		return '<span class="required">*</span>';
     	}
     	return '';
@@ -166,7 +169,9 @@ class Slpb_Checkout_Block_Shop_Abstract extends Mage_Core_Block_Template
     
  	public function isFieldVisible($key,$method = null)
  	{
- 		if($method == null) $method = $this->getQuote()->getCheckoutMethod();
+ 		if($method == null) {
+ 			$method = $this->getQuote()->getCheckoutMethod();
+ 		}
  		return ($this->helper('mpcheckout/config')->getConfig($key,$method) != '');
  		
  	}
@@ -180,7 +185,7 @@ class Slpb_Checkout_Block_Shop_Abstract extends Mage_Core_Block_Template
         }
         $options = explode(';', $options);
         foreach ($options as &$v) {
-            $v = $this->htmlEscape(trim($v));
+            $v = $this->escapeHtml(trim($v));
         }
         return $options;
     }

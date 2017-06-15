@@ -32,21 +32,17 @@
  */
 class Slpb_Checkout_Block_Cart extends Mage_Checkout_Block_Cart
 {
-
 	private $_CheckoutUrl = 'egovs_checkout/multipage';
-	
-   
-	
-    
-    public function getDeleteAllUrl()
+
+	public function getDeleteAllUrl()
     {
-    	$url = $this->getUrl('slpb_checkout/cart/deleteall', array(
-                'id'=>'0',
-                Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->helper('core/url')->getEncodedUrl()
-            ));
-        $img = $this->getSkinUrl('images/btn_trash.gif');
-        $text = Mage::helper('mpcheckout')->__('Delete All Items');
-        return "<a titel=\"$text\" href=\"#\" onclick=\"deleteAll(\'$url\')\" ><img height=\"16\" width=\"16\" alt=\"$text\" src=\"$img\"/></a>";
+    	return $this->getUrl(
+    		       'slpb_checkout/cart/deleteall',
+    			   array(
+                       'id'=>'0',
+                       Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->helper('core/url')->getEncodedUrl()
+                   )
+    		   );
     }
     
     public function getCheckoutUrl()

@@ -59,15 +59,24 @@
 					</service_tile>
 					<service_vg_group>
 						<table>bkg_viewer_service_vg_group</table>
-					</service_vg_group>						
+					</service_vg_group>
 					<service_vg>
 						<table>bkg_viewer_service_vg</table>
-					</service_vg>										
+					</service_vg>
 				</entities>
 			</bkgviewer_resource>
 		</models>
 	</global>
 	<frontend>
+		<routers>
+			<bkg_view_frontend>
+				<use>standard</use>
+				<args>
+					<module>Bkg_Viewer</module>
+					<frontName>bkg_viewer</frontName>
+				</args>
+			</bkg_view_frontend>
+		</routers>
 	</frontend>
 	<admin>
 		<routers>

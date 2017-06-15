@@ -27,6 +27,12 @@ class Bkg_Viewer_Block_Adminhtml_Service_Tilesystem_Edit_Tabs extends Mage_Admin
           'content'   => $this->getLayout()->createBlock('bkgviewer/adminhtml_service_tilesystem_edit_tab_form')->toHtml(),
       ));
       
+      $this->addTab('form_section2', array(
+      		'label'     => Mage::helper('bkgviewer')->__('Tile System Member'),
+      		'title'     => Mage::helper('bkgviewer')->__('Information'),
+      		'content'   => $this->getLayout()->createBlock('bkgviewer/adminhtml_service_tilesystem_edit_tab_grid')->toHtml(),
+      ));
+      
      
 
       return parent::_beforeToHtml();

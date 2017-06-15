@@ -28,6 +28,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Vggroup_New_Form extends Mage_Adminhtml
       $this->setForm($form);
       
       $fieldset = $form->addFieldset('navi_form', array('legend'=>Mage::helper('bkgviewer')->__('WMS Information')));
+      /*
       $fieldset->addField('url', 'text', array(
       		'label'     => Mage::helper('bkgviewer')->__('Url'),
       		'class'     => 'required-entry',
@@ -36,7 +37,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Vggroup_New_Form extends Mage_Adminhtml
       		'value'	=> 'http://localhost.local/bestand_niedersachsen_wms.xml',
       		'note'	=> 'getCapabilities'
       ));
-      
+      */
       $fieldset->addField('filename', 'file', array(
       		'label'     => Mage::helper('bkgviewer')->__('Filename'),
       		'class'     => 'required-entry',

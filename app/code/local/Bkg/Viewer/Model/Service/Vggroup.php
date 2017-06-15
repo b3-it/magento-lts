@@ -38,32 +38,43 @@ class Bkg_Viewer_Model_Service_Vggroup extends Mage_Core_Model_Abstract
     		/** @var \DOMElement $node */
     		if ($node instanceof \DOMElement) {
     			$id = $node->getElementsByTagName('GEN')->item(0)->textContent;
-    			 
-    			$polygons = array();
+    			
+    			$multiPoly = new Bkg_Geometry_Multipolygon();
+    			//$polygons = array();
     			try{
     				foreach ($node->getElementsByTagName('Polygon') as $polynode) {
     					if ($polynode instanceof \DOMElement) {
-    
-    						$lines = [];
-    						foreach ($polynode->getElementsByTagName('posList') as $listnode) {
-    							$cords = array_chunk(explode(" ", trim($listnode->textContent)), 2);
-    							$lines[]= implode(', ', array_map(function($c) {
-    								return implode(' ', $c);
-    							}, $cords));
-    						}
-    						$text = implode(', ', $lines);
     						$polygon = new Bkg_Geometry_Polygon();
-    						$polygons[] = $polygon->load($text);
-    
-    					}
-    				}
-    
-    				if (!empty($polygons)) {
-    					$multiPoly = new Bkg_Geometry_Multipolygon();
-    					foreach($polygons as $polygon)
-    					{
+    						
+    						$lines = [];
+    						foreach ($polynode->getElementsByTagName('exterior') as $extnode) 
+    						{
+	    						foreach ($extnode->getElementsByTagName('posList') as $listnode) {
+	    							$cords = array_chunk(explode(" ", trim($listnode->textContent)), 2);
+	    							$linestring =  new Bkg_Geometry_LineString();
+	    							$linestring->load($cords);
+	    							$polygon->setExterior($linestring);
+	    						}
+	    						
+	    						
+	    						
+    						}
+    						foreach ($polynode->getElementsByTagName('interior') as $intnode)
+    						{
+    							foreach ($intnode->getElementsByTagName('posList') as $listnode) {
+    								$cords = array_chunk(explode(" ", trim($listnode->textContent)), 2);
+    								$linestring =  new Bkg_Geometry_LineString();
+    								$linestring->load($cords);
+    								$polygon->addInterior($linestring);
+    							}
+    						}
     						$multiPoly->addPoloygon($polygon);
     					}
+    				}
+
+    
+    				//if (!empty($polygons)) 
+    				{
     						$tile = Mage::getModel('bkgviewer/service_vg');
     						$tile
     						->setGEOShape($multiPoly)
@@ -81,6 +92,22 @@ class Bkg_Viewer_Model_Service_Vggroup extends Mage_Core_Model_Abstract
     		}
     	}
  
+    }
+    
+    /**
+     * Laden einer Gruppe von Verwaltungsgebieten anhand der ident und CRS
+     * @param unknown $ident
+     * @param unknown $crs
+     * @return Bkg_Viewer_Model_Resource_Service_Vggroup
+     */
+    public function loadWithCRS($ident, $crs = null)
+    {
+    	$this->_beforeLoad(null, null);
+    	$this->_getResource()->loadWithCRS($this, $ident, $crs);
+    	$this->_afterLoad();
+    	$this->setOrigData();
+    	$this->_hasDataChanges = false;
+    	return $this;
     }
     
 }

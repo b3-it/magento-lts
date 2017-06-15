@@ -69,7 +69,7 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
     		if ($node instanceof \DOMElement) {
     			$id = $node->getElementsByTagName('ID')->item(0)->textContent;
     	
-    			$polygons = [];
+    			$polygons = array();
 	    		try{
 	    			foreach ($node->getElementsByTagName('Polygon') as $polynode) {
 	    				if ($polynode instanceof \DOMElement) {
@@ -77,14 +77,14 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
 	    					$lines = [];
 	    					foreach ($polynode->getElementsByTagName('posList') as $listnode) {
 	    						$cords = array_chunk(explode(" ", trim($listnode->textContent)), 2);
-	    						$lines[]= implode(', ', array_map(function($c) {
-	    							return implode(' ', $c);
-	    						}, $cords));
+	    						$linestring = new Bkg_Geometry_LineString();
+	    						$linestring->load($cords);
 	    					}
 	    					$text = implode(', ', $lines);
-	    					$polygon = new Bkg_Geometry_Polygon();
-	    					$polygons[] = $polygon->load($text);
-	    	
+	    					
+	    					$polygon  = new Bkg_Geometry_Polygon();
+	    					$polygon->setExterior($linestring);
+	    					$polygons[] = $polygon;
 	    				}
 	    			}
 	    	
@@ -109,5 +109,21 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
     	}
     }
     
+    
+    /**
+     * Laden eines Kachelsystems anhand der ident und CRS
+     * @param unknown $ident
+     * @param unknown $crs
+     * @return Bkg_Viewer_Model_Resource_Service_Tilesystem
+     */
+    public function loadWithCRS($ident, $crs = null)
+    {
+    	$this->_beforeLoad(null, null);
+        $this->_getResource()->loadWithCRS($this, $ident, $crs);
+        $this->_afterLoad();
+        $this->setOrigData();
+        $this->_hasDataChanges = false;
+        return $this;
+    }
     
 }

@@ -15,4 +15,39 @@ class Bkg_Viewer_Model_Resource_Service_Tilesystem extends Mage_Core_Model_Resou
         // Note that the id refers to the key field in your database table.
         $this->_init('bkgviewer/service_tile_system', 'id');
     }
+    
+    /**
+     * Laden eines Kachelsystems anhand der ident und CRS
+     * @param Mage_Core_Model_Abstract $object
+     * @param unknown $ident
+     * @param unknown $crs
+     * @return Bkg_Viewer_Model_Resource_Service_Tilesystem
+     */
+    public function loadWithCRS(Mage_Core_Model_Abstract $object, $ident, $crs = null)
+    {
+    	$read = $this->_getReadAdapter();
+    	if ($read && !is_null($ident)) {
+    		
+    		$select = $read->select()
+    		->from($this->getMainTable())
+    		->where('ident=?', $ident);
+    		
+    		if($crs){
+    			$select->where('crs=?', $crs);
+    		}
+    		
+    		$data = $read->fetchRow($select);
+    
+    		if ($data) {
+    			$object->setData($data);
+    		}
+    	}
+    
+    	$this->unserializeFields($object);
+    	$this->_afterLoad($object);
+    
+    	return $this;
+    }
+    
+
 }

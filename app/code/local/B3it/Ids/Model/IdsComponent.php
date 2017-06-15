@@ -186,7 +186,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 			$shopName = Mage::getStoreConfig('general/imprint/shop_name');
 			$body = sprintf("Shop Name: %s\nWebsite: %s\n\n%s", $shopName, Mage::getBaseUrl(), $body);
 			$mail->setBody($body);
-			$mailFrom = $this->getGeneralContact($module);
+			$mailFrom = $this->getGeneralContact();
 			$mail->setFromEmail($mailFrom['mail']);
 			$mail->setFromName($mailFrom['name']);
 			$mail->setToEmail($mailTo);
@@ -197,7 +197,7 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 				$mail->send();
 			}
 			catch(Exception $ex) {
-				$error = Mage::helper($module)->__('Unable to send email.');
+				$error = Mage::helper('b3it_ids')->__('Unable to send email.');
 	
 				if (isset($ex)) {
 					Mage::log($error.": {$ex->getTraceAsString()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+
+<layout version="0.1.0">
+    <default>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </default>
+    
+    <checkout_cart_index>
+        <!-- Rabattcodes im Warenkorb raus -->
+        <remove name="checkout.cart.coupon" />
+    </checkout_cart_index>
+
+    <catalog_category_default>
+        <reference name="right">
+            <action method="unsetChild"><name>sale.reorder.sidebar</name></action>
+            <action method="unsetChild"><name>reorder</name></action>
+        </reference>
+    </catalog_category_default>
+    
+    <egovs_checkout_multipage_overview>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+    </egovs_checkout_multipage_overview>
+
+    <customer_logged_in>
+        <reference name="right">
+            <action method="unsetChild"><name>sale.reorder.sidebar</name></action>
+            <action method="unsetChild"><name>reorder</name></action>
+        </reference>
+    </customer_logged_in>
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName"><name>recurring_profiles</name></action>
+            <action method="removeLinkByName"><name>billing_agreements</name></action>
+            <action method="removeLinkByName"><name>debitpin_activate</name></action>
+            <action method="removeLinkByName"><name>debitpin_change</name></action>
+            <action method="removeLinkByName"><name>wishlist</name></action>
+            <action method="removeLinkByName"><name>tags</name></action>
+            <action method="removeLinkByName"><name>reviews</name></action>
+        </reference>
+
+        <reference name="left">
+            <action method="unsetChild"><name>catalog.compare.sidebar</name></action>
+            <action method="unsetChild"><name>cart_sidebar</name></action>
+            <action method="unsetChild"><name>sale.reorder.sidebar</name></action>
+            <action method="unsetChild"><name>order</name></action>
+        </reference>
+
+        <reference name="right">
+            <action method="unsetChild"><name>sale.reorder.sidebar</name></action>
+        </reference>
+    </customer_account>
+
+</layout>

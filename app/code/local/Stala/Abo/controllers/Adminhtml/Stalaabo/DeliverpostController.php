@@ -197,6 +197,7 @@ class Stala_Abo_Adminhtml_Stalaabo_DeliverpostController extends Egovs_Base_Cont
     	$obj = new Varien_Object();
     	$obj->setStoreId(0);
     	$obj->setCreatedAtStoreDate(new Zend_Date());
+    	$obj->setCreatedAt(new Zend_Date());
     	
     	$order = Mage::getModel('sales/order');
     	$adr = Mage::getModel('customer/address')->load($item->getShippingAddressId());

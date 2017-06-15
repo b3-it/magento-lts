@@ -47,8 +47,8 @@ class Sid_Import_Model_Imageloader extends B3it_XmlBind_ProductBuilder_Imageload
 				if(!file_exists($targetDir)){
 					mkdir($targetDir, 0750, true);
 				}
-				if (!is_writable($destinationFolder)) {
-		            Mage::log('Destination folder is not writable or does not exists: '.$destinationFolder);
+				if (!is_writable($targetDir)) {
+		            Mage::log('Destination folder is not writable or does not exists: '.$targetDir);
 		        }
 				$data = $response->getBody();
 				file_put_contents($targetDir."/".$filename, $data);

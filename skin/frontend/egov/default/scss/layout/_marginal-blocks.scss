@@ -12,6 +12,7 @@
 	border: $global-active-border solid $global-border-color;
 	margin-bottom: $global-boxmargin;
 	display: block;
+	background-color: $global-wrapper-color;
 	
 	.block-title {
 	    color: $global-fontcolor-dark;
@@ -119,4 +120,9 @@
 	        border-bottom: $global-box-border solid $global-border-color;
 	    }
 	}
+}
+
+.col-left:first-child {
+	position: relative;
+	top: -15px;
 }

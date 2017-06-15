@@ -15,6 +15,32 @@
 class Sid_Wishlist_Model_Manager extends Varien_Object
 {
 	/**
+	 * Get product object based on requested product information
+	 *
+	 * @param   mixed $productInfo
+	 * @return  Mage_Catalog_Model_Product
+	 */
+	protected function _getProduct($productInfo) {
+		$product = null;
+		if ($productInfo instanceof Mage_Catalog_Model_Product) {
+			$product = $productInfo;
+		} elseif (is_int($productInfo) || is_string($productInfo)) {
+			$product = Mage::getModel('catalog/product')
+				->setStoreId(Mage::app()->getStore()->getId())
+				->load($productInfo);
+		}
+		$currentWebsiteId = Mage::app()->getStore()->getWebsiteId();
+		if (!$product
+			|| !$product->getId()
+			|| !is_array($product->getWebsiteIds())
+			|| !in_array($currentWebsiteId, $product->getWebsiteIds())
+			) {
+				Mage::throwException(Mage::helper('checkout')->__('The product could not be found.'));
+		}
+		return $product;
+	}
+	
+	/**
      * Übersetzungroutine
      *
      * @return string
@@ -125,10 +151,14 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 				return true;				
 			}
 			$params = new Varien_Object($this->getSession()->getParams());
+			$related = $params->getRelatedProduct();
 			$result = $quote->addProduct($product, $params);
 			
 			if (is_string($result)) {
 				throw new Sid_Wishlist_Model_Quote_NoProductException($this->__($result));
+			}
+			if (!empty($related)) {
+				$this->addProductsByIds($quote, explode(',', $related));
 			}
 		} else {
 			throw new Sid_Wishlist_Model_Quote_NoProductException($this->__('No Product to add!'));
@@ -142,6 +172,49 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 		$this->getSession()->replaceQuote($quote);
 		
 		return true;
+	}
+	
+	/**
+	 * Adding products to cart by ids
+	 *
+	 * @param   array $productIds
+	 * @return  Mage_Checkout_Model_Cart
+	 */
+	public function addProductsByIds($quote, $productIds)
+	{
+		$allAvailable = true;
+		$allAdded     = true;
+		
+		if (!empty($productIds)) {
+			foreach ($productIds as $productId) {
+				$productId = (int) $productId;
+				if (!$productId) {
+					continue;
+				}
+				$product = $this->_getProduct($productId);
+				if ($product->getId() && $product->isVisibleInCatalog()) {
+					try {
+						$quote->addProduct($product);
+					} catch (Exception $e){
+						$allAdded = false;
+					}
+				} else {
+					$allAvailable = false;
+				}
+			}
+			
+			if (!$allAvailable) {
+				$this->getSession()->addError(
+					Mage::helper('checkout')->__('Some of the requested products are unavailable.')
+				);
+			}
+			if (!$allAdded) {
+				$this->getSession()->addError(
+					Mage::helper('checkout')->__('Some of the requested products are not available in the desired quantity.')
+				);
+			}
+		}
+		return $this;
 	}
 	
 	/**

@@ -40,7 +40,6 @@ Default layout, loads most of the pages
                 <action method="addCheckoutLink"></action>
             </block>
         </reference>
-
         <reference name="header">
             <block type="checkout/cart_minicart" name="minicart_head" template="checkout/cart/minicart.phtml" before="-">
                 <block type="checkout/cart_sidebar" name="minicart_content" template="checkout/cart/minicart/items.phtml">
@@ -58,7 +57,6 @@ Default layout, loads most of the pages
                 </block>
             </block>
         </reference>
-
         <reference name="right">
             <block type="sidcheckout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml" before="-">
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
@@ -254,6 +252,11 @@ Multi address shipping checkout overview
 
     <checkout_multishipping_overview>
         <update handle="checkout_multishipping"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-overview</className></action>
+        </reference>
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="sidcheckout/multishipping_overview" name="checkout_overview" template="sid/checkout/multishipping/overview.phtml">
@@ -275,6 +278,12 @@ Multi address shipping checkout success
 
     <checkout_multishipping_success>
         <update handle="checkout_multishipping"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-success</className></action>
+        </reference>
+
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="sidcheckout/multishipping_success" name="checkout_success" template="checkout/multishipping/success.phtml"/>

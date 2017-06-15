@@ -46,7 +46,11 @@ class Slpb_Checkout_QuickletterController extends Mage_Core_Controller_Front_Act
  
         
         
-        if(!isset($params['id'])) return;
+        if(!isset($params['id']))
+        {
+        	$this->_redirect('checkout/cart/index');
+        	return;
+        }
         $id = intval($params['id']);
         $product= $this->_initProduct($id);
         
