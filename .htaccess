@@ -40,13 +40,9 @@
     AddType video/ogg .ogg
 
 <IfModule mod_php5.c>
-
-    php_value magic_quotes_gpc off
-
 ############################################
 ## adjust memory limit
 
-#    php_value memory_limit 64M
     php_value memory_limit 256M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
@@ -56,11 +52,6 @@
 ## PHP-Error-LOG
     php_flag log_errors on
     #php_value error_log /srv/www/htdocs/ *CUSTOMIZE* /var/log/php_error.log
-
-############################################
-## disable magic quotes for php request vars
-
-    php_flag magic_quotes_gpc off
 
 ############################################
 ## disable automatic session start
@@ -87,10 +78,48 @@
     php_value suhosin.session.cryptua off
 
 ###########################################
-# turn off compatibility with PHP4 when dealing with objects
+</IfModule>
 
-    php_value zend.ze1_compatibility_mode Off
+<IfModule mod_php7.c>
+############################################
+## adjust memory limit
 
+    php_value memory_limit 256M
+    php_value max_execution_time 18000
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+
+############################################
+## PHP-Error-LOG
+    php_flag log_errors on
+    #php_value error_log /srv/www/htdocs/ *CUSTOMIZE* /var/log/php_error.log
+
+
+############################################
+## disable automatic session start
+## before autoload was initialized
+
+    php_value session.auto_start off
+
+############################################
+## Session-Configuration
+## https://trac.kawatest.de/ticket/1647
+
+    php_value session.gc_probability 1
+    php_value session.gc_divisor 100
+    php_value session.gc_maxlifetime 86400
+
+############################################
+## enable resulting html compression
+
+    #php_value zlib.output_compression on
+
+###########################################
+# disable user agent verification to not break multiple image upload
+
+    php_value suhosin.session.cryptua off
+
+###########################################
 </IfModule>
 
 <IfModule mod_security.c>
