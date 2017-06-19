@@ -21,7 +21,7 @@
 //    Variablen werden in "_framework.scss" eingebunden
 @import "../../default/scss/egov/bitv";
 @import "../../default/scss/egov/video";
-@import "../../default/scss/egov/egov-base";
+@import "egov/egov-base";
 @import "../../default/scss/egov/fa-icons";
 @import "../../default/scss/egov/mp-checkout";
 @import "../../default/scss/egov/checkiban";
@@ -41,14 +41,14 @@
 // ----------------------------------------------
 // Layout
 @import "../../default/scss/layout/button-set";
-@import "../../default/scss/layout/buttons";
+@import "layout/buttons";
 @import "../../default/scss/layout/global";
 @import "layout/header";
 @import "../../default/scss/layout/header-nav";
 @import "layout/header-search";
 @import "../../default/scss/layout/header-account";
-@import "../../default/scss/layout/header-cart";
-@import "../../default/scss/layout/marginal-blocks";
+@import "layout/header-cart";
+@import "layout/marginal-blocks";
 @import "../../default/scss/layout/footer";
 
 

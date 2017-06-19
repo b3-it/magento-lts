@@ -351,6 +351,10 @@
     line-height: 100%;
     text-align: center;
     
+    &:hover {
+        background-color: $global-linkcolor;
+    }
+    
     @include bp(max-width, $bp-medium) {
     	padding-top: 5px;
     }
