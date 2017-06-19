@@ -45,6 +45,8 @@
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+
 	<table id="shopping-cart-table" class="cart-table data-table">
 	    <col width="40" />
 	    <col width="75" />
