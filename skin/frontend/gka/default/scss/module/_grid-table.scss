@@ -103,6 +103,7 @@ div.grid {
 	.hor-scroll {
 	    margin-bottom: -4px;
 	    overflow: auto;
+	    -ms-overflow-style: scrollbar;
 	    padding-bottom: $global-boxpadding;
 	    width: 100%;
 	}
