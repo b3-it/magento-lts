@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -199,9 +199,6 @@ class Mage_Core_Model_Resource_Session implements Zend_Session_SaveHandler_Inter
     /**
      * Fetch session data
      *
-	 * (Fix for PHP 7 to make sure it really returns string type as docblock promises, because otherwise session
-     * crashes.)
-     *
      * @param string $sessId
      * @return string
      */
@@ -218,7 +215,7 @@ class Mage_Core_Model_Resource_Session implements Zend_Session_SaveHandler_Inter
 
         $data = $this->_read->fetchOne($select, $bind);
 
-        return (string)$data;
+        return $data;
     }
 
     /**

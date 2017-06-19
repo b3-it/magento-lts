@@ -19,7 +19,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
@@ -389,13 +389,13 @@ select.multiselect option       { padding:3px 4px; border-bottom:1px solid #ddd;
 
 .columns .form-list             { width:auto; }
 .columns .form-list td.value    { width:300px; padding-right:5px !important; }
-.columns .form-list td.value .next-toinput { width:20%; display:inline; margin-right:5px; }
-.columns .form-list td.value .next-toselect input.input-text { width:78% !important; display:inline; }
+.columns .form-list td.value .next-toinput { width:75px; display:inline; margin-right:5px; }
+.columns .form-list td.value .next-toselect input.input-text { width:195px!important; display:inline; }
 
 .columns .form-list td.value input[type="checkbox"][id*="use_"] { margin:4px 10px 0 0; vertical-align:top; }
 .columns .form-list td.value input[type="checkbox"][id*="use_"] + label { display:inline-block; vertical-align:top; margin:2px 0 0 -7px; }
 
-.fieldset-wide .form-list { width:100% }
+.fieldset-wide .form-list { width:100% !important; }
 .fieldset-wide .form-list td.value { width:auto !important; }
 .fieldset-wide .form-list td.value input.input-text,
 .fieldset-wide .form-list td.value textarea { width:98% !important; }
@@ -1603,11 +1603,6 @@ ul.super-product-attributes { padding-left:15px; }
 .bold               { font-weight:bold !important; }
 .normal             { font-weight:normal !important; }
 .strike             { text-decoration: line-through; }
-
-/*****************************************/
-/********* Login and Password ************/
-/*****************************************/
-.login-form div.input-box {display: inline-block; width:50%; vertical-align: top;}
 
 /* Clear */ /* This keeps our HTML free of buncha clearing elements */
 .config-heading:after,
