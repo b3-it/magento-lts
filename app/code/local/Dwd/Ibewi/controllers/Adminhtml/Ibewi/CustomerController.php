@@ -25,7 +25,7 @@ class Dwd_Ibewi_Adminhtml_Ibewi_CustomerController extends Dwd_Ibewi_Controller_
 		try 
 		{
 			$this->_initAction();
-			$this->verifyDate();
+			//$this->verifyDate();
 			$this->renderLayout();
 		}
 		catch(Exception $ex)
