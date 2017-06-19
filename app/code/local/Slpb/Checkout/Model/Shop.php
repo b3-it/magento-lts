@@ -185,7 +185,7 @@ class Slpb_Checkout_Model_Shop extends Slpb_Checkout_Model_Abstract
 
        	if($totals['grand_total']['value'] < 0.01)
 		{
-			$this->addPaymentMethode('freepayment');
+			$this->addPaymentMethode('free');
 		
 		}
         else 

@@ -50,7 +50,7 @@ class Bkg_Viewer_Model_Service_Tile extends Mage_Core_Model_Abstract
     {
     	$shape = $this->getResource()->loadGeoemetryAsText($this->getId());
     	if($shape){
-    		$this->_GEOShape->load($shape);
+    		$this->_GEOShape = $shape;
     	}
     	return parent::_afterLoad();
     }

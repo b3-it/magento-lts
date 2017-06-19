@@ -8,4 +8,8 @@
         </reference>
     </adminhtml_sidimport_import_index>
 
+    <adminhtml_sidimport_import_grid>
+        <update handle="formkey"/>
+        <block type="sidimport/adminhtml_import_edit_tab_grid" name="import.grid" output="toHtml"></block>
+    </adminhtml_sidimport_import_grid>
 </layout>

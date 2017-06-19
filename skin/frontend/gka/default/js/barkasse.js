@@ -1,15 +1,9 @@
 var alertClass = 'required';
 
 $j(document).ready(function(){
-	var endSaldo   = parseFloat( $j('#opening').val() ) + parseFloat( $j('#saldo').val() );
-
-	// Default-Values
-	$j('#endsaldo').val( endSaldo.toFixed(2) );
-	$j('#balance').html('0.00 ' + currency);
-
 	// Kassenbuch-Journal
 	$j('#withdrawal').bind('keyup', function() {
-		setDiffPrice($j('#opening').val(), $j('#withdrawal').val(), '#balance', true);
+		setDiffPrice($j('#withdrawal').val(), $j('#endsaldo').val(),  '#balance', true);
 	});
 
 	// Checkout => Bestellübersicht

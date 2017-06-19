@@ -159,7 +159,7 @@ class Sid_Report_Model_Mysql4_Sales_Quantity_Collection extends Mage_Sales_Model
     		->_createSubSelect()
     		->setOrder('name', self::SORT_ORDER_ASC)
     	;
-    	Mage::log(sprintf('sql: %s', $this->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+    	//Mage::log(sprintf('sql: %s', $this->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	return $this;
     }
 	

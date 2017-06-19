@@ -50189,13 +50189,16 @@ ol.format.GMLBase.prototype.readFeaturesInternal = function(node, objectStack) {
  */
 ol.format.GMLBase.prototype.readGeometryElement = function(node, objectStack) {
   var context = /** @type {Object} */ (objectStack[0]);
-  context['srsName'] = node.firstElementChild.getAttribute('srsName');
+  var newContext = ol.obj.assign({}, context);
+  if (node.firstElementChild.hasAttribute('srsName')) {
+    newContext['srsName'] = node.firstElementChild.getAttribute('srsName');
+  }
   /** @type {ol.geom.Geometry} */
   var geometry = ol.xml.pushParseAndPop(null,
       this.GEOMETRY_PARSERS_, node, objectStack, this);
   if (geometry) {
     return /** @type {ol.geom.Geometry} */ (
-        ol.format.Feature.transformWithOptions(geometry, false, context));
+        ol.format.Feature.transformWithOptions(geometry, false, newContext));
   } else {
     return undefined;
   }
@@ -61379,7 +61382,8 @@ ol.format.WFS.prototype.readFeatures;
 ol.format.WFS.prototype.readFeaturesFromNode = function(node, opt_options) {
   var context = /** @type {ol.XmlNodeStackItem} */ ({
     'featureType': this.featureType_,
-    'featureNS': this.featureNS_
+    'featureNS': this.featureNS_,
+	'srsName' : this.readProjectionFromNode(node)
   });
   ol.obj.assign(context, this.getReadOptions(node,
       opt_options ? opt_options : {}));
@@ -62223,6 +62227,9 @@ ol.format.WFS.prototype.readProjectionFromNode = function(node) {
   if (node.firstElementChild &&
       node.firstElementChild.firstElementChild) {
     node = node.firstElementChild.firstElementChild;
+	if (node.hasAttribute('srsName')) {
+		return node.getAttribute('srsName');
+	}
     for (var n = node.firstElementChild; n; n = n.nextElementSibling) {
       if (!(n.childNodes.length === 0 ||
           (n.childNodes.length === 1 &&

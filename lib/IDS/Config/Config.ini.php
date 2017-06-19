@@ -59,6 +59,8 @@
     exceptions[]          = REQUEST.template_text;
     exceptions[]          = POST.variables;
     exceptions[]          = POST.template_text;
+    exceptions[]          = REQUEST.template_subject;
+    exceptions[]          = POST.template_subject;
 	
 	
     ; you can use regular expressions for wildcard exceptions - example: /.*foo/i

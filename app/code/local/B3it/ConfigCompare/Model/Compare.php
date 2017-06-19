@@ -34,8 +34,11 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     
     protected function _compareDiff($from, $to)
     {
-    	$myValue = str_replace(array("\r\n", "\r"),"\n", $from);
-    	$compare = str_replace(array("\r\n", "\r"),"\n", $to);
+    	$myValue = htmlentities(str_replace(array("\r\n", "\r"),"\n", $from));
+    	$compare = htmlentities(str_replace(array("\r\n", "\r"),"\n", $to));
+    	 
+    	//$myValue = str_replace(array("\r\n", "\r"),"\n", $from);
+    	//$compare = str_replace(array("\r\n", "\r"),"\n", $to);
     	if($myValue == $compare){
     		return true;
     	}else{

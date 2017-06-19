@@ -22,16 +22,10 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Grid extends Mage_Adminhtml_Blo
   	   */
       $collection = Mage::getModel('sidimport/storage')->getCollection();
       $this->_id = intval($this->getRequest()->getParam('los'));
-      $productModel = Mage::getModel('catalog/product');
+     
 
-      /**
-       * @var Mage_Core_Model_Session $session
-       */
-      $session = Mage::getSingleton("admin/session");
-      $defaults = $session->getImportDefaults();
-      $prefix = $defaults['sku_prefix'].$defaults['los'];
-
-      $exist = array();
+ 
+      /*
       foreach ($collection as $item) {
       	$sku = $item->getSku();
 
@@ -44,11 +38,40 @@ class Sid_Import_Block_Adminhtml_Import_Edit_Tab_Grid extends Mage_Adminhtml_Blo
         $sku = implode(', ',$exist);
         $this->getMessagesBlock()->addNotice($helper->__("Product(s) with SKU '%s' already exist! Existing Products are not overwritten", $sku));
       }
-
+*/
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
 
+  
+  protected function _afterLoadCollection()
+  {
+  	$helper = Mage::helper('sidimport');
+  	/**
+  	 * @var Mage_Core_Model_Session $session
+  	 */
+  	$session = Mage::getSingleton("admin/session");
+  	$defaults = $session->getImportDefaults();
+  	$prefix = $defaults['sku_prefix'].$defaults['los'];
+  	
+  	$collection = $this->getCollection();
+  	$productModel = Mage::getModel('catalog/product');
+  	$exist = array();
+  	
+	  	foreach ($collection as $item) {
+	  		$sku = $item->getSku();
+	  	
+	  		if ($productModel->loadByAttribute('sku', $prefix."/".$sku) !== false) {
+	  			$exist[] = $prefix."/".$sku;
+	  		}
+	  	}
+	  	
+	  	if (!empty($exist)) {
+	  		$sku = implode(', ',$exist);
+	  		$this->getMessagesBlock()->addNotice($helper->__("Product(s) with SKU '%s' already exist! Existing Products are not overwritten", $sku));
+	  	}
+  }
+  
   protected function _prepareColumns()
   {
       $this->addColumn('sku', array(

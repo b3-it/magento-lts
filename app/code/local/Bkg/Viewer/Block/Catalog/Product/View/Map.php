@@ -34,6 +34,10 @@ class Bkg_Viewer_Block_Catalog_Product_View_Map extends Mage_Catalog_Block_Produ
     	return null;
     }
     
+    /**
+     * 
+     * @return Mage_Bkgviewer_Model_Composit_Composit
+     */
     public function getComposit()
     {
     	if($this->_composit == null){

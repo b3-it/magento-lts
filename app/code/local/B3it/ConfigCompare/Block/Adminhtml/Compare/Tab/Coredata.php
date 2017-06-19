@@ -71,12 +71,14 @@
           'header'    => Mage::helper('configcompare')->__('Value'),
              'width'     => '120px',
              'index'     => 'value',
+      		 'column_css_class'    => 'max-width-configcompare',
       ));
       
       $this->addColumn('other_value', array(
       		'header'    => Mage::helper('configcompare')->__('Other value'),
       		 'width'     => '120px',
       		'index'     => 'other_value',
+      		'column_css_class'    => 'max-width-configcompare',
       ));
       
       return parent::_prepareColumns();

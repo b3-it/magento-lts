@@ -31,7 +31,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_VggroupController extends Mage_Adminht
 	
 	protected function _edit($id)
 	{
-		$model  = Mage::getModel('bkgviewer/service_vg')->load($id);
+		$model  = Mage::getModel('bkgviewer/service_vggroup')->load($id);
 
 		if ($model->getId() || $id == 0) {
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
@@ -49,8 +49,8 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_VggroupController extends Mage_Adminht
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
-			$this->_addContent($this->getLayout()->createBlock('bkgviewer/adminhtml_service_tilesystem_edit'))
-				->_addLeft($this->getLayout()->createBlock('bkgviewer/adminhtml_service_tilesystem_edit_tabs'));
+			$this->_addContent($this->getLayout()->createBlock('bkgviewer/adminhtml_service_vggroup_edit'))
+				->_addLeft($this->getLayout()->createBlock('bkgviewer/adminhtml_service_vggroup_edit_tabs'));
 
 			$this->renderLayout();
 		} else {

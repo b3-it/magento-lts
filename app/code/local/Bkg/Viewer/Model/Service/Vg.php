@@ -43,9 +43,11 @@ class Bkg_Viewer_Model_Service_Vg extends Mage_Core_Model_Abstract
     
     protected function _afterLoad()
     {
-    	$shape = $this->getResource()->loadGeoemetryAsText($this->getId());
-    	if($shape){
-    		$this->_GEOShape->load($shape);
+    	if($this->getId()){
+	    	$shape = $this->getResource()->loadGeoemetryAsText($this->getId());
+	    	if($shape){
+	    		$this->_GEOShape = $shape;
+	    	}
     	}
     	return parent::_afterLoad();
     }
