@@ -96,6 +96,10 @@
     <Egovs_Girosolution>
         <active>false</active>
         <codePool>local</codePool>
+        <depends>
+            <Mage_Payment />
+            <Egovs_Paymentbase />
+      </depends>
     </Egovs_Girosolution>
     <Egovs_Import>
       <active>false</active>

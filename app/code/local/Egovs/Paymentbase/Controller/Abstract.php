@@ -280,6 +280,10 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
     	//20150126::Frank Rochlitzer:Wir setzen den Status immer => falls APC fehlschlägt
     	//Sobald der Status nicht mehr PENDING_PAYMENT ist, wurde die Order schon behandelt!
     	//Der Status ist mit dem State identisch benannt.
+    	if ($this->_getOrder()->isEmpty()) {
+    		Mage::log("$module::NOTIFY_ACTION:Order is empty, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+    		return;
+    	}
     	if ($this->_getOrder()->getData('status') != Mage_Sales_Model_Order::STATE_PENDING_PAYMENT) {
     		Mage::log("$module::NOTIFY_ACTION:Saferpay notify already called, omitting!", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
     		return;
@@ -407,22 +411,26 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 	         * Die notify Action wird direkt von Saferpay aufgerufen (URL wird vorher übergeben)
 	         * 
 	         */
-	        Mage::log("$module::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-			
-        	if ($idp->getAttribute('PROVIDERID') == 77) {
-				$_providerName = "AMEX";
-			} elseif ($idp->getAttribute('PROVIDERID') == 102) {
-				$_providerName = "Visa";
-			} elseif ($idp->getAttribute('PROVIDERID') == 104) {
-				$_providerName = "Master";
-			} else {
-				$_providerName = "AMEX";
-			}
+	        Mage::log("$module::NOTIFY_ACTION:WS aktiviereTempKassenzeichen() kann aufgerufen werden", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+	        $_providerId = intval($idp->getAttribute('PROVIDERID'));
+	        switch ($_providerId) {
+	        	case 102:
+	        	case 2:
+	        		$_providerName = "Visa";
+	        		break;
+	        	case 104:
+	        	case 1:
+	        		$_providerName = "Master";
+	        		break;
+	        	case 77:
+	        	default:
+	        		$_providerName = 'AMEX';
+	        }
 
 			// so, jetzt Zugriff auf SOAP-Schnittstelle beim eGovernment
 			$objSOAPClient = Mage::helper('paymentbase')->getSoapClient();
 			$objResult = null;
-			for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!isset($objResult->istOk) || $objResult->istOk != true); $i++) {
+			for ($i = 0; $i < 3 && !($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis) && (!$objResult || !$objResult->isOk()); $i++) {
 				Mage::log(sprintf("$module::NOTIFY_ACTION:Try %s to activate kassenzeichen...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				try {
 					//Aktiviert z. B. das Kassenzeichen
@@ -434,9 +442,9 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 			Mage::log(sprintf("$module::NOTIFY_ACTION:Tried to activate Kassenzeichen, validating result...", $i+1), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 						
 			// wenn Web-Service nicht geklappt hat
-			if (!$objResult || $objResult->istOk != true) {
+			if (!$objResult || !$objResult->isOk()) {
 				$kassenzeichen = 'empty';
-				$subject = "$module::NOTIFY_ACTION:WS aktiviereTempXXXKassenzeichen() nicht erfolgreich";
+				$subject = "$module::NOTIFY_ACTION:WS aktiviereTempKassenzeichen() nicht erfolgreich";
 				$sMailText = '';
 				if ($order->getPayment()->hasData('kassenzeichen')) {
 					$kassenzeichen = $order->getPayment()->getKassenzeichen();
@@ -475,7 +483,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
             //20131113::Frank Rochlitzer
             //Bei Verbindungsfehler während aktivierenKassenzeichen wurde trotzdem die Order auf bezahlt gesetzt!
             if ($order->canInvoice() && $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
-            	&& $objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis && $objResult->istOk == true
+            	&& $objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis && $objResult->isOk()
             ) {
                 // it's a valid order
                 Mage::log("$module::Order is valid, preparing invoice...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);

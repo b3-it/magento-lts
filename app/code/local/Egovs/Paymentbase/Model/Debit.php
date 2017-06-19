@@ -97,7 +97,7 @@ abstract class Egovs_Paymentbase_Model_Debit extends Egovs_Paymentbase_Model_Abs
 			return '-999989';
 		}
 	
-		return $objResult->ergebnis->code;
+		return $objResult->ergebnis->getCode();
 	}
 	
 	/**

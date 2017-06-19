@@ -24,11 +24,19 @@
                         <title translate="label">
                             <label>Title</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>20</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </title>
+                        <description translate="label">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </description>
                         <merchant_id translate="label comment">
                             <label>Merchant ID</label>
                             <frontend_type>text</frontend_type>
@@ -71,14 +79,6 @@
                             </depends>
                             <validate>required-entry</validate>
                         </project_pwd>
-                        <description translate="label">
-                            <label>Description</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>30</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </description>
                         <epa_purpose translate="label">
                             <label>EPA compatible purpose</label>
                             <frontend_type>select</frontend_type>
@@ -220,11 +220,19 @@
                         <title translate="label">
                             <label>Title</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>20</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </title>
+                        <description translate="label">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </description>
                         <merchant_id translate="label comment">
                             <label>Merchant ID</label>
                             <frontend_type>text</frontend_type>
@@ -267,14 +275,16 @@
                             </depends>
                             <validate>required-entry</validate>
                         </project_pwd>
-                        <description translate="label">
-                            <label>Description</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>30</sort_order>
+                        <use_pseudo translate="label">
+                            <label>Enable use of pseudocard numbers</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>24</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </description>
+                            <comment>Use pseudocard numbers to get full chargeback on cancellations (default:yes)</comment>
+                        </use_pseudo>
                         <epa_purpose translate="label">
                             <label>EPA compatible purpose</label>
                             <frontend_type>select</frontend_type>

@@ -979,12 +979,8 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 			if ($objResult->ergebnis->istOk) {
 				return $this;
 			}
-			$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-			$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-			$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-			$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-			$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n\n";
-			$result = $objResult->ergebnis->code;
+			$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
+			$result = $objResult->ergebnis->getCode();
 		} elseif ($objResult instanceof SoapFault) {
 			$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
 		} else {

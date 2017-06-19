@@ -61,10 +61,10 @@ class GiroCheckout_SDK_Debug_helper {
      * stores information about the environment
      */
     public function init($logFilePrefix) {
-        self::$logFileName = date('Y-m-d_h-i-s').'-'.ucfirst($logFilePrefix).'-'.md5(time()).'.log';
+        self::$logFileName = date('Y-m-d_H-i-s').'-'.ucfirst($logFilePrefix).'-'.md5(time()).'.log';
         $ssl = null;
         
-        $this->writeLog(sprintf($this->debugStrings['start'],date('Y-m-d h:i:s')));
+        $this->writeLog(sprintf($this->debugStrings['start'],date('Y-m-d H:i:s')));
 
         if(in_array('curl',get_loaded_extensions())) {
             $curl_version = curl_version();
@@ -90,7 +90,7 @@ class GiroCheckout_SDK_Debug_helper {
      * logs transaction information
      */
     public function logTransaction($apiCallName) {
-        $this->writeLog(sprintf($this->debugStrings['transaction'], date('Y-m-d h:i:s'), $apiCallName));
+        $this->writeLog(sprintf($this->debugStrings['transaction'], date('Y-m-d H:i:s'), $apiCallName));
     }
 
     /*
@@ -103,7 +103,7 @@ class GiroCheckout_SDK_Debug_helper {
             $paramsString .= "$k=$v\r\n";
         }
 
-        $this->writeLog(sprintf($this->debugStrings['params set'], date('Y-m-d h:i:s'), $paramsString));
+        $this->writeLog(sprintf($this->debugStrings['params set'], date('Y-m-d H:i:s'), $paramsString));
     }
 
     /*
@@ -131,14 +131,14 @@ class GiroCheckout_SDK_Debug_helper {
             }
         }
 
-        $this->writeLog(sprintf($this->debugStrings['curlRequest'], date('Y-m-d h:i:s'), $paramsString, $curlInfoString));
+        $this->writeLog(sprintf($this->debugStrings['curlRequest'], date('Y-m-d H:i:s'), $paramsString, $curlInfoString));
     }
 
     /*
      * logs server reply data (header and body)
      */
     public function logReply($result, $curlError) {
-        $this->writeLog(sprintf($this->debugStrings['curlReply'], date('Y-m-d h:i:s'), $result, $curlError));
+        $this->writeLog(sprintf($this->debugStrings['curlReply'], date('Y-m-d H:i:s'), $result, $curlError));
     }
 
     /*
@@ -151,35 +151,35 @@ class GiroCheckout_SDK_Debug_helper {
           $paramsString .= "$k=".print_r($v,true)."\r\n";
         }
 
-        $this->writeLog(sprintf($this->debugStrings['replyParams'], date('Y-m-d h:i:s'), $paramsString));
+        $this->writeLog(sprintf($this->debugStrings['replyParams'], date('Y-m-d H:i:s'), $paramsString));
     }
 
     /*
      * logs parameters which were used for Notification
      */
     public function logNotificationInput($paramsArray) {
-      $this->writeLog(sprintf($this->debugStrings['notifyInput'], date('Y-m-d h:i:s'), print_r($paramsArray,1)));
+      $this->writeLog(sprintf($this->debugStrings['notifyInput'], date('Y-m-d H:i:s'), print_r($paramsArray,1)));
     }
 
     /*
      * logs parameters which were used for Notification
      */
     public function logNotificationParams($paramsArray) {
-        $this->writeLog(sprintf($this->debugStrings['notifyParams'], date('Y-m-d h:i:s'),  print_r($paramsArray,1)));
+        $this->writeLog(sprintf($this->debugStrings['notifyParams'], date('Y-m-d H:i:s'),  print_r($paramsArray,1)));
     }
 
     /*
      * logs parameters which were used for Notification
      */
     public function logNotificationOutput($outputType) {
-        $this->writeLog(sprintf($this->debugStrings['notifyOutput'], date('Y-m-d h:i:s'), $outputType));
+        $this->writeLog(sprintf($this->debugStrings['notifyOutput'], date('Y-m-d H:i:s'), $outputType));
     }
 
     /*
      * logs parameters which were used for Notification
     */
     public function logException($message) {
-    	$this->writeLog(sprintf($this->debugStrings['exception'], date('Y-m-d h:i:s'), $message));
+    	$this->writeLog(sprintf($this->debugStrings['exception'], date('Y-m-d H:i:s'), $message));
     }
     
     /*

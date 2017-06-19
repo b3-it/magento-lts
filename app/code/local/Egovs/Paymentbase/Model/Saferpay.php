@@ -229,6 +229,10 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 	
 		//Buchungsliste erstellen
 		$arrBuchungsliste = $this->createAccountingListParts();
+		
+		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+			$arrBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungList($arrBuchungsliste);
+		}
 	
 		// Objekt für Buchungsliste erstellen
 		$objBuchungsliste = new Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe(
@@ -473,6 +477,9 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 		$this->_getSaferPayUrl();
 				
 		if ($this->getDebug ()) {
+			//TODO Eigene Konfiguration vorsehen
+			//$this->_fieldsArr ['NOTIFYURL'] = rtrim($this->_fieldsArr ['NOTIFYURL'], '"');
+			//$this->_fieldsArr ['NOTIFYURL'] .= '&XDEBUG_SESSION_START"';
 			/*
 			 * build a xml-like form of the attributes that get stored in
 			* saferpay_api_debug table

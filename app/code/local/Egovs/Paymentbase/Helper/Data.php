@@ -7,7 +7,7 @@
  * @category	Egovs
  * @package		Egovs_Paymentbase
  * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright	Copyright (c) 2011-2016 B3 IT Systeme GmbH <http://www.b3-it.de>
+ * @copyright	Copyright (c) 2011-2016 B3 IT Systeme GmbH <https://www.b3-it.de>
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
@@ -27,6 +27,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	
 	
 	const ATTRIBUTE_SEPA_ADDITIONAL = 'sepa_additional_data';
+	
+	const EPAYBL_3_X_VERSION = 3;
+	
+	const EPAYBL_2_X_VERSION = 2;
 
 	/**
 	 * Client zur Soap - Kommunikation
@@ -212,6 +216,12 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 		
 		if (isset($result->ergebnis) && isset($result->ergebnis->code)) {
 			$result = $result->ergebnis->code;
+		}
+		if (isset($result->ergebnis) && isset($result->ergebnis->text)) {
+			$result = $result->ergebnis->text;
+		}
+		if (isset($result->text)) {
+			$result = $result->text;
 		}
 		if (isset($result->code)) {
 			$result = $result->code;
@@ -425,7 +435,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 		}
 
 		if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis
-			&& intval($objResult->ergebnis->code) == -199
+			&& $objResult->ergebnis->getCodeAsInt() == -199
 			&& $ignoreIfNotExists
 		) {
 			return $objResult;
@@ -436,11 +446,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 		if ($objResult instanceof SoapFault || $objResult instanceof Exception) {
 			$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
 		} elseif ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis) {
-			$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-			$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-			$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-			$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-			$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n\n";
+			$sMailText .= $this->getErrorStringFromObjResult($objResult->ergebnis);
 		}
 		//Kundennummer
 		if ($customer instanceof Egovs_Paymentbase_Model_Webservice_Types_Kunde) {
@@ -472,18 +478,12 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				continue;
 			}
 	
-			//array_walk($v['args'], array($this, '_processBackTraceItem'));
-	
 			//$trace .= '#' . ($k - $ignore) . ' ' . $v['file'] . '(' . $v['line'] . '): ' . (isset($v['class']) ? $v['class'] . '->' : '') . $v['function'] . '(' . implode(', ', $v['args']) . ')' . "\n";
 			$trace .= '#' . ($k - $ignore) . ' ' . $v['file'] . '(' . $v['line'] . '): ' . (isset($v['class']) ? $v['class'] . '->' : '') . $v['function'] . "\n";
 		}
 	
 		return $trace;
 	}
-	
-// 	protected function _processBackTraceItem(&$item, $key) {
-// 		$item = var_export($item, true);
-// 	}
 
 	/**
 	 * Kundennummer im WebShop
@@ -957,13 +957,13 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			self::parseAndThrow($res);
 		}
 		// wenn noch nicht vorhanden dann anlegen
-		if (($objResult->ergebnis->istOk != true) && ($objResult->ergebnis->code == '-0199')) {
+		if ((!$objResult->ergebnis->isOk()) && ($objResult->ergebnis->getCodeAsInt() == -199)) {
 			Mage::log("paymentbase::Kunde ist noch nicht vorhanden", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 			$objKunde = new Egovs_Paymentbase_Model_Webservice_Types_Kunde(
 				// EShopKundenNr, wie sie innerhalb der eGov-Plattform gefuehrt werden soll
 				$customer,
 				// Sprache
-				'DE',
+				'de',
 				// Titel
 				null,
 				// Anrede
@@ -1009,7 +1009,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				Mage::log(sprintf("%s in %s Line: %d", $e->getMessage(), $e->getFile(), $e->getLine()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				Mage::logException($e);
 			}
-		} elseif ($objResult->ergebnis->code == '+0000' || $objResult->ergebnis->istOk == true) {
+		} elseif ($objResult->ergebnis->istOk == true) {
 			$this->_eCustomerObject = $objResult->kunde;
 			// wenn Kunde schon vorhanden
 			if ($this->isNonVolatile()) {
@@ -1040,7 +1040,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$sMailText .= "Kundennummer (eGov): $customer\n";
 			$sMailText .= "Kundennummer (Shop): {$this->getCustomerId()}\n";
 			if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis) {
-				$message = isset($objResult->ergebnis) &&  isset($objResult->ergebnis->langText) ? $objResult->ergebnis->langText : "Unknown payment error";
+				$message = isset($objResult->ergebnis) &&  $objResult->ergebnis->getLongText() ? $objResult->ergebnis->getLongText() : "Unknown payment error";
 			} elseif ($objResult instanceof SoapFault) {
 				$message = $objResult->getMessage();
 			} else {
@@ -1058,7 +1058,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			if ($objResult instanceof SoapFault) {
 				self::parseAndThrow('ERROR:-999989');
 			} elseif ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis) {
-				self::parseAndThrow('ERROR_'.$objResult->ergebnis->code);
+				self::parseAndThrow('ERROR_'.$objResult->ergebnis->getCode());
 			} else {
 				self::parseAndThrow();
 			}
@@ -1077,11 +1077,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			} elseif ($objResult instanceof SoapFault) {
 				$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
 			} else {
-				$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-				$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-				$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-				$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-				$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n\n";
+				$sMailText .= $this->getErrorStringFromObjResult($objResult->ergebnis);
 			}
 
 			// Kundennummer
@@ -1385,7 +1381,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				// EShopKundenNr, wie sie innerhalb der eGov-Plattform gefuehrt werden soll
 				$this->getECustomerId($customer),
 				// Sprache
-				'DE',
+				'de',
 				// Titel
 				null,
 				// Anrede
@@ -1430,7 +1426,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 
 		// wenn Fehler dann Mail an Admin und zurück zur Zahlseite + Fehler anzeigen
 		if ((!$objResult || $objResult instanceof SoapFault || $objResult->ergebnis->istOk != true)
-			&& !($objResult && intval($objResult->ergebnis->code) == -199 && $ignoreNotExist)
+			&& !($objResult && $objResult->ergebnis->getCodeAsInt() == -199 && $ignoreNotExist)
 		) {
 			// Mail an Webmaster senden
 			$sMailText = "Während der Kommunikation mit dem ePayment-Server trat folgender Fehler auf:\n\n";
@@ -1439,12 +1435,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			} elseif ($objResult instanceof SoapFault) {
 				$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
 			} else {
-				$sMailText .= "Code: {$objResult->ergebnis->code}\n";
-				$sMailText .= "Titel: {$objResult->ergebnis->kurzText}\n";
-				$sMailText .= "Beschreibung: {$objResult->ergebnis->langText}\n";
-				$sMailText .= "ePaymentId: {$objResult->ergebnis->EPaymentId}\n";
-				$sMailText .= "ePaymentTimestamp: {$objResult->ergebnis->EPaymentTimestamp}\n";
-				switch (intval($objResult->ergebnis->code)) {
+				$sMailText .= $this->getErrorStringFromObjResult($objResult->ergebnis);
+				switch ($objResult->ergebnis->getCodeAsInt()) {
 					case -120:
 						/*
 						 * Code: -0120
@@ -1489,7 +1481,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				return 'ERROR:-999989';
 			}
 
-			return $objResult->ergebnis->code;
+			return $objResult->ergebnis->getCode();
 		}
 
 		// wenn Kunde angelegt werden konnte
@@ -1498,7 +1490,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			Mage::log("paymentbase::Kunde wurde geändert", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		}
 
-		return $objResult->ergebnis->code;
+		return $objResult->ergebnis->getCode();
 	}
 
 	/**
@@ -1576,13 +1568,9 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				if ($objResult instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_Kundenergebnis) {
 					$objResult = $objResult->ergebnis;
 				}
-				$sMailText .= "Code: {$objResult->code}\n";
-				$sMailText .= "Titel: {$objResult->kurzText}\n";
-				$sMailText .= "Beschreibung: {$objResult->langText}\n";
-				$sMailText .= "ePaymentId: {$objResult->EPaymentId}\n";
-				$sMailText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
-
-				if (intval($objResult->code) == -199) {
+				$sMailText .= $this->getErrorStringFromObjResult($objResult);
+				
+				if ($objResult->getCodeAsInt() == -199) {
 					$sendMail = false;
 				}
 			}
@@ -1634,16 +1622,11 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			} elseif (!$objResult) {
 				$sErrorText .= $this->__("Error: Couldn't check status of ePayment server, no result returned!")."\n";
 			} else {
-				$sErrorText .= "Code: {$objResult->code}\n";
-				$sErrorText .= "Titel: {$objResult->kurzText}\n";
-				$sErrorText .= "Beschreibung: {$objResult->langText}\n";
-				$sErrorText .= "ePaymentId: {$objResult->EPaymentId}\n";
-				$sErrorText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
+				$sErrorText .= $this->getErrorStringFromObjResult($objResult);
 			}
 
 			Mage::log("$code::Fehler in WebService-Funktion: 'isAlive'\n". $sErrorText, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			throw new Exception("$code::Fehler in WebService-Funktion: 'isAlive'\n". $sErrorText);
-
 		} else {
 			Mage::log("$code::{$this->__('ePayment server is alive')}", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		}
@@ -1681,11 +1664,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			} elseif (!$objResult) {
 				$sErrorText .= $this->__("Error: Couldn't check status of ePayment server, no result returned!")."\n";
 			} else {
-				$sErrorText .= "Code: {$objResult->code}\n";
-				$sErrorText .= "Titel: {$objResult->kurzText}\n";
-				$sErrorText .= "Beschreibung: {$objResult->langText}\n";
-				$sErrorText .= "ePaymentId: {$objResult->EPaymentId}\n";
-				$sErrorText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
+				$sErrorText .= $this->getErrorStringFromObjResult($objResult);
 			}
 	
 			Mage::log("$code::Fehler in WebService-Funktion: 'leseBankverbindungBewirtschafter'\n". $sErrorText, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
@@ -1740,8 +1719,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$arrResult = Mage::getModel('paymentbase/webservice_types_response_kassenzeichenInfoErgebnis');
 			$arrResult->ergebnis = Mage::getModel('paymentbase/webservice_types_response_ergebnis');
 			$arrResult->ergebnis->istOK = false;
-			$arrResult->ergebnis->langText = $e->getMessage();
-			$arrResult->ergebnis->code = -9999;
+			$arrResult->ergebnis->setLongText($e->getMessage());
+			$arrResult->ergebnis->setCode(-9999);
 		}
 		
 		if ($arrResult instanceof SoapFault) {
@@ -1750,11 +1729,11 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			$arrResult = Mage::getModel('paymentbase/webservice_types_response_kassenzeichenInfoErgebnis');
 			$arrResult->ergebnis = Mage::getModel('paymentbase/webservice_types_response_ergebnis');
 			$arrResult->ergebnis->istOK = false;
-			$arrResult->ergebnis->langText = $e->getMessage();
+			$arrResult->ergebnis->setLongText($e->getMessage());
 			if ($e->getCode()) {
-				$arrResult->ergebnis->code = $e->getCode();
+				$arrResult->ergebnis->setCode($e->getCode());
 			} else {
-				$arrResult->ergebnis->code = -9999;
+				$arrResult->ergebnis->setCode(-9999);
 			}
 		}
 
@@ -2032,7 +2011,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
      * @return string;
      */
     public function getMandatePdfTemplateStore() {
-    	$store = Mage::getStoreConfig("payment/paymentbase/mandate_pdf_template_store");
+    	$store = Mage::getStoreConfig("payment_services/paymentbase/mandate_pdf_template_store");
     	if (strpos($store, DIRECTORY_SEPARATOR) !== 0) {
     		$store = DIRECTORY_SEPARATOR.$store;
     	}
@@ -2205,5 +2184,36 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
     	}
     	return "";
     	
+    }
+    
+    /**
+     * Gibt die verwendete ePayBL Version zurück
+     * 
+     * @param int|Mage_Core_Model_Store $store
+     * 
+     * @return NULL|string
+     */
+    public function getEpayblVersionInUse($store = null) {
+    	return Mage::getStoreConfig('payment_services/paymentbase/epaybl_to_use', $store);
+    }
+    
+    /**
+     * Liefert einen String aus einem Ergebnis-Objekt
+     * 
+     * @param Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis $objResult
+     * 
+     * @return string
+     */
+    public function getErrorStringFromObjResult(Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis $objResult) {
+    	if (!$objResult) {
+    		return 'No error object available!';
+    	}
+    	$sErrorText = "Code: {$objResult->getCode()}\n";
+    	$sErrorText .= "Titel: {$objResult->getShortText()}\n";
+    	$sErrorText .= "Beschreibung: {$objResult->getLongText()}\n";
+    	$sErrorText .= "ePaymentId: {$objResult->EPaymentId}\n";
+    	$sErrorText .= "ePaymentTimestamp: {$objResult->EPaymentTimestamp}\n\n";
+    	
+    	return $sErrorText;
     }
 }

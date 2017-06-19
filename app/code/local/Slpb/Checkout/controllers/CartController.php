@@ -27,7 +27,7 @@
 /**
  * Shopping cart controller
  */
-class Slpb_Checkout_CartController extends Mage_Core_Controller_Front_Action//Mage_Checkout_CartController
+class Slpb_Checkout_CartController extends Mage_Checkout_CartController
 {
  
     protected function _getCart()
