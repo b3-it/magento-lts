@@ -534,7 +534,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
            
         } else {
             unset($data['address_id']);
-            
+            $data ['customer_address_id'] = null;
             //damit alle Felder der Adresse bei addData überschrieben werden können müssen auch alle da sein
             $eav = Mage::getModel('eav/entity_type')->loadByCode('customer_address');
             $attributes = $eav->getAttributeCollection();
