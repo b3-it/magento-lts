@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <!--
 /**
  * Magento
@@ -43,6 +44,15 @@
         </routers>
     </admin>
     <adminhtml>
+		<translate>
+			<modules>
+				<B3it_Modelhistory>
+					<files>
+						<default>B3it_Modelhistory.csv</default>
+					</files>
+				</B3it_Modelhistory>
+			</modules>
+		</translate>
         <menu>
             <system>
                 <children>

@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <B3it_ConfigCompare>
@@ -17,7 +18,16 @@
         </routers>
     </admin>
     <adminhtml>
-			<menu>
+		<translate>
+			<modules>
+				<B3it_ConfigCompare>
+					<files>
+						<default>B3it_ConfigCompare.csv</default>
+					</files>
+				</B3it_ConfigCompare>
+			</modules>
+		</translate>
+		<menu>
 			<system>
 				<children>
 					<tools translate="title">
