@@ -60,9 +60,25 @@ class Dwd_Ibewi_Adminhtml_Ibewi_Kostentraeger_AttributeController extends Mage_A
 
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
-			$model = Mage::getModel('ibewi/kostentraeger_attribute');
-			$model->setData($data)
-				->setId($this->getRequest()->getParam('id'));
+			$id = intval($this->getRequest()->getParam('id'));
+			$model = Mage::getModel('ibewi/kostentraeger_attribute')->load($id);
+			$model->setData($data)->setId($id);
+				
+			$collection = $model->getCollection();
+			
+			$collection->getSelect()
+			->where('id <> '.$id)
+			->where("value = ?", $data['value'] );
+			
+			//die($collection->getSelect()->__toString());
+			if(count($collection->getItems()) > 0)
+			{
+				Mage::getSingleton('adminhtml/session')->addError('Dieser Kostenträger existiert bereits');
+				Mage::getSingleton('adminhtml/session')->setFormData($data);
+				$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+				return;
+			}
+			
 
 			try {
 				

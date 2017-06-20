@@ -40,4 +40,25 @@ class Dwd_Ibewi_Model_Mysql4_Kostentraeger_Attribute extends Mage_Core_Model_Res
     	
     	return $result;
     }
+    
+    public function updateProducts(Varien_Object $object)
+    {
+    	/** @var $eav Mage_Eav_Model_Attribute */
+    	 
+    	$eav = Mage::getModel('eav/entity_attribute')->loadByCode(Mage_Catalog_Model_Product::ENTITY, 'kostentraeger');
+    	 
+    	$table = $eav->getBackendTable();
+    	$id = $eav->getId();
+    	$valueOld = $object->getOrigData('value');
+    	$value = $object->getValue();
+    	 
+    	 
+    	$sql = "UPDATE {$table}  set value ='{$value}' WHERE attribute_id = {$id} AND value = '{$valueOld}'";
+    	 
+    	 
+    	$write = $this->_getWriteAdapter();
+    	$result = $write->query($sql);
+    	 
+    	return $result;
+    }
 }

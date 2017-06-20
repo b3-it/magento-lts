@@ -25,4 +25,11 @@ class Dwd_Ibewi_Model_Kostentraeger_Attribute extends Mage_Core_Model_Abstract
     {
     	return $this->getResource()->isUsedByProduct($this);
     }
+    
+    protected function _afterSave()
+    {
+    	$this->getResource()->updateProducts($this);
+    	
+    	return parent::_afterSave();
+    }
 }
