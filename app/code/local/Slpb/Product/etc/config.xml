@@ -1,10 +1,11 @@
 <?xml version="1.0" ?>
-        <config>
-            <modules>
-            <Slpb_Product>
-                <version>0.1.2</version>
-            </Slpb_Product>
-        </modules>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Slpb_Product>
+            <version>0.1.2</version>
+        </Slpb_Product>
+    </modules>
         <global>
         	<helpers>
             <slpbproduct>
@@ -111,7 +112,16 @@
         		</quote>
         	</sales>
         </global>
-           <adminhtml>
+    <adminhtml>
+		<translate>
+			<modules>
+				<Slpb_Product>
+					<files>
+						<default>Slpb_Product.csv</default>
+					</files>
+				</Slpb_Product>
+			</modules>
+		</translate>
             <acl>
                 <resources>
                     <admin>

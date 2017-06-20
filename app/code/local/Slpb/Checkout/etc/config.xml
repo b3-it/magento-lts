@@ -1,11 +1,12 @@
 <?xml version="1.0" ?>
-        <config>
-            <modules>
-            <Slpb_Checkout>
-                <version>0.1.1</version>
-            </Slpb_Checkout>
-        </modules>
-        <frontend>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Slpb_Checkout>
+            <version>0.1.1</version>
+        </Slpb_Checkout>
+    </modules>
+    <frontend>
          <routers>
           <Slpb_checkout>
 	          <use>standard</use>
@@ -31,7 +32,7 @@
 		            </Slpb_Checkout>
 		        </modules>
     		</translate>
-        </frontend>
+    </frontend>
 	<adminhtml>
 	        <translate>
 		        <modules>
