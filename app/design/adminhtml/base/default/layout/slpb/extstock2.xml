@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
-<layout version="0.1.0">^
-    
-       
+<!DOCTYPE layout>
+<layout version="0.1.0">
     <adminhtml_catalog_product_edit>
         <reference name="product_tabs">
             <block type="extstock/adminhtml_catalog_product_edit_tab_extstock" name="tab_extstock" />					
