@@ -9,7 +9,9 @@
             <!-- Muss an letzter Stelle stehen um als DEFAULT zu gelten -->
             <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet> </action>
             <!-- Support für Native events und Aufrufe wie $(id).trigger('change') -->
-            <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action>
+            <!-- 2017-06-21 :: Deaktiviert, da jetzt mit jQuery umgesetzt -->
+            <!-- <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action> -->
+            <action method="addJs"><script>egovs/jquery.admin.js</script></action>
         </reference>
     </default>
     <adminhtml_egovsbase_tools_analyse_sales_order_item_index>
