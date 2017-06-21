@@ -1,6 +1,6 @@
 <?php
-use \SE\Component\OpenTrans;
-use \Doctrine\Common;
+//use \SE\Component\OpenTrans;
+//use \Doctrine\Common;
 
 
 class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Adminhtml_Controller_action
