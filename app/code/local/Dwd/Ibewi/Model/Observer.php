@@ -67,7 +67,7 @@ class Dwd_Ibewi_Model_Observer extends Varien_Object
     		return;
     	}
     	//nur für Lieferung
-    	if($additem->getIsVirtual()){
+    	if($additem->getProduct()->isVirtual()){
     		return;
     	}
     	
@@ -75,7 +75,7 @@ class Dwd_Ibewi_Model_Observer extends Varien_Object
     	//SteuerKlasse mit allen lieferfähigen Artikeln im Warenkorb vergleichen
     	foreach($quote->getAllItems() as $item)
     	{
-    		if(!$item->getIsVirtual())
+    		if(!$item->getProduct()->isVirtual())
     		{
 		    	if ($item->getTaxClassId() != $additem->getTaxClassId()) {
 		    		Mage::throwException(Mage::helper('germantax')->__('It is not possible to buy these items together. Please buy this item separately or remove all other items in your shopping cart.'));
