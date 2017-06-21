@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -32,6 +32,7 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     const VALIDATOR_HTTP_X_FORVARDED_FOR_KEY    = 'http_x_forwarded_for';
     const VALIDATOR_HTTP_VIA_KEY                = 'http_via';
     const VALIDATOR_REMOTE_ADDR_KEY             = 'remote_addr';
+    const VALIDATOR_SESSION_EXPIRE_TIMESTAMP    = 'session_expire_timestamp';
     const SECURE_COOKIE_CHECK_KEY               = '_secure_cookie_check';
 
     /**
@@ -56,16 +57,10 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             return $this;
         }
 
-        
-
         /**
          * Filter all input data in frontend
          */
         Egovs_Base_Model_Security_Filter::start();
-        
-        if (isset($_SESSION)) {
-        	return $this;
-        }
         
         
         // getSessionSaveMethod has to return correct version of handler in any case
@@ -147,12 +142,9 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
 
         //egovs
         //check if cookie is valid    
-        if(isset($_COOKIE[$sessionName]))
-        {
+        if(isset($_COOKIE[$sessionName])) {
 	        $key = $_COOKIE[$sessionName];
-	        if((strlen($key) > 128) || (!preg_match('#^[0-9a-zA-Z,-]+$#', $key)))
-	        {
-	        	
+	        if((strlen($key) > 128) || (!preg_match('#^[0-9a-zA-Z,-]+$#', $key))) {
 	        	$ip =  $_SERVER['REMOTE_ADDR'];
 	        	$msg = "Security Alert: Cookie: $_COOKIE[$sessionName] Ip:$ip";
 	        	Mage::log($msg, Zend_Log::ALERT, '');
@@ -161,7 +153,6 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
 				$_COOKIE = array();
 				$this->getCookie()->delete($sessionName);
 				$this->regenerateSessionId();
-				
 	        }
         }
         
@@ -175,7 +166,7 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
                 && $_SESSION[self::SECURE_COOKIE_CHECK_KEY] !== md5($cookie->get($secureCookieName))
             ) {
                 //session_regenerate_id(false);
-                $this->regenerateSessionId();
+                $this->regenerateSessionId(false);
                 $sessionHosts = $this->getSessionHosts();
                 $currentCookieDomain = $cookie->getDomain();
                 foreach (array_keys($sessionHosts) as $host) {
@@ -456,6 +447,16 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     }
 
     /**
+     * Use session expire timestamp in validator key
+     *
+     * @return bool
+     */
+    public function useValidateSessionExpire()
+    {
+        return $this->getCookie()->getLifetime() > 0;
+    }
+
+    /**
      * Retrieve skip User Agent validation strings (Flash etc)
      *
      * @return array
@@ -526,6 +527,15 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             return false;
         }
 
+        if ($this->useValidateSessionExpire()
+            && isset($sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP])
+            && $sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] < time() ) {
+            return false;
+        } else {
+            $this->_data[self::VALIDATOR_KEY][self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP]
+                = $validatorData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP];
+        }
+
         return true;
     }
 
@@ -559,35 +569,34 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             $parts[self::VALIDATOR_HTTP_USER_AGENT_KEY] = (string)$_SERVER['HTTP_USER_AGENT'];
         }
 
+        $parts[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] = time() + $this->getCookie()->getLifetime();
+
         return $parts;
     }
 
     /**
      * Regenerate session Id
      *
+     * @param boolean $delete_old_session
+     * 
      * @return Mage_Core_Model_Session_Abstract_Varien
      */
-    public function regenerateSessionId()
-    {
-    	if(!$this->_SessionIsRegenerated)
-    	{
+    public function regenerateSessionId($delete_old_session = true) {
+    	if(!$this->_SessionIsRegenerated) {
 	    	$this->setLastSessionId($this->getSessionId());
-	    	try
-	    	{
-	        	session_regenerate_id(false);
-	    	}
-	    	catch(Exception $ex)
-	    	{
-	    		
-	    	}
+	    	session_regenerate_id($delete_old_session);
     	}
     	$this->_SessionIsRegenerated = true;
         return $this;
     }
     
-    
-    private function getControllerActionFlag($flag = 'no_regenerate_id')
-    {
+    /**
+     * 
+     * @param string $flag
+     * 
+     * @return string
+     */
+    private function getControllerActionFlag($flag = 'no_regenerate_id') {
     	$cntr = Mage::app()->getFrontController();
     	if ($cntr instanceof Mage_Core_Controller_Varien_Front) {
     		/* @var $cntr Mage_Core_Controller_Varien_Front */
