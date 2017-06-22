@@ -57,7 +57,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->joinleft(array('product_haushaltstelle_att'=>'catalog_product_entity_varchar'), 'product_haushaltstelle_att.entity_id=main_table.product_id AND product_haushaltstelle_att.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'), array())
       	->joinleft(array('product_haushaltstelle'=>$this->getTable('paymentbase/haushaltsparameter')), 'product_haushaltstelle.paymentbase_haushaltsparameter_id=product_haushaltstelle_att.value' , array('haushaltstelle'=>'value'))
       	->columns(new Zend_Db_Expr("0 as is_versand"))
-      	->joinleft(array('product_kostentraeger'=>'catalog_product_entity_varchar'), 'product_kostentraeger.entity_id=main_table.product_id AND product_kostentraeger.attribute_id='.$eav->getIdByCode('catalog_product', 'kostentraeger'), array('kostentraeger'=>'value'))
+      	//->joinleft(array('product_kostentraeger'=>'catalog_product_entity_varchar'), 'product_kostentraeger.entity_id=main_table.product_id AND product_kostentraeger.attribute_id='.$eav->getIdByCode('catalog_product', 'kostentraeger'), array('kostentraeger'=>'value'))
       	
        	->joinleft(array('product_kostenstl'=>'catalog_product_entity_varchar'), 'product_kostenstl.entity_id=main_table.product_id AND product_kostenstl.attribute_id='.$eav->getIdByCode('catalog_product', 'kostenstelle'), array())
        	->joinleft(array('product_kostenstelle'=>'eav_attribute_option_value'), 'product_kostenstelle.option_id=product_kostenstl.value AND product_kostenstelle.store_id=0',array('kostenstelle'=>'value'))
@@ -66,7 +66,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
        	->joinleft(array('product_objektnummer_att'=>'catalog_product_entity_varchar'), 'product_objektnummer_att.entity_id=main_table.product_id AND product_objektnummer_att.attribute_id='.$eav->getIdByCode('catalog_product', 'objektnummer'), array())
        	->joinleft(array('product_objektnummer'=>$this->getTable('paymentbase/haushaltsparameter')), 'product_objektnummer.paymentbase_haushaltsparameter_id=product_objektnummer_att.value' , array('objektnummer'=>'value'))
        	 
-       	->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id=main_table.order_item_id',array('tax_percent','is_virtual'))   	
+       	->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id=main_table.order_item_id',array('tax_percent','is_virtual','kostentraeger'))   	
        	->joinleft(array('payment'=>'sales_flat_order_payment'), 'order.entity_id=payment.parent_id', array('kassenzeichen'))  
       	->columns($bewirtschafter)
       	->columns($konto)
