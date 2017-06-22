@@ -48,7 +48,6 @@
         top: 40px;
         right: 0;
         width: 320px;
-        background: white;
     }
 
 }
@@ -65,13 +64,12 @@
     z-index: 5;
     width: 22px;
     height: 22px;
-    background: rgba($global-linkcolor, 0.9);
-    color: $global-fontcolor-light;
+    background: rgba($global-wrapper-color, 0.9);
     line-height: 24px;
     text-align: center;
 }
 .skip-link.skip-active .count {
-    color: $global-fontcolor-light;
+    color: $global-wrapper-color;
 }
 
 // Using extra .skip-link selector to increase specificity
@@ -90,7 +88,7 @@
 
 @include bp(min-width, $bp-medium + 1) {
     .skip-cart {
-        color: $global-linkcolor;
+        color: $global-active-color;
         text-transform: uppercase;
 
         &:hover {
@@ -113,12 +111,12 @@
             }
         }
     }
-    .skip-cart .count,
+
     .skip-link.skip-active .count {
-        color: $global-linkcolor;
+        color: $global-wrapper-color;
         
         &:active {
-            color: $global-linkcolor-active;
+            color: $global-wrapper-color;
         }
     }
 }

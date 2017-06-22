@@ -1,6 +1,6 @@
 ﻿//
 // @category    design
-// @package     egov_slpb_small
+// @package     egov_slpb
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -14,7 +14,7 @@ $global-linkcolor: #4D87C7;                                            // Textfa
 $global-linkcolor-hover: #FFFFFF;                                      // Textfarbe für Hover-Links
 $global-linkcolor-active: #FFFFFF;                                     // Textfarbe für aktive Links
 
-$global-navigation-color: #FFFFFF;                                     // Hintergrundfarbe für die Hauptnavigation
+$global-navigation-color: #E9F2E8;                                     // Hintergrundfarbe für die Hauptnavigation
 $global-navigation-border-color: #EDEDED;                              // Randfarbe für die SKIP-Navigation
 
 $global-active-color: #369D47;                                         // Standard-Rand-Farbe des aktiven Elements
@@ -69,7 +69,7 @@ $global-rgba-2: rgba(205, 218, 201, 0.65);                             // Zweite
 // 2015-10-16 Anpassung der Buttons (Farbe und Gradient)
 $global-button-font-color: #FFFFFF;                                    // Schriftfarbe der Buttons
 $global-button-font-hover-color: #FFFFFF;                              // Hover-Schriftfarbe der Buttons
-$global-button-color: #4D87C7;                                         // Hintergrundfarbe der Buttons
+$global-button-color: #369D47;                                         // Hintergrundfarbe der Buttons
 $global-button-hovercolor: #139436;                                    // Hover-Hintergrundfarbe der Buttons
 $global-button-gradient: 0%;                                           // Höhe des Gradienten auf den Buttons (weniger=oben; mehr=unten)
 $global-button-gradient-1: $global-rgba-1 0%;                          // Startwert des Gradienten
@@ -80,15 +80,15 @@ $global-button-font-boxed: #FFFFFF;                                    // Schrif
 $global-button-rgba-1: rgba(143, 182, 116, 0.6);                       // Erste Farbe für Buttons innerhalb von Boxen im Checkout
 $global-button-rgba-2: rgba(138, 174, 108, 0.65);                      // Zweite Farbe für Buttons innerhalb von Boxen im Checkout
 
-$global-footer-backgroundcolor: #EDF6EE;                               // Hintergrundfarbe des Footers
-$global-footer-fontcolor: #000000;                                     // Schriftfarbe des Footers
+$global-footer-backgroundcolor: #D6D6D6;                               // Hintergrundfarbe des Footers
+$global-footer-fontcolor: #444444;                                     // Schriftfarbe des Footers
 
 $global-header-gradientcolor-1: #4db74d;                               // Start-Gradientfarbe im Header
 $global-header-gradientcolor-2: #358335;                               // End-Gradientfarbe im Header
 
 $global-box-title-backgroundcolor: #EDF6EE;                            // Hintergrund der Titelleiste aller normalen Boxen
 $global-box-content-backgroundcolor: #FFFFFF;                          // Hintergrund des Inhaltes aller normalen Boxen
-$global-box-bordercolor: #AECDAE;                                      // Randfarbe aller normalen Boxen
+$global-box-bordercolor: #369D47;                                      // Randfarbe aller normalen Boxen
 
 $global-category-font-color: #333333;                                  // Textfarbe der Kategorie-Navigation
 $global-category-hover-color: #333333;                                 // Hover-Farbe der Kategorie-Navigation

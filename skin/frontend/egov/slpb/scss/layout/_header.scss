@@ -347,12 +347,12 @@
     float: right;
     width: 15%;
     background-color: $global-wrapper-color;
-    color: $global-linkcolor;
+    color: $global-active-color;
     line-height: 100%;
     text-align: center;
     
     &:hover {
-        background-color: $global-linkcolor;
+        background-color: $global-active-color;
     }
     
     @include bp(max-width, $bp-medium) {

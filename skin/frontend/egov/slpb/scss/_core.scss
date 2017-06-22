@@ -31,7 +31,7 @@
 
 // ----------------------------------------------
 // Core
-@import "../../default/scss/core/common";
+@import "core/common";
 
 
 // ----------------------------------------------
@@ -80,10 +80,10 @@
 @import "../../default/scss/module/sales-order-print";
 @import "../../default/scss/module/slideshow";
 @import "../../default/scss/module/wishlist";
-@import "../../default/scss/module/checkout-cart-minicart";
+@import "module/checkout-cart-minicart";
 @import "../../default/scss/module/search";
 @import "../../default/scss/module/account-reviews";
-@import "../../default/scss/module/account-login";
+@import "module/account-login";
 @import "../../default/scss/module/cms";
 @import "../../default/scss/module/pricing_conditions";
 @import "../../default/scss/module/cookies";

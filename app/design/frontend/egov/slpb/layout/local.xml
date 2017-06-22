@@ -6,6 +6,39 @@
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>
+
+        <reference name="head">
+            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+            <action method="addJs"><script>slpb/star-counter.js</script></action>
+        </reference>
+        
+        <reference name="left">
+            <remove name="cart_sidebar" />
+        </reference>
+
+        <reference name="footer_links2">
+            <action method="addLink" translate="label title">
+               <label>Delivery / Cost</label>
+               <url helper="core/getCurrentUrl">bereitstellung</url>
+               <title>Delivery / Cost</title>
+            </action>
+            <action method="addLink" translate="label title">
+               <label>Ordering Conditions</label>
+               <url helper="core/url/getUrl">bestellbedingungen</url>
+               <title>Ordering Conditions</title>
+            </action>
+            <action method="addLink" translate="label title">
+               <label>Privacy policy</label>
+               <url helper="core/url/getUrl">datenschutz</url>
+               <title>Privacy policy</title>
+            </action>
+            <action method="addLink" translate="label title">
+               <label>Payment</label>
+               <url helper="core/url/getUrl">zahlung</url>
+               <title>Payment</title>
+            </action>
+        </reference>
     </default>
     
     <checkout_cart_index>

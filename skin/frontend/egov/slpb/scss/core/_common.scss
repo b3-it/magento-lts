@@ -1,6 +1,6 @@
 ﻿//
 // @category    design
-// @package     egov_slpb_small
+// @package     egov_default
 // @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -66,7 +66,7 @@ textarea:focus, input[type="text"]:focus, input[type="email"]:focus,
 input[type="password"]:focus, input[type="tel"]:focus, select:focus,
 textarea:active, input[type="text"]:active, input[type="email"]:active,
 input[type="password"]:active, input[type="tel"]:active, select:active {
-    background-color: $global-wrapper-color;
+    background-color: $global-lightcolor-hover;
     border-color: $global-lightcolor;
 }
 
@@ -86,15 +86,16 @@ a {
     text-decoration: none;
     border: $global-active-border solid transparent;
     
-    &:active {
-        color: $global-linkcolor-hover;
-        background-color: $global-linkcolor;
-    }
-    
-    &:focus {
-        outline-color: $global-linkcolor-active;
-        color: darken($global-linkcolor-active, 30%);
-    }
+    &:hover {
+	    color: $global-linkcolor-hover;
+	    background-color: $global-linkcolor;
+	    text-decoration: none;
+	}
+	
+	&:focus {
+	    outline-color: $global-linkcolor-active;
+	    color: darken($global-linkcolor-active, 30%);
+	}
 }
 
 ol,
