@@ -583,6 +583,7 @@
             </design>
             <security>
                 <extensions_compatibility_mode>0</extensions_compatibility_mode>
+                <validate_formkey_checkout>1</validate_formkey_checkout>
             </security>
         </admin>
         <web>
