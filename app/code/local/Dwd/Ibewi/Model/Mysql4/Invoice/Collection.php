@@ -104,11 +104,12 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->columns($hh_versand)
       	//kennzeichen für Versandposition
       	->columns(new Zend_Db_Expr("1 as is_versand"))
-      	->columns(new Zend_Db_Expr("'' as kostentraeger"))
+      	
       	->columns(new Zend_Db_Expr("'' as kostenstelle"))
        	->columns($obj_versand)
       	->columns($tax_percent)
       	->columns(new Zend_Db_Expr('1 as is_virtual'))
+      	->columns(new Zend_Db_Expr("'' as kostentraeger"))
       	->joinleft(array('payment'=>'sales_flat_order_payment'), 'order.entity_id=payment.parent_id', array('kassenzeichen'))  
        	->columns($bewirtschafter)
       	->columns($konto)
