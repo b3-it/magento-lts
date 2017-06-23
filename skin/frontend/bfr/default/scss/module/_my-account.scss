@@ -99,7 +99,7 @@
     .box {
         margin: 0px;
         width: 90%;
-        
+
         @include bp(max-width, $bp-xsmall) {
             width: 100%;
         }
@@ -121,7 +121,7 @@
 
     button {
         padding: 5px;
-        top: -10px !important;
+        top: -20px !important;
 
         small {
             position: relative;
@@ -130,7 +130,7 @@
     }
 
     @include new_address;
-    
+
     #adress-edit-company2, #adress-edit-company3 {
     	display: none;
     }
@@ -159,7 +159,7 @@
 .sidebar > .block-cart:first-child {
     position: relative;
     top: -21px;
-    
+
     @include bp(max-width, $bp-medium) {
         display: none;
     }
