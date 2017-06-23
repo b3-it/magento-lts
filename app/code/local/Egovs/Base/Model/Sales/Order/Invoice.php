@@ -88,7 +88,7 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
             $customerName = $order->getCustomerName();
         }
 
-        $mailer = Mage::getModel('egovsbase/core_email_mailer');
+        $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         if ($notifyCustomer) {
             $emailInfo = Mage::getModel('core/email_info');
             $emailInfo->addTo($order->getCustomerEmail(), $customerName);
@@ -177,7 +177,7 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
             $customerName = $order->getCustomerName();
         }
 
-        $mailer = Mage::getModel('egovsbase/core_email_mailer');
+        $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         if ($notifyCustomer) {
             $emailInfo = Mage::getModel('core/email_info');
             $emailInfo->addTo($order->getCustomerEmail(), $customerName);

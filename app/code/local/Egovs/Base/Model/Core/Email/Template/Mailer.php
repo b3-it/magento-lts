@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -32,12 +32,12 @@
  *
  * @category	Egovs
  * @package		Egovs_Base
- * @author		Holger KÃ¶gel <h.koegel@b3-it.de>
+ * @author		Holger Kögel <h.koegel@b3-it.de>
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @copyright	Copyright (c) 2012 - 2017 B3 IT Systeme GmbH <https://www.b3-it.de>
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_Base_Model_Core_Email_Mailer extends Mage_Core_Model_Email_Template_Mailer
+class Egovs_Base_Model_Core_Email_Template_Mailer extends Mage_Core_Model_Email_Template_Mailer
 {
 	protected $_Attachment = null;
 	

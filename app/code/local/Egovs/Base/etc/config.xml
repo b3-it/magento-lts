@@ -226,6 +226,7 @@
                 <rewrite>
                     <email>Egovs_Base_Model_Core_Email</email>
                     <email_template>Egovs_Base_Model_Core_Email_Template</email_template>
+                    <email_template_mailer>Egovs_Base_Model_Core_Email_Template_Mailer</email_template_mailer>
                     <email_queue>Egovs_Base_Model_Core_Email_Queue</email_queue>
                 </rewrite>
             </core>
