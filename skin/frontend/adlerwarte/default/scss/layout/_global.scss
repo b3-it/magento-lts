@@ -22,14 +22,26 @@ body {
     margin: 0 auto;
     background: $global-wrapper-color;
     position: relative;
-
-    .page {
-        min-height: 100vh;
-        background-image: url($global-content-bg-image);
+    
+    #background-image {
+	    margin:0;
+	    padding:0;
+	    position:absolute;
+	    display: none;
+	    top:0;
+	    left:0;
+	    width: 100vw;
+	    height: 110vh;
+	    background-size: cover;
+        
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-position: 0 -300px;
-        background-size: cover;
+	}
+
+    .page {
+        min-height: 100vh;
+        background-color: #909090;  
 
         #top-wave {
             width: 100%;

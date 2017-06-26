@@ -164,7 +164,7 @@
 }
 .egov-arrow-main-closed {
     @extend .egov-navigation-base;
-    background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
+    //background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
 }
 .egov-arrow-main-open {
     @extend .egov-navigation-base;

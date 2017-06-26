@@ -378,12 +378,6 @@ div.block-reorder {
         left: -3px;
     }
 
-    button.btn-cart {
-        @extend .egov-float-right;
-        position: relative;
-        right: -3px;
-    }
-
     li {
         margin-top: $box-spacing;
         margin-bottom: 0;

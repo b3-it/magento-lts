@@ -39,7 +39,7 @@
 	    &:first-child:nth-last-child(2) ~ .button {
 	        min-width: 31%;
 	        width: 31%;
-	        padding: 5px;
+	        //padding: 5px;
 
 	        @include bp(max-width, $bp-small) {
 	            width: 100%;

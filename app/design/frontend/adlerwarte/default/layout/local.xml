@@ -7,11 +7,21 @@
             <action method="addItem"><type>skin_js</type><name>js/adlerwarte_custom.js</name></action>
         </reference>
     </default>
+    
+    <catalogsearch_advanced_index>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_advanced_index>
+    
     <checkout_cart_index translate="label">
         <reference name="content">
             <remove name="checkout.cart.coupon" />
         </reference>
     </checkout_cart_index>
+    
     <customer_account>
         <reference name="customer_account_navigation">
             <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>

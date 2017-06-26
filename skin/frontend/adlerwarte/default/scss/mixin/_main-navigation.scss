@@ -72,6 +72,11 @@
         border-style: solid;
         border-color: $global-navigation-color;
     }
+    
+    .current:hover a strong {
+       	color: $global-fontcolor-light;
+       	background-color: $global-category-hover-bg;
+    }
 
     ul {
         margin: 0;
@@ -83,7 +88,7 @@
             border-top: $global-box-border solid $global-navigation-border-color;
             margin: 0;
 
-            strong{
+            strong {
             	color: $global-linkcolor;
             }
 

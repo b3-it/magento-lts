@@ -12,8 +12,8 @@ var backgrounds = ['bg2.jpg', 'bg3.jpg', 'bg4.jpg', 'bg5.jpg', 'bg7.jpg', 'bg8.j
 $j(document).ready(function () {
     // Scroll Top
     addScrollTop();
-
-    // Zufälliges Hintergrundbild
+    
+    // Zufälliges Hintergrundbild einblenden
     randomBackground();
 });
 
@@ -27,7 +27,10 @@ function randomBackground()
     var image = backgrounds[ index ];
 
     if ( image != 'undefined' ) {
-        $j('.wrapper .page').css('background-image', 'url("' + SKIN_PATH + '/images/' + image + '")');
+        var newImage = SKIN_PATH + 'images/' + image;
+        
+        $j('#background-image').css({'background-image': 'url("' + newImage + '")'}).fadeIn(1000);
+    	//$j('.wrapper .page').css({'background-image': 'url("' + newImage + '")'});
     }
 }
 
@@ -75,11 +78,11 @@ function addScrollTop()
     // #to-top anzeigen
 		$j(window).scroll(function () {
 		    fromTop = $j(this).scrollTop();                      // Wie weit wurde gescrollt
-        viewHeight = $j(window).innerHeight();               // Wie groß ist das Browser-Fenster
-        docHeight = $j(document).height();                   // Wie groß ist das Dokument
-        maxBottom = $j('.footer-container').height() + 12;   // Ausrechnen, wie hoch der Footer ist
+            viewHeight = $j(window).innerHeight();               // Wie groß ist das Browser-Fenster
+            docHeight = $j(document).height();                   // Wie groß ist das Dokument
+            maxBottom = $j('.footer-container').height() + 12;   // Ausrechnen, wie hoch der Footer ist
 
-		    spaceBottom = docHeight - viewHeight - fromTop;      // Wievile Rest ist noch Platz
+		    spaceBottom = docHeight - viewHeight - fromTop;      // Wieviel Rest ist noch Platz
 		    newBottom = maxBottom - spaceBottom;                 // neuen Bottom-Wert ermitteln
 
 		    // Button positionieren

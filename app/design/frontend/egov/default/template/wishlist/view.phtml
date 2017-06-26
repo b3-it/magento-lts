@@ -48,8 +48,13 @@
                     <p class="wishlist-empty"><?php echo $this->__('You have no items in your wishlist.') ?></p>
                 <?php endif ?>
                 <div class="buttons-set">
-                    <a class="button" href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
-                    <?php echo $this->getChildHtml('control_buttons');?>
+                    <?php
+                    $other = $this->getChildHtml('control_buttons');
+                    echo $other . (strlen($other) ? '<br /><br />' : '');
+                    ?>
+                    <a class="button<?php echo (strlen($other) ? ' egov-float-left' : '') ?>" href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>">
+                        <small>&laquo; </small><?php echo $this->__('Back') ?>
+                    </a>
                 </div>
             </div>
         </form>
