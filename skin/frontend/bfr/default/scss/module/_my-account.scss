@@ -5,10 +5,23 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.sales-order-history {
+	.col-main {
+	    top: -25px !important;
+	}
+}
+
+.new-adress-button .button {
+	float: none;
+}
+
 .my-account {
+	
+	position: relative;
+	top: -15px;
 
     .dashboard {
-        top: -15px !important;
+        top: 0 !important;
 
         .box-head {
             padding-bottom: 0px;
@@ -144,6 +157,14 @@
     .full-size {
         width: 100%;
     }
+}
+
+.sales-order-history, .review-customer-index,
+.wishlist-index-index, .newsletter-manage-index,
+.sepadebitbund-change-index {
+	.my-account {
+	    top: 0;
+	}
 }
 
 #customer-account-menu {
