@@ -30,7 +30,7 @@ function randomBackground()
         var newImage = SKIN_PATH + 'images/' + image;
         
         $j('#background-image').css({'background-image': 'url("' + newImage + '")'}).fadeIn(1000);
-        $j('.page').css('background-color', 'transparent');
+        $j('.page').css({'background-color': 'transparent', 'background': 'transparent'});
     	//$j('.wrapper .page').css({'background-image': 'url("' + newImage + '")'});
     }
 }
