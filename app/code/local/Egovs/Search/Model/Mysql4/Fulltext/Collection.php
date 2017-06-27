@@ -132,7 +132,7 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
     {
     	$dir = $dir =='desc'? 'desc' : 'asc';
         if ($attribute == 'relevance') {
-            //$this->getSelect()->order("relevance {$dir}");
+            $this->getSelect()->order("relevance {$dir}");
         } elseif ($attribute == 'ordered_qty') {
      	    $this->_addQtyOrdered();
             $this->getSelect()->order("ordered_qty {$dir}");
