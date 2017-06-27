@@ -53,6 +53,15 @@
         </reference>
     </catalog_category_default>
     
+    <catalogsearch_result_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="left_first">
+            <action method="unsetChild"><name>catalogsearch.leftnav</name></action>
+        </reference>
+    </catalogsearch_result_index>
+    
     <egovs_checkout_multipage_overview>
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>

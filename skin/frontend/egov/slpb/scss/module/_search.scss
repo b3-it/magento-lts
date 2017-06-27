@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_slpb_small
+// @package     egov_slpb
 // @copyright   Copyright (c) 2017 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -58,21 +58,24 @@
     overflow: visible !important;
     position: relative !important;
     top: 0px !important;
-    width: 100% !important;
+    width: 225px !important;
     z-index: 200;
 
     ul {
         background-color: $global-lightcolor;
-        border: 1px solid $global-border-color-light;
+        border: $global-active-border solid $global-border-color-light;
         left: 0;
         padding-left: 0;
         position: absolute;
         top: 0;
         width: 100%;
+        
+        overflow: auto;
+        max-height: 80vh;
 
         li {
-            border-bottom: 1px solid $global-border-color;
-            color: $global-linkcolor;
+            border-bottom: $global-active-border solid $global-border-color;
+            color: $global-active-color;
             cursor: pointer;
             font-size: $global-fontsize;
             padding: 4px 6px;
@@ -80,18 +83,14 @@
             display: block;
             line-height: $global-lineheight;
 
-            border-bottom-style: solid;
-            border-bottom-width: $global-active-border;
-            border-bottom-color: $global-border-color;
-
             &:hover {
                 color: $global-linkcolor-hover;
-                background-color: $global-linkcolor;
+                background-color: $global-active-color;
             }
 
             &.selected {
-                background-color: $global-linkcolor-active;
-                color: white;
+                background-color: $global-active-color;
+                color: $global-linkcolor-hover;
             }
 
             .amount {
