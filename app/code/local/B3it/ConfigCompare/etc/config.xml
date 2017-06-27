@@ -67,6 +67,16 @@
 										<configcompare translate="title">
 											<title>Export Coreconfigdata</title>
 											<sort_order>10</sort_order>
+											<children>
+												<configcompare_export_configdata module="configcompare">
+													<title>Export Config</title>
+													<sort_order>20</sort_order>
+												</configcompare_export_configdata>
+												<configcompare_import_configdata module="configcompare">
+													<title>Import Config</title>
+													<sort_order>10</sort_order>
+												</configcompare_import_configdata>
+											</children>
 										</configcompare>
 									</children>
 								</tools>
