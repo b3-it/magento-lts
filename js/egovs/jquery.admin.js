@@ -1,6 +1,7 @@
 var jq_version    = '1.10.2';
 var jq_subpath    = 'lib/jquery/';
 var jq_noconflict = 'noconflict.js';
+var showStatusMsg = false;
 
 /**
  * Nachladen von beliebigen JS-Dateien
@@ -41,14 +42,18 @@ if ( typeof $j == 'undefined' ) {
 	var jq_conf = JS_URL + jq_subpath + jq_noconflict;
 	
     loadScript(jq_main, function() {
-        //alert('JQ ready!');
+        if ( showStatusMsg == true ) {
+        	alert('jQuery fertig geladen!');
+        }
     });
 
 	// 0,5 Sekunde warten
 	setTimeout(function(){
     	// Magento-eigenes noConflict laden
     	loadScript(jq_conf, function() {
-            //alert('JQ-NC ready!');
+            if ( showStatusMsg == true ) {
+            	alert('jQuery-noConflict fertig geladen!');
+            }
         });
 	}, 500);	
 	
@@ -61,7 +66,9 @@ if ( typeof $j == 'undefined' ) {
         }
         
         if ( typeof $j == 'undefined' || typeof jQuery == 'undefined' ) {
-	        alert("jQuery nicht geladen!\n\n" + jq_main + "\n" + jq_conf);
+	        if ( showStatusMsg == true ) {
+	        	alert("jQuery nicht geladen!\n\n" + jq_main + "\n" + jq_conf);
+	        }
         }
 	}, 1000);
 }
