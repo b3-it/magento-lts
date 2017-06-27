@@ -79,7 +79,7 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
         	$this->getSelect()
         		->where($this->getConnection()->quoteInto('search_result.query_id=?',$this->_getQuery()->getId()));
         }  
-        
+        $this->getSelect()->group('e.entity_id');
         //die( $this->getSelect()->__toString());
         return $this;
     }
@@ -90,8 +90,6 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
         $this->getSelect()
             ->joinLeft( array('best' => $this->getTable('sales/bestsellers_aggregated_yearly')), "best.product_id=e.entity_id and best.store_id = {$this->getStoreId()} and $period", array('ordered_qty' => 'sum(qty_ordered)'))
         ;
-        $this->getSelect()->group('e.entity_id');
-        //->order('ordered_qty ' . $dir);
         
         //die( $this->getSelect()->__toString());
         return $this;
