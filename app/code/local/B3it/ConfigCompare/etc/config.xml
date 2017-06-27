@@ -32,15 +32,15 @@
 				<children>
 					<tools translate="title">
 						<children>
-							<configcompare translate="title" module="adminhtml">
+							<configcompare translate="title" module="configcompare">
 								<title>Compare Config</title>
 								<children>
-									<configcompare_export_configdata module="configcompare">
+									<configcompare_export_configdata translate="title" module="configcompare">
 										<title>Export Config</title>
 										<sort_order>20</sort_order>
 										<action>adminhtml/configcompare_export_coreconfigdata</action>
 									</configcompare_export_configdata>
-									<configcompare_import_configdata module="configcompare">
+									<configcompare_import_configdata translate="title" module="configcompare">
 										<title>Import Config</title>
 										<sort_order>10</sort_order>
 										<action>adminhtml/configcompare_import</action>
@@ -53,7 +53,7 @@
 				</children>
 			</system>
 		</menu>
-				<acl>
+		<acl>
 			<resources>
 				<all>
 					<title>Allow everything</title>
@@ -68,11 +68,11 @@
 											<title>Export Coreconfigdata</title>
 											<sort_order>10</sort_order>
 											<children>
-												<configcompare_export_configdata module="configcompare">
+												<configcompare_export_configdata translate="title" module="configcompare">
 													<title>Export Config</title>
 													<sort_order>20</sort_order>
 												</configcompare_export_configdata>
-												<configcompare_import_configdata module="configcompare">
+												<configcompare_import_configdata translate="title" module="configcompare">
 													<title>Import Config</title>
 													<sort_order>10</sort_order>
 												</configcompare_import_configdata>
