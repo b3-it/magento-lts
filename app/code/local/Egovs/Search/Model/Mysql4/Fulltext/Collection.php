@@ -86,6 +86,7 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
     
     protected function _addQtyOrdered() {
         $lastYear = Mage::app()->getLocale()->date(null, Zend_Date::YEAR)->sub(1, Zend_Date::YEAR);
+        $lastYear = $lastYear->get(Zend_Date::YEAR);
         $period = "best.period >= '$lastYear'";
         $this->getSelect()
             ->joinLeft( array('best' => $this->getTable('sales/bestsellers_aggregated_yearly')), "best.product_id=e.entity_id and best.store_id = {$this->getStoreId()} and $period", array('ordered_qty' => 'sum(qty_ordered)'))
