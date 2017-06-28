@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     egov_slpb
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -25,6 +25,12 @@
         padding-bottom: $global-box-title-padding-bottom;
         padding-left: $global-box-title-padding-left;
         
+        > strong, > h2 {
+            padding: 0;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
         @include bp(max-width, $bp-medium) {
             padding: 0;
             margin-top: 0;
@@ -32,7 +38,7 @@
             border-top: none;
             margin-bottom: 0;
             
-            > strong {
+            > strong, > h2 {
                 @include accordionDtBase('right', $global-border-color);
                 display: block;
                 width: 100%;
@@ -41,7 +47,7 @@
             }
 
             &.active {
-                > strong {
+                > strong, > h2 {
                     @include accordionDtBase('down', $global-border-color);
                 }
             }
@@ -125,3 +131,27 @@
 .col-left:first-child {
 	position: relative;
 }
+
+.widget-static-block {
+	.block-content {
+	    margin: 0;
+	}
+	ul.links li {
+	    padding: 0;
+	    margin: 0;
+	    
+	    a {
+	        color: $global-active-color;
+	        width: 100%;
+	        display: block;
+	        padding: 10px;
+	        
+	        &:hover {
+	            background-color: $global-active-color;
+	            color: $global-linkcolor-hover;
+	        }
+	    }
+	}
+}
+
+
