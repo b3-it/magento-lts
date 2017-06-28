@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-
+<!DOCTYPE widgets>
 <widgets>
     <catalog_category_image type="egovsbase/catalog_category_widget_image" translate="name description" module="egovsbase">
         <name>Catalog Category Image</name>

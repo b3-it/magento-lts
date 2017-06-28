@@ -44,7 +44,8 @@
 	
 	.even, .odd {
 	    &:hover, &:active {
-	        background-color: $global-linkcolor;
+	        background-color: $global-active-color;
+	        color: $global-linkcolor-hover;
 	    }
 	}
 }
@@ -72,7 +73,7 @@
 
         li {
             border-bottom: 1px solid $global-border-color;
-            color: $global-linkcolor;
+            color: $global-active-color;
             cursor: pointer;
             font-size: $global-fontsize;
             padding: 4px 6px;
@@ -106,7 +107,7 @@
     }
 
     &:before {
-        @include triangle(up, 7px, $global-linkcolor);
+        @include triangle(up, 7px, $global-active-color);
         left: 1.5%;
         top: -7px;
     }

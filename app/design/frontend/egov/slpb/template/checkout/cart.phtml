@@ -24,10 +24,16 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
     <?php echo $this->getChildHtml('form_before') ?>
     <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
-
-		<div>
-		    <?php echo $this->__('Stars on cart'); ?>: <span id="star-cnt">--</span>
-		</div>
+        
+        <ul class="messages">
+            <li class="success-msg">
+                <ul>
+                    <li>
+                        <span><?php echo $this->__('Stars on cart'); ?></span>: <span id="star-cnt">--</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 		
         <table id="shopping-cart-table" class="cart-table data-table">
             <col width="50" />

@@ -1522,6 +1522,11 @@ $toolbar-icon-padding-offset: 8px;
     float: left;
 }
 
+.pages a:hover {
+    color: $global-linkcolor-hover;
+    background-color: $global-active-color;
+}
+
 .pages a,
 .pages .current {
     display: inline-block;
@@ -1534,57 +1539,50 @@ $toolbar-icon-padding-offset: 8px;
     width: 25px;
     height: 30px;
     padding: 0;
-    color: $global-linkcolor;
+    color: $global-active-color;
     font-family: $base-font-family;
 }
 
 .pages .current,
 .pages .current:hover {
-    color: $global-linkcolor-hover;
-    border: 1px solid $global-border-color;
+    border: 1px solid $global-active-color;
     width: 30px;
-    background-color: $global-wrapper-color;
+    color: $global-linkcolor-hover;
+    background-color: $global-active-color;
     cursor: default;
 }
 
-.pages .next,
-.pages .previous {
-    // New HP5BP technique: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757c9e03dda4e463fb0d4db5a5f82d7
-    font: 0/0 a;
-    text-shadow: none;
-    color: transparent;
-    background-color: transparent;
-    position: relative;
-
-    &:hover {
-        border: 1px solid $global-linkcolor;
-    }
-}
-
-.pages .next {
-    &:before {
-        @include triangle(right, 4px, $global-linkcolor);
+.pages {
+	.next, .previous {
+	    // New HP5BP technique: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757c9e03dda4e463fb0d4db5a5f82d7
+	    font: 0/0 a;
+	    text-shadow: none;
+	    color: transparent;
+	    background-color: transparent;
+	    position: relative;
         top: 50%;
-        margin-top: -3px;
         left: 50%;
+        padding-top: 12px;
         margin-left: -2px;
-    }
-    &:hover:before {
-        @include triangle(right, 4px, $global-linkcolor);
-    }
-}
+        
+        &:hover {
+        	border: 1px solid $global-active-color;
+    	}
+	}
 
-.pages .previous {
-    &:before {
-        @include triangle(left, 4px, $global-linkcolor);
-        top: 50%;
-        margin-top: -3px;
-        left: 50%;
-        margin-left: -2px;
-    }
-    &:hover:before {
-        @include triangle(left, 4px, $global-linkcolor);
-    }
+	.next:before {
+	    @include triangle(right, 4px, $global-active-color);
+	}
+	.next:hover:before {
+	    @include triangle(right, 4px, $global-linkcolor-hover);
+	}
+	
+	.previous:before {
+	    @include triangle(left, 4px, $global-active-color);
+	}
+	.previous:hover:before {
+	    @include triangle(left, 4px, $global-linkcolor-hover);
+	}
 }
 
 @include bp(max-width, $bp-xsmall) {

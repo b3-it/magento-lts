@@ -43,9 +43,15 @@
 </ul>
 <?php endif; ?>
 
-<div>
-    <?php echo $this->__('Stars on cart'); ?>: <span id="star-cnt">--</span>
-</div>
+<ul class="messages">
+    <li class="success-msg">
+        <ul>
+            <li>
+                <span><?php echo $this->__('Stars on cart'); ?></span>: <span id="star-cnt">--</span>
+            </li>
+        </ul>
+    </li>
+</ul>
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">

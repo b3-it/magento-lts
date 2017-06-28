@@ -85,6 +85,12 @@
             &.last {
                 border: none;
             }
+            
+            //tr:not(.qty-wrapper) {
+            //    th.mini-cart-first, td.mini-cart-secound {
+            //        display: none;
+            //    }
+            //}
 
             .product-details {
                 position: relative;
@@ -97,6 +103,8 @@
         .product-name {
             padding-top: 0px;
             font-weight: bold;
+            max-height: 1.8rem;
+            overflow: hidden;
 
             a {
                 color: $global-linkcolor;
