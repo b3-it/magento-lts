@@ -26,6 +26,17 @@
         <reference name="customer_account_navigation">
             <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
             <action method="removeLinkByName"><name>downloadable_products</name></action>
+            <action method="removeLinkByName"><name>recurring_profiles</name></action>
+            <action method="removeLinkByName"><name>reviews</name></action>
+            <action method="removeLinkByName"><name>tags</name></action>
         </reference>
     </customer_account>
+    
+    <catalog_seo_sitemap>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+    </catalog_seo_sitemap>
 </layout>

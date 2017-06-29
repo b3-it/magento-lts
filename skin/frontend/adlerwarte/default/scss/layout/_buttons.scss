@@ -20,6 +20,8 @@
     text-align: center;
     padding: 12px 5px;
     display: inline-block;
+    
+    min-width: 25%;
 
     &:hover, &:active, &:focus {
         background: $global-button-hovercolor $global-repeat-scroll;
@@ -37,8 +39,10 @@
     }
     
     &:only-child {
-	    width: 100%;
-	    float: none;
+	    @include bp(max-width, $bp-small) {
+	        width: 100%;
+	        float: none;
+	    }
 	}
 	&:last-child {
 	    float: right;

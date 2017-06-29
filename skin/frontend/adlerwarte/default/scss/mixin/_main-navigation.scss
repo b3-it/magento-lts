@@ -120,6 +120,8 @@
     li:last-child a,
     li.level0:last-child a.level0 {
         border-bottom: 0;
+        display: block;
+        width: 100%;
     }
    
     li.level0 {

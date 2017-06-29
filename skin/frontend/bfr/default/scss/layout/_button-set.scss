@@ -39,8 +39,8 @@
 
 	    &:first-child:nth-last-child(2),
 	    &:first-child:nth-last-child(2) ~ .button {
-	        min-width: 40%;
-	        width: 40%;
+	        min-width: 27%;
+	        width: 27%;
 	        
 	        @include bp(max-width, $bp-xsmall) {
 	            width: 100%;

@@ -5,6 +5,13 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.new-adress-button {
+	.button {
+	    display: inline-block;
+	    float: none;
+	}
+}
+
 .my-account {
 	position: relative;
 	top: -20px;
