@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
     <modules>
-        <B3it_Admin>
-            <active>false</active>
-            <codePool>local</codePool>
-        </B3it_Admin>
+	    <B3it_Admin>
+           <active>false</active>
+           <codePool>local</codePool>
+	    </B3it_Admin>
         <B3it_Ids>
             <active>false</active>
             <codePool>local</codePool>
@@ -20,6 +21,6 @@
 		<B3it_ConfigCompare>
 			<active>false</active>
 			<codePool>local</codePool>
-		</B3it_ConfigCompare>    
+		</B3it_ConfigCompare>
     </modules>
 </config>
