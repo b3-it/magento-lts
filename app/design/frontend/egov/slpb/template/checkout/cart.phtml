@@ -15,6 +15,8 @@
 
 $_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both-prices' : 'display-single-price';
 $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
+
+$_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getStore()));
 ?>
 <div class="cart <?php echo $_priceDisplay; ?>" id="jumptarget<?php echo $this->getNameInLayout();?>">
     <div class="page-title title-buttons">
@@ -29,7 +31,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             <li class="success-msg">
                 <ul>
                     <li>
-                        <span><?php echo $this->__('Stars on cart'); ?></span>: <span id="star-cnt">--</span>
+                        <span><?php echo $this->__('Stars on cart'); ?></span>: <span id="star-cnt">--</span> / <?php echo $_maxstar; ?>
                     </li>
                 </ul>
             </li>

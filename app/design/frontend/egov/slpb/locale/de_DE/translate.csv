@@ -5,3 +5,6 @@
 "Egovs_Checkout::Billing Information","Zahlweise wählen"
 "Egovs_Checkout::Billing Details","Rechnungsinformation"
 "Egovs_Checkout::Details of the payment method can be found here","Einzelheiten der Zahlungsart finden Sie hier"
+"Egovs_Base::Sku","Best.-Nr."
+"Mage_Checkout::SKU","Best.-Nr."
+"Mage_Catalog::Sku","Best.-Nr."

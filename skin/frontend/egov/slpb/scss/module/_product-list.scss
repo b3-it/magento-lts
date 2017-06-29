@@ -9,6 +9,10 @@
  * General Product List Styles (not module-specific)
  * ================================================= */
 
+.slpb-stars {
+	margin-left: 10px;
+}
+
 /* -------------------------------------------- *
  * Product List General
  */
@@ -45,8 +49,8 @@ p.product-name {
     font-family: $base-font-family;
     font-weight: bold;
     line-height: $global-lineheight;
-    max-height: $global-lineheight * 2.8;
-    height: auto;
+    height: $global-lineheight * 3.8;
+    margin: 0 20px;
 
     a {
         color: $global-linkcolor;

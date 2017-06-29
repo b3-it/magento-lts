@@ -5,6 +5,10 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+#product-attribute-row-delivery_time {
+	display: none;
+}
+
 .catalog-product-view,
 .catalog-category-view {
     .main-container {
@@ -443,6 +447,10 @@
 
         .ratings {
             margin-bottom: 8px;
+        }
+        
+        .tax-details {
+            display: none;
         }
 
         .price-box {
