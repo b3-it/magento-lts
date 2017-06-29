@@ -27,28 +27,6 @@
 	}
 }
 
-#slpb-suggest {
-	-webkit-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
-    box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
-	
-	.sku {
-	    display: inline-block;
-	    width: 40px;
-	}
-	
-	.even {
-	    background-color: #F3F8F3;
-	}
-	.odd {}
-	
-	.even, .odd {
-	    &:hover, &:active {
-	        background-color: $global-linkcolor;
-	    }
-	}
-}
-
 /* ============================================ *
  * Search - Auto Suggest
  * ============================================ */
@@ -62,6 +40,11 @@
     z-index: 200;
 
     ul {
+    	-webkit-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+    	-moz-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+    	box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+
+
         background-color: $global-lightcolor;
         border: $global-active-border solid $global-border-color-light;
         left: 0;
@@ -105,7 +88,7 @@
     }
 
     &:before {
-        @include triangle(up, 7px, $global-linkcolor);
+        @include triangle(up, 7px, $global-active-color);
         left: 1.5%;
         top: -7px;
     }
@@ -123,11 +106,6 @@
     .page-title {
         width: $global-content-2col-right-percent;
     }
-/*    
-    .buttons-set {
-    	clear: none;
-    }
-*/
 }
 
 .advanced-search {
