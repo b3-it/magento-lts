@@ -90,18 +90,11 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
      	if (empty($this->_data['welcome'])) {
      		if (Mage::isInstalled() && Mage::getSingleton('customer/session')->isLoggedIn()) {
      			$customer = Mage::getSingleton('customer/session')->getCustomer();
-	     		if (strlen($customer->getCompany()) > 0) {
-		    		$str = trim($customer->getName());
-		    		//Firma
-		    		if (!empty($str)) {
-		    			$str = trim(sprintf('%s <span id="welcome-company">(%s)</span>', $this->escapeHtml($str), $this->escapeHtml($customer->getCompany())));
-		    		} else {
-		    			$str = trim(sprintf('%s', $this->escapeHtml($customer->getCompany())));
-		    		}
-		    	} else {
-		    		$str = $this->escapeHtml($customer->getName());
-		    	}
-                $this->_data['welcome'] = $this->__('Welcome, %s!', $str);
+
+     			$this->_data['welcome'] = $this->__('You are logged in as %s in %s',
+     					                                $this->escapeHtml($customer->getName(),
+     					                                $this->escapeHtml(Mage::app()->getStore()->getName())
+     					                           );
      		} else {
      			$this->_data['welcome'] = Mage::getStoreConfig('design/header/welcome');
      		}

@@ -23,5 +23,10 @@
                 <class>Gka_Base_Helper</class>
             </gkabase>
         </helpers>
+        <blocks>
+            <gkabase>
+                <class>Gka_Base_Block</class>
+            </gkabase>
+        </blocks>
     </global>
 </config>

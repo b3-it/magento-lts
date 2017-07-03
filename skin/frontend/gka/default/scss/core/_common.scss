@@ -603,6 +603,7 @@ div.block-reorder {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
+            top: 0;
             
             @include bp(max-width, 490px) {
             	display: none;

@@ -33,7 +33,11 @@
 
     <customer_account>
         <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="gka_barkasse"><name>kassenbuch_journal</name><path>gka_barkasse/kassenbuch_journal/index</path><label>Kassenbuch Journal</label></action>
+            <action method="addLink" translate="label" module="gka_barkasse">
+                <name>kassenbuch_journal</name>
+                <path>gka_barkasse/kassenbuch_journal/index</path>
+                <label>Cash Journal</label>
+            </action>
         </reference>
     </customer_account>
 
