@@ -55,14 +55,36 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 				$this->cmspage = $curCMS;
 				$front->addRouter ( 'offline_router', $this );
 			}
-			/*
-			 * if($now >= $to)
-			 * {
-			 * Mage::setStoreConfig('general/offline/lock')
-			 * }
-			 */
+			
+			if ($now >= $to) {
+				/** @var $configCol Mage_Core_Model_Resource_Config_Data_Collection */
+				$configCol = Mage::getModel('core/config_data')->getCollection();
+				$configCol->addFieldToFilter('path', array('like' => 'general/offline/lock'))
+					->addValueFilter(self::MAINTENANCE_SCHEDULED)
+				;
+				
+				//Erst nach Store-Daten suchen
+				/** @var $config Mage_Core_Model_Config_Data */
+				$scopes = array('stores', 'websites', 'default');
+				foreach ($scopes as $scope) {
+					foreach ($configCol as $config) {
+						if ($config->getScope() == $scope) {
+							if (($scope == 'stores' && $config->getScopeId() == $store->getId())
+								|| ($scope == 'websites' && $config->getScopeId() == $store->getWebsiteId())
+								|| ($scope == 'default' && $config->getScopeId() == 0)
+							) {
+								$config->setValue(0)->save();
+								Mage::getConfig()->cleanCache();
+								return;
+							}
+						}
+					}
+				}
+			}
+			
 		}
 	}
+	
 	private function __isAdmin() {
 		$request = clone (Mage::app ()->getRequest ());
 		
