@@ -1,6 +1,9 @@
 <?php
 class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Varien_Router_Standard
 {
+	CONST MAINTENANCE_ON = 1;
+	CONST MAINTENANCE_SCHEDULED = 2;
+	
 	private $cmspage = '/index/';
 	
 	public function addOfflineRouter(Varien_Event_Observer $observer) {	
@@ -8,11 +11,10 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 		
 		$request = Mage::app()->getRequest();
 		$storeCode = $request->getStoreCodeFromPath();
-		//return;
 		$front = $observer->getEvent()->getFront();
 		
 		
-		if($this->isAdmin()){
+		if ($this->__isAdmin()) {
 			return;
 		}
 		
@@ -20,61 +22,56 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 		$store = Mage::app()->getStore();
 		
 		
-	 	//if ($module !== "admin") 
-	 	{
-			$curOffline = Mage::getStoreConfig('general/offline/lock');
-			$curDate1 = Mage::getStoreConfig('general/offline/to_date');
-			$curDate2 = Mage::getStoreConfig('general/offline/from_date');
-			$curCMS = Mage::getStoreConfig('general/offline/cmspagepicker');
+		$curOffline = Mage::getStoreConfig('general/offline/lock');
+		$curDate1 = Mage::getStoreConfig('general/offline/to_date');
+		$curDate2 = Mage::getStoreConfig('general/offline/from_date');
+		$curCMS = Mage::getStoreConfig('general/offline/cmspagepicker');
+		
+		if ($curOffline == self::MAINTENANCE_ON) {
+		
+			$this->cmspage = $curCMS;
+			$front->addRouter('offline_router', $this);
 			
-			if ($curOffline == 1) {			// YES
+		} elseif ($curOffline == self::MAINTENANCE_SCHEDULED) {
+
+			$timezone = Mage::app()->getStore($store)->getConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_TIMEZONE);
+			$locale =  Mage::app()->getLocale()->getLocaleCode();// new Zend_Locale(Mage::getStoreConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_LOCALE, $storeId));
+			$locale = new Zend_Locale($locale);
+			$from = new Zend_Date(null, null, $locale);
+			$to = new Zend_Date(null, null, $locale);
+
+			$format = 'YYYY-MM-dd HH:mm:ss';
+			$from->setDate($curDate2, $format);
+			$from->setTime($curDate2, $format);
+			$from->setTimezone($timezone);
 			
+			$to->setDate($curDate1, $format,$locale);
+			$to->setTime($curDate1, $format,$locale);
+			$to->setTimezone($timezone);
+			
+			$now = Mage::app()->getLocale()->date(null, null, $locale, false);
+			$now = $now->getTimestamp();
+			
+			$from = $from->getTimestamp() + $from->getGmtOffset();
+			
+			$to = $to->getTimestamp() + $to->getGmtOffset();
+			
+			if (($now > $from) && ($now <$to))
+			{
 				$this->cmspage = $curCMS;
 				$front->addRouter('offline_router', $this);
-				
 			}
-			elseif ($curOffline == 2) {	// Scheduled
-
-				$timezone = Mage::app()->getStore($store)->getConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_TIMEZONE);
-				$locale =  Mage::app()->getLocale()->getLocaleCode();// new Zend_Locale(Mage::getStoreConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_LOCALE, $storeId));
-				$locale = new Zend_Locale($locale);
-				$from = new Zend_Date(null, null, $locale);
-				$to = new Zend_Date(null, null, $locale);
-
-				$format = 'YYYY-MM-dd HH:mm:ss';
-				$from->setDate($curDate2, $format);
-				$from->setTime($curDate2, $format);
-				$from->setTimezone($timezone);
-				
-				$to->setDate($curDate1, $format,$locale);
-				$to->setTime($curDate1, $format,$locale);
-				$to->setTimezone($timezone);
-				
-				$now = Mage::app()->getLocale()->date(null, null, $locale, false);
-				$now = $now->getTimestamp();
-				
-				$from = $from->getTimestamp() + $from->getGmtOffset();
-				
-				$to = $to->getTimestamp() + $to->getGmtOffset();
-				
-				if(($now > $from) && ($now <$to))
-				{
-					$this->cmspage = $curCMS;
-					$front->addRouter('offline_router', $this);
-				}
-				/*
-				else if($now > $to)
-				{
-					Mage::getStoreConfig($path)
-				}
-				*/
-			}	
+			/*
+			if($now >= $to)
+			{
+				Mage::setStoreConfig('general/offline/lock')
+			}
+			*/
 		}
 	}
 	
 	
-	private function isAdmin()
-	{
+	private function __isAdmin() {
 		
 		
 		$request = clone(Mage::app()->getRequest());
@@ -110,8 +107,7 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 	
 	
 	
-	public function _collectRoutes()
-	{
+	protected function _collectRoutes() {
 		$configArea = 'admin';
 		$useRouterName = 'admin';
 		if ((string)Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_USE_CUSTOM_ADMIN_PATH)) {
@@ -134,8 +130,6 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 				$modules = array((string)$routerConfig->args->module);
 				if ($routerConfig->args->modules) {
 					foreach ($routerConfig->args->modules->children() as $customModule) {
-						// Remove bei Magento-Patch [Trac 1842]
-						//if ($customModule) {
 						if ((string)$customModule) {
 							if ($before = $customModule->getAttribute('before')) {
 								$position = array_search($before, $modules);
@@ -169,11 +163,17 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 	* Validate and Match Cms Page and modify request
 	*
 	* @param Zend_Controller_Request_Http $request
+	* 
 	* @return bool
 	*/
-	public function match(Zend_Controller_Request_Http $request)
-	{
+	public function match(Zend_Controller_Request_Http $request) {
 		$request->setPathInfo($this->cmspage);
+		$response = Mage::app()->getResponse();
+		if ($response->canSendHeaders()) {
+			// Service Unavailable
+			$response->setHeader('MAINTENANCE', 1, true);
+			$response->setHttpResponseCode(503);
+		}
 		return false;
 	}
 }
