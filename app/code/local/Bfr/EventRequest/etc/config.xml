@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bfr_EventRequest>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </Bfr_EventRequest>
     </modules>
     <frontend>
@@ -152,6 +152,15 @@
             </eventrequest>
         </helpers>
         <events>
+            <clear_expired_quotes_before>
+                <observers>
+                    <bfr_eventrequest_clear_expired_quotes_before>
+                        <type>singleton</type>
+                        <class>Bfr_EventRequest_Model_Observer</class>
+                        <method>onClearExpiredQuotesBefore</method>
+                    </bfr_eventrequest_clear_expired_quotes_before>
+                </observers>
+            </clear_expired_quotes_before>
             <sales_quote_add_item>
                 <observers>
                     <bfr_eventrequest_add_item>
