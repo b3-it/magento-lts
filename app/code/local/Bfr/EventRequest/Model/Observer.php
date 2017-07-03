@@ -113,6 +113,13 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 	}
 	
 	
+	public function onClearExpiredQuotesBefore($observer)
+	{
+		$sales_observer = $observer['sales_observer'];
+		$sales_observer->setExpireQuotesAdditionalFilterFields(array('is_event_request'=>'0'));
+	}
+	
+	
 	public function onSalesOrderSaveCommitAfter($observer)
 	{
 		try {
