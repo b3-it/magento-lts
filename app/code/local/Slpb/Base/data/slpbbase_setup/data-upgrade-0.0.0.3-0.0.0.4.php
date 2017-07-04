@@ -27,7 +27,7 @@ $installer->setConfigData('customer/shippingrequired/company', null);
 
 $page = Mage::getModel('cms/page')->load('abholungspauschale', 'identifier');
 if ( !$page->isEmpty()) {
-	$page->addData(array('root_template' => 'one_column', 'stores' => array(0)));
+	$page->addData(array('root_template' => 'one_column', 'stores' => array(0)))->save();
 }
 		
 $installer->endSetup();
