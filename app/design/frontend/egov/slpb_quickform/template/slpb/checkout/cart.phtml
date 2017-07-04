@@ -50,7 +50,7 @@ $_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getSt
     <li class="success-msg">
         <ul>
             <li>
-                <span><?php echo $this->__('Stars on cart'); ?></span>: <span id="star-cnt">--</span> / <?php echo $_maxstar; ?>
+                <?php echo $this->__('<span>Stars on cart</span>: <span id="star-cnt">--</span> from max %s', $_maxstar); ?>
             </li>
         </ul>
     </li>
