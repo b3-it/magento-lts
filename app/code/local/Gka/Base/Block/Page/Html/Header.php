@@ -33,73 +33,23 @@
  * @package    Mage_Page
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
+class Gka_Base_Block_Page_Html_Header extends Mage_Page_Block_Html_Welcome
 {
-	private $_jump = null;
-	
-    private function getChilds($node)
-    {
-    	if($node == null) return; 
-    	if($node->getJumptitle()!= null)
-    	{
-    		$this->_jump[$node->getNameInLayout()] = $node;
-    	}
-    	
-	   	foreach($node->getChild('') as $key=>$value)
-    	{
-    		$this->getChilds($value);
-    	}
-    }
-    
-    
-
-     public function getJumps()
-     {
-     	if($this->_jump == null)
-     	{
-	     	$this->_jump = array();
-     		$layout = $this->getLayout();
-     		$this->getChilds($layout->getBlock('root'));
-	     	foreach($layout->getBlock('root')->getChild('') as $key=>$value)
-	    	{
-	    		$this->getChilds($value);
-	    	}
-     	}
-     	return $this->_jump;
-     }
-
-     public function getTitel()
-     {
-     	$head = $this->getLayout()->getBlock("head");
-     	if($head)
-     	{   		
-     		return $head->getTitle();
-     	}
-
-     	return Mage::getBlockSingleton("page/html_head")->getTitle();
-     }
-     
-     public function getUrl($route = '', $params = array()) {
-     	if (strlen($route) < 1 && count($params) < 1) {
-     		return Mage::getStoreConfig('web/url/header_home_link');
-     	}
-     	return parent::getUrl($route, $params);
-     }
-     
      public function getWelcome() {
+var_dump(1);
      	if (empty($this->_data['welcome'])) {
      		if (Mage::isInstalled() && Mage::getSingleton('customer/session')->isLoggedIn()) {
      			$customer = Mage::getSingleton('customer/session')->getCustomer();
 
      			$this->_data['welcome'] = $this->__('You are logged in as %s in %s',
-     					                                $this->escapeHtml($customer->getName(),
-     					                                $this->escapeHtml(Mage::app()->getStore()->getName())
+     					                            $this->escapeHtml($customer->getName()),
+     					                            $this->escapeHtml(Mage::app()->getStore()->getName())
      					                           );
      		} else {
      			$this->_data['welcome'] = Mage::getStoreConfig('design/header/welcome');
      		}
      	}
-     
+
      	return $this->_data['welcome'];
      }
      

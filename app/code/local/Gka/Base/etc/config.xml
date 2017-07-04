@@ -3,9 +3,37 @@
 <config>
     <modules>
         <Gka_Base>
-            <version>0.1.0</version>
+            <version>0.2.0.0</version>
         </Gka_Base>
     </modules>
+    <global>
+        <resources>
+            <gkabase_setup>
+                <setup>
+                    <module>Gka_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gkabase_setup>
+        </resources>
+        <helpers>
+            <gkabase>
+                <class>Gka_Base_Helper</class>
+            </gkabase>
+        </helpers>
+        <blocks>
+            <gkabase>
+                <class>Gka_Base_Block</class>
+            </gkabase>
+            <page>
+            	<rewrite>
+                	<html_welcome>Gka_Base_Block_Page_Html_Header</html_welcome>
+                </rewrite>
+            </page>
+        </blocks>
+    </global>
     <frontend>
             <routers>
                 <customer>
@@ -17,16 +45,4 @@
                 </customer>
             </routers>
     </frontend>
-    <global>
-        <helpers>
-            <gkabase>
-                <class>Gka_Base_Helper</class>
-            </gkabase>
-        </helpers>
-        <blocks>
-            <gkabase>
-                <class>Gka_Base_Block</class>
-            </gkabase>
-        </blocks>
-    </global>
 </config>
