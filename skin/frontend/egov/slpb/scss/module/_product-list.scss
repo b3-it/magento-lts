@@ -334,12 +334,16 @@ p.product-name {
         }
 
         .product-name {
-            margin-bottom: $blobal-blockcontent-marginbottom;
+            margin: 0 0 $blobal-blockcontent-marginbottom 0;
             height: 1em;
 
             a {
                 font-size: $global-fontsize;
             }
+        }
+        
+        .product-price {
+            display: none;
         }
 
         .ratings {
@@ -357,7 +361,7 @@ p.product-name {
 
         .desc {
             margin-top: $element-spacing;
-            max-height: 40px;
+            max-height: 100px;
         }
 
         .product-primary {
@@ -371,7 +375,6 @@ p.product-name {
         
         .product-action {
             position: relative;
-            top: -10px;
         }
     }
 }
@@ -397,7 +400,7 @@ p.product-name {
             height: auto;
         }
         .product-primary {
-            height: 45%;
+            height: 70%;
         }
         .product-price {
             height: 27%;

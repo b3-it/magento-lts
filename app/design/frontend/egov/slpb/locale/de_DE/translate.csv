@@ -8,3 +8,4 @@
 "Egovs_Base::Sku","Best.-Nr."
 "Mage_Checkout::SKU","Best.-Nr."
 "Mage_Catalog::Sku","Best.-Nr."
+"Mage_Catalog::SKU","Bestellnummer"

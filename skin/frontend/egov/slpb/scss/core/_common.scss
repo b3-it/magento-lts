@@ -156,7 +156,7 @@ h6, .h6 { @include h6; }
     }
 
     .in-stock {
-        color: $global-instock-color;
+        font-size: 12px;
     }
 
     .available-soon, .out-of-stock {
