@@ -25,16 +25,9 @@ $installer->setConfigData('customer/registerrequired/company', null);
 $installer->setConfigData('customer/registerrequired/taxvat', null);
 $installer->setConfigData('customer/shippingrequired/company', null);
 
-$_cmsTable = Mage::getModel('cms/page');
-
-$data = array(
-		    'identifier'    => 'abholungspauschale',
-		    'root_template' => 'one_column',
-		    'stores'        => array(0)
-        );
-
-if ( !$_cmsTable->load($data['identifier'])->isEmpty() ) {
-	$_cmsTable->setData($data)->save();
+$page = Mage::getModel('cms/page')->load('abholungspauschale', 'identifier');
+if ( !$page->isEmpty()) {
+	$page->addData(array('root_template' => 'one_column', 'stores' => array(0)));
 }
 		
 $installer->endSetup();
