@@ -20,8 +20,7 @@
         </reference>
 
         <reference name="header">
-            <!-- <remove name="welcome" />
-            <block type="gkabase/page_html_header" name="welcome" as="welcome"/> -->
+            <block type="gkabase/page_html_welcome" name="welcome" as="welcome"/>
         </reference>
 
         <reference name="left">
