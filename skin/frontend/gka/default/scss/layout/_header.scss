@@ -116,22 +116,11 @@
             display: block;
             height: 1em;
             margin-top: 12px;
-        }
-        
-        #real-time {
-            color: $global-fontcolor-light;
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 18px;
             
-            #time > span:not(:last-child):after {
-                content: ':';
+            span {
+                display: inline-block;
+                float: right;
             }
-            #date {
-                margin-right: 10px;
-            }
-
         }
 
         @include bp(max-width, 910px) {

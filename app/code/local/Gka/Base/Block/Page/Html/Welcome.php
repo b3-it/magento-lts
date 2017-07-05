@@ -66,7 +66,7 @@ class Gka_Base_Block_Page_Html_Welcome  extends Mage_Page_Block_Html_Welcome
         if (empty($this->_data['welcome'])) {
             if (Mage::isInstalled() && $this->_getSession()->isLoggedIn()) {
             	$customer = Mage::getSingleton('customer/session')->getCustomer();
-                $this->_data['welcome'] =  $this->__('You are logged in as %s in %s %s',
+                $this->_data['welcome'] =  $this->__('You are logged in as %s in %s <span>%s</span>',
      					                            $this->escapeHtml($customer->getName()),
      					                            $this->escapeHtml($this->getStore()),
                 									$date

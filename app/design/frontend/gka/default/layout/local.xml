@@ -6,8 +6,6 @@
             <remove name="silver_track" />
             
             <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
-            <action method="addJs"><script>egovs/jquery.simpleClock.js</script></action>
-            <action method="addItem"><type>skin_js</type><name>js/gka_start.js</name></action>
         </reference>
 
         <reference name="content">
