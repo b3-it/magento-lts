@@ -35,14 +35,23 @@
         </blocks>
     </global>
     <frontend>
-            <routers>
-                <customer>
-                    <args>
-                        <modules>
-                            <gka_base before="Mage_Customer">Gka_Base</gka_base>
-                        </modules>
-                    </args>
-                </customer>
-            </routers>
+        <translate>
+            <modules>
+              <Gka_Base>
+                  <files>
+                      <default>Gka_Base.csv</default>
+                  </files>
+              </Gka_Base>
+            </modules>
+        </translate>
+        <routers>
+            <customer>
+                <args>
+                    <modules>
+                        <gka_base before="Mage_Customer">Gka_Base</gka_base>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
     </frontend>
 </config>
