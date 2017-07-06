@@ -335,7 +335,8 @@ p.product-name {
 
         .product-name {
             margin: 0 0 $blobal-blockcontent-marginbottom 0;
-            height: 1em;
+            height: 1.3em;
+            overflow: hidden;
 
             a {
                 font-size: $global-fontsize;

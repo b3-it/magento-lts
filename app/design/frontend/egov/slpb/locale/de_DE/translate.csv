@@ -9,3 +9,5 @@
 "Mage_Checkout::SKU","Best.-Nr."
 "Mage_Catalog::Sku","Best.-Nr."
 "Mage_Catalog::SKU","Bestellnummer"
+"Mage_Customer::New Customer","Neuer Nutzer"
+"Mage_Customer::Registered Customers","Registrierte Nutzer"
