@@ -2,10 +2,6 @@
 <!DOCTYPE config>
 <config>
     <modules>
-	    <Gka_Base>
-           <active>false</active>
-           <codePool>local</codePool>     	    	
-	    </Gka_Base>
 	    <Gka_Barkasse>
            <active>true</active>
            <codePool>local</codePool>     	    	
