@@ -783,7 +783,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             $newData = array();
             foreach ($array as $key=>$val) {
                 if (call_user_func_array($closure, array($val, $key))) {
-                    $newData($array[$key]);
+                    $newData[$key]= $val;
                 }
             }
             return($array);
