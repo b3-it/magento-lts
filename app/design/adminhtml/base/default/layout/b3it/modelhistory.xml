@@ -11,4 +11,14 @@
             <block type="modelhistory/adminhtml_config" name="config" />
         </reference>
     </adminhtml_modelhistory_config_index>
+    <adminhtml_modelhistory_settings_index>
+        <reference name="content">
+            <block type="modelhistory/adminhtml_settings" name="settings" />
+        </reference>
+    </adminhtml_modelhistory_settings_index>
+    <adminhtml_modelhistory_settings_new>
+        <reference name="content">
+            <block type="modelhistory/adminhtml_settings_new" name="settings" />
+        </reference>
+    </adminhtml_modelhistory_settings_new>
 </layout>

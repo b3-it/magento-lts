@@ -321,7 +321,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             } else {
                 return true;
             }
-        }, ARRAY_FILTER_USE_BOTH);
+        });
 
         // filter origData
         $origData = $this::__myArrayFilter($origData, function ($value, $key) use ($result_data) {
@@ -332,7 +332,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             } else {
                 return true;
             }
-        }, ARRAY_FILTER_USE_BOTH);
+        });
         
         // filter variables that only did change type from string to integer
         array_walk($result_data, function (&$value, $key) use ($origData) {
