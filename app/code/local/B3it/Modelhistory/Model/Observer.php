@@ -311,7 +311,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         }
 
         // remove empty keys from new data
-        $result_data = array_filter($data, function ($value, $key) use ($origData) {
+        $result_data = $this::__myArrayFilter($data, function ($value, $key) use ($origData) {
             if ($this->_conditionalExcludeKey($key, isset($origData[$key]) ? $origData[$key] : null, $value, 0)) {
                 return false;
             }
@@ -324,7 +324,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         }, ARRAY_FILTER_USE_BOTH);
 
         // filter origData
-        $origData = array_filter($origData, function ($value, $key) use ($result_data) {
+        $origData = $this::__myArrayFilter($origData, function ($value, $key) use ($result_data) {
             if (empty($value) && !isset($result_data[$key])) {
                 return false;
             } else if ($this->_conditionalExcludeKey($key, $value, isset($result_data[$key]) ? $result_data[$key] : null, 0)) {
@@ -773,5 +773,20 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             $tmp .= '...';
         }
         return $tmp;
+    }
+    
+
+    static protected function __myArrayFilter($array, $closure) {
+        if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
+            return array_filter($array, $closure, ARRAY_FILTER_USE_BOTH);
+        } else {
+            $newData = array();
+            foreach ($array as $key=>$val) {
+                if (call_user_func_array($closure, array($val, $key))) {
+                    $newData($array[$key]);
+                }
+            }
+            return($array);
+        }
     }
 }
