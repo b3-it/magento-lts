@@ -89,4 +89,10 @@ class Egovs_Object
 		return $this->_ModuleName;
 	}
 	
+	
+	public function isFieldEquals($field,$compareTo)
+	{
+		$field = $this->getData($field);
+		return boolval($field == $compareTo);
+	}
 }
