@@ -9,7 +9,7 @@
  * @author     Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
  *
  */
-class Egovs_EventBundle_Model_Ressource_Report_Options_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class Egovs_EventBundle_Model_Resource_Report_Options_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
 	private $_categoryfilter = null;
 	private $_categorynames = null;
