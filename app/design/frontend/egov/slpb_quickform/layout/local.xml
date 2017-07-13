@@ -12,7 +12,7 @@
             <remove name="store_language" />
             <remove name="top.search" />
         </reference>
-        
+
         <reference name="footer">
             <remove name="store_switcher" />
         </reference>

@@ -17,28 +17,13 @@
             <remove name="cart_sidebar" />
         </reference>
 
-        <reference name="footer_links2">
-            <action method="addLink" translate="label title">
-               <label>Delivery / Cost</label>
-               <url helper="core/getCurrentUrl">bereitstellung</url>
-               <title>Delivery / Cost</title>
-            </action>
-            <action method="addLink" translate="label title">
-               <label>Ordering Conditions</label>
-               <url helper="core/url/getUrl">bestellbedingungen</url>
-               <title>Ordering Conditions</title>
-            </action>
-            <action method="addLink" translate="label title">
-               <label>Privacy policy</label>
-               <url helper="core/url/getUrl">datenschutz</url>
-               <title>Privacy policy</title>
-            </action>
-            <action method="addLink" translate="label title">
-               <label>Payment</label>
-               <url helper="core/url/getUrl">zahlung</url>
-               <title>Payment</title>
-            </action>
-        </reference>
+		<reference name="footer">
+		   <block type="cms/block" name="cms_footer_links" before="footer_links">
+		      <action method="setBlockId">
+		         <block_id>footer_links</block_id>
+		      </action>
+		   </block>
+		</reference>
     </default>
 
     <customer_account>
