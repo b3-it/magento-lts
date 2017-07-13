@@ -16,7 +16,7 @@ class Egovs_ProductFile_Helper_Data extends Mage_Core_Helper_Abstract
 {
 	const PRODUCT_FILE  			= 'productfile';
 	const PRODUCT_IMAGE 			= 'productimage';
-	const PRODUCT_FILE_DESCRIPTION 	= 'productdescription';
+	const PRODUCT_FILE_DESCRIPTION 	= 'productfiledescription';
 	const PRODUCT_DELETE_FILE		= 'deleteproductfile';
 
 	/**
