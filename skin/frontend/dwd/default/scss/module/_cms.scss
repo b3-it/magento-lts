@@ -74,16 +74,9 @@
             padding: 0px;
 
             li {
-                color: $global-fontcolor-dark;
                 font-family: $base-font-family;
                 font-size: $global-fontsize;
                 text-indent: $global-indent;
-                list-style-image: url($global-category-arrow-full-right);
-                list-style-type: none;
-
-                a {
-                    color: $global-linkcolor;
-                }
             }
         }
 

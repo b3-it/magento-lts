@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     bfr_default
+// @package     egov_default
 // @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -22,15 +22,13 @@
     padding-top: $box-spacing;
     width: 100%;
     text-align: left;
-    
+
     .button {
         display: inline-block;
         margin-right: $box-spacing;
         min-width: 25%;
-        padding-left: 0;
-        padding-right: 0;
 
-	    @include bp(max-width, $bp-xsmall) {
+	    @include bp(max-width, $bp-small) {
 	        float: none;
 	        display: block;
             margin-left: 0;
@@ -39,10 +37,11 @@
 
 	    &:first-child:nth-last-child(2),
 	    &:first-child:nth-last-child(2) ~ .button {
-	        min-width: 27%;
-	        width: 27%;
-	        
-	        @include bp(max-width, $bp-xsmall) {
+	        min-width: 31%;
+	        width: 31%;
+	        //padding: 5px;
+
+	        @include bp(max-width, $bp-small) {
 	            width: 100%;
 	            margin-bottom: $box-spacing;
 	        }
@@ -51,18 +50,14 @@
 	    &:first-child:nth-last-child(3) ~ .button {
 	        min-width: 27%;
 	        width: 27%;
-	        
-	        @include bp(max-width, $bp-xsmall) {
+
+	        @include bp(max-width, $bp-small) {
 	            width: 100%;
 	            margin-bottom: $box-spacing;
 	        }
 	    }
 	}
-	
-	a.button {
-	    padding-top: 15px;
-	}
-    
+
     &:after {
         @include clearfix;
     }
@@ -72,13 +67,13 @@
 	margin: $box-spacing 0;
 	padding-top: $box-spacing;
 	width: 100%;
-	
+
 	.button {
         padding-left: 0;
 		padding-right: 0;
 	    width: 48%;
 	}
-	
+
 	&:after {
         @include clearfix;
     }

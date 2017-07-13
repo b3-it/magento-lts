@@ -315,7 +315,7 @@ body:not(.customer-account) .block:first-child .block-title {
     }
 
     li {
-        a {
+        a:not(.no-pre-image) {
             @extend .image-link;
 
             @include bp(max-width, $bp-large) {
@@ -360,6 +360,9 @@ body:not(.customer-account) .block:first-child .block-title {
     .block .actions .button ~ a {
         line-height: 33px;
         margin-right: 5px;
+        
+        padding: 8px 0;
+        font-size: 0.9rem;
     }
 }
 

@@ -378,12 +378,6 @@ div.block-reorder {
         left: -3px;
     }
 
-    button.btn-cart {
-        @extend .egov-float-right;
-        position: relative;
-        right: -3px;
-    }
-
     li {
         margin-top: $box-spacing;
         margin-bottom: 0;
@@ -663,7 +657,7 @@ div.block-reorder {
     position: relative;
     top: $global-cms-top-position;
     background-color: $global-wrapper-color;
-    
+
     @include bp(max-width, $bp-medium) {
     	padding-bottom: 0;
     	top: 10px !important;
@@ -730,7 +724,7 @@ div.block-reorder {
 
     .std {
         margin: 0px;
-        
+
         img {
             max-width: 100%;
             height: auto;
@@ -776,11 +770,11 @@ div.block-reorder {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
-            
+
             @include bp(max-width, $bp-medium) {
                 width: 30%;
             }
-            
+
             @include bp(max-width, $bp-xsmall) {
             	display: block;
             	float: none;
@@ -793,11 +787,11 @@ div.block-reorder {
         .col-main {
             overflow: hidden;
             width: $global-content-2col-left-percent;
-            
+
             @include bp(max-width, $bp-medium) {
                 width: 67%;
             }
-            
+
             @include bp(max-width, $bp-xsmall) {
             	width: 100%;
             }
@@ -820,7 +814,7 @@ div.block-reorder {
             width: $global-rightcol-percent;
             top: $global-rightcol-margintop;
             margin-bottom: $global-rightcol-margintop;
-            
+
             @include bp(max-width, $bp-large) {
                 top: 0;
                 width: 100%;
@@ -854,7 +848,7 @@ div.block-reorder {
             float: left;
             width: $global-leftcol-percent;
         }
-        
+
         .messages {
             width: $global-content-3col-percent;
         }
@@ -943,7 +937,7 @@ div.block-reorder {
 
     .col-1,
     .col-2 {
-        width: 50%;
+        width: 48%;
         padding: $box-spacing-large;
 
         @include bp(max-width, $bp-medium) {
@@ -977,7 +971,7 @@ div.block-reorder {
     }
 
     .wide {
-        width: 65%;
+        width: 60%;
     }
 
     &:after {
@@ -1662,7 +1656,7 @@ $toolbar-icon-padding-offset: 8px;
     & > .count-container {
         float: left;
         font-size: $global-fontsize;
-        
+
         @include bp(max-width, $bp-small) {
             float: none;
             width: 100%;
@@ -1680,7 +1674,7 @@ $toolbar-icon-padding-offset: 8px;
         float: right;
         height: 30px;
         line-height: 30px;
-        
+
         @include bp(max-width, $bp-small) {
             float: none;
             display: inline-block;

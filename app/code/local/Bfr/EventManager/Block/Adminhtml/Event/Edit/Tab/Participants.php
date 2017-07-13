@@ -18,6 +18,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       $this->setId('participantGrid');
       $this->setDefaultSort('participant_id');
       $this->setDefaultDir('ASC');
+      
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
   }
@@ -293,6 +294,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'align'     => 'left',
   			'width'     => '80px',
   			'index'     => 'status',
+  			'filter_index' => 'main_table.status',
   			'type'      => 'options',
   			'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
   	));
@@ -345,7 +347,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                     'visibility' => array(
                          'name' => 'status',
                          'type' => 'select',
-                         'class' => 'required-entry',
+                         //'class' => 'required-entry',
                          'label' => Mage::helper('eventmanager')->__('Status'),
                          'values' => $statuses
                      )

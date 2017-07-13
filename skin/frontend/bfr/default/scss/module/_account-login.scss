@@ -6,6 +6,9 @@
 //
 
 .customer-account-login {
+	.col-main {
+	    top: -25px !important;
+	}
     p.required {
         color: $global-warning-color;
     }

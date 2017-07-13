@@ -36,7 +36,7 @@
             <div class="product-list-left-col">
                 <?php /* Product Image */ ?>
                 <?php $_imageAlt = $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?>
-                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_imageAlt; ?>" class="product-image">
                     <img id="product-collection-image-<?php echo $_product->getId(); ?>"
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
                          alt="<?php echo $_imageAlt; ?>" />
@@ -172,8 +172,8 @@
     <ul class="products-grid products-grid--max-<?php echo $_columnCount; ?>-col">
         <?php $i=0; foreach ($_productCollection as $_product): ?>
             <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
-                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
-                    <?php $_imageAlt = $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?>
+                <?php $_imageAlt = $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?>
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_imageAlt; ?>" class="product-image">
                     <img id="product-collection-image-<?php echo $_product->getId(); ?>"
                          src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize_list); ?>"
                          alt="<?php echo $_imageAlt; ?>" />

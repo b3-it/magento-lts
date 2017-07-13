@@ -76,23 +76,9 @@
     .col-main {
         margin-top: 5px;
     }
-
-    .page-title {
-        width: $global-content-2col-right-percent;
-        
-        @include bp(max-width, $bp-medium) {
-            width: 100%;
-        }
-    }
 }
 
 .advanced-search {
-    width: $global-content-2col-right-percent;
-    
-    @include bp(max-width, $bp-medium) {
-        width: 100%;
-    }
-    
     @include bp(max-width, $bp-xsmall) {
         padding: $trim-small;
     }

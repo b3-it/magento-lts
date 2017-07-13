@@ -326,7 +326,6 @@ p.product-name {
         button.button, a.button {
             font-size: $global-fontsize;
             width: $global-product-list-button-width;
-            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
             text-align: center;
 
             span {
@@ -407,9 +406,7 @@ p.product-name {
             height: $global-product-list-desc_height + 10 !important;
         }
 
-        button.button, a.button {
-            width: $global-product-list-button-width / $global-3col-factor;
-            
+        button.button, a.button {            
             @include bp(max-width, $bp-small) {
                 width: 100%;
                 padding: 10px;
