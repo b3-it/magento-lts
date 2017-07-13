@@ -1698,6 +1698,18 @@ body.customer-account .data-table {
     }
 }
 
+#checkout-review-table {
+	.product-details {
+	    display: inline-block;
+	    width: 90%;
+	    vertical-align: top;
+	}
+	.product-name {
+	    height: auto;
+	    width: 90%;
+	}
+}
+
 // Center the arrow, as the font is larger in tfoot
 #shopping-cart-totals-table tfoot td .summary-collapse {
     &:before,
