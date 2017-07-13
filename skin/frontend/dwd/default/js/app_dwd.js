@@ -153,7 +153,7 @@ $j(document).ready(function(){
     		}
     	});
     }
-    
+
     // Kontakt in Mobil-Navigation einbauen
     if ( $j('#mobile-home-link').length ) {
     	$j('<li id="mobile-contact" class="level0"></li>').insertAfter( $j('#mobile-home-link') );
