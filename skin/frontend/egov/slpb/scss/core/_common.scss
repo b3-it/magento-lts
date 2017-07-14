@@ -85,13 +85,13 @@ a {
     color: $global-linkcolor;
     text-decoration: none;
     border: $global-active-border solid transparent;
-    
+
     &:hover {
 	    color: $global-linkcolor-hover;
 	    background-color: $global-linkcolor;
 	    text-decoration: none;
 	}
-	
+
 	&:focus {
 	    outline-color: $global-linkcolor-active;
 	    color: darken($global-linkcolor-active, 30%);
@@ -604,7 +604,7 @@ div.block-reorder {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
-            
+
             @include bp(max-width, 490px) {
             	display: none;
             }
@@ -621,7 +621,7 @@ div.block-reorder {
             padding-left: $global-content-leftpadding-percent;
             padding-top: $global-content-paddingtop;
             padding-right: $global-rightcol-rightmargin-percent;
-            
+
             @include bp(max-width, 490px) {
             	width: 100% !important;
             }
@@ -1151,7 +1151,7 @@ span.weee {
     &:after {
         @include clearfix;
     }
-    
+
     dt, dd {
         display: table-cell;
     }
@@ -1564,7 +1564,7 @@ $toolbar-icon-padding-offset: 8px;
         left: 50%;
         padding-top: 12px;
         margin-left: -2px;
-        
+
         &:hover {
         	border: 1px solid $global-active-color;
     	}
@@ -1576,7 +1576,7 @@ $toolbar-icon-padding-offset: 8px;
 	.next:hover:before {
 	    @include triangle(right, 4px, $global-linkcolor-hover);
 	}
-	
+
 	.previous:before {
 	    @include triangle(left, 4px, $global-active-color);
 	}
@@ -1701,7 +1701,7 @@ body.customer-account .data-table {
 #checkout-review-table {
 	.product-details {
 	    display: inline-block;
-	    width: 90%;
+	    width: 80%;
 	    vertical-align: top;
 	}
 	.product-name {

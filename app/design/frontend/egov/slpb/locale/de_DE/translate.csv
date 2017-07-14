@@ -11,3 +11,7 @@
 "Mage_Catalog::SKU","Bestellnummer"
 "Mage_Customer::New Here?","Neuer Nutzer"
 "Mage_Customer::Already registered?","Registrierte Nutzer"
+"Mage_Checkout::Continue Shopping","Produkte hinzufügen"
+"Egovs_Checkout::Continue Shopping","Produkte hinzufügen"
+"Egovs_Checkout::Thank you for your order","Vielen Dank für Ihre Bestellung"
+"Egovs_Base::State/Province","Bundesland"
