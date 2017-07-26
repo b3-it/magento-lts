@@ -16,42 +16,43 @@ $last_err = null;
 /////////////////////// SQL-Abfragen \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 $sql = array(
 		'deleteLog' => array(
-				'log_customer'       => 'DELETE FROM `log_customer`',
-				'log_quote'          => 'DELETE FROM `log_quote`',
-				'log_summary'        => 'DELETE FROM `log_summary`',
-				'log_summary_type'   => 'DELETE FROM `log_summary_type`',
-				'log_url'            => 'DELETE FROM `log_url`',
-				'log_url_info'       => 'DELETE FROM `log_url_info`',
-				'log_visitor'        => 'DELETE FROM `log_visitor`',
-				'log_visitor_info'   => 'DELETE FROM `log_visitor_info`',
-				'log_visitor_online' => 'DELETE FROM `log_visitor_online`',
+				'log_customer'       => 'DELETE IGNORE FROM `log_customer`;',
+				'log_quote'          => 'DELETE IGNORE FROM `log_quote`;',
+				'log_summary'        => 'DELETE IGNORE FROM `log_summary`;',
+				'log_summary_type'   => 'DELETE IGNORE FROM `log_summary_type`;',
+				'log_url'            => 'DELETE IGNORE FROM `log_url`;',
+				'log_url_info'       => 'DELETE IGNORE FROM `log_url_info`;',
+				'log_visitor'        => 'DELETE IGNORE FROM `log_visitor`;',
+				'log_visitor_info'   => 'DELETE IGNORE FROM `log_visitor_info`;',
+				'log_visitor_online' => 'DELETE IGNORE FROM `log_visitor_online`;',
 		),
 		'anonUser' => array(
-		        'anon_customer_create'      => 'ALTER TABLE `customer_entity` CHANGE `created_at` `created_at` TIMESTAMP NOT NULL DEFAULT 0;',
-				'anon_customer_update'      => 'ALTER TABLE `customer_entity` CHANGE `updated_at` `updated_at` TIMESTAMP NOT NULL DEFAULT 0;',
-				'anon_customer_email'       => "UPDATE customer_entity SET email = concat('anon_',entity_id,'@testshop.org') WHERE email NOT LIKE '%testshop.org' OR email NOT LIKE '%trw-net.de' OR email NOT LIKE '%hempelfernsehen.de';",
-				'anon_sales_email_quote'    => "UPDATE sales_flat_quote SET customer_email = concat('anon_',customer_id,'@testshop.org') WHERE customer_email NOT LIKE '%testshop.org' OR customer_email NOT LIKE '%trw-net.de' OR customer_email NOT LIKE '%hempelfernsehen.de';",
-				'anon_sales_email_order'    => "UPDATE sales_flat_order SET customer_email = concat('anon_',customer_id,'@testshop.org') WHERE customer_email NOT LIKE '%testshop.org' OR customer_email NOT LIKE '%trw-net.de' OR customer_email NOT LIKE '%hempelfernsehen.de';",
-				'anon_sales_addess_quote'   => "UPDATE sales_flat_quote_address SET firstname = concat('firstname_',customer_id), lastname = concat('lastname_',customer_id), company = concat('company_',customer_id),  company2 = concat('company2_',customer_id) , company3 = concat('company3_',customer_id) ;",
-				'anon_sales_addess_order'   => "UPDATE sales_flat_order_address SET firstname = concat('firstname_',customer_id), lastname = concat('lastname_',customer_id), company = concat('company_',customer_id),  company2 = concat('company2_',customer_id) , company3 = concat('company3_',customer_id) ;",
-				'anon_cusomer_firstname'    => "UPDATE customer_entity_varchar AS adr join eav_attribute AS att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'firstname' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer' set value = concat('firstname_',entity_id);",
-				'anon_cusomer_lastname'     => "UPDATE customer_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'lastname' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer' set value = concat('lastname_',entity_id);",
-				'anon_cusomer_company'      => "UPDATE customer_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'company' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer' set value = concat('company_',entity_id);",
-				'anon_cusomer_company2'     => "UPDATE customer_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'company2' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer' set value = concat('company2_',entity_id);",
-				'anon_cusomer_company3'     => "UPDATE customer_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'company3' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer' set value = concat('company3_',entity_id);",
-				'anon_address_firstname'    => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'firstname' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = concat('firstname_',entity_id);",
-				'anon_address_lastname'     => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'lastname' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = concat('lastname_',entity_id);",
-				'anon_address_company'      => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'company' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = concat('company_',entity_id);",
-				'anon_address_company2'     => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'company2' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = concat('company2_',entity_id);",
-				'anon_address_company3'     => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'company3' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = concat('company3_',entity_id);",
-				'anon_address_phone'        => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'telephone' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = '';",
-				'anon_address_street'       => "UPDATE customer_address_entity_text as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'street' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = concat('Teststraße ',entity_id);",
-				'anon_address_city'         => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'city' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = 'Testort';",
-				'anon_address_postcode'     => "UPDATE customer_address_entity_varchar as adr join eav_attribute as att on att.attribute_id = adr.attribute_id AND att.attribute_code = 'postcode' join eav_entity_type as et on et.entity_type_id = att.entity_type_id AND et.entity_type_code = 'customer_address' set value = concat(entity_id);",
-				'anon_billing_invoice_grid' => "UPDATE sales_flat_invoice_grid set billing_name = concat('billing_name',increment_id), billing_company = concat('billing_company',increment_id);",
-				'anon_billing_order_grid'   => "UPDATE sales_flat_order_grid set billing_name = concat('billing_name',increment_id), billing_company = concat('billing_company',increment_id), shipping_name = concat('shipping_name',increment_id),  shipping_company = concat('shipping_company',increment_id);",
-				'anon_newsletter'           => "DELETE FROM `newsletter_subscriber`;",
-				'anon_email_queue'          => "DELETE FROM `core_email_queue`;",
+		        'anon_customer_create'      => "ALTER TABLE `customer_entity` CHANGE `created_at` `created_at` TIMESTAMP NOT NULL DEFAULT 0;",
+				'anon_customer_update'      => "ALTER TABLE `customer_entity` CHANGE `updated_at` `updated_at` TIMESTAMP NOT NULL DEFAULT 0;",
+				'anon_customer_email'       => "UPDATE `customer_entity` SET `email` = CONCAT('anon_',entity_id,'@testshop.org') WHERE `email` NOT LIKE '%testshop.org' OR `email` NOT LIKE '%trw-net.de' OR `email` NOT LIKE '%hempelfernsehen.de';",
+				'anon_sales_email_quote'    => "UPDATE `sales_flat_quote` SET `customer_email` = CONCAT('anon_',customer_id,'@testshop.org') WHERE `customer_email` NOT LIKE '%testshop.org' OR `customer_email` NOT LIKE '%trw-net.de' OR `customer_email` NOT LIKE '%hempelfernsehen.de';",
+				'anon_sales_email_order'    => "UPDATE `sales_flat_order` SET `customer_email` = CONCAT('anon_',customer_id,'@testshop.org') WHERE `customer_email` NOT LIKE '%testshop.org' OR `customer_email` NOT LIKE '%trw-net.de' OR `customer_email` NOT LIKE '%hempelfernsehen.de';",
+				'anon_sales_addess_quote'   => "UPDATE `sales_flat_quote_address` SET `firstname` = CONCAT('firstname_',customer_id), `lastname` = CONCAT('lastname_',customer_id), `company` = CONCAT('company_',customer_id), `company2` = CONCAT('company2_',customer_id) , `company3` = CONCAT('company3_',customer_id) ;",
+				'anon_sales_addess_order'   => "UPDATE `sales_flat_order_address` SET `firstname` = CONCAT('firstname_',customer_id), `lastname` = CONCAT('lastname_',customer_id), `company` = CONCAT('company_',customer_id), `company2` = CONCAT('company2_',customer_id) , `company3` = CONCAT('company3_',customer_id) ;",
+				'anon_cusomer_firstname'    => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'firstname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('firstname_',entity_id);",
+				'anon_cusomer_lastname'     => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'lastname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('lastname_',entity_id);",
+				'anon_cusomer_company'      => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('company_',entity_id);",
+				'anon_cusomer_company2'     => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company2' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('company2_',entity_id);",
+				'anon_cusomer_company3'     => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company3' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('company3_',entity_id);",
+				'anon_address_firstname'    => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'firstname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('firstname_',entity_id);",
+				'anon_address_lastname'     => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'lastname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('lastname_',entity_id);",
+				'anon_address_company'      => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('company_',entity_id);",
+				'anon_address_company2'     => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company2' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('company2_',entity_id);",
+				'anon_address_company3'     => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company3' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('company3_',entity_id);",
+				'anon_address_phone'        => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'telephone' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = '';",
+				'anon_address_street'       => "UPDATE `customer_address_entity_text` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'street' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('Teststraße ',entity_id);",
+				'anon_address_city'         => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'city' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = 'Testort';",
+				'anon_address_postcode'     => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'postcode' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT(entity_id);",
+				'anon_address_email'        => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'email' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('anon_',entity_id,'@testshop.org') WHERE `value` NOT LIKE '%testshop.org' OR `value` NOT LIKE '%trw-net.de' OR `value` NOT LIKE '%hempelfernsehen.de';",
+				'anon_billing_invoice_grid' => "UPDATE `sales_flat_invoice_grid` SET `billing_name` = CONCAT('billing_name',increment_id), billing_company = CONCAT('billing_company',increment_id);",
+				'anon_billing_order_grid'   => "UPDATE `sales_flat_order_grid` SET `billing_name` = CONCAT('billing_name',increment_id), billing_company = CONCAT('billing_company',increment_id), shipping_name = CONCAT('shipping_name',increment_id),  shipping_company = CONCAT('shipping_company',increment_id);",
+				'anon_newsletter'           => "DELETE IGNORE FROM `newsletter_subscriber`;",
+				'anon_email_queue'          => "DELETE IGNORE FROM `core_email_queue`;",
 		)
 );
 
@@ -297,7 +298,7 @@ if ( isset($_POST['action']) ) {
 
 			$return['html'] .= '<div class="' . ( ($err['status'] == TRUE) ? 'okay' : 'fail' ) . '">' .
 					           date('d.m.y H:i:s') .
-			                   ' [Code: ' . ( ($err['status'] == TRUE) ? $err['status'] : $last_err) . '] Action: ' . $table .
+			                   ' [Code: ' . ( ($err['status'] == TRUE) ? $err['status'] : $last_err) . '] Action: ' . $key .
 			                   ' / Affected: ' . $err['rows'] . '</div>';
 			$return['tables'][] = array(
 									'name' => transformToHtml($table),
@@ -317,7 +318,7 @@ if ( isset($_POST['action']) ) {
 			                   ' [Code: ' . ( ($err == TRUE) ? $err : $last_err) . '] Action: ' . $tableName .
 			                   '</div>';			
 			$return['tables'][] = array(
-									'name'  => transformToHtml($tableName),
+					                'name'  => transformToHtml($tableName),
 									'stat'  => ( ($err == TRUE) ? 1 : 0),
 									'error' => $last_err
 								  );
