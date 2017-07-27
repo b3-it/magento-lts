@@ -3,4 +3,4 @@
 "Mage_Catalog::ProductFile description","Programme"
 "Mage_Catalog::Name Prefix","Event date"
 "Mage_Catalog::Set Product as not salable from Date","Registration deadline"
-"Mage_Core::Startup Page","Homepage"
+"Mage_Page::Startup Page","Homepage"
