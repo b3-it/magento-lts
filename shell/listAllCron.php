@@ -23,7 +23,7 @@ class Mage_Shell_CronLister extends Mage_Shell_Abstract
 
         uksort($datas, array($this, 'compareTimes'));
 
-        echo implode("\n", $datas);        
+        echo implode("\n", $datas) . "\n";        
     }
 
     public function compareTimes($time1, $time2)
