@@ -692,7 +692,17 @@ if ( count($data) AND is_array($data) ) {
         </table>
 ';
 }
-
+else {
+	echo '<script type="text/javascript">
+$(document).ready(function(){
+    // damit keiner Blödsinn macht :)
+    $("#aktionen button").each(function(){
+        $(this).prop("disabled", true).css("cursor", "no-drop");
+    });
+});
+</script>
+';
+}
 
 
 echo '
