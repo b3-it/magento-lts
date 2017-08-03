@@ -8,14 +8,14 @@
 $global-wrapper-color: #FFFFFF;                                        // Hintergrundfarbe der Seite
 $global-fontcolor-dark: #000000;                                       // Schriftfarbe für helle Hintergründe
 $global-fontcolor-light: #FFFFFF;                                      // Schriftfarbe für Dunkle Hintergründe
-$global-lightcolor: #CDCCBD;                                           // Hintergrund für Eingabefelder
+$global-lightcolor: #E9F0F9;                                           // Hintergrund für Eingabefelder
 $global-lightcolor-hover: #E9F0F9;                                     // Hintergrundfarbe für aktive Elemente
 $global-linkcolor: #356EC5;                                            // Textfarbe für Links
 $global-linkcolor-hover: #356EC5;                                      // Textfarbe für Hover-Links
 $global-linkcolor-active: #356EC5;                                     // Textfarbe für aktive Links
 
 $global-navigation-color: #FFFFFF;                                     // Hintergrundfarbe für die Hauptnavigation
-$global-navigation-border-color: #EDEDED;                              // Randfarbe für die SKIP-Navigation
+$global-navigation-border-color: #E9F0F9;                              // Randfarbe für die SKIP-Navigation
 
 $global-active-color: #356EC5;                                         // Standard-Rand-Farbe des aktiven Elements
 
@@ -64,14 +64,14 @@ $global-success-background: #EFF5EA;                                   // Hinter
 
 $global-text-shadow: rgba(0, 0, 0, 0.3);                               // Textschatten für Überschriften
 
-$global-rgba-1: rgba(239, 242, 234, 0.6);                              // Erste Farbe für Buttons
-$global-rgba-2: rgba(205, 218, 201, 0.65);                             // Zweite Farbe für Buttons
+$global-rgba-1: rgba(233, 240, 249, 0.6);                              // Erste Farbe für Buttons
+$global-rgba-2: rgba( 53, 110, 197, 0.65);                             // Zweite Farbe für Buttons
 // 2015-10-16 Anpassung der Buttons (Farbe und Gradient)
 $global-button-font-color: #000000;                                    // Schriftfarbe der Buttons
 $global-button-font-hover-color: #000000;                              // Hover-Schriftfarbe der Buttons
 $global-button-color: #E9F0F9;                                         // Hintergrundfarbe der Buttons
 $global-button-hovercolor: #FFFFFF;                                    // Hover-Hintergrundfarbe der Buttons
-$global-button-gradient: 50%;                                          // Höhe des Gradienten auf den Buttons (weniger=oben; mehr=unten)
+$global-button-gradient: 100%;                                         // Höhe des Gradienten auf den Buttons (weniger=oben; mehr=unten)
 $global-button-gradient-1: $global-rgba-1 0%;                          // Startwert des Gradienten
 $global-button-gradient-2: $global-rgba-2 $global-button-gradient;     // Endwert des Gradienten
 
@@ -86,9 +86,9 @@ $global-footer-fontcolor: #000000;                                     // Schrif
 $global-header-gradientcolor-1: #6D97D8;                               // Start-Gradientfarbe im Header
 $global-header-gradientcolor-2: #356EC5;                               // End-Gradientfarbe im Header
 
-$global-box-title-backgroundcolor: #CDCCBD;                            // Hintergrund der Titelleiste aller normalen Boxen
+$global-box-title-backgroundcolor: #E9F0F9;                            // Hintergrund der Titelleiste aller normalen Boxen
 $global-box-content-backgroundcolor: #FFFFFF;                          // Hintergrund des Inhaltes aller normalen Boxen
-$global-box-bordercolor: #E9F0F9;                                      // Randfarbe aller normalen Boxen
+$global-box-bordercolor: #B5CDEE;                                      // Randfarbe aller normalen Boxen
 
 $global-category-font-color: #333333;                                  // Textfarbe der Kategorie-Navigation
 $global-category-hover-color: #333333;                                 // Hover-Farbe der Kategorie-Navigation
