@@ -11,8 +11,8 @@ $global-fontcolor-light: #FFFFFF;                                      // Schrif
 $global-lightcolor: #E9F0F9;                                           // Hintergrund für Eingabefelder
 $global-lightcolor-hover: #E9F0F9;                                     // Hintergrundfarbe für aktive Elemente
 $global-linkcolor: #356EC5;                                            // Textfarbe für Links
-$global-linkcolor-hover: #356EC5;                                      // Textfarbe für Hover-Links
-$global-linkcolor-active: #356EC5;                                     // Textfarbe für aktive Links
+$global-linkcolor-hover: #333333;                                      // Textfarbe für Hover-Links
+$global-linkcolor-active: #333333;                                     // Textfarbe für aktive Links
 
 $global-navigation-color: #FFFFFF;                                     // Hintergrundfarbe für die Hauptnavigation
 $global-navigation-border-color: #E9F0F9;                              // Randfarbe für die SKIP-Navigation
@@ -29,7 +29,7 @@ $global-h6-color: #FF0000;                                             // Farbe 
 $global-cart-color: #356EC5;                                           // Textfarbe für Preise im Warenkorb
 $global-cart-subtotal: #356EC5;                                        // Textfarbe für Summen im Warenkorb
 
-$global-border-color: #E9F0F9;                                         // Farbe für normale Ränder bei Boxen
+$global-border-color: #356EC5;                                         // Farbe für normale Ränder bei Boxen
 $global-border-color-light: #CDCCBD;                                   // Farbe für helle Ränder bei Boxen
 
 $global-price-normal-color: #356EC5;                                   // Farbe für Preisangaben im Katalog
@@ -38,7 +38,7 @@ $global-price-special-color: #356EC5;                                  // Farbe 
 $global-instock-color: #356EC5;                                        // Farbe für "Auf Lager" im Katalog
 $global-available-color: #FF0000;                                      // Farbe für "Nicht Lieferbar" im Katalog
 
-$global-minicart-background: #CDCCBD;                                  // Hintergrundfarbe des Menü-Warenkorbs
+$global-minicart-background: #E9F0F9;                                  // Hintergrundfarbe des Menü-Warenkorbs
 $global-sidebar-cart-background: #FFFFFF;                              // Hintergrundfarbe des Warenkorbs in der Sidebar
 
 $global-checkout-tableborder: #E9F0F9;                                 // Randfarbe der Checkout-Tabelle
