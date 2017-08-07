@@ -1,7 +1,7 @@
 ﻿//
 // @category    design
-// @package     egov_default
-// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @package     egov_lfa
+// @copyright   Copyright (c) 2017 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 .default-form {
@@ -61,20 +61,26 @@
             background-color: $global-checkout-tdbackground;
             color: $global-checkout-tdfontcolor;
 
-            h3 {
-                margin: 0px;
-                padding: 0px;
+            h3, .product-details, .checkout-product-image {
                 display: inline-block;
                 vertical-align: top;
             }
+            
+            h3 {
+                margin: 0px;
+                padding: 0px;
+            }
+            
+            .product-details {
+                width: 90%;
+            }
 
             .checkout-product-image {
-                display: inline-block;
                 margin-right: $fa-icon-margin;
             }
         }
 
-        td:nth-child(2), td:nth-child(3),
+        td:nth-child(2), td:nth-child(3), td:nth-child(4),
         td:nth-child(5), td:nth-child(6) {
             text-align: right;
         }
@@ -98,7 +104,7 @@
     tfoot td {
         background-color: $global-checkout-total-background;
         color: $global-fontcolor-dark;
-        border-color: $global-checkout-tableborder;
+        border-color: $global-checkout-total-border;
         border-width: $global-checkout-borderwidth;
         border-style: solid;
         padding: $global-tdpadding;
