@@ -287,15 +287,19 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 		
 		//Individualisierungsoptionen verarbeiten
 		$optionIds = $item->getOptionByCode('option_ids');
-		$optionIds = $optionIds->getValue();
-		$optionIds = explode(',', $optionIds);
-		$options = array();
-		foreach ($optionIds as $id) {
-			$option = $item->getOptionByCode("option_$id");
-			$options[$id] = $option->getValue();
+		if ($optionIds) {
+			$optionIds = $optionIds->getValue();
+			$optionIds = explode(',', $optionIds);
+			$options = array();
+			foreach ($optionIds as $id) {
+				$option = $item->getOptionByCode("option_$id");
+				if (!$option) {
+					continue;
+				}
+				$options[$id] = $option->getValue();
+			}
+			$request['options'] = $options;
 		}
-		$request['options'] = $options;
-		
 		if ($item->getId() > 0) {
 			$request['sidwishlist_item_id'] = $item->getId();
 		}
