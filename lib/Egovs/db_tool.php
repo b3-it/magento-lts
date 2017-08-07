@@ -10,6 +10,10 @@ $config_xml = $base . $ds . join($ds, array('app', 'etc', 'local.xml'));
 $script     = str_replace('\\', '/', $_SERVER['PHP_SELF']);
 $data_xml   = array();
 
+// Per Default kann weder die DB gelöscht werden, noch die Anonymisierung genutzt werden
+// Der Wert muss manuell auf TRUE gesetzt werden, um die Funktion zu nutzen
+$resticted_host = TRUE;
+
 /////////////////////// Letzte Fehlermeldung \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 $last_err = null;
 
@@ -71,92 +75,100 @@ $sql = array(
 						'query'  => "UPDATE `sales_flat_quote` SET `customer_email` = CONCAT('anon_',customer_id,'@testshop.org') WHERE `customer_email` NOT LIKE '%testshop.org' OR `customer_email` NOT LIKE '%trw-net.de' OR `customer_email` NOT LIKE '%hempelfernsehen.de';"
 				),
 				5  => array(
+						'action' => 'anon_sales_flat_order_names',
+						'query'  => "UPDATE `sales_flat_order` SET `customer_firstname` = CONCAT('firstname_',customer_id), `customer_lastname` = CONCAT('lastname_',customer_id), `customer_company` = CONCAT('company_',customer_id), `remote_ip` = '0.0.0.0';"
+				),
+				6  => array(
 						'action' => 'anon_sales_email_order',
 						'query'  => "UPDATE `sales_flat_order` SET `customer_email` = CONCAT('anon_',customer_id,'@testshop.org') WHERE `customer_email` NOT LIKE '%testshop.org' OR `customer_email` NOT LIKE '%trw-net.de' OR `customer_email` NOT LIKE '%hempelfernsehen.de';"
 				),
-				6  => array(
+				7  => array(
 						'action' => 'anon_sales_addess_quote',
 						'query'  => "UPDATE `sales_flat_quote_address` SET `firstname` = CONCAT('firstname_',customer_id), `lastname` = CONCAT('lastname_',customer_id), `company` = CONCAT('company_',customer_id), `company2` = CONCAT('company2_',customer_id) , `company3` = CONCAT('company3_',customer_id) ;"
 				),
-				7  => array(
-						'action' => 'anon_sales_addess_order',
-						'query'  => "UPDATE `sales_flat_order_address` SET `firstname` = CONCAT('firstname_',customer_id), `lastname` = CONCAT('lastname_',customer_id), `company` = CONCAT('company_',customer_id), `company2` = CONCAT('company2_',customer_id) , `company3` = CONCAT('company3_',customer_id) ;"
-				),
 				8  => array(
+						'action' => 'anon_sales_addess_order',
+						'query'  => "UPDATE `sales_flat_order_address` SET `firstname` = CONCAT('firstname_',customer_id), `lastname` = CONCAT('lastname_',customer_id), `company` = CONCAT('company_',customer_id), `company2` = CONCAT('company2_',customer_id) , `company3` = CONCAT('company3_',customer_id), `telephone` = '', `street` = CONCAT('Teststrasse ',entity_id);"
+				),
+				9  => array(
 						'action' => 'anon_cusomer_firstname',
 						'query'  => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'firstname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('firstname_',entity_id);"
 				),
-				9  => array(
+				10 => array(
 						'action' => 'anon_cusomer_lastname',
 						'query'  => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'lastname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('lastname_',entity_id);"
 				),
-				10 => array(
+				11 => array(
 						'action' => 'anon_cusomer_company',
 						'query'  => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('company_',entity_id);"
 				),
-				11 => array(
+				12 => array(
 						'action' => 'anon_cusomer_company2',
 						'query'  => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company2' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('company2_',entity_id);"
 				),
-				12 => array(
+				13 => array(
 						'action' => 'anon_cusomer_company3',
 						'query'  => "UPDATE `customer_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company3' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer' SET `value` = CONCAT('company3_',entity_id);"
 				),
-				13 => array(
+				14 => array(
 						'action' => 'anon_address_firstname',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'firstname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('firstname_',entity_id);"
 				),
-				14 => array(
+				15 => array(
 						'action' => 'anon_address_lastname',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'lastname' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('lastname_',entity_id);"
 				),
-				15 => array(
+				16 => array(
 						'action' => 'anon_address_company',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('company_',entity_id);"
 				),
-				16 => array(
+				17 => array(
 						'action' => 'anon_address_company2',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company2' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('company2_',entity_id);"
 				),
-				17 => array(
+				18 => array(
 						'action' => 'anon_address_company3',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'company3' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('company3_',entity_id);"
 				),
-				18 => array(
+				19 => array(
 						'action' => 'anon_address_phone',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'telephone' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = '';"
 				),
-				19 => array(
-						'action' => 'anon_address_street',
-						'query'  => "UPDATE `customer_address_entity_text` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'street' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('Teststraße ',entity_id);"
-				),
 				20 => array(
+						'action' => 'anon_address_street',
+						'query'  => "UPDATE `customer_address_entity_text` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'street' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('Teststrasse ',entity_id);"
+				),
+				21 => array(
 						'action' => 'anon_address_city',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'city' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = 'Testort';"
 				),
-				21 => array(
+				22 => array(
 						'action' => 'anon_address_postcode',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'postcode' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT(entity_id);"
 				),
-				22 => array(
+				23 => array(
 						'action' => 'anon_address_email',
 						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'email' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT('anon_',entity_id,'@testshop.org') WHERE `value` NOT LIKE '%testshop.org' OR `value` NOT LIKE '%trw-net.de' OR `value` NOT LIKE '%hempelfernsehen.de';"
 				),
-				23 => array(
+				24 => array(
 						'action' => 'anon_billing_invoice_grid',
 						'query'  => "UPDATE `sales_flat_invoice_grid` SET `billing_name` = CONCAT('billing_name',increment_id), billing_company = CONCAT('billing_company',increment_id);"
 				),
-				24 => array(
+				25 => array(
 						'action' => 'anon_billing_order_grid',
 						'query'  => "UPDATE `sales_flat_order_grid` SET `billing_name` = CONCAT('billing_name',increment_id), billing_company = CONCAT('billing_company',increment_id), shipping_name = CONCAT('shipping_name',increment_id),  shipping_company = CONCAT('shipping_company',increment_id);"
 				),
-				25 => array(
+				26 => array(
 						'action' => 'anon_delete_newsletter',
 						'query'  => "DELETE IGNORE FROM `newsletter_subscriber`;"
 				),
-				26 => array(
+				27 => array(
 						'action' => 'anon_delete_email_queue',
 						'query'  => "DELETE IGNORE FROM `core_email_queue`;"
+				),
+				28 => array(
+						'action' => 'anon_dataflow_batch_import',
+						'query'  => "UPDATE `dataflow_batch_import` SET `batch_data` = ''"
 				),
 		),
 );
@@ -354,8 +366,15 @@ function set_sql($query = '', $param = '', $value = '', $affected = false)
 	}
 }
 
-function getUserSize($bytes)
+function getUserSize($bytes, $precision = 2)
 {
+	$unit = ['B','kB','MB','GB','TB','PB','EB','ZB','YB'];
+	for($i = 0; $bytes>= 1024 AND $i < count($unit)-1; $i++) {
+		$bytes /= 1024;
+	}
+	return number_format($bytes, $precision, ",", ".") . ' ' . $unit[$i];
+	
+	/*
 	$bytes = max(0, $bytes);
 	
 	foreach (array(' B',' KB',' MB',' GB',' TB',' PB') AS $i => $k)
@@ -364,6 +383,7 @@ function getUserSize($bytes)
 		$bytes /= 1024;
 	}
 	return number_format($bytes, 2, ",", ".") . $k;
+	*/
 }
 
 function transformToHtml($string)
@@ -438,11 +458,19 @@ if ( isset($_POST['action']) ) {
     			$key   = $sql[$_POST['what']][$position]['action'];
     			$table = extractTableName($query);
 
-    			// Aktionen ausführen
-    			$err  = set_sql($query, 1, 1, true);
+    			if ( ( $resticted_host === FALSE ) OR ($_POST['what'] == 'deleteLog') ) {
+    				// Aktionen ausführen
+    				$err = set_sql($query, 1, 1, true);
+    			}
+    			else {
+    				// Aktion blockieren weil produktive Systeme
+    				$err['error']   = false;
+    				$err['message'] = 'Restricted Host!!';
+    			}
+
     			$new  = get_sql("SHOW TABLE STATUS WHERE name = '" . $table . "'");
 
-				$return['html']   = ( ($err['error'] == FALSE) ? 'Affected: ' . $err['rows'] : $err['message']);
+    			$return['html']   = ( ($err['error'] == FALSE) ? 'Affected: ' . $err['rows'] : $err['message']);
     			$return['tables'] = array(
 					    				'error' => ( ($err['error'] == FALSE) ? 'okay' : 'fail' ),
     									'code'  => ( ($err['error'] == FALSE) ? 1      : $err['error']),
@@ -462,8 +490,17 @@ if ( isset($_POST['action']) ) {
     	}
     	elseif ( $_POST['what'] == 'clearAllTables' ) {
     		// Alle Tabellen bearbeiten
-    		$tableName = htmlentities(trim($_POST['act']), ENT_QUOTES, "UTF-8");
-    		$err = set_sql('DROP TABLE IF EXISTS ' . $tableName, 1, 1);
+    		$tableName = htmlentities(trim($_POST['act']), ENT_QUOTES, "UTF-8");    		
+
+    		if ( ( $resticted_host === FALSE ) AND ($_POST['what'] != 'deleteLog') ) {
+    			// Aktionen ausführen
+    			$err = set_sql('DROP TABLE IF EXISTS ' . $tableName, 1, 1);
+    		}
+    		else {
+    			// Aktion blockieren weil produktive Systeme
+    			$err['error']   = false;
+    			$err['message'] = 'Restricted Host!!';
+    		}
     		
     		$return['html'] = ( ($err['error'] == FALSE) ? 'Return-Code: ' . $err['status'] : $err['message']);
     		$return['tables'] = array(
@@ -512,6 +549,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         </style>
         <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.15/js/jquery.tablesorter.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.15/js/parsers/parser-metric.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
         <script type="text/javascript">
             var action     = "empty";   // auszuführende Aktion
@@ -522,7 +560,9 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
             var first_spinner = "";
 
             $(document).ready(function(){
-                $("#database-table").tablesorter();
+                $("#database-table").tablesorter({
+                    usNumberFormat : false
+                });
                 // damit keiner Blödsinn macht :)
                 $("#action-start").prop("disabled", true);
             });
@@ -652,11 +692,12 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         </script>
     </head>
     <body>
+        <h2>Server: ' . $_SERVER['SERVER_NAME']. '</h2>
         <div id="status-msg"></div>
         <div id="aktionen">
-            <button onclick="setAction(\'anonUser\');">Kundendaten anonymisieren</button>
+            <button onclick="setAction(\'anonUser\');"' . ( ($resticted_host === FALSE) ? '' : ' disabled="disabled"' ) . '>Kundendaten anonymisieren</button>
             <button onclick="setAction(\'deleteLog\');">LOG-Tabellen leeren</button>
-            <button onclick="setAction(\'clearAllTables\');" class="alert">alle Tabellen löschen</button>
+            <button onclick="setAction(\'clearAllTables\');"' . ( ($resticted_host === FALSE) ? ' class="alert"' : ' disabled="disabled"' ) . '>alle Tabellen löschen</button>
             <button onclick="startAction();" id="action-start" class="">Aktion durchführen</button>
         </div>
 ';
@@ -671,10 +712,10 @@ if ( count($data) AND is_array($data) ) {
                     <th>#</th>
                     <th>Tabelle</th>
                     <th>Datens&auml;tze</th>
-                    <th>Gr&ouml;&szlig;e</th>
+                    <th class="sorter-metric" data-metric-name-full="byte|Byte|BYTE" data-metric-name-abbr="b|B">Gr&ouml;&szlig;e</th>
                 </tr>
             </thead>
-            </tbody>
+            <tbody>
 ';
 	foreach( $data AS $key => $table ) {
 		$id_name = transformToHtml($table['Name']);
@@ -684,7 +725,7 @@ if ( count($data) AND is_array($data) ) {
                     <td>' . ($key + 1) . '</td>
                     <td>' . $table['Name'] . '</td>
                     <td id="rows-' . $id_name . '">' . $table['Rows'] . '</td>
-                    <td id="size-' . $id_name . '">' . getUserSize($table['Data_length']) . '</td>
+                    <td id="size-' . $id_name . '">' . getUserSize($table['Data_length']). '</td>
                 </tr>';
 	}
     echo '
