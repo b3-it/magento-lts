@@ -288,6 +288,8 @@ div.block-cart {
 
                 p.product-name {
                     padding: 0px;
+                    overflow: hidden;
+                    height: 2rem;
                 }
             }
         }
