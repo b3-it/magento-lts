@@ -12,7 +12,7 @@ $data_xml   = array();
 
 // Per Default kann weder die DB gelöscht werden, noch die Anonymisierung genutzt werden
 // Der Wert muss manuell auf TRUE gesetzt werden, um die Funktion zu nutzen
-$resticted_host = TRUE;
+$resticted_host = FALSE;
 
 /////////////////////// Letzte Fehlermeldung \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 $last_err = null;
@@ -464,8 +464,8 @@ if ( isset($_POST['action']) ) {
 					    				'field' => transformToHtml($key),
 					    				'table' => transformToHtml($table),
 					    				'next'  => $next,
-					    				'rows'  => intval($new['Rows']),
-					    				'size'  => getUserSize($new['Data_length']),
+					    				'rows'  => intval($new[0]['Rows']),
+    									'size'  => getUserSize($new[0]['Data_length']),
 					   					'init'  => ( ($next <= count($sql[$_POST['what']])) ? transformToHtml($sql[$_POST['what']][$next]['action']) : '' )
 					    			);
     		}
@@ -520,19 +520,20 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         <title>Magento - DB-Tool</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.15/css/theme.default.min.css" />
         <style type="text/css">
-            html       {background-color:#DCDCDC; width:750px; margin: 0 auto;}
-            table      {margin:20px 0px 20px 20px; width:100%;}
-            input      {width:300px;}
-            hr         {width:500px;}
-            .okay      {color:#008000;}
-            .fail      {background-color:#FF0000 !important; color:#FFFFFF !important; font-weight:bold;}
-            .change td {background-color:#9FB6CD;}
-            .copy      {font-size:9px;}
-            #status-msg{display:block; margin:10px 0; width:98.5%; border:1px solid #000; padding:5px; background-color:#FFF; overflow-y:scroll; height:100px;}
-            .status-div{display:inline-block;}
-            button     {width:17.5%; padding:10px; margin:10px 25px; cursor:pointer;}
-			.alert     {background-color: #ff0000; color: #ffffff;}
-            .start     {background-color: #008000; color: #ffffff;}
+            html            {background-color:#DCDCDC; width:750px; margin: 0 auto;}
+            table           {margin:20px 0px 20px 20px; width:100%;}
+            input           {width:300px;}
+            hr              {width:500px;}
+            .okay           {color:#008000;}
+            .fail           {background-color:#FF0000 !important; color:#FFFFFF !important; font-weight:bold;}
+            .change td      {background-color:#9FB6CD;}
+            .copy           {font-size:9px;}
+            #status-msg     {display:block; margin:10px 0; width:98.5%; border:1px solid #000; padding:5px; background-color:#FFF; overflow-y:scroll; height:100px;}
+            .status-div     {display:inline-block;}
+            button          {width:17.5%; padding:10px; margin:10px 25px; cursor:pointer;}
+            button:disabled {cursor:no-drop;}
+			.alert          {background-color: #ff0000; color: #ffffff;}
+            .start          {background-color: #008000; color: #ffffff;}
         </style>
         <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.15/js/jquery.tablesorter.min.js"></script>
@@ -577,7 +578,10 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
                 $.ajax({
                     url   : "' . $script . '",
                     method: "POST",
-                    data  : {"action": "getActionProbertys", "what" : whatAction},
+                    data  : {
+                        "action": "getActionProbertys",
+                        "what"  : whatAction
+                    },
 					beforeSend: function() {
 						resetForAction(true);
 					}
@@ -650,7 +654,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
                                 $("#status-msg").scrollTo("#action-" + s.tables.field);
                                 $("#status-" + s.tables.field).html( s.html ).addClass( s.tables.error );
                                 $("#row-"    + s.tables.table).addClass("change");
-                                $("#rows-"   + s.tables.table).html( parseInt(s.tables.rows) );
+                                $("#rows-"   + s.tables.table).html( s.tables.rows );
                                 $("#size-"   + s.tables.table).html( s.tables.size );
 
                                 if (action_pos > action_cnt || s.tables.error == -1) {
@@ -679,13 +683,13 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         </script>
     </head>
     <body>
-        <h2>Server: ' . $_SERVER['SERVER_NAME']. '</h2>
+        <h3>Server: ' . $_SERVER['SERVER_NAME']. ' <i>(' . $data_xml['dbname']. ')</i></h3>
         <div id="status-msg"></div>
         <div id="aktionen">
             <button onclick="setAction(\'anonUser\');"' . ( ($resticted_host === FALSE) ? '' : ' disabled="disabled"' ) . '>Kundendaten anonymisieren</button>
             <button onclick="setAction(\'deleteLog\');">LOG-Tabellen leeren</button>
-            <button onclick="setAction(\'clearAllTables\');"' . ( ($resticted_host === FALSE) ? ' class="alert"' : ' disabled="disabled"' ) . '>alle Tabellen löschen</button>
-            <button onclick="startAction();" id="action-start" class="">Aktion durchführen</button>
+            <button onclick="setAction(\'clearAllTables\');"' . ( ($resticted_host === FALSE) ? ' class="alert"' : ' disabled="disabled"' ) . '>alle Tabellen l&ouml;schen</button>
+            <button onclick="startAction();" id="action-start" class="">Aktion durchf&uuml;hren</button>
         </div>
 ';
 
@@ -725,7 +729,7 @@ else {
 $(document).ready(function(){
     // damit keiner Blödsinn macht :)
     $("#aktionen button").each(function(){
-        $(this).prop("disabled", true).css("cursor", "no-drop");
+        $(this).prop("disabled", true);
     });
 });
 </script>
