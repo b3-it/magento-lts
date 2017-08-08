@@ -316,12 +316,10 @@ function set_sql($query = '', $param = '', $value = '', $affected = false)
 	
 	if ( ($query == '') OR ($param == '') OR ($value == '') )
 	{
-		if ( is_null($value) OR !strlen($value) )
-		{
+		if ( is_null($value) OR !strlen($value) ) {
 			$last_err = 'Daten-Wert ist NULL!';
 		}
-		else
-		{
+		else {
 			$last_err = 'Fehler bei der Daten&uuml;bergabe!';
 		}
 		
@@ -368,22 +366,11 @@ function set_sql($query = '', $param = '', $value = '', $affected = false)
 
 function getUserSize($bytes, $precision = 2)
 {
-	$unit = ['B','kB','MB','GB','TB','PB','EB','ZB','YB'];
+	$unit = array(' B',' kB',' MB',' GB',' TB',' PB',' EB',' ZB',' YB');
 	for($i = 0; $bytes>= 1024 AND $i < count($unit)-1; $i++) {
 		$bytes /= 1024;
 	}
-	return number_format($bytes, $precision, ",", ".") . ' ' . $unit[$i];
-	
-	/*
-	$bytes = max(0, $bytes);
-	
-	foreach (array(' B',' KB',' MB',' GB',' TB',' PB') AS $i => $k)
-	{
-		if ($bytes < 1024) break;
-		$bytes /= 1024;
-	}
-	return number_format($bytes, 2, ",", ".") . $k;
-	*/
+	return number_format($bytes, $precision, ",", ".") . $unit[$i];
 }
 
 function transformToHtml($string)
@@ -492,7 +479,7 @@ if ( isset($_POST['action']) ) {
     		// Alle Tabellen bearbeiten
     		$tableName = htmlentities(trim($_POST['act']), ENT_QUOTES, "UTF-8");    		
 
-    		if ( ( $resticted_host === FALSE ) AND ($_POST['what'] != 'deleteLog') ) {
+    		if ( $resticted_host === FALSE ) {
     			// Aktionen ausführen
     			$err = set_sql('DROP TABLE IF EXISTS ' . $tableName, 1, 1);
     		}
