@@ -686,9 +686,9 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         <h3>Server: ' . $_SERVER['SERVER_NAME']. ' <i>(' . $data_xml['dbname']. ')</i></h3>
         <div id="status-msg"></div>
         <div id="aktionen">
-            <button onclick="setAction(\'anonUser\');"' . ( ($resticted_host === FALSE) ? '' : ' disabled="disabled"' ) . '>Kundendaten anonymisieren</button>
+            <button onclick="setAction(\'anonUser\');"' . ( ($resticted_host === TRUE) ? ' disabled="disabled"' : '' ) . '>Kundendaten anonymisieren</button>
             <button onclick="setAction(\'deleteLog\');">LOG-Tabellen leeren</button>
-            <button onclick="setAction(\'clearAllTables\');"' . ( ($resticted_host === FALSE) ? ' class="alert"' : ' disabled="disabled"' ) . '>alle Tabellen l&ouml;schen</button>
+            <button onclick="setAction(\'clearAllTables\');"' . ( ($resticted_host === TRUE) ? ' disabled="disabled"' : ' class="alert"' ) . '>alle Tabellen l&ouml;schen</button>
             <button onclick="startAction();" id="action-start" class="">Aktion durchf&uuml;hren</button>
         </div>
 ';
