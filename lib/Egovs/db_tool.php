@@ -11,8 +11,8 @@ $script     = str_replace('\\', '/', $_SERVER['PHP_SELF']);
 $data_xml   = array();
 
 // Per Default kann weder die DB gelöscht werden, noch die Anonymisierung genutzt werden
-// Der Wert muss manuell auf TRUE gesetzt werden, um die Funktion zu nutzen
-$resticted_host = FALSE;
+// Der Wert muss manuell auf FALSE gesetzt werden, um die Funktion zu nutzen
+$resticted_host = TRUE;
 
 /////////////////////// Letzte Fehlermeldung \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 $last_err = null;
