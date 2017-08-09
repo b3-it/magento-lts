@@ -451,7 +451,7 @@ if ( isset($_POST['action']) ) {
     			}
     			else {
     				// Aktion blockieren weil produktive Systeme
-    				$err['error']   = false;
+    				$err['error']   = true;
     				$err['message'] = 'Restricted Host!!';
     			}
 
@@ -485,7 +485,7 @@ if ( isset($_POST['action']) ) {
     		}
     		else {
     			// Aktion blockieren weil produktive Systeme
-    			$err['error']   = false;
+    			$err['error']   = true;
     			$err['message'] = 'Restricted Host!!';
     		}
     		
