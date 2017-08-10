@@ -86,9 +86,11 @@
         <reference name="customer_account_navigation">
             <action method="removeLinkByName"><name>recurring_profiles</name></action>
             <action method="removeLinkByName"><name>billing_agreements</name></action>
+            <!--
             <action method="removeLinkByName"><name>debitpin_activate</name></action>
             <action method="removeLinkByName"><name>debitpin_change</name></action>
             <action method="removeLinkByName"><name>wishlist</name></action>
+             -->
             <action method="removeLinkByName"><name>tags</name></action>
             <action method="removeLinkByName"><name>reviews</name></action>
         </reference>
