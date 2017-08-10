@@ -114,6 +114,32 @@ class Egovs_Base_Model_Adminhtml_Email_Template extends Egovs_Base_Model_Core_Em
 
 		return $configData;
 	}
+	
+	
+	
+    /**
+     * Parse variables string into array of variables
+     *
+     * @param string $variablesString
+     * @return array
+     */
+    protected function _parseVariablesString($variablesString)
+    {
+        $variables = array();
+        if ($variablesString && is_string($variablesString)) {
+            $variablesString = str_replace("\n", '', $variablesString);
+            try{
+            	$variables = Zend_Json::decode($variablesString);
+            }catch(Exception $ex){
+            	//Mage::getSingleton('adminhtml/session')->addError($ex->getMessage());
+            	$msg = "@var Error ". $ex->getMessage(). " Template ID:" . $this->getId();
+            	Mage::log($msg, Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
+            }
+        }
+        return $variables;
+    }
+	
+	
 
 	/**
 	 * Delete current usage

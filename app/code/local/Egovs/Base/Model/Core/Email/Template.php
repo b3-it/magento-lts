@@ -60,7 +60,7 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		
 		if (preg_match('/<!--@vars\s*((?:.)*?)\s*@-->/us', $templateText, $matches)) {
 			$this->setData('orig_template_variables', str_replace("\n", '', $matches[1]));
-			$templateText = str_replace($matches[0], '', $templateText);
+			//$templateText = str_replace($matches[0], '', $templateText);
 		}
 		
 		if (preg_match('/<!--@styles\s*(.*?)\s*@-->/s', $templateText, $matches)) {
@@ -347,5 +347,25 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 			$processedHtml = '{CSS inlining error: ' . $e->getMessage() . '}' . PHP_EOL . $html;
 		}
 		return $processedHtml;
+	}
+	
+	protected function _beforeSave()
+	{
+		parent::_beforeSave();
+		$templateText = $this->getTemplateText();
+		if (preg_match('/<!--@vars\s*((?:.)*?)\s*@-->/us', $templateText, $matches)) {
+			$variablesString = str_replace("\n", '', $matches[1]);
+			try{
+				$variables = Zend_Json::decode($variablesString);
+			}catch(Exception $ex){
+				Mage::getSingleton('adminhtml/session')->addError('@var '. $ex->getMessage());
+			}
+			
+		}
+		
+		
+		
+		
+		
 	}
 }
