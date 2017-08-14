@@ -253,19 +253,42 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
 		// Webservice aufrufen
 		$objResult = null;
 		try {
-			$objResult = $this->_getSoapClient()->ueberweisenVorLieferungMitBLP($this->_getECustomerId(), $objBuchungsliste, $this->getBuchungsListeParameter($payment, $amount));
-			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
-				//Fallback zu alter Methode
-				Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
-			        $objResult = $this->_getSoapClient()->ueberweisenVorLieferung($this->_getECustomerId(), $objBuchungsliste);
-			}
+			$objResult = $this->_getSoapClient()->anlegenKassenzeichenMitZahlverfahrenlisteMitBLP(
+					$this->_getECustomerId(),
+					$objBuchungsliste,
+					null,
+					null,
+					'BARZAHLUNG',
+					$this->getBuchungsListeParameter($payment, (float)$amount)
+			);
 		} catch (Exception $e) {
 			Mage::log($e, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 		}
-		$this->validateSoapResult($objResult, $objBuchungsliste, 'ueberweisenVorLieferung');
+		$this->validateSoapResult($objResult, $objBuchungsliste, 'anlegenKassenzeichen[Barzahlung]');
 		
     	//das kassenzeichen sollte erst abgeholt werden wenn das ergebniss geprueft wurde
     	$payment->setData('kassenzeichen', $objResult->buchungsListe->kassenzeichen);
+    	
+    	$objResult = null;
+    	try {
+    		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
+    			$objResult = $objSOAPClient->aktiviereTempKassenzeichen(
+    					sprintf("%s/%s", Mage::helper('paymentbase')->getBewirtschafterNr(), $payment->getKassenzeichen()),
+    					$payment->getKassenzeichen(),
+    					'BARZAHLUNG'
+    			);
+    		} else {
+	    		$objResult = $this->_getSoapClient()->aktiviereTempKreditkartenKassenzeichen(
+	    				sprintf("%s/%s", Mage::helper('paymentbase')->getBewirtschafterNr(), $payment->getKassenzeichen()),
+	    				null,
+	    				$payment->getKassenzeichen(),
+	    				'BARZAHLUNG'
+	    		);
+    		}
+    	} catch (Exception $e) {
+    		Mage::log($e, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+    	}
+    	$this->validateSoapResult($objResult, $objBuchungsliste, 'anlegenKassenzeichen[Barzahlung]');
 		
     	$this->loeschenKunde();
     	
