@@ -820,7 +820,7 @@ final class Mage
 
                 if (!is_dir($logDir)) {
                     mkdir($logDir);
-                    chmod($logDir, 0750);
+                    chmod($logDir, 0770);
                 }
 
                 if (!file_exists($logFile)) {
