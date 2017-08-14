@@ -15,14 +15,21 @@ var egov_break = {
     topSearch: 911     // Suchen-Leiste im Header
 };
 
+
 $j(document).ready(function () {
-    // Custom-Scrollbar im Skin-Design
-    $j('body').niceScroll({
-        'cursorcolor'       : '#4B914B',
+	var color_element  = '.page-title h1';
+	var scroll_element = 'body';
+	
+	$j(scroll_element).niceScroll({
+        'cursorcolor'       : $j(color_element).css('color'),
         'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
+        'cursorborderradius': '3px',
+        'horizrailenabled'  : false
     });
 
+	// Fixed HTML-Scroll-Bug für IE ab Version 8
+	$j('html').css({'overflow-y': '', '-ms-overflow-y': ''});
+	
     // Dynamische Skallierung der Welcome-Schrift
     var resizeText = function() {
         // aktuelle Breite des Containers

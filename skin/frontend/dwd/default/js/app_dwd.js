@@ -11,13 +11,18 @@ var egov_break = {
 
 // Allgemeine JS-Funktionen
 $j(document).ready(function(){
-    // Custom-Scrollbar im Skin-Design
-    $j('body').niceScroll({
+	var scroll_element = 'body';
+	
+	$j(scroll_element).niceScroll({
         'cursorcolor'       : $j('#top-row').css('background-color'),
         'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
+        'cursorborderradius': '3px',
+        'horizrailenabled'  : false
     });
 
+	// Fixed HTML-Scroll-Bug für IE ab Version 8
+	$j('html').css({'overflow-y': '', '-ms-overflow-y': ''});
+    
     $j('#mobile-cart > a').attr({
     	'id'                 : 'mobile-cart-menu',
     	'data-target-element': '#mobile-header-cart'
