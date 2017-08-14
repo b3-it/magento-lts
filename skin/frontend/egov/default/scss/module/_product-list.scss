@@ -405,7 +405,8 @@ p.product-name {
             height: auto;
         }
         .product-primary {
-            height: 70%;
+            height: 45%;
+            overflow: hidden;
             
             @include bp(max-width, $bp-small) {
                 height: 40%;

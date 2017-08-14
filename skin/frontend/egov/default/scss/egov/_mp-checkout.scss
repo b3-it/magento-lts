@@ -142,6 +142,9 @@
     }
 
     .col2-set {
+        table {
+            @extend .egov-base-table;
+        }
 
         div.col-1 {
             padding: $global-boxpadding $global-boxmargin 0px $global-boxmargin;
@@ -149,7 +152,7 @@
         
         div.col-2 {
             padding: $global-boxpadding $global-boxmargin 0px $global-boxmargin;
-            width: 45%;
+            width: 47%;
         }
         
         .wide {
