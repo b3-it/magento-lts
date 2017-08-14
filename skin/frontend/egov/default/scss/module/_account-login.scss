@@ -22,11 +22,14 @@
 
 .account-login {
     @include egov_loginform;
+    
+    position: relative;
+    top: -25px;
 }
 
 .egov-account-login {
     position: relative;
-    top: -25px;
+    //top: -25px;
 
     div.page-title > h1 {
         color: $global-linkcolor;

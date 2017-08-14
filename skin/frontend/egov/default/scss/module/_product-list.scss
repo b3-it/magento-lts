@@ -47,6 +47,7 @@ p.product-name {
     line-height: $global-lineheight;
     max-height: $global-lineheight * 2.8;
     height: auto;
+    overflow: hidden;
 
     a {
         color: $global-linkcolor;
@@ -321,6 +322,10 @@ p.product-name {
         button.button, a.button {
             font-size: $global-fontsize;
             width: 25%;
+            
+            @include bp(max-width, $bp-medium) {
+                width: 50%;
+            }
 
             span {
                 font-family: $base-font-family;
@@ -366,7 +371,6 @@ p.product-name {
 
         .desc {
             margin-top: $element-spacing;
-            max-height: 40px;
         }
 
         .product-primary {
@@ -401,7 +405,11 @@ p.product-name {
             height: auto;
         }
         .product-primary {
-            height: 45%;
+            height: 70%;
+            
+            @include bp(max-width, $bp-small) {
+                height: 40%;
+            }
         }
         .product-price {
             height: 27%;

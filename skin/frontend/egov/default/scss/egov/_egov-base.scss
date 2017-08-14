@@ -60,6 +60,7 @@
         td {
             background-color: $global-checkout-tdbackground;
             color: $global-checkout-tdfontcolor;
+            overflow: hidden;
 
             h3 {
                 margin: 0px;

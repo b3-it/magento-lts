@@ -37,6 +37,11 @@ $col-box-height: 25em;
                     right: -5%;
                     top: 40%;
                     width: 20%;
+                    
+                    @include bp(max-width, $bp-medium) {
+                        top: 60%;
+                        right: 5%;
+                    }
 	            }
 	        }
 
@@ -52,7 +57,7 @@ $col-box-height: 25em;
 		            padding-left: 0;
 		            padding-right: 0;
 		            
-		            @include bp(max-width, $bp-medium) {
+		            @include bp(max-width, $bp-small) {
 					    min-width: 100%;
 					    margin-bottom: $box-spacing;
 					}
@@ -61,7 +66,7 @@ $col-box-height: 25em;
 		            	width: 46%;
 		            	float: none;
 		            	
-		            	@include bp(max-width, $bp-medium) {
+		            	@include bp(max-width, $bp-small) {
 					    	min-width: 100%;
 						}
 					}
