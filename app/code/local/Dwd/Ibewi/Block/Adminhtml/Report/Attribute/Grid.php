@@ -28,6 +28,14 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
 	  	  /** @var $collection Dwd_Ibewi_Model_Mysql4_Report_Attribute_Collection */ 
 	      $collection = Mage::getModel('ibewi/report_attribute')->getCollection();
 	      $collection->addAttributeToSelect('*');
+	      
+
+	      $bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')."' as bewirtschafter");
+	      $konto = new Zend_Db_Expr("'".Mage::helper('ibewi')->getConfigValue('konto1')."' as konto");
+	      $collection->getSelect()
+	      ->columns($bewirtschafter)
+	      ->columns($konto);
+	     //die( $collection->getSelect()->__toString());
 	      	//->addAttributeToSelect('objektnummer')
 	      	//->addAttributeToSelect('objektnummer_mwst');
 	      $this->setCollection($collection);
@@ -63,7 +71,7 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
       $this->addColumn('tax_class', 
       		array(
       				'header' => Mage::helper('tax')->__('Product Tax Class'),
-      				'sortable'  => false,
+      				//'sortable'  => false,
       				'align' =>'left',
       				'index' => 'tax_class_id',
       				//'filter_index' => 'ptc.product_tax_class_id',
@@ -134,13 +142,23 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
       		'options' => $objmwst,
       ));
 
-      $bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')."' as bewirtschafter");
+     
       $this->addColumn('bewirtschafter', array(
       		'header'    => Mage::helper('ibewi')->__('Bewirtschafter'),
       		//'align'     =>'right',
       		'width'     => '50px',
       		'index'     => 'bewirtschafter',
-      		'default_value' => $bewirtschafter,
+      		'filter'    => false,
+      		'sortable'  => false
+      ));
+      
+      $this->addColumn('konto', array(
+      		'header'    => Mage::helper('ibewi')->__('Konto'),
+      		//'align'     =>'right',
+      		'width'     => '50px',
+      		'index'     => 'konto',
+      		'filter'    => false,
+      		'sortable'  => false
       ));
       
       $store = $this->_getStore();

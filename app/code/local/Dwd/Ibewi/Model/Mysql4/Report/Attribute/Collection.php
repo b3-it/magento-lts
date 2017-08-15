@@ -18,19 +18,7 @@ class Dwd_Ibewi_Model_Mysql4_Report_Attribute_Collection extends Mage_Catalog_Mo
     }
     
     
-    protected function _afterLoad()
-    {
-    	parent::_afterLoad();
-    	
-    	 $bewirtschafter = Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr');
-    	
-    	foreach ($this->getItems() as $item)
-    	{
-    		$item->setBewirtschafter($bewirtschafter);
-    	}
-    	
-    	
-    }
+  
     	
     
 
