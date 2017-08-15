@@ -21,6 +21,12 @@
             </block>
         </reference>
     </adminhtml_ibewi_order_index>
+    
+   <adminhtml_ibewi_report_attribute_index>
+        <reference name="content">
+            <block type="ibewi/adminhtml_report_attribute" name="ibewi" />
+        </reference>
+    </adminhtml_ibewi_report_attribute_index>
     <adminhtml_ibewi_kostentraeger_attribute_index>
         <reference name="content">
             <block type="ibewi/adminhtml_kostentraeger_attribute" name="kostentraeger_attribute" />

@@ -51,6 +51,15 @@
                             </order>
                         </children>
                     </ibewi>
+                    <products>
+                        <children>
+                            <ibewi_report_attribute module="ibewi">
+                                <title>Kontierung</title>
+                                <sort_order>10</sort_order>
+                                <action>adminhtml/ibewi_report_attribute</action>
+                            </ibewi_report_attribute>
+                        </children>
+                    </products>
                 </children>
             </report>
 			<catalog>
@@ -94,6 +103,14 @@
                                         </order>
                                     </children>
                                 </ibewi>
+                                <products>
+	                                <children>
+		                                <ibewi_report_attribute>
+		                                        <title>Kontierung</title>
+		                                        <sort_order>20</sort_order>
+		                                </ibewi_report_attribute>
+	                                </children>
+                                </products>
                             </children>
                         </report>
 						<catalog>
