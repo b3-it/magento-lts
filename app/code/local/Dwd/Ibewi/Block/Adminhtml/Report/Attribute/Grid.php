@@ -22,12 +22,18 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
 	      $this->setDefaultDir('ASC');
 	      $this->setSaveParametersInSession(true);
 	  }
+	  
+	  
+	  
+
+	  
 	
 	  protected function _prepareCollection()
 	  {
+	  		$store = $this->_getStore();
 	  	  /** @var $collection Dwd_Ibewi_Model_Mysql4_Report_Attribute_Collection */ 
 	      $collection = Mage::getModel('ibewi/report_attribute')->getCollection();
-	      $collection->addAttributeToSelect('*');
+	      //$collection->addAttributeToSelect('*');
 	      
 
 	      $bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')."' as bewirtschafter");
@@ -36,8 +42,73 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
 	      ->columns($bewirtschafter)
 	      ->columns($konto);
 	     //die( $collection->getSelect()->__toString());
-	      	//->addAttributeToSelect('objektnummer')
-	      	//->addAttributeToSelect('objektnummer_mwst');
+	      $collection->addAttributeToSelect('objektnummer')
+	      	->addAttributeToSelect('objektnummer_mwst')
+	      	->addAttributeToSelect('haushaltsstelle')
+	      	->addAttributeToSelect('ibewi_maszeinheit')
+	      	->addAttributeToSelect('kostenstelle')
+	      	->addAttributeToSelect('kostentraeger')
+	      	->addAttributeToSelect('tax_class_id');
+	      	
+	      	
+	      
+	      
+	      if ($store->getId()) {
+	      	//$collection->setStoreId($store->getId());
+	      	$adminStore = Mage_Core_Model_App::ADMIN_STORE_ID;
+	      	$collection->addStoreFilter($store);
+	      	$collection->joinAttribute(
+	      			'name',
+	      			'catalog_product/name',
+	      			'entity_id',
+	      			null,
+	      			'inner',
+	      			$adminStore
+	      			);
+	      	$collection->joinAttribute(
+	      			'custom_name',
+	      			'catalog_product/name',
+	      			'entity_id',
+	      			null,
+	      			'inner',
+	      			$store->getId()
+	      			);
+	      	$collection->joinAttribute(
+	      			'status',
+	      			'catalog_product/status',
+	      			'entity_id',
+	      			null,
+	      			'inner',
+	      			$store->getId()
+	      			);
+	      	$collection->joinAttribute(
+	      			'visibility',
+	      			'catalog_product/visibility',
+	      			'entity_id',
+	      			null,
+	      			'inner',
+	      			$store->getId()
+	      			);
+	      	$collection->joinAttribute(
+	      			'price',
+	      			'catalog_product/price',
+	      			'entity_id',
+	      			null,
+	      			'left',
+	      			$store->getId()
+	      			);
+	      }
+	      else {
+	      	$collection->addAttributeToSelect('price');
+	      	$collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
+	      	$collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
+	      }
+	      
+	      
+	      
+	      
+	      
+	      
 	      $this->setCollection($collection);
 	      return parent::_prepareCollection();
 	  }
