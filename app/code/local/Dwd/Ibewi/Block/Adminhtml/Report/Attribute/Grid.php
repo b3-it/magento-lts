@@ -100,14 +100,10 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
 	      }
 	      else {
 	      	$collection->addAttributeToSelect('price');
+	      	$collection->addAttributeToSelect('name');
 	      	$collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
 	      	$collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
 	      }
-	      
-	      
-	      
-	      
-	      
 	      
 	      $this->setCollection($collection);
 	      return parent::_prepareCollection();
@@ -153,12 +149,14 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
       		
       ));
       
-      
+      $masz = $this->__getMaszeinheitOptionarray();
       $this->addColumn('ibewi_maszeinheit', array(
       		'header'    => Mage::helper('ibewi')->__('IBEWI-Maßeinheit'),
       		//'align'     =>'right',
       		'width'     => '50px',
       		'index'     => 'ibewi_maszeinheit',
+      		'type'  => 'options',
+      		'options' => $masz,
       ));
       
       
@@ -173,12 +171,14 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
       		'options' => $kst,
       ));
       
-      
+      $kstt = $this->__getKostenträgerOptionarray();
       $this->addColumn('kostentraeger', array(
       		'header'    => Mage::helper('ibewi')->__('Kostentraeger'),
       		//'align'     =>'right',
       		//'width'     => '50px',
       		'index'     => 'kostentraeger',
+      		'type'  => 'options',
+      		'options' => $kstt,
       ));
       
       
@@ -283,10 +283,7 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
 
     }
 
-  public function getRowUrl($row)
-  {
-      return $this->getUrl('*/*/edit', array('id' => $row->getId()));
-  }
+
   
   protected function _getStore()
   {
@@ -319,7 +316,6 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
   
   private function __getKostenstelleOptionarray()
   {
-  		
   		$config    = Mage::getModel('eav/config');
   		$attribute = $config->getAttribute(Mage_Catalog_Model_Product::ENTITY, 'kostenstelle');
   		$values    = $attribute->setStoreId(0)->getSource()->getAllOptions();
@@ -332,6 +328,32 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
   		
   		return $res;
   		
+  }
+  
+  private function __getKostenträgerOptionarray()
+  {
+  	$collection = Mage::getModel('ibewi/kostentraeger_attribute')->getCollection();
+  	$res = array();
+  	foreach($collection->getItems() as $item)
+  	{
+  		$res[$item->getValue()] =$item->getValue();
+  	}
+  
+  	return $res;
+  
+  }
+  
+  private function __getMaszeinheitOptionarray()
+  {
+  	$einheiten = Mage::getConfig()->getNode('global/ibewi/einheiten')->asArray();
+  	$res = array();
+  	foreach($einheiten as $k=>$v)
+  	{
+  		$res[$k] =$k;
+  	}
+  
+  	return $res;
+  
   }
   
  
