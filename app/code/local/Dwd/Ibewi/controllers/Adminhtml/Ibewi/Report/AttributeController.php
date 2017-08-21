@@ -63,4 +63,13 @@ class Dwd_Ibewi_Adminhtml_Ibewi_Report_AttributeController extends Mage_Adminhtm
         $response->sendResponse();
         die;
     }
+    
+    protected function _isAllowed() {
+    	$action = strtolower($this->getRequest()->getActionName());
+    	switch ($action) {
+    		default:
+    			return Mage::getSingleton('admin/session')->isAllowed('report/products/ibewi_report_attribute');
+    			break;
+    	}
+    }
 }
