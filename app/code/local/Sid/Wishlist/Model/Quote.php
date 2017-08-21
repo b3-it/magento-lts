@@ -875,25 +875,44 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 			return $salesQuoteItem;
 		}
 		
-		if ($salesQuoteItem->getId()) {
-			//Hat ID wurde also schon gespeichert!
-			$item = $this->getItemBySalesQuoteItemId($salesQuoteItem->getId());
-			
-			if ($item == false) {
-				$item = $this->_addSalesQuoteItem($salesQuoteItem);				
-			}
-		} elseif (!$salesQuoteItem->isEmpty()) {
-			$item = $this->_addSalesQuoteItem($salesQuoteItem);
+		if ($salesQuoteParentItem = $salesQuoteItem->getParentItem()) {
+			$salesQuoteItem = $salesQuoteParentItem;
+			$salesQuoteItems[] = $salesQuoteItem;
+			$salesQuoteItems = array_merge($salesQuoteItems, $salesQuoteParentItem->getChildren());
 		} else {
-			Mage::throwException(Mage::helper('sidwishlist')->__('Case not implemented yet!'));
+			$salesQuoteItems[] = $salesQuoteItem;
 		}
+		$item = null;
+		$items = array();
+		$parentItem = null;
+		foreach ($salesQuoteItems as $salesQuoteItem) {
+			if ($salesQuoteItem->getId()) {
+				//Hat ID wurde also schon gespeichert!
+				$item = $this->getItemBySalesQuoteItemId($salesQuoteItem->getId());
+				
+				if ($item == false) {
+					$item = $this->_addSalesQuoteItem($salesQuoteItem);				
+				}
+			} elseif (!$salesQuoteItem->isEmpty()) {
+				$item = $this->_addSalesQuoteItem($salesQuoteItem);
+			} else {
+				Mage::throwException(Mage::helper('sidwishlist')->__('Case not implemented yet!'));
+			}
+			
+			if (!$parentItem) {
+				$parentItem = $item;
+			}
+			
+			if ($parentItem && $salesQuoteItem->getParentItem()) {
+				$item->setParentItem($parentItem);
+			}
+			$item->updateItem($salesQuoteItem);
+			$items[] = $item;
+			
+			$this->setTotalsCollectedFlag(false);
+		}
+		Mage::dispatchEvent("{$this->_eventPrefix}_product_add_after", array('items' => $items));
 		
-		$item->updateItem($salesQuoteItem);
-		
-		$this->setTotalsCollectedFlag(false);
-		
-		Mage::dispatchEvent("{$this->_eventPrefix}_product_add_after", array('item' => $item));
-
 		return $item;
 	}
 

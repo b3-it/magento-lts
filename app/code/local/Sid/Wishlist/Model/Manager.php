@@ -139,18 +139,37 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			$this->getSession()->setQuoteId($quote->getId());
 		}
 		if ($product = $this->getSession()->getProductToAdd()) {
-			if (($item = $quote->getItemByProduct($product)) !== false) {
-				$this->updateQuote(
-						array(
-								$item->getId() => $item->getDescription()
-						),
-						array(
-								$item->getId() => array('qty' => $item->getQty() * 1 + 1)
-						)
-				);
-				return true;				
-			}
 			$params = new Varien_Object($this->getSession()->getParams());
+			$cartCandidates = $product->getTypeInstance(true)
+				->prepareForCartAdvanced($params, $product, Mage_Catalog_Model_Product_Type_Abstract::PROCESS_MODE_FULL);
+			/**
+			 * If prepare process return one object
+			 */
+			if (!is_array($cartCandidates)) {
+				$cartCandidates = array($cartCandidates);
+			}
+			
+			$_updateQuote = false;
+			foreach ($cartCandidates as $_product) {
+				if (($item = $quote->getItemByProduct($_product)) !== false) {
+					if ($item->getParentItemId() || $item->getParentItem()) {
+						continue;
+					}
+					$this->updateQuote(
+							array(
+									$item->getId() => $item->getDescription()
+							),
+							array(
+									$item->getId() => array('qty' => $item->getQty() * 1 + 1)
+							)
+					);
+					$_updateQuote = true;
+				}
+			}
+			if ($_updateQuote) {
+				return true;
+			}
+			
 			$related = $params->getRelatedProduct();
 			$result = $quote->addProduct($product, $params);
 			

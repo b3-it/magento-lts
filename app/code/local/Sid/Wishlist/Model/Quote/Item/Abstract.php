@@ -96,11 +96,11 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	/**
      * Prüft ob das Item das Produkt repräsentiert
      *
-     * @param Mage_Catalog_Model_Product &$product Produkt
+     * @param Mage_Catalog_Model_Product $product Produkt
      * 
      * @return bool
      */
-    public function representProduct(&$product) {
+    public function representProduct($product) {
     	if (!$this->_getSalesQuoteItem()) {
     		return false;
     	}
@@ -415,6 +415,15 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	 */
 	public function getParentItem() {
 		return $this->_parentItem;
+	}
+	
+	/**
+	 * Liefert Parent Item ID
+	 *
+	 * @return int
+	 */
+	public function getParentItemId() {
+		return $this->getData('parent_item_id');
 	}
 	
 	/**
