@@ -487,16 +487,17 @@ p.product-name {
 .mini-products-list {
 
     .product-image {
-        float: left;
         min-width: 50px;
     }
     .product-details {
-        margin-left: 60px;
-    }
-
-    // Vertically center product name
-    .product-details .product-name {
-        padding-top: 10px;
+        display: inline-block;
+        width: 70%;
+        vertical-align: top;
+        
+        // Vertically center product name
+        .product-name {
+    	    padding-top: 10px;
+	    }
     }
 
     li {
