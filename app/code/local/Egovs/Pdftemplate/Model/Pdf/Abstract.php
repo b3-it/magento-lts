@@ -841,7 +841,10 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
         		->setArea('frontend')
         		->setPackageName(null);
         $config['skinbasedir'] = $design->getSkinBaseDir();
-        $config['mediadir'] = Mage::getStoreConfig('system/filesystem/media', $store);
+        
+        $dir = Mage::getStoreConfig('system/filesystem/media', $store);;
+        $dir = realpath( Mage::getConfig()->substDistroServerVars($dir));
+        $config['mediadir'] = $dir;
            
         
         return $config;
