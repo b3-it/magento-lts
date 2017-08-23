@@ -53,4 +53,10 @@ class Egovs_Pdftemplate_Block_Adminhtml_Template_Edit_Switcher extends Mage_Admi
     	}
     	return $this->getUrl('*/*/preview',array('id'=>$id));
     }
+    
+    protected function _toHtml()
+    {
+    	return Mage_Adminhtml_Block_Template::_toHtml();
+    	
+    }
 }
