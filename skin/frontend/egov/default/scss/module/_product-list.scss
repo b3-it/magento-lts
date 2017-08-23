@@ -278,6 +278,7 @@ p.product-name {
         height: auto;
         display: flex;
         flex-flow: row column;
+        min-height: 200px;
 
         &:after {
             @include clearfix;
@@ -369,10 +370,8 @@ p.product-name {
             }
             
             .price-box, .tax-details {
-                @include bp(max-width, $bp-xlarge) {
-                    display: inline-block;
-                    width: 45%;
-                }
+                display: inline-block;
+                width: 45%;
                 
                 @include bp(max-width, $bp-small) {
                     display: block;
