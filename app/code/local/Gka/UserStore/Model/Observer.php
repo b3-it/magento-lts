@@ -29,6 +29,34 @@ class Gka_UserStore_Model_Observer
                 $controllerAction->getResponse()->sendResponse();
                 return;
             }
+        }else{
+        	$this->_verifyStore($session);
         }
+    }
+    
+    /***
+     * Überprüfen ob der Kunde diesen Store nutzen darf
+     * @param unknown $session
+     */
+    protected function _verifyStore($session)
+    {
+       	$store = Mage::app()->getStore();
+    	if($store)
+    	{
+    		$customer = $session->getCustomer();
+    		$allowedStores = $customer->getAllowedStores();
+    		 
+    		if(count($allowedStores) < 1){
+    			die("<h1>Keine erlaubten Stores gefunden!</h1>");
+    		}
+    		
+    		if(array_search($store->getStoreId(),$allowedStores) === false)
+    		{
+    			$storeId = array_shift($allowedStores);
+    			Mage::app()->setCurrentStore($storeId);
+    			Mage::app()->getCookie()->set(Mage_Core_Model_Store::COOKIE_NAME,$storeId, true);
+    		}
+    	}
+    	
     }
 }
