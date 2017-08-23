@@ -278,6 +278,7 @@ p.product-name {
         height: auto;
         display: flex;
         flex-flow: row column;
+        min-height: 200px;
 
         &:after {
             @include clearfix;
