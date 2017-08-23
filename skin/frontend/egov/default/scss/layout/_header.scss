@@ -379,7 +379,6 @@ a.skip-link {
 
     .skip-link {
         border-right: 1px solid #EDEDED;
-        width: 30%;
     }
     
     .skip-account, .skip-cart {
@@ -445,17 +444,12 @@ a.skip-link {
 
 .skip-link .label {
     display: none;
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, 500px) {
-
-    .skip-link .label {
+    
+    @include bp(min-width, $bp-small) {
         display: inline;
     }
-
 }
+
 
 /* ============================================ *
  * Skip Content
@@ -480,20 +474,19 @@ a.skip-link {
     right:25%;
     width: 80%;
     text-align: right;
+    
+    .skip-link {
+        @include bp(max-width, $bp-medium) {
+            width: 33%;
+        }
+    }
 
     @include bp(max-width, $bp-medium) {
         position: static;
         display: inline-block;
         right: 0;
-    }
-
-    @include bp(max-width, 800px) {
         width: 75%;
         right: 10px;
-    }
-    
-    @include bp(max-width, 500px) {
-        width: 60%;
     }
 }
 

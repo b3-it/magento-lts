@@ -631,7 +631,7 @@
 
         // Since product detail page images are not cropped to a specific aspect ratio, in order to make the image not
         // cut off on tall skinny screens, we are setting a max-height on the image
-        max-height: 750px;
+        max-height: 390px;
 
         // Centering the image for instances where max-height kicks in
         margin: 0px auto;

@@ -367,6 +367,17 @@ p.product-name {
                     font-size: $global-fontsize;
                 }
             }
+            
+            .price-box, .tax-details {
+                @include bp(max-width, $bp-xlarge) {
+                    display: inline-block;
+                    width: 45%;
+                }
+                
+                @include bp(max-width, $bp-small) {
+                    display: block;
+                }
+            }
         }
 
         .desc {
@@ -416,6 +427,10 @@ p.product-name {
             height: 27%;
             overflow: hidden;
             margin-bottom: 15px;
+            
+            @include bp(max-width, $bp-medium) {
+                margin-bottom: 0;
+            }
         }
 
         .full {
@@ -448,7 +463,6 @@ p.product-name {
     .products-list .product-shop {
         .product-primary,
         .desc {
-            float: left;
             width: 60%;
             padding-right: 20px;
         }
