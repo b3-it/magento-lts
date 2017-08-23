@@ -90,6 +90,7 @@
                         </a>
                     </h2>
                   <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getUsedInProductListing() ) : ?>
+                  <?php endif; ?>
                     <div class="product_sku">
                         <?php
                         $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
@@ -100,7 +101,6 @@
                         echo $this->__('Sku').': <span title="'.$_sku_full.'">'.$_sku.'</span>';
                         ?>
                     </div>
-                  <?php endif; ?>
                     <div class="desc std">
                         <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description'); ?>
                     </div>
@@ -184,6 +184,7 @@
                         </a>
                     </h2>
                   <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getUsedInProductListing() ) : ?>
+                  <?php endif; ?>
                     <div class="product_sku">
                         <?php
                         $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
@@ -194,7 +195,6 @@
                         echo $this->__('Sku').': <span title="'.$_sku_full.'">'.$_sku.'</span>';
                         ?>
                     </div>
-                  <?php endif; ?>
                     <?php
                     // Provides extra blocks on which to hang some features for products in the list
                     // Features providing UI elements targeting this block will display directly below the product name

@@ -45,10 +45,10 @@ $_attributes->setData($_product->getAttributes());
 
                 <div class="product-shop">
                   <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getIsVisibleOnFront() ) : ?>
+                  <?php endif; ?>
                     <div class="product-sku">
                         <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
                     </div>
-                  <?php endif; ?>
                     <div class="price-info">
                         <?php echo $this->getPriceHtml($_product); ?>
                         <?php echo $this->getChildHtml('bundle_prices'); ?>
