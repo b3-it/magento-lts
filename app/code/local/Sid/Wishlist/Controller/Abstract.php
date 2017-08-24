@@ -303,6 +303,49 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 		if ($item->getId() > 0) {
 			$request['sidwishlist_item_id'] = $item->getId();
 		}
+		
+		$product = $item->getProduct();
+		if ($product->isComposite()) {
+			$typeInstance = $product->getTypeInstance(true);
+			$typeInstance->setStoreFilter($product->getStoreId(), $product);
+			
+			$optionCollection = $typeInstance->getOptionsCollection($product);
+			
+			$selectionCollection = $typeInstance->getSelectionsCollection(
+					$typeInstance->getOptionsIds($product),
+					$product
+			);
+			
+			$optionCollection= $optionCollection->appendSelections(
+					$selectionCollection, false,
+					Mage::helper('catalog/product')->getSkipSaleableCheck()
+			);
+			
+			$bundleOptions = array();
+			foreach ($optionCollection as $optionId => $option) {
+				/** @var $child Sid_Wishlist_Model_Quote_Item */
+				foreach ($item->getChildren() as $child) {
+					$itemProduct = $child->getProduct();
+					if (!$itemProduct) {
+						continue;
+					}
+					$itemProductId = $itemProduct->getId();
+					foreach ($option->getSelections() as $selection) {
+						if ($selection->getProductId() == $itemProductId
+								&& $selection->getOptionId() == $optionId) {
+							$bundleOptions[$optionId] = $selection->getSelectionId();
+							break;
+						}
+					}
+				}
+			}
+			
+			if (!empty($bundleOptions)) {
+				$request['bundle_option'] = $bundleOptions;
+			}
+		}
+		
+		
 		$preparedLinks = array();
 		switch ($item->getProduct()->getTypeId()) {
 			case Mage_Downloadable_Model_Product_Type::TYPE_DOWNLOADABLE:
