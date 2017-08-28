@@ -59,11 +59,15 @@ class Dwd_Ibewi_Adminhtml_Ibewi_Kostentraeger_AttributeController extends Mage_A
 	}
 
 	public function saveAction() {
+		
 		if ($data = $this->getRequest()->getPost()) {
 			$id = intval($this->getRequest()->getParam('id'));
 			$model = Mage::getModel('ibewi/kostentraeger_attribute')->load($id);
-			$model->setData($data)->setId($id);
-				
+			$model->setData($data);
+			if($id > 0)
+			{
+				$model->setId($id);
+			}
 			$collection = $model->getCollection();
 			
 			$collection->getSelect()
