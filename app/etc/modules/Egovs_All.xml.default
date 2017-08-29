@@ -69,9 +69,6 @@
     <Egovs_Extreport>
       <active>true</active>
       <codePool>local</codePool>
-      <depends>
-        <Egovs_Extstock />
-      </depends>
     </Egovs_Extreport>
     <Egovs_Extsalesorder>
       <active>true</active>
