@@ -112,8 +112,8 @@ class Bkg_Viewer_Model_Service_Tilesystem extends Mage_Core_Model_Abstract
     
     /**
      * Laden eines Kachelsystems anhand der ident und CRS
-     * @param unknown $ident
-     * @param unknown $crs
+     * @param string $ident
+     * @param string $crs
      * @return Bkg_Viewer_Model_Resource_Service_Tilesystem
      */
     public function loadWithCRS($ident, $crs = null)

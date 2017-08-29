@@ -16,7 +16,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 	/**
 	 * verhinderd, dass Veranstaltungen mit Zulassungsbeschränkung
 	 * zusammen mit anderen im Korb liegen
-	 * @param unknown $observer
+	 * @param Bfr_EventRequest_Model_Observer $observer
 	 * @return Bfr_EventRequest_Model_Observer
 	 */
 	public function onQuoteItemAdd($observer)
@@ -85,7 +85,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 	
 	/**
 	 * verhindern, dass eine Veranstaltung ohne Zulassung gekauft wird
-	 * @param unknown $observer
+	 * @param Bfr_EventRequest_Model_Observer $observer
 	 * @throws Exception
 	 */
 	public function onCheckoutEntryBefore($observer)

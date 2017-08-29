@@ -76,8 +76,8 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     
     /**
      * aktelle Werte für das Feld aus POST oder Konfig
-     * @param unknown $field
-     * @return unknown|Ambigous <string, NULL, multitype:, multitype:Ambigous <string, multitype:, NULL> , mixed>|mixed|string
+     * @param string $field
+     * @return mixed|string <string, NULL, multitype:, multitype:Ambigous <string, multitype:, NULL> , mixed>|mixed|string
      */
     private function getValue4Field($field)
     {
@@ -103,8 +103,8 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     
     /**
      * alte Werte für das Feld aus Konfig
-     * @param unknown $field
-     * @return unknown|Ambigous <string, NULL, multitype:, multitype:Ambigous <string, multitype:, NULL> , mixed>|mixed|string
+     * @param string $field
+     * @return mixed|string <string, NULL, multitype:, multitype:Ambigous <string, multitype:, NULL> , mixed>|mixed|string
      */
     private function getOldValue4Field($field)
     {
@@ -123,7 +123,7 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     
     /**
      * case Switcher
-     * @param unknown $data
+     * @param array $data
      */
     private function __save($data)
     {
@@ -138,7 +138,7 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     
     /**
      * Speichern bei anschalten
-     * @param unknown $data
+     * @param array $data
      */
     private function __saveOn($data)
     {
@@ -163,7 +163,7 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     
     /**
      * Speichern bei abschalten duch "Website verwenden"
-     * @param unknown $data
+     * @param array $data
      */
     private function __saveManuellOn4Schedules($data)
     {
@@ -188,7 +188,7 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     
     /**
      * speichern beim Abschalten
-     * @param unknown $data
+     * @param array $data
      */
     private function __saveOff($data)
     {
@@ -204,7 +204,7 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     
     /**
      * speichern bei Zeitgesteuert
-     * @param unknown $data
+     * @param array $data
      */
     private function __saveOffSceduled($data)
     {

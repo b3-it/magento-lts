@@ -61,8 +61,8 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     
     /**
      * Daten aus der Bestellung in die Veranstaltundsdatenbank übernehmen
-     * @param unknown $order
-     * @param unknown $orderItem
+     * @param Mage_Sales_Model_Order $order
+     * @param Mage_Sales_Model_Order_Item $orderItem
      * @return Bfr_EventManager_Model_Participant
      */
     public function importOrder($order,$orderItem)
