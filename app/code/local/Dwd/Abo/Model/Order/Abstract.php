@@ -46,7 +46,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	protected function setRuleData($quote)
 	{
 		//$customer = Mage::getModel('customer/customer')->load($quote->getCustomerId());
-		//Wird fÃ¼r Katalogpreisregeln benÃ¶tigt
+		//Wird für Katalogpreisregeln benötigt
 		//siehe: Mage_CatalogRule_Model_Observer::processAdminFinalPrice
 		Mage::unregister('rule_data');
 		Mage::register('rule_data', new Varien_Object(array(

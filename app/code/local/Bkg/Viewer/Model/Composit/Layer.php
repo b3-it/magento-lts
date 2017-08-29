@@ -102,9 +102,9 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     
     /**
      * alle Kinder nach der Id durchsuchen
-     * @param unknown $id
+     * @param string $id
      * @param string $recursiv
-     * @return Bkg_Viewer_Model_Composit_Layer[]|unknown[]|NULL[]|unknown|NULL
+     * @return Bkg_Viewer_Model_Composit_Layer|NULL
      */
     public function getChild($id, $recursiv = false)
     {

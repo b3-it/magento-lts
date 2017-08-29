@@ -90,10 +90,10 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     
     /**
      * Helper für den xml Export
-     * @param unknown $xml
-     * @param unknown $xml_node
-     * @param unknown $item
-     * @param unknown $field
+     * @param Varien_Simplexml_Element $xml
+     * @param Varien_Simplexml_Element $xml_node
+     * @param object $item
+     * @param string $field
      */
     protected function _addElement($xml, $xml_node ,$item, $field)
     {

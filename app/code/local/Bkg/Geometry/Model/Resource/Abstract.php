@@ -29,7 +29,7 @@ abstract class Bkg_Geometry_Model_Resource_Abstract extends Mage_Core_Model_Reso
    
    /**
     * Die geometrie anhand des Wkt feststellen und laden
-    * @param unknown $value
+    * @param string $value
     * @return Bkg_Geometry_Geometry | null
     */
    protected function _getGeometry($value)

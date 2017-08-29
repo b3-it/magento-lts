@@ -3,7 +3,7 @@ class Bkg_Geometry_Polygon extends Bkg_Geometry_Geometry
 {
 	/**
 	 * 
-	 * @var Bkg_Geometry_Linstring
+	 * @var Bkg_Geometry_LineString
 	 */
 	protected $_exterior;
 	
