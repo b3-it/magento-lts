@@ -469,8 +469,8 @@
             .regular-price .price,
             .special-price .price,
             .full-product-price .price {
-                color: $global-price-normal-color;
-                font-size: 1em;
+                color: $global-fontcolor-dark;
+                font-size: $global-fontsize;
             }
 
             .special-price {
@@ -1219,7 +1219,7 @@
 
 .product-options-bottom .tier-prices .price,
 .product-options-bottom .tier-prices .benefit {
-    color: $global-price-normal-color;
+    color: $global-fontcolor-dark;
 }
 
 /* "display: none" should be removed if products on site have a long list of product options and those product options */
