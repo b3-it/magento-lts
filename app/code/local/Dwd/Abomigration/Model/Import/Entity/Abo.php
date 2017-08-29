@@ -710,8 +710,8 @@ class Dwd_Abomigration_Model_Import_Entity_Abo extends Mage_ImportExport_Model_I
     
     /**
      * evt. vorhandene Adressen vergleichen und id zurückgeben
-     * @param unknown $rowData
-     * @return Ambigous <mixed, NULL, multitype:>|number
+     * @param array $rowData
+     * @return <mixed, NULL, multitype:>|number
      */
     protected function getAddressId($rowData)
     {

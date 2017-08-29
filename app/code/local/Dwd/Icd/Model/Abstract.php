@@ -33,7 +33,7 @@ class Dwd_Icd_Model_Abstract extends Mage_Core_Model_Abstract
 	
 	/**
 	 * Prüfung anhand des returnCodes auf Fehler
-	 * @param unknown $error
+	 * @param Zend_Validate_Exception $error
 	 * @param string $action  Methode die aufgerufen wurde
 	 * @return boolean
 	 */
@@ -50,7 +50,7 @@ class Dwd_Icd_Model_Abstract extends Mage_Core_Model_Abstract
 	
 	/**
 	 * Püft auf Fehler und gibt einen Status zurück
-	 * @param unknown $error
+	 * @param Zend_Validate_Exception $error
 	 * @return boolean TRUE = kein Fehler, FALSE = Fehler
 	 */
     protected function processError($error, $action = '', $value = '')
@@ -160,11 +160,11 @@ class Dwd_Icd_Model_Abstract extends Mage_Core_Model_Abstract
 	
     /**
      * speichern welche Befehle tatsächlich zum LDAP gesendet wurden
-     * @param unknown $accountId
-     * @param unknown $action
-     * @param unknown $param
-     * @param unknown $code
-     * @param unknown $msg
+     * @param integer $accountId
+     * @param string $action
+     * @param string $param
+     * @param string $code
+     * @param string $msg
      */
 	public function log($accountId,$action,$param,$code,$msg)
 	{
