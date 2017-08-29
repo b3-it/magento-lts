@@ -84,7 +84,13 @@ class Egovs_Extsalesorder_Model_Sales_Order extends Mage_Sales_Model_Order
 							&& $this->hasForcedCanCreditmemo())
 							) {
 								if ($this->getState() !== self::STATE_CLOSED) {
-									$this->_setState(self::STATE_CLOSED, true, '', $userNotification);
+									if ($this->getStatus() != self::SPECIAL_CANCEL_STATUS) {
+										$this->_setState(self::STATE_CLOSED, true, '', $userNotification);
+									} else {
+										$this->_setState(self::STATE_CLOSED, false, '', $userNotification);
+										$history = $this->addStatusHistoryComment('', false); // no sense to set $status again
+										$history->setIsCustomerNotified($userNotification); // for backwards compatibility
+									}
 								}
 					}
 				}
