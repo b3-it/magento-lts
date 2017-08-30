@@ -175,7 +175,7 @@ class Egovs_Extreport_Model_Mysql4_Report_Collection extends Mage_Reports_Model_
     /**
      * Setzt den Kategorienfilter
      * 
-     * @param unknown_type $filter Filter
+     * @param Mage_Catalog_Block_Layer_Filter_Category $filter Filter
      * 
      * @return void
      */
@@ -186,7 +186,7 @@ class Egovs_Extreport_Model_Mysql4_Report_Collection extends Mage_Reports_Model_
     /**
      * Setzt den Haushaltstellenfilter
      *
-     * @param unknown_type $filter Filter
+     * @param Egovs_Paymentbase_Model_Haushaltsparameter_Objektnummerhhstelle $filter Filter
      *
      * @return void
      */

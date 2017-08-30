@@ -14,7 +14,7 @@ class Egovs_Paymentbase_Model_System_Config_Backend_Alive extends Mage_Core_Mode
 	/**
 	 * Prüft ob ePayBL erreicht werden kann
 	 * 
-	 * @return Egovs_Paymentbase_Model_System_Config_Backend_Available
+	 * @return Egovs_Paymentbase_Model_System_Config_Backend_Alive
 	 * 
 	 * @see Mage_Core_Model_Abstract::_beforeSave()
 	 */

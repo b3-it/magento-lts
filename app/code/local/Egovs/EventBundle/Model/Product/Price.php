@@ -19,7 +19,7 @@ class Egovs_EventBundle_Model_Product_Price extends Mage_Bundle_Model_Product_Pr
 	 * @param  string|null                $which
 	 * @param  bool|null                  $includeTax
 	 * @param  bool                       $takeTierPrice
-	 * @return decimal|array
+	 * @return float|array
 	 */
 	public function getTotalPrices($product, $which = null, $includeTax = null, $takeTierPrice = true)
 	{
