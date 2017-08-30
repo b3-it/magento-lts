@@ -58,26 +58,6 @@ class Egovs_Extsalesorder_Model_Sales_Order extends Mage_Sales_Model_Order
 	}
 	
 	/**
-	 * Fügt die Unterstützung von Spezial-Stornos für Slpb hinzu.
-	 * 
-	 * @param boolean $isSpecial Handelt es sich um ein Spezial-Storno (SlpB)
-	 * 
-	 * @return Egovs_Extsalesorder_Model_Sales_Order
-	 * 
-	 * @see Mage_Sales_Model_Order::cancel()
-	 */
-	public function cancel($isSpecial = false) {
-		parent::cancel();
-		
-		if ($isSpecial && $this->getConfig()->getStatusLabel(self::SPECIAL_CANCEL_STATUS)) {
-			//$status = Mage::helper('extsalesorder')->__(self::SPECIAL_CANCEL_STATUS);
-			$this->setStatus(self::SPECIAL_CANCEL_STATUS);
-		}
-		
-		return $this;
-	}
-	
-	/**
 	 * Check order state before saving
 	 */
 	protected function _checkState() {
@@ -104,7 +84,13 @@ class Egovs_Extsalesorder_Model_Sales_Order extends Mage_Sales_Model_Order
 							&& $this->hasForcedCanCreditmemo())
 							) {
 								if ($this->getState() !== self::STATE_CLOSED) {
-									$this->_setState(self::STATE_CLOSED, true, '', $userNotification);
+									if ($this->getStatus() != self::SPECIAL_CANCEL_STATUS) {
+										$this->_setState(self::STATE_CLOSED, true, '', $userNotification);
+									} else {
+										$this->_setState(self::STATE_CLOSED, false, '', $userNotification);
+										$history = $this->addStatusHistoryComment('', false); // no sense to set $status again
+										$history->setIsCustomerNotified($userNotification); // for backwards compatibility
+									}
 								}
 					}
 				}

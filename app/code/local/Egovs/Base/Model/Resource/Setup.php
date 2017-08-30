@@ -12,13 +12,15 @@ class Egovs_Base_Model_Resource_Setup extends Mage_Eav_Model_Entity_Setup
 	{
 		$myModule = substr(__CLASS__, 0, strpos(__CLASS__, '_Model'));
 		
-		//Gesamte Magento-Installation überprüfen
+		//Gesamte Magento-Installation Überprüfen
 		//Nur wirkliche Abhängigkeiten Überprüfen
+		/*Sollte in 1.9 nicht mehr problematisch sein
 		if (!Egovs_Helper::dependenciesInstalled($myModule)) {
 			Egovs_Helper::reinitAllowedModules($myModule);
 				
 			return $this;
 		}
+		*/
 	
 		return parent::applyUpdates();
 	}
