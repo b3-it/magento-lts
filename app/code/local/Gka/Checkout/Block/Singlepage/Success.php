@@ -77,4 +77,19 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     {
     	return $this->getUrl('sales/order/view/', array('order_id'=> $this->getOrder()->getId(), '_secure' => true));
     }
+    
+    
+    public function getOrderItems()
+    {
+    	return $this->getOrder()->getAllItems();
+    }
+    
+    public function getBillingAddress()
+    {
+    	return $this->getOrder()->getAllItems();
+    }
+    
+    
+    
+    
 }

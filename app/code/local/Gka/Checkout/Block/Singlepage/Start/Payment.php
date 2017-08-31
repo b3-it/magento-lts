@@ -68,5 +68,9 @@ class Gka_Checkout_Block_Singlepage_Start_Payment extends Mage_Payment_Block_For
     }
 
 
+    public function getPaymentAdditionalFormUrl()
+    {
+    	return $this->getUrl('*/singlepage/paymentAdditionalForm', array('_secure'=>true));
+    }
     
 }

@@ -1,0 +1,13 @@
+        <div class="col2-set">
+			<div class="col-1">
+                <h4><?php echo $this->__('Singular amount'); ?></h4>
+	            <div class="input-box">
+    	            <input type="text" name="givenamount" id="givenamount" value="" class="input-text" style="width:90%;" />
+    	            <h2><?php echo $this->__('Change') ?>: <span id="balance"></span></h2>
+    	        </div>
+    	        <script type="text/javascript">
+        	        var price = <?php echo $this->getTotal(); ?>;
+        	        var currency = '<?php echo $this->getCurrencySymbol(); ?>';
+    	        </script>
+	        </div>
+	    </div>
