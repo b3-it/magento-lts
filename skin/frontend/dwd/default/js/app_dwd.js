@@ -12,11 +12,7 @@ var egov_break = {
 // Allgemeine JS-Funktionen
 $j(document).ready(function(){
     // Custom-Scrollbar im Skin-Design
-    $j('body').niceScroll({
-        'cursorcolor'       : $j('#top-row').css('background-color'),
-        'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
-    });
+	var isDWD = true;
 
     $j('#mobile-cart > a').attr({
     	'id'                 : 'mobile-cart-menu',
