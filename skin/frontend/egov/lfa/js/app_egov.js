@@ -17,16 +17,6 @@ var egov_break = {
 
 
 $j(document).ready(function () {
-	var color_element  = '.page-title h1';
-	var scroll_element = 'body';
-	
-	$j(scroll_element).niceScroll({
-        'cursorcolor'       : $j(color_element).css('color'),
-        'cursorwidth'       : '15px',
-        'cursorborderradius': '3px',
-        'horizrailenabled'  : false
-    });
-
 	// Fixed HTML-Scroll-Bug für IE ab Version 8
 	$j('html').css({'overflow-y': '', '-ms-overflow-y': ''});
 	
