@@ -18,8 +18,8 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 	
 	/**
 	 * die Url zum Hinzufügen des einele Produktes zum Warenkorb
-	 * @param unknown $product
-	 * @param unknown $additional
+	 * @param Mage_Bundle_Model_Resource_Bundle $product
+	 * @param array $additional
 	 */
 	public function getAddToCartUrl($product, $additional = array())
 	{
@@ -136,7 +136,7 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 	/**
 	 * 
 	 * entfernen der bereits gekauften Optionen
-	 * @param unknown $product
+	 * @param Mage_Bundle_Model_Resource_Bundle $product
 	 */
 	protected function removeSoldOptions($product)
 	{
@@ -229,7 +229,7 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 	/**
 	 *
 	 * entfernen der bereits gekauften Multiselect Produkte
-	 * @param unknown $product
+	 * @param Mage_Bundle_Model_Resource_Bundle $product
 	 */
 	protected function removeSoldSelections($product)
 	{
@@ -408,7 +408,7 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 	
 	/**
 	 * entfernen der Optionen die nicht verfügbar sind
-	 * @param unknown $product
+	 * @param Mage_Bundle_Model_Resource_Bundle $product
 	 */
 	protected function removeNotAvailable($product)
 	{
@@ -467,7 +467,7 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 	
 	/**
 	 * Preis formatieren
-	 * @param unknown $product
+	 * @param Mage_Bundle_Model_Resource_Bundle $product
 	 */
 	public function getFormatedPrice($product)
 	{

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Beschreibungsdatei für Produktinformationen
  *

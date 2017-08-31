@@ -25,8 +25,8 @@ class Egovs_Paymentbase_Model_Mysql4_Haushaltsparameter extends Mage_Core_Model_
     /**
      * Zugeordnete Haushaltsstellen speichern
      *
-     * @param unknown $objectId  ID
-     * @param unknown $hhstellen Array von Haushaltsstellen
+     * @param string $objectId  ID
+     * @param array $hhstellen Array von Haushaltsstellen
      *
      * @return Egovs_Paymentbase_Model_Mysql4_Haushaltsparameter
      */
