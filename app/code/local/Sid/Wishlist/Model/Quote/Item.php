@@ -259,7 +259,7 @@ class Sid_Wishlist_Model_Quote_Item extends Sid_Wishlist_Model_Quote_Item_Abstra
 		$storeId = $this->getStoreId();
 		$product = Mage::getModel('catalog/product')
 			->setStoreId($_product->getStoreId())
-			->load($product->getId());
+			->load($_product->getId());
 	
 		
 	
