@@ -14,7 +14,20 @@
  */
 class Egovs_Extsalesorder_Helper_Data extends Mage_Core_Helper_Abstract
 {
-	
+	/**
+	 * Übersetzt den Header einer Grid Column
+	 * 
+	 * @param array $args
+	 * 
+	 * @return array
+	 */
+	public function translate($args) {
+		if (array_key_exists('header', $args)) {
+			$args['header'] = $this->__($args['header']);
+		}
+		
+		return $args;
+	}
 	
 	public function getBaseBalanceColumnParams()
 	{
