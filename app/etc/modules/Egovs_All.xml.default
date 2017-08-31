@@ -218,7 +218,6 @@
       <codePool>local</codePool>
       <depends>
          <Mage_Customer />
-         <Egovs_Base />
        </depends>
     </Egovs_Vies>
     <Egovs_Zahlpartnerkonten>
@@ -226,7 +225,6 @@
       <codePool>local</codePool>
       <depends>
         <Mage_Payment />
-        <Egovs_Base />
         <Egovs_Paymentbase />
       </depends>
     </Egovs_Zahlpartnerkonten>
