@@ -89,7 +89,15 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     	return $this->getOrder()->getAllItems();
     }
     
-    
+    public function getLogoPath()
+    {
+    	$logo =  Mage::getStoreConfig('gka_checkout/invoice/logo_src');
+    	if (!empty($logo)) {
+    		 return Mage::getDesign()->getSkinBaseDir().DS.$logo;
+    	}
+    	
+    	return null;
+    }
     
     
 }
