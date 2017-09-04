@@ -51,14 +51,15 @@
         <?php if ($_option->getRequired()) echo '<span class="required">&nbsp;*</span>' ?>
     </label>
     <span id="bundle-option-<?php echo $_option->getId() ?>-tier-prices"> <?php echo $tierPriceHtml; ?></span>
-    <div class="qty-holder<?php echo ($_canChangeQty === true ? '' : ' qty-hidden') ?>">
+    <br />
+    <span class="qty-holder<?php echo ($_canChangeQty === true ? '' : ' qty-hidden') ?>">
         <label class="qty" for="bundle-option-<?php echo $_option->getId() ?>-qty-input">
             <?php echo $this->__('Qty:') ?>
         </label>
         <input onkeyup="bundle.changeOptionQty(this, event)" onblur="bundle.changeOptionQty(this, event)" <?php echo $_canChangeQty?'':'disabled="disabled"' ?> id="bundle-option-<?php echo $_option->getId() ?>-qty-input" class="input-text qty" type="text" name="bundle_option_qty[<?php echo $_option->getId() ?>]" value="<?php echo $_defaultQty ?>" />
-    </div>
-
-    <div class="input-box">
+    </span>
+    <br />
+    <span class="input-box">
     <?php if (count($_selections) == 1 && ($_option->getRequired() == 1) ): ?>
         <?php echo $this->getSelectionTitlePrice($_selections[0]) ?>
         <input type="hidden" name="bundle_option[<?php echo $_option->getId() ?>]" value="<?php echo $_selections[0]->getSelectionId() ?>" />
@@ -102,7 +103,7 @@
         </ul>
         <span id="bundle-option-<?php echo $_option->getId() ?>-container"></span>
     <?php endif; ?>
-    </div>
+    </span>
 </dt>
 <!--
 <dd>

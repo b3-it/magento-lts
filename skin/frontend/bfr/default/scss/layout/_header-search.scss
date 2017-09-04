@@ -10,7 +10,6 @@
  * ============================================ */
 
 .skip-search {
-
     &:not(.skip-active):hover {
         .icon {
             background-position: -50+4px (-150px + ($toolbar-icon-padding-offset/2));
@@ -21,16 +20,10 @@
         @extend .icon-sprite;
         background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
     }
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, 911px) {
-
-    a.skip-search {
+    
+    @include bp(min-width, $bp-small + 1) {
         display: none;
     }
-
 }
 
 /* ============================================ *
@@ -45,48 +38,58 @@
     input[type="text"] {
         margin: 0;
     }
-}
 
-
-@include bp(min-width, $bp-medium + 1) {
-
-    #header-search {
-    }
-}
-
-@include bp(max-width, 785px) {
-    #header-search {
+    @include bp(max-width, $bp-medium) {
         top: 150px + $global-logo-height;
-    }
-}
-
-@include bp(min-width, 910px) {
-    #header-search {
     }
 }
 
 /* ============================================ *
  * Search Input
  * ============================================ */
-
-#search_mini_form .input-box {
-    position: relative;
-    padding-top: 0;
-}
-
 #search_mini_form {
     label {
         display: none;
     }
+    
+    .input-box {
+	    position: relative;
+	    padding-top: 0;
+	}
 
-    button {
+    .button {
         padding: 5px 10px;
         background-color: $global-header-search-button;
         background-image: none;
         color: $global-fontcolor-light;
         border-radius: 0 6px 6px 0;
         -moz-border-radius: 0 6px 6px 0;
+        height: auto;
     }
+    
+    .search-button {
+	    @include image-replacement;
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    width: 40px;
+	    height: 40px;
+	    border: 0;
+	    background: none;
+	    
+	    &:before {
+		    content: '';
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    width: 30px;
+		    height: 30px;
+		    margin-top: -15px;
+		    margin-left: -15px;
+		    @extend .icon-sprite;
+		    background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
+	    }
+	}
 }
 
 #search {
@@ -100,30 +103,6 @@
     border-left: $global-box-border solid $global-input-bordercolor;
     border-radius: $global-radius 0 0 $global-radius;
 
-}
-
-#search_mini_form .search-button {
-    @include image-replacement;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    border: 0;
-    background: none;
-}
-
-#search_mini_form .search-button:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 30px;
-    height: 30px;
-    margin-top: -15px;
-    margin-left: -15px;
-    @extend .icon-sprite;
-    background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
 }
 
 #search_mini_form .search-button:hover:before {

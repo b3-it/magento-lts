@@ -193,6 +193,12 @@ class Dwd_Ibewi_Block_Adminhtml_Order_Grid extends Mage_Adminhtml_Block_Widget_G
           'align'     =>'left',
           'index'     => 'kostenstelle',
       ));
+     
+     $this->addColumn('kostentraeger', array(
+     		'header'    =>'Kostentraeger',
+     		'align'     =>'left',
+     		'index'     => 'kostentraeger',
+     ));
       
      $this->addColumn('haushaltstelle', array(
           'header'    => 'Haushaltstelle',

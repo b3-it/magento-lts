@@ -1,0 +1,182 @@
+﻿//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ====================================================
+// Mixin - New Address (My-Account, Multipage-Checkout)
+// ====================================================
+
+@mixin new_address {
+    form {
+        .half-space {
+            margin: 10px 0px !important;
+        }
+        .no-space {
+            margin: 0px !important;
+        }
+
+        #billing-new-address-form {
+            width: 100%;
+        }
+
+        #register-customer-password {
+            div {
+                width: 48%;
+                display: inline-block;
+            }
+        }
+
+        #birthday-box, #gender-box {
+            width: 48%;
+            display: inline-block;
+            float: left;
+            margin-bottom: 10px;
+
+            input[type="text"] {
+                margin: 0px;
+            }
+        }
+
+        .form-list {
+            li {
+                vertical-align: top;
+
+                label {
+                    font-weight: bold;
+                    display: block;
+                }
+
+                .column-left {
+                    margin-right: 9px;
+                }
+
+                .column-left, .column-right {
+                    width: 47%;
+                    float: left;
+                }
+            }
+
+            li.dummy {
+                height: 47px;
+            }
+        }
+
+        .zip-city {
+            > div {
+                display: inline-block;
+            }
+            div.zip-field {
+                width: 30%;
+            }
+            div.city-field {
+                width: 67%;
+            }
+        }
+
+        label.required em, label span.required,
+        span.required, p.required,
+        div.validation-advice {
+            color: $global-warning-color;
+            margin-right: $fa-icon-margin;
+        }
+
+        select.validation-failed,
+        input.validation-failed {
+            border-color: $global-warning-color;
+            opacity: 0.5;
+        }
+
+        div.validation-advice {
+            position: relative;
+            top: -5px;
+        }
+
+        .back-button {
+            float: left;
+        }
+
+        .fieldset {
+            width: 48%;
+            vertical-align: top;
+            height: auto;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .wide {
+            width: 99%;
+
+            li.street-field {
+                width: 100%;
+            }
+        }
+
+        .options {
+            width: 100%;
+            margin: 0px 0px 15px 0px !important;
+
+            li {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="password"],
+        input[type="email"] {
+            width: 95%;
+            margin-bottom: 6px;
+        }
+
+        select {
+            width: 94%;
+            margin-bottom: 6px;
+        }
+
+        .street-field {
+            margin-bottom: 12px;
+
+            input[type="text"] {
+                margin-bottom: 4px;
+            }
+        }
+
+        li.fullwide {
+            width: 100%;
+
+            .customer-name,
+            .customer-name-prefix,
+            .customer-name-prefix-suffix,
+            .customer-name-prefix-middlename,
+            .customer-name-prefix-middlename-suffix {
+                div.field {
+                    display: inline-block;
+                    width: 48%;
+                }
+
+                div.name-prefix {
+                    display: block;
+                }
+            }
+        }
+
+        li.halfwide {
+            width: 48%;
+        }
+
+        .customer-name-middlename {
+            width: 100%;
+
+            div.field {
+                width: 48%;
+                vertical-align: top;
+                height: auto;
+                display: inline-block;
+            }
+        }
+    }
+}

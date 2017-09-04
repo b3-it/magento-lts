@@ -1,0 +1,61 @@
+//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Primary Buttons
+ * ============================================ */
+.button {
+	@include default-button;
+	display: inline-block;
+	text-align: center;
+	min-width: 15%;
+	font-size: $global-fontsize;
+	
+	&.disabled, &:disabled {
+	    opacity: 0.6;
+    	cursor: not-allowed;
+    	
+    	&:hover, &:active, &:focus {
+    	}
+	}
+	&:only-child {
+	    @include bp(max-width, $bp-xsmall) {
+	        width: 100%;
+	        float: none;
+	    }
+	}
+	&:last-child {
+	    float: right;
+	    margin: 0;
+	    
+	    @include bp(max-width, $bp-xsmall) {
+	        float: none;
+	    }
+	}
+}
+
+.calendar .button {
+	display: table-cell;
+}
+
+.image-link {
+	border: none;
+    color: $global-footer-linkcolor;
+    text-decoration: none;
+    padding-left: 10px;
+    background: transparent url($global-footer-link-image) no-repeat scroll 0 5px;
+        
+    @include bp(max-width, $bp-small) {
+        background: none;
+        color: $global-fontcolor-light;
+    }
+
+    &:hover, &:active {
+        text-decoration: underline;
+        border: none;
+    }
+}

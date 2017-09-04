@@ -28,7 +28,7 @@ class Dwd_Ibewi_Model_Mysql4_Address_Collection extends Mage_Sales_Model_Resourc
     	main_table.entity_id as xxx, parent_id, customer_address_id, main_table.quote_address_id, region_id, customer_id, fax, region, postcode, lastname, street, city, email, telephone, country_id, firstname, address_type, prefix, middlename, suffix, company, company2, company3, taxvat");
       	
     	$company = new Zend_Db_Expr("trim(concat(COALESCE(company,''),' ',COALESCE(company2,''), ' ',COALESCE(company3,''))) as ebewi_company");
-    	
+    	$adressId = new Zend_Db_Expr("IFNULL(main_table.customer_address_id,CONCAT('OA',main_table.entity_id)) AS real_address_id");
     	$this->getSelect()
     	//->columns($cols)
     	->distinct()
@@ -36,6 +36,7 @@ class Dwd_Ibewi_Model_Mysql4_Address_Collection extends Mage_Sales_Model_Resourc
     	->join(array('order'=>'sales_flat_order'),'order.entity_id=main_table.parent_id',array('order_increment_id'=>'increment_id','order_customer_id'=>'customer_id',
     			'customer_prefix'=>'customer_prefix','customer_firstname'=>'customer_firstname','customer_lastname'=>'customer_lastname','customer_company'=>'customer_company'))
     	->columns($company)
+    	->columns($adressId)
     	//->columns(array('address_id'=>'entity_id'))
     	;
     	

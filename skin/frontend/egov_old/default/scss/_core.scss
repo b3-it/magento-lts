@@ -1,0 +1,105 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Core Application
+// ==============================================
+
+// ----------------------------------------------
+// Browser Resets
+@import "vendor/normalize";
+@import "core/reset";
+
+
+// ----------------------------------------------
+// EGOV-Definitionen
+//    ACHTUNG!!!
+//    Variablen werden in "_framework.scss" eingebunden
+@import "egov/bitv";
+@import "egov/video";
+@import "egov/egov-base";
+@import "egov/fa-icons";
+@import "egov/mp-checkout";
+@import "egov/checkiban";
+@import "egov/silver-track";
+@import "egov/credit-cards";
+
+
+// ----------------------------------------------
+// Core
+@import "core/common";
+
+
+// ----------------------------------------------
+// Vendor
+
+
+// ----------------------------------------------
+// Layout
+@import "layout/button-set";
+@import "layout/buttons";
+@import "layout/global";
+@import "layout/header";
+@import "layout/header-nav";
+@import "layout/header-search";
+@import "layout/header-account";
+@import "layout/header-cart";
+@import "layout/footer";
+@import "layout/marginal-blocks";
+
+
+// ----------------------------------------------
+// Modules
+
+// The sort order here is important for two reasons:
+//  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
+//  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
+//     so we should try not to change this order once it is in place
+@import "module/select-language";
+@import "module/product-list";
+@import "module/catalog-product";
+@import "module/catalog-msrp";
+@import "module/catalog-seo-sitemap-category";
+@import "module/catalog-compare";
+@import "module/catalogsearch-advanced-result";
+@import "module/catalogsearch-term-popular";
+@import "module/checkout-cart";
+@import "module/checkout-onepage";
+@import "module/checkout-success";
+@import "module/configurableswatches";
+@import "module/customer";
+@import "module/customer-account-forgotpassword";
+@import "module/contacts";
+@import "module/egovs-checkout-multipage-login";
+@import "module/paypal";
+@import "module/review";
+@import "module/sales-order-print";
+@import "module/slideshow";
+@import "module/wishlist";
+@import "module/checkout-cart-minicart";
+@import "module/search";
+@import "module/account-reviews";
+@import "module/account-login";
+@import "module/cms";
+@import "module/pricing_conditions";
+@import "module/cookies";
+@import "module/sales-guest-form";
+@import "module/tags";
+@import "module/captcha";
+@import "module/account-orders";
+@import "module/recurring-profiles";
+@import "module/billing-agreements";
+@import "module/popular-terms";
+@import "module/widget";
+@import "module/checkout-multi-address";
+@import "module/my-account";
+@import "module/my-recent-tags";
+
+
+// ----------------------------------------------
+// Override
+

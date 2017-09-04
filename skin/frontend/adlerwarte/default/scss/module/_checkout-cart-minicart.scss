@@ -1,0 +1,421 @@
+//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Checkout - Mini cart
+ * ============================================ */
+
+#header-cart {
+    margin: 0px !important;
+    
+    @include bp(max-width, $bp-medium) {
+    	position: absolute;
+    	top: 100px;
+    	right: 20%;
+    	width: 75%;
+    }
+    @include bp(max-width, $bp-xsmall) {
+    	width: 300px;
+    	right: 0;
+    }
+}
+
+.header-minicart {
+    display: inline-block;
+    height: 100%;
+    float: right;
+
+    @include bp(max-width, $bp-medium) {
+        display: block;
+    }
+
+    .minicart-message {
+        display: block;
+        padding: $box-spacing;
+    }
+
+    .empty {
+        padding: $box-spacing;
+        text-align: center;
+    }
+
+    .minicart-wrapper {
+        @include loadingOverlay();
+        clear: both;
+        position: relative;
+        background-color: $global-minicart-background;
+
+        .price {
+            color: $global-active-color !important;
+        }
+    }
+
+    .block-cart {
+        display: none;
+    }
+    .block-subtitle {
+        color: $global-fontcolor-dark;
+        font-family: $base-font-family;
+        font-size: 10px;
+        font-weight: bold;
+        line-height: 1.4;
+        padding: 5px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 0px;
+
+        .close {
+            width: 40px;
+            height: 40px;
+            float: right;
+            display: block;
+            color: $global-linkcolor;
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 30px;
+            position: absolute;
+            top: -2px;
+            right: $box-spacing - 13px;
+        }
+    }
+    .mini-products-list {
+        padding: $box-spacing;
+        margin-bottom: 20px;
+
+        a {
+            border-color: $global-minicart-background;
+        }
+
+        li {
+            padding: 8px 5px 8px 11px;
+            border-bottom: 1px solid #DDDDDD;
+            min-height: 100px;
+
+            &.last {
+                border: none;
+            }
+
+            .product-details {
+                position: relative;
+                top: -10px;
+                text-align: left;
+            }
+        }
+    }
+
+    .product-details {
+        .product-name {
+            padding-top: 0px;
+            font-weight: bold;
+
+            a {
+                background-color: transparent;
+                color: $global-linkcolor;
+            }
+        }
+
+        .mini-cart-first {
+            text-align: left;
+        }
+
+        .mini-cart-secound {
+            text-align: right;
+        }
+
+        .mini-cart-third {
+            width: 30px;
+            text-align: right;
+        }
+    }
+
+    .info-wrapper {
+        margin-bottom: 0.5em;
+        position: absolute;
+        right: 0px;
+
+        th {
+            text-transform: uppercase;
+            padding-right: $gap;
+        }
+        td {
+            color: $global-fontcolor-dark;
+            clear: right;
+
+            a {
+                background-color: transparent;
+                color: $global-h1-color;
+                height: 15px;
+            }
+        }
+
+        .qty-wrapper {
+            td {
+                height: 33px;
+                line-height: 33px;
+            }
+        }
+
+        .qty {
+            padding-left: 4px;
+            padding-right: 4px;
+            margin-right: 2px;
+            width: 3.2em;
+            text-align: center;
+            height: 30px;
+        }
+
+        .quantity-button {
+            opacity: 0;
+
+            @include transition-property(opacity);
+            @include transition-duration(100ms);
+
+            &[disabled] {
+                cursor: default;
+            }
+
+            &.visible {
+                opacity: 1;
+            }
+        }
+    }
+
+    .subtotal {
+        background-color: $global-minicart-background;
+        line-height: $global-minicart-lineheight;
+        padding-right: $global-boxpadding * 2;
+
+        .label {
+            color: $global-fontcolor-dark;
+            text-transform: uppercase;
+        }
+        .price {
+            color: $global-cart-subtotal;
+            font-weight: bold;
+        }
+    }
+
+    .minicart-actions {
+        padding: $box-spacing;
+        margin-top: 0px;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+
+        a.button {
+            padding: $global-btn-padding-v $global-btn-padding-h;
+        }
+
+        .checkout-button {
+            min-width: 145px;
+        }
+
+        .cart-link {
+            height: 33px;
+            line-height: 39px;
+            text-transform: uppercase;
+            font-size: $global-fontsize;
+        }
+
+        .paypal-logo {
+            .paypal-or {
+                line-height: 1.6;
+            }
+        }
+    }
+
+    #minicart-error-message {
+        text-align: center;
+        color: $global-warning-color;
+        display: none;
+    }
+
+    #minicart-success-message {
+        text-align: center;
+        color: green;
+        display: none;
+    }
+
+    //hide jcarousel controls until carousel is properly integrated with design
+    .jcarousel-control-prev,
+    .jcarousel-control-next {
+        display: none;
+    }
+}
+
+div.block-cart {
+    .block-content {
+        p.subtotal {
+            text-align: right;
+        }
+
+        .block-subtitle {
+            padding-top: 10px;
+        }
+
+        p.amount > a {
+            color: $global-active-color;
+        }
+    }
+
+    #cart-sidebar {
+        li.item {
+            border-bottom-color: $global-border-color;
+            border-bottom-width: $global-box-border;
+            border-bottom-style: solid;
+            margin-bottom: $global-boxpadding;
+            padding-bottom: $global-boxpadding;
+
+            .product-details {
+                .btn_edit {
+                    @extend .egov-float-right;
+                    margin-right: 10px;
+                    color: $global-active-color;
+                }
+
+                .btn_delete {
+                    @extend .egov-float-right;
+                    color: $global-active-color;
+                }
+
+                .tax-block {
+                    text-align: right;
+                }
+
+                p.product-name {
+                    padding: 0px;
+                    overflow: hidden;
+                    height: 2rem;
+                }
+            }
+        }
+    }
+}
+
+
+.header-minicart.skip-active .block-cart,
+.block-cart.skip-active {
+    display: block;
+}
+
+@include bp(min-width, $bp-medium + 1) {
+    .checkout-types.minicart {
+        float: none;
+        text-align: center;
+    }
+}
+
+@include bp(max-width, $bp-xsmall) {
+    .header-minicart a.skip-cart {
+        z-index: 1;
+        width: 100%;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    .header-minicart {
+        .subtotal {
+            .label {
+                color: $global-cart-subtotal;
+            }
+        }
+        .minicart-wrapper {
+            z-index: 999;
+
+            &:before {
+                background-color: #EDEDED;
+            }
+        }
+
+        .quantity-button {
+            float: none;
+        }
+
+        .header-minicart .block-cart {
+            padding: $trim-small;
+        }
+
+        .header-minicart .block-subtitle {
+            padding-top: $trim-small + 44px;
+        }
+
+        .minicart-actions {
+            padding-bottom: 33px;
+
+            .cart-link {
+                bottom: 0;
+                right: $box-spacing;
+                position: absolute;
+            }
+
+            .checkout-types.minicart {
+                li {
+                    display: inline-block;
+
+                    .paypal-logo {
+                        > a {
+                            display: inline;
+                        }
+
+                        .bml_button {
+                            display: inline-block;
+                            vertical-align: top;
+                        }
+
+                        .paypal-or {
+                            width: auto;
+                            float: none;
+                            display: inline;
+                            margin: 0 10px 5px 10px;
+                            line-height: 40px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include bp(max-width, 740px) {
+    .header-minicart {
+        .minicart-actions {
+            .cart-link {
+                right: auto;
+                left: 0;
+                text-align: center;
+                width: 100%;
+            }
+
+            .checkout-types.minicart {
+                li {
+                    .paypal-logo {
+                        .paypal-or,
+                        .paypal-button {
+                            width: 100%;
+                            display: block;
+                            margin-left: 0;
+                        }
+
+                        .paypal-or {
+                            line-height: 1.6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include bp(max-width, $bp-small) {
+    .header-minicart {
+        .minicart-actions {
+            .checkout-button {
+                width: 100%;
+            }
+        }
+    }
+}

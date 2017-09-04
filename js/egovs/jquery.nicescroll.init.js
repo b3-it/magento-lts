@@ -25,12 +25,20 @@ function detectIE() {
 }
 
 $j(document).ready(function () {
-	var color_element  = '.page-title h1';
-	var scroll_element = 'body';
+	if ( typeof(isDWD) !== 'undefined' ) {
+		var color_element  = '#top-row';
+		var color_proberty = 'background-color';
+		var scroll_element = 'body';
+	}
+	else {
+		var color_element  = '.page-title h1';
+		var color_proberty = 'color';
+		var scroll_element = 'body';
+	}
 
 	if ( detectIE() == false ) {
 		$j(scroll_element).niceScroll({
-	        'cursorcolor'       : $j(color_element).css('color'),
+	        'cursorcolor'       : $j(color_element).css(color_proberty),
 	        'cursorwidth'       : '15px',
 	        'cursorborderradius': '3px',
 	        'horizrailenabled'  : false

@@ -859,3 +859,6 @@
 "select all","select all"
 "unselect all","unselect all"
 "x","x"
+
+"Excl. %s Tax","Excl. %s Vat"
+"Incl. %s Tax","Incl. %s Vat"

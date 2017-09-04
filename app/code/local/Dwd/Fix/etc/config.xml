@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Dwd_Fix>
+            <version>0.1.0.0</version>
+        </Dwd_Fix>
+    </modules>
+    <global>
+        <helpers>
+            <dwd_fix>
+                <class>Dwd_Fix_Helper</class>
+            </dwd_fix>
+        </helpers>
+        <resources>
+            <dwd_fix_setup>
+                <setup>
+                    <module>Dwd_Fix</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dwd_fix_setup>
+        </resources>
+        <blocks>
+          <dwd_fix>
+              <class>Dwd_Fix_Block</class>
+          </dwd_fix>
+        </blocks>
+        <models>
+            <dwd_fix>
+                <class>Dwd_Fix_Model</class>
+                <resourceModel>dwd_fix_resource</resourceModel>
+            </dwd_fix>
+            <dwd_fix_resource>
+                <class>Dwd_Fix_Model_Resource</class>
+                <entities>
+                  <rechnung_rechnung>
+                    <table>dwd_fix_rechnung_rechnung</table>
+                  </rechnung_rechnung>
+
+                </entities>
+            </dwd_fix_resource>
+        </models>
+    </global>
+    <frontend>
+      <routers>
+            <dwd_fix>
+                <use>standard</use>
+                <args>
+                    <module>Dwd_Fix</module>
+                    <frontName>dwd_fix</frontName>
+                </args>
+            </dwd_fix>
+        </routers>
+        <layout>
+            <updates>
+                <dwd_fix>
+                  <file>dwd/fix.xml</file>
+                </dwd_fix>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+              <Dwd_Fix>
+                  <files>
+                      <default>dwd/fix.csv</default>
+                  </files>
+              </Dwd_Fix>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <Dwd_Fix_Adminhtml after="Mage_Adminhtml">Dwd_Fix_Adminhtml</Dwd_Fix_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
+    <adminhtml>
+      <menu>
+          <dwdfix module="dwd_fix">
+              <title>Dwd Fix</title>
+              <sort_order>50</sort_order>
+              <children>
+                  <dwdfix_rechnung_rechnung module="dwd_fix">
+                      <title>Rechnung</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/fix_rechnung_rechnung/index</action>
+                  </dwdfix_rechnung_rechnung>
+
+              </children>
+          </dwdfix>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <dwdfix module="dwd_fix">
+                          <title>Dwd Fix</title>
+                          <sort_order>10</sort_order>
+                          <children>
+                                <dwdfix_rechnung_rechnung module="dwd_fix">
+                                  <title>Rechnung</title>
+                                  <sort_order>10</sort_order>
+                              </dwdfix_rechnung_rechnung>
+
+                          </children>
+                      </dwdfix>
+                      <system>
+					        <children>
+					            <config>
+					                <children>
+					                    <dwd_fix>
+					                        <title>DWD Fix</title>
+					                    </dwd_fix>
+					                </children>
+					            </config>
+					        </children>
+					    </system>
+                  </children>
+              </admin> 
+        </resources>
+      </acl>
+        <translate>
+            <modules>
+                <Dwd_Fix>
+                    <files>
+                        <default>dwd/fix.csv</default>
+                    </files>
+                </Dwd_Fix>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <dwdfix>
+              <file>dwd/fix.xml</file>
+            </dwdfix>
+          </updates>
+        </layout>
+    </adminhtml>
+        <crontab>
+        <jobs>
+            <dwd_fix_sync>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                    <xcron_expr>* * * * *</xcron_expr>
+                </schedule>
+                <run>
+                    <model>dwd_fix/cron::runSync</model>
+                </run>
+            </dwd_fix_sync>
+        </jobs>
+        </crontab>
+</config>

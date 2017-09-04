@@ -1,19 +1,18 @@
 <?php
 error_reporting( E_ALL ^ E_NOTICE );
 
+$ds               = DIRECTORY_SEPARATOR;  // System-Seperator verwenden
 $script           = str_replace('\\', '/', $_SERVER['PHP_SELF']);
 $test_mode        = FALSE;                                     // Im Test-Modus werden _new-Dateien erzeugt, um die Originale nicht zu ver㭤ern
 $view_only        = ( isset($_GET['edit']) ? FALSE : TRUE );   // Alle Script-Aktionen abschalten
-$sub              = array('/lib/egovs', '\lib\egovs', '/lib/Egovs', '\lib\Egovs');
+$sub              = join($ds, array('lib', 'Egovs'));
 $base             = str_replace( $sub, '', dirname(__FILE__) );
-$base_modules_xml = $base . '/app/etc/modules/';
-$local_xml        = $base . '/app/etc/local.xml';
+$base_modules_xml = $base . $ds . join($ds, array('app', 'etc', 'modules')) . $ds;
+$local_xml        = $base . $ds . join($ds, array('app', 'etc', 'local.xml'));
 $exclude_modules  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel');
 $exclude_options  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel');
 $global_xml_file  = array();
 $neueliste        = array();
-
-
 
 
 ////////////////////////////////////////////////////////////
@@ -104,9 +103,9 @@ function set_xml(&$output, $xml_array)
     $output[] = '</config>';
 }
 
-/* Ließt den Inahtl einer XML-Datei ein un wandelt diesen in ein
+/* Ließt den Inhalt einer XML-Datei ein und wandelt diesen in ein
  * Mehrdimensiones Array um. Jeder Eintrag bekommt ein
- * Kex=>Value-Paar zugeordnet
+ * Key=>Value-Paar zugeordnet
  *
  * @param       string      Dateiname der XML
  *

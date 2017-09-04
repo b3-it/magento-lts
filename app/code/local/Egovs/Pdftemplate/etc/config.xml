@@ -6,6 +6,15 @@
             <version>0.1.6</version>
         </Egovs_Pdftemplate>
     </modules>
+     <frontend>
+        <layout>
+            <updates>
+                <pdftemplate>
+                    <file>egovs/pdftemplate.xml</file>
+                </pdftemplate>
+            </updates>
+        </layout>
+    </frontend>
     <admin>
         <routers>
 			<adminhtml>	
