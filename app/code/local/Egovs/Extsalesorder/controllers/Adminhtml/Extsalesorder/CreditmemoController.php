@@ -159,10 +159,10 @@ public function saveAction()
         try {
             $creditmemo = $this->_initCreditmemo();
             if ($creditmemo) {
-            	$betrag = abs($creditmemo->getOrder()->getTotalPaid()-$creditmemo->getOrder()->getTotalRefunded());
+            	$betrag = abs($creditmemo->getOrder()->getBaseTotalPaid()-$creditmemo->getOrder()->getBaseTotalRefunded());
+            	
             	//Normale Stornierung (Bestellung > 0 €, Noch kein Geld erhalten)
-            	if ($creditmemo->getOrder()->getGrandTotal() > 0.0001
-            		&& $creditmemo->getOrder()->getTotalPaid() <= 0.0001
+            	if ($creditmemo->getOrder()->getBaseGrandTotal() > 0.0001 && $creditmemo->getOrder()->getBaseTotalPaid() <= 0.0001
             	) {
             		//Prüfen ob Sendungen existieren
             		if ($creditmemo->getOrder()->hasShipments()) {
@@ -250,9 +250,6 @@ public function saveAction()
                         $this->__('No Items To Refund').'.');
                 	}
                 }
-//                 $this->_redirect('adminhtml/sales_order/view', array('order_id' => $creditmemo->getOrderId()));
-//                 //keine weitere Verarbeitung!!!
-//                 return;
 
                 $comment = '';
                 if (!empty($data['comment_text'])) {

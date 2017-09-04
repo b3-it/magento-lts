@@ -322,6 +322,7 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 			);
 			
 			$bundleOptions = array();
+			$bundleOptionsQty = array();
 			foreach ($optionCollection as $optionId => $option) {
 				/** @var $child Sid_Wishlist_Model_Quote_Item */
 				foreach ($item->getChildren() as $child) {
@@ -334,6 +335,9 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 						if ($selection->getProductId() == $itemProductId
 								&& $selection->getOptionId() == $optionId) {
 							$bundleOptions[$optionId] = $selection->getSelectionId();
+							if ($child->getQty() > 1) {
+								$bundleOptionsQty[$optionId] = $child->getQty();
+							}
 							break;
 						}
 					}
@@ -342,6 +346,9 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 			
 			if (!empty($bundleOptions)) {
 				$request['bundle_option'] = $bundleOptions;
+			}
+			if (!empty($bundleOptionsQty)) {
+				$request['bundle_option_qty'] = $bundleOptionsQty;
 			}
 		}
 		

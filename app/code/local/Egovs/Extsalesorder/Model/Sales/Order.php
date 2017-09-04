@@ -71,7 +71,7 @@ class Egovs_Extsalesorder_Model_Sales_Order extends Mage_Sales_Model_Order
 				&& !$this->canUnhold()
 				&& !$this->canInvoice()
 				&& !$this->canShip()) {
-					if (0 == $this->getBaseGrandTotal() || $this->canCreditmemo()) {
+					if ((0 == $this->getBaseGrandTotal() && !$this->getBaseTotalRefunded() && !$this->hasForcedCanCreditmemo()) || $this->canCreditmemo()) {
 						if ($this->getState() !== self::STATE_COMPLETE && $this->getBaseTotalPaid() >= $this->getBaseGrandTotal()) {
 							$this->_setState(self::STATE_COMPLETE, true, '', $userNotification);
 						}
@@ -80,8 +80,7 @@ class Egovs_Extsalesorder_Model_Sales_Order extends Mage_Sales_Model_Order
 					 * Order can be closed just in case when we have refunded amount.
 					 * In case of "0" grand total order checking ForcedCanCreditmemo flag
 					 */
-					elseif (floatval($this->getTotalRefunded()) || (!$this->getTotalRefunded()
-							&& $this->hasForcedCanCreditmemo())
+					elseif (floatval($this->getTotalRefunded()) || (!$this->getTotalRefunded() && $this->hasForcedCanCreditmemo())
 							) {
 								if ($this->getState() !== self::STATE_CLOSED) {
 									if ($this->getStatus() != self::SPECIAL_CANCEL_STATUS) {
