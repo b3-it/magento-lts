@@ -30,20 +30,20 @@
 	<?php echo $this->getChildHtml('singlepage_billing') ?>
 </div>	
 	
-	<fieldset>
-			<ul class="form-list group-select">
-				<li>
-					<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
-				</li>
-			</ul>
+<fieldset>
+	<ul class="form-list group-select">
+		<li>
+			<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/>
+		</li>
+	</ul>
 
-			<div>
-				<?php echo $this->getChildHtml('infotexts'); ?>
-				<?php echo $this->getChildHtml('agreementtexts'); ?>
+	<div>
+		<?php echo $this->getChildHtml('infotexts'); ?>
+		<?php echo $this->getChildHtml('agreementtexts'); ?>
 
-				<?php echo $this->getChildHtml('agreements') ?>
-			</div>
-	</fieldset>
+		<?php echo $this->getChildHtml('agreements') ?>
+	</div>
+</fieldset>
 	<fieldset class="multiple-checkout">
 		<?php $_address=$this->getBaseAddress() ?>
 		<?php if (Mage::helper('core')->isModuleEnabled('Egovs_GermanTax') && $_address):?>
@@ -101,9 +101,6 @@
 					<?php endforeach ?>
 				</tbody>
 			</table>
-			<table id="checkout-review-totals-table" class="data-table">
-				<?php echo $this->getChildHtml('totals'); ?>
-			</table>
 		</div>
 		<p class="grand-total">
 			<span style="font-weight: bold;"><?php echo $this->__('Grand Total:') ?> </span>
@@ -126,6 +123,3 @@
 		</span>
 	</fieldset>
 </form>
-
-<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>"></script>
-

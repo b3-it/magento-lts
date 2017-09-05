@@ -1,7 +1,14 @@
 <?php
 
 class Gka_UserStore_Model_Observer
-{
+{    
+    /***
+     * Überprüft die Kunden-Session
+     * 
+     * @param Varien_Event_Observer $observer
+     * @return Gka_UserStore_Model_Observer
+     */
+    
     public function forceLogin($observer)
     {
        
@@ -36,7 +43,7 @@ class Gka_UserStore_Model_Observer
     
     /***
      * Überprüfen ob der Kunde diesen Store nutzen darf
-     * @param unknown $session
+     * @param Mage_Customer_Model_Session $session
      */
     protected function _verifyStore($session)
     {
@@ -47,7 +54,16 @@ class Gka_UserStore_Model_Observer
     		$allowedStores = $customer->getAllowedStores();
     		 
     		if(count($allowedStores) < 1){
-    			die("<h1>Keine erlaubten Stores gefunden!</h1>");
+    		    $session->logout();
+    		    
+    		    $message = '<h1>Keine erlaubten Stores gefunden!</h1>';
+    		    $session->addError($messages);
+
+    		    Mage::app()->getResponse()->setRedirect(Mage::getUrl('customer/account/login'));
+    		    Mage::app()->getResponse()->sendResponse();
+    		    return;
+
+    		    //die("<h1>Keine erlaubten Stores gefunden!</h1>");
     		}
     		
     		if(array_search($store->getStoreId(),$allowedStores) === false)

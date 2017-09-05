@@ -90,7 +90,7 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     
     /**
      * Ermitteln des geöffneten Kassenbuches des aktuellen Kunden
-     * @param unknown $customerId
+     * @param Mage_Customer_Model_Customer $customerId
      * @return NULL | Gka_Barkasse_Block_Kassenbuch_Journal
      */
     public function getOpenJournal($customerId = null)
@@ -169,7 +169,7 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     
     /**
      * Kann der Kunde ein Kassenbuches eröffnen?
-     * @param unknown $customerId
+     * @param Mage_Customer_Model_Customer $customerId
      */
     public function isCustomerCanOpen($customerId)
     {
@@ -188,8 +188,8 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     }
     /**
      * Kassenbuches mit Id und CustomerId laden
-     * @param unknown $id
-     * @param unknown $customerId
+     * @param Gka_Barkasse_Model_Kassenbuch_Journal $id
+     * @param Mage_Customer_Model_Customer $customerId
      * @return NULL | Gka_Barkasse_Block_Kassenbuch_Journal
      */
     public function loadById_Customer($id,$customerId = null)

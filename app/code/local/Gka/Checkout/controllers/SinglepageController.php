@@ -25,7 +25,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     /**
      * Retrieve checkout state model
      *
-     * @return Mage_Checkout_Model_Type_Singlepage_State
+     * @return Gka_Checkout_Model_Type_Singlepage_State
      */
     protected function _getState()
     {

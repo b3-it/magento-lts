@@ -55,7 +55,7 @@ class Gka_Product_Model_Cron extends Mage_Core_Model_Abstract
     
     /**
      * Einsprung
-     * @param unknown $schedule
+     * @param Mage_Cron_Model_Schedule $schedule Schedule
      */
 	public function runCron($schedule) 
 	{		
@@ -73,7 +73,7 @@ class Gka_Product_Model_Cron extends Mage_Core_Model_Abstract
      * Ermitteln ob noch ein Cronjob läuft
      * @param $job_code
      * @param $job_id
-     * @param $timespan Zein in sekunden; default 1h 
+     * @param Varien_Event $timespan Zeit in sekunden; default 1h 
      */
   	protected function getIsRunning($job_code, $job_id, $timespan = 3600)
   	{
