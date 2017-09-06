@@ -1,0 +1,86 @@
+//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Header - Account
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Skip Link - Account
+ */
+
+.skip-account {
+    &:not(.skip-active):hover {
+        .icon {
+            background-image: none;
+            text-indent: 0;
+        }
+    }
+    .icon {
+        background-image: none;
+        text-indent: 0;
+    }
+    
+    @include bp(max-width, $bp-medium) {
+        width: 17.7%;
+        right: -2%;
+    }
+    @include bp(max-width, $bp-small) {
+        left: 11%;
+        width: 20%;
+    }
+    @include bp(max-width, $bp-xsmall) {
+        left: 11.5%;
+    }
+}
+
+// ---------------------------------------------
+
+/* -------------------------------------------- *
+ * Account Links
+ */
+
+#header-account {
+    padding: 5px 0;
+
+	li {
+	    display: block;
+	    line-height: 1rem;
+	    width: 100%;
+
+	    a {
+	        width: 100%;
+	        display: block;
+	        padding: 5px 10px 5px 20px;
+	    }
+	}
+
+    &.skip-active {
+        @include menu;
+        display: block;
+        position: absolute;
+        z-index: 1000;
+        top: 130px;
+        right: 155px;
+        width: 200px;
+        opacity: 0.9;
+        
+        @include bp(max-width, $bp-medium) {
+            width: 100%;
+            top: 145px;
+            right: 0;
+        }
+        
+        @include bp(max-width, $bp-xsmall) {
+            top: 137px;
+        }
+    }
+ 
+ 	@include bp(max-width, $bp-medium) {
+  	    top: 125px;
+  	}
+}

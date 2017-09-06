@@ -101,7 +101,12 @@ class Dwd_Periode_Adminhtml_Periode_PeriodeController extends Mage_Adminhtml_Con
    		return  $block->toHtml(); 
    }
    
-
+   protected function _isAllowed()
+   {
+   		return Mage::getSingleton('admin/session')->isAllowed('admin/catalog/products/newproducts/productsave')|| 
+   			Mage::getSingleton('admin/session')->isAllowed('admin/catalog/products/disabledproducts/productsave')|| 
+   			Mage::getSingleton('admin/session')->isAllowed('admin/catalog/products/enabledproducts/productsave') ;
+   }
   
 	
 }

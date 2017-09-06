@@ -1,0 +1,115 @@
+//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Nav - Skip Link
+ * ============================================ */
+
+.skip-nav {
+    width: 40%;
+    background-color: $global-active-color;
+    color: $global-fontcolor-light;
+    height: 90px;
+    vertical-align: bottom;
+    border-radius: 0px 0px 3px 3px;
+    border-width: $global-active-border;
+    border-style: solid;
+    border-color: $global-active-color;
+   
+    @include bp(min-width, $bp-medium + 1) {
+    	display: none;
+    }
+    @include bp(max-width, $bp-medium) {
+    	left: 33.5%;
+        width: 14%;
+    }
+    @include bp(max-width, $bp-small) {
+       left: 47%;
+       width: 16%;
+    }
+    @include bp(max-width, $bp-xsmall) {
+       left: 48.5%;
+       width: 17%;
+    }
+    
+    .label {
+    	display: inline;
+    	position: relative;
+    	
+    	@include bp(max-width, $bp-medium) {
+    		top: 45px;
+    	}
+        @include bp(max-width, 500px) {
+        	display: none;
+        }
+    }
+    
+    .icon {
+    	@extend .egov-list;
+    	position: relative;
+    	
+    	@include bp(max-width, $bp-medium) {
+    		top: 45px;
+    	}
+        @include bp(max-width, 500px) {
+        	top: 50px;
+        }
+    }
+}
+
+
+/* ============================================ *
+ * Nav - Skip Content
+ * ============================================ */
+
+@include bp(max-width, $bp-medium) {
+    #egov-nav {
+        position: relative;
+        top: 55px;
+
+        a {
+            display: block;
+            width: auto;
+        }
+    }
+}
+
+/* ============================================ *
+ * General Navigation Styles
+ * ============================================ */
+
+.nav-primary {
+    @include main-navigation;
+}
+
+/* ============================================ *
+ * Nav Primary & Large Viewports - Dropdown Menu
+ * ============================================ */
+
+
+/* ============================================ *
+ * Small Viewports - Accordion Style Menu
+ * ============================================ */
+
+@include bp(max-width, $bp-medium) {
+
+    .nav-primary {
+        // Indent sub-menus
+        li.level0 li {
+            padding: 0 0 0 25px;
+        }
+
+        li.level1 a {
+            padding: 0 15px 0 25px;
+        }
+
+        li.menu-active > a,
+        li.sub-menu-active > a {
+            color: $global-linkcolor-active;
+        }
+    }
+}

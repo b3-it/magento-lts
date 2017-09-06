@@ -22,6 +22,16 @@
  
     &:hover {
         text-decoration: none;
+        
+        .count{
+            background-color: $global-fontcolor-light;
+            color: $global-cart-color;
+        }
+    }
+    
+    @include bp(max-width, $bp-small) {
+        margin: 5px 0 0 0;
+        width: 100%;
     }
 
     .count {
@@ -71,7 +81,6 @@
         position: absolute;
         z-index: 200;
         top: 51px;
-        right: 28%;
         width: 400px;
         border: 0;
 
@@ -114,18 +123,8 @@
     color: $global-fontcolor-light;
 }
 
-// Using extra .skip-link selector to increase specificity
-.skip-link.skip-cart .count {
-}
-
 .skip-cart.no-count .count {
     display: none;
-}
-
-@include bp(max-width, 499px) {
-    .skip-cart .count {
-        margin-left: -12px;
-    }
 }
 
 @include bp(min-width, $bp-medium + 1) {

@@ -398,4 +398,8 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	}
     	$this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
     }
+    
+    protected function _isAllowed() {
+    	return Mage::getSingleton('admin/session')->isAllowed('bfr_eventmanager/eventmanager_event');
+    }
 }

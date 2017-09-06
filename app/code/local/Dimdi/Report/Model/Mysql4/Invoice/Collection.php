@@ -31,7 +31,7 @@ class Dimdi_Report_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysq
       $eav = Mage::getResourceModel('eav/entity_attribute'); 
       
  
-      $bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment/paymentbase/bewirtschafternr')."' as bewirtschafter");
+      $bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')."' as bewirtschafter");
       $konto = new Zend_Db_Expr("'Rechnung' as konto");
       $base_tax_amount = new Zend_Db_Expr("COALESCE(main_table.base_tax_amount,'0.0000') as base_tax_amount_notnull");
       //$taxrate = new Zend_Db_Expr("53100 as tax_rate");
@@ -43,11 +43,14 @@ class Dimdi_Report_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysq
       	->join(array('order'=>'sales_flat_order'),'order.entity_id=invoice.order_id',
       		array('order_increment_id' => 'increment_id','order_date' => 'created_at','customer_id','shipping_address_id','billing_address_id'))
       	->joinleft(array('product'=>'catalog_product_entity'),'main_table.product_id=product.entity_id',array('type_id'))
-      	->joinleft(array('product_haushaltstelle'=>'catalog_product_entity_varchar'), 'product_haushaltstelle.entity_id=main_table.product_id AND product_haushaltstelle.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'), array('haushaltstelle'=>'value'))
+      	->joinleft(array('product_haushaltstelle_att'=>'catalog_product_entity_varchar'), 'product_haushaltstelle_att.entity_id=main_table.product_id AND product_haushaltstelle_att.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'), array())
+      	->joinleft(array('product_haushaltstelle'=>$this->getTable('paymentbase/haushaltsparameter')), 'product_haushaltstelle.paymentbase_haushaltsparameter_id=product_haushaltstelle_att.value' , array('haushaltstelle'=>'value'))
+       
        	->joinleft(array('product_kostenstl'=>'catalog_product_entity_varchar'), 'product_kostenstl.entity_id=main_table.product_id AND product_kostenstl.attribute_id='.$eav->getIdByCode('catalog_product', 'kostenstelle'), array())
        	->joinleft(array('product_kostenstelle'=>'eav_attribute_option_value'), 'product_kostenstelle.option_id=product_kostenstl.value AND product_kostenstelle.store_id=0',array('kostenstelle'=>'value'))
+       	->joinleft(array('product_objektnummer_att'=>'catalog_product_entity_varchar'), 'product_objektnummer_att.entity_id=main_table.product_id AND product_objektnummer_att.attribute_id='.$eav->getIdByCode('catalog_product', 'objektnummer'), array())
+       	->joinleft(array('product_objektnummer'=>$this->getTable('paymentbase/haushaltsparameter')), 'product_objektnummer.paymentbase_haushaltsparameter_id=product_objektnummer_att.value' , array('objektnummer'=>'value'))
        	
-       	->joinleft(array('product_objektnummer'=>'catalog_product_entity_varchar'), 'product_objektnummer.entity_id=main_table.product_id AND product_objektnummer.attribute_id='.$eav->getIdByCode('catalog_product', 'objektnummer'), array('objektnummer'=>'value'))
        	->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id=main_table.order_item_id','tax_percent')   	
        	->joinleft(array('payment'=>'sales_flat_order_payment'), 'order.entity_id=payment.parent_id', array('kassenzeichen','method'))  
       	->columns($bewirtschafter)
@@ -58,9 +61,9 @@ class Dimdi_Report_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysq
   	//die($this->getSelect()->__toString());    	
       	
       	//Versandkosten
-        $bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment/paymentbase/bewirtschafternr')."' as bewirtschafter");	
-        $hh_versand = new Zend_Db_Expr("'".Mage::getStoreConfig('payment/paymentbase/haushaltsstelle')."' as haushaltsstelle");	
-        $obj_versand = new Zend_Db_Expr("'".Mage::getStoreConfig('payment/paymentbase/objektnummer')."' as objektnummer");	
+        $bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')."' as bewirtschafter");	
+        $hh_versand = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/haushaltsstelle')."' as haushaltsstelle");	
+        $obj_versand = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/objektnummer')."' as objektnummer");	
         $tax_percent = new Zend_Db_Expr('COALESCE(round(100 * `sales_flat_invoice`.`shipping_tax_amount` / `sales_flat_invoice`.`shipping_amount`),0.0000) as tax_percent');
 
       	
@@ -92,7 +95,7 @@ class Dimdi_Report_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysq
       	//die($sql2->__toString());
       	
       	//Gutschrift
-      	$bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment/paymentbase/bewirtschafternr')."' as bewirtschafter");	
+      	$bewirtschafter = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')."' as bewirtschafter");	
       	$konto = new Zend_Db_Expr("'Gutschrift' as konto");
       	$collection3 = Mage::getModel('sales/order_creditmemo_item')->getCollection();
       	$collection3->getSelect()
@@ -103,10 +106,16 @@ class Dimdi_Report_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysq
       	->join(array('order'=>'sales_flat_order'),'order.entity_id=invoice.order_id',
       		array('order_increment_id' => 'increment_id','order_date' => 'created_at','customer_id','shipping_address_id','billing_address_id'))
       	->joinleft(array('product'=>'catalog_product_entity'),'main_table.product_id=product.entity_id',array('type_id'))
-      	->joinleft(array('product_haushaltstelle'=>'catalog_product_entity_varchar'), 'product_haushaltstelle.entity_id=main_table.product_id AND product_haushaltstelle.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'), array('haushaltstelle'=>'value'))
+      	->joinleft(array('product_haushaltstelle_att'=>'catalog_product_entity_varchar'), 'product_haushaltstelle_att.entity_id=main_table.product_id AND product_haushaltstelle_att.attribute_id='.$eav->getIdByCode('catalog_product', 'haushaltsstelle'), array())
+      	->joinleft(array('product_haushaltstelle'=>$this->getTable('paymentbase/haushaltsparameter')), 'product_haushaltstelle.paymentbase_haushaltsparameter_id=product_haushaltstelle_att.value' , array('haushaltstelle'=>'value'))
+      	
        	->joinleft(array('product_kostenstl'=>'catalog_product_entity_varchar'), 'product_kostenstl.entity_id=main_table.product_id AND product_kostenstl.attribute_id='.$eav->getIdByCode('catalog_product', 'kostenstelle'), array())
        	->joinleft(array('product_kostenstelle'=>'eav_attribute_option_value'), 'product_kostenstelle.option_id=product_kostenstl.value AND product_kostenstelle.store_id=0',array('kostenstelle'=>'value'))
-      	->joinleft(array('product_objektnummer'=>'catalog_product_entity_varchar'), 'product_objektnummer.entity_id=main_table.product_id AND product_objektnummer.attribute_id='.$eav->getIdByCode('catalog_product', 'objektnummer'), array('objektnummer'=>'value'))
+       	->joinleft(array('product_objektnummer_att'=>'catalog_product_entity_varchar'), 'product_objektnummer_att.entity_id=main_table.product_id AND product_objektnummer_att.attribute_id='.$eav->getIdByCode('catalog_product', 'objektnummer'), array())
+      	->joinleft(array('product_objektnummer'=>$this->getTable('paymentbase/haushaltsparameter')), 'product_objektnummer.paymentbase_haushaltsparameter_id=product_objektnummer_att.value' , array('objektnummer'=>'value'))
+      	 
+      	
+      	
       	->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id=main_table.order_item_id','tax_percent')
       	->joinleft(array('payment'=>'sales_flat_order_payment'), 'order.entity_id=payment.parent_id', array('kassenzeichen','method'))  
        	->columns($bewirtschafter)

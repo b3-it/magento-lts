@@ -40,7 +40,7 @@
             }
 
             label {
-                width: 95%;
+                width: 90%;
             }
         }
 
@@ -80,6 +80,14 @@
             width: 7.5em;
             display: inline-block;
             vertical-align: top;
+            
+            @include bp(max-width, $bp-small) {
+                width: 32.8%;
+            }
+            
+            @include bp(max-width, $bp-xsmall) {
+                width: 32%;
+            }
         }
 
         li.active {
@@ -104,11 +112,6 @@
             top: -2px;
             margin-left: 3px;
         }
-    }
-
-    a.egovslistbutton, a.egovsbutton {
-        @extend .button;
-        display: inline-block;
     }
 
     a.break-link {
@@ -148,6 +151,13 @@
             min-height: 150px;
 
             border-bottom: $global-active-border dotted $global-box-bottomcolor;
+            
+            @include bp(max-width, $bp-medium) {
+                display: block;
+                margin: 0;
+                width: 100%;
+                min-height: auto;
+            }
 
             h3 {
                 @extend .block-title;
@@ -162,6 +172,10 @@
 
         div.col-1 {
             margin-right: $global-checkout-marginright;
+            
+            @include bp(max-width, $bp-small) {
+                margin-bottom: $global-checkout-marginright;
+            }
         }
 
         h4 {
@@ -172,10 +186,6 @@
         address, fieldset, p,
         .overview_shipping, .successview_shipping {
             margin: 5px 0px 10px 10px;
-        }
-        
-        button.button {
-        	width: 140px !important;
         }
     }
 
@@ -250,6 +260,10 @@
 
     .col1-wide {
         display: block;
+        
+        @include bp(max-width, $bp-xsmall) {
+            width: 93%;
+        }
 
         #checkout-review-table {
             @extend .egov-base-table;
@@ -334,20 +348,8 @@
     ul.checkout-progress {
         display:none;
     }
-}
-
-@include bp(max-width, 480px) {
-    .mp-checkout {
-        .buttons-set {
-            a.egovslistbutton, button.button {
-                width: auto !important;
-                min-width: 120px;
-                text-align: center;
-            }
-
-            a.break-link {
-                margin-left: 0px !important;
-            }
-        }
+    
+    .col-main {
+        width: 100% !important;
     }
 }

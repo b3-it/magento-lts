@@ -1,0 +1,56 @@
+.widget-static-block {
+    margin-bottom: 15px;
+}
+
+#credit_cards, .credit_cards {
+    border: 0 none;
+    float: left;
+    height: 27px;
+    margin: -20px -10px 0 0;
+    width: 120px;
+
+    img {
+        border: 0 none;
+        margin-top: 3px;
+        width: 40px;
+        display: inline-block;
+    }
+}
+
+#widget_credit_cards, .widget_credit_cards {
+    border: 0 none;
+    height: 100%;
+    width: 100%;
+
+    img {
+        border: 0 none;
+        margin-top: 3px;
+        width: 40px;
+        display: inline-block;
+    }
+}
+
+#widget_logo_master_card {
+}
+
+#widget_logo_master_card_secure {
+}
+
+#widget_logo_visa {
+}
+
+#widget_logo_visa_verified {
+}
+
+#pay-logo-before {
+	@extend .fa;
+	@extend .fa-credit-card;
+}
+#pay-logo-two {
+	@extend .fa;
+	@extend .fa-eur;
+    font-size: 1.6rem;
+    left: -15%;
+    position: relative;
+    top: 10%;
+}

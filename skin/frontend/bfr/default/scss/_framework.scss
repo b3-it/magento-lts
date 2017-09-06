@@ -29,29 +29,29 @@
 
 // ----------------------------------------------
 // font-awesome
-@import "../../../egov/default/scss/egov/font-awesome";
+@import "../../../egov_old/default/scss/egov/font-awesome";
 
 // ----------------------------------------------
 // Functions
-//@import "../../../egov/default/scss/egov/svg-function";
+//@import "../../../egov_old/default/scss/egov/svg-function";
 
 // ----------------------------------------------
 // Mixins
 
 @import "mixin/button";
-@import "../../../egov/default/scss/mixin/multi-column";
-@import "../../../egov/default/scss/mixin/breakpoint";
-@import "../../../egov/default/scss/mixin/clearfix";
+@import "../../../egov_old/default/scss/mixin/multi-column";
+@import "../../../egov_old/default/scss/mixin/breakpoint";
+@import "../../../egov_old/default/scss/mixin/clearfix";
 @import "mixin/egov_loginform";
-@import "../../../egov/default/scss/mixin/image-replacement";
-@import "../../../egov/default/scss/mixin/menu";
+@import "../../../egov_old/default/scss/mixin/image-replacement";
+@import "../../../egov_old/default/scss/mixin/menu";
 @import "mixin/main-navigation";
 @import "mixin/new_address";
-@import "../../../egov/default/scss/mixin/not-selectable";
-@import "../../../egov/default/scss/mixin/if-resolution";
+@import "../../../egov_old/default/scss/mixin/not-selectable";
+@import "../../../egov_old/default/scss/mixin/if-resolution";
 @import "mixin/toggle-content";
-@import "../../../egov/default/scss/mixin/triangle";
+@import "../../../egov_old/default/scss/mixin/triangle";
 @import "mixin/typography";
 @import "mixin/effects";
-@import "../../../egov/default/scss/mixin/loading-overlay";
+@import "../../../egov_old/default/scss/mixin/loading-overlay";
 @import "mixin/gradient";

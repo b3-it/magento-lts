@@ -9,9 +9,17 @@
 	margin: 0;
 }
 
+.inline-label {
+	display: inline-block !important;
+}
+
 .my-account {
 	position: relative;
-	top: 15px;
+	top: -5px;
+	
+	form .form-list li label {
+	    display: block;
+	}
 
 	#order-buttons {
 	    display: inline-block;
@@ -67,13 +75,16 @@
     }
 
     .my-wishlist {
+        position: relative;
+        top: 20px;
+    
         .fieldset {
             width: 100%;
 
             .wishlist-empty {
-                border: $global-box-border solid $global-border-color;
+                border: $global-box-border solid $grundfarbe-blau;
                 padding: $golbal-msgpadding;
-                background-color: $global-box-title-backgroundcolor;
+                background-color: $grundfarbe-weiss;
             }
         }
     }
@@ -168,12 +179,19 @@
     }
 
     .button {
-        float: none;
+        //float: none;
     }
 }
 
 #customer-account-menu {
     @include main-navigation;
+}
+
+.newsletter-manage-index, .dwd-abo-index-view,
+.dwd-icd-index-view, .sepadebitbund-change-index {
+	.my-account {
+	    top: 15px;
+	}
 }
 
 .addresses-primary,

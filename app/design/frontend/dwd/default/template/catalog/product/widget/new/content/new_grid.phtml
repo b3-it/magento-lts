@@ -50,14 +50,14 @@
                         $_productName = mb_substr($_productName, 0, $name_limit) . '...';
                     }
                     ?>
-                    <h2 class="product-name">
+                    <h2 class="product-name"><?php echo $_productNameStripped; ?>
                         <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
                             <?php echo $_productName; ?>
                         </a>
                     </h2>
                     <div class="product_sku">
                         <?php
-                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+                        $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
 
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = mb_substr($_sku, 0, $sku_limit) . '...';

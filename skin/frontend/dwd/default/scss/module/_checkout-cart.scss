@@ -949,7 +949,12 @@
 
         button {
             width: 45%;
-            margin-right: 10%;
+            
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+                display: block;
+                margin-bottom: 10px;
+            }
 
             &.full-width {
                 margin: 0;

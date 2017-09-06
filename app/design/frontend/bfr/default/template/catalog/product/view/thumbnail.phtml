@@ -18,23 +18,24 @@
     $_product    = $this->getProduct();
     $_helper     = $this->helper('catalog/output');
     $_image_list = $this->getGalleryImages();
+    $_image_alt  = $this->escapeHtml($this->getImageLabel());
 ?>
 <div class="product-image product-image-zoom">
     <div class="product-image-gallery">
         <img id="image-main"
              class="gallery-image visible"
              src="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"
-             alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
-             title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
-        <div class="image-copyright-box"><span><?php echo $this->escapeHtml($this->getImageLabel()); ?></span></div>
-        <?php $i=0; foreach ($_image_list AS $_image): ?>
-            <?php if ($this->isGalleryImageVisible($_image)): ?>
-            <?php $_img = $this->getGalleryImageUrl($_image); ?>
-            <img id="image-<?php echo $i; ?>"
-                 class="gallery-image"
-                 src="<?php echo $_img; ?>"
-                 data-zoom-image="<?php echo $_img; ?>" />
-            <?php endif; ?>
-        <?php $i++; endforeach; ?>
+             alt="<?php echo $_image_alt; ?>"
+             title="<?php echo $_image_alt; ?>" />
+      <?php $i=0; foreach ($_image_list AS $_image): ?>
+        <?php if ($this->isGalleryImageVisible($_image)): ?>
+        <?php $_img = $this->getGalleryImageUrl($_image); ?>
+        <img id="image-<?php echo $i; ?>"
+             class="gallery-image"
+             src="<?php echo $_img; ?>"
+             data-zoom-image="<?php echo $_img; ?>" />
+        <?php endif; ?>
+      <?php $i++; endforeach; ?>
     </div>
+    <div class="image-copyright-box"><span><?php echo $_image_alt; ?></span></div>
 </div>

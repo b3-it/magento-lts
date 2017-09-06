@@ -5,6 +5,11 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+#region_id-button {
+	font-size: 0.8rem;
+    padding: 0.7em 0.8em 0.7em 1.3em;
+}
+
 /* ============================================ *
  * Customer
  * ============================================ */
@@ -259,7 +264,7 @@ body.customer-account {
     .my-account {
         .dashboard {
             position: relative;
-            top: -20px;
+            //top: -20px;
         }
 
         h2 {
@@ -1002,6 +1007,8 @@ ol#cart-sidebar-reorder {
  * ============================================ */
 
 body.newsletter-manage-index .my-account {
+	top: 15px;
+
     .fieldset {
         margin-bottom: 20px;
     }

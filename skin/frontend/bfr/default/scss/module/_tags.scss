@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -15,6 +15,10 @@
 }
 #addTagForm .form-add {
     margin-top: 10px;
+    
+    button {
+        float: none;
+    }
 }
 .product-tags {
     background-color: $c-module-background;
@@ -42,6 +46,10 @@
 }
 .block-tags {
     margin-top: $global-boxmargin;
+    
+    @include bp(max-width, $bp-medium) {
+        display: none;
+    }
 
     .actions > a {
         font-size: $global-fontsize;

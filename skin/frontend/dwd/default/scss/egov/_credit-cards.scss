@@ -13,6 +13,10 @@
     height: 100%;
     width: 100%;
     
+    .block-content {
+        text-align: center;
+    }
+    
     @include bp(max-width, $bp-mobil) {
         position: relative;
         top: -8px;
@@ -29,6 +33,7 @@
         margin-top: 3px;
         width: 23%;
         display: inline-block;
+        max-height: 45px;
         
         @include bp(max-width, $bp-mobil) {
             width: auto;

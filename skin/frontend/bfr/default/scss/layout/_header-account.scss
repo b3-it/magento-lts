@@ -1,0 +1,136 @@
+//
+// @category    design
+// @package     bfr_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Header - Account
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Skip Link - Account
+ */
+
+.skip-account {
+    &:not(.skip-active):hover {
+        .icon {
+            background-image: none;
+            text-indent: 0;
+        }
+    }
+    
+    @include bp(min-width, $bp-medium + 1) {
+        float: none;
+        width: auto;
+        vertical-align: top;
+        display: inline-block;
+        padding: 0 10px;
+        text-transform: uppercase;
+    }
+
+    .icon {
+        background-image: none;
+        text-indent: 0;
+    }
+}
+
+// ---------------------------------------------
+#mobile-nav.skip-active,
+#header-account.skip-active {
+    @include menu;
+    display: block;
+    position: absolute;
+    z-index: 200;
+    opacity: 0.9;
+
+    @include bp(max-width, $bp-medium) {
+ 	    top: $mobile-header-accountnav-top;
+    }
+    
+    @include bp(max-width, $bp-small) {
+ 	    top: $mobile-header-accountnav-top - 28px;
+    }
+    
+    @include bp(max-width, $bp-xsmall) {
+ 	    top: $mobile-header-accountnav-top;
+    }
+}
+
+#mobile-nav.skip-active {
+    width: 80%;
+
+	@include bp(max-width, $bp-medium) {
+ 	    left: 0;
+    }
+}
+
+#header-account.skip-active {
+    width: 200px;
+
+	@include bp(max-width, $bp-medium) {
+ 	    left: 33%;
+    }
+}
+
+/* -------------------------------------------- *
+ * Account Links
+ */
+#mobile-nav,
+#header-account {
+    padding: 5px 0;
+}
+
+#mobile-nav {
+	ol > #egov-catalog-title > a {
+	    display: none;
+	}
+	
+    > ul > li > a {
+        background-color: $global-navigation-color;
+        
+        border-color: transparent transparent $global-navigation-border-color;
+        border-style: solid;
+        border-width: $global-active-border;
+
+        color: $global-navigation-font-color;
+        font-size: $global-navigation-font-size;
+    }
+
+    > ul > li.last > a {
+        border-bottom: $global-active-border solid transparent;
+    }
+	
+	li.level0 li {
+	    padding-left: 10px;
+	}	
+}
+
+#mobile-nav a,
+#header-account a {
+    position: relative;
+    display: block;
+    padding: 5px 10px;
+    line-height: 1.5;
+    margin-left: 10px;
+    color: $global-navigation-font-color;
+    
+    &:hover {
+        color: $global-linkcolor-hover;
+        font-weight: bold;
+        text-decoration: underline;
+        
+        @include bp(min-width, $bp-medium + 1) {
+            color: $global-linkcolor-hover;
+        }
+    }
+    
+    @include bp(min-width, $bp-medium + 1) {
+        display: block;
+        padding: 5px 10px;
+        color: $global-navigation-font-color;
+        line-height: 2;
+    }
+}
+

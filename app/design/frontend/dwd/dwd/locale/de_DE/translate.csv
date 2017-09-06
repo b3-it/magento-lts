@@ -47,3 +47,4 @@
 "Out of Stock","nicht lieferbar"
 "Out of stock","nicht lieferbar"
 "Sid_Checkout::Empty Cart","Alle Artikel entfernen""Startup Page","Start"
+"Your account is locked due to too many failed login attempts.<br />Please contact the %s (fon. %s or email %s).","Ihr Konto wurde aufgrund zu vieler fehlerhafter Login-Versuche leider gesperrt.<br />Bitte wenden Sie sich an den %s (Tel.: %s oder E-Mail: %s)."

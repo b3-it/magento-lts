@@ -36,6 +36,7 @@
         <?php echo $this->getMessagesBlock()->toHtml() ?>
 
         <form id="wishlist-view-form" action="<?php echo $this->getUrl('*/*/update', array('wishlist_id' => $this->getWishlistInstance()->getId())) ?>" method="post">
+            <?php echo $this->getBlockHtml('formkey') ?>
             <?php echo $this->getChildHtml('top'); ?>
             <div class="fieldset">
                 <?php if ($this->hasWishlistItems()): ?>
@@ -46,8 +47,14 @@
                 <?php else: ?>
                     <p class="wishlist-empty"><?php echo $this->__('You have no items in your wishlist.') ?></p>
                 <?php endif ?>
-                <div class="buttons-set buttons-set2">
-                    <?php echo $this->getChildHtml('control_buttons');?>
+                <div class="buttons-set">
+                    <?php
+                    $other = $this->getChildHtml('control_buttons');
+                    echo $other . (strlen($other) ? '<br /><br />' : '');
+                    ?>
+                    <a class="button<?php echo (strlen($other) ? ' egov-float-left' : '') ?>" href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>">
+                        <small>&laquo; </small><?php echo $this->__('Back') ?>
+                    </a>
                 </div>
             </div>
         </form>
@@ -84,9 +91,5 @@
             }
         //]]>
         </script>
-    </div>
-    <?php echo $this->getChildHtml('bottom'); ?>
-    <div class="buttons-set">
-        <a class="button" href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
     </div>
 <?php endif ?>

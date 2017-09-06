@@ -1,0 +1,389 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Wishlist
+ * ============================================ */
+
+#wishlist-table {
+    @extend .egov-base-table;
+
+    th {
+        text-align: center;
+        padding: $global-tdpadding;
+    }
+
+    td:nth-child(2) {
+        text-align: left !important;
+    }
+
+    &.clean-table {
+        font-family: $base-font-family;
+        font-size: $global-fontsize;
+        width: 100%;
+
+        td {
+            padding: $global-tdpadding;
+            vertical-align: top;
+        }
+    }
+
+    .product-image {
+        img {
+            max-width: 80px !important;
+            height: auto !important;
+        }
+    }
+
+    .product-name {
+        font-size: $global-fontsize-big;
+        font-family: $base-font-family;
+        margin-bottom: 0;
+
+        a {
+            color: $global-linkcolor;
+        }
+    }
+
+    .wishlist-sku {
+        font-size: $global-fontsize-small;
+        font-family: $base-font-family;
+        margin: 5px 0;
+    }
+
+    textarea {
+        border: $global-box-border solid $global-border-color;
+        width: 100%;
+        height: 45px;
+        font-size: $global-fontsize-small;
+        font-family: $base-font-family;
+
+        &:focus {
+            border: $global-box-border solid $global-border-color;
+        }
+    }
+
+    .item-manage {
+        text-align: right;
+        max-width: 450px;
+        padding-top: 5px;
+
+        .button {
+            padding: 5px;
+            width: 50%;
+        }
+    }
+
+    .cart-cell {
+        text-align: center;
+    }
+
+    td {
+        &.customer-wishlist-item-image {
+            width: 80px !important;
+        }
+
+        &.customer-wishlist-item-quantity {
+            width: 3em;
+        }
+
+        &.customer-wishlist-item-price {
+            width: 120px;
+            text-align: center;
+        }
+
+        &.customer-wishlist-item-cart {
+            width: 40px !important;
+            text-align: center !important;
+
+            a.egov-cart {
+                margin: 0px 0px 10px 0px;
+            }
+
+            .button {
+                font-size: $global-fontsize-small;
+                margin-bottom: $gap;
+                padding: 3px 5px;
+            }
+
+            .truncated {
+                margin-bottom: $gap;
+            }
+
+            > p {
+                margin-bottom: 0;
+            }
+
+            .remove-whishlist-item {
+                text-align: center;
+            }
+
+            .btn-remove {
+                vertical-align: top;
+            }
+        }
+
+        &.customer-wishlist-item-remove {
+            width: 20px !important;
+            padding: 0px !important;
+
+            a {
+                font-size: 1.5em;
+                margin: $global-boxpadding;
+            }
+        }
+        
+        .mobile-small-remove {
+            display: none;
+        }
+
+        .button,
+        button {
+            white-space: normal;
+        }
+
+    }
+
+    .price-box {
+        font-family: $base-font-family;
+        font-size: $global-fontsize-small;
+
+        .price {
+            color: $global-price-normal-color;
+        }
+    }
+
+    .giftregisty-add {
+        margin-top: 5px;
+
+        .change {
+            display: none;
+        }
+
+        li {
+            cursor: pointer;
+            color: $c-action;
+            margin-bottom: 3px;
+        }
+    }
+
+    .truncated {
+        .details {
+            background: none;
+            color: $c-action;
+        }
+    }
+
+    td[data-rwd-label]:before {
+        font-weight: 600;
+    }
+}
+
+#wishlist-sidebar {
+    .product-details {
+        .tax-details {
+            display: none;
+        }
+
+        .price-box {
+            width: 100%;
+            font-size: 1em;
+            margin: 5px 0;
+
+            .price {
+                font-size: 1em;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-xlarge) {
+    #wishlist-table {
+        &.clean-table {
+            td {
+                padding-left: $box-spacing;
+                padding-right: $box-spacing;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-large) {
+    #wishlist-table {
+        &.clean-table td {
+            padding-left: $global-tdpadding;
+            padding-right: $global-tdpadding;
+
+            textarea {
+                height: 100px;
+            }
+
+            &.customer-wishlist-item-cart {
+                width: 40px;
+                text-align: center !important;
+
+                a.egov-cart {
+                    margin: 0px 0px 10px 0px;
+                }
+            }
+        }
+
+        .product-name {
+            font-size: $f-size-s;
+        }
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-medium) {
+    #wishlist-table {
+        &:after {
+            @include clearfix;
+        }
+
+        .product-name {
+            font-size: $f-size-xl;
+        }
+
+        textarea {
+            height: 68px;
+            max-width: 100%;
+        }
+
+        .item-manage {
+            max-width: 100%;
+        }
+
+        tr {
+            position: relative;
+
+            &:after {
+                @include clearfix;
+            }
+        }
+
+        td.customer-wishlist-item-image {
+            width: 70px;
+
+            img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        td.customer-wishlist-item-cart {
+            p {
+                margin-bottom: 0;
+            }
+
+            .remove-whishlist-item {
+                margin-right: 0;
+                padding-top: 4px;
+            }
+        }
+
+        td.customer-wishlist-item-cart {
+            padding-right: 15px;
+        }
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-small) {
+    #wishlist-table {
+        td.customer-wishlist-item-quantity {
+            padding-left: 0;
+        }
+
+        td.customer-wishlist-item-image,
+        th.customer-wishlist-item-image,
+        th.customer-wishlist-item-remove,
+        td.customer-wishlist-item-remove {
+            display: none;
+        }
+        
+        th.customer-wishlist-item-info {
+            border-radius: $global-radius 0 0;
+        }
+        th.customer-wishlist-item-cart {
+            border-radius: 0 $global-radius 0 0;
+        }
+        
+        .mobile-small-remove {
+            bottom: 10px;
+            display: block !important;
+            position: absolute;
+            right: 5px;
+        }
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-xsmall) {
+    #wishlist-table {
+        tr {
+            position: relative;
+        }
+
+        td {
+            &.customer-wishlist-item-info,
+            &.customer-wishlist-item-quantity,
+            &.customer-wishlist-item-price,
+            &.customer-wishlist-item-cart {
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+                empty-cells: hide;
+            }
+
+            &.customer-wishlist-item-quantity,
+            &.customer-wishlist-item-price {
+                text-align: left;
+
+                &:before {
+                    float: left;
+                    margin-right: $trim-small;
+                }
+
+                .cart-cell {
+                    text-align: left;
+                }
+
+                .price-box {
+                    margin-top: 0;
+                }
+            }
+
+            &.customer-wishlist-item-cart {
+                position: relative;
+                
+                .cart-cell {
+                    float: left;
+                    width: 48%;
+                }
+
+                > p {
+                    float: right;
+                    width: 48%;
+                }
+            }
+        }
+
+        &.clean-table {
+            td.customer-wishlist-item-cart {
+                width: 100%;
+            }
+        }
+    }
+}

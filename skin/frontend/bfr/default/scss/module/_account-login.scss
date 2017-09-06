@@ -6,71 +6,22 @@
 //
 
 .customer-account-login {
-    .main-container {
-        position: relative;
-        top: $global-cms-top-position;
-    }
-
+	.col-main {
+	    top: -25px !important;
+	}
     p.required {
         color: $global-warning-color;
     }
 }
 
-.account-login > .egov-account-login {
-    // Reset aller Einstellungen aus dem gobalen Bereich
-    .col-1, .col-2 {
-        margin: 0px;
-        padding: 0px;
-    }
-}
-
-.egovs-checkout-multipage-login .egov-account-login {
-    top: 15px;
+.account-login {
+    @include egov_loginform;
 }
 
 .egov-account-login {
-    overflow: hidden;
-    width: 97%;
     position: relative;
-    top: -20px;
-
-    form {
-        height: 100%;
-        position: relative;
-
-        input {
-            width: 100%;
-        }
-    }
-
-    h2 {
-        font-family: $base-font-family;
-        border-bottom: $global-box-border-bottom dotted $global-box-bordercolor;
-        padding-top: $global-box-title-padding-top;
-        padding-right: $global-box-title-padding-right;
-        padding-bottom: $global-box-title-padding-bottom;
-        padding-left: $global-box-title-padding-left;
-        font-size: $global-fontsize-big !important;
-        font-weight: bold;
-
-        background: -moz-linear-gradient(top,  $gobal-header-rgba-1 0%, $gobal-header-rgba-2 $gobal-header-gradient);
-        background: -webkit-linear-gradient(top,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
-        background: linear-gradient(to bottom,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6d7dbdc', endColorstr='#00000000',GradientType=0 );
-
-
-        color: $global-fontcolor-dark;
-    }
-
-    div.page-title > h1 {
-        color: $global-linkcolor;
-        font-size: $global-pagetitle-size;
-    }
-
-    .new-users, .registered-users {
-        height: 25em;
-        width: 48%;
-
+	
+	.new-users, .registered-users {
         border-top-width: $global-box-border;
         border-top-style: solid;
         border-top-color: $global-box-bordercolor;
@@ -79,48 +30,38 @@
         border-bottom-style: solid;
         border-bottom-color: $global-box-bordercolor;
 
-        border-left: none !important;
-        border-right: none !important;
-
-        .content {
-            padding: 10px;
+        border-left: none;
+        border-right: none;
+        
+        @include bp(max-width, $bp-large) {
+            margin-bottom: 20px !important;
         }
 
-        .buttons-set {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            margin: 0px;
-            padding: 0px;
-        }
-    }
+	    h2 {
+	        font-family: $base-font-family;
+	        border-bottom: $global-box-border-bottom dotted $global-box-bordercolor;
+	        padding-top: $global-box-title-padding-top;
+	        padding-right: $global-box-title-padding-right;
+	        padding-bottom: $global-box-title-padding-bottom;
+	        padding-left: $global-box-title-padding-left;
+	        font-size: $global-fontsize-big !important;
+	        font-weight: bold;
+	
+	        background: -moz-linear-gradient(top,  $gobal-header-rgba-1 0%, $gobal-header-rgba-2 $gobal-header-gradient);
+	        background: -webkit-linear-gradient(top,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
+	        background: linear-gradient(to bottom,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
+	        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gobal-header-rgba-1', endColorstr='$gobal-header-rgba-2',GradientType=0 );
+	
+	        color: $global-fontcolor-dark;
+	    }
 
-    .buttons-set {
-        width: auto;
-        float: right;
-    }
+	}
 
-    button.button {
-        padding: 5px 6px;
-        width: 140px;
-    }
-
-    a.button {
-        padding: 6px 6px;
-        width: 140px;
-    }
-
-    .button-recovery{
-        position: absolute;
-        left: 10px;
-        bottom: 15px;
-        margin: 0px;
-        padding: 0px;
-
-        a, a:hover, a:active {
-            color: $global-button-font-color;
-            text-decoration: none;
-            cursor: pointer;
+    .new-users .button {
+        width: 40%;
+        
+        @include bp(max-width, $bp-xsmall) {
+            width: 100%;
         }
     }
 
@@ -135,7 +76,7 @@
                 margin-right: 5px;
             }
         }
-    }
+    }	
 
     ul.benefits > li {
         list-style-type: none;
@@ -146,18 +87,5 @@
     	ul.info, p > strong {
     		display: none;
     	}
-        .content > fieldset > p {
-        	position: relative;
-        	top: -25px;
-        }
-    }
-}
-
-@include bp(max-width, 480px) {
-    .egov-account-login {
-        .new-users, .registered-users {
-            width: 100%;
-            margin-bottom: 10px !important;
-        }
     }
 }
