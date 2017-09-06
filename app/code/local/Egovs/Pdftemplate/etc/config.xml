@@ -1,10 +1,20 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <Egovs_Pdftemplate>
             <version>0.1.7</version>
         </Egovs_Pdftemplate>
     </modules>
+     <frontend>
+        <layout>
+            <updates>
+                <pdftemplate>
+                    <file>egovs/pdftemplate.xml</file>
+                </pdftemplate>
+            </updates>
+        </layout>
+    </frontend>
     <admin>
         <routers>
 			<adminhtml>	

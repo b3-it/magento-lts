@@ -21,7 +21,7 @@
         margin: 0;
 
 	    a:hover, a:active {
-            color: $global-linkcolor-active;
+            color: $global-active-color;
         }
 
         a {
@@ -52,13 +52,17 @@
 
             width:100%;
             text-align: left;
-            color: $global-linkcolor;
+            color: $global-active-color;
             font-family: $base-font-family;
             font-size: $global-category-fontsize;
             display: inline-block;
             border-bottom: $global-box-border solid $global-border-color;
             text-transform: uppercase;
             text-decoration: none;
+            
+            &:hover {
+                background-color: transparent;
+            }
         }
     }
     
@@ -69,8 +73,10 @@
    
     a {
         text-decoration: none;
-        color: $global-linkcolor;
+        color: $global-active-color;
         font-family: $base-font-family;
+        
+        line-height: 1.2rem;
 
         border-width: $global-active-border;
         border-style: solid;
@@ -83,12 +89,13 @@
         border: $global-box-border solid $global-lightcolor;
 
         li {
-            background: $global-wrapper-color $global-repeat-scroll;
+            background: $global-navigation-color $global-repeat-scroll;
             border-top: $global-box-border solid $global-subcat-bordercolor;
             margin: 0;
 
             strong, a:hover, a:active {
-                color: $global-linkcolor-active;
+                background-color: $global-active-color;
+                color: $global-wrapper-color;
             }
 
             a {
@@ -137,7 +144,6 @@
             display: none;
 
             li {
-                background: $global-wrapper-color $global-repeat-scroll;
                 border-top: $global-box-border solid $global-subcat-bordercolor;
 
                 padding-left: $global-navigation-padding-left;
@@ -210,7 +216,7 @@
     
     li.menu-active > a,
     li.sub-menu-active > a {
-        color: $global-linkcolor-active;
+        color: $global-active-color;
     }
    
     li.level1 {

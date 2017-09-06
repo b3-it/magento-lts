@@ -360,7 +360,7 @@ class Egovs_EventBundle_Model_Observer
     /**
      * 
      * Speichern der ProduktStockAletert bei der Bestellung
-     * @param unknown $observer
+     * @param Egovs_EventBundle_Model_Observer $observer
      */
     public function onSalesOrderSaveAfter($observer) {
     	/* @var $order Mage_Sales_Model_Order */

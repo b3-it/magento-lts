@@ -52,7 +52,6 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 
         <div class="product-cart-sku">
             <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
-            <br />
             <?php echo $this->helper('slpbproduct')->getStars($_item->getProduct()); ?>
         </div>
 

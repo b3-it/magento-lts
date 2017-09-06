@@ -1,7 +1,0 @@
-"Ausverkauft","Vergriffen"
-"Mage_Customer::This account is not confirmed. <a href=""%s"">Click here</a> to resend confirmation email.","Dieses Benutzerkonto ist nicht bestätigt. <a href=""%s"">Klicken Sie hier</a> um sich eine Bestätigungs-Mail zusenden zu lassen."
-"Please enter your email below and we\'ll send you confirmation link for it.","Ist die unten angegebene E-Mail-Adresse richtig, klicken Sie bitte auf Absenden. Sie erhalten daraufhin die E-Mail mit dem Bestätigungslink.<br>Ist die E-Mail-Adresse fehlerhaft, bitten wir Sie, ein neues Benutzerkonto mit der korrekten E-Mail-Adresse einzurichten."
-"Mage_Core::Please enter your email below and we'll send you confirmation link for it.","Ist die unten angegebene E-Mail-Adresse richtig, klicken Sie bitte auf Absenden. Sie erhalten daraufhin die E-Mail mit dem Bestätigungslink.<br>Ist die E-Mail-Adresse fehlerhaft, bitten wir Sie, ein neues Benutzerkonto mit der korrekten E-Mail-Adresse einzurichten."
-"Egovs_Checkout::Billing Information","Zahlweise wählen"
-"Egovs_Checkout::Billing Details","Rechnungsinformation"
-"Egovs_Checkout::Details of the payment method can be found here","Einzelheiten der Zahlungsart finden Sie hier"

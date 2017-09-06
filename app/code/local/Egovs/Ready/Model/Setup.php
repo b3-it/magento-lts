@@ -29,7 +29,7 @@ class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 	
 	public function saveCmsPage($data)
 	{
-		/* @var $cms Mage_Cms_Model_Cms */
+		/** @var $cms Mage_Cms_Model_Page */
 		$cms = Mage::getModel('cms/page')->load($data['identifier']);
 		
 		
@@ -38,15 +38,20 @@ class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 			$cms->setData($data)->save();
 		} else {
 			// update
-			$data['stores'] = $cms->getStoreId();	
-			$data['page_id'] = $cms->getId();
-			$cms->setData($data)->save();
+			unset($data['stores]']);
+			unset($data['title']);
+			unset($data['is_active']);
+			if (!isset($data['replace_content']) || $data['replace_content'] == false) {
+			    unset($data['content']);
+			    unset($data['content_heading']);
+			}
+			$cms->addData($data)->save();
 		}
 	}
 	
 	public function saveCmsBlock($data)
 	{
-		/* @var $cms Mage_Cms_Model_Cms */
+		/** @var $cms Mage_Cms_Model_Block */
 		$cms = Mage::getModel('cms/block')->load($data['identifier']);
 		
 		
@@ -55,9 +60,13 @@ class Egovs_Ready_Model_Setup extends Mage_Catalog_Model_Resource_Setup
 			$cms->setData($data)->save();
 		} else {
 			// update;
-			$data['stores'] = $cms->getStoreId();
-			$data['block_id'] = $cms->getId();
-			$cms->setData($data)->save();
+			unset($data['stores']);
+			unset($data['title']);
+			unset($data['is_active']);
+			if (!isset($data['replace_content']) || $data['replace_content'] == false) {
+			    unset($data['content']);
+			}
+			$cms->addData($data)->save();
 		}
 	}
 	

@@ -287,18 +287,72 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 		
 		//Individualisierungsoptionen verarbeiten
 		$optionIds = $item->getOptionByCode('option_ids');
-		$optionIds = $optionIds->getValue();
-		$optionIds = explode(',', $optionIds);
-		$options = array();
-		foreach ($optionIds as $id) {
-			$option = $item->getOptionByCode("option_$id");
-			$options[$id] = $option->getValue();
+		if ($optionIds) {
+			$optionIds = $optionIds->getValue();
+			$optionIds = explode(',', $optionIds);
+			$options = array();
+			foreach ($optionIds as $id) {
+				$option = $item->getOptionByCode("option_$id");
+				if (!$option) {
+					continue;
+				}
+				$options[$id] = $option->getValue();
+			}
+			$request['options'] = $options;
 		}
-		$request['options'] = $options;
-		
 		if ($item->getId() > 0) {
 			$request['sidwishlist_item_id'] = $item->getId();
 		}
+		
+		$product = $item->getProduct();
+		if ($product->isComposite()) {
+			$typeInstance = $product->getTypeInstance(true);
+			$typeInstance->setStoreFilter($product->getStoreId(), $product);
+			
+			$optionCollection = $typeInstance->getOptionsCollection($product);
+			
+			$selectionCollection = $typeInstance->getSelectionsCollection(
+					$typeInstance->getOptionsIds($product),
+					$product
+			);
+			
+			$optionCollection= $optionCollection->appendSelections(
+					$selectionCollection, false,
+					Mage::helper('catalog/product')->getSkipSaleableCheck()
+			);
+			
+			$bundleOptions = array();
+			$bundleOptionsQty = array();
+			foreach ($optionCollection as $optionId => $option) {
+				/** @var $child Sid_Wishlist_Model_Quote_Item */
+				foreach ($item->getChildren() as $child) {
+					$itemProduct = $child->getProduct();
+					if (!$itemProduct) {
+						continue;
+					}
+					$itemProductId = $itemProduct->getId();
+					foreach ($option->getSelections() as $selection) {
+						if ($selection->getProductId() == $itemProductId
+								&& $selection->getOptionId() == $optionId) {
+							$bundleOptions[$optionId] = $selection->getSelectionId();
+							if ($child->getQty() > 1) {
+								$bundleOptionsQty[$optionId] = $child->getQty();
+							}
+							break;
+						}
+					}
+				}
+			}
+			
+			if (!empty($bundleOptions)) {
+				$request['bundle_option'] = $bundleOptions;
+			}
+			if (!empty($bundleOptionsQty)) {
+				$request['bundle_option_qty'] = $bundleOptionsQty;
+			}
+		}
+		
+		
 		$preparedLinks = array();
 		switch ($item->getProduct()->getTypeId()) {
 			case Mage_Downloadable_Model_Product_Type::TYPE_DOWNLOADABLE:

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" ?>
 <!DOCTYPE config>
-        <config>
-            <modules>
-            <Slpb_Product>
-                <version>0.1.2</version>
-            </Slpb_Product>
-        </modules>
+<config>
+    <modules>
+        <Slpb_Product>
+            <version>0.1.2</version>
+        </Slpb_Product>
+    </modules>
         <global>
         	<helpers>
             <slpbproduct>
@@ -82,7 +82,7 @@
         			</productlimit>
         		</observers>
         	</checkout_entry_before>
-        	<checkout_cart_product_add_before>
+        	<checkout_cart_add_product_before>
         	     <observers>	
         			<productlimit>
         				<type>singleton</type>
@@ -90,7 +90,7 @@
         				<method>onCheckoutCartProductAddBefore</method>
         			</productlimit>
         		</observers>
-        	</checkout_cart_product_add_before>
+        	</checkout_cart_add_product_before>
         	<checkout_cart_update_items_after>
         	     <observers>	
         			<productlimit>
@@ -112,7 +112,16 @@
         		</quote>
         	</sales>
         </global>
-           <adminhtml>
+    <adminhtml>
+		<translate>
+			<modules>
+				<Slpb_Product>
+					<files>
+						<default>Slpb_Product.csv</default>
+					</files>
+				</Slpb_Product>
+			</modules>
+		</translate>
             <acl>
                 <resources>
                     <admin>

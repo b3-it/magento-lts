@@ -12,11 +12,7 @@ var egov_break = {
 // Allgemeine JS-Funktionen
 $j(document).ready(function(){
     // Custom-Scrollbar im Skin-Design
-    $j('body').niceScroll({
-        'cursorcolor'       : $j('#top-row').css('background-color'),
-        'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
-    });
+	var isDWD = true;
 
     $j('#mobile-cart > a').attr({
     	'id'                 : 'mobile-cart-menu',
@@ -152,6 +148,12 @@ $j(document).ready(function(){
   				$j('#mobile-language-switch').append(link);
     		}
     	});
+    }
+
+    // Kontakt in Mobil-Navigation einbauen
+    if ( $j('#mobile-home-link').length ) {
+    	$j('<li id="mobile-contact" class="level0"></li>').insertAfter( $j('#mobile-home-link') );
+    	$j('#mobile-contact').html( $j('#header-contact-link').html() );
     }
 });
 

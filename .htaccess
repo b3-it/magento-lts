@@ -40,6 +40,9 @@
     AddType video/ogg .ogg
 
 <IfModule mod_php5.c>
+############################################
+# !!!Funktioniert nur falls Apache mit mod_php läuft!!
+# Unter Windows läuft PHP meist als CGI/FPM usw.
 
     php_value magic_quotes_gpc off
 
@@ -72,6 +75,11 @@
 ## Session-Configuration
 ## https://trac.kawatest.de/ticket/1647
 
+    php_value session.gc_probability 1
+    php_value session.gc_divisor 100
+    php_value session.gc_maxlifetime 86400
+
+    # https://trac.kawatest.de/ticket/1647
     php_value session.gc_probability 1
     php_value session.gc_divisor 100
     php_value session.gc_maxlifetime 86400

@@ -285,3 +285,4 @@
 "osCommerce Orders","osCommerce Bestellungen"
 "separate by "",""","durch Komma "","" getrennt"
 "Cancel Order","Bestellung stornieren"
+"<span>Stars on cart</span>: <span id=""star-cnt"">--</span> from max %s","<span>Sternchen im Warenkorb</span>: <span id=""star-cnt"">--</span> von maximal %s"

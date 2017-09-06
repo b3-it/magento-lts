@@ -91,7 +91,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   
   /**
    * die indivdualisierungs Optionen
-   * @return unknown
+   * @return object
    */
   protected function getDynamicColumns()
   {
@@ -543,10 +543,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   
 
  /**
-  * die Filterbedingungen für die dynymischen Spalten 
-  * @param unknown $collection
-  * @param unknown $column
-  */
+   * die Filterbedingungen für die dynymischen Spalten 
+   *
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
   protected function _filterDynamicCondition($collection, $column) {
   	if (!$value = $column->getFilter()->getValue()) {
   		return;

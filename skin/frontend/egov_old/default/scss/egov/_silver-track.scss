@@ -1,0 +1,80 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+// Plugin Silver Track https://tulios.github.io/jquery.silver_track
+//
+
+.silver-track {
+    display: block;
+    width: 100%;
+
+    .view-port {
+        overflow: hidden;
+        position: relative;
+
+        .product-image-thumbs {
+            position: relative;
+            margin: 0px;
+            padding: 0px;
+
+            .item {
+                position: absolute;
+
+                img {
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+                }
+            }
+        }
+
+    }
+
+    a.prev,
+    a.next {
+        display: block;
+        position: relative;
+        margin-top: -76px;
+        width: 36px;
+        height: 64px;
+        background: url("../images/silver_track_arrows_small.png");
+        background-repeat: no-repeat;
+
+    }
+
+    a.prev.disabled,
+    a.next.disabled {
+        display: none;
+    }
+
+    a.prev {
+        float: left;
+        background-position: 0 0;
+    }
+
+    a.prev:hover {
+        background-position: 0 -66px;
+    }
+
+    a.prev:active {
+        background-position: 0 -132px;
+    }
+
+    a.next {
+        float: right;
+        background-position: -36px 0;
+    }
+
+    a.next:hover {
+        background-position: -36px -132px;
+    }
+
+    a.next:active {
+        background-position: -36px -198px;
+    }
+
+}
+

@@ -16,7 +16,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 	/**
 	 * verhinderd, dass Veranstaltungen mit Zulassungsbeschränkung
 	 * zusammen mit anderen im Korb liegen
-	 * @param unknown $observer
+	 * @param Bfr_EventRequest_Model_Observer $observer
 	 * @return Bfr_EventRequest_Model_Observer
 	 */
 	public function onQuoteItemAdd($observer)
@@ -51,7 +51,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 		if(($productAdd->getEventrequest() == 1) && ($n > 1))
 		{
 			$quote->deleteItem($quoteItem);
-			Mage::throwException(Mage::helper('eventrequest')->__('%s has to be alone in the cart.',$productAdd->getName()));
+			Mage::throwException(Mage::helper('eventrequest')->__('%s can only be ordered/requested separately.',$productAdd->getName()));
 			return $this;
 		}
 
@@ -72,7 +72,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 					if($item->getProduct()->getEventrequest() == 1){
 						$quote->deleteItem($quoteItem);
 						Mage::throwException(
-								Mage::helper('eventrequest')->__('Finalize application of %s first!',$item->getProduct()->getName())
+								Mage::helper('eventrequest')->__('Please complete registration for the event %s first.',$item->getProduct()->getName())
 						);
 						return $this;
 					}
@@ -85,7 +85,7 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 	
 	/**
 	 * verhindern, dass eine Veranstaltung ohne Zulassung gekauft wird
-	 * @param unknown $observer
+	 * @param Bfr_EventRequest_Model_Observer $observer
 	 * @throws Exception
 	 */
 	public function onCheckoutEntryBefore($observer)
@@ -110,6 +110,13 @@ class Bfr_EventRequest_Model_Observer extends Varien_Object
 			$sess->addError($ex->getMessage());
 			$this->_redirect('checkout/cart');
 		}
+	}
+	
+	
+	public function onClearExpiredQuotesBefore($observer)
+	{
+		$sales_observer = $observer['sales_observer'];
+		$sales_observer->setExpireQuotesAdditionalFilterFields(array('is_event_request'=>'0'));
 	}
 	
 	

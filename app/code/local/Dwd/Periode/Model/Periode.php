@@ -272,7 +272,7 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
     /**
      * Finden des gültigen Staffelpreises
      * @param float|int $qty Menge
-     * @return Ambigous <NULL, object, boolean, Mage_Core_Model_Abstract, unknown>
+     * @return <NULL, object, boolean, Mage_Core_Model_Abstract, unknown>
      */
 
     public function getTierPriceForQty($qty)
@@ -289,7 +289,7 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
 
     /**
      * Preis in abhängigkeit von Mwst incl/excl ermitteln
-     * @param unknown_type $product
+     * @param Mage_Tax_Helper_Data $product
      */
     public function getFinalPrice($product)
     {
@@ -428,8 +428,8 @@ class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
   
     /**
      * Periode aus der QuoteOption lesen, oder anhand der Id Laden
-     * @param unknown $orderitem
-     * @return Dwd_Periode_Model_Periode|Ambigous <Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|NULL
+     * @param Mage_Sales_Model_Order_Item $orderitem
+     * @return Dwd_Periode_Model_Periode|<Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|NULL
      */
     public static function loadPeriodeByOrderItem($orderitem, $storeId = 0)
     {

@@ -1,0 +1,20 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+$base-font-rotis: 'RotisSansSerifW01-Extra';
+$base-font-family: Arial, Verdana, Helvetica, 'Sans Serif';
+
+$global-headline-rotis: $base-font-rotis;
+
+@font-face {
+  font-family: $base-font-rotis;
+  src: url("../font/7e5aeac5-0308-416d-a347-0aaad96a2d31.eot?#iefix");
+  src: url("../font/7e5aeac5-0308-416d-a347-0aaad96a2d31.eot?#iefix") format("eot"),
+       url("../font/13f09a40-3a24-44ca-8083-7c5e67fe802c.woff") format("woff"),
+       url("../font/c15c78f4-0b68-45e1-9e4e-5abf429825f4.ttf") format("truetype"),
+       url("../font/47e771a0-71f8-457b-a507-26686cf45aad.svg#47e771a0-71f8-457b-a507-26686cf45aad") format("svg");
+}

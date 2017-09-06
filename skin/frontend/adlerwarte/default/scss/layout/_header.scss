@@ -1,0 +1,404 @@
+//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+
+/* ============================================ *
+ * Header
+ * ============================================ */
+.page-header-container {
+    max-width: $global-fullpage-width;
+    min-width: $global-min-width;
+    position: relative;
+    margin: 0px auto;
+    padding-top: 100px;
+    height: 240px;
+    background-color: $global-wrapper-color;
+    background-image: none !important;
+    border-bottom: 1px solid #eeeeee;
+    
+    @include bp(max-width, $bp-large) {
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center 0px;
+        height: 230px;
+        padding: 0;
+    }
+
+    @include bp(max-width, $bp-medium) {
+        height: 110px + $global-logo-height;
+        min-width: auto;
+    }
+}
+
+
+
+@include bp(max-width, $bp-medium) {
+    #egov-nav, #header-account {
+        top: 35px + $global-logo-height !important;
+    }
+}
+
+.header-language-container,
+.page-header {
+    font-family: $base-font-family;
+
+    .welcome-header {
+        position: absolute;
+        top: 150px;
+        right: 10px;
+        text-align: right;
+        z-index: 999;
+        width: 600px;
+
+        h1 {
+            display: block;
+    	  }
+
+        .welcome-msg {
+            display: block;
+            height: 1em;
+            margin-top: 12px;
+        }
+        
+        @include bp(max-width, $bp-medium) {
+            top: 155px;
+            width: 100%;
+            text-align: left;
+            z-index: 0;
+            padding: 0 10px;
+        }
+    }
+}
+
+/* ============================================ *
+ * Language switcher + welcome message
+ * ============================================ */
+
+.header-language-background {
+
+    .header-language-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+
+    .form-language,
+    .currency-switcher {
+        float: left;
+        margin-right: $gap;
+    }
+
+    .welcome-msg {
+        float: right;
+    }
+}
+
+.store-language-container {
+    float: right;
+    position: absolute;
+    right: 33%;
+    top: 16px;
+    z-index: 999;
+
+    label {
+        display: none;
+    }
+    select {
+        max-width: 100%;
+        
+        @include bp(max-width, $bp-xsmall) {
+        	font-size: $global-fontsize-small;
+        }
+    }
+    
+    @include bp(max-width, 800px) {
+    	top: 0px + $global-logo-height;
+    }
+	@include bp(max-width, $bp-medium) {
+    	top: 40px + $global-logo-height;
+    	right: 10px;
+    }
+    @include bp(max-width, $bp-xsmall) {
+    	padding-top: 8px;
+    }
+}
+
+
+.header-language-background,
+.header-language-background a {
+    color: $global-fontcolor-light;
+}
+
+@include bp(max-width, $bp-medium) {
+    .header-language-background {
+        display: none;
+    }
+
+}
+
+/* ============================================ *
+ * Logo
+ * ============================================ */
+
+.logo {
+    width: $global-logo-width;
+    position: relative;
+    top: $global-logo-top;
+    left: $global-logo-left;
+    z-index: 99;
+    float: left;
+
+    img {
+        max-width: 100%;
+    }
+    
+    @include bp(max-width, $bp-medium) {
+    	width: auto;
+    	top: 70px;
+    }
+
+    .small {
+        display: none;
+        
+        @include bp(max-width, $bp-medium) {
+        	display: block;
+        }
+        
+        @include bp(max-width, $bp-small) {
+            position: relative;
+            top: 5px;
+            height: 80px;
+        }
+    }
+    .large {
+        display: block;
+        
+        @include bp(max-width, $bp-medium) {
+        	display: none;
+        }
+    }
+   
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+// ---------------------------------------------
+
+
+/* ============================================ *
+ * Skip Links
+ * ============================================ */
+
+.skip-links {
+    clear: both;
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 30px;
+
+    @include bp(max-width, $bp-medium) {
+        width: 65%;
+        right: -35%;
+        position: relative;
+        top: -45px;
+    }
+    
+    @include bp(max-width, $bp-small) {
+        width: 80%;
+        right: -20%;
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, 980px) {
+    .skip-search {
+   	    display: none;
+   	}
+}
+
+/* -------------------------------------------- *
+ * Skip - Link
+ */
+
+.skip-link {
+    position: relative;
+    float: right;
+    width: 15%;
+    background-color: $global-wrapper-color;
+    color: $global-linkcolor;
+    line-height: 42px;
+    text-align: center;
+    
+    @include bp(max-width, $bp-medium) {
+    	float: left;
+    }
+}
+
+a.skip-link {
+    text-decoration: none;
+}
+
+.skip-egov:hover,
+.skip-link:not(.skip-active):hover {
+    opacity: 0.8;
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-medium) {
+    .skip-search {
+        float: right;
+        position: relative;
+        top: -5px;
+    }
+    .skip-link {
+        width: 25%;
+    }
+
+    #header-account {
+        position: relative;
+        top: 35px;
+    }
+    .welcome-header {
+    	top: 30px;
+    	left: 0;
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, 500px) {
+
+    .skip-link {
+        width: 30%;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Active
+ */
+@include bp(max-width, $bp-medium) {
+
+    .skip-link.skip-active {
+        background: #EDEDED;
+        color: inherit;
+    }
+
+    .skip-link.skip-active span {
+        color: inherit;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Icon
+ */
+
+.skip-link .icon {
+    display: inline-block;
+    width: 30px;
+    vertical-align: middle;
+}
+
+.skip-link.skip-nav .icon,
+.skip-link.skip-cart:not(.no-count) .icon {
+    margin-right: 3px;
+}
+
+@include bp(min-width, 500px) {
+
+    .skip-link .icon {
+        margin-right: 3px;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Label
+ */
+
+.skip-link .label {
+    display: none;
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, 500px) {
+
+    .skip-link .label {
+        display: inline-block;
+    }
+
+}
+
+/* ============================================ *
+ * Skip Content
+ * ============================================ */
+
+.skip-content {
+    display: none;
+    z-index: 999;
+}
+
+.skip-content.skip-active {
+    display: block;
+    background: #EDEDED;
+}
+
+/* ============================================ *
+ * Global Header Navigation
+ * ============================================ */
+.account-cart-wrapper {
+    float: right;
+    height: 100px;
+    display: block;
+
+    a {
+        background-color: $global-active-color;
+        color: $global-fontcolor-light;
+        height: 100%;
+        vertical-align: bottom;
+        border-radius: 0px 0px 3px 3px;
+        border-width: $global-active-border;
+        border-style: solid;
+        border-color: $global-active-color;
+
+        span.icon, span.label {
+            line-height: 30px;
+            position: relative;
+            top: 57px;
+        }
+    }
+
+    @include bp(max-width, $bp-medium) {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        width: 100%;
+    }
+}
+
+.skip-egov, .skip-account{
+    display: inline-block;
+    padding: 0 10px;
+    text-transform: uppercase;
+    vertical-align: top;
+    width: auto;
+    float: left;
+}
+
+.skip-egov {
+    @include bp(max-width, $bp-medium) {
+    	display: none;
+    }
+}

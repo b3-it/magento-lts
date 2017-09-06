@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
     <adminhtml_slpbcustomer_sales_index>
         <reference name="content">

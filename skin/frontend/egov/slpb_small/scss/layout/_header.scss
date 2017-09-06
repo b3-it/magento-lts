@@ -1,10 +1,13 @@
 //
 // @category    design
-// @package     egov_slpb_small
+// @package     egov_slpb
 // @copyright   Copyright (c) 2017 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+#store-view-switcher {
+	display: none;
+}
 
 /* ============================================ *
  * Header
@@ -109,6 +112,7 @@
             color: $global-fontcolor-light;
             display: block;
             line-height: 0.9;
+            font-size: 2.5em;
     	  }
 
         .welcome-msg {
@@ -269,7 +273,20 @@
  * ============================================ */
 
 .skip-links {
-    display: none !important;
+    clear: both;
+    //overflow: hidden;
+    border-top:$global-active-border solid $global-navigation-border-color;
+    border-bottom: $global-active-border solid $global-navigation-border-color;
+    background-color: $global-navigation-color;
+
+    @include bp(max-width, 800px) {
+    	background-color: transparent;
+    	//overflow: none;
+
+    	h1 {
+    		font-size: 2em;
+    	}
+    }
 }
 
 // ---------------------------------------------
@@ -330,9 +347,13 @@
     float: right;
     width: 15%;
     background-color: $global-wrapper-color;
-    color: $global-linkcolor;
+    color: $global-active-color;
     line-height: 100%;
     text-align: center;
+    
+    &:hover {
+        background-color: $global-active-color;
+    }
     
     @include bp(max-width, $bp-medium) {
     	padding-top: 5px;
@@ -462,26 +483,7 @@ a.skip-link {
  * Global Header Navigation
  * ============================================ */
 .account-cart-wrapper {
-    position: absolute;
-    top:5px;
-    right:25%;
-    width: 80%;
-    text-align: right;
-
-    @include bp(max-width, $bp-medium) {
-        position: static;
-        display: inline-block;
-        right: 0;
-    }
-
-    @include bp(max-width, 800px) {
-        width: 75%;
-        right: 10px;
-    }
-    
-    @include bp(max-width, 500px) {
-        width: 60%;
-    }
+    display: none;
 }
 
 .skip-egov{

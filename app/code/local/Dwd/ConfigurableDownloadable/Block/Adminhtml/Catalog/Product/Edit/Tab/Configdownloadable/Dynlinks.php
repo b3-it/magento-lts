@@ -285,9 +285,9 @@ class Dwd_ConfigurableDownloadable_Block_Adminhtml_Catalog_Product_Edit_Tab_Conf
     /**
      * Return formated price with two digits after decimal point
      *
-     * @param decimal $value Preis
+     * @param float $value Preis
      * 
-     * @return decimal
+     * @return float
      */
     public function getPriceValue($value)
     {

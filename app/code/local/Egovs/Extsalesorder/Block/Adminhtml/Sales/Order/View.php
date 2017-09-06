@@ -6,7 +6,7 @@
  * @package     Egovs_Extsalesorder
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @author 		Holger Kögel <h.koegel@b3-it.de>
- * @copyright  	Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @copyright  	Copyright (c) 2010 - 2017 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_View extends Mage_Adminhtml_Block_Sales_Order_View
@@ -138,15 +138,6 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_View extends Mage_Adminhtm
     	}
     	
     	return $qtyShipped > 0 ? true : false;
-    }
-    
-    /**
-     * Liefert Rückläufer URL
-     * 
-     * @return string
-     */
-	public function getSpecialCancelUrl() {
-        return $this->getUrl('adminhtml/extsalesorder_sales_order/speccancel');
     }
     
     /**

@@ -1,0 +1,48 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Tags
+ * ============================================ */
+
+#addTagForm button {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+#addTagForm .form-add {
+    margin-top: 10px;
+}
+
+.product-tags {
+    border: $global-box-border solid $global-border-color;
+    padding: 5px 1% 10px;
+    width: 98%;
+}
+
+.tags-list li, .product-tags li {
+    display: inline-block;
+    margin: 0 10px 0 0 !important;
+
+    &.last {
+        margin-right: 0px;
+    }
+}
+.my-tag-edit {
+    .button.btn-remove {
+        padding: 0;
+
+        &:after {
+            color: white;
+        }
+    }
+}
+@include bp (max-width, $bp-medium) {
+    .tags-list > li,
+    .tags-list {
+        float: none;
+    }
+}

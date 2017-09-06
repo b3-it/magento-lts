@@ -25,12 +25,7 @@ body.catalogsearch-result-index .col-right {
     margin-bottom: $global-boxpadding;
 }
 
-// Prevent button overlapping when buttons have long text, such as non-English translations
-.products-list .action .button,
-.products-grid .actions .button {
-    white-space: normal;
-}
-
+.cms-index-index .name-prefix,
 .catalog-category-view .name-prefix,
 .catalogsearch-result-index .name-prefix {
     vertical-align: top;
@@ -40,21 +35,43 @@ body.catalogsearch-result-index .col-right {
 }
 
 .image-copyright-box {
-    //background-color: $global-category-gradient;
-    //height: 37px;
-    //position: absolute;
-    //bottom: 0;
-    //padding: $global-boxpadding-large;
     max-width: $global-product-list-image-width;
     width: auto;
     display: inline-flex;
     font-size: 0.7em;
+
+    @include bp(max-width, $bp-large) {
+        overflow: hidden;
+        width: 95%;
+    }
 
     > span {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         color: $global-fontcolor-dark;
+    }
+}
+
+.product-action {
+	bottom: 15px;
+    position: absolute;
+    width: 60%;
+
+    @include bp(max-width, $bp-large) {
+        width: 56%;
+    }
+
+    @include bp(max-width, $bp-xsmall) {
+        width: 53.5%;
+    }
+
+	.button {
+	    float: none;
+
+	    @include bp(max-width, $bp-large) {
+	        width: 100%;
+	    }
     }
 }
 
@@ -73,6 +90,7 @@ p.product-name {
     font-weight: normal;
     max-height: $global-lineheight * 3.7;
     height: auto;
+    overflow: hidden;
 
     a {
         color: $global-linkcolor;
@@ -89,6 +107,12 @@ p.product-name {
     margin-bottom: 5px;
     font-size: $base-font-family;
     font-family: $global-fontsize;
+    overflow: hidden;
+
+    @include bp(max-width, $bp-small) {
+        overflow: hidden;
+        height: 10em;
+    }
 }
 
 /* ============================================ *
@@ -117,8 +141,15 @@ p.product-name {
         margin-bottom: 15px;
 
         img {
-            width: 100%;
             height: auto;
+    		margin: 0 auto;
+    		max-height: 145px;
+    		max-width: 215px;
+    		width: auto;
+
+    		@include bp(max-width, $bp-small) {
+    		    max-width: 90%;
+    		}
 
             &:hidden {
                 display: none;
@@ -132,26 +163,11 @@ p.product-name {
     }
 
     .actions {
-        padding-top: $box-spacing;
         position: absolute;
         bottom: 0px;
-        min-height: $global-product-grid-action-height;
-        width: 100%;
 
-        a.button, button.button {
+        .button {
             min-width: 150px;
-            max-width: 80%;
-            width: 50%;
-            font-size: $global-fontsize;
-            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
-
-            span {
-                font-family: $base-font-family;
-            }
-        }
-
-        a.button {
-            display: inline-block;
         }
     }
 
@@ -304,7 +320,7 @@ p.product-name {
     margin-bottom: $global-boxmargin;
 
     .full, .short {
-        height: 100px;
+        height: 35px;
         position: relative;
 
         .shorter {
@@ -337,6 +353,7 @@ p.product-name {
             width: $global-product-list-imagesize;
             margin-bottom: $global-boxmargin - $global-boxpadding;
             max-width: $global-product-list-image-width;
+            min-height: 180px;
 
             .product-image img {
                 max-height: $global-product-list-image-height;
@@ -358,43 +375,44 @@ p.product-name {
         border-bottom: none;
     }
 
-    .product-action {
-        position: absolute;
-        bottom: $global-listmargin + 23px;
-        width: 60%;
-
-        button, a.button {
-            margin: 0;
-        }
-    }
-
     .product-shop {
         width: 100 - $global-product-list-imagesize;
         padding-left: $global-boxmargin;
         height: 100%;
-        /*flex: 1 1 100%;*/
 
         button.button, a.button {
             font-size: $global-fontsize;
             width: $global-product-list-button-width;
-            padding: $global-btn-padding-v ($global-btn-padding-h / 2);
+            padding: $global-btn-padding-v $global-btn-padding-h;
             text-align: center;
+
+            @include bp(max-width, $bp-large) {
+                width: 100%;
+            }
 
             span {
                 font-family: $base-font-family;
             }
         }
 
+        a.button {
+            padding-top: $global-btn-padding-v + ($global-btn-padding-v / 2);
+
+        }
+
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
             line-height: 1.7em;
+
+            @include bp(max-width, $bp-large) {
+                line-height: 1.6em;
+            }
 
             a {
                 font-size: 1.5em !important;
 
                 display: inline-block;
                 min-height: 1.4em;
-                max-height: 2.4em;
                 width: 95%;
                 overflow: hidden;
             }
@@ -428,6 +446,11 @@ p.product-name {
 
             .tax-details {
                 margin: 0 20px;
+
+                @include bp(max-width, $bp-xsmall) {
+                    display: block;
+                    margin: 0;
+                }
             }
 
             .tax-details:before {
@@ -445,6 +468,10 @@ p.product-name {
         .desc {
             margin: $element-spacing 0 $element-spacing * 2 0;
             font-size: 1.2em;
+
+            @include bp(max-width, $bp-large) {
+                display: none;
+            }
         }
 
         .product-primary {
@@ -477,10 +504,6 @@ p.product-name {
     .products-list {
         .product-primary {
             height: $global-product-list-desc_height + 10 !important;
-        }
-
-        button.button, a.button {
-            width: $global-product-list-button-width !important;
         }
 
         .full {
@@ -779,15 +802,5 @@ p.product-name {
         &:after {
             @include clearfix;
         }
-    }
-}
-
-.block-layered-nav .actions {
-    margin-bottom: $global-boxpadding * 2;
-
-    a {
-        @extend .button;
-        float: right;
-        margin-right: $global-boxpadding;
     }
 }

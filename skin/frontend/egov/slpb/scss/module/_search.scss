@@ -1,0 +1,141 @@
+//
+// @category    design
+// @package     egov_slpb
+// @copyright   Copyright (c) 2017 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * SlpB-Quick-Search
+ * ============================================ */
+#quick_form > .form-search {
+	display: block;
+	width: 100%;
+	margin: $global-boxmargin 0;
+	
+	legend {
+	    display: none;
+	}
+	
+	#quicksearch {
+	    width: 87%;
+	    padding: 13px;
+	}
+	
+	button {
+	    @extend .button;
+	}
+}
+
+/* ============================================ *
+ * Search - Auto Suggest
+ * ============================================ */
+
+.search-autocomplete {
+    left: 0 !important;
+    overflow: visible !important;
+    position: relative !important;
+    top: 0px !important;
+    width: 225px !important;
+    z-index: 200;
+
+    ul {
+    	-webkit-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+    	-moz-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+    	box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+
+
+        background-color: $global-lightcolor;
+        border: $global-active-border solid $global-border-color-light;
+        left: 0;
+        padding-left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        
+        overflow: auto;
+        max-height: 80vh;
+
+        li {
+            border-bottom: $global-active-border solid $global-border-color;
+            color: $global-active-color;
+            cursor: pointer;
+            font-size: $global-fontsize;
+            padding: 4px 6px;
+            text-align: left;
+            display: block;
+            line-height: $global-lineheight;
+
+            &:hover {
+                color: $global-linkcolor-hover;
+                background-color: $global-active-color;
+            }
+
+            &.selected {
+                background-color: $global-active-color;
+                color: $global-linkcolor-hover;
+            }
+
+            .amount {
+                float: right;
+                font-weight: bold;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+
+    &:before {
+        @include triangle(up, 7px, $global-active-color);
+        left: 1.5%;
+        top: -7px;
+    }
+}
+
+/* ============================================ *
+ * Search - Advanced
+ * ============================================ */
+
+.catalogsearch-advanced-index {
+    .col-main {
+        margin-top: 5px;
+    }
+
+    .page-title {
+        width: $global-content-2col-right-percent;
+    }
+}
+
+.advanced-search {
+    width: $global-content-2col-right-percent;
+
+    #advanced-search-list {
+        input, select {
+            width: 100%;
+            margin: 0px;
+        }
+
+        #price, #price_to {
+            width: 20%;
+        }
+
+        li.even, li.odd {
+            margin-bottom: $global-listmargin;
+        }
+    }
+
+    select.multiselect {
+        option {
+            border-bottom: 1px solid $global-border-color-light;
+            padding: 2px 5px;
+        }
+    }
+}
+
+@include bp(max-width, $bp-xsmall) {
+    .advanced-search {
+        padding: $trim-small;
+    }
+}

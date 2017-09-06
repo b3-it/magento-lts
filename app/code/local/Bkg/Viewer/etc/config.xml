@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
 	<modules>
@@ -51,32 +51,11 @@
 					<service_crs>
 						<table>bkg_viewer_service_crs</table>
 					</service_crs>
-					<service_tile_system>
-						<table>bkg_viewer_service_tile_system</table>
-					</service_tile_system>
-					<service_tile>
-						<table>bkg_viewer_service_tile</table>
-					</service_tile>
-					<service_vg_group>
-						<table>bkg_viewer_service_vg_group</table>
-					</service_vg_group>
-					<service_vg>
-						<table>bkg_viewer_service_vg</table>
-					</service_vg>
 				</entities>
 			</bkgviewer_resource>
 		</models>
 	</global>
 	<frontend>
-		<routers>
-			<bkg_view_frontend>
-				<use>standard</use>
-				<args>
-					<module>Bkg_Viewer</module>
-					<frontName>bkg_viewer</frontName>
-				</args>
-			</bkg_view_frontend>
-		</routers>
 	</frontend>
 	<admin>
 		<routers>
@@ -96,30 +75,22 @@
 				<sort_order>50</sort_order>
 				<children>
 					<bkgviewer_service_service module="bkgviewer">
-						<title>Service</title>
+						<title>Service Service</title>
 						<sort_order>10</sort_order>
 						<action>adminhtml/viewer_service_service/index</action>
 					</bkgviewer_service_service>
+					<!-- 
 					<bkgviewer_service_layer module="bkgviewer">
-						<title>Layer</title>
+						<title>Service Layer</title>
 						<sort_order>20</sort_order>
 						<action>adminhtml/viewer_service_layer/index</action>
 					</bkgviewer_service_layer>
+					 -->
 					<bkgviewer_composit_composit module="bkgviewer">
-						<title>Composit</title>
+						<title>Composit Composit</title>
 						<sort_order>30</sort_order>
 						<action>adminhtml/viewer_composit_composit/index</action>
-					</bkgviewer_composit_composit>			
-					<bkgviewer_service_tilesystem module="bkgviewer">
-						<title>Tile System</title>
-						<sort_order>40</sort_order>
-						<action>adminhtml/viewer_service_tilesystem/index</action>
-					</bkgviewer_service_tilesystem>			
-					<bkgviewer_service_vggroup module="bkgviewer">
-                        <title>Vg Group</title>
-                        <sort_order>50</sort_order>
-                        <action>adminhtml/viewer_service_vggroup/index</action>
-                    </bkgviewer_service_vggroup>         
+					</bkgviewer_composit_composit>					
 				</children>
 			</bkgviewer>
 		</menu>

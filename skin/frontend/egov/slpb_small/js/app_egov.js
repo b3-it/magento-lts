@@ -16,12 +16,8 @@ var egov_break = {
 };
 
 $j(document).ready(function () {
-    // Custom-Scrollbar im Skin-Design
-    $j('body').niceScroll({
-        'cursorcolor'       : '#4B914B',
-        'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
-    });
+	// Fixed HTML-Scroll-Bug für IE ab Version 8
+	$j('html').css({'overflow-y': '', '-ms-overflow-y': ''});
 
     // Dynamische Skallierung der Welcome-Schrift
     var resizeText = function() {

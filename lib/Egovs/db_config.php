@@ -8,6 +8,9 @@ $base       = str_replace( $sub, '', dirname(__FILE__) );
 $config_xml = $base . $ds . join($ds, array('app', 'etc', 'local.xml'));
 $data_xml   = array();
 
+/////////////////////// Letzte Fehlermeldung \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+$last_err = null;
+
 /////////////////////// Konfiguration der Abfrage \\\\\\\\\\\\\\\\\\\\\\\\\\\
 $sql_table  = 'core_config_data';
 $sql_fields = array(
@@ -17,13 +20,12 @@ $sql_fields = array(
               );
 
 
-/* Liest den Inahlt einer XML-Datei ein und wandelt diesen in ein
+/* Liest den Inhalt einer XML-Datei ein und wandelt diesen in ein
  * Mehrdimensiones Array um. Jeder Eintrag bekommt ein
  * Kex=>Value-Paar zugeordnet
  *
  * @param       string      Dateiname der XML
- *
- * return       array       Fertig geparstes XML-Array
+ * @return      array       Fertig geparstes XML-Array
  */
 function get_xml_data()
 {
@@ -75,10 +77,14 @@ function get_xml_data()
         }
     }
 
-    // DB-Verbindungs-Informationen zurückgeben
+    // DB-Verbindungs-Informationen zurï¿½ckgeben
     $data_xml = $params['config']['global']['resources']['default_setup']['connection'];
 }
 
+/* Verbindung zur Datenbank per PDO herstellen
+ * 
+ * @return      object      Datenbank-Link
+ */
 function connect()
 {
     // http://kushellig.de/prepared-statements-php-data-objects-pdo/
@@ -107,6 +113,11 @@ function connect()
     }
 }
 
+/* SQL-Abfrage an die Datenbank senden um die Felder anzuzeigen
+ * 
+ * @param      string      SQL-Abfrage
+ * @return     array       Result der Abfrage
+ */
 function get_sql($query = '')
 {
     $query = trim($query);
@@ -120,7 +131,7 @@ function get_sql($query = '')
 
     if ( is_object($link) )
     {
-        // Erfolg => PDO erzeugen und ausführen
+        // Erfolg => PDO erzeugen und ausfï¿½hren
         $result = $link -> prepare($query);
         $result -> execute();
 
@@ -129,26 +140,44 @@ function get_sql($query = '')
     }
     else
     {
-        // Fehler zurückgeben
+        // Fehler zurÃ¼ckgeben
         return $link;
     }
 }
 
+/* Wert in der Datenbank Ã¤ndern
+ * 
+ * @param     string     SQL-Abfrage fÃ¼r das Update
+ * @param     string     Feldbezeichner fÃ¼r die Ã„nderung
+ * @param     string     Wert fÃ¼r die Ã„nderung
+ * @return    bool       Erfolgs-Status des Updates
+ */
 function set_sql($query = '', $param = '', $value = '')
 {
+	global $last_err;
+	
     $query = trim($query);
     $param = trim($param);
     $value = trim($value);
 
     if ( ($query == '') OR ($param == '') OR ($value == '') )
     {
-        return 'Fehler bei der Daten&uuml;bergabe!';
+    	if ( is_null($value) OR !strlen($value) )
+    	{
+    		$last_err = 'Daten-Wert ist NULL!';
+    	}
+    	else
+    	{
+    		$last_err = 'Fehler bei der Daten&uuml;bergabe!';
+    	}
+    	
+    	return FALSE;
     }
 
     $link = connect();
     if ( is_object($link) )
     {
-        // Erfolg => PDO erzeugen und ausführen
+        // Erfolg => PDO erzeugen und ausfï¿½hren
         // http://www.mustbebuilt.co.uk/php/insert-update-and-delete-with-pdo/
 
         $result = $link -> prepare($query);
@@ -158,7 +187,7 @@ function set_sql($query = '', $param = '', $value = '')
     }
     else
     {
-        // Fehler zurückgeben
+        // Fehler zurÃ¼ckgeben
         return $link;
     }
 }
@@ -171,13 +200,13 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
     <head>
         <title>Magento - DB-Config</title>
         <style type="text/css">
-            html  {background-color:#DCDCDC;}
-            table {width:650px; margin:20px 0px 20px 20px;}
-            input {width:300px;}
-            hr    {width:500px;}
-            .okay {color:#008000;}
-            .fail {background-color:#FF0000; color:#FFFFFF; font-weight:bold;}
-            .copy {font-size:9px;}
+            html       {background-color:#DCDCDC; width:750px; margin: 0 auto;}
+            table      {margin:20px 0px 20px 20px;}
+            input      {width:300px;}
+            hr         {width:500px;}
+            .okay      {color:#008000;}
+            .fail      {background-color:#FF0000; color:#FFFFFF; font-weight:bold;}
+            .copy      {font-size:9px;}
         </style>
     </head>
     <body>
@@ -190,45 +219,55 @@ if ( isset($_POST['a']) AND ($_POST['a'] == 'update') )
     $sql_data = array();
     foreach( $_POST AS $key => $val )
     {
-        if ( $key != 'a' )
+    	$key_int = intval($key);
+    	
+    	if ( ($key != 'a') AND ($key_int > 0) )
         {
-            $err = set_sql("UPDATE " . $sql_table . " SET value='" . $val . "' WHERE path='" . $key . "'", $key, $val);
+        	$err = set_sql("UPDATE " . $sql_table . " SET value='" . $val . "' WHERE config_id = " . $key_int, $key, $val);
 
-            $sql_data[] = '<div class="' . ( ($err == TRUE) ? 'okay' : 'fail' ) . '">[Code: ' . $err . '] ' . $key . '</div>';
+        	$sql_data[] = '<div class="' . ( ($err == TRUE) ? 'okay' : 'fail' ) . '">' .
+                              '[Code: ' . ( ($err == TRUE) ? $err : $last_err) . '] Feld-ID:' . $key .
+        	              '</div>';
         }
     }
 
     echo implode("\n", $sql_data);
 }
 
-$data = get_sql("SELECT path, value FROM " . $sql_table . " WHERE " . implode(' OR ', $sql_fields));
+$sql = "SELECT *, name FROM `" . $sql_table . "` " .
+       "LEFT JOIN `core_website` ON (scope_id = website_id) " .
+       "WHERE " . implode(' OR ', $sql_fields);
+$data = get_sql($sql);
+
+//echo '<hr />' . $sql . '<hr />';
 
 echo "<form action=\"" . $_SERVER['PHP_SELF'] . "\" method=\"post\">\n" .
-     "<input type=\"hidden\" name=\"a\" value=\"update\" />\n" .
-     "<table summary=\"\">\n";
+     "    <input type=\"hidden\" name=\"a\" value=\"update\" />\n" .
+     "    <table summary=\"\">\n";
 if ( is_array($data) )
 {
     foreach( $data AS $key => $val )
     {
-        echo "  <tr>\n" .
-             "    <td>" . $val['path'] . "</td>\n" .
-             "    <td><input type=\"text\" name=\"" . $val['path'] . "\" value=\"" . $val['value'] . "\" /></td>\n" .
-             "  </tr>\n";
+        echo "        <tr>\n" .
+             "            <td>(" . $val['name'] .  " [" . $val['scope'] . " " . $val['scope_id'] . "]) " . $val['path'] . "</td>\n" .
+             "            <td><input type=\"text\" name=\"" . $val['config_id'] . "\" value=\"" . $val['value'] . "\" /></td>\n" .
+             "        </tr>\n";
     }
-    echo "  <tr>\n" .
-         "    <td colspan=\"2\"><center><input type=\"submit\" value=\"Speichern\" /></center></td>\n" .
-         "  </tr>\n";
+    echo "        <tr>\n" .
+         "            <td colspan=\"2\"><center><input type=\"submit\" value=\"Speichern\" /></center></td>\n" .
+         "        </tr>\n";
 }
 else
 {
-    echo "  <tr>\n" .
-         "    <td class=\"fail\">" . $data . "</td>\n" .
-         "  </tr>\n";
+    echo "        <tr>\n" .
+         "            <td class=\"fail\">" . $data . "</td>\n" .
+         "        </tr>\n";
 }
-echo "</table>\n</form>";
 
-echo '
-        <div class="copy">&copy; 2015 by B3-IT System GmbH</div>
+echo '    </table>
+</form>
+
+        <div class="copy">&copy; 2017 by B3-IT System GmbH</div>
     </body>
 </html>
 ';

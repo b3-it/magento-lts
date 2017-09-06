@@ -16,7 +16,7 @@
 <?php
     $_productCollection=$this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
-    $name_limit = 30;
+    $name_limit = 300;
     $sku_limit = 24;
     $desc_limit = 110;
     $_imgSize_list = 300;
@@ -87,9 +87,6 @@
                             <?php echo $_productName; ?>
                         </a>
                     </h2>
-                    <div class="slpb-stars">
-                        <?php echo $this->helper('slpbproduct')->getStars($_product); ?>
-                    </div>
                     <div class="product_sku">
                         <?php
                         $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
@@ -97,7 +94,8 @@
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = mb_substr($_sku, 0, $sku_limit) . '...';
                         }
-                        echo $this->__('Sku').': <span title="'.$_sku_full.'">'.$_sku.'</span>';
+                        echo $this->__('Sku') . ': <span title="'.$_sku_full.'">' . $_sku .
+                             '</span><span class="slpb-stars">' . $this->helper('slpbproduct')->getStars($_product) . '</span>';
                         ?>
                     </div>
                     <div class="desc std">
@@ -181,9 +179,6 @@
                             <?php echo $_productName; ?>
                         </a>
                     </h2>
-                    <div class="slpb-stars">
-                        <?php echo $this->helper('slpbproduct')->getStars($_product); ?>
-                    </div>
                     <div class="product_sku">
                         <?php
                         $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
@@ -191,7 +186,8 @@
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = mb_substr($_sku, 0, $sku_limit) . '...';
                         }
-                        echo $this->__('Sku').': <span title="'.$_sku_full.'">'.$_sku.'</span>';
+                        echo $this->__('Sku') . ': <span title="'.$_sku_full.'">' . $_sku .
+                             '</span><span class="slpb-stars">' . $this->helper('slpbproduct')->getStars($_product) . '</span>';
                         ?>
                     </div>
                     <?php

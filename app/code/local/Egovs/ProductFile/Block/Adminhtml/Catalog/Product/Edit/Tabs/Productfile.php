@@ -158,7 +158,7 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 			
 			$val1 = $this->_getAttributeStoreValue(Egovs_ProductFile_Helper_Data::PRODUCT_FILE, $productId, $store);
 			$val2 = $this->_getAttributeStoreValue(Egovs_ProductFile_Helper_Data::PRODUCT_IMAGE, $productId, $store);
-			$val3 = $this->_getAttributeStoreValue('productfiledescription', $productId, $store);
+			$val3 = $this->_getAttributeStoreValue(Egovs_ProductFile_Helper_Data::PRODUCT_FILE_DESCRIPTION, $productId, $store);
 			$hasStoreSettings = ($val1 != null) || ($val2 != null) || ($val3 != null) ;
 			
 					

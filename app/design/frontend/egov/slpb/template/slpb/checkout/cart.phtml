@@ -31,6 +31,9 @@
  * @see Mage_Checkout_Block_Cart
  */
 ?>
+<?php
+$_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getStore()));
+?>
 <div class="page-head-alt button-level">
     <h3><?php echo $this->__('Shopping Cart') ?></h3>
     <?php if(!$this->hasError()): ?>
@@ -40,8 +43,12 @@
     <?php endif; ?>
 </div>
 
+<div>
+    <?php echo $this->__('<span>Stars on cart</span>: <span id="star-cnt">--</span> from max %s', $_maxstar); ?>
+</div>
+
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
-<table cellspacing="0" border="0" id="shopping-cart-table" class="data-table box-table shopping-cart">
+<table style="border:0;" id="shopping-cart-table" class="data-table box-table shopping-cart">
     <col width="40" />
     <col width="75" />
     <col />

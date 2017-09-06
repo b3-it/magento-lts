@@ -24,7 +24,13 @@
 
     @include bp(max-width, $bp-medium) {
         display: inline-block;
-        width: auto;
+        width: 33%;
+    }
+    
+    .skip-link {
+        @include bp(max-width, $bp-medium) {
+            width: 90%;
+        }
     }
 
     .minicart-message {
@@ -260,6 +266,8 @@ div.block-cart {
 
                 p.product-name {
                     padding: 0px;
+                    overflow: hidden;
+                    height: 2rem;
                 }
             }
         }

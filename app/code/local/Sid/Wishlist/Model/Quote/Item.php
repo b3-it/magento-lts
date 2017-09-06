@@ -255,9 +255,13 @@ class Sid_Wishlist_Model_Quote_Item extends Sid_Wishlist_Model_Quote_Item_Abstra
 	 */
 	public function addToCart(Mage_Checkout_Model_Cart $cart, $buyRequest = null, $delete = false)
 	{
-		$product = $this->getProduct();
-	
+		$_product = $this->getProduct();
 		$storeId = $this->getStoreId();
+		$product = Mage::getModel('catalog/product')
+			->setStoreId($_product->getStoreId())
+			->load($_product->getId());
+	
+		
 	
 		if ($product->getStatus() != Mage_Catalog_Model_Product_Status::STATUS_ENABLED) {
 			return false;

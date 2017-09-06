@@ -1,4 +1,5 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
         <modules>
             <Egovs_Extreport>
@@ -112,9 +113,6 @@
 	                         <revenue translate="title" module="reports">
 	                         	 <title>Yield</title>
 	                             <action>adminhtml/extreport_sales/revenue</action>
-	                             <depends>
-                                    <module>Egovs_Extstock</module>
-                                 </depends>
 	                         </revenue>
 	                     	<costunit translate="title" module="reports">
 	                     		<title>KLR</title>
@@ -123,9 +121,6 @@
 	                         <quantityordered translate="title" module="extreport">
 	                            <title>Sold Products</title>
 	                            <action>adminhtml/extreport_sales/quantityordered</action>
-	                            <depends>
-	                                <module>Egovs_Extstock</module>
-	                            </depends>
 	                         </quantityordered>
 	                         <kassenzeichen translate="title" module="extreport">
 	                            <title>Kassenzeichen</title>

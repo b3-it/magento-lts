@@ -21,6 +21,7 @@
     $desc_limit = 110;
     $_imgSize_list = 300;
     $_imgSize_grid = 210;
+    $_attributes = new Varien_Object();
 ?>
 <?php if(!$_productCollection->count()): ?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
@@ -32,6 +33,7 @@
     <?php $_iterator = 0; ?>
     <ol class="products-list" id="products-list">
     <?php foreach ($_productCollection as $_product): ?>
+      <?php $_attributes->setData($_product->getAttributes()); ?>
         <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
             <div class="product-list-left-col">
                 <?php // Product Image ?>
@@ -54,7 +56,6 @@
                             <li>
                                 <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
                                    class="link-wishlist egov-star egov-float-left"
-                                   alt="<?php echo $this->__('Add to Wishlist') ?>"
                                    title="<?php echo $this->__('Add to Wishlist') ?>"> </a>
                             </li>
                         <?php endif; ?>
@@ -62,7 +63,6 @@
                             <li>
                                 <a href="<?php echo $_compareUrl ?>"
                                    class="link-compare egov-float-right"
-                                   alt="<?php echo $this->__('Add to Compare') ?>"
                                    title="<?php echo $this->__('Add to Compare') ?>">
                                     <span class="egov-compare"> </span>
                                     <!-- <span class="egov-compare-1"> </span>/<span class="egov-compare-2"> </span> -->
@@ -89,9 +89,11 @@
                             <?php echo $_productName; ?>
                         </a>
                     </h2>
+                  <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getUsedInProductListing() ) : ?>
+                  <?php endif; ?>
                     <div class="product_sku">
                         <?php
-                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+                        $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
 
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = mb_substr($_sku, 0, $sku_limit) . '...';
@@ -161,6 +163,7 @@
     <?php $_columnCount = $this->getColumnCount(); ?>
     <ul class="products-grid products-grid--max-<?php echo $_columnCount; ?>-col">
         <?php $i=0; foreach ($_productCollection as $_product): ?>
+          <?php $_attributes->setData($_product->getAttributes()); ?>
             <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <img id="product-collection-image-<?php echo $_product->getId(); ?>"
@@ -180,9 +183,11 @@
                             <?php echo $_productName; ?>
                         </a>
                     </h2>
+                  <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getUsedInProductListing() ) : ?>
+                  <?php endif; ?>
                     <div class="product_sku">
                         <?php
-                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+                        $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
 
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = mb_substr($_sku, 0, $sku_limit) . '...';
@@ -228,7 +233,6 @@
                                 <li>
                                     <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
                                        class="link-wishlist egov-star egov-float-left"
-                                       alt="<?php echo $this->__('Add to Wishlist') ?>"
                                        title="<?php echo $this->__('Add to Wishlist') ?>"> </a>
                                 </li>
                             <?php endif; ?>
@@ -236,7 +240,6 @@
                                 <li>
                                     <a href="<?php echo $_compareUrl ?>"
                                        class="link-compare egov-float-right"
-                                       alt="<?php echo $this->__('Add to Compare') ?>"
                                        title="<?php echo $this->__('Add to Compare') ?>">
                                         <span class="egov-compare"> </span>
                                         <!-- <span class="egov-compare-1"> </span>/<span class="egov-compare-2"> </span> -->

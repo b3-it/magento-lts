@@ -45,7 +45,7 @@ class Bkg_Viewer_CompositController extends Mage_Core_Controller_Front_Action
     }
     
     /**
-     * @return Mage_Bkgviewer_Model_Composit_Composit
+     * @return Bkg_Viewer_Model_Composit_Composit
      */
     protected function _getComposit() {
         $params = $this->getRequest()->getParams();

@@ -29,10 +29,7 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
     extends Mage_CatalogSearch_Model_Mysql4_Fulltext_Collection
 {
     
-	private $_qtyApplied = false;
-	
-	
-	
+	private $__qtyApplied = false;
 	
 	/**
      * Add search query filter
@@ -48,17 +45,21 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
     	Mage::getSingleton('catalogsearch/fulltext')->prepareResult();
        
         $this->getSelect()
-        ->distinct('e.entity_id')
-        ->joinLeft(array('search_result' => $this->getTable('catalogsearch/result')),'search_result.product_id=e.entity_id',array('relevance' => 'relevance'))
-        //->where($this->getConnection()->quoteInto('search_result.query_id=?',$this->_getQuery()->getId()))
+            ->distinct('e.entity_id')
+            ->joinLeft(
+                array('search_result' => $this->getTable('catalogsearch/result')),
+                'search_result.product_id=e.entity_id',
+                array('relevance' => 'relevance')
+              )
         ;
         
         $phonquery = "";
         $phone = Mage::helper('egovssearch/colognephon');
-        if(strlen($query)>2)$phonquery = $phone->germanphonetic($query);
+        if (strlen($query) > 2) {
+            $phonquery = $phone->germanphonetic($query);
+        }
         //!!klammer für Suche nach soundex und search_result.query_id
-        if(strlen($phonquery) > 1)
-        {
+        if (strlen($phonquery) > 1) {
         	//$exp  = "(soundex_result.product_id=e.entity_id AND ";
         	$exp = "(". $this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.$phonquery);
         	$exp .= " OR ". $this->getConnection()->quoteInto('soundex_result.soundex like ?','%'.$phonquery.'%').")";
@@ -74,20 +75,24 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
         		->orWhere($SoundExpr)
         		;
         	//die($this->getSelect()->__toString());
-        } 
-        else
-        {
+        } else {
         	$this->getSelect()
         		->where($this->getConnection()->quoteInto('search_result.query_id=?',$this->_getQuery()->getId()));
         }  
-        
-        
+        $this->getSelect()->group('e.entity_id');
+        //die( $this->getSelect()->__toString());
+        return $this;
+    }
+    
+    protected function _addQtyOrdered() {
+        $year = Mage::app()->getLocale()->date(null, Zend_Date::YEAR);
+        $year = $year->get(Zend_Date::YEAR);
+        $period = "best.period >= '$year-01-01'";
         $this->getSelect()
-    		->joinLeft( array('best' => 'sales_flat_order_item'), 'best.product_id=e.entity_id', array('ordered_qty' => 'sum(qty_ordered)'))
-    		->group('e.entity_id');
-    		//->order('ordered_qty ' . $dir);
+            ->joinLeft( array('best' => $this->getTable('sales/bestsellers_aggregated_yearly')), "best.product_id=e.entity_id and best.store_id = {$this->getStoreId()} and $period", array('ordered_qty' => 'sum(qty_ordered)'))
+        ;
         
-//die( $this->getSelect()->__toString());
+        //die( $this->getSelect()->__toString());
         return $this;
     }
 
@@ -127,31 +132,30 @@ class Egovs_Search_Model_Mysql4_Fulltext_Collection
     {
     	$dir = $dir =='desc'? 'desc' : 'asc';
         if ($attribute == 'relevance') {
-            //$this->getSelect()->order("relevance {$dir}");
-        }
-     	else if ($attribute == 'ordered_qty') {
+            $this->getSelect()->order("relevance {$dir}");
+        } elseif ($attribute == 'ordered_qty') {
+     	    $this->_addQtyOrdered();
             $this->getSelect()->order("ordered_qty {$dir}");
-        }
-        else {
+        } else {
             parent::setOrder($attribute, $dir);
         }
         return $this;
     }
     
     
-     protected function _applyProductAvail()
-     {
-     	parent::_applyProductLimitations();
-     	if( isset($this->_productLimitationFilters['avial']))
-     	{
-	     	if(($this->_qtyApplied === false) && ($this->_productLimitationFilters['avial']=='instock'))
-	     	{
-		     	$select = $this->getSelect();
-			    $select->join(array('stock'=>'cataloginventory_stock_status'),'e.entity_id = stock.product_id AND stock.stock_status = 1',array());        
-	     	}
-	     	$this->_qtyApplied = true; 
-     	}
-    //die($select->__toString()); 	
-     	return $this;
-     }
+    protected function _applyProductAvail()
+    {
+        parent::_applyProductLimitations();
+        if (isset($this->_productLimitationFilters['avial'])) {
+            if (($this->__qtyApplied === false) && ($this->_productLimitationFilters['avial'] == 'instock')) {
+                $select = $this->getSelect();
+                $select->join(array(
+                    'stock' => 'cataloginventory_stock_status'
+                ), 'e.entity_id = stock.product_id AND stock.stock_status = 1', array());
+            }
+            $this->__qtyApplied = true;
+        }
+        // die($select->__toString());
+        return $this;
+    }
 }

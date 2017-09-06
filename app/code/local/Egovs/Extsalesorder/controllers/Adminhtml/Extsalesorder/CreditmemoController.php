@@ -9,7 +9,7 @@ require "Mage/Adminhtml/controllers/Sales/Order/CreditmemoController.php";
  * @name       	 Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @author 		Holger Kögel <h.koegel@b3-it.de>
- * @copyright  	Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @copyright  	Copyright (c) 2010 - 2017 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends Mage_Adminhtml_Sales_Order_CreditmemoController
@@ -101,25 +101,6 @@ class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends M
 	}
 	
 	/**
-     * Erstell-Seite für Gutschrift
-     * 
-     * @return void
-     */
-    /* public function newAction() {
-        if ($creditmemo = $this->_initCreditmemo()) {
-            $commentText = Mage::getSingleton('adminhtml/session')->getCommentText(true);
-
-            $creditmemo->addData(array('commentText'=>$commentText));
-
-            $this->loadLayout()
-                ->_setActiveMenu('sales/order')
-                ->renderLayout();
-        } else {
-            $this->_forward('noRoute');
-        }
-    } */
-	
-	/**
 	 * Eigentliche Speicheraktion
 	 * 
 	 * @param Mage_Sales_Model_Order_Creditmemo $creditmemo Gutschrift
@@ -178,12 +159,12 @@ public function saveAction()
         try {
             $creditmemo = $this->_initCreditmemo();
             if ($creditmemo) {
-            	$betrag = abs($creditmemo->getOrder()->getTotalPaid()-$creditmemo->getOrder()->getTotalRefunded());
-            	//Normale Stornierung (Bestellung > 0 €, Noch kein Geld erhalten, Noch keine Sendung erstellt)
-            	if ($creditmemo->getOrder()->getGrandTotal() > 0.0001
-            		&& $creditmemo->getOrder()->getTotalPaid() <= 0.0001
-//             		&& !$creditmemo->getOrder()->hasShipments()
+            	$betrag = abs($creditmemo->getOrder()->getBaseTotalPaid()-$creditmemo->getOrder()->getBaseTotalRefunded());
+            	
+            	//Normale Stornierung (Bestellung > 0 €, Noch kein Geld erhalten)
+            	if ($creditmemo->getOrder()->getBaseGrandTotal() > 0.0001 && $creditmemo->getOrder()->getBaseTotalPaid() <= 0.0001
             	) {
+            		//Prüfen ob Sendungen existieren
             		if ($creditmemo->getOrder()->hasShipments()) {
             			$creditmemoItems = $creditmemo->getAllItems();
             			if (count($creditmemoItems) < 1) {
@@ -217,10 +198,7 @@ public function saveAction()
             				$this->_getSession()->addError($this->__('Invoice cancel error.'));
             			}
             		}
-//             		$this->_redirect('adminhtml/sales_order/view', array('order_id' => $creditmemo->getOrderId()));
-             		//keine weitere Verarbeitung!!!
-//             		return;
-            		//Bestellung stornieren
+            		//Dann Bestellung stornieren
             		$order = $creditmemo->getOrder();
             		try {
             			$order->cancel()
@@ -272,9 +250,6 @@ public function saveAction()
                         $this->__('No Items To Refund').'.');
                 	}
                 }
-//                 $this->_redirect('adminhtml/sales_order/view', array('order_id' => $creditmemo->getOrderId()));
-//                 //keine weitere Verarbeitung!!!
-//                 return;
 
                 $comment = '';
                 if (!empty($data['comment_text'])) {

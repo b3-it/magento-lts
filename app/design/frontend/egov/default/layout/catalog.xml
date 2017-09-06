@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
 <!--
 /**
  * @category    design
@@ -391,6 +392,25 @@ SEO Site Map
             <action method="setTitle" translate="title" module="catalog"><title>Site Map</title></action>
         </reference>
         <update handle="catalog_seo_sitemap" />
+
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                    <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Sitemap</crumbname>
+                <crumbinfo>
+                    <label>Sitemap</label>
+                    <title>Sitemap</title>
+                </crumbinfo>
+            </action>
+        </reference>
+
         <reference name="seo.sitemap.container">
             <action method="setTitle" translate="title" module="catalog"><title>Categories</title></action>
             <block type="catalog/seo_sitemap_category" name="seo.sitemap.sitemap" as="sitemap" after="pager_top" template="catalog/seo/sitemap.phtml">

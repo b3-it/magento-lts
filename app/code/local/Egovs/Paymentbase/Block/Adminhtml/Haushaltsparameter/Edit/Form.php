@@ -33,6 +33,8 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 				'class'     => 'required-entry',
 				'required'  => true,
 				'name'      => 'title',
+				'onchange'  => '',
+				'disabled'  => false,
 		));
 
 		$fieldset->addField('value', 'text', array(
@@ -40,6 +42,8 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 				'class'     => 'required-entry',
 				'required'  => true,
 				'name'      => 'value',
+				'onchange'  => '',
+				'disabled'  => false,
 		));
 
 
@@ -47,6 +51,8 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 		$fieldset->addField('type', 'select', array(
 				'label'     => Mage::helper('paymentbase')->__('Type'),
 				'name'      => 'type',
+				'onchange'  => 'changeHHType(this);',
+				'disabled'  => false,
 				'values'    => $types->getOptionHashArray()
 		));
 
@@ -61,17 +67,19 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 		 if((Mage::registry('haushaltsparameter_data')->getType() == Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER)
 		 		|| (Mage::registry('haushaltsparameter_data')->getType() == Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER_MWST))
 			*/
-		{
+		//{
 			$fieldset->addField('hhstelle', 'multiselect', array(
 					'label'     => Mage::helper('paymentbase')->__('Haushaltsstelle'),
 					'name'      => 'hhstellen',
+					'onchange'  => '',
+					'disabled'  => true,
 					'value'		=> $this->_getSelectedHHStellen(),
 					'values'    => $this->_getHHStellen(),
-					'note'	=>Mage::helper('paymentbase')->__('For Objektnumber an Objektnumber Mwst only.')
+					'note'	    => Mage::helper('paymentbase')->__('For Objektnumber an Objektnumber Mwst only.')
 
 			));
 
-		}
+		//}
 
 		return parent::_prepareForm();
 	}

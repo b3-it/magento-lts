@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
     <modules>
         <Bfr_EventRequest>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </Bfr_EventRequest>
     </modules>
     <frontend>
@@ -46,9 +46,8 @@
     </admin>
     <adminhtml>
         <menu>
-            <event module="eventrequest">
-                <title>Events</title>
-                <sort_order>41</sort_order>
+            <bfr_eventmanager module="eventrequest">
+               
                 <children>
                     <eventrequest_request module="eventrequest">
                         <title>Application</title>
@@ -56,7 +55,7 @@
                         <action>adminhtml/eventrequest_request</action>
                     </eventrequest_request>
                 </children>
-            </event>
+            </bfr_eventmanager>
         </menu>
         <acl>
             <resources>
@@ -65,16 +64,15 @@
                 </all>
                 <admin>
                     <children>
-                        <bfr_eventrequest>
-                            <title>EventRequest Module</title>
-                            <sort_order>10</sort_order>
+                        <bfr_eventmanager>
+                           
                             <children>
                                 <eventrequest_request module="eventrequest">
                                     <title>Manage Application</title>
                                     <sort_order>0</sort_order>
                                 </eventrequest_request>
                             </children>
-                        </bfr_eventrequest>
+                        </bfr_eventmanager>
                         <system>
                             <children>
                                 <config>
@@ -154,6 +152,15 @@
             </eventrequest>
         </helpers>
         <events>
+            <clear_expired_quotes_before>
+                <observers>
+                    <bfr_eventrequest_clear_expired_quotes_before>
+                        <type>singleton</type>
+                        <class>Bfr_EventRequest_Model_Observer</class>
+                        <method>onClearExpiredQuotesBefore</method>
+                    </bfr_eventrequest_clear_expired_quotes_before>
+                </observers>
+            </clear_expired_quotes_before>
             <sales_quote_add_item>
                 <observers>
                     <bfr_eventrequest_add_item>

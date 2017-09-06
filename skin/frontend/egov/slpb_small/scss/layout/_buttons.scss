@@ -1,0 +1,69 @@
+﻿//
+// @category    design
+// @package     egov_slpb
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.egov-pencile, .egov-delete {
+	color: $global-active-color;
+}
+
+/* ============================================ *
+ * Primary Buttons
+ * ============================================ */
+
+.button {
+    color: $global-button-font-color;
+    background-color: $global-button-color;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-rgba-1), color-stop($global-button-gradient, $global-rgba-2), color-stop(100%, $global-button-color));
+    background-image: -webkit-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-image: -moz-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-image: -o-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-image: linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
+    background-size: 100% auto;
+    
+    border: 0;
+
+    text-align: center;
+    padding: 12px 5px;
+    display: inline-block;
+
+    &:hover, &:active, &:focus {
+        background: $global-button-hovercolor $global-repeat-scroll;
+        color: $global-button-font-hover-color;
+        cursor: pointer;
+    }
+    &:focus {
+        outline: none;
+    }
+    
+    &.disabled, &:disabled {
+        background: $global-lightcolor;
+    	opacity: 0.6;
+    	cursor: not-allowed;
+    }
+    
+    &:only-child {
+	    width: 100%;
+	    float: none;
+	}
+	&:last-child {
+	    float: right;
+	    margin: 0;
+	}
+}
+
+.calendar .button {
+	display: table-cell;
+}
+
+// This mixin gets applied to elements that are only buttons on smartphones (or sometimes tablets), such as layered
+// nav links or checkbox labels.
+// Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
+// extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
+@mixin touch-button {
+    color: $global-button-font-color;
+    background-color: $global-lightcolor;
+    padding: 5px 10px;
+}

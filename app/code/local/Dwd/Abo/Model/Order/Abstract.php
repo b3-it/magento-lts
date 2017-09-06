@@ -46,7 +46,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	protected function setRuleData($quote)
 	{
 		//$customer = Mage::getModel('customer/customer')->load($quote->getCustomerId());
-		//Wird fÃ¼r Katalogpreisregeln benÃ¶tigt
+		//Wird für Katalogpreisregeln benötigt
 		//siehe: Mage_CatalogRule_Model_Observer::processAdminFinalPrice
 		Mage::unregister('rule_data');
 		Mage::register('rule_data', new Varien_Object(array(
@@ -494,7 +494,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 			$mail->setFromEmail($sender['email']);
 			$mail->setFromName($sender['name']);
 			
-			$sdm = Mage::getStoreConfig('payment/paymentbase/webshopdesmandanten');
+			$sdm = Mage::getStoreConfig('payment_services/paymentbase/webshopdesmandanten');
 			$subject = sprintf("%s::%s", $sdm, $subject);
 			$mail->setSubject($subject);
 			try {

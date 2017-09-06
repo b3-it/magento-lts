@@ -1,22 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
     <modules>
         <Dwd_Ibewi>
-            <version>0.1.2</version>
+            <version>0.1.3</version>
         </Dwd_Ibewi>
     </modules>
-    <frontend>
-        <routers>
-            <ibewi>
-                <use>standard</use>
-                <args>
-                    <module>Dwd_Ibewi</module>
-                    <frontName>ibewi</frontName>
-                </args>
-            </ibewi>
-        </routers>
-    </frontend>
     <admin>
 		<routers>
 			<adminhtml>	
@@ -31,11 +20,11 @@
     <adminhtml>
         <translate>
             <modules>
-                <mage_adminhtml>
+                <Dwd_Ibewi>
                     <files>
                         <default>Dwd_Ibewi.csv</default>
                     </files>
-                </mage_adminhtml>
+                </Dwd_Ibewi>
             </modules>
         </translate>
         <menu>
@@ -62,8 +51,30 @@
                             </order>
                         </children>
                     </ibewi>
+                    <products>
+                        <children>
+                            <ibewi_report_attribute module="ibewi">
+                                <title>Kontierung</title>
+                                <sort_order>10</sort_order>
+                                <action>adminhtml/ibewi_report_attribute</action>
+                            </ibewi_report_attribute>
+                        </children>
+                    </products>
                 </children>
             </report>
+			<catalog>
+				<children>
+					<attributes>
+							<children>
+								<dwdibewi_kostentraeger_attribute module="ibewi">
+									<title>Cost Unit</title>
+									<sort_order>10</sort_order>
+									<action>adminhtml/ibewi_kostentraeger_attribute/index</action>
+								</dwdibewi_kostentraeger_attribute>
+							</children>
+					</attributes>
+				</children>
+			</catalog>
         </menu>
         <acl>
             <resources>
@@ -92,8 +103,29 @@
                                         </order>
                                     </children>
                                 </ibewi>
+                                <products>
+	                                <children>
+		                                <ibewi_report_attribute>
+		                                        <title>Kontierung</title>
+		                                        <sort_order>20</sort_order>
+		                                </ibewi_report_attribute>
+	                                </children>
+                                </products>
                             </children>
                         </report>
+						<catalog>
+							<children>
+								<attributes>
+									<children>
+										<dwdibewi_kostentraeger_attribute
+											module="ibewi">
+											<title>Cost Unit</title>
+											<sort_order>10</sort_order>
+										</dwdibewi_kostentraeger_attribute>
+									</children>
+								</attributes>
+							</children>
+						</catalog>
                     </children>
                 </admin>
             </resources>
@@ -118,6 +150,9 @@
                     <access>
                         <table>ibewi_access</table>
                     </access>
+                    <kostentraeger_attribute>
+                        <table>ibewi_kostentraeger_attribute</table>
+                    </kostentraeger_attribute>
                 </entities>
             </ibewi_mysql4>
         </models>
@@ -217,12 +252,19 @@
                 <ibewi_maszeinheit>
                     <to_order_item>*</to_order_item>
                 </ibewi_maszeinheit>
+                <kostentraeger>
+                    <to_order_item>*</to_order_item>
+                </kostentraeger>
             </sales_convert_quote_item>
             <sales_convert_order_item>
                 <ibewi_maszeinheit>
                     <to_quote_item>*</to_quote_item>
                     <to_invoice_item>*</to_invoice_item>
                 </ibewi_maszeinheit>
+                <kostentraeger>
+                    <to_quote_item>*</to_quote_item>
+                    <to_invoice_item>*</to_invoice_item>
+                </kostentraeger>
            </sales_convert_order_item>
         </fieldsets>
         <sales>
@@ -230,6 +272,7 @@
         		<item>
         			<product_attributes>
                         <ibewi_maszeinheit/>
+                        <kostentraeger/>
                     </product_attributes>
         		</item>
         	</quote>
@@ -243,6 +286,15 @@
                     </sales_quote_item_set_product>
                 </observers>
             </sales_quote_product_add_after>
+            <sales_quote_add_item>
+                <observers>
+                    <ibewi_quote_item_add>
+                        <type>singleton</type>
+                        <class>Dwd_Ibewi_Model_Observer</class>
+                        <method>onSalesQuoteAddItem</method>
+                    </ibewi_quote_item_add>
+                </observers>
+            </sales_quote_add_item>
              </events>
     </global>
 </config>

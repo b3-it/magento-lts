@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
 <!--
 /**
  * @category    design
@@ -49,8 +50,9 @@
                 <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
 
                 <!-- added jQuery-Egov-Funktions -->
-                <action method="addJs"><script>egovs/jquery.nicescroll.min.js</script></action>
                 <action method="addJs"><script>egovs/jquery.egov.js</script></action>
+                <action method="addJs"><script>egovs/jquery.nicescroll.min.js</script></action>
+                <action method="addJs"><script>egovs/jquery.nicescroll.init.js</script></action>
                 <!--  <action method="addJs"><script>egovs/jquery.prevent.lostsession.js</script></action> -->
 
                 <!-- Add stylesheets with no media queries for use in IE 8 and below -->

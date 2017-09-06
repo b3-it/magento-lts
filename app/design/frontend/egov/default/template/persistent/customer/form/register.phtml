@@ -168,7 +168,7 @@
                 <li class="fields" id="adress-new-region">
                     <div class="field">
                         <label for="region_id">
-                            <?php echo $this->getFieldRequiredHtml('region')?>
+                            <?php echo $this->getFieldRequiredHtml('region') ?>
                             <?php echo $this->__('State/Province') ?>
                         </label>
                         <select tabindex="12" id="region_id" name="region_id" title="<?php echo $this->quoteEscape($this->__('State/Province')) ?>" class="validate-select" style="display:none;">
@@ -179,7 +179,7 @@
                             $('region_id').setAttribute('defaultValue', "<?php echo $this->getFormData()->getRegionId() ?>");
                         //]]>
                         </script>
-                        <input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getRegion()) ?>" title="<?php echo $this->quoteEscape($this->__('State/Province')) ?>" class="input-text <?php echo $this->isFieldRequired('region') ? 'required-entry' : ''?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" style="display:none;" />
+                        <input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getRegion()) ?>" title="<?php echo $this->quoteEscape($this->__('State/Province')) ?>" class="input-text <?php echo $this->isFieldRequired('region') ?  'required-entry' : ''; ?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" style="display:none;" />
                     </div>
                 </li>
               <?php endif; ?>
@@ -317,6 +317,10 @@
         <?php if($this->getShowAddressFields()): ?>
         new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
         <?php endif; ?>
+
+        if( $j('#region').hasClass('required-entry') ) {
+            $j('#adress-new-region label').prepend('<span class="required">*</span>');
+        }
 
         var TabData = {'prefix': 1, 'firstname': 2, 'middlename': 3, 'lastname': 4, 'suffix': 5, 'country': 13};
         setTabIndex(TabData);

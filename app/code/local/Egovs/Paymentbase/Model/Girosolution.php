@@ -54,6 +54,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$config = GiroCheckout_SDK_Config::getInstance();
 		$config->setConfig('DEBUG_MODE', $this->getDebug());
 		$config->setConfig('DEBUG_PATH', Mage::getBaseDir('var') . DS . 'log');
+		//TODO: Pfad zu CA Bundle setzen
+		//Pfad muss jetzt vor allem für Windows per INI_SET oder in PHP INI gesetzt werden
+		//https://curl.haxx.se/docs/sslcerts.html
+		//https://curl.haxx.se/docs/caextract.html
+		//curl.cainfo =
+		$config->setConfig('CURLOPT_CAINFO', null);
 		
 		parent::__construct();
     }

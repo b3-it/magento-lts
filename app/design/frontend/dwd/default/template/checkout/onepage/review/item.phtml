@@ -48,7 +48,7 @@ $_productname = $this->escapeHtml($this->getProductName());
 	        </dl>
         </div>
 
-		<div class="product-collateral item-options">
+		<dl class="product-collateral item-options">
 			<?php foreach ($_options as $_option) : ?>
 			<?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
 			<dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
@@ -63,7 +63,7 @@ $_productname = $this->escapeHtml($this->getProductName());
 			    <?php endif; ?>
 			</dd>
 			<?php endforeach; ?>
-        </div>
+        </dl>
       <?php endif;?>
         <?php if ($addtInfoBlock = $this->getProductAdditionalInformationBlock()):?>
             <?php echo $addtInfoBlock->setItem($_item)->toHtml() ?>

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout>
 	<adminhtml_sales_order_invoice_new>
 		<reference name="content">
@@ -78,16 +79,8 @@
             </action>
             <action method="addColumnAfter">
                 <columnId>base_balance</columnId>
-                <arguments helper="extsalesorder/translate">
-                    <translate>
-                        <header>Balance (Base)</header>
-                        <index>base_grand_total</index>
-                        <index_paid>base_total_paid</index_paid>
-                        <filter_index>(base_grand_total - ifnull(base_total_paid, 0))</filter_index>
-                        <renderer>egovsbase/adminhtml_widget_grid_column_renderer_balance</renderer>
-                        <type>currency</type>
-                        <currency>base_currency_code</currency>
-                    </translate>
+                <arguments helper="extsalesorder/getBaseBalanceColumnParams">
+                  
                 </arguments>
                 <after>grand_total</after>
             </action>

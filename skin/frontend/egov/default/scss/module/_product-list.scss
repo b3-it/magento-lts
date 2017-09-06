@@ -47,6 +47,7 @@ p.product-name {
     line-height: $global-lineheight;
     max-height: $global-lineheight * 2.8;
     height: auto;
+    overflow: hidden;
 
     a {
         color: $global-linkcolor;
@@ -277,6 +278,7 @@ p.product-name {
         height: auto;
         display: flex;
         flex-flow: row column;
+        min-height: 200px;
 
         &:after {
             @include clearfix;
@@ -321,6 +323,10 @@ p.product-name {
         button.button, a.button {
             font-size: $global-fontsize;
             width: 25%;
+            
+            @include bp(max-width, $bp-medium) {
+                width: 50%;
+            }
 
             span {
                 font-family: $base-font-family;
@@ -329,7 +335,7 @@ p.product-name {
 
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
-            height: 1em;
+            height: 1.2rem;
 
             a {
                 font-size: $global-fontsize;
@@ -362,11 +368,19 @@ p.product-name {
                     font-size: $global-fontsize;
                 }
             }
+            
+            .price-box, .tax-details {
+                display: inline-block;
+                width: 45%;
+                
+                @include bp(max-width, $bp-small) {
+                    display: block;
+                }
+            }
         }
 
         .desc {
             margin-top: $element-spacing;
-            max-height: 40px;
         }
 
         .product-primary {
@@ -402,11 +416,20 @@ p.product-name {
         }
         .product-primary {
             height: 45%;
+            overflow: hidden;
+            
+            @include bp(max-width, $bp-small) {
+                height: 40%;
+            }
         }
         .product-price {
             height: 27%;
             overflow: hidden;
             margin-bottom: 15px;
+            
+            @include bp(max-width, $bp-medium) {
+                margin-bottom: 0;
+            }
         }
 
         .full {
@@ -439,7 +462,6 @@ p.product-name {
     .products-list .product-shop {
         .product-primary,
         .desc {
-            float: left;
             width: 60%;
             padding-right: 20px;
         }
@@ -478,16 +500,17 @@ p.product-name {
 .mini-products-list {
 
     .product-image {
-        float: left;
         min-width: 50px;
     }
     .product-details {
-        margin-left: 60px;
-    }
-
-    // Vertically center product name
-    .product-details .product-name {
-        padding-top: 10px;
+        display: inline-block;
+        width: 70%;
+        vertical-align: top;
+        
+        // Vertically center product name
+        .product-name {
+    	    padding-top: 10px;
+	    }
     }
 
     li {

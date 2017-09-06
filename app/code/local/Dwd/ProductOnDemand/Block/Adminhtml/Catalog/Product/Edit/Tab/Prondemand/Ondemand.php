@@ -300,8 +300,8 @@ class Dwd_ProductOnDemand_Block_Adminhtml_Catalog_Product_Edit_Tab_Prondemand_On
     /**
      * Return formated price with two digits after decimal point
      *
-     * @param decimal $value
-     * @return decimal
+     * @param float $value
+     * @return float
      */
     public function getPriceValue($value)
     {
@@ -371,7 +371,7 @@ class Dwd_ProductOnDemand_Block_Adminhtml_Catalog_Product_Edit_Tab_Prondemand_On
     /**
      * Retrive config object
      *
-     * @return Varien_Config
+     * @return Varien_Object
      */
     public function getConfig()
     {

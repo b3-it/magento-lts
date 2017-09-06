@@ -72,13 +72,14 @@ input[type="password"]:active, input[type="tel"]:active, select:active {
 
 input[type="checkbox"], input[type="radio"] {
     position: relative;
-    top: 1px;
+    top: -1px;
     left: 2px;
     margin-right: $global-radio-checkback-spacing;
 }
 
 input[type="radio"] {
     margin-right: $global-radio-checkback-spacing - 3;
+    vertical-align: top;
 }
 
 a {
@@ -207,12 +208,16 @@ p.note-msg {
 // On account pages, don't remove the top border in order to create separation between block and .block-account
 body:not(.customer-account) .block:first-child .block-title {
     border-top: none;
-    padding-top: 0;
+    //padding-top: 0;
 }
 
 .block-subtitle {
     font-weight: bold;
     margin-bottom: $element-spacing;
+}
+
+.block-compared {
+	margin-bottom: $element-spacing / 2  !important;
 }
 
 /* -------------------------------------------- *
@@ -223,15 +228,6 @@ body:not(.customer-account) .block:first-child .block-title {
     position: relative;
     top: -20px;
 }
-
-/* ============================================ *
- * Reorder-Box Styles
- * ============================================ */
-
-div.block-reorder {
-    margin-top: $global-boxmargin;
-}
-
 
 .block-account,
 .block-cms-menu {
@@ -443,7 +439,15 @@ div.block-reorder {
 .block-layered-nav .currently,
 .mini-products-list,
 #compare-items {
-
+    a, p {
+        display: inline-block;
+        vertical-align: top;
+    }
+    
+    p {
+        width: 85%;
+    }
+    
     .btn-remove,
     .btn-previous {
         float: right;

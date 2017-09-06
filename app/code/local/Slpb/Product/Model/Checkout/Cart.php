@@ -91,7 +91,8 @@ class Slpb_Product_Model_Checkout_Cart extends Mage_Checkout_Model_Cart
             	Mage::throwException(Mage::helper('slpbproduct')->__('You have too much limited items at your cart.'));
             }
         
-	        
+            Mage::dispatchEvent('checkout_cart_add_product_before',
+            		array('product' => $product, 'request' =>$request, 'cart' => $this));
 	        
 	        
 		}

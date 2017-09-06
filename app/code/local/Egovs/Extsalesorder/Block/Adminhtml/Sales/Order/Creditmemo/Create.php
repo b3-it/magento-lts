@@ -23,12 +23,12 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_Creditmemo_Create extends 
         $this->_removeButton('delete');
         $this->_removeButton('save');
 
-        /*$this->_addButton('submit_creditmemo', array(
+        $this->_addButton('submit_creditmemo', array(
             'label'     => Mage::helper('sales')->__('Submit Credit Memo'),
             'class'     => 'save submit-button',
             'onclick'   => '$(\'edit_form\').submit()',
             )
-        );*/
+        );
 
     }
 

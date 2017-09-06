@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
     <default>
         <reference name="head">
@@ -9,7 +10,9 @@
             <!-- Muss an letzter Stelle stehen um als DEFAULT zu gelten -->
             <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet> </action>
             <!-- Support für Native events und Aufrufe wie $(id).trigger('change') -->
-            <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action>
+            <!-- 2017-06-21 :: Deaktiviert, da jetzt mit jQuery umgesetzt -->
+            <!-- <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action> -->
+            <action method="addJs"><script>egovs/jquery.admin.js</script></action>
         </reference>
     </default>
     <adminhtml_egovsbase_tools_analyse_sales_order_item_index>
@@ -21,8 +24,10 @@
 
 	<jquery_load_handle>
 		<reference name="head">
+		<!-- 
             <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
             <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+         -->
         </reference>
 	</jquery_load_handle>
 </layout>
