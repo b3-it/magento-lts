@@ -230,7 +230,7 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
      * @param Varien_Object $payment Payment
      * @param integer       $amount  Betrag
      * 
-     * @return Mage_Payment_Model_Abstract
+     * @return Egovs_Paymentbase_Model_Abstract
      * 
      * @see		Egovs_Paymentbase_Model_Abstract::_authorize
      */

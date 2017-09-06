@@ -100,7 +100,7 @@ Default layout, loads most of the pages
                 <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
  -->
-                <block type="gkacheckout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
 				<action method="setData"><key>accesskey</key><value>b</value></action>
                	<action method="setData"><key>jumptitle</key><value>Bestellung aufgeben</value></action>				
 				</block>
@@ -278,11 +278,12 @@ Multi address shipping checkout overview
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
 -->
                 <action method="addItemRender"><type>virtualpayid</type><block>virtualpayid/checkout_cart_item_renderer</block><template>gka/virtualpayid/checkout/onepage/review/item.phtml</template></action>
-                <block type="checkout/multishipping_payment_info" name="payment_info">
-                    <action method="setInfoTemplate"><method></method><template></template></action>
-                </block>
+               
                 
                 <block type="gkacheckout/cart_totals" name="totals" />
+                <block type="gkacheckout/singlepage_start_payment" name="singlepage_payment" template="checkout/singlepage/start/payment.phtml"/>
+                <block type="gkacheckout/singlepage_shipping" name="singlepage_shipping" template="checkout/singlepage/shipping.phtml"/>
+                <block type="gkacheckout/singlepage_start_billing" name="singlepage_billing" template="checkout/singlepage/start/billing.phtml"/>
             </block>
         </reference>
     </checkout_singlepage_overview>
@@ -295,7 +296,18 @@ Multi address shipping checkout success
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
-            <block type="gkacheckout/singlepage_success" name="checkout_success" template="checkout/singlepage/success.phtml"/>
+            <block type="gkacheckout/singlepage_success" name="checkout_success" template="checkout/singlepage/success.phtml">
+                    <block type="sales/order_items" name="order_items" template="checkout/singlepage/success/items.phtml">
+                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>checkout/singlepage/success/renderer/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>checkout/singlepage/success/renderer/default.phtml</template></action>
+                    <block type="sales/order_totals" name="order_totals" template="sales/order/totals.phtml">
+                        <action method="setLabelProperties"><value>colspan="3" class="a-right"</value></action>
+                        <action method="setValueProperties"><value>class="last a-right"</value></action>
+                        <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml" />
+                    </block>
+                </block>
+            
+            </block>
         </reference>
     </checkout_singlepage_success>
 

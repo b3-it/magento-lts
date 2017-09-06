@@ -51,7 +51,7 @@
                         <?php foreach ($_methods as $_method): $_code = $_method->getCode() ?>
                             <dt>
                                 <?php if ($_methodsCount > 1): ?>
-                                <input type="radio" id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" name="payment[method]" title="<?php echo $this->escapeHtml($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
+                                <input type="radio" id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" name="payment[method]" title="<?php echo $this->escapeHtml($_method->getTitle()) ?>" onclick="switchMethod('<?php echo $_code ?>');return;"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
                                 <?php else :?>
                                 <span class="no-display"><input type="radio" id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" name="payment[method]" checked="checked" class="radio" /></span>
                                 <?php endif;?>
@@ -69,23 +69,27 @@
                 </div>
     <script type="text/javascript">
     //<![CDATA[
-        var payment = new paymentForm('multishipping-billing-form');
-        function toggleToolTip(event){
-            if($('payment-tool-tip')){
-                /*$('payment-tool-tip').setStyle({
-                    top: (Event.pointerY(event)-510)+'px',
-                    left: (Event.pointerX(event)-800)+'px'
-                })*/
-                $('payment-tool-tip').toggle();
-            }
-            Event.stop(event);
-        }
-        if($('payment-tool-tip-close')){
-            Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
-        }
-        $$('.cvv-what-is-this').each(function(element){
-            Event.observe(element, 'click', toggleToolTip);
-        });
+    
+    
+    	 function switchMethod(method)
+    	 {
+ 			var url = '<?php echo $this->getPaymentAdditionalFormUrl(); ?>method/'+ method;
+    		$j.ajax({
+    	            url: url,
+    	            type: "GET",
+    	            dataType : "html",
+    	            success: function( data ) {
+    	                $j('#cashpayment').html(data);
+    	            },
+    	            error: function( xhr, status ) {
+    	            alert( "Sorry, there was a problem!" );
+    	            },
+    	            complete: function( xhr, status ) {
+    	                //$('#showresults').slideDown('slow')
+    	            }
+    	            });
+        	 
+    	 }
     //]]>
     </script>
 </div>

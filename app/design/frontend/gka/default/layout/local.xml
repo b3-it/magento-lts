@@ -51,6 +51,21 @@
             <action method="addBodyClass"><classname>mp-checkout</classname></action>
         </reference>
     </checkout_singlepage_start>
+    
+    <checkout_singlepage_overview>
+    	<reference name="head">
+    		<action method="addJs"><script>lib/jquery/jquery-ui-1.12.1.js</script></action>
+    		<action method="addItem"><type>js_css</type><name>lib/jquery/jquery-ui-1.12.1.css</name></action>
+    		<action method="addItem"><type>skin_js</type><name>js/overview.js</name></action>
+    		<action method="addItem"><type>skin_js</type><name>js/barkasse.js</name></action>
+    	</reference>
+    </checkout_singlepage_overview>
+    
+    <checkout_singlepage_success>
+    	<reference name="head">
+    		<action method="addCss"><stylesheet>css/print.css</stylesheet><params>media="print"</params></action>
+    	</reference>
+    </checkout_singlepage_success>
 
     <catalog_product_view>
         <reference name="product.info">
