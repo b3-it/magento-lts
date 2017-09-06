@@ -315,6 +315,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
 
         	$this->_getCheckout()->setShippingMethod();
         	$this->_getCheckout()->setBillingAddress($billing);
+        	$this->_getCheckout()->setShippingAddress($billing);
         	$this->_getCheckout()->setPaymentMethod($payment['method']);
             $givenamount = $this->getRequest()->getParam('givenamount', false);
             $this->_getCheckout()->createOrder($givenamount);
@@ -386,7 +387,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     public function paymentAdditionalFormAction()
     {
     	$method = $this->getRequest()->getParam('method');
-    	$out = "yxcv";
+    	$out = "";
     	if($method == 'epaybl_cashpayment')
     	{
 	    	$block = $this->getLayout()->createBlock(
