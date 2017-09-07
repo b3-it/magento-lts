@@ -74,4 +74,25 @@ foreach($cms_arr AS $page) {
     }
 }
 
+$email_tpl = Mage::getModel('core/email_template')->getCollection();
+
+foreach($email_tpl AS $tpl) {
+    $id       = $tpl->getTemplateId();
+    $old_text = $tpl->getTemplateText();
+    $new_text = str_replace(array_keys($symmetrics), array_values($symmetrics), $old_text);
+    
+    if ($old_text != $new_text) {
+        $model = Mage::getModel('core/email_template')->load($id);
+        $model->setTemplateText($new_text)->save();
+    }
+    
+    $old_title = $tpl->getTemplateSubject();
+    $new_title = str_replace(array_keys($symmetrics), array_values($symmetrics), $old_title);
+    
+    if ($old_title != $new_title) {
+        $model = Mage::getModel('core/email_template')->load($id);
+        $model->setTemplateSubject($new_title)->save();
+    }
+}
+
 $installer->endSetup();
