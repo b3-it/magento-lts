@@ -82,7 +82,7 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
     
     public function isCashPayment()
     {
-    	return true;//($this->getPayment()->getMethod() == 'epaybl_cashpayment');
+    	return ($this->getPayment()->getMethod() == 'epaybl_cashpayment');
     }
     
     public function getShippingAddress()
