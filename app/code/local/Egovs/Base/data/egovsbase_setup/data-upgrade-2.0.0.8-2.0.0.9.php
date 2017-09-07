@@ -81,6 +81,9 @@ foreach($email_tpl AS $tpl) {
     $old_text = $tpl->getTemplateText();
     $new_text = str_replace(array_keys($symmetrics), array_values($symmetrics), $old_text);
     
+    $new_text = str_replace(' style="font:9px/1em Verdana, Arial, Helvetica, sans-serif;"', '', $new_text);
+    $new_text = preg_replace('/<!--(.*)-->/Uis', '', $new_text);
+    
     if ($old_text != $new_text) {
         $model = Mage::getModel('core/email_template')->load($id);
         $model->setTemplateText($new_text)->save();
