@@ -155,9 +155,24 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     	return $order->formatPrice($ga - $total);
     }
     
+    /**
+     * Ist die verwendete Zahlart Barzahlung
+     * @return boolean
+     */
     public function isCashPayment()
     {
     	return ($this->getOrder()->getPayment()->getMethod() == 'epaybl_cashpayment');
+    }
+    
+    
+    /**
+     * der Name der Zahlart
+     */
+    public function getPaymentName()
+    {
+    	$info = $this->getOrder()->getPayment()->getMethodInstance();
+    	
+    	return $info->getTitle();
     }
     
 }
