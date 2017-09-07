@@ -260,6 +260,10 @@
             thead th, tbody td {
                 padding: $global-tdpadding;
             }
+            
+            .checkout-product-image {
+            	display: none !important;
+            }
 
             thead {
                 th:first-child {

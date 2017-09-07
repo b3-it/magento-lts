@@ -161,14 +161,14 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
      */
     public function isCashPayment()
     {
-    	return ($this->getOrder()->getPayment()->getMethod() == 'epaybl_cashpayment');
+    	return ($this->getOrder()->getPayment()->getMethod() == 'epaybl_cashpayment' ? 1 : 0);
     }
     
     
     /**
      * der Name der Zahlart
      */
-    public function getPaymentName()
+    public function getPaymentTitle()
     {
     	$info = $this->getOrder()->getPayment()->getMethodInstance();
     	

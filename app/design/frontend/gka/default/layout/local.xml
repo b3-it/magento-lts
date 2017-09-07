@@ -60,6 +60,12 @@
     		<action method="addItem"><type>skin_js</type><name>js/barkasse.js</name></action>
     	</reference>
     </checkout_singlepage_overview>
+
+    <checkout_singlepage_success>
+    	<reference name="head">
+    		<action method="addItem"><type>skin_js</type><name>js/success.js</name></action>
+    	</reference>
+    </checkout_singlepage_success>
     
     <checkout_singlepage_success>
     	<reference name="head">

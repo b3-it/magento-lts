@@ -13,14 +13,16 @@ $_order = $this->getOrder();
 $_orderItems = $this->getOrderItems();
 ?>
 
+<script type="text/javascript">
+	var ChangeAmountValue = '<?php echo $this->getChangeAmount(); ?>';
+	var ChangeAmountTitle = '<?php echo $this->__('Change amount'); ?>';
+	var ChangeAmountView  = '<?php echo $this->isCashPayment(); ?>';
+</script>
+
 <div class="multiple-checkout">
     <div class="page-title">
         <h1 data-role="page-title"><?php echo $this->__('Order Success') ?></h1>
     </div>
-    <h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
-    <p>
-        <?php echo $this->__('We are processing your order and you will soon receive an email with details of the order. Once the order has shipped you will receive another email with a link to track its progress.') ?>
-    </p>
     
     <div class="quittung-titel show-print-only">
     	<?php echo $this->__('Quittance'); ?><br />
@@ -57,6 +59,10 @@ $_orderItems = $this->getOrderItems();
         <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Print Page')) ?>" class="button" onclick="window.print();">
             <span><?php echo $this->__('Print Page') ?></span>
         </button>
+    </div>
+    
+    <div class="print-payment-method show-print-only">
+    	<?php echo $this->__('Paymentmethod: %s', $this->getPaymentTitle()); ?>
     </div>
     
     <div class="print-userinfo show-print-only">

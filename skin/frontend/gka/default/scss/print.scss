@@ -45,6 +45,7 @@ body, h3, td strong {
 #menuesprung,
 .page-header, .footer-container,
 .page-title, .sub-title, p, .qty-prefix,
+.tax-totals,
 colgroup, .buttons-set {
 	display: none;
 }
@@ -97,7 +98,7 @@ colgroup, .buttons-set {
 	}
 }
 
-.print-userinfo, .print-info-block {
+.print-userinfo, .print-info-block, .print-payment-method {
 	display: block;
 	margin: 30px 0 10px 0;
 	font-size: 0.9em;
