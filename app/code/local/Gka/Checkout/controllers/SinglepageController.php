@@ -104,7 +104,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         }
 
         //unr zum testen der success view, später entfernen
-        return $this;
+        //return $this;
         
         $quote = $this->_getCheckout()->getQuote();
         $a = $quote->hasItems();

@@ -28,9 +28,9 @@
  * Shopping cart controller
  */
 
-$path = realpath(__DIR__. '../../../../../core/Mage/Checkout/controllers');
+$path = realpath(__DIR__. '..'.DS.'..'.DS.'..'.DS.'..'.DS.'..'.DS.'core'.DS.'Mage'.DS.'Checkout'.DS.'controllers');
 
-require_once $path.'/CartController.php';
+require_once $path.DS.'CartController.php';
 
 class Gka_Checkout_CartController extends Mage_Checkout_CartController
 {
