@@ -13,7 +13,8 @@ class B3it_Maintenance_Model_DatePickerFrontend extends Mage_Adminhtml_Block_Sys
 			'format'	=> $format,
 			'time'		=> true,
         	//'input_format' => Varien_Date::DATETIME_INTERNAL_FORMAT,
-        	'locale' 	=>Mage::app()->getLocale()->getLocaleCode()
+        	'locale' 	=>Mage::app()->getLocale()->getLocaleCode(),
+        	'disabled' => $element->getInherit()
         );
         $date->setData($data);
 		$date->setForm($element->getForm());
