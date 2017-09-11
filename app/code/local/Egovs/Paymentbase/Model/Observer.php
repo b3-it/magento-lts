@@ -377,7 +377,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 	 * Payments mit authorize_capture (Debit & DebitPIN) überführen virtuelle Bestellungen nicht direkt in den State/Status Vollständig über.
 	 * Das Problem liegt an Mage_Sales_Model_Order::_checkState, welches den endgültigen State erst nach dem ersten Speichern der Order zulässt.
 	 * 
-	 * @param Varien_Observer $observer Observer
+	 * @param Varien_Event_Observer $observer Observer
 	 * 
 	 * @return void
 	 */

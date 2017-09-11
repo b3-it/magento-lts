@@ -692,7 +692,7 @@ abstract class Egovs_Paymentbase_Controller_Abstract extends Mage_Core_Controlle
 	 * @param string $mandantNr     Mandanten Nr.
 	 * @param string $_providerName Gilt nur für Kreditkarten
 	 * 
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Controller_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
      * 
      * @throws Exception
      */

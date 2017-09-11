@@ -15,7 +15,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_Invalid_KassenzeichenController ex
 	/**
 	 * Init
 	 *
-	 * @return Egovs_Paymentbase_Adminhtml_Invalid_KassenzeichenController
+	 * @return Egovs_Paymentbase_Adminhtml_Paymentbase_Invalid_KassenzeichenController
 	 */
 	protected function _initAction() {
 		$act = $this->getRequest()->getActionName();
