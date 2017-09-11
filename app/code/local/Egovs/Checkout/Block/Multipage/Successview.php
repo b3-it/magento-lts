@@ -204,7 +204,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 	/**
 	 * Retrieve quote
 	 *
-	 * @return Mage_Sales_Model_Qoute
+	 * @return Mage_Sales_Model_Quote
 	 */
 	public function getQuote() {
 		if ($this->_quote == null) {

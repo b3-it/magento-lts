@@ -217,7 +217,7 @@ class Egovs_Checkout_Block_Multipage_Overview extends Mage_Sales_Block_Items_Abs
     /**
      * Retrieve quote
      *
-     * @return Mage_Sales_Model_Qoute
+     * @return Mage_Sales_Model_Quote
      */
     public function getQuote()
     {

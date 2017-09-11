@@ -79,7 +79,7 @@ class Egovs_Checkout_Block_Multipage_Payment_Successinfo extends Mage_Core_Block
    /**
      * Retrieve info block name
      *
-     * @return unknown
+     * @return string|bool
      */
     protected function _getInfoBlockName()
     {
