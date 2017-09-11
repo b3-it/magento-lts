@@ -126,9 +126,7 @@ will be rendered on all checkout pages
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
-        <reference name="content">
-            <block type="gkacheckout/singlepage_state" name="checkout_state" template="checkout/multishipping/state.phtml"/>
-        </reference>
+ 
     </checkout_singlepage>
 
  
@@ -136,8 +134,13 @@ will be rendered on all checkout pages
 
 
     <checkout_singlepage_overview>
-        <update handle="checkout_multishipping"/>
+        <update handle="checkout_singlepage"/>
         <!-- Mage_Checkout -->
+        
+          <reference name="root">
+            <action method="addBodyClass"><classname>mp-checkout</classname></action>
+        </reference>
+        
         <reference name="head">
     		<action method="addJs"><script>lib/jquery/jquery-ui-1.12.1.js</script></action>
     		<action method="addItem"><type>js_css</type><name>lib/jquery/jquery-ui-1.12.1.css</name></action>
@@ -151,15 +154,7 @@ will be rendered on all checkout pages
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
-<!--
-                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
--->
                 <action method="addItemRender"><type>virtualpayid</type><block>virtualpayid/checkout_cart_item_renderer</block><template>gka/virtualpayid/checkout/onepage/review/item.phtml</template></action>
-               
-                
-              
                 <block type="gkacheckout/singlepage_payment" name="singlepage_payment" template="checkout/singlepage/payment.phtml"/>
                 <block type="gkacheckout/singlepage_shipping" name="singlepage_shipping" template="checkout/singlepage/shipping.phtml"/>
                 <block type="gkacheckout/singlepage_billing" name="singlepage_billing" template="checkout/singlepage/billing.phtml"/>
@@ -173,7 +168,7 @@ Multi address shipping checkout success
 
     <checkout_singlepage_success>
      
-        <update handle="checkout_multishipping"/>
+        <update handle="checkout_singlepage"/>
         <!-- Mage_Checkout -->
         <reference name="head">
     		<action method="addCss"><stylesheet>css/print.css</stylesheet><params>media="print"</params></action>
