@@ -12,7 +12,7 @@
 	</h2>
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
 	<?php echo $this->getBlockHtml('formkey'); ?>
 	
 <div class="col2-set">
@@ -123,3 +123,14 @@
 		</span>
 	</fieldset>
 </form>
+
+<script type="text/javascript">
+if(Validation) {
+	Validation.addAllThese([
+    	['givenamount', '<?php echo $this->__('Change Amount not plausible!'); ?>', function(v) {
+        	return v.length == 0 ? false : true;
+        }]
+    ]);
+}
+var dataForm = new VarienForm('form-validate', true);
+</script>
