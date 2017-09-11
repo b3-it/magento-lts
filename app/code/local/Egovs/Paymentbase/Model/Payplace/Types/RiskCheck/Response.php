@@ -46,7 +46,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 17
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var int
      */
     public $eventExtId;
     /**
@@ -218,7 +218,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 20
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var int
      */
     public $txExtId;
     /**
@@ -226,7 +226,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
      * @see parent::__construct()
      * @param string $_merchantId
      * @param string $_timeStamp
-     * @param anyExtId $_eventExtId
+     * @param int $_eventExtId
      * @param string $_basketId
      * @param Egovs_Paymentbase_Model_Payplace_Enum_RiskCheck_ActionEnum $_action
      * @param Egovs_Paymentbase_Model_Payplace_Types_EScore_Data $_eScoreData
@@ -251,7 +251,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
      * @param Egovs_Paymentbase_Model_Payplace_Enum_Scoring_RcEnum $_scoringRc
      * @param string $_rc
      * @param string $_message
-     * @param anyExtId $_txExtId
+     * @param int $_txExtId
      * @return Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response
      */
     public function __construct($_merchantId = NULL,$_timeStamp = NULL,$_eventExtId = NULL,$_basketId = NULL,$_action = NULL,$_eScoreData = NULL,$_customerId = NULL,$_addressData = NULL,$_reason = NULL,$_backendTxId = NULL,$_addressNote = NULL,$_eScoreFreightRoutingCode = NULL,$_score = NULL,$_eScoreInformaScoreVal = NULL,$_eScoreScoreType = NULL,$_negativeCriterion = NULL,$_relation = NULL,$_bankAccount = NULL,$_eScoreBankAccountValidationResult = NULL,$_eScoreBankAccountValidationMessage = NULL,$_eScoreRppMatch = NULL,$_eScoreRppResult = NULL,$_eScoreErrorCodeName = NULL,$_eScoreErrorDescription = NULL,$_scoringRc = NULL,$_rc = NULL,$_message = NULL,$_txExtId = NULL)
@@ -294,7 +294,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
     }
     /**
      * Get eventExtId value
-     * @return anyExtId|null
+     * @return int|null
      */
     public function getEventExtId()
     {
@@ -302,8 +302,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
     }
     /**
      * Set eventExtId value
-     * @param anyExtId $_eventExtId the eventExtId
-     * @return anyExtId
+     * @param int $_eventExtId the eventExtId
+     * @return bool
      */
     public function setEventExtId($_eventExtId)
     {
@@ -744,7 +744,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
     }
     /**
      * Get txExtId value
-     * @return anyExtId|null
+     * @return int|null
      */
     public function getTxExtId()
     {
@@ -752,8 +752,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response extends Egovs_Pa
     }
     /**
      * Set txExtId value
-     * @param anyExtId $_txExtId the txExtId
-     * @return anyExtId
+     * @param int $_txExtId the txExtId
+     * @return bool
      */
     public function setTxExtId($_txExtId)
     {
