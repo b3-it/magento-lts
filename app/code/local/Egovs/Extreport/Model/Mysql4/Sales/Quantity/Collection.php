@@ -204,7 +204,7 @@ class Egovs_Extreport_Model_Mysql4_Sales_Quantity_Collection extends Mage_Sales_
     /**
      * Setzt den Filter für Kategorien
      * 
-     * @param unknown_type $filter Filter
+     * @param object $filter Filter
      * 
      * @return void
      */

@@ -174,9 +174,9 @@ class Egovs_Extstock_Model_Extstock extends Mage_Core_Model_Abstract
     /**
      * Bucht von dem entsprechenden Produkt in der erwweiterten Lagerverwaltung die entsprechende Menge ab.
      * 
-     * @param integer_type $product_id Produkt ID
+     * @param integer Mage_Catalog_Model_Product $product_id Produkt ID
      * @param integer $qty Menge die abgebucht werden soll
-     * @param integer_type $order_id Order ID der Bestellung
+     * @param integer Mage_Sales_Model_Order $order_id Order ID der Bestellung
      * @return $this
      */
     public function decreaseQuantity($product_id, $qty, $order_id) {
@@ -242,8 +242,8 @@ class Egovs_Extstock_Model_Extstock extends Mage_Core_Model_Abstract
     
     /**
      * Falls Status auf geliefert: menge = bestellmenge
-     * @param unknown_type $data
-     * @return unknown
+     * @param array $data
+     * @return array
      */
     public function setQuantity($data)
     {

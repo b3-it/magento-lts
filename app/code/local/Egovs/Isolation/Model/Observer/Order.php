@@ -96,7 +96,7 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     
     /**
      * Prüfen ob der User ein Produkt in der Order hat
-     * @param unknown_type $orderid
+     * @param Mage_Sales_Model_Order $orderid
      */
 	protected function testOrderAllow($orderid, $order = null)
     {  
