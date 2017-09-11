@@ -222,7 +222,71 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
         return $this->__kassenzeichen;
     }
     
+    /**
+     * Assign data to info model instance
+     *
+     * @param   mixed $data
+     * @return  Mage_Payment_Model_Info
+     */
+    public function assignData($data)
+    {
+    	parent::assignData($data);
+    	if (!($data instanceof Varien_Object)) {
+    		$data = new Varien_Object($data);
+    	}
+    	$info = $this->getInfoInstance();
+    	$cntr = Mage::app()->getFrontController();
+    	$ga = $cntr->getRequest()->getParam('givenamount',0);
+    	$ga = str_replace(',', '.', $ga);
+    	$ga = floatval($ga);
+    	$info->setGivenAmount($ga);
+    	return $this;
+    }
+    
+    /**
+     * Wechselgeld überprüfen
+     * {@inheritDoc}
+     * @see Mage_Payment_Model_Method_Abstract::validate()
+     */
+    public function validate() {
+    	Mage_Payment_Model_Method_Abstract::validate();
+    
+    	$payment = $this->getInfoInstance();
+    	$ga = $payment->getGivenAmount();
+    	
+    	$quote = $payment->getQuote();
+    	
+    	$total= 0;
+    	if ($this->_isPlaceOrder()) {
+    		$total = $payment->getOrder()->getGrandTotal();
+    	} else {
+    		$total = $payment->getQuote()->getGrandTotal();
+    	}
+    	
+    	
+    	
+    	
+    	if($total > $ga)
+    	{
+    		Mage::throwException(Mage::helper('gka_barkasse')->__('Change Amount not plausible!'));
+    	}
+    }
  
+    
+    /**
+     * Whether current operation is order placement
+     *
+     * @return bool
+     */
+    private function _isPlaceOrder()
+    {
+    	$info = $this->getInfoInstance();
+    	if ($info instanceof Mage_Sales_Model_Quote_Payment) {
+    		return false;
+    	} elseif ($info instanceof Mage_Sales_Model_Order_Payment) {
+    		return true;
+    	}
+    }
     
     /**
      * Authorize
@@ -258,7 +322,7 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
 					$objBuchungsliste,
 					null,
 					null,
-					'BARZAHLUNG',
+					'KREDITKARTE',
 					$this->getBuchungsListeParameter($payment, (float)$amount)
 			);
 		} catch (Exception $e) {
@@ -268,6 +332,8 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
 		
     	//das kassenzeichen sollte erst abgeholt werden wenn das ergebniss geprueft wurde
     	$payment->setData('kassenzeichen', $objResult->buchungsListe->kassenzeichen);
+    	
+    	
     	
     	$objResult = null;
     	try {

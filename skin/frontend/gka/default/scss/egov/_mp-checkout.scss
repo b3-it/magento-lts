@@ -21,6 +21,16 @@
 	display: none;
 }
 
+.validation-advice {
+	display: block;
+	margin-top: 5px;
+	color: $global-warning-color;
+}
+.validation-failed, .validation-failed:focus, .validation-failed:active {
+	outline: $global-active-border solid $global-warning-color !important;
+	background-color: $global-warning-background !important;
+}
+
 .multiple-checkout .col2-set {
 	margin: 20px 0;
 }
@@ -259,6 +269,10 @@
 
             thead th, tbody td {
                 padding: $global-tdpadding;
+            }
+            
+            .checkout-product-image {
+            	display: none !important;
             }
 
             thead {

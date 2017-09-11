@@ -82,7 +82,7 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
     
     public function isCashPayment()
     {
-    	return true;//($this->getPayment()->getMethod() == 'epaybl_cashpayment');
+    	return ($this->getPayment()->getMethod() == 'epaybl_cashpayment');
     }
     
     public function getShippingAddress()
@@ -154,7 +154,7 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
 
     public function getBackUrl()
     {
-        return $this->getUrl('*/*/start',array('_secure'=>true));
+        return $this->getUrl('*/singlepage/overview',array('_secure'=>true));
     }
 
     /**

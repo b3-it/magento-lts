@@ -1,6 +1,6 @@
 <?php
 
-class Gka_Checkout_Block_Singlepage_Start_Billing extends Mage_Sales_Block_Items_Abstract
+class Gka_Checkout_Block_Singlepage_Billing extends Mage_Sales_Block_Items_Abstract
 {  
     protected function _prepareLayout()
     {

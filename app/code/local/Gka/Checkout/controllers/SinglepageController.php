@@ -93,7 +93,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         }
         
         if ($this->_getCheckoutSession()->getCartWasUpdated(true) &&
-            !in_array($action, array('index', 'login', 'register', 'addresses', 'success','overview'))
+            !in_array($action, array('index', 'login', 'register', 'addresses', 'success','overview','start'))
         ) {
             $this->_redirectUrl($this->_getHelper()->getCartUrl());
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
@@ -103,8 +103,8 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
-        //unr zum testen der success view, später entfernen
-        return $this;
+        //nur zum testen der success view, später entfernen
+        //return $this;
         
         $quote = $this->_getCheckout()->getQuote();
         $a = $quote->hasItems();
@@ -159,71 +159,12 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
      */
     public function startAction()
     {
-    	//$this->_getCheckout()->resetAssigned();
-    	
-    	if($this->_getState()->getActiveStep() == Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW)
-    	{
-    		$this->_redirect('*/cart', array('_secure'=>true));
+    	//die('ccc');
+    		$this->_redirect('*/singlepage/overview', array('_secure'=>true));
             return;
-    	}
-
-    	$this->_getState()->resetState();
     	
-        if (!$this->_getCheckout()->validateMinimumAmount()) {
-            $message = $this->_getCheckout()->getMinimumAmountDescription();
-            $this->_getCheckout()->getCheckoutSession()->addNotice($message);
-        }
-        $this->loadLayout();
-        $this->_initLayoutMessages('customer/session');
-        $this->_initLayoutMessages('checkout/session');
-        $this->renderLayout();
     }
 
-    /**
-     * Singlepage checkout process posted
-     * save overview Form, invoke next Step
-     * @return Gka_Checkout_SinglepageController
-     */
-    public function startPostAction()
-    {
-    	
-    	$billing = $this->getRequest()->getPost('billing', array());
-    	$payment = $this->getRequest()->getPost('payment', array());;
-    	
-//     	if(!isset($payment['method'])){
-//     		//Mage::getSingleton('core/session')->addError('Payment Method not set!');
-//     		Mage::getSingleton('core/session')->addError($this->__("Payment Method not set!"));
-//     		$this->_redirect('*/*/start', array('_secure'=>true));
-//     		return;
-//     	}
-    	$quote = $this->_getCheckout()->getQuote();
-    	
-    	
-    	try{
-    		$this->_getCheckout()->setBillingAddress($billing);
-    		//$this->_getCheckout()->setPaymentMethod($payment['method']);
-    		$this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
-    		$this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
-    	}
-    	catch(Exception $e) {
-            $this->_getCheckoutSession()->addException(
-                $e,
-                Mage::helper('checkout')->__('Data saving problem')
-            );
-            $this->_redirect('*/*/overview', array('_secure'=>true));
-            return $this;
-        }
-    	
-        //$this->_getCheckout()->resetAssigned();
-        $this->_redirect('*/*/overview', array('_secure'=>true));
-    	return $this;
-       
-    }
-
- 
-   
-
- 
 
     protected function _validateMinimumAmount()
     {
@@ -250,11 +191,6 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
-        if (!$this->_getState()->getCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START)) {
-        	//$this->_redirect('*/cart/index', array('_secure'=>true));
-        	//return $this;
-        }
-        
         
         $this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
         $this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);

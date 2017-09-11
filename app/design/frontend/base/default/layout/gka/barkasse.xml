@@ -57,6 +57,10 @@
         <reference name="head">
             <action method="addJs"><script>mage/adminhtml/grid.js</script></action>
             <action method="addJs"><script>mage/adminhtml/hash.js</script></action>
+             <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
+            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml" />
         </reference>
     </gka_barkasse_kassenbuch_journal_index>
     <gka_barkasse_kassenbuch_journalitems_index translate="label">

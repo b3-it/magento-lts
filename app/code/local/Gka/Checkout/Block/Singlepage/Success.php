@@ -131,4 +131,22 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     {
         return $this->getOrder()->getPayment()->getData('kassenzeichen');
     }
+    
+
+    
+    /**
+     * der Name der Zahlart
+     */
+    public function getPaymentTitle()
+    {
+    	$info = $this->getOrder()->getPayment()->getMethodInstance();
+    	
+    	return $info->getTitle();
+    }
+    
+    public function getContinueUrl()
+    {
+    	return $this->getUrl('/');
+    }
+    
 }
