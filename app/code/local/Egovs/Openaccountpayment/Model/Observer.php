@@ -28,7 +28,7 @@ class Egovs_Openaccountpayment_Model_Observer extends Mage_Core_Model_Abstract
 			return;
 
 		//darf nur für Openaccountpayments passieren
-		if (!($invoice->getOrder()->getPayment()->getMethodInstance() instanceof Egovs_Openaccountpayment_Model_Bankpayment))
+		if (!($invoice->getOrder()->getPayment()->getMethodInstance() instanceof Egovs_Openaccountpayment_Model_Openaccount))
 			return;
 			
 		$invoice->getOrder()->setState(Mage_Sales_Model_Order::STATE_PROCESSING, true);
@@ -48,7 +48,7 @@ class Egovs_Openaccountpayment_Model_Observer extends Mage_Core_Model_Abstract
 			return;
 
 		//darf nur für Openaccountpayments passieren
-		if (!($invoice->getOrder()->getPayment()->getMethodInstance() instanceof Egovs_Openaccountpayment_Model_Bankpayment))
+		if (!($invoice->getOrder()->getPayment()->getMethodInstance() instanceof Egovs_Openaccountpayment_Model_Openaccount))
 			return;
 
 		//gilt nur für Offline payments
