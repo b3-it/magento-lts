@@ -1,23 +1,23 @@
 <?php
 /**
- * Model für Terminalpay
+ * Model für Kreditkarte über Girosolution
  *
  * @category   	Gka
- * @package    	Gka_Terminalpay
+ * @package    	Gka_Tkonnektpay
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
- * @copyright  	Copyright (c) 2016 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @copyright  	Copyright (c) 2017 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  * 
- * @see Egovs_Paymentbase_Model_Girosolution
+ * @see Egovs_Paymentbase_Model_Tkonnekt
  */
-class Gka_Terminalpay_Model_Payment_Terminalpay extends Egovs_Paymentbase_Model_Girosolution
+class Gka_Tkonnektpay_Model_Payment_Debitcard extends Egovs_Paymentbase_Model_Tkonnekt
 {
 	/**
 	 * Unique internal payment method identifier
 	 *
 	 * @var string $_code
 	 */
-	protected $_code = 'gka_terminalpay';
+	protected $_code = 'gka_tkonnektpay_debitcard';
 	/**
 	 * Flag: Ist dieses Model ein Gateway
 	 *
@@ -57,7 +57,7 @@ class Gka_Terminalpay_Model_Payment_Terminalpay extends Egovs_Paymentbase_Model_
 	 *
 	 * @var string $_formBlockType
 	 */
-	protected $_formBlockType = 'gka_terminalpay/form_terminalpay';
+	protected $_formBlockType = 'gka_tkonnektpay/form_debitcard';
 	/**
 	 * Infoblock Type
 	 *
@@ -71,14 +71,7 @@ class Gka_Terminalpay_Model_Payment_Terminalpay extends Egovs_Paymentbase_Model_
 	 *
 	 * @var string $_epaybl_transaction_type
 	 */
-	protected $_epaybl_transaction_type = 'KREDITKARTE';
-	
-	/**
-	 * Unterscheidet zwischen Giropay und Kreditkarte für Girosolution
-	 *
-	 * @var string $_transaction_type
-	 */
-	protected $_transaction_type = 'creditCardTransaction';
+	protected $_epaybl_transaction_type = 'TERMINALZAHLUNG';
 	/**
 	 * Initialisiert das Array mit den zu übergebenden Parametern
 	 *
@@ -86,15 +79,7 @@ class Gka_Terminalpay_Model_Payment_Terminalpay extends Egovs_Paymentbase_Model_
 	 *
 	 * @see Egovs_Paymentbase_Model_Girosolution::_getGirosolutionRedirectUrl()
 	 */
-	protected function _getGirosolutionRedirectUrl() {
-		/**
-		 * 20170308::Frank Rochlitzer
-		 * ZV_AM-813 ZV_AM-814 Unterstützung zur Konfiguration von Pseudokartennummern-Nutzung
-		 */
-		if (Mage::getStoreConfigFlag("payment/{$this->getCode()}/use_pseudo")) {
-			//Pseudokartennummern
-			$this->_fieldsArr['pkn'] = 'create';
-		}
+	protected function _getTkonnektRedirectUrl() {
 	}
 	
 	protected function _callSoapClientImpl($objSOAPClient, $wId, $mandantNr, $refId, $providerName) {
@@ -127,12 +112,8 @@ class Gka_Terminalpay_Model_Payment_Terminalpay extends Egovs_Paymentbase_Model_
 		 *
 		 * TODO Muss mit Aufruf in xmlApiRequest übereinstimmen
 		 */
-		$buchungsListeParameter['ppCCaction'] = 'authorization';
+		//$buchungsListeParameter['ppCCaction'] = 'authorization';
 	
 		return $buchungsListeParameter;
-	}
-	
-	public function getTransactionType() {
-		return $this->_transaction_type;
 	}
 }
