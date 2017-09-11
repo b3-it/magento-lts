@@ -1,6 +1,6 @@
 <?php
 
-class Gka_Checkout_Block_Singlepage_Start_Payment extends Mage_Payment_Block_Form_Container
+class Gka_Checkout_Block_Singlepage_Payment extends Mage_Payment_Block_Form_Container
 {
  
 

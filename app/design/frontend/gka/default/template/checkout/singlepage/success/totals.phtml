@@ -28,7 +28,12 @@
  * @see Mage_Sales_Block_Order_Totals
  */
 ?>
+
+
+
+<?php  $useCode = array('grand_total')?>
 <?php foreach ($this->getTotals() as $_code => $_total): ?>
+  <?php if(in_array($_code, $useCode)):?>
     <?php if ($_total->getBlockName()): ?>
         <?php echo $this->getChildHtml($_total->getBlockName(), false); ?>
     <?php else:?>
@@ -49,4 +54,24 @@
         </td>
     </tr>
     <?php endif?>
+  <?php endif;?>
 <?php endforeach?>
+
+<?php if ($this->isCashPayment()):?>
+    <tr class="<?php echo $_code?>">
+        <td <?php echo $this->getLabelProperties()?>>
+            <?php echo $this->__('Eingezahlt');?>
+        </td>
+        <td <?php echo $this->getValueProperties()?>>
+            <?php echo $this->getGivenAmount(); ?>
+        </td>
+    </tr>
+        <tr class="<?php echo $_code?>">
+        <td <?php echo $this->getLabelProperties()?>>
+            <?php echo $this->__('Wechselgelt');?>
+        </td>
+        <td <?php echo $this->getValueProperties()?>>
+            <?php echo $this->getChangeAmount(); ?>
+        </td>
+    </tr>
+<?php endif;?>
