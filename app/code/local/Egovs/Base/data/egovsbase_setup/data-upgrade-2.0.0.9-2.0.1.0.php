@@ -1,9 +1,10 @@
 <?php
-/* @var $this Mage_Eav_Model_Entity_Setup */
-$installer = $this;
-$installer->startSetup();
+/**
+ * @var $this Mage_Eav_Model_Entity_Setup
+ */
 
 $line_break = "\n";
+$default_id = 'footer_links';
 $found = false;
 
 $footer_links_start = array(
@@ -26,20 +27,25 @@ $footer_links_ende = array(
     '</div>',
 );
 
+$installer = $this;
+$installer->startSetup();
+
 /** @var $blocks  Mage_Cms_Model_Resource_Block_Collection */
 $blocks = Mage::getModel('cms/block')->getCollection();
 
 foreach($blocks AS $block) {
-    if( $block->getIdentifier() == 'footer_links' ) {
+    $lowerId = strtolower( $block->getIdentifier() );
+
+    if( $lowerId == $default_id ) {
         $found = true;
 
         $content_array = explode( $line_break, $block->getContent() );
-        $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
 
         if ( $content_array[0] != $footer_links_start[0] ) {
-            $content_array = array_merge($footer_links_start, $content_array, $footer_links_ende);
+            $new_content_array = array_merge($footer_links_start, $content_array, $footer_links_ende);
 
-            $block->setContent(implode($line_break, $content_array))->setStores($store_ids)->save();
+            $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
+            $block->setContent(implode($line_break, $new_content_array))->setStores($store_ids)->save();
         }
     }
 }
@@ -48,10 +54,12 @@ if ( $found === false ) {
     $content_array = array_merge($footer_links_start, $footer_links_default, $footer_links_ende);
     
     $cmsBlock = array(
-        'title'         => 'Footer Links',
-        'identifier'    => 'footer_links',
-        'content'       => implode($line_break, $content_array),
-        'is_active'     => 1
+        'title'           => 'Footer Links',
+        'identifier'      => $default_id,
+        'content'         => implode($line_break, $content_array),
+        'is_active'       => 1,
+        'replace_content' => 0,
+        'stores'          => 0,
     );
 
     Mage::getModel('cms/block')->setData($cmsBlock)->setStores(array(0))->save();
