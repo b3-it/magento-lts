@@ -9,10 +9,12 @@ class TuChemnitz_Voucher_Model_Resource_Tan extends Mage_Core_Model_Mysql4_Abstr
     }
     
     /**
-     * Nächste Freie Tan suchen und OrderItemId schreiben 
-     * @param unknown $order_item_id
+     * Nächste Freie Tan suchen und OrderItemId schreiben
+     * 
+     * @param Mage_Sales_Model_Order_Item $order_item_id   $order_item_id
+     * @param Mage_Catalog_Model_Product                   $product_id
      */
-    public function allocateNextFreeTan($order_item_id,$product_id)
+    public function allocateNextFreeTan($order_item_id, $product_id)
     {
     	try {
     		$bind = "`status`=".TuChemnitz_Voucher_Model_Status::STATUS_SOLD . ",order_item_id=".$order_item_id;
@@ -29,7 +31,9 @@ class TuChemnitz_Voucher_Model_Resource_Tan extends Mage_Core_Model_Mysql4_Abstr
     
     /**
      * Löschen der Tans und Rückgabe Anzahl der gelöschten Tans 
-     * @param unknown $TanIds
+     * 
+     * @param TuChemnitz_Voucher_Model_Tan    $TanIds
+     * @param Mage_Catalog_Model_Product      $productId
      * @return int $count
      */
     public function deleteTans($TanIds, $productId)
@@ -53,9 +57,10 @@ class TuChemnitz_Voucher_Model_Resource_Tan extends Mage_Core_Model_Mysql4_Abstr
     
     /**
      * Verkaufte Tans zaehlen
-     * @param unknown $TanIds
-     * @param unknown $productId
-     * @return unknown|number
+     * 
+     * @param TuChemnitz_Voucher_Model_Tan    $TanIds
+     * @param Mage_Catalog_Model_Product      $productId
+     * @return bool|number
      */
     public function countSoldTans($TanIds, $productId)
     {
@@ -76,15 +81,16 @@ class TuChemnitz_Voucher_Model_Resource_Tan extends Mage_Core_Model_Mysql4_Abstr
     }
     
     
+    /**
+     * @param Mage_Catalog_Model_Product      $productId
+     * @return integer
+     */
     public function countPendingOrders4Product($productId)
     {
     	$state = "((`state` = 'pending' OR `state` = 'pending_payment'))";
     		$sql = "SELECT count(entity_id) FROM " .$this->getTable('sales/order_item');
     		$sql .= " Join " .$this->getTable('sales/order'). " as sorder on sorder.entity_id = ".$this->getTable('sales/order_item').".order_id and ". $state;
     		$sql .= " WHERE product_id=" . $productId;
-    		
-    		//die($sql);
-    		
     		
     		$count = $this->_getWriteAdapter()->fetchOne($sql);
     		return $count;
