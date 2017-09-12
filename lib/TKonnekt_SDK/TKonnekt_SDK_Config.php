@@ -34,6 +34,8 @@ class TKonnekt_SDK_Config
             // Debug mode and log
             self::$instance->setConfig('DEBUG_MODE', FALSE);
             self::$instance->setConfig('DEBUG_LOG_PATH', dirname(__FILE__) . '/log');
+
+            self::$instance->setConfig('BASE_REQUEST', null);
         }
         return self::$instance;
     }

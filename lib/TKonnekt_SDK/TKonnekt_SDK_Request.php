@@ -85,6 +85,10 @@ class TKonnekt_SDK_Request
                 throw new TKonnekt_SDK_Exception('Failure: API call method unknown');
             }
         }
+
+        if (($_baseRequest = $_config->getConfig('BASE_REQUEST'))) {
+            $this->__requestMethod->setBaseRequestURL($_baseRequest);
+        }
     }
 
     /**
