@@ -239,8 +239,12 @@ class TKonnekt_SDK_Request
 
             $_response = TKonnekt_SDK_Curl_Helper::getJSONResponseToArray($body);
 
-            if ($_response['rc'] == 5000 || $_response['rc'] == 5001) {
-                throw new TKonnekt_SDK_Exception('authentication failure');
+            /*
+             * Kommunikationsfehler werden im rc Parameter im Bereich 5000 <= rc < 6000 festgelegt
+             * und bedürfen keinem hash Parameter (technisch nicht möglich!)
+             */
+            if ($_response['rc'] >= 5000 && $_response['rc'] < 6000) {
+                throw new TKonnekt_SDK_Exception('communication failure');
             } elseif (!isset($header['hash'])) {
                 throw new TKonnekt_SDK_Exception('hash in response is missing');
             } elseif (isset($header['hash']) && $header['hash'] !== TKonnekt_SDK_Hash_Helper::getHMACSHA256HashString($this->__secret, $body)) {
