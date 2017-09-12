@@ -48,11 +48,13 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		$config->setConfig('DEBUG_MODE', $_debug);
 		$config->setConfig('DEBUG_PATH', Mage::getBaseDir('var') . DS . 'log');
 		//TODO: Pfad zu CA Bundle setzen
-		//Pfad muss jetzt vor allem für Windows per INI_SET oder in PHP INI gesetzt werden
+		//FIXME: Pfad muss vor allem für Windows per INI_SET oder in PHP INI gesetzt werden
 		//https://curl.haxx.se/docs/sslcerts.html
 		//https://curl.haxx.se/docs/caextract.html
 		//curl.cainfo =
 		$config->setConfig('CURLOPT_CAINFO', null);
+
+		$config->setConfig('BASE_REQUEST', $this->getServerUrl());
 		
 		parent::__construct();
     }
@@ -92,7 +94,14 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
     		}
     	}
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
-    		Mage::throwException($this->__('No kassenzeichen available!'));
+            if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
+                Mage::throwException($this->__('No kassenzeichen available!'));
+            } else {
+                $incrementId = $this->_getOrderIncrementId();
+                $incrementId = array_shift($incrementId);
+
+                $payment->setKassenzeichen($incrementId);
+            }
     	}
     	return "{$this->_getBewirtschafterNr()}/{$payment->getKassenzeichen()}";
     }
@@ -120,6 +129,29 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		
 		return $merchantId;
 	}
+
+    /**
+     * Get Merchant Id
+     *
+     * @return string
+     */
+    public function getServerUrl() {
+        $serverUrl =  Mage::getStoreConfig ( 'payment/' . $this->getCode () . '/server_url' );
+        if (empty($serverUrl)) {
+            if (!array_key_exists('srvurl', $this->_errors)) {
+                $helper = Mage::helper('gka_tkonnektpay');
+                $helper->sendMailToAdmin("{$this->getCode()}::{$helper->__('Server URL is missing in TKonnekt configuration')}", $helper->__('TKonnekt Error').':', $this->getCode());
+
+                $sModul = ucwords(substr($this->getCode(), 6), '_');
+
+                Mage::log($this->getCode()."::".$helper->__("%s Server URL is missing in TKonnekt configuration. Please contact the shop operator.", $sModul), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+                $this->_errors['srvurl'] = true;
+            }
+            Mage::throwException(Mage::helper('gka_tkonnektpay')->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
+        }
+
+        return $serverUrl;
+    }
 	
 	/**
 	 * Get Project password

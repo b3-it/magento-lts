@@ -9,7 +9,7 @@
  *
  * @see Mage_Adminhtml_Model_System_Config_Source_Order_Status
  */
-class Gka_Tkonnketpay_Model_Adminhtml_System_Config_Source_Debug
+class Gka_Tkonnektpay_Model_Adminhtml_System_Config_Source_Debug
 {
 	/**
 	 * Liefert ein Array der möglichen Optionen
