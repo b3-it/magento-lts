@@ -32,11 +32,11 @@ $installer->setConfigData('design/theme/layout', '');
 $installer->setConfigData('design/theme/default', '');
 
 $replace_url = array(
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/agb' => '{{store url="agb"}}',
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/widerruf' => '{{store url="widerruf"}}',
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/agb'         => '{{store url="agb"}}',
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/widerruf'    => '{{store url="widerruf"}}',
     'https://www.shop.sachsen.de/tuc_ticketshop/papercut/datenschutz' => '{{store url="datenschutz"}}',
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/zahlarten' => '{{store url="zahlarten"}}',
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/impressum' => '{{store url="impressum"}}',
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/zahlarten'   => '{{store url="zahlarten"}}',
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/impressum'   => '{{store url="impressum"}}',
 );
 
 $replace_string = array(
