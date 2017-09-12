@@ -26,7 +26,8 @@ class TKonnekt_SDK_Curl_Helper
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        $urlEnc = http_build_query($params, null, '&');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $urlEnc);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         $headers = array('Content-Type: application/x-www-form-urlencoded;charset=utf-8','Expect:');
