@@ -580,6 +580,7 @@
             <design>
                 <mode_default>1</mode_default>
                 <mode_test>0</mode_test>
+                <mode_migration>0</mode_migration>
                 <mode_int>0</mode_int>
                 <mode_prod>0</mode_prod>
             </design>

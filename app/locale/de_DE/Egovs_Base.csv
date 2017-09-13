@@ -107,8 +107,11 @@
 "Privacy policy","Datenschutz"
 "Payment","Zahlungsarten"
 
-
-
+"Not specified","Unbestimmt"
+"Test","Test-System"
+"Integration","Integrations-System"
+"Production","Produktivsystem"
+"Migration","Migrations-System"
 
 
 
