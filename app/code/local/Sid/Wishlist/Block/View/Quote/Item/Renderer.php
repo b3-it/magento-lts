@@ -67,7 +67,7 @@ class Sid_Wishlist_Block_View_Quote_Item_Renderer extends Mage_Core_Block_Templa
     /**
      * Check Product has URL
      *
-     * @return this
+     * @return bool
      */
     public function hasProductUrl()
     {

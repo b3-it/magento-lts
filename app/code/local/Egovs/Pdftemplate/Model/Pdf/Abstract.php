@@ -613,8 +613,9 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
     
     /**
      * Rendert die einzelen Items in einer Schleife
-     * @param unknown $object die Rechnung/Gutschrift/Lieferung
-     * @param unknown $template das Template
+     * 
+     * @param Varien_Object                             $object       die Rechnung/Gutschrift/Lieferung
+     * @param Egovs_Pdftemplate_Model_Template          $template     das Template
      * @return Egovs_Pdftemplate_Model_Pdf_Abstract
      */
 	protected function RenderTable($object,$template)

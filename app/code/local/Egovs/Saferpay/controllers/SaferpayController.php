@@ -93,7 +93,7 @@ class Egovs_Saferpay_SaferpayController extends Egovs_Paymentbase_Controller_Abs
 	 * @param string $mandantNr     Mandanten Nr.
 	 * @param string $_providerName  Providername
 	 * 
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Controller_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 * 
 	 * @see Egovs_Paymentbase_Controller_Abstract::_callSoapClientImpl()
 	 */

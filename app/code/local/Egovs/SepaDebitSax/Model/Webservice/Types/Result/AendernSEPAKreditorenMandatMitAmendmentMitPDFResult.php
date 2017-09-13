@@ -27,14 +27,14 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAKreditorenMand
     public $Result;
     /**
      * The AmendmentPdf
-     * @var base64Binary
+     * @var Varien_File_Object base64Binary
      */
     public $AmendmentPdf;
     /**
      * Constructor method for AendernSEPAKreditorenMandatMitAmendmentMitPDFResult
      * @see parent::__construct()
      * @param Egovs_SepaDebitSax_Model_Webservice_Types_Result $_result
-     * @param base64Binary $_amendmentPdf
+     * @param Varien_File_Object base64Binary $_amendmentPdf
      * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAKreditorenMandatMitAmendmentMitPDFResult
      */
     public function __construct($_result = NULL,$_amendmentPdf = NULL)
@@ -60,7 +60,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAKreditorenMand
     }
     /**
      * Get AmendmentPdf value
-     * @return base64Binary|null
+     * @return Varien_File_Object|null
      */
     public function getAmendmentPdf()
     {
@@ -68,8 +68,8 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAKreditorenMand
     }
     /**
      * Set AmendmentPdf value
-     * @param base64Binary $_amendmentPdf the AmendmentPdf
-     * @return base64Binary
+     * @param Varien_File_Object base64Binary $_amendmentPdf the AmendmentPdf
+     * @return Varien_File_Object base64Binary
      */
     public function setAmendmentPdf($_amendmentPdf)
     {

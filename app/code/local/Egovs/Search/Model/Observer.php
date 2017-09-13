@@ -7,7 +7,7 @@ class Egovs_Search_Model_Observer extends Mage_Core_Model_Abstract {
 	/**
 	 * 
 	 * @param Varien_Event_Observer $observer
-	 * @return unknown
+	 * @return null
 	 */
 	public function onModelSaveAfter($observer) 
 	{
@@ -28,11 +28,7 @@ class Egovs_Search_Model_Observer extends Mage_Core_Model_Abstract {
 		}
 		
 		//Mage::log("search::model_save_after raised", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-		
-		
-		
+
 		Mage::getModel('egovssearch_mysql4/soundex_collection')->addProduct($object, $storeid);
-			
-    	
 	}
 }

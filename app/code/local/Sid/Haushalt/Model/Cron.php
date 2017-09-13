@@ -13,7 +13,7 @@ class Sid_Haushalt_Model_Cron extends Mage_Core_Model_Abstract
  
     /**
      * Einsprung
-     * @param unknown $schedule
+     * @param Mage_Cron_Model_Schedule $schedule
      */
 	public function runCron($schedule) 
 	{		
@@ -28,9 +28,9 @@ class Sid_Haushalt_Model_Cron extends Mage_Core_Model_Abstract
     /**
      * 
      * Ermitteln ob noch ein Cronjob läuft
-     * @param $job_code
-     * @param $job_id
-     * @param $timespan Zein in sekunden; default 1h 
+     * @param string   $job_code
+     * @param int      $job_id
+     * @param DateTime $timespan Zein in sekunden; default 1h 
      */
   	protected function getIsRunning($job_code, $job_id, $timespan = 3600)
   	{
