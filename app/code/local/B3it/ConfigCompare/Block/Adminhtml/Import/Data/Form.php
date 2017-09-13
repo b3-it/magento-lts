@@ -10,9 +10,13 @@ class B3it_ConfigCompare_Block_Adminhtml_Import_Data_Form extends Mage_Adminhtml
 		return Mage::registry('current_product');
 	}
 	
-	
-	
-	protected function _prepareForm() {
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see Mage_Adminhtml_Block_Widget_Form::_prepareForm()
+	 */
+	protected function _prepareForm()
+	{
 		$form = new Varien_Data_Form();
 		
 		//$form->setUseContainer(true);
