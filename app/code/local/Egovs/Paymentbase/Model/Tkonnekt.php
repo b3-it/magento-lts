@@ -416,7 +416,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 *
 	 * Abgeleitete Klassen müssen _getTkonnektRedirectUrl() überschreiben!
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public final function getTkonnektRedirectUrl() {
 
@@ -477,11 +477,6 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 			if ($request->requestHasSucceeded()) {
 				$strUrlRedirect = $request->getResponseParam('redirect');
 
-				$result ["status"] = 1001;
-				$result ["redirect"] = $strUrlRedirect;
-				$result ["reference"] = $request->getResponseParam('reference');
-				$result ["gcTransInfo"] = $request->getResponseParams();
-
 				return $strUrlRedirect;
 			} else {
 				$iReturnCode = $request->getResponseParam('rc');
@@ -531,6 +526,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 			}
 		} catch ( Exception $e ) {
 			Mage::logException($e);
+			$msg = $e->getMessage();
 		}
 
 		if (is_null($msg)) {

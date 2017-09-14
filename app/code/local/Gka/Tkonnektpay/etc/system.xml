@@ -49,14 +49,14 @@
                             <validate>required-entry</validate>
                         </merchant_id>
                         <project_pwd translate="label comment">
-                            <label>Project password</label>
-                            <frontend_type>text</frontend_type>
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
                             <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                             <sort_order>23</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                            <comment>Your TKonnekt project password.</comment>
+                            <comment>Your TKonnekt password.</comment>
                             <depends>
                                 <active>1</active>
                             </depends>
