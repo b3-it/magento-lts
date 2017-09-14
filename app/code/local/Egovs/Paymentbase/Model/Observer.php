@@ -270,10 +270,14 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 					}
 					/* @var $item Mage_Sales_Model_Order */
 					if ($item->canCancel()) {
-						$item->cancel();
-						//Der Kunde muss nicht benachrichtigt werden, da er noch keine Mail über die Bestellung erhalten hat!
-						$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired.')).
-						$item->save();
+					    try {
+                            $item->cancel();
+                            //Der Kunde muss nicht benachrichtigt werden, da er noch keine Mail über die Bestellung erhalten hat!
+                            $item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired.')) .
+                            $item->save();
+                        } catch (Exception $e) {
+					        Mage::logException($e);
+                        }
 						continue;
 					}
 					
