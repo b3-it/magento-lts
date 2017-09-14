@@ -195,7 +195,16 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 	 * @return Egovs_Paymentbase_Model_Observer
 	 */
 	public function cleanExpiredGatewayOrders($schedule) {
-		$payments = array('giropay', 'saferpay', 'paypage', 'payplacepaypage', 'payplacegiropay', 'egovs_girosolution_giropay', 'egovs_girosolution_creditcard');
+		$payments = array(
+		    'giropay',
+            'saferpay',
+            'paypage',
+            'payplacepaypage',
+            'payplacegiropay',
+            'egovs_girosolution_giropay',
+            'egovs_girosolution_creditcard',
+            'gka_tkonnektpay_debitcard',
+        );
 		
 		foreach ($payments as $payment) {
 			$lifetimes = Mage::getConfig()->getStoresConfigByPath("payment/$payment/cancel_order_after");
