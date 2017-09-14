@@ -1,9 +1,25 @@
 <?php
+/**
+ * B3it Maintenance
+ * 
+ * 
+ * @category   	B3it
+ * @package    	B3it_Maintenance
+ * @name       	B3it_Maintenance_Controller_OfflineRouter
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Varien_Router_Standard {
 	const MAINTENANCE_ON = 1;
 	const MAINTENANCE_SCHEDULED = 2;
 	private $cmspage = '/index/';
 	
+	/**
+	 * 
+	 * @param Varien_Event_Observer $observer
+	 * @return void
+	 */
 	public function addOfflineRouter(Varien_Event_Observer $observer) {
 		if (! Mage::isInstalled ())
 			return;
