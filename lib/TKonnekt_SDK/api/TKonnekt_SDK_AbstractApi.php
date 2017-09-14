@@ -177,7 +177,7 @@ class TKonnekt_SDK_AbstractApi implements TKonnekt_SDK_InterfaceApi
             $this->_baseRequestUrl = $url;
         }
 
-        return $this->_baseRequestURL;
+        return $this->_baseRequestUrl;
     }
 
     /**
