@@ -30,17 +30,18 @@ class B3it_ConfigCompare_Block_Adminhtml_Compare_Tabs extends Mage_Adminhtml_Blo
      */
   protected function _beforeToHtml()
   {
+  	
       $this->addTab('form_section', array(
           'label'     => Mage::helper('configcompare')->__('Core Config Data'),
           'title'     => Mage::helper('configcompare')->__('Core Config Data'),
           'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_coredata')->toHtml(),
       ));
       
-      $this->addTab('form_section2', array(
-      		'label'     => Mage::helper('configcompare')->__('Cms Pages'),
-      		'title'     => Mage::helper('configcompare')->__('Cms Pages'),
-      		'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_cmspages')->toHtml(),
-      ));
+       $this->addTab('form_section2', array(
+       		'label'     => Mage::helper('configcompare')->__('Cms Pages'),
+       		'title'     => Mage::helper('configcompare')->__('Cms Pages'),
+       		'content'   => $this->getLayout()->createBlock('configcompare/adminhtml_compare_tab_cmspages')->toHtml(),
+       ));
       
       $this->addTab('form_section3', array(
       		'label'     => Mage::helper('configcompare')->__('Cms Blocks'),

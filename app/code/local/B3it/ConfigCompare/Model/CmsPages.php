@@ -18,13 +18,18 @@ class B3it_ConfigCompare_Model_CmsPages extends B3it_ConfigCompare_Model_Compare
 	{
 		$collection = Mage::getModel('cms/page')->getCollection();
 		
-		$stores = new Zend_Db_Expr('(SELECT page_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/page_store'). ' GROUP BY page_id ORDER BY store_id)');
+		$stores = new Zend_Db_Expr('(SELECT page_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/page_store'). ' WHERE store_id IN (0,'.$this->getStoreId().') GROUP BY page_id ORDER BY store_id)');
 		$collection->getSelect()
 		->joinleft(array('store'=>$stores),'store.page_id = main_table.page_id',array('stores'));
+
 		//die($collection->getSelect()->__toString());		
 		return $collection;
 	}
     
+	
+	
+	
+	
     public function getCollectionDiff($importXML)
     {
     	$this->_collection  =  $this->getCollection();
