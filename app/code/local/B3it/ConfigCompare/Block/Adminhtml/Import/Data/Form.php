@@ -28,6 +28,15 @@ class B3it_ConfigCompare_Block_Adminhtml_Import_Data_Form extends Mage_Adminhtml
 				'required'  => false,
 				'name'      => 'filename',
 		));
+		
+		
+		$field =$fieldset->addField('store_id', 'select', array(
+				'name'      => 'store_id',
+				'label'     => Mage::helper('cms')->__('Store View'),
+				'title'     => Mage::helper('cms')->__('Store View'),
+				'required'  => true,
+				'values'    => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, false),
+		));
 	
 		$fieldset->addField('configcompare_import', 'submit', array(
 				'label'     => Mage::helper('configcompare')->__('Start Import'),

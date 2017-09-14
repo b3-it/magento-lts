@@ -26,7 +26,9 @@ class B3it_ConfigCompare_Model_Mysql4_CoreConfigData_Collection extends Mage_Cor
     
     public function add($item){
     	$this->_totalRecords ++;
-    	$item = new Varien_Object($item);
+    	if(is_array($item)){
+    		$item = new Varien_Object($item);
+    	}
     	$item->setConfigId($this->_totalRecords);
     	$this->addItem($item);
     }
