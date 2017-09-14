@@ -19,7 +19,7 @@ class B3it_ConfigCompare_Block_Adminhtml_Compare_Tab_Cmsblocks extends Mage_Admi
         $collection->getSelect()->where("type='cms_block'");
   	  
   	  
-        $collection =Mage::getModel('configcompare/cmsBlocks')->getCollectionDiff($collection->getItems());
+        $collection =Mage::getModel('configcompare/cmsBlocks')->setStoreId($this->_getStoreId())->getCollectionDiff($collection->getItems());
 
         $this->setCollection($collection);
         parent::_prepareCollection();
@@ -27,6 +27,10 @@ class B3it_ConfigCompare_Block_Adminhtml_Compare_Tab_Cmsblocks extends Mage_Admi
         return $collection->filter();
     }
 
+    protected function _getStoreId()
+    {
+    	return intval($this->getRequest()->getParam('store_id',0));
+    }
   
     protected function _setFilterValues($data)
     {
