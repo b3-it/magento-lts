@@ -258,12 +258,20 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             
             $this->_getCheckout()->getCheckoutSession()->clear();
             $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(true);
-            
+            $redirectUrl = $this->_getCheckout()->getCheckout()->getRedirectUrl();
             $this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_SUCCESS);
             $this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
             
             
-            $this->_redirect('*/*/success', array('_secure'=>true));
+            if (isset($redirectUrl)) {
+            	$this->_redirectUrl($redirectUrl);
+            } else {
+            	$this->_redirect('*/*/success', array('_secure'=>true));
+            }
+            
+            
+            
+          
         } catch (Mage_Payment_Model_Info_Exception $e) {
             $message = $e->getMessage();
             if (!empty($message) ) {
