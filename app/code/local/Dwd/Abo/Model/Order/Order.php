@@ -50,6 +50,7 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 		}
 		unset($oldOrder);
 		
+		//add Items to Quote
 		foreach ($items as $item)
 		{
 			$this->addItem($abo_quote,$item);
@@ -72,14 +73,7 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 			
 			if(($AllowedPaymentMethod->getCode() == 'sepadebitbund') && ($lastmethod->getMethod() == 'sepadebitbund'))
 			{
-				//$AllowedPaymentMethod->setCcNumber($payment->getCcNumber());
-				
-				//$AllowedPaymentMethod->setAdditionalInformation('agreement',true);
-				
-				///$this->copySepaDebitValues($lastmethod, $AllowedPaymentMethod);
 				$AllowedPaymentMethod->setLastSepaMethod($lastmethod);
-				
-				
 			}
 			
 			if(!$AllowedPaymentMethod)

@@ -17,13 +17,17 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	protected function addItem($quote,$aboitem)
 	{
 		$product = Mage::getModel('catalog/product')->load($aboitem->getProductId());
+		$product->setData('website_id', 0);
 		
-        $item = Mage::getModel('sales/quote_item');
-        $item->setQuote($quote);
+		$buyRequest = new Varien_Object();
+		$buyRequest->setData('periode',$aboitem->getPeriodId());
+		$buyRequest->setData('station',$aboitem->getStationId());
+		
+		$item = $quote->addProduct($product, $buyRequest);
 		$item->setQty(1);
-		//$item->setData('stala_abo_shipping_address_id',intval($contractitem->getShippingAddressId()));
+		
 
-        $product->setData('website_id', 0);
+       
         /* @var $item Mage_Sales_Model_Quote_Item */
         $item->addOption(array('code'=>'periode_id','value'=>$aboitem->getPeriodId()));
         $item->addOption(array('code'=>'station_id','value'=>$aboitem->getStationId()));
@@ -32,12 +36,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         $item->setPeriode($p);
         $item->setAboItem($aboitem);
         
-		$item->setProduct($product);
-		//$item->setStationId($contractitem->getStationId());
-		
-		
-		
-		$quote->addItem($item);
+
 
 		return $item;
 	}
@@ -71,9 +70,8 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		
 		$quote->setCustomer($customer);
 		
-		$billingAdr = $customer->getDefaultBillingAddress();//Mage::getModel('customer/address')->load($item->getBillingAddressId());
-		//$billingAdr = clone $billingAdr;
-        //$billingAdr->unsAddressId()->unsAddressType();
+		$billingAdr = $customer->getDefaultBillingAddress();
+
         
         $billingAdr = Mage::getModel('sales/quote_address')->importCustomerAddress($billingAdr);
         $billingAdr->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_BILLING);
@@ -91,10 +89,6 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         		$baseAdr->setQuote($quote);
         	}
         }
-        
-       
-        
-        
        
         $quote->save();
         return $quote;
@@ -129,18 +123,10 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         /* @var $convertQuote Mage_Sales_Model_Convert_Quote */
         $convertQuote = Mage::getModel('sales/convert_quote');
  
-        if($quote->isVirtual())
-        {
-        	$order = $convertQuote->addressToOrder($quote->getBillingAddress());
-        }
-        else
-        {
-        	$order = $convertQuote->addressToOrder($quote->getShippingAddress());
-        }
-        $p = $convertQuote->paymentToOrderPayment($quote->getPayment());
-                
         
-
+        $service = Mage::getModel('sales/service_quote',$quote);
+        $service->submitAll();
+        $order = $service->getOrder();
         if($this->_customer)
         {
         	if($this->_customer->getId() != $order->getCustomerId())
@@ -164,40 +150,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	        	$this->copySepaDebitValues($payment->getLastSepaMethod(), $p);
 	        }
         }
-        $order->setPayment($p);
-        $order->save();
-        /* @var $order Mage_Sales_Model_Order */
-        $order->setBillingAddress($convertQuote->addressToOrderAddress($quote->getBillingAddress()));
-        $baseAdr = $quote->getBaseAddress();
-        if($baseAdr)
-        {
-        	$order->setBaseAddress($convertQuote->addressToOrderAddress($baseAdr));
-        }
-		//$order->setShippingAddress($convertQuote->addressToOrderAddress($quote->getShippingAddress()));
-        
-
-        
-        /*
-        $order->setPrintnote1($this->_customer->getAboPrintNote1());
-       	$order->setPrintnote2($this->_customer->getAboPrintNote2());
-        
-        $order->setIsAbo('1');
-        */
-        
-        foreach ($quote->getAllItems() as $item) {
-            $orderItem = $convertQuote->itemToOrderItem($item);
-            if ($item->getParentItem()) {
-                $orderItem->setParentItem($order->getItemByQuoteItemId($item->getParentItem()->getId()));
-            }
-            $orderItem->setPeriodId($item->getPeriode()->getId());
-            $orderItem->setPeriodType($item->getPeriode()->getType());
-            $orderItem->setPeriodStart($item->getAboItem()->getStopDate());
-            $orderItem->setPeriodEnd($item->getPeriode()->getEndDate(strtotime($item->getAboItem()->getStopDate())));
-            $orderItem->setIbewiMaszeinheit($item->getProduct()->getIbewiMaszeinheit());
-            $orderItem->setStoreId($order->getStoreId());
-            $order->addItem($orderItem);            
-        }
-		$order->save();
+       
        
         
         /**
