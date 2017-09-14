@@ -24,7 +24,7 @@ class Egovs_Paymentbase_Model_System_Config_Backend_Alive extends Mage_Core_Mode
         $value = $this->getValue();
 
         if ($value == true) {
-        	if ($this->getScope() == 'website') {
+        	if ($this->getScope() == 'websites') {
         		$scopeId = $this->getScopeId();
         		$storeId = Mage::app()->getWebsite($scopeId)->getDefaultStore()->getId();
         		// Start store emulation process
