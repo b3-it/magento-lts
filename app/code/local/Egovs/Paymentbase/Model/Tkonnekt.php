@@ -637,10 +637,12 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 				}
 				$orderId = $order->getIncrementId();
 
-				if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
-					Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus TKonnektdaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-					return false;
-				}
+                if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
+                    if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
+                        Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus TKonnektdaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+                        return false;
+                    }
+                }
 
 				//If order was already updated, do not update again.
 				if($order->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
