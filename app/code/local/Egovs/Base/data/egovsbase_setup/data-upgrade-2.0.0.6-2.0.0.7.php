@@ -34,6 +34,9 @@ if ( $oldPackage == 'default') {
     // Spezielle Designs löschen
     $installer->run("DELETE FROM `design_change`");
     
+    // alte Kategorie-Designs löschen
+    $installer->run("DELETE FROM `catalog_category_entity_varchar` WHERE `value` LIKE 'default/%';");
+    
 	$installer->setConfigData('design/header/logo_src', 'images/logo_sachsen.png');
 	$installer->setConfigData('design/header/logo_src_small', 'images/logo_sachsen_smartphone.png');
 }
