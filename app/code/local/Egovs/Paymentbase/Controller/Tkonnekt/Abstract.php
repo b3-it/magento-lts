@@ -134,8 +134,8 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     	
     	Mage::log("$module::notify action called...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	
-    	// do nothing, if not a GET request
-    	if (!$this->getRequest()->isGet()) {
+    	// do nothing, if not a POST request
+    	if (!$this->getRequest()->isPost()) {
     		$this->norouteAction();
     		Mage::log("$module::The request was not a GET request!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
     		return;
@@ -183,6 +183,14 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     		//TTL = 180s = 3Min
     		$apcAdded = apc_add($apcKey, true, 180);
     	}
+
+        if ($this->_getOrder()->isEmpty()) {
+            Mage::log("$module::NOTIFY_ACTION:Order not found", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            $this->getResponse()->setHttpResponseCode(400);
+            $this->getResponse()->sendResponse();
+            exit;
+        }
+
     	//20150126::Frank Rochlitzer:Wir setzen den Status immer => falls APC fehlschlägt
     	//Sobald der Status nicht mehr PENDING_PAYMENT ist, wurde die Order schon behandelt!
     	//Der Status ist mit dem State identisch benannt.
