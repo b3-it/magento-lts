@@ -35,15 +35,19 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 			$from = new Zend_Date ( null, null, $locale );
 			$to = new Zend_Date ( null, null, $locale );
 			
-			$format = 'YYYY-MM-dd HH:mm:ss';
-			$from->setDate ( $curDate2, $format );
-			$from->setTime ( $curDate2, $format );
-			$from->setTimezone ( $timezone );
-			
-			$to->setDate ( $curDate1, $format, $locale );
-			$to->setTime ( $curDate1, $format, $locale );
-			$to->setTimezone ( $timezone );
-			
+			$format = Varien_Date::DATETIME_INTERNAL_FORMAT;
+			try {
+				$from->setDate ( $curDate2, $format );
+				$from->setTime ( $curDate2, $format );
+				$from->setTimezone ( $timezone );
+				
+				$to->setDate ( $curDate1, $format, $locale );
+				$to->setTime ( $curDate1, $format, $locale );
+				$to->setTimezone ( $timezone );
+			} catch (Exception $e) {
+				Mage::logException($e);
+				return;
+			}
 			$now = Mage::app ()->getLocale ()->date ( null, null, $locale, false );
 			$now = $now->getTimestamp ();
 			
