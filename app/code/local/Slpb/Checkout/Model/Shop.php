@@ -19,8 +19,8 @@ class Slpb_Checkout_Model_Shop extends Slpb_Checkout_Model_Abstract
 	
     /**
      *
-     * @param unknown_type $data
-     * @return unknown
+     * @param Mage_Customer_Model_Resource_Address $data
+     * @return bool
      */
     public function saveAddress($data)
     {

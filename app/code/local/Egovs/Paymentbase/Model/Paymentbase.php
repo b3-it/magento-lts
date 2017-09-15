@@ -377,7 +377,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 	 * 
 	 * @param string $ePaymentID ePaymentID
 	 * 
-	 * @return Ergebnis ePayment-Ergebnisstruktur 
+	 * @return Egovs_Paymentbase_Controller_Abstract ePayment-Ergebnisstruktur 
 	 * 
 	 * @deprecated Wird mit SäHO nicht mehr verwendet!
 	 */

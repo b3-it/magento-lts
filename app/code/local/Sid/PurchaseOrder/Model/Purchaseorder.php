@@ -72,7 +72,7 @@ class Sid_PurchaseOrder_Model_Purchaseorder extends Mage_Payment_Model_Method_Pu
 	 * @param Varien_Object $payment Payment
 	 * @param float         $amount  Betrag
 	 * 
-	 * @return  Mage_Payment_Model_Abstract
+	 * @return  Mage_Payment_Model_Method_Abstract
 	 */
 	public function capture(Varien_Object $payment, $amount) {
 		parent::capture($payment, $amount);

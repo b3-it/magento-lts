@@ -19,8 +19,6 @@ class Egovs_SepaDebitBund_Block_Account_Index extends Mage_Core_Block_Template
 	 * URL für Controller
 	 * 
 	 * @return string
-	 * 
-	 * @see Egovs_SepaDepitBund_ChangeController::changeAction
 	 */
 	public function getActionUrl() {
 		return $this->getUrl('sepadebitbund/change/change', array('_secure'=>'true'));

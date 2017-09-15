@@ -54,7 +54,7 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Bankpayment extends Egovs_BankPaymen
      * @param Varien_Object $payment Payment
      * @param integer       $amount  Betrag
      * 
-     * @return Mage_Payment_Model_Abstract
+     * @return Mage_Payment_Model_Method_Abstract
      * 
      * @see		Egovs_Paymentbase_Model_Abstract::_authorize
      */

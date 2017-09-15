@@ -1,13 +1,11 @@
 <?php
 class  B3it_ConfigCompare_Block_Adminhtml_Widget_Grid_Column_Renderer_Diff extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
-
-
     /**
      * Renders grid column
      *
      * @param Varien_Object $row
-     * @return mixed
+     * @return string
      */
     public function _getValue(Varien_Object $row)
     {
@@ -24,7 +22,5 @@ class  B3it_ConfigCompare_Block_Adminhtml_Widget_Grid_Column_Renderer_Diff exten
 	        $string = $btn.$btn2.'<div id="'.$id.'" class="col_diff_small">'. $string .'</div>';
         }
         return html_entity_decode($string,ENT_QUOTES,'UTF-8');
-        //return $string;
-       
     }
 }

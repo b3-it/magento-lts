@@ -14,7 +14,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     /**
      * Retrieve checkout model
      *
-     * @return Egovs_Checkout_Model_Type_Multipage
+     * @return Egovs_Checkout_Model_Multipage
      */
     protected function _getCheckout()
     {

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE phpdoc>
 <phpdoc>
   <title>Mustershop - Bezahlmodule API</title>
   <parser>
     <target>..\..\..\..\..\Doc\Entwicklerdokumentation\Payments\phpdoc</target>
-	<!-- <target>E:\svn\magento\branches\magento1.6.x\Doc\Entwicklerdokumentation\Payments\phpdoc</target> -->
 	<default-package-name>Egovs</default-package-name>
   </parser>
   <transformer>
     <target>..\..\..\..\..\Doc\Entwicklerdokumentation\Payments\phpdoc</target>
-	<!-- <target>E:\svn\magento\branches\magento1.6.x\Doc\Entwicklerdokumentation\Payments\phpdoc</target> -->
   </transformer>
   <transformations>
     <!-- <template name="responsive" /> -->

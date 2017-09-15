@@ -90,7 +90,7 @@ class Mage_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Retrieve url for remove product from cart
      *
-     * @param   Mage_Sales_Quote_Item $item
+     * @param   Mage_Sales_Model_Quote_Item $item
      * @return  string
      */
     public function getRemoveUrl($item)
@@ -105,7 +105,7 @@ class Mage_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Retrieve shopping cart url
      *
-     * @return unknown
+     * @return string
      */
     public function getCartUrl()
     {
@@ -135,7 +135,7 @@ class Mage_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Get shopping cart summary qty
      *
-     * @return decimal
+     * @return int
      */
     public function getItemsQty()
     {
@@ -145,7 +145,7 @@ class Mage_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Get shopping cart items summary (inchlude config settings)
      *
-     * @return decimal
+     * @return int
      */
     public function getSummaryCount()
     {

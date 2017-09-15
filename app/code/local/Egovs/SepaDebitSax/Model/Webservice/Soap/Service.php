@@ -142,7 +142,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param string $_mandatsreferenz
 	 * @param string $_bearbeiter
 	 * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_AmendmentSEPAMandatResult
@@ -164,7 +164,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param string $_mandatsreferenz
 	 * @param dateTime $_letzteNutzung
 	 * @param string $_bearbeiter
@@ -187,9 +187,9 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param string $_mandatsreferenz
-	 * @param decimal $_betrag
+	 * @param float $_betrag
 	 * @param dateTime $_faelligkeit
 	 * @param string $_verwendungszweck
 	 * @param string $_anordnungsdetails
@@ -213,7 +213,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_MandatSuchanfrage $_mandatAnfrage
 	 * @param string $_bearbeiter
 	 * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_SucheSEPAMandatResult
@@ -235,7 +235,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param string $_mandatsreferenz
 	 * @param string $_bearbeiter
 	 * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_LesenSEPAMandatResult
@@ -259,7 +259,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param string $_suchanfragenId
 	 * @param string $_bearbeiter
 	 * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_SucheSEPAMandatNextResult
@@ -282,7 +282,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Mandat $_mandat
 	 * @param string $_bearbeiter
 	 * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMandatMitPDFResult
@@ -311,7 +311,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Mandat $_mandat
 	 * @param string $_bearbeiter
 	 * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAKreditorenMandatMitAmendmentMitPDFResult
@@ -336,9 +336,9 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param string $_mandatsreferenz
-	 * @param decimal $_betrag
+	 * @param float $_betrag
 	 * @param dateTime $_faelligkeit
 	 * @param string $_verwendungszweck
 	 * @param string $_anordnungsdetails
@@ -366,7 +366,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Service extends Egovs_SepaDebitSa
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::getSoapClient()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::setResult()
 	 * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::saveLastError()
-	 * @param Egovs_SepaDebitSax_Model_Webservice_TypesIdentifierzierung $_identifierzierung
+	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Identifierzierung $_identifierzierung
 	 * @param string $_mandatsreferenz
 	 * @param string $_bearbeiter
 	 * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_LesenSEPAMandatMitPDFResult

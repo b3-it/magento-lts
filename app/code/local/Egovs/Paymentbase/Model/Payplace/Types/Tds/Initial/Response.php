@@ -21,7 +21,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tds_Initial_Response extends Egovs_
 {
     /**
      * The acsURL
-     * @var anyURI
+     * @var string
      */
     public $acsURL;
     /**
@@ -32,7 +32,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tds_Initial_Response extends Egovs_
     /**
      * Constructor method for tdsInitialResponse
      * @see parent::__construct()
-     * @param anyURI $_acsURL
+     * @param string $_acsURL
      * @param string $_paReq
      * @return Egovs_Paymentbase_Model_Payplace_Types_Tds_Initial_Response
      */
@@ -42,7 +42,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tds_Initial_Response extends Egovs_
     }
     /**
      * Get acsURL value
-     * @return anyURI|null
+     * @return string|null
      */
     public function getAcsURL()
     {
@@ -50,8 +50,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tds_Initial_Response extends Egovs_
     }
     /**
      * Set acsURL value
-     * @param anyURI $_acsURL the acsURL
-     * @return anyURI
+     * @param string $_acsURL the acsURL
+     * @return bool
      */
     public function setAcsURL($_acsURL)
     {

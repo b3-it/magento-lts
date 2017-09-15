@@ -1156,7 +1156,7 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 	 * @param Varien_Object $payment Payment
 	 * @param integer       $amount  Betrag
 	 *
-	 * @return  Mage_Payment_Model_Abstract
+	 * @return  Egovs_Paymentbase_Model_Debit
 	 *
 	 * @see Egovs_Paymentbase_Model_Debit::_authorize
 	 * @see Egovs_Paymentbase_Model_Abstract::createAccountingListParts

@@ -39,7 +39,7 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
 	
 	/**
 	 * Array zum vermeiden doppelter Fehlermeldungen
-	 * @var unknown_type
+	 * @var array
 	 */
 	protected $_errors = array();
 	

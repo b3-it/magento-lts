@@ -29,8 +29,17 @@
             <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
         </reference>
     </customer_account>
+    
+    <catalog_category_view>
+        <reference name="left">
+            <block type="catalog/product_compare_sidebar" before="left.newsletter" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
+        </reference>
+    </catalog_category_view>
 
     <catalog_product_view>
+        <reference name="left">
+            <block type="catalog/product_compare_sidebar" before="left.newsletter" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
+        </reference>
         <reference name="product.info">
             <!-- Bewertungen in der Artikelansicht raus -->
             <remove name="product.reviews" />

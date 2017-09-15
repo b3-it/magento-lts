@@ -42,7 +42,7 @@ class Stala_Extcustomer_Model_Observer extends Mage_Core_Model_Abstract
 	/**
 	 * Behandelt das Löschen einer Quote
 	 * 
-	 * @param unknown_type $observer Observer
+	 * @param Varien_Event_Observer $observer Observer
 	 * 
 	 * @return Stala_Extcustomer_Model_Observer
 	 * 

@@ -413,18 +413,13 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 				}
 			}
 		}
-		
-		
-		
-		
-		
 	}
 	
 	
 	/**
 	 * Mandate zurückgeben evt. mit Änderungen
 	 * 
-	 * @param unknown $payment Payment
+	 * @param Egovs_Paymentbase_Model_Paymentbase $payment Payment
 	 * 
 	 * @return Egovs_Paymentbase_Model_Sepa_Mandate_Interface
 	 */
@@ -987,8 +982,8 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 	/**
 	 * Fehler der EPayBl auswerten
 	 * 
-	 * @param unknown $objResult Result von ePayBL
-	 * @param unknown $ergebnis Ergebnis von ePayBL
+	 * @param SOAP_Value $objResult Result von ePayBL
+	 * @param SoapFault|SoapVar $ergebnis Ergebnis von ePayBL
 	 * @param string $soapFunction SOAP-Funktion
 	 * 
 	 * @return void
@@ -1119,7 +1114,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 	/**
 	 * Mandat an der Mandatsverwaltung ändern
 	 * 
-	 * @param unknown $mandate Mandat
+	 * @param Egovs_Paymentbase_Model_Sepa_Mandate $mandate Mandat
 	 * @param boolean $Amendment | soll ein Amendment erstellt werden
 	 * 
 	 * @return Egovs_Paymentbase_Model_Sepa_Mandate_Interface

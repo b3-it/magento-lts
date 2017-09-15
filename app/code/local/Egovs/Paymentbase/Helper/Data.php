@@ -35,7 +35,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	/**
 	 * Client zur Soap - Kommunikation
 	 *
-	 * @var SOAP_BfF
+	 * @var SOAP_Client
 	 */
 	private $__objSOAPClientBfF = null;
 
@@ -543,8 +543,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @see Egovs_Paymentbase_Helper_Data::getECustomerIdNonVolatile
 	 * @see Egovs_Paymentbase_Helper_Data::getCustomerId
 	 * @see Egovs_Paymentbase_Model_Abstract::_getECustomerId
-	 * @see Egovs_Paypage_Model_Paypage::_anlegenKassenzeichenPaypage
-	 * @see Egovs_Paypage_Model_Paypage::getPaypageUrl
+	 * @see Egovs_PayplacePaypage_Model_Paypage::_anlegenKassenzeichenPaypage
+	 * @see Egovs_PayplacePaypage_Model_Paypage::getPaypageUrl
 	 *
 	 * @deprecated Egovs_Paymentbase_Helper_Data::getECustomerIdRandom
 	 */
@@ -592,8 +592,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return String ePayment Kundennummer
 	 *
 	 * @see Egovs_Paymentbase_Helper_Data::getCustomerId
-	 * @see Egovs_Paypage_Model_Paypage::_anlegenKassenzeichenPaypage
-	 * @see Egovs_Paypage_Model_Paypage::getPaypageUrl
+	 * @see Egovs_PayplacePaypage_Model_Paypage::_anlegenKassenzeichenPaypage
+	 * @see Egovs_PayplacePaypage_Model_Paypage::getPaypageUrl
 	 * @see Egovs_Paymentbase_Model_Adapter_Abstract::hash
 	 */
 	public function getECustomerIdRandom($customer = null, $throwIfNotExists = false) {

@@ -24,7 +24,7 @@ class Sid_Haushalt_Model_Export_Abstract extends Mage_Core_Model_Abstract
     
    	/**
    	 * OrderId's welche exportiert weden sollen übergeben
-   	 * @param unknown $orderIds
+   	 * @param array $orderIds
    	 */
     public function setOrderIds($orderIds)
     {
@@ -53,7 +53,7 @@ class Sid_Haushalt_Model_Export_Abstract extends Mage_Core_Model_Abstract
     
     /**
      * Status für alle oderIds auf exportiert setzen
-     * @param unknown $orderIds
+     * @param array $orderIds
      */
     public function setExportStatus($orderIds)
     {
@@ -82,7 +82,7 @@ class Sid_Haushalt_Model_Export_Abstract extends Mage_Core_Model_Abstract
     
     /**
      * Daten speichern Verzeichniss wird aus konfig ermittelt
-     * @param unknown $data
+     * @param string $data
      */
     public function saveFile($data)
     {

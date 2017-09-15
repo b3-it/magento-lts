@@ -52,7 +52,7 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 	/**
 	 * Währung
 	 * 
-	 * @var unknown_type
+	 * @var string
 	 */
 	protected $_orderCurrency = null;  
 

@@ -35,7 +35,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Compare extends Egovs_Paymentbase_M
     public $rejectMessage;
     /**
      * The id
-     * @var NCName
+     * @var int
      */
     public $id;
     /**
@@ -48,7 +48,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Compare extends Egovs_Paymentbase_M
      * @see parent::__construct()
      * @param Egovs_Paymentbase_Model_Payplace_Types_Item $_item
      * @param string $_rejectMessage
-     * @param NCName $_id
+     * @param int $_id
      * @param Egovs_Paymentbase_Model_Payplace_Enum_Mismatch_ActionEnum $_mismatchAction
      * @return Egovs_Paymentbase_Model_Payplace_Types_Compare
      */
@@ -92,7 +92,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Compare extends Egovs_Paymentbase_M
     }
     /**
      * Get id value
-     * @return NCName|null
+     * @return int|null
      */
     public function getId()
     {
@@ -100,8 +100,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Compare extends Egovs_Paymentbase_M
     }
     /**
      * Set id value
-     * @param NCName $_id the id
-     * @return NCName
+     * @param int $_id the id
+     * @return bool
      */
     public function setId($_id)
     {

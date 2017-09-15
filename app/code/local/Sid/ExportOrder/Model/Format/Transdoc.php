@@ -68,8 +68,8 @@ class Sid_ExportOrder_Model_Format_Transdoc extends Sid_ExportOrder_Model_Format
     
     /**
      * die Adressen in den xml Baum einhängen
-     * @param DOMElement $parent
-     * @param unknown $order
+     * @param DOMElement                $parent
+     * @param Mage_Sales_Model_Order    $order
      */
     protected function _addAddresses(DOMElement $parent, $order)
     {
@@ -99,8 +99,8 @@ class Sid_ExportOrder_Model_Format_Transdoc extends Sid_ExportOrder_Model_Format
     
     /**
      * die OrderItems in den xml Baum einhängen
-     * @param DOMElement $parent
-     * @param unknown $order
+     * @param DOMElement               $parent
+     * @param Mage_Sales_Model_Order   $order
      */
     protected function _addItems(DOMElement $parent, $order)
     {
@@ -123,8 +123,8 @@ class Sid_ExportOrder_Model_Format_Transdoc extends Sid_ExportOrder_Model_Format
     
     /**
      * die Totals in den xml Baum einhängen
-     * @param DOMElement $parent
-     * @param unknown $order
+     * @param DOMElement               $parent
+     * @param Mage_Sales_Model_Order   $order
      */
     protected function _addTotals(DOMElement $parent, $order)
     {

@@ -190,7 +190,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * This is the function that gets called if button "Place Order" is pressed
 	 * in the checkout process.
 	 *
-	 * @return the URL to be redirected to
+	 * @return string the URL to be redirected to
 	 */
 	public function getOrderPlaceRedirectUrl() {
 		//return Mage::getUrl("girosolution/{$this->getCode()}/redirect");
@@ -605,7 +605,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @param string $createInvoice
 	 * @param string $invoiceComment
 	 * @param string $gcRef
-	 * @param unknown $gcTransInfo
+	 * @param array $gcTransInfo
 	 * @param string $orderStateFinished
 	 * 
 	 * @return boolean
@@ -860,7 +860,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @param string $refId			TranskationsID des Zahlungsproviders
 	 * @param string $providerName  VISA,MASTER,GIROPAY,SEPASDD
 	 *
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Controller_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 *
 	 * @throws Exception
 	 */

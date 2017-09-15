@@ -60,9 +60,9 @@ class Sid_Cms_Model_Resource_Node extends Mage_Core_Model_Resource_Db_Abstract
     
     /**
      * alle Kinder nach der Id durchsuchen
-     * @param unknown $id
+     * @param int $id
      * @param string $recursiv
-     * @return Sid_Cms_Model_Resource_Node[]|unknown[]|NULL[]|unknown|NULL
+     * @return Sid_Cms_Model_Resource_Node[]|NULL[]
      */
     public function getChild($id, $recursiv = false)
     {

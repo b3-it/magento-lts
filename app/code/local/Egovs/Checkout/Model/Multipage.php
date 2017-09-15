@@ -197,8 +197,8 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 
     /**
      *
-     * @param unknown_type $data
-     * @param unknown_type $customerAddressId
+     * @param array $data
+     * @param integer $customerAddressId
      * 
      * @return boolean|string
      */
