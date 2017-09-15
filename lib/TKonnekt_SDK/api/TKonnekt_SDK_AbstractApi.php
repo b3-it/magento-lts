@@ -172,12 +172,12 @@ class TKonnekt_SDK_AbstractApi implements TKonnekt_SDK_InterfaceApi
 
         $size = strlen($url) - 1;
         if (strrpos($url, '/') == $size) {
-            $this->_baseRequestURL = substr($url, 0, $size);
+            $this->_baseRequestUrl = substr($url, 0, $size);
         } else {
-            $this->_baseRequestURL = $url;
+            $this->_baseRequestUrl = $url;
         }
 
-        return $this->_baseRequestURL;
+        return $this->_baseRequestUrl;
     }
 
     /**

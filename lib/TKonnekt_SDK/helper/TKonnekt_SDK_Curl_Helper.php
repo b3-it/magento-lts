@@ -26,10 +26,12 @@ class TKonnekt_SDK_Curl_Helper
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        $urlEnc = http_build_query($params, null, '&');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $urlEnc);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
+        $headers = array('Content-Type: application/x-www-form-urlencoded;charset=utf-8','Expect:');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         if ($_config->getConfig('CURLOPT_SSL_VERIFYPEER')) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $_config->getConfig('CURLOPT_SSL_VERIFYPEER'));
