@@ -36,7 +36,7 @@ class Gka_Tkonnektpay_Helper_Data extends Egovs_Paymentbase_Helper_Data
 
         $store = Mage::app()->getStore();
         $secure = Mage::getStoreConfigFlag(Mage_Core_Model_Store::XML_PATH_SECURE_IN_FRONTEND);
-        $newUrl = $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, $secure).'/tkonnekt/debitcard/isAlive';
+        $newUrl = $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, $secure).'tkonnekt/debitcard/isAlive';
         $request->addParam('notifyUrl', $newUrl);
 
         $request->setSecret($this->getProjectPassword());
