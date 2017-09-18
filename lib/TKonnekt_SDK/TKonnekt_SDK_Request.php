@@ -318,7 +318,7 @@ class TKonnekt_SDK_Request
      */
     public function paymentSuccessful() {
         if ($this->requestHasSucceeded() && $this->__requestMethod->isDirectPayment()) {
-            return $this->__requestMethod->getTransactionSuccessfulCode() == $this->__response['resultPayment'];
+            return $this->__requestMethod->getTransactionSuccessfulCode() == $this->__response[$this->__requestMethod->getNotifyResultName()];
         }
 
         return false;

@@ -190,7 +190,7 @@ class TKonnekt_SDK_Notify
      */
     public function paymentSuccessful() {
         if ($this->__requestMethod->getTransactionSuccessfulCode() != null) {
-            return $this->__requestMethod->getTransactionSuccessfulCode() == $this->__notifyParams['tkResultPayment'];
+            return $this->__requestMethod->getTransactionSuccessfulCode() == $this->__notifyParams[$this->__requestMethod->getNotifyResultName()];
         }
 
         return false;

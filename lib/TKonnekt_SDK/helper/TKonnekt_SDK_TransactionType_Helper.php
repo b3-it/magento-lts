@@ -26,8 +26,10 @@ class TKonnekt_SDK_TransactionType_Helper
                 return new TKonnekt_SDK_DebitCardTransaction();
 
             //tools apis
-            case 'getTransactionTool':
+            case 'getTransaction':
                 return new TKonnekt_SDK_Tools_GetTransaction();
+            case 'isAlive':
+                return new TKonnekt_SDK_Tools_IsAlive();
         }
 
         return null;

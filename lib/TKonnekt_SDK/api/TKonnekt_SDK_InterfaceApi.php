@@ -53,23 +53,38 @@ interface TKonnekt_SDK_InterfaceApi
 
     /**
      * Gibt true zurück, wenn die API eine Benachrichtigungs-URL benötigt, an die das Transaktionsergebnis gesendet werden soll.
+     *
+     * @return bool
      */
     public function hasNotifyURL();
 
     /**
      * Gibt true zurück, wenn die API eine Redirect-URL benötigt, an die der Kunde nach der Zahlung geschickt werden muss.
+     *
+     * @return bool
      */
     public function hasRedirectURL();
 
     /**
      * Gibt den ResultCode einer erfolgreichen Transaktion zurück.
+     *
+     * @return string
      */
     public function getTransactionSuccessfulCode();
 
     /**
      * Gibt den Parameternamen des Hash im API-Aufruf von TKonnekt zurück.
+     *
+     * @return string
      */
     public function getNotifyHashName();
+
+    /**
+     * Gibt den Parameternamen des Results im API-Aufruf von TKonnekt zurück.
+     *
+     * @return string
+     */
+    public function getNotifyResultName();
 
     /**
      * Führt einige spezielle Validierungen für diese Zahlungsmethode durch.

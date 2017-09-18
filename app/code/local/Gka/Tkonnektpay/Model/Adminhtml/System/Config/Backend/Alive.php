@@ -1,15 +1,14 @@
 <?php
 /**
- * Prüft ob ePayBL erreicht werden kann.
+ * Prüft ob TKonnekt erreicht werden kann.
  *
- * @category   	Egovs
- * @package    	Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright  	Copyright (c) 2012 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
- * @copyright  	Copyright (c) 2012 TRW-NET - http://www.trw-net.de 
+ * @category   	Gka
+ * @package    	Gka_Tkonnektpay
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2017 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license    	http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_Paymentbase_Model_System_Config_Backend_Alive extends Mage_Core_Model_Config_Data
+class Gka_Tkonnektpay_Model_Adminhtml_System_Config_Backend_Alive extends Mage_Core_Model_Config_Data
 {
 	/**
 	 * Prüft ob ePayBL erreicht werden kann
@@ -28,10 +27,10 @@ class Egovs_Paymentbase_Model_System_Config_Backend_Alive extends Mage_Core_Mode
         		//Bei Zertifikatfehlern gibt PHP Soap die Meldung als Warning aus.
         		//der SoapClient setzt das error_reporting jedoch immer auf 0 -> siehe mageCoreErrorHandler!
         		set_error_handler(array(Mage::helper('paymentbase'), 'epayblErrorHandler'));
-        		Mage::helper('paymentbase')->isAlive();        		
-        		Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('paymentbase')->__('The ePayBL Server is alive.'));
+        		Mage::helper('gka_tkonnektpay')->isAlive();
+        		Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('paymentbase')->__('The TKonnekt Server is alive.'));
         	} catch (Exception $e) {
-        		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('paymentbase')->__('The ePayBL Server is not available, check log files for further information.'));
+        		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('paymentbase')->__('The TKonnekt Server is not available, check log files for further information. Message: %s', $e->getMessage()));
         	}
         	restore_error_handler();
         }         
