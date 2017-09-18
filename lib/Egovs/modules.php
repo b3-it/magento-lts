@@ -9,8 +9,8 @@ $sub              = join($ds, array('lib', 'Egovs'));
 $base             = str_replace( $sub, '', dirname(__FILE__) );
 $base_modules_xml = $base . $ds . join($ds, array('app', 'etc', 'modules')) . $ds;
 $local_xml        = $base . $ds . join($ds, array('app', 'etc', 'local.xml'));
-$exclude_modules  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel');
-$exclude_options  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel');
+$exclude_modules  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel', 'Cm');
+$exclude_options  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel', 'Cm');
 $global_xml_file  = array();
 $neueliste        = array();
 
@@ -43,7 +43,7 @@ function set_header($title = 'Magento - Modulverwaltung')
             .result_fail  {color:#FF0000;}
             #mage         {cursor:pointer; width:1010px; height: 30px; background-color:#0000A0; color:#FFFFFF; padding:7px 0px 0px 10px; font-weight:bold;}
             #uploader     {display:none; left:100px; top:100px; z-index:1000; opacity:1; filter:Alpha(Opacity=100); position:absolute; border:2px solid #000000; background-color:#DCDCDC;}
-            #upload       {cursor:pointer; color:#0000FF;}
+            #upload       {cursor:pointer; color:#0000FF; display:inline-block; margin-left: 100px;}
             #start_upload {}
             #upload_title {background-color:#000000; color:#FFFFFF; font-weight:bold; padding:5px 0px 5px 10px;}
             #upload_hidde {float:right; padding:0px 10px 5px 0px; color:#FF0000; cursor:pointer;}
@@ -74,7 +74,8 @@ function set_xml(&$output, $xml_array)
 {
     $spacer = '    ';
 
-    $output[] = '<?xml version="1.0"?>';
+    $output[] = '<?xml version="1.0" encoding="UTF-8"?>';
+    $output[] = '<!DOCTYPE config>';
     $output[] = '<config>';
     $output[] = str_repeat($spacer, 1) . '<modules>';
 
@@ -511,13 +512,11 @@ echo '
 
             modul.removeClass(aktuell);
 
-            if ( aktuell == "aktiv")
-            {
+            if ( aktuell == "aktiv") {
                 modul.addClass("inaktiv");
                 status = "false";
             }
-            else
-            {
+            else {
                 modul.addClass("aktiv");
                 status = "true";
             }
@@ -580,7 +579,6 @@ echo '
 
     <p>
         <a id="download" href="' . $script . '?' . ( ($view_only === FALSE) ? 'edit&amp;' : '' ) . 'download">Einstellungen herunterladen</a>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         <span id="upload">Einstellungen hochladen</span>
     </p>
     <div id="dummy" class="min"></div>
@@ -660,7 +658,7 @@ unset($neueliste);
 
 echo '</div>
 
-        <div class="copy">&copy; 2012 by EDV-Beratung-Hempel</div>
+        <div class="copy">&copy; 2017 by B3-IT Systeme GmbH</div>
     </body>
 </html>
 ';
