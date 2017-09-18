@@ -542,19 +542,20 @@
                 <tempate_filter>widget/template_filter</tempate_filter>
             </content>
         </catalog>
-
-
     </global>
     <default>
         <dev>
             <debug>
-                <error_reporting>0</error_reporting>
+                <!-- 32759::All but notice -->
+                <error_reporting>32759</error_reporting>
                 <display_errors>0</display_errors>
                 <security_filter>1</security_filter>
+                <error_log><![CDATA[./var/log/php_errors.log]]></error_log>
             </debug>
             <log>
                 <!-- Notice Level (Zend_Log::NOTICE) -->
                 <log_level>5</log_level>
+                <active>1</active>
             </log>
         </dev>
         <design>
@@ -564,6 +565,23 @@
                 <theme>default</theme>
                 <translate>default</translate>
             </package>
+            <head>
+                <default_title>Egov Sachsen</default_title>
+                <default_description>eGov-Mustershop</default_description>
+                <default_keywords>Magento, Varien, E-commerce</default_keywords>
+                <default_robots>*</default_robots>
+                <default_media_type>text/html</default_media_type>
+                <default_charset>utf-8</default_charset>
+            </head>
+            <header>
+                <logo_src>images/logo_sachsen.png</logo_src>
+                <logo_alt>Egov Sachsen</logo_alt>
+                <logo_src_small>images/logo_sachsen_smartphone.png</logo_src_small>
+                <welcome>Herzlich Willkommen!</welcome>
+            </header>
+            <footer>
+                <copyright><![CDATA[&copy; 2017 Magento Egov Sachsen.]]></copyright>
+            </footer>
         </design>
         <system>
             <smtp>
@@ -573,6 +591,31 @@
                 <based_on>shipping</based_on>
             </calculation>
         </system>
+        <trans_email>
+            <ident_custom1>
+                <email>shop@testshop.org</email>
+                <name>eGov-Mustershop</name>
+            </ident_custom1>
+            <ident_custom2>
+                <email>shop@testshop.org</email>
+                <name>eGov-Mustershop</name>
+            </ident_custom2>
+            <ident_general>
+                <email>allgemein@testshop.org</email>
+                <name>eGov-Mustershop Allgemein</name>
+            </ident_general>
+            <ident_sales>
+                <email>sales@testshop.org</email>
+                <name>eGov-Mustershop Sales</name>
+            </ident_sales>
+            <ident_support>
+                <email>support@testshop.org</email>
+                <name>eGov-Mustershop CustomerSupport</name>
+            </ident_support>
+            <ident_admin>
+                <email>server@testshop.org</email>
+            </ident_admin>
+        </trans_email>
         <admin>
             <export>
                 <csv_separator>;</csv_separator>

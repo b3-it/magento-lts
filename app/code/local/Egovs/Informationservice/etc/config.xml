@@ -205,8 +205,8 @@
 	<default>
 		<trans_email>
 			<ident_informationsystem>
-				<email>custom1@example.com</email>
-				<name>Custom 1</name>
+				<email>auskunft@testshop.org</email>
+				<name>eGov-Mustershop Auskunft</name>
 			</ident_informationsystem>
 		</trans_email>
 		<informationservice>
