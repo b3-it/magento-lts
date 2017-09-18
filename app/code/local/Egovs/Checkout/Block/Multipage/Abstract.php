@@ -43,7 +43,7 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
     /**
      * Retrieve multishipping checkout model
      *
-     * @return Mage_Checkout_Model_Type_Multishipping
+     * @return Egovs_Checkout_Model_Multipage
      */
     public function getCheckout()
     {
