@@ -116,5 +116,10 @@
                 <group>epaybl</group>
             </gka_tkonnektpay_debitcard>
         </payment>
+        <payment_services>
+            <paymentbase>
+                <successaction>gkacheckout/singlepage/success</successaction>
+            </paymentbase>
+        </payment_services>
     </default>
 </config>
