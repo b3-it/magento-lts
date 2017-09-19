@@ -52,7 +52,7 @@ $email_templates = array(
         'template' => 'footer.htm',
         'name'     => 'eMail-Footer',
         'topic'    => 'E-Mail - Fußzeile',
-        'path'     => 'design/email/support'
+        'path'     => 'design/email/footer'
     ),
 );
 
