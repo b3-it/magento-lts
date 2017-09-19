@@ -48,8 +48,10 @@ foreach($blocks AS $block) {
             $new_content_array = array_merge($footer_links_start, $content_array, $footer_links_ende);
         }
         
-        if ( $content_array[2] == $footer_magento_eng ) {
-            $new_content_array = array_merge($footer_links_start, $footer_links_default, $footer_links_ende);
+        if ( count($content_array) >= 3 ) {
+            if ( $content_array[2] == $footer_magento_eng ) {
+                $new_content_array = array_merge($footer_links_start, $footer_links_default, $footer_links_ende);
+            }
         }
 
         $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());

@@ -288,6 +288,9 @@
             <egovsbase>
                 <class>Egovs_Base_Helper</class>
             </egovsbase>
+            <egovsbase_emailsetup>
+                <class>Egovs_Base_Helper_Emailsetup</class>
+            </egovsbase_emailsetup>
             <customer>
                 <rewrite>
                     <data>Egovs_Base_Helper_Customer_Data</data>
