@@ -28,6 +28,12 @@ foreach($email_arr AS $email) {
     $old = $email->getTemplateText();
     $new = str_replace(array_keys($replace), array_values($replace), $old);
     
+    // Prüfen, ob der Header in allen Templates eingefügt ist
+    $arr = explode("\n", trim($old));
+    if ( $arr[0] != $header ) {
+        $new = $header . "\n" . $new;
+    }
+    
     if ( $old != $new ) {
         $new .= "\n" . $footer;
 
