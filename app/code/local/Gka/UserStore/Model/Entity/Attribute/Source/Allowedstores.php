@@ -13,12 +13,13 @@ class Gka_UserStore_Model_Entity_Attribute_Source_Allowedstores
      *
      * @return array
      */
-    public function getAllOptions()
+    public function xgetAllOptions()
     {
         if (is_null($this->_options)) {
             $this->_options = array();
             foreach (Mage::app()->getStores() as $store) {
-            	if( $this->_getCustomer()->isInStore($store)){
+            	//if( $this->_getCustomer()->isInStore($store))
+            	{
 	                /* @var $group Mage_Customer_Model_Group */
 	                $this->_options[] = array(
 	                    'value' => $store->getId(),
@@ -28,6 +29,20 @@ class Gka_UserStore_Model_Entity_Attribute_Source_Allowedstores
             }
         }
         return $this->_options;
+    }
+    public function getAllOptions()
+    {
+    	if (!$this->_options) {
+    		$collection = Mage::getResourceModel('core/store_collection');
+    		if ('store_id' == $this->getAttribute()->getAttributeCode()) {
+    			$collection->setWithoutDefaultFilter();
+    		}
+    		$this->_options = Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm();
+    		if ('created_in' == $this->getAttribute()->getAttributeCode()) {
+    			array_unshift($this->_options, array('value' => '0', 'label' => Mage::helper('customer')->__('Admin')));
+    		}
+    	}
+    	return $this->_options;
     }
 
     /**
