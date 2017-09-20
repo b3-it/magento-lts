@@ -12,6 +12,8 @@
 class TKonnekt_SDK_AbstractApi implements TKonnekt_SDK_InterfaceApi
 {
 
+    protected $_notifyResultName = 'tkResultPayment';
+
     /**
      * Nur für Entwicklungszwecke
      */
@@ -242,5 +244,14 @@ class TKonnekt_SDK_AbstractApi implements TKonnekt_SDK_InterfaceApi
     public function validateParams($params, &$strError) {
         $strError = "";
         return TRUE;
+    }
+
+    /**
+     * Gibt den Parameternamen des Results im API-Aufruf von TKonnekt zurück.
+     *
+     * @return string
+     */
+    public function getNotifyResultName() {
+        return $this->_notifyResultName;
     }
 }

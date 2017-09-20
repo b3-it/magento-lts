@@ -179,6 +179,17 @@
                             <show_in_store>0</show_in_store>
                             <comment>Send personal data to ePayBL</comment>
                         </include_personal_data>
+                        <is_alive translate="label">
+                            <label>Check if is alive</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>gka_tkonnektpay/adminhtml_system_config_backend_alive</backend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Jetzt Prüfen ob Tkonnekt-Server erreichbar ist?</comment>
+                        </is_alive>
                         <debug_level translate="label">
                             <label>Debug Flag</label>
                             <frontend_type>select</frontend_type>

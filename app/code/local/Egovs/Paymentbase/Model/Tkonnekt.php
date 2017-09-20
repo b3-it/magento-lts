@@ -37,24 +37,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	protected $_errors = array();
 	
 	public function __construct() {
-		$libDIR = Mage::getBaseDir('lib');
-		$classPath = $libDIR . '/TKonnekt_SDK/TKonnekt_SDK.php';
-		if (is_file($classPath)) {
-			require_once $classPath;
-		}
-		
-		$config = TKonnekt_SDK_Config::getInstance();
-		$_debug = $this->getDebug() > 0 ? true : false;
-		$config->setConfig('DEBUG_MODE', $_debug);
-		$config->setConfig('DEBUG_PATH', Mage::getBaseDir('var') . DS . 'log');
-		//TODO: Pfad zu CA Bundle setzen
-		//FIXME: Pfad muss vor allem für Windows per INI_SET oder in PHP INI gesetzt werden
-		//https://curl.haxx.se/docs/sslcerts.html
-		//https://curl.haxx.se/docs/caextract.html
-		//curl.cainfo =
-		$config->setConfig('CURLOPT_CAINFO', null);
-
-		$config->setConfig('BASE_REQUEST', $this->getServerUrl());
+		Egovs_Paymentbase_Helper_Tkonnekt_Factory::initTkonnekt();
 		
 		parent::__construct();
     }
@@ -131,7 +114,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	}
 
     /**
-     * Get Merchant Id
+     * Get Server URL
      *
      * @return string
      */
@@ -159,8 +142,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 * @return string
 	 */
 	public function getProjectPassword() {
-		$projectPassword =  Mage::getStoreConfig ( 'payment/' . $this->getCode () . '/project_pwd' );
-		$projectPassword = Mage::helper('core')->decrypt($projectPassword);
+		$projectPassword =  $this->_getHelper()->getProjectPassword();
 	
 		if (empty($projectPassword)) {
 			if (!array_key_exists('prjpwd', $this->_errors)) {

@@ -293,6 +293,47 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
             $this->_successActionRedirectFailure();
         }
     }
+
+    /**
+     * Verfügbarkeit prüfen
+     *
+     * isAlive muss nur von außen erreichbar sein um z. B. Firewalls zu testen.
+     * Liefert  bei Erfolg HTTP 200 zurück
+     *
+     * @return void
+     */
+    public function isAliveAction() {
+        Mage::log($this->_getModuleName()."::isAlive action called...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+
+        /* !Wichtig! Initialisiert TKonnekt API! */
+        Egovs_Paymentbase_Helper_Tkonnekt_Factory::initTkonnekt();
+
+
+        //Retrieves the project password.
+        $projectPassword = Mage:helper('gka_tkonnnektpay')->getProjectPassword();
+
+        //Get the notification
+        $notify = new TKonnekt_SDK_Notify('isAlive');
+        try {
+            $notify->setSecret($projectPassword);
+            $notify->parseNotification($this->getRequest()->getParams());
+
+            if (!$notify->paymentSuccessful()) {
+                $iResult = $notify->getResponseParam("tkResult");
+                $msg = $notify->getResponseParam('tkResultMessage');
+                Mage::log(sprintf("$msg [%s]", $iResult), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            } else {
+                $notify->sendOkStatus();
+                exit;
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
+        $notify->sendBadRequestStatus();
+        exit;
+    }
+
     /**
      * Modulspezifische Fehlerbehandlung
      * 
