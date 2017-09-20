@@ -114,6 +114,11 @@ function set_xml(&$output, $xml_array)
  */
 function get_xml_data($file)
 {
+    if ( !filesize($file) )
+    {
+        return;
+    }
+
     $fp   = fopen($file, "r");
     $data = fread($fp, filesize($file));
     fclose($fp);
@@ -223,8 +228,11 @@ function get_xml_file_modules(&$data_array, $file_list)
     foreach ( $file_list AS $file )
     {
         $xml = get_xml_data($file);
-
-        $data_array[basename($file)] = array_keys($xml['config']['modules']);
+        
+        if ( count($xml) )
+        {
+            $data_array[basename($file)] = array_keys($xml['config']['modules']);
+        }
     }
 }
 ////////////////////////////////////////////////////////////
@@ -338,11 +346,14 @@ if ( isset($_GET['download']) )
         {
             $xml = get_xml_data($filename);
 
-            foreach($xml['config']['modules'] AS $key => $val)
+            if ( count($xml) )
             {
-                if ( !in_array( get_prefix($key), $exclude_options) )
+                foreach($xml['config']['modules'] AS $key => $val)
                 {
-                    $settings[basename($filename)][$key] = $val['active'];
+                    if ( !in_array( get_prefix($key), $exclude_options) )
+                    {
+                        $settings[basename($filename)][$key] = $val['active'];
+                    }
                 }
             }
         }
@@ -602,55 +613,58 @@ $core = FALSE;
 foreach ($neueliste AS $filename)
 {
     $xml = get_xml_data($filename);
-
-    foreach($xml['config']['modules'] AS $key => $val)
+    
+    if ( count($xml) )
     {
-        if ( in_array( get_prefix($key), $exclude_options) AND ($core === FALSE) )
+        foreach($xml['config']['modules'] AS $key => $val)
         {
-            echo "<div id=\"mage\"></div>\n" .
-                 "<div id=\"modules_mage\" style=\"display:none;\">\n";
-            $core = TRUE;
-        }
-
-        if ( $view_only === FALSE )
-        {
-            if ( in_array( get_prefix($key), $exclude_options) )
+            if ( in_array( get_prefix($key), $exclude_options) AND ($core === FALSE) )
             {
-                $click = ' onClick="alert(\'BASIS-Module k&ouml;nnen nicht ver&auml;ndert werden!\');"';
+                echo "<div id=\"mage\"></div>\n" .
+                    "<div id=\"modules_mage\" style=\"display:none;\">\n";
+                $core = TRUE;
+            }
+            
+            if ( $view_only === FALSE )
+            {
+                if ( in_array( get_prefix($key), $exclude_options) )
+                {
+                    $click = ' onClick="alert(\'BASIS-Module k&ouml;nnen nicht ver&auml;ndert werden!\');"';
+                }
+                else
+                {
+                    $click = ' onClick="change_module(\'' . $key . '\');"';
+                }
             }
             else
             {
-                $click = ' onClick="change_module(\'' . $key . '\');"';
+                $click = '';
             }
-        }
-        else
-        {
-            $click = '';
-        }
-
-        $aktiv = ( ($val['active'] === 'true') ? '<span class="aktiv"' : '<span class="inaktiv"' );
-        $class = ( ($i % 2 == 0) ? ' gerade' : '' );
-        echo '<div class="modul_zeile' . $class . '">' . $aktiv . ' id="' . $key . '"' . $click . '>' . $key . '</span>' .
-             '<span class="modul_result" id="' . $key . '_RESULT"></span>';
-
-        if ( isset($val['depends']) )
-        {
-            if ( is_array($val['depends']) )
+            
+            $aktiv = ( ($val['active'] === 'true') ? '<span class="aktiv"' : '<span class="inaktiv"' );
+            $class = ( ($i % 2 == 0) ? ' gerade' : '' );
+            echo '<div class="modul_zeile' . $class . '">' . $aktiv . ' id="' . $key . '"' . $click . '>' . $key . '</span>' .
+                '<span class="modul_result" id="' . $key . '_RESULT"></span>';
+            
+            if ( isset($val['depends']) )
             {
-                echo '<br />Abh&auml;ngigkeiten:<br /><div class="abhaengig">';
-
-                $sub = array();
-                foreach($val['depends'] AS $keys => $values)
+                if ( is_array($val['depends']) )
                 {
-                    $sub[] = '<a href="' . $script . '#' . $keys . '">' . $keys . '</a>';
+                    echo '<br />Abh&auml;ngigkeiten:<br /><div class="abhaengig">';
+                    
+                    $sub = array();
+                    foreach($val['depends'] AS $keys => $values)
+                    {
+                        $sub[] = '<a href="' . $script . '#' . $keys . '">' . $keys . '</a>';
+                    }
+                    
+                    echo implode(', ', $sub ) . '</div>';
                 }
-
-                echo implode(', ', $sub ) . '</div>';
             }
+            
+            echo "</div>\n";
+            $i++;
         }
-
-        echo "</div>\n";
-        $i++;
     }
 }
 
