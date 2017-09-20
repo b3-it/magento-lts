@@ -53,7 +53,7 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 			
 			$format = Varien_Date::DATETIME_INTERNAL_FORMAT;
 			
-			if ( !is_null($curDate1) AND !is_null($curDate2) ) {
+			if ( !is_null($curDate1) AND !is_null($curDate2) AND strlen($curDate1) AND strlen($curDate2) ) {
 			    try {
 			        $from->setDate ( $curDate2, $format );
 			        $from->setTime ( $curDate2, $format );
