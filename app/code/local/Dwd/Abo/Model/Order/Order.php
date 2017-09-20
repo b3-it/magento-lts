@@ -67,7 +67,6 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 		$AllowedPaymentMethod = $this->getAllowedPaymentMethod($abo_quote, $lastmethod);
 		if($AllowedPaymentMethod)
 		{
-			
 			//falls die letzte Bezahlmethode nicht mehr zur Verfügung steht
 			//$AllowedPaymentMethod =  array_shift($AllowedPaymentMethods);
 			

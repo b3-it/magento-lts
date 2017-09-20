@@ -5,7 +5,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
    
 	/* @var $_SepaMandate Egovs_Paymentbase_Model_Sepa_Mandate */
 	protected $_SepaMandate = null;
-	
+	protected $_customer = null;
 	
 	/**
 	 * 
@@ -112,149 +112,163 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         }
         
         
-        $quote->save();
-		
         
-        
-       
-        
-        
-        $quote->reserveOrderId();
-        /* @var $convertQuote Mage_Sales_Model_Convert_Quote */
-        $convertQuote = Mage::getModel('sales/convert_quote');
- 
-        
-        $service = Mage::getModel('sales/service_quote',$quote);
-        $service->submitAll();
-        $order = $service->getOrder();
         if($this->_customer)
         {
-        	if($this->_customer->getId() != $order->getCustomerId())
+        	if($this->_customer->getId() != $quote->getCustomerId())
         	{
-        		$this->_customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
+        		$this->_customer = Mage::getModel('customer/customer')->load($quote->getCustomerId());
         	}
         }
         else
         {
-        	$this->_customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
+        	$this->_customer = Mage::getModel('customer/customer')->load($quote->getCustomerId());
         }
         
-
+        
         if( $lastSepa =  $payment->getLastSepaMethod())
         {
         	$ref =$lastSepa->getAdditionalInformation('mandate_reference');
-	        if($ref != $this->_customer->getSepaMandateId()){
-	        	$this->fillSepaDebitValues($p, $this->_customer);
-	        }
-	        else{
-	        	$this->copySepaDebitValues($payment->getLastSepaMethod(), $p);
-	        }
+        	if($ref != $this->_customer->getSepaMandateId()){
+        		$this->fillSepaDebitValues($p, $this->_customer);
+        	}
+        	else{
+        		$this->copySepaDebitValues($payment->getLastSepaMethod(), $p);
+        	}
         }
-       
-       
         
-        /**
-         * We can use configuration data for declare new order status
-         */
-        Mage::dispatchEvent('checkout_type_onepage_save_order', array('order'=>$order, 'quote'=>$quote));  
-        Mage::dispatchEvent('sales_model_service_quote_submit_before', array('order'=>$order, 'quote'=>$quote));
-    	try {
-				$order->place();
-				if($first_increment_id){
-					$order->setOriginalIncrementId($first_increment_id);
-				}
-				
-				$order->save();
-				Mage::dispatchEvent('sales_model_service_quote_submit_success', array('order'=>$order, 'quote'=>$quote));
-			}
-			catch(Exception $ex)
-			{
-				Mage::dispatchEvent('sales_model_service_quote_submit_success', array('order'=>$order, 'quote'=>$quote));
-				$quote->setIsActive(false);
-				$quote->save();
-				
-				$order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED,"Fehler bei der Aboverlängerung",false);
-				$order->save();
-				$aboIds = array();
-				foreach ($quote->getAllItems() as $quoteitem)
-				{
-					 
-					$a = $quoteitem->getAboItem();
-					$aboIds[] = $a->getId();
-				}
-				$msg = "Die Abo(s) mit den Id(s) ". implode(',', $aboIds)." konnte(n) nicht verlängert werden." ;
-				$msg .= " Die Bestellung " . $order->getIncrementId() ." wurde storniert.";
-				$msg .= " Meldung: " . $ex->getMessage();
-				$this->sendMailToAdmin($msg);
-				
-				Mage::dispatchEvent('sales_model_service_quote_submit_failure', array('order'=>$order, 'quote'=>$quote));
-				throw $ex;
-				
-			}     
+        
+        
+        $quote->save();
+        $quote->reserveOrderId();
+        
+
+        $service = Mage::getModel('sales/service_quote',$quote);
+        try {
+	        $service->submitAll();
+	        $order = $service->getOrder();
+	        
+	        if($order)
+	        {
+		        if($first_increment_id){
+		        	$order->setOriginalIncrementId($first_increment_id);
+		        }
+		        //$order->queueNewOrderEmail();
+		        $order->save();
+		        Mage::dispatchEvent('checkout_type_onepage_save_order_after',
+		        		array('order'=>$order, 'quote'=>$quote));
+	        }
+	        $this->createNewAbo($order,$quote);
+        }
+        catch (Exception $ex)
+        {
+        	$this->onFailure($order,$quote);
+        }
         
         //20111114::Frank Rochlitzer:: Die eCustomerID muss zurÃ¼ckgesetzt werden -> Caching Problem
         Mage::helper('paymentbase')->resetECustomerId();
 
-        Mage::dispatchEvent('checkout_type_onepage_save_order_after', array('order'=>$order, 'quote'=>$quote));
-
-        /**
-         * need to have somelogic to set order as new status to make sure order is not finished yet
-         * quote will be still active when we send the customer to paypal
-         */
-
-       
-        
-        $quote->setIsActive(false);
-        $quote->save();
-
-        //Egovs_Helper::printMemUsage('getOrder=>');
         Mage::unregister('_singleton/salesrule/observer');
 
         
-        //gleich die neuen Abos anlegen
-        foreach ($quote->getAllItems() as $quoteitem) 
-        {
-        	
-        	$aboitem = $quoteitem->getAboItem();
-        	$orderitem = $order->getItemByQuoteItemId($quoteitem->getId());   	
-        	
-        	//neues Abo erzeugen
-        	$abo = Mage::getModel('dwd_abo/abo');
-    		$abo->setFirstOrderId($aboitem->getFirstOrderId());
-    		$abo->setFirstOrderitemId($aboitem->getFirstOrderitemId());
-    		$abo->setCurrentOrderId($orderitem->getOrderId());
-    		$abo->setCurrentOrderitemId($orderitem->getId());
-    		$abo->setRenewalStatus(Dwd_Abo_Model_Renewalstatus::STATUS_PAUSE);
-    		$abo->setStatus(Dwd_Abo_Model_Status::STATUS_ACTIVE);
-    		$abo->setStartDate($orderitem->getPeriodStart());
-    		$abo->setStopDate($orderitem->getPeriodEnd());
-    		$p = Mage::getModel('periode/periode')->load($orderitem->getPeriodId());
-    		if($p->getId())
-    		{
-    				$p = intval($p->getCancelationPeriod());
-    		} else {
-    				$p = 14; //default 14 Tage Kündigungsfrist 
-    		}
 
-    	
-    		$date = new Zend_Date($orderitem->getPeriodEnd(), Varien_Date::DATETIME_INTERNAL_FORMAT, null);
-    		//$date = new Zend_Date(strtotime($orderitem->getPeriodEnd()));
-    		$date->add($p *-1, Zend_Date::DAY);
-    		$abo->setCancelationPeriodEnd($date);
-    		$abo->save();
-    		
-    		//ids switchen vor löschen des alten abos
-    		$abo->switchTierPriceDepends($aboitem);
-    		
-    		//beim speichern eines nicht aktiven des Abos werden die Staffelpreisabhängigkeiten gelöscht 
-    		$aboitem->setRenewalStatus(Dwd_Abo_Model_Renewalstatus::STATUS_REORDERD);
-    		$aboitem->setStatus(Dwd_Abo_Model_Status::STATUS_EXPIRED);
-    		$aboitem->save();
-    		
-    		
-        	
-        }
         return $order;
+    }
+    
+    
+    
+    /**
+     * Einträge füe die Abos anlegen
+     * @param Mage_Sales_Model_Order $order
+     * @param Mage_Sales_Model_Quote $quote
+     * @return Dwd_Abo_Model_Order_Abstract
+     */
+    public function createNewAbo($order,$quote)
+    {
+    	
+    	//nur für automatische Verlängerungen
+    	if(!$quote->getIsBatchOrder()){
+    		return $this;
+    	}
+    	
+    	
+    	//gleich die neuen Abos anlegen
+    	foreach ($quote->getAllItems() as $quoteitem)
+    	{
+    		 
+    		$aboitem = $quoteitem->getAboItem();
+    		if($aboitem != null)
+    		{
+	    		$orderitem = $order->getItemByQuoteItemId($quoteitem->getId());
+	    		 
+	    		//neues Abo erzeugen
+	    		$abo = Mage::getModel('dwd_abo/abo');
+	    		$abo->setFirstOrderId($aboitem->getFirstOrderId());
+	    		$abo->setFirstOrderitemId($aboitem->getFirstOrderitemId());
+	    		$abo->setCurrentOrderId($orderitem->getOrderId());
+	    		$abo->setCurrentOrderitemId($orderitem->getId());
+	    		$abo->setRenewalStatus(Dwd_Abo_Model_Renewalstatus::STATUS_PAUSE);
+	    		$abo->setStatus(Dwd_Abo_Model_Status::STATUS_ACTIVE);
+	    		$abo->setStartDate($orderitem->getPeriodStart());
+	    		$abo->setStopDate($orderitem->getPeriodEnd());
+	    		$p = Mage::getModel('periode/periode')->load($orderitem->getPeriodId());
+	    		if($p->getId())
+	    		{
+	    			$p = intval($p->getCancelationPeriod());
+	    		} else {
+	    			$p = 14; //default 14 Tage Kündigungsfrist
+	    		}
+	    	
+	    		 
+	    		$date = new Zend_Date($orderitem->getPeriodEnd(), Varien_Date::DATETIME_INTERNAL_FORMAT, null);
+	    		//$date = new Zend_Date(strtotime($orderitem->getPeriodEnd()));
+	    		$date->add($p *-1, Zend_Date::DAY);
+	    		$abo->setCancelationPeriodEnd($date);
+	    		$abo->save();
+	    	
+	    		//ids switchen vor löschen des alten abos
+	    		$abo->switchTierPriceDepends($aboitem);
+	    	
+	    		//beim speichern eines nicht aktiven des Abos werden die Staffelpreisabhängigkeiten gelöscht
+	    		$aboitem->setRenewalStatus(Dwd_Abo_Model_Renewalstatus::STATUS_REORDERD);
+	    		$aboitem->setStatus(Dwd_Abo_Model_Status::STATUS_EXPIRED);
+	    		$aboitem->save();
+    		}
+    	
+    		 
+    	}
+    	return $this;
+    }
+    
+    /**
+     * Fehlerbehandlung
+     * @param Mage_Sales_Model_Order $order
+     * @param Mage_Sales_Model_Quote $quote
+     * @return Dwd_Abo_Model_Order_Abstract
+     */
+    public function onFailure($order,$quote)
+    {
+    	
+    	
+    	//nur für automatische Verlängerungen
+    	if(!$quote->getIsBatchOrder()){
+    		return $this;
+    	}
+    	
+    	
+    	$order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED,"Fehler bei der Aboverlängerung",false);
+    	$order->save();
+    	$aboIds = array();
+    	foreach ($quote->getAllItems() as $quoteitem)
+    	{
+    	
+    		$a = $quoteitem->getAboItem();
+    		$aboIds[] = $a->getId();
+    	}
+    	$msg = "Die Abo(s) mit den Id(s) ". implode(',', $aboIds)." konnte(n) nicht verlängert werden." ;
+    	$msg .= " Die Bestellung " . $order->getIncrementId() ." wurde storniert.";
+    	$msg .= " Meldung: " . $ex->getMessage();
+    	$this->sendMailToAdmin($msg);
     }
     
     
