@@ -33,7 +33,7 @@ class Sid_Wishlist_Model_Sales_Observer
 				$_wishlistItem->setQtyOrdered($qtyOrdered);
 			}
 			//Anzahl der im Warenkorb enthaltenen Elemente um bestellte Menge reduzieren
-			$_wishlistItem->setQtyGranted(max(max($_wishlistItem->getQtyGranted, 0)-$qtyOrdered, 0));
+			$_wishlistItem->setQtyGranted(max(max($_wishlistItem->getQtyGranted(), 0)-$qtyOrdered, 0));
 			$_wishlistItem->save();
 		}
 	}
