@@ -648,19 +648,22 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 			foreach ($items as $item) {
 				/*@var $item Mage_Sales_Model_Order_Invoice_Item */
 				$oi = $item->getOrderItem();
-				$item->setProductType($oi->getProductType());
-				
-				$item->setIsChild($oi->getParentItem()!= null);
-                if ($oi->getParentItem()) {
-                   if(!$showChilds){
-                   		continue;
-                   }
-                   $childpos++;
-                }else
-                {
-                	$pos++;
-                	$childpos = 0;
-                }
+				if($oi != null)
+				{
+					$item->setProductType($oi->getProductType());
+					
+					$item->setIsChild($oi->getParentItem()!= null);
+	                if ($oi->getParentItem()) {
+	                   if(!$showChilds){
+	                   		continue;
+	                   }
+	                   $childpos++;
+	                }else
+	                {
+	                	$pos++;
+	                	$childpos = 0;
+	                }
+				}
                 
                 $item->setPosition($pos);
 				$item->setChildPosition($childpos);
@@ -768,9 +771,10 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 		if(strlen($value) == 0) return "";
 		switch ($format) 
 		{
-			case "price": return $this->_Order->formatPrice($value);
+			case "price": return $this->_formatPrice($value);
 			case "int": return intval($value);
 			case "date": return Mage::helper('core')->formatDate($value);
+			case "datetime": return Mage::helper('core')->formatDate($value,Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true);
 			
 		}
 		if(strpos($format, 'format_') === 0)
@@ -780,6 +784,18 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 		}
 		return $value;
 	}
+	
+	
+	protected function _formatPrice($value)
+	{
+		if($this->_Order)
+		{
+			return $this->_Order->formatPrice($value);
+		}
+		$currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
+		return Mage::app()->getLocale()->currency($currency_code)->toCurrency($value, array());
+	}
+	
 	
 	protected function extractData($data, $keys = array())
 	{

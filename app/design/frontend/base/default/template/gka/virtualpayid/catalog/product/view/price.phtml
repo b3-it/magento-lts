@@ -1,0 +1,9 @@
+<div>
+	<label for="amount">Betrag</label>
+	<input name="amount" readonly="readonly" class="required-entry" value="<?php echo $this->getBasePrice();?>" id="amount">
+	
+</div>
+
+<script type="text/javascript">
+	setPrice(<?php echo $this->getBasePrice();?>);
+</script>

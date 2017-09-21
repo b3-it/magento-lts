@@ -1,0 +1,105 @@
+//
+// @category    design
+// @package     gka_default
+// @copyright   Copyright (c) 2017 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// WICHTIG !!
+// Die Eigenschaften "border" und "padding" können nicht auf der Seite einer Druckausgabe angewendet werden.
+
+// ==============================================
+// SASS / Compass Framework - Imports
+// ==============================================
+@import "var";
+@import "compass";
+@import "compass/css3";
+@import "egov/fontbase";
+@import "egov/style-size";
+@import "egov/style-colors";
+
+// ----------------------------------------------
+// Content
+
+@page {
+	size: A4 landscape;
+	margin: 2.1cm;
+}
+
+
+body, h3 {
+	width: 100%;
+	margin: 0;
+	counter-reset: chapternum figurenum;
+	font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+	line-height: 1.5;
+	font-size: 11pt;
+}
+
+body, h3, td strong {
+	background-color: none;
+	color: #000000;
+	font-weight: normal;
+}
+	
+#menuesprung,
+.page-header, .footer-container,
+.page-title, .sub-title, p, .qty-prefix,
+.tax-totals,
+colgroup, .buttons-set {
+	display: none;
+}
+	
+.main-container {
+	top: 0;
+}
+
+.quittung-titel {
+	margin: 30px auto;
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.col2-set {
+	.col-1, .col-2 {
+	    display: block;
+	    margin: 20px 0 30px 0;
+	}
+}
+
+.data-table {
+	width: 99%;
+	border-collapse: collapse;
+	
+	th {
+	    font-style: italic;
+	    font-size: 0.9em;
+	}
+
+	th, tfoot .last td {
+		border-bottom: solid #000000;
+	    border-bottom-width: .25pt;
+	}
+	
+	tfoot .first td {
+		border-top: solid #000000;
+	    border-top-width: .25pt;
+	}
+	
+	.a-left {
+	    text-align: left;
+	}
+	.a-center {
+	    text-align: center;
+	}
+	.a-right {
+	    text-align: right;
+	}
+}
+
+.print-userinfo, .print-info-block, .print-payment-method {
+	display: block;
+	margin: 30px 0 10px 0;
+	font-size: 0.9em;
+}

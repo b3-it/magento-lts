@@ -1,0 +1,72 @@
+<?php
+/**
+ * @category    design
+ * @package     gka_default
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+
+<?php
+$_order = $this->getOrder();
+$_orderItems = $this->getOrderItems();
+?>
+
+
+
+<div class="multiple-checkout">
+    <div class="page-title">
+        <h1 data-role="page-title"><?php echo $this->__('Order Success') ?></h1>
+    </div>
+    
+    <div class="quittung-titel show-print-only">
+    	<?php echo $this->__('Quittance'); ?><br />
+    	- <?php echo $this->__('Duplicate'); ?> -
+    </div>
+    
+    <div class="col2-set">
+    	<div class="col-1">
+    		<?php echo Mage::getStoreConfig('general/imprint/shop_name'); ?><br />
+    		<?php echo Mage::getStoreConfig('general/imprint/street'); ?><br />
+    		<?php echo Mage::getStoreConfig('general/imprint/zip') . ' ' . Mage::getStoreConfig('general/imprint/city'); ?>
+    	</div>
+    	<div class="col-2">
+    		<div id="depos-label"><?php echo $this->__('Depositors:'); ?></div>
+    		<div id="depos-company"><?php echo $_order->getBillingAddress()->getCompany(); ?></div>
+    		<?php echo $_order->getBillingAddress()->getFirstname() . ' ' . $_order->getBillingAddress()->getLastname(); ?>
+    	</div>
+    </div>
+    
+  <?php if($orderId = $this->getOrderId()): ?>
+    <p data-role="order-numbers">
+        <?php echo $this->__('Your order number is ') ?> <a href="<?php echo $this->getViewOrderUrl($orderId) ?>"><?php echo $this->getOrder()->getIncrementId() ?></a>
+    </p>
+    <p data-role="print-pdf">
+        <a href="<?php echo $this->getPrintUrl() ?>"><?php echo $this->__('Print preview') ?></a>
+    </p>
+  <?php endif; ?>
+    <?php echo $this->getChildHtml() ?>
+    <div class="buttons-set">
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?>" class="button" onclick="setLocation('<?php echo $this->getContinueUrl() ?>')">
+            <span><?php echo $this->__('Continue Shopping') ?></span>
+        </button>
+
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Print Page')) ?>" class="button" onclick="window.print();">
+            <span><?php echo $this->__('Print Page') ?></span>
+        </button>
+    </div>
+    
+    <div class="print-payment-method show-print-only">
+    	<?php echo $this->__('Paymentmethod: %s', $this->getPaymentTitle()); ?>
+    </div>
+    
+    <div class="print-userinfo show-print-only">
+        <?php echo $this->__('They were served by %s %s', $_order->getCustomerPrefix(), $this->getOrderCustomerName()); ?>
+    </div>
+    
+    <div class="print-info-block show-print-only">
+        <?php echo $this->__('Process: %s', $this->getOrderTime()); ?><br />
+        (<?php echo $this->__('Transaction number: %s', $this->getKassenzeichen() ); ?>)
+    </div>
+</div>

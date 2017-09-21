@@ -12,11 +12,21 @@
  */
 class Egovs_Pdftemplate_Model_Type extends Varien_Object
 {
-    const TYPE_INVOICE	= 1;
-    const TYPE_CREDITMEMO	= 2;
-    const TYPE_DELIVERYNOTE	= 3;
-    const TYPE_SEPAMANDAT	= 4;
+    const TYPE_INVOICE	= 'invoice';
+    const TYPE_CREDITMEMO	= 'creditmemo';
+    const TYPE_DELIVERYNOTE	= 'deliverynote';
+    const TYPE_SEPAMANDAT	= 'sepamandat';
 
+    
+    
+    
+    static public function getConfigTypes()
+    {
+    	$res = Mage::getConfig()->getNode('global/pdftemplate/types')->asArray();
+    	return $res;
+    }
+    
+    
     /**
      * Options getter
      *
@@ -24,12 +34,14 @@ class Egovs_Pdftemplate_Model_Type extends Varien_Object
      */
     static public function getOptionArray()
     {
-        return array(
-            self::TYPE_INVOICE    => Mage::helper('pdftemplate')->__('Invoice'),
-            self::TYPE_CREDITMEMO   => Mage::helper('pdftemplate')->__('Creditmemo'),
-            self::TYPE_DELIVERYNOTE   => Mage::helper('pdftemplate')->__('Deliverynote'),
-        	self::TYPE_SEPAMANDAT   => Mage::helper('pdftemplate')->__('SEPA Mandat')
-        );
+    	$res = self::getConfigTypes();
+    	
+    	foreach($res as $k=>$v)
+    	{
+    		$res[$k] =  Mage::helper('pdftemplate')->__($v);
+    	}
+    	
+    	return $res;
     }
     
   

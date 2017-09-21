@@ -524,6 +524,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
             table           {margin:20px 0px 20px 20px; width:100%;}
             input           {width:300px;}
             hr              {width:500px;}
+            .result         {display:inline; float:right; margin-right:50px;}
             .okay           {color:#008000;}
             .fail           {background-color:#FF0000 !important; color:#FFFFFF !important; font-weight:bold;}
             .change td      {background-color:#9FB6CD;}
@@ -595,7 +596,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
                         $("#status-msg").append(
                                              "<div id=\"action-" + value.name + "\" data-id=\"" + (index + 1) + "\" data-table=\"" + value.title + "\">" +
                                              (index + 1) + ".) Action: " + value.title +
-                                             " <span id=\"status-" + value.name + "\" class=\"\"><span>" +
+                                             " <span id=\"status-" + value.name + "\" class=\"result\"><span>" +
                                              "</div>"
                                          );
                     });

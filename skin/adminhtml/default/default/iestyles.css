@@ -108,7 +108,7 @@ button.disabled:active { filter:alpha(opacity=80); }
 button, .form-button            { width:auto; margin-left:5px; overflow:visible; }
 .massaction button              { width:auto; height: 20px; margin-left:0; overflow:hidden; }
 
-.hor-scroll { overflow-y:hidden; padding-bottom:20px; /*margin-bottom:-16px;*/ }
+.hor-scroll { overflow-y:hidden; padding-bottom:20px; -ms-overflow-style: scrollbar; /*margin-bottom:-16px;*/ }
 
 /* Grid Filter Override */
 .grid tr.filter th              { padding-top:3px; padding-bottom:3px; }

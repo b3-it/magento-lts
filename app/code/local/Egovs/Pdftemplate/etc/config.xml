@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Egovs_Pdftemplate>
-            <version>0.1.6</version>
+            <version>0.1.7</version>
         </Egovs_Pdftemplate>
     </modules>
      <frontend>
@@ -172,5 +172,13 @@
 				</mwst19>
 				</taxlabels>
 		</pdftemplate_taxlabels>
+		<pdftemplate>
+		  <types>
+			  <invoice>Invoice</invoice>
+			  <creditmemo>Creditmemo</creditmemo>
+			  <deliverynote>Deliverynote</deliverynote>
+			  <sepamandat>Sepamandat</sepamandat>
+		  </types>
+		</pdftemplate>
     </global>
 </config>

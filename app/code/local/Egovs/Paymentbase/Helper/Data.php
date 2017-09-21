@@ -1684,7 +1684,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 *
 	 * @param string $kzeichen Kassenzeichen
 	 *
-	 * @return Array beinhaltet einerseits den Returncode einer Abfrage nach
+	 * @return Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis beinhaltet einerseits den Returncode einer Abfrage nach
 	 * einer Liste der verbuchten Zahlungseingänge zu Kassenzeichen des anfragenden
 	 * Mandanten und andererseits wird die Liste der von ZÜV zurückgemeldeten Zahlungseingangselemente zurückgegeben
 	 */

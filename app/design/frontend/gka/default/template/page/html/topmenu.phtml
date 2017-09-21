@@ -1,0 +1,33 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php $_menu = $this->getHtml('level-top') ?>
+
+<?php if($_menu): ?>
+<nav id="egov-nav">
+    <ol class="nav-primary">
+	    <li id="mobile-home-link" class="level0">
+	        <a href="<?php echo Mage::getBaseUrl(); ?>">
+	            <?php echo $this->__('Startup Page'); ?>
+	        </a>
+	    </li>
+        <li id="egov-catalog-title" class="level0 egov-catalog-title">
+            <a class="level0 egov-arrow-main-open" href="javascript:void(0);">
+                <?php echo $this->__('Fee Schedule'); ?>
+            </a>
+            <ul style="display:block;">
+                <?php echo $_menu ?>
+            </ul>
+        </li>
+    </ol>
+</nav>
+<script type="text/javascript">
+    $j('#egov-nav').eGovMenu();
+</script>
+<?php endif ?>

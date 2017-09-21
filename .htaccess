@@ -44,6 +44,8 @@
 # !!!Funktioniert nur falls Apache mit mod_php läuft!!
 # Unter Windows läuft PHP meist als CGI/FPM usw.
 
+    php_value magic_quotes_gpc off
+
 ############################################
 ## adjust memory limit
 
@@ -67,7 +69,15 @@
 ## disable automatic session start
 ## before autoload was initialized
 
-    php_flag session.auto_start off
+    php_value session.auto_start off
+
+############################################
+## Session-Configuration
+## https://trac.kawatest.de/ticket/1647
+
+    php_value session.gc_probability 1
+    php_value session.gc_divisor 100
+    php_value session.gc_maxlifetime 86400
 
     # https://trac.kawatest.de/ticket/1647
     php_value session.gc_probability 1
@@ -77,17 +87,17 @@
 ############################################
 ## enable resulting html compression
 
-    #php_flag zlib.output_compression on
+    #php_value zlib.output_compression on
 
 ###########################################
 # disable user agent verification to not break multiple image upload
 
-    php_flag suhosin.session.cryptua off
+    php_value suhosin.session.cryptua off
 
 ###########################################
 # turn off compatibility with PHP4 when dealing with objects
 
-    php_flag zend.ze1_compatibility_mode Off
+    php_value zend.ze1_compatibility_mode Off
 
 </IfModule>
 

@@ -7,6 +7,9 @@ $line_break = "\n";
 $default_id = 'footer_links';
 $found = false;
 
+// Bei der Installation den Magento-Default ersetzen
+$footer_magento_eng = '    <li><a href="{{store direct_url="about-magento-demo-store"}}">About Us</a></li>';
+
 $footer_links_start = array(
     '<div class="links">',
     '   <div class="block-title"><strong><span>Links</span></strong></div>',
@@ -43,10 +46,16 @@ foreach($blocks AS $block) {
 
         if ( $content_array[0] != $footer_links_start[0] ) {
             $new_content_array = array_merge($footer_links_start, $content_array, $footer_links_ende);
-
-            $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
-            $block->setContent(implode($line_break, $new_content_array))->setStores($store_ids)->save();
         }
+        
+        if ( count($content_array) >= 3 ) {
+            if ( $content_array[2] == $footer_magento_eng ) {
+                $new_content_array = array_merge($footer_links_start, $footer_links_default, $footer_links_ende);
+            }
+        }
+
+        $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
+        $block->setContent(implode($line_break, $new_content_array))->setStores($store_ids)->save();
     }
 }
 

@@ -1,0 +1,139 @@
+<?php
+$_helper = $this->helper('gka_barkasse');
+$_kassenbuchjournal = $this->getKassenbuchJournal();
+$_customerName = $this->_getCustomer()->getFirstname() . ' ' . $this->_getCustomer()->getLastname();
+
+$_timeMask = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+$_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/(.)\\1+/', '$1', $_timeMask));
+?>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div id="journal-block">
+  <?php if(!$_kassenbuchjournal):?>
+	<div id="new_journal">
+		<div class="page-title">
+			<h1><?php echo $this->__("New billing period for billing"); ?></h1>
+	    </div>
+
+		<div>
+		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date($_timeMask); ?></span>
+		</div>
+		<div>
+		    <?php echo $this->__('Editor'); ?>: <span id="editor"><?php echo $_customerName; ?></span>
+		</div>
+
+		<form action="<?php echo $this->getOpenUrl();?>" method="post" class="scaffold-form">
+		    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		    <div class="fieldset half-space">
+		    	<ul class="form-list">
+		    		<li class="fields">
+					    <div class="field">
+							<label for="cashbox"><?php echo $_helper->__('Cashbox')?></label>
+					        <div class="input-box">
+							    <?php echo $this->getCashboxHtml(); ?>
+					        </div>
+					    </div>
+		    		</li>
+		    		<li class="fields">
+					    <div class="field">
+					    	<label for="last_balance"><?php echo $_helper->__('Last Balance')?></label>
+					        <div class="input-box">
+						    	<input type="text" id="last_balance" name="last_balance" readonly="readonly" value="<?php echo number_format($this->getLastBalance(), 2); ?>" class="input-text" />
+                                <?php echo $this->getCurrencySymbol(); ?>
+					        </div>
+					    </div>
+		    		</li>
+		    		<li class="fields">
+					    <div class="field">
+				    		<label for="opening_balance"><?php echo $_helper->__('Opening Balance')?></label>
+					        <div class="input-box">
+					    		<input type="text" id="opening_balance" name="opening_balance" class="input-text" />
+                                <?php echo $this->getCurrencySymbol(); ?>
+					        </div>
+					    </div>
+		    		</li>
+		    	</ul>
+			</div>
+		    <div class="buttons-set">
+	    		<button class="button" type="submit"><?php echo $_helper->__('Open')?></button>
+			</div>
+		</form>
+	</div>	
+  <?php else: ?>
+	<div id="close_journal">
+		<div class="page-title">
+			<h1><?php echo $this->__("A cash book for the cashier '%s' is opened.", $_kassenbuchjournal->getCashboxTitle()); ?></h1>
+	    </div>
+	    	
+		<div>
+		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date($_timeMask, $_kassenbuchjournal->getOpening()); ?></span>
+		</div>
+		<div>
+		    <?php echo $this->__('Editor'); ?>: <span id="editor"><?php echo $_kassenbuchjournal->getOwner(); ?></span>
+		</div>
+
+		<form action="<?php echo $this->getCloseUrl();?>" method="post" class="scaffold-form">
+		    <input type="hidden" name="id" value="<?php echo $_kassenbuchjournal->getId()?>" />
+		    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		    <div class="fieldset half-space">
+		    	<ul class="form-list">
+		    		<li class="fields">
+					    <div class="field">
+					        <label for="opening"><?php echo $_helper->__('Amount at cash point opening')?></label>
+					        <div class="input-box">
+					        	<input type="text" id="opening" name="opening" readonly="readonly" value="<?php echo number_format($this->getOpeningBalance(), 2); ?>" class="input-text" />
+                                <?php echo $this->getCurrencySymbol(); ?>
+					        </div>
+					    </div>
+		    		</li>
+		    		<li class="fields">
+					    <div class="field">
+			        		<label for="saldo"><?php echo $_helper->__('Sum of cash payments')?></label>
+					        <div class="input-box">
+					        	<input type="text" id="saldo" name="saldo" readonly="readonly" value="<?php echo number_format($this->getTotal(), 2); ?>" class="input-text" />
+                                <?php echo $this->getCurrencySymbol(); ?>
+					        </div>
+					    </div>
+		    		</li>
+		    		<li class="fields">
+					    <div class="field">
+			        		<label for="endsaldo"><?php echo $_helper->__('Closing balance of the cash desk')?></label>
+					        <div class="input-box">
+					        	<input type="text" id="endsaldo" name="endsaldo" readonly="readonly" value="<?php echo $this->getSaldo()?>" class="input-text" />
+                                <?php echo $this->getCurrencySymbol(); ?>
+					        </div>
+					    </div>
+		    		</li>
+		    		<li class="fields">
+					    <div class="field">
+			        		<label for="withdrawal"><?php echo $_helper->__('Withdrawal')?></label>
+					        <div class="input-box">
+					        	<input type="text" id="withdrawal" name="withdrawal" id="withdrawal" value="<?php echo number_format($this->getTotal(), 2); ?>" class="input-text" />
+                                <?php echo $this->getCurrencySymbol(); ?>
+					        </div>
+					    </div>
+		    		</li>
+		    	</ul>
+			</div>
+
+		    <div id="message-cashbox">
+         		<?php echo $this->__('I confirm that after the withdrawal, <span id="balance"></span> is in the cash desk.'); ?>
+		    </div>
+		    <div class="buttons-set">
+        		<button class="button" type="submit"><?php echo $_helper->__('Close checkout')?></button>
+		    </div>	
+		</form>
+	</div>
+	<script type="text/javascript">
+        var currency = '<?php echo $this->getCurrencySymbol(); ?>';
+	</script>
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>">
+	</script>
+	
+	<script type="text/javascript">
+		setDiffPrice($j('#withdrawal').val(),$j('#endsaldo').val(),  '#balance', true);
+	</script>
+  <?php endif;?>
+
+ <?php echo $this->getChildHtml("journal_details") ?>
+
+</div>

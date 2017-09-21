@@ -98,12 +98,12 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
 		    		$str = trim($customer->getName());
 		    		//Firma
 		    		if (!empty($str)) {
-                        $str = trim(sprintf('%s <span id="welcome-company">(%s)</span>', $this->htmlEscape($str), $this->htmlEscape($customer->getCompany())));
+		    			$str = trim(sprintf('%s <span id="welcome-company">(%s)</span>', $this->escapeHtml($str), $this->escapeHtml($customer->getCompany())));
 		    		} else {
-                        $str = trim(sprintf('%s', $this->htmlEscape($customer->getCompany())));
+		    			$str = trim(sprintf('%s', $this->escapeHtml($customer->getCompany())));
 		    		}
 		    	} else {
-                    $str = $this->htmlEscape($customer->getName());
+		    		$str = $this->escapeHtml($customer->getName());
 		    	}
                 $this->_data['welcome'] = $this->__('Welcome, %s!', $str);
      		} else {

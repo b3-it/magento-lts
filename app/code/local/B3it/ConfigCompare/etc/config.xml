@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE config>
 <config>
     <modules>
@@ -18,29 +18,20 @@
         </routers>
     </admin>
     <adminhtml>
-		<translate>
-			<modules>
-				<B3it_ConfigCompare>
-					<files>
-						<default>B3it_ConfigCompare.csv</default>
-					</files>
-				</B3it_ConfigCompare>
-			</modules>
-		</translate>
-		<menu>
+			<menu>
 			<system>
 				<children>
 					<tools translate="title">
 						<children>
-							<configcompare translate="title">
+							<configcompare translate="title" module="adminhtml">
 								<title>Compare Config</title>
 								<children>
-									<configcompare_export_configdata translate="title">
+									<configcompare_export_configdata module="configcompare">
 										<title>Export Config</title>
 										<sort_order>20</sort_order>
 										<action>adminhtml/configcompare_export</action>
 									</configcompare_export_configdata>
-									<configcompare_import_configdata translate="title">
+									<configcompare_import_configdata module="configcompare">
 										<title>Import Config</title>
 										<sort_order>10</sort_order>
 										<action>adminhtml/configcompare_import</action>
@@ -53,7 +44,7 @@
 				</children>
 			</system>
 		</menu>
-		<acl>
+				<acl>
 			<resources>
 				<all>
 					<title>Allow everything</title>
@@ -67,16 +58,6 @@
 										<configcompare translate="title">
 											<title>Export Coreconfigdata</title>
 											<sort_order>10</sort_order>
-											<children>
-												<configcompare_export_configdata translate="title">
-													<title>Export Config</title>
-													<sort_order>20</sort_order>
-												</configcompare_export_configdata>
-												<configcompare_import_configdata translate="title">
-													<title>Import Config</title>
-													<sort_order>10</sort_order>
-												</configcompare_import_configdata>
-											</children>
 										</configcompare>
 									</children>
 								</tools>

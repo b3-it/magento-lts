@@ -56,10 +56,10 @@
                 <!--  <action method="addJs"><script>egovs/jquery.prevent.lostsession.js</script></action> -->
 
                 <!-- Add stylesheets with no media queries for use in IE 8 and below -->
-                <action method="addItem"><type>skin_css</type><name>css/styles-ie8.css</name><params/><if><![CDATA[ (lte IE 8) & (!IEMobile)]]></if></action>
+                <action method="addItem"><type>skin_css</type><name>css/styles-ie8.css</name><params>media="screen"</params><if><![CDATA[ (lte IE 8) & (!IEMobile)]]></if></action>
 
                 <!-- Add stylesheets with media queries for use by modern browsers -->
-                <action method="addItem"><type>skin_css</type><name>css/styles.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
+                <action method="addItem"><type>skin_css</type><name>css/styles.css</name><params>media="screen"</params><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
 
                 <!-- Sets viewport meta tag using text block -->
                 <block type="core/text" name="head.viewport">
@@ -73,7 +73,7 @@
 
             <block type="page/html_notices" name="global_notices" as="global_notices" template="page/html/notices.phtml" />
 
-             <block type="bitv/page_html_header" name="header" as="header">
+            <block type="bitv/page_html_header" name="header" as="header">
                 <action method="setData"><key>accesskey</key><value>u</value></action>
                 <action method="setData"><key>jumptitle</key><value>Kundenmenü</value></action>
                 <block type="bitv/page_html_header" name="bitvmenu" as="bitvmenu" template="egovs/bitv/page/html/header.phtml"/>
