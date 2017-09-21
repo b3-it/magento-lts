@@ -28,6 +28,13 @@ foreach($email_arr AS $email) {
     $old = $email->getTemplateText();
     $new = str_replace(array_keys($replace), array_values($replace), $old);
     
+    $code = $email->getTemplateCode();
+
+    if ( ($code == 'eMail-Header') OR ($code == 'eMail-Footer') ) {
+        // nicht in sich selbst eintragen
+        continue;
+    }
+    
     // Prüfen, ob der Header in allen Templates eingefügt ist
     $arr = explode("\n", trim($old));
     if ( $arr[0] != $header ) {

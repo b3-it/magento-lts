@@ -6,15 +6,47 @@
 $installer = $this;
 $installer->startSetup();
 
-$cfg_array = 'a:3:{s:5:"title";s:12:"Kreditkarten";s:13:"force_enabled";s:1:"0";s:16:"custom_cms_block";s:1:"0";}';
+$widgetTitle = 'kreditkartenlogos';
 
-$this->run("INSERT INTO `widget_instance` (`instance_id`, `instance_type`, `package_theme`, `title`, `store_ids`, `widget_parameters`, `sort_order`) " .
-           "VALUES ('1', 'paymentbase/widget_creditcardlogos', 'egov/default', 'kreditkartenlogos', '0', '{$cfg_array}', '100');");
+$widget = Mage::getModel('widget/widget_instance')->load($widgetTitle, 'title');
+$id = $widget->getInstanceId();
 
-$this->run("INSERT INTO `widget_instance_page` (`page_id`, `instance_id`, `page_group`, `layout_handle`, `block_reference`, `page_for`, `page_template`) " .
-           "VALUES ('1', '1', 'all_pages', 'default', 'left', 'all', 'egovs/paymentbase/cc_logos_widget.phtml')");
-
-$this->run("INSERT INTO `widget_instance_page_layout` (`page_id`, `layout_update_id`) " .
-           "VALUES ('1', '1')");
+if ( is_null($id) OR !strlen($id) ) {
+    /**
+     * @var Mage_Widget_Model_Widget_Instance $widgetInstance
+     *
+     * see Mage_Widget_Model_Widget_Instance
+     * see Mage_Widget_Adminhtml_Widget_InstanceController
+     *
+     * see https://magento.stackexchange.com/questions/11904/creating-and-placing-a-widget-through-install-script
+     */
+    $widgetInstance = Mage::getModel('widget/widget_instance')->setData(array(
+        'type'              => 'paymentbase/widget_creditcardlogos',
+        'package_theme'     => 'egov/default',
+        'title'             => $widgetTitle,
+        'store_ids'         => '0',
+        'widget_parameters' => serialize(
+            array(
+                'title'            => 'Kreditkarten',
+                'force_enabled'    => '0',
+                'custom_cms_block' => '0'
+            )
+            ),
+        'sort_order'        => '100',
+        'page_groups'       => array(
+            array(
+                'page_group' => 'all_pages',
+                'all_pages'  => array(
+                    'page_id'       => '1',
+                    'group'         => 'all_pages',
+                    'layout_handle' => 'default',
+                    'for'           => 'all',
+                    'block'         => 'left',
+                    'page_template' => 'egovs/paymentbase/cc_logos_widget.phtml'
+                )
+            )
+        )
+    ))->save();
+}
 
 $installer->endSetup();

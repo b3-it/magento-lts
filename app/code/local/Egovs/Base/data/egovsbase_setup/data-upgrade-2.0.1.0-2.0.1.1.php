@@ -6,8 +6,12 @@
 $installer = $this;
 $installer->startSetup();
 
-$default_methods = 'a:3:{i:0;s:26:"egovs_girosolution_giropay";i:1;s:29:"egovs_girosolution_creditcard";i:2;s:11:"bankpayment";}';
 $newGroupFound   = FALSE;
+$default_methods = serialize(array(
+    'egovs_girosolution_giropay',
+    'egovs_girosolution_creditcard',
+    'bankpayment'
+));
 
 $newGroup = array(
     'customer_group_code'     => 'manuelle Prüfung',
@@ -22,7 +26,7 @@ $newGroup = array(
 
 
 /** @var Mage_Customer_Model_Resource_Group_Collection $groups */
-$groups = Mage::getResourceModel('customer/group_collection')->load();
+$groups = Mage::getModel('customer/group')->getCollection();
 
 foreach($groups AS $group) {
     $methods = $group->getAllowedPaymentMethods();
