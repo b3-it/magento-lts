@@ -144,7 +144,7 @@ $sql = array(
 				),
 				22 => array(
 						'action' => 'anon_address_postcode',
-						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'postcode' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = CONCAT(entity_id);"
+						'query'  => "UPDATE `customer_address_entity_varchar` AS `adr` JOIN `eav_attribute` AS `att` ON `att`.`attribute_id` = `adr`.`attribute_id` AND `att`.`attribute_code` = 'postcode' JOIN `eav_entity_type` AS `et` ON `et`.`entity_type_id` = `att`.`entity_type_id` AND `et`.`entity_type_code` = 'customer_address' SET `value` = '12345';"
 				),
 				23 => array(
 						'action' => 'anon_address_email',
