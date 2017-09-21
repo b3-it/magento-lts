@@ -5,6 +5,20 @@ $installer = $this;
 
 $installer->startSetup();
 
+// alle Seiten-Layouts zurücksetzen
+$_cmsTable = $installer->getTable('cms/page');
+if ($installer->tableExists($_cmsTable)) {
+    $installer->run("UPDATE `{$_cmsTable}` SET `root_template` = 'two_columns_left' WHERE `root_template` = 'two_columns_right';");
+    $installer->run("UPDATE `{$_cmsTable}` SET `root_template` = 'two_columns_left' WHERE `root_template` = 'three_columns';");
+}
+
+// alle Kategorie-Layouts zurücksetzen
+$_catTable = $installer->getTable('catalog_category_entity_varchar');
+$installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'three_columns';");
+$installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'two_columns_right';");
+
+
+// eMail-Einstellungen anpassen
 $email_logos = array(
     0 => array(
         'scope'       => 'default',

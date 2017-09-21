@@ -51,4 +51,7 @@ if ( $newGroupFound == FALSE ) {
 $this->setConfigData('customer/create_account/auto_group_assign', '1');
 $this->setConfigData('customer/create_account/vat_frontend_visibility', '1');
 
+// Deutschland bei den EU-Ländern entfernen
+$this->setConfigData('general/country/eu_countries', 'BE,BG,DK,EE,FI,FR,GR,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SE,SK,SI,ES,CZ,HU,GB,CY,AT');
+
 $installer->endSetup();
