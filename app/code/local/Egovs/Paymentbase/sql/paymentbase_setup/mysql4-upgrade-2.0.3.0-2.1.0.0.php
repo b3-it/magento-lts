@@ -26,7 +26,7 @@ foreach ($epayblAttributes as $attributeCode) {
     if (!$attributeId) {
         continue;
     }
-    $installer->updateAttribute(Mage_Catalog_Model_Product::ENTITY, $attributeCode, 'global', Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_WEBSITE);
+    $installer->updateAttribute(Mage_Catalog_Model_Product::ENTITY, $attributeCode, 'is_global', Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_WEBSITE);
 }
 
 $installer->endSetup();
