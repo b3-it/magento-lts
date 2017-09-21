@@ -6,9 +6,6 @@
 $installer = $this;
 $installer->startSetup();
 
-$name = 'checkout/agreement';
-$tableName = $installer->getTable($name);
-
 // @var $checks  array  alle einzelnen Bestellbedingungen (keine Doppelten)
 $checks = array();
 
@@ -18,9 +15,10 @@ $remove = array();
 /**
  * @var Mage_Checkout_Model_Agreement $agreements
  */
-$agreements = Mage::getModel($name)->getCollection();
+$agreements = Mage::getModel('checkout/agreement')->getCollection();
 foreach ($agreements AS $agreement) {
     $agreeName = $agreement->getName();
+
     if ( !array_key_exists($agreeName, $checks) ) {
         $checks[$agreeName] = array(
             'content'  => $agreement->getContent(),
@@ -30,7 +28,6 @@ foreach ($agreements AS $agreement) {
     else {
         $check1 = $checks[$agreeName]['content'];
         $check2 = $checks[$agreeName]['checkbox'];
-        
         if ( ($check1 == $agreement->getContent()) AND ($check2 == $agreement->getCheckboxHtml()) ) {
             // Das ist dann gleich
             $remove[] = $agreement->getAgreementId();
@@ -38,8 +35,10 @@ foreach ($agreements AS $agreement) {
     }
 }
 
+
 if ( count($remove) ) {
-    $liste = implode(', ', $remove);
+    $tableName = $installer->getTable('checkout_agreement');
+    $liste     = implode(', ', $remove);
     $this->run("DELETE FROM {$tableName} WHERE `agreement_id` IN ({$liste});");
 }
 

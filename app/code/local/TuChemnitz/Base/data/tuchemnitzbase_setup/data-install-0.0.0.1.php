@@ -13,8 +13,9 @@ if ($installer->tableExists($_cmsTable)) {
 }
 
 // alle Kategorie-Layouts zurücksetzen
-$installer->run("UPDATE `catalog_category_entity_varchar` SET `value` = 'two_columns_left' WHERE `value` = 'three_columns'");
-$installer->run("UPDATE `catalog_category_entity_varchar` SET `value` = 'two_columns_left' WHERE `value` = 'two_columns_right'");
+$_catTable = $installer->getTable('catalog_category_entity_varchar');
+$installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'three_columns';");
+$installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'two_columns_right';");
 
 // Inpressums-Daten komplettieren
 $installer->setConfigData('general/imprint/company_second', 'Technischen Universität Chemnitz');
