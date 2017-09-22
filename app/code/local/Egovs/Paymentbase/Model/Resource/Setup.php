@@ -22,11 +22,13 @@ class Egovs_Paymentbase_Model_Resource_Setup extends Mage_Catalog_Model_Resource
 				
 		//Gesamte Magento-Installation überprüfen
 		//Nur wirkliche Abhängigkeiten Überprüfen
+        /*Sollte in 1.9 nicht mehr problematisch sein
 		if (!Egovs_Helper::dependenciesInstalled($myModule)) {
 			Egovs_Helper::reinitAllowedModules($myModule);
 				
 			return $this;
 		}
+        */
 	
 		return parent::applyUpdates();
 	}
