@@ -160,6 +160,7 @@ class Gka_Checkout_CartController extends Mage_Checkout_CartController
             ->loadLayout()
             ->_initLayoutMessages('checkout/session')
             ->_initLayoutMessages('catalog/session')
+            ->_initLayoutMessages('core/session')
             ->getLayout()->getBlock('head')->setTitle($this->__('Shopping Cart'));
         $this->renderLayout();
         Varien_Profiler::stop(__METHOD__ . 'cart_display');
