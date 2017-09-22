@@ -273,7 +273,7 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
 	        	 
 	        	if ($status !== true)
 	        	{
-	        		Mage::getSingleton('checkout/session')->addError(Mage::helper($status));
+	        		Mage::getSingleton('checkout/session')->addError(Mage::helper($this->_getModuleName())->__($status));
 	        	}
 	        	$this->_redirect('checkout/cart', $params);
 	        	return;
