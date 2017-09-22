@@ -232,7 +232,7 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     	// check if the response is valid
         $status = $this->_callCheckReturnedMessageImpl();
         
-        if ($status == true) {
+        if ($status === true) {
         	$this->getResponse()->setHttpResponseCode(200);
         	$this->getResponse()->sendResponse();
         } else {
@@ -271,6 +271,10 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
 	        	$this->getCheckout()->getQuote()->setIsActive(true)->save();
 	        	$params = array('_secure' => $this->isSecureUrl());
 	        	 
+	        	if ($status !== true)
+	        	{
+	        		Mage::getSingleton('checkout/session')->addError(Mage::helper($status));
+	        	}
 	        	$this->_redirect('checkout/cart', $params);
 	        	return;
 	        }
@@ -279,7 +283,7 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
 	        Mage::log($this->_getModuleName()."::success action : Waiting since $diffTime seconds for order modifications", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         } while ($diffTime < 10 && ($order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW || $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT));
         
-        if ($status) {
+        if ($status === true) {
             // everything allright, redirect the user to success page
             //damit verschiedene Checkouts verwendet werden können
             $successaction =  Mage::getStoreConfig('payment_services/paymentbase/successaction') ? Mage::getStoreConfig('payment_services/paymentbase/successaction') : 'egovs_checkout/multipage/successview';
@@ -454,7 +458,7 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     			
     			Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     			
-    			return false;
+    			return $msg;
     		} else {
     			Mage::log(sprintf("$module::... _checkReturnedMessage with valid DATA called:\r\n%s...", var_export($notify->getResponseParams(), true)), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     			
