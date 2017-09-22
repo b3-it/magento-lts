@@ -403,6 +403,9 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     				 * 4500 	Zahlungsausgang unbekannt
     				 */
     				//Kreditkarte
+    				case 4100:
+    					$msg = $notify->getResponseParam("tkResultMessage");
+    					break;
     				case 4101:
     					$msg = Mage::helper("gka_tkonnektpay")->__("Country of creditcard not accepted or unknown");
     					break;
