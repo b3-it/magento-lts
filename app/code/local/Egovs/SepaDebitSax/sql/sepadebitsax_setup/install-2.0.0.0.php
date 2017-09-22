@@ -12,7 +12,7 @@
  * @copyright      	Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license        	http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-/* @var $this Egovs_Paymentbase_Model_Resource_Setup */
+/** @var $this Egovs_Paymentbase_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();
