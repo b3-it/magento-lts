@@ -1,10 +1,8 @@
 <?php
-
+/** @var $this Egovs_Paymentbase_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();
-
-/* @var $installer Mage_Eav_Model_Entity_Setup */
 
 $entityTypeId = 'order_payment';
 
@@ -12,8 +10,6 @@ $attributes = array(Egovs_SepaDebitSax_Helper_Data::ATTRIBUTE_ESHOP_TRANSACTION_
 		Egovs_SepaDebitSax_Helper_Data::ATTRIBUTE_SEPA_MATURITY,
 		
 );
-
-
 
 foreach ($attributes as $attributeId)
 {

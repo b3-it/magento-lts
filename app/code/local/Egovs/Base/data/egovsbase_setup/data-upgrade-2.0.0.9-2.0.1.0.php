@@ -53,9 +53,11 @@ foreach($blocks AS $block) {
                 $new_content_array = array_merge($footer_links_start, $footer_links_default, $footer_links_ende);
             }
         }
-
-        $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
-        $block->setContent(implode($line_break, $new_content_array))->setStores($store_ids)->save();
+        
+        if ($new_content_array) {
+            $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
+            $block->setContent(implode($line_break, $new_content_array))->setStores($store_ids)->save();
+        }
     }
 }
 

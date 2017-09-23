@@ -1053,12 +1053,13 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 	 * @return string BLZ des Kunden
 	 */
 	public function getBic() {
-		if ($this->getIbanOnly()) {
+	    $info = $this->getInfoInstance();
+	    $return = $info->getCcType();
+	    
+		if ($this->getIbanOnly() && empty($return)) {
 			return '';
 		}
-		
-		$info = $this->getInfoInstance();
-		$return = $info->getCcType();
+
 	
 		return (string) $return;
 	}
