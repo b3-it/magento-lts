@@ -41,16 +41,17 @@ foreach($email_arr AS $email) {
     $old = $email->getTemplateText();
     $new = str_replace(array_keys($replace), array_values($replace), $old);
 
-    // Prüfen, ob der Header in allen Templates eingefügt ist
-    $arr = explode("\n", trim($old));
-
     // falls der Tablulator im Template wird nicht erkannt
-    if ( ($arr[0] == '<style type="text/css">') AND ($arr[3] == '</style>') ) {
-        $new = explode("\n", trim($new));
+    $new = explode("\n", trim($new));
+    if ( ($new[0] == '<style type="text/css">') AND ($new[3] == '</style>') ) {
+var_dump($new);
         unset($new[0], $new[1], $new[2], $new[3]);
         $new = implode("\n", $new);
     }
+var_dump($new);
 
+    // Prüfen, ob der Header in allen Templates eingefügt ist
+    $arr = explode("\n", trim($old));
     if ( $arr[0] != $header ) {
         $new = $header . "\n" . $new;
     }
@@ -62,5 +63,7 @@ foreach($email_arr AS $email) {
         $model->setData('template_text', $new)->save();
     }
 }
+die;
+
 
 $installer->endSetup();
