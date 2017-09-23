@@ -5,8 +5,12 @@ $installer = $this;
 
 $installer->startSetup();
 
+$tab = "\t";
+
 $text1 = "<style type=\"text/css\">\n        tr.summary-details td {font-size: 10px; color: #626465; }\n</style>";
-$text2 = "<style type=\"text/css\">\n\tbody,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }\n\ta { color:#1E7EC8; }\n</style>";
+$text2 = "<style type=\"text/css\">\n" . $tab .
+         "body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }\n" . $tab .
+         "a { color:#1E7EC8; }\n</style>";
 
 $text3 = '<td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/sabre_logo_14_mail.png" _area=\'\'frontend\'\'}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>';
 $text4 = "<td valign=\"top\">
@@ -39,6 +43,11 @@ foreach($email_arr AS $email) {
 
     // Prüfen, ob der Header in allen Templates eingefügt ist
     $arr = explode("\n", trim($old));
+    // falls der Tablulator im Template wird nicht erkannt
+    if ( ($arr[0] == '<style type="text/css">') AND ($arr[3] == '</style>') ) {
+        unset($arr[0], $arr[1], $arr[2], $arr[3]);
+    }
+
     if ( $arr[0] != $header ) {
         $new = $header . "\n" . $new;
     }
