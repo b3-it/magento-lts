@@ -66,10 +66,10 @@ foreach($block_arr AS $block) {
     $new = str_replace(array_keys($replace_url), array_values($replace_url), $old);
     $new = str_replace(array_keys($replace_string), array_values($replace_string), $new);
     $new = preg_replace('/<!--(.*)-->/Uis', '', $new);
-    
+
     if ( $old != $new ) {
         $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
-        
+
         $model = Mage::getModel('cms/block')->load($id);
         $model->setContent($new)->setStores($store_ids)->save();
     }
@@ -81,17 +81,18 @@ $page_arr = Mage::getModel('cms/page')->getCollection();
 foreach($page_arr AS $page) {
     $id  = $page->getPageId();
     $old = $page->getContent();
-    
+
     $new = str_replace(array_keys($replace_url), array_values($replace_url), $old);
     $new = str_replace(array_keys($replace_string), array_values($replace_string), $new);
     $new = preg_replace('/<!--(.*)-->/Uis', '', $new);
-    
+
     if ( $old != $new ) {
         $store_ids = $page->getResource()->lookupStoreIds($page->getPageId());
-        
+
         $model = Mage::getModel('cms/page')->load($id);
         $model->setContent($new)->setStores($store_ids)->save();
     }
 }
+
 
 $installer->endSetup();
