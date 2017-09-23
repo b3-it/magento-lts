@@ -6,7 +6,7 @@ $installer = $this;
 $installer->startSetup();
 
 $text1 = "<style type=\"text/css\">\n        tr.summary-details td {font-size: 10px; color: #626465; }\n</style>";
-$text2 = "<style type=\"text/css\">\n    body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }\n    a { color:#1E7EC8; }\n</style>";
+$text2 = "<style type=\"text/css\">\n\tbody,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }\n\ta { color:#1E7EC8; }\n</style>";
 
 $text3 = '<td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/sabre_logo_14_mail.png" _area=\'\'frontend\'\'}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>';
 $text4 = "<td valign=\"top\">
