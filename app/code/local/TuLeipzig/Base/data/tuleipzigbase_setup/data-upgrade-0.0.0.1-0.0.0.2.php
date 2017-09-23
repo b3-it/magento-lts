@@ -47,7 +47,7 @@ foreach($email_arr AS $email) {
     // falls der Tablulator im Template wird nicht erkannt
     if ( ($arr[0] == '<style type="text/css">') AND ($arr[3] == '</style>') ) {
         $new = explode("\n", trim($new));
-        unset($new[0], $new[1], $new[2], $new[3];
+        unset($new[0], $new[1], $new[2], $new[3]);
         $new = implode("\n", $new);
     }
 
