@@ -42,11 +42,11 @@ foreach($email_arr AS $email) {
     $new = str_replace(array_keys($replace), array_values($replace), $old);
 
     // falls der Tablulator im Template wird nicht erkannt
-    $new = explode("\n", trim($new));
-    if ( ($new[0] == '<style type="text/css">') AND ($new[3] == '</style>') ) {
-var_dump($new);
-        unset($new[0], $new[1], $new[2], $new[3]);
-        $new = implode("\n", $new);
+    $arr = explode("\n", trim($new));
+    if ( ($arr[0] == '<style type="text/css">') AND ($arr[3] == '</style>') ) {
+var_dump($arr);
+        unset($arr[0], $arr[1], $arr[2], $arr[3]);
+        $new = implode("\n", $arr);
     }
 var_dump($new);
 
