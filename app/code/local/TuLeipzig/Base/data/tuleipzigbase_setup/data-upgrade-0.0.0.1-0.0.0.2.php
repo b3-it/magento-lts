@@ -43,9 +43,12 @@ foreach($email_arr AS $email) {
 
     // Prüfen, ob der Header in allen Templates eingefügt ist
     $arr = explode("\n", trim($old));
+
     // falls der Tablulator im Template wird nicht erkannt
     if ( ($arr[0] == '<style type="text/css">') AND ($arr[3] == '</style>') ) {
-        unset($arr[0], $arr[1], $arr[2], $arr[3]);
+        $new = explode("\n", trim($new));
+        unset($new[0], $new[1], $new[2], $new[3];
+        $new = implode("\n", $new);
     }
 
     if ( $arr[0] != $header ) {
