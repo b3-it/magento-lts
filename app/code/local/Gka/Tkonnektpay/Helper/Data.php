@@ -47,9 +47,9 @@ class Gka_Tkonnektpay_Helper_Data extends Egovs_Paymentbase_Helper_Data
             $iReturnCode = $request->getResponseParam('rc');
             $strResponseMsg = $request->getResponseMessage();
             if (!$strResponseMsg) {
-                $strResponseMsg = $this->_getHelper()->__("Unknown server error: %s", $iReturnCode);
+                $strResponseMsg = $this->__("Unknown server error: %s", $iReturnCode);
             } else {
-                $strResponseMsg = $this->_getHelper()->__("$strResponseMsg: %s", $iReturnCode);
+                $strResponseMsg = $this->__("$strResponseMsg: %s", $iReturnCode);
             }
             throw new Exception($strResponseMsg);
         }
