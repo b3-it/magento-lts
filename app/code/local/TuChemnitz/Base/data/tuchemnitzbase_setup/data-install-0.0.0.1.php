@@ -31,12 +31,15 @@ $installer->setConfigData('design/theme/skin'    , '');
 $installer->setConfigData('design/theme/layout'  , '');
 $installer->setConfigData('design/theme/default' , '');
 
+// ScopeID für Ticketshop ermitteln
+$scopeId = Mage::getModel('core/store')->load('papercut', 'code')->getWebsiteId();
+
 // Impressum für Ticketshop reparieren
-$installer->setConfigData('general/imprint/telephone'    , '+49 (0) 371 531-10000'                      , 'websites', 2);
-$installer->setConfigData('general/imprint/fax'          , '+49 (0) 371 531-10009'                      , 'websites', 2);
-$installer->setConfigData('general/imprint/email'        , 'rektorsekretariat@verwaltung.tu-chemnitz.de', 'websites', 2);
-$installer->setConfigData('general/imprint/ceo'          , 'Prof. Dr. Gerd Strohmeier'                  , 'websites', 2);
-$installer->setConfigData('general/imprint/company_first', 'Rektorat der TU Chemnitz'                   , 'websites', 2);
+$installer->setConfigData('general/imprint/telephone'    , '+49 (0) 371 531-10000'                      , 'websites', $scopeId);
+$installer->setConfigData('general/imprint/fax'          , '+49 (0) 371 531-10009'                      , 'websites', $scopeId);
+$installer->setConfigData('general/imprint/email'        , 'rektorsekretariat@verwaltung.tu-chemnitz.de', 'websites', $scopeId);
+$installer->setConfigData('general/imprint/ceo'          , 'Prof. Dr. Gerd Strohmeier'                  , 'websites', $scopeId);
+$installer->setConfigData('general/imprint/company_first', 'Rektorat der TU Chemnitz'                   , 'websites', $scopeId);
 
 $replace_url = array(
     'https://www.shop.sachsen.de/tuc_ticketshop/papercut/agb'         => '{{store url="agb"}}',
