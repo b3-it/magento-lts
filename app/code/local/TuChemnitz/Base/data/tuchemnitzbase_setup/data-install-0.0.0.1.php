@@ -25,11 +25,18 @@ $installer->setConfigData('design/header/logo_src', 'images/logo_sachsen.png');
 $installer->setConfigData('design/header/logo_src_small', 'images/logo_sachsen_smartphone.png');
 
 // Theme-Einstellungen zurücksetzen
-$installer->setConfigData('design/theme/locale', '');
+$installer->setConfigData('design/theme/locale'  , '');
 $installer->setConfigData('design/theme/template', '');
-$installer->setConfigData('design/theme/skin', '');
-$installer->setConfigData('design/theme/layout', '');
-$installer->setConfigData('design/theme/default', '');
+$installer->setConfigData('design/theme/skin'    , '');
+$installer->setConfigData('design/theme/layout'  , '');
+$installer->setConfigData('design/theme/default' , '');
+
+// Impressum für Ticketshop reparieren
+$installer->setConfigData('general/imprint/telephone'    , '+49 (0) 371 531-10000'                      , 'websites', 2);
+$installer->setConfigData('general/imprint/fax'          , '+49 (0) 371 531-10009'                      , 'websites', 2);
+$installer->setConfigData('general/imprint/email'        , 'rektorsekretariat@verwaltung.tu-chemnitz.de', 'websites', 2);
+$installer->setConfigData('general/imprint/ceo'          , 'Prof. Dr. Gerd Strohmeier'                  , 'websites', 2);
+$installer->setConfigData('general/imprint/company_first', 'Rektorat der TU Chemnitz'                   , 'websites', 2);
 
 $replace_url = array(
     'https://www.shop.sachsen.de/tuc_ticketshop/papercut/agb'         => '{{store url="agb"}}',
@@ -40,59 +47,32 @@ $replace_url = array(
 );
 
 $replace_string = array(
+    // Ticketshop :: Papercut
     'https://www.shop.sachsen.de/tuc_ticketshop/papercut' => '{{store url=""}}',
+    'www.shop.sachsen.de/tuc_ticketshop/papercut&nbsp;'   => '{{store url=""}}',
     'PaperCut-Shop TU Chemnitz'                           => '{{block type="imprint/field" value="shop_name"}}',
     'Stra&szlig;e der Nationen 62'                        => '{{block type="imprint/field" value="street"}}',
     '09111 Chemnitz'                                      => '{{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}',
-    '+49 (0) 371 531-13400'                               => '{{block type="imprint/field" value="telephone"}}',
-    '+49 (0) 371 531-13409'                               => '{{block type="imprint/field" value="fax"}}',
-    'drucken@hrz.tu-chemnitz.de'                          => '{{block type="imprint/field" value="email"}}',
+    '+49 371 531-10000'                                   => '{{block type="imprint/field" value="telephone"}}',
+    '+49 371 531-10009'                                   => '{{block type="imprint/field" value="fax"}}',
+    'rektorsekretariat@verwaltung.tu-chemnitz.de'         => '{{block type="imprint/field" value="email"}}',
     'Finanzamt Chemnitz-Mitte'                            => '{{block type="imprint/field" value="financial_office"}}',
     'Amtsgericht Chemnitz'                                => '{{block type="imprint/field" value="court"}}',
     'Rektorat der Technischen Universit&auml;t Chemnitz'  => '{{block type="imprint/field" value="ceo"}}',
+    'Rektorat der TU Chemnitz'                            => '{{block type="imprint/field" value="company_first"}}',
     'Technische Universit&auml;t Chemnitz'                => '{{block type="imprint/field" value="company_second"}}',
     'De 140857609'                                        => '{{block type="imprint/field" value="vat_id"}}',
     'DE 140857609'                                        => '{{block type="imprint/field" value="vat_id"}}',
 );
 
 
-// Footer-Links reparieren
-/** @var $block_arr  Mage_Cms_Model_Resource_Block_Collection */
-$block_arr = Mage::getModel('cms/block')->getCollection();
-foreach($block_arr AS $block) {
-    $id  = $block->getBlockId();
-    $old = $block->getContent();
+/* @var $cmsSetup Egovs_Base_Helper_Cmssetup_Data */
+$cmsSetup = Mage::helper('egovsbase_cmssetup');
 
-    $new = str_replace(array_keys($replace_url), array_values($replace_url), $old);
-    $new = str_replace(array_keys($replace_string), array_values($replace_string), $new);
-    $new = preg_replace('/<!--(.*)-->/Uis', '', $new);
-
-    if ( $old != $new ) {
-        $store_ids = $block->getResource()->lookupStoreIds($block->getBlockId());
-
-        $model = Mage::getModel('cms/block')->load($id);
-        $model->setContent($new)->setStores($store_ids)->save();
-    }
-}
-
-// CMS-Seiten
-/** @var $page_arr  Mage_Cms_Model_Resource_Page_Collection */
-$page_arr = Mage::getModel('cms/page')->getCollection();
-foreach($page_arr AS $page) {
-    $id  = $page->getPageId();
-    $old = $page->getContent();
-
-    $new = str_replace(array_keys($replace_url), array_values($replace_url), $old);
-    $new = str_replace(array_keys($replace_string), array_values($replace_string), $new);
-    $new = preg_replace('/<!--(.*)-->/Uis', '', $new);
-
-    if ( $old != $new ) {
-        $store_ids = $page->getResource()->lookupStoreIds($page->getPageId());
-
-        $model = Mage::getModel('cms/page')->load($id);
-        $model->setContent($new)->setStores($store_ids)->save();
-    }
-}
-
+// CMS-Blöcke reparieren
+$cmsSetup->changeCmsData('cms/block', $replace_url, $replace_string, TRUE);
+// CMS-Seiten reparieren
+$cmsSetup->changeCmsData('cms/page', $replace_url, $replace_string, TRUE);
 
 $installer->endSetup();
+

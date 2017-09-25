@@ -13,28 +13,30 @@ $checks = array();
 $remove = array();
 
 /**
- * @var Mage_Checkout_Model_Agreement $agreements
+ * @var Mage_Checkout_Model_Resource_Agreement_Collection $agreements
  */
 $agreements = Mage::getModel('checkout/agreement')->getCollection();
-foreach ($agreements AS $agreement) {
-    $agreeName = $agreement->getName();
 
-    if ( !array_key_exists($agreeName, $checks) ) {
-        $checks[$agreeName] = array(
-            'content'  => $agreement->getContent(),
-            'checkbox' => $agreement->getCheckboxHtml()
-        );
-    }
-    else {
-        $check1 = $checks[$agreeName]['content'];
-        $check2 = $checks[$agreeName]['checkbox'];
-        if ( ($check1 == $agreement->getContent()) AND ($check2 == $agreement->getCheckboxHtml()) ) {
-            // Das ist dann gleich
-            $remove[] = $agreement->getAgreementId();
+if ( $agreements instanceof Mage_Checkout_Model_Resource_Agreement_Collection ) {
+    foreach ($agreements AS $agreement) {
+        $agreeName = $agreement->getName();
+        
+        if ( !array_key_exists($agreeName, $checks) ) {
+            $checks[$agreeName] = array(
+                'content'  => $agreement->getContent(),
+                'checkbox' => $agreement->getCheckboxHtml()
+            );
+        }
+        else {
+            $check1 = $checks[$agreeName]['content'];
+            $check2 = $checks[$agreeName]['checkbox'];
+            if ( ($check1 == $agreement->getContent()) AND ($check2 == $agreement->getCheckboxHtml()) ) {
+                // Das ist dann gleich
+                $remove[] = $agreement->getAgreementId();
+            }
         }
     }
 }
-
 
 if ( count($remove) ) {
     $tableName = $installer->getTable('checkout_agreement');
