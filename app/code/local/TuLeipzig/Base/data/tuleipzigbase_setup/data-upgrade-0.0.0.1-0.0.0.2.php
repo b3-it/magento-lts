@@ -11,9 +11,11 @@ $text1 = "<style type=\"text/css\">\n        tr.summary-details td {font-size: 1
 $text2 = "<style type=\"text/css\">\n" . $tab .
          "body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }\n" . $tab .
          "a { color:#1E7EC8; }\n</style>";
+$text3 = "<style type=\"text/css\">\n    body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }\n</style>";
 
-$text3 = '<td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/sabre_logo_14_mail.png" _area=\'\'frontend\'\'}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>';
-$text4 = "<td valign=\"top\">
+$text4 = '<td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/sabre_logo_14_mail.png" _area=\'\'frontend\'\'}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>';
+$text5 = '<td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/logo_email.gif" _area=\'\'frontend\'\'}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>';
+$text6 = "<td valign=\"top\">
   <a href=\"{{store url=\"\"}}\">
     <img {{if logo_width}}width=\"{{var logo_width}}\" {{else}}width=\"165\"{{/if}} {{if logo_height}}height=\"{{var logo_height}}\" {{else}}height=\"48\"{{/if}} src=\"{{var logo_url}}\" alt=\"{{var logo_alt}}\" border=\"0\"/>
   </a>
@@ -23,43 +25,19 @@ $header = '{{template config_path="design/email/header"}}';
 $footer = '{{template config_path="design/email/footer"}}';
 
 $replace = array(
-    $text1 => $header,
-    $text2 => $header,
-    $text3 => $text4
+    // Header
+    '<html>'  => '<style type="text/css">',   // "Mogeln", damit der Header sauber eingebunden wird :) [siehe Template 41]
+    $text1    => $header,
+    $text2    => $header,
+    $text3    => $header,
+    // Footer
+    '</html>' => '',                          // Löschen, damit der Footer nicht doppelt ist
+    $text4    => $text6,
+    $text5    => $text6
 );
 
-$email_arr = Mage::getModel('core/email_template')->getCollection();
-foreach($email_arr AS $email) {
-    $code = $email->getTemplateCode();
-
-    if ( ($code == 'eMail-Header') OR ($code == 'eMail-Footer') ) {
-        // nicht in sich selbst eintragen
-        continue;
-    }
-
-    $id  = $email->getTemplateId();
-    $old = $email->getTemplateText();
-    $new = str_replace(array_keys($replace), array_values($replace), $old);
-
-    // falls der Tablulator im Template wird nicht erkannt
-    $arr = explode("\n", trim($new));
-    if ( (trim($arr[0]) == '<style type="text/css">') ) {
-        unset($arr[0], $arr[1], $arr[2], $arr[3]);
-        $new = implode("\n", $arr);
-    }
-
-    // Prüfen, ob der Header in allen Templates eingefügt ist
-    $arr = explode("\n", trim($old));
-    if ( $arr[0] != $header ) {
-        $new = $header . "\n" . $new;
-    }
-
-    if ( $old != $new ) {
-        $new .= "\n" . $footer;
-
-        $model = Mage::getModel('core/email_template')->load($id);
-        $model->setData('template_text', $new)->save();
-    }
-}
+/* @var $mailSetup Egovs_Base_Helper_Emailsetup_Data */
+$mailSetup = Mage::helper('egovsbase_emailsetup');
+$mailSetup->replaceEmailTemplateContent($replace, $header, $footer, 4);
 
 $installer->endSetup();

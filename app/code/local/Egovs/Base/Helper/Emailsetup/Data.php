@@ -147,4 +147,61 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
             }
         }
     }
+    
+    /**
+     * Läd alle eMail-Templates und verändert den Inhalt.
+     * Nach der Anpassung wird das Template zurück gespeichert.
+     * 
+     * @param array    $replace            Array mit $key => $val was ersetzt werden soll
+     * @param string   $header             String, welcher als Header an den Anfang eingefügt werden soll
+     * @param string   $footer             String, welcher als Footer an alle Templates angehängt weerden soll
+     * @param integer  $styleCounter       Anzahl der Zeilen im Style-Tag (eventuell wird der Tabluator nicht korrekt erkannt)
+     */
+    public function replaceEmailTemplateContent($replace = null, $header = '', $footer = '', $styleCounter = 0)
+    {
+        $email_arr = Mage::getModel('core/email_template')->getCollection();
+        foreach($email_arr AS $email) {
+            $code = $email->getTemplateCode();
+            
+            if ( ($code == 'eMail-Header') OR ($code == 'eMail-Footer') ) {
+                // nicht in sich selbst eintragen
+                continue;
+            }
+            
+            $id  = $email->getTemplateId();
+            $new = $old = $email->getTemplateText();
+            
+            if ( is_array($replace) AND count($replace) ) {
+                $new = str_replace(array_keys($replace), array_values($replace), $new);
+            }
+            
+            if ($styleCounter > 0) {
+                // falls der Tablulator im Template wird nicht erkannt
+                $arr = explode("\n", trim($new));
+                if ( (trim($arr[0]) == '<style type="text/css">') ) {
+                    for( $i = 0; $i < $styleCounter; $i++ ) {
+                        unset($arr[$i]);
+                    }
+                    $new = implode("\n", $arr);
+                }
+            }
+            
+            if ( strlen($header) ) {
+                // Prüfen, ob der Header in allen Templates eingefügt ist
+                $arr = explode("\n", trim($new));
+                if ( $arr[0] != $header ) {
+                    $new = $header . "\n" . $new;
+                }
+            }
+            
+            if ( $old != $new ) {
+                if ( strlen($footer) ) {
+                    $new .= "\n" . $footer;
+                }
+                
+                $model = Mage::getModel('core/email_template')->load($id);
+                $model->setData('template_text', $new)->save();
+            }
+        }
+    }
 }

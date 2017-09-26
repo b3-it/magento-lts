@@ -22,31 +22,8 @@ $replace = array(
     $text2 => $text3
 );
 
-$email_arr = Mage::getModel('core/email_template')->getCollection();
-foreach($email_arr AS $email) {
-    $code = $email->getTemplateCode();
-
-    if ( ($code == 'eMail-Header') OR ($code == 'eMail-Footer') ) {
-        // nicht in sich selbst eintragen
-        continue;
-    }
-
-    $id  = $email->getTemplateId();
-    $old = $email->getTemplateText();
-    $new = str_replace(array_keys($replace), array_values($replace), $old);
-    
-    // Prüfen, ob der Header in allen Templates eingefügt ist
-    $arr = explode("\n", trim($old));
-    if ( $arr[0] != $header ) {
-        $new = $header . "\n" . $new;
-    }
-    
-    if ( $old != $new ) {
-        $new .= "\n" . $footer;
-
-        $model = Mage::getModel('core/email_template')->load($id);
-        $model->setData('template_text', $new)->save();
-    }
-}
+/* @var $mailSetup Egovs_Base_Helper_Emailsetup_Data */
+$mailSetup = Mage::helper('egovsbase_emailsetup');
+$mailSetup->replaceEmailTemplateContent($replace, $header, $footer, 0);
 
 $installer->endSetup();
