@@ -153,9 +153,9 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
      * Nach der Anpassung wird das Template zurück gespeichert.
      * 
      * @param array    $replace            Array mit $key => $val was ersetzt werden soll
-     * @param string   $header             String, welcher als Header an den Anfang eingefügt werden soll
-     * @param string   $footer             String, welcher als Footer an alle Templates angehängt weerden soll
-     * @param integer  $styleCounter       Anzahl der Zeilen im Style-Tag (eventuell wird der Tabluator nicht korrekt erkannt)
+     * @param string   $header             String, welcher als Header am Anfang eingefügt werden soll
+     * @param string   $footer             String, welcher als Footer an alle Templates angehängt werden soll
+     * @param integer  $styleCounter       Anzahl der Zeilen im Style-Tag (eventuell wird der nicht korrekt erkannt)
      */
     public function replaceEmailTemplateContent($replace = null, $header = '', $footer = '', $styleCounter = 0)
     {
