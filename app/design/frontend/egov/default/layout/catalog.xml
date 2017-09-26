@@ -52,7 +52,7 @@ Category default layout
         <label>Catalog Category (Non-Anchor)</label>
 
         <reference name="left">
-            <block type="catalog/layer_view" name="catalog.leftnav" before="left.newsletter" as="category_filter" template="catalog/layer/view.phtml">
+            <block type="catalog/layer_view" name="catalog.leftnav" after="topEgovmenu" as="category_filter" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
             </block>
         </reference>
@@ -96,7 +96,7 @@ Category layered navigation layout
         <label>Catalog Category (Anchor)</label>
 
         <reference name="left">
-            <block type="catalog/layer_view" name="catalog.leftnav" before="left.newsletter" template="catalog/layer/view.phtml">
+            <block type="catalog/layer_view" name="catalog.leftnav" after="topEgovmenu" as="category_filter" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
             </block>
         </reference>
