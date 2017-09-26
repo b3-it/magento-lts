@@ -57,7 +57,6 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 					   href="<?php echo $this->getAddressesEditUrl() ?>"
-					   alt="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"
 					   title="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<address>
@@ -70,7 +69,6 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 						 href="<?php echo $this->getEditBillingUrl() ?>"
-						 alt="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"
 						 title="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<input type="hidden" name="payment[cc_number]"
@@ -94,7 +92,6 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 						 href="<?php echo $this->getEditShippingUrl() ?>"
-						 alt="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"
 						 title="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<address>
@@ -110,7 +107,6 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 						 href="<?php echo $this->getEditShippingmethodUrl() ?>"
-						 alt="<?php echo $this->__('Shipping Method') ?> <?php echo $this->__('Change') ?>"
 						 title="<?php echo $this->__('Shipping Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<?php if($_rate=$this->getShippingAddressRate($_address)): ?>
@@ -183,7 +179,7 @@
 			</table>
 		</div>
 		<p class="grand-total">
-			<big><?php echo $this->__('Grand Total:') ?> </big>
+			<div style="font-size:1.1rem;"><?php echo $this->__('Grand Total:') ?> </div>
 			<?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
 		</p>
 		<div class="buttons-set" id="review-buttons-container">
