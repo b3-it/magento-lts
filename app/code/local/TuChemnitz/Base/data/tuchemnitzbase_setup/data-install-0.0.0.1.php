@@ -21,7 +21,7 @@ $installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `v
 $installer->setConfigData('general/imprint/company_second', 'Technischen Universität Chemnitz');
 
 // Logo-Grafiken setzen
-$installer->setConfigData('design/header/logo_src', 'images/logo_sachsen.png');
+$installer->setConfigData('design/header/logo_src'      , 'images/logo_sachsen.png');
 $installer->setConfigData('design/header/logo_src_small', 'images/logo_sachsen_smartphone.png');
 
 // Theme-Einstellungen zurücksetzen
@@ -42,30 +42,30 @@ $installer->setConfigData('general/imprint/ceo'          , 'Prof. Dr. Gerd Stroh
 $installer->setConfigData('general/imprint/company_first', 'Rektorat der TU Chemnitz'                   , 'websites', $scopeId);
 
 $replace_url = array(
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/agb'         => '{{store url="agb"}}',
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/widerruf'    => '{{store url="widerruf"}}',
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/datenschutz' => '{{store url="datenschutz"}}',
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/zahlarten'   => '{{store url="zahlarten"}}',
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/impressum'   => '{{store url="impressum"}}',
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/agb'         => "{{store url='agb'}}",
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/widerruf'    => "{{store url='widerruf'}}",
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/datenschutz' => "{{store url='datenschutz'}}",
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/zahlarten'   => "{{store url='zahlarten'}}",
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut/impressum'   => "{{store url='impressum'}}",
 );
 
 $replace_string = array(
     // Ticketshop :: Papercut
-    'https://www.shop.sachsen.de/tuc_ticketshop/papercut' => '{{store url=""}}',
-    'www.shop.sachsen.de/tuc_ticketshop/papercut&nbsp;'   => '{{store url=""}}',
-    'PaperCut-Shop TU Chemnitz'                           => '{{block type="imprint/field" value="shop_name"}}',
-    'Stra&szlig;e der Nationen 62'                        => '{{block type="imprint/field" value="street"}}',
-    '09111 Chemnitz'                                      => '{{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}',
-    '+49 371 531-10000'                                   => '{{block type="imprint/field" value="telephone"}}',
-    '+49 371 531-10009'                                   => '{{block type="imprint/field" value="fax"}}',
-    'rektorsekretariat@verwaltung.tu-chemnitz.de'         => '{{block type="imprint/field" value="email"}}',
-    'Finanzamt Chemnitz-Mitte'                            => '{{block type="imprint/field" value="financial_office"}}',
-    'Amtsgericht Chemnitz'                                => '{{block type="imprint/field" value="court"}}',
-    'Rektorat der Technischen Universit&auml;t Chemnitz'  => '{{block type="imprint/field" value="ceo"}}',
-    'Rektorat der TU Chemnitz'                            => '{{block type="imprint/field" value="company_first"}}',
-    'Technische Universit&auml;t Chemnitz'                => '{{block type="imprint/field" value="company_second"}}',
-    'De 140857609'                                        => '{{block type="imprint/field" value="vat_id"}}',
-    'DE 140857609'                                        => '{{block type="imprint/field" value="vat_id"}}',
+    'https://www.shop.sachsen.de/tuc_ticketshop/papercut' => "{{store url=''}}",
+    'www.shop.sachsen.de/tuc_ticketshop/papercut&nbsp;'   => "{{store url=''}}",
+    'PaperCut-Shop TU Chemnitz'                           => "{{block type='imprint/field' value='shop_name'}}",
+    'Stra&szlig;e der Nationen 62'                        => "{{block type='imprint/field' value='street'}}",
+    '09111 Chemnitz'                                      => "{{block type='imprint/field' value='zip'}} {{block type='imprint/field' value='city'}}",
+    '+49 371 531-10000'                                   => "{{block type='imprint/field' value='telephone'}}",
+    '+49 371 531-10009'                                   => "{{block type='imprint/field' value='fax'}}",
+    'rektorsekretariat@verwaltung.tu-chemnitz.de'         => "{{block type='imprint/field' value='email'}}",
+    'Finanzamt Chemnitz-Mitte'                            => "{{block type='imprint/field' value='financial_office'}}",
+    'Amtsgericht Chemnitz'                                => "{{block type='imprint/field' value='court'}}",
+    'Rektorat der Technischen Universit&auml;t Chemnitz'  => "{{block type='imprint/field' value='ceo'}}",
+    'Rektorat der TU Chemnitz'                            => "{{block type='imprint/field' value='company_first'}}",
+    'Technische Universit&auml;t Chemnitz'                => "{{block type='imprint/field' value='company_second'}}",
+    'De 140857609'                                        => "{{block type='imprint/field' value='vat_id'}}",
+    'DE 140857609'                                        => "{{block type='imprint/field' value='vat_id'}}",
 );
 
 
