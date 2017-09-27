@@ -34,13 +34,15 @@ $installer->setConfigData('payment/egovs_girosolution_creditcard/active'     , '
 $installer->setConfigData('payment/egovs_girosolution_creditcard/merchant_id', 'RiUPLAz1MsQ=');
 $installer->setConfigData('payment/egovs_girosolution_creditcard/project_id' , 'QjKnnRPqoec=');
 $installer->setConfigData('payment/egovs_girosolution_creditcard/project_pwd', '8GodwH8354OvSQY3fjk3/A==');
+$installer->setConfigData('payment/egovs_girosolution_creditcard/title'      , 'Creditcard per Girosolution');
 
 // Giropay per Girosolution
 // https://trac.kawatest.de/ticket/2917
 $installer->setConfigData('payment/egovs_girosolution_giropay/active'     , '1');
 $installer->setConfigData('payment/egovs_girosolution_giropay/merchant_id', 'RiUPLAz1MsQ=');
-$installer->setConfigData('payment/egovs_girosolution_giropay/project_id' , 'QjKnnRPqoec=');
+$installer->setConfigData('payment/egovs_girosolution_giropay/project_id' , 'W2vurCc2P8A=');
 $installer->setConfigData('payment/egovs_girosolution_giropay/project_pwd', '8GodwH8354OvSQY3fjk3/A==');
+$installer->setConfigData('payment/egovs_girosolution_giropay/title'      , 'Giropay (German online banking accounts only)');
 
 // eMail-Templates korrekt zuweisen
 // https://trac.kawatest.de/ticket/2917
