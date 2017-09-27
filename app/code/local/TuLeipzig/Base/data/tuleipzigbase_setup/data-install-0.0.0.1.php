@@ -30,17 +30,25 @@ $installer->setConfigData('design/theme/default', '');
 
 // Kreditkarte per Girosolution
 // https://trac.kawatest.de/ticket/2917
-$installer->setConfigData('payment/egovs_girosolution_creditcard/active', '1');
+$installer->setConfigData('payment/egovs_girosolution_creditcard/active'     , '1');
 $installer->setConfigData('payment/egovs_girosolution_creditcard/merchant_id', 'RiUPLAz1MsQ=');
-$installer->setConfigData('payment/egovs_girosolution_creditcard/project_id', 'QjKnnRPqoec=');
+$installer->setConfigData('payment/egovs_girosolution_creditcard/project_id' , 'QjKnnRPqoec=');
 $installer->setConfigData('payment/egovs_girosolution_creditcard/project_pwd', '8GodwH8354OvSQY3fjk3/A==');
 
 // Giropay per Girosolution
 // https://trac.kawatest.de/ticket/2917
-$installer->setConfigData('payment/egovs_girosolution_giropay/active', '1');
+$installer->setConfigData('payment/egovs_girosolution_giropay/active'     , '1');
 $installer->setConfigData('payment/egovs_girosolution_giropay/merchant_id', 'RiUPLAz1MsQ=');
-$installer->setConfigData('payment/egovs_girosolution_giropay/project_id', 'QjKnnRPqoec=');
+$installer->setConfigData('payment/egovs_girosolution_giropay/project_id' , 'QjKnnRPqoec=');
 $installer->setConfigData('payment/egovs_girosolution_giropay/project_pwd', '8GodwH8354OvSQY3fjk3/A==');
+
+// eMail-Templates korrekt zuweisen
+// https://trac.kawatest.de/ticket/2917
+$installer->setConfigData('customer/create_account/email_template'             , '5' , 'default', 0);
+$installer->setConfigData('customer/create_account/email_confirmation_template', '6' , 'default', 0);
+$installer->setConfigData('customer/create_account/email_confirmed_template'   , '7' , 'default', 0);
+$installer->setConfigData('customer/password/forgot_email_template'            , '40', 'default', 0);
+$installer->setConfigData('customer/password/remind_email_template'            , '59', 'default', 0);
 
 // eMail-Einstellungen anpassen
 $email_logos = array(
