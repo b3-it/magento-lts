@@ -31,6 +31,21 @@ $installer->setConfigData('design/theme/skin'    , '');
 $installer->setConfigData('design/theme/layout'  , '');
 $installer->setConfigData('design/theme/default' , '');
 
+// Kreditkarte per Girosolution
+$installer->setConfigData('payment/egovs_girosolution_creditcard/active'     , '1');
+$installer->setConfigData('payment/egovs_girosolution_creditcard/merchant_id', 'Llu4kPuVeJE=');
+$installer->setConfigData('payment/egovs_girosolution_creditcard/project_id' , '5HdbQm+marg=');
+$installer->setConfigData('payment/egovs_girosolution_creditcard/project_pwd', 'PxUlfKYeMp9qsS0PCnB42w==');
+$installer->setConfigData('payment/egovs_girosolution_creditcard/description', 'Kreditkarte per Girosolution');
+
+// Giropay per Girosolution
+$installer->setConfigData('payment/egovs_girosolution_giropay/active'     , '1');
+$installer->setConfigData('payment/egovs_girosolution_giropay/merchant_id', 'Llu4kPuVeJE=');
+$installer->setConfigData('payment/egovs_girosolution_giropay/project_id' , 'SdIrju6FFRs=');
+$installer->setConfigData('payment/egovs_girosolution_giropay/project_pwd', 'PxUlfKYeMp9qsS0PCnB42w==');
+$installer->setConfigData('payment/egovs_girosolution_giropay/description', 'Giropay per Girosolution');
+
+
 // ScopeID für Ticketshop ermitteln
 $scopeId = Mage::getModel('core/store')->load('papercut', 'code')->getWebsiteId();
 
