@@ -16,8 +16,12 @@ $text3 = "<style type=\"text/css\">\n    body,td { color:#2f2f2f; font:11px/1.35
 $text4 = '<td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/sabre_logo_14_mail.png" _area=\'\'frontend\'\'}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>';
 $text5 = '<td valign="top"><a href="{{store url=""}}"><img src="{{skin url="images/logo_email.gif" _area=\'\'frontend\'\'}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/></a></td>';
 $text6 = "<td valign=\"top\">
-  <a href=\"{{store url=\"\"}}\">
-    <img {{if logo_width}}width=\"{{var logo_width}}\" {{else}}width=\"165\"{{/if}} {{if logo_height}}height=\"{{var logo_height}}\" {{else}}height=\"48\"{{/if}} src=\"{{var logo_url}}\" alt=\"{{var logo_alt}}\" border=\"0\"/>
+  <a href=\"{{store url=''}}\">
+    <img width=\"{{if logo_width}}{{var logo_width}}{{else}}165{{/if}}\"
+		 height=\"{{if logo_height}}{{var logo_height}}{{else}}48{{/if}}\"
+		 src=\"{{var logo_url}}\"
+		 alt=\"{{var logo_alt}}\"
+		 border=\"0\" />
   </a>
 </td>";
 
@@ -33,7 +37,11 @@ $replace = array(
     // Footer
     '</html>' => '',                          // Löschen, damit der Footer nicht doppelt ist
     $text4    => $text6,
-    $text5    => $text6
+    $text5    => $text6,
+    // Template-Code bereinigen
+    '{{store url=""}}'                             => "{{store url=''}}",
+    '{{store url="customer/account/"}}'            => "{{store url='customer/account/'}}",
+    '{{block type="imprint/field" value="email"}}' => "{{block type='imprint/field' value='email'}}"
 );
 
 /* @var $mailSetup Egovs_Base_Helper_Emailsetup_Data */
