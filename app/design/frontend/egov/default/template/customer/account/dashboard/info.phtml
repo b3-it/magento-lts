@@ -13,20 +13,22 @@
                 <h3>
                     <?php echo $this->__('Contact Information') ?>
                     <span class="spacer"> | </span>
-                    <a class="egov-pencile" href="<?php echo $this->getUrl('customer/account/edit') ?>" title="<?php echo $this->__('Edit') ?>" alt="<?php echo $this->__('Edit') ?>"> </a>
+                    <a class="egov-pencile"
+                       href="<?php echo $this->getUrl('customer/account/edit') ?>"
+                       title="<?php echo $this->__('Edit') ?>"> </a>
                 </h3>
             </div>
             <div class="box-content">
-                <p>
-                    <div>
-                        <?php echo $this->escapeHtml($this->getCustomer()->getName()) ?>
-                    </div>
-                    <div>
-                        <?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>
-                        <span class="spacer"> | </span>
-                        <a class="egov-password" href="<?php echo $this->getChangePasswordUrl() ?>" title="<?php echo $this->__('Change Password') ?>" alt="<?php echo $this->__('Change Password') ?>"> </a>
-                    </div>
-                </p>
+                <div>
+                    <?php echo $this->escapeHtml($this->getCustomer()->getName()) ?>
+                </div>
+                <div>
+                    <?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>
+                    <span class="spacer"> | </span>
+                    <a class="egov-password"
+                       href="<?php echo $this->getChangePasswordUrl() ?>"
+                       title="<?php echo $this->__('Change Password') ?>"> </a>
+                </div>
             </div>
         </div>
     </div>
@@ -37,7 +39,9 @@
                 <h3>
                     <?php echo $this->__('Newsletters') ?>
                      <span class="spacer"> | </span>
-                     <a class="egov-pencile" href="<?php echo $this->getUrl('newsletter/manage') ?>" title="<?php echo $this->__('Edit') ?>" alt="<?php echo $this->__('Edit') ?>"> </a>
+                     <a class="egov-pencile"
+                        href="<?php echo $this->getUrl('newsletter/manage') ?>"
+                        title="<?php echo $this->__('Edit') ?>"> </a>
                 </h3>
             </div>
             <div class="box-content">

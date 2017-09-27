@@ -190,7 +190,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 * This is the function that gets called if button "Place Order" is pressed
 	 * in the checkout process.
 	 *
-	 * @return the URL to be redirected to
+	 * @return string URL to be redirected to
 	 */
 	public function getOrderPlaceRedirectUrl() {
 		return $this->getTkonnektRedirectUrl();
@@ -545,7 +545,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 *
 	 * @return int
      *
-     * @see Gka_Tkonnketpay_Model_Adminhtml_System_Config_Source_Debug
+     * @see Gka_Tkonnektpay_Model_Adminhtml_System_Config_Source_Debug
 	 */
 	public function getDebug() {
 		return Mage::getStoreConfigFlag('payment/'.$this->getCode().'/debug_level');
@@ -584,7 +584,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 * @param string $createInvoice
 	 * @param string $invoiceComment
 	 * @param string $tkRef
-	 * @param unknown $tkTransInfo
+	 * @param array  $tkTransInfo
 	 * @param string $orderStateFinished
 	 *
 	 * @return boolean
@@ -845,7 +845,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 * @param string $refId			TranskationsID des Zahlungsproviders
 	 * @param string $providerName  VISA,MASTER,GIROPAY,SEPASDD
 	 *
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Model_Webservice_PaymentServices|bool Ergebnis|false Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 *
 	 * @throws Exception
 	 */
