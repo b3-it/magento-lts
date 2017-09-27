@@ -1,8 +1,6 @@
 <?php
-/**
- * @var $this Mage_Eav_Model_Entity_Setup
- */
-
+/** @var Mage_Core_Model_Resource_Setup $installer */
+/** @var Mage_Eav_Model_Entity_Setup $this */
 $line_break = "\n";
 $default_id = 'footer_links';
 $found = false;
