@@ -35,9 +35,8 @@ require_once 'Mage/Adminhtml/controllers/Catalog/Product/GalleryController.php';
  *
  * @category   	Egovs
  * @package    	Egovs_Video
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
- * @copyright  	Copyright (c) 2011 TRW-NET - http://www.trw-net.de
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2011 - 2017 B3 It Systeme GmbH - https://www.b3-it.de
  * @license    	http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
  * @see Mage_Adminhtml_Block_Catalog_Product_Helper_Form_Gallery_Content
@@ -64,6 +63,11 @@ class Egovs_Video_Adminhtml_Catalog_Product_GalleryController extends Mage_Admin
                 Mage::helper('egovsvideo/catalog_image'), 'validateUploadFile');
             $uploader->setAllowRenameFiles(true);
             $uploader->setFilesDispersion(true);
+            $uploader->addValidateCallback(
+            		Mage_Core_Model_File_Validator_Image::NAME,
+            		Mage::getModel('egovsvideo/file_validator_media'),
+            		'validate'
+            		);
             $result = $uploader->save(
                 Mage::getSingleton('catalog/product_media_config')->getBaseTmpMediaPath()
             );
