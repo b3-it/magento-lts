@@ -36,10 +36,13 @@ class Egovs_Base_Model_Resource_Setup extends Mage_Eav_Model_Entity_Setup
         /** Flush all magento cache */
         Mage::app()->cleanCache();
 
+        /** http://www.matthias-zeis.com/archiv/magento-indizes-manuell-neu-erstellen */
         /** run all of Magento Indexer */
-        $processes = $indexer->getProcessesCollection();
-        foreach ($processes AS $process) {
-            $process->reindexEverything();
+        try {
+            //$indexer = Mage::getSingleton('index/indexer');
+            //$processCollection = $indexer->getProcessesCollection();
+            //$processCollection->walk('reindexAll');
+        } catch (Exception $e) {
         }
 
         return parent::afterApplyAllUpdates();
