@@ -63,6 +63,12 @@ $email_templates = array(
         'path'     => 'design/email/header'
     ),
     1 => array(
+        'template' => 'support.htm',
+        'name'     => 'eMail-Support',
+        'topic'    => 'E-Mail - Support',
+        'path'     => 'design/email/support'
+    ),
+    2 => array(
         'template' => 'footer.htm',
         'name'     => 'eMail-Footer',
         'topic'    => 'E-Mail - Fußzeile',

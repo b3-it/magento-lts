@@ -92,5 +92,6 @@ $cmsSetup->changeCmsData('cms/block', $replace_url, $replace_string, TRUE);
 // CMS-Seiten reparieren
 $cmsSetup->changeCmsData('cms/page', $replace_url, $replace_string, TRUE);
 
+
 $installer->endSetup();
 
