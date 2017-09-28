@@ -24,13 +24,21 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class Mage_Adminhtml_Block_Notification_Symlink extends Mage_Adminhtml_Block_Template
+/**
+ * System config symlink backend model
+ *
+ * @category Mage
+ * @package  Mage_Adminhtml
+ */
+class Mage_Adminhtml_Model_System_Config_Backend_Symlink extends Mage_Core_Model_Config_Data
 {
     /**
-     * @return bool
+     * Save object data
+     *
+     * @return Mage_Core_Model_Abstract
      */
-    public function isSymlinkEnabled()
+    public function save()
     {
-        return Mage::getStoreConfigFlag(self::XML_PATH_TEMPLATE_ALLOW_SYMLINK);
+        return $this;
     }
 }
