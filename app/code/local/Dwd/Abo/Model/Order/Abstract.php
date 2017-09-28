@@ -124,16 +124,16 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         {
         	$this->_customer = Mage::getModel('customer/customer')->load($quote->getCustomerId());
         }
-        
+        $payment = $quote->getPayment();
         
         if( $lastSepa =  $payment->getLastSepaMethod())
         {
         	$ref =$lastSepa->getAdditionalInformation('mandate_reference');
         	if($ref != $this->_customer->getSepaMandateId()){
-        		$this->fillSepaDebitValues($p, $this->_customer);
+        		$this->fillSepaDebitValues($payment, $this->_customer);
         	}
         	else{
-        		$this->copySepaDebitValues($payment->getLastSepaMethod(), $p);
+        		$this->copySepaDebitValues($payment->getLastSepaMethod(), $payment);
         	}
         }
         
@@ -142,7 +142,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         $quote->save();
         $quote->reserveOrderId();
         
-
+		/* @var $service Mage_Sales_Model_Service_Quote */
         $service = Mage::getModel('sales/service_quote',$quote);
         try {
 	        $service->submitAll();
@@ -164,6 +164,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         {
         	$this->onFailure($order,$quote);
         }
+        $quote->setIsActive(false)->save();
         
         //20111114::Frank Rochlitzer:: Die eCustomerID muss zurÃ¼ckgesetzt werden -> Caching Problem
         Mage::helper('paymentbase')->resetECustomerId();
