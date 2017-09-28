@@ -26,6 +26,16 @@
 	</div>
 </div>
 
+<div class="col2-set block">
+<fieldset>
+	<ul>
+		<li>
+    <?php echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')->setObject(new Varien_Object())->setForceUseCustomerRequiredAttributes(false)->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+		</li>
+	</ul>
+</fieldset>
+</div>
+
 <div id="address">
 	<?php echo $this->getChildHtml('singlepage_billing') ?>
 </div>	
