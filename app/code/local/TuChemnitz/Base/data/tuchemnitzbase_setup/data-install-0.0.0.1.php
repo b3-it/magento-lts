@@ -17,10 +17,10 @@ $_catTable = $installer->getTable('catalog_category_entity_varchar');
 $installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'three_columns';");
 $installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'two_columns_right';");
 
-// Inpressums-Daten komplettieren
-$installer->setConfigData('general/imprint/company_second', 'Technischen Universität Chemnitz');
+$configTable = $installer->getTable('core/config_data');
+$installer->run("DELETE FROM `{$configTable}` WHERE `path` LIKE 'design/header/%' AND `scope` <> 'default';");
 
-// Logo-Grafiken setzen
+// Design und Logo-Grafiken setzen
 $installer->setConfigData('design/header/logo_src'      , 'images/logo_sachsen.png');
 $installer->setConfigData('design/header/logo_src_small', 'images/logo_sachsen_smartphone.png');
 
@@ -46,16 +46,14 @@ $installer->setConfigData('payment/egovs_girosolution_giropay/project_pwd', 'PxU
 $installer->setConfigData('payment/egovs_girosolution_giropay/description', 'Giropay per Girosolution');
 
 
-// ScopeID für Ticketshop ermitteln
-$scopeId = Mage::getModel('core/store')->load('papercut', 'code')->getWebsiteId();
-
 // Impressum reparieren
-$installer->setConfigData('general/imprint/telephone'    , '+49 (0) 371 531-10000'           , 'default', 0);
-$installer->setConfigData('general/imprint/fax'          , '+49 (0) 371 531-10009'           , 'default', 0);
-$installer->setConfigData('general/imprint/email'        , 'rektorsekretariat@tu-chemnitz.de', 'default', 0);
-$installer->setConfigData('general/imprint/ceo'          , 'Prof. Dr. Gerd Strohmeier'       , 'default', 0);
-$installer->setConfigData('general/imprint/company_first', 'Rektorat der TU Chemnitz'        , 'default', 0);
-$installer->setConfigData('general/imprint/tax_number'   , '215/149/03007'                   , 'default', 0);
+$installer->setConfigData('general/imprint/company_second', 'Technischen Universität Chemnitz', 'default', 0);
+$installer->setConfigData('general/imprint/telephone'     , '+49 (0) 371 531-10000'           , 'default', 0);
+$installer->setConfigData('general/imprint/fax'           , '+49 (0) 371 531-10009'           , 'default', 0);
+$installer->setConfigData('general/imprint/email'         , 'rektorsekretariat@tu-chemnitz.de', 'default', 0);
+$installer->setConfigData('general/imprint/ceo'           , 'Prof. Dr. Gerd Strohmeier'       , 'default', 0);
+$installer->setConfigData('general/imprint/company_first' , 'Rektorat der TU Chemnitz'        , 'default', 0);
+$installer->setConfigData('general/imprint/tax_number'    , '215/149/03007'                   , 'default', 0);
 
 // Bankdaten einpflegen
 $installer->setConfigData('general/imprint/bank_account_owner', 'Hauptkasse des Freistaates Sachsen', 'default', 0);
@@ -63,10 +61,17 @@ $installer->setConfigData('general/imprint/bank_name'         , 'Deutsche Bundes
 $installer->setConfigData('general/imprint/iban'              , 'DE22 8600 0000 0086 0015 22'       , 'default', 0);
 $installer->setConfigData('general/imprint/swift'             , 'MARK DEF1 860'                     , 'default', 0);
 
+// ScopeID für Ticketshop ermitteln
+$scopeId = Mage::getModel('core/store')->load('papercut', 'code')->getWebsiteId();
+
 // Impressum für Ticketshop reparieren
-$installer->setConfigData('general/imprint/telephone'    , '+49 (0) 371 531-13400'     , 'websites', $scopeId);
-$installer->setConfigData('general/imprint/fax'          , '+49 (0) 371 531-13409'     , 'websites', $scopeId);
-$installer->setConfigData('general/imprint/email'        , 'drucken@hrz.tu-chemnitz.de', 'websites', $scopeId);
+$installer->setConfigData('general/imprint/telephone', '+49 (0) 371 531-13400'     , 'websites', $scopeId);
+$installer->setConfigData('general/imprint/fax'      , '+49 (0) 371 531-13409'     , 'websites', $scopeId);
+$installer->setConfigData('general/imprint/email'    , 'drucken@hrz.tu-chemnitz.de', 'websites', $scopeId);
+
+// Design für Ticket-Shop
+$installer->setConfigData('design/header/logo_alt', 'PaperCut-Shop TU Chemnitz', 'websites', $scopeId);
+$installer->setConfigData('design/header/welcome' , 'Willkommen'               , 'websites', $scopeId);
 
 $replace_url = array(
     'https://www.shop.sachsen.de/tuc_ticketshop/papercut/agb'         => "{{store url='agb'}}",
