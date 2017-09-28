@@ -14,7 +14,45 @@
  */
 class Egovs_Base_Model_Resource_Setup extends Mage_Eav_Model_Entity_Setup
 {
-	public function applyUpdates()
+    /**
+     * Call afterApplyAllUpdates method flag
+     * @see Mage_Core_Model_Resource_Setup
+     *
+     * @var boolean
+     */
+    protected $_callAfterApplyAllUpdates = true;
+    
+    /**
+     * Run each time after applying of all updates,
+     * if setup model setted  $_callAfterApplyAllUpdates flag to true
+     * 
+     * http://vinaikopp.com/2014/11/03/magento-setup-scripts/
+     *
+     * @see Mage_Core_Model_Resource_Setup
+     * @return Mage_Core_Model_Resource_Setup
+     */
+    public function afterApplyAllUpdates()
+    {
+        /** Flush all magento cache */
+        Mage::app()->cleanCache();
+
+        /** run all of Magento Indexer */
+        $processes = $indexer->getProcessesCollection();
+        foreach ($processes AS $process) {
+            $process->reindexEverything();
+        }
+
+        return parent::afterApplyAllUpdates();
+    }
+    
+    
+    /**
+     * Apply module resource install, upgrade and data scripts
+     *
+     * @see Mage_Core_Model_Resource_Setup
+     * @return Mage_Core_Model_Resource_Setup
+     */
+    public function applyUpdates()
 	{
 		$myModule = substr(__CLASS__, 0, strpos(__CLASS__, '_Model'));
 		
