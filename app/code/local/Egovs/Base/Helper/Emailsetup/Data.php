@@ -139,8 +139,13 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
             if (!$id) {
                 $template = $this->_getTemplateContent($templatePath . DS . $entry['template']);
 
-                $installer->run("INSERT INTO `{$emailTable}` (`template_code`, `template_text`, `template_type`, `template_subject`) " .
-                                "VALUES ('{$entry['name']}', '{$template}', '2', '{$entry['topic']}');");
+                $model = Mage::getModel('core/email_template');
+                $model->setData(array(
+                    'template_code'    => $entry['name'],
+                    'template_text'    => $template,
+                    'template_type'    => 2,
+                    'template_subject' => $entry['topic']
+                ))->save();
 
                 $id = $installer->getConnection()->fetchOne("SELECT `template_id` FROM `{$emailTable}` WHERE `template_code` = '{$entry['name']}';");
                 $installer->setConfigData($entry['path'], $id);
@@ -263,7 +268,8 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
         }
         
         $content = file_get_contents($filename);
-        return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+        $content = mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+        return $content;
     }
     
     /**
