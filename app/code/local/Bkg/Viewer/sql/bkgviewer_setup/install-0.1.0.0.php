@@ -131,6 +131,7 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_service')))
     	`url` varchar(512) default '',
     	`url_featureinfo` varchar(512) default '',
     	`url_map` varchar(512) default '',
+    	`type` varchar(56) default 'wms',
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -183,7 +184,6 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/service_crs')))
 
 			");
 }
-
 
 
 

@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_Catalog
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Bkg_MapSeries>
+            <version>0.0.1.0</version>
+        </Bkg_MapSeries>
+    </modules>
+    <admin>
+    </admin>
+    <global>
+        <models>
+            <mapseries>
+                <class>Bkg_MapSeries_Model</class>
+                <resourceModel>mapseries_resource</resourceModel>
+            </mapseries>
+            <mapseries_resource>
+                <class>Bkg_MapSeries_Model_Resource</class>
+               
+                <entities>
+                  
+                </entities>
+            </mapseries_resource>
+        </models>
+        <resources>
+           
+        </resources>
+        <blocks>
+            <mapseries>
+                <class>Bkg_MapSeries_Block</class>
+            </mapseries>
+        </blocks>
+       
+        
+        <catalog>
+            <product>
+                <type>
+                   
+                    <mapseries translate="label" module="mapseries">
+                        <label>Map Series Product</label>
+                        <model>mapseries/product_type_mapseries</model>
+                        <price_model>catalog/product_type_grouped_price</price_model>
+                        <composite>1</composite>
+                        <allow_product_types>
+                            <simple/>
+                            <virtual/>
+                            <downloadable/>
+                        </allow_product_types>
+                        <index_priority>50</index_priority>
+                        <price_indexer>catalog/product_indexer_price_grouped</price_indexer>
+                    </mapseries>
+                    
+                </type>
+           </product>
+        </catalog>
+         <helpers>
+            <mapseries>
+                <class>Bkg_MapSeries_Helper</class>
+            </mapseries>
+        </helpers>
+    </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Bkg_MapSeries>
+                    <files>
+                        <default>Bkg/MapSeries.csv</default>
+                    </files>
+                </Bkg_MapSeries>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <mapseries>
+                    <file>bkg/mapseries.xml</file>
+                </mapseries>
+            </updates>
+        </layout>
+        <events>
+        </events>
+    </adminhtml>
+    <frontend>
+        <events>
+        </events>
+        <translate>
+            <modules>
+                <Bkg_MapSeries>
+                    <files>
+                        <default>Bkg/MapSeries.csv</default>
+                    </files>
+                </Bkg_MapSeries>
+            </modules>
+        </translate>
+                <layout>
+            <updates>
+                <mapseries>
+                    <file>bkg/mapseries.xml</file>
+                </mapseries>
+            </updates>
+        </layout>
+      </frontend>
+    <default>
+    </default>
+    <crontab>
+    </crontab>
+</config>

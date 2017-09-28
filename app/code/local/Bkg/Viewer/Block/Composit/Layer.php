@@ -10,6 +10,8 @@
  */
 class Bkg_Viewer_Block_Composit extends Mage_Core_Model_Abstract
 {
+	
+	
 	public function _prepareLayout()
     {
 		return parent::_prepareLayout();
@@ -23,4 +25,6 @@ class Bkg_Viewer_Block_Composit extends Mage_Core_Model_Abstract
         return $this->getData('composit');
 
     }
+    
+ 
 }

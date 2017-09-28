@@ -126,4 +126,26 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
         
         return $data;
     }
+    
+    public function getOpenLayer()
+    {
+    	$text = "";
+    	 
+    	$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection();
+    	$collection->getSelect()
+    	->where('composit_id='.intval($this->getId()))
+    	->order('visual_pos');
+    	foreach($collection->getItems() as $layer)
+    	{
+    		if($layer->getService()->getType() == 'wfs')
+    		{
+    			$text .= " ". $layer->getOpenLayerWfs();
+    		}else
+    		{
+    			$text .= " ". $layer->getOpenLayerWfs();
+    		}
+    	}
+    	 
+    	return $text;
+    }
 }
