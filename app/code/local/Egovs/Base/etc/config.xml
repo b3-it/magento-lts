@@ -294,6 +294,9 @@
             <egovsbase_emailsetup>
                 <class>Egovs_Base_Helper_Emailsetup</class>
             </egovsbase_emailsetup>
+            <egovsbase_pdfsetup>
+                <class>Egovs_Base_Helper_Pdfsetup</class>
+            </egovsbase_pdfsetup>
             <customer>
                 <rewrite>
                     <data>Egovs_Base_Helper_Customer_Data</data>

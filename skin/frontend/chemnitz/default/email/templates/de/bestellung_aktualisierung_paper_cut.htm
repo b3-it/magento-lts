@@ -1,0 +1,61 @@
+{{template config_path="design/email/header"}}
+
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <table cellspacing="0" cellpadding="0" border="0" width="98%" style="margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+    <tr>
+        <td align="center" valign="top">
+
+	        <table style="width:650px;">
+	        <tr>
+	            <td valign="top" align="right">
+  <a href="{{store url=''}}">
+    <img width="{{if logo_width}}{{var logo_width}}{{else}}165{{/if}}"
+		 height="{{if logo_height}}{{var logo_height}}{{else}}48{{/if}}"
+		 src="{{var logo_url}}"
+		 alt="{{var logo_alt}}"
+		 border="0" />
+  </a>
+</td>
+	        </tr>
+	        </table>
+
+
+	        <table style="width:650px;">
+	        <tr>
+	            <td valign="top">
+	                <p><strong>Hallo {{htmlescape var=$order.getCustomerName()}}</strong>,</p>
+	                <p>Status Ihrer Bestellung Nr. {{var order.increment_id}} ist jetzt: <strong>Vollständig</strong>.</p>
+	                <p>Sie können den aktuellen Status Ihrer Bestellung jederzeit <a href="{{store url='customer/account/'}}" style="color:#1E7EC8;">in Ihrem Kundenbereich</a> einsehen.</p>
+	                <p>{{var comment}}</p>
+	                <p>
+	                    Sollten Sie Fragen haben,
+	                    senden Sie uns eine E-Mail an <a href="mailto:{{config path="trans_email/ident_general/email"}}" style="color:#1E7EC8;">{{config path="trans_email/ident_general/email"}}</a>.
+	                </p>
+	            </td>
+	        </tr>
+	        <tr>
+                                      <td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td valign="top">
+							{{block type="cms/block" block_id="papercut_mail_signature_de"}}
+						</td>
+					</tr>
+					<tr><td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td>
+							{{block type="cms/block" block_id="papercut_widerruf_block_de"}}
+						</td>
+					</tr>
+					<tr><td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td>
+							{{block type="cms/block" block_id="papercut_agb_block_de"}}
+						</td>
+					</tr>
+	        </table>
+        </td>
+	</tr>
+	</table>
+</div>
+
+{{template config_path="design/email/footer"}}
