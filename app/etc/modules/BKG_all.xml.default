@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <modules>
+    <Bkg_Viewer>
+      <active>false</active>
+      <codePool>local</codePool>
+    </Bkg_Viewer>
+  </modules>
+</config>
