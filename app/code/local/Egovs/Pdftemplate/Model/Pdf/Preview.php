@@ -36,9 +36,9 @@ class Egovs_Pdftemplate_Model_Pdf_Preview extends Egovs_Pdftemplate_Model_Pdf_Ab
 		$mandate = $invoices;
 
 
-		$mandate->setConfig($this->getConfig(0));
-		$mandate->setImprint($this->getImprint(0));
-		$mandate->setEPayblConfig($this->getEPayblConfig(0));
+		$mandate->setConfig($this->getConfig($this->_storeId));
+		$mandate->setImprint($this->getImprint($this->_storeId));
+		$mandate->setEPayblConfig($this->getEPayblConfig($this->_storeId));
 		$this->LoadTemplate($mandate);
 
 		$this->_Pdf->addPage();

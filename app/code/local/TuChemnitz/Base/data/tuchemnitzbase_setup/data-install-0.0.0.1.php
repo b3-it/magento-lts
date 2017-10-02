@@ -17,8 +17,9 @@ $_catTable = $installer->getTable('catalog_category_entity_varchar');
 $installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'three_columns';");
 $installer->run("UPDATE `{$_catTable}` SET `value` = 'two_columns_left' WHERE `value` = 'two_columns_right';");
 
-$configTable = $installer->getTable('core/config_data');
-$installer->run("DELETE FROM `{$configTable}` WHERE `path` LIKE 'design/header/%' AND `scope` <> 'default';");
+$_configTable = $installer->getTable('core/config_data');
+$installer->run("DELETE FROM `{$_configTable}` WHERE `path` LIKE 'design/header/%' AND `scope` <> 'default';");
+$installer->run("DELETE FROM `{$_configTable}` WHERE `path` LIKE 'payment/giropay/%' AND `scope` <> 'default';");
 
 // Design und Logo-Grafiken setzen
 $installer->setConfigData('design/header/logo_src'      , 'images/logo_sachsen.png');
@@ -30,6 +31,10 @@ $installer->setConfigData('design/theme/template', '');
 $installer->setConfigData('design/theme/skin'    , '');
 $installer->setConfigData('design/theme/layout'  , '');
 $installer->setConfigData('design/theme/default' , '');
+
+// Giropay abschalten
+$installer->setConfigData('payment/giropay/active'                   , '0');
+$installer->setConfigData('payment/egovs_girosolution_giropay/active', '0');
 
 // Kreditkarte per Girosolution
 $installer->setConfigData('payment/egovs_girosolution_creditcard/active'     , '1');
