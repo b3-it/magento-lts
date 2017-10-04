@@ -45,6 +45,6 @@ if (!$installer->tableExists($settingTableName)) {
         array('Mage_Index_', '1')
     );
     
-    $installer->getConnection()->insertArray($table, array("model", "blocked"), $data);
+    $installer->getConnection()->insertArray($settingTableName, array("model", "blocked"), $data);
 }
 $installer->endSetup();
