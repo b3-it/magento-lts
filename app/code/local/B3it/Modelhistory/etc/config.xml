@@ -18,7 +18,7 @@
 <config>
     <modules>
         <B3it_Modelhistory>
-            <version>0.0.2.0</version>
+            <version>0.0.3.0</version>
         </B3it_Modelhistory>
     </modules>
     <default>
