@@ -97,3 +97,5 @@
 
 "Alphanumeric, dash and underscore characters are recommended for filenames. Improper characters are replaced with \'_\'.","Empfohlen werden alphanumerische, per Bindestrich & Unterstrich (_) getrennte Zeichen als Dateinamen. Ungeeignete Zeichen werden mit \'_\' ersetzt."
 "Available","Verfügbar"
+"Please upload a file.","Bitte eine Datei hochladen."
+"Please specify Url.","Bitte eine Url angeben."
