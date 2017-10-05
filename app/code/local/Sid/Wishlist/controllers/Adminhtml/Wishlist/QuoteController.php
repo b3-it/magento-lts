@@ -9,7 +9,7 @@
  * @copyright  	Copyright (c) 2012 TRW-NET - http://www.trw-net.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Sid_Wishlist_Adminhtml_QuoteController extends Mage_Adminhtml_Controller_action
+class Sid_Wishlist_Adminhtml_Wishlist_QuoteController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
