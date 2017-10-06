@@ -2443,7 +2443,7 @@ class TCPDF {
 
 	/**
 	 * Get the last cell height.
-	 * @return last cell height
+	 * @return float last cell height
 	 * @public
 	 * @since 4.0.017 (2008-08-05)
 	 */

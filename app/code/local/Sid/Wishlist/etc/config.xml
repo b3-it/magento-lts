@@ -50,13 +50,13 @@
     </adminhtml>
     <admin>
         <routers>
-			<sidwishlist>
-				<use>admin</use>
-				<args>
-					<module>Sid_Wishlist</module>
-					<frontName>sidwishlist</frontName>
-				</args>
-			</sidwishlist>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Sid_Cms_Adminhtml after="Mage_Adminhtml">Sid_Wishlist_Adminhtml</Sid_Cms_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
         </routers>
     </admin>  
     <global>

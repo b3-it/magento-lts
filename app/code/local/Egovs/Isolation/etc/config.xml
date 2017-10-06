@@ -7,20 +7,6 @@
     </Egovs_Isolation>
   </modules>
 
-  <admin>
-    <routers>
-      <isolation>
-        <use>admin</use>
-        <args>
-          <module>Egovs_Isolation</module>
-          <frontName>isolation</frontName>
-        </args>
-      </isolation>
-    </routers>
-  </admin>
-
-  
-
   <adminhtml>
     <layout>
       <updates>
