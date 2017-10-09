@@ -322,7 +322,7 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
 					$objBuchungsliste,
 					null,
 					null,
-					'KREDITKARTE',
+					'BARZAHLUNG',
 					$this->getBuchungsListeParameter($payment, (float)$amount)
 			);
 		} catch (Exception $e) {
