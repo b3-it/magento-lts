@@ -324,24 +324,38 @@ abstract class Sid_Wishlist_Controller_Abstract extends Mage_Core_Controller_Fro
 			$bundleOptions = array();
 			$bundleOptionsQty = array();
 			foreach ($optionCollection as $optionId => $option) {
-				/** @var $child Sid_Wishlist_Model_Quote_Item */
+                $_selections = array();
+                $_selectionsQty = array();
+			    /** @var $child Sid_Wishlist_Model_Quote_Item */
 				foreach ($item->getChildren() as $child) {
 					$itemProduct = $child->getProduct();
 					if (!$itemProduct) {
 						continue;
 					}
 					$itemProductId = $itemProduct->getId();
+
 					foreach ($option->getSelections() as $selection) {
 						if ($selection->getProductId() == $itemProductId
 								&& $selection->getOptionId() == $optionId) {
-							$bundleOptions[$optionId] = $selection->getSelectionId();
+							$_selections[] = $selection->getSelectionId();
 							if ($child->getQty() > 1) {
-								$bundleOptionsQty[$optionId] = $child->getQty();
+								$_selectionsQty[$selection->getSelectionId()] = $child->getQty();
 							}
 							break;
 						}
 					}
 				}
+				if (count($_selections) > 1) {
+                    $bundleOptions[$optionId] = $_selections;
+                } elseif (!empty($_selections)) {
+                    $bundleOptions[$optionId] = array_shift($_selections);
+                }
+
+                if (count($_selectionsQty) > 1) {
+                    $bundleOptionsQty[$optionId] = $_selectionsQty;
+                } elseif (!empty($_selectionsQty)) {
+                    $bundleOptionsQty[$optionId] = array_shift($_selectionsQty);
+                }
 			}
 			
 			if (!empty($bundleOptions)) {
