@@ -459,7 +459,7 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 		if (!is_numeric($qty)) {
 			Mage::throwException(Mage::helper('sidwishlist')->__('Quantity must be a numeric value'));
 		}
-		if ($this->getQtyGranted()*1 + $qty > $this->getQty()) {
+		if ($this->getQtyGranted()*1 + $this->getQtyOrdered()*1 + $qty > $this->getQty()) {
 			Mage::throwException(Mage::helper('sidwishlist')->__("Qty granted can't be greater than qty requested"));
 		}
 		$this->setQtyGranted($this->getQtyGranted()*1 + $qty);
