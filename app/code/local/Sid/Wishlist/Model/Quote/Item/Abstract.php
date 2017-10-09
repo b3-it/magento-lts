@@ -510,10 +510,16 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	 */
 	public function getMessage($string = true)
 	{
+	    $_salesMessages = array();
+	    if ($this->_getSalesQuoteItem()) {
+	        $_salesMessages = $this->_getSalesQuoteItem()->getMessage(false);
+        }
+        $_messages = array_merge($_salesMessages, $this->_messages);
+
 		if ($string) {
-			return join("\n", $this->_messages);
+			return join("\n", $_messages);
 		}
-		return $this->_messages;
+		return $_messages;
 	}
 	
 	/**
@@ -553,4 +559,16 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	public function getStore() {
 		return $this->getQuote()->getStore();
 	}
+
+	public function getHasError() {
+	    if ($this->hasData('error')) {
+	        return true;
+        }
+
+        if ($this->_getSalesQuoteItem()) {
+	        return $this->_getSalesQuoteItem()->getHasError();
+        }
+
+        return false;
+    }
 }
