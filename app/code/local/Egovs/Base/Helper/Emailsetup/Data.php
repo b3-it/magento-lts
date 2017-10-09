@@ -86,7 +86,7 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
                     }
 
                     // Die Datei existiert nicht => kopieren
-                    if ( !is_file($logo_to) ) {
+                    if ( !is_file($logo_to) AND is_file($logo_from) ) {
                         copy($logo_from, $logo_to);
                     }
                 }
