@@ -49,7 +49,7 @@ class TKonnekt_SDK_Tools_GetTransaction extends TKonnekt_SDK_AbstractApi impleme
     /**
      * Die Request-URL der TKonnekt-API für diese Anfrage.
      *
-     * @var sting
+     * @var string
      */
     protected $_requestURL = "/api/v1/transaction/status";
 

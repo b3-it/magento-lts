@@ -34,6 +34,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                 <col width="" /> <?php //Zwischensumme ?>
                 <col width="" /> <?php //Status ?>
                 <col width="10" /> <?php //Aktionen ?>
+                <col width="" /> <?php //Option ?>
         <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
                 <col width="" />
                 <col width="" />
@@ -53,6 +54,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Status') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Actions') ?></th>
+					<th>&nbsp;</th>
 				</tr>
 			  <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
 	            <tr>
