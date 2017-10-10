@@ -45,7 +45,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?></th>
 					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Qty Requested') ?>	</th>
-					<?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
+					<?php if ($this->isAuthorizedOrderer() || $this->hasQtyOrdered()): ?>
 						<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Qty Ordered') ?></th>
 					<?php endif; ?>
 					<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
@@ -54,7 +54,9 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Status') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Actions') ?></th>
-					<th>&nbsp;</th>
+                    <?php if (!($this->isAuthorizedOrderer() || $this->hasQtyOrdered())): ?>
+                        <th>&nbsp;</th>
+                    <?php endif; ?>
 				</tr>
 			  <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
 	            <tr>
