@@ -54,9 +54,6 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Status') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Actions') ?></th>
-                    <?php if (!($this->isAuthorizedOrderer() || $this->hasQtyOrdered())): ?>
-                        <th>&nbsp;</th>
-                    <?php endif; ?>
 				</tr>
 			  <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
 	            <tr>
