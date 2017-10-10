@@ -1569,6 +1569,35 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 		return $this->getData('qty_granted');
 	}
 
+    /**
+     * Prüft ob es Elemente mit einer bestellten Menge gibt
+     *
+     * @return bool
+     */
+    public function hasQtyOrdered() {
+        if ($this->hasData('qty_ordered')) {
+            return (bool) $this->getData('qty_ordered');
+        }
+
+        $items = $this->getAllVisibleItems();
+
+        if (empty($items)) {
+            $this->setData('qty_ordered', false);
+            return $this->getData('qty_ordered');
+        }
+
+        foreach ($items as $item) {
+            /* @var $item Sid_Wishlist_Model_Quote_Item */
+            if ($item->getQtyOrdered() > 0) {
+                $this->setData('qty_ordered', true);
+                return $this->getData('qty_ordered');;
+            }
+        }
+
+        $this->setData('qty_ordered', false);
+        return $this->getData('qty_ordered');
+    }
+
 	/**
 	 * Has a virtual products on quote
 	 *

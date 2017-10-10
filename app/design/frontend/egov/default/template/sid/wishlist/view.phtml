@@ -25,7 +25,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                 <col width="25%" /> <?php //Bild & Produktname ?>
                 <col width="" /> <?php //Preis ?>
                 <col width="" /> <?php //Angefragt ?>
-        <?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
+        <?php if ($this->isAuthorizedOrderer() || $this->hasQtyOrdered()): ?>
 			    <col width="" /> <?php //bestellt ?>
 		<?php endif; ?>
 		<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
