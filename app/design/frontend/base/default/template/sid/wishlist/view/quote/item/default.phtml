@@ -24,46 +24,46 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php 
+/**
+ * @var $this Sid_Wishlist_Block_View_Quote_Item_Renderer
+ */
+?>
 <?php $_item = $this->getItem()?>
 <tr>
-    <td><a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->htmlEscape($this->getProductName()) ?>"><img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></a></td>
     <td>
-        <h3 class="product-name"><a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->getProductName() ?></a></h3>
-          <span class="std small">
-	            <?php echo $this->__('Sku').': '.$this->htmlEscape($_item->getSku()) ?><br/>
-	            <?php echo $this->__('Frame Contract').': '.$this->htmlEscape($_item->getFrameContract()) ?>
-	     </span>
-		<?php if ($_options = $this->getOptionList()):?>
+        <a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->escapeHtml($this->getProductName()) ?>">
+            <img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+        </a>
+        <a href="<?php echo $this->getProductUrl() ?>" class="product-name"><?php echo $this->getProductName() ?></a>
+        <div class="std small">
+            <?php echo $this->__('Sku').': '.$this->escapeHtml($_item->getSku()) ?><br/>
+            <?php echo $this->__('Frame Contract').': '.$this->escapeHtml($_item->getFrameContract()) ?>
+        </div>
+      <?php if ($_options = $this->getOptionList()):?>
         <dl class="item-options">
-            <?php foreach ($_options as $_option) : ?>
+          <?php foreach ($_options as $_option) : ?>
             <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-            <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
             <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
-                <?php if (isset($_formatedOptionValue['full_view'])): ?>
+              <?php if (isset($_formatedOptionValue['full_view'])): ?>
                 <div class="truncated_full_value">
                     <dl class="item-options">
-                        <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                        <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
                         <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
                     </dl>
                 </div>
-                <?php endif; ?>
+              <?php endif; ?>
             </dd>
-            <?php endforeach; ?>
+          <?php endforeach; ?>
         </dl>
-        <?php endif;?>
-        <?php if ($messages = $this->getMessages()): ?>
-        <?php foreach ($messages as $message): ?>
-            <p class="item-msg <?php echo $message['type'] ?>">* <?php echo $message['text'] ?></p>
-        <?php endforeach; ?>
-        <?php endif; ?>
+      <?php endif;?>
+      <?php if ($messages = $this->getMessages()): ?>
+       <?php foreach ($messages as $message): ?>
+        <p class="item-msg <?php echo $message['type'] ?>">* <?php echo $message['text'] ?></p>
+       <?php endforeach; ?>
+      <?php endif; ?>      
     </td>
-	<td>
-		<textarea name="description[<?php echo $_item->getId() ?>]" rows="3" cols="5"
-			onfocus="focusComment(this)"
-			onblur="focusComment(this)"
-			title="<?php echo $this->__('Comment') ?>"
-			style="width: 150px; height: 100px;"><?php echo $_item->getDescription(); ?></textarea>
-	</td>
 	<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
     <td class="a-right">
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
@@ -162,7 +162,7 @@
     </td>
     <?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
     <td class="a-center">
-    	<?php if ($this->hasQtyGranted()): ?>
+    	<?php if ($this->hasQtyGranted() || $this->getQtyOrdered() > 0): ?>
     	<div class="qty" title="<?php echo Mage::helper('sidwishlist')->__("Quantity Ordered: "). $this->getProductName()?>">
     		<span><?php echo $this->getQtyOrdered() ?></span>
     	</div>
@@ -285,6 +285,13 @@
 				<?php echo $this->getStatusOptionsHtml() ?>
 			</select>
 		</div>
+		<div class="input-box">
+			<textarea name="description[<?php echo $_item->getId() ?>]" rows="3" cols="5"
+				onfocus="focusComment(this)"
+				onblur="focusComment(this)"
+				title="<?php echo $this->__('Comment') ?>"
+				style="width: 150px; height: 100px;"><?php echo $_item->getDescription(); ?></textarea>
+		</div>
 	</td>
 	<td class="a-center">
         <a class="remove egov-delete"
@@ -301,12 +308,12 @@
 		        ?>
 				<?php if ($_item->canHaveQty() && $isVisibleProduct): ?>
 					<p>
-						<input type="text" class="input-text qty" name="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $_item->getQty() * 1 ?>" />
+						<input type="text" class="input-text qty" name="qty[<?php echo $_item->getId(); ?>]" value="<?php echo $this->getAvailableQty() * 1 ?>" />
 					</p>
 				<?php endif; ?>
 				<?php if ($product->isSaleable()): ?> 
 					<?php if ($isVisibleProduct): ?>
-						<button type="button" title="<?php echo $this->__('Add to Cart') ?>" onclick="addWItemToCart(<?php echo $_item->getId(); ?>)" class="button btn-cart egov-cart" style="font-size: 16px"> </button>
+						<button type="button"  style="min-width: 35px" title="<?php echo $this->__('Add to Cart') ?>" onclick="addWItemToCart(<?php echo $_item->getId(); ?>)" class="button btn-cart egov-cart" style="font-size: 16px"></button>
 					<?php endif ?>
 				<?php else: ?>
 					<p class="availability out-of-stock">
