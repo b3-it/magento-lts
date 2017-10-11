@@ -335,7 +335,9 @@ p.product-name {
 
         .product-name {
             margin-bottom: $blobal-blockcontent-marginbottom;
-            height: 1.2rem;
+            max-height: 2.2rem;
+            height: auto;
+            width: 100%;
 
             a {
                 font-size: $global-fontsize;
