@@ -129,6 +129,10 @@ class Sid_Wishlist_Model_Sales_Observer
 		if ($_sidWishlistItem->getStatus() == Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_ACCEPTED) {
 			$_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_BACKORDER);
 		}
+
+		if ($_sidWishlistItem->getQtyGranted() < 1) {
+            $_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_EDITABLE);
+        }
 		$_sidWishlistItem->save();
 	}
 }
