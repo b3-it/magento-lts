@@ -130,7 +130,7 @@ class Sid_Wishlist_Model_Sales_Observer
 			$_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_BACKORDER);
 		}
 
-		if ($_sidWishlistItem->getQtyGranted() < 1) {
+		if ($_sidWishlistItem->getQtyGranted() < 1 && $_sidWishlistItem->getQtyOrdered() < 1) {
             $_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_EDITABLE);
         }
 		$_sidWishlistItem->save();
