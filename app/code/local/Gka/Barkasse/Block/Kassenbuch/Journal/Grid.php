@@ -74,6 +74,8 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'opening_balance',
+      		'type'  => 'currency',
+      		'currency_code' => 'EUR',
       ));
       
       $this->addColumn('sum_id', array(
@@ -88,6 +90,8 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
       		//'align'     =>'left',
       		//'width'     => '150px',
       		'index'     => 'sum_booking_amount',
+      		'type'  => 'currency',
+      		'currency_code' => 'EUR',
       ));
       
       $this->addColumn('withdrawal', array(
@@ -95,7 +99,9 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
       		//'align'     =>'left',
       		//'width'     => '150px',
       		'index'     => 'withdrawal',
-      		'type'	=> 'price'
+      		//'type'	=> 'price'
+      		'type'  => 'currency',
+      		'currency_code' => 'EUR',
       ));
       
       $this->addColumn('closing_balance', array(
@@ -103,6 +109,8 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'closing_balance',
+      		'type'  => 'currency',
+      		'currency_code' => 'EUR',
       ));
       
       
