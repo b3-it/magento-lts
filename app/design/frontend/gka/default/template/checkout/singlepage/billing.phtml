@@ -1,12 +1,11 @@
+
 <h2><?php echo $this->__('Billing Address') ?></h2>
 <fieldset>
     <ul class="form-list">
 
     <li id="billing-new-address-form">
         <fieldset>
-          
             <ul>
-                <li class="fields"><?php echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')->setObject(new Varien_Object())->setForceUseCustomerRequiredAttributes(false)->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?></li>
                 <li class="fields">
                     <div class="field">
                         <label for="billing:company"><?php echo $this->__('Company') ?></label>

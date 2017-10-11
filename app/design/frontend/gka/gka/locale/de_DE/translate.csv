@@ -8,6 +8,7 @@
 "Add to Cart","in die Kasse"
 "Mage_Catalog::SKU","Gebührenschlüssel"
 "Mage_Catalog::Qty:","Anzahl"
+"Gka_Checkout::Billing Address","weitere Adressangaben"
 "Gka_Checkout::Product Name","Gebühren-Bezeichnung"
 "Gka_Checkout::Price","Gebührensatz"
 "Gka_Checkout::Qty","Anzahl"

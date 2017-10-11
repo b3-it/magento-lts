@@ -1,7 +1,7 @@
 $j(document).ready(function() {
    	$j('.name-middlename').remove();
-	
-	$j('#address').accordion({
+
+   	$j('#address').accordion({
        	'active'     : false,
        	'collapsible': true,
        	'heightStyle': 'content',
