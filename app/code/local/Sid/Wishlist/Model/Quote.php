@@ -243,6 +243,22 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 				$item->setIsDefault(true);
 			}
 		}
+        $quote = Mage::getSingleton('checkout/session')->getQuote();
+		/** @var Sid_Wishlist_Model_Quote_Item $item */
+        foreach ($this->getAllVisibleItems() as $item) {
+		    /** @var Mage_Sales_Model_Quote_Item $salesItem */
+            foreach ($quote->getAllVisibleItems() as $salesItem) {
+                if ($item->getQtyGranted() > 0 && $item->representProduct($salesItem->getProduct())) {
+                    $qty = max($salesItem->getQty()-$item->getQtyGranted(), 0);
+                    if ($qty > 0) {
+                        $salesItem->setQty($qty);
+                    } else {
+                        $salesItem->delete();
+                    }
+                }
+            }
+        }
+        $quote->save();
 		
 		return parent::_beforeDelete();
 	}
@@ -1203,8 +1219,8 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
         }
         return $this;
 	}
-	
-	/**
+
+    /**
 	 * Formatiert den Preis
 	 *
 	 * @param   float $price       Preis
