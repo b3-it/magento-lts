@@ -90,7 +90,8 @@ $replace_string = array(
     // Ticketshop :: Papercut
     'https://www.shop.sachsen.de/tuc_ticketshop/papercut' => "{{store url=''}}",
     'www.shop.sachsen.de/tuc_ticketshop/papercut'         => "{{store url=''}}",
-    '{{store url=''}}_en'                                 => "{{store url=''}}",
+    "{{store url=''}}_en"                                 => "{{store url=''}}",
+    "http://{{store url=''}}/"                            => "{{store url=''}}",
     'PaperCut-Shop TU Chemnitz'                           => "{{block type='imprint/field' value='shop_name'}}",
     'Stra&szlig;e der Nationen 62'                        => "{{block type='imprint/field' value='street'}}",
     '09111 Chemnitz'                                      => "{{block type='imprint/field' value='zip'}} {{block type='imprint/field' value='city'}}",
