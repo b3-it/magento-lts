@@ -107,6 +107,8 @@
 "Ordering Conditions","Bestellbedingungen"
 "Privacy policy","Datenschutz"
 "Payment","Zahlungsarten"
+"Show Register-Option on Login Page","Benutzer-Registrierung erlauben"
+"If ""No"", the logon of the users in the frontend is not displayed.","Wenn ""Nein"", wird die Anmeldung der Benutzer im Frontend nicht angezeigt"
 "Not specified","Unbestimmt"
 "Test","Test-System"
 "Integration","Integrations-System"

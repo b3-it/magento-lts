@@ -358,6 +358,20 @@
         </design>
         <customer>
             <groups>
+            	<create_account>
+                    <fields>
+                        <register_user_on_login translate="label comment">
+                            <label>Show Register-Option on Login Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>If "No", the logon of the users in the frontend is not displayed.</comment>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </register_user_on_login>
+                    </fields>
+                </create_account>
                 <address>
                     <fields>
                         <base_address_info_block translate="label">

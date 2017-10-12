@@ -710,6 +710,9 @@
             </invoice>
         </sales_email>
         <customer>
+        	<create_account>
+        		<register_user_on_login>1</register_user_on_login>
+        	</create_account>
             <guestrequired>
                 <prefix>opt</prefix>
                 <firstname>req</firstname>
