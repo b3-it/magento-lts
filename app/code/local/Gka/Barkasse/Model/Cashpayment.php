@@ -338,7 +338,7 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
     	$objResult = null;
     	try {
     		if (Mage::helper('paymentbase')->getEpayblVersionInUse() == Egovs_Paymentbase_Helper_Data::EPAYBL_3_X_VERSION) {
-    			$objResult = $objSOAPClient->aktiviereTempKassenzeichen(
+    			$objResult = $this->_getSoapClient()->aktiviereTempKassenzeichen(
     					sprintf("%s/%s", Mage::helper('paymentbase')->getBewirtschafterNr(), $payment->getKassenzeichen()),
     					$payment->getKassenzeichen(),
     					'BARZAHLUNG'
