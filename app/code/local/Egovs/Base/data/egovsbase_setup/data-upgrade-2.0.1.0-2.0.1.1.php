@@ -46,7 +46,7 @@ if ( $newGroupFound == FALSE ) {
     $this->setConfigData('customer/create_account/viv_error_group', $id);
 }
 
-$this->setConfigData('customer/create_account/auto_group_assign', '1');
+// $this->setConfigData('customer/create_account/auto_group_assign', '1');
 $this->setConfigData('customer/create_account/vat_frontend_visibility', '1');
 
 // Deutschland bei den EU-Ländern entfernen
