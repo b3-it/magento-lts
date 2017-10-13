@@ -33,6 +33,8 @@ class Egovs_SepaDebitSax_Model_Webservice_Enum_MandatsTyp extends Egovs_SepaDebi
     /**
      * Constant for value 'COR1'
      * @return string 'COR1'
+     *
+     * @deprecated Seit SEPA 3.0 - Es gibt nur noch CORE oder B2B
      */
     const VALUE_COR1 = 'COR1';
     /**
