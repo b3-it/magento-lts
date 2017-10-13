@@ -93,10 +93,18 @@ class Sid_Wishlist_Model_Sales_Observer
 		if ($_sidWishlistItem->isEmpty()) {
 			return;
 		}
-		
-		$_sidWishlistItem->setQtyGranted(0)
-			->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_EDITABLE)
-			->save();
+
+        $_diffQty = $salesQuoteItem->getQty();
+
+        $_sidWishlistItem->setQtyGranted(max($_sidWishlistItem->getQtyGranted() - $_diffQty, 0));
+        if ($_sidWishlistItem->getStatus() == Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_ACCEPTED) {
+            $_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_BACKORDER);
+        }
+
+        if ($_sidWishlistItem->getQtyGranted() < 1 && $_sidWishlistItem->getQtyOrdered() < 1) {
+            $_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_EDITABLE);
+        }
+        $_sidWishlistItem->save();
 	
 		$this->_lastItemId = $salesQuoteItem->getId();
 	}

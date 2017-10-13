@@ -11,6 +11,8 @@
  * @copyright  	Copyright (c) 2012 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
  * @copyright  	Copyright (c) 2012 TRW-NET - http://www.trw-net.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ * @method decimal setQtyGranted Setzt die freigegebene Anzahl
  */
 abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model_Abstract
 	implements Mage_Catalog_Model_Product_Configuration_Item_Interface
