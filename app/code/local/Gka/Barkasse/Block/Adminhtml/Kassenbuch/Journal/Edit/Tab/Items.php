@@ -29,49 +29,49 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
 
   protected function _prepareColumns()
   {
-      $this->addColumn('id', array(
+      $this->addColumn('id_grid', array(
           'header'    => Mage::helper('gka_barkasse')->__('ID'),
           'align'     =>'right',
           'width'     => '50px',
           'index'     => 'id',
       ));
 
-      $this->addColumn('number', array(
+      $this->addColumn('number_grid', array(
           'header'    => Mage::helper('gka_barkasse')->__('Number'),
           //'align'     =>'left',
           'width'     => '100px',
           'index'     => 'number',
       ));
       
-      $this->addColumn('booking_date', array(
+      $this->addColumn('booking_date_grid', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Booking Date'),
       		//'align'     =>'left',
       		//'width'     => '150px',
       		'type'		=>'datetime',
       		'index'     => 'booking_date',
       ));
-      $this->addColumn('booking_amount', array(
+      $this->addColumn('booking_amount_grid', array(
           'header'    => Mage::helper('gka_barkasse')->__('Booking Amount'),
           //'align'     =>'left',
           'width'     => '150px',
           'index'     => 'booking_amount',
       ));
       
-      $this->addColumn('given_amount', array(
+      $this->addColumn('given_amount_grid', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Given Amount'),
       		//'align'     =>'left',
       		'width'     => '150px',
       		'index'     => 'given_amount',
       ));
       
-      $this->addColumn('increment_id', array(
+      $this->addColumn('increment_id_grid', array(
           'header'    => Mage::helper('gka_barkasse')->__('Order#'),
           //'align'     =>'left',
           'width'     => '150px',
           'index'     => 'increment_id',
       ));
       
-      $this->addColumn('kassenzeichen', array(
+      $this->addColumn('kassenzeichen_grid', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Kassenzeichen'),
       		//'align'     =>'left',
       		'width'     => '150px',
@@ -80,7 +80,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
 
 
 
-     $this->addColumn('status', array(
+     $this->addColumn('status_grid', array(
             'header' => Mage::helper('sales')->__('Status'),
             'index' => 'status',
             'type'  => 'options',

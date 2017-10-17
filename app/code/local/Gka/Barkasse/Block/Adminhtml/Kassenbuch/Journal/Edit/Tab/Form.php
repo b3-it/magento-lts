@@ -94,7 +94,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Form extends Mage
 	      		//'required'  => true,
 	      		'name'      => 'status',
 	      		'values'    => Gka_Barkasse_Model_Kassenbuch_Journal_Status::getAllOptions(false),
-	      		'disabled'	=> $model->getStatus() == Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED,
+	      		//'disabled'	=> $model->getStatus() == Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED,
 	      		'value' 	=> $model->getStatus(),
 	      ));
 	       

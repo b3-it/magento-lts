@@ -80,7 +80,13 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 			if($id > 0)
 			{
 				$model = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
-				$model->setData($data)->setId($id);
+				foreach($data as $k=>$v)
+				{
+					if(!empty($v)){
+						$model->setData($k,$v);
+					}
+				}
+				$model->setId($id);
 			}else{
 				$model = Mage::getModel('gka_barkasse/kassenbuch_journal');
 				$model->setData($data);

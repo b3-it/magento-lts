@@ -81,6 +81,18 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	$opening_balance = floatval($this->getRequest()->getParam('opening_balance'));
     	$cashbox_id      = intval($this->getRequest()->getParam('cashbox_id'));
     	
+    	
+    	$collection = Mage::getResourceModel('gka_barkasse/kassenbuch_cashbox_collection');
+    	$collection->getSelect()
+    		->where('customer_id = ' .  $this->_getCustomer()->getId())
+    		->where('id = '.$cashbox_id);
+    	if(count($collection->getItems()) < 1 )
+    	{
+    		Mage::getSingleton('core/session')->addError($this->__('Wrong CashBox selected!'));
+    		$this->_redirect('gka_barkasse/kassenbuch_journal/');
+    		return;
+    	}
+    	
     	if($opening_balance < $this->getLastBalance())
     	{
     		Mage::getSingleton('core/session')->addError($this->__('The starting amount must not be less than the final amount of the previous day!'));

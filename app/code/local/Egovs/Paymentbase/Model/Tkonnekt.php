@@ -29,6 +29,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 */
 	protected $_fieldsArr = null;
 	
+	
 	/**
 	 * Array zum vermeiden doppelter Fehlermeldungen
 	 * 
@@ -243,6 +244,17 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 */
 	protected function _getKassenzeichen() {
 		return null;
+	}
+	
+	/**
+	 * die Buchungslisten Paramter um die Zahlmethode terminalpayment
+	 * {@inheritDoc}
+	 * @see Egovs_Paymentbase_Model_Abstract::getBuchungsListeParameter()
+	 */
+	public function getBuchungsListeParameter($payment, $amount) {
+		$params = parent::getBuchungsListeParameter($payment, $amount);
+		$params['paymentmethod'] = 'terminalpayment';
+		return $params;
 	}
 	
 	/**
