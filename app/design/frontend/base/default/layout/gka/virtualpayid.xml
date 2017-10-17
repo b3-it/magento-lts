@@ -29,6 +29,7 @@
 <layout version="0.1.0">
     <PRODUCT_TYPE_virtualpayid translate="label" module="virtualpayid">
        <label>Catalog Product View (Virtual)</label>
+       <update handle="page_two_columns_left" />
        <reference name="product.info">
        		<block type="virtualpayid/catalog_product_view_type" name="product.info.virtualpayid" as="product_type_data" template="gka/virtualpayid/catalog/product/view/type.phtml">
             </block>

@@ -27,18 +27,17 @@
 <?php  $_order = $this->getOrder() ?>
 <?php $_item = $this->getItem() ?>
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
-    <td><h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
+    <td>
+    	<h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
    	<!-- configvirtual -->
-         <?php if ($payid = $this->getPayId($_item)): ?>
+      <?php if ($payid = $this->getPayId($_item)): ?>
         <dl class="item-options">
-            <dt><?php Mage::helper('gka_virtualpayid')->__('Payment Identification')?>: <?php echo $payid; ?></dt>            
+            <dt><?php Mage::helper('virtualpayid')->__('Payment Identification'); ?></dt>
+            <dd><?php echo $payid; ?></dd>
         </dl>
-    <?php endif; ?>
+      <?php endif; ?>
+    <!-- EOF configvirtual -->
 
-        <!-- EOF configvirtual -->
-    
-    
-    
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options">
         <?php foreach ($_options as $_option) : ?>
