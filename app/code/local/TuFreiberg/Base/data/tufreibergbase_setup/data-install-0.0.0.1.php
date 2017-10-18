@@ -5,6 +5,9 @@ $installer = $this;
 
 $installer->startSetup();
 
+// Default-Package setzen
+$installer->setConfigData('design/package/name', 'freiberg');
+
 // alle Seiten-Layouts zurücksetzen
 $_cmsTable = $installer->getTable('cms/page');
 if ($installer->tableExists($_cmsTable)) {
