@@ -244,8 +244,9 @@ class TKonnekt_SDK_Request
              * und bedürfen keinem hash Parameter (technisch nicht möglich!)
              */
             if ($_response['rc'] >= 5000 && $_response['rc'] < 6000) {
-                $msg = sprintf("%s[%s]", $_response['msg'], $_response['rc']);
-                throw new TKonnekt_SDK_Exception("communication failure: $msg");
+                $msg = $_response['msg'];
+                $rc = (int)$_response['rc'];
+                throw new TKonnekt_SDK_Exception("$msg", $rc);
             } elseif (!isset($header['hash'])) {
                 throw new TKonnekt_SDK_Exception('hash in response is missing');
             } elseif (isset($header['hash']) && !hash_equals($header['hash'], TKonnekt_SDK_Hash_Helper::getHMACSHA256HashString($this->__secret, $body))) {
@@ -261,8 +262,9 @@ class TKonnekt_SDK_Request
             foreach ($header as $k => $v) {
                 $_header[] = "$k=$v";
             }
-            $header = $_header;
-            throw new TKonnekt_SDK_Exception('Failure: ' . $e->getMessage() . "\n" . implode("\r\n", $header) ."\r\n". $body);
+            $header = implode("\r\n", $_header);
+            $tse = new TKonnekt_SDK_Exception('Failure: ' . $e->getMessage() . "\r\n$header\r\n$body");
+            throw new TKonnekt_SDK_Exception($e->getMessage(), $e->getCode(), $tse);
         }
 
         return TRUE;
