@@ -32,6 +32,9 @@ $installer->setConfigData('design/theme/skin'    , '');
 $installer->setConfigData('design/theme/layout'  , '');
 $installer->setConfigData('design/theme/default' , '');
 
+// Default-Package setzen
+$installer->setConfigData('design/package/name', 'chemnitz');
+
 // Giropay abschalten
 $installer->setConfigData('payment/giropay/active'                   , '0');
 $installer->setConfigData('payment/egovs_girosolution_giropay/active', '0');
