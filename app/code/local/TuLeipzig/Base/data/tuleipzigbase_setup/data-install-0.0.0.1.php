@@ -28,6 +28,9 @@ $installer->setConfigData('design/theme/skin', '');
 $installer->setConfigData('design/theme/layout', '');
 $installer->setConfigData('design/theme/default', '');
 
+// Default-Package setzen
+$installer->setConfigData('design/package/name', 'leipzig');
+
 // Kreditkarte per Girosolution
 // https://trac.kawatest.de/ticket/2917
 $installer->setConfigData('payment/egovs_girosolution_creditcard/active'     , '1');
