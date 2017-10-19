@@ -1,6 +1,11 @@
 <?php
 class Egovs_Base_Model_Observer
 {
+    /**
+     * Abkürzungen im HTML-Code mit der Auszeichnung ABBR versehen
+     * 
+     * @param Varien_Event_Observer $observer
+     */
     public function replaceTemplateAbbr( Varien_Event_Observer $observer ) {
 
         if ( !$observer->hasBlock() ) {
@@ -8,9 +13,9 @@ class Egovs_Base_Model_Observer
         }
 
         /* @var $block Mage_Core_Block_Abstract */
-        $transport = $observer->getTransport();
-        $html      = $transport->getHtml();
-        $fileName  = $observer->getBlock()->getTemplateFile();
+        $transport   = $observer->getTransport();
+        $old = $html = $transport->getHtml();
+        $fileName    = $observer->getBlock()->getTemplateFile();
 
         // Da im BE nichts geändert werden soll, ist der Wert dann FALSE
         if ( (strpos($fileName, 'adminhtml') !== false) OR ($fileName == '') ) {
@@ -19,7 +24,9 @@ class Egovs_Base_Model_Observer
 
         $data = array(
                        'inkl.'  => 'inklusive',
+                       'Inkl.'  => 'Inklusive',
                        'zzgl.'  => 'zuz&uuml;glich',
+                       'Zzgl.'  => 'Zuz&uuml;glich',
                        'MwSt.'  => 'Mehrwertsteuer',
                        'etc.'   => 'und so weiter',
                        'etw.'   => 'etwas',
@@ -82,10 +89,12 @@ class Egovs_Base_Model_Observer
             
             // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
             if ( strpos($html, '="<abbr') ) {
-            	$html = str_replace('="' . $replace, $key, $html);
+                $html = str_replace('="' . $replace, '="' . $key, $html);
             }
         }
-
-        $transport->setHtml($html);
+        
+        if ( $old != $html ) {
+            $transport->setHtml($html);
+        }
     }
 }
