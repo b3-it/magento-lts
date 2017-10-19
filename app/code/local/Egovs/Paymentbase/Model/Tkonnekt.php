@@ -521,6 +521,9 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		} catch ( Exception $e ) {
 			Mage::logException($e);
 			$msg = $e->getMessage();
+			if ($e->getPrevious()) {
+			    $msg .= "\r\n\r\n".$e->getPrevious()->getMessage();
+            }
 		}
 
 		if (is_null($msg)) {

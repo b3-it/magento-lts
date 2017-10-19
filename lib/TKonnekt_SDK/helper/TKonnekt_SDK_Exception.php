@@ -16,13 +16,13 @@ class TKonnekt_SDK_Exception extends Exception
      * @param string $message
      * @param int $code
      */
-    public function __construct($message = null, $code = 0)
+    public function __construct($message = null, $code = 0, Throwable $previous = null)
     {
         $Config = TKonnekt_SDK_Config::getInstance();
 
         if ($Config->getConfig('DEBUG_MODE')) {
             TKonnekt_SDK_Debug_Helper::getInstance()->LogException($message);
         }
-        parent::__construct($message, $code);
+        parent::__construct($message, $code, $previous);
     }
 }
