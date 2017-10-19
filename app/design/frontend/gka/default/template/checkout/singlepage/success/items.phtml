@@ -48,7 +48,7 @@
             <?php $_count = $_items->count(); ?>
         <?php foreach ($_items as $_item): ?>
         <?php if ($_item->getParentItem()) continue; ?>
-	    <div class="print-line show-print-only"></div>
+	    <!-- <div class="print-line show-print-only"></div> -->
         <tbody>
             <?php echo $this->getItemHtml($_item) ?>
             <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId()): ?>
