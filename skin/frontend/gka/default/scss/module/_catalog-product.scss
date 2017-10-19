@@ -243,8 +243,9 @@
 
         .add-to-cart {
             position: absolute;
-            top: $global-2L-product-height + ( $gobal-cart-block-height / 2 );
+            top: $global-2L-product-height + ( $gobal-cart-block-height / 2 ) - 2.5px;
             left: $global-product-image-2L-width + 18%;
+            height: 40px;
 
             @include bp(max-width, $bp-medium) {
             	position: relative;
