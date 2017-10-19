@@ -6,12 +6,23 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 /* @var $this Mage_Customer_Block_Widget_Name */
+
+$_fields  = array('prefix', 'firstname', 'middlename', 'lastname', 'suffix');
+$_require = false;
+
+foreach( $_fields AS $field ) {
+    if ( strlen($this->getValidationClass($field)) ) {
+        $_require = true;
+        break;
+    }
+}
 ?>
 <div class="<?php echo $this->getContainerClassName()?>">
 <?php if ($this->showPrefix()): ?>
   <?php if($this->isFieldVisible('prefix')):?>
     <div class="field name-prefix">
         <label for="<?php echo $this->getFieldId('prefix')?>">
+        	<?php if (strlen($this->getValidationClass('prefix'))) : echo '<em class="required">*</em>'; endif; ?>
             <?php echo $this->getStoreLabel('prefix') ?>
         </label>
         <div class="input-box">
@@ -31,6 +42,7 @@
   <?php if($this->isFieldVisible('firstname')):?>
     <div class="field name-firstname">
         <label for="<?php echo $this->getFieldId('firstname')?>">
+        	<?php if (strlen($this->getValidationClass('firstname'))) : echo '<em class="required">*</em>'; endif; ?>
             <?php echo $this->getStoreLabel('firstname') ?>
         </label>
         <div class="input-box">
@@ -43,6 +55,7 @@
   <?php if($this->isFieldVisible('middlename')):?>
     <div class="field name-middlename">
         <label for="<?php echo $this->getFieldId('middlename')?>">
+        	<?php if (strlen($this->getValidationClass('middlename'))) : echo '<em class="required">*</em>'; endif; ?>
             <?php echo $this->getStoreLabel('middlename') ?>
         </label>
         <div class="input-box">
@@ -54,6 +67,7 @@
   <?php if($this->isFieldVisible('lastname')):?>
     <div class="field name-lastname">
         <label for="<?php echo $this->getFieldId('lastname')?>">
+        	<?php if (strlen($this->getValidationClass('lastname'))) : echo '<em class="required">*</em>'; endif; ?>
             <?php echo $this->getStoreLabel('lastname') ?>
         </label>
         <div class="input-box">
@@ -65,6 +79,7 @@
   <?php if($this->isFieldVisible('suffix')):?>
     <div class="field name-suffix">
         <label for="<?php echo $this->getFieldId('suffix')?>">
+        	<?php if (strlen($this->getValidationClass('suffix'))) : echo '<em class="required">*</em>'; endif; ?>
             <?php echo $this->getStoreLabel('suffix') ?>
         </label>
         <div class="input-box">
@@ -82,3 +97,4 @@
   <?php endif; ?>
 <?php endif; ?>
 </div>
+<?php if ($_require) : echo '<br /><span class="required">' . $this->__('* Required Fields') . '</span>'; endif; ?>

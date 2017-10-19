@@ -34,7 +34,17 @@
 <fieldset>
 	<ul>
 		<li>
-    <?php echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')->setObject(new Varien_Object())->setForceUseCustomerRequiredAttributes(false)->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+		  <?php
+		    echo $this->getLayout()
+		              ->createBlock('egovsbase/customer_widget_name')
+		              ->setObject(
+		                  new Varien_Object()
+		              )
+		              ->setForceUseCustomerRequiredAttributes(false)
+		              ->setFieldIdFormat('billing:%s')
+		              ->setFieldNameFormat('billing[%s]')
+		              ->toHtml();
+		  ?>
 		</li>
 	</ul>
 </fieldset>
