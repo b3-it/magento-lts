@@ -95,8 +95,11 @@
 	                 <products translate="title" module="reports">
 	                     <children>
 	                     	<stockflow translate="title" module="extreport">
-	                             <title>Stock flow</title>
-	                             <action>adminhtml/extreport_product/stockflow</action>
+                                <title>Stock flow</title>
+	                            <action>adminhtml/extreport_product/stockflow</action>
+                                <depends>
+                                    <module>Egovs_Extstock</module>
+                                </depends>
 	                         </stockflow>
 	                         <overview translate="title" module="reports">
 	                             <title>Overview</title>
