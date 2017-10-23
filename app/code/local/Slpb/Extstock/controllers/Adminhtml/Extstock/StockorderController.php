@@ -211,4 +211,8 @@ class Slpb_Extstock_Adminhtml_Extstock_StockorderController extends Mage_Adminht
         $response->sendResponse();
         die;
     }
+    
+    protected function _isAllowed() {
+    	return Mage::getSingleton('admin/session')->isAllowed('extstock/ordersheet');
+    }
 }
