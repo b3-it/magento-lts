@@ -70,4 +70,29 @@ class Gka_Checkout_Block_Singlepage_Billing extends Mage_Sales_Block_Items_Abstr
     	
     	return $select->getHtml();
     }
+    
+    /**
+     * Get multishipping checkout model
+     *
+     * @return Mage_Checkout_Model_Type_Multishipping
+     */
+    public function getCheckout()
+    {
+    	return Mage::getSingleton('gkacheckout/type_singlepage');
+    }
+    
+    /**
+     * Retrieve quote
+     *
+     * @return Mage_Sales_Model_Quote
+     */
+    public function getQuote()
+    {
+    	return $this->getCheckout()->getQuote();
+    }
+    
+    public function isVirtual()
+    {
+    	return ($this->getQuote()->isVirtual());
+    }
 }
