@@ -109,14 +109,17 @@
 <!-- -->
 
 <!-- Addresses forms -->
+	<?php $n = 0;?>
     <div class="entry-edit" id="address_form_container">
         <?php if(count($addressCollection)): ?>
             <?php foreach ($addressCollection as $_address): ?>
             <div id="form_address_item_<?php echo $_address->getId() ?>" style="display:none">
             <?php
+            	$n++;
+            	$aid = $_address->getId()? $_address->getId(): '_item_'.$n;
                     $this->getForm()->addValues($_address->getData())
-                            ->setHtmlIdPrefix("_item{$_address->getId()}")
-                            ->setFieldNameSuffix('address['.$_address->getId().']');
+                            ->setHtmlIdPrefix("_item{$aid}")
+                            ->setFieldNameSuffix('address['.$aid.']');
                     $this->addValuesToNamePrefixElement($_address->getPrefix())
                         ->addValuesToNameSuffixElement($_address->getSuffix());
             ?>
@@ -198,7 +201,9 @@ addressesModel.prototype = {
 
             // set Zip optional/required
             var countryElement = $('_item' + item.id.replace(/address_item_/, '').replace(new RegExp(this.baseItemId), '') + 'country_id');
-            varienGlobalEvents.fireEvent("address_country_changed", countryElement);
+            if(countryElement){
+            	varienGlobalEvents.fireEvent("address_country_changed", countryElement);
+            }
         }
     },
 
