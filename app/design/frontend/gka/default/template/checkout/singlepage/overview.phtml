@@ -15,61 +15,62 @@
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
 	<?php echo $this->getBlockHtml('formkey'); ?>
 	
-<div class="col2-set">
-	<div class="col-1">
-		<?php echo $this->getChildHtml('singlepage_payment') ?>
-	</div>
-	<div class="col-2">
-	<?php if(!$this->isVirtual()):?>
-		<?php //echo $this->getChildHtml('singlepage_shipping') ?>
-	<?php endif;?>
-	</div>
-</div>
-<br />
-<div class="page-title">
-	<h2>
-		<?php echo $this->__('Depositors') ?>
-	</h2>
-</div>
-<fieldset>
-	<ul>
-		<li>
-		  <?php
-		    echo $this->getLayout()
-		              ->createBlock('egovsbase/customer_widget_name')
-		              ->setObject(
-		                  new Varien_Object()
-		              )
-		              ->setForceUseCustomerRequiredAttributes(false)
-		              ->setFieldIdFormat('billing:%s')
-		              ->setFieldNameFormat('billing[%s]')
-		              ->toHtml();
-		  ?>
-		</li>
-	</ul>
-</fieldset>
+    <div class="col2-set">
+    	<div class="col-1">
+    		<?php echo $this->getChildHtml('singlepage_payment') ?>
+    	</div>
+    	<div class="col-2">
+    	<?php if(!$this->isVirtual()):?>
+    		<?php //echo $this->getChildHtml('singlepage_shipping') ?>
+    	<?php endif;?>
+    	</div>
+    </div>
+    <br />
+    <div class="page-title">
+    	<h2>
+    		<?php echo $this->__('Depositors') ?>
+    	</h2>
+    </div>
+    <fieldset>
+    	<ul>
+    		<li>
+    		  <?php
+    		    echo $this->getLayout()
+    		              ->createBlock('egovsbase/customer_widget_name')
+    		              ->setObject(
+    		                  new Varien_Object()
+    		              )
+    		              ->setForceUseCustomerRequiredAttributes(false)
+    		              ->setFieldIdFormat('billing:%s')
+    		              ->setFieldNameFormat('billing[%s]')
+    		              ->toHtml();
+    		  ?>
+    		</li>
+    	</ul>
+    </fieldset>
+    
+    <div class="page-title">
+    	<h2>&nbsp;</h2>
+    </div>
+    <div id="address">
+    	<?php echo $this->getChildHtml('singlepage_billing') ?>
+    </div>	
+    	
+    <fieldset>
+    	<ul class="form-list group-select">
+    		<li>
+    			<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/>
+    		</li>
+    	</ul>
+    
+    	<div>
+    		<?php echo $this->getChildHtml('infotexts'); ?>
+    		<?php echo $this->getChildHtml('agreementtexts'); ?>
+    
+    		<?php echo $this->getChildHtml('agreements') ?>
+    	</div>
+    </fieldset>
 
-<div class="page-title">
-	<h2>&nbsp;</h2>
-</div>
-<div id="address">
-	<?php echo $this->getChildHtml('singlepage_billing') ?>
-</div>	
-	
-<fieldset>
-	<ul class="form-list group-select">
-		<li>
-			<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/>
-		</li>
-	</ul>
-
-	<div>
-		<?php echo $this->getChildHtml('infotexts'); ?>
-		<?php echo $this->getChildHtml('agreementtexts'); ?>
-
-		<?php echo $this->getChildHtml('agreements') ?>
-	</div>
-</fieldset>
 	<fieldset class="multiple-checkout">
 		<?php $_address=$this->getBaseAddress() ?>
 		<?php if (Mage::helper('core')->isModuleEnabled('Egovs_GermanTax') && $_address):?>
@@ -87,8 +88,8 @@
 				</div>
 			</div>
 		<?php endif;?>
-		
-	<div id='cashpayment'> </div> 	
+
+		<div id='cashpayment'> </div>
 
 		<div class="col1-wide">
 
@@ -133,7 +134,6 @@
 			<?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
 		</p>
 		<div class="buttons-set" id="review-buttons-container">
-			
 			<a class="button" href="<?php echo $this->getUrl() ?>">
 			    <span><?php echo $this->__('Continue Shopping') ?></span>
 			</a>
