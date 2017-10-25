@@ -23,7 +23,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
   protected function _prepareCollection()
   {
   	$collection = Mage::getModel('gka_barkasse/kassenbuch_journal')->getCollection();
-  	$expr = new Zend_Db_Expr('(SELECT sum(id) as sum_id, sum(booking_amount) as sum_booking_amount, journal_id FROM '.$collection->getTable('gka_barkasse/kassenbuch_journal_items').' GROUP BY journal_id)');
+  	$expr = new Zend_Db_Expr('(SELECT count(id) as sum_id, sum(booking_amount) as sum_booking_amount, journal_id FROM '.$collection->getTable('gka_barkasse/kassenbuch_journal_items').' GROUP BY journal_id)');
   	
   
   	$userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
