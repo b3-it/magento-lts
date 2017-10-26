@@ -72,7 +72,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
       ));
       
       $this->addColumn('kassenzeichen_grid', array(
-      		'header'    => Mage::helper('gka_barkasse')->__('Kassenzeichen'),
+      		'header'    => Mage::helper('gka_barkasse')->__('Checkout Number'),
       		//'align'     =>'left',
       		'width'     => '150px',
       		'index'     => 'kassenzeichen',

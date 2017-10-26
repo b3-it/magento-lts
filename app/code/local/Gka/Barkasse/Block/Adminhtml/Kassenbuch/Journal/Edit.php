@@ -43,7 +43,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit extends Mage_Adminhtm
     {
         if( Mage::registry('kassenbuchjournal_data') && Mage::registry('kassenbuchjournal_data')->getId() ) {
         	$journal = Mage::registry('kassenbuchjournal_data');
-        	return Mage::helper('gka_barkasse')->__("Deails von Kasse '%s' vom %s",$journal->getCashboxTitle(),$journal->getOpening());
+        	return Mage::helper('gka_barkasse')->__("Details of cash register' %s' from %s",$journal->getCashboxTitle(),$journal->getOpening());
         } else {
             return '';
         }

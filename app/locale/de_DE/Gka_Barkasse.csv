@@ -38,5 +38,11 @@
 "Total Taking","Gesamteinnahme"
 "Closing balance must be greather than zero!","Der Endsaldo muss größer 0.00 sein!"
 "Change Amount not plausible!","Der Einzahlbetrag reicht nicht aus!"
+"Details of cash register' %s' from %s","Details von Kasse '%s' vom %s"
+"Booking Date","Buchungsdatum"
+"Booking Amount","Buchungsbetrag"
+"Given Amount","Gegebener Betrag"
+"Order#","Bestellung#"
+"Checkout Number","Kassenzeichen"
 
 "TEXT_PROCESS_ERROR:-0609","Der Buchungstext einer Buchung der Buchungsliste ist zu lang oder zu kurz."
