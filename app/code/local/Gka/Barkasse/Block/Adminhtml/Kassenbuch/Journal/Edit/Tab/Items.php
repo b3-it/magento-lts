@@ -17,6 +17,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
       $this->setDefaultSort('kassenbuch_journal_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
+      $this->setUseAjax(true);
   }
 
   protected function _prepareCollection()
@@ -98,7 +99,12 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
       return parent::_prepareColumns();
   }
 
- 
+  public function getGridUrl($params = array())
+  {
+  		$id     =  intval($this->getRequest()->getParam('id'));
+    	return $this->getUrl('*/*/Grid', array('id'=>$id));
+  
+  }
   
   protected function _getKassenbuchjournal()
   {

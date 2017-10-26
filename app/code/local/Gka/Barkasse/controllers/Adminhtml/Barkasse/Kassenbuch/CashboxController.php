@@ -200,4 +200,10 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
         $response->sendResponse();
         die;
     }
+    
+    protected function _isAllowed()
+    {
+    	$res =  Mage::getSingleton('admin/session')->isAllowed('admin/barkasse_kassenbuch_cashbox');
+    	return $res;
+    }
 }

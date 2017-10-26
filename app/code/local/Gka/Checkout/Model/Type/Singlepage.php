@@ -291,11 +291,12 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     	$this->getCheckout()->setLastOrderId($order->getId());
     	
         if ($order) {
-        	Mage::getSingleton('core/session')->setOrderId($order->getIncrementId());
-        	Mage::dispatchEvent('checkout_submit_all_after', array('order' => $order, 'quote' => $this->getQuote()));
         	if($givenamount){
         		$order->setGivenAmount($givenamount)->save();
         	}
+        	Mage::getSingleton('core/session')->setOrderId($order->getIncrementId());
+        	Mage::dispatchEvent('checkout_submit_all_after', array('order' => $order, 'quote' => $this->getQuote()));
+        	
         }
         
        
