@@ -187,7 +187,7 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
     
     protected function _isAllowed()
     {
-    	$res =  Mage::getSingleton('admin/session')->isAllowed('admin/barkasse_kassenbuch_journal');
+    	$res =  Mage::getSingleton('admin/session')->isAllowed('admin/gkabarkasse/gkabarkasse_kassenbuch_journal');
     	return $res;
     }
 }

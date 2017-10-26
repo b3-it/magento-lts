@@ -203,7 +203,7 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
     
     protected function _isAllowed()
     {
-    	$res =  Mage::getSingleton('admin/session')->isAllowed('admin/barkasse_kassenbuch_cashbox');
+    	$res =  Mage::getSingleton('admin/session')->isAllowed('admin/gkabarkasse/gkabarkasse_kassenbuch_cashbox');
     	return $res;
     }
 }
