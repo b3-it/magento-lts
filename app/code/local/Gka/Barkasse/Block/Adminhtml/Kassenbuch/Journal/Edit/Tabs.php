@@ -22,8 +22,8 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tabs extends Mage_Adm
   protected function _beforeToHtml()
   {
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('gka_barkasse')->__('Journal Details'),
-          'title'     => Mage::helper('gka_barkasse')->__('Journal Details'),
+          'label'     => Mage::helper('gka_barkasse')->__('Details'),
+          'title'     => Mage::helper('gka_barkasse')->__('Details'),
           'content'   => $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_journal_edit_tab_form')->toHtml(),
       ));
       

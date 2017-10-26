@@ -14,7 +14,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Form extends Mage
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('kassenbuchjournal_form', array('legend'=>Mage::helper('gka_barkasse')->__(' Kassenbuch Journal information')));
+      $fieldset = $form->addFieldset('kassenbuchjournal_form', array('legend'=>Mage::helper('gka_barkasse')->__(' Kassenbuch')));
 
       $model = $this->_getKassenbuchjournal();
       $isNew = ($model == null) || ($model->getId() == 0);
@@ -72,20 +72,26 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Form extends Mage
 	      }
 	      
 	      $fieldset->addField('opening_balance', 'text', array(
-	      		'label'     => Mage::helper('gka_barkasse')->__('Opening Balance'),
+	      		'label'     => Mage::helper('gka_barkasse')->__('Opening Balance in €'),
 	      		//'class'     => 'required-entry',
 	      		//'required'  => true,
 	      		'name'      => 'opening_balance',
 	      		'disabled'	=> true,
-	      		'value' 	=> $model->getOpeningBalance(),
+	      		'value' 	=>  number_format($model->getOpeningBalance(),2)
 	      ));
+	      
+	      if($model->getStatus() == Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_OPEN){
+	      	$balance =  number_format( $model->getTotal(), 2);
+	      }else{
+	      	$balance = number_format($model->getClosingBalance(),2);
+	      }
 	      $fieldset->addField('closing_balance', 'text', array(
-	      		'label'     => Mage::helper('gka_barkasse')->__('Closing Balance'),
+	      		'label'     => Mage::helper('gka_barkasse')->__('Closing Balance in €'),
 	      		//'class'     => 'required-entry',
 	      		//'required'  => true,
 	      		'name'      => 'closing_balance',
 	      		'disabled'	=> $model->getStatus() == Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED,
-	      		'value' 	=> $model->getClosingBalance(),
+	      		'value' 	=> $balance,
 	      ));
 	       
 	      $fieldset->addField('status', 'select', array(

@@ -26,6 +26,18 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       
       $collection->getSelect()
       ->joinLeft(array('items'=>$expr), 'items.journal_id=main_table.id',array('sum_id','sum_booking_amount'));
+      
+      $helper = Mage::helper('isolation');
+      if(!$helper->getUserIsAdmin()){
+      	$views = $helper->getUserStoreViews();
+      	$views[] = '-1'; //damit das Array gefüllt ist
+      	$collection->getSelect()
+      	->joinLeft(array('cashbox'=>$collection->getTable('gka_barkasse/kassenbuch_cashbox')), 'main_table.cashbox_id=cashbox.id',array())
+      	->where('cashbox.store_id IN ('.implode(',',$views).')')
+      	;
+      }
+      
+      
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -198,7 +210,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
     	if (!isset($params['_current'])) {
     		$params['_current'] = true;
     	}
-    	return $this->getUrl('*/*/*', $params);
+    	return $this->getUrl('*/*/grid', $params);
 
     }
 

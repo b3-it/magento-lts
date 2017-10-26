@@ -14,8 +14,8 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
   {
       parent::__construct();
       $this->setId('kassenbuch_journalGrid');
-      $this->setDefaultSort('kassenbuch_journal_id');
-      $this->setDefaultDir('ASC');
+      $this->setDefaultSort('number');
+      $this->setDefaultDir('DESC');
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
   }
@@ -139,7 +139,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
           'index'     => 'cashbox_title',
       ));
 
-
+/*
       $this->addColumn('status', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Status'),
       		'align'     => 'left',
@@ -148,6 +148,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
       		'type'      => 'options',
       		'options'   => Gka_Barkasse_Model_Kassenbuch_Journal_Status::getOptionArray()
       ));
+      */
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('gka_barkasse')->__('Action'),
@@ -198,6 +199,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
     	if (!isset($params['_current'])) {
     		$params['_current'] = true;
     	}
+    	$params['_store'] = Mage::app()->getStore();
     	return $this->getUrl('*/*/grid', $params);
 
     }

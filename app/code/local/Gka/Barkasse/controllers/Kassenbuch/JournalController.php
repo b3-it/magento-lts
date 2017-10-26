@@ -68,7 +68,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	if ($model->getId() || $id == 0) {
     		$pdf = Mage::getModel('gka_barkasse/kassenbuch_journal_pdf');
     		//$pdf->preparePdf();
-    		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW;
+    		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_DIRECT_OUTPUT;
     		$pdf->getPdf(array($model))->render();
     	} else {
     		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('gka_barkasse')->__('Item does not exist'));
