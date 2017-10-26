@@ -8,6 +8,18 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method string getTitle()
+ *  @method setTitle(string $value)
+ *  @method int getCustomerId()
+ *  @method setCustomerId(int $value)
+ *  @method int getStoreId()
+ *  @method setStoreId(int $value)
+ *  @method string getCustomer()
+ *  @method setCustomer(string $value)
+ */
 class Gka_Barkasse_Model_Kassenbuch_Cashbox extends Mage_Core_Model_Abstract
 {
     public function _construct()

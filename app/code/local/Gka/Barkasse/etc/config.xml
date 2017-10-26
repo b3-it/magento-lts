@@ -94,6 +94,16 @@
                 </given_amount>
            </sales_convert_order_payment>
          </fieldsets>
+         <template>
+            <email>
+                <payment_epaybl_cashpayment_close_journal_notification_email_template translate="label" module="gka_barkasse">
+                    <label>Journal Closing Notification E-Mail Template</label>
+                    <file>gka/barkasse/journal_closing.html</file>
+                    <type>html</type>
+                </payment_epaybl_cashpayment_close_journal_notification_email_template>
+               
+             </email>
+        </template>
     </global>
     <frontend>
       <routers>
@@ -208,6 +218,7 @@
                 <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
                 <delete_customer_after_transaction>1</delete_customer_after_transaction>
                 <group>epaybl</group>
+                <close_journal_notification_email_template>payment_epaybl_cashpayment_close_journal_notification_email_template</close_journal_notification_email_template>
             </epaybl_cashpayment>
         </payment>
     </default>

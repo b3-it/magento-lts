@@ -24,6 +24,9 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
   {
   	$userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
   	$id     =  intval($this->getRequest()->getParam('id'));
+  	if(!$id){
+  		$id = Mage::registry('journal_id');
+  	}
   	$collection = Mage::getModel('gka_barkasse/kassenbuch_journalitems')->getCollection();
   	$collection->getSelect()
   	->join(array('journal'=> $collection->getTable('gka_barkasse/kassenbuch_journal')),'main_table.journal_id=journal.id',array())

@@ -155,16 +155,19 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	}
     	
     	
+    	Mage::register('journal_id',$id);
+    	$fileName   = 'kassenbuchjournaldetails.csv';
+    	$itemsCSV    = $this->getLayout()->createBlock('gka_barkasse/kassenbuch_journalitems_grid')->getCsv();
+    	
+    	
     	$model->setWithdrawal($withdrawal);
        	$model->setClosingBalance($balance);
        	$model->setStatus(Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED);
     	$model->save();
-    	 
+    	$model->sendEmail($itemsCSV);
     	Mage::getSingleton('core/session')->addSuccess($this->__('Cashbox closed!'));
     	$this->_redirect('gka_barkasse/kassenbuch_journal/index');
-    	return;
-    	 
-    	 
+    	return;	 
     }
 
     

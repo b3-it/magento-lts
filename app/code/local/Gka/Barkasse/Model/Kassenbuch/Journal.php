@@ -8,6 +8,32 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method int getNumber()
+ *  @method setNumber(int $value)
+ *  @method string getOwner()
+ *  @method setOwner(string $value)
+ *  @method  getOpening()
+ *  @method setOpening( $value)
+ *  @method  getClosing()
+ *  @method setClosing( $value)
+ *  @method  getOpeningBalance()
+ *  @method setOpeningBalance( $value)
+ *  @method  getClosingBalance()
+ *  @method setClosingBalance( $value)
+ *  @method int getCustomerId()
+ *  @method setCustomerId(int $value)
+ *  @method int getCashboxId()
+ *  @method setCashboxId(int $value)
+ *  @method string getCashboxTitle()
+ *  @method setCashboxTitle(string $value)
+ *  @method int getStatus()
+ *  @method setStatus(int $value)
+ *  @method  getWithdrawal()
+ *  @method setWithdrawal( $value)
+ */
 class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
 {
 	protected $_cashbox = null;
@@ -117,6 +143,10 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     	return $this->_customer;
     }
     
+    /**
+     * 
+     * @return Gka_Barkasse_Model_Kassenbuch_Cashbox
+     */
     public function getCashbox()
     {
     	if($this->_cashbox == null)
@@ -206,6 +236,67 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
     	if(count($collection->getItems()) == 0) return null;
     
     	return $collection->getFirstItem();
+    }
+    
+    public function sendEMail($itemsCSV)
+    {
+    	//Email senden
+    	$template = 'payment/epaybl_cashpayment/close_journal_notification_email_template';
+    	$storeid = $this->getCashbox()->getStoreId();
+    	$tmp = Mage::getStoreConfig('payment/epaybl_cashpayment/close_journal_notification_email', $storeid);
+    	if(strlen($tmp)>6)
+	    {
+	    	$tmp = explode(';', $tmp);
+	    	
+	    	$recipients = array();
+	    	foreach($tmp as $val)
+	    	{
+	    		$recipients[] = array('name' =>$val,'email'=>$val);
+	    	}
+	    	
+	    
+	    	$data = array();
+	    	$data['cashbox'] = $this->getCashbox()->getTitle();
+	    	$data['opening'] = $this->getOpeningFormated();
+	    	$data['opening_balance'] = Mage::helper('core')->currency($this->getOpeningBalance(), true, false);
+	    	$data['closing'] = $this->getClosingFormated();
+	    	$data['closing_balance'] = Mage::helper('core')->currency($this->getClosingBalance(), true, false);
+	    	$data['number'] = $this->getNumber();
+	    	$data['withdrawal'] = Mage::helper('core')->currency($this->getWithdrawal(), true, false);
+	    	$data['owner'] = $this->getOwner();
+	    	
+	    	
+	    	
+	    	$file = array();
+	    	$file['content'] = $itemsCSV;
+	    	$file['filename'] = "KassenabschlussProtokoll ". $this->getCashbox()->getTitle();
+	    
+	    	$files = array();
+	    	$files[] = $file;
+	    	$res = Mage::helper('gka_barkasse')->sendEmail($template, $recipients, $data, $storeid, $files);
+	    
+	    	
+    	}
+    	return $this;
+    }
+    
+    protected function _formatDate($date)
+    {
+    	$dateTimestamp = Mage::getModel('core/date')->timestamp(strtotime($date));
+    	$date = Mage::app()->getLocale()->date($date, null, null,  true);
+    	//return $date;
+    	return $date->toString(Zend_Date::DATETIME_MEDIUM);
+    
+    }
+    
+    public function getClosingFormated()
+    {
+    	return $this->_formatDate($this->getClosing());
+    }
+    
+    public function getOpeningFormated()
+    {
+    	return $this->_formatDate($this->getOpening());
     }
     
 }

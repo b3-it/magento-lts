@@ -8,6 +8,24 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method int getNumber()
+ *  @method setNumber(int $value)
+ *  @method  getBookingDate()
+ *  @method setBookingDate( $value)
+ *  @method int getJournalId()
+ *  @method setJournalId(int $value)
+ *  @method int getOrderId()
+ *  @method setOrderId(int $value)
+ *  @method int getSource()
+ *  @method setSource(int $value)
+ *  @method  getBookingAmount()
+ *  @method setBookingAmount( $value)
+ *  @method  getGivenAmount()
+ *  @method setGivenAmount( $value)
+ */
 class Gka_Barkasse_Model_Kassenbuch_Journalitems extends Mage_Core_Model_Abstract
 {
     public function _construct()
