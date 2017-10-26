@@ -10,6 +10,12 @@
   */
 class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
+	
+	protected function _getUrlModelClass()
+	{
+		return 'core/url';
+	}
+	
   public function __construct()
   {
       parent::__construct();
