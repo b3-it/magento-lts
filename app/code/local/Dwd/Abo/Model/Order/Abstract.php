@@ -31,6 +31,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         /* @var $item Mage_Sales_Model_Quote_Item */
         $item->addOption(array('code'=>'periode_id','value'=>$aboitem->getPeriodId()));
         $item->addOption(array('code'=>'station_id','value'=>$aboitem->getStationId()));
+        $item->addOption(array('code'=>'previous_periode_end','value'=>$aboitem->getStopDate()));
        
         $p = Mage::getModel('periode/periode')->load($aboitem->getPeriodId());
         $item->setPeriode($p);
@@ -150,6 +151,31 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	        
 	        if($order)
 	        {
+	        	/** @var $orderItem Mage_Sales_Model_Order_Item **/
+	        	foreach($order->getItemsCollection() as $orderItem)
+	        	{
+	        		$periode_id = $orderItem->getPeriodId();
+	        		if($periode_id)
+	        		{
+	        			$periode = Mage::getModel('periode/periode')->load($periode_id);
+	        			/** @var $quoteItem Mage_Sales_Model_Quote_Item **/
+	        			
+	        			$quoteItem = $this->_findQuoteItem($quote, $orderItem->getQuoteItemId());	
+	        			if($quoteItem){
+		        			$enddate = $quoteItem->getOptionByCode('previous_periode_end');
+		        			if($enddate){
+			        			$enddate = $enddate->getValue();
+			        			//$enddate= $item->getAboItem()->getStopDate();
+				           		$orderItem->setPeriodStart($enddate);
+				        		$orderItem->setPeriodEnd($periode->getEndDate(strtotime($enddate)));
+				        		$orderItem->save();
+		        			}
+	        			}
+		        		
+	        		}
+	        	}
+	        	
+	        	
 		        if($first_increment_id){
 		        	$order->setOriginalIncrementId($first_increment_id);
 		        }
@@ -176,6 +202,22 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         return $order;
     }
     
+    /**
+     * Ein Item innerhalb einer Quote anhand seiner Id finden
+     * @param Mage_Sales_Model_Quote $quote
+     * @param int $id
+     * @return Mage_Sales_Model_Quote_Item|NULL
+     */
+    protected function _findQuoteItem($quote,$id)
+    {
+    	/** @var $quote Mage_Sales_Model_Quote **/
+    	foreach($quote->getAllItems() as $item){
+    		if($item->getId() == $id){
+    			return $item;
+    		}
+    	}
+    	return null;
+    }
     
     
     /**

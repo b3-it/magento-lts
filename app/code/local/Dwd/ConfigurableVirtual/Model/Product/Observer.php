@@ -296,18 +296,21 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
     	}
     	$options = $orderItem->getBuyRequest();
 
-    	if($options->getPeriode())
+    	if(!$orderItem->getPeriodId())
     	{
-    		$periode = Mage::getModel('periode/periode')->load($options->getPeriode());
-    		if($periode->getId())
-    		{
-    			$orderItem->setPeriodType($periode->getType());
-    			$orderItem->setPeriodStart($periode->getStartDate());
-    			$orderItem->setPeriodEnd($periode->getEndDate());
-    			$orderItem->setPeriodId($periode->getId());
-
-
-    		}
+	    	if($options->getPeriode())
+	    	{
+	    		$periode = Mage::getModel('periode/periode')->load($options->getPeriode());
+	    		if($periode->getId())
+	    		{
+	    			$orderItem->setPeriodType($periode->getType());
+	    			$orderItem->setPeriodStart($periode->getStartDate());
+	    			$orderItem->setPeriodEnd($periode->getEndDate());
+	    			$orderItem->setPeriodId($periode->getId());
+	
+	
+	    		}
+	    	}
     	}
     	if($options->getStation())
     	{
