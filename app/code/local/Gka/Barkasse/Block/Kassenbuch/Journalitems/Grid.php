@@ -46,6 +46,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
           'align'     =>'right',
           'width'     => '50px',
           'index'     => 'id',
+          'filter_index' => 'main_table.id'
       ));
 
       $this->addColumn('number', array(
