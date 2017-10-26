@@ -34,7 +34,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
   	->where('status = '.Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED);
   		
   	//die($collection->getSelect()->__toString());
-  	;
+  	
     $this->setCollection($collection);
     return parent::_prepareCollection();
   }

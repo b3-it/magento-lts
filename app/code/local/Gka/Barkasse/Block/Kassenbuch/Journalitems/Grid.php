@@ -33,7 +33,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
   	->where('journal_id = ' . $id);
   	//->where('main_table.status = '.Gka_Barkasse_Model_Kassenbuch_Journal_Status::STATUS_CLOSED);
   		
-  	
+  	//die($collection->getSelect()->__toString());
   	;
     $this->setCollection($collection);
     return parent::_prepareCollection();
@@ -54,6 +54,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'number',
+      	  'filter_index' => 'main_table.number'
       ));
 
       $this->addColumn('booking_date', array(
@@ -68,6 +69,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'booking_amount',
+      	  'filter_index' => 'main_table.booking_amount'
       	//	'type'	=> 'datetime'
       ));
  
@@ -90,6 +92,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
             'type'  => 'options',
             'width' => '70px',
             'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+       		'filter_index' => 'order.status'
         ));
  
 		$this->addExportType('*/*/exportCsv', Mage::helper('gka_barkasse')->__('CSV'));

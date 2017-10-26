@@ -154,7 +154,7 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
     public function exportCsvAction()
     {
         $fileName   = 'kassenbuchjournal.csv';
-        $content    = $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuchjournal_grid')
+        $content    = $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_journal_grid')
             ->getCsv();
 
         $this->_sendUploadResponse($fileName, $content);
@@ -163,7 +163,7 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
     public function exportXmlAction()
     {
         $fileName   = 'kassenbuchjournal.xml';
-        $content    = $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuchjournal_grid')
+        $content    = $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_journal_grid')
             ->getXml();
 
         $this->_sendUploadResponse($fileName, $content);
