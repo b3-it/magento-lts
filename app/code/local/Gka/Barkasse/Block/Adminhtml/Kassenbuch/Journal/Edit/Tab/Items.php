@@ -27,7 +27,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
       $this->setCollection($collection);
       
       
-      die($collection->getSelect()->__toString());
+      //die($collection->getSelect()->__toString());
       return parent::_prepareCollection();
   }
 
