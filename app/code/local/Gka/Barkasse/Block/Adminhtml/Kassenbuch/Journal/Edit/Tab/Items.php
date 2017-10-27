@@ -25,6 +25,9 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
   	  $model = $this->_getKassenbuchjournal();
       $collection = $model->getItemsCollection();
       $this->setCollection($collection);
+      
+      
+      die($collection->getSelect()->__toString());
       return parent::_prepareCollection();
   }
 
@@ -63,6 +66,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
       		//'align'     =>'left',
       		'width'     => '150px',
       		'index'     => 'given_amount',
+      		'filter_index' => 'main_table.given_amount'
       ));
       
       $this->addColumn('increment_id_grid', array(

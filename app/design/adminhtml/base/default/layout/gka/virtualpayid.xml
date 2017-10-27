@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout>
-
+  <adminhtml_virtualpayid_epaybl_client_index>
+        <reference name="content">
+            <block type="virtualpayid/adminhtml_epaybl_client" name="epaybl_client" />
+        </reference>
+    </adminhtml_virtualpayid_epaybl_client_index>
+    
     <adminhtml_sales_order_view>
         <reference name="order_items">
             <action method="addItemRender"><type>virtualpayid</type><block>adminhtml/sales_order_view_items_renderer_default</block><template>gka/virtualpayid/sales/order/view/items/renderer/configvirtual.phtml</template></action>

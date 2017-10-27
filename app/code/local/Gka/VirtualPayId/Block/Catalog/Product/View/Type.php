@@ -85,4 +85,19 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Type extends Mage_Catalog_Bloc
 		
 			return Mage::helper('core')->jsonEncode($config);
 		}
+		
+		public function getClientSelectBox()
+		{
+			$collection = Mage::getModel('virtualpayid/epaybl_client')->getCollection();
+			$txt = array();
+			$txt[] = '<select id="pay_client" name="pay_client" >';
+			$txt[] = '<option value="">-- Bitte wählen --</option>';
+			foreach ($collection as $client)
+			{
+				$txt[] = '<option value="'.$client->getClient().'">'. $client->getTitle() .'</option>';
+			}
+			$txt[] = '</select>';
+			 
+			return implode(' ',$txt);
+		}
 }

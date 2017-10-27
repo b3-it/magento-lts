@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Gka_VirtualPayId>
-            <version>0.0.1.0</version>
+            <version>0.0.2.0</version>
         </Gka_VirtualPayId>
     </modules>
     <adminhtml>
@@ -32,6 +32,39 @@
                 </virtualpayid>
             </updates>
         </layout>
+      <menu>
+          <system >
+            <children>
+                  <gkavirtualPayId_epaybl_client module="virtualpayid">
+                      <title>ePayBL Client</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/virtualpayid_epaybl_client/index</action>
+                  </gkavirtualPayId_epaybl_client>
+
+              </children>
+          </system>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <system module="virtualpayid">
+                          <title>Gka Virtualpayid</title>
+                          <sort_order>10</sort_order>
+                          <children>
+                                <gkavirtualPayId_epaybl_client module="virtualpayid">
+                                  <title>ePayBL Client</title>
+                                  <sort_order>10</sort_order>
+                              </gkavirtualPayId_epaybl_client>
+                          </children>
+                      </system>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
     </adminhtml>
     
     <global>
@@ -110,6 +143,9 @@
                     <payid>
                         <table>gka_virtual_payid</table>
                     </payid>
+                    <epaybl_client>
+                        <table>gka_virtual_payid_epaybl_client</table>
+                    </epaybl_client>
                     
                 </entities>
             </virtualpayid_resource>

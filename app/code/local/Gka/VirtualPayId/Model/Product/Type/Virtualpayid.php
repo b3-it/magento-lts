@@ -28,6 +28,7 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
     	$result = parent::_prepareProduct($buyRequest, $product, $processMode);
     			
     	$pay_id = $buyRequest->getPayId();
+    	$pay_client = $buyRequest->getPayClient();
     	$specialPrice = (float)($buyRequest->getAmount());
     	
     	
@@ -35,6 +36,7 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
     	if($pay_id)
     	{
     		$this->getProduct($product)->addCustomOption('pay_id', $pay_id);
+    		$this->getProduct($product)->addCustomOption('pay_client', $pay_client);
     		if ($specialPrice > 0) {
     			$this->getProduct($product)->setCustomPrice($specialPrice);
     			$this->getProduct($product)->setOriginalCustomPrice($specialPrice);
