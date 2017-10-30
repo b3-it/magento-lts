@@ -106,7 +106,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
   public function getGridUrl($params = array())
   {
   		$id     =  intval($this->getRequest()->getParam('id'));
-    	return $this->getUrl('*/*/Grid', array('id'=>$id));
+    	return $this->getUrl('*/*/Items', array('id'=>$id));
   
   }
   

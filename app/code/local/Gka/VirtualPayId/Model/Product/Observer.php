@@ -67,6 +67,70 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		return $this;
 	}
 	
+	public function onCheckoutCartUpdateItemsAfter($observer)
+	{
+		$cart = $observer['cart'];
+		$quote = $cart->getQuote();
+		$items = $quote->getAllVisibleItems();
+		$this->testCart($items,$adr);
+	}
+	
+	public function onQuoteMerge($observer)
+	{
+		//$quote =  Mage::getSingleton('checkout/session')->getQuote();
+		try
+		{
+			$quote = $observer->getData('quote');
+			$this->testCart($quote->getAllVisibleItems(),$adr);
+				
+		}
+		catch(Exception $ex){
+			//$quote->addMessage($ex->getMessage());
+			//Mage::getSingleton('core/message')->error('TEST');
+			Mage::getSingleton('customer/session')->addError($ex->getMessage());
+		}
+	}
+	
+	public function testCart($items)
+	{
+		$product = $orderitem->getProduct();
+	
+		if (!$product) {
+			$product = Mage::getModel('catalog/product')
+			->setStoreId($order->getStoreId())
+			->load($orderitem->getProductId());
+		} 
+		
+		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
+			return $this;
+		}
+	
+		$_virtualpayidCount = 0;
+	
+		foreach ($items as $item) 
+		{
+			if ($item->getParentItem()) {
+				continue;
+			}
+			$product = $item->getProduct();
+			if ($product && $product->getTypeId() == Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
+				$_virtualpayidCount++;
+				if($item->getQty() > 1)
+				{
+					Mage::throwException(Mage::helper('virtualpayid')->__('Maximum Quantity is excceded.'));
+					break;
+				}
+			}
+		}
+		
+		if(($_virtualpayidCount > 0) && (count($items) > 1)){
+			Mage::throwException(Mage::helper('virtualpayid')->__('Produkte für externe Kassenzeichen dürfen nur einzeln abgerechnent werden.'));
+			break;
+		}
+	}
+	
+	
+	
 	
 	/**
 	 * Wenn Produkt in Quote gesetzt wird
@@ -76,20 +140,23 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 	 * @return Gka_VirtualPayId_Model_Product_Observer
 	 */
 	public function onSalesQuoteItemSetProduct($observer) {
-		$orderItem = $observer->getQuoteItem();
+		$quoteItem = $observer->getQuoteItem();
 		$product = $observer->getProduct();
+		/** @var $quote Mage_Sales_Model_Quote */
+		$quote = $quoteItem->getQuote();
 		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
 			return $this;
 		}
-	
-		$br = $orderItem->getBuyRequest();
+		$quote->setExternesKassenzeichen(1);
+		
+		$br = $quoteItem->getBuyRequest();
 		$specialPrice = (float)($br->getAmount());
 
 		
 		if ($specialPrice > 0) {
-				$orderItem->setCustomPrice($specialPrice);
-				$orderItem->setOriginalCustomPrice($specialPrice);
-				$orderItem->getProduct()->setIsSuperMode(true);
+				$quoteItem->setCustomPrice($specialPrice);
+				$quoteItem->setOriginalCustomPrice($specialPrice);
+				$quoteItem->getProduct()->setIsSuperMode(true);
 		}else{
 			//throw new Exception('Preis darf nicht null sein!');
 		}
