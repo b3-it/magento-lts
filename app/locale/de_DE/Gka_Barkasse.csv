@@ -44,5 +44,9 @@
 "Given Amount","Gegebener Betrag"
 "Order#","Bestellung#"
 "Checkout Number","Kassenzeichen"
+"Opening Balance in €","Eröffnungsbetrag in €"
+"Closing Balance in €","Schlussbetrag in €"
+"Journal Closing Notification E-Mail Template","eMail-Vorlage für Kassenabschlussprotokoll"
+"Journal Closing Notification E-Mail Address", "eMail-Adresse für Kassenabschlussprotokoll"
 
 "TEXT_PROCESS_ERROR:-0609","Der Buchungstext einer Buchung der Buchungsliste ist zu lang oder zu kurz."
