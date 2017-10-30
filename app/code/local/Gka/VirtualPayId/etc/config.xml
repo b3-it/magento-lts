@@ -189,7 +189,8 @@
                         <method>onCheckoutCartUpdateItemsAfter</method>
                     </productlimit1>
                 </observers>
-                <sales_quote_merge_after>
+            </checkout_cart_update_items_after>
+            <sales_quote_merge_after>
                 <observers> 
                     <productlimit>
                         <type>singleton</type>
@@ -198,7 +199,15 @@
                     </productlimit>
                 </observers>
             </sales_quote_merge_after>
-            </checkout_cart_update_items_after>
+            <sales_quote_add_item>
+                <observers>
+                    <productlimit2>
+                        <type>singleton</type>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
+                        <method>onSalesQuoteAddItem</method>
+                    </productlimit2>
+                </observers>
+            </sales_quote_add_item>
         </events>
     </global>
     <frontend>

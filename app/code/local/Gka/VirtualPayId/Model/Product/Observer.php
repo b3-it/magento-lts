@@ -72,39 +72,36 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		$cart = $observer['cart'];
 		$quote = $cart->getQuote();
 		$items = $quote->getAllVisibleItems();
-		$this->testCart($items,$adr);
+		$this->testCart($items);
 	}
 	
 	public function onQuoteMerge($observer)
 	{
-		//$quote =  Mage::getSingleton('checkout/session')->getQuote();
 		try
 		{
 			$quote = $observer->getData('quote');
-			$this->testCart($quote->getAllVisibleItems(),$adr);
+			$this->testCart($quote->getAllVisibleItems());
 				
 		}
 		catch(Exception $ex){
-			//$quote->addMessage($ex->getMessage());
-			//Mage::getSingleton('core/message')->error('TEST');
+			
 			Mage::getSingleton('customer/session')->addError($ex->getMessage());
 		}
 	}
 	
-	public function testCart($items)
-	{
-		$product = $orderitem->getProduct();
-	
-		if (!$product) {
-			$product = Mage::getModel('catalog/product')
-			->setStoreId($order->getStoreId())
-			->load($orderitem->getProductId());
-		} 
-		
-		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
-			return $this;
+	public function onSalesQuoteAddItem($observer) {
+		/* @var $item Mage_Sales_Model_Quote_Item */
+		$item = $observer->getQuoteItem();
+		if (!$item) {
+			return;
 		}
 	
+		$quote = $item->getQuote();
+		$this->testCart($quote->getAllVisibleItems());
+	}
+	
+	public function testCart($items)
+	{	
 		$_virtualpayidCount = 0;
 	
 		foreach ($items as $item) 
@@ -147,6 +144,18 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
 			return $this;
 		}
+		
+		try{
+			$items = $quote->getAllVisibleItems();
+			//$items[] = new Varien_Object(array('product'=>$product,'qty'=>1));
+			$this->testCart($items);
+			
+		}
+		catch(Exception $ex){
+			$quote->removeItem($quoteItem->getId());
+			Mage::getSingleton('customer/session')->addError($ex->getMessage());
+		}
+		
 		$quote->setExternesKassenzeichen(1);
 		
 		$br = $quoteItem->getBuyRequest();
