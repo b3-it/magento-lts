@@ -76,7 +76,9 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 			}
 				
 			$service->fetchLayers($data['url'],$data['type'],$data['version']);
-			$this->_edit($service->getId());
+			//$this->_edit($service->getId());
+			Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkgviewer')->__('Item was successfully created'));
+			$this->_redirect('*/*/edit',array('id'=>$service->getId()));
 				
 		} catch (Exception $e) {
 			Mage::getSingleton('adminhtml/session')->setFormData($data);
