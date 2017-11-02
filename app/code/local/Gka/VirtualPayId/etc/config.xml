@@ -168,7 +168,7 @@
                 <observers>
                     <virtual_pay_id>
                         <type>singleton</type>
-                        <class>virtualpayid/product_observer</class>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
                         <method>onSalesOrderSaveAfter</method>
                     </virtual_pay_id>
                 </observers>  
@@ -176,7 +176,7 @@
            <sales_quote_item_set_product>
                 <observers>
                     <virtualpayid_product_observer_item_save_commit_after>
-                        <class>virtualpayid/product_observer</class>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
                         <method>onSalesQuoteItemSetProduct</method>
                     </virtualpayid_product_observer_item_save_commit_after>
                 </observers>
