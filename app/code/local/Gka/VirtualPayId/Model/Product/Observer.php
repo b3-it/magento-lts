@@ -122,7 +122,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		
 		if(($_virtualpayidCount > 0) && (count($items) > 1)){
 			Mage::throwException(Mage::helper('virtualpayid')->__('Produkte für externe Kassenzeichen dürfen nur einzeln abgerechnent werden.'));
-			break;
+			
 		}
 	}
 	
