@@ -13,6 +13,9 @@
 .idea/
 .tern-project
 
+# Debug-Files
+lib/Egovs/.localhost
+
 # Magento-Config
 app/etc/local.xml
 
