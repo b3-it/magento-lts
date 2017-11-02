@@ -129,21 +129,20 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
     
     public function getOpenLayer()
     {
-    	$text = "";
+    	$text = "layers = [];".PHP_EOL;
     	 
     	$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection();
     	$collection->getSelect()
     	->where('composit_id='.intval($this->getId()))
     	->order('visual_pos');
+    	
+    	
     	foreach($collection->getItems() as $layer)
     	{
-    		if($layer->getService()->getType() == 'wfs')
-    		{
-    			$text .= " ". $layer->getOpenLayerWfs();
-    		}else
-    		{
-    			$text .= " ". $layer->getOpenLayerWfs();
-    		}
+    	    /**
+    	     * @var Bkg_Viewer_Model_Composit_Layer $layer 
+    	     */
+			$text .= " ". $layer->getOpenLayer();
     	}
     	 
     	return $text;

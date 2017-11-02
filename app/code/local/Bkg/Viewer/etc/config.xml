@@ -56,8 +56,11 @@
 		</models>
 		<wms>
 		  <versions>
-		      <v130>1.3.0</v130>
-		      <v200>2.0.0</v200>
+		      <!-- TOOD find better way when versions does colide! -->
+		      <v100 type="WMTS">1.0.0</v100><!-- WMTS -->
+		      <v110 type="WFS">1.1.0</v110><!-- WFS -->
+		      <v130 type="WMS">1.3.0</v130><!-- WMS -->
+		      <v200 type="WFS">2.0.0</v200><!-- WFS -->
 		  </versions>
 		</wms>
 	</global>

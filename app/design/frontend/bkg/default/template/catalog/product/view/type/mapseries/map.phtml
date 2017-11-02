@@ -1,29 +1,87 @@
+<?php
+/**
+ *  @var Bkg_MapSeries_Block_Product_View_Type_Mapseries_Map $this
+ */
+?>
 <div id="map">
 
 </div>
-
+   <?php 
+   //var_dump($this->getComposit());
+   //$this->getComposit()->getOpenLayer();
+   //die();
+   ?>
    <script>
+   jQuery(function() {
      <?php echo $this->getComposit()->getOpenLayer(); ?>
 
-      var raster = new ol.layer.Tile({
-        source: new ol.source.BingMaps({
-          imagerySet: 'Aerial',
-          key: 'Your Bing Maps Key from http://www.bingmapsportal.com/ here'
-        })
-      });
-
       var map = new ol.Map({
-        layers: [raster, vector],
+        layers: layers,
+        controls: ol.control.defaults(),
         target: document.getElementById('map'),
         view: new ol.View({
-          center: [-8908887.277395891, 5381918.072437216],
-          maxZoom: 19,
-          zoom: 12
+          center: ol.proj.fromLonLat([13.73836, 51.049259]),
+          //projection: ol.proj.get("EPSG:31467"),
+          //maxZoom: 19,
+          zoom: 6
         })
       });
 
-
-
-
+      var select = new ol.interaction.Select();
+      select.on('select', function(e) {
+        var f = e.target.getFeatures().item(0);
+        var sku = f.get('sku');
+        var j = jQuery("#qty-" + sku);
+        if (j.length == 0) {
+          alert("no item with " + sku);
+        } else {
+          jQuery("#confirmSelectPrice").text(jQuery("#price-" + sku + " .price").text());
+          jQuery("#confirmSelectName").text(jQuery("#name-" + sku).text()); // f.get('name')
+          jQuery("#confirmSelectDialog").dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+              Confirm: function() {
+                j.val(function(i, oldval) {
+                  return parseInt( oldval, 10) + 1;
+                });
+                f.changed();
+                jQuery( this ).dialog( "close" );
+              },
+              Cancel: function() {
+                jQuery( this ).dialog( "close" );
+              }
+            }
+          });
+        }
+        e.target.getFeatures().clear();
+      });
+      map.addInteraction(select);
       
+      map.addControl(new ol.control.OverviewMap()); // TODO lol? 
+      map.addControl(new ol.control.ZoomSlider());
+      map.addControl(new ol.control.ScaleLine());
+      map.addControl(new ol.control.MousePosition({
+    	  coordinateFormat: function(coord) { return ol.coordinate.toStringHDMS(ol.proj.toLonLat(coord),1); }
+      }));
+
+      jQuery('#super-product-table').delegate('input.qty', 'change', function( e ) {
+          sku = e.target.id.slice(4);
+    	  vector.getSource().forEachFeature(function(f) {
+        	  if (f.get("sku") == sku) {
+            	  f.changed();
+            	  return true;
+        	  }
+        	  return false;
+    	  });
+      });
+    });
     </script>
+    
+    <div id="confirmSelectDialog" title="Füge hinzu?">
+    <p>
+        Füge Kachel '<span id="confirmSelectName"></span>' für <span id="confirmSelectPrice"></span> hinzu?
+    </p>
+    </div>

@@ -29,7 +29,7 @@ class Bkg_Viewer_Model_Service_Type_Wfs200 extends Bkg_Viewer_Model_Service_Type
 			$ns = $doc->getNamespaces(true);
 			
 			$this->_serviceData['url'] = $url;
-			$this->_serviceData['type'] = $this->_type;
+			$this->_serviceData['format'] = $this->_type;
 			$this->_serviceData['url_map'] = $url;
 			
 			$this->setUrl($url);

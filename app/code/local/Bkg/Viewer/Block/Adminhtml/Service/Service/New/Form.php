@@ -27,7 +27,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_New_Form extends Mage_Adminhtml
 		$form->setUseContainer(true);
 		$this->setForm($form);
 
-		$fieldset = $form->addFieldset('navi_form', array('legend'=>Mage::helper('bkgviewer')->__('WMS Information')));
+		$fieldset = $form->addFieldset('navi_form', array('legend'=>Mage::helper('bkgviewer')->__('Information')));
 		$fieldset->addField('url', 'text', array(
 				'label'     => Mage::helper('bkgviewer')->__('Url'),
 				'class'     => 'required-entry',
@@ -44,6 +44,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_New_Form extends Mage_Adminhtml
 				'name'      => 'type',
 				'values' => array(
 						array('label'=>'Web Map Service','value'=>'WMS'),
+				        array('label' => 'Web Map Tile Service', 'value'=>'WMTS'),
 						array('label'=>'Web Feature Service','value'=>'WFS')
 				)
 				//'value'	=> 'http://localhost.local/bestand_niedersachsen_wms.xml',
