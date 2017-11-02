@@ -63,9 +63,9 @@
       map.addControl(new ol.control.OverviewMap()); // TODO lol? 
       map.addControl(new ol.control.ZoomSlider());
       map.addControl(new ol.control.ScaleLine());
-      map.addControl(new ol.control.MousePosition({
-    	  coordinateFormat: function(coord) { return ol.coordinate.toStringHDMS(ol.proj.toLonLat(coord),1); }
-      }));
+      //map.addControl(new ol.control.MousePosition({
+      //  coordinateFormat: function(coord) { return ol.coordinate.toStringHDMS(ol.proj.toLonLat(coord),1); }
+      //}));
 
       jQuery('#super-product-table').delegate('input.qty', 'change', function( e ) {
           sku = e.target.id.slice(4);
