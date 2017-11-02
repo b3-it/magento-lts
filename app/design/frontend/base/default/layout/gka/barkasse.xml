@@ -37,6 +37,7 @@
                 <name>kassenbuch_journal</name>
                 <path>gka_barkasse/kassenbuch_journal/index</path>
                 <label>Cash Journal</label>
+                <secure>true</secure>
             </action>
         </reference>
     </customer_account>
