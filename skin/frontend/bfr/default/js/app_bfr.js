@@ -47,13 +47,6 @@ function checkMobileCustomerNavigation()
 }
 
 $j(document).ready(function(){
-    // Custom-Scrollbar im Skin-Design
-    $j('body').niceScroll({
-        'cursorcolor'       : $j('#top-row').css('background-color'),
-        'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
-    });
-    
     // Alt-Attribut in die Copyright-Box schreiben
     $j('.thumb-link').click(function(){
     	$j('.image-copyright-box span').html( $j(this).attr('title') );
