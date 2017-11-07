@@ -26,8 +26,14 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
     	$buyRequest->setQty(1);
     
     	$result = parent::_prepareProduct($buyRequest, $product, $processMode);
-    			
+
+        /**
+         * @var string $pay_id Kassenzeichen
+         */
     	$pay_id = $buyRequest->getPayId();
+        /**
+         * @var string $pay_client Bewirtschafter Nr.
+         */
     	$pay_client = $buyRequest->getPayClient();
     	$specialPrice = (float)($buyRequest->getAmount());
     	
@@ -41,7 +47,7 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
     			$this->getProduct($product)->setCustomPrice($specialPrice);
     			$this->getProduct($product)->setOriginalCustomPrice($specialPrice);
     			$product->setIsSuperMode(true);
-    		}else{
+    		} else {
     			return Mage::helper('virtualpayid')->__('Price is missing!');
     		}
     		
@@ -50,7 +56,7 @@ class Gka_VirtualPayId_Model_Product_Type_Virtualpayid extends Mage_Catalog_Mode
 
     	
     	
-    	return Mage::helper('virtualpayid')->__('Payment ID is missing!');
+    	return Mage::helper('virtualpayid')->__('External Kassenzeichen is missing!');
     }
     
     
