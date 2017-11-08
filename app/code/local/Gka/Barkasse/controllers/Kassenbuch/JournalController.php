@@ -206,6 +206,14 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     }
     
     
+    public function prelogoutAction()
+    {
+    	$this->loadLayout();
+    	$this->renderLayout();
+    }
+   
+    
+    
     public function preDispatch() {
     	parent::preDispatch();
 

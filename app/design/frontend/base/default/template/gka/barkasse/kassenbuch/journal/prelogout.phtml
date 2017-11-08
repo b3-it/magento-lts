@@ -1,0 +1,12 @@
+<?php
+$_helper = Mage::helper('gka_barkasse');
+?>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div id="journal-block">
+	<h2><?php echo $_helper->__('Journal is still open! Do you want to close it?')?></h2>
+	<form>
+		<a class="button" href="<?php echo $this->getLogoutUrl()?>"><?php echo $_helper->__('Logout'); ?> </a>
+		<a class="button" href="<?php echo $this->getJournalUrl()?>"><?php echo $_helper->__('Close Journal'); ?> </a>
+		</form>
+
+</div>
