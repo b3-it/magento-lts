@@ -38,33 +38,6 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 	public function processOrderItem($orderitem, $order)
 	{
 		return $this;
-		
-// 		if (!$orderitem->getId()) {
-// 			//order not saved in the database
-// 			return $this;
-// 		}
-// 		$product = $orderitem->getProduct();
-	
-// 		if (!$product) {
-// 			$product = Mage::getModel('catalog/product')
-// 			->setStoreId($order->getStoreId())
-// 			->load($orderitem->getProductId());
-// 		} 
-		
-// 		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
-// 			return $this;
-// 		}
-	
-		
-// 		$br = $orderitem->getBuyRequest();
-		
-// 		Mage::getModel('virtualpayid/payid')
-// 			->setOrderItemId($orderitem->getId())
-// 			->setKassenzeichen($br->getPayId())
-// 			->save();
-		
-	
-		return $this;
 	}
 	
 	public function onCheckoutCartUpdateItemsAfter($observer)
@@ -138,6 +111,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 	 */
 	public function onSalesQuoteItemSetProduct($observer) {
 		$quoteItem = $observer->getQuoteItem();
+		/** @var $product Mage_Catalog_Model_Product */
 		$product = $observer->getProduct();
 		/** @var $quote Mage_Sales_Model_Quote */
 		$quote = $quoteItem->getQuote();
@@ -145,18 +119,33 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 			return $this;
 		}
 		
-		try{
+		try {
 			$items = $quote->getAllVisibleItems();
-			//$items[] = new Varien_Object(array('product'=>$product,'qty'=>1));
 			$this->testCart($items);
 			
-		}
-		catch(Exception $ex){
+		} catch(Exception $ex){
 			$quote->removeItem($quoteItem->getId());
 			Mage::getSingleton('customer/session')->addError($ex->getMessage());
 		}
-		
-		$quote->setExternesKassenzeichen(1);
+
+        /**
+         * @var string $payId Kassenzeichen
+         */
+		$payId = $product->getCustomOption('pay_id');
+		if (is_null($payId)) {
+            $quote->removeItem($quoteItem->getId());
+		    Mage::throwException(Mage::helper('virtualpayid')->_('No external Kassenzeichen available!'));
+        }
+        $payClient = $product->getCustomOption('pay_client');
+		if (is_null($payClient)) {
+            $quote->removeItem($quoteItem->getId());
+            Mage::throwException(Mage::helper('virtualpayid')->_('No external Bewirtschafter available!'));
+        }
+
+        /*
+         * Format: Bewirtschafter/Kassenzeichen
+         */
+		$quote->setExternesKassenzeichen(sprintf('%s/%s', $payClient, $payId));
 		
 		$br = $quoteItem->getBuyRequest();
 		$specialPrice = (float)($br->getAmount());
@@ -166,7 +155,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 				$quoteItem->setCustomPrice($specialPrice);
 				$quoteItem->setOriginalCustomPrice($specialPrice);
 				$quoteItem->getProduct()->setIsSuperMode(true);
-		}else{
+		} else {
 			//throw new Exception('Preis darf nicht null sein!');
 		}
 	}

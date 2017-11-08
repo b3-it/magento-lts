@@ -77,6 +77,13 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
     			$payment = $this->getInfoInstance();
     		}
     	}
+
+    	if (($txId = $payment->getTransactionId()) || ($txId = $payment->getOrder()->getExternesKassenzeichen())) {
+    	    $aTxId = explode('/', $txId);
+    	    if (count($aTxId) == 2) {
+    	        return $txId;
+            }
+        }
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
             if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                 Mage::throwException($this->__('No kassenzeichen available!'));
@@ -692,7 +699,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 				//TODO : Providername ermitteln
 				$_providerName = 'TERMINALZAHLUNG';
 
-                if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
+                if (!$order->getExternesKassenzeichen() && self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                     $_kassenzeichenActivated = $this->_activateKassenzeichen($merchantTxId, $tkRef, $_providerName);
                 } else {
                     $_kassenzeichenActivated = true;

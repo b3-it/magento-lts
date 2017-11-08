@@ -446,7 +446,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 		}
 
 		if ($this->hasKassenzeichen()) {
-			Mage::log("paymentbase::The Kassenzeichen exists already: {$this->getKassenzeichen()}", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+			Mage::log("paymentbase::The Kassenzeichen exists already: {$payment->getKassenzeichen()}", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 			return $this;
 		}
 		try {
@@ -1039,7 +1039,27 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			}
 		}
 			
-		return $payment->hasData('kassenzeichen');
+		if ($payment->hasData('kassenzeichen')) {
+		    return true;
+        }
+
+        $eKz = $this->_getOrder()->getExternesKassenzeichen();
+		if (!$eKz || strlen($eKz) < 1) {
+		    return false;
+        }
+
+        $data = explode('/', $eKz);
+		if (count($data) == 2) {
+		    $payment->setKassenzeichen($data[1]);
+            //Kassenzeichen auch in Quote ablegen
+            $payment->getOrder()->getQuote()->getPayment()->setKassenzeichen($data[1]);
+
+            /** @var $payment Mage_Sales_Model_Order_Payment */
+            $payment->setTransactionId($eKz);
+		    return true;
+        }
+
+        return false;
 	}
 
 	/**

@@ -31,14 +31,14 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/
 	$installer->getConnection()->addColumn(
 			$installer->getTable('sales/order'),
 			$attributeId,
-			'smallint(3) default 0'
+			'varchar(255) default null'
 			);
 }
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/quote'), $attributeId)) {
 	$installer->getConnection()->addColumn(
 			$installer->getTable('sales/quote'),
 			$attributeId,
-			'smallint(3) default 0'
+            'varchar(255) default null'
 			);
 }
 
