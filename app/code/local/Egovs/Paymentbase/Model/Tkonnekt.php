@@ -466,10 +466,9 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		$msg = null;
 		$additionalMsg = null;
 		$iReturnCode = null;
-		$request = null;
+        $request = new TKonnekt_SDK_Request('debitCardTransaction');
 		try {
 			// Sends request to TKonnekt.
-			$request = new TKonnekt_SDK_Request('debitCardTransaction');
 			$request->setSecret($this->getProjectPassword());
 			foreach ($this->_fieldsArr as $param => $value) {
 				$request->addParam($param, $value);
@@ -480,57 +479,61 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 				$strUrlRedirect = $request->getResponseParam('redirect');
 
 				return $strUrlRedirect;
-			} else {
-				$iReturnCode = $request->getResponseParam('rc');
-				$strResponseMsg = $request->getResponseMessage();
-				if (!$strResponseMsg) {
-					$strResponseMsg = $this->_getHelper()->__("Unknown server error.");
-				}
-				if ($request->getResponseParam('reference')) {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on TKonnekt REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				} else {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on TKonnekt\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				}
-				$_source = $this->_getOrder();
-				if (!$_source) {
-					/** @var $_source Mage_Sales_Model_Quote */
-					$_source = $this->getInfoInstance()->getQuote();
-				} else {
-					/** @var $_source Mage_Sales_Model_Order */
-					/** @var $payment Mage_Sales_Model_Order_Payment */
-					$payment = $_source->getPayment();
-					$payment->setTransactionId($request->getResponseParam('reference'));
-					$transaction = $payment->addTransaction('order', null, false, '');
-					$transaction->setParentTxnId($_source->getIncrementId());
-					$transaction->setIsClosed(1);
-					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
-					$transaction->save ();
-					$_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
-					$_source->cancel()->save();
-
-					$_quoteId = $_source->getQuoteId();
-					$_source = $_source->getQuote();
-					if (!$_source) {
-						$_source = Mage::getModel('sales/quote')->load($_quoteId);
-					}
-				}
-
-				if (!$_source->isEmpty()) {
-					if (!$_source->getIsActive()) {
-						$_source->setIsActive(true)->save();
-					}
-					Mage::getSingleton('checkout/session')->replaceQuote($_source);
-				}
 			}
+
+            $iReturnCode = $request->getResponseParam('rc');
+            $strResponseMsg = $request->getResponseMessage();
+            if (!$strResponseMsg) {
+                $strResponseMsg = $this->_getHelper()->__("Unknown server error.");
+            }
+            if ($request->getResponseParam('reference')) {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on TKonnekt REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            } else {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on TKonnekt\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            }
+
+            throw new Exception('Failed to start transaction on TKonnekt');
 		} catch ( Exception $e ) {
 			Mage::logException($e);
 			$msg = $e->getMessage();
 			if ($e->getPrevious()) {
 			    $additionalMsg = "\r\n\r\n".$e->getPrevious()->getMessage();
+            }
+
+            //Roll Back
+            $_source = $this->_getOrder();
+            if (!$_source) {
+                /** @var $_source Mage_Sales_Model_Quote */
+                $_source = $this->getInfoInstance()->getQuote();
+            } else {
+                /** @var $_source Mage_Sales_Model_Order */
+                /** @var $payment Mage_Sales_Model_Order_Payment */
+                $payment = $_source->getPayment();
+                $payment->setTransactionId($request->getResponseParam('reference'));
+                $transaction = $payment->addTransaction('order', null, false, '');
+                $transaction->setParentTxnId($_source->getIncrementId());
+                $transaction->setIsClosed(1);
+                $transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
+                $transaction->save ();
+                $_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+                $_source->cancel()->save();
+
+                $_quoteId = $_source->getQuoteId();
+                $_source = $_source->getQuote();
+                if (!$_source) {
+                    $_source = Mage::getModel('sales/quote')->load($_quoteId);
+                }
+            }
+
+            if (!$_source->isEmpty()) {
+                if (!$_source->getIsActive()) {
+                    $_source->setIsActive(true)->save();
+                }
+                Mage::getSingleton('checkout/session')->replaceQuote($_source);
             }
 		}
 
