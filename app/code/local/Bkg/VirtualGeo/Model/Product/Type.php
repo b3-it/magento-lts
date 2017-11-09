@@ -21,8 +21,8 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
     {
     	$resultParent = parent::_prepareProduct($buyRequest, $product, $processMode);
     
-    	if (is_string($result)) {
-    		return $result;
+    	if (is_string($resultParent)) {
+    		return $resultParent;
     	}
     	
     	//TODO: aus $buyRequest lesen

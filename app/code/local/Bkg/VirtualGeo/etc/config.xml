@@ -42,6 +42,7 @@
                     </virtualgeo_observer>
                 </observers>
             </catalog_product_prepare_save>
+            <!-- 
             <sales_convert_quote_item_to_order_item>
                 <observers>
                     <virtualgeo_observer>
@@ -98,6 +99,7 @@
                     </bundle_observer>
                 </observers>
             </catalog_model_product_duplicate>
+             -->
         </events>
 		
     </adminhtml>
@@ -106,30 +108,30 @@
         <fieldsets>
             <virtualgeo_sales_copy_order>
                 <entity_id>
-                    <to_configvirtual>order_id</to_configvirtual>
+                    <to_regionallocation>order_id</to_regionallocation>
                 </entity_id>
                 <increment_id>
-                    <to_configvirtual>order_increment_id</to_configvirtual>
+                    <to_regionallocation>order_increment_id</to_regionallocation>
                 </increment_id>
                 <created_at>
-                    <to_configvirtual>*</to_configvirtual>
+                    <to_regionallocation>*</to_regionallocation>
                 </created_at>
                 <updated_at>
-                    <to_configvirtual>*</to_configvirtual>
+                    <to_regionallocation>*</to_regionallocation>
                 </updated_at>
                 <customer_id>
-                    <to_configvirtual>*</to_configvirtual>
+                    <to_regionallocation>*</to_regionallocation>
                 </customer_id>
             </virtualgeo_sales_copy_order>
             <virtualgeo_sales_copy_order_item>
                 <item_id>
-                    <to_configvirtual>order_item_id</to_configvirtual>
+                    <to_regionallocation>order_item_id</to_regionallocation>
                 </item_id>
                 <name>
-                    <to_configvirtual>product_name</to_configvirtual>
+                    <to_regionallocation>product_name</to_regionallocation>
                 </name>
                 <sku>
-                    <to_configvirtual>product_sku</to_configvirtual>
+                    <to_regionallocation>product_sku</to_regionallocation>
                 </sku>
             </virtualgeo_sales_copy_order_item>
         </fieldsets>

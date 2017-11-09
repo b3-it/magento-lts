@@ -31,35 +31,35 @@
             <order>
                 <create>
                     <available_product_types>
-                        <configvirtual/>
+                        <regionallocation/>
                     </available_product_types>
                 </create>
             </order>
         </sales>
         <layout>
             <updates>
-                <configvirtual>
+                <regionallocation>
                     <file>bkg/regionallocation.xml</file>
-                </configvirtual>
+                </regionallocation>
             </updates>
         </layout>
         <events>
         <!-- 
             <catalog_product_prepare_save>
                 <observers>
-                    <configvirtual_observer>
-                        <class>configvirtual/product_observer</class>
+                    <regionallocation_observer>
+                        <class>regionallocation/product_observer</class>
                         <method>prepareProductSave</method>
-                    </configvirtual_observer>
+                    </regionallocation_observer>
                 </observers>
             </catalog_product_prepare_save>
             -->
             <catalog_product_edit_action>
                 <observers>
-                    <configvirtual_observer>
-                        <class>configvirtual/product_observer</class>
+                    <regionallocation_observer>
+                        <class>regionallocation/product_observer</class>
                         <method>prepareProductEdit</method>
-                    </configvirtual_observer>
+                    </regionallocation_observer>
                 </observers>
             </catalog_product_edit_action>
         </events>
@@ -213,38 +213,38 @@
         <!--
             <sales_order_item_save_commit_after>
                 <observers>
-                    <configvirtual_product_observer>
-                        <class>configvirtual/product_observer</class>
+                    <regionallocation_product_observer>
+                        <class>regionallocation/product_observer</class>
                         <method>saveOrderItem</method>
-                    </configvirtual_product_observer>
+                    </regionallocation_product_observer>
                 </observers>
             </sales_order_item_save_commit_after>  
             
             <sales_order_item_save_before>
               <observers>
-                    <configvirtual_product_save_orderitem_before>
-                        <class>configvirtual/product_observer</class>
+                    <regionallocation_product_save_orderitem_before>
+                        <class>regionallocation/product_observer</class>
                         <method>onBeforeSaveOrderItem</method>
-                    </configvirtual_product_save_orderitem_before>
+                    </regionallocation_product_save_orderitem_before>
                 </observers>
             
             </sales_order_item_save_before>
             -->
             <sales_quote_item_set_product>
                 <observers>
-                    <configvirtual_product_observer>
+                    <regionallocation_product_observer>
                         <class>regionallocation/product_observer</class>
                         <method>onSalesQuoteItemSetProduct</method>
-                    </configvirtual_product_observer>
+                    </regionallocation_product_observer>
                 </observers>
             </sales_quote_item_set_product>  
             <!--
             <sales_order_save_after>
             <observers>
-                <configvirtual_product_save_order>
-                    <class>configvirtual/product_observer</class>
+                <regionallocation_product_save_order>
+                    <class>regionallocation/product_observer</class>
                     <method>onSalesOrderSaveAfter</method>
-                </configvirtual_product_save_order>
+                </regionallocation_product_save_order>
             </observers>
         </sales_order_save_after>
         -->
@@ -256,9 +256,9 @@
         
         <layout>
             <updates>
-                <configvirtual module="Bkg_RegionAllocation">
+                <regionallocation module="Bkg_RegionAllocation">
                     <file>bkg/regionallocation.xml</file>
-                </configvirtual>
+                </regionallocation>
             </updates>
         </layout>
         
@@ -269,7 +269,7 @@
             <catalog_product_dataflow>
                 <manage_stock>
                     <product_type>
-                        <configvirtual/>
+                        <regionallocation/>
                     </product_type>
                 </manage_stock>
             </catalog_product_dataflow>

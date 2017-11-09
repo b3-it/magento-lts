@@ -25,7 +25,7 @@ class Bkg_RegionAllocation_Model_Product_Type_Regionallocation extends Mage_Cata
 		if ($this->getProduct($product)->getStockData()) {
 			$stockItem = $this->getProduct($product)->getStockData();
 			
-			if(($stockItem['max_sale_qty'] != 1) || (isset($stockItem['use_config_max_sale_qty']) && $stockItem['use_config_max_sale_qty']))
+			if((isset($stockItem['max_sale_qty']) &&($stockItem['max_sale_qty'] != 1)) || (isset($stockItem['use_config_max_sale_qty']) && $stockItem['use_config_max_sale_qty']))
 			{
 				Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('regionallocation')->__('Maximum saleable quantity is 1'));
 			}

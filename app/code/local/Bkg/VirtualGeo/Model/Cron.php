@@ -13,6 +13,7 @@ class Bkg_VirtualGeo_Model_Cron extends Mage_Core_Model_Abstract
  
     public function run()
     {
+    	return;
     	$this->getIsRunning('Bkg_VirtualGeo',1);
     	
     	try{

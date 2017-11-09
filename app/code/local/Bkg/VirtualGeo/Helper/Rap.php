@@ -76,7 +76,7 @@ class Bkg_VirtualGeo_Helper_Rap extends Mage_Core_Helper_Abstract
 		$ident = explode('_', $ident);
 		$sect = $this->getUsageSections();
 		if(isset($sect[$ident[0]])){
-			if($ident[1] == 'tax'){
+			if((isset($ident[1])) && ($ident[1] == 'tax')){
 				return $sect[$ident[0]]['tax_label'];
 			}else{
 				return $sect[$ident[0]]['taxfree_label'];

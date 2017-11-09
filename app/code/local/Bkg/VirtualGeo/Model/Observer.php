@@ -136,6 +136,7 @@ class Bkg_VirtualGeo_Model_Observer
      */
     public function appendBundleSelectionData($observer)
     {
+    	return;
         $orderItem = $observer->getEvent()->getOrderItem();
         $quoteItem = $observer->getEvent()->getItem();
 

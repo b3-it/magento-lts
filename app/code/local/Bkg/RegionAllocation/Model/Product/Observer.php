@@ -16,7 +16,7 @@ class Bkg_RegionAllocation_Model_Product_Observer extends Varien_Object
 		$product = $observer->getEvent()->getProduct();
 
 		if ($regionallocation = $request->getPost('regionallocation')) {
-			$product->setConfigvirtualData($regionallocation);
+			$product->setRegionallocationData($regionallocation);
 		}
 
 
