@@ -134,13 +134,13 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		$payId = $product->getCustomOption('pay_id');
 		if (is_null($payId) || $payId->isEmpty() || !$payId->getValue()) {
             $quote->removeItem($quoteItem->getId());
-		    Mage::throwException(Mage::helper('virtualpayid')->_('No external Kassenzeichen available!'));
+		    Mage::throwException(Mage::helper('virtualpayid')->__('No external Kassenzeichen available!'));
         }
         $payId = $payId->getValue();
         $payClient = $product->getCustomOption('pay_client');
 		if (is_null($payClient) || $payClient->isEmpty() || !$payClient->getValue()) {
             $quote->removeItem($quoteItem->getId());
-            Mage::throwException(Mage::helper('virtualpayid')->_('No external Bewirtschafter available!'));
+            Mage::throwException(Mage::helper('virtualpayid')->__('No external Bewirtschafter available!'));
         }
         $payClient = $payClient->getValue();
 
