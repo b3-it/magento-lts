@@ -9,15 +9,15 @@
       <active>true</active>
       <codePool>local</codePool>
     </Bkg_MapSeries>
-    <Bkg_Regionallocation>
+    <Bkg_RegionAllocation>
       <active>true</active>
       <codePool>local</codePool>
-    </Bkg_Regionallocation>
+    </Bkg_RegionAllocation>
      <Bkg_VirtualGeo>
       <active>true</active>
       <codePool>local</codePool>
       <depends>
-      	<Bkg_Regionallocation />
+      	<Bkg_RegionAllocation />
       </depends>
     </Bkg_VirtualGeo>    
   </modules>
