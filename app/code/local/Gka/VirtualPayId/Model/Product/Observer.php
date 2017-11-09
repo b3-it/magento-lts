@@ -129,18 +129,20 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		}
 
         /**
-         * @var string $payId Kassenzeichen
+         * @var Mage_Sales_Model_Quote_Item_Option $payId Kassenzeichen
          */
 		$payId = $product->getCustomOption('pay_id');
-		if (is_null($payId)) {
+		if (is_null($payId) || $payId->isEmpty() || !$payId->getValue()) {
             $quote->removeItem($quoteItem->getId());
 		    Mage::throwException(Mage::helper('virtualpayid')->_('No external Kassenzeichen available!'));
         }
+        $payId = $payId->getValue();
         $payClient = $product->getCustomOption('pay_client');
-		if (is_null($payClient)) {
+		if (is_null($payClient) || $payClient->isEmpty() || !$payClient->getValue()) {
             $quote->removeItem($quoteItem->getId());
             Mage::throwException(Mage::helper('virtualpayid')->_('No external Bewirtschafter available!'));
         }
+        $payClient = $payClient->getValue();
 
         /*
          * Format: Bewirtschafter/Kassenzeichen
