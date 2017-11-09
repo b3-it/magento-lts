@@ -75,7 +75,10 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     		$address = $order->getBillingAddress();
     	}
     	$productOptions = ($orderItem->getProductOptions());
-    	$personalOptions = $productOptions['info_buyRequest']['personal_options'];
+    	$personalOptions = array();
+    	if(isset($productOptions['info_buyRequest']['personal_options'])){
+    		$personalOptions = $productOptions['info_buyRequest']['personal_options'];
+    	}
     	if(!is_array($personalOptions)){
     		$personalOptions = array();
     	}
@@ -110,7 +113,7 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	$this->setEventId($event->getId());
     	$this->setCreatedTime(now())->setUpdateTime(now());
     	$fields = array('prefix'=>'getPrefix','academic_titel'=>'getAcademicTitel','position'=>'getPosition',
-    			'firstname'=>'getFirstname','lastname'=>'getLastName','company'=>'getCompany','company2'=>'getCompany2',
+    			'firstname'=>'getFirstname','lastname'=>'getLastname','company'=>'getCompany','company2'=>'getCompany2',
     			'company3'=>'getCompany3','street'=>'getStreetFull','city'=>'getCity','postcode'=>'getPostcode','email'=>'getEmail',
     			'country'=>'getCountry','phone'=>'getPhone');
     	foreach($fields as $field => $func){

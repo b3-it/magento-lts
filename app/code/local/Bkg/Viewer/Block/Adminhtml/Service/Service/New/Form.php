@@ -43,9 +43,9 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_New_Form extends Mage_Adminhtml
 				//'required'  => true,
 				'name'      => 'type',
 				'values' => array(
-						array('label'=>'Web Map Service','value'=>'WMS'),
-				        array('label' => 'Web Map Tile Service', 'value'=>'WMTS'),
-						array('label'=>'Web Feature Service','value'=>'WFS')
+					array('label'=>'Web Map Service','value'=>'Wms'),
+					array('label' => 'Web Map Tile Service', 'value'=>'Wmts'),
+					array('label'=>'Web Feature Service','value'=>'Wfs')
 				)
 				//'value'	=> 'http://localhost.local/bestand_niedersachsen_wms.xml',
 				//'note'	=> 'getCapabilities'

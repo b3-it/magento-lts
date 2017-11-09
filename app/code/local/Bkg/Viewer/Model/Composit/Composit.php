@@ -114,7 +114,12 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
                     $data[$vg->getIdent()] = $tmp;
                 } else {
                     // key already exist, push them to existing array
-                    array_push($data[$vg->getIdent()], ...$tmp);
+                    // DO VERSION CHECK FOR VERY OLD PHP
+                    if (version_compare(PHP_VERSION, '5.6.0') >= 0) {
+                        array_push($data[$vg->getIdent()], ...$tmp);
+                    } else {
+                        $data[$vg->getIdent()] = array_merge($data[$vg->getIdent()], $tmp);
+                    }
                 }
             }
             #the data is stored the best when turned into a json string and then gz compressed
