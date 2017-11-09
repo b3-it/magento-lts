@@ -35,6 +35,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
   	}
   	$collection = Mage::getModel('gka_barkasse/kassenbuch_journalitems')->getCollection();
   	$collection->getSelect()
+  	->columns(array('externes_kassenzeichen_bool' => "IF(LENGTH(externes_kassenzeichen),1,0)"))
   	->join(array('journal'=> $collection->getTable('gka_barkasse/kassenbuch_journal')),'main_table.journal_id=journal.id',array())
   	->joinLeft(array('payment'=>'sales_flat_order_payment'), 'payment.parent_id=main_table.order_id',array('method'=>'method','kassenzeichen'=>'kassenzeichen'))
   	->join(array('order'=> $collection->getTable('sales/order')),'main_table.order_id=order.entity_id',array('status','increment_id','externes_kassenzeichen'))
@@ -106,7 +107,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
        
        $this->addColumn('externes_kassenzeichen', array(
        		'header' => Mage::helper('gka_barkasse')->__('Externes Kassenzeichen'),
-       		'index' => 'externes_kassenzeichen',
+       		'index' => 'externes_kassenzeichen_bool',
        		'type'  => 'options',
        		'width' => '70px',
        		'options' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
