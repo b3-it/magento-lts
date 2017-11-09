@@ -36,7 +36,8 @@ class Bkg_MapSeries_Block_Product_View_Type_Mapseries extends Mage_Catalog_Block
 {
 	public function hasComposit($_product)
 	{
-		return (!empty($_product->getGeocomposit()));
+		$flag = $_product->getGeocomposit();
+		return (!empty($flag));
 	}
 	
 	public function getComposit($_product)

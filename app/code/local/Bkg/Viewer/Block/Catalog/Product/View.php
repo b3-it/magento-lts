@@ -14,7 +14,8 @@ class Bkg_Viewer_Block_Catalog_Product_View extends Mage_Catalog_Block_Product_V
 	
 	public function hasComposit($_product)
 	{
-		return (!empty($_product->getGeocomposit()));
+		$flag = $_product->getGeocomposit();
+		return (!empty($flag));
 	}
 	
  	
