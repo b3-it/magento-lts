@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bkg_Viewer>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Bkg_Viewer>
+    <Bkg_MapSeries>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Bkg_MapSeries>
+    <Bkg_Regionallocation>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Bkg_Regionallocation>
+     <Bkg_VirtualGeo>
+      <active>true</active>
+      <codePool>local</codePool>
+      <depends>
+      	<Bkg_Regionallocation />
+      </depends>
+    </Bkg_VirtualGeo>    
+  </modules>
+</config>
