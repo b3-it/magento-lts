@@ -464,6 +464,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		}
 
 		$msg = null;
+		$additionalMsg = null;
 		$iReturnCode = null;
 		$request = null;
 		try {
@@ -529,14 +530,14 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 			Mage::logException($e);
 			$msg = $e->getMessage();
 			if ($e->getPrevious()) {
-			    $msg .= "\r\n\r\n".$e->getPrevious()->getMessage();
+			    $additionalMsg = "\r\n\r\n".$e->getPrevious()->getMessage();
             }
 		}
 
 		if (is_null($msg)) {
 			$msg = Mage::helper('gka_tkonnektpay')->__("Unknown server error");
 		}
-		Mage::helper("paymentbase")->sendMailToAdmin($msg, 'Fehler bei getTkonnektRedirectURL');
+		Mage::helper("paymentbase")->sendMailToAdmin(sprintf('%s%s', $msg, $additionalMsg), 'Fehler bei getTkonnektRedirectURL');
 
 		if (!is_null($iReturnCode) && !is_null($request)) {
 			$msg = $request->getResponseMessage();
