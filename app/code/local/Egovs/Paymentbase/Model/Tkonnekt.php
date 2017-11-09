@@ -515,10 +515,12 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
                 $payment = $_source->getPayment();
                 $payment->setTransactionId($request->getResponseParam('reference'));
                 $transaction = $payment->addTransaction('order', null, false, '');
-                $transaction->setParentTxnId($_source->getIncrementId());
-                $transaction->setIsClosed(1);
-                $transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
-                $transaction->save ();
+                if ($transaction) {
+                    $transaction->setParentTxnId($_source->getIncrementId());
+                    $transaction->setIsClosed(1);
+                    $transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
+                    $transaction->save();
+                }
                 $_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
                 $_source->cancel()->save();
 
