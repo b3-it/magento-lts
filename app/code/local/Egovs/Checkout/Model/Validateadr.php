@@ -96,8 +96,6 @@ class Egovs_Checkout_Model_Validateadr extends Varien_Object
 	 * @param array $errors Fehler Array
 	 * 
 	 * @return boolean
-	 * 
-	 * @see Egovs_Vies_Model_Webservice_Types_CheckVatResponse::validateWith
 	 */
 	protected function _validateVat(&$data, &$errors) {
 		//falls das feld nicht gesetzt wurde braucht es nicht geprüft werden

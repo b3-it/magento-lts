@@ -95,7 +95,7 @@ class Egovs_Giropay_GiropayController extends Egovs_Paymentbase_Controller_Abstr
 	 * @param string $mandantNr     Mandanten Nr.
 	 * @param string $_providerName  Wird hier nicht benutzt
 	 * 
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Controller_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 * 
 	 * @see Egovs_Paymentbase_Controller_Abstract::_callSoapClientImpl()
 	 */

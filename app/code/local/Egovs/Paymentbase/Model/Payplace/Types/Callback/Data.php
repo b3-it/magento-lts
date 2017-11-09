@@ -22,7 +22,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Data extends Egovs_Payment
 {
     /**
      * The notifyURL
-     * @var anyURI
+     * @var string
      */
     public $notifyURL;
     /**
@@ -33,7 +33,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Data extends Egovs_Payment
     /**
      * Constructor method for callbackData
      * @see parent::__construct()
-     * @param anyURI $_notifyURL
+     * @param string $_notifyURL
      * @param Egovs_Paymentbase_Model_Payplace_Types_Credentials $_credentials
      * @return Egovs_Paymentbase_Model_Payplace_Types_Callback_Data
      */
@@ -43,7 +43,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Data extends Egovs_Payment
     }
     /**
      * Get notifyURL value
-     * @return anyURI|null
+     * @return string|null
      */
     public function getNotifyURL()
     {
@@ -51,8 +51,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Data extends Egovs_Payment
     }
     /**
      * Set notifyURL value
-     * @param anyURI $_notifyURL the notifyURL
-     * @return anyURI
+     * @param string $_notifyURL the notifyURL
+     * @return bool
      */
     public function setNotifyURL($_notifyURL)
     {
@@ -81,7 +81,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Data extends Egovs_Payment
      * @see Egovs_Paymentbase_Model_Payplace_WsdlClass::__set_state()
      * @uses Egovs_Paymentbase_Model_Payplace_WsdlClass::__set_state()
      * @param array $_array the exported values
-     * @return Egovs_Paymentbase_Model_Payplace_Types_CallbackData
+     * @return Egovs_Paymentbase_Model_Payplace_Types_Callback_Data
      */
     public static function __set_state(array $_array,$_className = __CLASS__)
     {

@@ -26,7 +26,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Request extends Egovs_
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 17
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var string
      */
     public $eventExtId;
     /**
@@ -41,15 +41,15 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Request extends Egovs_
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 22
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var string
      */
     public $txReferenceExtId;
     /**
      * Constructor method for txDiagnosisRequest
      * @see parent::__construct()
-     * @param anyExtId $_eventExtId
+     * @param int $_eventExtId
      * @param Egovs_Paymentbase_Model_Payplace_Enum_KindEnum $_kind
-     * @param anyExtId $_txReferenceExtId
+     * @param int $_txReferenceExtId
      * @return Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Request
      */
     public function __construct($_eventExtId = NULL,$_kind = NULL,$_txReferenceExtId = NULL)
@@ -58,7 +58,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Request extends Egovs_
     }
     /**
      * Get eventExtId value
-     * @return anyExtId|null
+     * @return int|null
      */
     public function getEventExtId()
     {
@@ -66,8 +66,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Request extends Egovs_
     }
     /**
      * Set eventExtId value
-     * @param anyExtId $_eventExtId the eventExtId
-     * @return anyExtId
+     * @param int $_eventExtId the eventExtId
+     * @return bool
      */
     public function setEventExtId($_eventExtId)
     {
@@ -97,7 +97,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Request extends Egovs_
     }
     /**
      * Get txReferenceExtId value
-     * @return anyExtId|null
+     * @return int|null
      */
     public function getTxReferenceExtId()
     {
@@ -105,8 +105,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Request extends Egovs_
     }
     /**
      * Set txReferenceExtId value
-     * @param anyExtId $_txReferenceExtId the txReferenceExtId
-     * @return anyExtId
+     * @param int $_txReferenceExtId the txReferenceExtId
+     * @return bool
      */
     public function setTxReferenceExtId($_txReferenceExtId)
     {

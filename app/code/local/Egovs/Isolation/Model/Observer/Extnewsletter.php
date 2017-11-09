@@ -16,7 +16,7 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
   /**
    * der Filter für die Newsletterthemen
    * Enter description here ...
-   * @param unknown $observer
+   * @param Varien_Event_Observer $observer Observer
    */
     public function onStoreBlockLoad($observer)
     {

@@ -2,7 +2,11 @@
 <!DOCTYPE config>
 <config>
     <modules>
-     <TuChemnitz_Voucher>
+   		<TuChemnitz_Base>
+			<active>false</active>
+			<codePool>local</codePool>
+		</TuChemnitz_Base>
+        <TuChemnitz_Voucher>
             <active>false</active>
             <codePool>local</codePool>
             <depends>          

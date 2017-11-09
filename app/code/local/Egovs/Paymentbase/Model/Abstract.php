@@ -17,7 +17,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	/**
 	 * Client zur SOAP - Kommunikation
 	 * 
-	 * @var SOAP_BfF
+	 * @var SOAP_Client
 	 */
 	private $__objSOAPClientBfF = null;
 	
@@ -416,7 +416,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	 * @param Varien_Object $payment Payment
 	 * @param float         $amount  Betrag
 	 * 
-	 * @return Mage_Payment_Model_Abstract
+	 * @return Mage_Payment_Model_Method_Abstract
 	 * 
 	 * @see Egovs_Paymentbase_Model_Paymentbase::_authorize
 	 */
@@ -507,7 +507,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	 * @param Varien_Object $payment Payment
 	 * @param float         $amount  Betrag 
 	 * 
-	 * @return Mage_Payment_Model_Abstract
+	 * @return Mage_Payment_Model_Method_Abstract
 	 *
 	 * @see	Egovs_Paymentbase_Model_Abstract::authorize
 	 * @see Egovs_Paymentbase_Model_Abstract::createAccountingListParts
@@ -542,7 +542,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	 * @throws Exception
 	 *
 	 * @see Egovs_Paymentbase_Helper_Data::createCustomerForPayment
-	 * @see Egovs_DebitPIN_Model_Debitpin::_ePaymentActivateDebitEntry
+	 * @see Egovs_DebitPIN_Block_Payment_Form_Debitpin::_ePaymentActivateDebitEntry
 	 */
 	public function createCustomerForPayment($data = null) {
 		if (empty($data) && Mage::getStoreConfig(sprintf('payment/%s/include_personal_data', $this->getCode()))) {

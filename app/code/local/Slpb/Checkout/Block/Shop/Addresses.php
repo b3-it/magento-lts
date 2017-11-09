@@ -35,7 +35,7 @@ class Slpb_Checkout_Block_Shop_Addresses extends Slpb_Checkout_Block_Shop_Abstra
     /**
      * Retrieve multipage checkout model
      *
-     * @return Mage_Checkout_Model_Type_Multipage
+     * @return Egovs_Checkout_MultipageController
      */
     public function getCheckout()
     {

@@ -321,68 +321,9 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		Mage_Payment_Model_Method_Abstract::validate();
 
 		$payment = $this->getInfoInstance();
-		if ((!$this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
-			$sBankCheck = 0;
-			$this->_preprocessBic();
-			if (!preg_match('/^[a-z]{6}[0-9a-z]{2}([0-9a-z]{3})?\z/i', $this->getBic())) {
-				$sBankCheck = -416;
-			}
-			if ($sBankCheck >= 0 && $this->getValidateBicIbanWithEpaybl()) {
-				$bankverbindung = new Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung(
-						array(
-								'BIC' => (string) $this->getBic(),
-								'IBAN' => (string) $this->getIban(),
-// 								'kontoinhaber' => $payment->getCcOwner(),
-						)
-				);
-				
-				$sBankCheck = $this->_ePaymentCheckBankData($bankverbindung);
-			}
-
-			// SOAP Error
-			if ($sBankCheck == '-9999') {
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_SOAP', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif ($sBankCheck == '-999989') {
-				Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_'.$sBankCheck, Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -402) {
-				// Die angegebene Bankleitzahl ist zu kurz oder zu lang
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_BLZ_TOO_SHORT', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -406) {
-				// Die angegebene Verbindung ist in der Blacklist
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_BLACKLIST', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -403) {
-				// Die angegebene Kontonummer ist zu kurz oder zu lang
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_KTO_TOO_SHORT', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -410) {
-				// Die Bankverbindung konnte nicht validiert werden
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_BANK_NOT_VERIF', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -415) {
-				// Für den Kunden liegt keine Einzugsermächtigung vor, deshalb darf keine elektronische
-				// Lastschrift durchgeführt werden
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_EZE_PRESENT', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -416) {
-				// BIC ungültig
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_BIC_INVALID', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -417) {
-				// IBAN ungültig
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_IBAN_INVALID', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -420 || intval($sBankCheck) == -401) {
-				// Die Bankverbindung konnte nicht validiert werden
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_NOT_VALID', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) == -702) {
-				// Die Bankverbindung konnte nicht validiert werden
-				Mage::throwException(Mage::helper('paymentbase')->__('ERROR_DEBIT_ENTRY_BLZ_INVALID', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			} elseif (intval($sBankCheck) < 0) {
-				// anderer Fehler
-				$msg = "{$this->getCode()}::Lastschrift: Fehler bei Bankprüfung, Code:".$sBankCheck;
-				Mage::helper("paymentbase")->sendMailToAdmin($msg);
-				Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				Mage::throwException(Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getCustomerSupportMail()));
-			}
+		if (($this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
+		    $this->_validateBankdata();
 		}
-		
-		
-		
 		
 		if (($this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
 			$payment->setCcNumberEnc($payment->encrypt($payment->getCcNumber()));
@@ -413,18 +354,13 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 				}
 			}
 		}
-		
-		
-		
-		
-		
 	}
 	
 	
 	/**
 	 * Mandate zurückgeben evt. mit Änderungen
 	 * 
-	 * @param unknown $payment Payment
+	 * @param Egovs_Paymentbase_Model_Paymentbase $payment Payment
 	 * 
 	 * @return Egovs_Paymentbase_Model_Sepa_Mandate_Interface
 	 */
@@ -987,8 +923,8 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 	/**
 	 * Fehler der EPayBl auswerten
 	 * 
-	 * @param unknown $objResult Result von ePayBL
-	 * @param unknown $ergebnis Ergebnis von ePayBL
+	 * @param SOAP_Value $objResult Result von ePayBL
+	 * @param SoapFault|SoapVar $ergebnis Ergebnis von ePayBL
 	 * @param string $soapFunction SOAP-Funktion
 	 * 
 	 * @return void
@@ -1119,7 +1055,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 	/**
 	 * Mandat an der Mandatsverwaltung ändern
 	 * 
-	 * @param unknown $mandate Mandat
+	 * @param Egovs_Paymentbase_Model_Sepa_Mandate $mandate Mandat
 	 * @param boolean $Amendment | soll ein Amendment erstellt werden
 	 * 
 	 * @return Egovs_Paymentbase_Model_Sepa_Mandate_Interface

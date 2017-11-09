@@ -39,7 +39,7 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 	
 	/**
 	 * Array zum vermeiden doppelter Fehlermeldungen
-	 * @var unknown_type
+	 * @var array
 	 */
 	protected $_errors = array();
 	/**
@@ -105,7 +105,7 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 	 * This is the function that gets called if button "Place Order" is pressed
 	 * in the checkout process.
 	 *
-	 * @return the URL to be redirected to
+	 * @return string the URL to be redirected to
 	 */
 	public function getOrderPlaceRedirectUrl() {
 		return Mage::getUrl("{$this->getCode()}/{$this->getCode()}/redirect");

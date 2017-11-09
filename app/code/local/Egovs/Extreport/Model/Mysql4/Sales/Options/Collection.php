@@ -33,8 +33,6 @@ class Egovs_Extreport_Model_Mysql4_Sales_Options_Collection extends Mage_Core_Mo
 	 * 
 	 * Add ordered items with state PROCESSING | COMPLETE
 	 * Depends on Egovs_Extreport_Model_Mysql4_Sales_Pbc_Collection
-	 * @param date $from
-	 * @param date $to
 	 * @return Egovs_Extreport_Model_Mysql4_Sales_Pbc_Collection
 	 */
 	public function addPaidItemsWithOptions()

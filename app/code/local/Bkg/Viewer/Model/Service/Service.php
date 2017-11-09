@@ -31,25 +31,27 @@ class Bkg_Viewer_Model_Service_Service extends Mage_Core_Model_Abstract
 	}
 
 
-	public function fetchLayers($url,$type='WMS')
+	public function fetchLayers($url,$type='WMS',$version="1.3.0")
 	{
 		$helper = Mage::helper('bkgviewer');
+		$reader = Mage::getModel('bkgviewer/service_type_'.$type.str_replace('.', '', $version));
+		if(!$reader)
+		{
+			Mage::throwException("Service Reader not found: Type" . $type . " Version " . $version);
+		}
 		//try
 		{
 			$url = trim($url,'?');
-			$url .= "?Request=GetCapabilities&SERVICE=".$type."&VERSION=1.3.0";
-			$xml = $helper->fetchData($url);
-			$wms = new B3it_XmlBind_Wms13_WmsCapabilities();
-			$capa = $wms->getCapability();
-			$wms->bindXml($xml);
-			$this->setUrl($url);
-			$this->setTitle($wms->getService()->getTitle()->getValue());
-			$this->setUrlFeatureinfo($this->_getHref($capa->getRequest()->getGetfeatureinfo()->getAllDcptype()));
-			$this->setUrlMap($this->_getHref($capa->getRequest()->getGetmap()->getAllDcptype()));
+			$data = $reader->fetchData($url);
+			
+			$this->setData($data);
 			$this->save();
 
-			$layer = $capa->getLayer();
-			$this->_saveLayer($layer);
+			$layers = $data['layer'];
+			foreach ($layers as $layer)
+			{
+				$this->_saveLayer($layer);
+			}
 		}
 		//     	catch(Exception $ex)
 		//     	{
@@ -58,56 +60,46 @@ class Bkg_Viewer_Model_Service_Service extends Mage_Core_Model_Abstract
 			 
 	}
 
-	/**
-	 * die UrL Bestimmen
-	 * @param array B3it_XmlBind_Wms13_Dcptype $dcp
-	 */
-	protected function _getHref(array $dcp)
-	{
-		/* @var B3it_XmlBind_Wms13_Dcptype $d */
-		foreach($dcp as $d)
-		{
-			return $d->getHttp()->getGet()->getOnlineresource()->getAttribute('href');
-		}
-		 
-		return "";
-	}
+	
 
-	protected function _saveLayer(B3it_XmlBind_Wms13_Layer $layer, $parent_id = null)
+	protected function _saveLayer($layer, $parent_id = null)
 	{
-		$model = Mage::getModel('bkgviewer/service_layer');
-		$model->setTitle($layer->getTitle()->getValue());
-		$model->setName($layer->getName()->getValue());
-		$model->setAbstract($layer->getAbstract()->getValue());
-		$model->setParentId($parent_id);
-		$model->setServiceId($this->getId());
-		$model->setCrs();
-		$model->setBbWest($layer->getExGeographicboundingbox()->getWestboundlongitude()->getValue());
-		$model->setBbEast($layer->getExGeographicboundingbox()->getEastboundlongitude()->getValue());
-		$model->setBbSouth($layer->getExGeographicboundingbox()->getSouthboundlatitude()->getValue());
-		$model->setBbNorth($layer->getExGeographicboundingbox()->getNorthboundlatitude()->getValue());
-		//    	$model->setStyle();
-		$model->save();
-		 
-		 
-		foreach($layer->getAllBoundingbox() as $bb)
+		//foreach ($layers as $layer)
 		{
-			/* @var Bkg_Viewer_Model_Service_Crs $mod_crs */
-			$mod_crs = Mage::getModel('bkgviewer/service_crs');
-			$mod_crs->setName($bb->getAttribute('CRS'));
-			$mod_crs->setLayerId($model->getId());
-			$mod_crs->setMinx($bb->getAttribute('minx'));
-			$mod_crs->setMaxx($bb->getAttribute('maxx'));
-			$mod_crs->setMiny($bb->getAttribute('miny'));
-			$mod_crs->setMaxy($bb->getAttribute('maxy'));
-			$mod_crs->save();
+			$model = Mage::getModel('bkgviewer/service_layer');
+			$model->setData($layer);
+			$model->setParentId($parent_id);
+			$model->setServiceId($this->getId());
+			$model->save();
+			
+			if(isset($layer['children'])){
+				foreach($layer['children'] as $ly)
+				{
+					$this->_saveLayer($ly,$model->getId());
+				}
+			}
+			
+		}
+		
 
-		}
 		 
-		foreach($layer->getAllLayer() as $ly)
-		{
-			$this->_saveLayer($ly,$model->getId());
-		}
+		 
+// 		foreach($layer->getAllBoundingbox() as $bb)
+// 		{
+// 			/* @var Bkg_Viewer_Model_Service_Crs $mod_crs */
+// 			$mod_crs = Mage::getModel('bkgviewer/service_crs');
+// 			$mod_crs->setName($bb->getAttribute('CRS'));
+// 			$mod_crs->setLayerId($model->getId());
+// 			$mod_crs->setMinx($bb->getAttribute('minx'));
+// 			$mod_crs->setMaxx($bb->getAttribute('maxx'));
+// 			$mod_crs->setMiny($bb->getAttribute('miny'));
+// 			$mod_crs->setMaxy($bb->getAttribute('maxy'));
+// 			$mod_crs->save();
+
+// 		}
+		 
+	
+		
 
 	}
 

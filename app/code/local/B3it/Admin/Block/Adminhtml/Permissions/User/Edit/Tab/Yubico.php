@@ -8,15 +8,22 @@
  * @copyright	Copyright (c) 2014 B3 IT Systeme GmbH
  * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class B3it_Admin_Block_Adminhtml_Permissions_User_Edit_Tab_Yubico
-	extends Mage_Adminhtml_Block_Widget_Form
+class B3it_Admin_Block_Adminhtml_Permissions_User_Edit_Tab_Yubico extends Mage_Adminhtml_Block_Widget_Form
 {
+    /**
+     * 
+     */
 	public function __construct()
 	{
 		parent::__construct();
 		$this->setDestElementId('yubico_form');
 	}
 	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see Mage_Adminhtml_Block_Widget_Form::_prepareForm()
+	 */
 	protected function _prepareForm()
 	{
 		$model = Mage::registry('permissions_user');

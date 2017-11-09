@@ -38,7 +38,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Article extends Egovs_Paymentbase_M
      * The quantity
      * Meta informations extracted from the WSDL
      * - minOccurs : 0
-     * @var long
+     * @var int
      */
     public $quantity;
     /**
@@ -46,7 +46,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Article extends Egovs_Paymentbase_M
      * Meta informations extracted from the WSDL
      * - documentation : Price in lower currency unit, e.g. cent.
      * - minOccurs : 0
-     * @var long
+     * @var int
      */
     public $price;
     /**
@@ -61,8 +61,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Article extends Egovs_Paymentbase_M
      * @see parent::__construct()
      * @param string $_name
      * @param string $_code
-     * @param long $_quantity
-     * @param long $_price
+     * @param int $_quantity
+     * @param float $_price
      * @param string $_description
      * @return Egovs_Paymentbase_Model_Payplace_Types_Article
      */
@@ -106,7 +106,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Article extends Egovs_Paymentbase_M
     }
     /**
      * Get quantity value
-     * @return long|null
+     * @return int|null
      */
     public function getQuantity()
     {
@@ -114,8 +114,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Article extends Egovs_Paymentbase_M
     }
     /**
      * Set quantity value
-     * @param long $_quantity the quantity
-     * @return long
+     * @param int $_quantity the quantity
+     * @return bool
      */
     public function setQuantity($_quantity)
     {
@@ -123,7 +123,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Article extends Egovs_Paymentbase_M
     }
     /**
      * Get price value
-     * @return long|null
+     * @return float|null
      */
     public function getPrice()
     {
@@ -131,8 +131,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Article extends Egovs_Paymentbase_M
     }
     /**
      * Set price value
-     * @param long $_price the price
-     * @return long
+     * @param float $_price the price
+     * @return bool
      */
     public function setPrice($_price)
     {

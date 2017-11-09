@@ -29,6 +29,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
 	protected $_children = array();
 	protected $_Service = null;
 	protected $_ServiceLayer = null;
+	protected static $Count = 0;
 	
     public function _construct()
     {
@@ -142,5 +143,35 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     public function getChildren()
     {
     	return $this->_children;
+    }
+    
+    
+    public function getOpenLayerWfs()
+    {
+    	self::$Count++;
+    	$text = array();
+    	$text[] = "var vectorSource".self::$Count." = new ol.source.Vector({";
+    	$text[] = "	format: new ol.format.GeoJSON(),";
+    	$text[] = "	url: function(extent) {";
+    	$text[] = "		return '".$this->getService()->getUrlMap()."service=WFS&' +";
+    	$text[] = "		'version=2.0.0&request=GetFeature&typename=kachel:dgm10_gk3&' +";
+    	$text[] = "		'srsname=EPSG:6.9:31467&' +";
+    	$text[] = "		'bbox=' + extent.join(',') + ',EPSG:6.9:31467';";
+    	$text[] = "	},";
+    	$text[] = "	strategy: ol.loadingstrategy.bbox";
+    	$text[] = "});";
+    	 
+    	 
+    	$text[] = "	var vector = new ol.layer.Vector({";
+    	$text[] = "		source: vectorSource".self::$Count.",";
+    	$text[] = "		style: new ol.style.Style({";
+    	$text[] = "			stroke: new ol.style.Stroke({";
+    	$text[] = "				color: 'rgba(0, 0, 255, 1.0)',";
+    	$text[] = "				width: 2";
+    	$text[] = "			})";
+    	$text[] = "		})";
+    	$text[] = "	});";
+    	 
+    	return implode("\n", $text);
     }
 }

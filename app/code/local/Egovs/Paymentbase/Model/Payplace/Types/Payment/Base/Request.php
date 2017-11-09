@@ -35,7 +35,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Base_Request extends Egovs_
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 17
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var string
      */
     public $eventExtId;
     /**
@@ -96,7 +96,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Base_Request extends Egovs_
      * Constructor method for paymentBaseRequest
      * @see parent::__construct()
      * @param string $_timeStamp
-     * @param anyExtId $_eventExtId
+     * @param string $_eventExtId
      * @param string $_basketId
      * @param Egovs_Paymentbase_Model_Payplace_Enum_KindEnum $_kind
      * @param Egovs_Paymentbase_Model_Payplace_Enum_IndicatorEnum $_indicator
@@ -130,7 +130,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Base_Request extends Egovs_
     }
     /**
      * Get eventExtId value
-     * @return anyExtId|null
+     * @return string|null
      */
     public function getEventExtId()
     {
@@ -138,8 +138,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Base_Request extends Egovs_
     }
     /**
      * Set eventExtId value
-     * @param anyExtId $_eventExtId the eventExtId
-     * @return anyExtId
+     * @param string $_eventExtId the eventExtId
+     * @return bool
      */
     public function setEventExtId($_eventExtId)
     {

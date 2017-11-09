@@ -57,6 +57,10 @@ class Mage_Page_Block_Html_Breadcrumbs extends Mage_Core_Block_Template
      */
     protected $_cacheKeyInfo = null;
 
+    
+    /**
+     * 
+     */
     public function __construct()
     {
         parent::__construct();
@@ -92,7 +96,11 @@ class Mage_Page_Block_Html_Breadcrumbs extends Mage_Core_Block_Template
         return $this->_cacheKeyInfo;
     }
 
-
+    /**
+     * 
+     * {@inheritDoc}
+     * @see Mage_Core_Block_Template::_toHtml()
+     */
     protected function _toHtml()
     {
         if (is_array($this->_crumbs)) {

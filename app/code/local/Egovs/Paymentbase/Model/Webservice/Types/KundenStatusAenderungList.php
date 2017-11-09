@@ -16,7 +16,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	/**
 	 * Konstruktor
 	 * 
-	 * @param Egovs_Paymentbase_Model_Webservice_Types_KundenStatusAenderung[] $kundenStatusAenderungList Array von KundenStatusAenderung-Objekten
+	 * @param array $kundenStatusAenderungList Array von KundenStatusAenderung-Objekten
 	 * 
 	 * @return void
 	 */
@@ -55,7 +55,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	/**
 	 * Gibt ein Array von KundenStatusAenderung-Objekten zurück
 	 * 
-	 * @return Egovs_Paymentbase_Model_Webservice_Types_Response_KundenStatusAenderung[]
+	 * @return Egovs_Paymentbase_Model_Webservice_Types_KundenStatusAenderungList
 	 */
 	public function getKundenStatusAenderungList() {
 		return $this->kundenStatusAenderungList;

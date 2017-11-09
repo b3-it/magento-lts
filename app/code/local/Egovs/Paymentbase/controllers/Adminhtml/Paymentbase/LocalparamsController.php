@@ -13,7 +13,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_LocalparamsController extends Mage
 	/**
 	 * Init
 	 * 
-	 * @return Egovs_Paymentbase_Adminhtml_LocalparamsController
+	 * @return Egovs_Paymentbase_Adminhtml_Paymentbase_LocalparamsController
 	 */
 	protected function _initAction() {
 		$this->loadLayout();

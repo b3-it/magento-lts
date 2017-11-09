@@ -23,13 +23,13 @@ class Egovs_Paymentbase_Model_Payplace_Types_Base_Response extends Egovs_Payment
      * The ref
      * Meta informations extracted from the WSDL
      * - use : optional
-     * @var NCName
+     * @var string
      */
     public $ref;
     /**
      * Constructor method for baseResponse
      * @see parent::__construct()
-     * @param NCName $_ref
+     * @param string $_ref
      * @return Egovs_Paymentbase_Model_Payplace_Types_Base_Response
      */
     public function __construct($_ref = NULL)
@@ -38,7 +38,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Base_Response extends Egovs_Payment
     }
     /**
      * Get ref value
-     * @return NCName|null
+     * @return string|null
      */
     public function getRef()
     {
@@ -46,8 +46,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Base_Response extends Egovs_Payment
     }
     /**
      * Set ref value
-     * @param NCName $_ref the ref
-     * @return NCName
+     * @param string $_ref the ref
+     * @return bool
      */
     public function setRef($_ref)
     {

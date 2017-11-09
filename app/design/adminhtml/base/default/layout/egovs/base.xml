@@ -4,11 +4,12 @@
     <default>
         <reference name="head">
             <action method="addCss"><stylesheet>css/egovs_default.css</stylesheet></action>
-            <action method="addCss" ifconfig="admin/design/mode_test"><stylesheet>css/shop-state-test.css</stylesheet> </action>
-            <action method="addCss" ifconfig="admin/design/mode_int"><stylesheet>css/shop-state-int.css</stylesheet> </action>
-            <action method="addCss" ifconfig="admin/design/mode_prod"><stylesheet>css/shop-state-prod.css</stylesheet> </action>
+            <action method="addCss" ifconfig="admin/design/mode_test"><stylesheet>css/shop-state-test.css</stylesheet></action>
+            <action method="addCss" ifconfig="admin/design/mode_migration"><stylesheet>css/shop-state-migration.css</stylesheet></action>
+            <action method="addCss" ifconfig="admin/design/mode_int"><stylesheet>css/shop-state-int.css</stylesheet></action>
+            <action method="addCss" ifconfig="admin/design/mode_prod"><stylesheet>css/shop-state-prod.css</stylesheet></action>
             <!-- Muss an letzter Stelle stehen um als DEFAULT zu gelten -->
-            <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet> </action>
+            <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet></action>
             <!-- Support für Native events und Aufrufe wie $(id).trigger('change') -->
             <!-- 2017-06-21 :: Deaktiviert, da jetzt mit jQuery umgesetzt -->
             <!-- <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action> -->
@@ -17,8 +18,7 @@
     </default>
     <adminhtml_egovsbase_tools_analyse_sales_order_item_index>
         <reference name="content">
-            <block type="egovsbase/adminhtml_tools_analyse_sales_order_item" name="egovssbase" >
-            </block>
+            <block type="egovsbase/adminhtml_tools_analyse_sales_order_item" name="egovssbase" />
         </reference>
     </adminhtml_egovsbase_tools_analyse_sales_order_item_index>
 

@@ -43,7 +43,7 @@ class Egovs_Search_Catalog_Model_Layer_Filter_Avail extends Mage_Catalog_Model_L
      * Get option text from frontend model by option id
      *
      * @param   int $optionId
-     * @return  unknown
+     * @return  string
      */
     
    protected function _getOptionText($value)

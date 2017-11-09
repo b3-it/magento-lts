@@ -298,7 +298,7 @@ class Egovs_Openaccountpayment_Model_Openaccount extends Egovs_Paymentbase_Model
 	 * @param Varien_Object $payment Payment
 	 * @param integer 	    $amount  Betrag
 	 * 
-	 * @return  Mage_Payment_Model_Abstract
+	 * @return Egovs_Paymentbase_Model_Abstract
 	 *
 	 * @see		Egovs_Paymentbase_Model_Abstract::_authorize
 	 */

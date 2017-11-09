@@ -26,9 +26,9 @@
     $types_flash = array('flv', 'avi');
     $types_html5 = array('ogg', 'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a');
 
-    $thumb_width  = 90;  // Breite des Vorschaubildes für Videos
-    $thumb_height = 90;  // Höhe des Vorschaubildes für Video
-    $pre_image    = 90;  // Größe des Vorschaubildes für normale Bilder
+    $thumb_width  = 90;  // Breite des Vorschaubildes fÃ¼r Videos
+    $thumb_height = 90;  // HÃ¶he des Vorschaubildes fÃ¼r Video
+    $pre_image    = 90;  // GrÃ¶ÃŸe des Vorschaubildes fÃ¼r normale Bilder
 
 ?>
 
@@ -61,7 +61,7 @@
                       <?php
                       if ( in_array($file_info['extension'], $types_flash) ):
                       ?>
-                        <object id="egov_flash_video_<?php echo $i; ?>"
+                        <object id="egov-flash-video-<?php echo $i; ?>"
                                 type="application/x-shockwave-flash"
                                 data="<?php echo $js_url; ?>flash/player_flv.swf"
                                 class="egov-product-flash"
@@ -75,7 +75,7 @@
                             <param name="flashvars" value="flv=<?php echo $full_url; ?>" />
                         </object>
                       <?php elseif ( in_array($file_info['extension'], $types_html5) ): ?>
-                        <video id="egov_product_video_<?php echo $i; ?>"
+                        <video id="egov-html5-video-<?php echo $i; ?>"
                                width="<?php echo $thumb_width; ?>"
                                height="<?php echo $thumb_height; ?>"
                                class="egov-product-video"
@@ -87,7 +87,8 @@
                                     type='video/<?php echo $file_info['extension']; ?>' />
                         </video>
                       <?php else: ?>
-                        <a class="thumb-link egov-product-image"
+                        <a id="egov-product-image-<?php echo $i; ?>"
+                           class="thumb-link egov-product-image"
                            href="javascript:void(0);"
                            title="<?php echo $file_label ?>"
                            data-image-index="<?php echo $i; ?>">

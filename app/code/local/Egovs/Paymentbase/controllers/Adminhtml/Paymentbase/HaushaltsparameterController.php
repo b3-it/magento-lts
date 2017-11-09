@@ -13,7 +13,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController exten
 	/**
 	 * Init
 	 *
-	 * @return Egovs_Paymentbase_Adminhtml_HaushaltsparameterController
+	 * @return Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController
 	 */
 	protected function _initAction() {
 		$this->loadLayout();

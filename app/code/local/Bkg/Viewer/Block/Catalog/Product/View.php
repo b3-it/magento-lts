@@ -17,10 +17,5 @@ class Bkg_Viewer_Block_Catalog_Product_View extends Mage_Catalog_Block_Product_V
 		return (!empty($_product->getGeocomposit()));
 	}
 	
- 	public function getComposit($_product)
- 	{
- 		$block = Mage::getBlockSingleton('bkgviewer/catalog_product_view_map');
- 		
- 		return $block->toHtml();
- 	}
+ 	
 }

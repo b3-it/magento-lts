@@ -47,8 +47,8 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 	
 	/***
 	 * 
-	 * @param unknown $order
-	 * @param unknown $orderItem
+	 * @param Mage_Sales_Model_Order       $order
+	 * @param Mage_Sales_Model_Order_Item  $orderItem
 	 * @return string
 	 */
 	private function getBudgedNumber($order, $orderItem)

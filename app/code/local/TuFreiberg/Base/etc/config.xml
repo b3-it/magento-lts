@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <TuFreiberg_Base>
+            <version>0.0.0.5</version>
+        </TuFreiberg_Base>
+    </modules>
+    <global>
+        <resources>
+            <tufreibergbase_setup>
+                <setup>
+                    <module>TuFreiberg_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </tufreibergbase_setup>
+        </resources>
+    </global>
+</config>
