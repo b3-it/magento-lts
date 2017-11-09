@@ -313,7 +313,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 					$transactionType,
 					$this->getBuchungsListeParameter($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal())
 			);			
-			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
+			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->getCode() == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
 				//Fallback zu alter Methode
 				Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 				$objResult = $this->_getSoapClient()->anlegenKassenzeichen($this->_getMandantNr(), $this->_getECustomerId(), $objBuchungsliste, null, null, $transactionType);
@@ -464,6 +464,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		}
 
 		$msg = null;
+		$additionalMsg = null;
 		$iReturnCode = null;
 		$request = null;
 		try {
@@ -529,14 +530,14 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 			Mage::logException($e);
 			$msg = $e->getMessage();
 			if ($e->getPrevious()) {
-			    $msg .= "\r\n\r\n".$e->getPrevious()->getMessage();
+			    $additionalMsg = "\r\n\r\n".$e->getPrevious()->getMessage();
             }
 		}
 
 		if (is_null($msg)) {
 			$msg = Mage::helper('gka_tkonnektpay')->__("Unknown server error");
 		}
-		Mage::helper("paymentbase")->sendMailToAdmin($msg, 'Fehler bei getTkonnektRedirectURL');
+		Mage::helper("paymentbase")->sendMailToAdmin(sprintf('%s%s', $msg, $additionalMsg), 'Fehler bei getTkonnektRedirectURL');
 
 		if (!is_null($iReturnCode) && !is_null($request)) {
 			$msg = $request->getResponseMessage();
