@@ -637,7 +637,10 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 					Mage::log("{$this->getCode()}::\n$tmp", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				}
 
-				$extKassenzeichen = trim(str_replace("{$this->_getBewirtschafterNr()}/", "", $merchantTxId));
+				$extKassenzeichen = trim($merchantTxId);
+				if (preg_match('/(?<=\/)[\w]+$/', $extKassenzeichen, $matches)) {
+				    $extKassenzeichen = $matches[0];
+                }
 
 				$order = $this->_getOrder();
 				// If order was not found, return false
@@ -649,7 +652,9 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 
                 if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                     if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
-                        Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus TKonnektdaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+                        $msg = "Kassenzeichen stimmt nicht mit Kassenzeichen aus TKonnektdaten überein!";
+                        $msg .= "\r\nTKonnekt:$extKassenzeichen != {$order->getPayment()->getKassenzeichen()}:Webshop";
+                        Mage::log("{$this->getCode()}::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
                         return false;
                     }
                 }
