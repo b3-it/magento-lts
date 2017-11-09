@@ -79,9 +79,8 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
     	}
 
     	if (($txId = $payment->getTransactionId()) || ($txId = $payment->getOrder()->getExternesKassenzeichen())) {
-    	    $aTxId = explode('/', $txId);
-    	    if (count($aTxId) == 2) {
-    	        return $txId;
+            if (preg_match('/[\w]+\/[\w]+$/', $txId)) {
+                return $txId;
             }
         }
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
@@ -544,7 +543,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		}
 		Mage::helper("paymentbase")->sendMailToAdmin(sprintf('%s%s', $msg, $additionalMsg), 'Fehler bei getTkonnektRedirectURL');
 
-		if (!is_null($iReturnCode) && !is_null($request)) {
+		if (!is_null($request)) {
 			$msg = $request->getResponseMessage();
 		}
 		Mage::throwException($msg);
@@ -860,7 +859,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 * @param string $refId			TranskationsID des Zahlungsproviders
 	 * @param string $providerName  VISA,MASTER,GIROPAY,SEPASDD
 	 *
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Model_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 *
 	 * @throws Exception
 	 */
