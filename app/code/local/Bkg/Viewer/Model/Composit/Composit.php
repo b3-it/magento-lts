@@ -118,9 +118,7 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
                     if (version_compare(PHP_VERSION, '5.6.0') >= 0) {
                         array_push($data[$vg->getIdent()], ...$tmp);
                     } else {
-                        foreach ($tmp as $t) {
-                            $data[$vg->getIdent()][] = $t;
-                        }
+                        $data[$vg->getIdent()] = array_merge($data[$vg->getIdent()], $tmp);
                     }
                 }
             }

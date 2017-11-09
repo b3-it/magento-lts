@@ -79,7 +79,7 @@
                 <block type="bitv/page_html_header" name="bitvmenu" as="bitvmenu" template="egovs/bitv/page/html/header.phtml"/>
                 <block type="page/template_links" name="top.links" as="topLinks" />
                 <block type="core/template" name="topEgovmenu" template="page/template/egovmenu.phtml" />
-                <!-- <block type="egovsbase/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" /> -->
+                <block type="egovsbase/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" />
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
                 <block type="page/html_wrapper" name="top.container" as="topContainer" translate="label">
                     <label>Page Header</label>

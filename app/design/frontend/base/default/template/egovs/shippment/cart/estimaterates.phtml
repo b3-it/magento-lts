@@ -26,15 +26,10 @@
                     </dd>
                 <?php endforeach; ?>
             </dl>
-            <!-- 
-            <div class="buttons-set">
-                <button type="submit" title="<?php echo $this->__('Update Total') ?>" class="button" name="do" value="<?php echo $this->__('Update Total') ?>"><span><span><?php echo $this->__('Update Total') ?></span></span></button>
-            </div>
-             -->
              <?php endif; ?>
         <?php else:?>
              <?php $plz = $this->getEstimatePostcode(); if (empty($plz)) {
-            		echo $this->__('Calculation of shipping cost requires postcode!'); 
+            		echo $this->__('Calculation of shipping cost requires postcode!');
 				} else{
 					echo $this->__('No Valid Shipping Method found!');
 				}?>
