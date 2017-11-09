@@ -116,6 +116,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		/** @var $quote Mage_Sales_Model_Quote */
 		$quote = $quoteItem->getQuote();
 		if ($product && $product->getTypeId() != Gka_VirtualPayId_Model_Product_Type_Virtualpayid::TYPE_VIRTUAL_PAYID) {
+		    $quote->unsetData('externes_kassenzeichen');
 			return $this;
 		}
 		
