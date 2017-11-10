@@ -344,7 +344,8 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     		$notify->parseNotification($this->getRequest()->getParams());
     		
     		if (!$notify->paymentSuccessful()) {
-    			switch (intval($notify->getResponseParam("gcResultPayment"))) {
+                $iReturnCode = intval($notify->getResponseParam("gcResultPayment"));
+    			switch ($iReturnCode) {
     				/* Giropay
     				 * 4001 	giropay Bank offline
     				 * 4002 	Online Banking Zugang ungültig
@@ -395,9 +396,13 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     					$msg = Mage::helper("egovs_girosolution")->__("Transaction unsuccessful");
     					break;
     				default:
-    					$msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
+                        $msg = $notify->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
     			}
-    			
+
+    			if (!$msg) {
+                    $msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
+                }
+
     			$data = var_export($notify->getResponseParams(), true);
     			Mage::log(sprintf("$module:: Girosolution payment unsuccessful : %s\r\n%s", $msg, $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
     			
