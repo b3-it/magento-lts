@@ -53,7 +53,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       		//'onchange'  => 'onchangeTransferType()',
       
       ));
-      
+ /*     
       $services = Mage::getModel('bkgviewer/service_tilesystem')->getCollection();
       $fieldset->addField('tile_system', 'select', array(
       		'label'     => Mage::helper('bkgviewer')->__('Tile System'),
@@ -75,7 +75,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       		//'onchange'  => 'onchangeTransferType()',
       
       ));
-      
+  */    
       
       $fieldset = $form->addFieldset('navi_layers', array('legend'=>Mage::helper('bkgviewer')->__('Layers available')));
       

@@ -35,6 +35,21 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 		Mage::register('kassenbuchjournal_data', $model);
 		$this->loadLayout(false);
 		$this->getResponse()->setBody(
+				$this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_journal_grid')->toHtml()
+				);
+	}
+	
+	/**
+	 * Order grid
+	 */
+	public function itemsAction()
+	{
+		$id     =  intval($this->getRequest()->getParam('id'));
+		$model  = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
+	
+		Mage::register('kassenbuchjournal_data', $model);
+		$this->loadLayout(false);
+		$this->getResponse()->setBody(
 				$this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_journal_edit_tab_items')->toHtml()
 				);
 	}

@@ -21,13 +21,13 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Response extends Egovs
 {
     /**
      * The redirectURL
-     * @var anyURI
+     * @var string
      */
     public $redirectURL;
     /**
      * Constructor method for formServiceResponse
      * @see parent::__construct()
-     * @param anyURI $_redirectURL
+     * @param string $_redirectURL
      * @return Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Response
      */
     public function __construct($_redirectURL = NULL)
@@ -36,7 +36,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Response extends Egovs
     }
     /**
      * Get redirectURL value
-     * @return anyURI|null
+     * @return string|null
      */
     public function getRedirectURL()
     {
@@ -44,8 +44,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Response extends Egovs
     }
     /**
      * Set redirectURL value
-     * @param anyURI $_redirectURL the redirectURL
-     * @return anyURI
+     * @param string $_redirectURL the redirectURL
+     * @return bool
      */
     public function setRedirectURL($_redirectURL)
     {

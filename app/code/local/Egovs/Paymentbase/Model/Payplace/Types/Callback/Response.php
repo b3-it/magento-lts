@@ -24,19 +24,19 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Response extends Egovs_Pay
      * The ref
      * Meta informations extracted from the WSDL
      * - documentation : This reference makes it easier to assign a response to a request. This attribute will be copied from the "id" attribute of the request, if it has been provided.
-     * @var NCName
+     * @var string
      */
     public $ref;
     /**
      * The version
-     * @var anonymous15
+     * @var string
      */
     public $version;
     /**
      * Constructor method for callbackResponse
      * @see parent::__construct()
-     * @param NCName $_ref
-     * @param anonymous15 $_version
+     * @param string $_ref
+     * @param string $_version
      * @return Egovs_Paymentbase_Model_Payplace_Types_Callback_Response
      */
     public function __construct($_ref = NULL,$_version = NULL)
@@ -45,7 +45,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Response extends Egovs_Pay
     }
     /**
      * Get ref value
-     * @return NCName|null
+     * @return string|null
      */
     public function getRef()
     {
@@ -53,8 +53,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Response extends Egovs_Pay
     }
     /**
      * Set ref value
-     * @param NCName $_ref the ref
-     * @return NCName
+     * @param string $_ref the ref
+     * @return bool
      */
     public function setRef($_ref)
     {
@@ -62,7 +62,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Response extends Egovs_Pay
     }
     /**
      * Get version value
-     * @return anonymous15|null
+     * @return string|null
      */
     public function getVersion()
     {
@@ -70,8 +70,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Response extends Egovs_Pay
     }
     /**
      * Set version value
-     * @param anonymous15 $_version the version
-     * @return anonymous15
+     * @param string $_version the version
+     * @return bool
      */
     public function setVersion($_version)
     {

@@ -23,7 +23,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Base_Request extends Egovs_Paymentb
      * The id
      * Meta informations extracted from the WSDL
      * - use : required
-     * @var ID
+     * @var int
      */
     public $id;
     /**
@@ -44,7 +44,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Base_Request extends Egovs_Paymentb
     /**
      * Constructor method for baseRequest
      * @see parent::__construct()
-     * @param ID $_id
+     * @param int $_id
      * @param Egovs_Paymentbase_Model_Payplace_Types_Option $_option
      * @param string $_merchantId
      * @return Egovs_Paymentbase_Model_Payplace_Types_Base_Request
@@ -55,7 +55,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Base_Request extends Egovs_Paymentb
     }
     /**
      * Get id value
-     * @return ID
+     * @return int
      */
     public function getId()
     {
@@ -63,8 +63,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Base_Request extends Egovs_Paymentb
     }
     /**
      * Set id value
-     * @param ID $_id the id
-     * @return ID
+     * @param int $_id the id
+     * @return bool
      */
     public function setId($_id)
     {

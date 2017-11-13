@@ -61,11 +61,18 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                 <td class="label"><label><?php echo Mage::helper('sales')->__('Order Status') ?></label></td>
                 <td class="value"><strong><span id="order_status"><?php echo $_order->getStatusLabel() ?></span></strong></td>
             </tr>
-            <?php if (($_order->getPayment()->getKassenzeichen())): ?>
-            <tr>
-            	<td class="label"><label>Kassenzeichen</label></td>
-                <td class="value"><strong><span id="order_status"><?php echo $_order->getPayment()->getKassenzeichen() ?></span></strong></td>
-        	</tr>
+            <?php if (($_order->getExternesKassenzeichen())): ?>
+                <tr>
+                    <td class="label"><label><?php echo Mage::helper('paymentbase')->__('Bewirtschafter/Kassenzeichen') ?></label></td>
+                    <td class="value"><strong><span id="order_bkz"><?php echo $_order->getExternesKassenzeichen() ?></span></strong></td>
+                </tr>
+                <?php else: ?>
+                    <?php if (($_order->getPayment()->getKassenzeichen())): ?>
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('paymentbase')->__('Kassenzeichen') ?></label></td>
+                        <td class="value"><strong><span id="order_bkz"><?php echo $_order->getPayment()->getKassenzeichen() ?></span></strong></td>
+                    </tr>
+                <?php endif; ?>
         	<?php endif; ?>
         	<?php if (($_order->getPayment()->getSaferpayTransactionId())): ?>
             <tr>

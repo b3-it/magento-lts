@@ -114,7 +114,7 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Saferpay extends Egovs_Saferpay_Mode
      * @param string												 $soapFunction     Name der Soap-Funktion
      * @param bool													 $keepCustomer     Kunden löschen?
      * 
-     * @return true|throws Exception
+     * @return Mage_Core_Exception|bool true|throws Exception
      * 
      * @throws Exception
      * 

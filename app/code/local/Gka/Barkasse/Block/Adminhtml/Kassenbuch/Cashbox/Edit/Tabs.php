@@ -16,14 +16,14 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Cashbox_Edit_Tabs extends Mage_Adm
       parent::__construct();
       $this->setId('kassenbuchcashbox_tabs');
       $this->setDestElementId('edit_form');
-      $this->setTitle(Mage::helper('gka_barkasse')->__('Kassenbuch Cashbox Information'));
+      $this->setTitle(Mage::helper('gka_barkasse')->__('Barkasse Information'));
   }
 
   protected function _beforeToHtml()
   {
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('gka_barkasse')->__('Kassenbuch Cashbox Information'),
-          'title'     => Mage::helper('gka_barkasse')->__('Kassenbuch Cashbox Information'),
+          'label'     => Mage::helper('gka_barkasse')->__('Details'),
+          'title'     => Mage::helper('gka_barkasse')->__('Details'),
           'content'   => $this->getLayout()->createBlock('gka_barkasse/adminhtml_kassenbuch_cashbox_edit_tab_form')->toHtml(),
       ));
 

@@ -530,8 +530,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * Anlegen eines Temporären Kassenzeichens
 	 *
 	 * @param string        $eShopKundenNr    ePayBL Kunden ID
-	 * @param Buchungsliste $objBuchungsListe Buchungsliste
-	 * @param LieferAdresse $lieferAdresse	  Lieferadresse
+	 * @param object        $objBuchungsListe Buchungsliste
+	 * @param string        $lieferAdresse	  Lieferadresse
 	 * @param string        $buchungsText     Text für Buchung
 	 * @param string|array  $zahlverfahren    Vorgesehenes Zahlverfahren für diese Buchung (Feld kann durch Angabe von null leer gelassen werden). Mögliche Werte sind: 'UEBERWEISUNGVOR', 'UEBERWEISUNGNACH', 'LASTSCHRIFTMIT', 'LASTSCHRIFTOHNE', 'GIROPAY' und 'KREDITKARTE'.
 	 *
@@ -561,11 +561,11 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * Anlegen eines Temporären Kassenzeichens
 	 *
 	 * @param string                          $eShopKundenNr          ePayBL Kunden ID
-	 * @param Buchungsliste                   $objBuchungsListe       Buchungsliste
-	 * @param LieferAdresse                   $lieferAdresse		  Lieferadresse
+	 * @param object                          $objBuchungsListe       Buchungsliste
+	 * @param string                          $lieferAdresse		  Lieferadresse
 	 * @param string                          $buchungsText           Text für Buchung
 	 * @param string|array                    $zahlverfahrenListe     Liste der vorgesehenes Zahlverfahren für diese Buchung (Feld kann durch Angabe von null leer gelassen werden). Mögliche Werte sind: 'UEBERWEISUNGVOR', 'UEBERWEISUNGNACH', 'LASTSCHRIFTMIT', 'LASTSCHRIFTOHNE', 'GIROPAY' und 'KREDITKARTE'.
-	 * @param BuchungslisteParameterSet|array $buchungsListeParameter Zusätzliche Parameter für ePayBL
+	 * @param array                           $buchungsListeParameter Zusätzliche Parameter für ePayBL
 	 *
 	 * @return SoapFault|stdClass
 	 */
@@ -608,10 +608,10 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	}
 	/**
 	 * 
-	 * @param unknown $wId
-	 * @param unknown $mandantNr
-	 * @param unknown $saferpayReferenzID
-	 * @param unknown $kartenTyp
+	 * @param string $wId
+	 * @param string $mandantNr
+	 * @param string $saferpayReferenzID
+	 * @param string $kartenTyp
 	 * 
 	 * @return mixed
 	 * 
@@ -633,9 +633,9 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	
 	/**
 	 * 
-	 * @param unknown $wId
-	 * @param unknown $mandantNr
-	 * @param unknown $saferpayReferenzID
+	 * @param string $wId
+	 * @param string $mandantNr
+	 * @param string $saferpayReferenzID
 	 * 
 	 * @return mixed
 	 * 

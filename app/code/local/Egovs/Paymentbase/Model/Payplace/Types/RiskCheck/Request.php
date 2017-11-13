@@ -35,7 +35,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Request extends Egovs_Pay
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 17
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var int
      */
     public $eventExtId;
     /**
@@ -81,7 +81,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Request extends Egovs_Pay
      * Constructor method for riskCheckRequest
      * @see parent::__construct()
      * @param string $_timeStamp
-     * @param anyExtId $_eventExtId
+     * @param int $_eventExtId
      * @param string $_basketId
      * @param Egovs_Paymentbase_Model_Payplace_Enum_RiskCheck_ActionEnum $_action
      * @param Egovs_Paymentbase_Model_Payplace_Types_EScore_Data $_eScoreData
@@ -114,7 +114,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Request extends Egovs_Pay
     }
     /**
      * Get eventExtId value
-     * @return anyExtId|null
+     * @return int|null
      */
     public function getEventExtId()
     {
@@ -122,8 +122,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Request extends Egovs_Pay
     }
     /**
      * Set eventExtId value
-     * @param anyExtId $_eventExtId the eventExtId
-     * @return anyExtId
+     * @param int $_eventExtId the eventExtId
+     * @return bool
      */
     public function setEventExtId($_eventExtId)
     {

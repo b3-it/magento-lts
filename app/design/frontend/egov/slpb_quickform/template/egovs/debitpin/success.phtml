@@ -1,15 +1,15 @@
 <h4><?php echo $this->__('Debit PIN Registration Success') ?></h4>
-<?php 
-if($this->getIsActivated())
-{ ?>
-<?php echo $this->__('PIN_REGISTRATION_SUCCESSFULL') ?>
-<a href="<?php echo $this->getSkinUrl('')?>Antrag_Lastschriftverfahren.pdf" target="_blank"><u><?php echo $this->__('REGISTRATION_DOCUMENT') ?> (PDF)</u></a><br><br>
-<?php
-if(Mage::getStoreConfig('payment/paymentbase/show_webshop'))
-{
-	echo '<b>Webshop:</b> '. Mage::getStoreConfig('payment/paymentbase/webshopdesmandanten').'<br><br>';	
-}
-?>
+<?php if($this->getIsActivated()) { ?>
+    <?php echo $this->__('PIN_REGISTRATION_SUCCESSFULL') ?>
+    <a href="<?php echo $this->getSkinUrl('')?>Antrag_Lastschriftverfahren.pdf" target="_blank">
+    	<?php echo $this->__('REGISTRATION_DOCUMENT') ?> (PDF)
+    </a>
+    <br /><br />
+    <?php if(Mage::getStoreConfig('payment/paymentbase/show_webshop')) { ?>
+	    <b><?php echo $this->__('Webshop') ?>:</b>
+	    <?php Mage::getStoreConfig('payment/paymentbase/webshopdesmandanten'); ?>
+	    <br /><br />
+    <?php } ?>
 <?php echo $this->__('KUNDENNUMMER_ANGEBEN') ?><br><br> 
 <?php
 

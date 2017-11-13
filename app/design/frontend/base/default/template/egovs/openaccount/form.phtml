@@ -17,15 +17,15 @@
 
 ?>
 <?php echo $this->getPaymentInfoHtml(); ?>
-<p>
-<fieldset class="form-list">
-    <ul id="payment_form_<?php echo $this->getMethodCode(); ?>" >
-        <li>
-            <div class="input-box">
-            <?php $s = $this->getUrl('zahlung')?>
-            <p><?php echo $this->__("<a target='_blank' href='%s'>Here</a> you can read details to the payment method!",$s)?></p>
-            </div>
-        </li>
-    </ul>
-</fieldset>
-</p>
+<div>
+    <fieldset class="form-list">
+        <ul id="payment_form_<?php echo $this->getMethodCode(); ?>" >
+            <li>
+                <div class="input-box">
+                <?php $s = $this->getUrl('zahlung')?>
+                <p><?php echo $this->__("<a target='_blank' href='%s'>Here</a> you can read details to the payment method!",$s)?></p>
+                </div>
+            </li>
+        </ul>
+    </fieldset>
+</div>

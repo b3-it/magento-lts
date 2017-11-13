@@ -497,8 +497,9 @@ class Mage_CatalogInventory_Model_Stock_Status extends Mage_Core_Model_Abstract
     
     /**
      * getItemById der Collection liefert nur dann richtige Items wenn der idFieldName der Collection
-     * und des Items übereinstimmen 
-     * @param Collection $collection
+     * und des Items übereinstimmen
+     * 
+     * @param Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Collection $collection
      * @param int $itemId
      * @return Varien_Object|NULL
      */

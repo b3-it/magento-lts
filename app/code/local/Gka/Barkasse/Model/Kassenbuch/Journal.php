@@ -170,6 +170,12 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
      	return $collection;
      }
     
+     
+     public function setItems($items)
+     {
+     	$this->_items = $items;
+     	return $this;
+     }
     
     public function getAllItems()
     {
@@ -269,7 +275,7 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
 	    	
 	    	$file = array();
 	    	$file['content'] = $itemsCSV;
-	    	$file['filename'] = "KassenabschlussProtokoll ". $this->getCashbox()->getTitle();
+	    	$file['filename'] = "Kassenabschlussprotokoll ". $this->getCashbox()->getTitle().".csv";
 	    
 	    	$files = array();
 	    	$files[] = $file;

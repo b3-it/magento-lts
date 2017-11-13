@@ -1,9 +1,25 @@
 <?php
+/**
+ * B3it Maintenance
+ * 
+ * 
+ * @category   	B3it
+ * @package    	B3it_Maintenance
+ * @name       	B3it_Maintenance_Controller_OfflineRouter
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Varien_Router_Standard {
 	const MAINTENANCE_ON = 1;
 	const MAINTENANCE_SCHEDULED = 2;
 	private $cmspage = '/index/';
 	
+	/**
+	 * 
+	 * @param Varien_Event_Observer $observer
+	 * @return void
+	 */
 	public function addOfflineRouter(Varien_Event_Observer $observer) {
 		if (! Mage::isInstalled ())
 			return;
@@ -23,6 +39,10 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 		$curDate2 = Mage::getStoreConfig ( 'general/offline/from_date' );
 		$curCMS = Mage::getStoreConfig ( 'general/offline/cmspagepicker' );
 		
+		if ( !strlen($curDate1) OR !strlen($curDate2) ) {
+		    return;
+		}
+		
 		if ($curOffline == self::MAINTENANCE_ON) {
 			
 			$this->cmspage = $curCMS;
@@ -35,15 +55,26 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 			$from = new Zend_Date ( null, null, $locale );
 			$to = new Zend_Date ( null, null, $locale );
 			
-			$format = 'YYYY-MM-dd HH:mm:ss';
-			$from->setDate ( $curDate2, $format );
-			$from->setTime ( $curDate2, $format );
-			$from->setTimezone ( $timezone );
+			$format = Varien_Date::DATETIME_INTERNAL_FORMAT;
 			
-			$to->setDate ( $curDate1, $format, $locale );
-			$to->setTime ( $curDate1, $format, $locale );
-			$to->setTimezone ( $timezone );
-			
+			if ( !is_null($curDate1) AND !is_null($curDate2) ) {
+			    try {
+			        $from->setDate ( $curDate2, $format );
+			        $from->setTime ( $curDate2, $format );
+			        $from->setTimezone ( $timezone );
+			        
+			        $to->setDate ( $curDate1, $format, $locale );
+			        $to->setTime ( $curDate1, $format, $locale );
+			        $to->setTimezone ( $timezone );
+			    } catch (Exception $e) {
+			        Mage::logException($e);
+			        return;
+			    }
+			}
+			else {
+			    return;
+			}
+
 			$now = Mage::app ()->getLocale ()->date ( null, null, $locale, false );
 			$now = $now->getTimestamp ();
 			

@@ -105,7 +105,7 @@ class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends M
 	 * 
 	 * @param Mage_Sales_Model_Order_Creditmemo $creditmemo Gutschrift
 	 *  
-	 * @return Egovs_Extsalesorder_Adminhtml_Sales_Order_CreditmemoController
+	 * @return Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController
 	 * 
 	 * @see Mage_Adminhtml_Sales_Order_CreditmemoController::_saveCreditmemo()
 	 */
@@ -129,7 +129,7 @@ class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends M
      *
      * @param Mage_Sales_Model_Order_Invoice $invoice Rechnung
      * 
-     * @return Egovs_Extsalesorder_Adminhtml_Sales_Order_CreditmemoController
+     * @return Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController
      */
     protected function _saveInvoice($invoice)
     {

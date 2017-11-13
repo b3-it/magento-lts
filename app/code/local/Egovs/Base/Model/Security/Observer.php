@@ -208,7 +208,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 	/**
 	 * Nötig da {@link Mage_Core_Model_App::__callObserverMethod} method_exists verwendet
 	 * 
-	 * @param unknown $observer Observer
+	 * @param Varien_Event_Observer $observer Observer
 	 * 
 	 * @return void
 	 */

@@ -12,6 +12,9 @@
  */
 class B3it_ConfigCompare_Block_Adminhtml_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
+    /**
+     * 
+     */
     public function __construct()
     {
         parent::__construct();
@@ -22,16 +25,17 @@ class B3it_ConfigCompare_Block_Adminhtml_Edit extends Mage_Adminhtml_Block_Widge
         $this->_mode = 'compare';
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     * @see Mage_Adminhtml_Block_Widget_Container::getHeaderText()
+     */
     public function getHeaderText()
     {
         if( Mage::registry('_data') && Mage::registry('_data')->getId() ) {
-            return Mage::helper('configcompare')->__("Compare Item '%s'", $this->htmlEscape(Mage::registry('_data')->getTitle()));
+            return Mage::helper('configcompare')->__("Compare Item '%s'", $this->escapeHtml(Mage::registry('_data')->getTitle()));
         } else {
             return Mage::helper('configcompare')->__('Add Item');
         }
     }
-    
-
-	
-	
 }

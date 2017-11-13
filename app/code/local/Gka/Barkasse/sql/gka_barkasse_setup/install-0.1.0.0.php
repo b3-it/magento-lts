@@ -165,15 +165,23 @@ $html = '<h2>Kassenabschlussprotokoll {{number}}</h2><h3>{{cashbox_title}} - {{(
 	<thead>
 		<tr style="background-color:#DFDFDF; ">
 			<td style="width:15mm;">Nummer</td>
-			<td style="width:75mm;">Datum</td>
-			<td style="width:40mm;">Betrag</td>	
+			<td style="width:25mm;">Datum</td>
+			<td style="width:25mm;">Betrag</td>
+			<td style="width:25mm;">Bestellung</td>	
+			<td style="width:25mm;">Kassenzeichen</td>
+			<td style="width:25mm;">Externes Kassenzeichen</td>
+			<td style="width:25mm;">Bestellstatus</td>
 		</tr>
 	</thead>
 	{{items}}
 		<tr>
 		<td style="width:15mm;" align="center">{{number}}</td>
-		<td style="width:75mm;">{{(datetime)booking_date}}</td>
-		<td style="width:40mm;">{{(price)booking_amount}}</td>
+		<td style="width:25mm;">{{(datetime)booking_date}}</td>
+		<td style="width:25mm;">{{(price)booking_amount}}</td>
+		<td style="width:25mm;">{{increment_id}}</td>
+		<td style="width:25mm;">{{kassenzeichen}}</td>
+		<td style="width:25mm;">{{externes_kassenzeichen_text}}</td>
+		<td style="width:25mm;">{{status}}</td>
 		</tr>{{items}}
 	</table><br><br>';
 $data['body']['top'] = 110;

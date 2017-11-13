@@ -1,36 +1,29 @@
 <h4><?php echo $this->__('Register for Debit Payment (PIN)') ?></h4>
-<?php 
-if($this->getIsActivated())
-{ ?>
-<?php echo $this->__('ERFOLGREICH_REGISTRIERT') ?>Download: <a href="<?php echo $this->getSkinUrl('')?>Antrag_Lastschriftverfahren.pdf" target="_blank"><u><?php echo $this->__('REGISTRATION_DOCUMENT') ?> (PDF)</u></a><br><br>
-
-<?php
-if(Mage::getStoreConfig('payment/paymentbase/show_webshop'))
-{
-	echo '<b>Webshop:</b> '. Mage::getStoreConfig('payment/paymentbase/webshopdesmandanten').'<br><br>';	
-}
-?>
-<?php echo $this->__('KUNDENNUMMER_ANGEBEN') ?>
-<br><br> 
-<?php
-	echo $this->getCustomerEpayID();
+<?php  if($this->getIsActivated()) { ?>
+    <?php echo $this->__('ERFOLGREICH_REGISTRIERT') ?>
+    <?php echo $this->__('Download') ?>:
+    <a href="<?php echo $this->getSkinUrl('')?>Antrag_Lastschriftverfahren.pdf" target="_blank">
+        <?php echo $this->__('REGISTRATION_DOCUMENT') ?> (PDF)
+    </a>
+    <br /><br />
+    <?php if(Mage::getStoreConfig('payment/paymentbase/show_webshop')) { ?>
+        <b><?php echo $this->__('Webshop') ?>:</b>
+        <?php echo Mage::getStoreConfig('payment/paymentbase/webshopdesmandanten'); ?>
+        <br /><br />
+	<?php } ?>
+	<?php echo $this->__('KUNDENNUMMER_ANGEBEN') ?>
+	<br /><br /> 
+	<?php echo $this->getCustomerEpayID();
 }
 elseif($this->hasAdress()){?>
-<br>
+<br />
 <?php echo $this->__('ERKLAERUNG_VERFAHREN') ?>
-
-<br><br>
+<br /><br />
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form method="post" action="<?php echo $this->getActionUrl()?>">
-<button type="submit"><?php echo $this->__('Register Now') ?></button>
+    <button type="submit"><?php echo $this->__('Register Now') ?></button>
 </form>
-<?php 
-}else{
-?> 
-<br><br>
+<?php }else{ ?> 
+<br /><br />
 <?php echo $this->__('KEINE_ADRESSE') ?>
-
-
-<?php 
-}
-?>
+<?php } ?>

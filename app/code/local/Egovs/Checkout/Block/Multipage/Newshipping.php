@@ -38,7 +38,7 @@ class Egovs_Checkout_Block_Multipage_Newshipping extends Egovs_Checkout_Block_Mu
     /**
      * Get multishipping checkout model
      *
-     * @return Mage_Checkout_Model_Type_Multishipping
+     * @return Egovs_Checkout_Model_Multipage
      */
     public function getCheckout()
     {

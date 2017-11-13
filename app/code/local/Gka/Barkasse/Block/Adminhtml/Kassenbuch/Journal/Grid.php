@@ -17,6 +17,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       $this->setDefaultSort('kassenbuch_journal_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
+      $this->setUseAjax(true);
   }
 
   protected function _prepareCollection()

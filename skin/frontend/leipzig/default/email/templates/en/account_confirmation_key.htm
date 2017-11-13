@@ -1,0 +1,61 @@
+{{template config_path="design/email/header"}}
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <table style="width:98%; margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+        <tr>
+            <td align="center" valign="top">
+                
+                <table style="width:650px;">
+                    <tr>
+                        <td valign="top">
+                            <a href="{{store url=''}}">
+							    <img width="{{if logo_width}}{{var logo_width}}{{else}}165{{/if}}"
+								     height="{{if logo_height}}{{var logo_height}}{{else}}48{{/if}}"
+								     src="{{var logo_url}}"
+								     alt="{{var logo_alt}}"
+								     border="0"/>
+							</a>
+						</td>
+                    </tr>
+                </table>
+
+                
+                <table style="width:650px;">
+                    <tr>
+                        <td valign="top">
+                            <p><strong>Dear {{htmlescape var=$customer.name}}</strong>, <br/> Welcome to {{block type="imprint/field" value="shop_name"}}.</p>
+
+                            <p>Your e-mail {{var customer.email}} must be confirmed before using it to log in to our store.</p>
+
+                            <p>To confirm the e-mail and instantly log in, please, use 
+								<a href="{{store url='customer/account/confirm/' _query_id=$customer.id _query_key=$customer.confirmation _query_back_url=$back_url}}" style="color:#1E7EC8;">this confirmation link</a>. 
+								This link is valid only once.
+							</p>
+
+                            <p style="border:1px solid #BEBCB7; padding:13px 18px; background:#F8F7F5; ">
+                                Use the following values when prompted to log in:<br/>
+                                E-mail: {{var customer.email}}<br/>
+                                Password: <i>you chose when signing up</i>
+							</p>
+
+                            <p>If you have any questions about your account or any other matter, please feel free to contact us at 
+								<a href="mailto:{{block type='imprint/field' value='email'}}" style="color:#1E7EC8;">{{block type="imprint/field" value="email"}}</a>.
+							</p>
+                        </td>
+                    </tr>
+                    <tr>
+						<td>
+							{{template config_path="design/email/support"}}
+						</td>
+					</tr>
+					<tr>
+						<td>
+		                    {{block type="cms/block" block_id="sym_widerruf_en"}}
+		                </td>
+					</tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</div>
+{{template config_path="design/email/footer"}}

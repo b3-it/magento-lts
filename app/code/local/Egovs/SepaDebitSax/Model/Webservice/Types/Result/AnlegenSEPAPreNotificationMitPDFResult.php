@@ -27,14 +27,14 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAPreNotificatio
     public $Result;
     /**
      * The PreNotificationPdf
-     * @var base64Binary
+     * @var Varien_File_Object base64Binary
      */
     public $PreNotificationPdf;
     /**
      * Constructor method for AnlegenSEPAPreNotificationMitPDFResult
      * @see parent::__construct()
      * @param Egovs_SepaDebitSax_Model_Webservice_Types_Result $_result
-     * @param base64Binary $_preNotificationPdf
+     * @param Varien_File_Object base64Binary $_preNotificationPdf
      * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAPreNotificationMitPDFResult
      */
     public function __construct($_result = NULL,$_preNotificationPdf = NULL)
@@ -60,7 +60,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAPreNotificatio
     }
     /**
      * Get PreNotificationPdf value
-     * @return base64Binary|null
+     * @return Varien_File_Object base64Binary|null
      */
     public function getPreNotificationPdf()
     {
@@ -68,8 +68,8 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAPreNotificatio
     }
     /**
      * Set PreNotificationPdf value
-     * @param base64Binary $_preNotificationPdf the PreNotificationPdf
-     * @return base64Binary
+     * @param Varien_File_Object base64Binary $_preNotificationPdf the PreNotificationPdf
+     * @return Varien_File_Object base64Binary
      */
     public function setPreNotificationPdf($_preNotificationPdf)
     {

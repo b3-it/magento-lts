@@ -1,5 +1,5 @@
 <?php
-
+/** @var $this Egovs_Paymentbase_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();

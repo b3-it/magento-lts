@@ -45,13 +45,13 @@ class Gka_Barkasse_Model_Observer extends Varien_Object
 	 */
 	public function onCustomerAuthenticated($observer)
 	{
-		return;
+		//return;
 		$customer = $observer->getModel();
 		if($customer->getId()){
 			if(Mage::getModel('gka_barkasse/kassenbuch_journal')->isCustomerCanOpen($customer->getId()))
 			{
 					$text = "Sie haben zur Zeit keine Barkasse zur Verfügung! Bitte klicken Sie <a href=\"". Mage::getModel('core/url')->getUrl('gka_barkasse/kassenbuch_journal'). "\"> hier </a>";
-					//Mage::getSingleton('customer/session')->addError($text);
+					Mage::getSingleton('customer/session')->addError($text);
 			}
 		}
 	}

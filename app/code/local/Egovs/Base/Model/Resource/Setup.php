@@ -1,14 +1,61 @@
 <?php
 /**
- * Customer resource setup model
+ * Installer
  *
- * @category    Mage
- * @package     Mage_Customer
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @category		Egovs
+ * @package			Egovs_Base
+ * @name			Egovs_Base_Model_Resource_Setup
+ * @author			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ * @version			0.1.0.0
+ * @since			0.1.0.0
+ *
  */
 class Egovs_Base_Model_Resource_Setup extends Mage_Eav_Model_Entity_Setup
 {
-	public function applyUpdates()
+    /**
+     * Call afterApplyAllUpdates method flag
+     * @see Mage_Core_Model_Resource_Setup
+     *
+     * @var boolean
+     */
+    protected $_callAfterApplyAllUpdates = true;
+    
+    /**
+     * Run each time after applying of all updates,
+     * if setup model setted  $_callAfterApplyAllUpdates flag to true
+     * 
+     * http://vinaikopp.com/2014/11/03/magento-setup-scripts/
+     *
+     * @see Mage_Core_Model_Resource_Setup
+     * @return Mage_Core_Model_Resource_Setup
+     */
+    public function afterApplyAllUpdates()
+    {
+        /** Flush all magento cache */
+        Mage::app()->cleanCache();
+
+        /** http://www.matthias-zeis.com/archiv/magento-indizes-manuell-neu-erstellen */
+        /** run all of Magento Indexer */
+        try {
+            //$indexer = Mage::getSingleton('index/indexer');
+            //$processCollection = $indexer->getProcessesCollection();
+            //$processCollection->walk('reindexAll');
+        } catch (Exception $e) {
+        }
+
+        return parent::afterApplyAllUpdates();
+    }
+    
+    
+    /**
+     * Apply module resource install, upgrade and data scripts
+     *
+     * @see Mage_Core_Model_Resource_Setup
+     * @return Mage_Core_Model_Resource_Setup
+     */
+    public function applyUpdates()
 	{
 		$myModule = substr(__CLASS__, 0, strpos(__CLASS__, '_Model'));
 		

@@ -13,19 +13,29 @@ class Gka_Barkasse_Model_Kassenbuch_Journal_Pdf extends Egovs_Pdftemplate_Model_
 	public function preparePdf($journal = array())
 	{
 			$journal = array_shift($journal);
-			$this->Name = Mage::helper('pdftemplate')->__('Kassenabschlussprotokoll').'_' .Mage::getSingleton('core/date')->date('d_m_Y__H_i_s').'.pdf';		
+			$this->Name = Mage::helper('gka_barkasse')->__('Kassenabschlussprotokoll').'_' .Mage::getSingleton('core/date')->date('d_m_Y__H_i_s').'.pdf';		
 
 			$storeId = $journal->getCashbox()->getStoreId();
 			
 			$template = Mage::getStoreConfig('payment/epaybl_cashpayment/pdf_report',$storeId);
 			
+			$items = $journal->getItemsCollection()->getItems();
+			
+			
+			foreach($items as $item){
+				if(empty($item->getExternesKassenzeichen())){
+					$item->setExternesKassenzeichenText(Mage::helper('gka_barkasse')->__('No'));
+				}
+				else{
+					$item->setExternesKassenzeichenText(Mage::helper('gka_barkasse')->__('Yes'));
+				}
+			}
+			
+			
+			
+			$journal->setItems($items);
 			
 			$journal->setTemplateId($template);
-			
-			//$date = "";
-			//$opening = Mage::helper('core')->formatDate($journal->getOpening());
-				
-			
 			
 			
 			$this->LoadTemplate($journal);

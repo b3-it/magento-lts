@@ -33,7 +33,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_New_Form extends Mage_Adminhtml
 				'class'     => 'required-entry',
 				'required'  => true,
 				'name'      => 'url',
-				'value'	=> 'http://localhost.local/bestand_niedersachsen_wms.xml',
+				'value'	=> 'http://sg.geodatenzentrum.de/wfs_kachel',
 				'note'	=> 'getCapabilities'
 		));
 
@@ -50,7 +50,15 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_New_Form extends Mage_Adminhtml
 				//'note'	=> 'getCapabilities'
 		));
 
-
+		$options = Mage::helper('bkgviewer')->getAvailableVersions();
+		$fieldset->addField('version', 'select', array(
+				'label'     => Mage::helper('bkgviewer')->__('Version'),
+				'class'     => 'required-entry',
+				'required'  => true,
+				'name'      => 'version',
+				'options' => $options
+				
+		));
 
 
 		return parent::_prepareForm();

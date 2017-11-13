@@ -14,7 +14,7 @@ class Egovs_Isolation_Model_Observer_Cms extends Egovs_Isolation_Model_Observer_
 {
   /**
    * für die Cms Seiten
-   * @param unknown $observer
+   * @param Varien_Event_Observer $observer Observer
    */
 	public function onPageCollectionLoad($observer)
 	{
@@ -35,7 +35,7 @@ class Egovs_Isolation_Model_Observer_Cms extends Egovs_Isolation_Model_Observer_
     
 	/**
 	 * Für die Cms Blöcke
-	 * @param unknown $observer
+	 * @param Varien_Event_Observer $observer Observer
 	 */
 	public function onBlockCollectionLoad($observer)
 	{
@@ -57,7 +57,7 @@ class Egovs_Isolation_Model_Observer_Cms extends Egovs_Isolation_Model_Observer_
 
 	/**
 	 * Für die Cms Navigation
-	 * @param unknown $observer
+	 * @param Varien_Event_Observer $observer Observer
 	 */
 	public function onNaviCollectionLoad($observer)
 	{
@@ -76,7 +76,7 @@ class Egovs_Isolation_Model_Observer_Cms extends Egovs_Isolation_Model_Observer_
 	
 	/**
 	 * Für die Cms Navigation
-	 * @param unknown $observer
+	 * @param Varien_Event_Observer $observer Observer
 	 */
 	public function onNaviLoad($observer)
 	{

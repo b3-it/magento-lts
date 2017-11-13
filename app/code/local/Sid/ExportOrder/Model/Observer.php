@@ -3,6 +3,10 @@
 class Sid_ExportOrder_Model_Observer
 {
 
+    /**
+     *
+     * @param Varien_Event_Observer $observer
+     */
     public function onVendorSaveAfter($observer)
     {
         $vendor = $observer->getDataObject();

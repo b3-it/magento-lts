@@ -129,7 +129,7 @@ class Egovs_SepaDebitSax_Helper_Data extends Egovs_Paymentbase_Helper_Data
 	 * @param Egovs_SepaDebitSax_Model_Webservice_Types_Mandat $mandate
 	 * @param boolean $throwError soll ein Fehler geworfen werden oder der Text zurückgegeben werden
 	 * @throws Egovs_Paymentbase_Exception_Validation
-	 * @return Ambigous <string, string, multitype:>
+	 * @return string
 	 */
 	public function getMandateStatusText($mandate, $throwError = false) {
 		//Fallback falls aktiv

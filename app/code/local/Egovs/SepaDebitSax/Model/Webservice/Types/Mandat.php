@@ -149,7 +149,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
     public $KontoinhaberAdresse;
     /**
      * The NachfolgeMandatId
-     * @var long
+     * @var float
      */
     public $NachfolgeMandatId;
     /**
@@ -223,7 +223,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
      * @param string $_kontoinhaberName
      * @param string $_kontoinhaberVorname
      * @param Egovs_SepaDebitSax_Model_Webservice_Types_Adresse $_kontoinhaberAdresse
-     * @param long $_nachfolgeMandatId
+     * @param float $_nachfolgeMandatId
      * @param string $_bearbeiter
      * @param dateTime $_datumStatusaenderung
      * @param dateTime $_datumLetzteFaelligkeit
@@ -746,7 +746,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
     }
     /**
      * Get NachfolgeMandatId value
-     * @return long|null
+     * @return float|null
      */
     public function getNachfolgeMandatId()
     {
@@ -754,8 +754,8 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
     }
     /**
      * Set NachfolgeMandatId value
-     * @param long $_nachfolgeMandatId the NachfolgeMandatId
-     * @return long
+     * @param float $_nachfolgeMandatId the NachfolgeMandatId
+     * @return float
      */
     public function setNachfolgeMandatId($_nachfolgeMandatId)
     {

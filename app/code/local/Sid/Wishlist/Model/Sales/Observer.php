@@ -18,6 +18,9 @@ class Sid_Wishlist_Model_Sales_Observer
 		
 		foreach ($_order->getItemsCollection() as $orderItem) {
 			/** @var $orderItem Mage_Sales_Model_Order_Item */
+			if ($orderItem->getParentItem()) {
+				continue;
+			}
 			$qtyOrdered = $orderItem->getQtyOrdered();
 			$_wishlistItem = Mage::getModel('sidwishlist/quote_item')->load($orderItem->getSidwishlistItemId());
 			if (!$_wishlistItem->getId()) {
@@ -30,7 +33,7 @@ class Sid_Wishlist_Model_Sales_Observer
 				$_wishlistItem->setQtyOrdered($qtyOrdered);
 			}
 			//Anzahl der im Warenkorb enthaltenen Elemente um bestellte Menge reduzieren
-			$_wishlistItem->setQtyGranted(max(max($_wishlistItem->getQtyGranted, 0)-$qtyOrdered, 0));
+			$_wishlistItem->setQtyGranted(max(max($_wishlistItem->getQtyGranted(), 0)-$qtyOrdered, 0));
 			$_wishlistItem->save();
 		}
 	}

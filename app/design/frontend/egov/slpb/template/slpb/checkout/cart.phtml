@@ -47,6 +47,18 @@ $_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getSt
     <?php echo $this->__('<span>Stars on cart</span>: <span id="star-cnt">--</span> from max %s', $_maxstar); ?>
 </div>
 
+<script type="text/javascript">
+function deleteAll(url)
+{
+	q = confirm("<?php echo Mage::helper('mpcheckout')->__('Delete All Items'); ?>?");
+	if(q == true)
+	{
+		window.location.href = url;
+	}
+}
+
+</script>
+
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
 <table style="border:0;" id="shopping-cart-table" class="data-table box-table shopping-cart">
     <col width="40" />
@@ -68,18 +80,6 @@ $_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getSt
 <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
     <col width="80" />
 <?php endif; ?>
-
-<script type="text/javascript">
-function deleteAll(url)
-{
-	q = confirm("<?php echo Mage::helper('mpcheckout')->__('Delete All Items'); ?>?");
-	if(q == true)
-	{
-		window.location.href = url;
-	}
-}
-
-</script>
 
 <?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
     <thead>

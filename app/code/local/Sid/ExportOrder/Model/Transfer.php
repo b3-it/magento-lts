@@ -39,7 +39,7 @@ abstract class Sid_ExportOrder_Model_Transfer extends Mage_Core_Model_Abstract
 	
 	/**
 	 * 
-	 * @param unknown $type
+	 * @param Sid_ExportOrder_Model_Type_Transfer $type
 	 * @return Sid_ExportOrder_Model_Transfer
 	 */
 	public static function getInstance($type)
@@ -65,7 +65,7 @@ abstract class Sid_ExportOrder_Model_Transfer extends Mage_Core_Model_Abstract
 	/**
 	 * 
 	 * @param string $content
-	 * @param unknown $order
+	 * @param Mage_Sales_Model_Order $order
 	 * @param array $data assoziatives Array für die Email Variablen
 	 * @return bool | string in Fehlerfall false ansonsten eine Textmeldung 
 	 */

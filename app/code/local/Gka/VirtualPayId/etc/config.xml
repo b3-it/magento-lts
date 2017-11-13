@@ -97,6 +97,11 @@
                     <to_configvirtual>product_sku</to_configvirtual>
                 </sku>
             </configvirtual_sales_copy_order_item>
+            <sales_convert_quote>
+                <externes_kassenzeichen>
+                    <to_order>*</to_order>
+                </externes_kassenzeichen>
+            </sales_convert_quote>
         </fieldsets>
         
         <catalog>
@@ -163,7 +168,7 @@
                 <observers>
                     <virtual_pay_id>
                         <type>singleton</type>
-                        <class>virtualpayid/product_observer</class>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
                         <method>onSalesOrderSaveAfter</method>
                     </virtual_pay_id>
                 </observers>  
@@ -171,11 +176,38 @@
            <sales_quote_item_set_product>
                 <observers>
                     <virtualpayid_product_observer_item_save_commit_after>
-                        <class>virtualpayid/product_observer</class>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
                         <method>onSalesQuoteItemSetProduct</method>
                     </virtualpayid_product_observer_item_save_commit_after>
                 </observers>
               </sales_quote_item_set_product>
+              <checkout_cart_update_items_after>
+                 <observers>    
+                    <productlimit1>
+                        <type>singleton</type>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
+                        <method>onCheckoutCartUpdateItemsAfter</method>
+                    </productlimit1>
+                </observers>
+            </checkout_cart_update_items_after>
+            <sales_quote_merge_after>
+                <observers> 
+                    <productlimit>
+                        <type>singleton</type>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
+                        <method>onQuoteMerge</method>
+                    </productlimit>
+                </observers>
+            </sales_quote_merge_after>
+            <sales_quote_add_item>
+                <observers>
+                    <productlimit2>
+                        <type>singleton</type>
+                        <class>Gka_VirtualPayId_Model_Product_Observer</class>
+                        <method>onSalesQuoteAddItem</method>
+                    </productlimit2>
+                </observers>
+            </sales_quote_add_item>
         </events>
     </global>
     <frontend>

@@ -37,7 +37,7 @@ class Egovs_Pdftemplate_Model_Sectiontype extends Varien_Object
     
     /**
      * 
-     * @param unknown $id
+     * @param Egovs_Pdftemplate_Model_Sectiontype $id
      * @return string
      */
 	static public function getHtmlPrefix($id)

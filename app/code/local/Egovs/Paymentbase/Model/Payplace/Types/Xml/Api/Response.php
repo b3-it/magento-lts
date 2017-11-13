@@ -37,7 +37,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response extends Egovs_Paym
     public $txDiagnosisResponse;
     /**
      * The giropayBankCheckResponse
-     * @var Egovs_Paymentbase_Model_Payplace_Types_Giropay_Bank_Check_Response
+     * @var Egovs_Paymentbase_Model_Payplace_Types_Giropay_BankCheck_Response
      */
     public $giropayBankCheckResponse;
     /**
@@ -57,19 +57,19 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response extends Egovs_Paym
     public $batchResponse;
     /**
      * The panAliasResponse
-     * @var Egovs_Paymentbase_Model_Payplace_Types_Pan_Alias_Response
+     * @var Egovs_Paymentbase_Model_Payplace_Types_PanAlias_Response
      */
     public $panAliasResponse;
     /**
      * The ref
      * Meta informations extracted from the WSDL
      * - documentation : This reference makes it easier to assign a response to a request. This attribute will be copied from the "id" attribute of the request, if it has been provided.
-     * @var NCName
+     * @var string
      */
     public $ref;
     /**
      * The version
-     * @var anonymous15
+     * @var string
      */
     public $version;
     /**
@@ -80,11 +80,11 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response extends Egovs_Paym
      * @param Egovs_Paymentbase_Model_Payplace_Types_Tx_Diagnosis_Response $_txDiagnosisResponse
      * @param Egovs_Paymentbase_Model_Payplace_Types_Giropay_BankCheck_Response $_giropayBankCheckResponse
      * @param Egovs_Paymentbase_Model_Payplace_Types_Tds_Initial_Response $_tdsInitialResponse
-     * @param Egovs_Paymentbase_Model_Payplace_Types_Risk_Check_Response $_riskCheckResponse
+     * @param Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response $_riskCheckResponse
      * @param Egovs_Paymentbase_Model_Payplace_Types_Batch_Response $_batchResponse
      * @param Egovs_Paymentbase_Model_Payplace_Types_PanAlias_Response $_panAliasResponse
-     * @param NCName $_ref
-     * @param anonymous15 $_version
+     * @param string $_ref
+     * @param string $_version
      * @return Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response
      */
     public function __construct($_paymentResponse = NULL,$_formServiceResponse = NULL,$_txDiagnosisResponse = NULL,$_giropayBankCheckResponse = NULL,$_tdsInitialResponse = NULL,$_riskCheckResponse = NULL,$_batchResponse = NULL,$_panAliasResponse = NULL,$_ref = NULL,$_version = NULL)
@@ -229,7 +229,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response extends Egovs_Paym
     }
     /**
      * Get ref value
-     * @return NCName|null
+     * @return string|null
      */
     public function getRef()
     {
@@ -237,8 +237,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response extends Egovs_Paym
     }
     /**
      * Set ref value
-     * @param NCName $_ref the ref
-     * @return NCName
+     * @param string $_ref the ref
+     * @return bool
      */
     public function setRef($_ref)
     {
@@ -246,7 +246,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response extends Egovs_Paym
     }
     /**
      * Get version value
-     * @return anonymous15|null
+     * @return string|null
      */
     public function getVersion()
     {
@@ -254,8 +254,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Response extends Egovs_Paym
     }
     /**
      * Set version value
-     * @param anonymous15 $_version the version
-     * @return anonymous15
+     * @param string $_version the version
+     * @return bool
      */
     public function setVersion($_version)
     {

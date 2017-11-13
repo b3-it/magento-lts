@@ -30,12 +30,12 @@
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <div class="multiple-checkout">
-    <?php $_index=0 ?>
-    <?php foreach ($this->getAddressCollection() as $_address): ?>
+    <?php foreach ($this->getAddressCollection() as $_index => $_address): ?>
         <?php if($_index%3==0): ?><div class="col3-set"><?php endif; ?>
         <div class="col-<?php echo ($_index%3+1) ?>">
                 <p class="actions">
-                    <a href="<?php echo $this->getEditAddressUrl($_address) ?>"><?php echo $this->__('Edit Address') ?></a> <span class="separator">|</span> 
+                    <a href="<?php echo $this->getEditAddressUrl($_address) ?>"><?php echo $this->__('Edit Address') ?></a>
+                    <span class="separator">|</span> 
                     <a href="<?php echo $this->getSetAddressUrl($_address) ?>"><?php echo $this->__('Select Address') ?></a>
                 </p>
                 <address>
@@ -48,7 +48,6 @@
                     <?php endif; ?>
                 </address>
         </div>
-        <?php $_index++ ?>
         <?php if($_index && $_index%3==0): ?></div><?php endif; ?>
     <?php endforeach; ?>
     <?php if(!$_index || $_index%3!=0): ?></div><?php endif; ?>

@@ -42,7 +42,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Data extends Egovs_Paymentbase
      * Meta informations extracted from the WSDL
      * - documentation : URL of the cascading stylesheet which the form service uses to display the form.
      * - minOccurs : 0
-     * @var anyURI
+     * @var string
      */
     public $cssURL;
     /**
@@ -77,7 +77,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Data extends Egovs_Paymentbase
      * @see parent::__construct()
      * @param string $_locale
      * @param string $_version
-     * @param anyURI $_cssURL
+     * @param string $_cssURL
      * @param Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Option $_formServiceOption
      * @param string $_merchantName
      * @param Egovs_Paymentbase_Model_Payplace_Types_Label $_label
@@ -99,7 +99,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Data extends Egovs_Paymentbase
     /**
      * Set locale value
      * @param string $_locale the locale
-     * @return string
+     * @return bool
      */
     public function setLocale($_locale)
     {
@@ -116,7 +116,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Data extends Egovs_Paymentbase
     /**
      * Set version value
      * @param string $_version the version
-     * @return string
+     * @return bool
      */
     public function setVersion($_version)
     {
@@ -124,7 +124,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Data extends Egovs_Paymentbase
     }
     /**
      * Get cssURL value
-     * @return anyURI|null
+     * @return string|null
      */
     public function getCssURL()
     {
@@ -132,8 +132,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Data extends Egovs_Paymentbase
     }
     /**
      * Set cssURL value
-     * @param anyURI $_cssURL the cssURL
-     * @return anyURI
+     * @param string $_cssURL the cssURL
+     * @return bool
      */
     public function setCssURL($_cssURL)
     {

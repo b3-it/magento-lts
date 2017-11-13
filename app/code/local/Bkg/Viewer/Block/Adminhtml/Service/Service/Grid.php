@@ -13,8 +13,8 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_Grid extends Mage_Adminhtml_Blo
   public function __construct()
   {
       parent::__construct();
-      $this->setId('Service\ServiceGrid');
-      $this->setDefaultSort('Service\Service_id');
+      $this->setId('ServiceGrid');
+      $this->setDefaultSort('service_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
   }
@@ -82,7 +82,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_Grid extends Mage_Adminhtml_Blo
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('serviceservice_id');
+        $this->getMassactionBlock()->setFormFieldName('id');
 
         $this->getMassactionBlock()->addItem('delete', array(
              'label'    => Mage::helper('bkgviewer')->__('Delete'),

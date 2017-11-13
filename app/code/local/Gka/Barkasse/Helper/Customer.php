@@ -24,4 +24,25 @@ class Gka_Barkasse_Helper_Customer extends Mage_Customer_Helper_Data
 		}
 		return $this->_getUrl('customer/account');
 	}
+	
+	/**
+	 * Retrieve customer logout url
+	 *
+	 * @return string
+	 */
+	public function getLogoutUrl()
+	{
+		$customer = $this->getCustomer();
+		$model = null;
+		if($customer && $customer->getId()){
+			$model  = Mage::getModel('gka_barkasse/kassenbuch_journal')->getOpenJournal();
+		}
+		 
+		if ($model &&  $model->getId())
+		{
+			return $this->_getUrl('gka_barkasse/kassenbuch_journal/prelogout');
+		}
+		
+		return $this->_getUrl('customer/account/logout');
+	}
 }

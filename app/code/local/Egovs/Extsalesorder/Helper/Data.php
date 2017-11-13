@@ -34,6 +34,7 @@ class Egovs_Extsalesorder_Helper_Data extends Mage_Core_Helper_Abstract
 		return array(
 				'header' => $this->__('Balance (Base)'),
 				'index' => 'base_grand_total',
+				'index_paid' => 'base_total_paid',
 				'type' => 'currency',
 				'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
 				'currency' => 'base_currency_code', 

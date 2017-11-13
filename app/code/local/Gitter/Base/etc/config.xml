@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Gitter_Base>
-            <version>0.0.0.1</version>
+            <version>0.0.0.3</version>
         </Gitter_Base>
     </modules>
     <global>

@@ -148,7 +148,7 @@
 }
 
 .ol-popup-content {
-    min-width: 170px;
+    min-width: 220px;
     max-height: 200px;
     overflow-x: auto;
 }
@@ -221,8 +221,8 @@
 		    height: 51px;
 		    position: relative;
 		    top: 35%;
-		    display: inline-block;
-		    margin: 10px;
+		    display: block;
+		    margin: 10px auto;
 		}
 	}
 }

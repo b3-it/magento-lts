@@ -77,6 +77,12 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
     			$payment = $this->getInfoInstance();
     		}
     	}
+
+    	if (($txId = $payment->getTransactionId()) || ($txId = $payment->getOrder()->getExternesKassenzeichen())) {
+            if (preg_match('/[\w]+\/[\w]+$/', $txId)) {
+                return $txId;
+            }
+        }
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
             if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                 Mage::throwException($this->__('No kassenzeichen available!'));
@@ -306,7 +312,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 					$transactionType,
 					$this->getBuchungsListeParameter($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal())
 			);			
-			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
+			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->getCode() == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
 				//Fallback zu alter Methode
 				Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 				$objResult = $this->_getSoapClient()->anlegenKassenzeichen($this->_getMandantNr(), $this->_getECustomerId(), $objBuchungsliste, null, null, $transactionType);
@@ -457,11 +463,11 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		}
 
 		$msg = null;
+		$additionalMsg = null;
 		$iReturnCode = null;
-		$request = null;
+        $request = new TKonnekt_SDK_Request('debitCardTransaction');
 		try {
 			// Sends request to TKonnekt.
-			$request = new TKonnekt_SDK_Request('debitCardTransaction');
 			$request->setSecret($this->getProjectPassword());
 			foreach ($this->_fieldsArr as $param => $value) {
 				$request->addParam($param, $value);
@@ -472,66 +478,72 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 				$strUrlRedirect = $request->getResponseParam('redirect');
 
 				return $strUrlRedirect;
-			} else {
-				$iReturnCode = $request->getResponseParam('rc');
-				$strResponseMsg = $request->getResponseMessage();
-				if (!$strResponseMsg) {
-					$strResponseMsg = $this->_getHelper()->__("Unknown server error.");
-				}
-				if ($request->getResponseParam('reference')) {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on TKonnekt REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				} else {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on TKonnekt\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				}
-				$_source = $this->_getOrder();
-				if (!$_source) {
-					/** @var $_source Mage_Sales_Model_Quote */
-					$_source = $this->getInfoInstance()->getQuote();
-				} else {
-					/** @var $_source Mage_Sales_Model_Order */
-					/** @var $payment Mage_Sales_Model_Order_Payment */
-					$payment = $_source->getPayment();
-					$payment->setTransactionId($request->getResponseParam('reference'));
-					$transaction = $payment->addTransaction('order', null, false, '');
-					$transaction->setParentTxnId($_source->getIncrementId());
-					$transaction->setIsClosed(1);
-					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
-					$transaction->save ();
-					$_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
-					$_source->cancel()->save();
-
-					$_quoteId = $_source->getQuoteId();
-					$_source = $_source->getQuote();
-					if (!$_source) {
-						$_source = Mage::getModel('sales/quote')->load($_quoteId);
-					}
-				}
-
-				if (!$_source->isEmpty()) {
-					if (!$_source->getIsActive()) {
-						$_source->setIsActive(true)->save();
-					}
-					Mage::getSingleton('checkout/session')->replaceQuote($_source);
-				}
 			}
+
+            $iReturnCode = $request->getResponseParam('rc');
+            $strResponseMsg = $request->getResponseMessage();
+            if (!$strResponseMsg) {
+                $strResponseMsg = $this->_getHelper()->__("Unknown server error.");
+            }
+            if ($request->getResponseParam('reference')) {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on TKonnekt REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            } else {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on TKonnekt\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            }
+
+            throw new Exception('Failed to start transaction on TKonnekt');
 		} catch ( Exception $e ) {
 			Mage::logException($e);
 			$msg = $e->getMessage();
 			if ($e->getPrevious()) {
-			    $msg .= "\r\n\r\n".$e->getPrevious()->getMessage();
+			    $additionalMsg = "\r\n\r\n".$e->getPrevious()->getMessage();
+            }
+
+            //Roll Back
+            $_source = $this->_getOrder();
+            if (!$_source) {
+                /** @var $_source Mage_Sales_Model_Quote */
+                $_source = $this->getInfoInstance()->getQuote();
+            } else {
+                /** @var $_source Mage_Sales_Model_Order */
+                /** @var $payment Mage_Sales_Model_Order_Payment */
+                $payment = $_source->getPayment();
+                $payment->setTransactionId($request->getResponseParam('reference'));
+                $transaction = $payment->addTransaction('order', null, false, '');
+                if ($transaction) {
+                    $transaction->setParentTxnId($_source->getIncrementId());
+                    $transaction->setIsClosed(1);
+                    $transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
+                    $transaction->save();
+                }
+                $_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+                $_source->cancel()->save();
+
+                $_quoteId = $_source->getQuoteId();
+                $_source = $_source->getQuote();
+                if (!$_source) {
+                    $_source = Mage::getModel('sales/quote')->load($_quoteId);
+                }
+            }
+
+            if (!$_source->isEmpty()) {
+                if (!$_source->getIsActive()) {
+                    $_source->setIsActive(true)->save();
+                }
+                Mage::getSingleton('checkout/session')->replaceQuote($_source);
             }
 		}
 
 		if (is_null($msg)) {
 			$msg = Mage::helper('gka_tkonnektpay')->__("Unknown server error");
 		}
-		Mage::helper("paymentbase")->sendMailToAdmin($msg, 'Fehler bei getTkonnektRedirectURL');
+		Mage::helper("paymentbase")->sendMailToAdmin(sprintf('%s%s', $msg, $additionalMsg), 'Fehler bei getTkonnektRedirectURL');
 
-		if (!is_null($iReturnCode) && !is_null($request)) {
+		if (!is_null($request)) {
 			$msg = $request->getResponseMessage();
 		}
 		Mage::throwException($msg);
@@ -624,7 +636,10 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 					Mage::log("{$this->getCode()}::\n$tmp", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				}
 
-				$extKassenzeichen = trim(str_replace("{$this->_getBewirtschafterNr()}/", "", $merchantTxId));
+				$extKassenzeichen = trim($merchantTxId);
+				if (preg_match('/(?<=\/)[\w]+$/', $extKassenzeichen, $matches)) {
+				    $extKassenzeichen = $matches[0];
+                }
 
 				$order = $this->_getOrder();
 				// If order was not found, return false
@@ -636,7 +651,9 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 
                 if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                     if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
-                        Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus TKonnektdaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+                        $msg = "Kassenzeichen stimmt nicht mit Kassenzeichen aus TKonnektdaten überein!";
+                        $msg .= "\r\nTKonnekt:$extKassenzeichen != {$order->getPayment()->getKassenzeichen()}:Webshop";
+                        Mage::log("{$this->getCode()}::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
                         return false;
                     }
                 }
@@ -692,7 +709,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 				//TODO : Providername ermitteln
 				$_providerName = 'TERMINALZAHLUNG';
 
-                if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
+                if (!$order->getExternesKassenzeichen() && self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                     $_kassenzeichenActivated = $this->_activateKassenzeichen($merchantTxId, $tkRef, $_providerName);
                 } else {
                     $_kassenzeichenActivated = true;
@@ -842,7 +859,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	 * @param string $refId			TranskationsID des Zahlungsproviders
 	 * @param string $providerName  VISA,MASTER,GIROPAY,SEPASDD
 	 *
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Model_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 *
 	 * @throws Exception
 	 */

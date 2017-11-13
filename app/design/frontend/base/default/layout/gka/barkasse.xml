@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <!--
 /**
  * Magento
@@ -37,6 +38,7 @@
                 <name>kassenbuch_journal</name>
                 <path>gka_barkasse/kassenbuch_journal/index</path>
                 <label>Cash Journal</label>
+                <secure>true</secure>
             </action>
         </reference>
     </customer_account>
@@ -86,7 +88,17 @@
         </reference>
     </gka_barkasse_kassenbuch_journalitems_index>
 
-
+    <gka_barkasse_kassenbuch_journal_prelogout translate="label">
+        <label>Kassenbuch Journal</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="gka_barkasse/kassenbuch_journal_prelogout" name="kassenbuch_prelogout" template="gka/barkasse/kassenbuch/journal/prelogout.phtml" />
+        </reference>
+        <reference name="root">
+            <action method="setHeaderTitle" translate="title" module="gka_barkasse"><title>Kassenbuch schließen</title></action>
+        </reference>
+       
+    </gka_barkasse_kassenbuch_journal_prelogout>
 
 
 </layout>

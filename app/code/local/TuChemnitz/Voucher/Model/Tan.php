@@ -35,8 +35,8 @@ class TuChemnitz_Voucher_Model_Tan extends Mage_Core_Model_Abstract
     
     /**
      * Löschen der Tans 
-     * @param unknown $TanIds
-     * @param unknown $product_id
+     * @param TuChemnitz_Voucher_Model_Tan $TanIds
+     * @param Mage_Catalog_Model_Product $product_id
      * @return int Anzahl
      */
     public function deleteTans($TanIds, $product_id)

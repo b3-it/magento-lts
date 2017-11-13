@@ -75,7 +75,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 				throw new Exception('empty url');
 			}
 				
-			$service->fetchLayers($data['url'],$data['type']);
+			$service->fetchLayers($data['url'],$data['type'],$data['version']);
 			$this->_edit($service->getId());
 				
 		} catch (Exception $e) {
@@ -142,13 +142,13 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 	}
 
 	public function massDeleteAction() {
-		$serviceserviceIds = $this->getRequest()->getParam('serviceservice');
+		$bkgviewerIds = $this->getRequest()->getParam('id');
 		if(!is_array($bkgviewerIds)) {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
 		} else {
 			try {
 				foreach ($bkgviewerIds as $bkgviewerId) {
-					$bkgviewer = Mage::getModel('bkgviewer/serviceservice')->load($bkgviewerId);
+					$bkgviewer = Mage::getModel('bkgviewer/service_service')->load($bkgviewerId);
 					$bkgviewer->delete();
 				}
 				Mage::getSingleton('adminhtml/session')->addSuccess(

@@ -80,7 +80,7 @@ if(empty($_cartQty)) {
             </button>
         <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
             <button class="button egov-float-right"
-                    onclick="window.open('<?php echo $this->getUrl('checkout/singlepage/start'); ?>','_self');"
+                    onclick="window.open('<?php echo $this->getCheckoutUrl(); ?>','_self');"
                     title="<?php echo $this->quoteEscape($this->__('Checkout')) ?>">
                 <?php echo $this->__('Checkout') ?>
             </button>

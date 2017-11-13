@@ -26,5 +26,21 @@ if (!$installer->tableExists($installer->getTable('virtualpayid/epaybl_client'))
 		");
 }
 
+$attributeId = 'externes_kassenzeichen';
+if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/order'), $attributeId)) {
+	$installer->getConnection()->addColumn(
+			$installer->getTable('sales/order'),
+			$attributeId,
+			'varchar(255) default null'
+			);
+}
+if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/quote'), $attributeId)) {
+	$installer->getConnection()->addColumn(
+			$installer->getTable('sales/quote'),
+			$attributeId,
+            'varchar(255) default null'
+			);
+}
+
 
 $installer->endSetup();

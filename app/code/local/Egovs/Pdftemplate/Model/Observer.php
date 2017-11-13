@@ -35,7 +35,8 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 	
 	/**
 	 * Nachträgliches laden der Storeabhängigen pdf-Template konfiguration
-	 * @param unknown $observer
+	 * 
+	 * @param Varien_Event_Observer $observer Observer
 	 */
 	public function onCustomerGroupLoadAfter($observer)
 	{

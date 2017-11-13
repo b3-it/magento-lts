@@ -24,6 +24,9 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
   {
   	  $model = $this->_getKassenbuchjournal();
       $collection = $model->getItemsCollection();
+      
+      $collection->getSelect()->columns(array('externes_kassenzeichen_bool' => "IF(LENGTH(externes_kassenzeichen),1,0)"));
+      
       $this->setCollection($collection);
       
       
@@ -94,7 +97,14 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
         ));
       
       
-
+     $this->addColumn('externes_kassenzeichen', array(
+     		'header' => Mage::helper('gka_barkasse')->__('Externes Kassenzeichen'),
+     		'index' => 'externes_kassenzeichen_bool',
+     		'type'  => 'options',
+     		'width' => '70px',
+     		'options' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
+     		 
+     ));
 
 
 		$this->addExportType('*/*/exportCsv', Mage::helper('gka_barkasse')->__('CSV'));
@@ -106,7 +116,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
   public function getGridUrl($params = array())
   {
   		$id     =  intval($this->getRequest()->getParam('id'));
-    	return $this->getUrl('*/*/Grid', array('id'=>$id));
+    	return $this->getUrl('*/*/Items', array('id'=>$id));
   
   }
   

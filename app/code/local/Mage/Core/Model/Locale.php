@@ -352,7 +352,7 @@ class Mage_Core_Model_Locale
     /**
      * Retrieve currency option list
      *
-     * @return unknown
+     * @return array
      */
     public function getOptionCurrencies()
     {
@@ -376,7 +376,7 @@ class Mage_Core_Model_Locale
     /**
      * Retrieve all currency option list
      *
-     * @return unknown
+     * @return array
      */
     public function getOptionAllCurrencies()
     {
@@ -421,7 +421,7 @@ class Mage_Core_Model_Locale
     /**
      * Retrieve array of allowed currencies
      *
-     * @return unknown
+     * @return array
      */
     public function getAllowCurrencies()
     {

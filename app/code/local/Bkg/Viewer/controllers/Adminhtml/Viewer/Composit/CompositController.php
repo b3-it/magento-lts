@@ -119,6 +119,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 				
 			$model->setTitle($node['title'])
 			->setPos($node['pos'])
+			->setVisualPos($node['visual_pos'])
 			->setType($node['type'])
 			->setCompositId($compositId);
 				

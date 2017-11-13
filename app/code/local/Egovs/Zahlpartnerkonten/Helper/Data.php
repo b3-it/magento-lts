@@ -37,7 +37,7 @@ class Egovs_Zahlpartnerkonten_Helper_Data extends Egovs_Paymentbase_Helper_Data
 	 * 
 	 * @param Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis $kassenzeichenInfo  Kassenzeicheninfoergbnis aus ePayBL
 	 * @param Egovs_Zahlpartnerkonten_Model_Pool										  $kassenzeichenModel Kassenzeichen aus Pool
-	 * @param Mage_Payment_Model_Abstract												  $payment			  Zahlmodul
+	 * @param Mage_Payment_Model_Method_Abstract	          							  $payment			  Zahlmodul
 	 * 
 	 * @return Egovs_Zahlpartnerkonten_Helper_Data
 	 */

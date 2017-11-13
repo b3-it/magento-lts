@@ -11,7 +11,11 @@
  */
 class B3it_Admin_Model_Observer
 {
-	public function onAdminUserAuthenticateAfter($observer)
+    /**
+     *
+     * @param Varien_Event_Observer $observer Observer
+     */
+    public function onAdminUserAuthenticateAfter($observer)
 	{
 		if ($observer->getUser()->getId() > 0) {
 			//Passwort wird sonst neu gehasht und überschrieben!!
@@ -79,6 +83,11 @@ class B3it_Admin_Model_Observer
 			'roles_section'
         );
 	}
+
+	/**
+	 *
+	 * @param Varien_Event_Observer $observer Observer
+	 */
 	public function onLayoutRenderAdminhtmlPermissionsUserGridBefore($observer) {
 		$block = $observer->getBlock();
 		if (!$block || !($block instanceof Mage_Adminhtml_Block_Permissions_User_Grid) || $block->getNameInLayout() == 'permissions_user.grid') {
@@ -89,6 +98,10 @@ class B3it_Admin_Model_Observer
 		$block->sortColumnsByOrder();
 	}
 	
+	/**
+	 *
+	 * @param Varien_Event_Observer $observer Observer
+	 */
 	public function onLayoutRenderAdminhtmlPermissionsUserIndexBefore($observer) {
 		$block = $this->getLayout()->getBlock('content')->getChild('content.child0');
 		
@@ -106,6 +119,11 @@ class B3it_Admin_Model_Observer
 		$this->_addExtendedInfoColumns($grid);
 	}
 	
+	/**
+	 * 
+	 * @param Mage_Adminhtml_Block_Permissions_User_Grid $grid
+	 * @return Mage_Adminhtml_Block_Permissions_User_Grid
+	 */
 	protected function _addExtendedInfoColumns($grid) {
 		$grid->addColumnAfter('logdate', array(
 					'header'    => Mage::helper('b3itadmin')->__('Last Login'),
