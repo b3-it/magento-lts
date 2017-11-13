@@ -51,4 +51,6 @@
 
 "TEXT_PROCESS_ERROR:-0609","Der Buchungstext einer Buchung der Buchungsliste ist zu lang oder zu kurz."
 "Journal is still open! Do you want to close it?","Ein Kassenbuch ist noch geöffnet! Möchten Sie es noch schließen?"
-"Clos Journal","Kassenbuch schließen"
+"Close Journal","Kassenbuch schließen"
+"processing","Verarbeitung"
+"complete","Vollständig"
