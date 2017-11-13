@@ -1,6 +1,9 @@
 <?php
-$_requiredClassForNonVirtual = ($this->isVirtual() ? ' required-entry ' : '');
-$_requiredHtmlForNonVirtual  = ($this->isVirtual() ? '<em class="required">*</em>' : '');
+//$_requiredClassForNonVirtual = ($this->isVirtual() ? '' : ' required-entry ');
+//$_requiredHtmlForNonVirtual  = ($this->isVirtual() ? '' : '<em class="required">*</em>');
+
+$_egov_helper = Mage::helper('egovsbase/config');
+$_checkout_method = 'shipping';
 ?>
 
 <h2><?php echo $this->__('Billing Address') ?></h2>
@@ -12,32 +15,41 @@ $_requiredHtmlForNonVirtual  = ($this->isVirtual() ? '<em class="required">*</em
             <ul>
                 <li class="fields">
                     <div class="field">
-                        <label for="billing:company"><?php echo $_requiredHtmlForNonVirtual . $this->__('Company') ?></label>
+                        <label for="billing:company">
+                            <?php echo $_egov_helper->getFieldRequiredHtml('company', $_checkout_method) ?>
+                            <?php echo $this->__('Company') ?>
+                        </label>
                         <div class="input-box">
-                            <input type="text" id="billing:company" name="billing[company]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Company')) ?>" class="input-text <?php echo $_requiredClassForNonVirtual . $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
+                            <input type="text" id="billing:company" name="billing[company]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Company')) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('company', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
                         </div>
                     </div>
                 </li>
               <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
                 <li class="wide">
-                    <label for="billing:street1"><?php echo $_requiredHtmlForNonVirtual . $this->__('Address') ?></label>
+                    <label for="billing:street1">
+                        <?php echo $_egov_helper->getFieldRequiredHtml('street', $_checkout_method) ?>
+                        <?php echo $this->__('Address') ?>
+                    </label>
                     <div class="input-box">
-                        <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" name="billing[street][]" id="billing:street1" value="" class="input-text <?php echo $_requiredClassForNonVirtual . $_streetValidationClass ?>" />
+                        <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" name="billing[street][]" id="billing:street1" value="" class="input-text <?php echo $_egov_helper->isFieldRequired('street', $_checkout_method) ? 'required-entry' : ''; echo $_streetValidationClass ?>" />
                     </div>
                 </li>
               <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
               <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
                 <li class="wide">
                     <div class="input-box">
-                        <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" name="billing[street][]" id="billing:street<?php echo $_i ?>" value="" class="input-text <?php echo $_requiredClassForNonVirtual . $_streetValidationClass ?>" />
+                        <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" name="billing[street][]" id="billing:street<?php echo $_i ?>" value="" class="input-text <?php echo $_egov_helper->isFieldRequired('street', $_checkout_method) ? 'required-entry' : ''; echo $_streetValidationClass ?>" />
                     </div>
                 </li>
               <?php endfor; ?>
               <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
                 <li class="wide">
-                    <label for="billing:vat_id"><?php echo $_requiredHtmlForNonVirtual . $this->__('VAT Number') ?></label>
+                    <label for="billing:vat_id">
+                        <?php echo $_egov_helper->getFieldRequiredHtml('vat_id', $_checkout_method) ?>
+                        <?php echo $_requiredHtmlForNonVirtual . $this->__('VAT Number') ?>
+                    </label>
                     <div class="input-box">
-                        <input type="text" id="billing:vat_id" name="billing[vat_id]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('VAT Number')) ?>" class="input-text <?php echo $_requiredClassForNonVirtual . $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
+                        <input type="text" id="billing:vat_id" name="billing[vat_id]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('VAT Number')) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('vat_id', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
                     </div>
                 </li>
               <?php endif; ?>
@@ -45,20 +57,26 @@ $_requiredHtmlForNonVirtual  = ($this->isVirtual() ? '<em class="required">*</em
                     <div class="field">
                         <label for="billing:city"><?php echo $_requiredHtmlForNonVirtual . $this->__('City') ?></label>
                         <div class="input-box">
-                            <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('City')) ?>" name="billing[city]" value="" class="input-text <?php echo $_requiredClassForNonVirtual . $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="billing:city" />
+                            <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('City')) ?>" name="billing[city]" value="" class="input-text <?php echo $_egov_helper->isFieldRequired('city', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="billing:city" />
                         </div>
                     </div>
-                   
+
                 </li>
                 <li class="fields">
                     <div class="field">
-                        <label for="billing:postcode"><?php echo $_requiredHtmlForNonVirtual . $this->__('Zip/Postal Code') ?></label>
+                        <label for="billing:postcode">
+                            <?php echo $_egov_helper->getFieldRequiredHtml('postcode', $_checkout_method) ?>
+                            <?php echo $_requiredHtmlForNonVirtual . $this->__('Zip/Postal Code') ?>
+                        </label>
                         <div class="input-box">
-                            <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Zip/Postal Code')) ?>" name="billing[postcode]" id="billing:postcode" value="" class="input-text validate-zip-international <?php echo $_requiredClassForNonVirtual . $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                            <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Zip/Postal Code')) ?>" name="billing[postcode]" id="billing:postcode" value="" class="input-text validate-zip-international <?php echo $_egov_helper->isFieldRequired('postcode', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
                         </div>
                     </div>
                     <div class="field">
-                        <label for="billing:country_id"><?php echo $_requiredHtmlForNonVirtual . $this->__('Country') ?></label>
+                        <label for="billing:country_id">
+                            <?php echo $_egov_helper->getFieldRequiredHtml('country', $_checkout_method) ?>
+                            <?php echo $_requiredHtmlForNonVirtual . $this->__('Country') ?>
+                        </label>
                         <div class="input-box">
                             <?php echo $this->getCountryHtmlSelect('billing') ?>
                         </div>
@@ -66,21 +84,27 @@ $_requiredHtmlForNonVirtual  = ($this->isVirtual() ? '<em class="required">*</em
                 </li>
                 <li class="fields">
                     <div class="field">
-                        <label for="billing:telephone"><?php echo $_requiredHtmlForNonVirtual . $this->__('Telephone') ?></label>
+                        <label for="billing:telephone">
+                            <?php echo $_egov_helper->getFieldRequiredHtml('telephone', $_checkout_method) ?>
+                            <?php echo $_requiredHtmlForNonVirtual . $this->__('Telephone') ?>
+                        </label>
                         <div class="input-box">
-                            <input type="text" name="billing[telephone]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Telephone')) ?>" class="input-text <?php echo $_requiredClassForNonVirtual . $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="billing:telephone" />
+                            <input type="text" name="billing[telephone]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Telephone')) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('telephone', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="billing:telephone" />
                         </div>
                     </div>
                     <div class="field">
-                        <label for="billing:fax"><?php echo $_requiredHtmlForNonVirtual . $this->__('Fax') ?></label>
+                        <label for="billing:fax">
+                            <?php echo $_egov_helper->getFieldRequiredHtml('fax', $_checkout_method) ?>
+                            <?php echo $_requiredHtmlForNonVirtual . $this->__('Fax') ?>
+                        </label>
                         <div class="input-box">
-                            <input type="text" name="billing[fax]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Fax')) ?>" class="input-text <?php echo $_requiredClassForNonVirtual . $this->helper('customer/address')->getAttributeValidationClass('fax') ?>" id="billing:fax" />
+                            <input type="text" name="billing[fax]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Fax')) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('fax', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>" id="billing:fax" />
                         </div>
                     </div>
                 </li>
               <?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
               <?php if ($_gender->isEnabled()): ?>
-                <li class="fields">                
+                <li class="fields">
                   <?php if ($_gender->isEnabled()): ?>
                     <div class="field">
                         <?php echo $_gender->setGender($this->getQuote()->getCustomerGender())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
@@ -93,5 +117,3 @@ $_requiredHtmlForNonVirtual  = ($this->isVirtual() ? '<em class="required">*</em
     </li>
     </ul>
 </fieldset>
-
-
