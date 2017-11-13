@@ -72,11 +72,23 @@
         var stringAjaxError = "<?php echo $this->__('Sorry, there was a problem!'); ?>";
         var urlBaseAjax = '<?php echo $this->getPaymentAdditionalFormUrl(); ?>';
 
-      <?php if ($_methodsCount <= 1) : ?>
-        $j(document).ready(function(){
-            switchMethod( $j('.no-display input').attr('value') );
+        $j(document).ready(function() {
+            var isAjaxSend = false;
+
+            // alle Inputs im Zahl-Container durchgehen
+            $j('.sp-methods input').each(function(){
+                if( $j(this).is(":checked") ) {
+                    switchMethod( $j(this).val() );
+                    isAjaxSend = true;
+                }
+            });
+
+          <?php if ($_methodsCount <= 1) : ?>
+            if ( isAjaxSend == false ) {
+                switchMethod( $j('.no-display input').attr('value') );
+            }
+          <?php endif; ?>
         });
-      <?php endif; ?>
 
     	 function switchMethod(method)
     	 {
@@ -89,10 +101,7 @@
     	        },
     	        error: function( xhr, status ) {
     	            alert(stringAjaxError);
-    	        },
-    	        //complete: function( xhr, status ) {
-    	        //    $j('#showresults').slideDown('slow');
-    	        //}
+    	        }
     	    });
     	 }
     //]]>
