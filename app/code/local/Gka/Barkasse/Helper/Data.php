@@ -20,7 +20,7 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-class Gka_Barkasse_Helper_Data extends Mage_Core_Helper_Abstract
+class Gka_Barkasse_Helper_Data extends Egovs_Paymentbase_Helper_Data
 {
 
 	public function sendEmail($template, array $recipients, array $data = array(), $storeid = 0, $files = null)
