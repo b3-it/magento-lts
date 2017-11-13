@@ -64,31 +64,36 @@
                             <?php endif; ?>
                         <?php endforeach; ?>
                         </dl>
-                      
+
                     </div>
                 </div>
     <script type="text/javascript">
     //<![CDATA[
-    
-    
+        var stringAjaxError = "<?php echo $this->__('Sorry, there was a problem!'); ?>";
+        var urlBaseAjax = '<?php echo $this->getPaymentAdditionalFormUrl(); ?>';
+
+      <?php if ($_methodsCount <= 1) : ?>
+        $j(document).ready(function(){
+            switchMethod( $j('.no-display input').attr('value') );
+        });
+      <?php endif; ?>
+
     	 function switchMethod(method)
     	 {
- 			var url = '<?php echo $this->getPaymentAdditionalFormUrl(); ?>method/'+ method;
     		$j.ajax({
-    	            url: url,
-    	            type: "GET",
-    	            dataType : "html",
-    	            success: function( data ) {
-    	                $j('#cashpayment').html(data);
-    	            },
-    	            error: function( xhr, status ) {
-    	            alert( "Sorry, there was a problem!" );
-    	            },
-    	            complete: function( xhr, status ) {
-    	                //$('#showresults').slideDown('slow')
-    	            }
-    	            });
-        	 
+                'url'     : urlBaseAjax + 'method/' + method,
+    	        'type'    : "GET",
+    	        'dataType': "html",
+    	        success: function( data ) {
+    	            $j('#cashpayment').html(data);
+    	        },
+    	        error: function( xhr, status ) {
+    	            alert(stringAjaxError);
+    	        },
+    	        //complete: function( xhr, status ) {
+    	        //    $j('#showresults').slideDown('slow');
+    	        //}
+    	    });
     	 }
     //]]>
     </script>
