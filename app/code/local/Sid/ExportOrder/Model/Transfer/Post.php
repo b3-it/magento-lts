@@ -65,6 +65,17 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 				$this->setLog('setze Username: '. $this->getUser());
 				curl_setopt($ch,CURLOPT_PROXYUSERPWD,$this->getUser().':'.$this->getPwd());
 			}
+			
+			if(!empty($this->getPort())){
+				
+				curl_setopt($ch,CURLOPT_PORT,$this->getPort());
+			}
+			
+			if(strpos($this->getAddress(),'https:') !== false)
+			{
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+			}
 
 			$data = array('file' => $cfile);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
