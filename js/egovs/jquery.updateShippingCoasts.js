@@ -21,20 +21,47 @@ $j(document).ready(function(){
 
 function coShippingMethodFormSubmit()
 {
+    var formParams = $j('#shipping-zip-form').serialize();
+
+    toggleLoadingMask();
+        updateAjax(urlEstimate, formParams, '', '#estimateRate');
+        updateAjax(urlTotals, formParams, '#shopping-cart-totals-table', '.cart-totals');
     toggleLoadingMask();
 
-    new Ajax.Request(urlEstimate, {
-        parameters: Form.serialize('shipping-zip-form'),
-        onSuccess: function(response) {
-            $('estimateRate').update(response.responseText);
+    //new Ajax.Request(urlEstimate, {
+    //    parameters: Form.serialize('shipping-zip-form'),
+    //    onSuccess: function(response) {
+    //        $('estimateRate').update(response.responseText);
 
-            new Ajax.Request(urlTotals, {
-                parameters: Form.serialize('shipping-zip-form'),
-                onSuccess: function(response) {
-                    $('shopping-cart-totals-table').update(response.responseText);
-                }
-            });
-            toggleLoadingMask();
+            //new Ajax.Request(urlTotals, {
+            //    parameters: Form.serialize('shipping-zip-form'),
+            //    onSuccess: function(response) {
+            //        $('shopping-cart-totals-table').update(response.responseText);
+            //    }
+            //});
+            //toggleLoadingMask();
+    //    }
+    //});
+}
+
+function updateAjax(ajaxURL, formParams, removedElement, destinationElement)
+{
+    $j.ajax({
+        'url'     : ajaxURL,
+        'method'  : 'POST',
+        'data'    : formParams,
+        'dataType': 'html'
+    })
+    .done(function(result) {
+        if ( removedElement.length && $j(removedElement).length ) {
+            $j(removedElement).remove();
+            $j(destinationElement).prepend(result);
         }
+        else {
+            $j(destinationElement).html(result);
+        }
+    })
+    .fail(function(jqXHR, textStatus) {
+        alert('Request failed: ' + textStatus);
     });
 }

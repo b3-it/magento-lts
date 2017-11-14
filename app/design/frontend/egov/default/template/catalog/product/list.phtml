@@ -130,7 +130,7 @@
                                 <button type="button"
                                         title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
                                         class="button btn-cart egov-cart"
-                                        onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                        onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, array('_forced_secure' => true)) ?>')">
                                     <span>
                                         <?php echo $this->__('Add to Cart') ?>
                                     </span>
@@ -214,7 +214,7 @@
                                     <button type="button"
                                             title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
                                             class="button btn-cart egov-cart"
-                                            onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                            onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, array('_forced_secure' => true)) ?>')">
                                         <span><?php echo $this->__('Add to Cart') ?></span>
                                     </button>
                                 <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
