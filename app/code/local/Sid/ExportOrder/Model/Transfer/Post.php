@@ -43,7 +43,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 		$output = "";
 		try
 		{
-			$curl_opt[] = array();
+			$curl_opt = array();
 			$tmp = tmpfile();
 			$a = stream_get_meta_data($tmp);
 			$filename = $a['uri'];
