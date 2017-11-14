@@ -43,7 +43,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 		$output = "";
 		try
 		{
-			
+			$curl_opt[] = array();
 			$tmp = tmpfile();
 			$a = stream_get_meta_data($tmp);
 			$filename = $a['uri'];
@@ -55,31 +55,38 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			$ch = curl_init();
 
 			// Follow any Location headers
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-
-			curl_setopt($ch, CURLOPT_URL, $this->getAddress());
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
+			//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			$curl_opt[CURLOPT_FOLLOWLOCATION] = 1;
+			//curl_setopt($ch, CURLOPT_URL, $this->getAddress());
+			$curl_opt[CURLOPT_URL] = $this->getAddress();
+			//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$curl_opt[CURLOPT_RETURNTRANSFER] = 1;
+			//curl_setopt($ch, CURLOPT_POST, 1);
+			$curl_opt[CURLOPT_POST] = 1;
 
 			if(!empty($this->getUser())){
 				$this->setLog('setze Username: '. $this->getUser());
-				curl_setopt($ch,CURLOPT_PROXYUSERPWD,$this->getUser().':'.$this->getPwd());
+				//curl_setopt($ch,CURLOPT_PROXYUSERPWD,$this->getUser().':'.$this->getPwd());
+				$curl_opt[CURLOPT_PROXYUSERPWD] = $this->getUser().':'.$this->getPwd();
 			}
 			
 			if(!empty($this->getPort())){
 				
-				curl_setopt($ch,CURLOPT_PORT,$this->getPort());
+				//curl_setopt($ch,CURLOPT_PORT,$this->getPort());
+				$curl_opt[CURLOPT_PORT] = $this->getPort();
 			}
 			
 			if(strpos($this->getAddress(),'https:') !== false)
 			{
-				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				$curl_opt[CURLOPT_SSL_VERIFYPEER] = 0;
+				$curl_opt[CURLOPT_SSL_VERIFYHOST] = 0;
 			}
 
 			$data = array('file' => $cfile);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
+			//curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			$curl_opt[CURLOPT_POSTFIELDS] = $data;
 // 			if (Mage::getStoreConfig('web/proxy/use_proxy') == true) {
 // 				$host = Mage::getStoreConfig('web/proxy/proxy_name');
 // 				$port = 8080;
@@ -94,6 +101,12 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 // 					curl_setopt($cs, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('web/proxy/proxy_user_pwd'));
 // 				}
 // 			}
+			
+			foreach($curl_opt as $opt=>$value)
+			{
+				curl_setopt($ch, $opt, $value);
+				$this->setLog('Curl SetOpt: '.$opt."=". $value);
+			}
 			
 			$output = curl_exec($ch);
 			$this->setLog($output);
