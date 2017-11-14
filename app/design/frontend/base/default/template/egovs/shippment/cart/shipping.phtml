@@ -89,7 +89,9 @@
                 </dl>
                <?php endif; ?>
               <?php else:?>
-              <?php $zip = $this->getEstimatePostcode(); if (empty($zip)) {
+              <?php
+                $zip = $this->getEstimatePostcode();
+                if (empty($zip)) {
             		echo $this->__('Calculation of shipping cost requires postcode!');
 				} else{
 					echo $this->__('No Valid Shipping Method found!');
@@ -106,9 +108,9 @@
         </form>
         <script type="text/javascript">
             var coShippingMethodForm = new VarienForm('shipping-zip-form');
-            var countriesWithOptionalZip = <?php echo $this->helper('directory')->getCountriesWithOptionalZip(true) ?>;
-            var urlEstimate = '<?php echo $this->getUrl('egovs_shipment/cart/estimate/')?>';
-            var urlTotals = '<?php echo $this->getUrl('egovs_shipment/cart/totals/')?>';
+            var countriesWithOptionalZip = <?php echo $this->helper('directory')->getCountriesWithOptionalZip(true); ?>;
+            var urlEstimate = '<?php echo $this->getUrl('egovs_shipment/cart/estimate/', array('_forced_secure' => true)); ?>';
+            var urlTotals = '<?php echo $this->getUrl('egovs_shipment/cart/totals/', array('_forced_secure' => true)); ?>';
             var btnUpdateTitle = '<?php echo $this->__('Get a Quote') ?>';
             var btnUpdateCaption = '<?php echo $this->__('Update shipping cost') ?>';
         </script>
