@@ -27,21 +27,6 @@ function coShippingMethodFormSubmit()
         updateAjax(urlEstimate, formParams, '', '#estimateRate');
         updateAjax(urlTotals, formParams, '#shopping-cart-totals-table', '.cart-totals');
     toggleLoadingMask();
-
-    //new Ajax.Request(urlEstimate, {
-    //    parameters: Form.serialize('shipping-zip-form'),
-    //    onSuccess: function(response) {
-    //        $('estimateRate').update(response.responseText);
-
-            //new Ajax.Request(urlTotals, {
-            //    parameters: Form.serialize('shipping-zip-form'),
-            //    onSuccess: function(response) {
-            //        $('shopping-cart-totals-table').update(response.responseText);
-            //    }
-            //});
-            //toggleLoadingMask();
-    //    }
-    //});
 }
 
 function updateAjax(ajaxURL, formParams, removedElement, destinationElement)
