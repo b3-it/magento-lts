@@ -4,13 +4,20 @@
 function CurlPost($sURL)
 {
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_URL, $sURL);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt ($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+    $curl_opt = array();
+    $curl_opt[CURLOPT_SSL_VERIFYPEER] = 0;
+    $curl_opt[CURLOPT_SSL_VERIFYHOST] = 0;
+    $curl_opt[CURLOPT_URL] = $sURL;
+    $curl_opt[CURLOPT_POST] = 1;
+    $curl_opt[CURLOPT_HEADER] = 0;
+    $curl_opt[CURLOPT_RETURNTRANSFER] = 1;
+   
     
+    foreach($curl_opt as $opt=>$value)
+    {
+    	curl_setopt($ch, $opt, $value);
+    	echo 'Curl SetOpt: '.$opt."=". $value .'\n';
+    }
 
     $sResult = curl_exec($ch);
     if (curl_errno($ch)) 
