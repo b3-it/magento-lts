@@ -44,13 +44,13 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 		try
 		{
 			$curl_opt = array();
-			$tmp = tmpfile();
-			$a = stream_get_meta_data($tmp);
-			$filename = $a['uri'];
+			//$tmp = tmpfile();
+			//$a = stream_get_meta_data($tmp);
+			$filename = tempnam (Mage::getBaseDir('tmp'), "ExportOrder".$order->getIncrementId() ); // $a['uri'];
 
 			$wantedFileName = "Order".$order->getIncrementId().'_'.date('d-m-Y_H-i-s').$this->getFileExtention();
-
-			fwrite($tmp, $content);
+			file_put_contents($filename, $content);
+			
 			$cfile = curl_file_create($filename,'application/xml', $wantedFileName);
 			$ch = curl_init();
 
@@ -65,11 +65,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			$curl_opt[CURLOPT_POST] = 1;
 			$curl_opt[CURLOPT_HEADER] = 0;
 
-			if(!empty($this->getUser())){
-				$this->setLog('setze Username: '. $this->getUser());
-				//curl_setopt($ch,CURLOPT_PROXYUSERPWD,$this->getUser().':'.$this->getPwd());
-				$curl_opt[CURLOPT_PROXYUSERPWD] = $this->getUser().':'.$this->getPwd();
-			}
+			
 			
 			if(!empty($this->getPort())){
 				
@@ -85,23 +81,28 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 				$curl_opt[CURLOPT_SSL_VERIFYHOST] = 0;
 			}
 
+			$curl_opt[CURLOPT_PROXY] = '10.100.80.50:8080';
+			$curl_opt[CURLOPT_HTTPPROXYTUNNEL] = true;
+			
 			$data = array('file' => $cfile);
 			//curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			$curl_opt[CURLOPT_POSTFIELDS] = $data;
-// 			if (Mage::getStoreConfig('web/proxy/use_proxy') == true) {
-// 				$host = Mage::getStoreConfig('web/proxy/proxy_name');
-// 				$port = 8080;
-// 				if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')>0)) {
-// 					$port =  Mage::getStoreConfig('web/proxy/proxy_port');
-// 				}
-// 				curl_setopt($cs, CURLOPT_PROXY, $host . ":" . $port);
-// 				curl_setopt($cs, CURLOPT_HTTPPROXYTUNNEL, true);
-// 				//$this->useProxyAndHTTPS = true;
-// 				$user = Mage::getStoreConfig('web/proxy/proxy_user');
-// 				if (isset($user) && (strlen($user) > 0)) {
-// 					curl_setopt($cs, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('web/proxy/proxy_user_pwd'));
-// 				}
-// 			}
+ 			if (Mage::getStoreConfig('framecontract/proxy_exportorder/use_proxy') == true) {
+				$host = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_name');
+ 				$port = 8080;
+ 				if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')>0)) {
+ 					$port =  Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port');
+ 				}
+ 			
+ 				
+ 				$curl_opt[CURLOPT_PROXY] = $host . ":" . $port;
+ 				$curl_opt[CURLOPT_HTTPPROXYTUNNEL] = true;
+ 				
+ 				$user = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user');
+ 				if (isset($user) && (strlen($user) > 0)) {
+ 					curl_setopt($cs, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user_pwd'));
+ 				}
+ 			}
 			
 			foreach($curl_opt as $opt=>$value)
 			{
@@ -133,6 +134,9 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			
 			
 			curl_close($ch);
+			if(file_exists($filename)){
+				unlink($filename);
+			}
 		}
 		catch(Exception $ex)
 		{
