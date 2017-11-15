@@ -16,7 +16,7 @@ function CurlPost($sURL)
     foreach($curl_opt as $opt=>$value)
     {
     	curl_setopt($ch, $opt, $value);
-    	echo 'Curl SetOpt: '.$opt."=". $value .'\n';
+    	echo 'Curl SetOpt: '.$opt."=". $value ."\n";
     }
 
     $sResult = curl_exec($ch);

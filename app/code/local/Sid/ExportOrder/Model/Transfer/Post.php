@@ -63,6 +63,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			$curl_opt[CURLOPT_RETURNTRANSFER] = 1;
 			//curl_setopt($ch, CURLOPT_POST, 1);
 			$curl_opt[CURLOPT_POST] = 1;
+			$curl_opt[CURLOPT_HEADER] = 0;
 
 			if(!empty($this->getUser())){
 				$this->setLog('setze Username: '. $this->getUser());
