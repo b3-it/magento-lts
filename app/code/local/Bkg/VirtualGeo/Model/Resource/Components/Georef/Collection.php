@@ -24,25 +24,26 @@ class Bkg_Virtualgeo_Model_Resource_Components_Georef_Collection extends Mage_Co
 		return $this->_storeid;
 	}
 	
-    public function _construct()
-    {
-        parent::_construct();
-        $this->_init('virtualgeo/components_georef');
-    }
-    
-    
-    public function getLabelTable()
-    {
-    	return $this->getTable('virtualgeo/components_georef_label');
-    }
-    
-    protected function _initSelect()
-    {
-    	$select = $this->getSelect()->from(array('main_table' => $this->getMainTable()));
-    	$select->join(array('label'=>$this->getLabelTable()), "label.parent_id=main_table.id AND label.store_id=".$this->getStoreId(),array('parent_id','shortname','name','description'));
-    	return $this;
-    }
-    
+	public function _construct()
+	{
+		parent::_construct();
+		$this->_init('virtualgeo/components_georef');
+	}
+	
+	
+	public function getLabelTable()
+	{
+		return $this->getTable('virtualgeo/components_georef_label');
+	}
+	
+	protected function _initSelect()
+	{
+		$select = $this->getSelect()->from(array('main_table' => $this->getMainTable()));
+		$select->join(array('label'=>$this->getLabelTable()), "label.parent_id=main_table.id AND label.store_id=".$this->getStoreId(),array('parent_id','shortname','name','description'));
+		return $this;
+	}
+	
+   
     
   
 }

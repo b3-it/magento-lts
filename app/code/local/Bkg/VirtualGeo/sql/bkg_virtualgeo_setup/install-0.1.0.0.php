@@ -92,6 +92,36 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_format_
 	");
 }
 
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_format_product')))
+{
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_format_product')};
+	  CREATE TABLE {$installer->getTable('virtualgeo/components_format_product')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `format_id` int(11) unsigned NOT NULL,
+	  `product_id` int(10) unsigned NOT NULL,
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`format_id`) REFERENCES `{$this->getTable('virtualgeo/components_format_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
+
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_georef_product')))
+{
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_georef_product')};
+	   CREATE TABLE {$installer->getTable('virtualgeo/components_georef_product')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `georef_id` int(11) unsigned NOT NULL,
+	  `product_id` int(10) unsigned NOT NULL,
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`georef_id`) REFERENCES `{$this->getTable('virtualgeo/components_georef_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
+
 /*
 if (!$installer->getAttribute('catalog_product', 'request')) {
 	$installer->addAttribute('catalog_product', 'request', array(

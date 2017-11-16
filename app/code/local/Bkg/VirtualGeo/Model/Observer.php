@@ -58,9 +58,7 @@ class Bkg_VirtualGeo_Model_Observer
         $product->setPriceType(Mage_Bundle_Model_Product_Price::PRICE_TYPE_DYNAMIC);
         $productData =  $request->getPost('product');
         
-        if(isset($productData['rap'])){
-        	$this->_saveRap($productData['rap'],$product);
-        }
+       
         
         if (($items = $request->getPost('bundle_options')) && !$product->getCompositeReadonly()) {
             $product->setBundleOptionsData($items);
@@ -95,6 +93,118 @@ class Bkg_VirtualGeo_Model_Observer
     }
 
 
+    /**
+     * Setting Bundle Items Data to product for father processing
+     *
+     * @param Varien_Object $observer
+     * @return Mage_Bundle_Model_Observer
+     */
+    public function onProductSaveAfter($observer)
+    {
+    	$dataObject = $observer->getEvent()->getDataObject();
+    	$product = $observer->getEvent()->getProduct();
+
+    	if($product->getTypeId() != Bkg_VirtualGeo_Model_Product_Type::TYPE_CODE)
+    	{
+    		return $this;
+    	}
+    
+    	if($dataObject->getRap()){
+    		$this->_saveRap($dataObject->getRap(),$product);
+    	}
+
+    	$this->_saveGeoref($dataObject->getGeoref(),$product);
+    	$this->_saveFormat($dataObject->getFormat(),$product);
+    }
+    
+    protected function _saveGeoref($data, $product)
+    {
+    	if(empty($data)){
+    		$data = array();
+    	}
+    	//evtl. vorhandene laden
+    	$collection = Mage::getModel('virtualgeo/components_georefproduct')->getCollection();
+    	$collection->getSelect()
+    	->where('product_id = '.intval($product->getId()));
+    	$newItems = array();
+		
+    	//speichern
+    	foreach($data as $id)
+    	{
+    		$found = false;
+    		foreach($collection->getItems() as $item)
+    		{
+    			if($item->getGeorefId() == $id){
+    				$found = true;
+    				$newItems[] = $id;
+    				break;
+    			}
+    		}
+    		if(!$found)
+    		{
+    			$item = Mage::getModel('virtualgeo/components_georefproduct');
+    			$item
+    			->setProductId($product->getId())
+    			->setGeorefId($id)
+    			->save();
+    			$newItems[] = $id;
+    		}
+    	}
+    	
+    	foreach($collection->getItems() as $item)
+    	{
+    		if(!in_array($item->getGeorefId(), $newItems)){
+    			$item->delete();
+    		}
+    	}
+    	 
+    	
+    }
+    
+    protected function _saveFormat($data, $product)
+    {
+    	if(empty($data)){
+    		$data = array();
+    	}
+    	//evtl. vorhandene laden
+    	$collection = Mage::getModel('virtualgeo/components_formatproduct')->getCollection();
+    	$collection->getSelect()
+    	->where('product_id = '.intval($product->getId()));
+    	$newItems = array();
+    
+    	//speichern
+    	foreach($data as $id)
+    	{
+    		$found = false;
+    		foreach($collection->getItems() as $item)
+    		{
+    			if($item->getFormatId() == $id){
+    				$found = true;
+    				$newItems[] = $id;
+    				break;
+    			}
+    		}
+    		if(!$found)
+    		{
+    			$item = Mage::getModel('virtualgeo/components_formatproduct');
+    			$item
+    			->setProductId($product->getId())
+    			->setFormatId($id)
+    			->save();
+    			$newItems[] = $id;
+    		}
+    	}
+    	 
+    	foreach($collection->getItems() as $item)
+    	{
+    		if(!in_array($item->getFormatId(), $newItems)){
+    			$item->delete();
+    		}
+    	}
+    
+    	 
+    }
+    
     protected function _saveRap($rapData, $parent = null)
     {
     	//evtl. vorhandene laden

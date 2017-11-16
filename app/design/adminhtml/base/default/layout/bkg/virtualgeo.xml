@@ -59,6 +59,8 @@ Layout handle for budle products
             <action method="bindShadowTabs"><first>virtualgeo_fees</first><second>price</second></action>
             <action method="addTab"><name>bundle_items</name><block>bundle/adminhtml_catalog_product_edit_tab_bundle</block></action>
             <action method="bindShadowTabs"><first>bundle_items</first><second>customer_options</second></action>
+            <action method="addTab"><name>virtualgeo_georef</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_georef</block></action>
+            <action method="addTab"><name>virtualgeo_format</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_format</block></action>
         </reference>
     </adminhtml_catalog_product_virtualgeo>
 

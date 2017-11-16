@@ -58,4 +58,17 @@ class Bkg_Virtualgeo_Model_Components_Georef extends Mage_Core_Model_Abstract
     	
     	return $this;
     }
+    
+    public function getCollectionAsOptions($productId,$storeId = 0)
+    {
+    	$res = array();
+    	$collection = $this->getCollection();
+    	$collection->setStoreId($storeId);
+    	foreach($collection->getItems() as $item)
+    	{
+    		$res[] = array('label'=>$item->getName(),'value' => $item->getId());
+    	}
+    	
+    	return $res;
+    }
 }
