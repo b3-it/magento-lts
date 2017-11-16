@@ -49,12 +49,13 @@ class Bkg_VirtualGeo_Model_Observer
         $product = $observer->getEvent()->getProduct();
 
         
+        
         if($product->getTypeId() != Bkg_VirtualGeo_Model_Product_Type::TYPE_CODE)
         {
         	return $this;
         }
         
-        
+        $product->setPriceType(Mage_Bundle_Model_Product_Price::PRICE_TYPE_DYNAMIC);
         $productData =  $request->getPost('product');
         
         if(isset($productData['rap'])){

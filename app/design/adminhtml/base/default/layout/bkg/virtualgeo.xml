@@ -38,7 +38,21 @@ Layout handle for budle products
             <action method="setData"><attribute>attributeTabs</attribute><attributeType>bundle/adminhtml_catalog_product_edit_tab_attributes</attributeType></action>
         </reference>
     </default>-->
-
+    <adminhtml_virtualgeo_components_georef_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_georef" name="georef" >
+ 
+            </block>
+        </reference>
+    </adminhtml_virtualgeo_components_georef_index>
+    <adminhtml_virtualgeo_components_format_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_format" name="format" >
+            
+               </block>
+        </reference>
+    </adminhtml_virtualgeo_components_format_index>
+    
     <adminhtml_catalog_product_virtualgeo>
         <reference name="product_tabs">
             <action method="addTab"><name>virtualgeo_fees</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_fees</block></action>
