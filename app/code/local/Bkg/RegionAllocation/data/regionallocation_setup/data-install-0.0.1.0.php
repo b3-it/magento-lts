@@ -1,4 +1,4 @@
-=>'<?php
+<?php
 /**
  *
  *-- TODO:: kurze Beschreibung --
