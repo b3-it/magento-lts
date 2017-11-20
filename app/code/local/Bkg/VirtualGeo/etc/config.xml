@@ -42,6 +42,14 @@
                     </virtualgeo_observer>
                 </observers>
             </catalog_product_prepare_save>
+            <catalog_product_save_after>
+                <observers>
+                    <virtualgeo_observer_onProductSaveAfter>
+                        <class>virtualgeo/observer</class>
+                        <method>onProductSaveAfter</method>
+                    </virtualgeo_observer_onProductSaveAfter>
+                </observers>
+            </catalog_product_save_after>            
             <!-- 
             <sales_convert_quote_item_to_order_item>
                 <observers>
@@ -101,7 +109,56 @@
             </catalog_model_product_duplicate>
              -->
         </events>
-		
+		<menu>
+			<catalog>
+				<children>
+					<virtualgeo_components module="virtualgeo">
+						<title>virtualgeo components</title>
+						<sort_order>10</sort_order>
+						<children>
+							<virtualgeo_components_georef module="virtualgeo">
+								<title>CRS</title>
+								<sort_order>10</sort_order>
+								<action>adminhtml/virtualgeo_components_georef/index</action>
+							</virtualgeo_components_georef>
+							<virtualgeo_components_format module="virtualgeo">
+								<title>Format</title>
+								<sort_order>10</sort_order>
+								<action>adminhtml/virtualgeo_components_format/index</action>
+							</virtualgeo_components_format>
+						</children>
+					</virtualgeo_components>
+				</children>
+			</catalog>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<catalog>
+							<children>
+							<virtualgeo_components>
+								<children>
+								<virtualgeo_components_georef	module="virtualgeo">
+									<title>CRS</title>
+									<sort_order>10</sort_order>
+								</virtualgeo_components_georef>
+								<virtualgeo_components_format	module="virtualgeo">
+									<title>Format</title>
+									<sort_order>10</sort_order>
+								</virtualgeo_components_format>
+								</children>
+								</virtualgeo_components>
+							</children>
+						</catalog>
+	
+					</children>
+				</admin>
+			</resources>
+		</acl>
     </adminhtml>
     <global>
        
@@ -182,6 +239,24 @@
                    <components_regionallocation>
                     <table>virtualgeo_components_regionallocation</table>
                    </components_regionallocation>
+                   <components_format_entity>
+                    <table>virtualgeo_components_format_entity</table>
+                   </components_format_entity>
+                   <components_format_label>
+                    <table>virtualgeo_components_format_label</table>
+                   </components_format_label>
+                   <components_georef_entity>
+                    <table>virtualgeo_components_georef_entity</table>
+                   </components_georef_entity>
+                   <components_georef_label>
+                    <table>virtualgeo_components_georef_label</table>
+                   </components_georef_label>
+                   <components_georef_product>
+                    <table>virtualgeo_components_georef_product</table>
+                   </components_georef_product>
+                   <components_format_product>
+                    <table>virtualgeo_components_format_product</table>
+                   </components_format_product>
                     <quote_options>
                         <table>virtualgeo_quote_options</table>
                     </quote_options>

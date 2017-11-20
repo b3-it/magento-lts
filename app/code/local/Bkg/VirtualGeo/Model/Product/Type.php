@@ -127,6 +127,17 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
     }
     
    
+    /**
+     * Before save type related data
+     *
+     * @param Mage_Catalog_Model_Product $product
+     */
+    public function beforeSave($product = null)
+    {
+    	parent::beforeSave($product);
+    	$product->setPriceType(Mage_Bundle_Model_Product_Price::PRICE_TYPE_DYNAMIC);
+    	return $this;
+    }
 
     
     /**

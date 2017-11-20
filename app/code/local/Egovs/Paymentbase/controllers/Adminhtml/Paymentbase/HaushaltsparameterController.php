@@ -91,7 +91,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController exten
 				->setId($this->getRequest()->getParam('id'));
 			
 			try {
-				if ($model->getCreatedTime == null || $model->getUpdateTime() == null) {
+				if ($model->getCreatedTime() == null || $model->getUpdateTime() == null) {
 					$model->setCreatedTime(now())
 						->setUpdateTime(now());
 				} else {
