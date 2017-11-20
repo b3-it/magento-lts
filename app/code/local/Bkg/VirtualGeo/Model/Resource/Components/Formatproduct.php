@@ -17,5 +17,18 @@ class Bkg_Virtualgeo_Model_Resource_Components_Formatproduct extends Mage_Core_M
     }
     
  
+    public function saveDefault($defaultId, $productId, $storeId)
+    {
+    	$table = $this->getMainTable();
+    	$data=array();
+    	$data['is_default'] = '0';
+    	$this->_getWriteAdapter()->update($table,$data, "product_id= $productId  AND store_id = $storeId ");
+    	 
+
+    	$data['is_default'] = '1';
+    	$this->_getWriteAdapter()->update($table, $data, "product_id= $productId  AND store_id = $storeId AND format_id = $defaultId ");
+    
+    	return $this;
+    }
  
 }

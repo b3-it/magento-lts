@@ -17,6 +17,12 @@ class Bkg_Virtualgeo_Model_Components_Georefproduct extends Mage_Core_Model_Abst
         $this->_init('virtualgeo/components_georefproduct');
     }
     
+    /**
+     * Alle CRS die für dieses Produkt und Store verfügbar sind ermittel
+     * @param int $productId
+     * @param int $storeId
+     * @return array| NULL[]
+     */
     public function getValue4Product($productId, $storeId = 0)
     {
     	$storeId = intval($storeId);
@@ -31,5 +37,26 @@ class Bkg_Virtualgeo_Model_Components_Georefproduct extends Mage_Core_Model_Abst
     	 
     	return $res;
     }
+    
+    public function getDefaul4Product($productId, $storeId = 0)
+    {
+    	$storeId = intval($storeId);
+    	$collection = $this->getCollection();
+    	$collection->getSelect()->where('product_id=?',$productId);
+    	$collection->getSelect()->where('store_id=?',$storeId);
+    	$collection->getSelect()->where('is_default=?','1');
+    	 
+    	$res = 0;
+    	foreach ($collection->getItems() as $item)
+    	{
+    		$res = $item->getGeorefId();
+    	}
+    
+    	return $res;
+    }
 
+    public function saveDefault($defaultId, $productId, $storeId)
+    {
+    	$this->getResource()->saveDefault($defaultId, $productId, $storeId);
+    }
 }

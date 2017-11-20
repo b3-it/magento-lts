@@ -113,11 +113,11 @@ class Bkg_VirtualGeo_Model_Observer
     		$this->_saveRap($dataObject->getRap(),$product);
     	}
 
-    	$this->_saveGeoref($dataObject->getGeoref(),$product);
-    	$this->_saveFormat($dataObject->getFormat(),$product);
+    	$this->_saveGeoref($dataObject->getGeoref(), $dataObject->getGeorefDefault(),$product);
+    	$this->_saveFormat($dataObject->getFormat(), $dataObject->getFormatDefault(),$product);
     }
     
-    protected function _saveGeoref($data, $product)
+    protected function _saveGeoref($data, $default, $product)
     {
     	if(empty($data)){
     		$data = array();
@@ -136,6 +136,9 @@ class Bkg_VirtualGeo_Model_Observer
     		//ertmal die erste verwenden
     		if($defaultId === null)
     		{
+    			$defaultId = $id;
+    		}
+    		if(in_array($id, $default)){
     			$defaultId = $id;
     		}
     		$found = false;
@@ -166,10 +169,10 @@ class Bkg_VirtualGeo_Model_Observer
     		}
     	}
     	 
-    	
+    	Mage::getModel('virtualgeo/components_georefproduct')->saveDefault($defaultId,intval($product->getId()), intval($product->getStoreId()));
     }
     
-    protected function _saveFormat($data, $product)
+    protected function _saveFormat($data, $default, $product)
     {
     	if(empty($data)){
     		$data = array();
@@ -186,9 +189,13 @@ class Bkg_VirtualGeo_Model_Observer
     	//speichern
     	foreach($data as $id)
     	{
-    		//ertmal die erste verwenden
+    		//ertmal die erste als default verwenden
     		if($defaultId === null)
     		{
+    			$defaultId = $id;
+    		}
+    		//
+    		if(in_array($id, $default)){
     			$defaultId = $id;
     		}
     		$found = false;
@@ -218,7 +225,8 @@ class Bkg_VirtualGeo_Model_Observer
     			$item->delete();
     		}
     	}
-    
+    	
+    	Mage::getModel('virtualgeo/components_formatproduct')->saveDefault(intval($defaultId),intval($product->getId()), intval($product->getStoreId()));
     	 
     }
     

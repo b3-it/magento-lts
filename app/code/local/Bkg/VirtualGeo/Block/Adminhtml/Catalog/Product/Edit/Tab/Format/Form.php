@@ -18,16 +18,18 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Format_Form extend
 				'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
 		));
 
-		$categoriesField = $fieldset->addField('format', 'multiselect', array(
+		$field = $fieldset->addField('format', 'multiselect', array(
 				'label'     => Mage::helper('virtualgeo')->__('Verwendung'),
 				'name'      => 'product[format][]',
+				'defaultname'      => 'product[format_default][]',
 				'values'    => Mage::getModel('virtualgeo/components_format')->getCollectionAsOptions($this->getProduct()->getId()),
-				'value'		=> Mage::getModel('virtualgeo/components_formatproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
+				'value'		=> Mage::getModel('virtualgeo/components_formatproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
+				'default'	=> Mage::getModel('virtualgeo/components_formatproduct')->getDefaul4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
 				
 		));
-		if (false) {
-			$categoriesField->setRenderer(
-					$this->getLayout()->createBlock('informationservice/adminhtml_widget_form_renderer_fieldset_selectlevels')
+		if ($field) {
+			$field->setRenderer(
+					$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_renderer_list')
 					);
 		}
 	
