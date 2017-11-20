@@ -49,47 +49,9 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Georef extends Mag
     }
     
     
-    public function getAddButtonHtml()
-    {
-    	return $this->getChildHtml('add_button');
-    }
+ 
     
-    
-    private function getProductId()
-    {
-    	if($this->getData('product_id')!= null)
-    	{
-    		return $this->getData('product_id');
-    	}
-    
-    	$product = Mage::registry('product');
-    	if($product)
-    	{
-    		return $product->getId();
-    	}
-    	return 0;
-    }
-    
-    public function getProduct()
-    {
-    	
-    	$product = Mage::registry('product');
-    	if($product)
-    	{
-    		return $product();
-    	}
-    	return null;
-    }
-    
-    public function getFieldValue($field)
-    {
-    	$product = Mage::registry('product');
-    	if($product)
-    	{
-    		return $product->getData($field);
-    	}
-    	return null;
-    }
+
     
    
 }

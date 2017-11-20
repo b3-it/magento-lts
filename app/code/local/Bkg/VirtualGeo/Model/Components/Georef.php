@@ -32,7 +32,7 @@ class Bkg_Virtualgeo_Model_Components_Georef extends Mage_Core_Model_Abstract
     protected function _afterSave()
     {
     	$obj = new Varien_Object();
-    	$labels = $this->getResource()->loadLabels($obj, $this->getId(), $this->getStoreId());
+    	$labels = $this->getResource()->loadLabels($obj, intval($this->getId()), $this->getStoreId());
     	
     	$obj->setShortname($this->getShortname());
     	$obj->setName($this->getName());
@@ -50,7 +50,7 @@ class Bkg_Virtualgeo_Model_Components_Georef extends Mage_Core_Model_Abstract
     protected function _afterLoad()
     {
     	$obj = new Varien_Object();
-    	$labels = $this->getResource()->loadLabels($obj, $this->getId(), $this->getStoreId());
+    	$labels = $this->getResource()->loadLabels($obj, intval($this->getId()), $this->getStoreId());
     	
     	$this->setShortname($obj->getShortname());
     	$this->setName($obj->getName());

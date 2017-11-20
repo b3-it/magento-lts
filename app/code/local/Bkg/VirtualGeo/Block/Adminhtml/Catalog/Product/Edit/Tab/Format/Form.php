@@ -22,7 +22,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Format_Form extend
 				'label'     => Mage::helper('virtualgeo')->__('Verwendung'),
 				'name'      => 'product[format][]',
 				'values'    => Mage::getModel('virtualgeo/components_format')->getCollectionAsOptions($this->getProduct()->getId()),
-				'value'		=> Mage::getModel('virtualgeo/components_formatproduct')->getValue4Product($this->getProduct()->getId())
+				'value'		=> Mage::getModel('virtualgeo/components_formatproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
 				
 		));
 		if (false) {

@@ -125,12 +125,19 @@ class Bkg_VirtualGeo_Model_Observer
     	//evtl. vorhandene laden
     	$collection = Mage::getModel('virtualgeo/components_georefproduct')->getCollection();
     	$collection->getSelect()
-    	->where('product_id = '.intval($product->getId()));
+    	->where('product_id = '.intval($product->getId()))
+    	->where('store_id = '.intval($product->getStoreId()));
     	$newItems = array();
 		
+    	$defaultId = null;
     	//speichern
     	foreach($data as $id)
     	{
+    		//ertmal die erste verwenden
+    		if($defaultId === null)
+    		{
+    			$defaultId = $id;
+    		}
     		$found = false;
     		foreach($collection->getItems() as $item)
     		{
@@ -145,6 +152,7 @@ class Bkg_VirtualGeo_Model_Observer
     			$item = Mage::getModel('virtualgeo/components_georefproduct');
     			$item
     			->setProductId($product->getId())
+    			->setStoreId($product->getStoreId())
     			->setGeorefId($id)
     			->save();
     			$newItems[] = $id;
@@ -169,12 +177,20 @@ class Bkg_VirtualGeo_Model_Observer
     	//evtl. vorhandene laden
     	$collection = Mage::getModel('virtualgeo/components_formatproduct')->getCollection();
     	$collection->getSelect()
-    	->where('product_id = '.intval($product->getId()));
+    	->where('product_id = '.intval($product->getId()))
+    	->where('store_id = '.intval($product->getStoreId()));
     	$newItems = array();
     
+    	$defaultId = null;
+    	
     	//speichern
     	foreach($data as $id)
     	{
+    		//ertmal die erste verwenden
+    		if($defaultId === null)
+    		{
+    			$defaultId = $id;
+    		}
     		$found = false;
     		foreach($collection->getItems() as $item)
     		{
@@ -189,6 +205,7 @@ class Bkg_VirtualGeo_Model_Observer
     			$item = Mage::getModel('virtualgeo/components_formatproduct');
     			$item
     			->setProductId($product->getId())
+    			->setStoreId($product->getStoreId())
     			->setFormatId($id)
     			->save();
     			$newItems[] = $id;
