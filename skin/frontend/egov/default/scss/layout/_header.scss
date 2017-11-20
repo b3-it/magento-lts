@@ -130,7 +130,7 @@
         }
         @include bp(max-width, 550px) {
             left: 5px;
-            top: -75px;
+            top: 65px;
         }
     }
 }
@@ -470,7 +470,7 @@ a.skip-link {
 
     .skip-link {
         @include bp(max-width, $bp-medium) {
-            width: 50%;
+            width: 33%;
         }
     }
 
@@ -478,7 +478,7 @@ a.skip-link {
         position: static;
         display: inline-block;
         right: 0;
-        width: 50%;
+        width: 75%;
     }
 }
 
