@@ -33,7 +33,7 @@ $installer->startSetup();
 
 /** @var $blocks  Mage_Cms_Model_Resource_Block_Collection */
 $blocks = Mage::getModel('cms/block')->getCollection();
-
+$new_content_array = null;
 foreach($blocks AS $block) {
     $lowerId = strtolower( $block->getIdentifier() );
 

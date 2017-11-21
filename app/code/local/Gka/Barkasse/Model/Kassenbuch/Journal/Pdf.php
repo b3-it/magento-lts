@@ -21,7 +21,6 @@ class Gka_Barkasse_Model_Kassenbuch_Journal_Pdf extends Egovs_Pdftemplate_Model_
 			
 			$items = $journal->getItemsCollection()->getItems();
 			
-			
 			foreach($items as $item){
 				if(empty($item->getExternesKassenzeichen())){
 					$item->setExternesKassenzeichenText(Mage::helper('gka_barkasse')->__('No'));
@@ -29,6 +28,7 @@ class Gka_Barkasse_Model_Kassenbuch_Journal_Pdf extends Egovs_Pdftemplate_Model_
 				else{
 					$item->setExternesKassenzeichenText(Mage::helper('gka_barkasse')->__('Yes'));
 				}
+				$item->setStatus(Mage::helper('gka_barkasse')->__($item->getStatus()));
 			}
 			
 			

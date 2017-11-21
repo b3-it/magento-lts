@@ -74,6 +74,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('gka_barkasse')->__('Item does not exist'));
     		$this->_redirect('*/*/');
     	}
+    	return $this;
     }
     
     public function openAction()

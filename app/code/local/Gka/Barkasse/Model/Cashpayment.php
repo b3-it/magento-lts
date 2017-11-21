@@ -273,6 +273,20 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
     }
  
     
+    public function createCustomerForPayment($data = null) {
+    	$payment = $this->getInfoInstance();
+    	$quote = $payment->getQuote();
+    	$order = $payment->getOrder();
+    	
+    	if($order){
+    		$adr = $order->getBillingAddress();
+    	}else {
+    		$adr = $quote->getBillingAddress();
+    	}
+    	
+    	return parent::createCustomerForPayment($adr);
+    }
+    
     /**
      * Whether current operation is order placement
      *
