@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* @var $installer Mage_Catalog_Model_Resource_Setup */
 $installer = $this;
 $connection = $installer->getConnection();
