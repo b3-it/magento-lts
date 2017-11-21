@@ -349,7 +349,7 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     /**
      * Ruft die Standard- bzw Modulimplementation zum Prüfen der Nachricht auf
      * 
-     * @return boolean
+     * @return boolean|string
      * 
      * @see Egovs_Paymentbase_Controller_Abstract::__checkReturnedMessage
      */
@@ -369,7 +369,7 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     /**
      * Validiert die Antwort des Zahlungsproviders -- Template Method --
      * 
-     * @return boolean
+     * @return boolean|string
      * 
      */
     protected function _checkReturnedMessage() {
