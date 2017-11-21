@@ -138,7 +138,7 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_content
 	  `code` varchar(128) default '',
 	  `parent_id` int(11) unsigned NOT NULL,
 	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	  ");
 }
