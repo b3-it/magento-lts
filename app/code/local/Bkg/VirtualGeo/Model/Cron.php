@@ -1,7 +1,7 @@
 <?php
 /**
  * 
- *  Eventbundle Produkte automatisch deaktivieren bzw. unverkäuflich setzen
+ *  VirtualGeo Produkte automatisch deaktivieren bzw. unverkäuflich setzen
  *  @category Egovs
  *  @package  Bkg_VirtualGeo_Model_Cron
  *  @author Holger Kögel <​h.koegel@b3-it.de>

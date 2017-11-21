@@ -122,6 +122,10 @@ class Bkg_VirtualGeo_Model_Observer
     	if(empty($data)){
     		$data = array();
     	}
+    	if(empty($default))
+    	{
+    		$default = array();
+    	}
     	//evtl. vorhandene laden
     	$collection = Mage::getModel('virtualgeo/components_georefproduct')->getCollection();
     	$collection->getSelect()
@@ -176,6 +180,10 @@ class Bkg_VirtualGeo_Model_Observer
     {
     	if(empty($data)){
     		$data = array();
+    	}
+    	if(empty($default))
+    	{
+    		$default = array();
     	}
     	//evtl. vorhandene laden
     	$collection = Mage::getModel('virtualgeo/components_formatproduct')->getCollection();

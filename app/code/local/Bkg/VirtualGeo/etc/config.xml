@@ -257,7 +257,16 @@
                    <components_format_product>
                     <table>virtualgeo_components_format_product</table>
                    </components_format_product>
-                    <quote_options>
+					<components_content_entity>
+                    <table>virtualgeo_components_content_entity</table>
+                   </components_content_entity>
+                   <components_content_label>
+                    <table>virtualgeo_components_content_label</table>
+                   </components_content_label>
+                   <components_content_product>
+                    <table>virtualgeo_components_content_product</table>
+                   </components_content_product>
+				   <quote_options>
                         <table>virtualgeo_quote_options</table>
                     </quote_options>
                 </entities>

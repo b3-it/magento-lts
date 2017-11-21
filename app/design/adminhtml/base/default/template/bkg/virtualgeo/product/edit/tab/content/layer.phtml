@@ -1,0 +1,57 @@
+<?php
+/**
+ */
+?>
+<div class="content-header">
+  <?php if($this->getTitle()): ?>
+    <h3><?php echo $this->getTitle() ?></h3>
+  <?php endif ?>
+    <p class="form-buttons">
+        <button class="scalable" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('New')?>">
+            <?php echo Mage::helper('bkgviewer')->__('New')?>
+        </button>
+        <button class="scalable btn btn-warning btn-sm" onclick="nodeOptions.edit();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('Rename')?>">
+            <?php echo Mage::helper('bkgviewer')->__('Rename')?>
+        </button>
+        <button class="scalable btn btn-danger btn-sm" onclick="nodeOptions.remove();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('Delete')?>">
+            <?php echo Mage::helper('bkgviewer')->__('Delete')?>
+        </button>
+    </p>
+</div>
+
+<div id="jstree_layer" class="demo"></div>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+var root_node_title = "<?php echo Mage::helper('bkgviewer')->__('Root node')?>";
+var node_element_is_null = "<?php echo Mage::helper('bkgviewer')->__('Node Element is null and root node can not be deleted')?>";
+var node_element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('Node Element is not selected and root node can not be renamed')?>";
+var element_default_title = "<?php echo Mage::helper('bkgviewer')->__('New node')?>";
+var element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must be select an element')?>";
+//]]>
+</script>
+
+<script type="text/javascript" src="<?php echo $this->getJsUrl() ?>bkg/viewer/composit/init.tree.admin.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+function init_db_nodes() {
+<?php foreach ($this->getNodes() as $node):
+	$parent = $node->getParentId();
+	if($node->getParentId())
+	{
+		$parent = 'node_'.$node->getParentId();
+	}
+	else{
+		$parent = '"root"';
+	}
+	echo "var node_".$node->getId()." = nodeOptions.add(".$node->toJson().",$parent);"
+?>
+<?php endforeach;?>
+	nodeOptions.open_all();
+}
+
+//]]>
+</script>
+
