@@ -21,38 +21,50 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Form exten
     		$this->setForm($form);
     		$fieldset = $form->addFieldset('compositlayer_form', array('legend'=>Mage::helper('bkgviewer')->__('Item information')));
     
-    		$fieldset->addField('title', 'text', array(
-    				'label'     => Mage::helper('bkgviewer')->__('Title'),
+    		$fieldset->addField('code', 'text', array(
+    				'label'     => Mage::helper('virtualgeo')->__('Code'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
     				'name'      => 'title',
     		));
-    		$fieldset->addField('parent_id', 'text', array(
-    				'label'     => Mage::helper('bkgviewer')->__('Parent'),
+    		
+    		$fieldset->addField('name', 'text', array(
+    				'label'     => Mage::helper('virtualgeo')->__('Name'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'parent_id',
+    				'name'      => 'Name',
     		));
-    		$fieldset->addField('composit_id', 'text', array(
-    				'label'     => Mage::helper('bkgviewer')->__('Composit'),
+    		
+    		$fieldset->addField('is_checked', 'checkbox', array(
+    				'label'     => Mage::helper('virtualgeo')->__('Is Checked'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'composit_id',
+    				'name'      => 'is_checked',
     		));
-    		$fieldset->addField('pos', 'text', array(
-    				'label'     => Mage::helper('bkgviewer')->__('Position'),
+    		
+    		$fieldset->addField('is_readonly', 'checkbox', array(
+    				'label'     => Mage::helper('virtualgeo')->__('Is Readonly'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'pos',
+    				'name'      => 'is_readonly',
     		));
-    		$fieldset->addField('service_layer', 'text', array(
-    				'label'     => Mage::helper('bkgviewer')->__('Layer'),
+    		
+    		$fieldset->addField('toogle_all', 'checkbox', array(
+    				'label'     => Mage::helper('virtualgeo')->__('Toogle All'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'service_layer',
+    				'name'      => 'toogle_all',
     		));
+    		
+    		
     
-    
+    		$fieldset->addField ( 'copy_values', 'button', array (
+    				'value' => Mage::helper ( 'virtualgeo' )->__ ( 'Insert' ),
+    				'name' => 'copy_values',
+    				'onclick' => "addPages();",
+    				'class'	=> 'form-button',
+    				'label' => Mage::helper ( 'virtualgeo' )->__ ( 'Copy selected Layer to Tree' ),
+    		) );
     
     		if ( Mage::getSingleton('adminhtml/session')->getcompositlayerData() )
     		{
