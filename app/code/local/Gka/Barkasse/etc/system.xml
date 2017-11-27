@@ -125,6 +125,7 @@
                             <show_in_store>0</show_in_store>
                             <comment>If active the customer will be deleted after every payment transaction on the ePayBL server</comment>
                         </delete_customer_after_transaction>
+                        <!-- 
                         <include_personal_data translate="label">
                             <label>Include personal data</label>
                             <frontend_type>select</frontend_type>
@@ -135,6 +136,7 @@
                             <show_in_store>0</show_in_store>
                             <comment>Send personal data to ePayBL</comment>
                         </include_personal_data>
+                         -->
                         <debug_flag translate="label">
                             <label>Debug Flag</label>
                             <frontend_type>select</frontend_type>
