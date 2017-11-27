@@ -45,6 +45,17 @@
         <blocks>
             <gka_tkonnektpay><class>Gka_Tkonnektpay_Block</class></gka_tkonnektpay>
         </blocks>
+        <events>
+            <pdftemplate_invoice_prepare>
+                <observers>
+                    <gka_tkonnektpay_invoice_prepare>
+                        <type>singleton</type>
+                        <class>gka_tkonnektpay/observer</class>
+                        <method>onInvoicePrepare</method>
+                    </gka_tkonnektpay_invoice_prepare>
+                </observers>
+            </pdftemplate_invoice_prepare>
+        </events>
     </global>
     <frontend>
     	<secure_url>

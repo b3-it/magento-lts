@@ -28,4 +28,31 @@ class Gka_Tkonnektpay_Model_Observer
         }
     }
  
+    public function onInvoicePrepare(Varien_Event_Observer $observer)
+    {
+    	$order = $observer->getOrder();
+    	if($order)
+    	{
+    		/* @var $payment Mage_Sales_Model_Order_Payment */
+    		$payment = $order->getPayment();
+    		if($payment->getMethod() == "gka_tkonnektpay_debitcard")
+    		{
+    			$collection = Mage::getModel('sales/order_payment_transaction')->getCollection()
+    			->setOrderFilter($order)
+    			->addPaymentIdFilter($payment->getId())
+    			->addTxnTypeFilter('order');
+    			
+    			foreach($collection->getItems() as $item)
+    			{
+    				$data = ($item->getadditionalInformation());	
+    				if(isset($data['raw_details_info'])){
+	    				if(isset($data['raw_details_info']['tkCustomerReceipt'])){
+	    					$order->setTerminalCustomerReceipt($data['raw_details_info']['tkCustomerReceipt']);
+	    				}
+    				}
+    			}
+    		}
+    	}
+    	
+    }
 }

@@ -31,6 +31,8 @@ class Egovs_Pdftemplate_Model_Pdf_Invoice extends Egovs_Pdftemplate_Model_Pdf_Ab
         		$id = Mage::getStoreConfig('sales_pdf/invoice/invoice_pdf_template', $order->getStoreId());
         	}
         	
+        	
+        	
         	$invoice->setTemplateId($id);
         	$invoice->setConfig($this->getConfig($order->getStoreId()));
         	$invoice->setImprint($this->getImprint($order->getStoreId()));
@@ -49,7 +51,8 @@ class Egovs_Pdftemplate_Model_Pdf_Invoice extends Egovs_Pdftemplate_Model_Pdf_Ab
 	        }
 	        $paymentInfo = implode('<br>', $payment);
 	        
-
+			Mage::dispatchEvent('pdftemplate_invoice_prepare', array('order' => $order));
+			
 			$order->setPaymentInfo($paymentInfo);
 	       	$taxInfo = $order->getFullTaxInfo();       
 	        
