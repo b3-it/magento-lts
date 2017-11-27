@@ -66,8 +66,8 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 
 			Mage::register('kassenbuchjournal_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('gka_barkasse/items');
+			$this->_initAction();
+			
 
 			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
 			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
