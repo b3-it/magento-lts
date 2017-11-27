@@ -137,6 +137,7 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_content
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `code` varchar(128) default '',
 	  `parent_id` int(11) unsigned NOT NULL,
+	  `pos` smallint default 0,
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -146,8 +147,8 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_content
 if (!$installer->tableExists($installer->getTable('virtualgeo/components_content_label')))
 {
 	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_content_label')};
-			CREATE TABLE {$installer->getTable('virtualgeo/components_content_label')} (
+	  -- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_content_label')};
+	   CREATE TABLE {$installer->getTable('virtualgeo/components_content_label')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `store_id` smallint unsigned NOT NULL,
 	  `parent_id` int(11) unsigned NOT NULL,
