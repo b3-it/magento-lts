@@ -82,7 +82,7 @@ class Egovs_Base_Model_Observer
             
             // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
             if ( strpos($html, '="<abbr') ) {
-            	$html = str_replace('="' . $replace, $key, $html);
+            	$html = str_replace('="' . $replace, '="' . $key, $html);
             }
         }
 
