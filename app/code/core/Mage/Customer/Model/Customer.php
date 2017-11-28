@@ -80,6 +80,11 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
     const MINIMUM_PASSWORD_LENGTH = 6;
 
     /**
+     * Maximum Password Length
+     */
+    const MAXIMUM_PASSWORD_LENGTH = 256;
+
+    /**
      * Model event prefix
      *
      * @var string
@@ -912,7 +917,7 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
     }
 
     /**
-     * Validate customer attribute values on password reset
+     * Validate customer password on reset
      * @return bool
      */
     public function validateResetPassword()
@@ -925,6 +930,10 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
         if (!Zend_Validate::is($password, 'StringLength', array(self::MINIMUM_PASSWORD_LENGTH))) {
             $errors[] = Mage::helper('customer')
                 ->__('The minimum password length is %s', self::MINIMUM_PASSWORD_LENGTH);
+        }
+        if (!Zend_Validate::is($password, 'StringLength', array('max' => self::MAXIMUM_PASSWORD_LENGTH))) {
+            $errors[] = Mage::helper('customer')
+                ->__('Please enter a password with at most %s characters.', self::MAXIMUM_PASSWORD_LENGTH);
         }
         $confirmation = $this->getPasswordConfirmation();
         if ($password != $confirmation) {
