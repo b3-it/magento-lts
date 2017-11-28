@@ -7,23 +7,23 @@
 
 #virtual-pay-block, #additional-information {
 	@extend .block;
-	
+
 	padding: 10px;
-	
+
 	label {
-	    display: inline-block; 
+	    display: inline-block;
 	    width: 120px;
 	}
-	
+
 	img, button {
 	    display: inline-block;
 	    margin: 0 20px;
 	}
-	
+
 	img {
 	    height: 25px;
 	}
-	
+
 	textarea {
 	    width: 82%;
 	}
@@ -96,7 +96,7 @@
 .col3-layout {
     .category-products, .product-view {
         width: $global-content-3col-percent;
-        
+
         @include bp(max-width, $bp-medium) {
         	width: 100%;
         }
@@ -181,7 +181,7 @@
             position: absolute;
             top: $global-1-product-height - $gobal-cart-block-height - 140px;
             left: $global-product-image-1-width + 2%;
-            
+
             @include bp(max-width, $bp-medium) {
             	position: relative;
             	top: auto;
@@ -200,8 +200,8 @@
         }
 
         #product-base-block {
-            height: $global-2L-product-height;
-            
+            //height: $global-2L-product-height;
+
             @include bp(max-width, $bp-medium) {
                 height: auto;
             }
@@ -215,7 +215,8 @@
         }
 
         .product-img-box {
-            width: $global-product-image-2L-width;
+            //width: $global-product-image-2L-width;
+			display: none;
         }
 
         .product-shop {
@@ -243,7 +244,8 @@
 
         .add-to-cart {
             position: absolute;
-            top: $global-2L-product-height + ( $gobal-cart-block-height / 2 ) - 2.5px;
+            //top: $global-2L-product-height + ( $gobal-cart-block-height / 2 ) - 2.5px;
+			top: 80px;
             left: $global-product-image-2L-width + 18%;
             height: 40px;
 
@@ -471,9 +473,10 @@
             margin-top: 0;
 
             .price-from, .price-to {
-                padding: 10px 0;
+                //padding: 10px 0;
+				display: none;
             }
-                        .old-price,
+            .old-price,
             .special-price,
             .regular-price {
                 padding-right: 0;
