@@ -13,7 +13,7 @@ $_checkout_method = 'shipping';
     <li id="billing-new-address-form">
         <fieldset>
             <ul>
-                <li class="fields">
+                <li class="fields billing-company">
                     <div class="field">
                         <label for="billing:company">
                             <?php echo $_egov_helper->getFieldRequiredHtml('company', $_checkout_method) ?>
@@ -25,7 +25,7 @@ $_checkout_method = 'shipping';
                     </div>
                 </li>
               <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
-                <li class="wide">
+                <li class="wide billing-street">
                     <label for="billing:street1">
                         <?php echo $_egov_helper->getFieldRequiredHtml('street', $_checkout_method) ?>
                         <?php echo $this->__('Address') ?>
@@ -42,7 +42,7 @@ $_checkout_method = 'shipping';
                 </li>
               <?php endfor; ?>
               <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
-                <li class="wide">
+                <li class="wide billing-vat-id">
                     <label for="billing:vat_id">
                         <?php echo $_egov_helper->getFieldRequiredHtml('vat_id', $_checkout_method) ?>
                         <?php echo $_requiredHtmlForNonVirtual . $this->__('VAT Number') ?>
@@ -52,7 +52,7 @@ $_checkout_method = 'shipping';
                     </div>
                 </li>
               <?php endif; ?>
-                <li class="fields">
+                <li class="fields billing-city">
                     <div class="field">
                         <label for="billing:city"><?php echo $_requiredHtmlForNonVirtual . $this->__('City') ?></label>
                         <div class="input-box">
@@ -61,7 +61,7 @@ $_checkout_method = 'shipping';
                     </div>
 
                 </li>
-                <li class="fields">
+                <li class="fields billing-zip">
                     <div class="field">
                         <label for="billing:postcode">
                             <?php echo $_egov_helper->getFieldRequiredHtml('postcode', $_checkout_method) ?>
@@ -71,7 +71,7 @@ $_checkout_method = 'shipping';
                             <input type="text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Zip/Postal Code')) ?>" name="billing[postcode]" id="billing:postcode" value="" class="input-text validate-zip-international <?php echo $_egov_helper->isFieldRequired('postcode', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field billing-country">
                         <label for="billing:country_id">
                             <?php echo $_egov_helper->getFieldRequiredHtml('country', $_checkout_method) ?>
                             <?php echo $_requiredHtmlForNonVirtual . $this->__('Country') ?>
@@ -81,7 +81,7 @@ $_checkout_method = 'shipping';
                         </div>
                     </div>
                 </li>
-                <li class="fields">
+                <li class="fields billing-phone">
                     <div class="field">
                         <label for="billing:telephone">
                             <?php echo $_egov_helper->getFieldRequiredHtml('telephone', $_checkout_method) ?>
@@ -91,7 +91,7 @@ $_checkout_method = 'shipping';
                             <input type="text" name="billing[telephone]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Telephone')) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('telephone', $_checkout_method) ? 'required-entry' : ''; echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="billing:telephone" />
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field billing-fax">
                         <label for="billing:fax">
                             <?php echo $_egov_helper->getFieldRequiredHtml('fax', $_checkout_method) ?>
                             <?php echo $_requiredHtmlForNonVirtual . $this->__('Fax') ?>
@@ -103,7 +103,7 @@ $_checkout_method = 'shipping';
                 </li>
               <?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
               <?php if ($_gender->isEnabled()): ?>
-                <li class="fields">
+                <li class="fields billing-gender">
                   <?php if ($_gender->isEnabled()): ?>
                     <div class="field">
                         <?php echo $_gender->setGender($this->getQuote()->getCustomerGender())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
