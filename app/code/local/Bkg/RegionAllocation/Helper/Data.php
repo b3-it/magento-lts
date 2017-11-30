@@ -32,6 +32,7 @@ class Bkg_RegionAllocation_Helper_Data extends Mage_Core_Helper_Data
 		foreach($kst->getPortions() as $portion)
 		{
 			$d = $price * $portion->getPortion();
+			$d /= 100.0;
 			$portion->setPrice($d);
 			$sum += $d;
 			//Beträge aufspalten falls mehrere Produkte Rap's konfiguriert wurden
