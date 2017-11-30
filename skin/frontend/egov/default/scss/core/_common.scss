@@ -443,11 +443,11 @@ body:not(.customer-account) .block:first-child .block-title {
         display: inline-block;
         vertical-align: top;
     }
-    
+
     p {
         width: 85%;
     }
-    
+
     .btn-remove,
     .btn-previous {
         float: right;
@@ -607,7 +607,7 @@ body:not(.customer-account) .block:first-child .block-title {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
-            
+
             @include bp(max-width, 490px) {
             	display: none;
             }
@@ -624,7 +624,7 @@ body:not(.customer-account) .block:first-child .block-title {
             padding-left: $global-content-leftpadding-percent;
             padding-top: $global-content-paddingtop;
             padding-right: $global-rightcol-rightmargin-percent;
-            
+
             @include bp(max-width, 490px) {
             	width: 100% !important;
             }
@@ -760,7 +760,7 @@ body:not(.customer-account) .block:first-child .block-title {
 
     .col-1,
     .col-2 {
-        width: 50%;
+        width: 45%;
         padding: $box-spacing-large;
 
         @include bp(max-width, $bp-medium) {
@@ -1154,7 +1154,7 @@ span.weee {
     &:after {
         @include clearfix;
     }
-    
+
     dt, dd {
         display: table-cell;
     }
