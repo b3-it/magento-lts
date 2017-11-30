@@ -146,9 +146,10 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
     		}
     	}
     	
+    	$helper = Mage::helper('core');
     	foreach($data as $key=> $value)
     	{
-    		$data[$key] = $value ." €";
+    		$data[$key] = $helper->currency($value, true, false);
     	}
     	
     	
