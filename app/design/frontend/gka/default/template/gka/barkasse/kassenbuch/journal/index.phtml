@@ -57,13 +57,13 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 	    		<button class="button" type="submit"><?php echo $_helper->__('Open')?></button>
 			</div>
 		</form>
-	</div>	
+	</div>
   <?php else: ?>
 	<div id="close_journal">
 		<div class="page-title">
 			<h1><?php echo $this->__("A cash book for the cashier '%s' is opened.", $_kassenbuchjournal->getCashboxTitle()); ?></h1>
 	    </div>
-	    	
+
 		<div>
 		    <?php echo $this->__('Opening Date'); ?> <span id="open-date"><?php echo Mage::getModel('core/date')->date($_timeMask, $_kassenbuchjournal->getOpening()); ?></span>
 		</div>
@@ -120,7 +120,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 		    </div>
 		    <div class="buttons-set">
         		<button class="button" type="submit"><?php echo $_helper->__('Close checkout')?></button>
-		    </div>	
+		    </div>
 		</form>
 	</div>
 	<script type="text/javascript">
@@ -128,9 +128,9 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 	</script>
 	<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>">
 	</script>
-	
+
 	<script type="text/javascript">
-		setDiffPrice($j('#withdrawal').val(),$j('#endsaldo').val(),  '#balance', true);
+		setDiffPrice($j('#withdrawal').val(), $j('#endsaldo').val(), '#balance', true);
 	</script>
   <?php endif;?>
 

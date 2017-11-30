@@ -11,6 +11,10 @@
 	}
 }
 
+#balance {
+	font-weight: bold;
+}
+
 /* ============================================ *
  * Customer
  * ============================================ */
@@ -27,7 +31,7 @@
             padding-top: 20px;
         }
     }
-	
+
 	.col2-set {
         .col-1 {
             ul {
@@ -142,7 +146,7 @@ body.customer-account {
 
     .col2-left-layout {
         .col-left {
-            .block-compare {                
+            .block-compare {
                 @include bp(max-width, $bp-medium) {
                     display: none;
                 }
@@ -227,10 +231,10 @@ body.customer-account {
                 text-align: left !important;
             }
         }
-       
+
         #my-collections-table {
         	@extend .egov-base-table;
-        	
+
         	th, td {
                 padding: $global-tdpadding $global-tdpadding !important;
             }
@@ -559,17 +563,17 @@ body.customer-account {
         tfoot tr.shipping {
             margin-top: 0;
         }
-        
+
         tbody td[data-rwd-label] {
             text-align: left;
             padding-left: 30px;
         }
-        
+
         tbody td {
            border-style: hidden;
         }
     }
-    
+
     .my-account .order-details a.button {
         width: 100%;
     }
@@ -607,6 +611,12 @@ body.customer-account {
         border-bottom: none;
         border-top: none;
     }
+}
+
+#my-orders-table {
+	.ship {
+		display: none;
+	}
 }
 
 ol#cart-sidebar-reorder {
@@ -736,7 +746,7 @@ ol#cart-sidebar-reorder {
             }
         }
     }
-    
+
     .my-account .order-details a.button {
         width: 100%;
     }

@@ -149,6 +149,7 @@ h6, .h6 { @include h6; }
 .availability {
     font-size: $global-fontsize-big;
     margin-bottom: 0;
+    display: none;
 
     .label {
          font-size: $global-fontsize;
@@ -604,7 +605,7 @@ div.block-reorder {
             position: relative;
             width: $global-leftcol-percent;
             top: 0;
-            
+
             @include bp(max-width, 490px) {
             	display: none;
             }
@@ -621,7 +622,7 @@ div.block-reorder {
             padding-left: $global-content-leftpadding-percent;
             padding-top: $global-content-paddingtop;
             padding-right: $global-rightcol-rightmargin-percent;
-            
+
             @include bp(max-width, 490px) {
             	width: 100% !important;
             }
@@ -1151,7 +1152,7 @@ span.weee {
     &:after {
         @include clearfix;
     }
-    
+
     dt, dd {
         display: table-cell;
     }

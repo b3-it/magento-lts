@@ -543,7 +543,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		}
 		Mage::helper("paymentbase")->sendMailToAdmin(sprintf('%s%s', $msg, $additionalMsg), 'Fehler bei getTkonnektRedirectURL');
 
-		if (!is_null($request)) {
+		if (!is_null($request) && $request->getResponseMessage()) {
 			$msg = $request->getResponseMessage();
 		}
 		Mage::throwException($msg);

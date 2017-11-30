@@ -24,11 +24,11 @@
 // Prevent button overlapping when buttons have long text, such as non-English translations
 .products-grid .actions .button {
     width: 100%;
-    
+
     &.egov-cart {
         font-size: 1.0rem;
     }
-    
+
     span {
         font-family: $base-font-family;
         font-size: 1.0rem;
@@ -311,7 +311,7 @@ p.product-name {
         button.button, a.button {
             font-size: $global-fontsize;
             width: 25%;
-            
+
             @include bp(max-width, $bp-medium) {
                 width: 50%;
             }
@@ -356,11 +356,11 @@ p.product-name {
                     font-size: $global-fontsize;
                 }
             }
-            
+
             .price-box, .tax-details {
                 display: inline-block;
                 width: 45%;
-                
+
                 @include bp(max-width, $bp-small) {
                     display: block;
                 }
@@ -405,7 +405,7 @@ p.product-name {
         .product-primary {
             height: auto;
             overflow: hidden;
-            
+
             @include bp(max-width, $bp-small) {
                 height: 40%;
             }
@@ -414,7 +414,7 @@ p.product-name {
             height: auto;
             overflow: hidden;
             margin-bottom: 15px;
-            
+
             @include bp(max-width, $bp-medium) {
                 margin-bottom: 0;
             }
@@ -491,10 +491,9 @@ p.product-name {
         min-width: 50px;
     }
     .product-details {
-        display: inline-block;
-        width: 70%;
-        vertical-align: top;
-        
+        display: block;
+        width: 100%;
+
         // Vertically center product name
         .product-name {
     	    padding-top: 10px;
@@ -509,16 +508,16 @@ p.product-name {
             @include clearfix();
         }
     }
-    
+
     .product {
         padding-left: 22px;
-        
+
         .product-image {
             margin-right: 5px;
         }
         .product-details {
             margin-left: 85px;
-            
+
             .product-name {
                 padding: 0;
             }
