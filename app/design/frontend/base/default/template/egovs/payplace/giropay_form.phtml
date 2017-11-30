@@ -14,8 +14,11 @@
 <fieldset class="form-list">
     <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
 		<li>
+            <label for="bic">
+                <span class="required">*</span>
+                <?php echo $this->__('BIC') ?>
+            </label>
             <div class="input-box">
-                <label for="bic"><?php echo $this->__('BIC') ?> <span class="required">*</span></label><br />
                 <input type="text" id="bic" name="payment[cc_type]" title="<?php echo $this->__('BIC') ?>" class="input-text required-entry validate-alphanum validate-debit-bic" value="" />
             </div>
 		</li>
