@@ -176,7 +176,7 @@ Multi address shipping checkout success
     		<action method="setTitle"><value>Gebührenkasse</value></action>
     	</reference>
         <reference name="content">
-            <block type="gkacheckout/singlepage_success" name="checkout_success" template="checkout/singlepage/success.phtml">
+            <block type="gkacheckout/singlepage_success" name="checkout_success" template="gka/checkout/singlepage/success.phtml">
                     <block type="sales/order_items" name="order_items" template="checkout/singlepage/success/items.phtml">
                     <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>checkout/singlepage/success/renderer/default.phtml</template></action>
                     <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>checkout/singlepage/success/renderer/default.phtml</template></action>
