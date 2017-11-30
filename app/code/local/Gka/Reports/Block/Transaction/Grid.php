@@ -20,7 +20,7 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
   {
       parent::__construct();
       $this->setId('gka_transactionGrid');
-      $this->setDefaultSort('increment_id');
+      $this->setDefaultSort('real_order_id');
       $this->setDefaultDir('DESC');
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
@@ -30,11 +30,12 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
   protected function _prepareCollection()
   {
   	$collection = Mage::getResourceModel('sales/order_grid_collection');
-  	
+
   
   	$userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
   	
   	$collection->getSelect()
+  	->joinleft(array('payment'=>$collection->getTable('sales/order_payment')),'payment.parent_id=main_table.entity_id',array('kassenzeichen'))
    	->where('customer_id = ' . $userId)
    	->where('store_id = '. intval(Mage::app()->getStore()))
   	;
@@ -54,7 +55,12 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
   			'index' => 'increment_id',
   	));
   	
-
+  	$this->addColumn('kassenzeichen', array(
+  			'header' => Mage::helper('sales')->__('Kassenzeichen'),
+  			'index' => 'kassenzeichen',
+  			'type' => 'text',
+  			'width' => '100px',
+  	));
   	
   	$this->addColumn('created_at', array(
   			'header' => Mage::helper('sales')->__('Purchased On'),
@@ -139,7 +145,13 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
     			}
     		}
     	}
-    	 
+    	
+    	foreach($data as $key=> $value)
+    	{
+    		$data[$key] = $value ." €";
+    	}
+    	
+    	
     	$this->setTotals(new Varien_Object($data));
     }
 
