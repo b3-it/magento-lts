@@ -126,6 +126,9 @@
                 <delete_customer_after_transaction>1</delete_customer_after_transaction>
                 <group>epaybl</group>
             </gka_tkonnektpay_debitcard>
+            <paymentbase>
+            	<successaction>gkacheckout/singlepage/success</successaction>
+            </paymentbase>
         </payment>
         <payment_services>
             <paymentbase>
