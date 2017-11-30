@@ -1,27 +1,27 @@
 <?php
 class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 {
-	
-	
+
+
 
 	public function prepareProductSave($observer) {
 		$request = $observer->getEvent()->getRequest();
 		$product = $observer->getEvent()->getProduct();
-	
-		
+
+
 		return $this;
 	}
-	
-	
+
+
 	public function onSalesOrderSaveAfter($observer) {
 		/* @var $order Mage_Sales_Model_Order */
 		$order = $observer->getOrder();
-	
-	
+
+
 		if (!$order || $order->isEmpty()) {
 			return;
 		}
-	
+
 		foreach($order->getAllItems() as $orderitem)
 		{
 			/* @var $orderitem Mage_Sales_Model_Order_Item */
@@ -30,16 +30,16 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 			}
 			$this->processOrderItem($orderitem, $order);
 		}
-	
-	
-	
+
+
+
 	}
-	
+
 	public function processOrderItem($orderitem, $order)
 	{
 		return $this;
 	}
-	
+
 	public function onCheckoutCartUpdateItemsAfter($observer)
 	{
 		$cart = $observer['cart'];
@@ -47,37 +47,37 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		$items = $quote->getAllVisibleItems();
 		$this->testCart($items);
 	}
-	
+
 	public function onQuoteMerge($observer)
 	{
 		try
 		{
 			$quote = $observer->getData('quote');
 			$this->testCart($quote->getAllVisibleItems());
-				
+
 		}
 		catch(Exception $ex){
-			
+
 			Mage::getSingleton('customer/session')->addError($ex->getMessage());
 		}
 	}
-	
+
 	public function onSalesQuoteAddItem($observer) {
 		/* @var $item Mage_Sales_Model_Quote_Item */
 		$item = $observer->getQuoteItem();
 		if (!$item) {
 			return;
 		}
-	
+
 		$quote = $item->getQuote();
 		$this->testCart($quote->getAllVisibleItems());
 	}
-	
+
 	public function testCart($items)
-	{	
+	{
 		$_virtualpayidCount = 0;
-	
-		foreach ($items as $item) 
+
+		foreach ($items as $item)
 		{
 			if ($item->getParentItem()) {
 				continue;
@@ -92,16 +92,16 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 				}
 			}
 		}
-		
+
 		if(($_virtualpayidCount > 0) && (count($items) > 1)){
-			Mage::throwException(Mage::helper('virtualpayid')->__('Produkte für externe Kassenzeichen dürfen nur einzeln abgerechnet werden.'));
-			
+			Mage::throwException(Mage::helper('virtualpayid')->__('Products for external Payment code may only be invoiced individually.'));
+
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Wenn Produkt in Quote gesetzt wird
 	 *
@@ -119,11 +119,11 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
             $quote->setExternesKassenzeichen(null);
 			return $this;
 		}
-		
+
 		try {
 			$items = $quote->getAllVisibleItems();
 			$this->testCart($items);
-			
+
 		} catch(Exception $ex){
 			$quote->removeItem($quoteItem->getId());
 			Mage::getSingleton('customer/session')->addError($ex->getMessage());
@@ -135,13 +135,13 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		$payId = $product->getCustomOption('pay_id');
 		if (is_null($payId) || $payId->isEmpty() || !$payId->getValue()) {
             $quote->removeItem($quoteItem->getId());
-		    Mage::throwException(Mage::helper('virtualpayid')->__('No external Kassenzeichen available!'));
+		    Mage::throwException(Mage::helper('virtualpayid')->__('No external Payment code available!'));
         }
         $payId = $payId->getValue();
         $payClient = $product->getCustomOption('pay_client');
 		if (is_null($payClient) || $payClient->isEmpty() || !$payClient->getValue()) {
             $quote->removeItem($quoteItem->getId());
-            Mage::throwException(Mage::helper('virtualpayid')->__('No external Bewirtschafter available!'));
+            Mage::throwException(Mage::helper('virtualpayid')->__('No external operator available!'));
         }
         $payClient = $payClient->getValue();
 
@@ -149,11 +149,11 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
          * Format: Bewirtschafter/Kassenzeichen
          */
 		$quote->setExternesKassenzeichen(sprintf('%s/%s', $payClient, $payId));
-		
+
 		$br = $quoteItem->getBuyRequest();
 		$specialPrice = (float)($br->getAmount());
 
-		
+
 		if ($specialPrice > 0) {
 				$quoteItem->setCustomPrice($specialPrice);
 				$quoteItem->setOriginalCustomPrice($specialPrice);

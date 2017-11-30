@@ -5,3 +5,6 @@
 "Fetch Price","Preis abholen"
 "Sorry, there was a problem!","Es ist ein Problem aufgetreten!"
 "External Kassenzeichen is missing!","Kein externes Kassenzeichen vorhanden!"
+"No external Payment code available!","Kein externes Kassenzeichen verfügbar!"
+"No external operator available!","Kein externer Bewirtschafter verfügbar!"
+"Products for external Payment code may only be invoiced individually.","Produkte für externe Kassenzeichen dürfen nur einzeln abgerechnet werden."
