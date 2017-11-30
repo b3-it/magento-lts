@@ -37,7 +37,7 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
   	$collection->getSelect()
   	->joinleft(array('payment'=>$collection->getTable('sales/order_payment')),'payment.parent_id=main_table.entity_id',array('kassenzeichen'))
    	->where('customer_id = ' . $userId)
-   	->where('store_id = '. intval(Mage::app()->getStore()))
+   	->where('store_id = '. intval(Mage::app()->getStore()->getId()))
   	;
   		
   	//die($collection->getSelect()->__toString());
