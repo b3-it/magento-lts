@@ -40,5 +40,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Gka_VirtualPayId>
+        <Gka_Report>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Gka_Report>
     </modules>
 </config>
