@@ -5,7 +5,7 @@ class Gka_Checkout_Block_Singlepage_Billing extends Mage_Sales_Block_Items_Abstr
     protected function _prepareLayout()
     {
         if ($headBlock = $this->getLayout()->getBlock('head')) {
-            $headBlock->setTitle(Mage::helper('checkout')->__('Ship to Multiple Addresses') . ' - ' . $headBlock->getDefaultTitle());
+            $headBlock->setTitle(Mage::helper('checkout')->__('Checkout') . ' - ' . $headBlock->getDefaultTitle());
         }
 
         parent::_prepareLayout();

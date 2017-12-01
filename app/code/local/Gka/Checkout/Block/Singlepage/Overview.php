@@ -150,6 +150,15 @@ class Gka_Checkout_Block_Singlepage_Overview extends Mage_Sales_Block_Items_Abst
     {
         return $this->getCheckout()->getQuote()->getGrandTotal();
     }
+    
+    public function getShippingCosts()
+    {
+    	if($this->getCheckout()->getQuote()->getShippingAddress())
+    	{
+    		return $this->getCheckout()->getQuote()->getShippingAddress()->getBaseShippingAmount();
+    	}
+    	return null;
+    }
 
 
     public function getBackUrl()

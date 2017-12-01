@@ -199,6 +199,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         	//$quote = $this->_getCheckout()->getQuote();
         	//$quote->removeAllAddresses();
          	$this->_getCheckout()->setShippingMethod();
+         	$this->_getCheckout()->getQuote()->collectTotals();
             $this->loadLayout();
             $this->_initLayoutMessages('checkout/session');
             $this->_initLayoutMessages('customer/session');

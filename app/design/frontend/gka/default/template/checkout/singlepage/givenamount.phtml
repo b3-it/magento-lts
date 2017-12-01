@@ -15,12 +15,16 @@
         	        $j(document).ready(function(){
         	        	// Kassenbuch-Journal
         	        	$j('#withdrawal').bind('keyup', function() {
-        	        		setDiffPrice($j('#withdrawal').val(), $j('#endsaldo').val(),  '#balance', true);
+        	        		var v = $j('#endsaldo').val();
+            	        	v = v.replace(/,/g , ".");
+        	        		setDiffPrice($j('#withdrawal').val(),v,  '#balance', true);
         	        	});
 
         	        	// Checkout => Bestellübersicht
         	        	$j('#givenamount').bind('keyup', function() {
-        	        		setDiffPrice(price, $j('#givenamount').val(), '#balance', true);
+            	        	var v = $j('#givenamount').val();
+            	        	v = v.replace(/,/g , ".");
+        	        		setDiffPrice(price, v, '#balance', true);
         	        	});
         	        });
     	        </script>
