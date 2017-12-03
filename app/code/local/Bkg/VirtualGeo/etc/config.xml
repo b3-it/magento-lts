@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bkg_VirtualGeo>
-            <version>0.1.1.0</version>
+            <version>0.1.2.0</version>
         </Bkg_VirtualGeo>
     </modules>
     
@@ -340,7 +340,7 @@
             <bkg_virtualgeo_setup>
                 <setup>
                     <module>Bkg_VirtualGeo</module>
-                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                    <class>Bkg_VirtualGeo_Model_Resource_Setup</class>
                 </setup>
             </bkg_virtualgeo_setup>
         </resources>

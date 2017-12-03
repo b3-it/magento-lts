@@ -13,15 +13,15 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Content_Grid extends Mage_Adminh
   public function __construct()
   {
       parent::__construct();
-      $this->setId('components_Content_entityGrid');
-      $this->setDefaultSort('components_Content_entity_id');
+      $this->setId('components_content_entityGrid');
+      $this->setDefaultSort('components_content_entity_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
   }
 
   protected function _prepareCollection()
   {
-      $collection = Mage::getModel('virtualgeo/components_Content')->getCollection();
+      $collection = Mage::getModel('virtualgeo/components_content')->getCollection();
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }

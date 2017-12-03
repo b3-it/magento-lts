@@ -12,6 +12,7 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Content extends Mage_Adminhtml_B
 {
   public function __construct()
   {
+  	
     $this->_controller = 'adminhtml_components_content';
     $this->_blockGroup = 'virtualgeo';
     $this->_headerText = Mage::helper('virtualgeo')->__('Components Content Manager');
