@@ -302,6 +302,9 @@
                    <components_content_product>
                     <table>virtualgeo_components_content_product</table>
                    </components_content_product>
+                   <components_content_category>
+                    <table>virtualgeo_components_content_category</table>
+                   </components_content_category>                   
                    <components_storage_entity>
                     <table>virtualgeo_components_storage_entity</table>
                    </components_storage_entity>
