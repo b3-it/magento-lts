@@ -52,6 +52,33 @@ Layout handle for budle products
                </block>
         </reference>
     </adminhtml_virtualgeo_components_format_index>
+    <adminhtml_virtualgeo_components_resolution_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_resolution" name="resolution" >
+               </block>
+        </reference>
+    </adminhtml_virtualgeo_components_resolution_index>
+    
+    <adminhtml_virtualgeo_components_storage_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_storage" name="storage" >
+               </block>
+        </reference>
+    </adminhtml_virtualgeo_components_storage_index>
+    <adminhtml_virtualgeo_components_structure_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_structure" name="structure" >
+            
+               </block>
+        </reference>
+    </adminhtml_virtualgeo_components_structure_index>
+    <adminhtml_virtualgeo_components_content_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_content" name="geocontent" >
+            
+               </block>
+        </reference>
+    </adminhtml_virtualgeo_components_content_index>
     
     <adminhtml_catalog_product_virtualgeo>
             <reference name="head">
@@ -66,6 +93,10 @@ Layout handle for budle products
             <action method="addTab"><name>virtualgeo_georef</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_georef</block></action>
             <action method="addTab"><name>virtualgeo_format</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_format</block></action>
             <action method="addTab"><name>virtualgeo_content</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_content</block></action>
+            
+            <action method="addTab"><name>virtualgeo_structure</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_structure</block></action>
+            <action method="addTab"><name>virtualgeo_storage</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_storage</block></action>
+            <action method="addTab"><name>virtualgeo_resolution</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_resolution</block></action>
         </reference>
     </adminhtml_catalog_product_virtualgeo>
 

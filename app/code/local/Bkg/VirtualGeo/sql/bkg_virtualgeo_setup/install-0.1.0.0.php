@@ -69,6 +69,7 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_format_
 	   CREATE TABLE {$installer->getTable('virtualgeo/components_format_entity')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `code` varchar(128) default '',
+	  `has_resolution` smallint unsigned default 0,
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	");

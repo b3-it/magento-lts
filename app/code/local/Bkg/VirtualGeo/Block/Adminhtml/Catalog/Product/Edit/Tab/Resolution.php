@@ -2,7 +2,7 @@
 /**
  * 
  * */
-class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Structure extends Mage_Adminhtml_Block_Widget
+class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Resolution extends Mage_Adminhtml_Block_Widget
     implements Mage_Adminhtml_Block_Widget_Tab_Interface
 {
 	
@@ -16,22 +16,22 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Structure extends 
 	
     public function getTabLabel()
     {
-        return Mage::helper('virtualgeo')->__('Structure');
+        return Mage::helper('virtualgeo')->__('Resolution');
     }
     public function getTabTitle()
     {
-        return Mage::helper('virtualgeo')->__('Structure');
+        return Mage::helper('virtualgeo')->__('Resolution');
     }
     
     protected function _toHtml()
     {
-    	return $this->getChild('format_form')->toHtml();
+    	return $this->getChild('resolution_form')->toHtml();
     }
     
  	protected function _prepareLayout()
     {
-    	$this->setChild('format_form',
-    			$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_structure_form')
+    	$this->setChild('resolution_form',
+    			$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_resolution_form')
     			);
 
     	return Mage_Adminhtml_Block_Widget::_prepareLayout();
