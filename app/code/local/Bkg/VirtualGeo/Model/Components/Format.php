@@ -73,4 +73,13 @@ class Bkg_Virtualgeo_Model_Components_Format extends Mage_Core_Model_Abstract
     	 
     	return $res;
     }
+    
+    public function getOptions4Product($productId,$storeId=0)
+    {
+    	$collection = $this->getCollection();
+    	$collection->getSelect()
+    	->join(array('product'=>$collection->getTable('virtualgeo/components_format_product')),'product.format_id = main_table.id AND product_id='.$productId.' AND ((product.store_id= 0) OR (product.store_id='.$storeId.'))',array('is_default'));
+    	
+    	return $collection;
+    }
 }

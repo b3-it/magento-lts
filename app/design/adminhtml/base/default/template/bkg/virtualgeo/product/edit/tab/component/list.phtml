@@ -38,13 +38,15 @@ $_class   = $_element->getFieldsetHtmlClass();
     	<div style="width:100%">
     		<div style="display:table-cell; width:30px">Use</div>
     		<div style="display:table-cell; width:50px">Default</div>
-    		<div style="display:table-cell">Label</div> 
+    		<div style="display:table-cell; width:50px">Pos</div>
+    		<div style="padding-left:5px; display:table-cell">Label</div> 
     	</div>
     	<?php foreach ($_element->getValues() as $value): $value = new Varien_Object($value);?>
     	<div style="width:100%">
     		<div style="display:table-cell; width:30px"><input type="checkbox" name="<?php echo $_element->getName();?>" value="<?php echo $value->getValue()?>" <?php if(in_array($value->getValue(), $_element->getValue())) echo 'checked="checked"'; ?>></div>
     		<div style="display:table-cell; width:50px"><input type="radio" name="<?php echo $_element->getDefaultname();?>" value="<?php echo $value->getValue()?>" <?php if($value->getValue() ==  $_element->getDefault()) echo 'checked="checked"'; ?> ></div>
-    		<div style="display:table-cell"><?php echo $value->getLabel();?></div> 
+    		<div style="display:table-cell; width:50px"><input type="text" name="<?php echo $_element->getPos();?>" value="<?php echo $value->getValue()?>" style="width: 95%"/></div>
+    		<div style="padding-left:5px;display:table-cell"><?php echo $value->getLabel();?></div> 
     	</div>
     	<?php endforeach; ?>
        

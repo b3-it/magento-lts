@@ -388,7 +388,7 @@
         </translate>
         <layout>
             <updates>
-                <virtualgeo >
+                <virtualgeo>
                     <file>bkg/virtualgeo.xml</file>
                 </virtualgeo>
             </updates>
