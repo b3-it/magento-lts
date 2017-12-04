@@ -138,7 +138,6 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_content
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `code` varchar(128) default '',
 	  `parent_id` int(11) unsigned NOT NULL,
-	  `pos` smallint default 0,
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -183,26 +182,4 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_content
 
 
 
-/*
-if (!$installer->getAttribute('catalog_product', 'request')) {
-	$installer->addAttribute('catalog_product', 'request', array(
-			'label' => 'With Request',
-			'input' => 'select',
-			'type' => 'int',
-			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
-			'visible' => false,
-			//'required' => true,
-			'is_user_defined' => true,
-			'searchable' => false,
-			'comparable' => false,
-			'visible_on_front' => false,
-			'visible_in_advanced_search' => false,
-			'source'    => 'eav/entity_attribute_source_boolean',
-			'default' => '1',
-			//'option' => $option,
-			'group' => 'General',
-			'apply_to' => Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE,
-	));
-}
-*/
 $installer->endSetup();
