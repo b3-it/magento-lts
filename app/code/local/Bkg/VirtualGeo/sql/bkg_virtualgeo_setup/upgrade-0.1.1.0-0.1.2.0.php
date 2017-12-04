@@ -19,7 +19,7 @@ if ($installer->tableExists($installer->getTable('virtualgeo/components_format_e
 {
 	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_format_entity')} 
 	  ADD COLUMN  `has_resolution` smallint unsigned default 0,
-	  ADD COLUMN  `pos` int(11) unsigned default 0,
+	  ADD COLUMN  `pos` int(11) unsigned default 0
 	  ");
 }
 
@@ -37,7 +37,7 @@ if ($installer->tableExists($installer->getTable('virtualgeo/components_structur
 if ($installer->tableExists($installer->getTable('virtualgeo/components_storage_entity')))
 {
 	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_storage_entity')}
-	ADD COLUMN  `pos` int(11) unsigned default 0,
+	ADD COLUMN  `pos` int(11) unsigned default 0
 	");
 
 }
@@ -45,7 +45,7 @@ if ($installer->tableExists($installer->getTable('virtualgeo/components_storage_
 if ($installer->tableExists($installer->getTable('virtualgeo/components_resolution_entity')))
 {
 	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_resolution_entity')}
-	ADD COLUMN  `pos` int(11) unsigned default 0,
+	ADD COLUMN  `pos` int(11) unsigned default 0
 	");
 
 }
@@ -53,16 +53,57 @@ if ($installer->tableExists($installer->getTable('virtualgeo/components_resoluti
 if ($installer->tableExists($installer->getTable('virtualgeo/components_georef_entity')))
 {
 	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_georef_entity')}
-	ADD COLUMN  `pos` int(11) unsigned default 0,
+	ADD COLUMN  `pos` int(11) unsigned default 0
 	");
 }
 
 if ($installer->tableExists($installer->getTable('virtualgeo/components_content_entity')))
 {
 	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_content_entity')}
-	ADD COLUMN  `pos` int(11) unsigned default 0,
+	ADD COLUMN  `pos` int(11) unsigned default 0
 	");
 }
 
+if ($installer->tableExists($installer->getTable('virtualgeo/components_resolution_product')))
+{
+	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_resolution_product')}
+	ADD COLUMN  `pos` int(11) unsigned default 0
+	");
+}
+
+if ($installer->tableExists($installer->getTable('virtualgeo/components_format_product')))
+{
+	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_format_product')}
+	ADD COLUMN  `pos` int(11) unsigned default 0
+	");
+}
+
+if ($installer->tableExists($installer->getTable('virtualgeo/components_georef_product')))
+{
+	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_georef_product')}
+	ADD COLUMN  `pos` int(11) unsigned default 0
+	");
+}
+
+if ($installer->tableExists($installer->getTable('virtualgeo/components_content_product')))
+{
+	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_content_product')}
+	ADD COLUMN  `pos` int(11) unsigned default 0
+	");
+}
+
+if ($installer->tableExists($installer->getTable('virtualgeo/components_structure_product')))
+{
+	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_structure_product')}
+	ADD COLUMN  `pos` int(11) unsigned default 0
+	");
+}
+
+if ($installer->tableExists($installer->getTable('virtualgeo/components_storage_product')))
+{
+	$installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_storage_product')}
+	ADD COLUMN  `pos` int(11) unsigned default 0
+	");
+}
 
 $installer->endSetup();
