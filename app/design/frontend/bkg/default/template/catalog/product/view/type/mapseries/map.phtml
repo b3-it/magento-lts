@@ -27,42 +27,122 @@
         })
       });
 
-      var select = new ol.interaction.Select();
-      select.on('select', function(e) {
-        var f = e.target.getFeatures().item(0);
-        var sku = f.get('sku');
-        var j = jQuery("#qty-" + sku);
-        if (j.length == 0) {
-          alert("no item with " + sku);
-        } else {
-          jQuery("#confirmSelectPrice").text(jQuery("#price-" + sku + " .price").text());
-          jQuery("#confirmSelectName").text(jQuery("#name-" + sku).text()); // f.get('name')
-          jQuery("#confirmSelectDialog").dialog({
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            buttons: {
-              Confirm: function() {
-                j.val(function(i, oldval) {
-                  return parseInt( oldval, 10) + 1;
-                });
-                f.changed();
-                jQuery( this ).dialog( "close" );
-              },
-              Cancel: function() {
-                jQuery( this ).dialog( "close" );
-              }
-            }
+      var dialogFunction = function(list) {
+    	  str = "<table title='Füge hinzu?'>";
+          list.forEach( function(f) {
+        	  var sku = f.get('sku');
+        	  var price = jQuery("#price-" + sku + " .price").text();
+        	  var name = jQuery("#name-" + sku).text();
+              str += "<tr>";
+
+              str += "<td><label><input id='confirm-chk-"+ sku +"' type='checkbox' checked='checked' name='ids' value='" + sku + "' />" + name + "</td>";
+              str += "<td>" + price + "</td>";
+              str += "<td><input id='confirm-qty-" + sku + "' type='number' value='1' min='0' /></td>";
+              
+              str += "</tr>";
           });
-        }
-        e.target.getFeatures().clear();
-      });
+          str += "</table>";
+          jQuery(str).dialog({
+              resizable: false,
+              height: "auto",
+              width: 400,
+              modal: true,
+              buttons: {
+                Confirm: function() {
+                  jQuery( this ).find(":checked").each(function(index) {
+                      sku = jQuery(this).val();
+
+                      v = jQuery('#confirm-qty-' + sku).val();
+                      qty = jQuery('#qty-' + sku);
+                      qty.val(function(i, oldval) {
+                          return parseInt(oldval, 10) + parseInt(v, 10);
+                      });
+                      // call changed so the map get updated
+                      qty.change();
+                  });
+
+                  // need to destroy so it is removed from code
+                  jQuery( this ).dialog( "destroy" ).remove();
+                },
+                Cancel: function() {
+                  // need to destroy so it is removed from code
+                  jQuery( this ).dialog( "destroy" ).remove();
+                }
+              }
+            });
+      };
+      
+       var select = new ol.interaction.Select({
+    	   multi: true
+       });
+       
+       select.on('select', function(e) {
+    	   var list = [];
+    	   e.target.getFeatures().forEach(function(f) {
+    		   var sku = f.get('sku');
+               var j = jQuery("#qty-" + sku);
+               if (j.length != 0) {
+                 list.push(f);
+               }
+           });
+    	   e.target.getFeatures().clear();
+    	   if (list.length <= 0) {
+               return;
+           }
+    	   dialogFunction(list);
+       });
+
       map.addInteraction(select);
       
+      var dragBox = new ol.interaction.DragBox();
+      map.addInteraction(dragBox);
+      dragBox.on('boxend', function(e) {
+
+          var extent = e.target.getGeometry().getExtent();
+          var list = [];
+          vector.getSource().forEachFeatureIntersectingExtent(extent, function(f) {
+        	  var sku = f.get('sku');
+              var j = jQuery("#qty-" + sku);
+              if (j.length != 0) {
+              	list.push(f);
+              }
+          });
+
+          if (list.length <= 0) {
+              return;
+          }
+          dialogFunction(list);
+      });
+      // clear selection when drawing a new box and when clicking on the map
+      dragBox.on('boxstart', function() {
+        //selectedFeatures.clear();
+      });
+
       map.addControl(new ol.control.OverviewMap()); // TODO lol? 
       map.addControl(new ol.control.ZoomSlider());
       map.addControl(new ol.control.ScaleLine());
+
+      map.addControl(new buttonCtrl({
+    	  text: "+",
+    	  classname: "ol-addall",
+    	  callback: function(b) {
+        	  qty = jQuery('#super-product-table .qty');
+        	  qty.val(function(i, oldval) {
+            	  // increase value by one
+                  return parseInt(oldval, 10) + 1;
+              });
+              qty.change();
+    	  }
+      }));
+      map.addControl(new buttonCtrl({
+    	  text: "C",
+    	  classname: "ol-clearall",
+    	  callback: function(b) {
+        	  qty = jQuery('#super-product-table .qty');
+        	  qty.val('0');
+              qty.change();
+    	  }
+      }));
       //map.addControl(new ol.control.MousePosition({
       //  coordinateFormat: function(coord) { return ol.coordinate.toStringHDMS(ol.proj.toLonLat(coord),1); }
       //}));
@@ -71,7 +151,7 @@
           sku = e.target.id.slice(4);
     	  vector.getSource().forEachFeature(function(f) {
         	  if (f.get("sku") == sku) {
-            	  f.changed();
+            	  f.changed(); // invalidate to redraw again
             	  return true;
         	  }
         	  return false;

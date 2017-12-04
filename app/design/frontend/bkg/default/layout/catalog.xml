@@ -183,6 +183,7 @@ Product view
             <action method="addJs"><script>bkg/jsts.min.js</script></action>
             <action method="addItem"><type>js_css</type><name>lib/ol/ol.css</name></action>
             <action method="addJs"><script>bkg/ol.tooglectrl.js</script></action>
+            <action method="addJs"><script>bkg/ol.buttonctrl.js</script></action>
             <action method="addJs"><script>lib/jquery/jquery-ui-1.12.1.js</script></action>
             <action method="addItem"><type>js_css</type><name>lib/jquery/jquery-ui-1.12.1.css</name></action>
             <action method="addJs"><script>bkg/map.js</script></action>

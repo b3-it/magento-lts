@@ -1,4 +1,13 @@
 
+.ol-addall {
+	top: 6px;
+	left: 40px;
+}
+
+.ol-clearall {
+	top: 6px;
+	left: 66px;
+}
 
 .ol-scale-line {
 	left: unset;
