@@ -33,8 +33,3 @@
 .ol-control > .ui-helper-hidden-accessible {
 	position: absolute;
 }
-
-
-#confirmSelectDialog:not(.ui-dialog-content) {
-	display:none;
-}
