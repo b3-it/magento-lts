@@ -26,4 +26,15 @@
  		}
  		
  	}
+ 	
+ 	public function getRowValue($row, $idx)
+ 	{
+ 		if(isset($row[$idx])){
+ 			return $row[$idx];
+ 		}
+ 		
+ 		return "";
+ 	}
+ 	
+ 	
  } 
