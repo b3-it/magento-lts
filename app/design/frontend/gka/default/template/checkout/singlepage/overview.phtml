@@ -76,7 +76,7 @@
 
 	<fieldset class="multiple-checkout">
 		<?php $_address=$this->getBaseAddress() ?>
-		
+
 
 		<div id='cashpayment'> </div>
 
@@ -118,11 +118,11 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 		<?php if ($this->getShippingCosts()):?>
 		<p class="grand-total">
 			<span style="font-weight: bold;"><?php echo $this->__('Shipping Cost:') ?> </span>
-			<?php echo $this->helper('checkout')->formatPrice($this->getShippingCosts()) ?>	
+			<?php echo $this->helper('checkout')->formatPrice($this->getShippingCosts()) ?>
 		</p>
 		<?php endif;?>
 		<p class="grand-total">

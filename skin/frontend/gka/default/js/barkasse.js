@@ -2,12 +2,12 @@ var alertClass = 'required';
 
 $j(document).ready(function(){
 	// Kassenbuch-Journal
-	$j('#withdrawal').bind('keyup', function() {
+	$j('#withdrawal').on('keyup change', function(event) {
 		setDiffPrice($j('#withdrawal').val(), $j('#endsaldo').val(),  '#balance', true);
 	});
 
 	// Checkout => Bestellübersicht
-	$j('#givenamount').bind('keyup', function() {
+	$j('#givenamount').on('keyup input', function(event) {
 		setDiffPrice(price, $j('#givenamount').val(), '#balance', true);
 	});
 });
@@ -15,7 +15,7 @@ $j(document).ready(function(){
 /*
  * Errechnet aus 2 Übergebenen Werten die Differenz und setzt das Ergebnis
  * in ein übergebenes HTML-Element
- * 
+ *
  * @param    float     Gesamtsumme
  * @param    float     Differenzbetrag
  * @param    string    ID des Ziel-Elementes (mit '#')
@@ -26,14 +26,14 @@ function setDiffPrice(total, giff, element, highlight)
 	var givenamount = parseFloat( giff );
 	var totalprice  = parseFloat( total );
 	var diff        = givenamount - totalprice;
-	
+
 	// Wenn es keine Zahl ist, dann 0 ausgeben
 	if ( isNaN(diff) ) {
 		diff = 0;
 	}
-	
+
 	$j(element).html( diff.toFixed(2) + ' ' + currency );
-	
+
 	if ( highlight == true ) {
 		highlightLowerCash(diff, element);
 	}
@@ -42,7 +42,7 @@ function setDiffPrice(total, giff, element, highlight)
 /*
  * Hervorhebung je nach Differenz-Betrag, um negative Beträge sichtbar zu
  * gestalten
- * 
+ *
  * @param    float     Differenz-Betrag
  * @param    string    ID des Ziel-Elementes (mit '#')
  */
