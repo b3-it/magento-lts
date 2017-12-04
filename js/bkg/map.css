@@ -1,4 +1,13 @@
 
+.ol-addall {
+	top: 6px;
+	left: 40px;
+}
+
+.ol-clearall {
+	top: 6px;
+	left: 66px;
+}
 
 .ol-scale-line {
 	left: unset;
@@ -23,9 +32,4 @@
 }
 .ol-control > .ui-helper-hidden-accessible {
 	position: absolute;
-}
-
-
-#confirmSelectDialog:not(.ui-dialog-content) {
-	display:none;
 }
