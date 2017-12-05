@@ -5,6 +5,7 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+$customer = Mage::getSingleton('customer/session')->getCustomer();
 ?>
 <div class="dashboard" id="jumptarget<?php echo $this->getNameInLayout();?>">
     <div class="page-title">
@@ -25,6 +26,12 @@
         <div class="box-head">
             <h2>
                 <?php echo $this->__('Address Book') ?>
+              <?php if ( $customer->getBaseAddress() == null ): ?>
+                <span class="spacer"> | </span>
+                <a class="egov-pencile"
+                   href="<?php echo $this->getUrl('customer/address', array('_secure'=>true)) ?>"
+                   title="<?php echo $this->__('Manage Addresses') ?>"> </a>
+              <?php endif; ?>
             </h2>
         </div>
         <?php echo $this->getChildHtml('address') ?>
