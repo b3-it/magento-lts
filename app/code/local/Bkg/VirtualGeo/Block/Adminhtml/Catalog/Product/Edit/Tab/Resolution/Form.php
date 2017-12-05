@@ -9,7 +9,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Resolution_Form ex
 		$fieldset = $form->addFieldset('resolution_form', array(
 				'legend' => Mage::helper('virtualgeo')->__('Resolution')
 		));
-		
+
 		$fieldset->addField('use_resolution', 'select', array(
 				'label'     => Mage::helper('regionallocation')->__('Use Resolution'),
 				//'class'     => 'required-entry',
@@ -19,20 +19,20 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Resolution_Form ex
 		));
 
 		$field = $fieldset->addField('resolution', 'multiselect', array(
-				'label'     => Mage::helper('virtualgeo')->__('Verwendung'),
+				'label'     => Mage::helper('virtualgeo')->__('Usage'),
 				'name'      => 'product[resolution][]',
 				'defaultname'      => 'product[resolution_default][]',
 				'values'    => Mage::getModel('virtualgeo/components_resolution')->getCollectionAsOptions($this->getProduct()->getId()),
 				'value'		=> Mage::getModel('virtualgeo/components_resolutionproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
 				'default'	=> Mage::getModel('virtualgeo/components_resolutionproduct')->getDefaul4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
-				
+
 		));
 		if ($field) {
 			$field->setRenderer(
 					$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_renderer_list')
 					);
 		}
-	
+
 
 		return parent::_prepareForm();
 	}
@@ -50,6 +50,6 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Resolution_Form ex
 		return $this->_productInstance;
 	}
 
-	
+
 
 }
