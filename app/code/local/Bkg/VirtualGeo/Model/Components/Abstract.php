@@ -1,7 +1,7 @@
 <?php
 /**
  * Basis-Funktionen für Models
- * 
+ *
  * @author r.muetterlein
  *
  */
@@ -13,9 +13,15 @@ abstract class Bkg_VirtualGeo_Model_Components_Abstract extends Mage_Core_Model_
      */
     protected $_storeid = 0;
 
+    public function _construct()
+    {
+        parent::_construct();
+        $this->_init($this->_component_type);
+    }
+
 	/**
 	 * setzen der StoreID
-	 * 
+	 *
 	 * @param integer $id
 	 * @return Bkg_VirtualGeo_Model_Components_Abstract
 	 */
@@ -27,7 +33,7 @@ abstract class Bkg_VirtualGeo_Model_Components_Abstract extends Mage_Core_Model_
 
 	/**
 	 * SoreID
-	 * 
+	 *
 	 * @return integer
 	 */
 	public function getStoreId()
@@ -37,7 +43,7 @@ abstract class Bkg_VirtualGeo_Model_Components_Abstract extends Mage_Core_Model_
 
 	/**
 	 * Speichern
-	 * 
+	 *
 	 * {@inheritDoc}
 	 * @see Mage_Core_Model_Abstract::_afterSave()
 	 */
@@ -74,7 +80,7 @@ abstract class Bkg_VirtualGeo_Model_Components_Abstract extends Mage_Core_Model_
     }
 
     /**
-     * 
+     *
      * @param integer $productId
      * @param integer $storeId
      * @return Bkg_VirtualGeo_Model_Components_Abstract
@@ -93,17 +99,18 @@ abstract class Bkg_VirtualGeo_Model_Components_Abstract extends Mage_Core_Model_
     }
 
     /**
-     * 
+     *
      * @param integer $productId
      * @param integer $storeId
      * @return Bkg_VirtualGeo_Model_Components_Abstract
      */
-	public function getOptions4Product($productId,$storeId=0)
+	public function getOptions4Product($productId, $storeId=0)
 	{
 		$collection = $this->getCollection();
 		$collection->getSelect()
-		           ->join(array('product' => $collection->getTable('virtualgeo/components_format_product')),
-                          'product.format_id = main_table.id AND product_id=' . $productId . ' AND ((product.store_id= 0) OR (product.store_id=' . $storeId . '))',
+		           ->join(array('product' => $collection->getTable($this->_component_table)),
+                          'product.' . $this->_component_colid . ' = main_table.id AND product_id=' .
+                          $productId . ' AND ((product.store_id= 0) OR (product.store_id=' . $storeId . '))',
                           array('is_default'));
 
 		return $collection;

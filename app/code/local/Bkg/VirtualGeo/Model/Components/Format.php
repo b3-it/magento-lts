@@ -10,9 +10,7 @@
  */
 class Bkg_Virtualgeo_Model_Components_Format extends Bkg_VirtualGeo_Model_Components_Abstract
 {
-    public function _construct()
-    {
-        parent::_construct();
-        $this->_init('virtualgeo/components_format');
-    }
+    protected $_component_type  = 'virtualgeo/components_format';
+	protected $_component_table = 'virtualgeo/components_format_product';
+	protected $_component_colid = 'format_id';
 }
