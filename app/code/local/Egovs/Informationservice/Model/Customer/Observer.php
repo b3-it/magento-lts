@@ -7,13 +7,13 @@ class Egovs_Informationservice_Model_Customer_Observer
 		if ($address_id == 0)
 			return;
 		
-		if (($block instanceof Egovs_Base_Block_Customer_Address_Book) || ($block instanceof Egovs_Base_Block_Customer_Account_Dashboard_Address)) {
-			if (! $block->AddressEditingIsDenied) {
+		if ($block instanceof Mage_Core_Block_Abstract) {
+			if (! $block->getAddressEditingIsDenied()) {
 				$collection = Mage::getModel ( 'informationservice/request' )->getCollection ();
 				$collection->getSelect ()->where ( 'address_id= ?', intval($address_id));
 				// echo ($collection->getSelect()->__toString());
 				if (count ( $collection->getItems () ) > 0) {
-					$block->AddressEditingIsDenied = true;
+					$block->setAddressEditingIsDenied(true);
 				}
 			}
 		}
