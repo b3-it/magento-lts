@@ -22,7 +22,7 @@
             <modules>
                 <Bkg_RegionAllocation>
                     <files>
-                        <default>Bkg_RegionAllocation.csv</default>
+                        <default>Bkg/RegionAllocation.csv</default>
                     </files>
                 </Bkg_RegionAllocation>
             </modules>

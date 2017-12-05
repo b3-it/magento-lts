@@ -57,7 +57,7 @@
             <modules>
                 <Bkg_MapSeries>
                     <files>
-                        <default>Bkg_MapSeries.csv</default>
+                        <default>Bkg/MapSeries.csv</default>
                     </files>
                 </Bkg_MapSeries>
             </modules>
@@ -79,7 +79,7 @@
             <modules>
                 <Bkg_MapSeries>
                     <files>
-                        <default>Bkg_MapSeries.csv</default>
+                        <default>Bkg/MapSeries.csv</default>
                     </files>
                 </Bkg_MapSeries>
             </modules>
