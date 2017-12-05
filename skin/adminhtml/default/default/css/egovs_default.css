@@ -71,10 +71,49 @@ ins {
 
 .col_diff_small
 {
-	height:50px; 
+	height:50px;
 	overflow:hidden;
 }
 
 .max-width-configcompare{
 	max-width: 400px;
 }
+
+/* Backend-Definitionen für VirtualGEO (Tabell-Layout) */
+.div-table-head {
+    width: 100%;
+    background: url("../images/sort_row_bg.gif") 0 50% repeat-x;
+}
+.div-table-body {
+    width: 100%;
+}
+.div-table-head > div,
+.div-table-body > div {
+    display: table-cell;
+    padding: 2px 4px;
+    white-space: nowrap;
+}
+.div-table-head > div {
+    border: 1px #f9f9f9 solid;
+    font-size: .9em;
+}
+.div-table-body > div {
+    border-width: 0 1px 1px 0;
+    border-color: #dadfe0;
+    border-style: solid;
+    background: #f6f6f6;
+    text-align: center;
+}
+.div-table-body > div:first-child {
+    border-left-width: 1px;
+}
+.div-table-body > div:last-child {
+    text-align: left;
+}
+.div-table-body input[type="text"] {
+    width: 95%;
+}
+.div-table-body:hover > div {
+    background: #fcf5dd;
+}
+/* Ende der Definitionen für VirtualGEO */

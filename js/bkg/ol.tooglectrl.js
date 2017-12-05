@@ -9,7 +9,7 @@ var toogleModeCtrl = function(opt_options) {
 	element.className = className + ' ol-unselectable ol-control';
 
 	var i = 0;
-	jQuery.each(fields, function(key, value) {
+	$j.each(fields, function(key, value) {
 		var label = document.createElement('label');
 		label.innerHTML = value;
 		label.htmlFor = 'radio-' + key;
@@ -25,10 +25,10 @@ var toogleModeCtrl = function(opt_options) {
 		i++;
 	});
 
-	jQuery(element).find('input[type="radio"]').checkboxradio({
+	$j(element).find('input[type="radio"]').checkboxradio({
 		icon : false
 	});
-	jQuery(element).controlgroup();
+	$j(element).controlgroup();
 
 	ol.control.Control.call(this, {
 		element : element,

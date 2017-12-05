@@ -22,10 +22,10 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Format_Edit_Form extends Mage_Ad
 
       $form->setUseContainer(true);
       $this->setForm($form);
- 
+
       $dataModel = Mage::registry('componentsformat_entity_data');
-      
-      $fieldset = $form->addFieldset('componentsformat_entity_form', array('legend'=>Mage::helper('virtualgeo')->__(' Components Formatentity information')));
+
+      $fieldset = $form->addFieldset('componentsformat_entity_form', array('legend'=>Mage::helper('virtualgeo')->__('Components Formatentity information')));
 
       $fieldset->addField('code', 'text', array(
           'label'     => Mage::helper('virtualgeo')->__('Code'),
@@ -42,7 +42,7 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Format_Edit_Form extends Mage_Ad
   			'name'      => 'shortname',
   			'value'	=> $dataModel->getShortname()
   	));
-  
+
   	$fieldset->addField('name', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('Name'),
   			//'class'     => 'required-entry',
@@ -50,7 +50,7 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Format_Edit_Form extends Mage_Ad
   			'name'      => 'name',
   			'value'	=> $dataModel->getName()
   	));
-  
+
   	$fieldset->addField('description', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('Description'),
   			//'class'     => 'required-entry',
@@ -58,7 +58,7 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Format_Edit_Form extends Mage_Ad
   			'name'      => 'description',
   			'value'	=> $dataModel->getDescription()
   	));
-  
+
   	$fieldset->addField('store', 'hidden', array(
   			//'label'     => Mage::helper('virtualgeo')->__('Name'),
   			//'class'     => 'required-entry',
@@ -66,11 +66,11 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Format_Edit_Form extends Mage_Ad
   			'name'      => 'store',
   			'value'	=> $dataModel->getStoreId()
   	));
-  	
 
 
-    
+
+
       return parent::_prepareForm();
-  
+
   }
 }

@@ -6,13 +6,13 @@
             <version>0.1.2.0</version>
         </Bkg_VirtualGeo>
     </modules>
-    
+
     <adminhtml>
         <translate>
             <modules>
                 <Bkg_VirtualGeo>
                     <files>
-                        <default>Bkg_VirtualGeo.csv</default>
+                        <default>Bkg/VirtualGeo.csv</default>
                     </files>
                 </Bkg_VirtualGeo>
             </modules>
@@ -49,8 +49,8 @@
                         <method>onProductSaveAfter</method>
                     </virtualgeo_observer_onProductSaveAfter>
                 </observers>
-            </catalog_product_save_after>            
-            <!-- 
+            </catalog_product_save_after>
+            <!--
             <sales_convert_quote_item_to_order_item>
                 <observers>
                     <virtualgeo_observer>
@@ -190,14 +190,14 @@
 								</virtualgeo_components>
 							</children>
 						</catalog>
-	
+
 					</children>
 				</admin>
 			</resources>
 		</acl>
     </adminhtml>
     <global>
-       
+
         <fieldsets>
             <virtualgeo_sales_copy_order>
                 <entity_id>
@@ -257,7 +257,7 @@
             <virtualgeo>
                 <class>Bkg_VirtualGeo_Block</class>
             </virtualgeo>
-           
+
         </blocks>
         <helpers>
             <virtualgeo>
@@ -304,7 +304,7 @@
                    </components_content_product>
                    <components_content_category>
                     <table>virtualgeo_components_content_category</table>
-                   </components_content_category>                   
+                   </components_content_category>
                    <components_storage_entity>
                     <table>virtualgeo_components_storage_entity</table>
                    </components_storage_entity>
@@ -337,7 +337,7 @@
                     </quote_options>
                 </entities>
             </virtualgeo_resource>
-            
+
         </models>
         <resources>
             <bkg_virtualgeo_setup>
@@ -365,7 +365,7 @@
                 </observers>
             </checkout_cart_product_add_after>
         </events>
-     
+
     </global>
     <frontend>
         <routers>
@@ -381,7 +381,7 @@
             <modules>
                 <Bkg_VirtualGeo>
                     <files>
-                        <default>Bkg_VirtualGeo.csv</default>
+                        <default>Bkg/VirtualGeo.csv</default>
                     </files>
                 </Bkg_VirtualGeo>
             </modules>
@@ -446,7 +446,7 @@
             </catalog_product_dataflow>
         </fieldsets>
         <routers>
-			<adminhtml>	
+			<adminhtml>
 				<args>
 					<modules>
 						<Bkg_VirtualGeo_Adminhtml after="Mage_Adminhtml">Bkg_VirtualGeo_Adminhtml</Bkg_VirtualGeo_Adminhtml>

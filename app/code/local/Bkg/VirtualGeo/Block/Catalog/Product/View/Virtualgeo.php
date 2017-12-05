@@ -2,11 +2,11 @@
 
 class Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo extends Mage_Bundle_Block_Catalog_Product_View_Type_Bundle
 {
-	
+
 	protected $_componentsBlockType = array();
 	protected $_componentsBlock = array();
-	
-	
+
+
 	/**
 	 * Componenten
 	 *
@@ -23,8 +23,23 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo extends Mage_Bundle_B
 			);
 		}
 	}
-	
-	
+
+	/**
+	 * All ComponentKeys for Blockoutput
+	 *
+	 * @see app\design\frontend\base\default\layout\bkg\virtualgeo.xml
+	 * @return array
+	 */
+	public function getBlocksFromComponents()
+	{
+		if ( is_array($this->_componentsBlockType) AND count($this->_componentsBlockType) ) {
+			return array_keys($this->_componentsBlockType);
+		}
+		else {
+			return null;
+		}
+	}
+
 	/**
 	 * Return price block
 	 *
@@ -48,7 +63,7 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo extends Mage_Bundle_B
 		}
 		return $this->_componentsBlock[$type];
 	}
-	
+
 	public function getComponentsBlock($type)
 	{
 		return $this->_getComponentsBlock($type);

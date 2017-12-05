@@ -9,7 +9,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Storage_Form exten
 		$fieldset = $form->addFieldset('storage_form', array(
 				'legend' => Mage::helper('virtualgeo')->__('Storage')
 		));
-		
+
 		$fieldset->addField('use_storage', 'select', array(
 				'label'     => Mage::helper('regionallocation')->__('Use Storage'),
 				//'class'     => 'required-entry',
@@ -19,20 +19,20 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Storage_Form exten
 		));
 
 		$field = $fieldset->addField('storage', 'multiselect', array(
-				'label'     => Mage::helper('virtualgeo')->__('Verwendung'),
+				'label'     => Mage::helper('virtualgeo')->__('Usage'),
 				'name'      => 'product[storage][]',
 				'defaultname'      => 'product[storage_default][]',
 				'values'    => Mage::getModel('virtualgeo/components_storage')->getCollectionAsOptions($this->getProduct()->getId()),
 				'value'		=> Mage::getModel('virtualgeo/components_storageproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
 				'default'	=> Mage::getModel('virtualgeo/components_storageproduct')->getDefaul4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
-				
+
 		));
 		if ($field) {
 			$field->setRenderer(
 					$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_renderer_list')
 					);
 		}
-	
+
 
 		return parent::_prepareForm();
 	}
@@ -50,6 +50,6 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Storage_Form exten
 		return $this->_productInstance;
 	}
 
-	
+
 
 }

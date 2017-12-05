@@ -168,12 +168,12 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_content
 			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_content_product')};
 	  CREATE TABLE {$installer->getTable('virtualgeo/components_content_product')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `format_id` int(11) unsigned NOT NULL,
+	  `content_id` int(11) unsigned NOT NULL,
 	  `product_id` int(10) unsigned NOT NULL,
 	  `store_id` smallint unsigned NOT NULL,
 	  `is_default` smallint unsigned default 0,
 	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`format_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`content_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE,
 	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE,
 	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

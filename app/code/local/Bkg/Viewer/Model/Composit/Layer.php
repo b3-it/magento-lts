@@ -274,7 +274,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	$text[] = "var vector = new ol.layer.Vector({";
     	$text[] = "  source: vectorSource".self::$Count.",";
     	$text[] = "  style: function(feature, resolution) {";
-    	$text[] = "    j = jQuery('#qty-' + feature.get('sku'));";
+    	$text[] = "    j = \$j('#qty-' + feature.get('sku'));";
     	
     	$text[] = "    return new ol.style.Style({";
     	$text[] = "      stroke: new ol.style.Stroke({";

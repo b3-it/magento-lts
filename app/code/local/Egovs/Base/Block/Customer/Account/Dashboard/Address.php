@@ -34,15 +34,9 @@
 
 class Egovs_Base_Block_Customer_Account_Dashboard_Address extends Mage_Customer_Block_Account_Dashboard_Address
 {
-	public $AddressEditingIsDenied = false;
-	
 	public function rejectAddressEditing($address_id)
 	{
-		 $data = array('block'=> $this,"address_id"=>$address_id);
-		 Mage::dispatchEvent('egovs_base_customer_reject_address_editing',$data);
-		 $res = $this->AddressEditingIsDenied;
-		 $this->AddressEditingIsDenied = false;
-		 return $res;
+		 return Mage::helper('egovsbase/customer_address')->rejectAddressEditing($address_id, $this);
 	}
 	
 	public function getLockedAddressText()

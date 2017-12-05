@@ -22,10 +22,10 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Storage_Edit_Form extends Mage_A
 
       $form->setUseContainer(true);
       $this->setForm($form);
- 
+
       $dataModel = Mage::registry('componentsstorage_entity_data');
-      
-      $fieldset = $form->addFieldset('componentsstorage_entity_form', array('legend'=>Mage::helper('virtualgeo')->__(' Components Storageentity instorageion')));
+
+      $fieldset = $form->addFieldset('componentsstorage_entity_form', array('legend'=>Mage::helper('virtualgeo')->__('Components Storageentity information')));
 
       $fieldset->addField('code', 'text', array(
           'label'     => Mage::helper('virtualgeo')->__('Code'),
@@ -42,7 +42,7 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Storage_Edit_Form extends Mage_A
   			'name'      => 'shortname',
   			'value'	=> $dataModel->getShortname()
   	));
-  
+
   	$fieldset->addField('name', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('Name'),
   			//'class'     => 'required-entry',
@@ -50,7 +50,7 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Storage_Edit_Form extends Mage_A
   			'name'      => 'name',
   			'value'	=> $dataModel->getName()
   	));
-  
+
   	$fieldset->addField('description', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('Description'),
   			//'class'     => 'required-entry',
@@ -58,7 +58,7 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Storage_Edit_Form extends Mage_A
   			'name'      => 'description',
   			'value'	=> $dataModel->getDescription()
   	));
-  
+
   	$fieldset->addField('store', 'hidden', array(
   			//'label'     => Mage::helper('virtualgeo')->__('Name'),
   			//'class'     => 'required-entry',
@@ -66,11 +66,11 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Storage_Edit_Form extends Mage_A
   			'name'      => 'store',
   			'value'	=> $dataModel->getStoreId()
   	));
-  	
 
 
-    
+
+
       return parent::_prepareForm();
-  
+
   }
 }

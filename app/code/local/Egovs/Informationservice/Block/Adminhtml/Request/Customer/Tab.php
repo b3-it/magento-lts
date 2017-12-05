@@ -121,28 +121,4 @@ class Egovs_Informationservice_Block_Adminhtml_Request_Customer_Tab
 			$block->getLayout()->getMessagesBlock()->addNotice($text);
 		}
 	}
-	
-	public function rejectAddressEditing($observer)
-	{
-		$block = $observer['block'];
-		$address_id = intval($observer['address_id']);
-		if($address_id == 0) return;
-
-		if (($block instanceof Egovs_Base_Block_Customer_Address_Book) ||
-			($block instanceof Egovs_Base_Block_Customer_Account_Dashboard_Address))
-		{
-			if(!$block->AddressEditingIsDenied)
-			{
-				$collection = Mage::getModel('informationservice/request')->getCollection();
-				$collection->getSelect()->where('address_id=?', intval($address_id));
-				//echo ($collection->getSelect()->__toString());
-				if(count($collection->getItems()) > 0)
-				{
-					$block->AddressEditingIsDenied = true;
-				}
-			}	
-		}
-
-	}
-
 }

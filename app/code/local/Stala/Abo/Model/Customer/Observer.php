@@ -44,27 +44,18 @@ class Stala_Abo_Model_Customer_Observer
 	{
 		$block = $observer['block'];
 		$address_id = intval($observer['address_id']);
-		if($address_id == 0) return;
+		if ($address_id == 0)
+		    return;
 
-		if (($block instanceof Egovs_Base_Block_Customer_Address_Book) ||
-			($block instanceof Egovs_Base_Block_Customer_Account_Dashboard_Address))
-		{
-			if(!$block->AddressEditingIsDenied)
-			{
+        if ($block instanceof Mage_Core_Block_Abstract)	{
+			if (!$block->getAddressEditingIsDenied()) {
 				$collection = Mage::getModel('stalaabo/contract')->getCollection();
 				$collection->getSelect()->where('shipping_address_id='.$address_id .' OR billing_address_id='.$address_id);
 				//echo ($collection->getSelect()->__toString());
-				if(count($collection->getItems()) > 0)
-				{
-					$block->AddressEditingIsDenied = true;
+				if (count($collection->getItems()) > 0) {
+					$block->setAddressEditingIsDenied(true);
 				}
 			}	
 		}
-
 	}
-	
-
-
 }
-
-?>
