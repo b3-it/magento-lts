@@ -23,7 +23,6 @@
  * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
-
 ?>
 <?php $_product = $this->getProduct() ?>
 
@@ -40,13 +39,17 @@
     </script>
 <?php endif; ?>
 
-<?php $blocks= array('format')?>
-<?php foreach ($blocks as $blockname):?>
-	<?php $block = $this->getComponentsBlock($blockname);?>
-	<?php if($block):?>
-		<?php echo $block->toHtml();?>
-	<?php endif;?>
-<?php endforeach;?>
+<div id="virtualgeo">
+<?php
+$blocks= array('georef', 'format', 'content', 'resolution', 'storage', 'structure');
+foreach ($blocks AS $blockname) {
+    $block = $this->getComponentsBlock($blockname);
+	if($block) {
+        echo $block->toHtml();
+	}
+}
+?>
+</div>
 
 <?php if ($this->displayProductStockStatus()): ?>
     <?php if ($_product->isAvailable()): ?>
