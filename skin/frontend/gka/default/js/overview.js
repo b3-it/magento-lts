@@ -77,6 +77,8 @@ function openAccordion()
                 // Accordion war geschlossen, daher funktioniert
                 // der Magento-Validator nicht richtig
                 highlightHiddenElements();
+                // NiceScroll anpassen
+                $j('body').getNiceScroll().resize();
             }
         });
     }
