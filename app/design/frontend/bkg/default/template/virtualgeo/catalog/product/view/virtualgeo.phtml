@@ -40,7 +40,7 @@
     </script>
 <?php endif; ?>
 
-<?php $blocks= array('format')?>
+<?php $blocks= array('georef','structure','format','resolution','storage')?>
 <?php foreach ($blocks as $blockname):?>
 	<?php $block = $this->getComponentsBlock($blockname);?>
 	<?php if($block):?>
