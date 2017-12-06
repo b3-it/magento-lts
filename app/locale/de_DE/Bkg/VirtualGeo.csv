@@ -5,6 +5,7 @@
 "Content","Inhalt"
 "Format","Format"
 "CRS","CRS"
+"Coordinate Reference System","Koordinaten Referenz System"
 "Components Storage Manager","Kompontenten &rArr; Lager Verwaltung"
 "Components Resolution Manager","Kompontenten &rArr; Verwaltung der Auflösungen"
 "Components Structure Manager","Kompontenten &rArr; Struktur Verwaltung"
@@ -32,3 +33,4 @@
 "Insert","Einfügen"
 "Content Settings","Einstellungen für den Inhalt"
 "Use","Aktiv"
+"Selected Options","gewählte Option"
