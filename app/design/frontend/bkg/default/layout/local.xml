@@ -5,6 +5,8 @@
         <reference name="head">
             <remove name="silver_track" />
             <action method="addJs"><script>bkg/virtual_geo.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-ui-1.12.1.js</script></action>
+    		<action method="addItem"><type>js_css</type><name>lib/jquery/jquery-ui-1.12.1.css</name></action>
             <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
         </reference>
 

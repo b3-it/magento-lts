@@ -198,32 +198,32 @@ Additional block for bundle product type
                 <action method="addComponentsBlock">
                     <type>georef</type>
                     <block>virtualgeo/catalog_product_view_components_georef</block>
-                    <template>virtualgeo/catalog/product/view/components/georef.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
                     <type>format</type>
                     <block>virtualgeo/catalog_product_view_components_format</block>
-                    <template>virtualgeo/catalog/product/view/components/format.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
                     <type>content</type>
                     <block>virtualgeo/catalog_product_view_components_content</block>
-                    <template>virtualgeo/catalog/product/view/components/content.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
                     <type>resolution</type>
                     <block>virtualgeo/catalog_product_view_components_resolution</block>
-                    <template>virtualgeo/catalog/product/view/components/resolution.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
                     <type>storage</type>
                     <block>virtualgeo/catalog_product_view_components_storage</block>
-                    <template>virtualgeo/catalog/product/view/components/storage.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
                     <type>structure</type>
                     <block>virtualgeo/catalog_product_view_components_structure</block>
-                    <template>virtualgeo/catalog/product/view/components/structure.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addPriceBlockType">
                     <type>virtualgeo</type>

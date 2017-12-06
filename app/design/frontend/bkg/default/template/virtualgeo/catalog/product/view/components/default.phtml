@@ -1,12 +1,26 @@
-
-<?php $_product = $this->getProduct() ?>
-
-<h1><?php echo $this->getTitle();?></h1>
-<?php foreach($this->getOptions() as $option):?>
-<div>
-<span><?php echo $option->getCode();?> </span>
-<span><?php echo $option->getName();?> </span>
-<span><?php echo $option->getDescription();?> </span>
-<span><?php echo $option->getIsDefault();?> </span>
-</div>
-<?php endforeach;?>
+    <h3>
+        <?php echo $this->getTitle(); ?>
+        <div class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></div>
+    </h3>
+    <div class="virtualgeo-default">
+      <?php foreach($this->getOptions() as $option): ?>
+        <?php $_default = ($option->getIsDefault() == '1' ? ' checked="checked"' : ''); ?>
+        <?php //var_dump($option); ?>
+        <div class="option-row">
+            <div>
+                <input type="radio"
+                       class="radio"
+                       name="<?php echo $this->getHtmlID(); ?>[]"
+                       value="<?php echo $this->getGeoref(); ?>"
+                       data-id="<?php echo $this->getHtmlID(); ?>"
+                       data-georef="<?php echo $this->getGeoref(); ?>"
+                       data-epsg-code="<?php echo $this->getEpsgCode(); ?>"
+                       data-shortname="<?php echo $this->getShortname(); ?>"
+                       data-name="<?php echo $option->getName();?>"
+                       <?php echo $_default; ?> />
+            </div>
+            <div class="virtualgeo-name"><?php echo $option->getName();?></div>
+            <div class="virtualgeo-desc"><?php echo $option->getDescription();?></div>
+        </div>
+      <?php endforeach; ?>
+    </div>
