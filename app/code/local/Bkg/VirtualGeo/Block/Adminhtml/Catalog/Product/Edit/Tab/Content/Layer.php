@@ -18,7 +18,6 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
     //alle verfügbaren PersonalOptions für das Produkt finden 
 	public function getFields()
 	{
-		
 		return array();
 	}
 

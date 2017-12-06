@@ -117,6 +117,85 @@ class Bkg_VirtualGeo_Model_Observer
     	$this->_saveFormat($dataObject->getFormat(), $dataObject->getFormatDefault(),$product);
     }
     
+    
+    
+    protected function _saveContentLayer($nodes,$productId)
+    {
+    	$loaded = array();
+    	//model erzeugen oder laden
+    	foreach($nodes as $node)
+    	{
+    		$model = Mage::getModel('virtualgeo/components_contentproduct');
+    		if(!isset($node['id']) || empty($node['id']))
+    		{
+    			$model->save();
+    			$node['id'] = $model->getId();
+    			$node['model'] = $model;
+    		}else {
+    			$model = Mage::getModel('bkgviewer/composit_layer')->load($node['id']);
+    			$node['model'] = $model;
+    		}
+    
+    		$model->setTitle($node['title'])
+    		->setPos($node['pos'])
+    		->setVisualPos($node['visual_pos'])
+    		->setType($node['type'])
+    		->setCompositId($compositId);
+    
+    		if(!isset($node['serviceLayer']) || empty($node['serviceLayer']))
+    		{
+    			$model->unsetData('service_layer');
+    		}else{
+    
+    			$model->setServiceLayerId($node['serviceLayer']);
+    		}
+    		$loaded[] = $node;
+    
+    	}
+    
+    	//jetzt die Elternbeziehung und die Reihenfolge
+    	foreach($loaded as $node)
+    	{
+    
+    		$model = $node['model'];
+    		$parent = $this->findByNumber($loaded, $node['parent']);
+    
+    		if($parent){
+    			$model->setParentId($parent['model']->getId());
+    		}else{
+    			$model->setData('parent_id',null);
+    		}
+    
+    
+    		$model->save();
+    
+    	}
+    
+    	foreach($loaded as $node)
+    	{
+    		if($node['is_delete']){
+    			$model = $node['model'];
+    			$model->delete();
+    		}
+    	}
+    
+    
+    
+    }
+    
+    private function findByNumber($nodes,$number)
+    {
+    	foreach ($nodes as $node){
+    		if($node['number'] == $number){
+    			return $node;
+    		}
+    	}
+    
+    	return null;
+    }
+    
+    
+    
     protected function _saveGeoref($data, $default, $product)
     {
     	if(empty($data)){

@@ -1,12 +1,10 @@
-function addPages() {
+function addLayer() {
 	var form_data = {};
-    var inputs = $j('#edit_form').serializeArray();
-    $j.each(inputs, function (i, input) {
-    	form_data[input.name] = input.value;
-    });
+	form_data['checked'] = $j('#layerForm_Name_is_checked').is(':checked');
+	form_data['readonly'] = $j('#layerForm_Name_is_readonly').is(':checked');
 	
-    var service_layers = $j('#service_layers');
-    var selected = service_layers.find('option:selected');
+    var layers = $j('#layerForm_Name');
+    var selected = layers.find('option:selected');
 	selected.each(function(){
         nodeOptions.addPage($j(this).val(),$j(this).text(),form_data);
     });
@@ -72,24 +70,25 @@ $j('#jstree_layer').on("ready.jstree", function (e, data) {
 
 
 
-var nodeTemplate = '<div style="display:none" id="node_options_{{number}}" class="hor-scroll">' +
-				'<input type="hidden" id="node_options_{{number}}_is_delete" name="node_options[{{number}}][is_delete]" value="" />'+
-				'<input type="hidden" name="node_options[{{number}}][id]" value="{{id}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_name" name="node_options[{{number}}][label]" value="{{label}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_number" name="node_options[{{number}}][number]" value="{{number}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_parent" name="node_options[{{number}}][parent]" value="{{parent}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_pos" name="node_options[{{number}}][pos]" value="{{pos}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_visual_pos" name="node_options[{{number}}][visual_pos]" value="{{visual_pos}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_type" name="node_options[{{number}}][type]" value="{{type}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_serviceLayer" name="node_options[{{number}}][serviceLayer]" value="{{serviceLayer}}" />'+
-				'<input type="hidden" id="node_options_{{number}}_title" name="node_options[{{number}}][title]" value="{{title}}" />'+
+var nodeTemplate = '<div style="display:none" id="content_layer_options_{{number}}" class="hor-scroll">' +
+				'<input type="hidden" id="content_layer_options_{{number}}_is_delete" name="product[content_layer_options][{{number}}][is_delete]" value="" />'+
+				'<input type="hidden" name="product[content_layer_options][{{number}}][id]" value="{{id}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_name" name="product[content_layer_options][{{number}}][label]" value="{{label}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_number" name="product[content_layer_options][{{number}}][number]" value="{{number}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_parent" name="product[content_layer_options][{{number}}][parent]" value="{{parent}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_pos" name="product[content_layer_options][{{number}}][pos]" value="{{pos}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_visual_pos" name="product[content_layer_options][{{number}}][visual_pos]" value="{{visual_pos}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_type" name="product[content_layer_options][{{number}}][type]" value="{{type}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_code" name="product[content_layer_options][{{number}}][code]" value="{{code}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_checked" name="product[content_layer_options][{{number}}][checked]" value="{{checked}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_readonly" name="product[content_layer_options][{{number}}][readonly]" value="{{readonly}}" />'+
 				'</div>';
 
 
 
 				
 var nodeOptions = {
-		div_id : "#hidden_navi_menu",
+		div_id : "#hidden_content_layer",
 		tree : $j("#jstree_layer"),
 		templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
 		templateText : nodeTemplate,
@@ -103,7 +102,7 @@ var nodeOptions = {
 		show : function(node) {
 			//this.hideAll();
 			if(node.data){
-				var elem = $j("#node_options_"+node.data.number);
+				var elem = $j("#content_layer_options_"+node.data.number);
 				if(elem){
 					//elem.show();
 				}
@@ -112,7 +111,7 @@ var nodeOptions = {
 		},
 		hideAll : function(){
 			for (var i = 1; i <= this.itemCount; i++){
-					var elem = $j("#node_options_"+i);
+					var elem = $j("#content_layer_options_"+i);
 					if(elem.length != 0)
 					{
 						elem.hide();
@@ -120,12 +119,12 @@ var nodeOptions = {
 			}
 		},
 		rename : function(node, $text) {
-			var elem = $j("#node_options_" + node.data.number + "_name");
+			var elem = $j("#content_layer_options_" + node.data.number + "_name");
 			if(elem){
 				elem.val($text);
 			}
 			if(node.data.type = 'page'){
-				var elem = $j("#node_options_" + node.data.number + "_title");
+				var elem = $j("#content_layer_options_" + node.data.number + "_title");
 				node.text = node.text + " ("+elem.val()+")";
 				var ref = this.tree.jstree(true);
 				ref.redraw(true);
@@ -136,7 +135,7 @@ var nodeOptions = {
 			{
 				var ref = this.tree.jstree(true);
 				var parent = ref.get_node(node.parent);
-				var elem = $j("#node_options_" + node.data.number + "_parent");
+				var elem = $j("#content_layer_options_" + node.data.number + "_parent");
 				if(parent.data){
 					elem.val(parent.data.number);
 				}else{
@@ -147,7 +146,7 @@ var nodeOptions = {
 				{
 					var child = ref.get_node(parent.children[childId]);
 					if(child){
-						var elem = $j("#node_options_" + child.data.number + "_pos");
+						var elem = $j("#content_layer_options_" + child.data.number + "_pos");
 						elem.val(pos);
 						pos++;
 					}
@@ -215,13 +214,12 @@ var nodeOptions = {
 			ref.open_node(sel);
 			var data = new Object();
 			data.number = this.itemCount;
-			data.type = 'page';
-			data.label = label;
-			data.serviceLayer = id;
+			data.type = 'default';
 			data.title = label;
 			data.visual_pos = input_data.visual_pos;
-			data.service_title = label;
-			//sel = ref.create_node(sel,  {"type":"page","data":data, "text" : data.label});
+			data.readonly = input_data.readonly;
+			data.checked = input_data.checked;
+			
 			sel = this.createTextNode(sel, data);
 			this.template = new Template(this.templateText, this.templateSyntax);
 			var content = this.template.evaluate(data);
@@ -239,9 +237,10 @@ var nodeOptions = {
 		{
 			var ref = this.tree.jstree(true);
 			var text = data.title;
-			if(data.type == 'page'){
-				text = text + "<span style=\"text-align:right;\" ><span>  | " + data.service_title + " | "+data.visual_pos+"</span></span>" ;
-			}
+			var ro = data.readonly? "readonly" : "";
+			var ch = data.checked? "checked" : "";
+			text = text + "<span style=\"text-align:right;\" ><span> " + ro + " " + ch + "</span></span>" ;
+
 			var sel = ref.create_node(parent,  {"type":data.type,"data":data, "text" : text});
 			return sel;
 		},
@@ -254,7 +253,7 @@ var nodeOptions = {
 					return false;
 				}
 				var node = ref.get_node(sel);
-				var elem = $j("#node_options_" + node.data.number + "_is_delete");
+				var elem = $j("#content_layer_options_" + node.data.number + "_is_delete");
 				elem.val(1);
 				ref.delete_node(sel);
 		},
@@ -271,7 +270,7 @@ var nodeOptions = {
 				var node = ref.get_node(sel);
 				if(node.data.type = 'layer'){
 					var node = ref.get_node(sel);
-					var elem = $j("#node_options_" + node.data.number + "_name");
+					var elem = $j("#content_layer_options_" + node.data.number + "_name");
 					node.text = elem.val();
 				}
 				ref.edit(sel);

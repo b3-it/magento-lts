@@ -11,11 +11,10 @@
                 <input type="radio"
                        class="radio"
                        name="<?php echo $this->getHtmlID(); ?>[]"
-                       value="<?php echo $this->getGeoref(); ?>"
+                       value="<?php echo $option->getCode(); ?>"
                        data-id="<?php echo $this->getHtmlID(); ?>"
-                       data-georef="<?php echo $this->getGeoref(); ?>"
-                       data-epsg-code="<?php echo $this->getEpsgCode(); ?>"
-                       data-shortname="<?php echo $this->getShortname(); ?>"
+                       data-code="<?php echo $option->getCode(); ?>"
+                       data-shortname="<?php echo $option->getShortname(); ?>"
                        data-name="<?php echo $option->getName();?>"
                        <?php echo $_default; ?> />
             </div>

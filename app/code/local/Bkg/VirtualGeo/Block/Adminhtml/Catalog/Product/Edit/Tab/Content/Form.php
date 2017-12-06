@@ -18,50 +18,59 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Form exten
 	protected function _prepareForm()
     	{
     		$form = new Varien_Data_Form();
+//     		$form = new Varien_Data_Form(array(
+//     				'id' => 'layer_edit_form',
+//     				'action' => 'test',
+//     				'method' => 'post',
+//     				'enctype' => 'multipart/form-data'
+//     		)
+//     				);
     		$this->setForm($form);
-    		$fieldset = $form->addFieldset('compositlayer_form', array('legend'=>Mage::helper('bkgviewer')->__('Item information')));
+    		$fieldset = $form->addFieldset('contentlayer_form', array('legend'=>Mage::helper('bkgviewer')->__('Item information')));
     
-    		$fieldset->addField('code', 'text', array(
-    				'label'     => Mage::helper('virtualgeo')->__('Code'),
+    		$fieldset->addField('category', 'select', array(
+    				'label'     => Mage::helper('virtualgeo')->__('Category'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'title',
+    				'name'      => 'category',
     		));
     		
-    		$fieldset->addField('name', 'text', array(
+    		$layer = array();
+    		foreach(Mage::getModel('virtualgeo/components_content')->getCollectionAsOptions() as $opt)
+    		{
+    			//$layer[$opt['value']] = $opt['label'];
+    			$layer[] = $opt; 
+    		}
+    		
+    		
+    		$fieldset->addField('layerForm_Name', 'multiselect', array(
     				'label'     => Mage::helper('virtualgeo')->__('Name'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'Name',
+    				'name'      => 'LayerForm_Name',
+    				'values'  => $layer,
     		));
     		
-    		$fieldset->addField('is_checked', 'checkbox', array(
+    		$fieldset->addField('layerForm_Name_is_checked', 'checkbox', array(
     				'label'     => Mage::helper('virtualgeo')->__('Is Checked'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'is_checked',
+    				'name'      => 'LayerForm_is_checked',
     		));
     		
-    		$fieldset->addField('is_readonly', 'checkbox', array(
+    		$fieldset->addField('layerForm_Name_is_readonly', 'checkbox', array(
     				'label'     => Mage::helper('virtualgeo')->__('Is Readonly'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
-    				'name'      => 'is_readonly',
+    				'name'      => 'LayerForm_is_readonly',
     		));
     		
-    		$fieldset->addField('toogle_all', 'checkbox', array(
-    				'label'     => Mage::helper('virtualgeo')->__('Toogle All'),
-    				//'class'     => 'required-entry',
-    				//'required'  => true,
-    				'name'      => 'toogle_all',
-    		));
-    		
-    		
+
     
     		$fieldset->addField ( 'copy_values', 'button', array (
     				'value' => Mage::helper ( 'virtualgeo' )->__ ( 'Insert' ),
     				'name' => 'copy_values',
-    				'onclick' => "addPages();",
+    				'onclick' => "addLayer();",
     				'class'	=> 'form-button',
     				'label' => Mage::helper ( 'virtualgeo' )->__ ( 'Copy selected Layer to Tree' ),
     		) );

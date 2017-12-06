@@ -9,7 +9,7 @@
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_Virtualgeo_Model_Components_Component extends Mage_Core_Model_Abstract
+class Bkg_VirtualGeo_Model_Components_Component extends Mage_Core_Model_Abstract
 {
 	
 	protected $_storeid = 0;
@@ -17,8 +17,7 @@ class Bkg_Virtualgeo_Model_Components_Component extends Mage_Core_Model_Abstract
 	//alias der Tabelle für die Verbindung zum Produkt
 	protected $_productRelationTable = 'virtualgeo/xxx';
 	
-	//name der Spalte des Fremdschlüssels in der Produkttabelle
-	protected $_productRelationField = 'xxx';
+	
 	
 	public function setStoreId($id)
 	{
@@ -82,7 +81,7 @@ class Bkg_Virtualgeo_Model_Components_Component extends Mage_Core_Model_Abstract
     	$collection = $this->getCollection();
     	$collection->setStoreId($storeId);
     	$collection->getSelect()
-    	->join(array('product'=>$collection->getTable($this->_productRelationTable)),"product.{$this->_productRelationField} = main_table.id AND product_id={$productId} AND ((product.store_id= 0) OR (product.store_id={$storeId}))",array('is_default'));
+    	->join(array('product'=>$collection->getTable($this->_productRelationTable)),"product.entity_id = main_table.id AND product_id={$productId} AND ((product.store_id= 0) OR (product.store_id={$storeId}))",array('is_default'));
     	
     	return $collection;
     }
