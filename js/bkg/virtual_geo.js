@@ -2,7 +2,9 @@ $j(document).ready(function(){
     scanForActiveOptions();
 
     $j('#virtualgeo').accordion({
-        'icons': {
+        'heightStyle': 'content',
+        'autoHeight' : false,
+        'icons'      : {
             'header'      : 'ui-icon-plus',
             'activeHeader': 'ui-icon-minus'
         },
