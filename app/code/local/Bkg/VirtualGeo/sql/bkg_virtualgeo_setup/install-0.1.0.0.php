@@ -15,14 +15,12 @@ $installer->startSetup();
 if (!$installer->tableExists($installer->getTable('virtualgeo/components_regionallocation')))
 {
 	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_regionallocation')};
 	CREATE TABLE {$installer->getTable('virtualgeo/components_regionallocation')} (
 	  	`id` int(11) unsigned NOT NULL auto_increment,
     	`parent_id` int(11) unsigned NOT NULL,
         `rap_id` int(11) unsigned NOT NULL,
         `fee` varchar(128) default '',
         `usage` varchar(128) default '',
-    
 	PRIMARY KEY (`id`),
     FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE,
     FOREIGN KEY (`rap_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE
@@ -33,153 +31,156 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_regiona
 if (!$installer->tableExists($installer->getTable('virtualgeo/components_georef_entity')))
 {
 	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_georef_entity')};
 	   CREATE TABLE {$installer->getTable('virtualgeo/components_georef_entity')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `georef` varchar(128) default '',
+	  `code` varchar(128) default '',
 	  `epsg_code` varchar(128) default '',
+	  `pos` int(11) unsigned default 0,
+	  UNIQUE KEY ìdx_georef_code (`code`), 
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 	");
 }
 
-if (!$installer->tableExists($installer->getTable('virtualgeo/components_georef_label')))
+
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_content_category')))
 {
-	$installer->run("
- 	-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_georef_label')};
-	   CREATE TABLE {$installer->getTable('virtualgeo/components_georef_label')} (
+    $installer->run("
+	  CREATE TABLE {$installer->getTable('virtualgeo/components_content_category')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `store_id` smallint unsigned NOT NULL,
-	  `parent_id` int(11) unsigned NOT NULL,
-	  `name` varchar(512) default '',
-	  `description` varchar(1024) default '',
-	  `shortname` varchar(255) default '',
-	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_georef_entity')}`(`id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
+	  `label` varchar(128) default '',
+	  `pos` int(11) unsigned default 0,
+	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	");
+	  ");
+}
+
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_content_entity')))
+{
+    $installer->run("
+	  CREATE TABLE {$installer->getTable('virtualgeo/components_content_entity')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `code` varchar(128) default '',
+	  `category_id` int(11) unsigned default NULL,
+	  `pos` int(11) unsigned default 0,
+	  INDEX ìdx_content_code (`code`), 
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`category_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_category')}`(`id`) ON DELETE SET NULL
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
 }
 
 if (!$installer->tableExists($installer->getTable('virtualgeo/components_format_entity')))
 {
-	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_format_entity')};
+    $installer->run("
 	   CREATE TABLE {$installer->getTable('virtualgeo/components_format_entity')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `code` varchar(128) default '',
 	  `has_resolution` smallint unsigned default 0,
+	  `pos` int(11) unsigned default 0,
+	  CONSTRAINT UNIQUE INDEX ìdx_format_code (`code`), 
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	");
 }
 
-if (!$installer->tableExists($installer->getTable('virtualgeo/components_format_label')))
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_resolution_entity')))
 {
-	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_format_label')};
-	   CREATE TABLE {$installer->getTable('virtualgeo/components_format_label')} (
+    $installer->run("
+	CREATE TABLE {$installer->getTable('virtualgeo/components_resolution_entity')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `code` varchar(128) default '',
+	  `pos` int(11) unsigned default 0,
+	  CONSTRAINT UNIQUE INDEX ìdx_resolution_code (`code`), 
+	  PRIMARY KEY (`id`)
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
+
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_structure_entity')))
+{
+    $installer->run("
+		CREATE TABLE {$installer->getTable('virtualgeo/components_structure_entity')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `code` varchar(128) default '',
+	  `type` varchar(128) default '',
+	  `pos` int(11) unsigned default 0,
+	  INDEX ìdx_structure_code (`code`), 
+	  PRIMARY KEY (`id`)
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
+
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_storage_entity')))
+{
+    $installer->run("
+	   CREATE TABLE {$installer->getTable('virtualgeo/components_storage_entity')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `code` varchar(128) default '',
+	  `pos` int(11) unsigned default 0,
+	  CONSTRAINT UNIQUE INDEX ìdx_storage_code (`code`), 
+	  PRIMARY KEY (`id`)
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
+
+
+
+$tables = array();
+$tables[] = 'virtualgeo/components_georef';
+$tables[] = 'virtualgeo/components_format';
+$tables[] = 'virtualgeo/components_content';
+$tables[] = 'virtualgeo/components_structure';
+$tables[] = 'virtualgeo/components_resolution';
+$tables[] = 'virtualgeo/components_storage';
+
+foreach ($tables as $table)
+{
+
+    if (!$installer->tableExists($installer->getTable($table."_label")))
+    {
+       $installer->run("CREATE TABLE {$installer->getTable($table.'_label')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `store_id` smallint unsigned NOT NULL,
-	  `parent_id` int(11) unsigned NOT NULL,
+	  `entity_id` int(11) unsigned NOT NULL,
 	  `name` varchar(512) default '',
 	  `description` varchar(1024) default '',
 	  `shortname` varchar(255) default '',
 	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_format_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`entity_id`) REFERENCES `{$this->getTable($table.'_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
+	  ) 
+	  ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+    }
+
+    if (!$installer->tableExists($installer->getTable($table.'_product'))) {
+        $installer->run("
+		
+	  CREATE TABLE {$installer->getTable($table.'_product')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `entity_id` int(11) unsigned NOT NULL,
+	  `product_id` int(10) unsigned NOT NULL,
+	  `store_id` smallint unsigned NOT NULL,
+	  `pos` int(11) unsigned default 0,
+	  `is_default` smallint unsigned default 0,
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`entity_id`) REFERENCES `{$this->getTable($table.'_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE,
 	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+    }
+}
+
+if ($installer->tableExists($installer->getTable('virtualgeo/components_content_product')))
+{
+    $installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_content_product')}
+	ADD COLUMN  `parent_node_id` int(11) unsigned default NULL,
+	ADD CONSTRAINT fk_components_content_product_parent FOREIGN KEY (parent_node_id) REFERENCES {$installer->getTable('virtualgeo/components_content_product')}(id)
+	ON UPDATE CASCADE ON DELETE CASCADE
 	");
 }
 
-if (!$installer->tableExists($installer->getTable('virtualgeo/components_format_product')))
-{
-	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_format_product')};
-	  CREATE TABLE {$installer->getTable('virtualgeo/components_format_product')} (
-	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `format_id` int(11) unsigned NOT NULL,
-	  `product_id` int(10) unsigned NOT NULL,
-	  `store_id` smallint unsigned NOT NULL,
-	  `is_default` smallint unsigned default 0,
-	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`format_id`) REFERENCES `{$this->getTable('virtualgeo/components_format_entity')}`(`id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
-	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	  ");
-}
-
-if (!$installer->tableExists($installer->getTable('virtualgeo/components_georef_product')))
-{
-	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_georef_product')};
-	   CREATE TABLE {$installer->getTable('virtualgeo/components_georef_product')} (
-	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `georef_id` int(11) unsigned NOT NULL,
-	  `product_id` int(10) unsigned NOT NULL,
-	  `store_id` smallint unsigned NOT NULL,
-	  `is_default` smallint unsigned default 0,
-	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`georef_id`) REFERENCES `{$this->getTable('virtualgeo/components_georef_entity')}`(`id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
-	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	  ");
-}
-
-
-if (!$installer->tableExists($installer->getTable('virtualgeo/components_content_entity')))
-{
-	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_content_entity')};
-			CREATE TABLE {$installer->getTable('virtualgeo/components_content_entity')} (
-	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `code` varchar(128) default '',
-	  `parent_id` int(11) unsigned NOT NULL,
-	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE
-	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	  ");
-}
-
-if (!$installer->tableExists($installer->getTable('virtualgeo/components_content_label')))
-{
-	$installer->run("
-	  -- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_content_label')};
-	   CREATE TABLE {$installer->getTable('virtualgeo/components_content_label')} (
-	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `store_id` smallint unsigned NOT NULL,
-	  `parent_id` int(11) unsigned NOT NULL,
-	  `name` varchar(512) default '',
-	  `description` varchar(1024) default '',
-	  `shortname` varchar(255) default '',
-	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
-	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	  ");
-}
-
-if (!$installer->tableExists($installer->getTable('virtualgeo/components_content_product')))
-{
-	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('virtualgeo/components_content_product')};
-	  CREATE TABLE {$installer->getTable('virtualgeo/components_content_product')} (
-	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `content_id` int(11) unsigned NOT NULL,
-	  `product_id` int(10) unsigned NOT NULL,
-	  `store_id` smallint unsigned NOT NULL,
-	  `is_default` smallint unsigned default 0,
-	  PRIMARY KEY (`id`),
-	  FOREIGN KEY (`content_id`) REFERENCES `{$this->getTable('virtualgeo/components_content_entity')}`(`id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE,
-	  FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE
-	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	  ");
-}
-
-
+$installer->addStoreView();
 
 $installer->endSetup();

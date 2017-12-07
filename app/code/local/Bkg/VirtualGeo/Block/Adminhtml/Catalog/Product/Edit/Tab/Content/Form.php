@@ -36,7 +36,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Form exten
     		));
     		
     		$layer = array();
-    		foreach(Mage::getModel('virtualgeo/components_content')->getCollectionAsOptions() as $opt)
+    		$product = Mage::registry("current_product");
+    		foreach(Mage::getModel('virtualgeo/components_content')->getCollectionAsOptions($product->getId()) as $opt)
     		{
     			//$layer[$opt['value']] = $opt['label'];
     			$layer[] = $opt; 

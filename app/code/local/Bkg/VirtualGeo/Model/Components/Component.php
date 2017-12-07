@@ -43,7 +43,7 @@ class Bkg_VirtualGeo_Model_Components_Component extends Mage_Core_Model_Abstract
     	$obj->setDescription($this->getDescription());
     	 
     	$obj->setStoreId($this->getStoreId());
-    	$obj->setParentId($this->getId());
+    	$obj->setEntityId($this->getId());
     	 
     	$this->getResource()->saveLabel($obj);
     	 

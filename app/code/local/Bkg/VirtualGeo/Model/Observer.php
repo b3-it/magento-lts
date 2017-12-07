@@ -227,7 +227,7 @@ class Bkg_VirtualGeo_Model_Observer
     		$found = false;
     		foreach($collection->getItems() as $item)
     		{
-    			if($item->getGeorefId() == $id){
+    			if($item->getEntityId() == $id){
     				$found = true;
     				$newItems[] = $id;
     				break;
@@ -239,7 +239,7 @@ class Bkg_VirtualGeo_Model_Observer
     			$item
     			->setProductId($product->getId())
     			->setStoreId($product->getStoreId())
-    			->setGeorefId($id)
+    			->setEntityId($id)
     			->save();
     			$newItems[] = $id;
     		}
@@ -247,7 +247,7 @@ class Bkg_VirtualGeo_Model_Observer
     	
     	foreach($collection->getItems() as $item)
     	{
-    		if(!in_array($item->getGeorefId(), $newItems)){
+    		if(!in_array($item->getEntityId(), $newItems)){
     			$item->delete();
     		}
     	}
@@ -288,7 +288,7 @@ class Bkg_VirtualGeo_Model_Observer
     		$found = false;
     		foreach($collection->getItems() as $item)
     		{
-    			if($item->getFormatId() == $id){
+    			if($item->getEntityId() == $id){
     				$found = true;
     				$newItems[] = $id;
     				break;
@@ -300,7 +300,7 @@ class Bkg_VirtualGeo_Model_Observer
     			$item
     			->setProductId($product->getId())
     			->setStoreId($product->getStoreId())
-    			->setFormatId($id)
+    			->setEntityId($id)
     			->save();
     			$newItems[] = $id;
     		}

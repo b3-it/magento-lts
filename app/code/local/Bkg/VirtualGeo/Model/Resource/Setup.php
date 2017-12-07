@@ -36,5 +36,12 @@
  		return "";
  	}
  	
- 	
+
+ 	public function addCategory($label)
+    {
+        $cat = Mage::getModel('virtualgeo/components_content_category');
+        $cat->setLabel($label)->save();
+        return $cat;
+    }
+
  } 

@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bkg_VirtualGeo>
-            <version>0.1.3.0</version>
+            <version>0.1.1.0</version>
         </Bkg_VirtualGeo>
     </modules>
 
@@ -332,6 +332,9 @@
                    <components_resolution_product>
                     <table>virtualgeo_components_resolution_product</table>
                    </components_resolution_product>
+                    <components_content_category>
+                        <table>virtualgeo_components_content_category</table>
+                    </components_content_category>
 				   <quote_options>
                         <table>virtualgeo_quote_options</table>
                     </quote_options>
