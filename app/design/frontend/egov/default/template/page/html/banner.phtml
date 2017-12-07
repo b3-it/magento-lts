@@ -1,0 +1,18 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2017 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+$_bannerImage = Mage::getStoreConfig('design/banner/banner_image', Mage::app()->getStore());
+$_bannerStyle = Mage::getStoreConfig('design/banner/banner_image_style', Mage::app()->getStore());
+
+if ( !is_null($_bannerStyle) AND strlen($_bannerStyle) ) {
+    $_bannerStyle = ' style="' . $this->htmlEscape($_bannerStyle) . '"';
+}
+?>
+<div id="banner"<?php echo $_bannerStyle; ?>>
+    <img src="<?php echo Mage::getBaseUrl('media'); ?>shop/banner/<?php echo $_bannerImage; ?>" />
+</div>

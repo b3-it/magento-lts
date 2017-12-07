@@ -59,7 +59,8 @@
 "Error Reporting","Fehler-Level (Error Reporting)"
 "Primary Shipping Address","Primäre Lieferadresse"
 "Default Address","Standard Adresse"
-"Catalog Category Image","Katelog Kategorie Bild"
+"Catalog Category Image","Katalog Kategorie Bild"
+"Category Image Block Template","Block-Template für Kategorie Bild"
 "Image to a Specified Category","Bild für eine bestimmte Kategorie"
 "Base Address","Stammadresse"
 "Edit Base Address","Stammadresse bearbeiten"
@@ -106,7 +107,6 @@
 "Ordering Conditions","Bestellbedingungen"
 "Privacy policy","Datenschutz"
 "Payment","Zahlungsarten"
-
 "Not specified","Unbestimmt"
 "Test","Test-System"
 "Integration","Integrations-System"
