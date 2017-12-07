@@ -1,7 +1,7 @@
 $j(document).ready(function(){
     scanForActiveOptions();
 
-    $j('#virtualgeo').accordion({
+    $j('div#virtualgeo').accordion({
         'heightStyle': 'content',
         'autoHeight' : false,
         'icons'      : {
@@ -13,7 +13,7 @@ $j(document).ready(function(){
         }
     });
 
-    $j('#virtualgeo input[type="radio"]').on('click', function(event){
+    $j('div#virtualgeo input[type="radio"]').on('click', function(event){
         setOptionForTitle( $j(this) );
     });
 });
@@ -24,7 +24,7 @@ $j(document).ready(function(){
  */
 function scanForActiveOptions()
 {
-    $j('#virtualgeo input:checked').each(function(index, element){
+    $j('div#virtualgeo input:checked').each(function(index, element){
         setOptionForTitle( $j(element) );
     });
 }
