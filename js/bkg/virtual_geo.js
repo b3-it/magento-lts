@@ -1,7 +1,9 @@
+var _accordionElement = 'div#virtualgeo';  // Element, welches das Accordion representiert
+
 $j(document).ready(function(){
     scanForActiveOptions();
 
-    $j('div#virtualgeo').accordion({
+    $j(_accordionElement).accordion({
         'heightStyle': 'content',
         'autoHeight' : false,
         'icons'      : {
@@ -13,7 +15,7 @@ $j(document).ready(function(){
         }
     });
 
-    $j('div#virtualgeo input[type="radio"]').on('click', function(event){
+    $j(_accordionElement + ' input[type="radio"]').on('click', function(event){
         setOptionForTitle( $j(this) );
     });
 });
@@ -24,7 +26,7 @@ $j(document).ready(function(){
  */
 function scanForActiveOptions()
 {
-    $j('div#virtualgeo input:checked').each(function(index, element){
+    $j(_accordionElement + ' input:checked').each(function(index, element){
         setOptionForTitle( $j(element) );
     });
 }
