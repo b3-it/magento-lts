@@ -59,7 +59,8 @@
 "Error Reporting","Fehler-Level (Error Reporting)"
 "Primary Shipping Address","Primäre Lieferadresse"
 "Default Address","Standard Adresse"
-"Catalog Category Image","Katelog Kategorie Bild"
+"Catalog Category Image","Katalog Kategorie Bild"
+"Category Image Block Template","Block-Template für Kategorie Bild"
 "Image to a Specified Category","Bild für eine bestimmte Kategorie"
 "Base Address","Stammadresse"
 "Edit Base Address","Stammadresse bearbeiten"
@@ -106,13 +107,19 @@
 "Ordering Conditions","Bestellbedingungen"
 "Privacy policy","Datenschutz"
 "Payment","Zahlungsarten"
-
 "Not specified","Unbestimmt"
 "Test","Test-System"
 "Integration","Integrations-System"
 "Production","Produktivsystem"
 "Migration","Migrations-System"
-
-
-
-
+"Use a banner graphic above the shop","Benutze Bannergrafik oberhalb des Shop"
+"Use a banner image","zeige Banner"
+"Select ""Yes"" to use a image above the shop.","Wähle ""Ja"" um ein Bannerbild oberhalb des Shops anzuzeigen."
+"Show banner in","zeige Banner in"
+"Not selected","nicht gewählt"
+"Above the page content","Oberhalb des Seiten-Inhalt"
+"Inside the page content","Innerhalb des Seiten-Inhalt"
+"Banner Image","Banner-Bild"
+"Allowed file types: jpg, jpeg, gif, png.","Erlaubte Datei-Typen: jpg, jpeg, gif, png."
+"Custome Style Definition","eigene Sytle-Anweisungen"
+"Example: max-height:200px; height:auto; width:auto;","Beispiel: max-height:200px; height:auto; width:auto;"

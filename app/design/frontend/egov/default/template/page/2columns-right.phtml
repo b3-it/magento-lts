@@ -9,6 +9,9 @@
 /**
  * Template for Mage_Page_Block_Html
  */
+
+  $_showBannerActive = Mage::getStoreConfig('design/banner/banner_image_use', Mage::app()->getStore());
+  $_showBannerOn     = Mage::getStoreConfig('design/banner/banner_image_show', Mage::app()->getStore());
 ?>
 <!DOCTYPE html>
 
@@ -32,6 +35,9 @@
                 <?php echo $this->getChildHtml('global_notices') ?>
 
                 <div class="main-container col2-right-layout">
+                  <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 1 ) : ?>
+                    <?php echo $this->getChildHtml('banner'); ?>
+                  <?php endif; ?>
                     <div class="main">
                         <div class="col-left" style="display: none !important;">
                             <?php /* Das muß hier rein, da es im 2-Spaltig-Rechts-Layout keine Navigation o.Ä. gibt => Mobil wird unbedienbar! */ ?>
@@ -42,6 +48,9 @@
                             <div class="col-right sidebar">
                                 <?php echo $this->getChildHtml('right') ?>
                             </div>
+                          <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 2 ) : ?>
+                            <?php echo $this->getChildHtml('banner'); ?>
+                          <?php endif; ?>
                             <?php echo $this->getChildHtml('global_messages') ?>
                             <?php echo $this->getChildHtml('content') ?>
                             <?php echo $this->getChildHtml('footer_before') ?>
