@@ -3,7 +3,7 @@
  * 
  *  Basisklasse für die Componenten
  *  @category Egovs
- *  @package  Bkg_Virtualgeo_Model_Components_Component
+ *  @package  Bkg_VirtualGeo_Model_Components_Component
  *  @author Frank Rochlitzer <​f.rochlitzer@b3-it.de>
  *  @author Holger Kögel <​h.koegel@b3-it.de>
  *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
