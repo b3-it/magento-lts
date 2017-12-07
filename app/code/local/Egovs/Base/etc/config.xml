@@ -568,6 +568,10 @@
             </log>
         </dev>
         <design>
+            <banner>
+                <banner_image_use>0</banner_image_use>
+                <banner_image_show>0</banner_image_show>
+            </banner>
             <package>
                 <default_theme>default</default_theme>
                 <name>egov</name>

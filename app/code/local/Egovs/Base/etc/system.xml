@@ -232,6 +232,59 @@
                 </design>
             </groups>
         </admin>
+        <design>
+            <groups>
+                <banner translate="label" module="egovsbase">
+                    <label>Use a banner graphic above the shop</label>
+                    <frontend_type>text</frontend_type>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <banner_image_use translate="label comment" module="egovsbase">
+                            <label>Use a banner image</label>
+                            <comment>Select "Yes" to use a image above the shop.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </banner_image_use>
+                        <banner_image_show translate="label comment" module="egovsbase">
+                            <label>Show banner in</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovsbase/system_config_design_banner_modes</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </banner_image_show>
+                        <banner_image translate="label" module="egovsbase">
+                            <label>Banner Image</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">shop/banner</upload_dir>
+                            <base_url type="media" scope_info="1">shop/banner</base_url>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Allowed file types: jpg, jpeg, gif, png.</comment>
+                        </banner_image>
+                        <banner_image_style translate="label" module="egovsbase">
+                            <label>Custome Style Definition</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Example: max-height:200px; height:auto; width:auto;</comment>
+                        </banner_image_style>
+                    </fields>
+                </banner>
+            </groups>
+        </design>
         <customer>
             <groups>
                 <address>

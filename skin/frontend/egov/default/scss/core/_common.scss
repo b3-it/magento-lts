@@ -1156,7 +1156,7 @@ span.weee {
     }
 
     dt, dd {
-        display: table-cell;
+        //display: table-cell;
     }
 
     dt {
@@ -1290,7 +1290,8 @@ span.weee {
 .no-touch .product-img-box .product-image:not(.zoom-available):hover {
     position: relative;
     display: block;
-    border: 1px solid $global-border-color-light;
+    top: -15px;
+    //border: 1px solid $global-border-color-light;
 }
 
 @include bp (max-width, $bp-medium) {
