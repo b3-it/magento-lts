@@ -26,8 +26,7 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
     	}
     	
     	//TODO: aus $buyRequest lesen
-    	$nutzung = 'ext'; 
-    	
+    	$nutzung = 'ext';
     	$price = 100;
     	
     	//alle verfügbaren Entgelte abholen

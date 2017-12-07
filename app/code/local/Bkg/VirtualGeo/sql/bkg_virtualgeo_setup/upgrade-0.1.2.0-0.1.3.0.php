@@ -1,9 +1,9 @@
 <?php
 /**
   *
-  * @category   	Bkg Virtualgeo
-  * @package    	Bkg_Virtualgeo
-  * @name       	Bkg_Virtualgeo Installer
+  * @category   	Bkg
+  * @package    	Bkg_VirtualGeo
+  * @name       	Bkg_VirtualGeo Installer
   * @author 		Holger Kögel <h.koegel@b3-it.de>
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
@@ -36,7 +36,8 @@ $tables[] = array('col'=>'storage_id', 'table' =>  'virtualgeo/components_storag
 foreach($tables as $table)
 {
 
-	if ($installer->tableExists($installer->getTable($table['table'])))
+	if ($installer->tableExists($installer->getTable($table['table']))
+        && !$installer->getConnection()->tableColumnExists($installer->getTable($table['table']), 'entity_id'))
 	{
 		$installer->run("ALTER TABLE {$installer->getTable($table['table'])}
 		CHANGE {$table['col']} `entity_id`  int(11) unsigned NOT NULL;
