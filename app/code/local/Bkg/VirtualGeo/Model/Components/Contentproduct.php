@@ -18,5 +18,5 @@ class Bkg_VirtualGeo_Model_Components_Contentproduct extends Bkg_VirtualGeo_Mode
         $this->_init('virtualgeo/components_contentproduct');
     }
     
-
+   
 }

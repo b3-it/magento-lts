@@ -13,7 +13,7 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
 	
 
     /**
-     * Alle Formate die für dieses Produkt und Store verfügbar sind ermittel
+     * Alle Inhalte die für dieses Produkt und Store verfügbar sind ermittel
      * @param int $productId
      * @param int $storeId
      * @return array| NULL[]

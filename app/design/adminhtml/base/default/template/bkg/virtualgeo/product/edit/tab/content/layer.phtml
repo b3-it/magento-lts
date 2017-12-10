@@ -38,10 +38,10 @@ var element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must b
 //<![CDATA[
 function init_db_nodes() {
 <?php foreach ($this->getNodes() as $node):
-	$parent = $node->getParentId();
-	if($node->getParentId())
+	
+	if($node->getParent())
 	{
-		$parent = 'node_'.$node->getParentId();
+		$parent = 'node_'.$node->getParent();
 	}
 	else{
 		$parent = '"root"';

@@ -20,4 +20,15 @@ class Bkg_VirtualGeo_Model_Components_Content extends Bkg_VirtualGeo_Model_Compo
 		parent::_construct();
 		$this->_init('virtualgeo/components_content');
 	}
+	
+	public function getOptions4Product($productId,$storeId=0)
+	{
+		$collection = $this->getCollection();
+		$collection->setStoreId($storeId);
+		$collection->getSelect()
+		->join(array('product'=>$collection->getTable($this->_productRelationTable)),"product.entity_id = main_table.id AND product_id={$productId} AND ((product.store_id= 0) OR (product.store_id={$storeId}))",
+			array('is_default','component_product_relation_id'=>'id','parent_node_id'));
+		 
+		return $collection;
+	}
 }

@@ -81,7 +81,7 @@ class Bkg_VirtualGeo_Model_Components_Component extends Mage_Core_Model_Abstract
     	$collection = $this->getCollection();
     	$collection->setStoreId($storeId);
     	$collection->getSelect()
-    	->join(array('product'=>$collection->getTable($this->_productRelationTable)),"product.entity_id = main_table.id AND product_id={$productId} AND ((product.store_id= 0) OR (product.store_id={$storeId}))",array('is_default'));
+    	->join(array('product'=>$collection->getTable($this->_productRelationTable)),"product.entity_id = main_table.id AND product_id={$productId} AND ((product.store_id= 0) OR (product.store_id={$storeId}))",array('is_default','component_product_relation_id'=>'id'));
     	
     	return $collection;
     }
