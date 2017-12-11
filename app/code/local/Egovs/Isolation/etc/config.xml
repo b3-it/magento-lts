@@ -301,6 +301,14 @@
           </report_bestseller_collectionload_observer>
         </observers>
       </sales_report_bestseller_collection_load_before>
+       <sales_order_collection_load_before>
+        <observers>
+          <sales_order_collectionload_observer>
+            <class>isolation/observer_report</class>
+            <method>onSalesOrderCollectionLoad</method>
+          </sales_order_collectionload_observer>
+        </observers>
+      </sales_order_collection_load_before>
       <sales_report_eventbundle_options_collection_load_before>
         <observers>
           <report_eventbundle_options_collectionload_observer>

@@ -38,21 +38,32 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 	{
 		parent::_initSelect();
 
-		if (version_compare(Mage::getVersion(), '1.4.1', '<')) {
-			$att = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('order', 'state');
+		$isolation = false;
+				
+		if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation'))
+		{
+			$helper  = Mage::helper('isolation');
+			if(!$helper->getUserIsAdmin()){
+				$isolation = true;
+			}
+		}
+		if($isolation)
+		{
+			$helper  = Mage::helper('isolation'); 
+			$sg = implode(',',$helper->getUserStoreGroups());
 			
 			$this->getSelect()
-					->join(array('order' => $this->getTable('sales/order')),
-							'order.entity_id = main_table.order_id',
-							array('store_id'=>'store_id','order_date'=>'created_at')
-					)->join(array('order_state'=> $this->_getTablePrefix('sales_order_varchar')),
-							"order.entity_id = order_state.entity_id AND order_state.attribute_id='".$att."'  AND order_state.value<>'canceled'",
-							array('bestellstatus'=>'order_state.value')
-					)->joinLeft(array('e'=>$this->_getTablePrefix('catalog_product_entity')),
-							'e.entity_id = main_table.product_id',
-							array('category_ids'=>'category_ids')
-					)
-			;	 
+			->join(
+					array('order'=>$this->getTable('sales/order')),
+					"order.entity_id = main_table.order_id AND order.state <> 'canceled'",
+					array('order_date'=>'created_at', "state")
+					)->join(
+							array('e'=>$this->getTable('catalog/category_product')),
+							'e.product_id = main_table.product_id AND store_group IN ('.$sg.")",
+							array('category_ids' => new Zend_Db_Expr("GROUP_CONCAT(DISTINCT CONCAT_WS(', ', category_id))"))
+							)
+							;
+		
 		} else {
 			$this->getSelect()
 				->join(
@@ -66,6 +77,9 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 				)
 			;
 		}
+		
+		
+	
 		
 		/* @var $catalog Mage_Catalog_Model_Resource_Product */
 		$catalog = Mage::getResourceSingleton('catalog/product');
@@ -98,8 +112,11 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 				->group('main_table.created_at')
 		;
 		
-		Mage::log(sprintf('sql: %s', $this->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+		//Mage::log(sprintf('sql: %s', $this->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 
+		
+		
+		
 		return $this;
 	}
 
@@ -128,6 +145,24 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 		//var_dump($filter);
 		$this->getSelect()->where('order.store_id = '.$filter);
 	}
+	
+	
+	protected function _afterLoadData()
+	{
+		$hhCollection = Mage::getModel('paymentbase/haushaltsparameter')->getCollection();
+		$hh = $hhCollection->getItems();
+		
+		foreach ($this->getItems() as $key => $item)
+		{
+			if(isset($hh[$item->getHaushaltsstelle()]))	$item->setHaushaltsstelle($hh[$item->getHaushaltsstelle()]->getValue());
+			if(isset($hh[$item->getObjektnummer()])) $item->setObjektnummer($hh[$item->getObjektnummer()]->getValue());
+			if(isset($hh[$item->getObjektnummerMwst()])) $item->setObjektnummerMwst($hh[$item->getObjektnummerMwst()]->getValue());
+			$this->_items[$key] = $item;
+		}
+		
+		return parent::_afterLoad();
+	}
+	
 	
 	/**
 	 * Liefert die Anzahl der Ergbnisse

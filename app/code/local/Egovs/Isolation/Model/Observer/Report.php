@@ -43,6 +43,10 @@ class Egovs_Isolation_Model_Observer_Report extends Egovs_Isolation_Model_Observ
     	//die($observer->getCollection()->getSelect()->__toString());
     }
     
+    public function onSalesOrderCollectionLoad($observer)
+    {
+    	$this->addStoreGroupFilterToCollection($observer->getOrderCollection(),'entity_id');
+    }
 
     
     /**

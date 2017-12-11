@@ -38,6 +38,8 @@ class Egovs_Extreport_Model_Mysql4_Sales_Revenue_Collection extends Mage_Sales_M
 	{
 		parent::_initSelect();
 
+		if(Mage::helper('core')->isModuleEnabled('extstock'))
+		{
 		$table = $this->getTable('extstock/salesorder');
 		$expr = new Zend_Db_Expr("(
 				SELECT DISTINCT
@@ -60,6 +62,15 @@ class Egovs_Extreport_Model_Mysql4_Sales_Revenue_Collection extends Mage_Sales_M
 						'main_table.product_id = extview.productid and extview.orderid = main_table.order_id'
 				)
 		;
+		}else{
+			$this->getSelect()
+			->distinct()
+			->columns(array(
+					'vk_sum'=>'sum(IF(main_table.parent_item_id IS NULL, main_table.price * sub_qty , left_sale.price * sub_qty))',
+					'yield'=>'sum(IF(main_table.parent_item_id IS NULL, (main_table.price * sub_qty)- sub_ek , (left_sale.price * sub_qty)-sub_ek))',
+					'ek_sum'=>'sum(sub_ek)')
+					);
+		}
 		
 		if (version_compare(Mage::getVersion(), '1.4.1', '<')) {
 			$att = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('order', 'state');

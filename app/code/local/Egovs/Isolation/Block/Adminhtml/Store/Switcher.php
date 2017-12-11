@@ -45,6 +45,8 @@ class Egovs_Isolation_Block_Adminhtml_Store_Switcher extends Mage_Adminhtml_Bloc
 		return $this->_StoreGroups;
 	}
 	
+
+	
     /**
      * Get websites
      *
