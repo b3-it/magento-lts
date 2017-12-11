@@ -73,18 +73,16 @@ $j('#jstree_layer').on("ready.jstree", function (e, data) {
 var nodeTemplate = '<div style="display:none" id="content_layer_options_{{number}}" class="hor-scroll">' +
 				'<input type="hidden" id="content_layer_options_{{number}}_is_delete" name="product[content_layer_options][{{number}}][is_delete]" value="" />'+
 				'<input type="hidden" name="product[content_layer_options][{{number}}][id]" value="{{id}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_name" name="product[content_layer_options][{{number}}][label]" value="{{label}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_label" name="product[content_layer_options][{{number}}][label]" value="{{label}}" />'+
 				'<input type="hidden" id="content_layer_options_{{number}}_number" name="product[content_layer_options][{{number}}][number]" value="{{number}}" />'+
 				'<input type="hidden" id="content_layer_options_{{number}}_parent" name="product[content_layer_options][{{number}}][parent]" value="{{parent}}" />'+
 				'<input type="hidden" id="content_layer_options_{{number}}_pos" name="product[content_layer_options][{{number}}][pos]" value="{{pos}}" />'+
 				'<input type="hidden" id="content_layer_options_{{number}}_visual_pos" name="product[content_layer_options][{{number}}][visual_pos]" value="{{visual_pos}}" />'+
 				'<input type="hidden" id="content_layer_options_{{number}}_type" name="product[content_layer_options][{{number}}][type]" value="{{type}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_code" name="product[content_layer_options][{{number}}][code]" value="{{code}}" />'+
+				'<input type="hidden" id="content_layer_options_{{number}}_entity_id" name="product[content_layer_options][{{number}}][entity_id]" value="{{entity_id}}" />'+
 				'<input type="hidden" id="content_layer_options_{{number}}_checked" name="product[content_layer_options][{{number}}][checked]" value="{{checked}}" />'+
 				'<input type="hidden" id="content_layer_options_{{number}}_readonly" name="product[content_layer_options][{{number}}][readonly]" value="{{readonly}}" />'+
 				'</div>';
-
-
 
 				
 var nodeOptions = {
@@ -181,10 +179,7 @@ var nodeOptions = {
 					data.type = "default"
 				}
 				data.number = this.itemCount;
-				var text = data.title;
-				if(data.type == 'page'){
-					text = text + "<span style=\"text-align:right;\" ><span>  | " + data.service_title + " | "+data.visual_pos+"</span></span>" ;
-				}
+				
 				sel = this.createTextNode(sel,data);//ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
 				if(sel && edit) {
 					ref.edit(sel);
@@ -215,11 +210,11 @@ var nodeOptions = {
 			var data = new Object();
 			data.number = this.itemCount;
 			data.type = 'default';
-			data.title = label;
+			data.label = label;
 			data.visual_pos = input_data.visual_pos;
 			data.readonly = input_data.readonly;
 			data.checked = input_data.checked;
-			
+			data.entity_id = id;
 			sel = this.createTextNode(sel, data);
 			this.template = new Template(this.templateText, this.templateSyntax);
 			var content = this.template.evaluate(data);
@@ -236,7 +231,7 @@ var nodeOptions = {
 		createTextNode: function(parent,data)
 		{
 			var ref = this.tree.jstree(true);
-			var text = data.title;
+			var text = data.label;
 			var ro = data.readonly? "readonly" : "";
 			var ch = data.checked? "checked" : "";
 			text = text + "<span style=\"text-align:right;\" ><span> " + ro + " " + ch + "</span></span>" ;

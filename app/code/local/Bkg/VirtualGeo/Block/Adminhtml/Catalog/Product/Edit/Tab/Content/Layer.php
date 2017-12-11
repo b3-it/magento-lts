@@ -14,12 +14,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
        
     }
 
-    
-    //alle verfügbaren PersonalOptions für das Produkt finden 
-	public function getFields()
-	{
-		return array();
-	}
+  
 
 	private function getStoreId()
 	{
@@ -30,28 +25,75 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 	
 	public function getNodes()
 	{
-		return array();
-	}
-	
-	
-	private function getProduct()
-	{
-		$product = Mage::registry('product');
-		if($product)
+		$res = array();
+		$product = $this->_getProduct();
+		$collection = Mage::getModel('virtualgeo/components_content')->getOptions4Product($product->getId(), $product->getStoreId());
+		
+		$items = $collection->getItems();
+		
+		foreach($collection->getItems() as $item)
 		{
-			return $product;
+			$parent = null;
+			if($item->getParentNodeId())
+			{
+				$parent = $this->_findItem($items,$item->getParentNodeId());
+			}
+			
+			$res[] = new Varien_Object(array('id'=>$item->getComponentProductRelationId(),
+					'label'=>$item->getName(),
+					'entity_id'=>$item->getEntityId(),
+					'readonly'=>$item->getReadonly(),
+					'checked'=>$item->getChecked() ,
+					'pos' =>$item->getPos(),
+					'parent' => $parent != null? $parent->getComponentProductRelationId() : ''
+			));
 		}
 		
-		if($this->getData('product_id')!= null)
-		{
-			$product = Mage::getModel('catalog/product')->load('product_id');
-			$product->setStoreId($this->getStoreId());
-			return $product;
-		}
+		
+		return $res;
+	}
 	
+	protected function _findItem($items,$component_product_relation_id)
+	{
+		foreach ($items as $item)
+		{
+			if($item->getComponentProductRelationId() == $component_product_relation_id)
+			{
+				return $item;
+			}
+		}
 		
 		return null;
 	}
+	
+	/**
+	 * Retirve currently edited product model
+	 *
+	 * @return Mage_Catalog_Model_Product
+	 */
+	protected function _getProduct()
+	{
+		return Mage::registry('current_product');
+	}
+	
+// 	private function getProduct()
+// 	{
+// 		$product = Mage::registry('product');
+// 		if($product)
+// 		{
+// 			return $product;
+// 		}
+		
+// 		if($this->getData('product_id')!= null)
+// 		{
+// 			$product = Mage::getModel('catalog/product')->load('product_id');
+// 			$product->setStoreId($this->getStoreId());
+// 			return $product;
+// 		}
+	
+		
+// 		return null;
+// 	}
 	
 	public function getFieldsAvail()
 	{

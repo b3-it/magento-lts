@@ -113,8 +113,13 @@ class Bkg_VirtualGeo_Model_Observer
     		$this->_saveRap($dataObject->getRap(),$product);
     	}
 
-    	$this->_saveGeoref($dataObject->getGeoref(), $dataObject->getGeorefDefault(),$product);
-    	$this->_saveFormat($dataObject->getFormat(), $dataObject->getFormatDefault(),$product);
+    	$this->_saveComponent($dataObject->getGeoref(), $dataObject->getGeorefDefault(),$product,'virtualgeo/components_georefproduct');
+    	$this->_saveComponent($dataObject->getFormat(), $dataObject->getFormatDefault(),$product,'virtualgeo/components_formatproduct');
+        $this->_saveComponent($dataObject->getStorage(), $dataObject->getStorageDefault(),$product,'virtualgeo/components_storageproduct');
+        $this->_saveComponent($dataObject->getStructure(), $dataObject->getStructureDefault(),$product,'virtualgeo/components_structureproduct');
+        $this->_saveComponent($dataObject->getResolution(), $dataObject->getResolutionDefault(),$product,'virtualgeo/components_resolutionproduct');
+        $content = $dataObject->getContentLayerOptions();
+        $this->_saveContentLayer($content,$product->getId());
     }
     
     
@@ -123,31 +128,38 @@ class Bkg_VirtualGeo_Model_Observer
     {
     	$loaded = array();
     	//model erzeugen oder laden
-    	foreach($nodes as $node)
+    	foreach($nodes as $key =>$node)
     	{
     		$model = Mage::getModel('virtualgeo/components_contentproduct');
+    		$model
+                ->setPos($node['pos'])
+                ->setEntityId($node['entity_id'])
+                ->setProductId($productId); //FK
     		if(!isset($node['id']) || empty($node['id']))
     		{
     			$model->save();
-    			$node['id'] = $model->getId();
+                $nodes[$key]['id'] = $model->getId();
     			$node['model'] = $model;
     		}else {
-    			$model = Mage::getModel('bkgviewer/composit_layer')->load($node['id']);
+    			$model = Mage::getModel('virtualgeo/components_contentproduct')->load($node['id']);
     			$node['model'] = $model;
     		}
     
-    		$model->setTitle($node['title'])
+    		$model
     		->setPos($node['pos'])
     		->setVisualPos($node['visual_pos'])
     		->setType($node['type'])
-    		->setCompositId($compositId);
+    		->setProductId($productId)
+            ->setEntityId($node['entity_id'])
+            ->save();
     
-    		if(!isset($node['serviceLayer']) || empty($node['serviceLayer']))
+    		if(!isset($node['parent']) || empty($node['parent']))
     		{
-    			$model->unsetData('service_layer');
+    			$model->unsetData('parent_node_id');
     		}else{
-    
-    			$model->setServiceLayerId($node['serviceLayer']);
+
+    		    $parentNode = $this->findByNumber($nodes, $node['parent']);
+    			$model->setParentNodeId($parentNode['id']);
     		}
     		$loaded[] = $node;
     
@@ -196,7 +208,7 @@ class Bkg_VirtualGeo_Model_Observer
     
     
     
-    protected function _saveGeoref($data, $default, $product)
+    protected function _saveComponent($data, $default, $product,$model)
     {
     	if(empty($data)){
     		$data = array();
@@ -206,7 +218,7 @@ class Bkg_VirtualGeo_Model_Observer
     		$default = array();
     	}
     	//evtl. vorhandene laden
-    	$collection = Mage::getModel('virtualgeo/components_georefproduct')->getCollection();
+    	$collection = Mage::getModel($model)->getCollection();
     	$collection->getSelect()
     	->where('product_id = '.intval($product->getId()))
     	->where('store_id = '.intval($product->getStoreId()));
@@ -235,7 +247,7 @@ class Bkg_VirtualGeo_Model_Observer
     		}
     		if(!$found)
     		{
-    			$item = Mage::getModel('virtualgeo/components_georefproduct');
+    			$item = Mage::getModel($model);
     			$item
     			->setProductId($product->getId())
     			->setStoreId($product->getStoreId())
@@ -252,70 +264,10 @@ class Bkg_VirtualGeo_Model_Observer
     		}
     	}
     	 
-    	Mage::getModel('virtualgeo/components_georefproduct')->saveDefault($defaultId,intval($product->getId()), intval($product->getStoreId()));
+    	Mage::getModel($model)->saveDefault($defaultId,intval($product->getId()), intval($product->getStoreId()));
     }
     
-    protected function _saveFormat($data, $default, $product)
-    {
-    	if(empty($data)){
-    		$data = array();
-    	}
-    	if(empty($default))
-    	{
-    		$default = array();
-    	}
-    	//evtl. vorhandene laden
-    	$collection = Mage::getModel('virtualgeo/components_formatproduct')->getCollection();
-    	$collection->getSelect()
-    	->where('product_id = '.intval($product->getId()))
-    	->where('store_id = '.intval($product->getStoreId()));
-    	$newItems = array();
-    
-    	$defaultId = null;
-    	
-    	//speichern
-    	foreach($data as $id)
-    	{
-    		//ertmal die erste als default verwenden
-    		if($defaultId === null)
-    		{
-    			$defaultId = $id;
-    		}
-    		//
-    		if(in_array($id, $default)){
-    			$defaultId = $id;
-    		}
-    		$found = false;
-    		foreach($collection->getItems() as $item)
-    		{
-    			if($item->getEntityId() == $id){
-    				$found = true;
-    				$newItems[] = $id;
-    				break;
-    			}
-    		}
-    		if(!$found)
-    		{
-    			$item = Mage::getModel('virtualgeo/components_formatproduct');
-    			$item
-    			->setProductId($product->getId())
-    			->setStoreId($product->getStoreId())
-    			->setEntityId($id)
-    			->save();
-    			$newItems[] = $id;
-    		}
-    	}
-    	 
-    	foreach($collection->getItems() as $item)
-    	{
-    		if(!in_array($item->getFormatId(), $newItems)){
-    			$item->delete();
-    		}
-    	}
-    	
-    	Mage::getModel('virtualgeo/components_formatproduct')->saveDefault(intval($defaultId),intval($product->getId()), intval($product->getStoreId()));
-    	 
-    }
+
     
     protected function _saveRap($rapData, $parent = null)
     {

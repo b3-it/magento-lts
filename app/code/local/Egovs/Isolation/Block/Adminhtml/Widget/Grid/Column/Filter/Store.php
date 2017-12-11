@@ -68,10 +68,11 @@ class Egovs_Isolation_Block_Adminhtml_Widget_Grid_Column_Filter_Store
                 if ($group->getWebsiteId() != $website->getId()) {
                     continue;
                 }
-
-                if(array_search($group->getId(), $storeGroups) === false) {
-                	continue;
-                	
+                if(!$helper->getUserIsAdmin())
+                {
+                    if(array_search($group->getId(), $storeGroups) === false) {
+                        continue;
+                    }
                 }
                 $groupShow = false;
                 foreach ($storeCollection as $store) {

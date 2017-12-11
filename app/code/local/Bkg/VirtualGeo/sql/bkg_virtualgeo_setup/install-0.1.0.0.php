@@ -118,6 +118,7 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_storage
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `code` varchar(128) default '',
 	  `pos` int(11) unsigned default 0,
+	  `max_mb` int(11) unsigned default 0,
 	  CONSTRAINT UNIQUE INDEX ìdx_storage_code (`code`), 
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
