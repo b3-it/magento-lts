@@ -7,4 +7,6 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Format extends Bkg_Vi
 	{
 		return  $this->helper('virtualgeo')->__('Format');
 	}
+
+
 }
