@@ -51,6 +51,18 @@
 					<service_crs>
 						<table>bkg_viewer_service_crs</table>
 					</service_crs>
+					<service_tile>
+						<table>bkg_viewer_service_tile</table>
+					</service_tile>
+					<service_tile_system>
+						<table>bkg_viewer_service_tile_system</table>
+					</service_tile_system>
+					<service_vg>
+						<table>bkg_viewer_service_vg</table>
+					</service_vg>
+					<service_vg_group>
+						<table>bkg_viewer_service_vg_group</table>
+					</service_vg_group>
 				</entities>
 			</bkgviewer_resource>
 		</models>
