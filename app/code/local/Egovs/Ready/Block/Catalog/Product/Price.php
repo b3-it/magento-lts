@@ -157,6 +157,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 			
 			$_htmlTemplate = $_infoBlock
 				->setIsIncludingShippingCosts($this->isIncludingShippingCosts())
+                ->setWithoutShippingCostsText($this->getWithoutShippingCostsText())
 				->setShowShippingLink($this->showShippingLink())
 				->setPriceDisplayType(Mage::helper('tax')->getPriceDisplayType())
 				->setDisplayProductWeight($this->getDisplayProductWeight())

@@ -13,8 +13,8 @@
 ?>
 <?php
 /** 
- * @var $this Egovs_Ready_Block_Catalog_Product_Price
- * @see Egovs_Ready_Block_Catalog_Product_Price
+ * @var $this Mage_Core_Block_Template
+ * @see Egovs_Ready_Block_Catalog_Product_Price::_toHtml()
  */
 ?>
 <?php $shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl() ?>
@@ -58,11 +58,11 @@
 	 	<?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
 	        <span class="tax-details"><?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?></span>    
 	    <?php endif ?>
-        <?php if( $this->isVirtual() && ($wscText = $this->getWithoutShippingCostsText())): ?>
-            <span class="tax-separator">, </span>
-            <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
-        <?php endif; ?>
     <?php endif ?>
+    <?php if ( $this->getProduct()->isVirtual() && ($wscText = $this->getWithoutShippingCostsText())): ?>
+        <span class="tax-separator">, </span>
+        <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
+    <?php endif; ?>
 <?php endif ?>
 <?php if ($this->getDisplayProductWeight()): ?>
         <br/> (<?php echo $this->__('Shipping Weight %s', $this->getFormattedWeight()) ?>)
