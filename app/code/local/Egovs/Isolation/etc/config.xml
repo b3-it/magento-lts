@@ -309,6 +309,14 @@
           </sales_order_collectionload_observer>
         </observers>
       </sales_order_collection_load_before>
+       <report_collection_add_store_filter>
+        <observers>
+          <report_collection_add_store_filter_observer>
+            <class>isolation/observer_report</class>
+            <method>onReportCollectionAddStoreFilter</method>
+          </report_collection_add_store_filter_observer>
+        </observers>
+      </report_collection_add_store_filter>
       <sales_report_eventbundle_options_collection_load_before>
         <observers>
           <report_eventbundle_options_collectionload_observer>

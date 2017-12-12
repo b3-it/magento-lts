@@ -187,6 +187,12 @@ class Egovs_Extreport_Model_Mysql4_Sales_Quantity_Collection extends Mage_Sales_
     public function setStoreIds($storeIds)
     {
         $vals = array_values($storeIds);
+        
+        $transport = new Varien_Object(array('storeids'=>$storeIds));
+        Mage::dispatchEvent('report_collection_add_store_filter',array('transport'=>$transport,'collection'=> $this));
+        $storeIds = $transport->getStoreids();
+        
+        
        // $this->_storefilter = array_values($storeIds);
         if (count($storeIds) >= 1 && $vals[0] != '') {
         	$this->_storefilter = $storeIds;

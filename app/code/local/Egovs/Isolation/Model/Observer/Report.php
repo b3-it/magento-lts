@@ -25,6 +25,24 @@ class Egovs_Isolation_Model_Observer_Report extends Egovs_Isolation_Model_Observ
 		
 	}
     
+	public function onReportCollectionAddStoreFilter($observer)
+	{	
+		$collection = $observer->getCollection();
+		$transport = $observer->getTransport();
+		$storeIds = $transport->getStoreids();
+		
+		if(!Mage::helper('isolation')->getUserIsAdmin())
+		{
+			$storeGroups = $this->getUserStoreGroups();
+			if(($storeGroups) && (count($storeGroups) > 0))
+			{
+				$res = array_values(array_intersect($storeIds,$storeGroups));
+				$transport->setStoreids($res);
+			}else{
+				$transport->setStoreids(array(-1));
+			}
+		}
+	}
     
     public function onCollectionLoad($observer)
     {

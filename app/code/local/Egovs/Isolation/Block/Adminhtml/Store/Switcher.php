@@ -36,6 +36,8 @@ class Egovs_Isolation_Block_Adminhtml_Store_Switcher extends Mage_Adminhtml_Bloc
 
 	private $_StoreGroups = null;
 
+	
+	
 	private function getUserStoreGroups()
 	{
 		if($this->_StoreGroups == null)
