@@ -13,7 +13,7 @@
 ?>
 <?php
 /** 
- * @var $this Mage_Core_Block_Template
+ * @var $this Egovs_Ready_Block_Catalog_Product_Price
  * @see Egovs_Ready_Block_Catalog_Product_Price
  */
 ?>
@@ -58,7 +58,7 @@
 	 	<?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
 	        <span class="tax-details"><?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?></span>    
 	    <?php endif ?>
-        <?php if( $this->getProduct()->isVirtual() && ($wscText = $this->getWithoutShippingCostsText())): ?>
+        <?php if( $this->isVirtual() && ($wscText = $this->getWithoutShippingCostsText())): ?>
             <span class="tax-separator">, </span>
             <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
         <?php endif; ?>
