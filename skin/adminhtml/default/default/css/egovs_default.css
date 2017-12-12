@@ -117,3 +117,40 @@ ins {
     background: #fcf5dd;
 }
 /* Ende der Definitionen für VirtualGEO */
+
+/* jstree-Definitionen */
+.jstree li a {
+    width: calc(100% - 29px); /* Item auf maximale Breite "aufblasen" */
+    position: relative;
+}
+
+/* Start für Auswahl bei VirtualGeo-Inhalt */
+.tree-options {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+#jstree-info {
+    text-align: right;
+}
+.tree-head, .inline-tree-cell {
+    display: inline-block;
+    width: 20px;
+    font-size: 17px;
+}
+.tree-head {
+    text-align: left;
+    font-size: 15px;
+    width: 18px;
+}
+.option-tree-true:after {
+    /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box-with-check/ */
+    content:'\2611';
+    color: #008000;
+}
+.option-tree-false:after {
+    /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box-with-x/ */
+    content:'\2612';
+    color: #FF0000;
+}
+/* Ende für Auswahl bei VirtualGeo-Inhalt */

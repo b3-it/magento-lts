@@ -1,8 +1,27 @@
+$j(document).ready(function(){
+	$j('#layerForm_Name').removeAttr('multiple');
+
+	// Erzeuge Select-Header für JsTree
+	$j.each($j('#contentlayer_form input[type="checkbox"]'), function(){
+		var name  = $j(this).attr('id');
+ 		var label = $j("label[for='" + name + "']").html();
+
+		var head = $j('<div />', {
+			'id'   : 'header-' + name,
+			'class': 'tree-head',
+			'html' : label.substring(0, 1),
+			'title': label
+		});
+
+		$j('#jstree-info').append(head);
+	});
+});
+
 function addLayer() {
 	var form_data = {};
 	form_data['checked'] = $j('#layerForm_Name_is_checked').is(':checked');
 	form_data['readonly'] = $j('#layerForm_Name_is_readonly').is(':checked');
-	
+
     var layers = $j('#layerForm_Name');
     var selected = layers.find('option:selected');
 	selected.each(function(){
@@ -14,60 +33,92 @@ function isEmptyElement(val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
 
-$j('#jstree_layer').jstree({
-	  "core" : {
-	    "animation" : 0,
-	    "check_callback" : true,
-	    "themes" : { "stripes" : true },
-	    'data' :[
-					{ "text" : root_node_title}
-			    ]
-	  },
-	  "types" : {
-	    "#" : {
-	      "max_children" : 10,
-	      "max_depth" : 4,
-	      "valid_children" : ["root"]
-	    },
-	    "root" : {
-	      "xicon" : "/static/3.3.2/assets/images/tree_icon.png",
-	      "valid_children" : ["default","page"]
-	    },
-	    "default" : {
-	      "valid_children" : ["default","page"]
-	    },
-	    "page" : {
-	    	"icon" : "jstree-file",
-		     "valid_children" : []
-		    },
-	  },
-	  "plugins" : [
-	    "types"
-	  ]
-	});
+function getFormData(elementID)
+{
+	// alle Diese IDs werden beim hinzufügen zum DatenArray ausgelassen
+	var exclude = ['copy_values'];
 
-$j('#jstree_layer').on("changed.jstree", function (e, data) {
+	// Wenn das Array mit Elementen gefüllt ist, wird dies zu durchsuchen benutzt
+	var idArray    = [];
+	var searchFor  = '';
+	var dataOption = new Array();
+
+	if ( idArray.length ) {
+		searchFor = idArray;
+	}
+	else {
+		searchFor = $j(elementID + ' :input');
+	}
+
+	$j.each(searchFor, function() {
+		var element = $j(this).attr('name');
+		var value   = ( $j(this).val() == null || $j(this).val() == '' ? '0' : $j(this).val() );
+
+		if ( $j(this).attr('type') == 'checkbox' ) {
+			value = $j(this).is(':checked');
+		}
+
+		if ( $j.inArray($j(this).attr('id'), exclude) == -1 ) {
+			dataOption.push({
+				'name' : $j(this).attr('name'),
+				'eID'  : $j(this).attr('id'),
+				'type' : $j(this).attr('type'),
+				'value': value
+			});
+		}
+	});
+	return dataOption;
+}
+
+$j('#jstree_layer').jstree({
+	"core" : {
+		"animation" : 0,
+		"check_callback" : true,
+		"themes" : { "stripes" : true },
+		'data' :[
+			{ "text" : root_node_title}
+		]
+	},
+	"types" : {
+		"#" : {
+			"max_children" : 10,
+			"max_depth" : 4,
+			"valid_children" : ["root"]
+		},
+		"root" : {
+			"xicon" : "/static/3.3.2/assets/images/tree_icon.png",
+			"valid_children" : ["default","page"]
+		},
+		"default" : {
+			"valid_children" : ["default","page"]
+		},
+		"page" : {
+			"icon" : "jstree-file",
+			"valid_children" : []
+		},
+	},
+	"plugins" : [
+		"types"
+	]
+})
+.on("changed.jstree", function (event, data) {
 	if(data.selected.length) {
 		nodeOptions.show(data.instance.get_node(data.selected[0]));
 	}
-});
-$j('#jstree_layer').on("rename_node.jstree", function (e, data) {
+})
+.on("rename_node.jstree", function (event, data) {
 	if(data.node) {
 		nodeOptions.rename(data.node,data.text);
 	}
-});
-$j('#jstree_layer').on("move_node.jstree", function (e, data) {
+})
+.on("move_node.jstree", function (event, data) {
 	if(data.node) {
 		nodeOptions.move(data.node, data.position);
 	}
-});
-$j('#jstree_layer').on("ready.jstree", function (e, data) {
+})
+.on("ready.jstree", function (event, data) {
 	init_db_nodes();
 });
-
-
-
-
 
 
 var nodeTemplate = '<div style="display:none" id="content_layer_options_{{number}}" class="hor-scroll">' +
@@ -84,198 +135,202 @@ var nodeTemplate = '<div style="display:none" id="content_layer_options_{{number
 				'<input type="hidden" id="content_layer_options_{{number}}_readonly" name="product[content_layer_options][{{number}}][readonly]" value="{{readonly}}" />'+
 				'</div>';
 
-				
+
 var nodeOptions = {
-		div_id : "#hidden_content_layer",
-		tree : $j("#jstree_layer"),
-		templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
-		templateText : nodeTemplate,
-		itemCount : 0,
-		pos : 0,
-		kategories : [],
-		getDiv : function(){
-			
-			return $j(this.div_id);
-		},
-		show : function(node) {
-			//this.hideAll();
-			if(node.data){
-				var elem = $j("#content_layer_options_"+node.data.number);
-				if(elem){
-					//elem.show();
-				}
+	'div_id'         : "#hidden_content_layer",
+	'tree'           : $j("#jstree_layer"),
+	'templateSyntax' : /(^|.|\r|\n)({{(\w+)}})/,
+	'templateText'   : nodeTemplate,
+	'itemCount'      : 0,
+	'pos'            : 0,
+	'kategories'     : [],
+	'getDiv' : function(){
+		return $j(this.div_id);
+	},
+	'show' : function(node) {
+		//this.hideAll();
+		if(node.data) {
+			var elem = $j("#content_layer_options_"+node.data.number);
+			//if(elem) {
+				//elem.show();
+			//}
+		}
+		//Element.insert(this.div, {'':this.template.evaluate(data)});
+	},
+	'hideAll' : function() {
+		for (var i = 1; i <= this.itemCount; i++){
+			var elem = $j("#content_layer_options_"+i);
+			if(elem.length != 0) {
+				elem.hide();
 			}
-			//Element.insert(this.div, {'':this.template.evaluate(data)});
-		},
-		hideAll : function(){
-			for (var i = 1; i <= this.itemCount; i++){
-					var elem = $j("#content_layer_options_"+i);
-					if(elem.length != 0)
-					{
-						elem.hide();
-					}
-			}
-		},
-		rename : function(node, $text) {
-			var elem = $j("#content_layer_options_" + node.data.number + "_name");
-			if(elem){
-				elem.val($text);
-			}
-			if(node.data.type = 'page'){
-				var elem = $j("#content_layer_options_" + node.data.number + "_title");
-				node.text = node.text + " ("+elem.val()+")";
-				var ref = this.tree.jstree(true);
-				ref.redraw(true);
-			}
-		},
-		move : function(node, pos) {
-			if(node)
-			{
-				var ref = this.tree.jstree(true);
-				var parent = ref.get_node(node.parent);
-				var elem = $j("#content_layer_options_" + node.data.number + "_parent");
-				if(parent.data){
-					elem.val(parent.data.number);
-				}else{
-					elem.val('0');
-				}
-				var pos = 0;
-				for(var childId in parent.children)
-				{
-					var child = ref.get_node(parent.children[childId]);
-					if(child){
-						var elem = $j("#content_layer_options_" + child.data.number + "_pos");
-						elem.val(pos);
-						pos++;
-					}
-				}
-			}
-		},
-		
-		add: function(data, sel) {
-				var ref = this.tree.jstree(true);
-				var edit = false;
-
-				this.itemCount++;
-				if(!sel) {
-					var	sel = ref.get_selected();
-					if(!sel.length) { 
-						alert( element_not_selected );
-						return false; 
-					}
-					sel = sel[0];
-					ref.open_node(sel);
-					edit = true;
-				}
-				else if(sel == 'root') {
-					sel =  ref.get_node('j1_1');
-				} 
-				
-				if(!data){
-					var data = new Object();
-					
-					data.name = 'default';
-					data.label = element_default_title;
-					data.type = "default"
-				}
-				data.number = this.itemCount;
-				
-				sel = this.createTextNode(sel,data);//ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
-				if(sel && edit) {
-					ref.edit(sel);
-				}
-				this.template = new Template(this.templateText, this.templateSyntax);
-				var content = this.template.evaluate(data);
-				var html = this.getDiv().html();
-				this.getDiv().html( this.getDiv().html() + content);
-				
-				var node = ref.get_node(sel);
-				this.move(node, this.itemCount);
-					
-				
-				return node.id;
-			
-		},
-		addPage: function(id, label, input_data) {
+		}
+	},
+	'rename' : function(node, $text) {
+		var elem = $j("#content_layer_options_" + node.data.number + "_name");
+		if(elem) {
+			elem.val($text);
+		}
+		if(node.data.type = 'page') {
+			var elem = $j("#content_layer_options_" + node.data.number + "_title");
+			node.text = node.text + " ("+elem.val()+")";
 			var ref = this.tree.jstree(true);
-			this.itemCount++;
-			var	sel = ref.get_selected();
-			if(!sel.length) { 
-				alert( element_not_selected );
-				return false; 
+			ref.redraw(true);
+		}
+	},
+	'move' : function(node, pos) {
+		if(node) {
+			var ref = this.tree.jstree(true);
+			var parent = ref.get_node(node.parent);
+			var elem = $j("#content_layer_options_" + node.data.number + "_parent");
+			if(parent.data) {
+				elem.val(parent.data.number);
+			} else {
+				elem.val('0');
 			}
+			var pos = 0;
+			for(var childId in parent.children){
+				var child = ref.get_node(parent.children[childId]);
+				if(child) {
+					var elem = $j("#content_layer_options_" + child.data.number + "_pos");
+					elem.val(pos);
+					pos++;
+				}
+			}
+		}
+	},
+	'add': function(data, sel) {
+		var ref = this.tree.jstree(true);
+		var edit = false;
 
+		this.itemCount++;
+		if(!sel) {
+			var	sel = ref.get_selected();
+			if(!sel.length) {
+				alert( element_not_selected );
+				return false;
+			}
 			sel = sel[0];
 			ref.open_node(sel);
-			var data = new Object();
-			data.number = this.itemCount;
-			data.type = 'default';
-			data.label = label;
-			data.visual_pos = input_data.visual_pos;
-			data.readonly = input_data.readonly;
-			data.checked = input_data.checked;
-			data.entity_id = id;
-			sel = this.createTextNode(sel, data);
-			this.template = new Template(this.templateText, this.templateSyntax);
-			var content = this.template.evaluate(data);
-			var html = this.getDiv().html();
-			this.getDiv().html( this.getDiv().html() + content);
-			
-			var node = ref.get_node(sel);
-			this.move(node, this.itemCount);
-				
-			
-			return node.id;
-			
-		},
-		createTextNode: function(parent,data)
-		{
-			var ref = this.tree.jstree(true);
-			var text = data.label;
-			var ro = data.readonly? "readonly" : "";
-			var ch = data.checked? "checked" : "";
-			text = text + "<span style=\"text-align:right;\" ><span> " + ro + " " + ch + "</span></span>" ;
-
-			var sel = ref.create_node(parent,  {"type":data.type,"data":data, "text" : text});
-			return sel;
-		},
-		remove: function(data) {
-				this.hideAll();
-				var ref = this.tree.jstree(true);
-				var	sel = ref.get_selected();
-				if(!sel.length) {
-					alert(node_element_is_null);
-					return false;
-				}
-				var node = ref.get_node(sel);
-				var elem = $j("#content_layer_options_" + node.data.number + "_is_delete");
-				elem.val(1);
-				ref.delete_node(sel);
-		},
-
-		edit: function(data) {
-            //if ( isEmptyElement(data) == false ) {
-            	var ref = this.tree.jstree(true);
-            	var	sel = ref.get_selected();
-            	if(!sel.length) {
-            		alert( node_element_not_selected );
-            		return false;
-            	}
-				sel = sel[0];
-				var node = ref.get_node(sel);
-				if(node.data.type = 'layer'){
-					var node = ref.get_node(sel);
-					var elem = $j("#content_layer_options_" + node.data.number + "_name");
-					node.text = elem.val();
-				}
-				ref.edit(sel);
-		},
-		open_all: function() {
-			var ref = this.tree.jstree(true);
-			ref.open_all('j1_1');
-		},
-		set_div: function(data) {
-			this.div = data;
+			edit = true;
 		}
-}
+		else if(sel == 'root') {
+			sel =  ref.get_node('j1_1');
+		}
 
+		if(!data){
+			var data = new Object();
+
+			data.name = 'default';
+			data.label = element_default_title;
+			data.type = "default"
+		}
+		data.number = this.itemCount;
+
+		sel = this.createTextNode(sel,data);//ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
+		if(sel && edit) {
+			ref.edit(sel);
+		}
+		this.template = new Template(this.templateText, this.templateSyntax);
+		var content = this.template.evaluate(data);
+		var html = this.getDiv().html();
+		this.getDiv().html( this.getDiv().html() + content);
+
+		var node = ref.get_node(sel);
+		this.move(node, this.itemCount);
+
+
+		return node.id;
+
+	},
+	'addPage': function(id, label, input_data) {
+		var ref = this.tree.jstree(true);
+		this.itemCount++;
+		var	sel = ref.get_selected();
+		if(!sel.length) {
+			alert( element_not_selected );
+			return false;
+		}
+
+		sel = sel[0];
+		ref.open_node(sel);
+
+		var data = new Object();
+		data.number = this.itemCount;
+		data.type = 'default';
+		data.label = label;
+		data.visual_pos = input_data.visual_pos;
+		data.readonly = input_data.readonly;
+		data.checked = input_data.checked;
+		data.entity_id = id;
+		sel = this.createTextNode(sel, data);
+
+		var nodeData = getFormData('#contentlayer_form');
+		nodeData.push(data);
+
+		var inputField = $j('<input />', {
+			'id'   : 'content_layer_options_' + this.itemCount,
+			'name' : 'product[content_layer_options][' + this.itemCount + ']',
+			'value': JSON.stringify(nodeData),
+			'type' : 'input',
+			'style': 'width:100%;'
+		});
+		$j('#jstree-data').append(inputField);
+
+		var node = ref.get_node(sel);
+		this.move(node, this.itemCount);
+		this.open_all();
+
+		return node.id;
+	},
+	'createTextNode': function(parent, data)
+	{
+		var ref = this.tree.jstree(true);
+		var text = data.label;
+
+		text += '<div class="tree-options">';
+		text += '<div class="inline-tree-cell option-tree-' + (data.readonly ? 'true' : 'false') + ' option-readonly"></div>';
+		text += '<div class="inline-tree-cell option-tree-' + (data.checked ? 'true' : 'false')  + ' option-checked"></div>';
+		text += '</div>';
+
+		var sel = ref.create_node(parent, {"type":data.type,"data":data, "text" : text});
+		return sel;
+	},
+	'remove': function(data) {
+		this.hideAll();
+		var ref = this.tree.jstree(true);
+		var	sel = ref.get_selected();
+		if(!sel.length) {
+			alert(node_element_is_null);
+			return false;
+		}
+		var node = ref.get_node(sel);
+		var elem = $j("#content_layer_options_" + node.data.number + "_is_delete");
+		elem.val(1);
+		ref.delete_node(sel);
+	},
+
+	edit: function(data) {
+		//if ( isEmptyElement(data) == false ) {
+		var ref = this.tree.jstree(true);
+		var	sel = ref.get_selected();
+		if(!sel.length) {
+			alert( node_element_not_selected );
+			return false;
+		}
+		sel = sel[0];
+		var node = ref.get_node(sel);
+		if(node.data.type = 'layer') {
+			var node = ref.get_node(sel);
+			var elem = $j("#content_layer_options_" + node.data.number + "_name");
+			node.text = elem.val();
+		}
+		ref.edit(sel);
+	},
+	open_all: function() {
+		var ref = this.tree.jstree(true);
+		ref.open_all('j1_1');
+	},
+	set_div: function(data) {
+		this.div = data;
+	}
+}
