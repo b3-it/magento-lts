@@ -13,8 +13,6 @@ class Bkg_VirtualGeo_Model_Components_Resolution extends Bkg_VirtualGeo_Model_Co
 	//alias der Tabelle für die Verbindung zum Produkt
 	protected $_productRelationTable = 'virtualgeo/components_resolution_product';
 	
-
-	
 	public function _construct()
 	{
 		parent::_construct();

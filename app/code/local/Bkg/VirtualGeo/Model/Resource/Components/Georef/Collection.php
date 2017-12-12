@@ -10,22 +10,14 @@
  */
 class Bkg_VirtualGeo_Model_Resource_Components_Georef_Collection extends Bkg_VirtualGeo_Model_Resource_Components_Component_Collection
 {
-	
-
-	public function _construct()
+    public function _construct()
 	{
 		parent::_construct();
 		$this->_init('virtualgeo/components_georef');
 	}
 	
-	
 	public function getLabelTable()
 	{
 		return $this->getTable('virtualgeo/components_georef_label');
 	}
-	
-
-   
-    
-  
 }

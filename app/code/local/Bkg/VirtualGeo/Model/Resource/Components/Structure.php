@@ -20,6 +20,4 @@ class Bkg_VirtualGeo_Model_Resource_Components_Structure extends Bkg_VirtualGeo_
     {
     	return $this->getTable('virtualgeo/components_structure_label');
     }
-    
-
 }

@@ -15,8 +15,4 @@ class Bkg_VirtualGeo_Model_Resource_Components_Resolutionproduct extends Bkg_Vir
         // Note that the id refers to the key field in your database table.
         $this->_init('virtualgeo/components_resolution_product', 'id');
     }
-    
- 
-
- 
 }
