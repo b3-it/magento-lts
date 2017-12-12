@@ -21,6 +21,4 @@ class Bkg_VirtualGeo_Model_Resource_Components_Georef extends Bkg_VirtualGeo_Mod
     {
     	return $this->getTable('virtualgeo/components_georef_label');
     }
-    
-
 }

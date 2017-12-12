@@ -10,13 +10,9 @@
  */
 class Bkg_VirtualGeo_Model_Components_Storageproduct extends Bkg_VirtualGeo_Model_Components_Componentproduct
 {
-	
-		
     public function _construct()
     {
         parent::_construct();
         $this->_init('virtualgeo/components_storageproduct');
     }
-    
-
 }

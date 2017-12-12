@@ -10,10 +10,8 @@
  */
 class Bkg_VirtualGeo_Model_Components_Structure extends Bkg_VirtualGeo_Model_Components_Component
 {
-
 	//alias der Tabelle für die Verbindung zum Produkt
 	protected $_productRelationTable = 'virtualgeo/components_structure_product';
-	
 	
 	public function _construct()
 	{

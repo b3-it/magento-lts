@@ -20,5 +20,4 @@ class Bkg_VirtualGeo_Model_Resource_Components_Content extends Bkg_VirtualGeo_Mo
     {
         return $this->getTable('virtualgeo/components_content_label');
     }
-
 }

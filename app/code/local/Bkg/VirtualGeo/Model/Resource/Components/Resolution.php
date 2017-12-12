@@ -20,6 +20,4 @@ class Bkg_VirtualGeo_Model_Resource_Components_Resolution extends Bkg_VirtualGeo
     {
     	return $this->getTable('virtualgeo/components_resolution_label');
     }
-    
-
 }

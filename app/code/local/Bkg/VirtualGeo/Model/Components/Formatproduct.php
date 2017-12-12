@@ -9,15 +9,10 @@
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Bkg_VirtualGeo_Model_Components_Formatproduct extends Bkg_VirtualGeo_Model_Components_Componentproduct
-{
-	
-		
+{	
     public function _construct()
     {
         parent::_construct();
         $this->_init('virtualgeo/components_formatproduct');
     }
-    
-
-
 }

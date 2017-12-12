@@ -10,8 +10,6 @@
  */
 class Bkg_VirtualGeo_Model_Resource_Components_Structure_Collection extends Bkg_VirtualGeo_Model_Resource_Components_Component_Collection
 {
-
-	
     public function _construct()
     {
         parent::_construct();
@@ -22,7 +20,4 @@ class Bkg_VirtualGeo_Model_Resource_Components_Structure_Collection extends Bkg_
     {
     	return $this->getTable('virtualgeo/components_structure_label');
     }
-    
-
-    
 }

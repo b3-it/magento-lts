@@ -20,6 +20,4 @@ class Bkg_VirtualGeo_Model_Resource_Components_Format extends Bkg_VirtualGeo_Mod
     {
     	return $this->getTable('virtualgeo/components_format_label');
     }
-    
-
 }

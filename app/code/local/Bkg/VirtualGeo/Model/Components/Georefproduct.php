@@ -10,7 +10,6 @@
  */
 class Bkg_VirtualGeo_Model_Components_Georefproduct extends Bkg_VirtualGeo_Model_Components_Componentproduct
 {
-	
     public function _construct()
     {
         parent::_construct();

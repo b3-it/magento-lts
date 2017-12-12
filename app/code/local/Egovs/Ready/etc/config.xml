@@ -178,6 +178,7 @@ T: {{var telephone}}
                 <display_tax_below_price>1</display_tax_below_price>
                 <display_zero_tax_below_price>1</display_zero_tax_below_price>
                 <display_delivery_time_on_categories>1</display_delivery_time_on_categories>
+                <without_shipping_costs_text>Without Shipping Costs</without_shipping_costs_text>
             </price>
         </catalog>
         <checkout>
