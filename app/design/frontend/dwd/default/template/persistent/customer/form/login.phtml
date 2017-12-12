@@ -41,7 +41,7 @@
                 </form>
             </div>
             <?php endif; ?>
-
+			<?php $_secure = Mage::app()->getFrontController()->getRequest()->isSecure(); ?>
             <?php // This column should be col-1 if the registration column is not displayed ?>
             <div class="<?php if ($this->helper('customer')->isRegistrationAllowed()): ?>col-2<?php else: ?>col-1<?php endif; ?> registered-users">
                 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" class="scaffold-form">

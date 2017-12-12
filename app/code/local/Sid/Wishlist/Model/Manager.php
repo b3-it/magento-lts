@@ -252,8 +252,7 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 		if (!$this->getSession()->hasQuoteId()) {
 			Mage::throwException($this->__('No collection list available'));
 		}
-		
-		$hasChanges = false;
+
 		$errors = array();
 		//$desc und $collection haben die gleichen keys
 		foreach ($collection as $id => $value) {
@@ -275,7 +274,6 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			
 			if (is_null($item)) {
 				//Item wurde entfernt
-				$hasChanges = true;
 				continue;
 			}
 			
@@ -292,11 +290,21 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 				} else {
 					$item->setQtyRequested($value['qty']);
 				}
-			}			
+			}
+
+            // collect errors instead of throwing first one
+            if ($item->getHasError()) {
+                $message = $item->getMessage();
+                if (!in_array($message, $errors)) { // filter duplicate messages
+                    $errors[] = $message;
+                }
+                $item->setData($item->getOrigData());
+                Mage::getSingleton('sidwishlist/session')->setTriggerRecollect(true);
+                $item->setDataChanges(false);
+            }
 			
-			if ($item->hasDataChanges()) {
+			if ($item->hasDataChanges() && empty($errors)) {
 				$item->save();
-				$hasChanges = true;
 			}
 		}
 		
@@ -306,14 +314,12 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			}
 		}
 		
-		//Da andere Benutzer ebenfalls Änderungen gemacht haben könnten
-// 		if ($hasChanges) {
-			$this->getQuote()
-				->setTotalsCollectedFlag(false) //Force recollect
-				->collectTotals()
-				->save()
-			;
-// 		}
+		//Da andere Benutzer ebenfalls Änderungen gemacht haben könnten --> immer ausführen
+        $this->getQuote()
+            ->setTotalsCollectedFlag(false) //Force recollect
+            ->collectTotals()
+            ->save()
+        ;
 		
 		return $this;
 	}

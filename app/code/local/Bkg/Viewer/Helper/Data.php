@@ -76,8 +76,8 @@ class Bkg_Viewer_Helper_Data extends Mage_Core_Helper_Abstract
 	//eine Liste mit Version für WMS ermitteln
 	public function getAvailableVersions()
 	{
-			if (is_null($options))
-			{
+			//if (is_null($options))
+			//{
 				$options = array();
 // 				$options[] = array(
 // 						'label' =>'',
@@ -90,17 +90,12 @@ class Bkg_Viewer_Helper_Data extends Mage_Core_Helper_Abstract
 				if(is_array($einheiten))
 				{
 		
-					foreach($einheiten as $k=>$v)
+					foreach($einheiten as $v)
 					{
-// 						$options[] = array(
-// 								'label' =>$v,
-// 								'value' =>$v
-// 						);
-						$options[$v] = $v;
+						$options[$v[0]] = $v['@']['type'] . " " . $v[0];
 					}
-		
 				}
-			}
+			//}
 			return $options;
 	}
 }

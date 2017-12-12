@@ -3,6 +3,11 @@
            || 'onmsgesturechange' in window;  // works on ie10
 }
 
+function toggleLoadingMask()
+{
+    $j('#loading-mask').toggle();
+}
+
 (function($j){
     $j.eGovMenu = function(element, options){
 
@@ -175,12 +180,12 @@
             }
         });
     }
-    
+
     $j(document).ready(function(){
     	//cloneNavigation();
-        
+
     	var setDefaultToggle = false;
-    	
+
     	// Prüfen, ob die Array-Variable gesetzt ist
     	if ( typeof toggleBlocks == 'undefined' ) {
     		setDefaultToggle = true;
@@ -200,16 +205,16 @@
 	        	});
         	}
         }
-    	
+
     });
-    
+
     function cloneNavigation()
     {
     	// Inhalt in Mobile Navigation kopieren
     	// Funktion der Navigation herstellen
     	$j('#header-nav').html( $j('#egov-nav').html() ).eGovMenu();
     }
-    
+
     function toggleBlockContent(classElement)
     {
     	$j('.' + classElement).on('click', function(){

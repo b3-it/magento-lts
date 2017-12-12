@@ -28,7 +28,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_New extends Mage_Adminhtml_Bloc
 
     public function getHeaderText()
     {
-        return Mage::helper('bkgviewer')->__('Insert WMS URL');
+        return Mage::helper('bkgviewer')->__('Insert URL');
     }
 	
 	

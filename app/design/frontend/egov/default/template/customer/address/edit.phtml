@@ -11,6 +11,8 @@
  *
  * @see Mage_Customer_Block_Address_Edit
  */
+
+$_isAdditionalCompany = Mage::getStoreConfig('customer/registerrequired/additionalcompany');
 ?>
 <?php $_egov_helper = Mage::helper('egovsbase/config'); ?>
 <?php if($this->getTitle()): ?>
@@ -67,6 +69,7 @@
                     </div>
                 </div>
             </li>
+          <?php if ($_isAdditionalCompany) : ?>
             <li class="fields" id="adress-edit-company2">
                 <div class="field">
                     <label for="company">
@@ -77,6 +80,7 @@
                     </div>
                 </div>
             </li>
+        <?php endif; ?>
             <li class="fields" id="adress-edit-telephone">
                 <div class="field">
                     <label for="telephone">
@@ -135,6 +139,7 @@
           <?php else : ?>
             <li class="wide dummy"></li>
           <?php endif; ?>
+          <?php if ($_isAdditionalCompany) : ?>
             <li class="fields" id="adress-edit-company3">
                 <div class="field">
                     <label for="company">
@@ -145,6 +150,7 @@
                     </div>
                 </div>
             </li>
+        <?php endif; ?>
             <li class="fields" id="adress-edit-fax">
                 <div class="field">
                     <label for="fax">

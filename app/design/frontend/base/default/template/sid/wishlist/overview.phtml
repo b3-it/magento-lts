@@ -35,16 +35,18 @@
 <?php echo $this->getPagerHtml(); ?>
 <?php if($_lists->getSize()): ?>
 <table class="data-table" id="my-collections-table">
-    <col width="30" />
-    <col width="80" />
-    <col />
-    <col width="100"/>
-    <col width="100" />
-    <col width="80" />
-    <col width="60" />
-    <col width="1" />
-    <col width="1" />
-    <col width="1" />
+    <colgroup>
+        <col width="1" />
+        <col width="50" />
+        <col />
+        <col width="120"/>
+        <col width="120" />
+        <col width="50" />
+        <col width="10" />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+    </colgroup>
     <thead>
         <tr>
             <th class="number"><?php echo $this->__('List #') ?></th>
@@ -52,11 +54,10 @@
             <th><?php echo $this->__('Name') ?></th>
             <th><?php echo $this->__('Description') ?></th>            
             <th><?php echo $this->__('Owner') ?></th>
-            <th class="total"><span class="nobr"><?php echo $this->__('Total') ?></span></th>
-            <th><span class="nobr"><?php echo $this->__('Default') ?></span></th>
-            <th class="status"><span class="nobr"><?php echo $this->__('Status') ?></span></th>
-            <th class="view">&nbsp;</th>
-            <th>&nbsp;</th>
+            <th class="total"><?php echo $this->__('Total') ?></th>
+            <th><?php echo $this->__('Default') ?></th>
+            <th class="status"><?php echo $this->__('Status') ?></th>
+            <th class="view"></th>
         </tr>
     </thead>
     <tbody>
@@ -72,28 +73,23 @@
             <td><em><?php echo $_list->getDefaultLabel() ?></em></td>
             <td class="status"><em><?php echo $_list->getStatusLabel() ?></em></td>
             <td class="a-center view">
-                <span class="nobr">
-                	<a class="egov-view"
+               	<a class="egov-view"
                 	href="<?php echo $this->getViewUrl($_list) ?>"
-                	title="<?php echo $this->__('View') ?>"
-                	alt="<?php echo $this->__('View') ?>"> </a>
-                </span>
-            </td>
-            <td class="a-center">
+                	title="<?php echo $this->__('View') ?>"> </a>
+                <br /><br />
             	<a class="egov-delete"
-            		href="<?php echo $this->getDeleteUrl($_list) ?>"
-            		title="<?php echo $this->__('Delete') ?>"
-            		alt="<?php echo $this->__('Delete') ?>"
-            		onclick="return confirmDeletion();"/> </a>
+            	   href="<?php echo $this->getDeleteUrl($_list) ?>"
+            	   title="<?php echo $this->__('Delete') ?>"
+            	   onclick="return confirmDeletion();"> </a>
             </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 </div>
-<script type="text/javascript">decorateTable('my-collections-table');</script>
 <script type="text/javascript">
     //<![CDATA[
+    decorateTable('my-collections-table');
     function confirmDeletion() {
         return confirm('<?php echo $this->__('Are you sure you want to remove this collector list?') ?>');
     }

@@ -38,10 +38,12 @@ class Sid_Wishlist_Model_Quote_Observer extends Mage_Core_Model_Abstract
 		
 		foreach ($collection->getItems() as $item) {
 			//Quote/Merkliste darf hier nicht geladen werden, da sonst Endlosschleife entsteht!!
-			$note = Mage::helper('sidwishlist')->__("Product '%s' with quantity %d is no more saleable and was automatically removed");
-			Mage::getSingleton('sidwishlist/session')->addNotice(
-							sprintf($note, $salesQuoteItem->getName(), $salesQuoteItem->getQty())
-			);
+			$note = Mage::helper('sidwishlist')->__(
+			    "Product '%s' with quantity %d is no more saleable and was automatically removed",
+                $salesQuoteItem->getName(),
+                $salesQuoteItem->getQty()
+            );
+			Mage::getSingleton('sidwishlist/session')->addNotice($note);
 			Mage::getSingleton('sidwishlist/session')->setTriggerRecollect(true);
 			$salesQuoteItem->getQuote()->setTriggerRecollect(1)->save();
 		}

@@ -11,6 +11,7 @@
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Varien_Router_Standard {
+    const MAINTENANCE_OFF = 0;
 	const MAINTENANCE_ON = 1;
 	const MAINTENANCE_SCHEDULED = 2;
 	private $cmspage = '/index/';
@@ -25,30 +26,29 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 			return;
 		
 		$request = Mage::app ()->getRequest ();
-		$storeCode = $request->getStoreCodeFromPath ();
 		$front = $observer->getEvent ()->getFront ();
 		
 		if ($this->__isAdmin ()) {
 			return;
 		}
 		
-		$store = Mage::app ()->getStore ();
+		$storeCode = $request->getStoreCodeFromPath ();
+		$store = Mage::app ()->getStore ($storeCode);
 		
-		$curOffline = Mage::getStoreConfig ( 'general/offline/lock' );
-		$curDate1 = Mage::getStoreConfig ( 'general/offline/to_date' );
-		$curDate2 = Mage::getStoreConfig ( 'general/offline/from_date' );
-		$curCMS = Mage::getStoreConfig ( 'general/offline/cmspagepicker' );
+		$curOffline = Mage::getStoreConfig ( 'general/offline/lock', $store );
+		$curCMS = Mage::getStoreConfig ( 'general/offline/cmspagepicker', $store );
 		
-		if ( !strlen($curDate1) OR !strlen($curDate2) ) {
-		    return;
-		}
 		
 		if ($curOffline == self::MAINTENANCE_ON) {
-			
 			$this->cmspage = $curCMS;
 			$front->addRouter ( 'offline_router', $this );
 		} elseif ($curOffline == self::MAINTENANCE_SCHEDULED) {
-			
+		    $curDate1 = Mage::getStoreConfig ( 'general/offline/to_date', $store );
+		    $curDate2 = Mage::getStoreConfig ( 'general/offline/from_date', $store );
+		    // only check curDate if needed
+		    if ( !strlen($curDate1) OR !strlen($curDate2) ) {
+		        return;
+		    }
 			$timezone = Mage::app ()->getStore ( $store )->getConfig ( Mage_Core_Model_Locale::XML_PATH_DEFAULT_TIMEZONE );
 			$locale = Mage::app ()->getLocale ()->getLocaleCode (); // new Zend_Locale(Mage::getStoreConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_LOCALE, $storeId));
 			$locale = new Zend_Locale ( $locale );
@@ -104,7 +104,7 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 								|| ($scope == 'websites' && $config->getScopeId() == $store->getWebsiteId())
 								|| ($scope == 'default' && $config->getScopeId() == 0)
 							) {
-								$config->setValue(0)->save();
+							    $config->setValue(self::MAINTENANCE_OFF)->save();
 								Mage::getConfig()->cleanCache();
 								return;
 							}
@@ -133,7 +133,7 @@ class B3it_Maintenance_Controller_OfflineRouter extends Mage_Core_Controller_Var
 			return true;
 		}
 		
-		$routes = $this->_collectRoutes ( 'admin', 'admin' );
+		$routes = $this->_collectRoutes ();
 		foreach ( $routes as $route ) {
 			if (preg_match ( '#^' . $route . '(\/.*)?$#', ltrim ( $request->getPathInfo (), '/' ) )) {
 				return true;

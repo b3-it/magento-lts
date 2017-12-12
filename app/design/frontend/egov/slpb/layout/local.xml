@@ -8,9 +8,10 @@
         </reference>
 
         <reference name="head">
-            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-1.12.4.min.js</script></action>
             <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
             <action method="addJs"><script>slpb/star-counter.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
         </reference>
 
         <reference name="left">

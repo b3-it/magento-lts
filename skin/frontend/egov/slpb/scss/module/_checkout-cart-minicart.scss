@@ -11,7 +11,7 @@
 
 #header-cart {
     margin: 0px !important;
-    
+
     @include bp(max-width, 490px) {
     	position: absolute;
     	top: 40px;
@@ -21,11 +21,6 @@
 
 .header-minicart {
     display: inline-block;
-
-    @include bp(max-width, $bp-medium) {
-        display: inline-block;
-        width: auto;
-    }
 
     .minicart-message {
         display: block;
@@ -85,7 +80,7 @@
             &.last {
                 border: none;
             }
-            
+
             //tr:not(.qty-wrapper) {
             //    th.mini-cart-first, td.mini-cart-secound {
             //        display: none;
@@ -283,13 +278,13 @@ div.block-cart {
     display: block;
     position: absolute;
     top: 40px;
-    
+
     @include bp(max-width, $bp-medium) {
     	top: 45px;
     	right: 27%;
     	width: 50%;
     }
-    
+
     @include bp(max-width, 500px) {
     	width: 100%;
     }

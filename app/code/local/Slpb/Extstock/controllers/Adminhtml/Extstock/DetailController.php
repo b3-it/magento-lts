@@ -69,11 +69,6 @@ class Slpb_Extstock_Adminhtml_Extstock_DetailController extends Mage_Adminhtml_C
     }
     
     protected function _isAllowed() {
-    	$action = strtolower($this->getRequest()->getActionName());
-    	switch ($action) {
-    		default:
-    			return Mage::getSingleton('admin/session')->isAllowed('extstock/detail');
-    			break;
-    	}
+    	return Mage::getSingleton('admin/session')->isAllowed('extstock/detail');
     }
 }

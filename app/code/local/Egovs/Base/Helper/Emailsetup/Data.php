@@ -1,7 +1,7 @@
 <?php
 /**
  * Installer für eMail-Configuration
- * 
+ *
  * @category   	Egovs
  * @package    	Egovs_Base
  * @author 		René Mütterlein <r.muetterlein@b3-it.de>
@@ -12,14 +12,14 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
 {
     /**
      * Datei-Maske zum anlegen neuer Verzeichnis-Strukturen im Media-Verzeichnis
-     * 
+     *
      * @var string
      */
     private $_defaultDirectoryMask = '0750';
 
     /**
      * Installiert eine neue eMail-Konfiguration auf unterschiedlichen Ebenen
-     * 
+     *
      * Bsp $configData:
      * array(
      *     0 => array(
@@ -35,9 +35,9 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
      *     ),
      *     ...
      * );
-     * 
-     * 
-     * 
+     *
+     *
+     *
      * @param array                        $configData      Array mit Konfigurations-Daten
      * @param string                       $imagePath       Skin-Pfad für Quell-Datei(en)
      * @param Mage_Eav_Model_Entity_Setup  $installer       Installer-Object
@@ -45,7 +45,7 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
     public function setEmailConfig($configData, $imagePath, $installer)
     {
         // Tabelle mit der Config
-        $cfgTable  = $installer->getTable('core/config_data'); 
+        $cfgTable  = $installer->getTable('core/config_data');
 
         // Pfad zum Magento-Skin
         $skinPath  = Mage::getBaseDir('skin') . DS . 'frontend' . DS . $imagePath;
@@ -55,13 +55,13 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
 
         // Unter-Verzeichnis im Media
         $destPath  = 'email' . DS . 'logo';
-        
+
         foreach($configData AS $key => $entry) {
             foreach($entry['data'] AS $path => $value) {
                 $path = 'design/email/' . $path;
 
                 $logo_to = $logo_from = '';
-                
+
                 if ( $path == 'design/email/logo' ) {
                     if ( $entry['scope'] == 'default' ) {
                         $value = $entry['scope'] . '/' . $value;
@@ -75,39 +75,28 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
                     $logo_from = $skinPath  . DS . $entry['default'];
                 }
 
-                // Herausfinden, ob ein Eintrag mit den Scope-Daten schon vorhanden ist
-                $id = $installer->getConnection()->fetchOne("SELECT `config_id` FROM `{$cfgTable}` WHERE `path` = '{$path}' AND " .
-                                                            "`scope` = '{$entry['scope']}' AND `scope_id` = '{$entry['scope_id']}';");
-                
-                if (!$id) {
-                    // Eintrag nicht vorhanden => Anlegen
-                    $installer->run("INSERT INTO `{$cfgTable}` (`scope`, `scope_id`, `path`, `value`)" .
-                                    "VALUES ('{$entry['scope']}', '{$entry['scope_id']}', '{$path}', '{$value}');");
-                }
-                else {
-                    // Eintrag vorhanden => Update
-                    $installer->run("UPDATE `{$cfgTable}` SET `value` = '{$value}' WHERE `config_id` = '{$id}';");
-                }
-                
+                // Configuration aktualisieren
+                $installer->setConfigData($path, $value, $entry['scope'], $entry['scope_id']);
+
                 // Wenn es die LOGO-Datei ist, ....
                 if ( strlen($logo_to) ) {
                     // Ziel-Pfad ist nicht da => anlegen
                     if ( !is_dir(dirname($logo_to)) ) {
                         mkdir(dirname($logo_to), $this->_defaultDirectoryMask, TRUE);
                     }
-                    
+
                     // Die Datei existiert nicht => kopieren
-                    if ( !is_file($logo_to) ) {
+                    if ( !is_file($logo_to) AND is_file($logo_from) ) {
                         copy($logo_from, $logo_to);
                     }
                 }
             }
         }
     }
-    
+
     /**
      * Installiert neue eMail-Templates, welche aus einer Datei gelesen werden
-     * 
+     *
      * Bsp $configData:
      * array(
      *      0 => array(
@@ -118,9 +107,9 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
      *      ),
      *      ...
      * );
-     * 
-     * 
-     * 
+     *
+     *
+     *
      * @param array                        $configData      Array mit Konfigurations-Daten
      * @param string                       $templatePath    Skin-Pfad für Quell-Datei(en)
      * @param Mage_Eav_Model_Entity_Setup  $installer       Installer-Object
@@ -135,19 +124,24 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
 
         foreach($configData AS $key => $entry) {
             $id = $this->_getTemplateIdFromCode($installer, $emailTable, $entry['name']);
-            
+
             if (!$id) {
                 $template = $this->_getTemplateContent($templatePath . DS . $entry['template']);
 
-                $installer->run("INSERT INTO `{$emailTable}` (`template_code`, `template_text`, `template_type`, `template_subject`) " .
-                                "VALUES ('{$entry['name']}', '{$template}', '2', '{$entry['topic']}');");
+                $model = Mage::getModel('core/email_template');
+                $model->setData(array(
+                    'template_code'    => $entry['name'],
+                    'template_text'    => $template,
+                    'template_type'    => 2,
+                    'template_subject' => $entry['topic']
+                ))->save();
 
                 $id = $installer->getConnection()->fetchOne("SELECT `template_id` FROM `{$emailTable}` WHERE `template_code` = '{$entry['name']}';");
                 $installer->setConfigData($entry['path'], $id);
             }
         }
     }
-    
+
     /**
      * Aktualisiert ein vorhandenes eMail-Template mit dem Inhalt aus einer Datei
      *
@@ -171,10 +165,10 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
     {
         // Tabelle mit der eMail-Templates
         $emailTable   = $installer->getTable('core/email_template');
-        
+
         // Pfad zum Magento-Skin
         $templatePath = Mage::getBaseDir('skin') . DS . 'frontend' . DS . $templatePath;
-        
+
         foreach($configData AS $key => $entry) {
             if ( isset($entry['id']) ) {
                 $id = intval($entry['id']);
@@ -182,10 +176,10 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
             else {
                 $id = $this->_getTemplateIdFromCode($installer, $emailTable, $entry['name']);
             }
-            
+
             if ( $id > 0 ) {
                 $template = $this->_getTemplateContent($templatePath . DS . $entry['template']);
-                
+
                 $model = Mage::getModel('core/email_template')->load($id);
                 $model->setData('template_text', $template)->save();
             }
@@ -195,7 +189,7 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
     /**
      * Läd alle eMail-Templates und verändert den Inhalt.
      * Nach der Anpassung wird das Template zurück gespeichert.
-     * 
+     *
      * @param array    $replace            Array mit $key => $val was ersetzt werden soll
      * @param string   $header             String, welcher als Header am Anfang eingefügt werden soll
      * @param string   $footer             String, welcher als Footer an alle Templates angehängt werden soll
@@ -206,19 +200,19 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
         $email_arr = Mage::getModel('core/email_template')->getCollection();
         foreach($email_arr AS $email) {
             $code = $email->getTemplateCode();
-            
+
             if ( ($code == 'eMail-Header') OR ($code == 'eMail-Footer') ) {
                 // nicht in sich selbst eintragen
                 continue;
             }
-            
+
             $id  = $email->getTemplateId();
             $new = $old = $email->getTemplateText();
-            
+
             if ( is_array($replace) AND count($replace) ) {
                 $new = str_replace(array_keys($replace), array_values($replace), $new);
             }
-            
+
             if ($styleCounter > 0) {
                 // falls der Tablulator im Template wird nicht erkannt
                 $arr = explode("\n", trim($new));
@@ -229,7 +223,7 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
                     $new = implode("\n", $arr);
                 }
             }
-            
+
             if ( strlen($header) ) {
                 // Prüfen, ob der Header in allen Templates eingefügt ist
                 $arr = explode("\n", trim($new));
@@ -237,12 +231,12 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
                     $new = $header . "\n" . $new;
                 }
             }
-            
+
             if ( $old != $new ) {
                 if ( strlen($footer) ) {
                     $new .= "\n" . $footer;
                 }
-                
+
                 $model = Mage::getModel('core/email_template')->load($id);
                 $model->setData('template_text', $new)->save();
             }
@@ -252,7 +246,7 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Auslesen und Umwandeln eines HTML-Templates
-     * 
+     *
      * @param  string  $filename    Pfad zur Template-Datei im Dateisystem
      * @return string               Inhalt der HTML-Datei als UTF-8 String
      */
@@ -261,14 +255,15 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
         if ( !is_file($filename) ) {
             return;
         }
-        
+
         $content = file_get_contents($filename);
-        return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+        $content = mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+        return $content;
     }
-    
+
     /**
      * Ermittelt anhand des Template-Codes die ID des Templates
-     * 
+     *
      * @param Mage_Eav_Model_Entity_Setup  $installer       Installer-Object
      * @param string                       $emailTable      Name der eMail-Tabelle
      * @param string                       $templateCode    Template-Code

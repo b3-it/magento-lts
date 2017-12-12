@@ -1,0 +1,58 @@
+﻿{{template config_path="design/email/header"}}
+
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+	<table cellspacing="0" cellpadding="0" border="0" width="98%" style="margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+	<tr>
+	    <td align="center" valign="top">
+
+	        <table style="width:650px;">
+	        <tr>
+	            <td valign="top" align="right">
+  <a href="{{store url=''}}">
+    <img width="{{if logo_width}}{{var logo_width}}{{else}}165{{/if}}"
+		 height="{{if logo_height}}{{var logo_height}}{{else}}48{{/if}}"
+		 src="{{var logo_url}}"
+		 alt="{{var logo_alt}}"
+		 border="0" />
+  </a>
+</td>
+	        </tr>
+	        </table>
+
+
+	        <table style="width:650px;">
+	        <tr>
+	            <td valign="top">
+	                <p><strong>Dear {{htmlescape var=$order.getCustomerName()}}</strong>,</p>
+	                <p>Your order # {{var order.increment_id}} has been <strong>{{var order.getStatusLabel()}}</strong>.</p>
+	                <p>You can check the status of your order by <a href="{{store url='customer/account/'}}" style="color:#1E7EC8;">logging into your account</a>.</p>
+	                <p>{{var comment}}</p>
+	                <p>
+	                    If you have any questions, please feel free to contact us at <a href="mailto:{{config path="trans_email/ident_general/email"}}" style="color:#1E7EC8;">{{config path="trans_email/ident_general/email"}}</a>.
+	                </p>
+	            </td>
+	        </tr>
+			<tr><td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td>
+							{{block type="cms/block" block_id="papercut_mail_signature_de"}}
+						</td>
+					</tr>
+					<tr><td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td>
+							{{block type="cms/block" block_id="papercut_widerruf_block_de"}}
+						</td>
+					</tr>
+					<tr><td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td>
+							{{block type="cms/block" block_id="papercut_agb_block_de"}}
+						</td>
+					</tr>
+	        </table>
+	    </td>
+	</tr>
+	</table>
+</div>
+{{template config_path="design/email/footer"}}

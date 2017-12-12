@@ -80,7 +80,9 @@
 
 @include bp(max-width, 499px) {
     .skip-cart .count {
-        margin-left: -12px;
+        margin-left: 5px;
+        top: 0;
+        position: absolute;
     }
 }
 
