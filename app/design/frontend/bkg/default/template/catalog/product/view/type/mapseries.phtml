@@ -29,6 +29,8 @@
  *
  * @see Mage_Catalog_Block_Product_View_Media
  * @see Mage_Catalog_Block_Product_View_Type_Grouped
+ * 
+ * @var Bkg_MapSeries_Block_Product_View_Type_Mapseries $this
  */
 ?>
 <?php $this->setPreconfiguredValue(); ?>
@@ -72,7 +74,7 @@
     <?php foreach ($_associatedProducts as $_item): ?>
         <?php $_finalPriceInclTax = $this->helper('tax')->getPrice($_item, $_item->getFinalPrice(), true) ?>
         <tr>
-            <td><?php echo $this->escapeHtml($_item->getName()) ?></td>
+            <td id="name-<?php echo $_item->getSku()?>"><?php echo $this->escapeHtml($_item->getName()) ?></td>
             <?php if ($this->getCanShowProductPrice($_product)): ?>
             <td class="a-right">
                 <?php if ($this->getCanShowProductPrice($_item)): ?>
@@ -84,7 +86,7 @@
             <?php if ($_product->isSaleable()): ?>
             <td class="a-center">
             <?php if ($_item->isSaleable()) : ?>
-                <input id="qty_<?php echo $_item->getSku()?>" type="text" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+                <input id="qty-<?php echo $_item->getSku()?>" type="number" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" min="0" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
             <?php else: ?>
                 <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
             <?php endif; ?>

@@ -31,7 +31,7 @@ $_attributes->setData($_product->getAttributes());
 </div>
 <div class="product-view">
     <div class="product-essential">
-        <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->_isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <form action="<?php echo $this->getSubmitUrl($_product, array('_forced_secure' => true)) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
             <?php echo $this->getBlockHtml('formkey') ?>
             <div class="no-display">
                 <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
@@ -45,10 +45,10 @@ $_attributes->setData($_product->getAttributes());
 
                 <div class="product-shop">
                   <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getIsVisibleOnFront() ) : ?>
-                  <?php endif; ?>
                     <div class="product-sku">
                         <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
                     </div>
+                  <?php endif; ?>
                     <div class="price-info">
                         <?php echo $this->getPriceHtml($_product); ?>
                         <?php echo $this->getChildHtml('bundle_prices'); ?>

@@ -72,7 +72,8 @@ class Mage_Checkout_Helper_Cart extends Mage_Core_Helper_Url
 
         $params = array(
             Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => Mage::helper('core')->urlEncode($continueShoppingUrl),
-            'product' => $product->getId()
+            'product' => $product->getId(),
+            '_forced_secure' => true
         );
 
         if ($this->_getRequest()->getRouteName() == 'checkout'
@@ -97,7 +98,8 @@ class Mage_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     {
         $params = array(
             'id'=>$item->getId(),
-            Mage_Core_Controller_Front_Action::PARAM_NAME_BASE64_URL => $this->getCurrentBase64Url()
+            Mage_Core_Controller_Front_Action::PARAM_NAME_BASE64_URL => $this->getCurrentBase64Url(),
+            '_forced_secure' => true
         );
         return $this->_getUrl('checkout/cart/delete', $params);
     }
@@ -109,7 +111,7 @@ class Mage_Checkout_Helper_Cart extends Mage_Core_Helper_Url
      */
     public function getCartUrl()
     {
-        return $this->_getUrl('checkout/cart');
+        return $this->_getUrl('checkout/cart', array('_forced_secure' => true));
     }
 
     /**

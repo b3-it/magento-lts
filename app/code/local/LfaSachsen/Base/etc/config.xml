@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <LfaSachsen_Base>
+            <version>0.0.0.1</version>
+        </LfaSachsen_Base>
+    </modules>
+    <global>
+        <resources>
+            <lfasachsenbase_setup>
+                <setup>
+                    <module>LfaSachsen_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </lfasachsenbase_setup>
+        </resources>
+    </global>
+</config>

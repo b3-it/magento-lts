@@ -3,7 +3,7 @@
 <config>
     <modules>
         <TuChemnitz_Base>
-            <version>0.0.0.2</version>
+            <version>0.0.0.4</version>
         </TuChemnitz_Base>
     </modules>
     <global>

@@ -56,7 +56,8 @@ class Gka_Checkout_Helper_Cart extends Mage_Core_Helper_Url
 
         $routeParams = array(
             $urlParamName   => $continueUrl,
-            'product'       => $product->getEntityId()
+            'product'       => $product->getEntityId(),
+            '_forced_secure' => true
         );
 
         if (!empty($additional)) {
@@ -86,7 +87,8 @@ class Gka_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     {
         $params = array(
             'id'=>$item->getId(),
-            Mage_Core_Controller_Front_Action::PARAM_NAME_BASE64_URL => $this->getCurrentBase64Url()
+            Mage_Core_Controller_Front_Action::PARAM_NAME_BASE64_URL => $this->getCurrentBase64Url(),
+            '_forced_secure' => true
         );
         return $this->_getUrl('checkout/cart/delete', $params);
     }

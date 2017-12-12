@@ -1,3 +1,4 @@
+<?php
 class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Adminhtml_Controller_action
 {
 
@@ -58,11 +59,7 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
  
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
-			
-			
-	  			
-	  			
-			$model = Mage::getModel('framecontract/vendor');		
+			$model = Mage::getModel('framecontract/vendor');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 			
@@ -115,17 +112,17 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 
     public function massDeleteAction() {
         $vendorIds = $this->getRequest()->getParam('vendor');
-        if(!is_array($framecontractIds)) {
+        if(!is_array($vendorIds)) {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
             try {
-                foreach ($framecontractIds as $framecontractId) {
-                    $framecontract = Mage::getModel('framecontract/vendor')->load($framecontractId);
-                    $framecontract->delete();
+                foreach ($vendorIds as $vendorId) {
+                    $vendor = Mage::getModel('framecontract/vendor')->load($vendorId);
+                    $vendor->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                        'Total of %d record(s) were successfully deleted', count($framecontractIds)
+                        'Total of %d record(s) were successfully deleted', count($vendorIds)
                     )
                 );
             } catch (Exception $e) {
@@ -138,19 +135,19 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
     public function massStatusAction()
     {
         $vendorIds = $this->getRequest()->getParam('vendor');
-        if(!is_array($framecontractIds)) {
+        if(!is_array($vendorIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
         } else {
             try {
                 foreach ($vendorIds as $vendorId) {
-                    $vendor = Mage::getSingleton('framecontract/vendor')
-                        ->load($framecontractId)
+                    Mage::getSingleton('framecontract/vendor')
+                    ->load($vendorId)
                         ->setStatus($this->getRequest()->getParam('status'))
                         ->setIsMassupdate(true)
                         ->save();
                 }
                 $this->_getSession()->addSuccess(
-                    $this->__('Total of %d record(s) were successfully updated', count($framecontractIds))
+                    $this->__('Total of %d record(s) were successfully updated', count($vendorIds))
                 );
             } catch (Exception $e) {
                 $this->_getSession()->addError($e->getMessage());

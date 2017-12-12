@@ -238,13 +238,50 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 				->loadByCustomerId(Mage::getSingleton('customer/session')->getCustomerId())
 				->getFirstItem()
 			;
-			
+
 			if (!$item->isEmpty()) {
 				$item->setIsDefault(true);
 			}
 		}
 		
-		return parent::_beforeDelete();
+		parent::_beforeDelete();
+
+        $currentQuote = Mage::getSingleton('checkout/session')->getQuote();
+        $_customers = array(Mage::getSingleton('customer/session')->getCustomerId());
+
+        foreach ($this->getCustomerAcls()->getData() as $id => $role) {
+            if ($role !== 'O') {
+                continue;
+            }
+            $_customers[] = $id;
+        }
+
+        $quoteCollection = Mage::getModel('sales/quote')->getCollection();
+        $quoteCollection->addFieldToFilter('customer_id', array('in' => $_customers));
+        $quoteCollection->addFieldToFilter('is_active', 1);
+        $quoteCollection->addFieldToFilter('items_qty', array('gt' => 0));
+        foreach ($quoteCollection->getItems() as $quote) {
+            /** @var Sid_Wishlist_Model_Quote_Item $item */
+            foreach ($this->getAllVisibleItems() as $item) {
+                /** @var Mage_Sales_Model_Quote_Item $salesItem */
+                foreach ($quote->getAllVisibleItems() as $salesItem) {
+                    if ($item->getQtyGranted() > 0 && $item->representProduct($salesItem->getProduct())) {
+                        $qty = max($salesItem->getQty() - $item->getQtyGranted(), 0);
+                        if ($qty > 0) {
+                            $salesItem->setQty($qty);
+                        } else {
+                            $salesItem->delete();
+                        }
+                    }
+                }
+            }
+            if ($currentQuote->getId() == $quote->getId()) {
+                $currentQuote->setTriggerRecollect(true)->collectTotals();
+            }
+            $quote->save();
+        }
+
+        return $this;
 	}
 
 	/**
@@ -357,11 +394,18 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 	 *
 	 * ACLs haben die Form:<br/>
 	 *  { customer_id => W|R|O }
+     *
+     * <dl>
+     *  <dt>O</dt>
+     *  <dd>Berechtigter Besteller</dd>
+     *  <dt>W</dt>
+     *  <dd>Interessent</dd>
+     * </dl>
 	 *  
 	 * @return Varien_Object
 	 */
 	public function getCustomerAcls() {
-		if (!is_null($this->_acls)) {
+		if ($this->_acls instanceof Varien_Object) {
 			return $this->_acls;
 		}
 		
@@ -438,12 +482,12 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 		$this->checkAcl();
 		
 		$this->getCustomerAcls()->unsetData($customer);
-		
+
 		if ($this->getCustomerAcls()->isEmpty()) {
 			$this->_delete();
 			return $this;
 		}
-		
+
 		$this->setCustomerAcls($this->getCustomerAcls());
 				
 		return $this;
@@ -1173,8 +1217,34 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 	 */
 	public function delete() {
 		$customer = Mage::getSingleton('customer/session')->getCustomerId();
+		$acls = $this->getCustomerAcls();
+		$isOrderer = false;
+		if ($acls->getData($customer) === 'O') {
+		    $isOrderer = true;
+        }
 		$this->removeCustomerFromAcls($customer);
-		
+
+		if ($isOrderer) {
+            $quote = Mage::getSingleton('checkout/session')->getQuote();
+
+            /** @var Sid_Wishlist_Model_Quote_Item $item */
+            foreach ($this->getAllVisibleItems() as $item) {
+                /** @var Mage_Sales_Model_Quote_Item $salesItem */
+                foreach ($quote->getAllVisibleItems() as $salesItem) {
+                    if ($item->getQtyGranted() > 0 && $item->representProduct($salesItem->getProduct())) {
+                        $qty = max($salesItem->getQty() - $item->getQtyGranted(), 0);
+                        if ($qty > 0) {
+                            $salesItem->setQty($qty);
+                        } else {
+                            $salesItem->delete();
+                        }
+                    }
+                }
+            }
+            $quote->setTriggerRecollect(true)->collectTotals();
+            $quote->save();
+        }
+
 		$this->save();
 		
 		return $this;
@@ -1203,8 +1273,8 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
         }
         return $this;
 	}
-	
-	/**
+
+    /**
 	 * Formatiert den Preis
 	 *
 	 * @param   float $price       Preis
@@ -1568,6 +1638,35 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 		$this->setData('qty_granted', false);
 		return $this->getData('qty_granted');
 	}
+
+    /**
+     * Prüft ob es Elemente mit einer bestellten Menge gibt
+     *
+     * @return bool
+     */
+    public function hasQtyOrdered() {
+        if ($this->hasData('qty_ordered')) {
+            return (bool) $this->getData('qty_ordered');
+        }
+
+        $items = $this->getAllVisibleItems();
+
+        if (empty($items)) {
+            $this->setData('qty_ordered', false);
+            return $this->getData('qty_ordered');
+        }
+
+        foreach ($items as $item) {
+            /* @var $item Sid_Wishlist_Model_Quote_Item */
+            if ($item->getQtyOrdered() > 0) {
+                $this->setData('qty_ordered', true);
+                return $this->getData('qty_ordered');;
+            }
+        }
+
+        $this->setData('qty_ordered', false);
+        return $this->getData('qty_ordered');
+    }
 
 	/**
 	 * Has a virtual products on quote

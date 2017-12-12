@@ -273,7 +273,7 @@ class TKonnekt_SDK_Request
     /**
      * Liefert sourceId des Hosts zurück
      *
-     * @return sourceId des Hosts
+     * @return string  sourceId des Hosts
      */
     public function getHostSourceId() {
         if (isset($_SERVER['SERVER_NAME'])) {
@@ -285,7 +285,7 @@ class TKonnekt_SDK_Request
     /**
      * Liefert sourceId dieses SDKs zurück
      *
-     * @return Version Information von diesem SDK
+     * @return string  Version Information von diesem SDK
      */
     public function getSDKSourceId() {
         return 'PHP ' . __TKONNEKT_SDK_VERSION__;

@@ -28,7 +28,7 @@ class Bkg_Viewer_Model_Service_Type_Wms130 extends Bkg_Viewer_Model_Service_Type
 			$wms->bindXml($xml);
 			
 			$this->_serviceData['url'] = $url;
-			$this->_serviceData['type'] = $this->_type;
+			$this->_serviceData['format'] = $this->_type;
 			$this->_serviceData['title']=($wms->getService()->getTitle()->getValue());
 			$this->_serviceData['url_featureinfo'] = ($this->_getHref($capa->getRequest()->getGetfeatureinfo()->getAllDcptype()));
 			$this->_serviceData['url_map'] = ($this->_getHref($capa->getRequest()->getGetmap()->getAllDcptype()));

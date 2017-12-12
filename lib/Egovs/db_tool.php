@@ -14,6 +14,10 @@ $data_xml   = array();
 // Der Wert muss manuell auf FALSE gesetzt werden, um die Funktion zu nutzen
 $resticted_host = TRUE;
 
+if ( is_file('.localhost') ) {
+    $resticted_host = FALSE;
+}
+
 /////////////////////// Letzte Fehlermeldung \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 $last_err = null;
 

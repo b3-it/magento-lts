@@ -67,6 +67,8 @@ class Egovs_Shipment_Model_Bulkgoods
 	
 		$costs = array();
 		
+	
+		
 		foreach ($request->getAllItems() as $item) {
 				if ($item->getParentItem()) {
 					continue;
@@ -78,6 +80,7 @@ class Egovs_Shipment_Model_Bulkgoods
 							$cost = $this->getCost($child);
                             if($cost != null){
                                 $costs[] = $cost;	
+                               
                             }
 						}
 					}
@@ -85,6 +88,7 @@ class Egovs_Shipment_Model_Bulkgoods
 				$cost = $this->getCost($item);
                 if($cost != null){
                      $costs[] = $cost;
+                    
                 }
 
 			}
@@ -94,11 +98,45 @@ class Egovs_Shipment_Model_Bulkgoods
 			return false;
 		}
 		
-		$maxPrice  = 0;
+		//maximaler Preis per Versandkostengruppe
+		/*
+		$maxPricePerGroup = array();
+		
 		foreach($costs as $cost){
-			if($cost->getPrice() > $maxPrice){
-				$maxPrice = $cost->getPrice();
+			$group = $cost->getRate()->getShipmentGroup();
+			//initialisieren
+			if(!isset($maxPricePerGroup[$group])){
+				$maxPricePerGroup[$group] = 0.0;
 			}
+			//vergleich
+			if($cost->getPrice() > $maxPricePerGroup[$group]){
+				$maxPricePerGroup[$group] = $cost->getPrice();
+			}
+		}
+		*/
+		
+		
+		//summierter Preis für Artikel die pro Stück berechnet werden (d.h rate.qty  = 0)
+		$PricePerItemSum = 0.0;
+		foreach($costs as $cost){
+			if($cost->getRate()->getQty() == 0)
+			{
+				$PricePerItemSum += $cost->getPrice();
+			}
+		}
+		
+		
+		$maxPrice  = 0.0;
+		foreach($costs as $cost){
+			if($cost->getRate()->getQty() != 0){
+				if($cost->getPrice() > $maxPrice){
+					$maxPrice = $cost->getPrice();
+				}
+			}
+		}
+		
+		if($PricePerItemSum > $maxPrice){
+			$maxPrice = $PricePerItemSum;
 		}
 		
 		
@@ -163,16 +201,16 @@ class Egovs_Shipment_Model_Bulkgoods
 		if(count($regions) == 1){
             $obj = null;
 			if($regions[0]->getQty() == 0){
-				$obj = new Varien_Object(array('rate'=>$regions[0],'price' => $regions[0]->getPrice() * $item->getQty()));
+				$obj = new Varien_Object(array('rate'=>$regions[0],'price' => $regions[0]->getPrice() * $item->getQty(),'is_price_per_item'=>true));
 			}else{
-                $obj = new Varien_Object(array('rate'=>$regions[0],'price' => $regions[0]->getPrice()));
+                $obj = new Varien_Object(array('rate'=>$regions[0],'price' => $regions[0]->getPrice(),'is_price_per_item'=>true));
             }
             return $obj;
 		}
 		foreach($regions as $r){
 			//falls Menge größer
 			if ($item->getQty() >=  $r->getQty()) {
-				$obj = new Varien_Object(array('rate'=>$r,'price' => $r->getPrice())); 	
+				$obj = new Varien_Object(array('rate'=>$r,'price' => $r->getPrice(),'is_price_per_item'=>true)); 	
 				return $obj;
 			}
 			

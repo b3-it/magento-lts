@@ -7,6 +7,9 @@ $installer->startSetup();
 // Default-Package nach "egov", wenn es "default" ist
 $oldPackage = Mage::getStoreConfig('design/package/name');
 
+// Neue Design-Packages
+$newPackages = array('egov', 'dwd', 'bfr', 'adlerwarte');
+
 // Daten, welche im Design angepasst werden sollen
 // SELECT * FROM `core_config_data` WHERE `path` LIKE 'design/theme%'
 $design_path = array(
@@ -17,7 +20,7 @@ $design_path = array(
     'design/theme/locale'
 );
 
-if ( $oldPackage == 'default') {
+if ( ($oldPackage == 'default') AND !in_array($oldPackage, $newPackages) ) {
     // eigene Designs löschen
     $installer->run("DELETE FROM `core_config_data` WHERE `path` = 'design/package/name' AND `scope_id` > 0");
     

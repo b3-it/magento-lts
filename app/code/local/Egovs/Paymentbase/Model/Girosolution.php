@@ -98,6 +98,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
     			$payment = $this->getInfoInstance();
     		}
     	}
+
+    	if (($txId = $payment->getTransactionId()) || ($txId = $payment->getOrder()->getExternesKassenzeichen())) {
+            if (preg_match('/[\w]+\/[\w]+$/', $txId)) {
+                return $txId;
+            }
+        }
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
     		Mage::throwException($this->__('No kassenzeichen available!'));
     	}
@@ -193,7 +199,6 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @return string the URL to be redirected to
 	 */
 	public function getOrderPlaceRedirectUrl() {
-		//return Mage::getUrl("girosolution/{$this->getCode()}/redirect");
 		return $this->getGirosolutionRedirectUrl();
 	}
 	/**
@@ -312,7 +317,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$transactionType,
 					$this->getBuchungsListeParameter($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal())
 			);			
-			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
+			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->getCode() == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
 				//Fallback zu alter Methode
 				Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 				$objResult = $this->_getSoapClient()->anlegenKassenzeichen($this->_getMandantNr(), $this->_getECustomerId(), $objBuchungsliste, null, null, $transactionType);
@@ -325,21 +330,21 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$this->loeschenKunde();	
 		
 //		Mage::log("{$this->getCode()}::post::objSOAPClientBfF->anlegenKassenzeichen(" . var_export($this->_getMandantNr(), true) . ", " . var_export($this->_getECustomerId(), true) . ", " . var_export($objResult->buchungsListe, true) . ", null, null, $saferpay_type)", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-		
+
 		return $objResult->buchungsListe->kassenzeichen;
 	}
-	
+
 	/**
 	 * Capture payment
-	 * 
+	 *
 	 * @param Varien_Object $payment Payment
 	 * @param float         $amount  Betrag
-	 * 
+	 *
 	 * @return Egovs_Paymentbase_Model_Saferpay
 	 */
 	public function capture(Varien_Object $payment, $amount) {
 		parent::capture($payment, $amount);
-		
+
 		//Ticket #705
 		//http://www.kawatest.de:8080/trac/ticket/705
 		if (!$this->hasKassenzeichen($payment)) {
@@ -347,25 +352,13 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		}
 		
 		$order = $this->_getOrder();
-		
+
 		if (!$order->getPayment()->getTransactionId()) {
 			Mage::throwException(
 					Mage::helper('paymentbase')->__('Payment not confirmed from payment gateway. In most cases you have to cancel the invoice and order.')
 			);
 		}
-		if ($order 
-			&& ($order->getState() == Mage_Sales_Model_Order::STATE_NEW
-				|| $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
-				|| $order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW)
-		) {
-			
-    		//STATE_COMPLETE ist in Magento ab 1.6 geschützt
-    		//wird für Virtuelle Produkte aber automatisch gesetzt
-    		$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
-	    	
-			//$order->setState($orderState);
-		}
-		
+
 		if ($order
 			&& ($order->getState() == Mage_Sales_Model_Order::STATE_PROCESSING
 				|| $order->getState() == Mage_Sales_Model_Order::STATE_COMPLETE)
@@ -374,10 +367,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			// we add a status message to the message-section in admin
 			$order->addStatusHistoryComment(Mage::helper('paymentbase')->__('Successfully received payment from customer'));
 		}
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 * Eigene Anpassungen für $this->_fieldsArr für Girosolution
 	 * 
@@ -388,7 +381,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	
 	/**
 	 * Liefert die PayerNote
-	 * 
+	 *
 	 * Falls es keine PayerNote gibt wird:
 	 * <ul>
 	 * 	<li>Beschreibung</li>
@@ -396,7 +389,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * 	<li>Zahlung per Saferpay</li>
 	 * </ul>
 	 * als Alternative geliefert.
-	 * 
+	 *
 	 * @return string
          */
 	protected function _getPayerNote() {
@@ -405,7 +398,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/description")) <= 0) {
 				//Wenn Description nicht gefüllt
 	        	if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/title")) <= 0) {
-	        		$desc = "Zahlung per Saferpay";
+	        		$desc = "Zahlung per GiroSolution";
 	        	} else {
 	        		$desc = Mage::getStoreConfig("payment/{$this->getCode()}/title");
 	        	}
@@ -415,7 +408,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		} else {
 			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/payernote");
 		}
-		
+
 		return $desc;
 	}
 	/**
@@ -425,7 +418,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 *
 	 * Abgeleitete Klassen müssen _getGirosolutionRedirectUrl() überschreiben!
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public final function getGirosolutionRedirectUrl() {
 
@@ -445,7 +438,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         } else {
 			$this->_fieldsArr['amount'] = ($_source->getTotalDue() * 100);
 			$this->_fieldsArr['currency'] = $_source->getOrderCurrencyCode();
-			
+
 			$_realOrderId = $_source->getRealOrderId();
         }
 		
@@ -483,75 +476,76 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		
 		$msg = null;
 		$iReturnCode = null;
-		$request = null;
+        $request = new GiroCheckout_SDK_Request($this->_transaction_type);
 		try {
 			// Sends request to Girocheckout.
-			$request = new GiroCheckout_SDK_Request($this->_transaction_type);
 			$request->setSecret($this->getProjectPassword());
 			foreach ($this->_fieldsArr as $param => $value) {
 				$request->addParam($param, $value);
 			}
 			$request->submit();
-			
+
 			if ($request->requestHasSucceeded()) {
 				$strUrlRedirect = $request->getResponseParam('redirect');
-				
-				$result ["status"] = 1001;
-				$result ["redirect"] = $strUrlRedirect;
-				$result ["reference"] = $request->getResponseParam('reference');
-				$result ["gcTransInfo"] = $request->getResponseParams();
-				
+
 				return $strUrlRedirect;
-			} else {
-				$iReturnCode = $request->getResponseParam('rc');
-				$strResponseMsg = $request->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
-				if (!$strResponseMsg) {
-					$strResponseMsg = $this->_getHelper()->__("Unkown server error.");
-				}
-				if ($request->getResponseParam('reference')) {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				} else {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				}
-				$_source = $this->_getOrder();
-				if (!$_source) {
-					/** @var $_source Mage_Sales_Model_Quote */
-					$_source = $this->getInfoInstance()->getQuote();
-				} else {
-					/** @var $_source Mage_Sales_Model_Order */
-					/** @var $payment Mage_Sales_Model_Order_Payment */
-					$payment = $_source->getPayment();
-					$payment->setTransactionId($request->getResponseParam('reference'));
-					$transaction = $payment->addTransaction('order', null, false, '');
-					$transaction->setParentTxnId($_source->getIncrementId());
-					$transaction->setIsClosed(1);
-					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
-					$transaction->save ();
-					$_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
-					$_source->cancel()->save();
-					
-					$_quoteId = $_source->getQuoteId();
-					$_source = $_source->getQuote();
-					if (!$_source) {
-						$_source = Mage::getModel('sales/quote')->load($_quoteId);
-					}
-				}
-				
-				if (!$_source->isEmpty()) {
-					if (!$_source->getIsActive()) {
-						$_source->setIsActive(true)->save();
-					}
-					Mage::getSingleton('checkout/session')->replaceQuote($_source);
-				}
 			}
+
+            $iReturnCode = $request->getResponseParam('rc');
+            $strResponseMsg = $request->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
+            if (!$strResponseMsg) {
+                $strResponseMsg = $this->_getHelper()->__("Unkown server error.");
+            }
+            if ($request->getResponseParam('reference')) {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on Girosolution REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            } else {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on Girosolution\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            }
+
+            $msg = 'Failed to start transaction on GiroSolution';
+            throw new Exception($msg);
 		} catch ( Exception $e ) {
 			Mage::logException($e);
+
+            //Roll Back
+            $_source = $this->_getOrder();
+            if (!$_source) {
+                /** @var $_source Mage_Sales_Model_Quote */
+                $_source = $this->getInfoInstance()->getQuote();
+            } else {
+                /** @var $_source Mage_Sales_Model_Order */
+                /** @var $payment Mage_Sales_Model_Order_Payment */
+                $payment = $_source->getPayment();
+                $payment->setTransactionId($request->getResponseParam('reference'));
+                $transaction = $payment->addTransaction('order', null, false, '');
+                if ($transaction) {
+                    $transaction->setParentTxnId($_source->getIncrementId());
+                    $transaction->setIsClosed(1);
+                    $transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
+                    $transaction->save();
+                }
+                $_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+                $_source->cancel()->save();
+
+                $_quoteId = $_source->getQuoteId();
+                $_source = $_source->getQuote();
+                if (!$_source) {
+                    $_source = Mage::getModel('sales/quote')->load($_quoteId);
+                }
+            }
+
+            if (!$_source->isEmpty()) {
+                if (!$_source->getIsActive()) {
+                    $_source->setIsActive(true)->save();
+                }
+                Mage::getSingleton('checkout/session')->replaceQuote($_source);
+            }
 		}
-		
+
 		if (is_null($msg)) {
 			$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
 		}
@@ -580,7 +574,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	public function getRedirectBlockType() {
 		return $this->_redirectBlockType;
 	}
-	
+
 	/**
 	 * Gibt an ob dieses Zahlmodul nur Offline-Erstattungen erlaubt
 	 *
@@ -593,10 +587,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	public function getSupportsOnlyOfflineCreditmemo() {
 		return true;
 	}
-	
+
 	/**
 	 * Ändert die Order nach der Bezahlung
-	 * 
+	 *
 	 * @param string $paymentSuccessful
 	 * @param string $merchantTxId
 	 * @param string $updateOrderState
@@ -611,22 +605,22 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @return boolean
 	 */
 	public function modifyOrderAfterPayment(
-			$paymentSuccessful = false,
-			$merchantTxId = '',
-			$updateOrderState = false,
-			$orderStateComment = '',
-			$sendEmail = false,
-			$createInvoice = true,
-			$invoiceComment = '',
-			$gcRef = null,
-			$gcTransInfo = null,
-			$orderStateFinished = Mage_Sales_Model_Order::STATE_PROCESSING) {
-	
+        $paymentSuccessful = false,
+        $merchantTxId = '',
+        $updateOrderState = false,
+        $orderStateComment = '',
+        $sendEmail = false,
+        $createInvoice = true,
+        $invoiceComment = '',
+        $gcRef = null,
+        $gcTransInfo = null,
+        $orderStateFinished = Mage_Sales_Model_Order::STATE_PROCESSING) {
+
 				$paymentSuccessful = isset($paymentSuccessful) ? (is_bool($paymentSuccessful) ? $paymentSuccessful : false) : false;
 				$merchantTxId = isset($merchantTxId) ? $merchantTxId : '';
 				$updateOrderState = isset($updateOrderState) ? (is_bool($updateOrderState) ? $updateOrderState : false) : false;
 				$orderStateComment = isset($orderStateComment) ? $orderStateComment : '';
-	
+
 				if($orderStateComment == '') {
 					if($paymentSuccessful == true)
 						$orderStateComment = 'Payment was successful';
@@ -639,7 +633,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				if($invoiceComment == '') {
 					$invoiceComment = Mage::helper('egovs_girosolution')->__('Automatically generated by payment confirmation');
 				}
-				
+
 				if ($this->getDebug()) {
 					$tmp = '';
 					foreach ($gcTransInfo as $k => $v) {
@@ -647,9 +641,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					}
 					Mage::log("{$this->getCode()}::\n$tmp", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 				}
-	
-				$extKassenzeichen = trim(str_replace("{$this->_getBewirtschafterNr()}/", "", $merchantTxId));
-				
+
+				$extKassenzeichen = trim($merchantTxId);
+				if (preg_match('/(?<=\/)[\w]+$/', $extKassenzeichen, $matches)) {
+				    $extKassenzeichen = $matches[0];
+                }
+
 				$order = $this->_getOrder();
 				// If order was not found, return false
 				if(!$order || $order->isEmpty()) {
@@ -659,7 +656,9 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 				$orderId = $order->getIncrementId();
 				
 				if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
-					Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus Girosolutiondaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+                    $msg = "Kassenzeichen stimmt nicht mit Kassenzeichen aus TKonnektdaten überein!";
+                    $msg .= "\r\nTKonnekt:$extKassenzeichen != {$order->getPayment()->getKassenzeichen()}:Webshop";
+					Mage::log("{$this->getCode()}::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 					return false;
 				}
 				
@@ -684,33 +683,33 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 							);
 					$order->save();
 				}
-	
+
 				if($paymentSuccessful == false) {
 					// If no update was required, return true, because the order was found
 					if($updateOrderState == false) {
 						return true;
 					}
-	
+
 					$order->cancel();
 					$order->addStatusHistoryComment($orderStateComment);
 					$order->save();
 					Mage::getSingleton('checkout/session')->addNotice($orderStateComment);
 					return true;
 				} // end failed payment
-	
-	
+
+
 				// SUCCESSFUL PAYMENT
 				// Set customers shopping cart inactive
 				$quote = $this->_getOrder()->getQuoteId();
 				$quote = Mage::getModel('sales/quote')->load($quote);
 				//Mage::getSingleton('checkout/session')->getQuote()->setIsActive(false)->save();
 				$quote->setIsActive(false)->save();
-				
+
 				// If no update was required, return true, because the order was found
 				if($updateOrderState == false) {
 					return true;
 				}
-				
+
 				//TODO : Providername ermitteln
 				$_providerName = 'VISA';
 				
@@ -728,17 +727,17 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$order->setState(Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW, false, $this->__('Could not activate Kassenzeichen! See log files for further informations.'), false);
 					return true;
 				}
-	
+
 				// Send email
 				if($sendEmail == true) {
 					$order->sendNewOrderEmail();
 					$order->setEmailSent(true);
 				}
-					
+
 				if(empty($orderStateFinished)) {
 					$orderStateFinished = true;
 				}
-	
+
 				// Modify payment
 				$order->setState(
 						Mage_Sales_Model_Order::STATE_PROCESSING,
@@ -746,14 +745,14 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 						$orderStateComment,
 						$sendEmail
 				);
-	
+
 				if($createInvoice == true) {
 					if($order->canInvoice()) {
 						$invoice = $order->prepareInvoice();
 						$invoice->addComment($invoiceComment);
 						$invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
 						$invoice->register();
-						
+
 						Mage::getModel('core/resource_transaction')->addObject($invoice)->addObject($invoice->getOrder())->save();
 						$invoice->sendEmail(true, '');
 						//$order->setState(Mage_Sales_Model_Order::STATE_PROCESSING, $orderStateFinished, $invoiceComment);
@@ -860,7 +859,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @param string $refId			TranskationsID des Zahlungsproviders
 	 * @param string $providerName  VISA,MASTER,GIROPAY,SEPASDD
 	 *
-	 * @return Egovs_Paymentbase_Controller_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Model_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 *
 	 * @throws Exception
 	 */

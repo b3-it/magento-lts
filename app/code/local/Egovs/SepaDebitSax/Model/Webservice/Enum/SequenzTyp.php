@@ -23,6 +23,8 @@ class Egovs_SepaDebitSax_Model_Webservice_Enum_SequenzTyp extends Egovs_SepaDebi
     /**
      * Constant for value 'FRST' First = erstes Mandat
      * @return string 'FRST'
+     *
+     * @deprecated Seit SEPA 3.0 - Es soll immer 'RCUR' benutzt werden!
      */
     const VALUE_FRST = 'FRST';
     /**

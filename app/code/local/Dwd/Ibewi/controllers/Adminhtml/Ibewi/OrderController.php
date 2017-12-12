@@ -25,7 +25,7 @@ class Dwd_Ibewi_Adminhtml_Ibewi_OrderController extends Dwd_Ibewi_Controller_Adm
 		try 
 		{
 			$this->_initAction();
-			//$this->verifyDate();
+			$this->verifyDate();
 			$this->renderLayout();
 		}
 		catch(Exception $ex)

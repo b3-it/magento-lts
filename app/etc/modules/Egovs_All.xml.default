@@ -95,7 +95,7 @@
       </depends>
     </Egovs_GermanTax>
     <Egovs_Girosolution>
-        <active>false</active>
+        <active>true</active>
         <codePool>local</codePool>
         <depends>
             <Mage_Payment />

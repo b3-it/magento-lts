@@ -40,7 +40,9 @@ Supported layout update handles (special):
     <PRODUCT_TYPE_mapseries translate="label" module="catalog">
         <label>Catalog Product View (Grouped)</label>
          <reference name="head">
+         <!-- 
             <action method="addJs"><script>bkg/mapseries/view.js</script></action>
+         -->
          </reference>
         <reference name="product.info">
             <block type="mapseries/product_view_type_mapseries" name="product.info.grouped" as="product_type_data" template="catalog/product/view/type/mapseries.phtml">
