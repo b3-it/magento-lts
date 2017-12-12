@@ -115,15 +115,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Form extends Mage_Adminh
       
       ));
       
-      $fieldset->addField('betroffenheit_layer', 'checkbox', array(
-      		'label'     => Mage::helper('bkgviewer')->__('betroffenheit'),
-      		//'required'  => true,
-      		//'values'    => $this->getPages(),
-      		'name'      => 'betroffenheit_layer',
-      		'value'	=> ''
-      		//'onchange'  => 'onchangeTransferType()',
-      
-      ));
+
       
       $fieldset->addField('entity_layer', 'checkbox', array(
       		'label'     => Mage::helper('bkgviewer')->__('entity layer'),
