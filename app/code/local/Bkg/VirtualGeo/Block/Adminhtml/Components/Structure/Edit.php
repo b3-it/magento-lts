@@ -28,11 +28,44 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit extends Mage_Admi
             'class'     => 'save',
         ), -100);
 
+       	$url = $this->getUrl('adminhtml/viewer_service_service/layers',array('id'=>'layer_id'));
         $this->_formScripts[] = "
             function saveAndContinueEdit(){
                 editForm.submit($('edit_form').action+'back/edit/');
             }
+        		
+        	function reloadLayer()
+			{
+        		var url = '".$url."';
+				var id = \$j('#service option:selected').val();
+        		url = url.replace('layer_id',id);
+        		//alert(url);
+        		\$j.getJSON(url, function(data) {
+				    \$j('#service_layer option').remove();
+				    \$j.each(data, function(){
+				        \$j('#service_layer').append(new Option(this.name,this.value));
+					})
+        		})	
+				
+			}	
+        				
+        	function toogleLayer()
+			{
+        		if(\$j('#showLayer').is(':checked'))
+        		{
+        			\$j('#service').show();
+        			\$j('#service_layer').show();
+        		}
+        		else
+        		{
+        			\$j('#service').hide();
+        			\$j('#service_layer').hide();
+        		}
+			}
+        				
+        				toogleLayer();
         ";
+        
     }
 
     public function getHeaderText()
