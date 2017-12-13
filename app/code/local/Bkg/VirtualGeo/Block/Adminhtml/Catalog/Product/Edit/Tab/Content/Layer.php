@@ -15,6 +15,10 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
     }
 
   
+    public function getRefeshComponentContentUrl()
+    {
+    	return $this->getUrl('*/virtualgeo_components_content_category/refeshComponentContent');
+    }
 
 	private function getStoreId()
 	{

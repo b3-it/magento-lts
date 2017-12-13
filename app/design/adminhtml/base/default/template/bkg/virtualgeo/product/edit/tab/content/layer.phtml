@@ -46,4 +46,13 @@ foreach ($this->getNodes() AS $node){
 ?>
 	nodeOptions.open_all();
 }
+
+function refeshComponentContent()
+{
+	var cat_id = $j('#component_content_category').val();
+	var url = "<?php echo $this->getRefeshComponentContentUrl()?>id/"+cat_id;
+	$j.get( url , function( data ) {
+		  $j( "#layerForm_Name" ).html( data );
+		});
+}
 </script>

@@ -79,6 +79,12 @@ Layout handle for budle products
                </block>
         </reference>
     </adminhtml_virtualgeo_components_content_index>
+    <adminhtml_virtualgeo_components_content_category_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_content_category" name="geocontent" >
+               </block>
+        </reference>
+    </adminhtml_virtualgeo_components_content_category_index>
     
     <adminhtml_catalog_product_virtualgeo>
             <reference name="head">
