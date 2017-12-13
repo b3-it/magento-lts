@@ -15,6 +15,20 @@
    $j(function() {
      <?php echo $this->getComposit()->getOpenLayer(); ?>
 
+     // set style
+      vector.setStyle(function(feature, resolution) {
+          j = $j('#qty-' + feature.get('sku'));
+          return new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                  color: 'rgba(0, 0, 0, 1.0)',
+                  width: 1
+              }),
+              fill: new ol.style.Fill({
+                  color: j.length == 0 ? 'rgba(255, 0, 0, 0.25)' : j.val() == 0 ? 'rgba(0, 0, 255, 0.25)' : 'rgba(0, 255, 0, 0.25)',
+              }),
+          });
+      });
+
       var map = new ol.Map({
         layers: layers,
         controls: ol.control.defaults(),
