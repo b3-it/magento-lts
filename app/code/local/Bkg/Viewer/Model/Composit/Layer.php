@@ -222,24 +222,6 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	// TODO fixed bugs in OL and others, no loader is needed
 /*
     	// need loader to convert features
-    	$text[] = "loader: function(extent, resolution, projection) {";
-    	$text[] = "   src = this;";
-        $text[] = "   console.log([extent, resolution, projection]);";
-        
-        //$text[] = " path = '".$this->getService()->getUrlMap()."&request=GetFeature&typename=".$this->getServiceLayer()->getName()."' +";
-    	//$text[] = "		'&srsname=EPSG:6.9:31467&' +";
-    	//$text[] = "		'bbox=' + extent.join(',') + ',EPSG:6.9:31467';";
-    	
-        $text[] = "path = 'http://sg.geodatenzentrum.de/wfs_vertriebseinheiten?SERVICE=wfs&VERSION=1.1.0&request=GetFeature&typename=vertriebseinheiten:tk200&srsname=urn:x-ogc:def:crs:EPSG:25832';";
-        
-        $text[] = "   console.log(path);";
-        $text[] = "jQuery.ajax(path, {cache: false }).then(function(response,textStatus, jqXHR ) {";
-        $text[] = "srcProjection = src.getFormat().readProjection(response);";
-        //$text[] = "console.log(srcProjection."
-        $text[] = "   console.log(ol.proj.get(srcProjection));";
-//        $text[] = "srcProjection ='EPSG:25832';";
-        $text[] = "data = src.getFormat().readFeatures(response, {dataProjection: srcProjection, featureProjection: projection});";
-        //$text[] = "   console.log(data);";
 //*
 
         $text[] = "for (var i=0;i<data.length;i++) {";
@@ -273,28 +255,6 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
 
     	$text[] = "var vector = new ol.layer.Vector({";
     	$text[] = "  source: vectorSource".self::$Count.",";
-    	$text[] = "  style: function(feature, resolution) {";
-    	$text[] = "    j = \$j('#qty-' + feature.get('sku'));";
-    	
-    	$text[] = "    return new ol.style.Style({";
-    	$text[] = "      stroke: new ol.style.Stroke({";
-    	$text[] = "        color: 'rgba(0, 0, 0, 1.0)',";
-    	$text[] = "        width: 1";
-    	$text[] = "      }),";
-    	$text[] = "      fill: new ol.style.Fill({";
-    	$text[] = "        color: j.length == 0 ? 'rgba(255, 0, 0, 0.25)' : j.val() == 0 ? 'rgba(0, 0, 255, 0.25)' : 'rgba(0, 255, 0, 0.25)',";
-    	$text[] = "      }),";
-/*
-    	$text[] = "      text:  new ol.style.Text({";
-    	//$text[] = "        scale: 2,";
-    	$text[] = "        fill: new ol.style.Fill({";
-    	$text[] = "          color: 'rgba(0, 0, 255, 1.0)',";
-    	$text[] = "        }),";
-    	$text[] = "        text: feature.get('name')";
-    	$text[] = "      }),";
-//*/
-    	$text[] = "    });";
-    	$text[] = "  }";
     	$text[] = "});";
     	$text[] = "layers.push(vector);";
     	 
