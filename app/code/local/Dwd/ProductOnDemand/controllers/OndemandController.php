@@ -166,6 +166,9 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$params[Mage_Core_Model_Url::FORM_KEY] = Mage::getSingleton('core/session')->getFormKey();
 
 		$this->_forward('add', 'cart', 'checkout', $params);
+        Mage::app()->getRequest()->setInternallyForwarded(true);
+		//Redirect endet in Endlosschleife
+		//$this->_redirect('checkout/cart/add', $params);
 	}
 
 	/**
