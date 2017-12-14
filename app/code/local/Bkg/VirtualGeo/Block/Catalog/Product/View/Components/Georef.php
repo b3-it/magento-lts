@@ -7,4 +7,10 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Georef extends Bkg_Vi
 	{
 		return  $this->helper('virtualgeo')->__('Coordinate Reference System');
 	}
+	
+	public function getOptions($fields = null)
+	{
+	    $fields = array('code', 'epsg_code');
+	    return parent::getOptions($fields);
+	}
 }

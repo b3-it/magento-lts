@@ -198,7 +198,7 @@ Additional block for bundle product type
                 <action method="addComponentsBlock">
                     <type>georef</type>
                     <block>virtualgeo/catalog_product_view_components_georef</block>
-                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/georef.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
                     <type>format</type>

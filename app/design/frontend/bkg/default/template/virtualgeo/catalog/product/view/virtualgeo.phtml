@@ -30,7 +30,14 @@
 
 <script type="text/javascript">
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
+    <?php if ($this->getComposit()): ?>
+    var _layerFunc  = function() {
+    	<?php echo $this->getComposit()->getOpenLayer(); ?>
+    	return layers;
+	};
+	<?php endif; ?>
 </script>
+
 <div id="virtualgeo">
 <?php
 $blocks = $this->getBlocksFromComponents();
@@ -41,6 +48,11 @@ foreach ($blocks AS $blockname) {
 	}
 }
 ?>
+<h3>
+Map
+</h3>
+<div class="virtualgeo-map" id="virtualgeo-openlayer">
+</div>
 </div>
 
 <?php if ($this->displayProductStockStatus()): ?>

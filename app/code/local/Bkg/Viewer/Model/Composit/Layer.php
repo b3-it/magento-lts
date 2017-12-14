@@ -173,6 +173,10 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         $text[] = "  var options = ol.source.WMTS.optionsFromCapabilities(result, {";
         $text[] = "    layer: '".$this->getServiceLayer()->getName()."',";
         $text[] = "  });";
+        //$text[] = "  console.log(options);";
+        
+        //$text[] = "  console.log(ol.proj.getTransform(options.projection, 'EPSG:4647'));";
+        //$text[] = "  layer".self::$Count.".setSource(new ol.source.OSM({projection: _epsg}));";
         $text[] = "  layer".self::$Count.".setSource(new ol.source.WMTS(options));";
         $text[] = "});";
         
@@ -219,6 +223,27 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	$text[] = "	url: '".$this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName()."',";
     	// srsName set somehow?
 
+/*//    	
+    	$text[] = "	loader: function(extent, resolution, projection) {";
+    	//$text[] = "	console.log(extent, resolution, projection);";
+    	$text[] = "	console.log(this.getUrl());";
+    	$text[] = "	src = this;";
+
+    	$text[] = "	jQuery.get(this.getUrl(), function( data ) {";
+    	//$text[] = "	console.log(data);";
+    	$text[] = "	srcProjection = ol.proj.get(src.getFormat().readProjection(data));";
+    	$text[] = "	console.log(srcProjection, projection);";
+    	$text[] = "	features = src.getFormat().readFeatures(data, {dataProjection: projection, featureProjection: srcProjection});";
+    	$text[] = "for (var i=0;i<features.length;i++) {";
+    	// BUG in OL
+    	//$text[] = "    features[i].getGeometry().transform(srcProjection, projection);";
+    	$text[] = "}";
+    	$text[] = "	src.addFeatures(features);";
+    	$text[] = "});";
+    	$text[] = "	},";
+
+//*/
+    	
     	// TODO fixed bugs in OL and others, no loader is needed
 /*
     	// need loader to convert features

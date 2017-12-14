@@ -8,7 +8,7 @@ class Bkg_VirtualGeo_MapController extends Mage_Core_Controller_Front_Action
 {
     public function structurLayerAction() {
 
-        $layerId = intval($params = $this->getRequest()->getParam('id'));
+        $layerId = intval($this->getRequest()->getParam('id'));
         $result = "";
         if($layerId > 0)
         {
@@ -16,7 +16,7 @@ class Bkg_VirtualGeo_MapController extends Mage_Core_Controller_Front_Action
             if($layer->getId())
             {
                $service = Mage::getModel('bkgviewer/service_service')->load($layer->getServiceId());
-               $result = $service->getUrlFeatureinfo()."&typename=".$layer->getName()."',";
+               $result = $service->getUrlFeatureinfo()."&typename=".$layer->getName();
             }
         }
 
