@@ -73,7 +73,7 @@ function isEmptyElement(val) {
 function getFormData(elementID, data)
 {
 	// alle diese IDs werden beim hinzufügen zum DatenArray ausgelassen
-	var exclude = ['copy_values'];
+	var exclude = ['copy_values', 'component_content_category'];
 
 	// Wenn das Array mit Elementen gefüllt ist, wird dies zu durchsuchen benutzt
 	var idArray    = [];
@@ -97,6 +97,17 @@ function getFormData(elementID, data)
 			value = $j(this).is(':checked');
 		}
 
+		// End-String ermitteln und Wert aus dem Array setzen
+		var ending = element.slice(-7);
+		if ( ending == 'checked' || ending == 'eadonly' ) {
+			if ( ending == 'checked' && data.checked != null ) {
+				value = data.checked;
+			}
+			if ( ending == 'eadonly' && data.readonly != null ) {
+				value = data.readonly;
+			}
+		}
+
 		// Splitt für MultiSelect
 		if (multi && multi !== false) {
 			// Daten aus dem JS-Tree nutzen
@@ -105,12 +116,10 @@ function getFormData(elementID, data)
 
 		// Prüfen, ob Element in der Ausschluss-Liste enthalten ist
 		if ( $j.inArray($j(this).attr('id'), exclude) == -1 ) {
-			dataOption.push({
-				'name' : $j(this).attr('name'),
-				'eID'  : $j(this).attr('id'),
-				'type' : $j(this).attr('type'),
-				'value': value
-			});
+			var arrayKey = $j(this).attr('name');
+			var tmp = {};
+			tmp[arrayKey] = value;
+			dataOption.push(tmp);
 		}
 	});
 
@@ -302,7 +311,7 @@ var nodeOptions = {
 		}
 
 		var nodeData = getFormData('#contentlayer_form', data);
-		nodeData.push(data);
+		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
 		var node = ref.get_node(sel);
@@ -334,7 +343,7 @@ var nodeOptions = {
 		sel = this.createTextNode(sel, data);
 
 		var nodeData = getFormData('#contentlayer_form', data);
-		nodeData.push(data);
+		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
 		var node = ref.get_node(sel);
