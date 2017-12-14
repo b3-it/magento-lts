@@ -70,16 +70,33 @@ function isEmptyElement(val) {
  * @param    array     Originale Daten aus dem JS-Tree
  * @return   array     JSON-String mit Array-Daten
  */
-function getFormData(elementID, data)
+function getFormData(elementID, data, node)
 {
 	// alle diese IDs werden beim hinzufügen zum DatenArray ausgelassen
-	var exclude = ['copy_values', 'component_content_category'];
+	//var exclude = ['copy_values', 'component_content_category'];
 
 	// Wenn das Array mit Elementen gefüllt ist, wird dies zu durchsuchen benutzt
-	var idArray    = [];
-	var searchFor  = '';
+	//var idArray    = [];
+	//var searchFor  = '';
 	var dataOption = new Array();
+	var tmp = {};
 
+	tmp.name   = data.entity_id;
+	tmp.numer  = data.number;
+	tmp.parent = data.parent;
+	tmp.is_checked = $j('#layerForm_Name_is_checked').is(':checked');
+	tmp.is_readonly = $j('#layerForm_Name_is_readonly').is(':checked');
+
+	if ( data.checked != null ) {
+		tmp.is_checked = data.checked;
+	}
+	if ( data.readonly != null ) {
+		tmp.is_readonly = data.readonly;
+	}
+
+	dataOption.push(tmp);
+
+/*
 	if ( idArray.length ) {
 		searchFor = idArray;
 	}
@@ -122,6 +139,7 @@ function getFormData(elementID, data)
 			dataOption.push(tmp);
 		}
 	});
+*/
 
 	// JSON-Array zurückgeben
 	return dataOption;
@@ -309,12 +327,13 @@ var nodeOptions = {
 		if(sel && edit) {
 			ref.edit(sel);
 		}
-
-		var nodeData = getFormData('#contentlayer_form', data);
+        var node = ref.get_node(sel);
+		//data.parent = node.;
+		var nodeData = getFormData('#contentlayer_form', data, sel);
 		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
-		var node = ref.get_node(sel);
+
 		this.move(node, this.itemCount);
 		this.open_all();
 
@@ -331,7 +350,7 @@ var nodeOptions = {
 
 		sel = sel[0];
 		ref.open_node(sel);
-
+		var parentNode = ref.get_node(sel);
 		var data = new Object();
 		data.number = this.itemCount;
 		data.type = 'default';
@@ -340,9 +359,17 @@ var nodeOptions = {
 		data.readonly = input_data.readonly;
 		data.checked = input_data.checked;
 		data.entity_id = id;
-		sel = this.createTextNode(sel, data);
+        data.parent = 0;
+		if(parentNode.data != null)
+		{
+			data.parent = parentNode.data.number;
+		}
 
-		var nodeData = getFormData('#contentlayer_form', data);
+		sel = this.createTextNode(sel, data);
+		var node = ref.get_node(sel);
+
+		var nodeData = getFormData('#contentlayer_form', data, node);
+
 		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
