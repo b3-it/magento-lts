@@ -70,7 +70,7 @@ function isEmptyElement(val) {
  * @param    array     Originale Daten aus dem JS-Tree
  * @return   array     JSON-String mit Array-Daten
  */
-function getFormData(elementID, data)
+function getFormData(elementID, data, node)
 {
 	// alle diese IDs werden beim hinzufügen zum DatenArray ausgelassen
 	//var exclude = ['copy_values', 'component_content_category'];
@@ -81,7 +81,9 @@ function getFormData(elementID, data)
 	var dataOption = new Array();
 	var tmp = {};
 
-	tmp.name = data.entity_id;
+	tmp.name   = data.entity_id;
+	tmp.numer  = data.number;
+	tmp.parent = data.parent;
 	tmp.is_checked = $j('#layerForm_Name_is_checked').is(':checked');
 	tmp.is_readonly = $j('#layerForm_Name_is_readonly').is(':checked');
 
@@ -326,7 +328,7 @@ var nodeOptions = {
 			ref.edit(sel);
 		}
 
-		var nodeData = getFormData('#contentlayer_form', data);
+		var nodeData = getFormData('#contentlayer_form', data, sel);
 		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
@@ -357,8 +359,9 @@ var nodeOptions = {
 		data.checked = input_data.checked;
 		data.entity_id = id;
 		sel = this.createTextNode(sel, data);
+		var node = ref.get_node(sel);
 
-		var nodeData = getFormData('#contentlayer_form', data);
+		var nodeData = getFormData('#contentlayer_form', data, node);
 		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
