@@ -18,33 +18,46 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$hashAlgo = (string) Mage::getStoreConfig('catalog/dwd_pod/hash_algorithm');
 		if (!$hash || hash($hashAlgo, $salt.$hashPrefix) != $hash) {
 			$msg = Mage::helper('prondemand')->__('Transaction ID is incorrect');
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
 		}
+
+        Mage::log(sprintf("pod::Prepare call for application server... (ID:%s)", $id), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 
 		$msg = Mage::helper('prondemand')->__('Application Server is not available');
 		$transactionUrl = (string) Mage::getStoreConfig('catalog/dwd_pod/transaction_url');
 		$httpClient = new Varien_Http_Client();
 		/* @var $response Zend_Http_Response */
-		$response = $httpClient->setUri($transactionUrl)
-			->setParameterGet(array('id' => $id))
-			->setConfig(array('timeout' => 7))
-			->request('GET')
-		;
+		try {
+            $response = $httpClient->setUri($transactionUrl)
+                ->setParameterGet(array('id' => $id))
+                ->setConfig(array('timeout' => 7))
+                ->request('GET');
+        } catch (Exception $e) {
+		    Mage::logException($e);
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            Mage::getSingleton('catalog/session')->addError($msg);
+            $this->_redirectUrl($referer);
+            return;
+        }
 		if (!$response || $response->getStatus() != 200) {
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
 		}
 
+        Mage::log(sprintf("pod::... call for application server finished (ID:%s)", $id), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+
 		//XML auswerten
+        Mage::log(sprintf("pod::Parsing XML... (ID:%s)", $id), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		$productMetaData = null;
 		$body = $response->getBody();
-		$contend = explode("\r\n\r\n", $body, 2);
-		if (!empty($content)) {
-			list($headers, $content) = $content;
-			$body = $content;
+		$content = explode("\r\n\r\n", $body, 2);
+		if (!empty($content) && count($content) == 2) {
+			list($headers, $body) = $content;
 		}
 		try {
 			$productMetaData = Mage::getModel('core/config_base', $body);
@@ -56,6 +69,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$msg = Mage::helper('prondemand')->__('XML parsing error.');
 		/* @var $productMetaData Mage_Core_Model_Config_Base */
 		if (!$productMetaData || !($productMetaData instanceof Mage_Core_Model_Config_Base)) {
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
@@ -89,6 +103,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 						}
 					}
 					$msg = sprintf('%s (ID:%s;CODE:%s)', $msg, $errorId, $errorCode);
+                    Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 					Mage::getSingleton('catalog/session')->addError($msg);
 				}
 			} else {
@@ -101,6 +116,7 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$productInfo = $productMetaData->getNode('productInfo');
 		if (!$productInfo || !$productInfo->hasChildren()) {
 			$msg = Mage::helper('prondemand')->__('Product not available');
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
@@ -108,10 +124,13 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$downloadInfo = $productMetaData->getNode('downloadInfo');
 		if (!$downloadInfo || !$downloadInfo->hasChildren()) {
 			$msg = Mage::helper('prondemand')->__('Product not available');
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
 		}
+        Mage::log(sprintf("pod::... parsing XML finished (ID:%s)", $id), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+        Mage::log(sprintf("pod::All fine, preparing product to add to cart (ID:%s)", $id), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 
 		$westeTypeId = $productMetaData->getNode()->getAttribute('westeTypId');
 		$collection = Mage::getModel('catalog/product')->getCollection();
