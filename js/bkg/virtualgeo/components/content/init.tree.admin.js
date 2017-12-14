@@ -327,12 +327,13 @@ var nodeOptions = {
 		if(sel && edit) {
 			ref.edit(sel);
 		}
-
+        var node = ref.get_node(sel);
+		//data.parent = node.;
 		var nodeData = getFormData('#contentlayer_form', data, sel);
 		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
-		var node = ref.get_node(sel);
+
 		this.move(node, this.itemCount);
 		this.open_all();
 
@@ -349,7 +350,7 @@ var nodeOptions = {
 
 		sel = sel[0];
 		ref.open_node(sel);
-
+		var parentNode = ref.get_node(sel);
 		var data = new Object();
 		data.number = this.itemCount;
 		data.type = 'default';
@@ -358,10 +359,17 @@ var nodeOptions = {
 		data.readonly = input_data.readonly;
 		data.checked = input_data.checked;
 		data.entity_id = id;
+        data.parent = 0;
+		if(parentNode.data != null)
+		{
+			data.parent = parentNode.data.number;
+		}
+
 		sel = this.createTextNode(sel, data);
 		var node = ref.get_node(sel);
 
 		var nodeData = getFormData('#contentlayer_form', data, node);
+
 		nodeData.push({'old': data});
 		appendJsonField(this.itemCount, nodeData);
 
