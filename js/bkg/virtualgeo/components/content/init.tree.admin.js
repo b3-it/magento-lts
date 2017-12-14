@@ -1,6 +1,9 @@
-$j(document).ready(function(){
-	$j('#layerForm_Name').removeAttr('multiple');
+var idFormLayer = '#layerForm_Name';
 
+/**
+ * Dokument fertig geladen
+ */
+$j(document).ready(function(){
 	// Erzeuge Select-Header für JsTree
 	$j.each($j('#contentlayer_form input[type="checkbox"]'), function(){
 		var name  = $j(this).attr('id');
@@ -17,25 +20,59 @@ $j(document).ready(function(){
 	});
 });
 
+/**
+ * JS-Aktion zum neuladen des gefilterten Inhals für Componenten-Inhalt
+ */
+function refeshComponentContent()
+{
+	var cat_id = $j('#component_content_category').val();
+	$j.ajax({
+		'url' : url_for_refresh + 'id/' + cat_id,
+		'type': 'GET',
+		'beforeSend': function() {
+			// Aktionen vor dem Absenden
+		}
+	})
+	.done(function(data){
+		$j(idFormLayer).html( data );
+	})
+	.fail(function(jqXHR, textStatus){
+		alert( "Request failed: " + textStatus );
+	});
+}
+
+/**
+ * neues Element / neue Elemente in den JS-Tree einfügen
+ */
 function addLayer() {
 	var form_data = {};
 	form_data['checked'] = $j('#layerForm_Name_is_checked').is(':checked');
 	form_data['readonly'] = $j('#layerForm_Name_is_readonly').is(':checked');
 
-    var layers = $j('#layerForm_Name');
+    var layers = $j(idFormLayer);
     var selected = layers.find('option:selected');
 	selected.each(function(){
-        nodeOptions.addPage($j(this).val(),$j(this).text(),form_data);
+        nodeOptions.addPage($j(this).val(), $j(this).text(), form_data);
     });
+
+	// Auswahl zurücksetzen
+	resetFormFields('#contentlayer_form');
 }
 
 function isEmptyElement(val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
 
-function getFormData(elementID)
+/**
+ * Alle FormFelder in ein JSON-Array schreiben und für Speicherung einfügen
+ *
+ * @param    string    ID des Form-Elements mit den einzelnen Optionen
+ * @param    array     Originale Daten aus dem JS-Tree
+ * @return   array     JSON-String mit Array-Daten
+ */
+function getFormData(elementID, data)
 {
-	// alle Diese IDs werden beim hinzufügen zum DatenArray ausgelassen
+	// alle diese IDs werden beim hinzufügen zum DatenArray ausgelassen
 	var exclude = ['copy_values'];
 
 	// Wenn das Array mit Elementen gefüllt ist, wird dies zu durchsuchen benutzt
@@ -53,11 +90,20 @@ function getFormData(elementID)
 	$j.each(searchFor, function() {
 		var element = $j(this).attr('name');
 		var value   = ( $j(this).val() == null || $j(this).val() == '' ? '0' : $j(this).val() );
+		var multi   = $j(this).attr('multiple');
 
+		// Element ist eine Checkbox => Status ermitteln
 		if ( $j(this).attr('type') == 'checkbox' ) {
 			value = $j(this).is(':checked');
 		}
 
+		// Splitt für MultiSelect
+		if (multi && multi !== false) {
+			// Daten aus dem JS-Tree nutzen
+			value = data.entity_id;
+		}
+
+		// Prüfen, ob Element in der Ausschluss-Liste enthalten ist
 		if ( $j.inArray($j(this).attr('id'), exclude) == -1 ) {
 			dataOption.push({
 				'name' : $j(this).attr('name'),
@@ -67,9 +113,80 @@ function getFormData(elementID)
 			});
 		}
 	});
+
+	// JSON-Array zurückgeben
 	return dataOption;
 }
 
+/**
+ * die Auswahl von allen Formular-Elementen entfernen
+ *
+ * @param    string    ID des Form-Elements mit den einzelnen Optionen
+ */
+function resetFormFields(elementID)
+{
+	// alle diese IDs werden beim zurücksetzen ausgelassen
+	var exclude = ['copy_values', 'component_content_category'];
+
+	$j.each($j(elementID + ' :input'), function() {
+		// Prüfen, ob Element in der Ausschluss-Liste enthalten ist
+		if ( $j.inArray($j(this).attr('id'), exclude) == -1 ) {
+			// Element ist eine Checkbox
+			if ( $j(this).attr('type') == 'checkbox' ) {
+				$j(this).removeAttr('checked');
+			}
+			// Element ist Multi-Select
+			if ( $j(this).attr('multiple') !== false ) {
+				$j(this).val(null);
+			}
+		}
+	});
+}
+
+/**
+ * Anlegen eines HiddenFields zur Übermittlung des Formulars
+ *
+ * @param    integer     Nummer der anzulegenden Elements
+ * @param    array       JSON-Daten
+ */
+function appendJsonField(itemID, nodeData)
+{
+	var inputField = $j('<input />', {
+		'id'   : 'virtualgeo_content_layer_options_' + itemID,
+		'name' : 'product[content_layer_options][' + itemID + ']',
+		'value': JSON.stringify(nodeData),
+		'type' : 'hidden'
+	});
+	$j('#jstree-data').append(inputField);
+}
+
+/**
+ * JSON-Feld aus dem Formular löschen, da der knoten im JS-Tree entfernt wurde
+ *
+ * @param  integer   ID des zu löschenden Feldes
+ */
+function removeJsonField(itemID)
+{
+	var objData = $j('#virtualgeo_content_layer_options_' + itemID).val();
+	var oldData = $j('#virtualgeo_content_layer_deleted').val();
+	var newData = '';
+
+	var arrayData = $j.parseJSON(objData);
+
+	if ( oldData.length ) {
+		newData = oldData + ',' + $j(arrayData).get(-1).id;
+	}
+	else {
+		newData = $j(arrayData).get(-1).id;
+	}
+
+	$j('#virtualgeo_content_layer_deleted').val(newData);
+	$j('#virtualgeo_content_layer_options_' + itemID).remove();
+}
+
+/**
+ * JS-Tree-Element initialisieren
+ */
 $j('#jstree_layer').jstree({
 	"core" : {
 		"animation" : 0,
@@ -106,11 +223,6 @@ $j('#jstree_layer').jstree({
 		nodeOptions.show(data.instance.get_node(data.selected[0]));
 	}
 })
-.on("rename_node.jstree", function (event, data) {
-	if(data.node) {
-		nodeOptions.rename(data.node,data.text);
-	}
-})
 .on("move_node.jstree", function (event, data) {
 	if(data.node) {
 		nodeOptions.move(data.node, data.position);
@@ -121,78 +233,36 @@ $j('#jstree_layer').jstree({
 });
 
 
-var nodeTemplate = '<div style="display:none" id="content_layer_options_{{number}}" class="hor-scroll">' +
-				'<input type="hidden" id="content_layer_options_{{number}}_is_delete" name="product[content_layer_options][{{number}}][is_delete]" value="" />'+
-				'<input type="hidden" name="product[content_layer_options][{{number}}][id]" value="{{id}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_label" name="product[content_layer_options][{{number}}][label]" value="{{label}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_number" name="product[content_layer_options][{{number}}][number]" value="{{number}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_parent" name="product[content_layer_options][{{number}}][parent]" value="{{parent}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_pos" name="product[content_layer_options][{{number}}][pos]" value="{{pos}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_visual_pos" name="product[content_layer_options][{{number}}][visual_pos]" value="{{visual_pos}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_type" name="product[content_layer_options][{{number}}][type]" value="{{type}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_entity_id" name="product[content_layer_options][{{number}}][entity_id]" value="{{entity_id}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_checked" name="product[content_layer_options][{{number}}][checked]" value="{{checked}}" />'+
-				'<input type="hidden" id="content_layer_options_{{number}}_readonly" name="product[content_layer_options][{{number}}][readonly]" value="{{readonly}}" />'+
-				'</div>';
-
-
+/**
+ * Knoten-Objekt erzeugen
+ */
 var nodeOptions = {
-	'div_id'         : "#hidden_content_layer",
 	'tree'           : $j("#jstree_layer"),
-	'templateSyntax' : /(^|.|\r|\n)({{(\w+)}})/,
-	'templateText'   : nodeTemplate,
 	'itemCount'      : 0,
 	'pos'            : 0,
 	'kategories'     : [],
-	'getDiv' : function(){
-		return $j(this.div_id);
-	},
+
 	'show' : function(node) {
-		//this.hideAll();
 		if(node.data) {
 			var elem = $j("#content_layer_options_"+node.data.number);
-			//if(elem) {
-				//elem.show();
-			//}
 		}
-		//Element.insert(this.div, {'':this.template.evaluate(data)});
 	},
 	'hideAll' : function() {
 		for (var i = 1; i <= this.itemCount; i++){
-			var elem = $j("#content_layer_options_"+i);
+			var elem = $j("#content_layer_options_" + i);
 			if(elem.length != 0) {
 				elem.hide();
 			}
-		}
-	},
-	'rename' : function(node, $text) {
-		var elem = $j("#content_layer_options_" + node.data.number + "_name");
-		if(elem) {
-			elem.val($text);
-		}
-		if(node.data.type = 'page') {
-			var elem = $j("#content_layer_options_" + node.data.number + "_title");
-			node.text = node.text + " ("+elem.val()+")";
-			var ref = this.tree.jstree(true);
-			ref.redraw(true);
 		}
 	},
 	'move' : function(node, pos) {
 		if(node) {
 			var ref = this.tree.jstree(true);
 			var parent = ref.get_node(node.parent);
-			var elem = $j("#content_layer_options_" + node.data.number + "_parent");
-			if(parent.data) {
-				elem.val(parent.data.number);
-			} else {
-				elem.val('0');
-			}
 			var pos = 0;
 			for(var childId in parent.children){
 				var child = ref.get_node(parent.children[childId]);
 				if(child) {
-					var elem = $j("#content_layer_options_" + child.data.number + "_pos");
-					elem.val(pos);
 					pos++;
 				}
 			}
@@ -226,28 +296,27 @@ var nodeOptions = {
 		}
 		data.number = this.itemCount;
 
-		sel = this.createTextNode(sel,data);//ref.create_node(sel,  {"type":data.type,"data":data, "text" : text});
+		sel = this.createTextNode(sel,data);
 		if(sel && edit) {
 			ref.edit(sel);
 		}
-		this.template = new Template(this.templateText, this.templateSyntax);
-		var content = this.template.evaluate(data);
-		var html = this.getDiv().html();
-		this.getDiv().html( this.getDiv().html() + content);
+
+		var nodeData = getFormData('#contentlayer_form', data);
+		nodeData.push(data);
+		appendJsonField(this.itemCount, nodeData);
 
 		var node = ref.get_node(sel);
 		this.move(node, this.itemCount);
-
+		this.open_all();
 
 		return node.id;
-
 	},
 	'addPage': function(id, label, input_data) {
 		var ref = this.tree.jstree(true);
 		this.itemCount++;
 		var	sel = ref.get_selected();
 		if(!sel.length) {
-			alert( element_not_selected );
+			alert( node_not_selected + ': <' + label + '>' );
 			return false;
 		}
 
@@ -264,17 +333,9 @@ var nodeOptions = {
 		data.entity_id = id;
 		sel = this.createTextNode(sel, data);
 
-		var nodeData = getFormData('#contentlayer_form');
+		var nodeData = getFormData('#contentlayer_form', data);
 		nodeData.push(data);
-
-		var inputField = $j('<input />', {
-			'id'   : 'content_layer_options_' + this.itemCount,
-			'name' : 'product[content_layer_options][' + this.itemCount + ']',
-			'value': JSON.stringify(nodeData),
-			'type' : 'input',
-			'style': 'width:100%;'
-		});
-		$j('#jstree-data').append(inputField);
+		appendJsonField(this.itemCount, nodeData);
 
 		var node = ref.get_node(sel);
 		this.move(node, this.itemCount);
@@ -304,33 +365,19 @@ var nodeOptions = {
 			return false;
 		}
 		var node = ref.get_node(sel);
-		var elem = $j("#content_layer_options_" + node.data.number + "_is_delete");
-		elem.val(1);
+
+		// das zugehörige JSON-Feld löschen
+        removeJsonField(node.data.number);
+
+		//elem.val(1);
 		ref.delete_node(sel);
 	},
 
-	edit: function(data) {
-		//if ( isEmptyElement(data) == false ) {
-		var ref = this.tree.jstree(true);
-		var	sel = ref.get_selected();
-		if(!sel.length) {
-			alert( node_element_not_selected );
-			return false;
-		}
-		sel = sel[0];
-		var node = ref.get_node(sel);
-		if(node.data.type = 'layer') {
-			var node = ref.get_node(sel);
-			var elem = $j("#content_layer_options_" + node.data.number + "_name");
-			node.text = elem.val();
-		}
-		ref.edit(sel);
-	},
-	open_all: function() {
+	'open_all': function() {
 		var ref = this.tree.jstree(true);
 		ref.open_all('j1_1');
 	},
-	set_div: function(data) {
+	'set_div': function(data) {
 		this.div = data;
 	}
 }

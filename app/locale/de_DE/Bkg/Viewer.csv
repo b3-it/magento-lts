@@ -16,3 +16,4 @@
 "Node Element is not selected and root node can not be renamed","Knotenelement ist nicht markiert und der Wurzelknoten kann nicht umbenannt werden."
 "New node","neuer Knoten"
 "You must be select an element","Sie müssen ein Element auswählen."
+"You must select a node to insert","Sie müssen einen Knoten auswählen zum einfügen von"

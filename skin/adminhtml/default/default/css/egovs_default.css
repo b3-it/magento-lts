@@ -149,8 +149,8 @@ ins {
     color: #008000;
 }
 .option-tree-false:after {
-    /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box-with-x/ */
-    content:'\2612';
-    color: #FF0000;
+    /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box/ */
+    content:'\2610';
+    color: #3E3E3E;
 }
 /* Ende für Auswahl bei VirtualGeo-Inhalt */

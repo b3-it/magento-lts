@@ -1,33 +1,28 @@
-<?php
-/**
- */
-?>
-<div class="content-header">
-  <?php if($this->getTitle()): ?>
-    <h3><?php echo $this->getTitle() ?></h3>
-  <?php endif ?>
-    <p class="content-buttons form-buttons">
+<div class="entry-edit-head entry-edit">
+    <div class="form-buttons">
         <button class="scalable add" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('New')?>">
-            <?php echo Mage::helper('bkgviewer')->__('New')?>
-        </button>
-        <button class="scalable btn btn-warning btn-sm" onclick="nodeOptions.edit();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('Rename')?>">
-            <?php echo Mage::helper('bkgviewer')->__('Rename')?>
+            <span><?php echo Mage::helper('bkgviewer')->__('New')?></span>
         </button>
         <button class="scalable delete btn btn-danger btn-sm" onclick="nodeOptions.remove();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('Delete')?>">
-            <?php echo Mage::helper('bkgviewer')->__('Delete')?>
+            <span><?php echo Mage::helper('bkgviewer')->__('Delete')?></span>
         </button>
-    </p>
+    </div>
 </div>
+
 <div id="jstree-info"></div>
 <div id="jstree_layer"></div>
-<div id="jstree-data"></div>
+<div id="jstree-data">
+    <input type="hidden" name="virtualgeo_content_layer_deleted" id="virtualgeo_content_layer_deleted" value="" />
+</div>
 
 <script type="text/javascript">
-    var root_node_title = "<?php echo Mage::helper('bkgviewer')->__('Root node')?>";
-    var node_element_is_null = "<?php echo Mage::helper('bkgviewer')->__('Node Element is null and root node can not be deleted')?>";
-    var node_element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('Node Element is not selected and root node can not be renamed')?>";
-    var element_default_title = "<?php echo Mage::helper('bkgviewer')->__('New node')?>";
-    var element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must be select an element')?>";
+    var root_node_title = "<?php echo Mage::helper('bkgviewer')->__('Root node'); ?>";
+    var node_element_is_null = "<?php echo Mage::helper('bkgviewer')->__('Node Element is null and root node can not be deleted'); ?>";
+    var node_element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('Node Element is not selected and root node can not be renamed'); ?>";
+    var element_default_title = "<?php echo Mage::helper('bkgviewer')->__('New node'); ?>";
+    var element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must be select an element'); ?>";
+    var node_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must select a node to insert'); ?>"
+    var url_for_refresh = "<?php echo $this->getRefeshComponentContentUrl()?>";
 </script>
 
 <script type="text/javascript" src="<?php echo $this->getJsUrl() ?>bkg/virtualgeo/components/content/init.tree.admin.js"></script>
@@ -45,14 +40,5 @@ foreach ($this->getNodes() AS $node){
 }
 ?>
 	nodeOptions.open_all();
-}
-
-function refeshComponentContent()
-{
-	var cat_id = $j('#component_content_category').val();
-	var url = "<?php echo $this->getRefeshComponentContentUrl()?>id/"+cat_id;
-	$j.get( url , function( data ) {
-		  $j( "#layerForm_Name" ).html( data );
-		});
 }
 </script>
