@@ -127,10 +127,13 @@ class Bkg_VirtualGeo_Model_Observer
     protected function _saveContentLayer($nodes,$productId)
     {
     	$loaded = array();
+
     	//model erzeugen oder laden
     	foreach($nodes as $key =>$node)
     	{
+    	    $node = json_decode($node);
     		$model = Mage::getModel('virtualgeo/components_contentproduct');
+    		continue;
     		$model
                 ->setPos($node['pos'])
                 ->setEntityId($node['entity_id'])
