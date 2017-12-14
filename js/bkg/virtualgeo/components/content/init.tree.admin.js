@@ -73,13 +73,28 @@ function isEmptyElement(val) {
 function getFormData(elementID, data)
 {
 	// alle diese IDs werden beim hinzufügen zum DatenArray ausgelassen
-	var exclude = ['copy_values', 'component_content_category'];
+	//var exclude = ['copy_values', 'component_content_category'];
 
 	// Wenn das Array mit Elementen gefüllt ist, wird dies zu durchsuchen benutzt
-	var idArray    = [];
-	var searchFor  = '';
+	//var idArray    = [];
+	//var searchFor  = '';
 	var dataOption = new Array();
+	var tmp = {};
 
+	tmp.name = data.entity_id;
+	tmp.is_checked = $j('#layerForm_Name_is_checked').is(':checked');
+	tmp.is_readonly = $j('#layerForm_Name_is_readonly').is(':checked');
+
+	if ( data.checked != null ) {
+		tmp.is_checked = data.checked;
+	}
+	if ( data.readonly != null ) {
+		tmp.is_readonly = data.readonly;
+	}
+
+	dataOption.push(tmp);
+
+/*
 	if ( idArray.length ) {
 		searchFor = idArray;
 	}
@@ -122,6 +137,7 @@ function getFormData(elementID, data)
 			dataOption.push(tmp);
 		}
 	});
+*/
 
 	// JSON-Array zurückgeben
 	return dataOption;
