@@ -41,9 +41,9 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit extends Mage_Admi
         		url = url.replace('layer_id',id);
         		//alert(url);
         		\$j.getJSON(url, function(data) {
-				    \$j('#service_layer option').remove();
+				    \$j('#layer_id option').remove();
 				    \$j.each(data, function(){
-				        \$j('#service_layer').append(new Option(this.name,this.value));
+				        \$j('#layer_id').append(new Option(this.name,this.value));
 					})
         		})	
 				
@@ -51,15 +51,15 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit extends Mage_Admi
         				
         	function toogleLayer()
 			{
-        		if(\$j('#showLayer').is(':checked'))
+        		if(\$j('#show_layer').is(':checked'))
         		{
         			\$j('#service').show();
-        			\$j('#service_layer').show();
+        			\$j('#layer_id').show();
         		}
         		else
         		{
         			\$j('#service').hide();
-        			\$j('#service_layer').hide();
+        			\$j('#layer_id').hide();
         		}
 			}
         				

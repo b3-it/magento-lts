@@ -66,6 +66,12 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
+		    if(isset($data['show_layer']))
+            {
+                $data['show_layer'] = 1;
+            }else{
+                $data['show_layer'] = 0;
+            }
 			$store_id     =  intval($this->getRequest()->getParam('store'));
 
 			$model = Mage::getModel('virtualgeo/components_structure');
@@ -74,13 +80,6 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
 				->setId($this->getRequest()->getParam('id'));
 
 			try {
-				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
-					$model->setCreatedTime(now())
-						->setUpdateTime(now());
-				} else {
-					$model->setUpdateTime(now());
-				}
-
 				$model->save();
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('virtualgeo')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
