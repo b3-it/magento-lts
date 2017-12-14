@@ -46,8 +46,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 			$res[] = new Varien_Object(array('id'=>$item->getComponentProductRelationId(),
 					'label'=>$item->getName(),
 					'entity_id'=>$item->getEntityId(),
-					'readonly'=>$item->getReadonly(),
-					'checked'=>$item->getChecked() ,
+					'readonly'=>boolval($item->getReadonly()),
+					'is_checked'=>boolval($item->getIsChecked()) ,
 					'pos' =>$item->getPos(),
 					'parent' => $parent != null? $parent->getComponentProductRelationId() : ''
 			));
