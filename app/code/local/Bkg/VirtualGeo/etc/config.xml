@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bkg_VirtualGeo>
-            <version>0.1.1.0</version>
+            <version>0.1.4.0</version>
         </Bkg_VirtualGeo>
     </modules>
 
@@ -123,27 +123,32 @@
 							</virtualgeo_components_georef>
 							<virtualgeo_components_format module="virtualgeo">
 								<title>Format</title>
-								<sort_order>10</sort_order>
+								<sort_order>20</sort_order>
 								<action>adminhtml/virtualgeo_components_format/index</action>
 							</virtualgeo_components_format>
 							<virtualgeo_components_content module="virtualgeo">
 								<title>Content</title>
-								<sort_order>10</sort_order>
+								<sort_order>30</sort_order>
 								<action>adminhtml/virtualgeo_components_content/index</action>
 							</virtualgeo_components_content>
+                            <virtualgeo_components_content_category module="virtualgeo">
+                                <title>Content Category</title>
+                                <sort_order>30</sort_order>
+                                <action>adminhtml/virtualgeo_components_content_category/index</action>
+                            </virtualgeo_components_content_category>							
 							<virtualgeo_components_structure module="virtualgeo">
 								<title>Structure</title>
-								<sort_order>10</sort_order>
+								<sort_order>50</sort_order>
 								<action>adminhtml/virtualgeo_components_structure/index</action>
 							</virtualgeo_components_structure>
 							<virtualgeo_components_storage module="virtualgeo">
 								<title>Storage</title>
-								<sort_order>10</sort_order>
+								<sort_order>60</sort_order>
 								<action>adminhtml/virtualgeo_components_storage/index</action>
 							</virtualgeo_components_storage>
 							<virtualgeo_components_resolution module="virtualgeo">
 								<title>Resolution</title>
-								<sort_order>10</sort_order>
+								<sort_order>70</sort_order>
 								<action>adminhtml/virtualgeo_components_resolution/index</action>
 							</virtualgeo_components_resolution>
 						</children>
@@ -186,6 +191,10 @@
 									<title>Content</title>
 									<sort_order>10</sort_order>
 								</virtualgeo_components_content>
+                                <virtualgeo_components_content_category  module="virtualgeo">
+                                    <title>Content Category</title>
+                                    <sort_order>10</sort_order>
+                                </virtualgeo_components_content_category>								
 								</children>
 								</virtualgeo_components>
 							</children>

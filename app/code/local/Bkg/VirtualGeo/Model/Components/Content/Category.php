@@ -17,4 +17,17 @@ class Bkg_VirtualGeo_Model_Components_Content_Category extends Mage_Core_Model_A
 		parent::_construct();
 		$this->_init('virtualgeo/components_content_category');
 	}
+	
+	public function getOptionsArray()
+	{
+		$res = array();
+		$collection = $this->getCollection();
+		$res[0] = Mage::helper('virtualgeo')->__('All');
+		foreach($collection->getItems() as $item)
+		{
+			$res[$item->getId()] = $item->getLabel();
+		}
+			
+		return $res;
+	}
 }

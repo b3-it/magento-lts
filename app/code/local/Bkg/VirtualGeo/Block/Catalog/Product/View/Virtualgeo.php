@@ -68,4 +68,30 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo extends Mage_Bundle_B
 	{
 		return $this->_getComponentsBlock($type);
 	}
+	
+	
+	
+	/**
+	 *
+	 * @return Bkg_Viewer_Model_Composit_Composit
+	 */
+	public function getComposit()
+	{
+	    if($this->_composit == null){
+	        $product = $this->getProduct();
+	        if(!$product->getId()){
+	            $this->log('Product for Composit not found!');
+	            return null;
+	        }
+	        
+	        if(!$product->getGeocomposit()){
+	            $this->log('Composit not set!');
+	            return null;
+	        }
+	        
+	        $this->_composit = Mage::getModel('bkgviewer/composit_composit')->load($product->getGeocomposit());
+	    }
+	    
+	    return $this->_composit;
+	}
 }

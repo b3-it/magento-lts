@@ -28,11 +28,13 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Form exten
     		$this->setForm($form);
     		$fieldset = $form->addFieldset('contentlayer_form', array('legend'=>Mage::helper('bkgviewer')->__('Item information')));
     
-    		$fieldset->addField('category', 'select', array(
+    		$fieldset->addField('component_content_category', 'select', array(
     				'label'     => Mage::helper('virtualgeo')->__('Category'),
     				//'class'     => 'required-entry',
     				//'required'  => true,
     				'name'      => 'category',
+    				'options'	=> Mage::getModel('virtualgeo/components_content_category')->getOptionsArray(),
+    				'onchange' => "refeshComponentContent()"
     		));
     		
     		$layer = array();
