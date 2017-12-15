@@ -1,24 +1,45 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <default>
-    </default>
    <customer_account>
-        <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="gka_reports"><name>gka_reports</name><path>gka_reports/transaction/index</path><label>My Transactions</label></action>
-        </reference>
+       <reference name="customer_account_navigation">
+           <action method="addLink" translate="label" module="gka_reports">
+               <name>gka_reports</name>
+               <path>gka_reports/transaction/index</path>
+               <label>My Transactions</label>
+           </action>
+       </reference>
     </customer_account>
     <gka_reports_transaction_index>
-           <reference name="head">
-            <action method="addJs"><script>mage/adminhtml/grid.js</script></action>
-            <action method="addJs"><script>mage/adminhtml/hash.js</script></action>
-             <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name></action>
-            <action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
-            <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
-            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml" />
+        <label>My Transactions</label>
+        <update handle="customer_account"/>
+
+        <reference name="head">
+            <action method="addJs">
+                <script>mage/adminhtml/grid.js</script>
+            </action>
+            <action method="addJs">
+                <script>mage/adminhtml/hash.js</script>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>calendar/calendar-win2k-1.css</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>calendar/calendar.js</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>calendar/calendar-setup.js</name>
+            </action>
+            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
         </reference>
-        <reference name="content">
-            <block type="gka_reports/transaction" name="reports" template="gka/reports/transaction/index.phtml" >
-            	<block type="gka_reports/transaction_grid" name="transaction_grid"  />
+
+
+
+        <reference name="my.account.wrapper">
+            <block type="gka_reports/transaction" name="reports" template="gka/reports/transaction/index.phtml">
+                <block type="gka_reports/transaction_grid" name="transaction_grid"/>
             </block>
         </reference>
     </gka_reports_transaction_index>
