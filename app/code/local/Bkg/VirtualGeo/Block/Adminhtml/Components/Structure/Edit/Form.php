@@ -69,11 +69,14 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
           'value' => $dataModel->getStoreId()
       ));
 
-      $services = Mage::getModel('bkgviewer/service_service')->getCollection($dataModel->getLayerId());
-      $layer = Mage::getModel('bkgviewer/service_layer');
-      if ($dataModel->getLayerId()) {
-        $layer->load($dataModel->getLayerId());
-      }
+
+      	$services = Mage::getModel('bkgviewer/service_service')->getCollection();
+
+//       $layer = Mage::getModel('bkgviewer/service_layer');
+//       if ($dataModel->getLayerId()) {
+//         $layer->load($dataModel->getLayerId());
+//       }
+  	 
   	  $fieldset->addField('show_layer', 'checkbox', array(
   	  		'label'     => Mage::helper('virtualgeo')->__('Show Layer'),
   	  		'name'      => 'show_layer',
@@ -84,43 +87,44 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
   	  		'class'     =>  ($store_id != 0) ? 'readonly' : '',
   	  ));
 
-      $layers = array();
-      if($layer->getServiceId()) {
-          $collection = Mage::getModel('bkgviewer/service_layer')->getCollection();
-          $collection->getSelect()
-              ->where('service_id=?', $layer->getServiceId());
+//       $layers = array();
+//       if($layer->getServiceId()) {
+//           $collection = Mage::getModel('bkgviewer/service_layer')->getCollection();
+//           $collection->getSelect()
+//               ->where('service_id=?', $layer->getServiceId());
 
 
-          foreach($collection->getItems() as $item)
-          {
-              $layers[$item->getId()] = $item->getTitle();
-          }
-      }
+//           foreach($collection->getItems() as $item)
+//           {
+//               $layers[$item->getId()] = $item->getTitle();
+//           }
+//       }
+      
       $fieldset->addField('service', 'select', array(
       		'label'     => Mage::helper('bkgviewer')->__('Service'),
-      		'name'      => 'service',
+      		'name'      => 'service_id',
       		'value'	=> '',
       		'options' => $services->getAsFormOptions(true),
-      		'onchange'  => 'reloadLayer()',
+      		//'onchange'  => 'reloadLayer()',
       		'readonly' => $store_id != 0,
       		'disabled' => $store_id != 0,
       		'class'     =>  ($store_id != 0) ? 'readonly' : '',
-            'value'    => $layer->getServiceId(),
+            'value'    => $dataModel->getServiceId(),
       
       ));
       
       
-      $fieldset->addField('layer_id', 'select', array(
-      		'label'     => Mage::helper('bkgviewer')->__('Layer'),
-      		'name'      => 'layer_id',
-      		'value'	=> $layer->getId(),
-      		'options' => $layers,
-      		'readonly' => $store_id != 0,
-      		'disabled' => $store_id != 0,
-      		'class'     =>  ($store_id != 0) ? 'readonly' : '',
+//       $fieldset->addField('layer_id', 'select', array(
+//       		'label'     => Mage::helper('bkgviewer')->__('Layer'),
+//       		'name'      => 'layer_id',
+//       		'value'	=> $layer->getId(),
+//       		'options' => $layers,
+//       		'readonly' => $store_id != 0,
+//       		'disabled' => $store_id != 0,
+//       		'class'     =>  ($store_id != 0) ? 'readonly' : '',
       		
       
-      ));
+//       ));
 
 
       return parent::_prepareForm();
