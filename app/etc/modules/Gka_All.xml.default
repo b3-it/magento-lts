@@ -5,6 +5,10 @@
         <Gka_Barkasse>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+                <Mage_Sales/>
+                <Egovs_Paymentbase/>
+            </depends>
         </Gka_Barkasse>
         <Gka_Base>
             <active>true</active>
@@ -13,6 +17,9 @@
         <Gka_Checkout>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+                <Mage_Checkout/>
+            </depends>
         </Gka_Checkout>
         <Gka_Product>
             <active>true</active>
@@ -25,6 +32,14 @@
             <active>true</active>
             <codePool>local</codePool>
         </Gka_Ready>
+        <Gka_Reports>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog/>
+                <Mage_Sales/>
+            </depends>
+        </Gka_Reports>
         <Gka_Tkonnektpay>
             <active>true</active>
             <codePool>local</codePool>
@@ -40,9 +55,5 @@
             <active>true</active>
             <codePool>local</codePool>
         </Gka_VirtualPayId>
-        <Gka_Report>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Gka_Report>
     </modules>
 </config>
