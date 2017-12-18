@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Bkg_Viewer>
-			<version>0.1.1.0</version>
+			<version>0.1.2.0</version>
 		</Bkg_Viewer>
 	</modules>
 	<global>
@@ -63,6 +63,9 @@
 					<service_vg_group>
 						<table>bkg_viewer_service_vg_group</table>
 					</service_vg_group>
+					<composit_selectiontools>
+						<table>bkg_viewer_composit_selectiontools</table>
+					</composit_selectiontools>
 				</entities>
 			</bkgviewer_resource>
 		</models>

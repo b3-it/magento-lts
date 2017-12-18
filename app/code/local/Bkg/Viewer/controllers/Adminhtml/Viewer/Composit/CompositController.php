@@ -80,6 +80,11 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 				if(isset($data['node_options'])){
 					$this->saveChilds($data['node_options'], $model->getId());
 				}
+				if(isset($data['sectiontools']))
+                {
+                    $this->saveSelectiontools($data['sectiontools'], $model->getId());
+                }
+
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkgviewer')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -99,7 +104,30 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkgviewer')->__('Unable to find item to save'));
         $this->_redirect('*/*/');
 	}
-	
+
+
+    public function saveSelectiontools($data,$compositId)
+    {
+        if($data)
+        {
+            foreach($data as $d) {
+                $model = Mage::getModel('bkgviewer/composit_selectiontools');
+                if($d['id'] > 0)
+                {
+                    $model->load($d['id']);
+                }
+
+                $model->setPos($d['pos'])
+                    ->setProductId($product->getId())
+                    ->setStoreId($product->getStoreId())
+                    ->setLayerId($d['layer_id'])
+                    ->setLabel($d['label'])
+                    ->save();
+            }
+        }
+    }
+
+
 	public function saveChilds($nodes,$compositId)
 	{
 		$loaded = array();

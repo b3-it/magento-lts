@@ -114,7 +114,8 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/composit_layer')))
 	  		`pos` smallint unsigned default 0,
 	  		`visual_pos` smallint unsigned default 0,
 	  		`service_layer_id` int(11) unsigned ,
-	  		PRIMARY KEY (`id`)
+	  		PRIMARY KEY (`id`),
+	  		 FOREIGN KEY (`composit_id`) REFERENCES `{$this->getTable('bkgviewer/composit_composit')}`(`id`) ON DELETE CASCADE,
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 			");

@@ -2,10 +2,9 @@
 /**
  */
 ?>
-<div class="content-header">
-  <?php if($this->getTitle()): ?>
-    <h3><?php echo $this->getTitle() ?></h3>
-  <?php endif ?>
+<div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('bkgviewer')->__('Navigation') ?></h4>
+
     <p class="form-buttons">
         <button class="scalable" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('New')?>">
             <?php echo Mage::helper('bkgviewer')->__('New')?>
