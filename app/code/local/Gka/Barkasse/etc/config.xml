@@ -24,7 +24,7 @@
             <gka_barkasse_setup>
                 <setup>
                     <module>Gka_Barkasse</module>
-                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                    <class>Gka_Barkasse_Model_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
