@@ -77,6 +77,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Form exten
     				'class'	=> 'form-button',
     				'label' => Mage::helper ( 'virtualgeo' )->__ ( 'Copy selected Layer to Tree' ),
     		) );
+
+
     
     		if ( Mage::getSingleton('adminhtml/session')->getcompositlayerData() )
     		{

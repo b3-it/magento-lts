@@ -36,10 +36,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content extends Ma
     					'adminhtml.catalog.product.edit.tab.content.layer')
     			);
     	
-    	$this->setChild('content_tools',
-    			$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_content_selectiontools',
-    					'adminhtml.catalog.product.edit.tab.content.tools')
-    			);
+
     	
     	$this->setChild('content_form',
     			$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_content_form',

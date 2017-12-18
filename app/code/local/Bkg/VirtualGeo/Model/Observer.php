@@ -119,11 +119,11 @@ class Bkg_VirtualGeo_Model_Observer
         $this->_saveComponent($dataObject->getStructure(), $dataObject->getStructureDefault(),$product,'virtualgeo/components_structureproduct');
         $this->_saveComponent($dataObject->getResolution(), $dataObject->getResolutionDefault(),$product,'virtualgeo/components_resolutionproduct');
         $content = $dataObject->getContentLayerOptions();
-        $this->_saveContentLayer($content,$product->getId());
+        //$this->_saveContentLayer($content,$product->getId());
+
     }
     
-    
-    
+
     protected function _saveContentLayer($nodes,$productId)
     {
     	$loaded = array();
@@ -131,7 +131,7 @@ class Bkg_VirtualGeo_Model_Observer
     	//model erzeugen oder laden
     	foreach($nodes as $key =>$node)
     	{
-    	    $node = json_decode($node);
+    	    $node = json_decode($node,true);
     		$model = Mage::getModel('virtualgeo/components_contentproduct');
     		continue;
     		$model
