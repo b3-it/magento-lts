@@ -27,13 +27,13 @@ $j(document).ready(function(){
         	if (ui.newPanel.length > 0) {
 
 				if (ui.newPanel.is('#virtualgeo-openlayer')) {
-					_epsg = jQuery("input:checked[name='virtualgeo-components-georef[]']").attr("data-epsg");
+					_epsg = $j("input:checked[name='virtualgeo-components-georef[]']").attr("data-epsg");
 					//_epsg = "3857";
-					console.log(_epsg);
+					//console.log(_epsg);
         			if (_map == null) {
         				//alert("create map");
         				layers = _layerFunc.call();
-        				console.log(layers);
+        				//console.log(layers);
         				view = makeview(_epsg);
         				_map = new ol.Map({
         			        layers: layers,
@@ -45,6 +45,8 @@ $j(document).ready(function(){
         				_overview = new ol.control.OverviewMap({view:  makeview(_epsg)});
         				_map.addControl(_overview); // TODO lol? 
         				_map.addControl(new ol.control.ZoomSlider());
+        				_layerSwitcher = new ol.control.LayerSwitcher(); 
+        			    _map.addControl(_layerSwitcher);
         				//_map.addControl(new ol.control.ScaleLine());
         			} else {
             			//alert("rebuild map");
@@ -54,11 +56,10 @@ $j(document).ready(function(){
             			_overview.getOverviewMap().setView(makeview(_epsg));
 
             			layers = _layerFunc.call();
-            			for (i = 0; i < layers.length; ++i) {
-            				_map.addLayer(layers[i]);
-            			}
+            			// use this to add new Layers
+            			_map.getLayerGroup().setLayers(layers);
         			}
-        			console.log(_map.getView().getProjection());
+        			//console.log(_map.getView().getProjection());
         		}
     		}
 
@@ -69,6 +70,7 @@ $j(document).ready(function(){
         	if (ui.newPanel.length > 0) {
         		if (ui.newPanel.is('#virtualgeo-openlayer') && _map != null) {
         			//clean map of layers
+        			//_layerSwitcher.setMap(null);
         			_map.getLayers().clear();
         			//alert("clean map");
         			

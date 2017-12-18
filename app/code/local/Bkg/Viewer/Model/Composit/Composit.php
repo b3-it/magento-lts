@@ -134,16 +134,26 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
     
     public function getOpenLayer()
     {
-    	$text = "layers = [];".PHP_EOL;
-    	 
+    	$text = "var layers_0 = new ol.Collection();".PHP_EOL;
+    	
+    	/**
+    	 * @var Bkg_Viewer_Model_Resource_Composit_Layer_Collection $collection
+    	 */
     	$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection();
-    	$collection->getSelect()
-    	->where('composit_id='.intval($this->getId()))
-    	->order('visual_pos');
     	
+    	//echo "}</script>";
     	
-    	foreach($collection->getItems() as $layer)
+    	//var_dump($list);
+    	//die();
+    	//->where("service_layer_id != null") // no need for category ones there?
+    	
+    	// done via zIndex
+    	//->order('visual_pos')
+    	;
+    	foreach($collection->getNodesTree($this->getId())->getChildren() as $layer)
     	{
+    	    //var_dump($layer);
+    	    //die();
     	    /**
     	     * @var Bkg_Viewer_Model_Composit_Layer $layer 
     	     */
@@ -151,5 +161,9 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
     	}
     	 
     	return $text;
+    }
+    
+    public function getLayerTree() {
+        
     }
 }
