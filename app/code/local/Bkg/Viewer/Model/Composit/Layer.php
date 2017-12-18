@@ -145,25 +145,49 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	return $this->_children;
     }
     
-    public function getOpenLayer() {
+    public function getOpenLayer($level = 0) {
         $result = "";
-        
+        // no service layer means its a category one
+        if ($this->getServiceLayerId() === null) {
+            // can't use let there because of Browser support
+            $result = "layers_" . ($level + 1) ." = [];".PHP_EOL;
+            foreach ($this->getChildren() as $child) {
+                //var_dump($child);
+                //die();
+                $result .= $child->getOpenLayer($level + 1);
+            }
+            
+            $lines = [];
+            
+            $lines[] = "layers_$level.push(new ol.layer.Group({";
+            $lines[] = "title: '" . $this->getTitle() . "',";
+            $lines[] = "layers: layers_". ($level + 1);
+            $lines[] = "}));";
+            //$result =
+            return $result.implode(PHP_EOL, $lines).PHP_EOL;
+        }
         $type = $this->getService()->getFormat();
         if($type === 'wfs') {
-            $result = $this->getOpenLayerWfs();
+            $result = $this->getOpenLayerWfs($level);
         } else if($type === 'wms') {
-            $result = $this->getOpenLayerWms();
+            $result = $this->getOpenLayerWms($level);
         } else if($type === 'wmts') {
-            $result = $this->getOpenLayerWmts();
+            $result = $this->getOpenLayerWmts($level);
         }
         return $result.PHP_EOL;
     }
     
     
-    public function getOpenLayerWmts() {
+    public function getOpenLayerWmts($level) {
         $text = array();
         
         self::$Count++;
+        
+        $text[] = "var layer".self::$Count." = new ol.layer.Tile({";
+        $text[] = "  title: '" . $this->getTitle() . "',";
+        $text[] = "  zIndex: " . $this->getVisualPos();
+        //source: null
+        $text[] = "})";
         
         $text[] = "var wmfsparser = new ol.format.WMTSCapabilities();";
         $text[] = "fetch('".$this->getService()->getUrl()."').then(function(response) {";
@@ -180,10 +204,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         $text[] = "  layer".self::$Count.".setSource(new ol.source.WMTS(options));";
         $text[] = "});";
         
-        $text[] = "var layer".self::$Count." = new ol.layer.Tile({";
-            //source: null
-        $text[] = "})";
-        $text[] = "layers.push(layer".self::$Count.");";
+        $text[] = "layers_$level.push(layer".self::$Count.");";
         
         return implode(PHP_EOL, $text);
     }
@@ -203,7 +224,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         return implode("\n", $text);
     }
     
-    public function getOpenLayerWfs()
+    public function getOpenLayerWfs($level)
     {
 //        var_dump($this);
 //        die();
@@ -280,8 +301,10 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
 
     	$text[] = "var vector = new ol.layer.Vector({";
     	$text[] = "  source: vectorSource".self::$Count.",";
+    	$text[] = "  title: '" . $this->getTitle() . "',";
+    	$text[] = "  zIndex: " . $this->getVisualPos();
     	$text[] = "});";
-    	$text[] = "layers.push(vector);";
+    	$text[] = "layers_$level.push(vector);";
     	 
     	return implode("\n", $text);
     }

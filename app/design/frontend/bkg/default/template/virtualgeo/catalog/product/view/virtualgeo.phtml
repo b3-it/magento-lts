@@ -31,9 +31,39 @@
 <script type="text/javascript">
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
     <?php if ($this->getComposit()): ?>
+    var kachelsource = null;
     var _layerFunc  = function() {
     	<?php echo $this->getComposit()->getOpenLayer(); ?>
-    	return layers;
+    	kachelsource = null;
+    	struct = $j("input:checked[name='virtualgeo-components-structure[]']");
+    	if (struct.length > 0) {
+    		structid = struct.val();
+    		georef = $j("input:checked[name='virtualgeo-components-georef[]']")
+    		if (georef.length > 0) {
+    			geocode = georef.attr("data-code");
+    			url = baseUrl + "index.php/virtualgeo/map/structurLayer/id/" + structid + "/georef/" + geocode;
+    			$j.ajax(url, {
+    				//async: false,
+        			success: function(str) {
+            			//console.log(str);
+            			if (!!str) {
+                			kachelsource = new ol.source.Vector({
+                		    	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),
+                		    	url: str
+                			});
+                			kachelVector = new ol.layer.Vector({
+                	    	  source: kachelsource,
+                	    	  zIndex: 1000
+                	    	});
+                	    	layers_0.push(kachelVector);
+            			}
+        			}
+    			}); 
+    		}
+        		
+    	}
+//    	console.log(layer);
+    	return layers_0;
 	};
 	<?php endif; ?>
 </script>
