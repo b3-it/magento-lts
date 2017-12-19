@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * @category       Gka Reports
@@ -33,7 +32,7 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
         $userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
 
         $collection->getSelect()
-            ->joinleft(array('payment' => $collection->getTable('sales/order_payment')), 'payment.parent_id=main_table.entity_id', array('kassenzeichen'))
+            ->joinleft(array('payment' => $collection->getTable('sales/order_payment')), 'payment.parent_id=main_table.entity_id', array('kassenzeichen','method'))
             ->where('customer_id = ' . $userId)
             ->where('main_table.store_id = ' . intval(Mage::app()->getStore()->getId()));
 
@@ -44,28 +43,28 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
         return parent::_prepareCollection();
     }
 
-    protected function _addCostUnits() {
-        //TODO: 20171215: Frank Rochlitzer:: Funktioniert nicht so einfach, Transaktionen/Bestellungen können mehrere Produkte enthalten!!!
-        /* @var $catalog Mage_Catalog_Model_Resource_Product */
-        $catalog = Mage::getResourceSingleton('catalog/product');
-        $kfr = array();
-        $kfr[] = $catalog->getAttribute('haushaltsstelle');
-        $kfr[] = $catalog->getAttribute('objektnummer');
+//     protected function _addCostUnits() {
+//         //TODO: 20171215: Frank Rochlitzer:: Funktioniert nicht so einfach, Transaktionen/Bestellungen können mehrere Produkte enthalten!!!
+//         /* @var $catalog Mage_Catalog_Model_Resource_Product */
+//         $catalog = Mage::getResourceSingleton('catalog/product');
+//         $kfr = array();
+//         $kfr[] = $catalog->getAttribute('haushaltsstelle');
+//         $kfr[] = $catalog->getAttribute('objektnummer');
 
-        foreach ($kfr as $attribute) {
-            if (!$attribute) {
-                continue;
-            }
-            $alias = sprintf('_left_%s', $attribute->getAttributeCode());
-            /** @var $collection Mage_Sales_Model_Resource_Order_Grid_Collection */
-            $collection = $this->getCollection();
-            $collection->getSelect()
-                ->joinLeft(array($alias => $attribute->getBackendTable()),
-                    sprintf('%1$s.attribute_id = %2$s and %1$s.entity_id = main_table.product_id', $alias, $attribute->getAttributeId()),
-                    array($attribute->getAttributeCode() => 'value')
-                );
-        }
-    }
+//         foreach ($kfr as $attribute) {
+//             if (!$attribute) {
+//                 continue;
+//             }
+//             $alias = sprintf('_left_%s', $attribute->getAttributeCode());
+//             /** @var $collection Mage_Sales_Model_Resource_Order_Grid_Collection */
+//             $collection = $this->getCollection();
+//             $collection->getSelect()
+//                 ->joinLeft(array($alias => $attribute->getBackendTable()),
+//                     sprintf('%1$s.attribute_id = %2$s and %1$s.entity_id = main_table.product_id', $alias, $attribute->getAttributeId()),
+//                     array($attribute->getAttributeCode() => 'value')
+//                 );
+//         }
+//     }
 
     protected function _prepareColumns() {
         $this->addColumn('real_order_id', array(
@@ -76,7 +75,7 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
         ));
 
         /* @var $catalog Mage_Catalog_Model_Resource_Product */
-        $catalog = Mage::getResourceSingleton('catalog/product');
+        //$catalog = Mage::getResourceSingleton('catalog/product');
         /*
          * TODO: 20171215: Frank Rochlitzer:: Funktioniert nicht so einfach, Transaktionen/Bestellungen können mehrere Produkte enthalten!!!
         $this->addColumn('haushaltsstelle',
@@ -111,34 +110,37 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
             'width' => '100px',
         ));
 
-        $this->addColumn('billing_name', array(
-            'header' => Mage::helper('sales')->__('Bill to Name'),
-            'index' => 'billing_name',
-        ));
+//         $this->addColumn('billing_name', array(
+//             'header' => Mage::helper('sales')->__('Bill to Name'),
+//             'index' => 'billing_name',
+//         ));
 
         $this->addColumn('base_grand_total', array(
-            'header' => Mage::helper('sales')->__('G.T. (Base)'),
+            'header' => Mage::helper('sales')->__('Amount'),
             'index' => 'base_grand_total',
             'type' => 'currency',
             'currency' => 'base_currency_code',
             'total' => 'sum',
         ));
 
+        $this->addColumn('payment_method', array(
+        		'header' => Mage::helper('sales')->__('Payment Method'),
+        		'index' => 'method',
+        		'type' => 'options',
+        		'width' => '70px',
+        		'filter_index' => 'payment.method',
+        		'options' => Mage::helper('gka_reports')->getActivePaymentMethods(),
+        ));
+        
         $this->addColumn('status', array(
             'header' => Mage::helper('sales')->__('Status'),
             'index' => 'status',
             'type' => 'options',
-            'width' => '70px',
+            'width' => '60px',
             'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
         ));
 
-        $this->addColumn('payment_method', array(
-            'header' => Mage::helper('sales')->__('Payment Method'),
-            'index' => 'payment_method',
-            'type' => 'options',
-            'width' => '130px',
-            'options' => Mage::helper('gka_reports')->getActivePaymentMethods(),
-        ));
+
 
 
         $this->addExportType('*/*/exportCsv', Mage::helper('gka_reports')->__('CSV'));
