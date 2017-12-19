@@ -73,7 +73,7 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
 		    	$orderItem->addOption(array('code'=>'period_object','value'=>serialize($periode)));
 
 		    	//Prüfen ob automatische Aboverlängerung:
-		    	$aboItem = $orderItem->getAboItem();
+		    	$aboItem = $product->getAboItem();
 		    	if($aboItem)
 		    	{
 		    		$q = $aboItem->getTierPriceDependBenefitCount();

@@ -23,6 +23,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		$buyRequest->setData('periode',$aboitem->getPeriodId());
 		$buyRequest->setData('station',$aboitem->getStationId());
 		
+		$product->setAboItem($aboitem);
 		$item = $quote->addProduct($product, $buyRequest);
 		$item->setQty(1);
 		
@@ -32,6 +33,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         $item->addOption(array('code'=>'periode_id','value'=>$aboitem->getPeriodId()));
         $item->addOption(array('code'=>'station_id','value'=>$aboitem->getStationId()));
         $item->addOption(array('code'=>'previous_periode_end','value'=>$aboitem->getStopDate()));
+      
        
         $p = Mage::getModel('periode/periode')->load($aboitem->getPeriodId());
         $item->setPeriode($p);
