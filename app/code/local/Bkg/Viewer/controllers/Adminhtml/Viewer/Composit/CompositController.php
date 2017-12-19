@@ -116,12 +116,16 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
                 {
                     $model->load($d['id']);
                 }
-
-                $model->setPos($d['pos'])
-                    ->setCompositId($compositId)
-                    ->setLayerId($d['layer_id'])
-                    ->setLabel($d['label'])
-                    ->save();
+				if($d['deleted'] == 0)
+				{
+	                $model->setPos($d['pos'])
+	                    ->setCompositId($compositId)
+	                    ->setLayerId($d['layer_id'])
+	                    ->setLabel($d['label'])
+	                    ->save();
+				}else{
+					$model->delete();
+				}
             }
         }
     }
