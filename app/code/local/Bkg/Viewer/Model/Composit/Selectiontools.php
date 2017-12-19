@@ -23,5 +23,15 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
     }
     
    
-
+	public function getOptions4Product($compositId)
+	{
+		$collection = $this->getCollection();
+		$collection->getSelect()
+		->join(array('layer'=>$collection->getTable('bkgviewer/service_layer')),'layer.id= main_table.layer_id',array('title'))
+		->where('composit_id = ?', $compositId)
+		->order('pos');
+		
+		return $collection;
+	}
+    
 }

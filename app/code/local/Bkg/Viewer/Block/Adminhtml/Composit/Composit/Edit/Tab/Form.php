@@ -124,9 +124,5 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Tab_Form extends Mage_Ad
         return $res;
     }
 
-    protected function _afterToHtml($html)
-    {
-        $html = str_replace('</form>', '<div id="hidden_navi_menu" /></form>', $html);
-        return $html;
-    }
+   
 }

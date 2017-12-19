@@ -118,8 +118,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
                 }
 
                 $model->setPos($d['pos'])
-                    ->setProductId($product->getId())
-                    ->setStoreId($product->getStoreId())
+                    ->setCompositId($compositId)
                     ->setLayerId($d['layer_id'])
                     ->setLabel($d['label'])
                     ->save();

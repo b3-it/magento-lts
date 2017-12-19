@@ -17,25 +17,17 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Selectiontools extends M
   
 	public function getTools()
 	{
-	    return array();
+
 		$res = array();
-        $product = $this->_getProduct();
-        $collection = Mage::getModel('virtualgeo/components_content_selectiontools')->getOptions4Product($product->getId(), $product->getStoreId());
+		$composit = Mage::registry('compositcomposit_data');
+        $collection = Mage::getModel('bkgviewer/composit_selectiontools')->getOptions4Product($composit->getId());
 
-		return $collection;
+		return $collection->getItems();
 	}
 	
 
 	
-	/**
-	 * Retirve currently edited product model
-	 *
-	 * @return Mage_Catalog_Model_Product
-	 */
-	protected function _getProduct()
-	{
-		return Mage::registry('current_product');
-	}
+	
 	
 
 	
