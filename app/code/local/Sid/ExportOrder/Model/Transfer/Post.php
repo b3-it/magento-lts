@@ -81,8 +81,8 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 				$curl_opt[CURLOPT_SSL_VERIFYHOST] = 0;
 			}
 
-			$curl_opt[CURLOPT_PROXY] = '10.100.80.50:8080';
-			$curl_opt[CURLOPT_HTTPPROXYTUNNEL] = true;
+			//$curl_opt[CURLOPT_PROXY] = '10.100.80.50:8080';
+			//$curl_opt[CURLOPT_HTTPPROXYTUNNEL] = true;
 			
 			$data = array('file' => $cfile);
 			//curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -122,6 +122,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			
 			if (($http_status < 200) || ($http_status > 210))
 			{
+				Sid_ExportOrder_Model_History::createHistory($order->getId(), $output);
 				throw new Exception("HTTP Status: " . $http_status ." ".$output);
 			}
 			
