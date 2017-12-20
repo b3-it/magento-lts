@@ -211,7 +211,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     
     
     
-    public function getOpenLayerWms() {
+    public function getOpenLayerWms($level) {
         $text = array();
         self::$Count++;
         $text[] = "var layer".self::$Count." = new ol.layer.Tile({";
@@ -221,6 +221,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         $text[] = "         params: {LAYERS: '".$this->getServiceLayer()->getName()."'}";
         $text[] = "    })";
         $text[] = "});";
+        $text[] = "layers_$level.push(layer".self::$Count.");";
         return implode("\n", $text);
     }
     
