@@ -1,10 +1,12 @@
 function addPages() {
 	var form_data = {};
-    var inputs = $j('#edit_form').serializeArray();
-    $j.each(inputs, function (i, input) {
-    	form_data[input.name] = input.value;
-    });
+    
 	
+    form_data['permanent'] = $j('#permanent').value;
+    form_data['entity_layer'] = $j('#entity_layer').value;
+    form_data['visual_pos'] = $j('#visual_pos').value;
+    
+    
     var service_layers = $j('#service_layers');
     var selected = service_layers.find('option:selected');
 	selected.each(function(){
@@ -63,6 +65,7 @@ $j('#jstree_layer').on("move_node.jstree", function (e, data) {
 		nodeOptions.move(data.node, data.position);
 	}
 });
+
 $j('#jstree_layer').on("ready.jstree", function (e, data) {
 	init_db_nodes();
 });

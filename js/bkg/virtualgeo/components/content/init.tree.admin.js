@@ -46,8 +46,8 @@ function refeshComponentContent()
  */
 function addLayer() {
 	var form_data = {};
-	form_data['checked'] = $j('#layerForm_Name_is_checked').is(':checked');
-	form_data['readonly'] = $j('#layerForm_Name_is_readonly').is(':checked');
+	form_data['is_checked'] = $j('#layerForm_Name_is_checked').is(':checked');
+	form_data['is_readonly'] = $j('#layerForm_Name_is_readonly').is(':checked');
 
     var layers = $j(idFormLayer);
     var selected = layers.find('option:selected');
@@ -63,87 +63,7 @@ function isEmptyElement(val) {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
 }
 
-/**
- * Alle FormFelder in ein JSON-Array schreiben und für Speicherung einfügen
- *
- * @param    string    ID des Form-Elements mit den einzelnen Optionen
- * @param    array     Originale Daten aus dem JS-Tree
- * @return   array     JSON-String mit Array-Daten
- */
-function getFormData(elementID, data, node)
-{
-	// alle diese IDs werden beim hinzufügen zum DatenArray ausgelassen
-	//var exclude = ['copy_values', 'component_content_category'];
 
-	// Wenn das Array mit Elementen gefüllt ist, wird dies zu durchsuchen benutzt
-	//var idArray    = [];
-	//var searchFor  = '';
-	var dataOption = new Array();
-	var tmp = {};
-
-	tmp.name   = data.entity_id;
-	tmp.numer  = data.number;
-	tmp.parent = data.parent;
-	tmp.is_checked = $j('#layerForm_Name_is_checked').is(':checked');
-	tmp.is_readonly = $j('#layerForm_Name_is_readonly').is(':checked');
-
-	if ( data.checked != null ) {
-		tmp.is_checked = data.checked;
-	}
-	if ( data.readonly != null ) {
-		tmp.is_readonly = data.readonly;
-	}
-
-	dataOption.push(tmp);
-
-/*
-	if ( idArray.length ) {
-		searchFor = idArray;
-	}
-	else {
-		searchFor = $j(elementID + ' :input');
-	}
-
-	$j.each(searchFor, function() {
-		var element = $j(this).attr('name');
-		var value   = ( $j(this).val() == null || $j(this).val() == '' ? '0' : $j(this).val() );
-		var multi   = $j(this).attr('multiple');
-
-		// Element ist eine Checkbox => Status ermitteln
-		if ( $j(this).attr('type') == 'checkbox' ) {
-			value = $j(this).is(':checked');
-		}
-
-		// End-String ermitteln und Wert aus dem Array setzen
-		var ending = element.slice(-7);
-		if ( ending == 'checked' || ending == 'eadonly' ) {
-			if ( ending == 'checked' && data.checked != null ) {
-				value = data.checked;
-			}
-			if ( ending == 'eadonly' && data.readonly != null ) {
-				value = data.readonly;
-			}
-		}
-
-		// Splitt für MultiSelect
-		if (multi && multi !== false) {
-			// Daten aus dem JS-Tree nutzen
-			value = data.entity_id;
-		}
-
-		// Prüfen, ob Element in der Ausschluss-Liste enthalten ist
-		if ( $j.inArray($j(this).attr('id'), exclude) == -1 ) {
-			var arrayKey = $j(this).attr('name');
-			var tmp = {};
-			tmp[arrayKey] = value;
-			dataOption.push(tmp);
-		}
-	});
-*/
-
-	// JSON-Array zurückgeben
-	return dataOption;
-}
 
 /**
  * die Auswahl von allen Formular-Elementen entfernen
@@ -328,10 +248,8 @@ var nodeOptions = {
 			ref.edit(sel);
 		}
         var node = ref.get_node(sel);
-		//data.parent = node.;
-		var nodeData = getFormData('#contentlayer_form', data, sel);
-		nodeData.push({'old': data});
-		appendJsonField(this.itemCount, nodeData);
+		
+		appendJsonField(this.itemCount, data);
 
 
 		this.move(node, this.itemCount);
@@ -356,8 +274,8 @@ var nodeOptions = {
 		data.type = 'default';
 		data.label = label;
 		data.visual_pos = input_data.visual_pos;
-		data.readonly = input_data.readonly;
-		data.checked = input_data.checked;
+		data.is_readonly = input_data.is_readonly;
+		data.is_checked = input_data.is_checked;
 		data.entity_id = id;
         data.parent = 0;
 		if(parentNode.data != null)
@@ -366,12 +284,8 @@ var nodeOptions = {
 		}
 
 		sel = this.createTextNode(sel, data);
-		var node = ref.get_node(sel);
 
-		var nodeData = getFormData('#contentlayer_form', data, node);
-
-		nodeData.push({'old': data});
-		appendJsonField(this.itemCount, nodeData);
+		appendJsonField(this.itemCount, data);
 
 		var node = ref.get_node(sel);
 		this.move(node, this.itemCount);
@@ -385,8 +299,8 @@ var nodeOptions = {
 		var text = data.label;
 
 		text += '<div class="tree-options">';
-		text += '<div class="inline-tree-cell option-tree-' + (data.readonly ? 'true' : 'false') + ' option-readonly"></div>';
-		text += '<div class="inline-tree-cell option-tree-' + (data.checked ? 'true' : 'false')  + ' option-checked"></div>';
+		text += '<div class="inline-tree-cell option-tree-' + (data.is_checked ? 'true' : 'false')  + ' option-checked"></div>';
+		text += '<div class="inline-tree-cell option-tree-' + (data.is_readonly ? 'true' : 'false') + ' option-readonly"></div>';
 		text += '</div>';
 
 		var sel = ref.create_node(parent, {"type":data.type,"data":data, "text" : text});
