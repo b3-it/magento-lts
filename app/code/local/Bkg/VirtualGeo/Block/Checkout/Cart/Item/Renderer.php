@@ -103,7 +103,12 @@ class Bkg_VirtualGeo_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Block
             		
             		
             		$value = $helper->getLabelForUsage($child->getOptionByCode('usage')->getValue());
-            		$currentfeelabel[$feelabel][] =  $value . ' ' .  Mage::helper('core')->currency($child->getCalculationPrice());
+            		$text = $value . ' ' .  Mage::helper('core')->currency($child->getCalculationPrice());
+            		if($child->getTaxAmount()){
+            			$tax = Mage::helper('core')->currency($child->getTaxAmount());
+            			$text .= " (Mwst. {$child->getTaxPercent()}% {$tax})";
+            		}
+            		$currentfeelabel[$feelabel][] = $text ;
             		
             	}
             }

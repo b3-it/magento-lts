@@ -192,6 +192,7 @@ Additional block for bundle product type
         <label>Catalog Product View (VirtualGeo)</label>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
+            <action method="addItem"><type>js</type><name>bkg/ol.tooglectrl.js</name></action>
         </reference>
         <reference name="product.info">
             <block type="virtualgeo/catalog_product_view_virtualgeo" name="product.info.virtualgeo" as="product_type_data" template="virtualgeo/catalog/product/view/virtualgeo.phtml">

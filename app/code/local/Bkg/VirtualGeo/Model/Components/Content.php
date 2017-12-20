@@ -31,4 +31,17 @@ class Bkg_VirtualGeo_Model_Components_Content extends Bkg_VirtualGeo_Model_Compo
 		 
 		return $collection;
 	}
+	
+	public function getCollectionAsOptions($productId,$storeId = 0)
+	{
+		$res = array();
+		$collection = $this->getCollection();
+		$collection->setStoreId($storeId);
+		foreach($collection->getItems() as $item)
+		{
+			$res[] = array('label'=>trim($item->getName() ." " . $item->getDescription()),'value' => $item->getId());
+		}
+	
+		return $res;
+	}
 }

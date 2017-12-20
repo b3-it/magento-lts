@@ -119,7 +119,7 @@ class Bkg_VirtualGeo_Model_Observer
         $this->_saveComponent($dataObject->getStructure(), $dataObject->getStructureDefault(),$product,'virtualgeo/components_structureproduct');
         $this->_saveComponent($dataObject->getResolution(), $dataObject->getResolutionDefault(),$product,'virtualgeo/components_resolutionproduct');
         $content = $dataObject->getContentLayerOptions();
-        //$this->_saveContentLayer($content,$product->getId());
+        $this->_saveContentLayer($content,$product->getId());
 
     }
     
@@ -132,28 +132,29 @@ class Bkg_VirtualGeo_Model_Observer
     	foreach($nodes as $key =>$node)
     	{
     	    $node = json_decode($node,true);
-    		$model = Mage::getModel('virtualgeo/components_contentproduct');
-    		continue;
+    		$model = Mage::getModel('virtualgeo/components_contentproduct')->load(intval($node['id']));
+
     		$model
                 ->setPos($node['pos'])
                 ->setEntityId($node['entity_id'])
                 ->setProductId($productId); //FK
-    		if(!isset($node['id']) || empty($node['id']))
+    		
+    		if($model->getId())
     		{
     			$model->save();
                 $nodes[$key]['id'] = $model->getId();
-    			$node['model'] = $model;
-    		}else {
-    			$model = Mage::getModel('virtualgeo/components_contentproduct')->load($node['id']);
-    			$node['model'] = $model;
+    			
     		}
-    
+    		
+    		$node['model'] = $model;
     		$model
     		->setPos($node['pos'])
     		->setVisualPos($node['visual_pos'])
     		->setType($node['type'])
     		->setProductId($productId)
             ->setEntityId($node['entity_id'])
+            ->setReadonly($node['is_readonly'])
+            ->setIsChecked($node['is_checked'])
             ->save();
     
     		if(!isset($node['parent']) || empty($node['parent']))

@@ -133,7 +133,8 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_Content_CategoryController 
     	$res = array();
     	foreach($collection->getItems() as $item)
     	{
-    		$res[] = "<option value='{$item->getId()}' >{$item->getName()} </option>";
+    		$name = trim($item->getName()." ". $item->getDescription());
+    		$res[] = "<option value='{$item->getId()}' >{$name} </option>";
     	}
     	
     	$this->getResponse()->setBody(implode(" ",$res));

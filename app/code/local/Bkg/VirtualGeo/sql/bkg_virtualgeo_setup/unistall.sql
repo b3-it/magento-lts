@@ -18,5 +18,6 @@ drop table virtualgeo_components_storage_product;
 drop table virtualgeo_components_structure_entity;
 drop table virtualgeo_components_structure_label;
 drop table virtualgeo_components_structure_product;
+drop table virtualgeo_components_content_category;
 delete from core_resource where code = 'bkg_virtualgeo_setup';
 SET FOREIGN_KEY_CHECKS = 1;

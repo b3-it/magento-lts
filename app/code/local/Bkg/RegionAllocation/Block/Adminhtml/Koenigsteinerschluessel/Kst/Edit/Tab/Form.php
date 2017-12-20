@@ -39,8 +39,8 @@ class Bkg_Regionallocation_Block_Adminhtml_Koenigsteinerschluessel_Kst_Edit_Tab_
       		'input_format' => Varien_Date::DATE_INTERNAL_FORMAT,
       		//'class'     => 'readonly',
       		//'readonly'  => true,
-      		'class'     => 'required-entry',
-      		'required'  => true,
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
       		'format'       => $dateFormatIso,
       		'image'  => $this->getSkinUrl('images/grid-cal.gif'),
       ));

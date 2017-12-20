@@ -91,7 +91,7 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_resolut
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `code` varchar(128) default '',
 	  `pos` int(11) unsigned default 0,
-	  CONSTRAINT UNIQUE INDEX ìdx_resolution_code (`code`), 
+	  INDEX ìdx_resolution_code (`code`), 
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	  ");
@@ -106,6 +106,9 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_structu
 	  `type` varchar(128) default '',
 	  `pos` int(11) unsigned default 0,
 	  INDEX ìdx_structure_code (`code`), 
+  	  show_layer SMALLINT default 0,
+      service_id int(11) unsigned default NULL,
+  	  CONSTRAINT fk_components_structure_service FOREIGN KEY (service_id) REFERENCES {$installer->getTable('bkgviewer/service_service')}(id) ON DELETE SET NULL,
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	  ");
@@ -177,6 +180,8 @@ if ($installer->tableExists($installer->getTable('virtualgeo/components_content_
 {
     $installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_content_product')}
 	ADD COLUMN  `parent_node_id` int(11) unsigned default NULL,
+	ADD readonly SMALLINT default 0,
+    ADD is_checked SMALLINT default 0,
 	ADD CONSTRAINT fk_components_content_product_parent FOREIGN KEY (parent_node_id) REFERENCES {$installer->getTable('virtualgeo/components_content_product')}(id)
 	ON UPDATE CASCADE ON DELETE CASCADE
 	");
