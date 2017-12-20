@@ -39,6 +39,18 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo extends Mage_Bundle_B
 			return null;
 		}
 	}
+	
+	/**
+	 * 
+	 * @return array
+	 */
+	public function getSelectionTools() {
+	    $composit = $this->getComposit();
+	    if ($composit) {
+	       return Mage::getModel('bkgviewer/composit_selectiontools')->getOptions4Product($composit->getId());
+	    }
+	    return array();
+	}
 
 	/**
 	 * Return price block

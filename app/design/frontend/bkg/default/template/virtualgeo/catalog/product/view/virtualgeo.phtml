@@ -32,9 +32,29 @@
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
     <?php if ($this->getComposit()): ?>
     var kachelsource = null;
+
+
+	var toolsfunc = function() {
+      var tools = [];
+      <?php
+      $tools = $this->getSelectionTools();
+      foreach ($tools as $tool) {
+          /**
+           * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
+           */
+          echo ($tool->getOpenLayers());
+      }
+      ?>
+      return new ol.layer.Group({
+        //title: 'Tools',
+        layers: tools
+      });
+	}
+    
     var _layerFunc  = function() {
     	<?php echo $this->getComposit()->getOpenLayer(); ?>
     	kachelsource = null;
+
     	struct = $j("input:checked[name='virtualgeo-components-structure[]']");
     	if (struct.length > 0) {
     		structid = struct.val();
@@ -60,11 +80,13 @@
         			}
     			}); 
     		}
-        		
     	}
 //    	console.log(layer);
+
+        layers_0.push(toolsfunc.call());
     	return layers_0;
 	};
+
 	<?php endif; ?>
 </script>
 

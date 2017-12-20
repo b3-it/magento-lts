@@ -32,7 +32,7 @@ $j(document).ready(function(){
 					//console.log(_epsg);
         			if (_map == null) {
         				//alert("create map");
-        				layers = _layerFunc.call();
+        				layers = _layerFunc.call(_epsg);
         				//console.log(layers);
         				view = makeview(_epsg);
         				_map = new ol.Map({
@@ -47,6 +47,15 @@ $j(document).ready(function(){
         				_map.addControl(new ol.control.ZoomSlider());
         				_layerSwitcher = new ol.control.LayerSwitcher(); 
         			    _map.addControl(_layerSwitcher);
+        			    
+        			    _map.addControl(new toogleModeCtrl({
+        		    		inputName: 'radio-toogleMode',
+        		    		className: 'toogleModeCtrl',
+        		    		fields: {
+        		    			'plus': "+",
+        		    			'minus': "-"
+        		    		}
+        		    	}));
         				//_map.addControl(new ol.control.ScaleLine());
         			} else {
             			//alert("rebuild map");
@@ -55,7 +64,7 @@ $j(document).ready(function(){
             			// need to update view on overview map
             			_overview.getOverviewMap().setView(makeview(_epsg));
 
-            			layers = _layerFunc.call();
+            			layers = _layerFunc.call(_epsg);
             			// use this to add new Layers
             			_map.getLayerGroup().setLayers(layers);
         			}
