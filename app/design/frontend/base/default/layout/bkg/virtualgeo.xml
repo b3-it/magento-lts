@@ -208,7 +208,7 @@ Additional block for bundle product type
                 <action method="addComponentsBlock">
                     <type>content</type>
                     <block>virtualgeo/catalog_product_view_components_content</block>
-                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/content.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
                     <type>resolution</type>
@@ -216,14 +216,19 @@ Additional block for bundle product type
                     <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
-                    <type>storage</type>
-                    <block>virtualgeo/catalog_product_view_components_storage</block>
-                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
-                </action>
-                <action method="addComponentsBlock">
                     <type>structure</type>
                     <block>virtualgeo/catalog_product_view_components_structure</block>
                     <template>virtualgeo/catalog/product/view/components/structure.phtml</template>
+                </action>
+                 <action method="addComponentsBlock">
+                    <type>map</type>
+                    <block>virtualgeo/catalog_product_view_components_map</block>
+                    <template>virtualgeo/catalog/product/view/components/map.phtml</template>
+                </action>
+                 <action method="addComponentsBlock">
+                    <type>storage</type>
+                    <block>virtualgeo/catalog_product_view_components_storage</block>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addPriceBlockType">
                     <type>virtualgeo</type>

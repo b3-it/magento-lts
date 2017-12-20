@@ -1,0 +1,25 @@
+    <h3>
+        <?php echo $this->getTitle(); ?>
+        <div class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></div>
+    </h3>
+    <div class="virtualgeo-default">
+      <?php foreach($this->getOptions() as $option): ?>
+        <?php $_default = ($option->getIsDefault() == '1' ? ' checked="checked"' : ''); ?>
+        <?php //var_dump($option); ?>
+        <div class="option-row">
+            <div>
+                <input type="radio"
+                       class="radio"
+                       name="<?php echo $this->getHtmlID(); ?>[]"
+                       value="<?php echo $option->getEntityId(); ?>"
+                       data-id="<?php echo $this->getHtmlID(); ?>"
+                       data-code="<?php echo $option->getCode(); ?>"
+                       data-shortname="<?php echo $option->getShortname(); ?>"
+                       data-name="<?php echo $option->getName();?>"
+                       <?php echo $_default; ?> />
+            </div>
+            <div class="virtualgeo-name"><?php echo $option->getName();?></div>
+            <div class="virtualgeo-desc"><?php echo $option->getDescription();?></div>
+        </div>
+      <?php endforeach; ?>
+    </div>

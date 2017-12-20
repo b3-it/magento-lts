@@ -434,6 +434,11 @@ class Bkg_VirtualGeo_Model_Observer
     	return Mage::getSingleton('checkout/session');
     }
    
+    public function onHttpResponseSendBefore($observer)
+    {
+    	$response = $observer->getResponse();
+    	$response->setHeader('Access-Control-Allow-Origin','*');
+    }
 
     
 }

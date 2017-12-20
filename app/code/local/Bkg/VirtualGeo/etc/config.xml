@@ -405,6 +405,18 @@
                 </virtualgeo>
             </updates>
         </layout>
+        <events>
+         <!--  
+        <http_response_send_before>
+        <observers>
+	           <virtualgeo_http_response_send_before>
+	                 <class>virtualgeo/observer</class>
+	                 <method>onHttpResponseSendBefore</method>
+	             </virtualgeo_http_response_send_before>
+	         </observers>
+        </http_response_send_before>
+        -->
+        </events>
 
     </frontend>
     <admin>
