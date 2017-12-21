@@ -42,6 +42,8 @@
         @extend .egov-navigation-background;
 
         background-color: $global-category-item-color;
+        background-image: none;
+        background-color: $global-linkcolor-active;
 
         margin: 0;
         padding: 0;
