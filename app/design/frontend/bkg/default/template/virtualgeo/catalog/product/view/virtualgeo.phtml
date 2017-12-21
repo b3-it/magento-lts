@@ -27,11 +27,26 @@
         //]]>
     </script>
 <?php endif; ?>
+<style  type="text/css" >
 
+.ui-controlgroup > .ui-helper-hidden-accessible {
+  position: absolute !important;
+}
+
+#select-vg-menu > .ui-menu-item {
+  line-height: normal;
+}
+.toogleModeCtrl {
+	top: 0em;
+}
+.toogleSelectCtrl {
+	top: 0em;
+	left: 5.5em;
+}
+</style>
 <script type="text/javascript">
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
     <?php if ($this->getComposit()): ?>
-    var kachelsource = null;
 
 
 	var toolsfunc = function() {
@@ -50,10 +65,11 @@
         layers: tools
       });
 	}
-    
-    var _layerFunc  = function() {
-    	<?php echo $this->getComposit()->getOpenLayer(); ?>
-    	kachelsource = null;
+
+	function _kachelFunc(f) {
+
+    	kachelSource = null;
+    	kachelVector = null;
 
     	struct = $j("input:checked[name='virtualgeo-components-structure[]']");
     	if (struct.length > 0) {
@@ -67,23 +83,23 @@
         			success: function(str) {
             			//console.log(str);
             			if (!!str) {
-                			kachelsource = new ol.source.Vector({
+            				kachelSource = new ol.source.Vector({
                 		    	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),
                 		    	url: str
                 			});
                 			kachelVector = new ol.layer.Vector({
-                	    	  source: kachelsource,
+                	    	  source: kachelSource,
                 	    	  zIndex: 1000
                 	    	});
-                	    	layers_0.push(kachelVector);
+                			f.call(null, kachelVector);
             			}
         			}
     			}); 
     		}
     	}
-//    	console.log(layer);
-
-        layers_0.push(toolsfunc.call());
+    }
+    var _layerFunc  = function() {
+    	<?php echo $this->getComposit()->getOpenLayer(); ?>
     	return layers_0;
 	};
 
