@@ -91,36 +91,6 @@ function resetFormFields(elementID)
 }
 
 /**
- * Anlegen eines HiddenFields zur Übermittlung des Formulars
- *
- * @param    integer     Nummer der anzulegenden Elements
- * @param    array       JSON-Daten
- */
-function appendJsonField(itemID, nodeData)
-{
-	var inputField = $j('<input />', {
-		'id'   : 'virtualgeo_content_layer_options_' + itemID,
-		'name' : 'product[content_layer_options][' + itemID + ']',
-		'value': JSON.stringify(nodeData),
-		'type' : 'hidden',
-		'width' : '700px'
-	});
-	$j('#jstree-data').append(inputField);
-}
-
-/**
- * JSON-Feld aus dem Formular löschen, da der knoten im JS-Tree entfernt wurde
- *
- * @param  integer   ID des zu löschenden Feldes
- */
-function removeJsonField(itemID)
-{
-	var data = JSON.parse($j('#virtualgeo_content_layer_options_' + itemID).val());
-	data['deleted'] = true;
-    $j('#virtualgeo_content_layer_options_' + itemID).val(JSON.stringify(data));
-}
-
-/**
  * JS-Tree-Element initialisieren
  */
 $j('#jstree_layer').jstree({
@@ -143,6 +113,7 @@ $j('#jstree_layer').jstree({
 			"valid_children" : ["default","page"]
 		},
 		"default" : {
+            "icon" : "jstree-file",
 			"valid_children" : ["default","page"]
 		},
 		"page" : {
@@ -151,7 +122,7 @@ $j('#jstree_layer').jstree({
 		},
 	},
 	"plugins" : [
-		"types"
+		"types",  "dnd"
 	]
 })
 .on("changed.jstree", function (event, data) {
@@ -162,6 +133,7 @@ $j('#jstree_layer').jstree({
 .on("move_node.jstree", function (event, data) {
 	if(data.node) {
 		nodeOptions.move(data.node, data.position);
+		nodeOptions.reorder('j1_1',0);
 	}
 })
 .on("ready.jstree", function (event, data) {
@@ -195,14 +167,34 @@ var nodeOptions = {
 		if(node) {
 			var ref = this.tree.jstree(true);
 			var parent = ref.get_node(node.parent);
-			var pos = 0;
+			//var pos = 0;
 			for(var childId in parent.children){
 				var child = ref.get_node(parent.children[childId]);
 				if(child) {
-					pos++;
+                   // pos++;
+					child.data.parent_number = parent.data.number;
+					child.data.pos = pos;
+					this.alterJsonField(child.data);
 				}
 			}
 		}
+	},
+	'reorder' : function(nodeId, pos)
+	{
+		pos++;
+        var ref = this.tree.jstree(true);
+        var node = ref.get_node(nodeId);
+        if(node.data != null) {
+            node.data.pos = pos;
+            this.alterJsonField(node.data);
+        }
+        for(var childId in node.children){
+
+        	//var child = ref.get_node(node.children[childId]);
+        	pos = this.reorder(node.children[childId], pos);
+        }
+		return pos;
+
 	},
 	'add': function(data, sel) {
 		var ref = this.tree.jstree(true);
@@ -229,11 +221,9 @@ var nodeOptions = {
 
 		if(!data){
 			var data = new Object();
-
 			data.name = 'default';
 			data.label = element_default_title;
 			data.type = "default"
-
 		}
         data.deleted = false;
 		data.number = this.itemCount;
@@ -249,11 +239,8 @@ var nodeOptions = {
 			ref.edit(sel);
 		}
         var node = ref.get_node(sel);
-		
-		appendJsonField(this.itemCount, data);
 
-
-		this.move(node, this.itemCount);
+		//this.move(node, this.itemCount);
 		this.open_all();
 
 		return node.id;
@@ -289,8 +276,6 @@ var nodeOptions = {
 
 		sel = this.createTextNode(sel, data);
 
-		appendJsonField(this.itemCount, data);
-
 		var node = ref.get_node(sel);
 		this.move(node, this.itemCount);
 		this.open_all();
@@ -307,8 +292,25 @@ var nodeOptions = {
 		text += '<div class="inline-tree-cell option-tree-' + (data.is_readonly ? 'true' : 'false') + ' option-readonly"></div>';
 		text += '</div>';
 
+		this.appendJsonField(data);
+
 		var sel = ref.create_node(parent, {"type":data.type,"data":data, "text" : text});
 		return sel;
+	},
+	'appendJsonField':function (nodeData)
+    {
+        var inputField = $j('<input />', {
+            'id'   : 'virtualgeo_content_layer_options_' + nodeData.number,
+            'name' : 'product[content_layer_options][' + nodeData.number + ']',
+            'value': JSON.stringify(nodeData),
+            'type' : 'text',
+            'width' : '600px'
+        });
+        $j('#jstree-data').append(inputField);
+    },
+	'alterJsonField':function (nodeData)
+	{
+        $j('#virtualgeo_content_layer_options_' + nodeData.number).val(JSON.stringify(nodeData));
 	},
 	'remove': function(data) {
 		this.hideAll();
@@ -320,10 +322,12 @@ var nodeOptions = {
 		}
 		var node = ref.get_node(sel);
 
-		// das zugehörige JSON-Feld löschen
-        removeJsonField(node.data.number);
+		//Delete Flag setzten
+        var data = JSON.parse($j('#virtualgeo_content_layer_options_' + node.data.number).val());
+        data['deleted'] = true;
+        $j('#virtualgeo_content_layer_options_' + node.data.number).val(JSON.stringify(data));
 
-		//elem.val(1);
+        //knoten entfernen
 		ref.delete_node(sel);
 	},
 
@@ -331,7 +335,5 @@ var nodeOptions = {
 		var ref = this.tree.jstree(true);
 		ref.open_all('j1_1');
 	},
-	'set_div': function(data) {
-		this.div = data;
-	}
+
 }
