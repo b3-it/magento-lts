@@ -7,6 +7,7 @@ var kachelSource = null;
 var kachelVector = null;
 var _select = null;
 
+var tools = null;
 var selections = null;
 
 var _kachelFinalSource = null;
@@ -162,7 +163,7 @@ $j(document).ready(function(){
         			if (_map == null) {
         				//alert("create map");
         				var layers = _layerFunc.call(_epsg);
-        				var tools = toolsfunc.call(_epsg);
+        				tools = toolsfunc.call(_epsg);
         			    selections = makeSelection(tools);
         			    
         			    updateKachel(layers, selections);
@@ -192,23 +193,28 @@ $j(document).ready(function(){
         		    		}
         		    	}));
         			    
-        			    var vgidx = 1;
-        			    var vgs = { '' : "Verwaltungsgebiete" }; 
-        			    tools.getLayers().forEach(function (f) {
-        			    	var t = f.get('title');
-        			    	vgs['vg' + vgidx]=t;
-        			    	vgidx += 1;
-        			    });
+        			    
+        			    fields = {
+    			    		'grid': "Grid",
+    			    	}
+        			    if (tools.getLayers().getLength() > 0) {
+            			    var vgidx = 1;
+            			    var vgs = { '' : "Tools" }; 
+            			    tools.getLayers().forEach(function (f) {
+            			    	var t = f.get('title');
+            			    	vgs['vg' + vgidx]=t;
+            			    	vgidx += 1;
+            			    });
+            			    fields['vg'] = vgs;
+        			    }
+        			    fields['poly'] = "Poly";
+        			    fields['rect'] = "Rect";
+			    		//'own': { '': "Meine Gebiete", 'own1': "Demo1", 'own2': "Demo2" }
+        			    
         			    _map.addControl(new toogleModeCtrl({
         			    	inputName: 'radio-toogleSelect',
         			    	className: 'toogleSelectCtrl',
-        			    	fields: {
-        			    		'grid': "Grid",
-        			    		'vg': vgs,
-        			    		'poly': "Poly",
-        			    		'rect': "Rect",
-        			    		//'own': { '': "Meine Gebiete", 'own1': "Demo1", 'own2': "Demo2" }
-        			    	}
+        			    	fields: fields
         			    }));
         			    
         			    $j('input[name=radio-toogleMode]').on('change', function(evt) {
@@ -224,6 +230,8 @@ $j(document).ready(function(){
         			    	// disable Vg selected
         			    	$j('#select-vg').val('').selectmenu( "refresh" );
         			    	$j('#select-vg-button').removeClass('ui-state-active');
+        			    	// only one tool is visible
+        			    	tools.getLayers().forEach(function(f) {f.setVisible(false);});
 
         			    	id = evt.target.id;
         			    	
@@ -243,6 +251,12 @@ $j(document).ready(function(){
         			    
         			    $j('#select-vg').on( "selectmenuchange", function( event, ui ) {
         			    	id = ui.item.element.attr('id');
+        			    	idx = id.slice(5);
+        			    	
+        			    	// only one tool is visible
+        			    	tools.getLayers().forEach(function(f) {f.setVisible(false);});
+        			    	tools.getLayers().item(idx-1).setVisible(true);
+        			    	
         			    	if (id !== undefined) {
         			    		$j('input[name=radio-toogleSelect]').prop( "checked", false ).checkboxradio( "refresh" );
         			    		$j('#select-vg-button').addClass('ui-state-active');
@@ -286,8 +300,12 @@ $j(document).ready(function(){
         			//clean map of layers
         			//_layerSwitcher.setMap(null);
         			_map.getLayers().clear();
-        			_kachelFinalSource.clear();
-        			_map.removeInteraction(_select);
+        			if (_kachelFinalSource !== null) {
+            			_kachelFinalSource.clear();        				
+        			}
+        			if (_select !== null) {
+        				_map.removeInteraction(_select);        				
+        			}
         			_select = null;
         			//alert("clean map");
         			

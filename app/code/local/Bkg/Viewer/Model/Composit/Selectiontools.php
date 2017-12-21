@@ -78,7 +78,7 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
         $text[] = "  source: vectorSource".self::$Count.",";
         $text[] = "  title: '" . $this->getLabel() . "',";
         $text[] = "  zIndex: " .(100+self::$Count). ",";
-        //$text[] = "  visible: false,";
+        $text[] = "  visible: false,";
         $text[] = "  style: new ol.style.Style({";
         $text[] = "    stroke: new ol.style.Stroke({";
         $text[] = "      color: 'red',";
