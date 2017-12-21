@@ -10,7 +10,7 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content extends Bkg_V
 	
 	
 	
-	public function getOptions()
+	public function getOptions($fields = null)
 	{
 		$options = parent::getOptions();
 		$res = $this->_findCildren(null,$options);
@@ -75,7 +75,7 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content extends Bkg_V
 		$res[] = 'data-code="'.$node->getCode().'"';
 		$res[] = 'data-shortname="'.$node->getShortname().'"';
 		$res[] = 'data-name="'.$node->getName().'"/>';
-		$res[] = $node->getName().'</div>';
+		$res[] = trim($node->getName()." " . $node->getDescription()).  '</div>';
 		
 		if($node->getChildren())
 		{

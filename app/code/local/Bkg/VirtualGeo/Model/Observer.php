@@ -126,70 +126,59 @@ class Bkg_VirtualGeo_Model_Observer
 
     protected function _saveContentLayer($nodes,$productId)
     {
-    	$loaded = array();
+        //deserialisierten wert ins array zurück schreiben
+        foreach($nodes as $key =>$node)
+        {
+            $node = json_decode($node,true);
+            $nodes[$key] = $node;
+        }
 
     	//model erzeugen oder laden
     	foreach($nodes as $key =>$node)
-    	{
-    	    $node = json_decode($node,true);
+        {
     		$model = Mage::getModel('virtualgeo/components_contentproduct')->load(intval($node['id']));
-
     		$model
                 ->setPos($node['pos'])
                 ->setEntityId($node['entity_id'])
-                ->setProductId($productId); //FK
-    		
-    		if($model->getId())
+                ->setProductId($productId) //FK
+                ->setReadonly($node['is_readonly'])
+                ->setIsChecked($node['is_checked']);
+    		if(!$model->getId())
     		{
     			$model->save();
-                $nodes[$key]['id'] = $model->getId();
-    			
     		}
-    		
+            $nodes[$key]['id'] = $model->getId();
     		$node['model'] = $model;
-    		$model
-    		->setPos($node['pos'])
-    		->setVisualPos($node['visual_pos'])
-    		->setType($node['type'])
-    		->setProductId($productId)
-            ->setEntityId($node['entity_id'])
-            ->setReadonly($node['is_readonly'])
-            ->setIsChecked($node['is_checked'])
-            ->save();
-    
-    		if(!isset($node['parent']) || empty($node['parent']))
-    		{
-    			$model->unsetData('parent_node_id');
-    		}else{
 
-    		    $parentNode = $this->findByNumber($nodes, $node['parent']);
-    			$model->setParentNodeId($parentNode['id']);
-    		}
-    		$loaded[] = $node;
-    
+
+
+    		$model->save();
+            $nodes[$key] = $node;
     	}
     
     	//jetzt die Elternbeziehung und die Reihenfolge
-    	foreach($loaded as $node)
+    	foreach($nodes as $node)
     	{
     
     		$model = $node['model'];
-    		$parent = $this->findByNumber($loaded, $node['parent']);
-    
-    		if($parent){
-    			$model->setParentId($parent['model']->getId());
-    		}else{
-    			$model->setData('parent_id',null);
-    		}
+
+
+            if(!isset($node['parent_number']) || empty($node['parent_number']))
+            {
+                $model->unsetData('parent_node_id');
+            }else{
+                $parentNode = $this->findByNumber($nodes, $node['parent_number']);
+                $model->setParentNodeId($parentNode['model']->getId());
+            }
     
     
     		$model->save();
     
     	}
     
-    	foreach($loaded as $node)
+    	foreach($nodes as $node)
     	{
-    		if($node['is_delete']){
+    		if($node['deleted'] == true){
     			$model = $node['model'];
     			$model->delete();
     		}

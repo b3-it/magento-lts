@@ -102,7 +102,8 @@ function appendJsonField(itemID, nodeData)
 		'id'   : 'virtualgeo_content_layer_options_' + itemID,
 		'name' : 'product[content_layer_options][' + itemID + ']',
 		'value': JSON.stringify(nodeData),
-		'type' : 'hidden'
+		'type' : 'hidden',
+		'width' : '700px'
 	});
 	$j('#jstree-data').append(inputField);
 }
@@ -114,21 +115,9 @@ function appendJsonField(itemID, nodeData)
  */
 function removeJsonField(itemID)
 {
-	var objData = $j('#virtualgeo_content_layer_options_' + itemID).val();
-	var oldData = $j('#virtualgeo_content_layer_deleted').val();
-	var newData = '';
-
-	var arrayData = $j.parseJSON(objData);
-
-	if ( oldData.length ) {
-		newData = oldData + ',' + $j(arrayData).get(-1).id;
-	}
-	else {
-		newData = $j(arrayData).get(-1).id;
-	}
-
-	$j('#virtualgeo_content_layer_deleted').val(newData);
-	$j('#virtualgeo_content_layer_options_' + itemID).remove();
+	var data = JSON.parse($j('#virtualgeo_content_layer_options_' + itemID).val());
+	data['deleted'] = true;
+    $j('#virtualgeo_content_layer_options_' + itemID).val(JSON.stringify(data));
 }
 
 /**
@@ -218,7 +207,7 @@ var nodeOptions = {
 	'add': function(data, sel) {
 		var ref = this.tree.jstree(true);
 		var edit = false;
-
+		var parentnode = null;
 		this.itemCount++;
 		if(!sel) {
 			var	sel = ref.get_selected();
@@ -229,9 +218,13 @@ var nodeOptions = {
 			sel = sel[0];
 			ref.open_node(sel);
 			edit = true;
+            parentnode = ref.get_node(sel);
 		}
 		else if(sel == 'root') {
 			sel =  ref.get_node('j1_1');
+
+		}else{
+            parentnode = ref.get_node(sel);
 		}
 
 		if(!data){
@@ -240,8 +233,16 @@ var nodeOptions = {
 			data.name = 'default';
 			data.label = element_default_title;
 			data.type = "default"
+
 		}
+        data.deleted = false;
 		data.number = this.itemCount;
+        data.pos = this.itemCount;
+
+
+        if(parentnode != null){
+            data.parent_number = parentnode.data.number;
+		}
 
 		sel = this.createTextNode(sel,data);
 		if(sel && edit) {
@@ -277,10 +278,13 @@ var nodeOptions = {
 		data.is_readonly = input_data.is_readonly;
 		data.is_checked = input_data.is_checked;
 		data.entity_id = id;
-        data.parent = 0;
-		if(parentNode.data != null)
+        data.parent_number = 0;
+        data.pos = this.itemCount;
+        data.deleted = false;
+        data.id = 0;
+		if(parentNode != null)
 		{
-			data.parent = parentNode.data.number;
+            data.parent_number = parentNode.data.number;
 		}
 
 		sel = this.createTextNode(sel, data);
