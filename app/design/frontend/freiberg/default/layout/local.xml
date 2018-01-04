@@ -2,6 +2,9 @@
 <!DOCTYPE layout>
 <layout>
     <default>
+		<reference name="head">
+			<action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
+		</reference>
         <reference name="left">
             <remove name="cart_sidebar" />
         </reference>
