@@ -1,23 +1,16 @@
 <?php
 class Egovs_Base_Helper_Customer_Data extends Mage_Customer_Helper_Data
 {
-    /**
-     * WSDL of VAT validation service
-     *
-     */
-    const VAT_VALIDATION_WSDL_URL = 'https://ec.europa.eu/taxation_customs/vies/services/checkVatService?wsdl';
-
-    /**
-     * Send request to VAT validation service and return validation result
-     *
-     * @param string $countryCode
-     * @param string $vatNumber
-     * @param string $requesterCountryCode
-     * @param string $requesterVatNumber
-     *
-     * @return Varien_Object
-     * @throws \Mage_Core_Exception
-     */
+	/**
+	 * Send request to VAT validation service and return validation result
+	 *
+	 * @param string $countryCode
+	 * @param string $vatNumber
+	 * @param string $requesterCountryCode
+	 * @param string $requesterVatNumber
+	 *
+	 * @return Varien_Object
+	 */
 	public function checkVatNumber($countryCode, $vatNumber, $requesterCountryCode = '', $requesterVatNumber = '') {
 		$vatNumber = trim($vatNumber);
 		$vatNumber = preg_replace( '/\s+/', '', $vatNumber);
@@ -48,14 +41,4 @@ class Egovs_Base_Helper_Customer_Data extends Mage_Customer_Helper_Data
         );
     }
 
-    /**
-     * Create SOAP client based on VAT validation service WSDL
-     *
-     * @param boolean $trace
-     * @return SoapClient
-     */
-    protected function _createVatNumberValidationSoapClient($trace = false)
-    {
-        return new SoapClient(static::VAT_VALIDATION_WSDL_URL, array('trace' => $trace));
-    }
 }
