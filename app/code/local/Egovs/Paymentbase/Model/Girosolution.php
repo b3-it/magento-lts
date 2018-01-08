@@ -674,7 +674,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         $lockResult = $this->_getDbLock($lockKey);
         $this->_logLockTimeDiff($startTime, 'DB:get_lock');
         if ($lockResult == 0) {
-            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:APC_FETCH:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
             $updateOrderState = false;
         }
 
@@ -953,7 +953,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         if ($runTime > 8) {
             Mage::log("{$this->getCode()}::modifyOrderAfterPayment:Server seems to be under heavy load! It took $runTime seconds until the lock ($lockMethod) was set!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
         } else {
-            Mage::log(sprintf("{$this->getCode()}::modifyOrderAfterPayment:Measured runtime for MUTEX was %s seconds.", $runTime), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+            Mage::log(sprintf("{$this->getCode()}::modifyOrderAfterPayment:Measured runtime for LOCK ($lockMethod) was %s seconds.", $runTime), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         }
     }
 
@@ -964,6 +964,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         try {
             $dbVersion = $adapter->fetchOne("SELECT @@version;");
             if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
+                Mage::log("{$this->getCode()}::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
                 /*
                  * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
                  * (for example, because another client has previously locked the name),
