@@ -49,16 +49,27 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Tab_Form extends Mage_Ad
       ));
 
 
-      $fieldset->addField('service_layers', 'multiselect', array(
+      $fieldset->addField('service_layers', 'select', array(
           'label'     => Mage::helper('bkgviewer')->__('Layer'),
           //'required'  => true,
           //'values'    => $this->getPages(),
           'name'      => 'service_layers',
-          'value'	=> ''
-          //'onchange'  => 'onchangeTransferType()',
+          'value'	=> '',
+          'onchange'  => 'setTitle()',
 
       ));
 
+      
+      $fieldset->addField('layer_title', 'text', array(
+      		'label'     => Mage::helper('bkgviewer')->__('Title'),
+      		//'required'  => true,
+      		//'values'    => $this->getPages(),
+      		'name'      => 'layer_title',
+      		'value'	=> ''
+      		//'onchange'  => 'onchangeTransferType()',
+      
+      ));
+      
       $fieldset->addField('permanent', 'checkbox', array(
           'label'     => Mage::helper('bkgviewer')->__('permanent'),
           //'required'  => true,
