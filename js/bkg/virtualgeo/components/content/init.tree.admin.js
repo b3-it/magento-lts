@@ -190,8 +190,10 @@ var nodeOptions = {
         }
         for(var childId in node.children){
 
-        	//var child = ref.get_node(node.children[childId]);
-        	pos = this.reorder(node.children[childId], pos);
+        	var child = ref.get_node(node.children[childId]);
+        	if(child){
+        		pos = this.reorder(node.children[childId], pos);
+        	}
         }
 		return pos;
 
@@ -303,7 +305,7 @@ var nodeOptions = {
             'id'   : 'virtualgeo_content_layer_options_' + nodeData.number,
             'name' : 'product[content_layer_options][' + nodeData.number + ']',
             'value': JSON.stringify(nodeData),
-            'type' : 'text',
+            'type' : 'hidden',
             'width' : '600px'
         });
         $j('#jstree-data').append(inputField);
