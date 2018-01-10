@@ -144,18 +144,17 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 			$model = Mage::getModel('bkgviewer/composit_layer');
 			if(!isset($node['id']) || empty($node['id']))
 			{
-				$model->save();
-				$node['id'] = $model->getId();
-				$node['model'] = $model;
+				
 			}else {
 				$model = Mage::getModel('bkgviewer/composit_layer')->load($node['id']);
-				$node['model'] = $model;
 			}
 				
 			$model->setTitle($node['title'])
 			->setPos($node['pos'])
 			->setVisualPos($node['visual_pos'])
 			->setType($node['type'])
+			->setPermanent($node['permanent'])
+			->setIsChecked($node['is_checked'])
 			->setCompositId($compositId);
 				
 			if(!isset($node['serviceLayer']) || empty($node['serviceLayer']))
@@ -165,6 +164,11 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 	
 				$model->setServiceLayerId($node['serviceLayer']);
 			}
+			
+			$model->save();
+			$node['id'] = $model->getId();
+			$node['model'] = $model;
+			
 			$loaded[] = $node;
 				
 		}

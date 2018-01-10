@@ -5,8 +5,9 @@ function addPages() {
 	form_data['is_readonly'] = $j('#layerForm_Name_is_readonly').is(':checked');
 	
 	
-    form_data['permanent'] = $j('#permanent').is(':checked');
-    form_data['entity_layer'] = $j('#entity_layer').is(':checked');
+	form_data['permanent'] = $j('#permanent').is(':checked');
+    form_data['is_checked'] = $j('#is_checked').is(':checked');
+    //form_data['entity_layer'] = $j('#entity_layer').is(':checked');
     form_data['visual_pos'] = $j('#visual_pos').val();
     form_data['title'] = $j('#layer_title').val();
     
@@ -50,7 +51,7 @@ $j('#jstree_layer').jstree({
 		    },
 	  },
 	  "plugins" : [
-	    "types"
+	    "types",  "dnd"
 	  ]
 	});
 
@@ -166,7 +167,6 @@ var nodeOptions = {
 	        	}
 	        }
 			return pos;
-
 		},
 		
 		add: function(data, sel) {
@@ -227,6 +227,8 @@ var nodeOptions = {
 			data.title = label;
 			data.visual_pos = input_data.visual_pos;
 			data.layer_name = input_data.layer_name;
+			data.permanent = input_data.permanent;
+			data.is_checked = input_data.is_checked;
 		
 			sel = this.createTextNode(sel, data);
 			
@@ -244,8 +246,10 @@ var nodeOptions = {
 			if(data.type == 'page'){
 				
 				text += '<div class="tree-options">';
-				text += '<div class="inline-tree-cell_a">'+ data.layer_name+'</div>';
-				text += '<div class="inline-tree-cell_b">'+ data.visual_pos+'</div>';
+				text += '<div class="inline-tree-cell">'+ data.layer_name+'</div>';
+				text += '<div class="inline-tree-cell">'+ data.visual_pos+'</div>';
+				text += '<div class="inline-tree-cell option-tree-' + (data.permanent ? 'true' : 'false') + ' option-readonly"></div>';
+				text += '<div class="inline-tree-cell option-tree-' + (data.is_checked ? 'true' : 'false') + ' option-checked"></div>';
 				text += '</div>';
 				//text = text + "<span style=\"text-align:right;\" ><span>  | " + data.layer_name + " | "+data.visual_pos+"</span></span>" ;
 			}
@@ -272,7 +276,7 @@ var nodeOptions = {
 		            'id'   : this.PostDataId+'_' + nodeData.number,
 		            'name' : this.PostDataName+'[' + nodeData.number + ']',
 		            'value': JSON.stringify(nodeData),
-		            'type' : 'hidden',
+		            'type' : 'text',
 		            'width' : '600px'
 		        });
 		        $j('#jstree-data').append(inputField);

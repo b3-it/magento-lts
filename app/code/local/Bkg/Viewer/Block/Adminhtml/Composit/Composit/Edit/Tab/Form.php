@@ -71,7 +71,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Tab_Form extends Mage_Ad
       ));
       
       $fieldset->addField('permanent', 'checkbox', array(
-          'label'     => Mage::helper('bkgviewer')->__('permanent'),
+          'label'     => Mage::helper('bkgviewer')->__('Permanent'),
           //'required'  => true,
           //'values'    => $this->getPages(),
           'name'      => 'permanent',
@@ -79,21 +79,31 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit_Tab_Form extends Mage_Ad
           //'onchange'  => 'onchangeTransferType()',
 
       ));
-
-
-
-      $fieldset->addField('entity_layer', 'checkbox', array(
-          'label'     => Mage::helper('bkgviewer')->__('entity layer'),
-          //'required'  => true,
-          //'values'    => $this->getPages(),
-          'name'      => 'entity_layer',
-          'value'	=> ''
-          //'onchange'  => 'onchangeTransferType()',
-
+      
+      $fieldset->addField('is_checked', 'checkbox', array(
+      		'label'     => Mage::helper('bkgviewer')->__('Checked'),
+      		//'required'  => true,
+      		//'values'    => $this->getPages(),
+      		'name'      => 'is_checked',
+      		'value'	=> ''
+      		//'onchange'  => 'onchangeTransferType()',
+      
       ));
 
+
+
+//       $fieldset->addField('entity_layer', 'checkbox', array(
+//           'label'     => Mage::helper('bkgviewer')->__('entity layer'),
+//           //'required'  => true,
+//           //'values'    => $this->getPages(),
+//           'name'      => 'entity_layer',
+//           'value'	=> ''
+//           //'onchange'  => 'onchangeTransferType()',
+
+//       ));
+
       $fieldset->addField('visual_pos', 'text', array(
-          'label'     => Mage::helper('bkgviewer')->__('visual position'),
+          'label'     => Mage::helper('bkgviewer')->__('Z-Index'),
           //'required'  => true,
           //'values'    => $this->getPages(),
           'name'      => 'visual_pos',

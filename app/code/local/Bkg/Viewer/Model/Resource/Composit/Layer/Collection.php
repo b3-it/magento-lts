@@ -37,6 +37,8 @@ class Bkg_Viewer_Model_Resource_Composit_Layer_Collection extends Mage_Core_Mode
     	{
     		$tmp = array();
     		foreach($allItems as $item){
+    			$item->setIsChecked(boolval($item->getIsChecked()));
+    			$item->setPermanent(boolval($item->getPermanent()));
     			if($item->getParentId() == null)
     			{
     				$root->addChild($item);
