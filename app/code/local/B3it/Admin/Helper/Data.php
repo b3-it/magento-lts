@@ -24,12 +24,13 @@ class B3it_Admin_Helper_Data extends Mage_Core_Helper_Data
 		}
 		/* @var $adminUsers Mage_Admin_Model_Resource_User_Collection */
 		$adminUsers = Mage::getResourceModel('admin/user_collection');
-		$utcDate = Mage::app()->getLocale()->utcDate(null, time(), true);
+		$utcDate = Mage::getModel('core/date')->gmtDate();
 		$adminUsers->addFieldToFilter('failed_logins_count', array('gteq' => $maxFailed))
 				->addFieldToFilter('is_active', 0)
 				->addFieldToFilter('failed_last_login_date', array('lteq' => $utcDate))
 		;
 		$sql = $adminUsers->getSelect()->assemble();
+		Mage::log(sprintf('b3itadmin::unlockAccounts:SQL:%s',$sql), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		
 		foreach ($adminUsers as $item) {
 			$item->setIsActive(true);

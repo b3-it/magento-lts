@@ -117,7 +117,7 @@
         <jobs>
             <unlock_locked_accounts>
                 <schedule>
-                    <cron_expr>30 0 * * *</cron_expr>
+                    <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>b3itadmin/observer::unlockLockedAccounts</model>
