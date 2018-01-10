@@ -18,3 +18,4 @@
 "Use offical Yubico validation servers?","Offiziellen Yubico Server benutzen?"
 "Verify validation server certificate?","Serverzertifikat validieren?"
 "Enabling this setting increases risk of automated attacks against admin functionality.","Das Aktivieren dieser Funktion erhöht das Risiko bei Angriffen aud das Backend"
+"Show login information","Zeige Logininformationen"

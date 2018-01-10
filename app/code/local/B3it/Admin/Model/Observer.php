@@ -17,39 +17,43 @@ class B3it_Admin_Model_Observer
      */
     public function onAdminUserAuthenticateAfter($observer)
 	{
-		if ($observer->getUser()->getId() > 0) {
+		if ($observer->getUser() && $observer->getUser()->getId() > 0) {
 			//Passwort wird sonst neu gehasht und überschrieben!!
 			$observer->getUser()->setOrigData(null, $observer->getUser()->getData());
 			if ( !$observer->getResult() ) {
 				$currentTime = Varien_Date::now();
 				$fails = $observer->getUser()->getFailedLoginsCount() + 1;
-				$observer->getUser()->setFailedLoginsCount($fails);
+				$observer->getUser()->setFailedLoginsCount(intval($fails));
 				$observer->getUser()->setFailedLastLoginDate($currentTime);
 				$maxFailed = Mage::getStoreConfig('admin/security/max_failed_logins');
-				if ($maxFailed === false) {
+				if ($maxFailed === false || !is_numeric($maxFailed)) {
 					$maxFailed = 3;
 				}
 				if ($fails >= $maxFailed) {
-					$file = Mage::getStoreConfig('dev/log/exception_file');
-					Mage::log(sprintf('permissions::warn: User with ID %s has been deactivated due to too many failed logins', $observer->getUser()->getId()), Zend_Log::WARN, $file, true);
-					$observer->getuser()->setIsActive(0);
+                    $observer->getuser()->setIsActive(0);
+				    $file = Mage::getStoreConfig('dev/log/exception_file');
+					$msg = sprintf('permissions::warn: User with ID %s has been deactivated due to too many failed logins', $observer->getUser()->getId());
+					Mage::log($msg, Zend_Log::WARN, $file, true);
+					Mage::helper('b3itadmin')->sendMailToAdmin($msg, 'Security::User deactivated:');
 				}
 			} else {
 				$user = $observer->getUser();
 				$user->setFailedLoginsCount(0);
-				
-				$text = 'Last Login: %s';
-				$lastFailed = $user->getFailedLastLoginDate() ? Mage::app()->getLocale()->date($user->getFailedLastLoginDate()) : '';
-				if (!empty($lastFailed)) {
-					$text .= '<br/>Last Failed Login: %s';
-				}
-				Mage::getSingleton('adminhtml/session')->addNotice(
-						Mage::helper('b3itadmin')->__(
-							$text,
-							Mage::app()->getLocale()->date($user->getLogdate()),
-							$user->getFailedLastLoginDate() ? Mage::app()->getLocale()->date($user->getFailedLastLoginDate()) : ''
-						)
-				);
+
+				if ($user && $user->getShowLoginInfo()) {
+                    $text = 'Last Login: %s';
+                    $lastFailed = $user->getFailedLastLoginDate() ? Mage::app()->getLocale()->date($user->getFailedLastLoginDate()) : '';
+                    if (!empty($lastFailed)) {
+                        $text .= '<br/>Last Failed Login: %s';
+                    }
+                    Mage::getSingleton('adminhtml/session')->addNotice(
+                        Mage::helper('b3itadmin')->__(
+                            $text,
+                            Mage::app()->getLocale()->date($user->getLogdate()),
+                            $user->getFailedLastLoginDate() ? Mage::app()->getLocale()->date($user->getFailedLastLoginDate()) : ''
+                        )
+                    );
+                }
 			}
 			$observer->getUser()->save();
 		}
@@ -174,4 +178,35 @@ class B3it_Admin_Model_Observer
 	{
 		return Mage::getSingleton('core/layout');
 	}
+
+	public function onAdminhtmlBlockHtmlBefore($observer) {
+        if (!($observer->getBlock() instanceof Mage_Adminhtml_Block_Permissions_User_Edit_Tab_Main)) {
+            return;
+        }
+        /** @var Mage_Adminhtml_Block_Permissions_User_Edit_Tab_Main $_userEditTabMain */
+        $_userEditTabMain = $observer->getBlock();
+        $form = $_userEditTabMain->getForm();
+        if (!$form) {
+            return;
+        }
+        /** @var Varien_Data_Form_Element_Fieldset $fieldset */
+        $fieldset = $form->getElement('base_fieldset');
+        if (!$fieldset) {
+            return;
+        }
+
+        $_after = 'email';
+        if ($form->getElement('phone')) {
+            $_after = 'phone';
+        }
+        $fieldset->addField('show_login_info', 'select', array(
+            'name'  => 'show_login_info',
+            'label' => Mage::helper('b3itadmin')->__('Show login information'),
+            'id'    => 'show_login_info',
+            'title' => Mage::helper('b3itadmin')->__('Show login information'),
+            'options'    => array('1' => Mage::helper('adminhtml')->__('Yes'), '0' => Mage::helper('adminhtml')->__('No')),
+            ),
+            $_after
+        );
+    }
 }
