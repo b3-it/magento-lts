@@ -698,7 +698,7 @@
             <show_in_store>0</show_in_store>
             <groups>
                 <ident_admin translate="label">
-                    <label>Administrator E-Mail</label>
+                    <label>Application-Management-E-Mail</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>40</sort_order>
                     <show_in_default>1</show_in_default>
