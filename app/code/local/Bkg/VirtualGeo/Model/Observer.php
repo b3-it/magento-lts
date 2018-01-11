@@ -165,7 +165,7 @@ class Bkg_VirtualGeo_Model_Observer
 
             if(!isset($node['parent_number']) || empty($node['parent_number']))
             {
-                $model->unsetData('parent_node_id');
+                $model->setData('parent_node_id',null);
             }else{
                 $parentNode = $this->findByNumber($nodes, $node['parent_number']);
                 $model->setParentNodeId($parentNode['model']->getId());

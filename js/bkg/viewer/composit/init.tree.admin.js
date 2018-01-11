@@ -141,6 +141,10 @@ var nodeOptions = {
 	                   		child.data.parent_number = parent.data.number;
 	                   		data['parent_number'] = parent.data.number;
 	                   	}
+	                   	else{
+                            child.data.parent_number = 0;
+                            data['parent_number'] = 0;
+						}
 						child.data.pos = pos;
 						
 						this.setPostData(data);
@@ -177,12 +181,14 @@ var nodeOptions = {
 				if(!sel) {
 					var	sel = ref.get_selected();
 					if(!sel.length) { 
-						alert( element_not_selected );
-						return false; 
+						//alert( element_not_selected );
+						//return false;
+						sel =  ref.get_node('j1_1');
+					}else {
+						sel = sel[0];
+						ref.open_node(sel);
+						edit = true;
 					}
-					sel = sel[0];
-					ref.open_node(sel);
-					edit = true;
 				}
 				else if(sel == 'root') {
 					sel =  ref.get_node('j1_1');
@@ -236,6 +242,7 @@ var nodeOptions = {
 			var node = ref.get_node(sel);
 			this.move(node, this.itemCount);
 			this.reorder('j1_1',0);
+            this.open_all();
 			return node.id;
 			
 		},
@@ -276,7 +283,7 @@ var nodeOptions = {
 		            'id'   : this.PostDataId+'_' + nodeData.number,
 		            'name' : this.PostDataName+'[' + nodeData.number + ']',
 		            'value': JSON.stringify(nodeData),
-		            'type' : 'text',
+		            'type' : 'hidden',
 		            'width' : '600px'
 		        });
 		        $j('#jstree-data').append(inputField);

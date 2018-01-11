@@ -149,6 +149,8 @@ var nodeOptions = {
 	'itemCount'      : 0,
 	'pos'            : 0,
 	'kategories'     : [],
+    PostDataId : 'virtualgeo_content_layer_options',
+    PostDataName : 'product[content_layer_options]',
 
 	'show' : function(node) {
 		if(node.data) {
@@ -164,38 +166,50 @@ var nodeOptions = {
 		}
 	},
 	'move' : function(node, pos) {
-		if(node) {
-			var ref = this.tree.jstree(true);
-			var parent = ref.get_node(node.parent);
-			//var pos = 0;
-			for(var childId in parent.children){
-				var child = ref.get_node(parent.children[childId]);
-				if(child) {
-                   // pos++;
-					child.data.parent_number = parent.data.number;
-					child.data.pos = pos;
-					this.alterJsonField(child.data);
-				}
-			}
-		}
+        if(node) {
+            var ref = this.tree.jstree(true);
+            var parent = ref.get_node(node.parent);
+            //var pos = 0;
+            for(var childId in parent.children){
+                var child = ref.get_node(parent.children[childId]);
+                if(child) {
+                    var data = this.getPostData(child.data.number);
+                    if(parent.data != null)
+                    {
+                        child.data.parent_number = parent.data.number;
+                        data['parent_number'] = parent.data.number;
+                    }
+                    else{
+                        child.data.parent_number = 0;
+                        data['parent_number'] = 0;
+                    }
+                    child.data.pos = pos;
+
+                    this.setPostData(data);
+                }
+            }
+        }
+        this.open_all();
 	},
 	'reorder' : function(nodeId, pos)
 	{
-		pos++;
+        pos++;
         var ref = this.tree.jstree(true);
         var node = ref.get_node(nodeId);
         if(node.data != null) {
             node.data.pos = pos;
-            this.alterJsonField(node.data);
+            var data = this.getPostData(node.data.number);
+            data['pos'] = pos;
+            this.setPostData(data);
         }
         for(var childId in node.children){
 
-        	var child = ref.get_node(node.children[childId]);
-        	if(child){
-        		pos = this.reorder(node.children[childId], pos);
-        	}
+            var child = ref.get_node(node.children[childId]);
+            if(child){
+                pos = this.reorder(node.children[childId], pos);
+            }
         }
-		return pos;
+        return pos;
 
 	},
 	'add': function(data, sel) {
@@ -206,13 +220,15 @@ var nodeOptions = {
 		if(!sel) {
 			var	sel = ref.get_selected();
 			if(!sel.length) {
-				alert( element_not_selected );
-				return false;
-			}
-			sel = sel[0];
-			ref.open_node(sel);
-			edit = true;
-            parentnode = ref.get_node(sel);
+				//alert( element_not_selected );
+				//return false;
+                sel =  ref.get_node('j1_1');
+			}else{
+				sel = sel[0];
+				ref.open_node(sel);
+				edit = true;
+				parentnode = ref.get_node(sel);
+            }
 		}
 		else if(sel == 'root') {
 			sel =  ref.get_node('j1_1');
@@ -267,8 +283,6 @@ var nodeOptions = {
 		data.is_readonly = input_data.is_readonly;
 		data.is_checked = input_data.is_checked;
 		data.entity_id = id;
-        data.parent_number = 0;
-        data.pos = this.itemCount;
         data.deleted = false;
         data.id = 0;
 		if(parentNode != null)
@@ -280,6 +294,7 @@ var nodeOptions = {
 
 		var node = ref.get_node(sel);
 		this.move(node, this.itemCount);
+        this.reorder('j1_1',0);
 		this.open_all();
 
 		return node.id;
@@ -294,26 +309,44 @@ var nodeOptions = {
 		text += '<div class="inline-tree-cell option-tree-' + (data.is_readonly ? 'true' : 'false') + ' option-readonly"></div>';
 		text += '</div>';
 
-		this.appendJsonField(data);
+        data['parent_number'] = 0;
+        data['deleted'] = false;
+        if(parent.data != null)
+        {
+            data['parent_number'] = parent.data.number;
+        }
+		this.setPostData(data);
+
 
 		var sel = ref.create_node(parent, {"type":data.type,"data":data, "text" : text});
 		return sel;
 	},
-	'appendJsonField':function (nodeData)
+
+
+    setPostData:function (nodeData)
     {
-        var inputField = $j('<input />', {
-            'id'   : 'virtualgeo_content_layer_options_' + nodeData.number,
-            'name' : 'product[content_layer_options][' + nodeData.number + ']',
-            'value': JSON.stringify(nodeData),
-            'type' : 'hidden',
-            'width' : '600px'
-        });
-        $j('#jstree-data').append(inputField);
+        var input = $j('#'+ this.PostDataId+'_' + nodeData.number);
+        if(input.length > 0)
+        {
+            input.val(JSON.stringify(nodeData));
+        }
+        else
+        {
+            var inputField = $j('<input />', {
+                'id'   : this.PostDataId+'_' + nodeData.number,
+                'name' : this.PostDataName+'[' + nodeData.number + ']',
+                'value': JSON.stringify(nodeData),
+                'type' : 'hidden',
+                'width' : '600px'
+            });
+            $j('#jstree-data').append(inputField);
+        }
     },
-	'alterJsonField':function (nodeData)
-	{
-        $j('#virtualgeo_content_layer_options_' + nodeData.number).val(JSON.stringify(nodeData));
-	},
+    getPostData:function (number)
+    {
+        var data = JSON.parse($j('#'+this.PostDataId+'_' + number).val());
+        return data;
+    },
 	'remove': function(data) {
 		this.hideAll();
 		var ref = this.tree.jstree(true);
