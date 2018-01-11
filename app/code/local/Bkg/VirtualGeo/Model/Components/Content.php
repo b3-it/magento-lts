@@ -27,7 +27,7 @@ class Bkg_VirtualGeo_Model_Components_Content extends Bkg_VirtualGeo_Model_Compo
 		$collection->setStoreId($storeId);
 		$collection->getSelect()
 		->join(array('product'=>$collection->getTable($this->_productRelationTable)),"product.entity_id = main_table.id AND product_id={$productId} AND ((product.store_id= 0) OR (product.store_id={$storeId}))",
-			array('is_default','component_product_relation_id'=>'id','parent_node_id','readonly','is_checked'));
+			array('is_default','component_product_relation_id'=>'id','parent_node_id','readonly','is_checked','pos'));
 		 
 		return $collection;
 	}

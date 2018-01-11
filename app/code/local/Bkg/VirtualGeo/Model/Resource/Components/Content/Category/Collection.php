@@ -18,4 +18,8 @@ class Bkg_VirtualGeo_Model_Resource_Components_Content_Category_Collection exten
     }
     
 
+
+    public function toOptionHash() {
+        return parent::_toOptionHash('id','label');
+    }
 }

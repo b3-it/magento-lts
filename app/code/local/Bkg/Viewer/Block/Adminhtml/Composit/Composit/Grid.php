@@ -13,7 +13,7 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Grid extends Mage_Adminhtml_B
   public function __construct()
   {
       parent::__construct();
-      $this->setId('Composit\CompositGrid');
+      $this->setId('CompositGrid');
       $this->setDefaultSort('Composit\Composit_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
