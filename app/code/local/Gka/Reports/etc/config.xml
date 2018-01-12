@@ -94,24 +94,24 @@
             </gka_reports_mysql4>
         </models>
         <resources>
-            <reports_setup>
+            <gkareports_setup>
                 <setup>
                     <module>Gka_Reports</module>
                 </setup>
                 <connection>
                     <use>core_setup</use>
                 </connection>
-            </reports_setup>
-            <reports_write>
+            </gkareports_setup>
+            <gkareports_write>
                 <connection>
                     <use>core_write</use>
                 </connection>
-            </reports_write>
-            <reports_read>
+            </gkareports_write>
+            <gkareports_read>
                 <connection>
                     <use>core_read</use>
                 </connection>
-            </reports_read>
+            </gkareports_read>
         </resources>
         <blocks>
             <gka_reports>
