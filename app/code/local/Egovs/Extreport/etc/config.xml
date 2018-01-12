@@ -4,7 +4,6 @@
         <modules>
             <Egovs_Extreport>
                 <version>0.1.1</version>
-                <depends><Egovs_Extstock /></depends>
             </Egovs_Extreport>
         </modules>
         <global>
