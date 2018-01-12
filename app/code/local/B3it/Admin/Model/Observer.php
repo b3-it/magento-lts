@@ -208,5 +208,12 @@ class B3it_Admin_Model_Observer
             ),
             $_after
         );
+
+        $model = Mage::registry('permissions_user');
+        $data = $model->getData();
+
+        unset($data['password']);
+
+        $form->setValues($data);
     }
 }

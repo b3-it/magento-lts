@@ -140,7 +140,7 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
     	 * @var Bkg_Viewer_Model_Resource_Composit_Layer_Collection $collection
     	 */
     	$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection();
-    	
+    	$collection->getSelect()->order('pos');
     	//echo "}</script>";
     	
     	//var_dump($list);
