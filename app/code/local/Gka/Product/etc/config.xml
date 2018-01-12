@@ -6,17 +6,6 @@
             <version>0.1.0</version>
         </Gka_Product>
     </modules>
-    <admin>
-        <routers>
-			<product>
-				<use>admin</use>
-				<args>
-					<module>Gka_Product</module>
-					<frontName>product</frontName>
-				</args>
-			</product>
-        </routers>
-    </admin>
     <global>
         <models>
             <gka_product>

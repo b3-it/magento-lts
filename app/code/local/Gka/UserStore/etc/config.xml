@@ -34,17 +34,6 @@
             </controller_action_predispatch>
         </events>
     </frontend>
-    <admin>
-        <routers>
-			<userstore>
-				<use>admin</use>
-				<args>
-					<module>Gka_UserStore</module>
-					<frontName>userstore</frontName>
-				</args>
-			</userstore>
-        </routers>
-    </admin>
     <adminhtml>
 		<layout>
 			<updates>

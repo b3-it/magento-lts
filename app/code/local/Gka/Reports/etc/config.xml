@@ -34,13 +34,13 @@
     </frontend>
     <admin>
         <routers>
-			<reports>
-				<use>admin</use>
-				<args>
-					<module>Gka_Reports</module>
-					<frontName>reports</frontName>
-				</args>
-			</reports>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Gka_Reports_Adminhtml after="Mage_Adminhtml">Gka_Reports_Adminhtml</Gka_Reports_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
         </routers>
     </admin>
     <adminhtml>

@@ -5,10 +5,10 @@
  *  @package  Gka_Reports
  *  @author Frank Rochlitzer <​f.rochlitzer@b3-it.de>
  *  @author Holger Kögel <​h.koegel@b3-it.de>
- *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
+ *  @copyright Copyright (c) 2017 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */ 
-class Gka_Reports_Adminhtml_ReportsController extends Mage_Adminhtml_Controller_action
+class Gka_Reports_Adminhtml_Gkareports_ReportsController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
