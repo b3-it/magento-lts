@@ -90,6 +90,7 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 
 		//versandadresse
 		if(!$order->getIsVirtual()){
+		    /** @var Mage_Sales_Model_Order_Address $shipping */
 			$shipping = $order->getShippingAddress();
 			$shippingParty = $orderInfo->getParties()->getParty();
 
@@ -110,6 +111,7 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 			$address->getZip()->setValue($shipping->getPostcode());
 			$address->getCountry()->setValue($shipping->getCountry());
 			$address->getStreet()->setValue($shipping->getStreetFull());
+			$address->getEmail()->setValue($shipping->getEmail());
 
 			$adr = Mage::getmodel('customer/address')->load($shipping->getCustomerAddressId());
 			if(!empty($adr->getDap())){
