@@ -5,8 +5,8 @@ var buttonCtrl = function(opt_options) {
     classname = options['classname'];
     
 	var button = $j('<button />', {
-		'id': '',
-		'class': '',
+		'id': options['button_id'] || null,
+		'class': options['button_class'] || null,
 		'html': options['text'] || "B"
 	});
 	   
@@ -19,6 +19,7 @@ var buttonCtrl = function(opt_options) {
     button.click(handler);
     
 	var container = $j('<div />', {
+		'id': options['div_id'] || null,
 		'class': classname + ' ol-unselectable ol-control',
 	});
 	
