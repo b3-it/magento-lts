@@ -586,13 +586,13 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     		return;
     	}
 
-        $shippingMethods = $this->getRequest()->getPost('shipping_method');
-        if (is_array($shippingMethods)) {
-            $shippingMethods = array_shift($shippingMethods);
+        $shippingMethod = $this->getRequest()->getPost('shipping_method');
+        if (is_array($shippingMethod)) {
+            $shippingMethod = array_shift($shippingMethod);
         }
         try {
             /* Liefert leeres Array bei Erfolg */
-            $result = $this->_getCheckout()->saveShippingMethod($shippingMethods);
+            $result = $this->_getCheckout()->saveShippingMethod($shippingMethod);
             if (!$result) {
                 Mage::dispatchEvent(
                     'checkout_controller_multishipping_shipping_post',
@@ -606,12 +606,13 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
                     Egovs_Checkout_Model_State::STEP_SHIPPING_DETAILS
                 );
                 $this->_redirect('*/*/billing', array('_secure'=>true));
+                return;
             }
         }
         catch (Exception $e){
             Mage::getSingleton('checkout/session')->addError($e->getMessage());
-            $this->_redirect('*/*/shippingmethod', array('_secure'=>true));
         }
+        $this->_redirect('*/*/shippingmethod', array('_secure'=>true));
     }
 
     /**
