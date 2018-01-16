@@ -47,7 +47,17 @@ class Bkg_MapSeries_Block_Product_View_Type_Mapseries_Map extends Mage_Catalog_B
 		return $this;
 	}
 	
-	
+	/**
+	 *
+	 * @return array
+	 */
+	public function getSelectionTools() {
+	    $composit = $this->getComposit();
+	    if ($composit) {
+	        return Mage::getModel('bkgviewer/composit_selectiontools')->getOptions4Product($composit->getId());
+	    }
+	    return array();
+	}
     /**
      * 
      * @return Bkg_Viewer_Model_Composit_Composit

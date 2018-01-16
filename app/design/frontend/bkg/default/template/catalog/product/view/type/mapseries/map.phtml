@@ -14,9 +14,21 @@
    <script>
    $j(function() {
      <?php echo $this->getComposit()->getOpenLayer(); ?>
+     var tools = [];
+     <?php
+     $tools = $this->getSelectionTools();
+     foreach ($tools as $tool) {
+         /**
+          * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
+          */
+         echo ($tool->getOpenLayers());
+     }
+     ?>
+
 
      // set style
-      vector.setStyle(function(feature, resolution) {
+     tools[0].setVisible(true);
+     tools[0].setStyle(function(feature, resolution) {
           j = $j('#qty-' + feature.get('sku'));
           return new ol.style.Style({
               stroke: new ol.style.Stroke({
@@ -28,6 +40,11 @@
               }),
           });
       });
+     
+     layers_0.push(new ol.layer.Group({
+         //title: 'Tools',
+         layers: tools
+       }));
 
       var map = new ol.Map({
         layers: layers_0,
@@ -114,7 +131,7 @@
 
           var extent = e.target.getGeometry().getExtent();
           var list = [];
-          vector.getSource().forEachFeatureIntersectingExtent(extent, function(f) {
+          tools[0].getSource().forEachFeatureIntersectingExtent(extent, function(f) {
         	  var sku = f.get('sku');
               var j = $j("#qty-" + sku);
               if (j.length != 0) {
@@ -163,7 +180,7 @@
 
       $j('#super-product-table').delegate('input.qty', 'change', function( e ) {
           sku = e.target.id.slice(4);
-    	  vector.getSource().forEachFeature(function(f) {
+          tools[0].getSource().forEachFeature(function(f) {
         	  if (f.get("sku") == sku) {
             	  f.changed(); // invalidate to redraw again
             	  return true;
