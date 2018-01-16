@@ -33,7 +33,7 @@ class Gka_Reports_TransactionController extends Mage_Core_Controller_Front_Actio
     public function exportCsvAction()
     {
     	$fileName   = 'kassenbuchjournal.csv';
-    	$content    = $this->getLayout()->createBlock('gka_barkasse/kassenbuch_journal_grid')
+    	$content    = $this->getLayout()->createBlock('gka_reports/transaction_grid')
     	->getCsv();
     
     	$this->_sendUploadResponse($fileName, $content);
@@ -42,7 +42,7 @@ class Gka_Reports_TransactionController extends Mage_Core_Controller_Front_Actio
     public function exportXmlAction()
     {
     	$fileName   = 'kassenbuchjournal.xml';
-    	$content    = $this->getLayout()->createBlock('gka_barkasse/kassenbuch_journal_grid')
+    	$content    = $this->getLayout()->createBlock('gka_reports/transaction_grid')
     	->getXml();
     
     	$this->_sendUploadResponse($fileName, $content);
