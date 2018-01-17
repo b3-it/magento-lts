@@ -1,0 +1,75 @@
+//
+// @category    design
+// @package     gka_default
+// @copyright   Copyright (c) 2017 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// WICHTIG !!
+// Die Eigenschaften "border" und "padding" können nicht auf der Seite einer Druckausgabe angewendet werden.
+
+// ==============================================
+// SASS / Compass Framework - Imports
+// ==============================================
+@import "var";
+@import "compass";
+@import "compass/css3";
+
+// ----------------------------------------------
+// Content
+
+@page {
+	size: A4 landscape;    // Querformat
+    //size: A4 portrait;     // Hochformat
+	margin: 2.1cm;
+}
+
+.page-header, .breadcrumbs, .col-left, .footer-container,
+.buttons-set, #menuesprung,
+#new_journal {
+    display: none;
+}
+
+#kassenbuch_journalGrid,
+#gka_transactionGrid {
+    .actions, .filter {
+        display: none;
+    }
+}
+
+#kassenbuch_journalGrid_table,
+#gka_transactionGrid_table {
+	width: 99%;
+	border-collapse: collapse;
+
+	th {
+	    font-style: italic;
+	    font-size: 0.9em;
+	}
+
+    th a {
+        text-decoration: none;
+    }
+
+    th, td {
+        border: .25pt solid #000000;
+    }
+
+	.a-left {
+	    text-align: left;
+	}
+	.a-center {
+	    text-align: center;
+	}
+	.a-right {
+	    text-align: right;
+	}
+}
+
+#kassenbuch_journalGrid_table {
+    colgroup col:nth-last-child(-n+2),
+    thead tr th:nth-last-child(-n+2),
+    tbody tr td:nth-last-child(-n+2) {
+        display: none;
+    }
+}

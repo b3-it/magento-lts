@@ -48,6 +48,7 @@
 "Closing Balance in €","Schlussbetrag in €"
 "Journal Closing Notification E-Mail Template","eMail-Vorlage für Kassenabschlussprotokoll"
 "Journal Closing Notification E-Mail Address", "eMail-Adresse für Kassenabschlussprotokoll"
+"Print Table","Tabelle drucken"
 
 "TEXT_PROCESS_ERROR:-0609","Der Buchungstext einer Buchung der Buchungsliste ist zu lang oder zu kurz."
 "Journal is still open! Do you want to close it?","Ein Kassenbuch ist noch geöffnet! Möchten Sie es noch schließen?"

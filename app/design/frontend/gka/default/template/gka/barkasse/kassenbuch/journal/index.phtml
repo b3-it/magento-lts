@@ -126,14 +126,17 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 	<script type="text/javascript">
         var currency = '<?php echo $this->getCurrencySymbol(); ?>';
 	</script>
-	<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>">
-	</script>
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>"></script>
 
 	<script type="text/javascript">
 		setDiffPrice($j('#withdrawal').val(), $j('#endsaldo').val(), '#balance', true);
 	</script>
   <?php endif;?>
 
- <?php echo $this->getChildHtml("journal_details") ?>
-
+    <?php echo $this->getChildHtml("journal_details") ?>
+    <div class="buttons-set">
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Print Table')) ?>" class="button" onclick="window.print();">
+            <span><?php echo $this->__('Print Table') ?></span>
+        </button>
+    </div>
 </div>
