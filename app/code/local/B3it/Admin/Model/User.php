@@ -24,7 +24,12 @@ class  B3it_Admin_Model_User extends Mage_Admin_Model_User
 		$config = Mage::getStoreConfigFlag('admin/security/use_case_sensitive_login');
 		$result = false;
 		$otpValid = true;
-		
+
+        Mage::dispatchEvent('admin_user_authenticate_before', array(
+            'username' => $username,
+            'user'     => $this
+        ));
+
 		try {
 			$this->loadByUsername($username);
 			$sensitive = ($config) ? $username == $this->getUsername() : true;
@@ -66,7 +71,12 @@ class  B3it_Admin_Model_User extends Mage_Admin_Model_User
 				}
 			}
 			
-			if ($otpValid && $sensitive && $this->getId() && Mage::helper('core')->validateHash($password, $this->getPassword())) {
+			if ($otpValid
+                && $sensitive
+                && $this->getId()
+                && $this->canAuthenticate()
+                && Mage::helper('core')->validateHash($password, $this->getPassword())
+            ) {
 				if ($this->getIsActive() != '1') {
 					Mage::throwException(Mage::helper('adminhtml')->__('This account is inactive.'));
 				}
@@ -89,7 +99,18 @@ class  B3it_Admin_Model_User extends Mage_Admin_Model_User
 	
 		if (!$result) {
 			$this->unsetData();
+            Mage::app()->getFrontController()->getResponse()->setHttpResponseCode(401);
 		}
 		return $result;
 	}
+
+	public function canAuthenticate() {
+        $fails = $this->getFailedLoginsCount() + 0;
+        $maxFailed = Mage::getStoreConfig('admin/security/max_failed_logins');
+        if ($maxFailed === false || !is_numeric($maxFailed)) {
+            $maxFailed = 3;
+        }
+
+        return ($fails < $maxFailed) || ($fails >= $maxFailed && $this->getIsActive() == 1);
+    }
 }

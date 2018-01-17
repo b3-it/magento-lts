@@ -29,13 +29,18 @@ class B3it_Admin_Model_Observer
 				if ($maxFailed === false || !is_numeric($maxFailed)) {
 					$maxFailed = 3;
 				}
-				if ($fails >= $maxFailed) {
+				if ($observer->getuser()->getIsActive() && $fails >= $maxFailed) {
                     $observer->getuser()->setIsActive(0);
 				    $file = Mage::getStoreConfig('dev/log/exception_file');
 					$msg = sprintf('permissions::warn: User with ID %s has been deactivated due to too many failed logins', $observer->getUser()->getId());
 					Mage::log($msg, Zend_Log::WARN, $file, true);
 					Mage::helper('b3itadmin')->sendMailToAdmin($msg, 'Security::User deactivated:');
 				}
+                $msg = sprintf('permissions:: Failed login for user with ID %s from IP %s', $observer->getUser()->getId(), Mage::app()->getFrontController()->getRequest()->getClientIp());
+                Mage::log($msg, Zend_Log::ALERT, '', true);
+                $fails = intval($fails) < 3 ? 2 : intval($fails);
+                $maxTime = ini_get("max_execution_time");
+                sleep(max(0, min((2^$fails)-2, intval($maxTime)-2)));
 			} else {
 				$user = $observer->getUser();
 				$user->setFailedLoginsCount(0);
