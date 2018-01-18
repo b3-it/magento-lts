@@ -811,7 +811,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
     	$quote = $this->_getCheckout()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError()) {
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
             return;
         }
 
@@ -892,7 +892,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
     	if (!$lastQuoteId || !$lastOrderId) {
     		$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
-    		$this->_redirect('checkout/cart', array('_forced_secure' => true));
+    		$this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
     		return;
     	}
 
