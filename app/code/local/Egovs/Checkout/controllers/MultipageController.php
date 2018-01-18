@@ -75,16 +75,16 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
         } catch (Mage_Core_Exception $e) {
             Mage::getSingleton('checkout/session')->addError($e->getMessage());
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         } catch(Exception $ex) {
         	Mage::getSingleton('checkout/session')->addException(
                 $ex,
                 $ex->getMessage()
             );
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         }
 
 
@@ -131,15 +131,15 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
         $quote = $this->_getCheckout()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError()) {
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         }
 
         if (!$quote->validateMinimumAmount()) {
             $error = Mage::getStoreConfig('sales/minimum_order/error_message');
             Mage::getSingleton('checkout/session')->addError($error);
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         }
 
         return $this;

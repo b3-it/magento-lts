@@ -24,8 +24,8 @@ function coShippingMethodFormSubmit()
     var formParams = $j('#shipping-zip-form').serialize();
 
     toggleLoadingMask();
-        updateAjax(urlEstimate, formParams, '', '#estimateRate');
-        updateAjax(urlTotals, formParams, '#shopping-cart-totals-table', '.cart-totals');
+    updateAjax(urlEstimate, formParams, '', '#estimateRate');
+    updateAjax(urlTotals, formParams, '#shopping-cart-totals-table', '.cart-totals');
     toggleLoadingMask();
 }
 

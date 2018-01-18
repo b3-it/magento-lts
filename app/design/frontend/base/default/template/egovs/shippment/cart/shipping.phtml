@@ -110,13 +110,8 @@
         <script type="text/javascript">
             var coShippingMethodForm = new VarienForm('shipping-zip-form');
             var countriesWithOptionalZip = <?php echo $this->helper('directory')->getCountriesWithOptionalZip(true); ?>;
-          <?php if ($isSecure) : ?>
-            var urlEstimate = '<?php echo $this->getUrl('egovs_shipment/cart/estimate/', array('_forced_secure' => true)); ?>';
-            var urlTotals = '<?php echo $this->getUrl('egovs_shipment/cart/totals/', array('_forced_secure' => true)); ?>';
-          <?php else : ?>
-            var urlEstimate = '<?php echo $this->getUrl('egovs_shipment/cart/estimate/'); ?>';
-            var urlTotals = '<?php echo $this->getUrl('egovs_shipment/cart/totals/'); ?>';
-          <?php endif; ?>
+            var urlEstimate = '<?php echo $this->getUrl('egovs_shipment/cart/estimate/', array('_secure' => $isSecure)); ?>';
+            var urlTotals = '<?php echo $this->getUrl('egovs_shipment/cart/totals/', array('_secure' => $isSecure)); ?>';
             var btnUpdateTitle = '<?php echo $this->__('Get a Quote') ?>';
             var btnUpdateCaption = '<?php echo $this->__('Update shipping cost') ?>';
         </script>
