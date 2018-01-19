@@ -217,6 +217,9 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 				return $objResult->sepaMandat;
 			}
 			$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
+            $sMailText .= "IbanOnly: {$this->getIbanOnly()}\n";
+			$sMailText .= "BIC {$this->getBic()}\n\n";
+
 			$result = $objResult->ergebnis->getCodeAsInt();
 		} elseif ($objResult instanceof SoapFault) {
 			$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
