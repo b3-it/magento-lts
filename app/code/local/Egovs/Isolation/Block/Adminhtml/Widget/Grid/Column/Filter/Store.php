@@ -50,6 +50,11 @@ class Egovs_Isolation_Block_Adminhtml_Widget_Grid_Column_Filter_Store
         $storeCollection = $storeModel->getStoreCollection();
         $helper  = Mage::helper('isolation');
         $storeGroups = $helper->getUserStoreGroups();
+
+        if($storeGroups == null)
+        {
+            $storeGroups = array();
+        }
         
         $allShow = $this->getColumn()->getStoreAll();
 
