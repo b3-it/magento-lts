@@ -1446,15 +1446,21 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 						$sMailText .= sprintf("Das Errorlogfile '%s' enthält weitere Informationen. Der Fehler kann unter Umständen ignoriert werden.\n", Egovs_Helper::EXCEPTION_LOG_FILE);
 						break;
 					case -440:
-						if ($objKunde && isset($objKunde->bankverbindung)) {
-							if ($objKunde->bankverbindung instanceof Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung) {
-								$sMailText .= sprintf("BIC: %s\n", $objKunde->bankverbindung->getBic());
-							} elseif ($objKunde->bankverbindung instanceof SoapVar) {
-								if (isset($objKunde->bankverbindung->BIC)) {
-									$sMailText .= sprintf("BIC: %s\n", $objKunde->bankverbindung->BIC);
-								}
+					    $_bankverbindung = $objKunde->getBankverbindung();
+						if ($objKunde && isset($_bankverbindung)) {
+							if ($_bankverbindung instanceof Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung) {
+								$sMailText .= sprintf("BIC: %s\n", $_bankverbindung->getBic());
+							} elseif ($_bankverbindung instanceof stdClass) {
+								if (isset($_bankverbindung->BIC)) {
+									$sMailText .= sprintf("BIC: %s\n", $_bankverbindung->BIC);
+								} else {
+								    $sMailText .= sprintf("Keine BIC verfügbar!\n");
+                                }
 							}
-						}
+							//$sMailText .= sprintf("Bankverbindung:\n%s\n", var_export($_bankverbindung, true));
+						} else {
+						    $sMailText .= "Keine Bankverbindung verfügbar!\n";
+                        }
 						break;
 				}
 				$sMailText .= "\n";
