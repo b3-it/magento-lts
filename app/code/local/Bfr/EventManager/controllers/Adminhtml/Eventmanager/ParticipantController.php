@@ -144,17 +144,17 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 
     public function massDeleteAction() {
         $participantIds = $this->getRequest()->getParam('participant');
-        if(!is_array($eventmanagerIds)) {
+        if(!is_array($participantIds)) {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
             try {
-                foreach ($eventmanagerIds as $eventmanagerId) {
+                foreach ($participantIds as $eventmanagerId) {
                     $eventmanager = Mage::getModel('eventmanager/participant')->load($eventmanagerId);
                     $eventmanager->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                        'Total of %d record(s) were successfully deleted', count($eventmanagerIds)
+                        'Total of %d record(s) were successfully deleted', count($participantIds)
                     )
                 );
             } catch (Exception $e) {
