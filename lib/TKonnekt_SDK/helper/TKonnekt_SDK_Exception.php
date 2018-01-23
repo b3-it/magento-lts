@@ -13,10 +13,11 @@ class TKonnekt_SDK_Exception extends Exception
     /**
      * TKonnekt_SDK_Exception Konstruktor
      *
-     * @param string $message
-     * @param int $code
+     * @param string          $message
+     * @param int             $code
+     * @param \Exception|null $previous
      */
-    public function __construct($message = null, $code = 0, Throwable $previous = null)
+    public function __construct($message = null, $code = 0, Exception $previous = null)
     {
         $Config = TKonnekt_SDK_Config::getInstance();
 
