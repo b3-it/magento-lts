@@ -62,13 +62,20 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
 	    return $this->_ServiceLayer ;
 	}
 	
-    public function getOpenLayers() {
+    public function getOpenLayers($geocode = false) {
         self::$Count++;
         $text = array();
+        $helper = Mage::helper("core");
+
+        $text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName() . "';";
+        if ($geocode) {
+            $text[] = "url += '&srsname=EPSG:' + " . $geocode .";";
+        }
+
         $text[] = "var vectorSource".self::$Count." = new ol.source.Vector({";
         $text[] = "	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),";
-        
-        $text[] = "	url: '".$this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName()."',";
+
+        $text[] = "	url: url,";
         // srsName set somehow?
 
         //$text[] = "	strategy: ol.loadingstrategy.bbox";
@@ -76,7 +83,7 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
         
         $text[] = "var vector = new ol.layer.Vector({";
         $text[] = "  source: vectorSource".self::$Count.",";
-        $text[] = "  title: '" . $this->getLabel() . "',";
+        $text[] = "  title: '" . $helper->jsQuoteEscape($this->getLabel()) . "',";
         $text[] = "  zIndex: " .(100+self::$Count). ",";
         $text[] = "  visible: false,";
         $text[] = "  style: new ol.style.Style({";
