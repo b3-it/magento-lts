@@ -27,7 +27,25 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
     	$line_separator = $this->_fitEscape($line_separator);
     	$item_separator = $this->_fitEscape($item_separator);
     	 $result = array();
-    	 
+
+
+        $result[] = 'Kundenadresse';
+        $result[] = $order->getBillingAddress()->getName();
+        $result[] = $order->getBillingAddress()->getCompany();
+        $result[] = $order->getBillingAddress()->getCompany2();
+        $result[] = $order->getBillingAddress()->getCompany3();
+        $result[] = $order->getBillingAddress()->getStreetFull();
+        $result[] = $order->getBillingAddress()->getCity();
+        $result[] = $order->getBillingAddress()->getPostcode();
+        $result[] = 'Tel: '.$order->getBillingAddress()->getTelephone();
+        $result[] = 'Fax: '.$order->getBillingAddress()->getFax();
+        $result[] = 'Email:'. $order->getCustomerEmail();
+
+
+
+
+
+
     	 $result[] = 'Rechnungsadresse';
     	 $result[] = $order->getBillingAddress()->getName();
     	 $result[] = $order->getBillingAddress()->getCompany();
