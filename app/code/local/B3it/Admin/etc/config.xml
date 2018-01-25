@@ -88,7 +88,16 @@
         <models>
             <b3itadmin>
                 <class>B3it_Admin_Model</class>
+                <resourceModel>b3itadmin_resource</resourceModel>
             </b3itadmin>
+            <b3itadmin_resource>
+                <class>B3it_Admin_Model_Resource</class>
+                <entities>
+                    <user>
+                        <table>admin_user</table>
+                    </user>
+                </entities>
+            </b3itadmin_resource>
             <admin>
                 <rewrite>
                     <user>B3it_Admin_Model_User</user>
