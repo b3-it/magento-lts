@@ -71,7 +71,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->columns($bewirtschafter)
       	->columns($konto)
       	->columns($suffixIncrementId)
-      	->joinleft(array('address'=>'sales_flat_order_address'), "address.address_type='base_address' AND address.parent_id = order.entity_id",array('base_address_id'=>'address.entity_id'))
+      	->joinleft(array('address'=>'sales_flat_order_address'), "address.address_type= IF (order.is_virtual=0,'shipping','base_address') AND address.parent_id = order.entity_id",array('base_address_id'=>'address.entity_id'))
       	->columns($leistungsAdr)
       	;
       	
