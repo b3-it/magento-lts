@@ -162,8 +162,8 @@ $j(document).ready(function(){
 					//console.log(_epsg);
         			if (_map == null) {
         				//alert("create map");
-        				var layers = _layerFunc.call(_epsg);
-        				tools = toolsfunc.call(_epsg);
+        				var layers = _layerFunc.call(null, _epsg);
+        				tools = toolsfunc.call(null, _epsg);
         			    selections = makeSelection(tools);
         			    
         			    updateKachel(layers, selections);
@@ -276,9 +276,9 @@ $j(document).ready(function(){
             			// need to update view on overview map
             			_overview.getOverviewMap().setView(makeview(_epsg));
 
-            			var layers = _layerFunc.call(_epsg);
+            			var layers = _layerFunc.call(null, _epsg);
 
-        				var tools = toolsfunc.call(_epsg);
+        				var tools = toolsfunc.call(null, _epsg);
         			    selections = makeSelection(tools);
         			    
         			    updateKachel(layers);

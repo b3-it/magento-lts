@@ -145,22 +145,24 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	return $this->_children;
     }
     
-    public function getOpenLayer($level = 0) {
+    public function getOpenLayer($level = 0, $espg = false) {
         $result = "";
         // no service layer means its a category one
         if ($this->getServiceLayerId() === null) {
+            $helper = Mage::helper('core');
             // can't use let there because of Browser support
             $result = "layers_" . ($level + 1) ." = [];".PHP_EOL;
             foreach ($this->getChildren() as $child) {
                 //var_dump($child);
                 //die();
-                $result .= $child->getOpenLayer($level + 1);
+                $result .= $child->getOpenLayer($level + 1, $espg);
             }
             
             $lines = [];
             
             $lines[] = "layers_$level.push(new ol.layer.Group({";
-            $lines[] = "title: '" . $this->getTitle() . "',";
+            // need title
+            $lines[] = "title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
             $lines[] = "layers: layers_". ($level + 1);
             $lines[] = "}));";
             //$result =
@@ -168,9 +170,9 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         }
         $type = $this->getService()->getFormat();
         if($type === 'wfs') {
-            $result = $this->getOpenLayerWfs($level);
+            $result = $this->getOpenLayerWfs($level, $espg);
         } else if($type === 'wms') {
-            $result = $this->getOpenLayerWms($level);
+            $result = $this->getOpenLayerWms($level, $espg);
         } else if($type === 'wmts') {
             $result = $this->getOpenLayerWmts($level);
         }
@@ -178,13 +180,14 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     }
     
     
-    public function getOpenLayerWmts($level) {
+    public function getOpenLayerWmts($level, $espg = false) {
         $text = array();
+        $helper = Mage::helper("core");
         
         self::$Count++;
         
         $text[] = "var layer".self::$Count." = new ol.layer.Tile({";
-        $text[] = "  title: '" . $this->getTitle() . "',";
+        $text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
         $text[] = "  zIndex: " . $this->getVisualPos();
         //source: null
         $text[] = "})";
@@ -196,6 +199,9 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         $text[] = "  var result = wmfsparser.read(text);";
         $text[] = "  var options = ol.source.WMTS.optionsFromCapabilities(result, {";
         $text[] = "    layer: '".$this->getServiceLayer()->getName()."',";
+        if ($espg) {
+            $text[] = "   projection: 'EPSG:' + " . $espg .",";
+        }
         $text[] = "  });";
         //$text[] = "  console.log(options);";
         
@@ -211,13 +217,18 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     
     
     
-    public function getOpenLayerWms($level) {
+    public function getOpenLayerWms($level, $espg = false) {
         $text = array();
+        $helper = Mage::helper("core");
         self::$Count++;
         $text[] = "var layer".self::$Count." = new ol.layer.Tile({";
+        $text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
+        $text[] = "  zIndex: " . $this->getVisualPos() . ",";
         $text[] = "    source: new ol.source.TileWMS({";
         $text[] = "        url: '". $this->getService()->getUrlMap()."',";
-        //$text[] = "         projection: 'EPSG:4326',";
+        if ($espg) {
+            $text[] = "         projection: 'EPSG:' + " . $espg .",";
+        }
         $text[] = "         params: {LAYERS: '".$this->getServiceLayer()->getName()."'}";
         $text[] = "    })";
         $text[] = "});";
@@ -225,13 +236,21 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         return implode("\n", $text);
     }
     
-    public function getOpenLayerWfs($level)
+    public function getOpenLayerWfs($level, $espg = false)
     {
 //        var_dump($this);
 //        die();
         
+        $helper = Mage::helper('core');
+        
     	self::$Count++;
     	$text = array();
+    	
+    	$text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName() . "';";
+    	if ($espg) {
+    	    $text[] = "url += '&srsname=EPSG:' + " . $espg .";";
+    	}
+    	
     	$text[] = "var vectorSource".self::$Count." = new ol.source.Vector({";
     	$text[] = "	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),";
 /*
@@ -242,7 +261,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	$text[] = "	},";
 //*/
 
-    	$text[] = "	url: '".$this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName()."',";
+    	$text[] = "	url: url,";
     	// srsName set somehow?
 
 /*//    	
@@ -302,7 +321,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
 
     	$text[] = "var vector = new ol.layer.Vector({";
     	$text[] = "  source: vectorSource".self::$Count.",";
-    	$text[] = "  title: '" . $this->getTitle() . "',";
+    	$text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
     	$text[] = "  zIndex: " . $this->getVisualPos();
     	$text[] = "});";
     	$text[] = "layers_$level.push(vector);";

@@ -8,7 +8,7 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-
+/** @var $this Bkg_VirtualGeo_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();
@@ -35,6 +35,7 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_georef_
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `code` varchar(128) default '',
 	  `epsg_code` varchar(128) default '',
+      `proj4` varchar(512) default '',
 	  `pos` int(11) unsigned default 0,
 	  UNIQUE KEY ìdx_georef_code (`code`), 
 	  PRIMARY KEY (`id`)

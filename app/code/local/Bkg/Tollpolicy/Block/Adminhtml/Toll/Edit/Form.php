@@ -30,30 +30,39 @@ class Bkg_Tollpolicy_Block_Adminhtml_Toll_Edit_Form extends Mage_Adminhtml_Block
       		//'required'  => true,
       		'name'      => 'name',
       ));
-      $fieldset->addField('active', 'text', array(
+      $fieldset->addField('code', 'text', array(
+          'label'     => Mage::helper('bkg_tollpolicy')->__('Code'),
+          'class'     => 'required-entry',
+          'required'  => true,
+          'name'      => 'code',
+      ));
+      $fieldset->addField('active', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Active'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'active',
+          'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
       ));
-      $fieldset->addField('date_from', 'text', array(
+      $dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+      $fieldset->addField('date_from', 'date', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('From'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'date_from',
+          'input_format' => Varien_Date::DATE_INTERNAL_FORMAT,
+          'image'  => $this->getSkinUrl('images/grid-cal.gif'),
+          'format'       => $dateFormatIso
       ));
-      $fieldset->addField('date_to', 'text', array(
+      $fieldset->addField('date_to', 'date', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('To'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'date_to',
+          'input_format' => Varien_Date::DATE_INTERNAL_FORMAT,
+          'image'  => $this->getSkinUrl('images/grid-cal.gif'),
+          'format'       => $dateFormatIso
       ));
-      $fieldset->addField('code', 'text', array(
-      		'label'     => Mage::helper('bkg_tollpolicy')->__('Code'),
-      		//'class'     => 'required-entry',
-      		//'required'  => true,
-      		'name'      => 'code',
-      ));
+
       $values = Mage::getModel('bkg_tollpolicy/tollcategory')->getCollection()->toOptionArray();
       $fieldset->addField('toll_category_id', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Category'),
