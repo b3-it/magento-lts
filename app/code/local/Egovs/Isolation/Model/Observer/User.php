@@ -15,7 +15,7 @@ class Egovs_Isolation_Model_Observer_User extends Varien_Object
     public function onUserSave($observer)
     {
     	$user = $observer->getObject();
-    	if(($user != null) && (get_class($user) == 'Mage_Admin_Model_User'))
+    	if(($user != null) && ($user instanceof Mage_Admin_Model_User))
     	{
     		$stores = $user->getStoreGroups();
     		Mage::getModel('isolation/relation')->removeAllStoreRelations($user->getId());
@@ -36,7 +36,7 @@ class Egovs_Isolation_Model_Observer_User extends Varien_Object
     public function onUserLoad($observer)
     {
     	$user = $observer->getObject();
-    	if(($user != null) && (get_class($user) == 'Mage_Admin_Model_User') && $user->getId())
+    	if(($user != null) && ($user instanceof Mage_Admin_Model_User) && $user->getId())
     	{
     		$collection = Mage::getModel('isolation/relation')->getCollection();
     		$collection->getSelect()->where('user_id = ' . $user->getId());
