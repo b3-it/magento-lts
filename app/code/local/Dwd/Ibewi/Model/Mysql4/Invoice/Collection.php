@@ -34,7 +34,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	$case .= " END) ";
       	
       	$versandSKU = new Zend_Db_Expr("(select case COALESCE(round(100 * `sales_flat_invoice`.`shipping_tax_amount` / `sales_flat_invoice`.`shipping_amount`),0) $case as sku");    	
-      	$suffixIncrementId = new Zend_Db_Expr("CONCAT_WS('_',order.increment_id, order_item.is_virtual ) as suffixincrementid") ;
+      	$suffixIncrementId = new Zend_Db_Expr("order.increment_id as suffixincrementid") ;
         
       	$leistungsAdr = new Zend_Db_Expr("(SELECT IF(order_item.is_virtual = 0,order.shipping_address_id,base_address_id)) AS leistungs_addresse");
       	
