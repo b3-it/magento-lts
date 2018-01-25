@@ -26,7 +26,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Georef_Edit_Form extends Mage_Ad
   	$fieldset = $form->addFieldset('componentsgeoref_entity_form', array('legend'=>Mage::helper('virtualgeo')->__('Components Georefentity information')));
 
   	$dataModel = Mage::registry('componentsgeoref_entity_data');
-
+/*
   	$fieldset->addField('georef', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('Georef'),
   			//'class'     => 'required-entry',
@@ -34,12 +34,22 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Georef_Edit_Form extends Mage_Ad
   			'name'      => 'georef',
   			'value'	=> $dataModel->getGeoref()
   	));
+  	//*/
+  	
   	$fieldset->addField('epsg_code', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('EPSG Code'),
   			//'class'     => 'required-entry',
   			//'required'  => true,
   			'name'      => 'epsg_code',
   			'value'	=> $dataModel->getEpsgCode()
+  	));
+  	
+  	$fieldset->addField('proj4', 'text', array(
+  	    'label'     => Mage::helper('virtualgeo')->__('Proj4'),
+  	    //'class'     => 'required-entry',
+  	    //'required'  => true,
+  	    'name'      => 'proj4',
+  	    'value'	=> $dataModel->getProj4()
   	));
 
   	$fieldset->addField('shortname', 'text', array(

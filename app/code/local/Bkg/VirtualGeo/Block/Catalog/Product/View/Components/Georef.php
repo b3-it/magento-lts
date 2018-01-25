@@ -10,7 +10,7 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Georef extends Bkg_Vi
 	
 	public function getOptions($fields = null)
 	{
-	    $fields = array('code', 'epsg_code');
+	    $fields = array('code', 'epsg_code', 'proj4');
 	    return parent::getOptions($fields);
 	}
 }

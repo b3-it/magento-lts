@@ -30,35 +30,40 @@ class Bkg_Tollpolicy_Block_Adminhtml_Usetype_Edit_Form extends Mage_Adminhtml_Bl
       		//'required'  => true,
       		'name'      => 'name',
       ));
-      $fieldset->addField('active', 'text', array(
+      $fieldset->addField('code', 'text', array(
+          'label'     => Mage::helper('bkg_tollpolicy')->__('Code'),
+          'class'     => 'required-entry',
+          'required'  => true,
+          'name'      => 'code',
+      ));
+      $fieldset->addField('active', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Active'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'active',
+          'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
       ));
-      $fieldset->addField('internal', 'text', array(
+      $fieldset->addField('internal', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Internal'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'internal',
+          'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
       ));
-      $fieldset->addField('external', 'text', array(
+      $fieldset->addField('external', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('External'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'external',
+          'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
       ));
-      $fieldset->addField('code', 'text', array(
-      		'label'     => Mage::helper('bkg_tollpolicy')->__('Code'),
-      		//'class'     => 'required-entry',
-      		//'required'  => true,
-      		'name'      => 'code',
-      ));
-      $fieldset->addField('is_default', 'text', array(
+
+      $fieldset->addField('is_default', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('is Default'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'is_default',
+          'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
       ));
       $values = Mage::getModel('bkg_tollpolicy/toll')->getCollection()->toOptionArray();
       $fieldset->addField('toll_id', 'select', array(

@@ -65,11 +65,15 @@ class Bkg_Tollpolicy_Block_Adminhtml_Toll_Grid extends Mage_Adminhtml_Block_Widg
           //'width'     => '150px',
           'index'     => 'code',
       ));
+
+      $values = Mage::getModel('bkg_tollpolicy/tollcategory')->getCollection()->toOptionHash();
       $this->addColumn('toll_category_id', array(
-          'header'    => Mage::helper('bkg_tollpolicy')->__(''),
+          'header'    => Mage::helper('bkg_tollpolicy')->__('Category'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'toll_category_id',
+          'type'      => 'options',
+          'options'   => $values
       ));
 
         $this->addColumn('action',

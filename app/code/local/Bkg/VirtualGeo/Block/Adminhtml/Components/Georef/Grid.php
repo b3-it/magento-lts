@@ -34,13 +34,15 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Georef_Grid extends Mage_Adminht
           'width'     => '50px',
           'index'     => 'id',
       ));
-
+/*
       $this->addColumn('georef', array(
           'header'    => Mage::helper('virtualgeo')->__('Georef'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'georef',
       ));
+//*/
+      
       $this->addColumn('epsg_code', array(
           'header'    => Mage::helper('virtualgeo')->__('EPSG Code'),
           //'align'     =>'left',

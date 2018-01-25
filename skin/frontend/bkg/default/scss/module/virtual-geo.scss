@@ -5,6 +5,14 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+
+// ----------------------------------------------
+// EGOV-Definitionen (Maße und Variablen)
+@import "../../../../egov/default/scss/egov/fontbase";
+@import "../egov/style-size";
+@import "../../../../egov/default/scss/egov/style-images";
+@import "../../../../egov/default/scss/egov/style-colors";
+
 #virtualgeo {
     margin-bottom: $global-boxmargin;
 }
@@ -41,4 +49,13 @@ a.ui-button:active,
 .ui-button.ui-state-active:hover {
     border-color: $global-active-color;
     background: $global-h3-color;
+}
+
+
+.toogleModeCtrl {
+	top: -2.5em;
+}
+.toogleSelectCtrl {
+	top: -2.5em;
+	left: 5.5em;
 }

@@ -132,7 +132,7 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
         return $data;
     }
     
-    public function getOpenLayer()
+    public function getOpenLayer($espg = false)
     {
     	$text = "var layers_0 = new ol.Collection();".PHP_EOL;
     	
@@ -157,7 +157,7 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
     	    /**
     	     * @var Bkg_Viewer_Model_Composit_Layer $layer 
     	     */
-			$text .= " ". $layer->getOpenLayer();
+			$text .= " ". $layer->getOpenLayer(0, $espg);
     	}
     	 
     	return $text;
