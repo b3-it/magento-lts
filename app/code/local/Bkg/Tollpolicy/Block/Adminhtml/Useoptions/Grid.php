@@ -22,6 +22,10 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Grid extends Mage_Adminhtml_Bloc
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('bkg_tollpolicy/useoptions')->getCollection();
+
+      $collection->getSelect()
+          ->join(array('usetype'=>$collection->getTable('bkg_tollpolicy/use_type_entity')),'toll.entity_id= main_table.use_type_id')
+          ->join(array('toll'=>$collection->getTable('bkg_tollpolicy/toll_entity_label')),'toll.entity_id= main_table')
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -68,7 +72,19 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Grid extends Mage_Adminhtml_Bloc
           //'width'     => '150px',
           'index'     => 'is_calculable',
       ));
-      
+
+
+      $values = Mage::getModel('bkg_tollpolicy/toll')->getCollection()->toOptionHash();
+      $this->addColumn('toll_id', array(
+          'header'    => Mage::helper('bkg_tollpolicy')->__('Toll'),
+          //'align'     =>'left',
+          //'width'     => '150px',
+          'index'     => 'toll_id',
+          'type'      => 'options',
+          'options'   => $values
+      ));
+
+
       $values = Mage::getModel('bkg_tollpolicy/usetype')->getCollection()->toOptionHash();
       $this->addColumn('use_type_id', array(
           'header'    => Mage::helper('bkg_tollpolicy')->__('Type of Use'),
