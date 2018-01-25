@@ -109,6 +109,10 @@
             $j('#' + elementDest).append( $j('#' + elementName) );
         }
 
+        if ( !valueForDhlSending.length ) {
+            alert("<?php echo $this->__('DHL Shipping-Module is not configure!'); ?>");
+        }
+
         $j.each( $j('#' + elementDest + ' input[type=radio]'), function(){
             if( $j(this).val() == valueForDhlSending ) {
                 nameForDhlSending = $j(this).attr('name');
