@@ -19,6 +19,11 @@ class Bkg_VirtualGeo_MapController extends Mage_Core_Controller_Front_Action
     		$structure = Mage::getModel('virtualgeo/components_structure')->load($structureId);
     		
     		/**
+    		 * @var Bkg_VirtualGeo_Model_Components_Georef $geo
+    		 */
+    		$geo = Mage::getModel('virtualgeo/components_georef')->load($georef, 'code');
+    		
+    		/**
     		 * @var Bkg_Viewer_Model_Service_Service $service
     		 */
     		$service = Mage::getModel('bkgviewer/service_service')->load($structure->getServiceId());
@@ -42,7 +47,11 @@ class Bkg_VirtualGeo_MapController extends Mage_Core_Controller_Front_Action
     			    Mage::log("Layer '" . $layer . "' für Service '" . $service->getTitle() . "' nicht gespeichert.");
     			}
 
+    			// add EPSG code there
     			$result = $service->getUrlFeatureinfo()."&typename=".$layer;
+    			if ($geo !== null && !empty($geo->getEpsgCode())) {
+    			    $result .= "&srsname=EPSG:".$geo->getEpsgCode();
+    			}
     		}
     	}
     

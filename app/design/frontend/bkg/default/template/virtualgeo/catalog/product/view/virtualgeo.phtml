@@ -49,7 +49,7 @@
     <?php if ($this->getComposit()): ?>
 
 
-	var toolsfunc = function() {
+	var toolsfunc = function(epsg) {
       var tools = [];
       <?php
       $tools = $this->getSelectionTools();
@@ -57,7 +57,7 @@
           /**
            * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
            */
-          echo ($tool->getOpenLayers());
+          echo ($tool->getOpenLayers("epsg"));
       }
       ?>
       return new ol.layer.Group({
@@ -74,9 +74,11 @@
     	struct = $j("input:checked[name='virtualgeo-components-structure[]']");
     	if (struct.length > 0) {
     		structid = struct.val();
-    		georef = $j("input:checked[name='virtualgeo-components-georef[]']")
+    		georef = $j("input:checked[name='virtualgeo-components-georef[]']");
     		if (georef.length > 0) {
     			geocode = georef.attr("data-code");
+
+    	        // the url should already support that epsg
     			url = baseUrl + "index.php/virtualgeo/map/structurLayer/id/" + structid + "/georef/" + geocode;
     			$j.ajax(url, {
     				//async: false,
@@ -98,8 +100,8 @@
     		}
     	}
     }
-    var _layerFunc  = function() {
-    	<?php echo $this->getComposit()->getOpenLayer(); ?>
+    var _layerFunc  = function(epsg) {
+    	<?php echo $this->getComposit()->getOpenLayer("epsg"); ?>
     	return layers_0;
 	};
 
