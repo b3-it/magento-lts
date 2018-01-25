@@ -9,6 +9,7 @@
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
 
+/** @var $this Bkg_VirtualGeo_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();
@@ -20,37 +21,130 @@ $installer->startSetup();
 $storeId_EN = 2;
 
 $data = array();
-//"0 BESCHREIBUNG_DEU","1 HINWEIS_DEU","2 BESCHREIBUNG_ENG","3 HINWEIS_ENG","4 EPSG",5 "CODE","6 POSITION","7 KUERZEL_DEU","8 KUERZEL_ENG");
-$data[] = array("Dummy","","dummy","","-","EE","1","EE","EE");
-$data[] = array("Gauß-Krüger-Abbildung im 2. Meridianstreifen<br>(Mittelmeridian 6°)<br>Ellipsoid Bessel, Datum Potsdam","Ehemaliges Standardsystem der deutschen Landesvermessung. Besonders geeignet für blattschnittfreie Daten im Westen Deutschlands.","Gauss Kruger Projection in the 2nd longitude zone<br>(Central Meridian 6°)<br>Ellipsoid Bessel, Datum Potsdam","especially suited for data without sheet line system in the West of Germany","31466","gk2","2","GK2","GK2");
-$data[] = array("Gauß-Krüger-Abbildung im 3. Meridianstreifen<br>(Mittelmeridian 9°)<br>Ellipsoid Bessel, Datum Potsdam","Ehemaliges Standardsystem der deutschen Landesvermessung. <br> Der 3. Streifen wurde oft auch für die Darstellung von deutschlandweiten Datensätzen verwendet.","Gauss Kruger Projection in the 3rd longitude zone<br>(Central Meridian 9°)<br>Ellipsoid Bessel, Datum Potsdam","common standard for Germany-wide data without sheet line system in the Gauss Kruger system","31467","gk3","3","GK3","GK3");
-$data[] = array("Gauß-Krüger-Abbildung im 4. Meridianstreifen<br>(Mittelmeridian 12°)<br>Ellipsoid Bessel, Datum Potsdam","Ehemaliges Standardsystem der deutschen Landesvermessung. <br> Besonders geeignet für blattschnittfreie Daten im Osten Deutschlands.","Gauss Kruger Projection in the 4th longitude zone<br>(Central Meridian 12°)<br>Ellipsoid Bessel, Datum Potsdam","especially suited for data without sheet line system in the East of Germany","31468","gk4","4","GK4","GK4");
-$data[] = array("Gauß-Krüger-Abbildung im 5. Meridianstreifen<br>(Mittelmeridian 15°)<br>Ellipsoid Bessel, Datum Potsdam","Ehemaliges Standardsystem der deutschen Landesvermessung. <br> Besonders geeignet für blattschnittfreie Daten im äußersten Osten Deutschlands.","Gauss Kruger Projection in the 5th longitude zone<br>(Central Meridian 15°)<br>Ellipsoid Bessel, Datum Potsdam","especially suited for data without sheet line system in the extreme East of Germany","31469","gk5","5","GK5","GK5");
-$data[] = array("Lambert-Abbildung (winkeltreu)<br> längentreue Breitenkreise: 48°40' und 53°40'<br> Bezugsmittelpunkt: 10°30' ö.L., 51°00' n.B.<br> Ellipsoid GRS80, Datum ETRS89","besonders geeignet für deutschlandweite blattschnittfreie Daten bei möglichst geringen Verzerrungen","Lambert Projection (conformal)<br>isometric parallels of latitude: 48°40' and 53°40'<br>centre of reference: 10°30' EL, 51°00' NL<br>Ellipsoid GRS80, Datum ETRS89","especially suited for Germany-wide data without sheet line system with as little distortions as possible","5243","lamge","6","LAMGe","LAMGe");
-$data[] = array("Lambert-Abbildung (winkeltreu)<br> längentreue Breitenkreise: 48°40' und 53°40'<br> Bezugsmittelpunkt: 10°30' ö.L., 51°00' n.B.<br> Ellipsoid WGS84, Datum WGS84","besonders geeignet für deutschlandweite blattschnittfreie Daten bei möglichst geringen Verzerrungen","Lambert Projection (conformal)<br>isometric parallels of latitude: 48°40' and 53°40'<br>centre of reference: 10°30' EL, 51°00' NL<br>Ellipsoid WGS84, Datum WGS84","especially suited for Germany-wide data without sheet line system with as little distortions as possible","-","lamgw","7","LAMGw","LAMGw");
-$data[] = array("UTM-Abbildung in der Zone 32<br>mit führender Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)","Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Sie unterscheidet sich von utm32w <br> durch ihren geodätischen Bezug.","UTM Projection in zone 32<br>(Centre 9°)<br>Ellipsoid GRS80, Datum ETRS89","","4647","utm32e","8","UTM32e","UTM32e");
-$data[] = array("UTM-Abbildung in der Zone 33<br>mit führender Zonenangabe im Rechtswert <br>Mittelmeridian   15°<br>(Ellipsoid GRS80, Datum ETRS89)","Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Sie unterscheidet sich von utm33w durch ihren geodätischen Bezug.","UTM Projection in zone 33<br>(Centre 15°)<br> Ellipsoid  GRS80,  Datum ETRS89","","5650","utm33e","9","UTM33e","UTM33e");
-$data[] = array("UTM-Abbildung in der Zone 32<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)","Standardsystem der deutschen Landesvermessung und international eingesetztes UTM-Systems. <br>Die Zone 32 wird oft auch für die Darstellung von deutschlandweiten Datensätzen verwendet.","UTM Projection in zone 32<br>(Centre 9°)<br>Ellipsoid GRS80, Datum ETRS89","common standard for Germany-wide data without sheet line system in the UTM system","25832","utm32s","10","UTM32s","UTM32s");
-$data[] = array("UTM-Abbildung in der Zone 33<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   15°<br>(Ellipsoid GRS80, Datum ETRS89)","Standardsystem der deutschen Landesvermessung und international eingesetztes UTM-Systems.","UTM Projection in zone 33<br>(Centre 15°)<br> Ellipsoid  GRS80,  Datum ETRS89","especially suited for data without sheet line system in the East of Germany","25833","utm33s","11","UTM33s","UTM33s");
-$data[] = array("UTM-Abbildung in der Zone 32<br>mit führender Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid WGS84, Datum WGS84)","Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Deutschland liegt überwiegend in der Zone 32, so dass diese auch für deutschlandweite blattschnittfreie Daten im UTM-System sehr geeignet ist.","UTM Projection in zone 32<br>(Centre 9°)<br> Ellipsoid WGS84, Datum WGS84 ","With zone indication at the beginning in the easting this georeferencing corresponds to a common form in Germany. Germany is mostly situated in the zone 32 so that this is very appropriate also for Germany-wide data without sheet line system in the UTM system.","-","utm32w","12","UTM32w","UTM32w");
-$data[] = array("UTM-Abbildung in der Zone 33<br>mit führender Zonenangabe im Rechtswert <br>(Mittelmeridian   15°)<br>Ellipsoid WGS84, Datum WGS84","Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Besonders geeignet für blattschnittfreie Daten im Osten Deutschlands.","UTM Projection in zone 33<br>(Centre 15°)<br> Ellipsoid  WGS84, Datum WGS84 ","especially suited for data without sheet line system in the East of Germany","-","utm33w","13","UTM33w","UTM33w");
-$data[] = array("Geographische Koordinaten in Dezimalgrad <br> (Ellipsoid GRS80, Datum ETRS89)","","Geographical coordinates in decimal degrees <br>  (Ellipsoid GRS80, Datum ETRS89)","","4258","geo89","14","GEO89","GEO89");
-$data[] = array("Geographische Koordinaten in Dezimalgrad<br> Ellipsoid WGS84, Datum WGS84","","Geographical coordinates in decimal degrees <br> (Ellipsoid WGS84, Datum WGS84)","","4326","geo84","15","GEO84","GEO84");
-$data[] = array("UTM-Abbildung in der Zone 32<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)","","UTM-Abbildung in der Zone 32<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)","","3044","tm32","16","TM32","TM32");
-$data[] = array("UTM-Abbildung in der Zone 33<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)","","UTM-Abbildung in der Zone 33<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)","","3045","tm33","17","TM33","TM33");
-$data[] = array("Pseudo-Mercator<br>(Ellipsoid WGS84, Datum WGS84)","Sphärische Mercator-Projektion <br> Standardsystem für weltweite Webdienste z.B. von Google oder OpenStreetMap","Pseudo-Mercator<br>(Ellipsoid WGS84, Datum WGS84)","Standardsystem für Webdienste von Google oder OpenStreetMap","3857","psmerc","18","PSEUDO_MERCATOR","PSEUDO_MERCATOR");
+//"0 BESCHREIBUNG_DEU","1 HINWEIS_DEU","2 BESCHREIBUNG_ENG","3 HINWEIS_ENG","4 EPSG",5 "CODE","6 POSITION","7 KUERZEL_DEU","8 KUERZEL_ENG", 9 Proj4);
+$data[] = array("Dummy","","dummy","","","EE","1","EE","EE");
+$data[] = array(
+    "Gauß-Krüger-Abbildung im 2. Meridianstreifen<br>(Mittelmeridian 6°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "Ehemaliges Standardsystem der deutschen Landesvermessung. Besonders geeignet für blattschnittfreie Daten im Westen Deutschlands.",
+    "Gauss Kruger Projection in the 2nd longitude zone<br>(Central Meridian 6°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "especially suited for data without sheet line system in the West of Germany",
+    "31466","gk2","2","GK2","GK2", "+proj=tmerc +axis=neu +lat_0=0 +lon_0=6 +k=1 +x_0=2500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs");
+$data[] = array(
+    "Gauß-Krüger-Abbildung im 3. Meridianstreifen<br>(Mittelmeridian 9°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "Ehemaliges Standardsystem der deutschen Landesvermessung. <br> Der 3. Streifen wurde oft auch für die Darstellung von deutschlandweiten Datensätzen verwendet.",
+    "Gauss Kruger Projection in the 3rd longitude zone<br>(Central Meridian 9°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "common standard for Germany-wide data without sheet line system in the Gauss Kruger system",
+    "31467","gk3","3","GK3","GK3", "+proj=tmerc +axis=neu +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs");
+$data[] = array(
+    "Gauß-Krüger-Abbildung im 4. Meridianstreifen<br>(Mittelmeridian 12°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "Ehemaliges Standardsystem der deutschen Landesvermessung. <br> Besonders geeignet für blattschnittfreie Daten im Osten Deutschlands.",
+    "Gauss Kruger Projection in the 4th longitude zone<br>(Central Meridian 12°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "especially suited for data without sheet line system in the East of Germany",
+    "31468","gk4","4","GK4","GK4", "+proj=tmerc +axis=neu +lat_0=0 +lon_0=12 +k=1 +x_0=4500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs");
+$data[] = array(
+    "Gauß-Krüger-Abbildung im 5. Meridianstreifen<br>(Mittelmeridian 15°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "Ehemaliges Standardsystem der deutschen Landesvermessung. <br> Besonders geeignet für blattschnittfreie Daten im äußersten Osten Deutschlands.",
+    "Gauss Kruger Projection in the 5th longitude zone<br>(Central Meridian 15°)<br>Ellipsoid Bessel, Datum Potsdam",
+    "especially suited for data without sheet line system in the extreme East of Germany",
+    "31469","gk5","5","GK5","GK5", "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs");
+$data[] = array(
+    "Lambert-Abbildung (winkeltreu)<br> längentreue Breitenkreise: 48°40' und 53°40'<br> Bezugsmittelpunkt: 10°30' ö.L., 51°00' n.B.<br> Ellipsoid GRS80, Datum ETRS89",
+    "besonders geeignet für deutschlandweite blattschnittfreie Daten bei möglichst geringen Verzerrungen",
+    "Lambert Projection (conformal)<br>isometric parallels of latitude: 48°40' and 53°40'<br>centre of reference: 10°30' EL, 51°00' NL<br>Ellipsoid GRS80, Datum ETRS89",
+    "especially suited for Germany-wide data without sheet line system with as little distortions as possible",
+    "5243","lamge","6","LAMGe","LAMGe", "+proj=lcc +lat_1=48.66666666666666 +lat_2=53.66666666666666 +lat_0=51 +lon_0=10.5 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+// no extra ESPG for lamgw because of Ellipsoid WGS84?
+$data[] = array(
+    "Lambert-Abbildung (winkeltreu)<br> längentreue Breitenkreise: 48°40' und 53°40'<br> Bezugsmittelpunkt: 10°30' ö.L., 51°00' n.B.<br> Ellipsoid WGS84, Datum WGS84",
+    "besonders geeignet für deutschlandweite blattschnittfreie Daten bei möglichst geringen Verzerrungen",
+    "Lambert Projection (conformal)<br>isometric parallels of latitude: 48°40' and 53°40'<br>centre of reference: 10°30' EL, 51°00' NL<br>Ellipsoid WGS84, Datum WGS84",
+    "especially suited for Germany-wide data without sheet line system with as little distortions as possible",
+    "","lamgw","7","LAMGw","LAMGw" ,"");
+
+$data[] = array(
+    "UTM-Abbildung in der Zone 32<br>mit führender Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Sie unterscheidet sich von utm32w <br> durch ihren geodätischen Bezug.",
+    "UTM Projection in zone 32<br>(Centre 9°)<br>Ellipsoid GRS80, Datum ETRS89","",
+    "4647","utm32e","8","UTM32e","UTM32e", "+proj=tmerc +lat_0=0 +lon_0=9 +k=0.9996 +x_0=32500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+$data[] = array(
+    "UTM-Abbildung in der Zone 33<br>mit führender Zonenangabe im Rechtswert <br>Mittelmeridian   15°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Sie unterscheidet sich von utm33w durch ihren geodätischen Bezug.",
+    "UTM Projection in zone 33<br>(Centre 15°)<br> Ellipsoid  GRS80,  Datum ETRS89","",
+    "5650","utm33e","9","UTM33e","UTM33e", "+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=33500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+$data[] = array(
+    "UTM-Abbildung in der Zone 32<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "Standardsystem der deutschen Landesvermessung und international eingesetztes UTM-Systems. <br>Die Zone 32 wird oft auch für die Darstellung von deutschlandweiten Datensätzen verwendet.",
+    "UTM Projection in zone 32<br>(Centre 9°)<br>Ellipsoid GRS80, Datum ETRS89",
+    "common standard for Germany-wide data without sheet line system in the UTM system",
+    "25832","utm32s","10","UTM32s","UTM32s", "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+$data[] = array(
+    "UTM-Abbildung in der Zone 33<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   15°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "Standardsystem der deutschen Landesvermessung und international eingesetztes UTM-Systems.",
+    "UTM Projection in zone 33<br>(Centre 15°)<br> Ellipsoid  GRS80,  Datum ETRS89",
+    "especially suited for data without sheet line system in the East of Germany",
+    "25833","utm33s","11","UTM33s","UTM33s", "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+// no extra ESPG for lamgw because of Ellipsoid WGS84?
+$data[] = array(
+    "UTM-Abbildung in der Zone 32<br>mit führender Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid WGS84, Datum WGS84)",
+    "Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Deutschland liegt überwiegend in der Zone 32, so dass diese auch für deutschlandweite blattschnittfreie Daten im UTM-System sehr geeignet ist.",
+    "UTM Projection in zone 32<br>(Centre 9°)<br> Ellipsoid WGS84, Datum WGS84 ",
+    "With zone indication at the beginning in the easting this georeferencing corresponds to a common form in Germany. Germany is mostly situated in the zone 32 so that this is very appropriate also for Germany-wide data without sheet line system in the UTM system.",
+    "","utm32w","12","UTM32w","UTM32w", "");
+$data[] = array(
+    "UTM-Abbildung in der Zone 33<br>mit führender Zonenangabe im Rechtswert <br>(Mittelmeridian   15°)<br>Ellipsoid WGS84, Datum WGS84",
+    "Mit führender Zonenangabe im Rechtswert entspricht diese Georeferenzierung einer in Deutschland verbreiteten Form. Besonders geeignet für blattschnittfreie Daten im Osten Deutschlands.",
+    "UTM Projection in zone 33<br>(Centre 15°)<br> Ellipsoid  WGS84, Datum WGS84 ",
+    "especially suited for data without sheet line system in the East of Germany",
+    "","utm33w","13","UTM33w","UTM33w", "");
+$data[] = array(
+    "Geographische Koordinaten in Dezimalgrad <br> (Ellipsoid GRS80, Datum ETRS89)",
+    "",
+    "Geographical coordinates in decimal degrees <br>  (Ellipsoid GRS80, Datum ETRS89)",
+    "",
+    "4258","geo89","14","GEO89","GEO89", "+proj=longlat +axis=neu +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
+// already known by proj4 
+$data[] = array(
+    "Geographische Koordinaten in Dezimalgrad<br> Ellipsoid WGS84, Datum WGS84",
+    "",
+    "Geographical coordinates in decimal degrees <br> (Ellipsoid WGS84, Datum WGS84)",
+    "",
+    "4326","geo84","15","GEO84","GEO84", "");
+$data[] = array(
+    "UTM-Abbildung in der Zone 32<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "",
+    "UTM-Abbildung in der Zone 32<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "",
+    "3044","tm32","16","TM32","TM32", "+proj=utm +axis=neu +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+$data[] = array(
+    "UTM-Abbildung in der Zone 33<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "",
+    "UTM-Abbildung in der Zone 33<br>ohne führende Zonenangabe im Rechtswert <br>Mittelmeridian   9°<br>(Ellipsoid GRS80, Datum ETRS89)",
+    "",
+    "3045","tm33","17","TM33","TM33", "+proj=utm +axis=neu +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+// already known by proj4 
+$data[] = array(
+    "Pseudo-Mercator<br>(Ellipsoid WGS84, Datum WGS84)",
+    "Sphärische Mercator-Projektion <br> Standardsystem für weltweite Webdienste z.B. von Google oder OpenStreetMap",
+    "Pseudo-Mercator<br>(Ellipsoid WGS84, Datum WGS84)",
+    "Standardsystem für Webdienste von Google oder OpenStreetMap",
+    "3857","psmerc","18","PSEUDO_MERCATOR","PSEUDO_MERCATOR", "");
 
 
 foreach($data as $row)
 {
 
+    /**
+     * @var Bkg_VirtualGeo_Model_Components_Georef $object
+     */
 	$object = Mage::getModel('virtualgeo/components_georef');
 	$object->setCode($this->getRowValue($row,5))
 	->setEpsgCode($this->getRowValue($row,4))
 	->setName($this->getRowValue($row,0))
 	->setShortname($this->getRowValue($row,7))
 	->setDescription($this->getRowValue($row,1))
-	->setPos($this->getRowValue($row,7) * 100)
+	->setPos(intval($this->getRowValue($row,6)))
+	->setProj4($this->getRowValue($row, 9))
 	->save();
 	$object->setStoreId($storeId_EN)
 	->setName($this->getRowValue($row,2))
