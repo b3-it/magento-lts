@@ -15,6 +15,8 @@ $installer = $this;
 $installer->startSetup();
 
 
+$tollcategory = Mage::getModel('bkg_tollpolicy/tollcategory');
+$tollcategory->setName('Gebühren')->save();
 
 
 
@@ -47,9 +49,96 @@ foreach($data as $row)
 	$object->setCode($row[3])
 	->setName($row[0])
         ->setDateFrom($row[2])
+        ->setActive(($row[3]=='AdV-3.1')? '1':'0')
+        ->setTollCategoryId($tollcategory->getId())
 	->save();
     $toll[$row[3]] = $object->getId();
 }
+
+
+
+
+
+$useType = array();
+
+foreach($toll as $k=> $v)
+{
+	$object = Mage::getModel('bkg_tollpolicy/usetype');
+	$object->setCode('int')
+	->setName('(innerhalb des Unternehmens)')
+	->setIsInternal('1')
+	->setActive('1')
+	->setTollId($v)
+	->save();
+
+	$useType[$k.":int"] = $object->getId();
+}
+
+
+//"0 NUTZUNG_DEU","1 NUTZUNG_ENG","2 CODE","3 ADV_VERSION","4 POSITION");
+$data = array();
+$data[] = array("Keine","Keine","Keine","AdV-2.0","6");
+$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.0","7");
+$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.0","8");
+$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.0","9");
+$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.0","10");
+$data[] = array("Keine","Keine","Keine","AdV-2.1","11");
+$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.1","12");
+$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.1","13");
+$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.1","14");
+$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.1","15");
+$data[] = array("Keine","Keine","Keine","AdV-2.2","16");
+$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.2","17");
+$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.2","18");
+$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.2","19");
+$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.2","20");
+$data[] = array("Keine","Keine","Keine","AdV-2.2.1","21");
+$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.2.1","22");
+$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.2.1","23");
+$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.2.1","24");
+$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.2.1","25");
+$data[] = array("Keine","Keine","Keine","AdV-2.2.2","26");
+$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.2.2","27");
+$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.2.2","28");
+$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.2.2","29");
+$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.2.2","30");
+$data[] = array("Keine","Keine","Keine","AdV-3.0","31");
+$data[] = array("Wiederverkauf","Wiederverkauf","Wiederverkauf","AdV-3.0","32");
+$data[] = array("Folgeprodukte oder -dienste Selbst","Folgeprodukte oder -dienste Selbst","Folgeprodukte-Dienste-Selbst","AdV-3.0","33");
+$data[] = array("Folgeprodukte oder -dienste ULZ","Folgeprodukte oder -dienste ULZ","Folgeprodukte-Dienste-ULZ","AdV-3.0","34");
+$data[] = array("Sonstige","Sonstige","Sonstige","AdV-3.0","35");
+$data[] = array("Keine","Keine","Keine","AdV-3.1","36");
+$data[] = array("Wiederverkauf","Wiederverkauf","Wiederverkauf","AdV-3.1","37");
+$data[] = array("Folgeprodukte oder -dienste Selbst","Folgeprodukte oder -dienste Selbst","Folgeprodukte-Dienste-Selbst","AdV-3.1","38");
+$data[] = array("Folgeprodukte oder -dienste ULZ","Folgeprodukte oder -dienste ULZ","Folgeprodukte-Dienste-ULZ","AdV-3.1","39");
+$data[] = array("Sonstige","Sonstige","Sonstige","AdV-3.1","40");
+$data[] = array("Keine","Keine","Keine","nicht_bekannt","1");
+$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","nicht_bekannt","2");
+$data[] = array("Folgedienst","Folgedienst","Folgedienst","nicht_bekannt","3");
+$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","nicht_bekannt","4");
+$data[] = array("Sonstige","Sonstige","Sonstige","nicht_bekannt","5");
+//"0 NUTZUNG_DEU","1 NUTZUNG_ENG","2 CODE","3 ADV_VERSION","4 POSITION");
+
+
+foreach($data as $row)
+{
+	if(isset($toll[$row[3]]))
+	{
+		$toll_id = $toll[$row[3]];
+		$object = Mage::getModel('bkg_tollpolicy/usetype');
+		$object->setCode($row[2])
+		->setName($row[0])
+		->setIsExternal('1')
+		->setActive('1')
+		->setTollId($toll_id)
+		->save();
+	
+		$useType[$row[3].":".$row[2]] = $object->getId();
+	}
+}
+
+
+
 
 $data = array();
 //"0 NUTZUNG_DEU"",1 NUTZUNG_ENG","2 FAKTOR","3 CODE","4 ADV_VERSION","5 POSITION"
@@ -105,33 +194,7 @@ $data[] = array("101 - 150 Arbeitsplätze","101 - 150 Arbeitsplätze","3,5","101
 $data[] = array("151 - 200 Arbeitsplätze","151 - 200 Arbeitsplätze","4","151-200_Arbeitsplaetze","nicht_bekannt","7");
 $data[] = array("Firmenlizenz","Firmenlizenz","5","Firmenlizenz","nicht_bekannt","8");
 
-$useType = array();
 
-foreach($toll as $k=> $v)
-{
-    $object = Mage::getModel('bkg_tollpolicy/usetype');
-    $object->setCode('int')
-        ->setName('Interne Nutzung')
-        ->setIsInternal('1')
-        ->setActive('1')
-        ->setTollId($v)
-        ->save();
-
-    $useType[$k.":int"] = $object->getId();
-}
-
-foreach($toll as $k=> $v)
-{
-    $object = Mage::getModel('bkg_tollpolicy/usetype');
-    $object->setCode('ext')
-        ->setName('Externe Nutzung')
-        ->setIsExternal('1')
-        ->setActive('1')
-        ->setTollId($v)
-        ->save();
-
-    $useType[$k.":ext"] = $object->getId();
-}
 
 
 
@@ -151,58 +214,45 @@ foreach($data as $row)
 
 
 
-//"0 NUTZUNG_DEU","1 NUTZUNG_ENG","2 CODE","3 ADV_VERSION","4 POSITION");
-$data[] = array("Keine","Keine","Keine","AdV-2.0","6");
-$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.0","7");
-$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.0","8");
-$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.0","9");
-$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.0","10");
-$data[] = array("Keine","Keine","Keine","AdV-2.1","11");
-$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.1","12");
-$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.1","13");
-$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.1","14");
-$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.1","15");
-$data[] = array("Keine","Keine","Keine","AdV-2.2","16");
-$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.2","17");
-$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.2","18");
-$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.2","19");
-$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.2","20");
-$data[] = array("Keine","Keine","Keine","AdV-2.2.1","21");
-$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.2.1","22");
-$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.2.1","23");
-$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.2.1","24");
-$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.2.1","25");
-$data[] = array("Keine","Keine","Keine","AdV-2.2.2","26");
-$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","AdV-2.2.2","27");
-$data[] = array("Folgedienst","Folgedienst","Folgedienst","AdV-2.2.2","28");
-$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","AdV-2.2.2","29");
-$data[] = array("Sonstige","Sonstige","Sonstige","AdV-2.2.2","30");
-$data[] = array("Keine","Keine","Keine","AdV-3.0","31");
-$data[] = array("Wiederverkauf","Wiederverkauf","Wiederverkauf","AdV-3.0","32");
-$data[] = array("Folgeprodukte oder -dienste Selbst","Folgeprodukte oder -dienste Selbst","Folgeprodukte-Dienste-Selbst","AdV-3.0","33");
-$data[] = array("Folgeprodukte oder -dienste ULZ","Folgeprodukte oder -dienste ULZ","Folgeprodukte-Dienste-ULZ","AdV-3.0","34");
-$data[] = array("Sonstige","Sonstige","Sonstige","AdV-3.0","35");
-$data[] = array("Keine","Keine","Keine","AdV-3.1","36");
-$data[] = array("Wiederverkauf","Wiederverkauf","Wiederverkauf","AdV-3.1","37");
-$data[] = array("Folgeprodukte oder -dienste Selbst","Folgeprodukte oder -dienste Selbst","Folgeprodukte-Dienste-Selbst","AdV-3.1","38");
-$data[] = array("Folgeprodukte oder -dienste ULZ","Folgeprodukte oder -dienste ULZ","Folgeprodukte-Dienste-ULZ","AdV-3.1","39");
-$data[] = array("Sonstige","Sonstige","Sonstige","AdV-3.1","40");
-$data[] = array("Keine","Keine","Keine","nicht_bekannt","1");
-$data[] = array("Folgeprodukt","Folgeprodukt","Folgeprodukt","nicht_bekannt","2");
-$data[] = array("Folgedienst","Folgedienst","Folgedienst","nicht_bekannt","3");
-$data[] = array("Wiederverkauf digital","Wiederverkauf digital","Wiederverkauf","nicht_bekannt","4");
-$data[] = array("Sonstige","Sonstige","Sonstige","nicht_bekannt","5");
 
+
+$data = array();
+//"0 NUTZUNG","1 ADV-VERSION","2 ANZEIGE_DEU","3 ANZEIGE_ENG","4 CODE","5 FAKTOR","6 POSITION");
+$data[] = array("Folgeprodukte-Dienste-Selbst","AdV-3.0","eine","eine","eine",",1","1");
+$data[] = array("Folgeprodukte-Dienste-Selbst","AdV-3.0","zwei","zwei","zwei",",15","2");
+$data[] = array("Folgeprodukte-Dienste-Selbst","AdV-3.0","mehr als zwei","mehr als zwei","ab_drei",",2","3");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.0","vier","vier","vier","1","4");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.0","mehr als vier - nur Endnutzer","mehr als vier - nur Endnutzer","ab_fuenf_nur_Endnutzer","1,5","5");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.0","mehr als vier - keine Endnutzer","mehr als vier - keine Endnutzer","ab_fuenf_keine_Endnutzer","3","6");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.0","einer","einer","einer",",4","7");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.0","keine Angaben","keine Angaben","ab_fuenf_ohne_Benennung","4","8");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.0","zwei","zwei","zwei",",6","9");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.0","drei","drei","drei",",8","10");
+$data[] = array("Keine","AdV-3.0","","","","","11");
+$data[] = array("Sonstige","AdV-3.0","","","","","12");
+$data[] = array("Wiederverkauf","AdV-3.0","","","","","13");
+$data[] = array("Folgeprodukte-Dienste-Selbst","AdV-3.1","eine bis drei","eine bis drei","eine_bis_drei",",1","14");
+$data[] = array("Folgeprodukte-Dienste-Selbst","AdV-3.1","mehr als drei","mehr als drei","ab_vier",",2","15");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.1","vier","vier","vier","1","16");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.1","mehr als vier - nur Endnutzer","mehr als vier - nur Endnutzer","ab_fuenf_nur_Endnutzer","1,5","17");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.1","Benennung , aber keine Endnutzer","Benennung , aber keine Endnutzer","ab_fuenf_keine_Endnutzer","3","18");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.1","einer","einer","einer",",4","19");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.1","keine Benennung und keine Endnutzer","keine Benennung und keine Endnutzer","ohne_Benennung","4","20");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.1","zwei","zwei","zwei",",6","21");
+$data[] = array("Folgeprodukte-Dienste-ULZ","AdV-3.1","drei","drei","drei",",8","22");
+$data[] = array("Keine","AdV-3.1","","","","","23");
+$data[] = array("Sonstige","AdV-3.1","","","","","24");
+$data[] = array("Wiederverkauf","AdV-3.1","","","","","25");
 
 
 foreach($data as $row)
 {
-    if(isset($useType[$row[3].":ext"]))
+    if(isset($useType[$row[1].":".$row[0]]))
     {
-        $usetype_id = $useType[$row[3].":ext"];
+        $usetype_id = $useType[$row[1].":".$row[0]];
         $object = Mage::getModel('bkg_tollpolicy/useoptions');
-        $object->setCode($row[2])
-            ->setName($row[0])
+        $object->setCode($row[4])
+            ->setName($row[2])
             ->setUseTypeId($usetype_id)
             ->save();
     }
