@@ -72,6 +72,7 @@
 .col3-layout {
     .category-products, .product-view {
         width: $global-content-3col-percent;
+        position: relative;
 
         @include bp(max-width, $bp-medium) {
         	width: 100%;
@@ -82,6 +83,10 @@
     }
 
     .product-view {
+        .product-collateral {
+            position: absolute;
+            margin-top: $global-boxmargin;
+        }
         .tab-content {
             .std {
                 width: 100%;
@@ -297,6 +302,7 @@
         }
         .product-shop {
             width: $global-product-info-3-width;
+            position: relative;
         }
 
         .product-options {
@@ -319,8 +325,9 @@
 
         .add-to-cart {
             position: absolute;
-            top: $global-3-product-height - $gobal-cart-block-height;
-            left: $global-product-image-3-width + 1%;
+            bottom: -3px;
+            width: 100%;
+            //left: $global-product-image-3-width + 1%;
 
             @include bp(max-width, $bp-medium) {
             	position: relative;
