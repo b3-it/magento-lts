@@ -177,6 +177,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
 		
 		$this->getCheckout()->setDisplaySuccess(true);
         // check if the response is valid
+        sleep(1);
         $status = $this->_callCheckReturnedMessageImpl();
         
         $order = $this->_getOrder();

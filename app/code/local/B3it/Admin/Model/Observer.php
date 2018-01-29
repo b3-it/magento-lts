@@ -20,22 +20,30 @@ class B3it_Admin_Model_Observer
 		if ($observer->getUser() && $observer->getUser()->getId() > 0) {
 			//Passwort wird sonst neu gehasht und überschrieben!!
 			$observer->getUser()->setOrigData(null, $observer->getUser()->getData());
+            /** @var B3it_Admin_Model_Resource_User $resource */
+            $resource = Mage::getResourceModel('b3itadmin/user');
+            $updateData = array();
 			if ( !$observer->getResult() ) {
 				$currentTime = Varien_Date::now();
 				$fails = $observer->getUser()->getFailedLoginsCount() + 1;
 				$observer->getUser()->setFailedLoginsCount(intval($fails));
 				$observer->getUser()->setFailedLastLoginDate($currentTime);
+
+				$updateData = array_merge($updateData, array('failed_logins_count', 'failed_last_login_date'));
 				$maxFailed = Mage::getStoreConfig('admin/security/max_failed_logins');
 				if ($maxFailed === false || !is_numeric($maxFailed)) {
 					$maxFailed = 3;
 				}
 				if ($observer->getuser()->getIsActive() && $fails >= $maxFailed) {
                     $observer->getuser()->setIsActive(0);
+                    $updateData[] = 'is_active';
 				    $file = Mage::getStoreConfig('dev/log/exception_file');
 					$msg = sprintf('permissions::warn: User with ID %s has been deactivated due to too many failed logins', $observer->getUser()->getId());
 					Mage::log($msg, Zend_Log::WARN, $file, true);
 					Mage::helper('b3itadmin')->sendMailToAdmin($msg, 'Security::User deactivated:');
 				}
+                $resource->saveAttributes($observer->getUser(), $updateData);
+
                 $msg = sprintf('permissions:: Failed login for user with ID %s from IP %s', $observer->getUser()->getId(), Mage::app()->getFrontController()->getRequest()->getClientIp());
                 Mage::log($msg, Zend_Log::ALERT, '', true);
                 $fails = intval($fails) < 3 ? 2 : intval($fails);
@@ -44,6 +52,8 @@ class B3it_Admin_Model_Observer
 			} else {
 				$user = $observer->getUser();
 				$user->setFailedLoginsCount(0);
+                $updateData[] = 'failed_logins_count';
+				$resource->saveAttributes($observer->getUser(), $updateData);
 
 				if ($user && $user->getShowLoginInfo()) {
                     $text = 'Last Login: %s';
@@ -60,7 +70,6 @@ class B3it_Admin_Model_Observer
                     );
                 }
 			}
-			$observer->getUser()->save();
 		}
 	}
 	

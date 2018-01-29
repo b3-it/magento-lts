@@ -131,7 +131,7 @@ foreach ($tables as $table)
 
 if (!$installer->getAttribute('catalog_product', 'toll_category')) {
 	$installer->addAttribute('catalog_product', 'toll_category', array(
-			'label' => 'With Request',
+			'label' => 'Toll Category',
 			'input' => 'select',
 			'type' => 'int',
 			'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
