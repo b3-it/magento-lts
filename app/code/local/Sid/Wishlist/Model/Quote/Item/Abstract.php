@@ -106,6 +106,11 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
     	if (!$this->_getSalesQuoteItem()) {
     		return false;
     	}
+
+        $itemProduct = $this->_getSalesQuoteItem()->getProduct();
+        if (!$product || !$itemProduct || $itemProduct->getId() != $product->getId()) {
+            return false;
+        }
     	
     	return $this->_getSalesQuoteItem()->representProduct($product);
     }

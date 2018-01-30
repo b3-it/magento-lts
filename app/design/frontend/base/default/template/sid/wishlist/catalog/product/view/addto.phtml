@@ -35,7 +35,7 @@
 		class="link-wishlist"
 		alt="<?php echo $this->__('Add to Collector List') ?>"
 		title="<?php echo $this->__('Add to Collector List') ?>"
-		onclick="productAddToCartForm.submitLight(this, this.href); return false;"><?php echo $this->__('Add to Collector List') ?></a>
+		onclick="productAddToCartForm.submit(this, this.href); return false;"><?php echo $this->__('Add to Collector List') ?></a>
 	</li>
 <?php else : ?>
 	<?php if ($this->helper('wishlist')->isAllow()) : ?>
