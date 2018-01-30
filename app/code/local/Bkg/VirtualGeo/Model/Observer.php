@@ -126,6 +126,10 @@ class Bkg_VirtualGeo_Model_Observer
 
     protected function _saveContentLayer($nodes,$productId)
     {
+        if($nodes == null)
+        {
+            return $this;
+        }
         //deserialisierten wert ins array zurück schreiben
         foreach($nodes as $key =>$node)
         {

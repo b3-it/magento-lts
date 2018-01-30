@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_orgunit_unit_index>
+        <reference name="content">
+            <block type="bkg_orgunit/adminhtml_unit" name="unit" />
+        </reference>
+    </adminhtml_orgunit_unit_index>
+
+</layout>

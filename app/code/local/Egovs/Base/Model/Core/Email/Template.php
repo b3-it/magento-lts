@@ -302,6 +302,8 @@
 				
 				//Styles in HEAD einfügen
 				if ($this->getTemplateStyles()) {
+                    $prevErrorState = libxml_use_internal_errors(true);
+				    libxml_clear_errors();
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					if ($dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NODEFDTD)) {
 						$domElements = $dom->getElementsByTagName('head');
@@ -347,7 +349,30 @@
 							}
 							$html = $dom->saveHTML();
 						}
-					}
+					} else {
+					    $errors = libxml_get_errors();
+					    /** @var LibXMLError $error */
+                        foreach ($errors as $error) {
+                            switch ($error->level) {
+                                case LIBXML_ERR_FATAL:
+                                    $level = "Fatal";
+                                    $logLevel = Zend_Log::CRIT;
+                                    break;
+                                case LIBXML_ERR_ERROR:
+                                    $level = "Error";
+                                    $logLevel = Zend_Log::ERR;
+                                    break;
+                                case LIBXML_ERR_WARNING:
+                                default:
+                                    $level = "Warning";
+                                    $logLevel = Zend_Log::WARN;
+                            }
+					        $msg = sprintf("%s: %s: %s, line: %s in %s (ID: %s)", $level, $error->code, $error->message, $error->line, $this->getTemplateCode(), $this->getId());
+					        Mage::log($msg, $logLevel);
+                        }
+                        libxml_clear_errors();
+                    }
+                    libxml_use_internal_errors($prevErrorState);
 				}
 				$processedHtml = $html;
 			} else {
