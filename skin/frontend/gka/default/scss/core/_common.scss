@@ -485,7 +485,8 @@ div.block-reorder {
  */
 
 .main-container {
-    max-width: $global-fullpage-width;
+    //max-width: $global-fullpage-width;
+    max-width: 95%;
     position: relative;
     top: $global-cms-top-position;
 }
@@ -605,6 +606,7 @@ div.block-reorder {
             position: relative;
             width: $global-leftcol-percent;
             top: 0;
+            max-width: 240px;
 
             @include bp(max-width, 490px) {
             	display: none;
