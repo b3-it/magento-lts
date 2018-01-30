@@ -56,8 +56,9 @@ class Sid_Wishlist_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @return  string|bool
 	 */
 	public function getAddUrl($item, $additional = array()) {
+        $_secure = $this->_getApp()->getFrontController()->getRequest()->isSecure();
 		$addUrlKey = Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED;
-		$addUrlValue = Mage::getUrl('*/*/*', array('_use_rewrite' => true, '_current' => true));
+		$addUrlValue = Mage::getUrl('*/*/*', array('_use_rewrite' => true, '_current' => true, '_secure' => $_secure));
 		$additional[$addUrlKey] = Mage::helper('core')->urlEncode($addUrlValue);
 		
 		return $this->getAddUrlWithParams($item, $additional);
