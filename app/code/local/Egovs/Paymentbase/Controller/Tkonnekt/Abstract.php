@@ -314,7 +314,7 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
 
 
         //Retrieves the project password.
-        $projectPassword = Mage::helper('gka_tkonnnektpay')->getProjectPassword();
+        $projectPassword = Mage::helper('gka_tkonnektpay')->getProjectPassword();
 
         //Get the notification
         $notify = new TKonnekt_SDK_Notify('isAlive');

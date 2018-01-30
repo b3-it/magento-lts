@@ -30,6 +30,13 @@ class Gka_Tkonnektpay_Helper_Data extends Egovs_Paymentbase_Helper_Data
         $msg = null;
         $iReturnCode = null;
 
+        // Start store emulation process
+        // Since the Transactional Email preview process has no mechanism for selecting a store view to use for
+        // previewing, use the default store view
+        $defaultStoreId = Mage::app()->getDefaultStoreView()->getId();
+        $appEmulation = Mage::getSingleton('core/app_emulation');
+        $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($defaultStoreId);
+
         // Sends request to TKonnekt.
         $request = new TKonnekt_SDK_Request('isAlive');
         $request->addParam('merchantId', $this->getMerchantId());
@@ -40,6 +47,9 @@ class Gka_Tkonnektpay_Helper_Data extends Egovs_Paymentbase_Helper_Data
         $request->addParam('notifyUrl', $newUrl);
 
         $request->setSecret($this->getProjectPassword());
+
+        // Stop store emulation process
+        $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
 
         $request->submit();
 
