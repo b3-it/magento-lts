@@ -32,7 +32,7 @@ if (!$installer->tableExists($installer->getTable('bkg_orgunit/unit')))
 }
 
 $installer->addEntityType('bkg_orgunit', array(
-    'entity_model'    => 'bkg_orgunit/address',
+    'entity_model'    => 'bkg_orgunit/unit_address',
     'table'           =>'bkg_orgunit/unit_address_entity',
 ));
 
