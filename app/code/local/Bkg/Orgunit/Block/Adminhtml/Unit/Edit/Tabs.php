@@ -26,6 +26,12 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tabs extends Mage_Adminhtml_Block_Wi
           'title'     => Mage::helper('bkg_orgunit')->__('Unit Information'),
           'content'   => $this->getLayout()->createBlock('bkg_orgunit/adminhtml_unit_edit_tab_form')->toHtml(),
       ));
+      
+      $this->addTab('form_section2', array(
+      		'label'     => Mage::helper('bkg_orgunit')->__('Adresses'),
+      		'title'     => Mage::helper('bkg_orgunit')->__('Adresses'),
+      		'content'   => $this->getLayout()->createBlock('bkg_orgunit/adminhtml_unit_edit_tab_addresses')->toHtml(),
+      ));
 
       return parent::_beforeToHtml();
   }
