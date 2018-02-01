@@ -13,15 +13,24 @@
         <Bkg_MapSeries>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+      	        <Bkg_VirtualGeo /> <!-- need epsg stuff from there -->
+            </depends>
         </Bkg_MapSeries>
         <Bkg_RegionAllocation>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_RegionAllocation>
+        <Bkg_Tollpolicy>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Tollpolicy>
         <Bkg_VirtualGeo>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
+                <Bkg_Viewer /> <!-- need viewer components -->
+                <Bkg_Tollpolicy /> <!-- needed because of the toll block -->
                 <Bkg_RegionAllocation />
             </depends>
         </Bkg_VirtualGeo>
