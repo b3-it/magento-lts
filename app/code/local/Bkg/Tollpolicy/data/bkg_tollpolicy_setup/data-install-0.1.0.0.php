@@ -9,7 +9,9 @@
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
 
-
+/**
+ * @var Mage_Catalog_Model_Resource_Setup $this
+ */
 $installer = $this;
 
 $installer->startSetup();
@@ -18,9 +20,7 @@ $installer->startSetup();
 $tollcategory = Mage::getModel('bkg_tollpolicy/tollcategory');
 $tollcategory->setName('Gebühren')->save();
 
-
-
-$storeId_EN = 2;
+//$storeId_EN = 2;
 
 $data = array();
 //"0 ADV_VERSION_DEU","1 ADV_VERSION_ENG","2 GUELTIG_AB","3 CODE","4 POSITION"
@@ -66,7 +66,7 @@ foreach($toll as $k=> $v)
 	$object = Mage::getModel('bkg_tollpolicy/usetype');
 	$object->setCode('int')
 	->setName('(innerhalb des Unternehmens)')
-	->setIsInternal('1')
+	->setInternal('1')
 	->setActive('1')
 	->setTollId($v)
 	->save();
@@ -128,9 +128,10 @@ foreach($data as $row)
 		$object = Mage::getModel('bkg_tollpolicy/usetype');
 		$object->setCode($row[2])
 		->setName($row[0])
-		->setIsExternal('1')
+		->setExternal('1')
 		->setActive('1')
 		->setTollId($toll_id)
+		->setPos($row[4])
 		->save();
 	
 		$useType[$row[3].":".$row[2]] = $object->getId();
@@ -207,6 +208,7 @@ foreach($data as $row)
         $object->setCode($row[3])
             ->setName($row[0])
             ->setFactor($row[2])
+            ->setPos($row[5])
             ->setUseTypeId($usetype_id)
             ->save();
     }
@@ -253,6 +255,7 @@ foreach($data as $row)
         $object = Mage::getModel('bkg_tollpolicy/useoptions');
         $object->setCode($row[4])
             ->setName($row[2])
+            ->setPos($row[6])
             ->setUseTypeId($usetype_id)
             ->save();
     }

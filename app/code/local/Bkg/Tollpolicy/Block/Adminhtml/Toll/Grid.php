@@ -46,6 +46,8 @@ class Bkg_Tollpolicy_Block_Adminhtml_Toll_Grid extends Mage_Adminhtml_Block_Widg
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'active',
+          'type'      => 'options',
+          'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
       ));
       $this->addColumn('date_from', array(
           'header'    => Mage::helper('bkg_tollpolicy')->__('From'),
