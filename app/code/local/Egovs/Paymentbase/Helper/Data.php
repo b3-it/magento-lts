@@ -24,6 +24,11 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @var string
 	 */
 	const ATTRIBUTE_SEPA_MANDATE_ID = 'sepa_mandate_id';
+
+    /**
+     * Datum des Abrufs des Zahlungseingangs von der ePayBL
+     */
+    const ATTRIBUTE_EPAYBL_CAPTURE_DATE = 'epaybl_capture_date';
 	
 	
 	const ATTRIBUTE_SEPA_ADDITIONAL = 'sepa_additional_data';
