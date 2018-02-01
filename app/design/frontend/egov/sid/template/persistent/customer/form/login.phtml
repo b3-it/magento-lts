@@ -33,7 +33,7 @@
                         <p class="form-instructions">
                             <?php echo $this->__('If you have an account with us, please log in.') ?>
                         </p>
-			            
+
                         <ul class="form-list">
                             <li>
                                 <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
@@ -56,11 +56,6 @@
                         <span class="required">
                             <?php echo $this->__('* Required Fields') ?>
                         </span>
-                        <span class="securityLabel">
-			              <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
-				            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
-			              <?php endif; ?>
-			            </span>
                     </div>
                     <div class="buttons-set">
                         <a class="button" href="<?php echo $this->getForgotPasswordUrl() ?>">
