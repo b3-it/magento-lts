@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bkg_License>
+            <version>0.1.0.0</version>
+        </Bkg_License>
+    </modules>
+    <global>
+        <helpers>
+            <bkg_license>
+                <class>Bkg_License_Helper</class>
+            </bkg_license>
+        </helpers>
+        <resources>
+            <bkg_license_setup>
+                <setup>
+                    <module>Bkg_License</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </bkg_license_setup>
+        </resources>
+        <blocks>
+          <bkg_license>
+              <class>Bkg_License_Block</class>
+          </bkg_license>
+        </blocks>
+        <models>
+            <bkg_license>
+                <class>Bkg_License_Model</class>
+                <resourceModel>bkg_license_resource</resourceModel>
+            </bkg_license>
+            <bkg_license_resource>
+            <class>Bkg_License_Model_Resource</class>
+                <entities>
+                  <master>
+                    <table>bkg_license_master</table>
+                  </master>
+                  <master_products>
+                    <table>bkg_license_master_products</table>
+                  </master_products>
+                  <master_customergroups>
+                    <table>bkg_license_master_customergroups</table>
+                  </master_customergroups>
+                  <master_toll>
+                    <table>bkg_license_master_toll</table>
+                  </master_toll>
+                  <master_agreement>
+                    <table>bkg_license_master_agreement</table>
+                  </master_agreement>
+                  <master_text>
+                    <table>bkg_license_master_text</table>
+                  </master_text>
+
+                    <copy>
+                        <table>bkg_license_copy</table>
+                    </copy>
+                    <copy_customergroups>
+                        <table>bkg_license_copy_customergroups</table>
+                    </copy_customergroups>
+                    <copy_toll>
+                        <table>bkg_license_copy_toll</table>
+                    </copy_toll>
+                    <copy_agreement>
+                        <table>bkg_license_copy_agreement</table>
+                    </copy_agreement>
+                    <copy_text>
+                        <table>bkg_license_copy_text</table>
+                    </copy_text>
+
+
+                </entities>
+            </bkg_license_resource>
+        </models>
+    </global>
+    <frontend>
+      <routers>
+            <bkg_license>
+                <use>standard</use>
+                <args>
+                    <module>Bkg_License</module>
+                    <frontName>bkg_license</frontName>
+                </args>
+            </bkg_license>
+        </routers>
+        <layout>
+            <updates>
+                <bkg_license>
+                  <file>bkg/license.xml</file>
+                </bkg_license>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+              <Bkg_License>
+                  <files>
+                      <default>bkg/license.csv</default>
+                  </files>
+              </Bkg_License>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <Bkg_License_Adminhtml after="Mage_Adminhtml">Bkg_License_Adminhtml</Bkg_License_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
+    <adminhtml>
+      <menu>
+          <bkglicense module="bkg_license">
+              <title>Bkg License</title>
+              <sort_order>50</sort_order>
+              <children>
+                  <bkglicense_master module="bkg_license">
+                      <title>Master</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/license_master/index</action>
+                  </bkglicense_master>
+                  <bkglicense_copy module="bkg_license">
+                      <title>Copy</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/license_copy/index</action>
+                  </bkglicense_copy>
+                  <!--
+                  <bkglicense_products module="bkg_license">
+                      <title>Products</title>
+                      <sort_order>20</sort_order>
+                      <action>adminhtml/license_products/index</action>
+                  </bkglicense_products>
+                  <bkglicense_customergroups module="bkg_license">
+                      <title>Customergroups</title>
+                      <sort_order>30</sort_order>
+                      <action>adminhtml/license_customergroups/index</action>
+                  </bkglicense_customergroups>
+                  <bkglicense_toll module="bkg_license">
+                      <title>Toll</title>
+                      <sort_order>40</sort_order>
+                      <action>adminhtml/license_toll/index</action>
+                  </bkglicense_toll>
+                  <bkglicense_agreement module="bkg_license">
+                      <title>Agreement</title>
+                      <sort_order>50</sort_order>
+                      <action>adminhtml/license_agreement/index</action>
+                  </bkglicense_agreement>
+                  <bkglicense_text module="bkg_license">
+                      <title>Text</title>
+                      <sort_order>60</sort_order>
+                      <action>adminhtml/license_text/index</action>
+                  </bkglicense_text>
+-->
+              </children>
+          </bkglicense>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <bkglicense module="bkg_license">
+                          <title>Bkg License</title>
+                          <sort_order>10</sort_order>
+                          <children>
+                                <bkglicense_entity module="bkg_license">
+                                  <title>Entity</title>
+                                  <sort_order>10</sort_order>
+                              </bkglicense_entity>
+                                <bkglicense_products module="bkg_license">
+                                  <title>Products</title>
+                                  <sort_order>20</sort_order>
+                              </bkglicense_products>
+                                <bkglicense_customergroups module="bkg_license">
+                                  <title>Customergroups</title>
+                                  <sort_order>30</sort_order>
+                              </bkglicense_customergroups>
+                                <bkglicense_toll module="bkg_license">
+                                  <title>Toll</title>
+                                  <sort_order>40</sort_order>
+                              </bkglicense_toll>
+                                <bkglicense_agreement module="bkg_license">
+                                  <title>Agreement</title>
+                                  <sort_order>50</sort_order>
+                              </bkglicense_agreement>
+                                <bkglicense_text module="bkg_license">
+                                  <title>Text</title>
+                                  <sort_order>60</sort_order>
+                              </bkglicense_text>
+
+                          </children>
+                      </bkglicense>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
+        <translate>
+            <modules>
+                <Bkg_License>
+                    <files>
+                        <default>bkg/license.csv</default>
+                    </files>
+                </Bkg_License>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <bkglicense>
+              <file>bkg/license.xml</file>
+            </bkglicense>
+          </updates>
+        </layout>
+    </adminhtml>
+</config>
