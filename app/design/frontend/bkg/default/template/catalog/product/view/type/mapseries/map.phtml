@@ -6,25 +6,37 @@
 <div id="map">
 
 </div>
-   <?php 
-   //var_dump($this->getComposit());
-   //$this->getComposit()->getOpenLayer();
-   //die();
-   ?>
    <script>
-   $j(function() {
-     <?php echo $this->getComposit()->getOpenLayer(); ?>
-     var tools = [];
-     <?php
-     $tools = $this->getSelectionTools();
-     foreach ($tools as $tool) {
-         /**
-          * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
-          */
-         echo ($tool->getOpenLayers());
-     }
-     ?>
+   <?php 
+        echo Mage::helper("virtualgeo/data")->getProj4();
+   ?>
+	$j(function() {
+		epsg = "<?php echo $this->getESPGfromTool(); ?>";
+        <?php echo $this->getComposit()->getOpenLayer("epsg"); ?>
+        var tools = [];
+    <?php
+        /**
+         * @var Bkg_Viewer_Model_Resource_Composit_Selectiontools_Collection $tools
+         */
+        $tools = $this->getSelectionTools();
+        foreach ($tools as $tool) {
+            /**
+            * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
+            */
+            echo ($tool->getOpenLayers("epsg"));
+        }
+    ?>
 
+    function makeview(epsg) {
+    	pro = ol.proj.get("EPSG:"+ epsg);
+    	return new ol.View({
+    	     center: ol.proj.fromLonLat([13.73836, 51.049259], pro),
+    	     projection: pro,
+    	     maxZoom: 10,
+    	     zoom: 6,
+    	     minZoom: 2
+       });
+    }
 
      // set style
      tools[0].setVisible(true);
@@ -50,12 +62,7 @@
         layers: layers_0,
         controls: ol.control.defaults(),
         target: document.getElementById('map'),
-        view: new ol.View({
-          center: ol.proj.fromLonLat([13.73836, 51.049259]),
-          //projection: ol.proj.get("EPSG:31467"),
-          //maxZoom: 19,
-          zoom: 6
-        })
+        view: makeview(epsg)
       });
 
       var dialogFunction = function(list) {
@@ -149,7 +156,7 @@
         //selectedFeatures.clear();
       });
 
-      map.addControl(new ol.control.OverviewMap()); // TODO lol? 
+      map.addControl(new ol.control.OverviewMap({view: makeview(epsg)})); // TODO lol? 
       map.addControl(new ol.control.ZoomSlider());
       map.addControl(new ol.control.ScaleLine());
 
