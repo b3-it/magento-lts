@@ -189,6 +189,20 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     	if ($this->getKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo <= 0.0) {
             $_saldo = $this->getKassenzeichenInfo()->saldo;
 
+            /**
+             * #3026 ZV_FM-720
+             * Stornierungen nicht verarbeiten
+             *
+             * betragHauptforderungen - betragStornos == 0
+             */
+            if ($_saldo == 0.0
+                && round($this->getKassenzeichenInfo()->betragHauptforderungen - $this->getKassenzeichenInfo()->betragStornos, 4) == 0.0
+                && round($this->getKassenzeichenInfo()->betragZahlungseingaenge, 4) == 0.0
+            ) {
+                //TODO Stornierung implementieren
+                return;
+            }
+
             //Reset möglicher Teilzahlungen
     		$this->_getOrder()->setBaseTotalPaid(0);
     		$this->_getOrder()->setTotalPaid(0);
