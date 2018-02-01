@@ -43,7 +43,6 @@ Supported layout update handles (special):
          
             <action method="addJs"><script>bkg/ol.buttonctrl.js</script></action>
 
-            <action method="addItem"><type>skin_css</type><name>css/module/mapseries.css</name></action>
          <!-- 
             <action method="addJs"><script>bkg/mapseries/view.js</script></action>
          -->
