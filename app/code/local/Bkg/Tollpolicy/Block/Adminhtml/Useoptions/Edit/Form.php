@@ -42,11 +42,15 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Edit_Form extends Mage_Adminhtml
       		//'required'  => true,
       		'name'      => 'factor',
       ));
-      $fieldset->addField('userdefined', 'text', array(
+      $options = array();
+      $options[''] = $this->__('Default');
+      $options['text'] = $this->__('Text');
+      $fieldset->addField('userdefined', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Userdefined'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'userdefined',
+          'options' => $options
       ));
       $fieldset->addField('is_default', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('is Default'),
