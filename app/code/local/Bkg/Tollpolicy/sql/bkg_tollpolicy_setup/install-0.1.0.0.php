@@ -8,7 +8,7 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-
+/** @var $this Mage_Catalog_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();

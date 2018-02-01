@@ -163,6 +163,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
             $lines[] = "layers_$level.push(new ol.layer.Group({";
             // need title
             $lines[] = "title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
+            $lines[] = "visible: " . ($this->getIsChecked() ? "true" : "false") . ",";
             $lines[] = "layers: layers_". ($level + 1);
             $lines[] = "}));";
             //$result =
@@ -188,6 +189,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         
         $text[] = "var layer".self::$Count." = new ol.layer.Tile({";
         $text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
+        $text[] = "  visible: " . ($this->getIsChecked() ? "true" : "false") . ",";
         $text[] = "  zIndex: " . $this->getVisualPos();
         //source: null
         $text[] = "})";
@@ -223,6 +225,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         self::$Count++;
         $text[] = "var layer".self::$Count." = new ol.layer.Tile({";
         $text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
+        $text[] = "  visible: " . ($this->getIsChecked() ? "true" : "false") . ",";
         $text[] = "  zIndex: " . $this->getVisualPos() . ",";
         $text[] = "    source: new ol.source.TileWMS({";
         $text[] = "        url: '". $this->getService()->getUrlMap()."',";
@@ -322,6 +325,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	$text[] = "var vector = new ol.layer.Vector({";
     	$text[] = "  source: vectorSource".self::$Count.",";
     	$text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
+    	$text[] = "  visible: " . ($this->getIsChecked() ? "true" : "false") . ",";
     	$text[] = "  zIndex: " . $this->getVisualPos();
     	$text[] = "});";
     	$text[] = "layers_$level.push(vector);";
