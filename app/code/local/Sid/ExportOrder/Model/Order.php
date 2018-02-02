@@ -109,11 +109,14 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     {
     	$storeId = $order->getStoreId();
     	
+    	$this->setLog(sprintf("read Order: %s", $this->getStatus()));
+    	
     	if($this->getStatus() != Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING){
     		return $this;
     	}
     	
     	
+    			
     	$this->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PROCESSING);
     	$this->getResource()->saveField($this, 'status');
     	try {
