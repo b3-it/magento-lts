@@ -165,6 +165,15 @@
 					</paymentbase>
 				</observers>
 			</sales_order_payment_place_end>
+			<sales_order_invoice_pay>
+				<observers>
+					<paymentbase_invoice_pay>
+						<type>singleton</type>
+						<class>paymentbase/observer</class>
+						<method>onSalesOrderInvoicePay</method>
+					</paymentbase_invoice_pay>
+				</observers>
+			</sales_order_invoice_pay>
 			<customer_save_after>
 				<observers>
 					<paymentbase>

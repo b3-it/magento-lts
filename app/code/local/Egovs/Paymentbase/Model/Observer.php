@@ -594,4 +594,23 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 		}
 		restore_error_handler();
 	}
+
+	public function onSalesOrderInvoicePay(Varien_Event_Observer $observer) {
+        /** @var \Mage_Sales_Model_Order_Invoice $invoice */
+	    $invoice = $observer->getEvent()->getInvoice();
+        if (is_null($invoice)) {
+            return;
+        }
+
+        if (!$invoice->getOrder()) {
+            return null;
+        }
+        $payment = $invoice->getOrder()->getPayment();
+
+        if (!$payment) {
+            return null;
+        }
+        $payment->setEpayblCaptureDate(Varien_Date::now());
+        $payment->getResource()->saveAttribute($payment, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CAPTURE_DATE);
+    }
 }
