@@ -40,15 +40,14 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           //'required'  => true,
           'name'      => 'note',
       ));
+/**      
       $fieldset->addField('parent_id', 'text', array(
           'label'     => Mage::helper('bkg_orgunit')->__('Übergeordnete Organisation'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'parent_id',
       ));
-
-
-
+//*/
       if ( Mage::getSingleton('adminhtml/session')->getunitData() )
       {
           $form->setValues(Mage::getSingleton('adminhtml/session')->getunitData());

@@ -100,5 +100,9 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
         return $entityTypeId;
     }
 
+    
+    public function format($type) {
+        return "OUTPUT ADDRESS THERE";
+    }
  
 }
