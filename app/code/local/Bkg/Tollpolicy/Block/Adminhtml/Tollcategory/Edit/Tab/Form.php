@@ -14,7 +14,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Tollcategory_Edit_Tab_Form extends Mage_Adm
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('toll_category_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__(' Tollcategory information')));
+      $fieldset = $form->addFieldset('toll_category_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__('Toll Category')));
 
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_tollpolicy')->__('Name'),

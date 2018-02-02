@@ -22,7 +22,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Toll_Edit_Form extends Mage_Adminhtml_Block
 
       $form->setUseContainer(true);
       $this->setForm($form);
-      $fieldset = $form->addFieldset('toll_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__(' Tollentity information')));
+      $fieldset = $form->addFieldset('toll_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__('Toll')));
       
       $fieldset->addField('name', 'text', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Name'),

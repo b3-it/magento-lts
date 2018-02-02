@@ -22,7 +22,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Usetype_Edit_Form extends Mage_Adminhtml_Bl
 
       $form->setUseContainer(true);
       $this->setForm($form);
-      $fieldset = $form->addFieldset('use_type_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__(' Type of use')));
+      $fieldset = $form->addFieldset('use_type_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__('Type of Use')));
       
       $fieldset->addField('name', 'text', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Name'),

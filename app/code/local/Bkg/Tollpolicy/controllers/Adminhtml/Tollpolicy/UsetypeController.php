@@ -14,8 +14,8 @@ class Bkg_Tollpolicy_Adminhtml_Tollpolicy_UsetypeController extends Mage_Adminht
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('use_type/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Use_type_entity Manager'), Mage::helper('adminhtml')->__('Use_type_entity Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('Use_type_entity Manager'));
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Type of Use Manager'), Mage::helper('adminhtml')->__('Type of Use Manager'));
+		$this->_title(Mage::helper('adminhtml')->__('Type of Use Manager'));
 		return $this;
 	}
 

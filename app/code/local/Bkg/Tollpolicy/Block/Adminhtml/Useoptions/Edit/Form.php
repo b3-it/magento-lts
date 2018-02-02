@@ -22,7 +22,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Edit_Form extends Mage_Adminhtml
 
       $form->setUseContainer(true);
       $this->setForm($form);
-      $fieldset = $form->addFieldset('use_options_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__(' Useoptionsentity information')));
+      $fieldset = $form->addFieldset('use_options_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__('Type of Use Options')));
 
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_tollpolicy')->__('Name'),
