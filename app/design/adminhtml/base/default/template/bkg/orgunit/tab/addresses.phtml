@@ -35,7 +35,7 @@
     <ul id="address_list">
     <?php $_iterator = 0; ?>
     <?php if(count($addressCollection)): ?>
-        <?php foreach ($addressCollection as $_address): ?>
+        <?php foreach ($addressCollection as $_address): $_address->load($_address->getId());?>
         <li id="address_item_<?php echo $_address->getId() ?>">
             <?php if (!$this->isReadonly()): ?>
             <a href="#" class="btn-remove-address">
