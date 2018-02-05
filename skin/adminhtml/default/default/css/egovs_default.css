@@ -143,6 +143,17 @@ ins {
     font-size: 15px;
     width: 18px;
 }
+.option-tree-name, .option-tree-position {
+    font-size: 12px;
+}
+.option-tree-name {
+    width: auto;
+    text-align: right;
+}
+.option-tree-position {
+    width: 50px;
+    text-align: center;
+}
 .option-tree-true:after {
     /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box-with-check/ */
     content:'\2611';
