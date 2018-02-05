@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Gka_Base>
-            <version>0.2.0.0</version>
+            <version>0.2.1.0</version>
         </Gka_Base>
     </modules>
     <global>
@@ -11,7 +11,7 @@
             <gkabase_setup>
                 <setup>
                     <module>Gka_Base</module>
-                    <class>Mage_Eav_Model_Entity_Setup</class>
+                    <class>Gka_Base_Model_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
