@@ -88,4 +88,13 @@ class Egovs_Base_Model_Observer
 
         $transport->setHtml($html);
     }
+
+    public function mediaCheckIsUsingStaticUrlsAllowed($observer) {
+        $controller = Mage::app()->getFrontController()->getAction();
+        if (!$controller || !$controller instanceof Egovs_Base_Adminhtml_Cms_Wysiwyg_MediaController) {
+            return;
+        }
+        $result = $observer->getResult();
+        $result->isAllowed = true;
+    }
 }
