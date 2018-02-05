@@ -78,6 +78,8 @@ class Bkg_VirtualGeo_Model_Components_Component extends Mage_Core_Model_Abstract
     
     public function getOptions4Product($productId,$storeId=0)
     {
+        $productId = intval($productId);
+        $storeId = intval($storeId);
     	$collection = $this->getCollection();
     	$collection->setStoreId($storeId);
     	$collection->getSelect()
