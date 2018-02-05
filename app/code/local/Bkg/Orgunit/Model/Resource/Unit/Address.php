@@ -13,7 +13,8 @@ class Bkg_Orgunit_Model_Resource_Unit_Address extends Mage_Eav_Model_Entity_Abst
     public function _construct()
     {
         $resource = Mage::getSingleton('core/resource');
-        $this->setType('bkg_orgunit')->setConnection(
+        $this->setType('bkg_orgunit')
+            ->setConnection(
             $resource->getConnection('customer_read'),
             $resource->getConnection('customer_write')
         );

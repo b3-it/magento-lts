@@ -37,6 +37,7 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
 
     protected function _construct()
     {
+        parent::_construct();
         $this->_init('bkg_orgunit/unit_address');
     }
 
@@ -102,6 +103,23 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
 
     
     public function format($type) {
+
+
+        switch ($type)
+        {
+            case 'html':
+                {
+                    //$data = Mage::getModel('bkg_orgunit/resource_unit_address')->load($this->getId());
+                    $rows = array();
+                    $rows[] = $this->getName();
+                    $rows[] = $this->getFirstname()." ". $this->getLastname();
+                    $rows[] = $this->getCompany();
+                    $rows[] = $this->getStreet();
+                    $rows[] = $this->getEmail();
+
+                    return implode('<br/>',$rows);
+                }
+        }
         return "OUTPUT ADDRESS THERE";
     }
  
