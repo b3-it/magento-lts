@@ -67,9 +67,9 @@
     <?php endif; ?>
 
          <div class="buttons-set">
-            <a href="<?php echo $this->getBackUrl() ?>" class="button"><?php echo $this->__('Back') ?></a>
-            <a class="button" href="<?php echo $this->getUrl() ?>"><span><?php echo $this->__('Continue Shopping') ?></span></a>
-            <button  class="button" type="submit"><span><?php echo $this->__('Continue') ?></span></button>
+            <a href="<?php echo $this->getBackUrl() ?>" class="button" id="invoiceAddressBack"><?php echo $this->__('Back') ?></a>
+            <a class="button" href="<?php echo $this->getUrl() ?>" id="invoiceAddressContinueShopping"><span><?php echo $this->__('Continue Shopping') ?></span></a>
+            <button  class="button" type="submit" id="invoiceAddressContinue"><span><?php echo $this->__('Continue') ?></span></button>
         </div>
     </fieldset>
 </form>
