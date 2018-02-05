@@ -25,7 +25,18 @@
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Tollpolicy>
-        <Bkg_VirtualGeo>
+      <Bkg_Orgunit>
+          <active>false</active>
+          <codePool>local</codePool>
+      </Bkg_Orgunit>
+      <Bkg_License>
+          <active>false</active>
+          <codePool>local</codePool>
+          <depends>
+              <Bkg_Tollpolicy/>
+          </depends>
+      </Bkg_License>
+      <Bkg_VirtualGeo>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
