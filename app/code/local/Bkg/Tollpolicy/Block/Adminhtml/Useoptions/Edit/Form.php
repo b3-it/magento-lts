@@ -22,7 +22,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Edit_Form extends Mage_Adminhtml
 
       $form->setUseContainer(true);
       $this->setForm($form);
-      $fieldset = $form->addFieldset('use_options_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__(' Useoptionsentity information')));
+      $fieldset = $form->addFieldset('use_options_entity_form', array('legend'=>Mage::helper('bkg_tollpolicy')->__('Type of Use Options')));
 
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_tollpolicy')->__('Name'),
@@ -42,11 +42,15 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Edit_Form extends Mage_Adminhtml
       		//'required'  => true,
       		'name'      => 'factor',
       ));
-      $fieldset->addField('userdefined', 'text', array(
+      $options = array();
+      $options[''] = $this->__('Default');
+      $options['text'] = $this->__('Text');
+      $fieldset->addField('userdefined', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Userdefined'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
       		'name'      => 'userdefined',
+          'options' => $options
       ));
       $fieldset->addField('is_default', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('is Default'),

@@ -108,6 +108,15 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     public function processOrder(Mage_Sales_Model_Order $order)
     {
     	$storeId = $order->getStoreId();
+    	
+    	if($this->getStatus() != Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING){
+    		return $this;
+    	}
+    	
+    	
+    			
+    	$this->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PROCESSING);
+    	$this->getResource()->saveField($this, 'status');
     	try {
 	    	$format = $this->getVendor()->getExportFormatModel();
 	    	$transfer = $this->getVendor()->getTransferModel();
@@ -136,6 +145,8 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
 	    		->save();
 	    	
+	    	$this->setLog(sprintf("--------- finish Order: %s --------------", $order->getId()));
+	    		
     	}
     	catch (Exception $ex)
     	{
@@ -143,6 +154,8 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     		->setUpdateTime(now())
     		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR)
     		->save();
+    		
+    		$this->setLog(sprintf("Error Order: %s, %s", $order->getId(),$ex->getMessage()));
     		
     		$recipients = array();
     		$recipients[] = array('name' => Mage::getStoreConfig("framecontract/email/sender_name", $storeId),

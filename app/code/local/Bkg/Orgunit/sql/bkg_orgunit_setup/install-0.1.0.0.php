@@ -9,6 +9,7 @@
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
 
+/** @var $this Mage_Catalog_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();
@@ -27,7 +28,6 @@ if (!$installer->tableExists($installer->getTable('bkg_orgunit/unit')))
 	  PRIMARY KEY (`id`),
      FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('bkg_orgunit/unit')}`(`id`) ON DELETE SET NULL
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 		");
 }
 
@@ -189,7 +189,7 @@ $attributes = array(
         ),
     ),
     'street'           => array(
-        'backend_type'      => 'text',
+        'backend_type'      => 'varchar', // FIXME text currently break the code
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -294,6 +294,11 @@ $attributes = array(
             'min_text_length'   => 1
         ),
     ),
+    'unit_id'           => array(
+        'backend_type'      => 'static', // need to be static otherwise insert fail
+        'is_user_defined'   => 0,
+        'is_system'         => 1,
+    )
 );
 $eavConfig = Mage::getSingleton('eav/config');
 foreach ($attributes as $attributeCode => $data) {

@@ -88,10 +88,49 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 	  			$data['filename'] = $_FILES['filename']['name'];
 			}
 
-
 			$model = Mage::getModel('bkg_orgunit/unit');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
+			
+			try {
+			    
+			    /**
+			     * @var Bkg_Orgunit_Model_Resource_Unit_Address_Collection $col
+			     */
+			    $col = Mage::getModel("bkg_orgunit/unit_address")->getCollection();
+			    
+			    $keys = array_keys($data['address']);
+
+			    foreach($col->getItemsByColumnValue('unit_id', intval($model->getId())) as $val) {
+			        /**
+			         * @var Bkg_Orgunit_Model_Resource_Unit_Address $val
+			         */
+			        if (!in_array($val->getId(), $keys)) {
+			            $val->delete($val->getId());
+			        }
+			    }
+			    
+    			foreach($data['address'] as $key => $value) {
+    			    // ignore template
+    			    if ("_template_" === $key) {
+    			        continue;
+    			    }
+    			    $address = Mage::getModel("bkg_orgunit/unit_address");
+    			    // address seems to exist, try to load old data
+    			    if (intval($key)) {
+    			        $address->load($key);
+    			    }
+    			    $address->setData($value);
+    			    $address->setUnitId(intval($model->getId()));
+    			    if (intval($key)) {
+    			        $address->setId($key);
+    			    }
+    			    $address->save();
+    			}
+			} catch (Exception $e) {
+			    var_dump($e->getMessage());
+			    Mage::logException($e);
+			}
 
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
@@ -165,12 +204,12 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
     public function massStatusAction()
     {
         $unitIds = $this->getRequest()->getParam('unit_ids');
-        if(!is_array($bkg_orgunitIds)) {
+        if(!is_array($unitIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
         } else {
             try {
                 foreach ($unitIds as $unitId) {
-                    $unit = Mage::getSingleton('bkg_orgunit/unit')
+                    Mage::getSingleton('bkg_orgunit/unit')
                         ->load($unitId)
                         ->setStatus($this->getRequest()->getParam('status'))
                         ->setIsMassupdate(true)

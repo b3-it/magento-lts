@@ -14,7 +14,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Tollcategory extends Mage_Adminhtml_Block_W
   {
     $this->_controller = 'adminhtml_tollcategory';
     $this->_blockGroup = 'bkg_tollpolicy';
-    $this->_headerText = Mage::helper('bkg_tollpolicy')->__('Tollcategory Manager');
+    $this->_headerText = Mage::helper('bkg_tollpolicy')->__('Toll Category Manager');
     $this->_addButtonLabel = Mage::helper('bkg_tollpolicy')->__('Add Item');
     parent::__construct();
   }

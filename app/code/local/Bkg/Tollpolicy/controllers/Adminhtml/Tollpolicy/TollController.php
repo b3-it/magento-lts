@@ -14,8 +14,8 @@ class Bkg_Tollpolicy_Adminhtml_Tollpolicy_TollController extends Mage_Adminhtml_
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('toll_entity/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Toll_entity Manager'), Mage::helper('adminhtml')->__('Toll_entity Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('Toll_entity Manager'));
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Toll_entity Manager'), Mage::helper('adminhtml')->__('Toll Manager'));
+		$this->_title(Mage::helper('adminhtml')->__('Toll Manager'));
 		return $this;
 	}
 
