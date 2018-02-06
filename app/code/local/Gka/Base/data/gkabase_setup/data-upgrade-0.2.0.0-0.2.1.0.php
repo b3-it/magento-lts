@@ -178,17 +178,13 @@ $html = '<h2>Kassenzeichen: {{order.payment.kassenzeichen}}</h2>
  
  <!--<pre style="border-left: 1mm solid #000000;">{{order.terminal_customer_receipt}}</pre>-->
  ';
-$data['body']['top'] = 50;
+$data['body']['top'] = 80;
 $data['body']['left'] = 20;
-$data['body']['width'] = 100;
+$data['body']['width'] = 0;
 $data['body']['height'] = 0;
 $data['body']['content'] = $html;
 
-$html = '<table >
- 	<tr><td style="font-weight:bold;font-size:8pt;">Bankverbindung</td><td style="font-size:8pt;">BLZ 850 503 00</td><td style="font-size:8pt;">SWIFT OSDD DE 81</td></tr>
- 	<tr><td style="font-size:8pt;">Sparkasse Dresden</td><td style="font-size:8pt;">Kto: 321 456 789</td><td style="font-size:8pt;">IBAN DE09 8505 0300 3155 8250 05</td></tr>
- 	</table>
- 	';
+$html = '';
 $data['footer']['top'] = 285;
 $data['footer']['left'] = 22;
 $data['footer']['width'] = 0;
