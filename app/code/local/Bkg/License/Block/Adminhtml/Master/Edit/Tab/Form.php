@@ -37,18 +37,12 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
           'name'      => 'usetypeoption_id',
       ));
 
-      $fieldset->addField('customergroup_id', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Kundengruppe'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'customergroup_id',
-      ));
-
-      $fieldset->addField('type', 'text', array(
+      $fieldset->addField('type', 'select', array(
           'label'     => Mage::helper('bkg_license')->__('Lizenztyp'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'type',
+      		'values' => Bkg_License_Model_Type::getOptionArray()
       ));
       $fieldset->addField('reuse', 'text', array(
           'label'     => Mage::helper('bkg_license')->__('Nchnutzung'),
