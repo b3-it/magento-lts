@@ -383,7 +383,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     	//sicherstellen das der Kunde auch seine Rechnung druckt
     	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
     	$invoices->getSelect()
-    		->join(array('order'=>$invoices->getTable('sales/order')),'main_table.order_id = order.entity_id AND customer_id='.$customer_id);
+    		->join(array('order'=>$invoices->getTable('sales/order')),'main_table.order_id = order.entity_id AND customer_id='.$customer_id,array());
     	
     	$invoices->load();
     	if ($invoices->getSize()){
