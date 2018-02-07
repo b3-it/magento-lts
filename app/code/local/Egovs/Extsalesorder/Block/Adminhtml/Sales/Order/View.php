@@ -6,7 +6,7 @@
  * @package     Egovs_Extsalesorder
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @author 		Holger Kögel <h.koegel@b3-it.de>
- * @copyright  	Copyright (c) 2010 - 2017 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @copyright  	Copyright (c) 2010 - 2018 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_View extends Mage_Adminhtml_Block_Sales_Order_View
@@ -45,12 +45,15 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_View extends Mage_Adminhtm
     		$sortOrder = $button['sort_order'];
     	}
     	$this->_removeButton('order_creditmemo');
-    	
+        $coreHelper = Mage::helper('core');
+
     	if ($this->_isAllowedAction('creditmemo')
     		&& $this->getOrder()->canCreditmemo()
     		&& $this->getOrder()->getShipmentsCollection()->getSize() < 1
-    		) {
-    		$message = Mage::helper('sales')->__('This will create an offline refund. To create an online refund, open an invoice and create credit memo for it. Do you wish to proceed?');
+        ) {
+    	    $message = $coreHelper->jsQuoteEscape(
+    	        Mage::helper('sales')->__('This will create an offline refund. To create an online refund, open an invoice and create credit memo for it. Do you wish to proceed?')
+    	    );
     		$onClick = "setLocation('{$this->getCreditmemoUrl()}')";
     		//Siehe dazu auch #1626 bzw. ZVM848
     		$paymentMethodInstance = $this->getOrder()->getPayment()->getMethodInstance();
