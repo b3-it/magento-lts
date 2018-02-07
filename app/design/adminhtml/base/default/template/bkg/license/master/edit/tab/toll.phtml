@@ -1,0 +1,40 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend">Toll Information</h4>
+    <div class="form-buttons"></div>
+</div>
+    <div class="fieldset " id="mastertext_form">
+    <div class="hor-scroll">
+ 
+		<table>
+			<thead>
+			<tr>
+				<th><?php echo $this->__('Ident')?></th>
+				<th><?php echo $this->__('Pos')?></th>
+				<th><?php echo $this->__('Remove')?></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td><input name="toll[ident]"/> </td>
+			<td><input name="toll[ident]"/> </td>
+			<td> <button class="scalable btn btn-danger btn-sm" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('Delete')?>">
+            <?php echo Mage::helper('bkg_license')->__('Delete')?>
+        </button> </td>
+			
+			</tr>
+			</tbody>
+		</table>
+		<select>
+			<?php foreach($this->getTollCollection() as  $key=>$value):?>
+			<option value="<?php echo $key?>"><?php echo $value?></option>
+			<?php endforeach;?>
+			</select>
+			
+			<button class="scalable" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('New')?>">
+            <?php echo Mage::helper('bkg_license')->__('Add')?>
+            </button>
+            </div>
+        </div>
+</div>
+

@@ -1,0 +1,35 @@
+		<table>
+			<thead>
+			<tr>
+				<th><?php echo $this->__($this->getElement()->getLabel())?></th>
+				<th><?php echo $this->__('Up')?></th>
+				<th><?php echo $this->__('Down')?></th>
+				<th><?php echo $this->__('Remove')?></th>
+			</tr>
+			</thead>
+			<tbody>
+			<?php foreach($this->getElement()->getElements() as $_item):?>
+			<tr id="<?php echo $this->getElement()->getId().'_row_'. $_item['pos']?>" >
+			<td>
+				<?php echo $_item['label']?>
+				<input id="<?php echo $this->getElement()->getId().'_value_'. $_item['pos']?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item['value']?>" type="xhidden"/> 
+				<input id="<?php echo $this->getElement()->getId().'_pos_'. $_item['pos']?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item['pos']?>"  type="xhidden"/> 
+				<input id="<?php echo $this->getElement()->getId().'_delete_'. $_item['pos']?>" name="<?php echo $this->getElement()->getName('delete')?>" value="0"  type="xhidden"/> 
+			</td>
+			<td> <button class="scalable btn btn-danger btn-sm" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('Up')?>"><?php echo Mage::helper('bkg_license')->__('Up')?></button> </td>
+			<td> <button class="scalable btn btn-danger btn-sm" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('Down')?>"><?php echo Mage::helper('bkg_license')->__('Down')?></button> </td>
+			<td> <button class="scalable btn btn-danger btn-sm" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('Remove')?>"><?php echo Mage::helper('bkg_license')->__('Delete')?></button> </td>
+			
+			</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+		<select>
+			<?php foreach($this->getElement()->getValues() as  $opt):?>
+			<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
+			<?php endforeach;?>
+			</select>
+			
+			<button class="scalable" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('Add')?>">
+            <?php echo Mage::helper('bkg_license')->__('Add')?>
+            </button>

@@ -8,14 +8,34 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Block_Widget
+class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Block_Widget_Form
 {
 	
-	protected function _construct()
+	protected function x_construct()
 	{
 		parent::_construct();
 		$this->setTemplate('bkg/license/master/edit/tab/toll.phtml');
 	}
+	
+	protected function _prepareForm()
+	{
+		$form = new Varien_Data_Form();
+		$this->setForm($form);
+		$fieldset = $form->addFieldset('unit_form', array('legend'=>Mage::helper('bkg_orgunit')->__(' Unit information')));
+	
+		$values = Mage::getModel('customer/customer_attribute_source_group')->getAllOptions();
+		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
+		$fieldset->addField('shortname', 'ol', array(
+				'label'     => Mage::helper('bkg_orgunit')->__('Kurzname'),
+			
+				//'class'     => 'required-entry',
+				//'required'  => true,
+				'name'      => 'shortname',
+				'values' =>$values,
+				'value' => array(array('value'=>1,'pos'=>20),array('value'=>2,'pos'=>10))
+		));
+	}
+	
 	
     public function getTollCollection()
     {
