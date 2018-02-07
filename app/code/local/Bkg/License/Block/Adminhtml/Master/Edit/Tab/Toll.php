@@ -39,11 +39,6 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Bl
 				'value' => array(array('value'=>1,'pos'=>20),array('value'=>2,'pos'=>10))
 		));
 
-// 		// Zusätzliche Bedienelemente
-// 		$fieldset = $form->addFieldset('other_form', array(
-// 			'legend' => Mage::helper('bkg_license')->__('Other Fields')
-// 		));
-
 		$fieldset->addField('customer_groups', 'multiselect', array(
 				'label'     => Mage::helper('bkg_license')->__('Customer Groups'),
 				//'class'     => 'required-entry',
