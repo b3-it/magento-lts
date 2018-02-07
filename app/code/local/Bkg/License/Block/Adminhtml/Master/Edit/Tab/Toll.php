@@ -24,35 +24,25 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Bl
 
 		// Tabelle mehrspaltig
 		$fieldset = $form->addFieldset('unit_form', array(
-				'class' => 'grid',
 				'legend' => Mage::helper('bkg_orgunit')->__('Unit information')
 		));
 
 		$values = Mage::getModel('customer/customer_attribute_source_group')->getAllOptions();
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
-		$fieldset->addField('shortname', 'ol', array(
+		
+		$att = array(
 				'label'     => Mage::helper('bkg_orgunit')->__('Short name'),
 				//'class'     => 'required-entry',
 				//'required'  => true,
 				'name'      => 'shortname',
 				'values' =>$values,
-				'value' => array(array('value'=>1,'pos'=>20),array('value'=>2,'pos'=>10))
-		));
+				'value' => array(array('value'=>1,'pos'=>20),array('value'=>2,'pos'=>10)));
+		
+		$field = $fieldset->addField('shortname', 'ol', $att);
 
-		$fieldset->addField('customer_groups', 'multiselect', array(
-				'label'     => Mage::helper('bkg_license')->__('Customer Groups'),
-				//'class'     => 'required-entry',
-				//'required'  => true,
-				'name'      => 'customer_groups',
-				'values' => $values
-		));
-
-		$fieldset->addField('name', 'text', array(
-				'label'     => Mage::helper('bkg_license')->__('Name'),
-				//'class'     => 'required-entry',
-				//'required'  => true,
-				'name'      => 'name',
-		));
+		$pane = new Bkg_License_Block_Adminhtml_Widget_Ol_Addpane($att);
+		$field->setAddPane($pane);
+	
 	}
 
 

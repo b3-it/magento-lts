@@ -11,13 +11,26 @@
  */
 class Egovs_Base_Block_Adminhtml_Widget_Form_Ol extends Varien_Data_Form_Element_Abstract
 {
+	
+	protected $_addpane = null;
+	
     public function __construct($attributes=array())
     {
         parent::__construct($attributes);
-       // $this->setType('text');
-       // $this->setExtType('textfield');
-        
-       
+ 		
+        $this->_addpane = new Egovs_Base_Block_Adminhtml_Widget_Form_Ol_Addpane($attributes);
+    }
+    
+    
+    public function setAddPane($block)
+    {
+    	$this->_addpane = $block;
+    }
+    
+    
+    public function getAddPane()
+    {
+    	return $this->_addpane;
     }
 
     public function getHtml()

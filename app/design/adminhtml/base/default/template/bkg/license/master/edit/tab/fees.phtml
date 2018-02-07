@@ -3,7 +3,7 @@
     <h4 class="icon-head head-edit-form fieldset-legend">Toll Information</h4>
     <div class="form-buttons"></div>
 </div>
-    <div class="fieldset " id="mastertext_form">
+    <div class="fieldset " id="fee_form">
     <div class="hor-scroll">
  
 		<table>
@@ -12,21 +12,24 @@
 				<th><?php echo $this->__('Fee')?></th>
 				<th><?php echo $this->__('Discount')?></th>
 				<th><?php echo $this->__('Percent')?></th>
-				<th><?php echo $this->__('Remove')?></th>
+
 			</tr>
 			</thead>
 			<tbody>
-			
+			<?php foreach($this->getFeesSections() as  $block):?>
+				<tr>
+					<td width="300px;"> <?php echo $block['label']?></td>
+					<td><input name="fees['<?php echo $block['ident']?>'][value]" value="" /></td>
+					<td><select name="fees['<?php echo $block['ident']?>'][is_percent]">
+							<option value="0"><?php echo $this->__('No')?></option><option value="1"><?php echo $this->__('Yes')?></option>
+						</select>
+					</td>
+					
+				</tr>
+			<?php endforeach;?>
 			</tbody>
 		</table>
-			<select>
-			<?php foreach($this->getFeesSections() as  $block):?>
-			<option value="<?php echo $block['value']?>"><?php echo $block['label']?></option>
-			<?php endforeach;?>
-			</select>
 			
-			<button class="scalable" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('New')?>">
-            <?php echo Mage::helper('bkg_license')->__('Add')?>
             </div>
         </div>
 </div>

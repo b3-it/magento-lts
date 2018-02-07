@@ -32,7 +32,16 @@ class Bkg_License_Block_Adminhtml_Master_Edit extends Mage_Adminhtml_Block_Widge
             function saveAndContinueEdit(){
                 editForm.submit($('edit_form').action+'back/edit/');
             }
-        ";
+        		
+        		
+            function toggleEditor() {
+                if (tinyMCE.getInstanceById('page_content') == null) {
+                    tinyMCE.execCommand('mceAddControl', false, 'text_content');
+                } else {
+                    tinyMCE.execCommand('mceRemoveControl', false, 'text_content');
+                }
+            }
+		 ";
     }
 
     public function getHeaderText()
@@ -42,6 +51,15 @@ class Bkg_License_Block_Adminhtml_Master_Edit extends Mage_Adminhtml_Block_Widge
         } else {
             return Mage::helper('bkg_license')->__('Add Item');
         }
+    }
+    
+    protected function _prepareLayout()
+    {
+    	// Load Wysiwyg on demand and Prepare layout
+    	if (Mage::getSingleton('cms/wysiwyg_config')->isEnabled() && ($block = $this->getLayout()->getBlock('head'))) {
+    		$block->setCanLoadTinyMce(true);
+    	}
+    	return parent::_prepareLayout();
     }
 
 
