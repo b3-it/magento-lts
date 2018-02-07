@@ -40,18 +40,25 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tabs extends Mage_Adminhtml_Block_
       ));
 
       $this->addTab('form_section3', array(
-          'label'     => Mage::helper('bkg_license')->__('Toll'),
+          'label'     => Mage::helper('bkg_license')->__('Type Of Use'),
           'title'     => Mage::helper('bkg_license')->__('Toll Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_toll')->toHtml(),
       ));
 
-      $this->addTab('form_section3', array(
+      $this->addTab('form_section4', array(
+      		'label'     => Mage::helper('bkg_license')->__('Fees'),
+      		'title'     => Mage::helper('bkg_license')->__('Fees Information'),
+      		'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_fees')->toHtml(),
+      ));
+      
+      
+      $this->addTab('form_section5', array(
           'label'     => Mage::helper('bkg_license')->__('Customer Group'),
           'title'     => Mage::helper('bkg_license')->__('Customer Group Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_customergroup')->toHtml(),
       ));
 
-      $this->addTab('form_section4', array(
+      $this->addTab('form_section6', array(
           'label'     => Mage::helper('bkg_license')->__('Products'),
           'title'     => Mage::helper('bkg_license')->__('Products Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_products')->toHtml(),

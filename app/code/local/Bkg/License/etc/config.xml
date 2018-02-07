@@ -126,7 +126,7 @@
                   </bkglicense_master>
                   <bkglicense_copy module="bkg_license">
                       <title>Copy</title>
-                      <sort_order>10</sort_order>
+                      <sort_order>20</sort_order>
                       <action>adminhtml/license_copy/index</action>
                   </bkglicense_copy>
                   <!--

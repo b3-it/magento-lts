@@ -1,0 +1,55 @@
+<tr>
+	<td class="label">
+		<?php echo $this->__($this->getElement()->getLabel())?>
+	</td>
+	<td class="value">
+		<table class="massaction">
+			<tbody style="background:none;">
+				<tr>
+					<td>
+						<div class="right" style="width:auto;">
+							<div class="entry-edit">
+								<select style="width:auto;">
+									<?php foreach($this->getElement()->getValues() as $opt):?>
+										<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
+									<?php endforeach;?>
+								</select>
+								<button class="scalable" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('Add')?>">
+									<?php echo Mage::helper('bkg_license')->__('Add')?>
+								</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table cellspacing="0" class="data">
+			<thead>
+				<tr class="headings">
+					<th><?php echo $this->__($this->getElement()->getLabel())?></th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
+				<?php $_itemID = $this->getElement()->getId(); ?>
+					<tr id="row-<?php echo $key; ?>" >
+						<td>
+							<?php echo $_item['label']?>
+							<input id="<?php echo 'value_'  . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item['value']?>" type="xhidden"/>
+							<input id="<?php echo 'pos_'    . $key; ?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item['pos']?>" class="position" type="xhidden"/>
+							<input id="<?php echo 'delete_' . $key; ?>" name="<?php echo $this->getElement()->getName('delete')?>" value="0"  type="xhidden"/>
+						</td>
+						<td class="position-sorting">
+							<button class="scalable position-up" type="button" title="<?php echo Mage::helper('bkg_license')->__('Up')?>"><span></span></button>
+							<button class="scalable position-down" type="button" title="<?php echo Mage::helper('bkg_license')->__('Down')?>"><span></span></button>
+							<button class="scalable position-delete" type="button" title="<?php echo Mage::helper('bkg_license')->__('Remove')?>"><span></span></button>
+						</td>
+					</tr>
+				<?php endforeach;?>
+			</tbody>
+		</table>
+		<script type="text/javascript" src="<?php echo $this->getJsUrl('egovs/table-position-move.js'); ?>"></script>
+	</td>
+</tr>

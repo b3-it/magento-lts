@@ -13,20 +13,23 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
      * @var Bkg_Tollpolicy_Model_Toll $toll
      */
     //echo "<span>".$toll->getName()."</span>";
+    echo "<input id='int' name='int' value='' type='checkbox'/>";
     echo "<fieldset class='virtualgeo-components-toll' style='border: 1px solid #c0c0c0; padding: 5px;'>";
     echo "<legend>".$this->__('Internal Usage')."</legend>";
+
     echo "<ul>";
     foreach ($toll->getActiveUseTypes(true) as $use) {
         echo "<li>";
         $useId = "virtualgeo-components-toll-" . $use->getId();
-        
-        $options = $use->getOptions();
+
+
+
         /**
          * @var Bkg_Tollpolicy_Model_Usetype $use
          */
         $label = "<label for='".$useId."'>".$use->getName()."</label>";
 
-
+        $options = $use->getOptions();
 
         if (sizeof($options) == 1) {
             /**
@@ -63,9 +66,11 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
     }
     echo "</ul>";
     echo "</fieldset>";
-    
+
+    echo "<input id='ext' name='ext' value='' type='checkbox'/>";
     echo "<fieldset class='virtualgeo-components-toll' style='border: 1px solid #c0c0c0; padding: 5px;'>";
     echo "<legend>". $this->__('External Usage')."</legend>";
+
     echo "<ul>";
     foreach ($toll->getActiveUseTypes(false) as $use) {
         echo "<li>";

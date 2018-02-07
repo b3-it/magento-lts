@@ -20,7 +20,8 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
      */
     public function getValue4Product($productId, $storeId = 0)
     {
-    	$storeId = intval($storeId);
+        $productId = intval($productId);
+        $storeId = intval($storeId);
     	$collection = $this->getCollection();
     	$collection->getSelect()->where('product_id=?',$productId);
     	$collection->getSelect()->where('store_id=?',$storeId);
@@ -35,6 +36,7 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     
     public function getDefaul4Product($productId, $storeId = 0)
     {
+        $productId = intval($productId);
     	$storeId = intval($storeId);
     	$collection = $this->getCollection();
     	$collection->getSelect()->where('product_id=?',$productId);

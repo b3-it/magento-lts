@@ -14,7 +14,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Customergroup extends Mage_Adm
     {
         $form = new Varien_Data_Form();
         $this->setForm($form);
-        $fieldset = $form->addFieldset('masteragreement_form', array('legend'=>Mage::helper('bkg_license')->__(' Master Agreement information')));
+        $fieldset = $form->addFieldset('masteragreement_form', array('legend'=>Mage::helper('bkg_license')->__('Master Agreement information')));
 
 
         $values = Mage::getModel('customer/customer_attribute_source_group')->getAllOptions();
