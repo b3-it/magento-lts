@@ -15,46 +15,46 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Agreement extends Mage_Adminht
 		parent::_construct();
 		$this->setTemplate('bkg/license/master/edit/tab/agreement.phtml');
 	}
-	
-	
-	
+
+
+
 	protected function _prepareForm()
 	{
 		$form = new Varien_Data_Form();
 		$this->setForm($form);
-	
+
 		// Tabelle mehrspaltig
 		$fieldset = $form->addFieldset('agreement_form', array(
 				'legend' => Mage::helper('bkg_orgunit')->__('Agreement information')
 		));
-	
+
 		$values = $this->getCmsBlocks();
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
-		$fieldset->addField('shortname', 'ol', array(
+		$fieldset->addField('agreement', 'ol', array(
 				'label'     => Mage::helper('bkg_orgunit')->__('Short name'),
 				//'class'     => 'required-entry',
 				//'required'  => true,
-				'name'      => 'shortname',
+				'name'      => 'agreement',
 				'values' =>$values,
 				'value' => array(array('value'=>'footer_links','pos'=>20),array('value'=>2,'pos'=>10))
 		));
 	}
-	
-	
-	
+
+
+
 	public function getCmsBlocks()
 	{
 		$collection = Mage::getModel('cms/block')->getCollection();
 		$res = array();
-	
-	
+
+
 		foreach($collection as $item)
 		{
 			$res[$item->getIdentifier()] = array('label'=>$item->getTitle(), 'value'=>$item->getIdentifier());
 		}
-	
-	
+
+
 		return $res;
 	}
-   
+
 }

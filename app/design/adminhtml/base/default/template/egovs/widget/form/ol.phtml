@@ -1,11 +1,15 @@
+<?php $_itemID = $this->getElement()->getId(); ?>
 <tr class='grid'>
 	<td class="label">
 		<?php echo $this->__($this->getElement()->getLabel())?>
 	</td>
 	<td class="value">
 		<?php echo $this->getElement()->getAddPane()->toHtml()?>
-
-		<table cellspacing="0" class="data">
+		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>">
+			<colgroup>
+				<col />
+				<col style="width: 110px;" />
+			</colgroup>
 			<thead>
 				<tr class="headings">
 					<th><?php echo $this->__($this->getElement()->getLabel())?></th>
@@ -14,13 +18,12 @@
 			</thead>
 			<tbody>
 				<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
-				<?php $_itemID = $this->getElement()->getId(); ?>
-					<tr id="row-<?php echo $key; ?>" >
+					<tr id="row-<?php echo $_itemID . '-' . $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $_itemID; ?>" >
 						<td>
-							<?php echo $_item['label']?>
-							<input id="<?php echo 'value_'  . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item['value']?>" type="xhidden"/>
-							<input id="<?php echo 'pos_'    . $key; ?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item['pos']?>" class="position" type="xhidden"/>
-							<input id="<?php echo 'delete_' . $key; ?>" name="<?php echo $this->getElement()->getName('delete')?>" value="0"  type="xhidden"/>
+							<?php echo $_item['label']; ?>
+							<input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item['value']?>" />
+							<input type="hidden" id="pos-<?php echo    $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item['pos']?>" class="position" />
+							<input type="hidden" id="delete-<?php echo $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('delete')?>" value="0" />
 						</td>
 						<td class="position-sorting">
 						<?php if($this->getElement()->getShowUpDown() !== false):?>

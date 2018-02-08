@@ -29,20 +29,19 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Bl
 
 		$values = Mage::getModel('customer/customer_attribute_source_group')->getAllOptions();
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
-		
+
 		$att = array(
 				'label'     => Mage::helper('bkg_orgunit')->__('Short name'),
 				//'class'     => 'required-entry',
 				//'required'  => true,
-				'name'      => 'shortname',
+				'name'      => 'toll',
 				'values' =>$values,
 				'value' => array(array('value'=>1,'pos'=>20),array('value'=>2,'pos'=>10)));
-		
-		$field = $fieldset->addField('shortname', 'ol', $att);
 
-		$pane = new Bkg_License_Block_Adminhtml_Widget_Ol_Addpane($att);
-		$field->setAddPane($pane);
-	
+		$field = $fieldset->addField('toll', 'ol', $att);
+
+		//$pane = new Bkg_License_Block_Adminhtml_Widget_Ol_Addpane($att);
+		//$field->setAddPane($pane);
 	}
 
 

@@ -1,4 +1,3 @@
-
 		<table class="massaction">
 			<tbody style="background:none;">
 				<tr>
@@ -10,7 +9,7 @@
 										<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
 									<?php endforeach;?>
 								</select>
-								<button class="scalable" onclick="" type="button" title="<?php echo Mage::helper('bkg_license')->__('Add')?>">
+								<button class="scalable" onclick="addTableRow( $j(this) );" type="button" title="<?php echo Mage::helper('bkg_license')->__('Add')?>">
 									<?php echo Mage::helper('bkg_license')->__('Add')?>
 								</button>
 							</div>
