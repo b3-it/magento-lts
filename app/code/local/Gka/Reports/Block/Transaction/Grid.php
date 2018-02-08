@@ -145,6 +145,7 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
 
         $this->addExportType('*/*/exportCsv', Mage::helper('gka_reports')->__('CSV'));
         $this->addExportType('*/*/exportXml', Mage::helper('gka_reports')->__('XML'));
+        $this->addExportType('*/*/exportExcel', Mage::helper('paymentbase')->__('XML (Excel)'));
         $this->setCountTotals(true);
         return parent::_prepareColumns();
     }

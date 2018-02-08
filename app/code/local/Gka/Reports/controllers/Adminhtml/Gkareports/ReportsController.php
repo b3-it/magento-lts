@@ -188,7 +188,7 @@ class Gka_Reports_Adminhtml_Gkareports_ReportsController extends Mage_Adminhtml_
   
     public function exportCsvAction()
     {
-        $fileName   = 'reports.csv';
+        $fileName   = 'report.csv';
         $content    = $this->getLayout()->createBlock('reports/adminhtml_reports_grid')
             ->getCsv();
 
@@ -197,11 +197,19 @@ class Gka_Reports_Adminhtml_Gkareports_ReportsController extends Mage_Adminhtml_
 
     public function exportXmlAction()
     {
-        $fileName   = 'reports.xml';
+        $fileName   = 'report.xml';
         $content    = $this->getLayout()->createBlock('reports/adminhtml_reports_grid')
             ->getXml();
 
         $this->_sendUploadResponse($fileName, $content);
+    }
+
+    public function exportExcelAction()
+    {
+        $fileName   = 'report.xls';
+        $content    = $this->getLayout()->createBlock('reports/adminhtml_reports_grid')
+            ->getExcel($fileName);
+        $this->_prepareDownloadResponse($fileName, $content);
     }
 
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')

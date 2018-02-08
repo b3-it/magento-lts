@@ -506,3 +506,4 @@
 "You`re now Logged Out","Sie sind jetzt abgemeldet"
 "You have been successfully logged out and will be redirected to our homepage in 5 seconds.","Sie wurden erfolgreich abgemeldet und werden in 5 Sekunden zur Startseite weitergeleitet."
 "Your password reset link has expired.","Ihr Passwort-Zurücksetzen-Link ist abgelaufen."
+"Your account is locked due to too many failed login attempts.<br />Please contact the %s (fon. %s or email %s).","Ihr Konto wurde wegen zu vielen falschen Logins gesperrt.<br />Bitte wenden Sie sich an %s (Tel. %s or E-Mail %s)."

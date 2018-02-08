@@ -47,6 +47,14 @@ class Gka_Reports_TransactionController extends Mage_Core_Controller_Front_Actio
     
     	$this->_sendUploadResponse($fileName, $content);
     }
+
+    public function exportExcelAction()
+    {
+        $fileName   = 'report.xls';
+        $content    = $this->getLayout()->createBlock('gka_reports/transaction_grid')
+            ->getExcel($fileName);
+        $this->_sendUploadResponse($fileName, $content);
+    }
     
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
     {
