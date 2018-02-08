@@ -14,7 +14,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions extends Mage_Adminhtml_Block_Wid
   {
     $this->_controller = 'adminhtml_useoptions';
     $this->_blockGroup = 'bkg_tollpolicy';
-    $this->_headerText = Mage::helper('bkg_tollpolicy')->__('Useoptions Manager');
+    $this->_headerText = Mage::helper('bkg_tollpolicy')->__('Type of Use Options Manager');
     $this->_addButtonLabel = Mage::helper('bkg_tollpolicy')->__('Add Item');
     parent::__construct();
   }

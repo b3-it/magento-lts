@@ -45,8 +45,10 @@ class Bkg_Tollpolicy_Block_Adminhtml_Usetype_Grid extends Mage_Adminhtml_Block_W
       $this->addColumn('active', array(
           'header'    => Mage::helper('bkg_tollpolicy')->__('Active'),
           //'align'     =>'left',
-          //'width'     => '150px',
+          'width'     => '100px',
           'index'     => 'active',
+          'type'      => 'options',
+          'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
       ));
 //       $this->addColumn('internal', array(
 //           'header'    => Mage::helper('bkg_tollpolicy')->__('internal'),
@@ -76,7 +78,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Usetype_Grid extends Mage_Adminhtml_Block_W
       
       $values = Mage::getModel('bkg_tollpolicy/toll')->getCollection()->toOptionHash();
       $this->addColumn('toll_id', array(
-          'header'    => Mage::helper('bkg_tollpolicy')->__(''),
+          'header'    => Mage::helper('bkg_tollpolicy')->__('Toll'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'toll_id',
@@ -86,7 +88,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Usetype_Grid extends Mage_Adminhtml_Block_W
       $this->addColumn('pos', array(
           'header'    => Mage::helper('bkg_tollpolicy')->__('Pos'),
           //'align'     =>'left',
-          //'width'     => '150px',
+          'width'     => '100px',
           'index'     => 'pos',
       ));
 

@@ -2,22 +2,38 @@
 <!DOCTYPE config>
 <config>
     <modules>
-        <Bkg_Base>
+		<Bkg_Base>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Base>
-        <Bkg_Viewer>
+		<Bkg_Geometry>
             <active>true</active>
             <codePool>local</codePool>
-        </Bkg_Viewer>
+        </Bkg_Geometry>
+        <Bkg_License>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_License>
         <Bkg_MapSeries>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_MapSeries>
+        <Bkg_Orgunit>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Orgunit>
         <Bkg_RegionAllocation>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_RegionAllocation>
+        <Bkg_Tollpolicy>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Tollpolicy>
+        <Bkg_Viewer>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Viewer>
         <Bkg_VirtualGeo>
             <active>true</active>
             <codePool>local</codePool>

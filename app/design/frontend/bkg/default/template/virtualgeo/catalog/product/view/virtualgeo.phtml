@@ -48,6 +48,9 @@
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
     <?php if ($this->getComposit()): ?>
 
+    <?php
+        echo Mage::helper("virtualgeo/data")->getProj4();
+    ?>
 
 	var toolsfunc = function(epsg) {
       var tools = [];

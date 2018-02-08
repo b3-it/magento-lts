@@ -143,6 +143,17 @@ ins {
     font-size: 15px;
     width: 18px;
 }
+.option-tree-name, .option-tree-position {
+    font-size: 12px;
+}
+.option-tree-name {
+    width: auto;
+    text-align: right;
+}
+.option-tree-position {
+    width: 50px;
+    text-align: center;
+}
 .option-tree-true:after {
     /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box-with-check/ */
     content:'\2611';
@@ -154,3 +165,29 @@ ins {
     color: #3E3E3E;
 }
 /* Ende für Auswahl bei VirtualGeo-Inhalt */
+
+.position-sorting button {
+    height: 20px;
+    width: 20px;
+    margin: 0 5px;
+}
+.position-sorting button:disabled {
+    cursor: not-allowed;
+}
+.position-sorting button span {
+    position: relative;
+    left: -2px;
+    top: -1px;
+}
+.position-sorting .position-up span:after {
+    /* https://www.toptal.com/designers/htmlarrows/arrows/ */
+    content: '\21E7';
+}
+.position-sorting .position-down span:after {
+    /* https://www.toptal.com/designers/htmlarrows/arrows/ */
+    content: '\21E9';
+}
+.position-sorting .position-delete span:after {
+    /* https://www.toptal.com/designers/htmlarrows/math/multiplication-sign/ */
+    content: '\00D7';
+}

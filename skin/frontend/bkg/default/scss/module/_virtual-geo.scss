@@ -1,0 +1,53 @@
+//
+// @category    design
+// @package     bkg_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+#virtualgeo {
+    margin-bottom: $global-boxmargin;
+}
+
+.option-row {
+    &:first-child {
+        border-top: $global-box-border solid $global-border-color;
+    }
+
+    > div {
+        display: table-cell;
+        width: 45%;
+        vertical-align: top;
+        border-width: 0 $global-box-border $global-box-border 0;
+        border-style: solid;
+        border-color: $global-border-color;
+        padding: $global-boxpadding;
+
+        &:first-child {
+            width: 2%;
+            border-left-width: $global-box-border;
+        }
+        &:not(:last-child) {
+            margin-left: 3px;
+        }
+    }
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+    border-color: $global-active-color;
+    background: $global-h3-color;
+}
+
+
+.toogleModeCtrl {
+	top: -2.5em;
+}
+.toogleSelectCtrl {
+	top: -2.5em;
+	left: 5.5em;
+}

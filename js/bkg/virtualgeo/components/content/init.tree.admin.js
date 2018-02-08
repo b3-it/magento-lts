@@ -285,7 +285,7 @@ var nodeOptions = {
 		data.entity_id = id;
         data.deleted = false;
         data.id = 0;
-		if(parentNode != null)
+		if(parentNode.data != null)
 		{
             data.parent_number = parentNode.data.number;
 		}

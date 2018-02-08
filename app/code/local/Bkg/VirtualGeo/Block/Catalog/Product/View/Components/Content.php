@@ -41,6 +41,9 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content extends Bkg_V
 	public function getTreeHtml()
 	{
 		$options = $this->getOptions();
+		if ($options === null) {
+		    return "";
+		}
 		$res = array();
 		foreach($options as $option)
 		{

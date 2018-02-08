@@ -16,14 +16,14 @@ class Bkg_Tollpolicy_Block_Adminhtml_Tollcategory_Edit_Tabs extends Mage_Adminht
       parent::__construct();
       $this->setId('toll_category_tabs');
       $this->setDestElementId('edit_form');
-      $this->setTitle(Mage::helper('bkg_tollpolicy')->__('Tollcategory Information'));
+      $this->setTitle(Mage::helper('bkg_tollpolicy')->__('Toll Category Information'));
   }
 
   protected function _beforeToHtml()
   {
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('bkg_tollpolicy')->__('Tollcategory Information'),
-          'title'     => Mage::helper('bkg_tollpolicy')->__('Tollcategory Information'),
+          'label'     => Mage::helper('bkg_tollpolicy')->__('Toll Category Information'),
+          'title'     => Mage::helper('bkg_tollpolicy')->__('Toll Category Information'),
           'content'   => $this->getLayout()->createBlock('bkg_tollpolicy/adminhtml_tollcategory_edit_tab_form')->toHtml(),
       ));
 

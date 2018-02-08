@@ -1,0 +1,41 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend">Toll Information</h4>
+    <div class="form-buttons"></div>
+</div>
+    <div class="fieldset " id="fee_form">
+    <div class="hor-scroll">
+ 
+		<table>
+			<thead>
+			<tr>
+				<th><?php echo $this->__('Fee')?></th>
+				<th><?php echo $this->__('Discount')?></th>
+				<th><?php echo $this->__('Percent')?></th>
+                <th><?php echo $this->__('Active')?></th>
+
+			</tr>
+			</thead>
+			<tbody>
+			<?php foreach($this->getFeesSections() as  $block):?>
+				<tr>
+					<td width="300px;"> <?php echo $block['label']?></td>
+					<td><input name="fees[<?php echo $block['ident']?>][discount]" value="<?php echo $this->getValues($block['ident'])->getDiscount() ?>" /></td>
+					<td><select name="fees[<?php echo $block['ident']?>][is_percent]">
+                            <?php echo $this->getYesNoOptions($this->getValues($block['ident'])->getIsPercent()) ?>
+						</select>
+					</td>
+                    <td><select name="fees[<?php echo $block['ident']?>][is_active]">
+                            <?php echo $this->getYesNoOptions($this->getValues($block['ident'])->getIsActive()) ?>
+                        </select>
+                    </td>
+					
+				</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+			
+            </div>
+        </div>
+</div>
+

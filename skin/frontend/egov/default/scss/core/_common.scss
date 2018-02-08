@@ -70,6 +70,11 @@ input[type="password"]:active, input[type="tel"]:active, select:active {
     border-color: $global-lightcolor;
 }
 
+li select {
+    display: block;
+    width: 95%;
+}
+
 input[type="checkbox"], input[type="radio"] {
     position: relative;
     top: -1px;

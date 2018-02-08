@@ -23,6 +23,8 @@ class Bkg_VirtualGeo_Model_Components_Content extends Bkg_VirtualGeo_Model_Compo
 	
 	public function getOptions4Product($productId,$storeId=0)
 	{
+        $productId = intval($productId);
+        $storeId = intval($storeId);
 		$collection = $this->getCollection();
 		$collection->setStoreId($storeId);
 		$collection->getSelect()

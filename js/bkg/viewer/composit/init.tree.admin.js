@@ -1,16 +1,16 @@
 function addPages() {
 	var form_data = {};
-    
+
 	form_data['is_checked'] = $j('#layerForm_Name_is_checked').is(':checked');
 	form_data['is_readonly'] = $j('#layerForm_Name_is_readonly').is(':checked');
-	
-	
+
+
 	form_data['permanent'] = $j('#permanent').is(':checked');
     form_data['is_checked'] = $j('#is_checked').is(':checked');
     //form_data['entity_layer'] = $j('#entity_layer').is(':checked');
     form_data['visual_pos'] = $j('#visual_pos').val();
     form_data['title'] = $j('#layer_title').val();
-    
+
     var service_layers = $j('#service_layers');
     var selected = service_layers.find('option:selected');
 	selected.each(function(){
@@ -78,18 +78,18 @@ $j('#jstree_layer').on("ready.jstree", function (e, data) {
 
 
 
-				
+
 var nodeOptions = {
 		div_id : "#hidden_navi_menu",
 		PostDataId : 'node_options',
 		PostDataName : 'node_options',
 		tree : $j("#jstree_layer"),
-		
+
 		itemCount : 0,
 		pos : 0,
 		kategories : [],
 		getDiv : function(){
-			
+
 			return $j(this.div_id);
 		},
 		show : function(node) {
@@ -115,7 +115,7 @@ var nodeOptions = {
 			var data = this.getPostData(node.data.number);
 			data['title'] = $text;
 			this.setPostData(data);
-			
+
 //			var elem = $j("#node_options_" + node.data.number + "_name");
 //			if(elem){
 //				elem.val($text);
@@ -146,7 +146,7 @@ var nodeOptions = {
                             data['parent_number'] = 0;
 						}
 						child.data.pos = pos;
-						
+
 						this.setPostData(data);
 					}
 				}
@@ -172,7 +172,7 @@ var nodeOptions = {
 	        }
 			return pos;
 		},
-		
+
 		add: function(data, sel) {
 				var ref = this.tree.jstree(true);
 				var edit = false;
@@ -180,7 +180,7 @@ var nodeOptions = {
 				this.itemCount++;
 				if(!sel) {
 					var	sel = ref.get_selected();
-					if(!sel.length) { 
+					if(!sel.length) {
 						//alert( element_not_selected );
 						//return false;
 						sel =  ref.get_node('j1_1');
@@ -192,35 +192,35 @@ var nodeOptions = {
 				}
 				else if(sel == 'root') {
 					sel =  ref.get_node('j1_1');
-				} 
-				
+				}
+
 				if(!data){
-					var data = new Object();					
+					var data = new Object();
 					data.name = 'default';
 					data.layer_label = element_default_title;
 					data.type = "default"
 				}
 				data.number = this.itemCount;
-				
+
 				sel = this.createTextNode(sel,data);
 				if(sel && edit) {
 					ref.edit(sel);
 				}
-					
+
 				var node = ref.get_node(sel);
 				this.move(node, this.itemCount);
-					
-				
+
+
 				return node.id;
-			
+
 		},
 		addPage: function(id, label, input_data) {
 			var ref = this.tree.jstree(true);
 			this.itemCount++;
 			var	sel = ref.get_selected();
-			if(!sel.length) { 
+			if(!sel.length) {
 				alert( element_not_selected );
-				return false; 
+				return false;
 			}
 
 			sel = sel[0];
@@ -228,33 +228,33 @@ var nodeOptions = {
 			var data = new Object();
 			data.number = this.itemCount;
 			data.type = 'page';
-			
+
 			data.serviceLayer = id;
 			data.title = label;
 			data.visual_pos = input_data.visual_pos;
 			data.layer_name = input_data.layer_name;
 			data.permanent = input_data.permanent;
 			data.is_checked = input_data.is_checked;
-		
+
 			sel = this.createTextNode(sel, data);
-			
-			
+
+
 			var node = ref.get_node(sel);
 			this.move(node, this.itemCount);
 			this.reorder('j1_1',0);
             this.open_all();
 			return node.id;
-			
+
 		},
 		createTextNode: function(parent,data)
 		{
 			var ref = this.tree.jstree(true);
 			var text = data.title;
 			if(data.type == 'page'){
-				
+
 				text += '<div class="tree-options">';
-				text += '<div class="inline-tree-cell">'+ data.layer_name+'</div>';
-				text += '<div class="inline-tree-cell">'+ data.visual_pos+'</div>';
+				text += '<div class="inline-tree-cell option-tree-name">'+ data.layer_name+'</div>';
+				text += '<div class="inline-tree-cell option-tree-position">'+ data.visual_pos+'</div>';
 				text += '<div class="inline-tree-cell option-tree-' + (data.permanent ? 'true' : 'false') + ' option-readonly"></div>';
 				text += '<div class="inline-tree-cell option-tree-' + (data.is_checked ? 'true' : 'false') + ' option-checked"></div>';
 				text += '</div>';
@@ -303,14 +303,14 @@ var nodeOptions = {
 					return false;
 				}
 				var node = ref.get_node(sel);
-								
+
 				//Delete Flag setzten
 		        var data = this.getPostData(node.data.number);
 		        data['deleted'] = true;
 		        this.setPostData(data);
-				
+
 		        ref.delete_node(sel);
-				
+
 		},
 
 		edit: function(data) {
@@ -338,4 +338,3 @@ var nodeOptions = {
 			this.div = data;
 		}
 }
-

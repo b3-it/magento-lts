@@ -59,20 +59,24 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Grid extends Mage_Adminhtml_Bloc
       $this->addColumn('userdefined', array(
           'header'    => Mage::helper('bkg_tollpolicy')->__('userdefined'),
           //'align'     =>'left',
-          //'width'     => '150px',
+          'width'     => '100px',
           'index'     => 'userdefined',
       ));
       $this->addColumn('is_default', array(
           'header'    => Mage::helper('bkg_tollpolicy')->__('is Default'),
           //'align'     =>'left',
-          //'width'     => '150px',
+          'width'     => '100px',
           'index'     => 'is_default',
+      		'type'      => 'options',
+      		'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
       ));
       $this->addColumn('is_calculable', array(
           'header'    => Mage::helper('bkg_tollpolicy')->__('is Calculable'),
           //'align'     =>'left',
-          //'width'     => '150px',
+          'width'     => '100px',
           'index'     => 'is_calculable',
+      		'type'      => 'options',
+      		'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
       ));
 
 

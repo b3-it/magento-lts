@@ -15,4 +15,14 @@ class Bkg_Tollpolicy_Model_Tollcategory extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('bkg_tollpolicy/tollcategory');
     }
+
+    public function getActiveTolls() {
+        /**
+         * @var Bkg_Tollpolicy_Model_Resource_Toll_Collection $col
+         */
+        $col = Mage::getModel('bkg_tollpolicy/toll')->getCollection();
+        $col->getSelect()->where('toll_category_id=?', intval($this->getId()));
+        $col->getSelect()->where('active=?', 1);
+        return $col->getItems();
+    }
 }
