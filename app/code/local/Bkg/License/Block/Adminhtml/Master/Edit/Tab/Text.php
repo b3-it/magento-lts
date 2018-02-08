@@ -38,8 +38,9 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Text  extends Mage_Adminhtml_B
         $contentField = $fieldset->addField('content', 'editor', array(
             'name'      => 'content',
             'style'     => 'height:36em;',
-            'required'  => true,
-            'config'    => $wysiwygConfig
+            //'required'  => true,
+            'config'    => $wysiwygConfig,
+            'value' => Mage::registry('entity_data')->getContent()
         ));
   }
    

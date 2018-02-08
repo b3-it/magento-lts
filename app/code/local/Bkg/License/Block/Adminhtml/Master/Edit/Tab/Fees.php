@@ -10,7 +10,7 @@
  */
 class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Fees extends Mage_Adminhtml_Block_Widget
 {
-	
+	protected $_values = null;
 	protected function _construct()
 	{
 		parent::_construct();
@@ -18,11 +18,56 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Fees extends Mage_Adminhtml_Bl
 	}
 	
 	
- public function getFeesSections()
+    public function getFeesSections()
     {
     	$sect = Mage::getConfig()->getNode('virtualgeo/fees/sections')->asArray();
     	return $sect;
     }
-    
+
+    public function getYesNoOptions($selected)
+    {
+        $res = array();
+        if($selected == 0)
+        {
+                 $res[] = '<option selected="selected" value="0">'.$this->__('No').'</option>';
+        }else
+            {
+                $res[] ='<option value="0">'.$this->__('No').'</option>';
+            }
+
+        if($selected == 1)
+        {
+            $res[] = '<option selected="selected" value="1">'.$this->__('Yes').'</option>';
+        }else
+        {
+            $res[] ='<option value="1">'.$this->__('Yes').'</option>';
+        }
+
+    return implode(' ',$res);
+
+    }
+
+
+    public function getValues($section)
+    {
+        if($this->_values== null)
+        {
+            $collection = Mage::getModel('bkg_license/master_toll')->getCollection();
+            $collection->getSelect()->where('master_id ='. intval(Mage::registry('entity_data')->getId()));
+            $this->_values = $collection->getItems();
+
+        }
+
+        foreach($this->_values as $item)
+        {
+            if($item->getFeeCode() == $section)
+            {
+                return $item;
+            }
+        }
+
+        return new Varien_Object();
+
+    }
    
 }

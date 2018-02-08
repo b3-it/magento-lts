@@ -17,25 +17,27 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Customergroup extends Mage_Adm
         $fieldset = $form->addFieldset('masteragreement_form', array('legend'=>Mage::helper('bkg_license')->__('Master Agreement information')));
 
 
+
+        $collection = Mage::getModel('bkg_license/master_customergroups')->getCollection();
+        $collection->addMasterIdFilter(Mage::registry('entity_data')->getId());
+
+        $value = array();
+       foreach($collection as $item)
+       {
+           $value[] = $item->getCustomergroupId();
+       }
+
         $values = Mage::getModel('customer/customer_attribute_source_group')->getAllOptions();
         $fieldset->addField('customer_groups', 'multiselect', array(
             'label'     => Mage::helper('bkg_license')->__('Customer Groups'),
             //'class'     => 'required-entry',
             //'required'  => true,
             'name'      => 'customer_groups',
-            'values' => $values
+            'values' => $values,
+            'value' => $value
         ));
 
 
-
-
-        if ( Mage::getSingleton('adminhtml/session')->getmasteragreementData() )
-        {
-            $form->setValues(Mage::getSingleton('adminhtml/session')->getmasteragreementData());
-            Mage::getSingleton('adminhtml/session')->setmasteragreementData(null);
-        } elseif ( Mage::registry('masteragreement_data') ) {
-            $form->setValues(Mage::registry('masteragreement_data')->getData());
-        }
         return parent::_prepareForm();
     }
 }

@@ -12,9 +12,9 @@
 class Egovs_Base_Block_Adminhtml_Widget_Form_Ol_Addpane extends Mage_Adminhtml_Block_Widget
 {
 	
-	protected function _construct($attributes)
+	protected function _construct($attributes = array())
 	{
-		parent::_construct();
+		parent::_construct($attributes);
 		$this->setTemplate('egovs/widget/form/ol/addpane.phtml');
 		$this->setData($attributes);
 	}
