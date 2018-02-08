@@ -22,7 +22,8 @@
 // Content
 
 @page {
-	size: A4 landscape;
+	//size: A4 landscape;
+	size: A4 portrait;
 	margin: 2.1cm;
 }
 
@@ -41,7 +42,7 @@ body, h3, td strong {
 	color: #000000;
 	font-weight: normal;
 }
-	
+
 #menuesprung,
 .page-header, .footer-container,
 .page-title, .sub-title, p, .qty-prefix,
@@ -49,7 +50,7 @@ body, h3, td strong {
 colgroup, .buttons-set {
 	display: none;
 }
-	
+
 .main-container {
 	top: 0;
 }
@@ -71,7 +72,7 @@ colgroup, .buttons-set {
 .data-table {
 	width: 99%;
 	border-collapse: collapse;
-	
+
 	th {
 	    font-style: italic;
 	    font-size: 0.9em;
@@ -81,12 +82,12 @@ colgroup, .buttons-set {
 		border-bottom: solid #000000;
 	    border-bottom-width: .25pt;
 	}
-	
+
 	tfoot .first td {
 		border-top: solid #000000;
 	    border-top-width: .25pt;
 	}
-	
+
 	.a-left {
 	    text-align: left;
 	}
