@@ -64,6 +64,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 			$this->_saveCustomerGroup($data,$model);
 			$this->_saveFees($data,$model);
 			$this->_saveProducts($data,$model);
+			$this->_saveAgreements($data,$model);
 
 			try {
 
@@ -150,6 +151,47 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
     }
 
+    protected function _saveAgreements($data,$model)
+    {
+        $groups = array();
+        $tmp = $data['agreement'];
+
+        foreach($tmp['value'] as $k=>$v)
+        {
+            $groups[] = array('value'=>$v,'pos'=>$tmp['pos'][$k],'delete'=>$tmp['delete'][$k]);
+        }
+
+        $collection = Mage::getModel('bkg_license/master_agreement')->getCollection();
+        $collection->addMasterIdFilter(intval($model->getId()));
+
+        $items = array();
+        foreach($collection as $item)
+        {
+            $items[$item->getIdentifier()] = $item;
+        }
+
+        foreach($groups as $group)
+        {
+            if((count($items) > 0) && (isset($items[$group['value']]))){
+                $item = $items[$group['value']];
+            }else{
+                $item = Mage::getModel('bkg_license/master_agreement');
+            }
+
+            $item->setMasterId(intval($model->getId()));
+            $item->setIdentifier($group['value']);
+            $item->setPos($group['pos']);
+
+
+            if($group['delete'])
+            {
+                $item->delete();
+            }else{
+                $item->save();
+            }
+        }
+
+    }
 
     protected function _saveFees($data,$model)
     {
