@@ -19,6 +19,7 @@ class Egovs_Base_Block_Adminhtml_Widget_Form_Ol extends Varien_Data_Form_Element
         parent::__construct($attributes);
  		
         $this->_addpane = new Egovs_Base_Block_Adminhtml_Widget_Form_Ol_Addpane($attributes);
+        $this->_addpane->setData($attributes);
     }
     
     

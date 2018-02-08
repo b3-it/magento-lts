@@ -57,45 +57,15 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					/* Starting upload */
-					$uploader = new Varien_File_Uploader('filename');
-
-					// Any extention would work
-	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-					$uploader->setAllowRenameFiles(false);
-
-					// Set the file upload mode
-					// false -> get the file directly in the specified folder
-					// true -> get the file in the product like folders
-					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
-
-					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS ;
-					$uploader->save($path, $_FILES['filename']['name'] );
-
-				} catch (Exception $e) {
-
-		        }
-
-		        //this way the name is saved in DB
-	  			$data['filename'] = $_FILES['filename']['name'];
-			}
-
-
-			$model = Mage::getModel('bkg_license/entity');
+			$model = Mage::getModel('bkg_license/master');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 
+			$this->_saveCustomerGroup($data,$model);
+			$this->_saveFees($data,$model);
+			$this->_saveProducts($data,$model);
+
 			try {
-				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
-					$model->setCreatedTime(now())
-						->setUpdateTime(now());
-				} else {
-					$model->setUpdateTime(now());
-				}
 
 				$model->save();
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkg_license')->__('Item was successfully saved'));
@@ -117,6 +87,99 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkg_license')->__('Unable to find item to save'));
         $this->_redirect('*/*/');
 	}
+
+	protected function _saveCustomerGroup($data,$model)
+    {
+        $groups = $data['customer_groups'];
+        $collection = Mage::getModel('bkg_license/master_customergroups')->getCollection();
+        $collection->addMasterIdFilter(intval($model->getId()));
+
+        $items = array();
+        foreach($collection as $item)
+        {
+            if(in_array($item->getCustomergroupId(),$groups)) {
+                $items[$item->getCustomergroupId()] = $item;
+            }else{
+                $item->delete();
+            }
+        }
+
+        foreach($groups as $group)
+        {
+            if(isset($items[$group])){
+                $item = $items[$group];
+            }else{
+                $item = Mage::getModel('bkg_license/master_customergroups');
+            }
+
+            $item->setMasterId(intval($model->getId()));
+            $item->setCustomergroupId($group);
+            $item->save();
+        }
+
+    }
+
+    protected function _saveProducts($data,$model)
+    {
+        $groups = $data['products'];
+        $collection = Mage::getModel('bkg_license/master_products')->getCollection();
+        $collection->addMasterIdFilter(intval($model->getId()));
+
+        $items = array();
+        foreach($collection as $item)
+        {
+            if(in_array($item->getProductId(),$groups)) {
+                $items[$item->getProductId()] = $item;
+            }else{
+                $item->delete();
+            }
+        }
+
+        foreach($groups as $group)
+        {
+            if(isset($items[$group])){
+                $item = $items[$group];
+            }else{
+                $item = Mage::getModel('bkg_license/master_products');
+            }
+
+            $item->setMasterId(intval($model->getId()));
+            $item->setProductId($group);
+            $item->save();
+        }
+
+    }
+
+
+    protected function _saveFees($data,$model)
+    {
+        $fees = $data['fees'];
+        $collection = Mage::getModel('bkg_license/master_toll')->getCollection();
+        $collection->getSelect()->where('master_id ='. intval($model->getId()));
+
+        $items = array();
+        foreach($collection as $item)
+        {
+            $items[$item->getFeeCode()] = $item;
+        }
+
+        foreach($fees as $key =>$fee)
+        {
+            if(isset($items[$key])){
+                $item = $items[$key];
+            }else{
+                $item = Mage::getModel('bkg_license/master_toll');
+            }
+
+            $fee['id'] = $item->getId();
+            $item->setData($fee);
+            $item->setMasterId(intval($model->getId()));
+            $item->setFeeCode($key);
+            $item->save();
+        }
+
+
+    }
 
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {

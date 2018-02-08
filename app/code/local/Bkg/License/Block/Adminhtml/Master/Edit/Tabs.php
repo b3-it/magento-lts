@@ -21,6 +21,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tabs extends Mage_Adminhtml_Block_
 
   protected function _beforeToHtml()
   {
+
       $this->addTab('form_section', array(
           'label'     => Mage::helper('bkg_license')->__('Master Information'),
           'title'     => Mage::helper('bkg_license')->__('Master Information'),
@@ -51,7 +52,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tabs extends Mage_Adminhtml_Block_
       		'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_fees')->toHtml(),
       ));
       
-      
+
       $this->addTab('form_section5', array(
           'label'     => Mage::helper('bkg_license')->__('Customer Group'),
           'title'     => Mage::helper('bkg_license')->__('Customer Group Information'),

@@ -25,24 +25,30 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Products extends Mage_Adminhtm
             $values[] = array('value'=> $item->getId(),'label'=> $item->getSku().' '. $item->getName()) ;
         }
 
+
+        $collection = Mage::getModel('bkg_license/master_products')->getCollection();
+        $collection->addMasterIdFilter(Mage::registry('entity_data')->getId());
+
+        $value = array();
+        foreach($collection as $item)
+        {
+            $value[] = $item->getProductId();
+        }
+
+
+
         $fieldset->addField('products', 'multiselect', array(
             'label'     => Mage::helper('bkg_license')->__('Products'),
             //'class'     => 'required-entry',
             //'required'  => true,
             'name'      => 'products',
-            'values' => $values
+            'values' => $values,
+            'value' => $value
         ));
 
 
 
 
-        if ( Mage::getSingleton('adminhtml/session')->getmasteragreementData() )
-        {
-            $form->setValues(Mage::getSingleton('adminhtml/session')->getmasteragreementData());
-            Mage::getSingleton('adminhtml/session')->setmasteragreementData(null);
-        } elseif ( Mage::registry('masteragreement_data') ) {
-            $form->setValues(Mage::registry('masteragreement_data')->getData());
-        }
         return parent::_prepareForm();
     }
 }

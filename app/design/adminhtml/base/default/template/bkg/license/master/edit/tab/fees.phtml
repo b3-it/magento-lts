@@ -12,6 +12,7 @@
 				<th><?php echo $this->__('Fee')?></th>
 				<th><?php echo $this->__('Discount')?></th>
 				<th><?php echo $this->__('Percent')?></th>
+                <th><?php echo $this->__('Active')?></th>
 
 			</tr>
 			</thead>
@@ -19,11 +20,15 @@
 			<?php foreach($this->getFeesSections() as  $block):?>
 				<tr>
 					<td width="300px;"> <?php echo $block['label']?></td>
-					<td><input name="fees['<?php echo $block['ident']?>'][value]" value="" /></td>
-					<td><select name="fees['<?php echo $block['ident']?>'][is_percent]">
-							<option value="0"><?php echo $this->__('No')?></option><option value="1"><?php echo $this->__('Yes')?></option>
+					<td><input name="fees[<?php echo $block['ident']?>][discount]" value="<?php echo $this->getValues($block['ident'])->getDiscount() ?>" /></td>
+					<td><select name="fees[<?php echo $block['ident']?>][is_percent]">
+                            <?php echo $this->getYesNoOptions($this->getValues($block['ident'])->getIsPercent()) ?>
 						</select>
 					</td>
+                    <td><select name="fees[<?php echo $block['ident']?>][is_active]">
+                            <?php echo $this->getYesNoOptions($this->getValues($block['ident'])->getIsActive()) ?>
+                        </select>
+                    </td>
 					
 				</tr>
 			<?php endforeach;?>

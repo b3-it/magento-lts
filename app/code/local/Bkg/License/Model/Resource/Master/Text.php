@@ -13,6 +13,6 @@ class Bkg_License_Model_Resource_Text extends Mage_Core_Model_Resource_Db_Abstra
     public function _construct()
     {
         // Note that the id refers to the key field in your database table.
-        $this->_init('bkg_license/text', 'id');
+        $this->_init('bkg_license/master_text', 'id');
     }
 }

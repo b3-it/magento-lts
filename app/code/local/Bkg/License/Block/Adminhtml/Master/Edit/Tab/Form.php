@@ -97,6 +97,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       } elseif ( Mage::registry('entity_data') ) {
           $form->setValues(Mage::registry('entity_data')->getData());
       }
+
       return parent::_prepareForm();
   }
 }

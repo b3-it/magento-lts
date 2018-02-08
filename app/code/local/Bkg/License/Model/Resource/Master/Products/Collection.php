@@ -8,11 +8,11 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_License_Model_Resource_Products_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class Bkg_License_Model_Resource_Master_Products_Collection extends Bkg_License_Model_Resource_Master_AbstractCollection
 {
     public function _construct()
     {
         parent::_construct();
-        $this->_init('bkg_license/products');
+        $this->_init('bkg_license/master_products');
     }
 }

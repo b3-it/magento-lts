@@ -12,7 +12,7 @@
 class Bkg_License_Block_Adminhtml_Widget_Ol_Addpane extends Mage_Adminhtml_Block_Widget
 {
 	
-	protected function _construct($attributes)
+	protected function _construct($attributes = array())
 	{
 		parent::_construct();
 		$this->setTemplate('bkg/license/widget/form/ol/addpane.phtml');
