@@ -28,7 +28,17 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Agreement extends Mage_Adminht
 				'legend' => Mage::helper('bkg_orgunit')->__('Agreement information')
 		));
 
-		$values = $this->getCmsBlocks();
+        $collection = Mage::getModel('bkg_license/master_agreement')->getCollection();
+
+        $collection->addMasterIdFilter(Mage::registry('entity_data')->getId());
+
+        $value = array();
+        foreach($collection as $item)
+        {
+            $value[] = array('value'=>$item->getIdentifier(),'pos'=>$item->getPos());
+        }
+
+        $values = $this->getCmsBlocks();
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
 		$fieldset->addField('agreement', 'ol', array(
 				'label'     => Mage::helper('bkg_orgunit')->__('Short name'),
@@ -36,7 +46,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Agreement extends Mage_Adminht
 				//'required'  => true,
 				'name'      => 'agreement',
 				'values' =>$values,
-				'value' => array(array('value'=>'footer_links','pos'=>20),array('value'=>2,'pos'=>10))
+				'value' => $value
 		));
 	}
 
