@@ -23,8 +23,9 @@ $j(document).ready(function(){
  */
 function setDiffPrice(total, giff, element, highlight)
 {
-	var givenamount = parseFloat( giff );
-	var totalprice  = parseFloat( total );
+	
+	var givenamount = parseFloat(giff.replace(/,/g , "."));
+	var totalprice  = parseFloat(total.replace(/,/g , "."));
 	var diff        = givenamount - totalprice;
 
 	// Wenn es keine Zahl ist, dann 0 ausgeben
