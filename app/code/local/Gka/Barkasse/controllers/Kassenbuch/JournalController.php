@@ -79,7 +79,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     
     public function openAction()
     {
-    	$opening_balance = floatval($this->getRequest()->getParam('opening_balance'));
+    	$opening_balance = Gka_Barkasse_Helper_Data::parseFloat($this->getRequest()->getParam('opening_balance'));
     	$cashbox_id      = intval($this->getRequest()->getParam('cashbox_id'));
     	
     	
@@ -138,7 +138,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     public function closeAction()
     {
     	//$balance = intval($this->getRequest()->getParam('closing_balance'));
-    	$withdrawal = floatval($this->getRequest()->getParam('withdrawal'));
+    	$withdrawal = Gka_Barkasse_Helper_Data::parseFloat($this->getRequest()->getParam('withdrawal'));
     	$id         = intval($this->getRequest()->getParam('id'));
     	
     	$model = Mage::getModel('gka_barkasse/kassenbuch_journal')->loadById_Customer($id);

@@ -254,7 +254,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         	$this->_getCheckout()->setBillingAddress($billing);
         	$this->_getCheckout()->setShippingAddress($billing);
         	$this->_getCheckout()->setPaymentMethod($payment['method']);
-            $givenamount = $this->getRequest()->getParam('givenamount', false);
+            $givenamount = Gka_Checkout_Helper_Data::parseFloat($this->getRequest()->getParam('givenamount', false));
             $this->_getCheckout()->createOrder($givenamount);
             
             $this->_getCheckout()->getCheckoutSession()->clear();

@@ -294,4 +294,13 @@ class Gka_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return (Mage::app()->getRequest()->getParam('context') == 'checkout');
     }
+    
+    
+    
+    public static function parseFloat($str) {
+    	$str = preg_replace('[^0-9\,\.\-\+]', '', strval($str));
+    	$str = strtr($str, ',', '.');
+    	$pos = strrpos($str, '.');
+    	return ($pos===false ? floatval($str) : floatval(str_replace('.', '', substr($str, 0, $pos)) . substr($str, $pos)));
+    }
 }
