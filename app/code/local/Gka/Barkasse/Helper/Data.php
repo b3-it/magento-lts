@@ -104,4 +104,11 @@ class Gka_Barkasse_Helper_Data extends Egovs_Paymentbase_Helper_Data
 	
 		return $this;
 	}
+	
+	public static function parseFloat($str) {
+		$str = preg_replace('[^0-9\,\.\-\+]', '', strval($str));
+		$str = strtr($str, ',', '.');
+		$pos = strrpos($str, '.');
+		return ($pos===false ? floatval($str) : floatval(str_replace('.', '', substr($str, 0, $pos)) . substr($str, $pos)));
+	}
 }
