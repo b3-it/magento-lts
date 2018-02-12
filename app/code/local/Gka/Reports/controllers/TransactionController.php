@@ -32,7 +32,7 @@ class Gka_Reports_TransactionController extends Mage_Core_Controller_Front_Actio
     
     public function exportCsvAction()
     {
-    	$fileName   = 'kassenbuchjournal.csv';
+    	$fileName   = $this->_getFileName('xls');
     	$content    = $this->getLayout()->createBlock('gka_reports/transaction_grid')
     	->getCsv();
     
@@ -41,7 +41,7 @@ class Gka_Reports_TransactionController extends Mage_Core_Controller_Front_Actio
     
     public function exportXmlAction()
     {
-    	$fileName   = 'kassenbuchjournal.xml';
+    	$fileName   = $this->_getFileName('xml');
     	$content    = $this->getLayout()->createBlock('gka_reports/transaction_grid')
     	->getXml();
     
@@ -50,10 +50,19 @@ class Gka_Reports_TransactionController extends Mage_Core_Controller_Front_Actio
 
     public function exportExcelAction()
     {
-        $fileName   = 'report.xls';
+        $fileName   = $this->_getFileName('xls');
         $content    = $this->getLayout()->createBlock('gka_reports/transaction_grid')
             ->getExcel($fileName);
         $this->_sendUploadResponse($fileName, $content);
+    }
+    
+    protected function _getFileName($ext = "csv")
+    {
+    	$fileName   = $this->__('My Transactions');
+    	$fileName .= "_".date('Y-m-d') . ".".$ext;
+    	 
+    	return $fileName;
+    	
     }
     
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
@@ -62,7 +71,7 @@ class Gka_Reports_TransactionController extends Mage_Core_Controller_Front_Actio
     	$response->setHeader('HTTP/1.1 200 OK','');
     	$response->setHeader('Pragma', 'public', true);
     	$response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
-    	$response->setHeader('Content-Disposition', 'attachment; filename='.$fileName);
+    	$response->setHeader('Content-Disposition', 'attachment; filename="'.$fileName.'"');
     	$response->setHeader('Last-Modified', date('r'));
     	$response->setHeader('Accept-Ranges', 'bytes');
     	$response->setHeader('Content-Length', strlen($content));

@@ -195,6 +195,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
 
 		$this->addExportType('*/*/exportCsv', Mage::helper('gka_barkasse')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('gka_barkasse')->__('XML'));
+		$this->addExportType('*/*/exportExcel', Mage::helper('paymentbase')->__('XML (Excel)'));
 
       return parent::_prepareColumns();
   }
