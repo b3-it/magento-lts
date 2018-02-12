@@ -4,12 +4,23 @@
 					<td>
 						<div class="right" style="width:auto;">
 							<div class="entry-edit">
-								<select style="width:auto;">
+								<select id="tollcategory" onchange="<?php echo $this->getOnchange()?>" style="width:auto;">
 									<?php foreach($this->getValues() as $opt):?>
 										<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
 									<?php endforeach;?>
 								</select>
-								<button class="scalable" onclick="addTableRow( $j(this) );" type="button" title="<?php echo Mage::helper('bkg_license')->__('Add')?>">
+								<select id="toll" onchange="<?php echo $this->getOnchangeToll()?>" style="width:auto;">
+									<option value = '0'><?php echo $this->__('-- Please Select --')?> </option>
+								</select>
+								<select id="tolluse" onchange="<?php echo $this->getOnchangeUse()?>" style="width:auto;">
+									<option value = '0'><?php echo $this->__('-- Please Select --')?> </option>
+								</select>
+								<select id="tolloption" style="width:auto;">
+									<option value = '0'><?php echo $this->__('-- Please Select --')?> </option>
+								</select>
+								
+								
+								<button  class="scalable" onclick="addTableRow( $j(this) );" type="button" title="<?php echo Mage::helper('bkg_license')->__('Add')?>">
 									<?php echo Mage::helper('bkg_license')->__('Add')?>
 								</button>
 							</div>

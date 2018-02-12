@@ -62,7 +62,7 @@ function addTableRow(element)
 
     var destTable = element.parents('table').next('table').attr('id');
     var newItem   = element.parents('div.entry-edit').first().find('option:selected').text();
-    var newId     = element.parents('div.entry-edit').first().find('option:selected').val();
+    var newId     = element.parents('div.entry-edit').first().find('option:selected').last().val();
     var table     = destTable.replace(tabelPrefix, '');
     var nextID    = parseInt( $j('#' + destTable + ' tbody tr:last').index() ) + 1;
 

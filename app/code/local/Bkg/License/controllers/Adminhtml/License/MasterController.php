@@ -91,7 +91,11 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
 	protected function _saveCustomerGroup($data,$model)
     {
-        $groups = $data['customer_groups'];
+    	$groups = array();
+		if(isset($data['customer_groups']))
+		{
+        	$groups = $data['customer_groups'];
+		}
         $collection = Mage::getModel('bkg_license/master_customergroups')->getCollection();
         $collection->addMasterIdFilter(intval($model->getId()));
 
@@ -240,6 +244,58 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 		}
 		$this->_redirect('*/*/');
 	}
+	
+	
+	
+	public function tollAction()
+	{
+		$id = intval($this->getRequest()->getParam('id'));
+		$collection = Mage::getModel('bkg_tollpolicy/toll')->getCollection();
+		$collection->getSelect()
+		->where('toll_category_id=?',$id);
+		$res = array();
+		$res[] = array('value'=>0, 'label' =>  $this->__('-- Please Select --'));
+		foreach($collection->getItems() as $item)
+		{
+			$res[] = array('value'=>$item->getId(), 'label' => $item->getName());
+		}
+			
+		die (json_encode($res));
+	}
+	
+	public function useAction()
+	{
+		$id = intval($this->getRequest()->getParam('id'));
+		$collection = Mage::getModel('bkg_tollpolicy/usetype')->getCollection();
+		$collection->getSelect()
+		->where('toll_id=?',$id);
+		$res = array();
+		$res[] = array('value'=>0, 'label' =>  $this->__('-- Please Select --'));
+		foreach($collection->getItems() as $item)
+		{
+			$res[] = array('value'=>$item->getId(), 'label' => $item->getName());
+		}
+			
+		die (json_encode($res));
+	}
+	
+	public function optionAction()
+	{
+		$id = intval($this->getRequest()->getParam('id'));
+		$collection = Mage::getModel('bkg_tollpolicy/useoptions')->getCollection();
+		$collection->getSelect()
+		->where('use_type_id=?',$id);
+		$res = array();
+		$res[] = array('value'=>0, 'label' =>  $this->__('-- Please Select --'));
+		foreach($collection->getItems() as $item)
+		{
+			$res[] = array('value'=>$item->getId(), 'label' => $item->getName());
+		}
+			
+		die (json_encode($res));
+	}
+	
+	
 
     public function massDeleteAction() {
         $entityIds = $this->getRequest()->getParam('entity_ids');

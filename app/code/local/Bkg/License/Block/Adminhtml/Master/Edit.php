@@ -28,11 +28,59 @@ class Bkg_License_Block_Adminhtml_Master_Edit extends Mage_Adminhtml_Block_Widge
             'class'     => 'save',
         ), -100);
 
+        $toll_url = $this->getUrl('adminhtml/license_master/toll',array('id'=>'cat_id'));
+        $use_url = $this->getUrl('adminhtml/license_master/use',array('id'=>'use_id'));
+        $option_url = $this->getUrl('adminhtml/license_master/option',array('id'=>'opt_id'));
+        
         $this->_formScripts[] = "
             function saveAndContinueEdit(){
                 editForm.submit($('edit_form').action+'back/edit/');
             }
+        	
+        	function reloadToll()
+			{
+        		var url = '".$toll_url."';
+				var id = \$j('#tollcategory option:selected').val();
+        		url = url.replace('cat_id',id);
         		
+        		\$j.getJSON(url, function(data) {
+				    \$j('#toll option').remove();
+				    \$j.each(data, function(){
+				        \$j('#toll').append(new Option(this.label,this.value));
+					})
+        		})	
+				
+			}	
+   			
+        	function reloadUse()
+			{
+        		var url = '".$use_url."';
+				var id = \$j('#toll option:selected').val();
+        		url = url.replace('use_id',id);
+        		
+        		\$j.getJSON(url, function(data) {
+				    \$j('#tolluse option').remove();
+				    \$j.each(data, function(){
+				        \$j('#tolluse').append(new Option(this.label,this.value));
+					})
+        		})	
+				
+			}	
+        				
+        	function reloadUseOpt()
+			{
+        		var url = '".$option_url."';
+				var id = \$j('#tolluse option:selected').val();
+        		url = url.replace('opt_id',id);
+        		
+        		\$j.getJSON(url, function(data) {
+				    \$j('#tolloption option').remove();
+				    \$j.each(data, function(){
+				        \$j('#tolloption').append(new Option(this.label,this.value));
+					})
+        		})	
+				
+			}	
         		
             function toggleEditor() {
                 if (tinyMCE.getInstanceById('page_content') == null) {

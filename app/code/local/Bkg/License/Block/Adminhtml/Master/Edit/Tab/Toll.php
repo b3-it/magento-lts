@@ -27,7 +27,14 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Bl
 				'legend' => Mage::helper('bkg_orgunit')->__('Unit information')
 		));
 
-		$values = Mage::getModel('customer/customer_attribute_source_group')->getAllOptions();
+		$collection = Mage::getModel('bkg_tollpolicy/tollcategory')->getCollection();
+		$values = array();
+		$values[] = array('value'=>0,'label'=>$this->__('-- Please Select --'));
+		foreach ($collection as $item)
+		{
+			$values[] = array('value'=>$item->getId(),'label'=>$item->getName());
+		}
+	
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
 
 		$att = array(
@@ -36,12 +43,16 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Bl
 				//'required'  => true,
 				'name'      => 'toll',
 				'values' =>$values,
+				'onchange'  => 'reloadToll()',
+				'onchange_toll'  => 'reloadUse()',
+				'onchange_use'  => 'reloadUseOpt()',
 				'value' => array(array('value'=>1,'pos'=>20),array('value'=>2,'pos'=>10)));
 
 		$field = $fieldset->addField('toll', 'ol', $att);
 
-		//$pane = new Bkg_License_Block_Adminhtml_Widget_Ol_Addpane($att);
-		//$field->setAddPane($pane);
+		$pane = new Bkg_License_Block_Adminhtml_Widget_Ol_Addpane($att);
+		$pane->addData($att);
+		$field->setAddPane($pane);
 	}
 
 
