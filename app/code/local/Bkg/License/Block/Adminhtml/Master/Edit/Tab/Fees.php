@@ -52,7 +52,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Fees extends Mage_Adminhtml_Bl
     {
         if($this->_values== null)
         {
-            $collection = Mage::getModel('bkg_license/master_toll')->getCollection();
+            $collection = Mage::getModel('bkg_license/master_fee')->getCollection();
             $collection->getSelect()->where('master_id ='. intval(Mage::registry('entity_data')->getId()));
             $this->_values = $collection->getItems();
 
