@@ -58,13 +58,31 @@ function registerClickEvent()
  */
 function addTableRow(element)
 {
-    var type = 'hidden';
+    var type          = 'hidden';       // als was sollen die Inputfelder hinzugefügt werden
+    var foundItems    = new Array();    // Hilfsvariable für Auswahl
+    var noItemSelect  = '0';            // Welcher Wert bei SelectBoxen soll nicht benutzt werden
+    var itemSeparator = ', ';           // Text-Verbinder für die Darstellung der Auswahl
+    var lastIdValue   = '';             // ID der letzten vorhandenen Select-Box
 
-    var destTable = element.parents('table').next('table').attr('id');
-    var newItem   = element.parents('div.entry-edit').first().find('option:selected').text();
-    var newId     = element.parents('div.entry-edit').first().find('option:selected').last().val();
-    var table     = destTable.replace(tabelPrefix, '');
-    var nextID    = parseInt( $j('#' + destTable + ' tbody tr:last').index() ) + 1;
+    $j( element.parents('div.entry-edit').first().find('select') ).each(function(){
+        if ( $j(this).val() != noItemSelect ) {
+            foundItems.push( $j(this).find('option:selected').text() );
+            lastIdValue = $j(this).val();
+        }
+    });
+
+    if ( foundItems.length == 0 ) {
+        alert( messageNoItemSelected );
+        return;
+    }
+
+    var destTable    = element.parents('table').next('table').attr('id');
+    var firstIdValue = element.parents('div.entry-edit').first().find('option:selected').val();
+
+    var newItem = foundItems.join(itemSeparator);
+    var newId   = lastIdValue;
+    var table   = destTable.replace(tabelPrefix, '');
+    var nextID  = parseInt( $j('#' + destTable + ' tbody tr:last').index() ) + 1;
 
     var cellName = $j('<td />', {
         'text': newItem
@@ -90,9 +108,17 @@ function addTableRow(element)
     });
     cellName.append(inputValue).append(inputPosition).append(inputDelete);
 
+    if ( $j('#' + destTable + ' tbody').attr('data-up-down') == 0 ) {
+        var tplButtons = templateUpDownButtons + templateDelButton;
+    }
+    else {
+        var tplButtons = templateDelButton;
+    }
+
     var cellFunction = $j('<td />', {
         'class': 'position-sorting',
-        'html' : $j('#' + destTable + ' tbody tr:first td:last').html()
+        //'html' : $j('#' + destTable + ' tbody tr:first td:last').html()
+        'html' : tplButtons
     });
 
     var newRow = $j('<tr />', {

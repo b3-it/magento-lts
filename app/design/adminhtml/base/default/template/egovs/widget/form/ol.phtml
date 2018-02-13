@@ -4,6 +4,12 @@
 		<?php echo $this->__($this->getElement()->getLabel())?>
 	</td>
 	<td class="value">
+		<script type="text/javascript">
+			var messageNoItemSelected = '<?php echo $this->__('At least one option must be selected.'); ?>';
+			var templateUpDownButtons = '<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('bkg_license')->__('Up')?>"><span></span></button>' +
+			                            '<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('bkg_license')->__('Down')?>"><span></span></button>';
+			var templateDelButton = '<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('bkg_license')->__('Remove')?>"><span></span></button>';
+		</script>
 		<?php echo $this->getElement()->getAddPane()->toHtml()?>
 		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>">
 			<colgroup>
@@ -16,9 +22,9 @@
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody data-up-down="<?php if($this->getElement()->getShowUpDown() !== false) { echo 0; } else { echo 1; } ?>">
 				<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
-					<tr id="row-<?php echo $_itemID . '-' . $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $_itemID; ?>" >
+					<tr id="row-<?php echo $_itemID . '-' . $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $_itemID; ?>">
 						<td>
 							<?php echo $_item['label']; ?>
 							<input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item['value']?>" />
@@ -27,10 +33,10 @@
 						</td>
 						<td class="position-sorting">
 						<?php if($this->getElement()->getShowUpDown() !== false):?>
-							<button class="scalable position-up" type="button" title="<?php echo Mage::helper('bkg_license')->__('Up')?>"><span></span></button>
-							<button class="scalable position-down" type="button" title="<?php echo Mage::helper('bkg_license')->__('Down')?>"><span></span></button>
+							<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('bkg_license')->__('Up')?>"><span></span></button>
+							<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('bkg_license')->__('Down')?>"><span></span></button>
 						<?php endif;?>
-							<button class="scalable position-delete" type="button" title="<?php echo Mage::helper('bkg_license')->__('Remove')?>"><span></span></button>
+							<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('bkg_license')->__('Remove')?>"><span></span></button>
 						</td>
 					</tr>
 				<?php endforeach;?>

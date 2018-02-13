@@ -169,25 +169,33 @@ ins {
 .position-sorting button {
     height: 20px;
     width: 20px;
-    margin: 0 5px;
+    margin: 0 6px;
+    padding: 0 1px;
+}
+.position-sorting button:first-child {
+    float: left;
+}
+.position-sorting button:last-child {
+    float: right;
 }
 .position-sorting button:disabled {
-    cursor: not-allowed;
+    cursor: default;
+    background: transparent;
+    border-color: transparent;
+}
+.position-sorting button:disabled span {
+    background-image: none;
 }
 .position-sorting button span {
-    position: relative;
-    left: -2px;
-    top: -1px;
+    background-repeat: no-repeat;
+    background-size: 16px;
 }
-.position-sorting .position-up span:after {
-    /* https://www.toptal.com/designers/htmlarrows/arrows/ */
-    content: '\21E7';
+.position-sorting .position-up span {
+    background-image: url('../images/entry_edit_head_arrow_up.gif');
 }
-.position-sorting .position-down span:after {
-    /* https://www.toptal.com/designers/htmlarrows/arrows/ */
-    content: '\21E9';
+.position-sorting .position-down span {
+    background-image: url('../images/entry_edit_head_arrow_down.gif');
 }
-.position-sorting .position-delete span:after {
-    /* https://www.toptal.com/designers/htmlarrows/math/multiplication-sign/ */
-    content: '\00D7';
+.position-sorting .position-delete span {
+    background-image: url('../images/cancel_btn_icon.gif');
 }
