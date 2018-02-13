@@ -61,7 +61,7 @@ function addTableRow(element)
     var type          = 'hidden';       // als was sollen die Inputfelder hinzugefügt werden
     var foundItems    = new Array();    // Hilfsvariable für Auswahl
     var noItemSelect  = '0';            // Welcher Wert bei SelectBoxen soll nicht benutzt werden
-    var itemSeparator = ', ';           // Text-Verbinder für die Darstellung der Auswahl
+    var itemSeparator = ': ';           // Text-Verbinder für die Darstellung der Auswahl
     var lastIdValue   = '';             // ID der letzten vorhandenen Select-Box
 
     $j( element.parents('div.entry-edit').first().find('select') ).each(function(){
@@ -158,21 +158,36 @@ function deactivateUnlogicalButtons(destTable)
         var thisTable = tabelPrefix + tableID;
     }
 
+    var firstVisibleRow = '';
+    var lastVisibleRow  = '';
+
     var anzahlZeilenSichtbar = 0;
     $j('#' + thisTable + ' tbody tr').each(function(){
         if( $j(this).css('display') != 'none' ) {
             anzahlZeilenSichtbar ++;
+
+            if ( firstVisibleRow.length ) {
+                // erste sichtbare Zeile ist gesetzt => muss also die letzte sein
+                lastVisibleRow  = $j(this).attr('id');
+            }
+
+            if ( firstVisibleRow == '' ) {
+                // erste sichtbare Zeile setzen
+                firstVisibleRow = $j(this).attr('id');
+            }
         }
     });
 
-    if ( anzahlZeilenSichtbar == 1 ) {
+    if ( (anzahlZeilenSichtbar == 1) && firstVisibleRow.length ) {
         // nur eine Zeile
-        $j('#' + thisTable + ' tbody tr:first-child button.position-up').attr('disabled', 'disabled');
-        $j('#' + thisTable + ' tbody tr:first-child button.position-down').attr('disabled', 'disabled');
+        $j('#' + firstVisibleRow + ' button.position-up').attr('disabled', 'disabled');
+        $j('#' + firstVisibleRow + ' button.position-down').attr('disabled', 'disabled');
     }
     else {
-        $j('#' + thisTable + ' tbody tr:first-child button.position-up').attr('disabled', 'disabled');
-        $j('#' + thisTable + ' tbody tr:last-child button.position-down').attr('disabled', 'disabled');
+        if ( firstVisibleRow.length && lastVisibleRow.length ) {
+            $j('#' + firstVisibleRow + ' button.position-up').attr('disabled', 'disabled');
+            $j('#' + lastVisibleRow  + ' button.position-down').attr('disabled', 'disabled');
+        }
     }
 }
 
