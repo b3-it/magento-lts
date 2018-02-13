@@ -41,12 +41,18 @@
                   <master_products>
                     <table>bkg_license_master_products</table>
                   </master_products>
+                  <master_fee>
+                    <table>bkg_license_master_fee</table>
+                  </master_fee>
+                   <master_toll>
+                    <table>bkg_license_master_toll</table>
+                  </master_toll>
                   <master_customergroups>
                     <table>bkg_license_master_customergroups</table>
                   </master_customergroups>
-                  <master_toll>
-                    <table>bkg_license_master_toll</table>
-                  </master_toll>
+                  <master_useoption>
+                    <table>bkg_license_master_useoption</table>
+                  </master_useoption>
                   <master_agreement>
                     <table>bkg_license_master_agreement</table>
                   </master_agreement>

@@ -61,14 +61,18 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 
-			$this->_saveCustomerGroup($data,$model);
-			$this->_saveFees($data,$model);
-			$this->_saveProducts($data,$model);
-			$this->_saveAgreements($data,$model);
+			
 
 			try {
 
 				$model->save();
+				
+				$this->_saveCustomerGroup($data,$model);
+				$this->_saveFees($data,$model);
+				$this->_saveProducts($data,$model);
+				$this->_saveAgreements($data,$model);
+				$this->_saveToll($data,$model);
+				
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkg_license')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -196,11 +200,53 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
         }
 
     }
+    
+    protected function _saveToll($data,$model)
+    {
+    	$groups = array();
+    	$tmp = $data['toll'];
+    
+    	foreach($tmp['value'] as $k=>$v)
+    	{
+    		$groups[] = array('value'=>$v,'pos'=>$tmp['pos'][$k],'delete'=>$tmp['delete'][$k]);
+    	}
+    
+    	$collection = Mage::getModel('bkg_license/master_toll')->getCollection();
+    	$collection->addMasterIdFilter(intval($model->getId()));
+    
+    	$items = array();
+    	foreach($collection as $item)
+    	{
+    		$items[$item->getUseoptionId()] = $item;
+    	}
+    
+    	foreach($groups as $group)
+    	{
+    		if((count($items) > 0) && (isset($items[$group['value']]))){
+    			$item = $items[$group['value']];
+    		}else{
+    			$item = Mage::getModel('bkg_license/master_toll');
+    		}
+    
+    		$item->setMasterId(intval($model->getId()));
+    		$item->setUseoptionId($group['value']);
+    		$item->setPos($group['pos']);
+    
+    
+    		if($group['delete'])
+    		{
+    			$item->delete();
+    		}else{
+    			$item->save();
+    		}
+    	}
+    
+    }
 
     protected function _saveFees($data,$model)
     {
         $fees = $data['fees'];
-        $collection = Mage::getModel('bkg_license/master_toll')->getCollection();
+        $collection = Mage::getModel('bkg_license/master_fee')->getCollection();
         $collection->getSelect()->where('master_id ='. intval($model->getId()));
 
         $items = array();
@@ -214,7 +260,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
             if(isset($items[$key])){
                 $item = $items[$key];
             }else{
-                $item = Mage::getModel('bkg_license/master_toll');
+                $item = Mage::getModel('bkg_license/master_fee');
             }
 
             $fee['id'] = $item->getId();

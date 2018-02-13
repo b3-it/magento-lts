@@ -26,7 +26,7 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master')))
         `date_to` datetime default now(),
         `active` smallint(6) unsigned default '0',
         `consternation_check` smallint(6) unsigned default '0',
-        `content` MEDIUMTEXT default '' 
+        `content` MEDIUMTEXT default '', 
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
     ");
@@ -47,6 +47,25 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master_products')
 ");
 }
 
+
+if (!$installer->tableExists($installer->getTable('bkg_license/master_toll')))
+{
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_toll')};
+			CREATE TABLE {$installer->getTable('bkg_license/master_toll')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `useoption_id` int(11) unsigned NOT NULL ,
+	  `useoption_code` varchar(255) default '' ,
+	  `master_id` int(11) unsigned NOT NULL ,
+	  `pos` int(11) default '0',
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`master_id`) REFERENCES `{$this->getTable('bkg_license/master')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`useoption_id`) REFERENCES `{$this->getTable('bkg_tollpolicy/use_options_entity')}`(`id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
+
+
 if (!$installer->tableExists($installer->getTable('bkg_license/master_customergroups')))
 {
 	$installer->run("
@@ -64,11 +83,11 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master_customergr
 		");
 }
 
-if (!$installer->tableExists($installer->getTable('bkg_license/master_toll')))
+if (!$installer->tableExists($installer->getTable('bkg_license/master_fee')))
 {
 	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_toll')};
-	CREATE TABLE {$installer->getTable('bkg_license/master_toll')} (
+	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_fee')};
+	CREATE TABLE {$installer->getTable('bkg_license/master_fee')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
     `master_id` int(11) unsigned NOT NULL,
         `fee_code` varchar(255) default '',
@@ -100,21 +119,20 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master_agreement'
 		");
 }
 
-if (!$installer->tableExists($installer->getTable('bkg_license/master_text')))
+if (!$installer->tableExists($installer->getTable('bkg_license/master_useoption')))
 {
 	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_text')};
-	CREATE TABLE {$installer->getTable('bkg_license/master_text')} (
+	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_useoption')};
+	CREATE TABLE {$installer->getTable('bkg_license/master_useoption')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-    `master_id` int(11) unsigned NOT NULL,
-        `identifier` varchar(128) default '',
-        `pos` int(11) default '0',
-    
+      `master_id` int(11) unsigned NOT NULL,
+      `use_option_id` int(11) unsigned,
+      `pos` int(11) default '0',
 	  PRIMARY KEY (`id`),
+      FOREIGN KEY (`use_option_id`) REFERENCES `{$this->getTable('bkg_tollpolicy/use_options_entity')}`(`id`) ON DELETE CASCADE,
       FOREIGN KEY (`master_id`) REFERENCES `{$this->getTable('bkg_license/master')}`(`id`) ON DELETE CASCADE
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-		");
+");
 }
 
 if (!$installer->tableExists($installer->getTable('bkg_license/copy')))
