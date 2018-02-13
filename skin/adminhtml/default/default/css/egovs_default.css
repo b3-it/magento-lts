@@ -197,13 +197,16 @@ ins {
 }
 .position-sorting button span {
     background-repeat: no-repeat;
-    background-size: 16px;
+    background-size: 14px;
+    position: relative;
+    top: -1px;
+    left: 1px;
 }
 .position-sorting .position-up span {
-    background-image: url('../images/entry_edit_head_arrow_up.gif');
+    background-image: url('../images/entry_edit_orange_head_arrow_up.gif');
 }
 .position-sorting .position-down span {
-    background-image: url('../images/entry_edit_head_arrow_down.gif');
+    background-image: url('../images/entry_edit_orange_head_arrow_down.gif');
 }
 .position-sorting .position-delete span {
     background-image: url('../images/cancel_btn_icon.gif');
