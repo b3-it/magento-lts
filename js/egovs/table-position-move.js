@@ -45,7 +45,7 @@ function registerClickEvent()
         }
         else if ( $j(this).is('.position-delete') ) {
             row.css('display', 'none');
-            $j('input#delete-' + row.attr('data-id')).attr('value', 1);
+            $j('input#delete-' + row.attr('data-table') + '-' + row.attr('data-id')).attr('value', 1);
         }
 
         // Unbenutzbare Buttons setzen
