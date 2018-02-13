@@ -13,9 +13,9 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('entity/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Entity Manager'), Mage::helper('adminhtml')->__('Entity Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('Entity Manager'));
+			->_setActiveMenu('bkglicense/bkglicense_master')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('License Master'), Mage::helper('adminhtml')->__('License Master'));
+		$this->_title(Mage::helper('adminhtml')->__('License Master'));
 		return $this;
 	}
 

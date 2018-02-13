@@ -95,7 +95,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit extends Mage_Adminhtml_Block_Widge
     public function getHeaderText()
     {
         if( Mage::registry('entity_data') && Mage::registry('entity_data')->getId() ) {
-            return Mage::helper('bkg_license')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('entity_data')->getId()));
+            return Mage::helper('bkg_license')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('entity_data')->getName()));
         } else {
             return Mage::helper('bkg_license')->__('Add Item');
         }

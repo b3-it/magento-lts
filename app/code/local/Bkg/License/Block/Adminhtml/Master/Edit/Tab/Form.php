@@ -14,7 +14,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('entity_form', array('legend'=>Mage::helper('bkg_license')->__(' Master Information')));
+      $fieldset = $form->addFieldset('entity_form', array('legend'=>Mage::helper('bkg_license')->__('Master License Information')));
 
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_license')->__('Name'),
@@ -24,7 +24,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       ));
 
       $fieldset->addField('ident', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Lizenznummer'),
+          'label'     => Mage::helper('bkg_license')->__('Number of License'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'ident',
@@ -33,7 +33,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
    
 
       $fieldset->addField('type', 'select', array(
-          'label'     => Mage::helper('bkg_license')->__('Lizenztyp'),
+          'label'     => Mage::helper('bkg_license')->__('Type of License'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'type',
@@ -43,7 +43,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       $yesno = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
       
       $fieldset->addField('reuse', 'select', array(
-          'label'     => Mage::helper('bkg_license')->__('Nchnutzung'),
+          'label'     => Mage::helper('bkg_license')->__('Reuse'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'reuse',
@@ -74,14 +74,14 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       
      
       $fieldset->addField('active', 'select', array(
-          'label'     => Mage::helper('bkg_license')->__('Aktiv'),
+          'label'     => Mage::helper('bkg_license')->__('Active'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'active',
       	  'values' => $yesno
       ));
       $fieldset->addField('consternation_check', 'select', array(
-          'label'     => Mage::helper('bkg_license')->__('Betroffenheit prüfen'),
+          'label'     => Mage::helper('bkg_license')->__('Check Consternation'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'consternation_check',

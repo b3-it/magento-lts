@@ -24,7 +24,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Bl
 
 		// Tabelle mehrspaltig
 		$fieldset = $form->addFieldset('unit_form', array(
-				'legend' => Mage::helper('bkg_orgunit')->__('Unit information')
+				'legend' => Mage::helper('bkg_orgunit')->__('Type Of Use Information')
 		));
 
 		//die Einträge der ersten selectbox - Gebührenkategorien
@@ -66,7 +66,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Toll extends Mage_Adminhtml_Bl
 		//das Eingabeelement mit ausgetauschter Kopfzeile
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
 		$att = array(
-				'label'     => Mage::helper('bkg_orgunit')->__('Short name'),
+				'label'     => Mage::helper('bkg_orgunit')->__('Type Of Use'),
 				//'class'     => 'required-entry',
 				//'required'  => true,
 				'name'      => 'toll',

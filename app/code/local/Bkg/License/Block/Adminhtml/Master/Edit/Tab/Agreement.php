@@ -25,7 +25,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Agreement extends Mage_Adminht
 
 		// Tabelle mehrspaltig
 		$fieldset = $form->addFieldset('agreement_form', array(
-				'legend' => Mage::helper('bkg_orgunit')->__('Agreement information')
+				'legend' => Mage::helper('bkg_orgunit')->__('Agreement')
 		));
 
         $collection = Mage::getModel('bkg_license/master_agreement')->getCollection();
@@ -41,7 +41,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Agreement extends Mage_Adminht
         $values = $this->getCmsBlocks();
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
 		$fieldset->addField('agreement', 'ol', array(
-				'label'     => Mage::helper('bkg_orgunit')->__('Short name'),
+				'label'     => Mage::helper('bkg_orgunit')->__('Block'),
 				//'class'     => 'required-entry',
 				//'required'  => true,
 				'name'      => 'agreement',

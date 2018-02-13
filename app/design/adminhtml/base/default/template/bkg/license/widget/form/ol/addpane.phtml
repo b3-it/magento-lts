@@ -5,7 +5,7 @@
 						<div class="right select-button-container">
 							<div class="entry-edit">
 								<select id="tollcategory" onchange="<?php echo $this->getOnchange()?>">
-									<?php foreach($this->getValues() as $opt):?>
+									<?php foreach($this->getValuesCat() as $opt):?>
 										<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
 									<?php endforeach;?>
 								</select>

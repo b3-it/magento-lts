@@ -16,15 +16,15 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tabs extends Mage_Adminhtml_Block_
       parent::__construct();
       $this->setId('entity_tabs');
       $this->setDestElementId('edit_form');
-      $this->setTitle(Mage::helper('bkg_license')->__('Entity Information'));
+      $this->setTitle(Mage::helper('bkg_license')->__('Master License'));
   }
 
   protected function _beforeToHtml()
   {
 
       $this->addTab('form_section', array(
-          'label'     => Mage::helper('bkg_license')->__('Master Information'),
-          'title'     => Mage::helper('bkg_license')->__('Master Information'),
+          'label'     => Mage::helper('bkg_license')->__('Master License Information'),
+          'title'     => Mage::helper('bkg_license')->__('Master License Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_form')->toHtml(),
       ));
 
@@ -47,8 +47,8 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tabs extends Mage_Adminhtml_Block_
       ));
 
       $this->addTab('form_section4', array(
-      		'label'     => Mage::helper('bkg_license')->__('Fees'),
-      		'title'     => Mage::helper('bkg_license')->__('Fees Information'),
+      		'label'     => Mage::helper('bkg_license')->__('Fee Discount'),
+      		'title'     => Mage::helper('bkg_license')->__('Fee Discount'),
       		'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_fees')->toHtml(),
       ));
       

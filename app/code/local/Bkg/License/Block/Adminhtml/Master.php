@@ -14,7 +14,7 @@ class Bkg_License_Block_Adminhtml_Master extends Mage_Adminhtml_Block_Widget_Gri
   {
     $this->_controller = 'adminhtml_master';
     $this->_blockGroup = 'bkg_license';
-    $this->_headerText = Mage::helper('bkg_license')->__('License Master Manager');
+    $this->_headerText = Mage::helper('bkg_license')->__('License Master');
     $this->_addButtonLabel = Mage::helper('bkg_license')->__('Add Item');
     parent::__construct();
   }

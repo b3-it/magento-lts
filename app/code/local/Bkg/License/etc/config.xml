@@ -122,18 +122,23 @@
     <adminhtml>
       <menu>
           <bkglicense module="bkg_license">
-              <title>Bkg License</title>
+              <title>License</title>
               <sort_order>50</sort_order>
               <children>
                   <bkglicense_master module="bkg_license">
-                      <title>Master</title>
+                      <title>License Master</title>
                       <sort_order>10</sort_order>
                       <action>adminhtml/license_master/index</action>
                   </bkglicense_master>
                   <bkglicense_copy module="bkg_license">
-                      <title>Copy</title>
+                      <title>License Copy</title>
                       <sort_order>20</sort_order>
                       <action>adminhtml/license_copy/index</action>
+                  </bkglicense_copy>
+                  <bkglicense_copy module="bkg_license">
+                      <title>Test Copy</title>
+                      <sort_order>20</sort_order>
+                      <action>adminhtml/license_test/index</action>
                   </bkglicense_copy>
                   <!--
                   <bkglicense_products module="bkg_license">
