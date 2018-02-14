@@ -47,7 +47,7 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     	return $this->_products;
     }
     
-    public function getTolls()
+    public function getToll()
     {
     	if($this->_tolls == null)
     	{
@@ -67,7 +67,7 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     	return $this->_customergroups;
     }
     
-    public function getFees()
+    public function getFee()
     {
     	if($this->_fees == null)
     	{
@@ -77,7 +77,7 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     	return $this->_fees;
     }
     
-    public function getAgreements()
+    public function getAgreement()
     {
     	if($this->_agreements == null)
     	{
@@ -94,7 +94,7 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     	return $this->_products;
     }
     
-    public function setTolls($value)
+    public function setToll($value)
     {
     	$this->_tolls = $value;
     	return $this->_tolls;
@@ -106,13 +106,13 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     	return $this->_customergroups;
     }
     
-    public function setFees($value)
+    public function setFee($value)
     {
     	$this->_fees = $value;
     	return $this->_fees;
     }
     
-    public function setAgreements($value)
+    public function setAgreement($value)
     {
     	$this->_agreements = $value;
     	return $this->_agreements;

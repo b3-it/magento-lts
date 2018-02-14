@@ -34,7 +34,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				$model->setData($data);
 			}
 
-			Mage::register('copyentity_data', $model);
+			Mage::register('entity_data', $model);
 
 			$this->_initAction();
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);

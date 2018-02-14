@@ -54,7 +54,7 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
 		$copy->setData($data);
     	
 		
-		$members = array('Agreements','Fee','Customergroups','Products','Toll');
+		$members = array('Agreement','Fee','Customergroups','Products','Toll');
 		foreach($members as $member)
 		{
 			$values = array();

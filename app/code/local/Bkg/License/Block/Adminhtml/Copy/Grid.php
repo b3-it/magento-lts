@@ -3,7 +3,7 @@
   *
   * @category   	Bkg License
   * @package    	Bkg_License
-  * @name       	Bkg_License_Block_Adminhtml_Copy_Entity_Grid
+  * @name       	Bkg_License_Block_Adminhtml_Copy_Grid
   * @author 		Holger Kögel <h.koegel@b3-it.de>
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
@@ -13,8 +13,8 @@ class Bkg_License_Block_Adminhtml_Copy_Grid extends Mage_Adminhtml_Block_Widget_
   public function __construct()
   {
       parent::__construct();
-      $this->setId('copy_entityGrid');
-      $this->setDefaultSort('copy_entity_id');
+      $this->setId('entityGrid');
+      $this->setDefaultSort('entity_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
   }
@@ -22,6 +22,13 @@ class Bkg_License_Block_Adminhtml_Copy_Grid extends Mage_Adminhtml_Block_Widget_
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('bkg_license/copy')->getCollection();
+      $products = new Zend_Db_Expr("(SELECT mpr.copy_id as copy_id, GROUP_CONCAT(sku SEPARATOR '; ')  as product_sku FROM {$collection->getTable('bkg_license/copy_products')} AS mpr
+      JOIN  {$collection->getTable('catalog/product')} AS pr ON pr.entity_id=mpr.product_id GROUP BY(copy_id))");
+      $collection->getSelect()
+      ->joinleft(array('products'=>$products),'products.copy_id=main_table.id');
+      
+      //die($collection->getSelect()->__toString());
+      
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -34,85 +41,91 @@ class Bkg_License_Block_Adminhtml_Copy_Grid extends Mage_Adminhtml_Block_Widget_
           'width'     => '50px',
           'index'     => 'id',
       ));
-
+      
+      
+      $this->addColumn('ident', array(
+      		'header'    => Mage::helper('bkg_license')->__('Number of License'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'ident',
+      ));
+      $this->addColumn('name', array(
+      		'header'    => Mage::helper('bkg_license')->__('Name'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'name',
+      ));
+      $this->addColumn('active', array(
+      		'header'    => Mage::helper('bkg_license')->__('Active'),
+      		//'align'     =>'left',
+      		'width'     => '50px',
+      		'index'     => 'active',
+      		'type'      => 'options',
+      		'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
+      ));
+      $this->addColumn('date_from', array(
+      		'header'    => Mage::helper('bkg_license')->__('Anfangsdatum'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'date_from',
+      		'type' => 'date'
+      ));
+      $this->addColumn('date_to', array(
+      		'header'    => Mage::helper('bkg_license')->__('Enddatum'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'date_to',
+      		'type' => 'date'
+      ));
+     
+      $this->addColumn('type', array(
+      		'header'    => Mage::helper('bkg_license')->__('Type of License'),
+      		//'align'     =>'left',
+      		'width'     => '50px',
+      		'index'     => 'type',
+      		'type' => 'options',
+      		'options'=>Bkg_License_Model_Type::getOptionArray()
+      ));
+      
+      $this->addColumn('products', array(
+      		'header'    => Mage::helper('bkg_license')->__('Products'),
+      		//'align'     =>'left',
+      		//'width'     => '50px',
+      		'index'     => 'product_sku',
+      		
+      ));
+      
+/*
       $this->addColumn('usetypeoption_id', array(
-          'header'    => Mage::helper('bkg_license')->__('Nutzungsart'),
+          'header'    => Mage::helper('bkg_license')->__('Type Of Use'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'usetypeoption_id',
       ));
       $this->addColumn('customergroup_id', array(
-          'header'    => Mage::helper('bkg_license')->__('Kundengruppe'),
+          'header'    => Mage::helper('bkg_license')->__('Customer Group'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'customergroup_id',
       ));
-      $this->addColumn('type', array(
-          'header'    => Mage::helper('bkg_license')->__('Lizenztyp'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'type',
-      ));
+    
+      */
       $this->addColumn('reuse', array(
-          'header'    => Mage::helper('bkg_license')->__('Nchnutzung'),
+          'header'    => Mage::helper('bkg_license')->__('Reuse'),
           //'align'     =>'left',
-          //'width'     => '150px',
+          'width'     => '50px',
           'index'     => 'reuse',
+      		'type'      => 'options',
+      		'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
       ));
-      $this->addColumn('ident', array(
-          'header'    => Mage::helper('bkg_license')->__('Lizenznummer'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'ident',
-      ));
-      $this->addColumn('name', array(
-          'header'    => Mage::helper('bkg_license')->__('Name'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'name',
-      ));
-      $this->addColumn('date_from', array(
-          'header'    => Mage::helper('bkg_license')->__('Anfangsdatum'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'date_from',
-      ));
-      $this->addColumn('date_to', array(
-          'header'    => Mage::helper('bkg_license')->__('Enddatum'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'date_to',
-      ));
-      $this->addColumn('active', array(
-          'header'    => Mage::helper('bkg_license')->__('Aktiv'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'active',
-      ));
-      $this->addColumn('consternation_check', array(
-          'header'    => Mage::helper('bkg_license')->__('Betroffenheit prüfen'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'consternation_check',
-      ));
-      $this->addColumn('master_id', array(
-          'header'    => Mage::helper('bkg_license')->__('Muster'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'master_id',
-      ));
-      $this->addColumn('product_id', array(
-          'header'    => Mage::helper('bkg_license')->__('Produkt'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'product_id',
-      ));
-      $this->addColumn('customer_id', array(
-          'header'    => Mage::helper('bkg_license')->__('Kunde'),
-          //'align'     =>'left',
-          //'width'     => '150px',
-          'index'     => 'customer_id',
-      ));
+
+
+//       $this->addColumn('consternation_check', array(
+//           'header'    => Mage::helper('bkg_license')->__('Check Consternation'),
+//           //'align'     =>'left',
+//           //'width'     => '150px',
+//           'index'     => 'consternation_check',
+//       ));
 
         $this->addColumn('action',
             array(
@@ -142,7 +155,7 @@ class Bkg_License_Block_Adminhtml_Copy_Grid extends Mage_Adminhtml_Block_Widget_
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('copyentity_ids');
+        $this->getMassactionBlock()->setFormFieldName('entity_ids');
 
         $this->getMassactionBlock()->addItem('delete', array(
              'label'    => Mage::helper('bkg_license')->__('Delete'),
