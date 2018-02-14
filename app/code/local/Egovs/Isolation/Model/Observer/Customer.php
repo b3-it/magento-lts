@@ -45,21 +45,22 @@ class Egovs_Isolation_Model_Observer_Customer extends Egovs_Isolation_Model_Obse
     	$StoreViews = $this->getUserStoreViews();
     	$storeGroups = $this->getUserStoreGroups();
     	$store = $customer->getStoreId();
-    	
+	
     	if($store === 0 ) { return; }
-    	if($customer->getId()) { return; }
+    	if($customer->getId()==0) { return; }
     	
     	if(($storeGroups) && (count($storeGroups) > 0)) 
     	{
     		$storeGroups = implode(',', $storeGroups);
     		
     		$collection = Mage::getModel('sales/order')->getCollection();
-    		$expr = new Zend_Db_Expr("(SELECT order_id as oid FROM ".$collection->getTable('sales/order_item')." WHERE store_group in (".$storeGroups.") GROUP BY order_id)");
+    		//SalesOrderCollection filtert bereits nach gekauften Items    		
+    		//$expr = new Zend_Db_Expr("(SELECT order_id as oid FROM ".$collection->getTable('sales/order_item')." WHERE store_group in (".$storeGroups.") GROUP BY order_id)");
     		$collection->getSelect()
-    			->join(array('order_item' => $expr),"order_item.oid=main_table.entity_id",array())
+    			//->join(array('order_item' => $expr),"order_item.oid=main_table.entity_id",array())
     			->where('customer_id = '. intval($customer->getId()))
     			;
-// die($collection->getSelect()->__toString());   		
+ 			//die($collection->getSelect()->__toString());   		
     		if(count($collection->getItems()) > 0)
     		{
     			return ;
