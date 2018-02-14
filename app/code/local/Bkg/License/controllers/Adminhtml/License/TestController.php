@@ -14,15 +14,65 @@ class Bkg_License_Adminhtml_License_TestController extends Mage_Adminhtml_Contro
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('bkglicense/bkglicense_master')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('License Master'), Mage::helper('adminhtml')->__('License Master'));
-		$this->_title(Mage::helper('adminhtml')->__('License Master'));
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('License Test'), Mage::helper('adminhtml')->__('License Test'));
+		$this->_title(Mage::helper('adminhtml')->__('License Test'));
 		return $this;
 	}
 
 	public function indexAction() {
-		$this->_initAction()
-			->renderLayout();
-		die('wwww');
+		$this->_initAction();
+		
+			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+			
+			$this->_addContent($this->getLayout()->createBlock('bkg_license/adminhtml_test_edit'));
+			
+			$this->renderLayout();
+			return;
+			
+	}
+	
+	public function saveAction() {
+		$this->_initAction();
+		if ($data = $this->getRequest()->getPost()) {
+	
+			$customer = Mage::getModel('customer/customer')->load($data['customer']);
+			$product = Mage::getModel('catalog/product')->load($data['product']);
+			$toll =  Mage::getModel('bkg_license/master_toll')->load($data['tolloption'],'useoption_id');
+			
+			$master = Mage::getModel('bkg_license/master')->getLicense($customer,$product,$toll);
+			Mage::register('license_master', $master);
+		}
+		
+		$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+			
+		$this->_addContent($this->getLayout()->createBlock('bkg_license/adminhtml_test_search'));
+			
+		$this->renderLayout();
+		return;
+	}
+	
+	public function copyAction() {
+		$this->_initAction();
+		$id     =  intval($this->getRequest()->getParam('id'));
+		if ($data = $this->getRequest()->getPost()) {
+	
+		
+				
+			$master = Mage::getModel('bkg_license/master')->load($id);
+			Mage::register('license_master', $master);
+			
+			
+			$copy = $master->createCopyLicense();
+			Mage::register('license_copy', $copy);
+			
+		}
+	
+		$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+			
+		$this->_addContent($this->getLayout()->createBlock('bkg_license/adminhtml_test_search'));
+			
+		$this->renderLayout();
+		return;
 	}
 
 

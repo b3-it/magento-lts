@@ -135,87 +135,130 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master_useoption'
 ");
 }
 
+$installer->startSetup();
 if (!$installer->tableExists($installer->getTable('bkg_license/copy')))
 {
-$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy')};
-	CREATE TABLE {$installer->getTable('bkg_license/copy')} (
-	    `id` int(11) unsigned NOT NULL auto_increment,
---        `usetypeoption_id` int(11) unsigned default null,
---        `usetypeoption` varchar(255) default '',
-        `type` smallint(6) unsigned default '0',
-        `reuse` smallint(6) unsigned default '0',
-        `ident` varchar(255) default '',
-        `name` varchar(255) default '',
-        `date_from` datetime default now(),
-        `date_to` datetime default now(),
-        `active` smallint(6) default '0',
-        `consternation_check` smallint(6) default '0',
-        `master_id` int(11) unsigned ,
-        `product_id` int(11) unsigned,
-        `customer_id` int(11) unsigned ,
-    
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `type` smallint(6) unsigned default '0',
+	  `reuse` smallint(6) unsigned default '0',
+	  `ident` varchar(255) default '',
+	  `name` varchar(255) default '',
+	  `date_from` date default NULL,
+	  `date_to` date default NULL,
+	  `active` smallint(6) unsigned default '0',
+	  `consternation_check` smallint(6) unsigned default '0',
+	  `content` MEDIUMTEXT default '',
+	  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			");
+}
+
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_products')))
+{
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_products')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_products')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `product_id` int(11) unsigned NOT NULL ,
+	  `copy_id` int(11) unsigned NOT NULL ,
 	  PRIMARY KEY (`id`),
-     -- FOREIGN KEY (`usetypeoption_id`) REFERENCES `{$this->getTable('bkg_tollpolicy/use_options_entity')}`(`id`) ON DELETE SET NULL,
-      FOREIGN KEY (`master_id`) REFERENCES `{$this->getTable('bkg_license/master')}`(`id`) ON DELETE SET NULL
-
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-		");
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`product_id`) REFERENCES `{$this->getTable('catalog/product')}`(`entity_id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
 }
 
 
 if (!$installer->tableExists($installer->getTable('bkg_license/copy_toll')))
 {
-    $installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_toll')};
-	CREATE TABLE {$installer->getTable('bkg_license/copy_toll')} (
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_toll')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_toll')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-    `copy_id` int(11) unsigned NOT NULL ,
-        `fee_code` varchar(128) default '',
-        `is_percent` smallint(6) default '0',
-        `discount` DECIMAL(12,4) default '0',
-    
+	  `useoption_id` int(11) unsigned NOT NULL ,
+	  `useoption_code` varchar(255) default '' ,
+	  `copy_id` int(11) unsigned NOT NULL ,
+	  `pos` int(11) default '0',
 	  PRIMARY KEY (`id`),
-     FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`useoption_id`) REFERENCES `{$this->getTable('bkg_tollpolicy/use_options_entity')}`(`id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
 
-		");
+
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_customergroups')))
+{
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_customergroups')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_customergroups')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `customergroup_id` smallint(5) unsigned NOT NULL ,
+	  `copy_id` int(11) unsigned NOT NULL ,
+
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`customergroup_id`) REFERENCES `{$this->getTable('customer/customer_group')}`(`customer_group_id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+	  ");
+}
+
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_fee')))
+{
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_fee')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_fee')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `copy_id` int(11) unsigned NOT NULL,
+	  `fee_code` varchar(255) default '',
+	  `is_percent` smallint(6) default '0',
+	  `is_active` smallint(6) default '0',
+	  `discount` DECIMAL(12,4) default '0',
+
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+	  ");
 }
 
 if (!$installer->tableExists($installer->getTable('bkg_license/copy_agreement')))
 {
-    $installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_agreement')};
-	CREATE TABLE {$installer->getTable('bkg_license/copy_agreement')} (
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_agreement')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_agreement')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-    `copy_id` int(11) unsigned NOT NULL,
-        `identifier` varchar(255) default '',
-        `pos` int(11) unsigned default '0',
-    
-	  PRIMARY KEY (`id`),
-     FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  `copy_id` int(11) unsigned NOT NULL ,
+	  `identifier` varchar(128) default '',
+	  `pos` int(11) default '0',
 
-		");
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+	  ");
 }
 
-if (!$installer->tableExists($installer->getTable('bkg_license/copy_text')))
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_useoption')))
 {
-    $installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_text')};
-	CREATE TABLE {$installer->getTable('bkg_license/copy_text')} (
+	$installer->run("
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_useoption')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_useoption')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-      `copy_id` int(11) unsigned NOT NULL ,
-      `identifier` varchar(255) default '',
-      `pos` varchar(128) default '0',
-    
+	  `copy_id` int(11) unsigned NOT NULL,
+	  `use_option_id` int(11) unsigned,
+	  `pos` int(11) default '0',
 	  PRIMARY KEY (`id`),
-    FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-		");
+	  FOREIGN KEY (`use_option_id`) REFERENCES `{$this->getTable('bkg_tollpolicy/use_options_entity')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
 }
+
 
 /*
 if (!$installer->getAttribute('catalog_product', 'request')) {

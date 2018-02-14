@@ -56,9 +56,7 @@
                   <master_agreement>
                     <table>bkg_license_master_agreement</table>
                   </master_agreement>
-                  <master_text>
-                    <table>bkg_license_master_text</table>
-                  </master_text>
+                 
 
                     <copy>
                         <table>bkg_license_copy</table>
@@ -72,9 +70,19 @@
                     <copy_agreement>
                         <table>bkg_license_copy_agreement</table>
                     </copy_agreement>
-                    <copy_text>
-                        <table>bkg_license_copy_text</table>
-                    </copy_text>
+                    <copy_products>
+                    <table>bkg_license_copy_products</table>
+                  </copy_products>
+                  <copy_fee>
+                    <table>bkg_license_copy_fee</table>
+                  </copy_fee>
+                  
+                  <copy_customergroups>
+                    <table>bkg_license_copy_customergroups</table>
+                  </copy_customergroups>
+                  <copy_useoption>
+                    <table>bkg_license_copy_useoption</table>
+                  </copy_useoption>
 
 
                 </entities>
@@ -135,11 +143,11 @@
                       <sort_order>20</sort_order>
                       <action>adminhtml/license_copy/index</action>
                   </bkglicense_copy>
-                  <bkglicense_copy module="bkg_license">
+                  <bkglicense_test module="bkg_license">
                       <title>Test Copy</title>
-                      <sort_order>20</sort_order>
+                      <sort_order>30</sort_order>
                       <action>adminhtml/license_test/index</action>
-                  </bkglicense_copy>
+                  </bkglicense_test>
                   <!--
                   <bkglicense_products module="bkg_license">
                       <title>Products</title>
