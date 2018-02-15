@@ -3,12 +3,12 @@
  *
  * @category   	Bkg License
  * @package    	Bkg_License
- * @name       	Bkg_License_Block_Adminhtml_Copy_Edit
+ * @name       	Bkg_License_Block_Adminhtml_Master_Edit
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class Bkg_License_Block_Adminhtml_Test_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()
     {
@@ -16,26 +16,20 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
 
         $this->_objectId = 'id';
         $this->_blockGroup = 'bkg_license';
-        $this->_controller = 'adminhtml_copy';
+        $this->_controller = 'adminhtml_test';
 
-        $this->_updateButton('save', 'label', Mage::helper('bkg_license')->__('Save Item'));
-        $this->_updateButton('delete', 'label', Mage::helper('bkg_license')->__('Delete Item'));
+        $this->_updateButton('save', 'label', Mage::helper('bkg_license')->__('Search License'));
+        
+        $this->_removeButton('delete');
+        $this->_removeButton('back');
+        $this->_removeButton('reset');
 
 
-        $this->_addButton('saveandcontinue', array(
-            'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
-            'onclick'   => 'saveAndContinueEdit()',
-            'class'     => 'save',
-        ), -100);
-
-        $toll_url = $this->getUrl('adminhtml/license_copy/toll',array('id'=>'cat_id'));
-        $use_url = $this->getUrl('adminhtml/license_copy/use',array('id'=>'use_id'));
-        $option_url = $this->getUrl('adminhtml/license_copy/option',array('id'=>'opt_id'));
+        $toll_url = $this->getUrl('adminhtml/license_master/toll',array('id'=>'cat_id'));
+        $use_url = $this->getUrl('adminhtml/license_master/use',array('id'=>'use_id'));
+        $option_url = $this->getUrl('adminhtml/license_master/option',array('id'=>'opt_id'));
         
         $this->_formScripts[] = "
-            function saveAndContinueEdit(){
-                editForm.submit($('edit_form').action+'back/edit/');
-            }
         	
         	function reloadToll()
 			{

@@ -3,7 +3,7 @@
  *
  * @category   	Bkg License
  * @package    	Bkg_License
- * @name       	Bkg_License_Block_Adminhtml_Copy_Entity_Edit_Tab_Form
+ * @name       	Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
@@ -14,96 +14,90 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('copyentity_form', array('legend'=>Mage::helper('bkg_license')->__(' Copy Entity information')));
+      $fieldset = $form->addFieldset('entity_form', array('legend'=>Mage::helper('bkg_license')->__('Copy License Information')));
 
-      $fieldset->addField('usetypeoption_id', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Nutzungsart'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'usetypeoption_id',
-      ));
-      $fieldset->addField('customergroup_id', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Kundengruppe'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'customergroup_id',
-      ));
-      $fieldset->addField('type', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Lizenztyp'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'type',
-      ));
-      $fieldset->addField('reuse', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Nchnutzung'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'reuse',
-      ));
-      $fieldset->addField('ident', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Lizenznummer'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'ident',
-      ));
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_license')->__('Name'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'name',
       ));
-      $fieldset->addField('date_from', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Anfangsdatum'),
+
+      $fieldset->addField('ident', 'text', array(
+          'label'     => Mage::helper('bkg_license')->__('Number of License'),
           //'class'     => 'required-entry',
           //'required'  => true,
-          'name'      => 'date_from',
+          'name'      => 'ident',
       ));
-      $fieldset->addField('date_to', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Enddatum'),
+
+   
+
+      $fieldset->addField('type', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Type of License'),
           //'class'     => 'required-entry',
           //'required'  => true,
-          'name'      => 'date_to',
+          'name'      => 'type',
+      		'values' => Bkg_License_Model_Type::getOptionArray()
       ));
-      $fieldset->addField('active', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Aktiv'),
+      
+      $yesno = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
+      
+      $fieldset->addField('reuse', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Reuse'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'reuse',
+      	  'values' => $yesno
+      ));
+
+      
+      $dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+      $fieldset->addField('date_from', 'date', array(
+      		'label'     => Mage::helper('bkg_license')->__('Start Date'),
+      		'name'      => 'date_from',
+      		'input_format' => Varien_Date::DATE_INTERNAL_FORMAT,
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'format'       => $dateFormatIso,
+      		'image'  => $this->getSkinUrl('images/grid-cal.gif'),
+      ));
+      
+      $fieldset->addField('date_to', 'date', array(
+      		'label'     => Mage::helper('bkg_license')->__('End Date'),
+      		'name'      => 'date_to',
+      		'input_format' => Varien_Date::DATE_INTERNAL_FORMAT,
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'format'       => $dateFormatIso,
+      		'image'  => $this->getSkinUrl('images/grid-cal.gif'),
+      ));
+      
+     
+      $fieldset->addField('active', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Active'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'active',
+      	  'values' => $yesno
       ));
-      $fieldset->addField('consternation_check', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Betroffenheit prüfen'),
+      $fieldset->addField('consternation_check', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Check Consternation'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'consternation_check',
-      ));
-      $fieldset->addField('master_id', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Muster'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'master_id',
-      ));
-      $fieldset->addField('product_id', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Produkt'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'product_id',
-      ));
-      $fieldset->addField('customer_id', 'text', array(
-          'label'     => Mage::helper('bkg_license')->__('Kunde'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'customer_id',
+      		'values' => $yesno
       ));
 
 
 
-      if ( Mage::getSingleton('adminhtml/session')->getcopyentityData() )
+      if ( Mage::getSingleton('adminhtml/session')->getentityData() )
       {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getcopyentityData());
-          Mage::getSingleton('adminhtml/session')->setcopyentityData(null);
-      } elseif ( Mage::registry('copyentity_data') ) {
-          $form->setValues(Mage::registry('copyentity_data')->getData());
+          $form->setValues(Mage::getSingleton('adminhtml/session')->getentityData());
+          Mage::getSingleton('adminhtml/session')->setentityData(null);
+      } elseif ( Mage::registry('entity_data') ) {
+          $form->setValues(Mage::registry('entity_data')->getData());
       }
+
       return parent::_prepareForm();
   }
 }
