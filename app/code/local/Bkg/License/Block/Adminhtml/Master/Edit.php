@@ -83,10 +83,10 @@ class Bkg_License_Block_Adminhtml_Master_Edit extends Mage_Adminhtml_Block_Widge
 			}	
         		
             function toggleEditor() {
-                if (tinyMCE.getInstanceById('page_content') == null) {
-                    tinyMCE.execCommand('mceAddControl', false, 'text_content');
+                if (tinyMCE.getInstanceById('page_template') == null) {
+                    tinyMCE.execCommand('mceAddControl', false, 'text_template');
                 } else {
-                    tinyMCE.execCommand('mceRemoveControl', false, 'text_content');
+                    tinyMCE.execCommand('mceRemoveControl', false, 'text_template');
                 }
             }
 		 ";

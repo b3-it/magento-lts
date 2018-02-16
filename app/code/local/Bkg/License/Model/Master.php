@@ -21,8 +21,8 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
     	$collection = $this->getCollection();
     	$date = date('Y-m-d');
     	$collection->getSelect()
-    		->join(array('product'=>$collection->getTable('bkg_license/master_products')),'product.master_id = main_table.id',array())
-    		->join(array('cgroup'=>$collection->getTable('bkg_license/master_customergroups')),'cgroup.master_id = main_table.id',array())
+    		->join(array('product'=>$collection->getTable('bkg_license/master_product')),'product.master_id = main_table.id',array())
+    		->join(array('cgroup'=>$collection->getTable('bkg_license/master_customergroup')),'cgroup.master_id = main_table.id',array())
     		->join(array('toll'=>$collection->getTable('bkg_license/master_toll')),'toll.master_id = main_table.id',array())
     		->where('product.product_id=?',intval($product->getId()))
     		->where('cgroup.customergroup_id=?',intval($customer->getGroupId()))
@@ -43,18 +43,20 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
     }
     
     
-    public function createCopyLicense()
+    public function createCopyLicense($customer)
     {
     	$copy = Mage::getModel('bkg_license/copy');
     	
     	$data = $this->getData();
 		
 		unset($data['id']);
-		 
-		$copy->setData($data);
-    	
 		
-		$members = array('Agreement','Fee','Customergroups','Products','Toll');
+		$copy->setData($data);
+		$copy->setCustomer($customer);
+		
+
+		
+		$members = array('Agreement','Fee','Customergroup','Product','Toll');
 		foreach($members as $member)
 		{
 			$values = array();
@@ -68,6 +70,7 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
 		}
 		
 		$copy->save();
+		$copy->processTemplate()->save();
     	return $copy;
     }
     

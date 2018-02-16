@@ -22,10 +22,10 @@ class Bkg_License_Block_Adminhtml_Copy_Grid extends Mage_Adminhtml_Block_Widget_
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('bkg_license/copy')->getCollection();
-      $products = new Zend_Db_Expr("(SELECT mpr.copy_id as copy_id, GROUP_CONCAT(sku SEPARATOR '; ')  as product_sku FROM {$collection->getTable('bkg_license/copy_products')} AS mpr
+      $product = new Zend_Db_Expr("(SELECT mpr.copy_id as copy_id, GROUP_CONCAT(sku SEPARATOR '; ')  as product_sku FROM {$collection->getTable('bkg_license/copy_product')} AS mpr
       JOIN  {$collection->getTable('catalog/product')} AS pr ON pr.entity_id=mpr.product_id GROUP BY(copy_id))");
       $collection->getSelect()
-      ->joinleft(array('products'=>$products),'products.copy_id=main_table.id');
+      ->joinleft(array('product'=>$product),'product.copy_id=main_table.id');
       
       //die($collection->getSelect()->__toString());
       
@@ -87,8 +87,8 @@ class Bkg_License_Block_Adminhtml_Copy_Grid extends Mage_Adminhtml_Block_Widget_
       		'options'=>Bkg_License_Model_Type::getOptionArray()
       ));
       
-      $this->addColumn('products', array(
-      		'header'    => Mage::helper('bkg_license')->__('Products'),
+      $this->addColumn('product', array(
+      		'header'    => Mage::helper('bkg_license')->__('Product'),
       		//'align'     =>'left',
       		//'width'     => '50px',
       		'index'     => 'product_sku',
@@ -155,7 +155,7 @@ class Bkg_License_Block_Adminhtml_Copy_Grid extends Mage_Adminhtml_Block_Widget_
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('entity_ids');
+        $this->getMassactionBlock()->setFormFieldName('copyentity_ids');
 
         $this->getMassactionBlock()->addItem('delete', array(
              'label'    => Mage::helper('bkg_license')->__('Delete'),

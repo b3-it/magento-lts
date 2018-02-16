@@ -69,7 +69,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 				
 				$this->_saveCustomerGroup($data,$model);
 				$this->_saveFees($data,$model);
-				$this->_saveProducts($data,$model);
+				$this->_saveProduct($data,$model);
 				$this->_saveAgreements($data,$model);
 				$this->_saveToll($data,$model);
 				
@@ -100,7 +100,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 		{
         	$groups = $data['customer_groups'];
 		}
-        $collection = Mage::getModel('bkg_license/master_customergroups')->getCollection();
+        $collection = Mage::getModel('bkg_license/master_customergroup')->getCollection();
         $collection->addMasterIdFilter(intval($model->getId()));
 
         $items = array();
@@ -118,7 +118,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
             if(isset($items[$group])){
                 $item = $items[$group];
             }else{
-                $item = Mage::getModel('bkg_license/master_customergroups');
+                $item = Mage::getModel('bkg_license/master_customergroup');
             }
 
             $item->setMasterId(intval($model->getId()));
@@ -128,10 +128,10 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
     }
 
-    protected function _saveProducts($data,$model)
+    protected function _saveProduct($data,$model)
     {
-        $groups = $data['products'];
-        $collection = Mage::getModel('bkg_license/master_products')->getCollection();
+        $groups = $data['product'];
+        $collection = Mage::getModel('bkg_license/master_product')->getCollection();
         $collection->addMasterIdFilter(intval($model->getId()));
 
         $items = array();
@@ -149,7 +149,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
             if(isset($items[$group])){
                 $item = $items[$group];
             }else{
-                $item = Mage::getModel('bkg_license/master_products');
+                $item = Mage::getModel('bkg_license/master_product');
             }
 
             $item->setMasterId(intval($model->getId()));
@@ -350,7 +350,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
         } else {
             try {
                 foreach ($entityIds as $entityId) {
-                    $bkg_license = Mage::getModel('bkg_license/entity')->load($entityId);
+                    $bkg_license = Mage::getModel('bkg_license/master')->load($entityId);
                     $bkg_license->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
@@ -373,7 +373,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
         } else {
             try {
                 foreach ($entityIds as $entityId) {
-                    $entity = Mage::getSingleton('bkg_license/entity')
+                    $entity = Mage::getSingleton('bkg_license/master')
                         ->load($entityId)
                         ->setStatus($this->getRequest()->getParam('status'))
                         ->setIsMassupdate(true)

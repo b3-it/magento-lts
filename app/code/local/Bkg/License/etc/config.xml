@@ -38,18 +38,18 @@
                   <master>
                     <table>bkg_license_master</table>
                   </master>
-                  <master_products>
-                    <table>bkg_license_master_products</table>
-                  </master_products>
+                  <master_product>
+                    <table>bkg_license_master_product</table>
+                  </master_product>
                   <master_fee>
                     <table>bkg_license_master_fee</table>
                   </master_fee>
                    <master_toll>
                     <table>bkg_license_master_toll</table>
                   </master_toll>
-                  <master_customergroups>
-                    <table>bkg_license_master_customergroups</table>
-                  </master_customergroups>
+                  <master_customergroup>
+                    <table>bkg_license_master_customergroup</table>
+                  </master_customergroup>
                   <master_useoption>
                     <table>bkg_license_master_useoption</table>
                   </master_useoption>
@@ -61,25 +61,25 @@
                     <copy>
                         <table>bkg_license_copy</table>
                     </copy>
-                    <copy_customergroups>
-                        <table>bkg_license_copy_customergroups</table>
-                    </copy_customergroups>
+                    <copy_customergroup>
+                        <table>bkg_license_copy_customergroup</table>
+                    </copy_customergroup>
                     <copy_toll>
                         <table>bkg_license_copy_toll</table>
                     </copy_toll>
                     <copy_agreement>
                         <table>bkg_license_copy_agreement</table>
                     </copy_agreement>
-                    <copy_products>
-                    <table>bkg_license_copy_products</table>
-                  </copy_products>
+                    <copy_product>
+                    <table>bkg_license_copy_product</table>
+                  </copy_product>
                   <copy_fee>
                     <table>bkg_license_copy_fee</table>
                   </copy_fee>
                   
-                  <copy_customergroups>
-                    <table>bkg_license_copy_customergroups</table>
-                  </copy_customergroups>
+                  <copy_customergroup>
+                    <table>bkg_license_copy_customergroup</table>
+                  </copy_customergroup>
                   <copy_useoption>
                     <table>bkg_license_copy_useoption</table>
                   </copy_useoption>
@@ -149,16 +149,16 @@
                       <action>adminhtml/license_test/index</action>
                   </bkglicense_test>
                   <!--
-                  <bkglicense_products module="bkg_license">
-                      <title>Products</title>
+                  <bkglicense_product module="bkg_license">
+                      <title>Product</title>
                       <sort_order>20</sort_order>
-                      <action>adminhtml/license_products/index</action>
-                  </bkglicense_products>
-                  <bkglicense_customergroups module="bkg_license">
-                      <title>Customergroups</title>
+                      <action>adminhtml/license_product/index</action>
+                  </bkglicense_product>
+                  <bkglicense_customergroup module="bkg_license">
+                      <title>Customergroup</title>
                       <sort_order>30</sort_order>
-                      <action>adminhtml/license_customergroups/index</action>
-                  </bkglicense_customergroups>
+                      <action>adminhtml/license_customergroup/index</action>
+                  </bkglicense_customergroup>
                   <bkglicense_toll module="bkg_license">
                       <title>Toll</title>
                       <sort_order>40</sort_order>
@@ -193,14 +193,14 @@
                                   <title>Entity</title>
                                   <sort_order>10</sort_order>
                               </bkglicense_entity>
-                                <bkglicense_products module="bkg_license">
-                                  <title>Products</title>
+                                <bkglicense_product module="bkg_license">
+                                  <title>Product</title>
                                   <sort_order>20</sort_order>
-                              </bkglicense_products>
-                                <bkglicense_customergroups module="bkg_license">
-                                  <title>Customergroups</title>
+                              </bkglicense_product>
+                                <bkglicense_customergroup module="bkg_license">
+                                  <title>Customergroup</title>
                                   <sort_order>30</sort_order>
-                              </bkglicense_customergroups>
+                              </bkglicense_customergroup>
                                 <bkglicense_toll module="bkg_license">
                                   <title>Toll</title>
                                   <sort_order>40</sort_order>

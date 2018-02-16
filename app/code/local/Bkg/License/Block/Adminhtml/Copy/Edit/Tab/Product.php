@@ -3,18 +3,18 @@
  *
  * @category   	Bkg Licence
  * @package    	Bkg_Licence
- * @name       	Bkg_License_Block_Adminhtml_Master_Edit_Tab_Customergroup
+ * @name       	Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Customergroup
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Products extends Mage_Adminhtml_Block_Widget_Form
+class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Product extends Mage_Adminhtml_Block_Widget_Form
 {
     protected function _prepareForm()
     {
         $form = new Varien_Data_Form();
         $this->setForm($form);
-        $fieldset = $form->addFieldset('masteragreement_form', array('legend'=>Mage::helper('bkg_license')->__('Products')));
+        $fieldset = $form->addFieldset('copyagreement_form', array('legend'=>Mage::helper('bkg_license')->__('Product')));
 
 
         $collection = Mage::getModel('catalog/product')->getCollection();
@@ -26,8 +26,8 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Products extends Mage_Adminhtm
         }
 
 
-        $collection = Mage::getModel('bkg_license/master_products')->getCollection();
-        $collection->addMasterIdFilter(Mage::registry('entity_data')->getId());
+        $collection = Mage::getModel('bkg_license/copy_product')->getCollection();
+        $collection->addCopyIdFilter(Mage::registry('entity_data')->getId());
 
         $value = array();
         foreach($collection as $item)
@@ -37,11 +37,11 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Products extends Mage_Adminhtm
 
 
 
-        $fieldset->addField('products', 'multiselect', array(
-            'label'     => Mage::helper('bkg_license')->__('Products'),
+        $fieldset->addField('product', 'multiselect', array(
+            'label'     => Mage::helper('bkg_license')->__('Product'),
             //'class'     => 'required-entry',
             //'required'  => true,
-            'name'      => 'products',
+            'name'      => 'product',
             'values' => $values,
             'value' => $value
         ));

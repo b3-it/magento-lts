@@ -72,6 +72,24 @@ class Bkg_Tollpolicy_Block_Adminhtml_Toll_Edit_Form extends Mage_Adminhtml_Block
       		'values' => $values
       ));
       
+      $values = array();
+      
+      $fieldset->addField('abrechnung_int', 'multiselect', array(
+      		'label'     => Mage::helper('bkg_tollpolicy')->__('abrechnung_int'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'abrechnung_int',
+      		'values' => $values
+      ));
+      
+      $fieldset->addField('abrechnung_ext', 'multiselect', array(
+      		'label'     => Mage::helper('bkg_tollpolicy')->__('abrechnung_ext'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'abrechnung_ext',
+      		'values' => $values
+      ));
+      
       
       
       if ( Mage::getSingleton('adminhtml/session')->gettoll_entityData() )

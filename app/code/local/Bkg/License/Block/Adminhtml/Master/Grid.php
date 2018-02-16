@@ -22,10 +22,10 @@ class Bkg_License_Block_Adminhtml_Master_Grid extends Mage_Adminhtml_Block_Widge
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('bkg_license/master')->getCollection();
-      $products = new Zend_Db_Expr("(SELECT mpr.master_id as master_id, GROUP_CONCAT(sku SEPARATOR '; ')  as product_sku FROM {$collection->getTable('bkg_license/master_products')} AS mpr
+      $product = new Zend_Db_Expr("(SELECT mpr.master_id as master_id, GROUP_CONCAT(sku SEPARATOR '; ')  as product_sku FROM {$collection->getTable('bkg_license/master_product')} AS mpr
       JOIN  {$collection->getTable('catalog/product')} AS pr ON pr.entity_id=mpr.product_id GROUP BY(master_id))");
       $collection->getSelect()
-      ->joinleft(array('products'=>$products),'products.master_id=main_table.id');
+      ->joinleft(array('product'=>$product),'product.master_id=main_table.id');
       
       //die($collection->getSelect()->__toString());
       
@@ -87,8 +87,8 @@ class Bkg_License_Block_Adminhtml_Master_Grid extends Mage_Adminhtml_Block_Widge
       		'options'=>Bkg_License_Model_Type::getOptionArray()
       ));
       
-      $this->addColumn('products', array(
-      		'header'    => Mage::helper('bkg_license')->__('Products'),
+      $this->addColumn('product', array(
+      		'header'    => Mage::helper('bkg_license')->__('Product'),
       		//'align'     =>'left',
       		//'width'     => '50px',
       		'index'     => 'product_sku',
@@ -155,7 +155,7 @@ class Bkg_License_Block_Adminhtml_Master_Grid extends Mage_Adminhtml_Block_Widge
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('entity_ids');
+        $this->getMassactionBlock()->setFormFieldName('masterentity_ids');
 
         $this->getMassactionBlock()->addItem('delete', array(
              'label'    => Mage::helper('bkg_license')->__('Delete'),

@@ -42,13 +42,31 @@ class Bkg_Tollpolicy_Block_Adminhtml_Usetype_Grid extends Mage_Adminhtml_Block_W
           //'width'     => '150px',
           'index'     => 'name',
       ));
-      $this->addColumn('active', array(
-          'header'    => Mage::helper('bkg_tollpolicy')->__('Active'),
+      $this->addColumn('internal', array(
+          'header'    => Mage::helper('bkg_tollpolicy')->__('Internal'),
           //'align'     =>'left',
           'width'     => '100px',
-          'index'     => 'active',
+          'index'     => 'internal',
           'type'      => 'options',
           'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
+      ));
+      
+      $this->addColumn('external', array(
+      		'header'    => Mage::helper('bkg_tollpolicy')->__('External'),
+      		//'align'     =>'left',
+      		'width'     => '100px',
+      		'index'     => 'external',
+      		'type'      => 'options',
+      		'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
+      ));
+      
+      $this->addColumn('active', array(
+      		'header'    => Mage::helper('bkg_tollpolicy')->__('Active'),
+      		//'align'     =>'left',
+      		'width'     => '100px',
+      		'index'     => 'active',
+      		'type'      => 'options',
+      		'options'   => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
       ));
 //       $this->addColumn('internal', array(
 //           'header'    => Mage::helper('bkg_tollpolicy')->__('internal'),

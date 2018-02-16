@@ -18,7 +18,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Customergroup extends Mage_Admin
 
 
 
-        $collection = Mage::getModel('bkg_license/copy_customergroups')->getCollection();
+        $collection = Mage::getModel('bkg_license/copy_customergroup')->getCollection();
         $collection->addCopyIdFilter(Mage::registry('entity_data')->getId());
 
         $value = array();

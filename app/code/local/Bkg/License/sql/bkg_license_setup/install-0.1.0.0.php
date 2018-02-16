@@ -26,17 +26,17 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master')))
         `date_to` date default NULL,
         `active` smallint(6) unsigned default '0',
         `consternation_check` smallint(6) unsigned default '0',
-        `content` MEDIUMTEXT default '', 
+        `template` MEDIUMTEXT default '', 
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
     ");
 }
 
-if (!$installer->tableExists($installer->getTable('bkg_license/master_products')))
+if (!$installer->tableExists($installer->getTable('bkg_license/master_product')))
 {
 	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_products')};
-	CREATE TABLE {$installer->getTable('bkg_license/master_products')} (
+	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_product')};
+	CREATE TABLE {$installer->getTable('bkg_license/master_product')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
       `product_id` int(11) unsigned NOT NULL ,
       `master_id` int(11) unsigned NOT NULL ,    
@@ -66,11 +66,11 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master_toll')))
 }
 
 
-if (!$installer->tableExists($installer->getTable('bkg_license/master_customergroups')))
+if (!$installer->tableExists($installer->getTable('bkg_license/master_customergroup')))
 {
 	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_customergroups')};
-	CREATE TABLE {$installer->getTable('bkg_license/master_customergroups')} (
+	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/master_customergroup')};
+	CREATE TABLE {$installer->getTable('bkg_license/master_customergroup')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
         `customergroup_id` smallint(5) unsigned NOT NULL ,
         `master_id` int(11) unsigned NOT NULL ,
@@ -94,7 +94,6 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master_fee')))
         `is_percent` smallint(6) default '0',
         `is_active` smallint(6) default '0',
         `discount` DECIMAL(12,4) default '0',
-    
 	  PRIMARY KEY (`id`),
     FOREIGN KEY (`master_id`) REFERENCES `{$this->getTable('bkg_license/master')}`(`id`) ON DELETE CASCADE
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -139,8 +138,8 @@ $installer->startSetup();
 if (!$installer->tableExists($installer->getTable('bkg_license/copy')))
 {
 	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy')};
-			CREATE TABLE {$installer->getTable('bkg_license/copy')} (
+	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy')};
+	CREATE TABLE {$installer->getTable('bkg_license/copy')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `type` smallint(6) unsigned default '0',
 	  `reuse` smallint(6) unsigned default '0',
@@ -150,17 +149,23 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy')))
 	  `date_to` date default NULL,
 	  `active` smallint(6) unsigned default '0',
 	  `consternation_check` smallint(6) unsigned default '0',
+	  `template` MEDIUMTEXT default '',
 	  `content` MEDIUMTEXT default '',
+	  `customer_id` int(11) unsigned default NULL,
+	  `orgunit_id` int(11) unsigned default NULL,
+	  `is_orgunit` smallint(6) unsigned default '0',
+	  FOREIGN KEY (`customer_id`) REFERENCES `{$this->getTable('customer/customer')}`(`entity_id`) ON SET NULL,
+	  FOREIGN KEY (`orgunit_id`) REFERENCES `{$this->getTable('bkg_orgunit/unit')}`(`id`) ON SET NULL,
 	  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-			");
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	");
 }
 
-if (!$installer->tableExists($installer->getTable('bkg_license/copy_products')))
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_product')))
 {
 	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_products')};
-			CREATE TABLE {$installer->getTable('bkg_license/copy_products')} (
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_product')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_product')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `product_id` int(11) unsigned NOT NULL ,
 	  `copy_id` int(11) unsigned NOT NULL ,
@@ -190,11 +195,11 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy_toll')))
 }
 
 
-if (!$installer->tableExists($installer->getTable('bkg_license/copy_customergroups')))
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_customergroup')))
 {
 	$installer->run("
-			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_customergroups')};
-			CREATE TABLE {$installer->getTable('bkg_license/copy_customergroups')} (
+			-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_customergroup')};
+			CREATE TABLE {$installer->getTable('bkg_license/copy_customergroup')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `customergroup_id` smallint(5) unsigned NOT NULL ,
 	  `copy_id` int(11) unsigned NOT NULL ,

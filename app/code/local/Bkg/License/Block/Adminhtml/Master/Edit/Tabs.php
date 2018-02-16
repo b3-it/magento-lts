@@ -60,9 +60,9 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tabs extends Mage_Adminhtml_Block_
       ));
 
       $this->addTab('form_section6', array(
-          'label'     => Mage::helper('bkg_license')->__('Products'),
-          'title'     => Mage::helper('bkg_license')->__('Products Information'),
-          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_products')->toHtml(),
+          'label'     => Mage::helper('bkg_license')->__('Product'),
+          'title'     => Mage::helper('bkg_license')->__('Product Information'),
+          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_master_edit_tab_product')->toHtml(),
       ));
 
       return parent::_beforeToHtml();

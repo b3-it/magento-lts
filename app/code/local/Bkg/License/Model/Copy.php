@@ -8,7 +8,7 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_License_Model_Copy extends Bkg_License_Model_Abstract
+class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 {
     public function _construct()
     {
@@ -25,5 +25,27 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Abstract
     		}
     	}
     }
+    
+    /**
+     *
+     * @param unknown $resourceName
+     * @return Mage_Core_Model_Resource_Db_Collection_Abstract
+     */
+    protected function _getRelated($resourceName)
+    {
+    	$collection = Mage::getModel($resourceName)->getCollection();
+    	$collection->getSelect()->where('copy_id=?',intval($this->getId()));
+    	 
+    	return $collection->getItems();
+    }
+    
+    
+    public function processTemplate()
+    {
+    	$this->setContent($this->_replaceVariables($this->getTemplate()));
+    	return $this;
+    }
+		
+	
     
 }

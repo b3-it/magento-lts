@@ -61,8 +61,8 @@ class Bkg_License_Adminhtml_License_TestController extends Mage_Adminhtml_Contro
 			$master = Mage::getModel('bkg_license/master')->load($id);
 			Mage::register('license_master', $master);
 			
-			
-			$copy = $master->createCopyLicense();
+			$customer = Mage::getModel('customer/customer')->load($data['customer']);
+			$copy = $master->createCopyLicense($customer);
 			Mage::register('license_copy', $copy);
 			
 		}

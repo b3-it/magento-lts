@@ -11,10 +11,10 @@
 class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
 {
    
-	protected $_products = null;
+	protected $_product = null;
 	protected $_tolls = null;
 	protected $_fees = null;
-	protected $_customergroups = null;
+	protected $_customergroup = null;
 	protected $_agreements = null;
     
     public function getLicense($customer,$product,$toll)
@@ -37,14 +37,14 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     }
     
     
-    public function getProducts()
+    public function getProduct()
     {
-    	if($this->_products == null)
+    	if($this->_product == null)
     	{
-    		$resourceName = $this->_resourceName . '_products';
-    		$this->_products = $this->_getRelated($resourceName);
+    		$resourceName = $this->_resourceName . '_product';
+    		$this->_product = $this->_getRelated($resourceName);
     	}
-    	return $this->_products;
+    	return $this->_product;
     }
     
     public function getToll()
@@ -57,14 +57,14 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     	return $this->_tolls;
     }
     
-    public function getCustomerGroups()
+    public function getCustomergroup()
     {
-    	if($this->_customergroups == null)
+    	if($this->_customergroup == null)
     	{
-    		$resourceName = $this->_resourceName . '_customergroups';
-    		$this->_customergroups = $this->_getRelated($resourceName);
+    		$resourceName = $this->_resourceName . '_customergroup';
+    		$this->_customergroup = $this->_getRelated($resourceName);
     	}
-    	return $this->_customergroups;
+    	return $this->_customergroup;
     }
     
     public function getFee()
@@ -88,10 +88,10 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     }
     
     
-    public function setProducts($value)
+    public function setProduct($value)
     {
-    	$this->_products = $value;
-    	return $this->_products;
+    	$this->_product = $value;
+    	return $this->_product;
     }
     
     public function setToll($value)
@@ -100,10 +100,10 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     	return $this->_tolls;
     }
     
-    public function setCustomerGroups($value)
+    public function setCustomergroup($value)
     {
-    	$this->_customergroups = $value;
-    	return $this->_customergroups;
+    	$this->_customergroup = $value;
+    	return $this->_customergroup;
     }
     
     public function setFee($value)
@@ -131,10 +131,10 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     
     protected function _afterSave()
     {
-    	$this->_saveRelated($this->_products);
+    	$this->_saveRelated($this->_product);
     	$this->_saveRelated($this->_tolls);
     	$this->_saveRelated($this->_fees);
-    	$this->_saveRelated($this->_customergroups);
+    	$this->_saveRelated($this->_customergroup);
     	$this->_saveRelated($this->_agreements);    	
     }
     

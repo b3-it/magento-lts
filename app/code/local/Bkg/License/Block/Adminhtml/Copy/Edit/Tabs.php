@@ -35,11 +35,17 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
       ));
 
       $this->addTab('form_section2', array(
-          'label'     => Mage::helper('bkg_license')->__('Text'),
-          'title'     => Mage::helper('bkg_license')->__('Text Information'),
-          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_text')->toHtml(),
+          'label'     => Mage::helper('bkg_license')->__('Template'),
+          'title'     => Mage::helper('bkg_license')->__('Template Information'),
+          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_template')->toHtml(),
       ));
 
+      $this->addTab('form_section2a', array(
+      		'label'     => Mage::helper('bkg_license')->__('Text'),
+      		'title'     => Mage::helper('bkg_license')->__('Text Information'),
+      		'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_text')->toHtml(),
+      ));
+      
       $this->addTab('form_section3', array(
           'label'     => Mage::helper('bkg_license')->__('Type Of Use'),
           'title'     => Mage::helper('bkg_license')->__('Toll Information'),
@@ -60,9 +66,9 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
       ));
 
       $this->addTab('form_section6', array(
-          'label'     => Mage::helper('bkg_license')->__('Products'),
-          'title'     => Mage::helper('bkg_license')->__('Products Information'),
-          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_products')->toHtml(),
+          'label'     => Mage::helper('bkg_license')->__('Product'),
+          'title'     => Mage::helper('bkg_license')->__('Product Information'),
+          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_product')->toHtml(),
       ));
 
       return parent::_beforeToHtml();

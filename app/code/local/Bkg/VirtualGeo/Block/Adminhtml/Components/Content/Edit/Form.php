@@ -27,13 +27,24 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Content_Edit_Form extends Mage_A
 
       $fieldset = $form->addFieldset('componentscontent_entity_form', array('legend'=>Mage::helper('virtualgeo')->__('Components Contententity inContention')));
 
-      $fieldset->addField('code', 'text', array(
-          'label'     => Mage::helper('virtualgeo')->__('Code'),
+        $store_id = intval($this->getRequest()->getParam('store', 0));
+
+      $field = $fieldset->addField('code', 'text', array(
+          'label' => Mage::helper('virtualgeo')->__('Code'),
           //'class'     => 'required-entry',
           //'required'  => true,
-          'name'      => 'code',
-      	  'value'	=> $dataModel->getCode()
+          //'readonly' => false,// boolval($store_id != 0),
+          //'disabled' => false,//boolval($store_id != 0),
+          'class' => ($store_id != 0) ? 'readonly' : '',
+          'name' => 'code',
+          'value' => $dataModel->getCode()
       ));
+      
+      if($store_id != 0)
+      {
+      	$field->setReadonly('readonly');
+      	$field->setDisabled('disabled');
+      }
 
   	$fieldset->addField('shortname', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('Short Name'),

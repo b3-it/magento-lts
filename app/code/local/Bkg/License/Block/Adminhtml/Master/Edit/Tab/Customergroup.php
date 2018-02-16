@@ -18,7 +18,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Customergroup extends Mage_Adm
 
 
 
-        $collection = Mage::getModel('bkg_license/master_customergroups')->getCollection();
+        $collection = Mage::getModel('bkg_license/master_customergroup')->getCollection();
         $collection->addMasterIdFilter(Mage::registry('entity_data')->getId());
 
         $value = array();

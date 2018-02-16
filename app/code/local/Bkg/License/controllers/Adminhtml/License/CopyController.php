@@ -142,7 +142,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
         } else {
             try {
                 foreach ($copyentityIds as $copyentityId) {
-                    $bkg_license = Mage::getModel('bkg_license/copy_entity')->load($copyentityId);
+                    $bkg_license = Mage::getModel('bkg_license/copy')->load($copyentityId);
                     $bkg_license->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
@@ -165,7 +165,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
         } else {
             try {
                 foreach ($copyentityIds as $copyentityId) {
-                    $copyentity = Mage::getSingleton('bkg_license/copy_entity')
+                    $copyentity = Mage::getSingleton('bkg_license/copy')
                         ->load($copyentityId)
                         ->setStatus($this->getRequest()->getParam('status'))
                         ->setIsMassupdate(true)

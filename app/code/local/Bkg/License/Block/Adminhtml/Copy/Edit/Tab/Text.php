@@ -35,7 +35,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Text  extends Mage_Adminhtml_Blo
       $wysiwygConfig->setAddVariables(true);
       $wysiwygConfig->setAddImages(false);
 
-        $contentField = $fieldset->addField('content', 'editor', array(
+        $templateField = $fieldset->addField('content', 'editor', array(
             'name'      => 'content',
             'style'     => 'height:36em;',
             //'required'  => true,

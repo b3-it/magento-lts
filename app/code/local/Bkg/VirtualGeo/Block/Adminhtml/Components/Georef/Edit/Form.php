@@ -36,13 +36,25 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Georef_Edit_Form extends Mage_Ad
   	));
   	//*/
   	
-  	$fieldset->addField('epsg_code', 'text', array(
+  	
+  	$store_id = intval($this->getRequest()->getParam('store', 0));
+  	
+  
+  	
+  	
+  	$field =$fieldset->addField('epsg_code', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('EPSG Code'),
   			//'class'     => 'required-entry',
   			//'required'  => true,
   			'name'      => 'epsg_code',
   			'value'	=> $dataModel->getEpsgCode()
   	));
+  	
+  	if($store_id != 0)
+  	{
+  		$field->setReadonly('readonly');
+  		$field->setDisabled('disabled');
+  	}
   	
   	$fieldset->addField('proj4', 'text', array(
   	    'label'     => Mage::helper('virtualgeo')->__('Proj4'),

@@ -60,7 +60,26 @@ class Bkg_License_Block_Adminhtml_Test_Search_Form extends Mage_Adminhtml_Block_
 	      		'value' => $master->getIdent()
 	      ));
       }
-      $fieldset = $form->addFieldset('entity_form1', array('legend'=>Mage::helper('bkg_license')->__('Copy License')));
+      $fieldset = $form->addFieldset('entity_form1', array('legend'=>Mage::helper('bkg_license')->__('New License')));
+      
+      $collection = Mage::getModel('customer/customer')->getCollection();
+      $values = array();
+      
+      foreach($collection as $item)
+      {
+      	$values[] = array('label'=>$item->getEmail(),'value'=>$item->getId());
+      }
+      
+      
+      $fieldset->addField('customer', 'select', array(
+      		'label'     => Mage::helper('bkg_license')->__('Customer'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'customer',
+      		'values' => $values
+      ));
+      
+      $fieldset = $form->addFieldset('entity_form2', array('legend'=>Mage::helper('bkg_license')->__('Copy License')));
       
       if(Mage::registry('license_copy') != null)
       {
@@ -87,8 +106,16 @@ class Bkg_License_Block_Adminhtml_Test_Search_Form extends Mage_Adminhtml_Block_
       			'label'     => Mage::helper('bkg_license')->__('Number of License'),
       			//'class'     => 'required-entry',
       			//'required'  => true,
-      			'ident'      => 'copy_ident',
+      			'name'      => 'copy_ident',
       			'value' => $copy->getIdent()
+      	));
+      	
+      	$fieldset->addField('content', 'textarea', array(
+      			'label'     => Mage::helper('bkg_license')->__('Text'),
+      			//'class'     => 'required-entry',
+      			//'required'  => true,
+      			'name'      => 'content',
+      			'value' => $copy->getContent()
       	));
       }
  
