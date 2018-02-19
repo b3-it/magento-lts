@@ -35,8 +35,11 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
        	//StoreIsolation
        	if(Mage::helper('egovsbase')->isModuleEnabled('Egovs_Isolation'))
        	{
-       		$stores = Mage::helper('isolation')->getUserStoreGroups();
-       		if(count($stores) > 0)
+
+
+            $storeGroups = Mage::helper('isolation')->getUserStoreGroups();
+            $storeViews = Mage::helper('isolation')->getUserStoreViews();
+            if(($storeGroups) && (count($storeGroups) > 0) || ($storeViews) && (count($storeViews) > 0))
        		{
        			//$collection->getSelect()->where('store_group IN ('.implode(',',$stores).')');
                 $collection->getSelect()->where("order_id in (?)", Mage::helper('isolation')->getOrderIdsDbExpr());

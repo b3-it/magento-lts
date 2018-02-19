@@ -144,7 +144,7 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     	if($collection == null) return;
     	$storeGroups = $this->getUserStoreGroups();
     	$storeViews = $this->getUserStoreViews();
-    	//if(($storeGroups) && (count($storeGroups) > 0))
+    	if(($storeGroups) && (count($storeGroups) > 0) || ($storeViews) && (count($storeViews) > 0))
     	{
     		$collection->getSelect()->where("{$order_id_field} in (?)", $this->_getOrderIdsDbExpr());
 
