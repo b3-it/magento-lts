@@ -58,24 +58,27 @@
                   </master_agreement>
                  
 
-                    <copy>
-                        <table>bkg_license_copy</table>
-                    </copy>
-                    <copy_customergroup>
-                        <table>bkg_license_copy_customergroup</table>
-                    </copy_customergroup>
-                    <copy_toll>
-                        <table>bkg_license_copy_toll</table>
-                    </copy_toll>
-                    <copy_agreement>
-                        <table>bkg_license_copy_agreement</table>
-                    </copy_agreement>
-                    <copy_product>
-                    <table>bkg_license_copy_product</table>
+                  <copy>
+                      <table>bkg_license_copy</table>
+                  </copy>
+                  <copy_customergroup>
+                      <table>bkg_license_copy_customergroup</table>
+                  </copy_customergroup>
+                  <copy_toll>
+                      <table>bkg_license_copy_toll</table>
+                  </copy_toll>
+                  <copy_agreement>
+                      <table>bkg_license_copy_agreement</table>
+                  </copy_agreement>
+                  <copy_product>
+                  <table>bkg_license_copy_product</table>
                   </copy_product>
                   <copy_fee>
                     <table>bkg_license_copy_fee</table>
                   </copy_fee>
+                  <copy_file>
+                        <table>bkg_license_copy_file</table>
+                  </copy_file>
                   
                   <copy_customergroup>
                     <table>bkg_license_copy_customergroup</table>
