@@ -143,16 +143,12 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     {
     	if($collection == null) return;
     	$storeGroups = $this->getUserStoreGroups();
-    	if(($storeGroups) && (count($storeGroups) > 0)) 
+    	$storeViews = $this->getUserStoreViews();
+    	//if(($storeGroups) && (count($storeGroups) > 0))
     	{
-    		$storeGroups = implode(',', $storeGroups);
-	    	
-	    	$expr = new Zend_Db_Expr("(SELECT order_id as oid FROM ".$collection->getTable('sales/order_item'). " as orderitem"
-	    		//	." join ".$collection->getTable('catalog/product') . " as product ON product.entity_id=orderitem.product_id"
-	    			." WHERE orderitem.store_group in (".$storeGroups.") GROUP BY order_id)");
-	       	$collection->getSelect()
-	    		->join(array('order_item' => $expr),"order_item.oid=main_table.".$order_id_field,array());
-	    //	die($collection->getSelect()->__toString());
+    		$collection->getSelect()->where("{$order_id_field} in (?)", $this->_getOrderIdsDbExpr());
+
+	    	//die($collection->getSelect()->__toString());
     	}	
     }
     

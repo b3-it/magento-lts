@@ -61,10 +61,19 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		return null;
 		
 	}
-	
-	
-	
-	protected function getUserStoreGroups()
+
+    /**
+     * Sollen die Bestellungen auch nach dem Kundenstore gefiltert werden
+     * @return bool
+     */
+	protected function _showOrderWithinCustomerStore()
+    {
+
+        return Mage::getConfig('storeisolation/filter/show_order_within_customer_store');
+    }
+
+
+    protected function getUserStoreGroups()
 	{
 		$user = $this->getUser();
 		return $user->getStoreGroups();
@@ -94,7 +103,13 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		}
 		return $res;
 	}
-	
+
+
+	protected function _getOrderIdsDbExpr()
+    {
+        return Mage::helper('isolation')->getOrderIdsDbExpr();
+    }
+
 	protected function getUserStoreRootCategories()
 	{
 		$res = array();
