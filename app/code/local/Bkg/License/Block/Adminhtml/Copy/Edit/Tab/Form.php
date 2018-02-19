@@ -30,6 +30,53 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           'name'      => 'ident',
       ));
 
+      $fieldset->addField('is_orgunit', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Type Customer'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'is_orgunit',
+          'values' => array(array('label'=>$this->__('Customer'),'value'=>0),
+                        array('label'=>$this->__('Organisational Unit'),'value'=>1)
+                        )
+      ));
+
+      $customers = array();
+      $collection = Mage::getModel('customer/customer')->getCollection();
+
+      $collection->addAttributeToSelect('*');
+
+      $customers[] = array('label'=>'','value'=>'');
+      foreach($collection as $item)
+      {
+          $name= "{$item->getEmail()} {$item->getFirstname()} {$item->getLastname()} {$item->getCompany()}";
+          $customers[] = array('label'=>$name,'value'=>$item->getId());
+      }
+
+
+      $fieldset->addField('customer', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Customer'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'customer_id',
+          'values' => $customers
+      ));
+
+      $collection = Mage::getModel('bkg_orgunit/unit')->getCollection();
+      $units = array();
+      $units[] = array('label'=>'','value'=>'');
+      foreach($collection as $item)
+      {
+          $name= "{$item->getShortname()}";
+          $units[] = array('label'=>$name,'value'=>$item->getId());
+      }
+
+      $fieldset->addField('orgunit', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Organisational Unit'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'orgunit_id',
+          'values' => $units
+      ));
    
 
       $fieldset->addField('type', 'select', array(
