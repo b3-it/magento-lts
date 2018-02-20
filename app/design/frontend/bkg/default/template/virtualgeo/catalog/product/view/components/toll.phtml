@@ -13,7 +13,7 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
      * @var Bkg_Tollpolicy_Model_Toll $toll
      */
     //echo "<span>".$toll->getName()."</span>";
-    echo "<input id='int' name='int' value='' type='checkbox'/>";
+    echo "<input id='virtualgeo-components-toll-int' name='virtualgeo-components-toll[int][use]' value='' type='checkbox'/>";
     echo "<fieldset class='virtualgeo-components-toll' style='border: 1px solid #c0c0c0; padding: 5px;'>";
     echo "<legend>".$this->__('Internal Usage')."</legend>";
 
@@ -21,6 +21,7 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
     foreach ($toll->getActiveUseTypes(true) as $use) {
         echo "<li>";
         $useId = "virtualgeo-components-toll-" . $use->getId();
+        $useName = "virtualgeo-components-toll[int][" . $use->getId()."]";
 
 
 
@@ -41,18 +42,18 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
                 $val = $opt->getId();
             }
 
-            echo "<input id='" . $useId . "' name='" . $useId . "' value='" . $val . "' type='checkbox'/>";
+            echo "<input id='" . $useId . "' name='" . $useName . "' value='" . $val . "' type='checkbox'/>";
             echo $label;
 
             if($opt->getUserdefined() == 'text')
             {
-                echo "<p> <input id='" . $useId . "' name='" . $useId . "_value' value='' type='text'/></p>";
+                echo "<p> <input id='" . $useId . "' name='" . $useName . "_value' value='' type='text'/></p>";
 
             }
 
         } else {
             echo $label;
-            echo "<select id='".$useId."' name='".$useId."'>";
+            echo "<select id='".$useId."' name='".$useName."'>";
             echo "<option></option>";
             foreach ($options as $opt) {
                 /**
@@ -67,7 +68,7 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
     echo "</ul>";
     echo "</fieldset>";
 
-    echo "<input id='ext' name='ext' value='' type='checkbox'/>";
+    echo "<input id='ext' name='virtualgeo-components-toll[ext][use]' value='' type='checkbox'/>";
     echo "<fieldset class='virtualgeo-components-toll' style='border: 1px solid #c0c0c0; padding: 5px;'>";
     echo "<legend>". $this->__('External Usage')."</legend>";
 
@@ -76,6 +77,8 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
         echo "<li>";
 
         $useId = "virtualgeo-components-toll-" . $use->getId();
+        $useName = "virtualgeo-components-toll[ext][" . $use->getId()."]";
+        
         $options = $use->getOptions();
         /**
          * @var Bkg_Tollpolicy_Model_Usetype $use
@@ -91,19 +94,18 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
             if (empty($val)) {
                 $val = $opt->getId();
             }
-
-                echo "<input id='" . $useId . "' name='" . $useId . "' value='' type='checkbox'/>";
+                echo "<input id='" . $useId . "' name='" . $useName . "' value='' type='checkbox'/>";
                 echo $label;
 
             if($opt->getUserdefined() == 'text')
             {
-                echo "<p> <input id='" . $useId . "' name='" . $useId . "_value' value='' type='text'/></p>";
+                echo "<p> <input id='" . $useId . "' name='" . $useName . "_value' value='' type='text'/></p>";
 
             }
 
         } else {
             echo $label;
-            echo "<select id='".$useId."' name='".$useId."'>";
+            echo "<select id='".$useId."' name='".$useName."'>";
             echo "<option></option>";
             foreach ($options as $opt) {
                 /**

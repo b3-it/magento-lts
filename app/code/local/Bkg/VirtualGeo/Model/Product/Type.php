@@ -25,46 +25,61 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
     		return $resultParent;
     	}
     	
-    	//TODO: aus $buyRequest lesen
-    	$nutzung = 'ext';
+    	$nutzungsarten = array();
+    	$toll = $buyRequest->getData('virtualgeo-components-toll');
+    	
+    	if(isset($toll['int']['use']))
+    	{
+    		$nutzungsarten[] = 'int';
+    	}
+    	if(isset($toll['ext']['use']))
+    	{
+    		$nutzungsarten[] = 'ext';
+    	}
+    	
+
     	$price = 100;
     	
     	//alle verfügbaren Entgelte abholen
     	$fees = $sect = Mage::getConfig()->getNode('virtualgeo/fees/sections')->asArray();
-    	
-    	foreach($fees as $fee)
+    	foreach($nutzungsarten as $nutzung)
     	{
-    			$raprel = $this->_getRapRelation($product, $fee['ident'], $nutzung);
-    			$taxraprel = $this->_getRapRelation($product, $fee['ident'], $nutzung.'_tax');
-    			
-    			$rapId = $raprel ? $raprel->getRapId(): null;
-    			$rapIdTax = $taxraprel ? $taxraprel->getRapId(): null;
-    			
-    			$raps = Mage::helper('regionallocation')->getRapProducts($rapId, $rapIdTax, $price, $fee['ident'], $nutzung);
-    			
-    			
-    			foreach($raps as $rap)
-    			{
-			    	$_result = $rap->getTypeInstance(true)->prepareForCart($buyRequest, $rap);
-			    	if (is_string($_result) && !is_array($_result)) {
-			    		return $_result;
-			    	}
-			    	
-			    	if (!isset($_result[0])) {
-			    		return Mage::helper('checkout')->__('Cannot add item to the shopping cart.');
-			    	}
-			    	
-			    	
-			    	
-			    	$resultParent[] = $_result[0]->setParentProductId($product->getId())
-			    		->addCustomOption('fee',$rap->getFee())
-			    		->addCustomOption('usage',$rap->getUsage())
-			    		->addCustomOption('kst_id',$rap->getKst()->getId())
-			    		->addCustomOption('kst_portions',serialize($rap->getPortions()))
-			    		;
-			    	;
-    			}
+	    	foreach($fees as $fee)
+	    	{
+	    			$raprel = $this->_getRapRelation($product, $fee['ident'], $nutzung);
+	    			$taxraprel = $this->_getRapRelation($product, $fee['ident'], $nutzung.'_tax');
+	    			
+	    			$rapId = $raprel ? $raprel->getRapId(): null;
+	    			$rapIdTax = $taxraprel ? $taxraprel->getRapId(): null;
+	    			
+	    			$raps = Mage::helper('regionallocation')->getRapProducts($rapId, $rapIdTax, $price, $fee['ident'], $nutzung);
+	    			
+	    			
+	    			foreach($raps as $rap)
+	    			{
+				    	$_result = $rap->getTypeInstance(true)->prepareForCart($buyRequest, $rap);
+				    	if (is_string($_result) && !is_array($_result)) {
+				    		return $_result;
+				    	}
+				    	
+				    	if (!isset($_result[0])) {
+				    		return Mage::helper('checkout')->__('Cannot add item to the shopping cart.');
+				    	}
+				    	
+				    	
+				    	
+				    	$resultParent[] = $_result[0]->setParentProductId($product->getId())
+				    		->addCustomOption('fee',$rap->getFee())
+				    		->addCustomOption('usage',$rap->getUsage())
+				    		->addCustomOption('kst_id',$rap->getKst()->getId())
+				    		->addCustomOption('kst_portions',serialize($rap->getPortions()))
+				    		;
+				    	;
+	    			}
+	    	}
     	}
+    	
+    	
     	
     	return $resultParent;
     }
