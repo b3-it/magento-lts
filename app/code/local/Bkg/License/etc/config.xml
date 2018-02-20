@@ -91,6 +91,11 @@
                 </entities>
             </bkg_license_resource>
         </models>
+        <pdftemplate>
+          <types>
+              <license_copy>License</license_copy>
+          </types>
+        </pdftemplate>
     </global>
     <frontend>
       <routers>

@@ -55,9 +55,6 @@ class Bkg_License_Adminhtml_License_TestController extends Mage_Adminhtml_Contro
 		$this->_initAction();
 		$id     =  intval($this->getRequest()->getParam('id'));
 		if ($data = $this->getRequest()->getPost()) {
-	
-		
-				
 			$master = Mage::getModel('bkg_license/master')->load($id);
 			Mage::register('license_master', $master);
 			

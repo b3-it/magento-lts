@@ -39,6 +39,23 @@
                     </td>
                 </tr>
 
+<select name="doctype">
+<?php foreach ($this->getDocTypes() as $k=>$v):?>
+<option value="<?php echo $k?>"><?php echo $v?></option>
+<?php endforeach;?>
+</select>
+
+<table>
+<?php foreach ($this->getFiles() as $file):?>
+<tr>
+<td><?php echo $file->getOrigFilename();?></td>
+<td><a href="<?php echo $file->getDownloadUrl();?>">Download</a>
+<td><?php echo $file->getCreated();?></td>
+<td><?php echo $file->getModified();?></td>
+<td><a href="<?php echo $file->getDeleteUrl();?>">Delete</a>
+</tr>
+<?php endforeach;?>
+</table>
 <!--
 
 

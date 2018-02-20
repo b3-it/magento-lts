@@ -16,11 +16,15 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       $this->setForm($form);
       $fieldset = $form->addFieldset('entity_form', array('legend'=>Mage::helper('bkg_license')->__('Master License Information')));
 
-      $fieldset->addField('name', 'text', array(
+      
+      $model = Mage::registry('entity_data');
+      
+    $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_license')->__('Name'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'name',
+      		'value' => $model->getData('name'),
       ));
 
       $fieldset->addField('ident', 'text', array(
@@ -28,16 +32,17 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'ident',
+      		'value' => $model->getData('ident'),
       ));
-
    
 
-      $fieldset->addField('type', 'select', array(
+     $fieldset->addField('type', 'select', array(
           'label'     => Mage::helper('bkg_license')->__('Type of License'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'type',
-      		'values' => Bkg_License_Model_Type::getOptionArray()
+      		'values' => Bkg_License_Model_Type::getOptionArray(),
+      		'value' => $model->getData('type'),
       ));
       
       $yesno = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
@@ -47,7 +52,8 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'reuse',
-      	  'values' => $yesno
+      	  'values' => $yesno,
+      		'value' => $model->getData('reuse'),
       ));
 
       
@@ -60,6 +66,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       		//'required'  => true,
       		'format'       => $dateFormatIso,
       		'image'  => $this->getSkinUrl('images/grid-cal.gif'),
+      		'value' => $model->getData('date_from'),
       ));
       
       $fieldset->addField('date_to', 'date', array(
@@ -70,6 +77,7 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       		//'required'  => true,
       		'format'       => $dateFormatIso,
       		'image'  => $this->getSkinUrl('images/grid-cal.gif'),
+      		'value' => $model->getData('date_to'),
       ));
       
      
@@ -78,25 +86,40 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'active',
-      	  'values' => $yesno
+      	  'values' => $yesno,
+      		'value' => $model->getData('active'),
       ));
       $fieldset->addField('consternation_check', 'select', array(
           'label'     => Mage::helper('bkg_license')->__('Check Consternation'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'consternation_check',
-      		'values' => $yesno
+      		'values' => $yesno,
+      		'value' => $model->getData('consternation_check'),
       ));
 
-
-
-      if ( Mage::getSingleton('adminhtml/session')->getentityData() )
+      $collection = Mage::getModel('pdftemplate/template')->getCollection();
+      $collection->getSelect()->where("type='license_copy'");
+      
+      $pdfs = array();
+      $pdfs[] = array('label'=>'','value'=>'');
+      foreach($collection as $item)
       {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getentityData());
-          Mage::getSingleton('adminhtml/session')->setentityData(null);
-      } elseif ( Mage::registry('entity_data') ) {
-          $form->setValues(Mage::registry('entity_data')->getData());
+      	$name= "{$item->getTitle()}";
+      	$pdfs[] = array('label'=>$name,'value'=>$item->getId());
       }
+      
+      
+      $fieldset->addField('pdf_template', 'select', array(
+      		'label'     => Mage::helper('bkg_license')->__('Pdf Template'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'pdf_template_id',
+      		'values' => $pdfs,
+      		'value' => $model->getData('pdf_template_id'),
+      ));
+
+     
 
       return parent::_prepareForm();
   }

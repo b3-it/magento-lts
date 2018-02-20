@@ -101,12 +101,25 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 	{
 			$id = $this->getRequest()->getParam('id');
 				
-			$file = Mage::getModel('bkg_license/copy_file')->load($id);
-			$path = Mage::helper('bkg_license')->getLicenseFilePath($license_id).DS.$file->getHashFilename();
+			$file = Mage::getModel('bkg_license/copy_file')->load($id,'hash_filename');
+			$path = Mage::helper('bkg_license')->getLicenseFilePath($file->getCopyId()).DS.$file->getHashFilename();
 
-			$content = file($path);
+			$content = file_get_contents($path);
 			$this->_prepareDownloadResponse($file->getOrigFilename(), $content);
 			return $this;
+	}
+	
+	public function deletefileAction()
+	{
+		$id = $this->getRequest()->getParam('id');
+	
+		$file = Mage::getModel('bkg_license/copy_file')->load($id,'hash_filename');
+		$path = Mage::helper('bkg_license')->getLicenseFilePath($file->getCopyId()).DS.$file->getHashFilename();
+	
+		unlink($path);
+		$file->delete();
+	
+		return $this;
 	}
 	
 	public function saveAction() {
