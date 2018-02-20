@@ -15,4 +15,15 @@ class Bkg_License_Model_Copy_File extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('bkg_license/copy_file');
     }
+    
+    public function getHashFilename()
+    {
+    	if(stlen($this->getData('hash_filename')) > 1){
+    		$str = bin2hex(random_bytes(8)).$this->getOrigFilename();
+    		$this->setData('hash_filename',md5($str));
+    	}
+    	return $this->getData('hash_filename');
+    }
+    
+ 
 }

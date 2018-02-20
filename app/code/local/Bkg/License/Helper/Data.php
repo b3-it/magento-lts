@@ -22,5 +22,20 @@
   */
 class Bkg_License_Helper_Data extends Mage_Core_Helper_Abstract
 {
-
+	public function getLicenseFilePath($license_id)
+	{
+		$path = $path = Mage::getBaseDir('media') . DS .'license'.DS.$license_id;
+		if(!file_exists($path))
+		{
+			try {
+				mkdir($path,'0777',true);
+			}catch(Exception $ex)
+			{
+				Mage::logException($ex);
+				$path = null;
+			}
+		}
+		
+		return $path;
+	}
 }

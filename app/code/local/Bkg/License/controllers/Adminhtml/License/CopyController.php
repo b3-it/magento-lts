@@ -53,38 +53,65 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 		$this->_forward('edit');
 	}
 
+	public function uploadAction()
+	{
+		if (!empty($_FILES))
+		{
+			$data = $this->getRequest()->getPost();
+			$license_id = $this->getRequest()->getParam('id');
+			
+			$f = $_FILES;
+			$result = array();
+			try
+			{
+				$uploader = new Varien_File_Uploader("Filedata");
+				$uploader->setAllowRenameFiles(true);
+	
+				$uploader->setFilesDispersion(false);
+				$uploader->setAllowCreateFolders(true);
+	
+				$file = Mage::getModel('bkg_license/copy_file');
+				$path = Mage::helper('bkg_license')->getLicenseFilePath($license_id).DS.$file->getHashFilename();
+				$file->setCopyId($license_id);
+				$file->setOrigFilename($_FILES['Filedata']['name']);
+				
+				//$uploader->setAllowedExtensions(array('pdf')); //server-side validation of extension
+				$uploadSaveResult = $uploader->save($path, $_FILES['Filedata']['name']);
+				
+				$file->save();
+				
+				$result = $uploadSaveResult['file'];
+			}
+			catch(Exception $e)
+			{
+				Mage::log("BKG Import: ".$e->getMessage() , Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				$result = array(
+						'file'        => $_FILES['Filedata']['name'],
+						"errorCode"   => $e->getCode() . ' (' . $_FILES['Filedata']['name'] . ')',
+						"errorMsg"    => $e->getMessage(),
+						"errorString" => "error"
+				);
+			}
+			$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+		}
+	}
+	
+
+	public function downloadAction()
+	{
+			$id = $this->getRequest()->getParam('id');
+				
+			$file = Mage::getModel('bkg_license/copy_file')->load($id);
+			$path = Mage::helper('bkg_license')->getLicenseFilePath($license_id).DS.$file->getHashFilename();
+
+			$content = file($path);
+			$this->_prepareDownloadResponse($file->getOrigFilename(), $content);
+			return $this;
+	}
+	
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
-
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					/* Starting upload */
-					$uploader = new Varien_File_Uploader('filename');
-
-					// Any extention would work
-	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-					$uploader->setAllowRenameFiles(false);
-
-					// Set the file upload mode
-					// false -> get the file directly in the specified folder
-					// true -> get the file in the product like folders
-					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
-
-					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS ;
-					$uploader->save($path, $_FILES['filename']['name'] );
-
-				} catch (Exception $e) {
-
-		        }
-
-		        //this way the name is saved in DB
-	  			$data['filename'] = $_FILES['filename']['name'];
-			}
-
-
-			$model = Mage::getModel('bkg_license/copy_entity');
+			$model = Mage::getModel('bkg_license/copy');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 

@@ -240,7 +240,7 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy_agreement'))
 	  `copy_id` int(11) unsigned NOT NULL ,
 	  `identifier` varchar(128) default '',
 	  `pos` int(11) default '0',
-
+		
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -277,6 +277,8 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy_file')))
       `orig_filename` varchar(255) default '',
       `path` varchar(255) default '', 
       `ext` varchar(56) default '', 
+      `created` datetime default now(),
+      `modified` datetime default now(),
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
