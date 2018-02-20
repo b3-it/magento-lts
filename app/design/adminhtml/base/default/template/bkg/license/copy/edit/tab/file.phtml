@@ -1,10 +1,9 @@
                 <tr>
                     <td>
 
-<form>
-    <input id="image_upload_token" name="image_upload_token" type="hidden" value="<?php echo $this->getToken();?>"/>
-    <div style="width:420px; float:left;">
-        <input id="file_upload" name="file_upload" type="file" />
+    <input id="image-upload-token" name="image_upload_token" type="hidden" value="<?php echo $this->getToken();?>"/>
+    <div id="file-selector">
+        <input id="file-upload" name="file_upload" type="file" />
     </div>
     <div id="result" class="uploadify-result"></div>
     <br style="clear:left;"/>
@@ -13,108 +12,34 @@
             <span><?php echo Mage::helper('bkg_license')->__('Start Upload'); ?></span>
         </button>
     </p>
-</form>
 
 <!-- http://www.excellencemagentoblog.com/onepage-checkout-add-file-upload-field-to-any-step -->
-
 <script type="text/javascript">
-    function getFileSize(fileSizeInBytes) {
-        var i = -1;
-        var byteUnits = [' kB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
-        do {
-            fileSizeInBytes = fileSizeInBytes / 1024;
-            i++;
-        } while (fileSizeInBytes > 1024);
-        return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
-    }
-    
-    function start_upload() {
-        $j('#file_upload').uploadify('upload', '*');
-    }
+    var currentTimeStamp = '<?php echo time(); ?>';
+    var currentToken = '<?php echo $this->getToken(); ?>';
+    var currentFormKey = '<?php echo $this->getFormKey(); ?>';
+    var ajaxUploaderUrl = '<?php echo $this->getActionUrl(); ?>';
+    var moduleHomePath = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>';
 
-    <?php $timestamp = time();?>
-	var max_upload = 500;
-	var added      = 0;
-	var max_size_1 = '1024KB';
-	var max_size_2 = '1100KB';
-
-	$j('#file_upload').uploadify({
-        'formData'        : {
-            'timestamp' : '<?php echo $timestamp;?>',
-            'token'     : '<?php echo $this->getToken();?>',
-            'form_key'  : '<?php echo $this->getFormKey()?>'
-        },
-        'method'          : 'post',
-        'swf'             : '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>lib/jquery/uploadify/uploadify.swf',
-        'wmode'           : 'transparent',
-        'uploader'        : '<?php echo $this->getActionUrl()?>',
-
-        'removeCompleted' : true,             // fertige Dateien aus der Warteschlange entfernen
-        'uploadLimit'     : max_upload,       // Hochlade-Limit       (default: 999)
-        'queueSizeLimit'  : max_upload,       // Warteschlangen-Limit (default: 999)
-        'fileSizeLimit'   : max_size_1,       // Dateigröße beschränken
-        'multi'           : true,             // mehrere Dateien auswählen
-        'progressData'    : 'speed',          // Angabe über der Progressbar (Prozent oder Geschwindigkeit)
-        'auto'            : false,            // Upload nicht automatisch beginnen
-        'buttonText'      : '<?php echo Mage::helper('bkg_license')->__('Browse Files'); ?>',    // Beschriftung des Buttons
-
-        'fileTypeDesc' : '<?php echo Mage::helper('bkg_license')->__('Select Images'); ?>',
-        'fileTypeExts' : '*.gif; *.jpg; *.png',
-        'buttonText'   : '<?php echo Mage::helper('bkg_license')->__('Search Images'); ?>',
-
-        'onInit'        : function(instance) {
-            $j('#result').html('');
-        },
-        'onSelectError' : function(file, errorCode, errorMsg) {
-            var meldung = '<?php echo Mage::helper('bkg_license')->__('This File '); ?>' + file.name;
-            switch(errorCode) {
-                case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED :
-                    meldung = '<span><?php echo Mage::helper('bkg_license')->__('Limit Reached: '); ?>' + meldung +
-                              '<?php echo Mage::helper('bkg_license')->__(' do not append.'); ?></span>';
-                    break;
-                case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT :
-                    meldung = '<span>' + meldung + '<?php echo Mage::helper('bkg_license')->__(' is with '); ?>' +
-                              getFileSize(file.size) + '<?php echo Mage::helper('bkg_license')->__(' is to big. '); ?>(Max. ' + max_size_2 + ')</span>';
-                    break;
-                case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE :
-                    meldung = '<span>' + meldung + '<?php echo Mage::helper('bkg_license')->__(' is empty.'); ?><br />';
-                    break;
-                case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE :
-                    meldung = '<span>' + meldung + '<?php echo Mage::helper('bkg_license')->__(' has an invalid file type.'); ?></span>';
-                    break;
-            }
-            this.queueData.errorMsg = '<?php echo Mage::helper('bkg_license')->__('There Errors occurred!'); ?>';
-            $j('#result').append(meldung);
-        },
-        'onSelect'        : function(file) {
-            added = added + 1;
-            var rest_ul = max_upload - added;
-            $j('#result').append('<span>' + file.name + '<?php echo Mage::helper('bkg_license')->__(' added to queue '); ?>(Rest: ' + rest_ul + ')</span>');
-        },
-        'onCancel'        : function(file) {
-            added = added - 1;
-            var rest_ul = max_upload - added;
-            $j('#result').append('<span>' + file.name + '<?php echo Mage::helper('bkg_license')->__(' canceled '); ?>(Rest: ' + rest_ul + ')</span>');
-        },
-        'onUploadStart'   : function() {
-            //$j('#result').append('Starte Upload...<br />');
-        },
-        'onUploadSuccess' : function(file, data, response) {
-            //$j('#result').append(data + ' => ' + response + '<br />---------------------------<br /><br />');
-        },
-        'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
-            $j('#result').append(file + '<br />Code: ' + errorCode + '<br />Msg: ' + errorMsg + '<br />Str: ' + errorString + '<br />---------------------------<br /><br />');
-        },
-        'onQueueComplete' : function(queueData) {
-            $j('#result').append('<span>' + queueData.uploadsSuccessful + '<?php echo Mage::helper('bkg_license')->__(' Files uploaded.'); ?></span>');
-        }
-	});
-
+    var strBrowseFiles = '<?php echo Mage::helper('bkg_license')->__('Browse Files'); ?>';
+    var strSelectImage = '<?php echo Mage::helper('bkg_license')->__('Select Images'); ?>';
+    var strThisFile = '<?php echo Mage::helper('bkg_license')->__('This File '); ?>';
+    var strLimitReached = '<?php echo Mage::helper('bkg_license')->__('Limit Reached: '); ?>';
+    var strNotAppend = '<?php echo Mage::helper('bkg_license')->__(' do not append.'); ?>';
+    var strIsWith = '<?php echo Mage::helper('bkg_license')->__(' is with '); ?>';
+    var strIsToBig = '<?php echo Mage::helper('bkg_license')->__(' is to big. '); ?>';
+    var strIsEmpty = '<?php echo Mage::helper('bkg_license')->__(' is empty.'); ?>';
+    var strInvalidFileName = '<?php echo Mage::helper('bkg_license')->__(' has an invalid file type.'); ?>';
+    var strError = '<?php echo Mage::helper('bkg_license')->__('There Errors occurred!'); ?>';
+    var strAppendFile = '<?php echo Mage::helper('bkg_license')->__(' added to queue '); ?>';
+    var strCancel = '<?php echo Mage::helper('bkg_license')->__(' canceled '); ?>';
+    var strUploadSuccess = '<?php echo Mage::helper('bkg_license')->__(' Files uploaded.'); ?>';
 </script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.uploadify.init.js"></script>
                     </td>
-                <tr>
+                </tr>
 
-
+<!--
 
 
 <table class="data" id="table-file" cellspacing="0">
@@ -131,3 +56,5 @@
     <tbody data-up-down="0">
     <tr id="row-agreement-0" data-id="0" data-table="agreement"><td>Fusszeile<input id="value-agreement-0" name="agreement[value][]" value="footer_links" type="hidden"><input id="pos-agreement-0" name="agreement[pos][]" value="0" type="hidden"><input id="delete-agreement-0" name="agreement[delete][]" value="0" type="hidden"></td><td class="position-sorting"><button class="scalable add-widget position-up" type="button" title="Up" disabled="disabled"><span></span></button><button class="scalable add-widget position-down" type="button" title="Down" disabled="disabled"><span></span></button><button class="scalable delete add-widget position-delete" type="button" title="Entfernen"><span></span></button></td></tr></tbody>
 </table>
+
+-->
