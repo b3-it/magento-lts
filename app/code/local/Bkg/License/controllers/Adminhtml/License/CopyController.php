@@ -116,11 +116,11 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				->setId($this->getRequest()->getParam('id'));
 
 			try {
-				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
-					$model->setCreatedTime(now())
-						->setUpdateTime(now());
-				} else {
-					$model->setUpdateTime(now());
+				if($model->getIsOrgUnit())
+				{
+					$model->unsetData('customer_id');
+				}else{
+					$model->unsetData('orgunit_id');
 				}
 
 				$model->save();

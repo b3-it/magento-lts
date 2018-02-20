@@ -37,6 +37,21 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
                 editForm.submit($('edit_form').action+'back/edit/');
             }
         	
+        	function switchIsOrgunit()
+        	{
+        		var orgunit = \$j('#is_orgunit option:selected').val();
+        		if(orgunit == 0)
+        		{
+        			\$j('#customer').show();
+        			\$j('#orgunit').hide();
+        		}
+        		else
+        		{
+        			\$j('#customer').hide();
+        			\$j('#orgunit').show();
+        		}
+        	}
+        	
         	function reloadToll()
 			{
         		var url = '".$toll_url."';

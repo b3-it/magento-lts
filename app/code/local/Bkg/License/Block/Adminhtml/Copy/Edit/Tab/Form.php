@@ -37,7 +37,8 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           'name'      => 'is_orgunit',
           'values' => array(array('label'=>$this->__('Customer'),'value'=>0),
                         array('label'=>$this->__('Organisational Unit'),'value'=>1)
-                        )
+                        ),
+      		'onchange' => 'switchIsOrgunit',
       ));
 
       $customers = array();
