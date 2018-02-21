@@ -46,18 +46,19 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
     	return $this;
     }
 		
-	public function createPdf($content = null)
+	
+	
+	public function previewPdf($content = null)
 	{
 		if($content == null)
 		{
 			$content = $this->getContent();
 		}
-		
+
 		$pdf = Mage::getModel('bkg_license/copy_pdf');
 		//$pdf->preparePdf();
-		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW;
-		$pdf->getPdf(array($this))->render();
-		
+		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_STANDARD;
+		return $pdf->getPdf(array($this))->render();
 		
 	}
 	
@@ -73,6 +74,7 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 		
 		$file->setOrigFilename(Mage::helper('bkg_license')->__('License').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf');
 		$file->save();
+		return $file;
 	}
 	
     

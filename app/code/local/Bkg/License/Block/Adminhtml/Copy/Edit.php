@@ -28,6 +28,33 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
             'class'     => 'save',
         ), -100);
 
+        
+        $id = Mage::registry('entity_data')->getId();
+        if($id)
+        {
+       
+        	$this->_addButton('previewpdf', array(
+        			'label'     => Mage::helper('adminhtml')->__('Preview Pdf'),
+        			'onclick'   => 'previewPdf(); return false;',
+        			'class'     => 'save',
+        	), -100);
+        	
+	        $this->_addButton('pdf', array(
+	        		'label'     => Mage::helper('adminhtml')->__('Create Pdf'),
+	        		'onclick'   => 'createPdfAndContinueEdit()',
+	        		'class'     => 'save',
+	        ), -100);
+	        
+	        $id = Mage::registry('entity_data')->getId();
+	        $this->_addButton('newtext', array(
+	        		'label'     => Mage::helper('adminhtml')->__('Process Template'),
+	        		'onclick'   => 'processTextAndContinueEdit()',
+	        		'class'     => 'save',
+	        ), -100);
+        
+        }
+        
+        
         $toll_url = $this->getUrl('adminhtml/license_copy/toll',array('id'=>'cat_id'));
         $use_url = $this->getUrl('adminhtml/license_copy/use',array('id'=>'use_id'));
         $option_url = $this->getUrl('adminhtml/license_copy/option',array('id'=>'opt_id'));
@@ -36,7 +63,69 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
             function saveAndContinueEdit(){
                 editForm.submit($('edit_form').action+'back/edit/');
             }
+        		
+        	function createPdfAndContinueEdit(){
+                editForm.submit($('edit_form').action+'createPdf/edit/');
+            }
+        		
+        	function processTextAndContinueEdit(){
+                editForm.submit($('edit_form').action+'processTemplate/edit/');
+            }
         	
+        	function previewPdf()
+        	{
+        		  \$j.ajax({
+      					url: '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}',
+     					methode: 'post',
+     					data: {'content': \$j('#text_content').val()},
+     					//dataType: 'binary',
+     					//cache: false,
+     					//contents: 'application/pdf;charset=UTF-8',
+      					
+   				 	})
+   				 	.done(function(result) {
+   				 	
+   				 	
+   				 	var url = '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}';
+        		setLocation(url);
+        		return;
+   				 	
+   				 	
+   				 			//result = unicodeBase64Decode(result);
+        					alert(result);
+        					//return;
+        					var blob = new Blob([result], {encoding:'UTF-8', type: 'application/pdf;charset=UTF-8' });
+					        var link = document.createElement('a');
+					        link.href = window.URL.createObjectURL(blob);
+					        link.download = '{$this->__('Preview')}.pdf';
+					
+					        document.body.appendChild(link);
+					
+					        link.click();
+					
+					        document.body.removeChild(link);
+					        window.URL.revokeObjectURL(link);
+      				})
+      				.fail(function(xhr,texterror){
+      						alert(texterror);
+      				});
+        	
+        		return;
+        	
+        	
+        		var url = '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}';
+        		setLocation(url);
+        		return;
+        	}
+        	function unicodeBase64Decode(text)
+			{
+			return window.atob(text);
+				return decodeURIComponent(Array.prototype.map.call(window.atob(text),function(c){
+					return \"%\"+(\"00\"+c.charCodeAt(0).toString(16)).slice(-2)
+				}
+				).join(\"\"))
+			}
+						
         	function switchIsOrgunit()
         	{
         		var orgunit = \$j('#is_orgunit option:selected').val();

@@ -11,6 +11,8 @@
 class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Controller_action
 {
 
+	
+	
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('copyentity/items')
@@ -24,6 +26,8 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 			->renderLayout();
 	}
 
+	
+	
 	public function editAction() {
 		$id     =  intval($this->getRequest()->getParam('id'));
 		$model  = Mage::getModel('bkg_license/copy')->load($id);
@@ -122,12 +126,34 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 		return $this;
 	}
 	
-	public function saveAction() {
+
+	public function previewPdfAction()
+	{
+		$content = null;
+		if ($content = $this->getRequest()->getParam('content'))
+		{
+			//$content = base64_decode($content);
+		}
+		$id = $this->getRequest()->getParam('id');
+		$model  = Mage::getModel('bkg_license/copy')->load($id);
+		
+		$pdf = $model->previewPdf($content);
+		//die($pdf);
+		//$pdf = utf8_encode($pdf);
+		//$pdf = base64_encode($pdf);
+		$this->_prepareDownloadResponse($this->__('Preview').'.pdf', $pdf,'application/pdf;charset=UTF-8');
+		return $this;
+	}
+	
+	
+	
+	public function saveAction()
+	{
 		if ($data = $this->getRequest()->getPost()) {
 			$model = Mage::getModel('bkg_license/copy');
 			$model->setData($data)
-				->setId($this->getRequest()->getParam('id'));
-
+			->setId($this->getRequest()->getParam('id'));
+		
 			try {
 				if($model->getIsOrgUnit())
 				{
@@ -135,28 +161,45 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				}else{
 					$model->unsetData('orgunit_id');
 				}
-
+		
 				$model->save();
+				//$this->_saveCustomerGroup($data,$model);
+				$this->_saveFees($data,$model);
+				$this->_saveProduct($data,$model);
+				$this->_saveAgreements($data,$model);
+				$this->_saveToll($data,$model);
+				
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkg_license')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
-
+		
 				if ($this->getRequest()->getParam('back')) {
+					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+					return;
+				}
+				
+				if ($this->getRequest()->getParam('createPdf')) {
+					$model->createPdfFile();
+					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+					return;
+				}
+				
+				if ($this->getRequest()->getParam('processTemplate')) {
+					$model->processTemplate()->save();
 					$this->_redirect('*/*/edit', array('id' => $model->getId()));
 					return;
 				}
 				$this->_redirect('*/*/');
 				return;
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                Mage::getSingleton('adminhtml/session')->setFormData($data);
-                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
-                return;
-            }
-        }
-        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkg_license')->__('Unable to find item to save'));
-        $this->_redirect('*/*/');
+				
+			} catch (Exception $e) {
+				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+				Mage::getSingleton('adminhtml/session')->setFormData($data);
+				$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+				return;
+			}
+		}
 	}
-
+	
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
@@ -239,6 +282,150 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
         $this->_sendUploadResponse($fileName, $content);
     }
 
+    protected function _saveProduct($data,$model)
+    {
+    	$groups = $data['product'];
+    	$collection = Mage::getModel('bkg_license/copy_product')->getCollection();
+    	$collection->addCopyIdFilter(intval($model->getId()));
+    
+    	$items = array();
+    	foreach($collection as $item)
+    	{
+    		if(in_array($item->getProductId(),$groups)) {
+    			$items[$item->getProductId()] = $item;
+    		}else{
+    			$item->delete();
+    		}
+    	}
+    
+    	foreach($groups as $group)
+    	{
+    		if(isset($items[$group])){
+    			$item = $items[$group];
+    		}else{
+    			$item = Mage::getModel('bkg_license/copy_product');
+    		}
+    
+    		$item->setMasterId(intval($model->getId()));
+    		$item->setProductId($group);
+    		$item->save();
+    	}
+    
+    }
+    
+    protected function _saveAgreements($data,$model)
+    {
+    	$groups = array();
+    	$tmp = $data['agreement'];
+    
+    	foreach($tmp['value'] as $k=>$v)
+    	{
+    		$groups[] = array('value'=>$v,'pos'=>$tmp['pos'][$k],'delete'=>$tmp['delete'][$k]);
+    	}
+    
+    	$collection = Mage::getModel('bkg_license/copy_agreement')->getCollection();
+    	$collection->addCopyIdFilter(intval($model->getId()));
+    
+    	$items = array();
+    	foreach($collection as $item)
+    	{
+    		$items[$item->getIdentifier()] = $item;
+    	}
+    
+    	foreach($groups as $group)
+    	{
+    		if((count($items) > 0) && (isset($items[$group['value']]))){
+    			$item = $items[$group['value']];
+    		}else{
+    			$item = Mage::getModel('bkg_license/copy_agreement');
+    		}
+    
+    		$item->setMasterId(intval($model->getId()));
+    		$item->setIdentifier($group['value']);
+    		$item->setPos($group['pos']);
+    
+    
+    		if($group['delete'])
+    		{
+    			$item->delete();
+    		}else{
+    			$item->save();
+    		}
+    	}
+    
+    }
+    
+    protected function _saveToll($data,$model)
+    {
+    	$groups = array();
+    	$tmp = $data['toll'];
+    
+    	foreach($tmp['value'] as $k=>$v)
+    	{
+    		$groups[] = array('value'=>$v,'pos'=>$tmp['pos'][$k],'delete'=>$tmp['delete'][$k]);
+    	}
+    
+    	$collection = Mage::getModel('bkg_license/copy_toll')->getCollection();
+    	$collection->addCopyIdFilter(intval($model->getId()));
+    
+    	$items = array();
+    	foreach($collection as $item)
+    	{
+    		$items[$item->getUseoptionId()] = $item;
+    	}
+    
+    	foreach($groups as $group)
+    	{
+    		if((count($items) > 0) && (isset($items[$group['value']]))){
+    			$item = $items[$group['value']];
+    		}else{
+    			$item = Mage::getModel('bkg_license/copy_toll');
+    		}
+    
+    		$item->setMasterId(intval($model->getId()));
+    		$item->setUseoptionId($group['value']);
+    		$item->setPos($group['pos']);
+    
+    
+    		if($group['delete'])
+    		{
+    			$item->delete();
+    		}else{
+    			$item->save();
+    		}
+    	}
+    
+    }
+    
+    protected function _saveFees($data,$model)
+    {
+    	$fees = $data['fees'];
+    	$collection = Mage::getModel('bkg_license/copy_fee')->getCollection();
+    	$collection->getSelect()->where('copy_id ='. intval($model->getId()));
+    
+    	$items = array();
+    	foreach($collection as $item)
+    	{
+    		$items[$item->getFeeCode()] = $item;
+    	}
+    
+    	foreach($fees as $key =>$fee)
+    	{
+    		if(isset($items[$key])){
+    			$item = $items[$key];
+    		}else{
+    			$item = Mage::getModel('bkg_license/copy_fee');
+    		}
+    
+    		$fee['id'] = $item->getId();
+    		$item->setData($fee);
+    		$item->setMasterId(intval($model->getId()));
+    		$item->setFeeCode($key);
+    		$item->save();
+    	}
+    
+    
+    }
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
     {
         $response = $this->getResponse();

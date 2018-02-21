@@ -71,7 +71,11 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
 		
 		$copy->save();
 		$copy->processTemplate()->save();
-		$copy->createPdfFile();
+		$file = $copy->createPdfFile();
+		if($this->getType() == Bkg_License_Model_Type::TYPE_ONLINE)
+		{
+			$file->setDoctype(Bkg_License_Model_Copy_Doctype::TYPE_FINAL);
+		}
     	return $copy;
     }
     

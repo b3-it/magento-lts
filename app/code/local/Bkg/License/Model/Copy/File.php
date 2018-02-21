@@ -25,4 +25,12 @@ class Bkg_License_Model_Copy_File extends Mage_Core_Model_Abstract
     	}
     	return $this->getData('hash_filename');
     }
+    
+    protected function _beforeSave()
+    {
+    	if(!$this->getDoctype()){
+    		$this->setDoctype(Bkg_License_Model_Copy_Doctype::TYPE_DRAFT);
+    	}
+    	return parent::_beforeSave();
+    }
 }
