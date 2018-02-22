@@ -55,9 +55,9 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
         }
         
         
-        $toll_url = $this->getUrl('adminhtml/license_copy/toll',array('id'=>'cat_id'));
-        $use_url = $this->getUrl('adminhtml/license_copy/use',array('id'=>'use_id'));
-        $option_url = $this->getUrl('adminhtml/license_copy/option',array('id'=>'opt_id'));
+        $toll_url = $this->getUrl('adminhtml/license_master/toll',array('id'=>'cat_id'));
+        $use_url = $this->getUrl('adminhtml/license_master/use',array('id'=>'use_id'));
+        $option_url = $this->getUrl('adminhtml/license_master/option',array('id'=>'opt_id'));
         
         $this->_formScripts[] = "
             function saveAndContinueEdit(){
@@ -72,28 +72,69 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
                 editForm.submit($('edit_form').action+'processTemplate/edit/');
             }
         	
+        	function dFilter(data)
+        	{
+        	    alert(data);
+        	    return data;
+        	}
+        	
         	function previewPdf()
         	{
+        	
+        	    var url = '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}';
+        		setLocation(url);
+        		return;
+        	    var oReq = new XMLHttpRequest();
+                oReq.open(\"POST\", '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}');
+                oReq.onload = function(e) {
+                  var arraybuffer = oReq.response; // not responseText
+                  /* ... */
+                }
+                oReq.send();
+                
+        	    return;
+        	
         		  \$j.ajax({
       					url: '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}',
      					methode: 'post',
      					data: {'content': \$j('#text_content').val()},
-     					//dataType: 'binary',
+     					dataType: 'text',
+     					mimeType: 'application/pdf',
+     					success: function(data, textStatus, jqXHR)
+                                {
+                                var binary = \"\";
+                                var responseText = jqXHR.responseText;
+                                    var responseTextLen = responseText.length;
+                                  for ( i = 0; i < responseTextLen; i++ ) {
+                                        binary += String.fromCharCode(responseText.charCodeAt(i) & 255)
+                                    }
+                                //data = btoa(binary);
+                                console.log(data);
+                                   // alert(data);
+                                   var blob = new Blob([binary], {encoding:'UTF-8', type: 'application/pdf;charset=UTF-8' });
+					        var link = document.createElement('a');
+					        link.href = window.URL.createObjectURL(blob);
+					        link.download = '{$this->__('Preview')}.pdf';
+					
+					        document.body.appendChild(link);
+					
+					        link.click();
+					
+					        document.body.removeChild(link);
+					        window.URL.revokeObjectURL(link);
+                                   
+                                    return binary;
+                                },
+     					processData: false,
      					//cache: false,
      					//contents: 'application/pdf;charset=UTF-8',
       					
    				 	})
-   				 	.done(function(result) {
-   				 	
-   				 	
-   				 	var url = '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}';
-        		setLocation(url);
-        		return;
-   				 	
+   				 	.done(function(result) {		 	
    				 	
    				 			//result = unicodeBase64Decode(result);
-        					alert(result);
-        					//return;
+        					//alert(result);
+        					return;
         					var blob = new Blob([result], {encoding:'UTF-8', type: 'application/pdf;charset=UTF-8' });
 					        var link = document.createElement('a');
 					        link.href = window.URL.createObjectURL(blob);
