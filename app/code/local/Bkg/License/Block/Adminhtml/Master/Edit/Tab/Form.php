@@ -21,8 +21,8 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       
     $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_license')->__('Name'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
+          'class'     => 'required-entry',
+          'required'  => true,
           'name'      => 'name',
       		'value' => $model->getData('name'),
       ));
@@ -112,8 +112,8 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       
       $fieldset->addField('pdf_template', 'select', array(
       		'label'     => Mage::helper('bkg_license')->__('Pdf Template'),
-      		//'class'     => 'required-entry',
-      		//'required'  => true,
+      		'class'     => 'required-entry',
+      		'required'  => true,
       		'name'      => 'pdf_template_id',
       		'values' => $pdfs,
       		'value' => $model->getData('pdf_template_id'),

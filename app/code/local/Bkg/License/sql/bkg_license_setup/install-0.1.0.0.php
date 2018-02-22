@@ -290,6 +290,23 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy_file')))
 	  ");
 }
 
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_address')))
+{
+    $installer->run("
+	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_address')};
+	CREATE TABLE {$installer->getTable('bkg_license/copy_file')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `copy_id` int(11) unsigned NOT NULL ,
+      `customer_address_id` int(11) unsigned default null,
+      `code` varchar(56) default '',  
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`customer_address_id`) REFERENCES `{$this->getTable('customer/address_entity')}`(`entity_id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+	  ");
+}
+
 $data = array();
 $data['general']['title'] = "Lizenz";
 $data['general']['type'] = 'license_copy';

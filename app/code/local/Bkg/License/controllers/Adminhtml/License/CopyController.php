@@ -169,7 +169,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 			->setId($this->getRequest()->getParam('id'));
 
 			try {
-				if($model->getIsOrgUnit())
+                if($model->getIsOrgunit() == '1')
 				{
 					$model->unsetData('customer_id');
 				}else{

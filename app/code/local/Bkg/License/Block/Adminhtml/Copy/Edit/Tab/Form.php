@@ -22,8 +22,8 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
       
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_license')->__('Name'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
+          'class'     => 'required-entry',
+          'required'  => true,
           'name'      => 'name',
       		'value' => $model->getData('name'),
       ));
@@ -44,7 +44,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           'values' => array(array('label'=>$this->__('Customer'),'value'=>0),
                         array('label'=>$this->__('Organisational Unit'),'value'=>1)
                         ),
-      		'onchange' => 'switchIsOrgunit',
+      		'onchange' => 'switchIsOrgunit();',
       		'value' => $model->getData('is_orgunit'),
       ));
 
@@ -63,8 +63,8 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
 
       $fieldset->addField('customer', 'select', array(
           'label'     => Mage::helper('bkg_license')->__('Customer'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
+          'class'     => 'required-entry',
+          'required'  => true,
           'name'      => 'customer_id',
           'values' => $customers,
       	  'value' => $model->getData('customer_id'),
@@ -81,8 +81,8 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
 
       $fieldset->addField('orgunit', 'select', array(
           'label'     => Mage::helper('bkg_license')->__('Organisational Unit'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
+          'class'     => 'required-entry',
+          'required'  => true,
           'name'      => 'orgunit_id',
           'values' => $units,
       	  'value' => $model->getData('orgunit_id'),

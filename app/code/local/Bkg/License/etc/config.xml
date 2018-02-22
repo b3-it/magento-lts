@@ -79,6 +79,9 @@
                   <copy_file>
                         <table>bkg_license_copy_file</table>
                   </copy_file>
+                    <copy_address>
+                        <table>bkg_license_copy_address</table>
+                    </copy_address>
                   
                   <copy_customergroup>
                     <table>bkg_license_copy_customergroup</table>

@@ -95,6 +95,10 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
 	protected function _saveCustomerGroup($data,$model)
     {
+        if(!isset($data['customer_groups']))
+        {
+            return $this;
+        }
     	$groups = array();
 		if(isset($data['customer_groups']))
 		{
@@ -130,6 +134,10 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
     protected function _saveProduct($data,$model)
     {
+        if(!isset($data['product']))
+        {
+            return $this;
+        }
         $groups = $data['product'];
         $collection = Mage::getModel('bkg_license/master_product')->getCollection();
         $collection->addMasterIdFilter(intval($model->getId()));
@@ -161,6 +169,11 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
     protected function _saveAgreements($data,$model)
     {
+        if(!isset($data['agreement']))
+        {
+            return $this;
+        }
+
         $groups = array();
         $tmp = $data['agreement'];
 
@@ -203,6 +216,10 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
     
     protected function _saveToll($data,$model)
     {
+        if(!isset($data['toll']))
+        {
+            return $this;
+        }
     	$groups = array();
     	$tmp = $data['toll'];
     
@@ -245,6 +262,10 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
     protected function _saveFees($data,$model)
     {
+        if(!isset($data['fees']))
+        {
+            return $this;
+        }
         $fees = $data['fees'];
         $collection = Mage::getModel('bkg_license/master_fee')->getCollection();
         $collection->getSelect()->where('master_id ='. intval($model->getId()));
@@ -344,7 +365,7 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 	
 
     public function massDeleteAction() {
-        $entityIds = $this->getRequest()->getParam('entity_ids');
+        $entityIds = $this->getRequest()->getParam('masterentity_ids');
         if(!is_array($entityIds)) {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {

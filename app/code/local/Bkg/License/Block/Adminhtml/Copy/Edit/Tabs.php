@@ -27,8 +27,12 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
           'title'     => Mage::helper('bkg_license')->__('Copy License Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_form')->toHtml(),
       ));
-
-      $this->addTab('form_section1', array(
+      $this->addTab('form_section1a', array(
+          'label'     => Mage::helper('bkg_license')->__('Address'),
+          'title'     => Mage::helper('bkg_license')->__('Address Information'),
+          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_address')->toHtml(),
+      ));
+      $this->addTab('form_section1b', array(
           'label'     => Mage::helper('bkg_license')->__('Agreement'),
           'title'     => Mage::helper('bkg_license')->__('Agreement Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_agreement')->toHtml(),

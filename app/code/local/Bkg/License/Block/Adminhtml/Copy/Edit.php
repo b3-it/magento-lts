@@ -72,11 +72,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
                 editForm.submit($('edit_form').action+'processTemplate/edit/');
             }
         	
-        	function dFilter(data)
-        	{
-        	    alert(data);
-        	    return data;
-        	}
+        	
         	
         	function previewPdf()
         	{
@@ -174,11 +170,19 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
         		{
         			\$j('#customer').show();
         			\$j('#orgunit').hide();
+        			\$j('#customer').addClass(\"required-entry\");
+        			\$j('#orgunit').removeClass(\"required-entry\");
+        			\$j('label[for=\"customer\"]').show();
+        			\$j('label[for=\"orgunit\"]').hide();
         		}
         		else
         		{
         			\$j('#customer').hide();
         			\$j('#orgunit').show();
+        			\$j('#customer').removeClass(\"required-entry\");
+        			\$j('#orgunit').addClass(\"required-entry\");
+        			\$j('label[for=\"customer\"]').hide();
+        			\$j('label[for=\"orgunit\"]').show();
         		}
         	}
         	
@@ -234,6 +238,8 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
                     tinyMCE.execCommand('mceRemoveControl', false, 'text_template');
                 }
             }
+            
+            switchIsOrgunit();
 		 ";
     }
 
