@@ -74,10 +74,13 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
       $id = Mage::registry('entity_data')->getId();
       if($id)
       {
-	      $this->addTab('form_section7', array(
+          $content = $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_file');
+          $content->setId($this->getHtmlId() . '_content')->setElement($this);
+          
+          $this->addTab('form_section7', array(
 	          'label'     => Mage::helper('bkg_license')->__('File'),
 	          'title'     => Mage::helper('bkg_license')->__('File'),
-	          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_file')->toHtml(),
+              'content'   => $content->toHtml(), // $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_file')->toHtml(),
 	      ));
       }
       return parent::_beforeToHtml();

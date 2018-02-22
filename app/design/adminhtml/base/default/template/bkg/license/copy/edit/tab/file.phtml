@@ -1,77 +1,75 @@
                 <tr>
                     <td>
+                        <div class="grid">
+                            <table cellspacing="0" class="data border" id="table-<?php echo $this->getHtmlId() ?>_grid" width="100%">
+                                <colgroup>
+                                    <col style="" />
+                                    <col style="width: 150px;" />
+                                    <col style="" />
+                                    <col style="" />
+                                    <col style="width: 110px;" />
+                                </colgroup>
+                                <thead>
+                                    <tr class="headings">
+                                        <th><?php echo $this->__('Original Filename'); ?></th>
+                                        <th><?php echo $this->__('Created At'); ?></th>
+                                        <th><?php echo $this->__('Downloadlink'); ?></th>
+                                        <th><?php echo $this->__('Deletelink'); ?></th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="<?php echo $this->getHtmlId() ?>_list">
+                                    <tr id="<?php echo $this->getHtmlId() ?>_template" class="template no-display">
+                                        <td class="cell-label">1</td>
+                                        <td class="cell-date">2</td>
+                                        <td class="cell-download">3</td>
+                                        <td class="cell-delete">4</td>
+                                        <td class="position-sorting">
+                                            <button class="scalable add-widget position-up" type="button" title="<?php echo $this->__('Up'); ?>" disabled="disabled"><span></span></button>
+                                            <button class="scalable add-widget position-down" type="button" title="<?php echo $this->__('Down'); ?>" disabled="disabled"><span></span></button>
+                                        </td>
+                                    </tr>
+                                  <?php foreach ($this->getFiles() AS $key => $file):?>
+                                    <tr id="row-<?php echo $this->getHtmlId() ?>-<?php echo $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $this->getHtmlId() ?>">
+                                        <td class="cell-label"><?php echo $file->getOrigFilename();?></td>
+                                        <td class="cell-date"><?php echo $file->getCreated();?></td>
+                                        <td class="cell-download"><a href="<?php echo $file->getDownloadUrl();?>">Download</a></td>
+                                        <td class="cell-delete"><a href="<?php echo $file->getDeleteUrl();?>">Delete</a></td>
+                                        <td class="position-sorting">
+                                            <button class="scalable add-widget position-up" type="button" title="<?php echo $this->__('Up'); ?>" disabled="disabled"><span></span></button>
+                                            <button class="scalable add-widget position-down" type="button" title="<?php echo $this->__('Down'); ?>" disabled="disabled"><span></span></button>
+                                        </td>
+                                    </tr>
+                                  <?php endforeach;?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="100" class="last" style="padding:8px">
+                                            <?php echo $this->getUploaderHtml(); ?>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <input type="hidden"
+                                   id="<?php echo $this->getHtmlId() ?>_save"
+                                   name="<?php echo $this->getElement()->getName() ?>[images]"
+                                   value="<?php echo $this->htmlEscape($this->getImagesJson()) ?>" />
+                            <input type="hidden"
+                                   id="<?php echo $this->getHtmlId() ?>_save_image"
+                                   name="<?php echo $this->getElement()->getName() ?>[values]"
+                                   value="<?php echo $this->htmlEscape($this->getImagesValuesJson()) ?>" />
+                            <script type="text/javascript">
+                                var <?php echo $this->getJsObjectName(); ?> = new Product.Gallery(
+                                                                                      '<?php echo $this->getHtmlId() ?>',
+                                                                                      <?php echo $this->getImageTypesJson() ?>
+                                                                                  );
+                            </script>
+                        </div>
 
-    <input id="image-upload-token" name="image_upload_token" type="hidden" value="<?php echo $this->getToken();?>"/>
-    <div id="file-selector">
-        <input id="file-upload" name="file_upload" type="file" />
-    </div>
-    <div id="result" class="uploadify-result"></div>
-    <br style="clear:left;"/>
-    <p>
-        <button id="uploadify_button" type="button" class="scalable" onclick="start_upload();">
-            <span><?php echo Mage::helper('bkg_license')->__('Start Upload'); ?></span>
-        </button>
-    </p>
-
-<!-- http://www.excellencemagentoblog.com/onepage-checkout-add-file-upload-field-to-any-step -->
-<script type="text/javascript">
-    var currentTimeStamp = '<?php echo time(); ?>';
-    var currentToken = '<?php echo $this->getToken(); ?>';
-    var currentFormKey = '<?php echo $this->getFormKey(); ?>';
-    var ajaxUploaderUrl = '<?php echo $this->getActionUrl(); ?>';
-    var moduleHomePath = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>';
-
-    var strBrowseFiles = '<?php echo Mage::helper('bkg_license')->__('Browse Files'); ?>';
-    var strSelectImage = '<?php echo Mage::helper('bkg_license')->__('Select Images'); ?>';
-    var strThisFile = '<?php echo Mage::helper('bkg_license')->__('This File '); ?>';
-    var strLimitReached = '<?php echo Mage::helper('bkg_license')->__('Limit Reached: '); ?>';
-    var strNotAppend = '<?php echo Mage::helper('bkg_license')->__(' do not append.'); ?>';
-    var strIsWith = '<?php echo Mage::helper('bkg_license')->__(' is with '); ?>';
-    var strIsToBig = '<?php echo Mage::helper('bkg_license')->__(' is to big. '); ?>';
-    var strIsEmpty = '<?php echo Mage::helper('bkg_license')->__(' is empty.'); ?>';
-    var strInvalidFileName = '<?php echo Mage::helper('bkg_license')->__(' has an invalid file type.'); ?>';
-    var strError = '<?php echo Mage::helper('bkg_license')->__('There Errors occurred!'); ?>';
-    var strAppendFile = '<?php echo Mage::helper('bkg_license')->__(' added to queue '); ?>';
-    var strCancel = '<?php echo Mage::helper('bkg_license')->__(' canceled '); ?>';
-    var strUploadSuccess = '<?php echo Mage::helper('bkg_license')->__(' Files uploaded.'); ?>';
-</script>
-<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.uploadify.init.js"></script>
+                        <select name="doctype">
+                        <?php foreach ($this->getDocTypes() as $k=>$v):?>
+                        <option value="<?php echo $k?>"><?php echo $v?></option>
+                        <?php endforeach;?>
+                        </select>
                     </td>
                 </tr>
-
-<select name="doctype">
-<?php foreach ($this->getDocTypes() as $k=>$v):?>
-<option value="<?php echo $k?>"><?php echo $v?></option>
-<?php endforeach;?>
-</select>
-
-<table>
-<?php foreach ($this->getFiles() as $file):?>
-<tr>
-<td><?php echo $file->getOrigFilename();?></td>
-<td><a href="<?php echo $file->getDownloadUrl();?>">Download</a>
-<td><?php echo $file->getCreated();?></td>
-<td><?php echo $file->getModified();?></td>
-<td><a href="<?php echo $file->getDeleteUrl();?>">Delete</a>
-</tr>
-<?php endforeach;?>
-</table>
-<!--
-
-
-<table class="data" id="table-file" cellspacing="0">
-    <colgroup>
-        <col>
-        <col style="width: 110px;">
-    </colgroup>
-    <thead>
-    <tr class="headings">
-        <th>Block</th>
-        <th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody data-up-down="0">
-    <tr id="row-agreement-0" data-id="0" data-table="agreement"><td>Fusszeile<input id="value-agreement-0" name="agreement[value][]" value="footer_links" type="hidden"><input id="pos-agreement-0" name="agreement[pos][]" value="0" type="hidden"><input id="delete-agreement-0" name="agreement[delete][]" value="0" type="hidden"></td><td class="position-sorting"><button class="scalable add-widget position-up" type="button" title="Up" disabled="disabled"><span></span></button><button class="scalable add-widget position-down" type="button" title="Down" disabled="disabled"><span></span></button><button class="scalable delete add-widget position-delete" type="button" title="Entfernen"><span></span></button></td></tr></tbody>
-</table>
-
--->

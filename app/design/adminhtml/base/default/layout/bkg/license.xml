@@ -22,11 +22,17 @@
     </adminhtml_license_copy_index>
 
     <adminhtml_license_copy_edit>
-        <update handle="jquery_load_handle"/>
         <reference name="head">
+            <action method="addJs"><file>lib/uploader/flow.min.js</file></action>
+            <action method="addJs"><file>lib/uploader/fusty-flow.js</file></action>
+            <action method="addJs"><file>lib/uploader/fusty-flow-factory.js</file></action>
+            <action method="addJs"><file>mage/adminhtml/uploader/instance.js</file></action>
+
+            <!--
             <action method="addJs"><script>lib/jquery/uploadify/jquery.uploadify.min.js</script></action>
             <action method="addCss"><stylesheet>lib/jquery/uploadify/uploadify.css</stylesheet></action>
             <action method="addCss"><stylesheet>lib/jquery/uploadify/uploadify-license.css</stylesheet></action>
+            -->
         </reference>
     </adminhtml_license_copy_edit>
 </layout>
