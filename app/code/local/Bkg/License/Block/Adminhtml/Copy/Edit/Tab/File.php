@@ -11,38 +11,109 @@
 class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_File extends Mage_Adminhtml_Block_Widget
 {
 	protected $_values = null;
+
+	/**
+     * Type of uploader block
+     *
+     * @var string
+     */
+    protected $_uploaderType = 'uploader/multiple';
+    protected $_uploaderFieldName = 'Filedata';
+
 	protected function _construct()
 	{
 		parent::_construct();
 		$this->setTemplate('bkg/license/copy/edit/tab/file.phtml');
 	}
-	
+
+	protected function _prepareLayout()
+	{
+		$this->setChild( 'uploader', $this->getLayout()->createBlock($this->_uploaderType) );
+
+		$this->getUploader()
+		     ->getUploaderConfig()
+		     ->setFileParameterName($this->_uploaderFieldName)
+			 ->setTarget( $this->getActionUrl() );
+
+		$browseConfig = $this->getUploader()->getButtonConfig();
+		$browseConfig->setAttributes(
+					       array(
+							   'accept' => $browseConfig->getMimeTypesByExtensions('gif, png, jpeg, jpg')
+						   )
+					   );
+
+		Mage::dispatchEvent('bkg_license_copy_prepare_layout', array('block' => $this));
+
+		return parent::_prepareLayout();
+	}
+
+	/**
+     * Retrive uploader block
+     *
+     * @return Mage_Uploader_Block_Multiple
+     */
+    public function getUploader()
+    {
+        return $this->getChild('uploader');
+    }
+
+    /**
+     * Retrive uploader block html
+     *
+     * @return string
+     */
+    public function getUploaderHtml()
+    {
+        return $this->getChildHtml('uploader');
+    }
+
+	public function getJsObjectName()
+    {
+        return $this->getHtmlId() . 'JsObject';
+    }
+
+	public function getImagesJson()
+    {
+        if(is_array($this->getElement()->getValue())) {
+            $value = $this->getElement()->getValue();
+            if(count($value[$this->_uploaderFieldName]) > 0) {
+                foreach ($value[$this->_uploaderFieldName] as &$image) {
+                    $image['url'] = Mage::getSingleton('catalog/product_media_config')
+                                        ->getMediaUrl($image['file']);
+                }
+                return Mage::helper('core')->jsonEncode($value[$this->_uploaderFieldName]);
+            }
+        }
+        return '[]';
+    }
+
+
+
 
 	public function getActionUrl()
 	{
 		$id = Mage::registry('entity_data')->getId();
 		$debug = "";
 		//$debug = "&start_debug=1&debug_host=192.168.178.83%2C127.0.0.1&send_sess_end=1&debug_session_id=1000&debug_start_session=1&debug_no_cache=1385544095237&debug_port=10000";
-		return Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('adminhtml/license_copy/upload',array('id'=>$id)).$debug;
+		//return Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('adminhtml/license_copy/upload',array('id'=>$id)).$debug;
+		return Mage::getModel('adminhtml/url')->addSessionParam()->getUrl( '*/license_copy/upload',array('id'=>$id) ).$debug;
 	}
-	
 
-	
 	public function getPostMaxSize()
 	{
 		return ini_get('post_max_size');
 	}
-	
+
 	public function getUploadMaxSize()
 	{
 		return ini_get('upload_max_filesize');
 	}
-	
+
 	public function getDataMaxSize()
 	{
 		return min($this->getPostMaxSize(), $this->getUploadMaxSize());
 	}
-	
+
 	public function getDataMaxSizeInBytes()
 	{
 		$iniSize = $this->getDataMaxSize();
@@ -68,7 +139,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_File extends Mage_Adminhtml_Bloc
 		}
 		return $parsedSize;
 	}
-	
+
 	/**
 	 * Retrive full uploader SWF's file URL
 	 * Implemented to solve problem with cross domain SWFs
@@ -79,7 +150,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_File extends Mage_Adminhtml_Bloc
 	 */
 	public function getUploaderUrl()
 	{
-	
+
 		$url = "uploadify.swf";
 		$design = Mage::getDesign();
 		$theme = $design->getTheme('skin');
@@ -89,31 +160,31 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_File extends Mage_Adminhtml_Bloc
 		return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) .
 		$design->getArea() . '/' . $design->getPackageName() . '/' . $theme . '/' . $url;
 	}
-   
-	
+
+
 	public function getDocTypes()
 	{
 		return Bkg_License_Model_Copy_Doctype::getOptionArray();
-		
+
 	}
-	
+
 	public function getFiles()
 	{
 		$id = Mage::registry('entity_data')->getId();
 		$collection= Mage::getModel('bkg_license/copy_file')->getCollection();
 		$collection->getSelect()->where('copy_id=?',intval($id));
-		
+
 		$res = array();
 		foreach($collection->getItems() as $item)
 		{
 			$url = $this->getUrl('adminhtml/license_copy/download',array('id'=>$item->getHashFilename()));
 			$item->setDownloadUrl($url);
-			
+
 			$url = $this->getUrl('adminhtml/license_copy/deletefile',array('id'=>$item->getHashFilename()));
 			$item->setDeleteUrl($url);
 			$res[] = $item;
 		}
-		
+
 		return $res;
 	}
 }

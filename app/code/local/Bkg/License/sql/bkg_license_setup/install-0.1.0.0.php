@@ -157,7 +157,7 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy')))
 	  `orgunit_id` int(11) unsigned default NULL,
 	  `is_orgunit` smallint(6) unsigned default '0',
 	  `pdf_template_id` int(11) unsigned default null,
-      FOREIGN KEY (`pdf_template_id`) REFERENCES `{$this->getTable('pdftemplate_template')}`(`pdftemplate_template_id`) ON DELETE SET NULL
+      FOREIGN KEY (`pdf_template_id`) REFERENCES `{$this->getTable('pdftemplate_template')}`(`pdftemplate_template_id`) ON DELETE SET NULL,
 	  FOREIGN KEY (`customer_id`) REFERENCES `{$this->getTable('customer/entity')}`(`entity_id`) ON DELETE SET NULL,
 	  FOREIGN KEY (`orgunit_id`) REFERENCES `{$this->getTable('bkg_orgunit/unit')}`(`id`) ON DELETE SET NULL,
 	  PRIMARY KEY (`id`)
@@ -361,8 +361,8 @@ $data['footer']['width'] = 0;
 $data['footer']['height'] = 0;
 $data['footer']['content'] = $html;
 
-$setup = Mage::getModel('pdftemplate/setup');
-$setup->CreateTemplate($data);
+
+$this->CreatePdfTemplate($data);
 
 /*
 if (!$installer->getAttribute('catalog_product', 'request')) {
