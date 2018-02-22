@@ -61,37 +61,15 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					/* Starting upload */
-					$uploader = new Varien_File_Uploader('filename');
-
-					// Any extention would work
-	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-					$uploader->setAllowRenameFiles(false);
-
-					// Set the file upload mode
-					// false -> get the file directly in the specified folder
-					// true -> get the file in the product like folders
-					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
-
-					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS ;
-					$uploader->save($path, $_FILES['filename']['name'] );
-
-				} catch (Exception $e) {
-
-		        }
-
-		        //this way the name is saved in DB
-	  			$data['filename'] = $_FILES['filename']['name'];
-			}
-
 			$model = Mage::getModel('bkg_orgunit/unit');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
-			
+
+			// need to set parent to null, can't select it from this select type
+			if ($model->getParentId() === '') {
+			    $model->setParentId(null);
+			}
+
 			try {
 			    
 			    /**
@@ -105,31 +83,90 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 			        /**
 			         * @var Bkg_Orgunit_Model_Resource_Unit_Address $val
 			         */
-			        if (!in_array($val->getId(), $keys)) {
-			            $val->delete($val->getId());
+			        $unitAddressId = $val->getId();
+			        if (!in_array($unitAddressId, $keys)) {
+			            $val->delete($unitAddressId);
+			            // Address Deleted, remove UserAddresses thanks to FK Cascade
 			        }
 			    }
+			    /**
+			     * @var Mage_Customer_Model_Resource_Customer_Collection $collection
+			     */
+			    $collection = Mage::getModel('customer/customer')->getCollection();
+			    // get customer by org_unit attribute
+			    $collection->addAttributeToFilter('org_unit', array('eq' => $model->getId()));
+			    $customers = $collection->getItems();
 			    
     			foreach($data['address'] as $key => $value) {
     			    // ignore template
     			    if ("_template_" === $key) {
     			        continue;
     			    }
+
+    			    /**
+    			     * @var Bkg_Orgunit_Model_Resource_Unit_Address $address
+    			     */
     			    $address = Mage::getModel("bkg_orgunit/unit_address");
     			    // address seems to exist, try to load old data
     			    if (intval($key)) {
     			        $address->load($key);
     			    }
+    			    //var_dump(array_filter($value));
+    			    //var_dump($address);
     			    $address->setData($value);
+    			    //var_dump($address);
+    			    //die();
     			    $address->setUnitId(intval($model->getId()));
     			    if (intval($key)) {
     			        $address->setId($key);
     			    }
     			    $address->save();
+    			    
+    			    // Address got updated
+
+    			    //need to filter data for the attributes, to exclude static, and possible other stuff
+    			    $newData = array();
+    			    foreach ($address->getAttributes() as $code => $attr) {
+    			        /**
+    			         * @var Mage_Eav_Model_Entity_Attribute $attr
+    			         */
+    			        if ($attr->getBackendType() != 'static') {
+    			            $newData[$code]=$address->getData($code);
+    			        }
+    			    }
+
+    			    var_dump($newData);
+    			    
+    			    foreach ($customers as $customer) {
+    			        /**
+    			         * @var Mage_Customer_Model_Customer $customer
+    			         */
+    			        /**
+    			         * @var Mage_Customer_Model_Resource_Address_Collection $collection
+    			         */
+    			        $collection = Mage::getModel('customer/address')->getCollection();
+    			        $collection->addAttributeToFilter('parent_id', array('eq' => $customer->getId()));
+    			        $collection->addAttributeToFilter('org_address_id', array('eq' => $address->getId()));
+    			        
+    			        $customer_address = $collection->fetchItem();
+    			        if ($customer_address === false) {
+    			            $customer_address = Mage::getModel('customer/address');
+    			            $customer_address->setData($newData);
+    			            $customer_address->setData('parent_id', $customer->getId());
+    			            $customer_address->setData('org_address_id', $address->getId());
+    			        } else {
+    			            // update existing data, key by key
+    			            foreach ($newData as $k => $v) {
+    			                $customer_address->setData($k, $v);
+    			            }
+    			        }
+    			        $customer_address->save();
+    			    }
     			}
 			} catch (Exception $e) {
 			    var_dump($e->getMessage());
 			    Mage::logException($e);
+			    die();
 			}
 
 			try {

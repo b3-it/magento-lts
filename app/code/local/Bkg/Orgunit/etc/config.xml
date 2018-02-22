@@ -26,8 +26,20 @@
           <bkg_orgunit>
               <class>Bkg_Orgunit_Block</class>
           </bkg_orgunit>
+          <adminhtml>
+                <rewrite>
+                	<!-- To hide Org addresses in customer edit -->
+                    <customer_edit_tab_addresses>Bkg_Orgunit_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
+                </rewrite>
+            </adminhtml>
         </blocks>
         <models>
+        	<customer_resource>
+        		<rewrite>
+        			<!-- To prevent the Org addresses from being deleted by customer save -->
+            		<customer>Bkg_Orgunit_Model_Resource_Customer</customer>
+        		</rewrite>
+    		</customer_resource>     
             <bkg_orgunit>
                 <class>Bkg_Orgunit_Model</class>
                 <resourceModel>bkg_orgunit_resource</resourceModel>
@@ -57,6 +69,13 @@
                     <frontName>bkg_orgunit</frontName>
                 </args>
             </bkg_orgunit>
+            <customer>
+            	<args>
+            		<modules>
+                        <general before="Mage_Customer">Bkg_Orgunit</general>
+                    </modules>
+            	</args>
+            </customer>
         </routers>
         <layout>
             <updates>

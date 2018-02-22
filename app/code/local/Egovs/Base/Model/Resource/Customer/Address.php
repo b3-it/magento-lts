@@ -35,13 +35,15 @@ class Egovs_Base_Model_Resource_Customer_Address extends Mage_Customer_Model_Res
 					$resource->saveAttribute ( $customer, 'default_shipping' );
 				}
 				
-				$base = $account ['base_address'];
-				
-				if ($base == $address->getPostIndex ()) {
-					self::$isSaved = true;
-					$customer->setBaseAddress ( $address->getId () );
-					$resource->saveAttribute ( $customer, 'base_address' );
-					
+				if (isset($account ['base_address'])) {
+    				$base = $account ['base_address'];
+    				
+    				if ($base == $address->getPostIndex ()) {
+    					self::$isSaved = true;
+    					$customer->setBaseAddress ( $address->getId () );
+    					$resource->saveAttribute ( $customer, 'base_address' );
+    					
+    				}
 				}
 			}
 		// FE

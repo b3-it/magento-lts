@@ -13,11 +13,14 @@
 $installer = $this;
 
 $installer->startSetup();
-if (!$installer->tableExists($installer->getTable('bkg_orgunit/unit')))
+
+$unit = $installer->getTable('bkg_orgunit/unit');
+$unit_address = $installer->getTable('bkg_orgunit/unit_address_entity');
+if (!$installer->tableExists($unit))
 {
 	$installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_orgunit/unit')};
-	CREATE TABLE {$installer->getTable('bkg_orgunit/unit')} (
+	-- DROP TABLE IF EXISTS {$unit};
+	CREATE TABLE {$unit} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
         `shortname` varchar(255) default '',
         `name` varchar(255) default '',
@@ -26,7 +29,7 @@ if (!$installer->tableExists($installer->getTable('bkg_orgunit/unit')))
         `parent_id` int(11) unsigned default null,
     
 	  PRIMARY KEY (`id`),
-     FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('bkg_orgunit/unit')}`(`id`) ON DELETE SET NULL
+     FOREIGN KEY (`parent_id`) REFERENCES `{$unit}`(`id`) ON DELETE SET NULL
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		");
 }
@@ -36,23 +39,21 @@ $installer->addEntityType('bkg_orgunit', array(
     'table'           =>'bkg_orgunit/unit_address_entity',
 ));
 
-if (!$installer->tableExists($installer->getTable('bkg_orgunit/unit_address_entity')))
+if (!$installer->tableExists($unit_address))
 {
     $installer->run("
-	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_orgunit/unit_address_entity')};
-	CREATE TABLE {$installer->getTable('bkg_orgunit/unit_address_entity')} (
+	-- DROP TABLE IF EXISTS {$unit_address};
+	CREATE TABLE {$unit_address} (
 	  `entity_id` int(11) unsigned NOT NULL auto_increment,
 	  `unit_id` int(11) unsigned NOT NULL,
       `name` varchar(255) default '',
     
 	  PRIMARY KEY (`entity_id`),
-	  FOREIGN KEY (`unit_id`) REFERENCES `{$this->getTable('bkg_orgunit/unit')}`(`id`) ON DELETE CASCADE
+	  FOREIGN KEY (`unit_id`) REFERENCES `{$unit}`(`id`) ON DELETE CASCADE
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 		");
 }
-
-
 
 
 if (!$installer->tableExists($installer->getTable('bkg_orgunit/unit_address_entity_varchar'))) {
@@ -111,15 +112,25 @@ if (!$installer->tableExists($installer->getTable('bkg_orgunit/unit_address_enti
 
 }
 
- if (!$installer->getAttribute('customer', 'org_unit'))
- {
-  $installer->addAttribute('customer', 'org_unit', array(
-		'label' => 'Organisation',
+if (!$installer->getAttribute('customer', 'org_unit'))
+{
+    $installer->addAttribute('customer', 'org_unit', array(
+        'type'  => 'int',
+        'label' => 'Organisation',
 		'input' => 'select',
 		'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
 		'visible' => true,
 		'required' => false,
-        'source'    => 'eav/entity_attribute_source_boolean',
+        'source'    => 'bkg_orgunit/entity_attribute_source_unit',
+    ));
+    
+    /**
+     * @var Mage_Eav_Model_Attribute $attr
+     */
+    $attr = $installer->getAttribute('customer', 'org_unit');
+    $this->getConnection()->insert($this->getTable('customer/form_attribute'), array(
+        'form_code'     => 'adminhtml_customer',
+        'attribute_id'  => $attr->getId()
     ));
 }
 
@@ -300,12 +311,42 @@ $attributes = array(
         'is_system'         => 1,
     )
 );
+/**
+ * @var Mage_Eav_Model_Config $eavConfig
+ */
 $eavConfig = Mage::getSingleton('eav/config');
 foreach ($attributes as $attributeCode => $data) {
-    $attribute = $eavConfig->getAttribute('bkg_orgunit', $attributeCode);
-       $attribute->addData($data);
+    if (!$installer->getAttribute('bkg_orgunit', $attributeCode)) {
+        $attribute = $eavConfig->getAttribute('bkg_orgunit', $attributeCode);
+        $attribute->addData($data);
+        $attribute->save();
+    }
+}
 
-    $attribute->save();
+if (!$installer->getAttribute('customer_address', 'org_address_id'))
+{
+    $installer->addAttribute('customer_address', 'org_address_id', array(
+        'type' => 'static',
+        'label' => 'Organisation Address',
+        'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
+        'visible' => false,
+        'required' => false,
+        //'source'    => 'eav/entity_attribute_source_boolean',
+    ));
+}
+
+$customer_address = $installer->getTable('customer/address_entity');
+
+if (!$installer->getConnection()->tableColumnExists($customer_address, 'org_address_id')) {
+    $installer->getConnection()->addColumn($customer_address, 'org_address_id', array(
+        'type'      => Varien_Db_Ddl_Table::TYPE_INTEGER,
+        'nullable'  => true,
+        'default'   => null,
+        'comment'   => "id to bkg_oggunit address"
+    ));
+    // extra check if FK exist?
+    $fkName = $installer->getFkName($customer_address, 'org_address_id', $unit_address, 'id');
+    $installer->getConnection()->addForeignKey($fkName, $customer_address, 'org_address_id', $unit_address, 'id');
 }
 
 $installer->endSetup();

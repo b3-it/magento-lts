@@ -40,21 +40,26 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           //'required'  => true,
           'name'      => 'note',
       ));
-/**      
-      $fieldset->addField('parent_id', 'text', array(
-          'label'     => Mage::helper('bkg_orgunit')->__('Übergeordnete Organisation'),
-          //'class'     => 'required-entry',
-          //'required'  => true,
-          'name'      => 'parent_id',
-      ));
-//*/
-      if ( Mage::getSingleton('adminhtml/session')->getunitData() )
-      {
+
+      // can only be set on creation
+      $id = $this->getRequest()->getParam('id');
+      if (!isset($id)) {
+          $fieldset->addField('parent_id', 'select', array(
+              'label'     => Mage::helper('bkg_orgunit')->__('Übergeordnete Organisation'),
+              //'class'     => 'required-entry',
+              //'required'  => true,
+              'name'      => 'parent_id',
+              'options' => Mage::getSingleton('bkg_orgunit/entity_attribute_source_unit')->getOptionArray()
+          ));
+      }
+
+      if ( Mage::getSingleton('adminhtml/session')->getunitData() ) {
           $form->setValues(Mage::getSingleton('adminhtml/session')->getunitData());
           Mage::getSingleton('adminhtml/session')->setunitData(null);
       } elseif ( Mage::registry('unit_data') ) {
           $form->setValues(Mage::registry('unit_data')->getData());
       }
+
       return parent::_prepareForm();
   }
 }

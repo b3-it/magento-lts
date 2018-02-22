@@ -11,10 +11,11 @@ class Bkg_Orgunit_Model_Entity_Attribute_Source_Unit extends Mage_Eav_Model_Enti
      */
     public function getAllOptions()
     {
-    	$collection = Mage::getModel('bkg_unit/unit')->getCollection();
+    	$collection = Mage::getModel('bkg_orgunit/unit')->getCollection();
         
         if (is_null($this->_options)) {
             $this->_options = array();
+            $this->_options[''] = '';
             foreach($collection as $item)
             {
             	$this->_options[] = array('label'=>$item->getName(),'value'=>$item->getId());
@@ -55,4 +56,42 @@ class Bkg_Orgunit_Model_Entity_Attribute_Source_Unit extends Mage_Eav_Model_Enti
     }
 
  
+    public function getPossibleParents($id) {
+        $result = [];
+        //allow null parent
+        $result[''] = '';
+        $options = $this->getAllOptions();
+        foreach ($options as $o) {
+            if (isset($id)) {
+                // can't be itself
+                if ($o['value'] === $id) {
+                    continue;
+                }
+                // id is parent of this
+                if ($this->isParentOf($o['value'], $id)) {
+                    continue;
+                }
+            }
+            $result[$o['value']] = $o['label'];
+            
+        }
+        return $result;
+    }
+    
+    private function isParentOf($unit, $parent) {
+        if (is_numeric($unit)) {
+            /**
+             * @var Bkg_Orgunit_Model_Unit $unit
+             */
+            $unit = Mage::getModel('bkg_unit/unit')->load($unit);
+        }
+        $id = $unit->getParentId();
+        if ($id !== null) {
+            return false;
+        }
+        if ($parent === $id) {
+            return true;
+        }
+        return isParentOf($id, $parent);
+    }
 }

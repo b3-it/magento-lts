@@ -65,7 +65,7 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
         if (is_null($attributes)) {
             $attributes = $this->_getResource()
                 ->loadAllAttributes($this)
-                ->getSortedAttributes();
+                ->getAttributesByCode(); // getSortedAttributes doesn't work because of of missing SetID 
             $this->setData('attributes', $attributes);
         }
         return $attributes;
@@ -111,13 +111,18 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
                 {
                     //$data = Mage::getModel('bkg_orgunit/resource_unit_address')->load($this->getId());
                     $rows = array();
-                    $rows[] = $this->getName();
-                    $rows[] = $this->getFirstname()." ". $this->getLastname();
+                    //$rows[] = $this->getName();
+                    $rows[] = $this->getPrefix()." ".$this->getFirstname() . " " . $this->getMiddlename() ." ". $this->getLastname() . " " . $this->getSuffix();
                     $rows[] = $this->getCompany();
+                    $rows[] = $this->getCompany2();
+                    $rows[] = $this->getCompany3();
                     $rows[] = $this->getStreet();
                     $rows[] = $this->getEmail();
 
-                    return implode('<br/>',$rows);
+                    $rows = array_filter($rows);
+                    //die();
+                    $str = implode('<br/>',$rows);
+                    return $str;
                 }
         }
         return "OUTPUT ADDRESS THERE";
