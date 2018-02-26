@@ -49,7 +49,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
       		'title'     => Mage::helper('bkg_license')->__('Text Information'),
       		'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_text')->toHtml(),
       ));
-      
+
       $this->addTab('form_section3', array(
           'label'     => Mage::helper('bkg_license')->__('Type Of Use'),
           'title'     => Mage::helper('bkg_license')->__('Toll Information'),
@@ -61,7 +61,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
       		'title'     => Mage::helper('bkg_license')->__('Fee Discount'),
       		'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_fees')->toHtml(),
       ));
-      
+
 
       $this->addTab('form_section5', array(
           'label'     => Mage::helper('bkg_license')->__('Customer Group'),
@@ -80,7 +80,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
       {
           $content = $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_file');
           $content->setId($this->getHtmlId() . '_content')->setElement($this);
-          
+
           $this->addTab('form_section7', array(
 	          'label'     => Mage::helper('bkg_license')->__('File'),
 	          'title'     => Mage::helper('bkg_license')->__('File'),

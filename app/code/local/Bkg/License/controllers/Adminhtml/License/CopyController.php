@@ -170,8 +170,11 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 			$id = intval($this->getRequest()->getParam('id'));
 			$model = Mage::getModel('bkg_license/copy')->load($id);
 			
-			$model->setData($data)
-			->setId($id);
+			$model->setData($data);
+			if($id > 0){
+			    $model->setId($id);
+			}
+
 			
 			if (($model->getOrigData('customer_address_id') != $model->getData('customer_address_id')) ||
 				($model->getOrigData('orgunit_address_id') != $model->getData('orgunit_address_id')) ||

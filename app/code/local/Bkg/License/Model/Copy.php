@@ -47,7 +47,7 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
         parent::_construct();
         $this->_init('bkg_license/copy');
     }
-    
+
     protected function _saveRelated($collection)
     {
     	if($collection != null){
@@ -57,7 +57,7 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
     		}
     	}
     }
-    
+
     /**
      *
      * @param unknown $resourceName
@@ -67,19 +67,19 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
     {
     	$collection = Mage::getModel($resourceName)->getCollection();
     	$collection->getSelect()->where('copy_id=?',intval($this->getId()));
-    	 
+
     	return $collection->getItems();
     }
-    
-    
+
+
     public function processTemplate()
     {
     	$this->setContent($this->_replaceVariables($this->getTemplate()));
     	return $this;
     }
-		
-	
-	
+
+
+
 	public function previewPdf($content = null)
 	{
 		if($content != null)
@@ -91,9 +91,9 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 		//$pdf->preparePdf();
 		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_STANDARD;
 		return $pdf->getPdf(array($this))->render();
-		
+
 	}
-	
+
 	public function createPdfFile()
 	{
 		$file = Mage::getModel('bkg_license/copy_file');
@@ -103,12 +103,12 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 		$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_STANDARD;
 		$path = Mage::helper('bkg_license')->getLicenseFilePath($this->getId()).DS.$file->getHashFilename();
 		$pdf->getPdf(array($this))->save($path);
-		
+
 		$file->setOrigFilename(Mage::helper('bkg_license')->__('License').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf');
 		$file->save();
 		return $file;
 	}
-	
+
     /**
      * ermittelt die Addresen der Lizenz
      */
@@ -123,15 +123,15 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 			$collection = Mage::getResourceModel('customer/address_collection');
 			$collection->addAttributeToFilter('parent_id', intval($this->getCustomerId()));
 			$collection->addAttributeToSelect('*');
-			
+
 			return $collection->getItems();
 		}
 	}
-	
+
 	public function getAddressRelations()
 	{
 		$collection = Mage::getModel('bkg_license/copy_address')->getCollection();
-        $collection->addCopyIdFilter(Mage::registry('entity_data')->getId());
+        $collection->addCopyIdFilter($this->getId());
         return $collection->getItems();
 	}
 }
