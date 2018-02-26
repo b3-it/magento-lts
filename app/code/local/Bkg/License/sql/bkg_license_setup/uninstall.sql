@@ -1,5 +1,6 @@
 SET foreign_key_checks = 0;
 drop table IF EXISTS bkg_license_copy;
+drop table IF EXISTS bkg_license_copy_address;
 drop table IF EXISTS bkg_license_copy_agreement;
 drop table IF EXISTS bkg_license_copy_customergroup;
 drop table IF EXISTS bkg_license_copy_fee;

@@ -144,7 +144,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 	public function previewPdfAction()
 	{
 		$content = null;
-		if ($content = $this->getRequest()->getParam('content'))
+		if ($content = $this->getRequest()->getParam('preview_pdf_content'))
 		{
 			//$content = base64_decode($content);
 		}
@@ -163,10 +163,27 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 
 	public function saveAction()
 	{
+	
 		if ($data = $this->getRequest()->getPost()) {
-			$model = Mage::getModel('bkg_license/copy');
+			
+			
+			$id = intval($this->getRequest()->getParam('id'));
+			$model = Mage::getModel('bkg_license/copy')->load($id);
+			
 			$model->setData($data)
-			->setId($this->getRequest()->getParam('id'));
+			->setId($id);
+			
+			if (($model->getOrigData('customer_address_id') != $model->getData('customer_address_id')) ||
+				($model->getOrigData('orgunit_address_id') != $model->getData('orgunit_address_id')) ||
+				($model->getOrigData('is_orgunit') != $model->getData('is_orgunit'))
+					){
+				
+				foreach($model->getAddressRelations() as $item)
+				{
+					$item->delete();
+				}
+				
+			}
 
 			try {
                 if($model->getIsOrgunit() == '1')
@@ -182,6 +199,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				$this->_saveProduct($data,$model);
 				$this->_saveAgreements($data,$model);
 				$this->_saveToll($data,$model);
+				$this->_saveAddress($data,$model);
 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkg_license')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
@@ -459,6 +477,50 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 
 
     }
+    
+    
+    protected function _saveAddress($data,$parent)
+    {
+    	if(!isset($data['address']))
+    	{
+    		return $this;
+    	}
+    	
+    	$addresses = $data['address']; 
+    
+    	$collection = Mage::getModel('bkg_license/copy_address')->getCollection();
+    	$collection->addCopyIdFilter(intval($parent->getId()));
+    
+    	$items = array();
+    	foreach($collection as $item)
+    	{
+    		$items[$item->getId()] = $item;
+    	}
+    
+    	foreach($addresses as $item)
+    	{
+    		if((count($items) > 0) && (!empty($items[$item['db_id']]))){
+    			$model = $items[$item['db_id']];
+    		}else{
+    			$model = Mage::getModel('bkg_license/copy_address');
+    		}
+    
+    		$model->setCopyId(intval($parent->getId()));
+    		$model->setCustomerAddressId($item['right_value']);
+    		$model->setCode($item['left_value']);
+    		$model->setIsOrgunit($parent->getIsOrgunit()); 
+    
+    		if($item['delete'])
+    		{
+    			$model->delete();
+    		}else{
+    			$model->save();
+    		}
+    	}
+    
+    }
+    
+    
     protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
     {
         $response = $this->getResponse();

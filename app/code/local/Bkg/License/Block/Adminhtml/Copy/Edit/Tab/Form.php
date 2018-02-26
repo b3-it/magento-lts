@@ -46,6 +46,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
                         ),
       		'onchange' => 'switchIsOrgunit();',
       		'value' => $model->getData('is_orgunit'),
+      		'note' => $this->__('Addresses will be deletet on change!')
       ));
 
       $customers = array();
@@ -68,6 +69,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           'name'      => 'customer_id',
           'values' => $customers,
       	  'value' => $model->getData('customer_id'),
+      		'note' => $this->__('Addresses will be deletet on change!')
       ));
 
       $collection = Mage::getModel('bkg_orgunit/unit')->getCollection();
@@ -86,6 +88,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           'name'      => 'orgunit_id',
           'values' => $units,
       	  'value' => $model->getData('orgunit_id'),
+      		'note' => $this->__('Addresses will be deletet on change!')
       ));
    
 

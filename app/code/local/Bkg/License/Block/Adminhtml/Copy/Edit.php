@@ -76,93 +76,16 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
         	
         	function previewPdf()
         	{
-        	
-        	    var url = '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}';
-        		setLocation(url);
+        		\$j('#preview_pdf_content').val(\$j('#text_content').val());
+        		\$j('#preview_pdf_form').submit();
+        		
+        	    //var url = '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}';
+        		//setLocation(url);
+        		
         		return;
-        	    var oReq = new XMLHttpRequest();
-                oReq.open(\"POST\", '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}');
-                oReq.onload = function(e) {
-                  var arraybuffer = oReq.response; // not responseText
-                  /* ... */
-                }
-                oReq.send();
-                
-        	    return;
-        	
-        		  \$j.ajax({
-      					url: '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}',
-     					methode: 'post',
-     					data: {'content': \$j('#text_content').val()},
-     					dataType: 'text',
-     					mimeType: 'application/pdf',
-     					success: function(data, textStatus, jqXHR)
-                                {
-                                var binary = \"\";
-                                var responseText = jqXHR.responseText;
-                                    var responseTextLen = responseText.length;
-                                  for ( i = 0; i < responseTextLen; i++ ) {
-                                        binary += String.fromCharCode(responseText.charCodeAt(i) & 255)
-                                    }
-                                //data = btoa(binary);
-                                console.log(data);
-                                   // alert(data);
-                                   var blob = new Blob([binary], {encoding:'UTF-8', type: 'application/pdf;charset=UTF-8' });
-					        var link = document.createElement('a');
-					        link.href = window.URL.createObjectURL(blob);
-					        link.download = '{$this->__('Preview')}.pdf';
-					
-					        document.body.appendChild(link);
-					
-					        link.click();
-					
-					        document.body.removeChild(link);
-					        window.URL.revokeObjectURL(link);
-                                   
-                                    return binary;
-                                },
-     					processData: false,
-     					//cache: false,
-     					//contents: 'application/pdf;charset=UTF-8',
-      					
-   				 	})
-   				 	.done(function(result) {		 	
-   				 	
-   				 			//result = unicodeBase64Decode(result);
-        					//alert(result);
-        					return;
-        					var blob = new Blob([result], {encoding:'UTF-8', type: 'application/pdf;charset=UTF-8' });
-					        var link = document.createElement('a');
-					        link.href = window.URL.createObjectURL(blob);
-					        link.download = '{$this->__('Preview')}.pdf';
-					
-					        document.body.appendChild(link);
-					
-					        link.click();
-					
-					        document.body.removeChild(link);
-					        window.URL.revokeObjectURL(link);
-      				})
-      				.fail(function(xhr,texterror){
-      						alert(texterror);
-      				});
-        	
-        		return;
-        	
-        	
-        		var url = '{$this->getUrl('*/*/previewPdf',array('id'=>$id))}';
-        		setLocation(url);
-        		return;
+        	  
         	}
-        	function unicodeBase64Decode(text)
-			{
-			return window.atob(text);
-				return decodeURIComponent(Array.prototype.map.call(window.atob(text),function(c){
-					return \"%\"+(\"00\"+c.charCodeAt(0).toString(16)).slice(-2)
-				}
-				).join(\"\"))
-			}
-						
+        			
         	function switchIsOrgunit()
         	{
         		var orgunit = \$j('#is_orgunit option:selected').val();
@@ -261,5 +184,14 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
     	return parent::_prepareLayout();
     }
 
+    protected function _toHtml()
+    {
+    	//dummy Form für pdf preview anhängen
+    	$id = Mage::registry('entity_data')->getId();
+    	$html = parent::_toHtml();
+    	$html .= "<form id='preview_pdf_form' action='{$this->getUrl('*/*/previewPdf',array('id'=>$id))}' enctype='multipart/form-data' method='POST'><input name='form_key' value='{$this->getFormKey()}' type='hidden'><input id='preview_pdf_content' name='preview_pdf_content' type='hidden'/> </form>";
+    	
+    	return $html;
+    }
 
 }

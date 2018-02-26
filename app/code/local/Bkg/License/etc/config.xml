@@ -248,4 +248,10 @@
           </updates>
         </layout>
     </adminhtml>
+    <bkg_lizense>
+    <address_type>
+       <technischer_ansprech>Technischer Ansprechpartner</technischer_ansprech>
+         <lizenz_nehmer>Lizenznehmer</lizenz_nehmer>
+        </address_type>
+        </bkg_lizense>
 </config>
