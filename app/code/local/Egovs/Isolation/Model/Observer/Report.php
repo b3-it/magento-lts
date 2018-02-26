@@ -30,7 +30,11 @@ class Egovs_Isolation_Model_Observer_Report extends Egovs_Isolation_Model_Observ
 		$collection = $observer->getCollection();
 		$transport = $observer->getTransport();
 		$storeIds = $transport->getStoreids();
-		
+
+		if(!is_array($storeIds)){
+		    $storeIds = array();
+        }
+
 		if(!Mage::helper('isolation')->getUserIsAdmin())
 		{
 			$storeGroups = $this->getUserStoreGroups();
