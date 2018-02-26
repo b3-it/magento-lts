@@ -38,8 +38,10 @@ class Bkg_License_Adminhtml_License_TestController extends Mage_Adminhtml_Contro
 			$customer = Mage::getModel('customer/customer')->load($data['customer']);
 			$product = Mage::getModel('catalog/product')->load($data['product']);
 			$toll =  Mage::getModel('bkg_license/master_toll')->load($data['tolloption'],'useoption_id');
-			
-			$master = Mage::getModel('bkg_license/master')->getLicense($customer,$product,$toll);
+
+            $online_only = boolval($data['type'] == Bkg_License_Model_Type::TYPE_ONLINE);
+
+			$master = Mage::getModel('bkg_license/master')->getLicense($customer,$product,$toll,$online_only);
 			Mage::register('license_master', $master);
 		}
 		

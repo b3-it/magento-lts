@@ -137,14 +137,24 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
       ));
       
      
-      $fieldset->addField('active', 'select', array(
-          'label'     => Mage::helper('bkg_license')->__('Active'),
+      $fieldset->addField('status', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Status'),
           //'class'     => 'required-entry',
           //'required'  => true,
-          'name'      => 'active',
-      	  'values' => $yesno,
-      		'value' => $model->getData('active'),
+          'name'      => 'status',
+      	  'values' => Bkg_License_Model_Copy_Status::getOptionArray(),
+      	  'value' => $model->getData('status'),
       ));
+
+      $fieldset->addField('accounting', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Accounting'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'accounting',
+          'values' => Bkg_License_Model_Copy_Accounting::getOptionArray(),
+          'value' => $model->getData('accounting'),
+      ));
+
       $fieldset->addField('consternation_check', 'select', array(
           'label'     => Mage::helper('bkg_license')->__('Check Consternation'),
           //'class'     => 'required-entry',

@@ -41,6 +41,15 @@ class Bkg_License_Block_Adminhtml_Test_Edit_Form extends Mage_Adminhtml_Block_Wi
       		'name'      => 'customer',
       		'values' => $values
       ));
+
+      $fieldset->addField('type', 'select', array(
+          'label'     => Mage::helper('bkg_license')->__('Type of License'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'type',
+          'values' => Bkg_License_Model_Type::getOptionArray(),
+
+      ));
       
       
       $collection = Mage::getModel('catalog/product')->getCollection();

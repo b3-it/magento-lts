@@ -22,16 +22,19 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
   protected function _beforeToHtml()
   {
 
+      $id = Mage::registry('entity_data')->getId();
       $this->addTab('form_section', array(
           'label'     => Mage::helper('bkg_license')->__('Copy License Information'),
           'title'     => Mage::helper('bkg_license')->__('Copy License Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_form')->toHtml(),
       ));
-      $this->addTab('form_section1a', array(
-          'label'     => Mage::helper('bkg_license')->__('Address'),
-          'title'     => Mage::helper('bkg_license')->__('Address Information'),
-          'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_address')->toHtml(),
-      ));
+      if($id) {
+          $this->addTab('form_section1a', array(
+              'label' => Mage::helper('bkg_license')->__('Address'),
+              'title' => Mage::helper('bkg_license')->__('Address Information'),
+              'content' => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_address')->toHtml(),
+          ));
+      }
       $this->addTab('form_section1b', array(
           'label'     => Mage::helper('bkg_license')->__('Agreement'),
           'title'     => Mage::helper('bkg_license')->__('Agreement Information'),
@@ -75,7 +78,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_product')->toHtml(),
       ));
 
-      $id = Mage::registry('entity_data')->getId();
+
       if($id)
       {
           $content = $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_file');
