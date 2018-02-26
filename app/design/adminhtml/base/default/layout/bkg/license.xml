@@ -27,6 +27,7 @@
             <action method="addJs"><file>lib/uploader/fusty-flow.js</file></action>
             <action method="addJs"><file>lib/uploader/fusty-flow-factory.js</file></action>
             <action method="addJs"><file>mage/adminhtml/uploader/instance.js</file></action>
+            <action method="addJs"><file>bkg/license.copy.uploader.js</file></action>
 
             <!--
             <action method="addJs"><script>lib/jquery/uploadify/jquery.uploadify.min.js</script></action>

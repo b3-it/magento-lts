@@ -211,3 +211,11 @@ ins {
 .position-sorting .position-delete span {
     background-image: url('../images/cancel_btn_icon.gif');
 }
+
+.doctype-select {
+    display: inline-block;
+    width: auto;
+    float: right;
+    margin-right: 10px;
+    min-width: 100px;
+}

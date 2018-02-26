@@ -5,8 +5,8 @@
                                 <colgroup>
                                     <col style="" />
                                     <col style="width: 150px;" />
-                                    <col style="" />
-                                    <col style="" />
+                                    <col style="width: 100px;" />
+                                    <col style="width: 100px;" />
                                     <col style="width: 110px;" />
                                 </colgroup>
                                 <thead>
@@ -20,21 +20,35 @@
                                 </thead>
                                 <tbody id="<?php echo $this->getHtmlId() ?>_list">
                                     <tr id="<?php echo $this->getHtmlId() ?>_template" class="template no-display">
-                                        <td class="cell-label">1</td>
-                                        <td class="cell-date">2</td>
-                                        <td class="cell-download">3</td>
-                                        <td class="cell-delete">4</td>
+                                        <td class="cell-label">
+                                            __filename__
+                                            <select id="doctype-__id__" name="doctype" class="doctype-select">
+                                              <?php foreach ($this->getDocTypes() as $k=>$v):?>
+                                                <option value="<?php echo $k?>"><?php echo $v?></option>
+                                              <?php endforeach;?>
+                                            </select>
+                                        </td>
+                                        <td class="cell-date">__created__</td>
+                                        <td class="cell-download"><a href="__download__"><?php echo $this->__('Download'); ?></a></td>
+                                        <td class="cell-delete"><a href="__delete__"><?php echo $this->__('Delete'); ?></a></td>
                                         <td class="position-sorting">
                                             <button class="scalable add-widget position-up" type="button" title="<?php echo $this->__('Up'); ?>" disabled="disabled"><span></span></button>
                                             <button class="scalable add-widget position-down" type="button" title="<?php echo $this->__('Down'); ?>" disabled="disabled"><span></span></button>
                                         </td>
                                     </tr>
                                   <?php foreach ($this->getFiles() AS $key => $file):?>
-                                    <tr id="row-<?php echo $this->getHtmlId() ?>-<?php echo $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $this->getHtmlId() ?>">
-                                        <td class="cell-label"><?php echo $file->getOrigFilename();?></td>
+                                    <tr id="row-<?php echo $this->getHtmlId() ?>-<?php echo $file->getId(); ?>" data-id="<?php echo $file->getId(); ?>" data-table="<?php echo $this->getHtmlId() ?>">
+                                        <td class="cell-label">
+                                            <?php echo $file->getOrigFilename();?>
+                                            <select id="doctype-<?php echo $file->getId(); ?>" name="doctype" class="doctype-select">
+                                              <?php foreach ($this->getDocTypes() as $k=>$v):?>
+                                                <option value="<?php echo $k?>"><?php echo $v?></option>
+                                              <?php endforeach;?>
+                                            </select>
+                                        </td>
                                         <td class="cell-date"><?php echo $file->getCreated();?></td>
-                                        <td class="cell-download"><a href="<?php echo $file->getDownloadUrl();?>">Download</a></td>
-                                        <td class="cell-delete"><a href="<?php echo $file->getDeleteUrl();?>">Delete</a></td>
+                                        <td class="cell-download"><a href="<?php echo $file->getDownloadUrl();?>"><?php echo $this->__('Download'); ?></a></td>
+                                        <td class="cell-delete"><a href="<?php echo $file->getDeleteUrl();?>"><?php echo $this->__('Delete'); ?></a></td>
                                         <td class="position-sorting">
                                             <button class="scalable add-widget position-up" type="button" title="<?php echo $this->__('Up'); ?>" disabled="disabled"><span></span></button>
                                             <button class="scalable add-widget position-down" type="button" title="<?php echo $this->__('Down'); ?>" disabled="disabled"><span></span></button>
@@ -59,17 +73,11 @@
                                    name="<?php echo $this->getElement()->getName() ?>[values]"
                                    value="<?php echo $this->htmlEscape($this->getImagesValuesJson()) ?>" />
                             <script type="text/javascript">
-                                var <?php echo $this->getJsObjectName(); ?> = new Product.Gallery(
-                                                                                      '<?php echo $this->getHtmlId() ?>',
-                                                                                      <?php echo $this->getImageTypesJson() ?>
-                                                                                  );
+                                $j('#<?php echo $this->getHtmlId() ?>_list').LicenseCopy({
+                                    'templateId': '#<?php echo $this->getHtmlId() ?>_template',
+                                    'newRowId'  : '<?php echo $this->getHtmlId() ?>'
+                                });
                             </script>
                         </div>
-
-                        <select name="doctype">
-                        <?php foreach ($this->getDocTypes() as $k=>$v):?>
-                        <option value="<?php echo $k?>"><?php echo $v?></option>
-                        <?php endforeach;?>
-                        </select>
                     </td>
                 </tr>
