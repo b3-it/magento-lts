@@ -177,7 +177,8 @@ foreach ($tables as $table)
     }
 }
 
-if ($installer->tableExists($installer->getTable('virtualgeo/components_content_product')))
+if ($installer->tableExists($installer->getTable('virtualgeo/components_content_product'))
+    && !$installer->getConnection()->tableColumnExists($installer->getTable('virtualgeo/components_content_product'), 'parent_node_id'))
 {
     $installer->run("ALTER TABLE {$installer->getTable('virtualgeo/components_content_product')}
 	ADD COLUMN  `parent_node_id` int(11) unsigned default NULL,

@@ -59,6 +59,26 @@
                 </entities>
             </bkg_orgunit_resource>
         </models>
+        <events>
+        	<customer_save_before>
+        		<observers>
+        			<bkg_orgunit_customer_save_before>
+        				<type>singleton</type>
+        				<class>bkg_orgunit/observer</class>
+        				<method>customer_save_before</method>
+        			</bkg_orgunit_customer_save_before>
+        		</observers>
+        	</customer_save_before>
+        	<customer_save_after>
+        		<observers>
+        			<bkg_orgunit_customer_save_after>
+        				<type>singleton</type>
+        				<class>bkg_orgunit/observer</class>
+        				<method>customer_save_after</method>
+        			</bkg_orgunit_customer_save_after>
+        		</observers>
+        	</customer_save_after>
+        </events>
     </global>
     <frontend>
       <routers>

@@ -15,7 +15,7 @@ class Bkg_Orgunit_Model_Entity_Attribute_Source_Unit extends Mage_Eav_Model_Enti
         
         if (is_null($this->_options)) {
             $this->_options = array();
-            $this->_options[''] = '';
+            $this->_options[] = array('label'=>'','value'=>'');
             foreach($collection as $item)
             {
             	$this->_options[] = array('label'=>$item->getName(),'value'=>$item->getId());

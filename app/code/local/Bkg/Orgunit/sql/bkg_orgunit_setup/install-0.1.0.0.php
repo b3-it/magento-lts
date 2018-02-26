@@ -127,10 +127,10 @@ if (!$installer->getAttribute('customer', 'org_unit'))
     /**
      * @var Mage_Eav_Model_Attribute $attr
      */
-    $attr = $installer->getAttribute('customer', 'org_unit');
+    $attrId = $installer->getAttributeId('customer', 'org_unit');
     $this->getConnection()->insert($this->getTable('customer/form_attribute'), array(
         'form_code'     => 'adminhtml_customer',
-        'attribute_id'  => $attr->getId()
+        'attribute_id'  => $attrId
     ));
 }
 
@@ -342,7 +342,7 @@ if (!$installer->getConnection()->tableColumnExists($customer_address, 'org_addr
         'type'      => Varien_Db_Ddl_Table::TYPE_INTEGER,
         'nullable'  => true,
         'default'   => null,
-        'comment'   => "id to bkg_oggunit address"
+        'comment'   => "id to bkg_orgunit address"
     ));
     // extra check if FK exist?
     $fkName = $installer->getFkName($customer_address, 'org_address_id', $unit_address, 'id');
