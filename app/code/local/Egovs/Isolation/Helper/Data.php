@@ -107,7 +107,7 @@ class Egovs_Isolation_Helper_Data extends Mage_Core_Helper_Abstract
         {
             $sql = array();
             $sql[] = "(SELECT order_table.entity_id  FROM {$tmp->getTable('sales/order')} AS `order_table`";
-            $sql[] = "LEFT JOIN (SELECT order_id as oid, store_group FROM {$tmp->getTable('sales/order_item')} as orderitem  GROUP BY order_id) AS `order_item` ON order_item.oid=order_table.entity_id and store_group in ({$storeGroups})";
+            $sql[] = "LEFT JOIN (SELECT order_id as oid FROM {$tmp->getTable('sales/order_item')} as orderitem WHERE store_group in ({$storeGroups}) GROUP BY order_id) AS `order_item` ON order_item.oid=order_table.entity_id";
             $sql[] = "LEFT JOIN {$tmp->getTable('customer/entity')} AS `customer` ON customer.entity_id=order_table.customer_id and customer.store_id in ({$storeViews})";
             $sql[] = "where ((customer.store_id is not null) or (order_item.store_group is not null)))";
             $result = new Zend_Db_Expr( implode(' ',$sql));
