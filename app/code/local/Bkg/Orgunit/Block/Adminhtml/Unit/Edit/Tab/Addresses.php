@@ -113,6 +113,8 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Addresses extends Mage_Adminhtml
             'legend'    => Mage::helper('customer')->__("Edit Customer's Address"))
         );
 
+        // TODO FIX THE USAGE OF CUSTOMER MODELS
+        
         $addressModel = Mage::getModel('customer/address');
         //$addressModel->setCountryId(Mage::helper('core')->getDefaultCountry($customer->getStore()));
         /** @var $addressForm Mage_Customer_Model_Form */
@@ -127,7 +129,7 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Addresses extends Mage_Adminhtml
                 ->processStreetAttribute($attributes['street']);
         }
         foreach ($attributes as $attribute) {
-            /* @var $attribute Mage_Eav_Model_Entity_Attribute */
+            /** @var $attribute Mage_Eav_Model_Entity_Attribute */
             $attribute->setFrontendLabel(Mage::helper('customer')->__($attribute->getFrontend()->getLabel()));
             $attribute->unsIsVisible();
         }
@@ -177,7 +179,12 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Addresses extends Mage_Adminhtml
             }
         }
 
+        /**
+         * @var Bkg_Orgunit_Model_Resource_Unit_Address_Collection $addressCollection
+         */
         $addressCollection = Mage::getModel('bkg_orgunit/unit_address')->getCollection();
+        $addressCollection->addAttributeToFilter('unit_id', array('eq' => $this->getRequest()->get('id')));
+
         //$addressCollection = $customer->getAddresses();
         //$this->assign('customer', $customer);
         $this->assign('addressCollection', $addressCollection);

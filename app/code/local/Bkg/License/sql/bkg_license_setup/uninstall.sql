@@ -17,3 +17,4 @@ drop table IF EXISTS bkg_license_master_toll;
 drop table IF EXISTS bkg_license_master_useoption;
 SET foreign_key_checks = 1;
 DELETE FROM core_resource WHERE code = 'bkg_license_setup';
+DELETE FROM pdftemplate_template WHERE type = 'license_copy';

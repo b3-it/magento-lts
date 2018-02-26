@@ -16,7 +16,7 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
         $this->_init('bkg_license/master');
     }
     
-    public function getLicense($customer,$product,$toll)
+    public function getLicense($customer,$product,$toll, $online_only = true)
     {
     	$collection = $this->getCollection();
     	$date = date('Y-m-d');
@@ -29,8 +29,11 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
     		->where('toll.useoption_id=?',intval($toll->getUseoptionId()))
     		->where('active=1')
     		->where('date_from <=?',$date)
-    		->where('date_to >=?',$date)
+    		->where(new Zend_Db_Expr("((date_to IS NULL) OR (date_to >='{$date}  00:00:00'))"))
     	;
+    	if($online_only){
+            $collection->getSelect()->where('type=?',Bkg_License_Model_Type::TYPE_ONLINE);
+        }
     	
     	//die($collection->getSelect()->__toString());
     	//der erste Treffer gewinnt

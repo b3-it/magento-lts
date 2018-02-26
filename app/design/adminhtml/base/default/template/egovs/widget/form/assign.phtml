@@ -57,9 +57,11 @@ var assign_<?php echo $_itemID?> = new assignTable('<?php echo $_itemID?>','<?ph
 			</tbody>
 		</table>
 		<script>
+            <?php if($_element->getValue()): ?>
 			<?php foreach($_element->getValue() as $value):?>
 			assign_<?php echo $_itemID?>.appendRow(<?php echo $value?>);
 			<?php endforeach;?>
+            <?php endif;?>
 		</script>
 	</td>
 </tr>
