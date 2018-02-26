@@ -22,7 +22,7 @@
                                     <tr id="<?php echo $this->getHtmlId() ?>_template" class="template no-display">
                                         <td class="cell-label">
                                             __filename__
-                                            <select id="doctype-__id__" name="doctype" class="doctype-select">
+                                            <select id="doctype-__id__" name="doctype[__did__]" class="doctype-select">
                                               <?php foreach ($this->getDocTypes() as $k=>$v):?>
                                                 <option value="<?php echo $k?>"><?php echo $v?></option>
                                               <?php endforeach;?>
@@ -40,7 +40,7 @@
                                     <tr id="row-<?php echo $this->getHtmlId() ?>-<?php echo $file->getId(); ?>" data-id="<?php echo $file->getId(); ?>" data-table="<?php echo $this->getHtmlId() ?>">
                                         <td class="cell-label">
                                             <?php echo $file->getOrigFilename();?>
-                                            <select id="doctype-<?php echo $file->getId(); ?>" name="doctype" class="doctype-select">
+                                            <select id="doctype-<?php echo $file->getId(); ?>" name="doctype[<?php echo $file->getId(); ?>]" class="doctype-select">
                                               <?php foreach ($this->getDocTypes() as $k=>$v):?>
                                                 <option value="<?php echo $k?>"><?php echo $v?></option>
                                               <?php endforeach;?>

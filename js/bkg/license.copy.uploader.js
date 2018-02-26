@@ -4,7 +4,8 @@
             containerId : '',
             template    : '',
             templateId  : '',
-            newRowId    : ''
+            newRowId    : '',
+            curRowCount : 0
         };
 
         this.settings = {}
@@ -14,6 +15,7 @@
             defaults.containerId = element;
             defaults.templateId  = options.templateId;
             defaults.newRowId    = options.newRowId;
+            options.curRowCount  = getNextId();
 
             document.on('uploader:fileSuccess', function(event) {
                 var memo = event.memo;
@@ -37,27 +39,32 @@
                     return;
                 }
 
-                if ( !defaults.template ) {
-                    getTemplate();
-                }
-
-                var nextId = getNextId();
-
-                var newTableCells = defaults.template;
-                newTableCells = newTableCells.replace("__id__"       , nextId)
-                                             .replace("__filename__" , response.filename)
-                                             .replace("__created__"  , response.created)
-                                             .replace("__download__" , response.download)
-                                             .replace("__delete__"   , response.delete);
-
-                var newTableRow = $j('<tr />', {
-                    'id'        : 'row-' + defaults.newRowId + '-' + nextId,
-                    'data-id'   : nextId,
-                    'data-table': defaults.newRowId
-                });
-                newTableRow.append(newTableCells);
-                $j(defaults.containerId).append(newTableRow);
+                appendRow(response);
             });
+        }
+
+        appendRow = function(response) {
+            if ( !defaults.template ) {
+                getTemplate();
+            }
+
+            var newTableCells = defaults.template;
+            newTableCells = newTableCells.replace("__id__"       , options.curRowCount)
+                                         .replace("__did__"      , options.curRowCount)
+                                         .replace("__filename__" , response.filename)
+                                         .replace("__created__"  , response.created)
+                                         .replace("__download__" , response.download)
+                                         .replace("__delete__"   , response.delete);
+
+            var newTableRow = $j('<tr />', {
+                'id'        : 'row-' + defaults.newRowId + '-' + options.curRowCount,
+                'data-id'   : options.curRowCount,
+                'data-table': defaults.newRowId
+            });
+            newTableRow.append(newTableCells);
+            $j(defaults.containerId).append(newTableRow);
+
+            options.curRowCount += 1;
         }
 
         getTemplate = function() {
@@ -68,9 +75,17 @@
             var currId = 0;
 
             $j('#' + defaults.containerId.id + ' tr').each(function(){
-                currId = parseInt( $j(this).attr('data-id') );
+                if ( ($j(this).attr('data-id') !== typeof undefined) && ($j(this).attr('data-id') !== false) ) {
+                    currId = parseInt( $j(this).attr('data-id') );
+                }
             });
-            return currId + 1;
+
+            if ( isNaN(currId) ) {
+                return 1;
+            }
+            else {
+                return currId + 1;
+            }
         }
 
         init();
