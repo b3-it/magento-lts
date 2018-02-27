@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_report_export_exported_index>
+        <reference name="content">
+            <block type="bfr_report/adminhtml_export_exported" name="export_exported" />
+        </reference>
+    </adminhtml_report_export_exported_index>
+
+</layout>
