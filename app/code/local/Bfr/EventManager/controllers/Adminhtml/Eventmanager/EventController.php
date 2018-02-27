@@ -406,8 +406,16 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $new_event = $this->getRequest()->getParam('new_event');
         if(!is_array($participantIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
+        } else if(!$new_event) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select Event'));
+        
         } else {
             try {
+            	foreach($participantIds as $participantId){
+            		$participant = Mage::getModel('eventmanager/participant')->load($participantId);
+            		$clone = $participant->copy();
+            		$clone->setEventId($new_event)->save();
+            	}
 
                 $this->_getSession()->addSuccess(
                     $this->__('Total of %d record(s) were copied', count($participantIds))

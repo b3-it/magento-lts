@@ -36,6 +36,21 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	return parent::_afterLoad();
     }
     
+    public function copy()
+    {
+    	$result = Mage::getModel('eventmanager/participant');
+    	$result->setData($this->getData());
+    	$result->unsetData('participant_id');
+    	$result->unsetData('order_id');
+    	$result->unsetData('order_item_id');
+    	$result->unsetData('created_time');
+    	$result->unsetData('update_time');
+    	$result->unsetData('status');
+    	$result->setIndustry($this->getIndustry());
+    	$result->setLobby($this->getLobby());
+    	return $result;
+    }
+    
     protected function _saveAttribute($field, $key)
     {
     	$orig = $this->getResource()->getAttributeValues($this->getId(), $key);
