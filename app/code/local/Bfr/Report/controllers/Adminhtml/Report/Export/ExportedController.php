@@ -13,9 +13,9 @@ class Bfr_Report_Adminhtml_Report_Export_ExportedController extends Mage_Adminht
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('exportexported/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('ExportExported Manager'), Mage::helper('adminhtml')->__('ExportExported Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('ExportExported Manager'));
+			->_setActiveMenu('report/salesroot')
+			->_addBreadcrumb(Mage::helper('bfr_report')->__('Order Export'), Mage::helper('bfr_report')->__('Order Export'));
+		$this->_title(Mage::helper('bfr_report')->__('Order Export'));
 		return $this;
 	}
 

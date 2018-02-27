@@ -43,7 +43,6 @@
             </bfr_report_resource>
         </models>
     </global>
-    
     <admin>
       <routers>
           <adminhtml>
@@ -57,7 +56,7 @@
     </admin>
     <adminhtml>
       <menu>
-          <report module="bfr_report">
+          <report>
               <children>
               <salesroot>
               <children>
@@ -79,7 +78,7 @@
               </all>
               <admin>
                   <children>
-                      <report module="bfr_report">
+                      <report>
                           <children>
                                  <salesroot>
 	                          <children>

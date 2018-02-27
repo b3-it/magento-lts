@@ -160,14 +160,14 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
       		'filter_condition_callback' => array($this, '_filterConditionExportStatus'),
       ));
       $this->addColumn('exported_at', array(
-          'header'    => Mage::helper('bfr_report')->__('Exportiert Am'),
+          'header'    => Mage::helper('bfr_report')->__('Exported At'),
           //'align'     =>'left',
           //'width'     => '150px',
       		'type' => 'datetime',
           'index'     => 'exported_at',
       ));
       $this->addColumn('exported_by', array(
-          'header'    => Mage::helper('bfr_report')->__('Exportiert Von'),
+          'header'    => Mage::helper('bfr_report')->__('Exported By'),
           'align'     =>'left',
           //'width'     => '50px',
           'index'     => 'exported_by',
