@@ -51,6 +51,16 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Form extends Mage_Adminhtml_Bloc
               'name'      => 'parent_id',
               'options' => Mage::getSingleton('bkg_orgunit/entity_attribute_source_unit')->getOptionArray()
           ));
+      }else{
+
+          $fieldset->addField('parent_id', 'select', array(
+              'label'     => Mage::helper('bkg_orgunit')->__('Übergeordnete Organisation'),
+              'disabled' => true,
+              'readonly'	=> true,
+              'name'      => 'parent_id',
+              'options' => Mage::getSingleton('bkg_orgunit/entity_attribute_source_unit')->getOptionArray()
+          ));
+
       }
 
       if ( Mage::getSingleton('adminhtml/session')->getunitData() ) {

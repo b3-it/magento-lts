@@ -1,13 +1,13 @@
 <?php
 /**
-  *
-  * @category   	Bkg Orgunit
-  * @package    	Bkg_Orgunit
-  * @name       	Bkg_Orgunit Installer
-  * @author 		Holger Kögel <h.koegel@b3-it.de>
-  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
-  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
-  */
+ *
+ * @category   	Bkg Orgunit
+ * @package    	Bkg_Orgunit
+ * @name       	Bkg_Orgunit Installer
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 
 /** @var $this Mage_Catalog_Model_Resource_Setup */
 $installer = $this;
@@ -122,6 +122,7 @@ if (!$installer->getAttribute('customer', 'org_unit'))
 		'visible' => true,
 		'required' => false,
         'source'    => 'bkg_orgunit/entity_attribute_source_unit',
+        'backend'    => 'bkg_orgunit/entity_attribute_backend_unit',
     ));
     
     /**
@@ -345,8 +346,8 @@ if (!$installer->getConnection()->tableColumnExists($customer_address, 'org_addr
         'comment'   => "id to bkg_orgunit address"
     ));
     // extra check if FK exist?
-    $fkName = $installer->getFkName($customer_address, 'org_address_id', $unit_address, 'id');
-    $installer->getConnection()->addForeignKey($fkName, $customer_address, 'org_address_id', $unit_address, 'id');
+    $fkName = $installer->getFkName($customer_address, 'org_address_id', $unit_address, 'entity_id');
+    $installer->getConnection()->addForeignKey($fkName, $customer_address, 'org_address_id', $unit_address, 'entity_id');
 }
 
 $installer->endSetup();
