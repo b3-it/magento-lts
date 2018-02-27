@@ -14,8 +14,10 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
   {
       parent::__construct();
       $this->setId('export_exportedGrid');
-      $this->setDefaultSort('export_exported_id');
+      $this->setDefaultSort('increment_id');
       $this->setDefaultDir('ASC');
+      $filter = array('exported'=>'0');
+      $this->setDefaultFilter($filter);
       $this->setSaveParametersInSession(true);
   }
 
