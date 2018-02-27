@@ -257,7 +257,16 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 					if ($item->isEmpty()) {
 						continue;
 					}
-					
+
+                    // Start store emulation process
+                    $appEmulation = Mage::getSingleton('core/app_emulation');
+                    $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($item->getStoreId());
+                    //Dealing with uninitialized translator!
+                    Mage::app()->getTranslator()->init('frontend', true);
+                    $translateHelper = Mage::helper('paymentbase');
+                    // Stop store emulation process
+                    $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
 					if ($item->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
 						//Girosolution Besonderheiten
 						if ($item->hasInvoices()) {
@@ -266,14 +275,14 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 						}
 						
 						//Im State STATE_PAYMENT_REVIEW ist kein Cancel möglich!
-						$item->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT, false, Mage::helper('paymentbase')->__('Modifying state for further processing.'), false);
+						$item->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT, false, $translateHelper->__('Modifying state for further processing.'), false);
 					}
 					/* @var $item Mage_Sales_Model_Order */
 					if ($item->canCancel()) {
 					    try {
                             $item->cancel();
                             //Der Kunde muss nicht benachrichtigt werden, da er noch keine Mail über die Bestellung erhalten hat!
-                            $item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired.')) .
+                            $item->addStatusHistoryComment($translateHelper->__('Payment session has expired.'));
                             $item->save();
                         } catch (Exception $e) {
 					        Mage::logException($e);
@@ -306,9 +315,9 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 						//Irgendetwas stimmt nicht
 						if ($item->canHold()) {
 							$item->hold();
-							$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired, but an unknown error occured. Please contact support!'));
+							$item->addStatusHistoryComment($translateHelper->__('Payment session has expired, but an unknown error occured. Please contact support!'));
 						} else {
-							$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired, hold is not possible an unknown error occured. Please contact support!'));
+							$item->addStatusHistoryComment($translateHelper->__('Payment session has expired, hold is not possible an unknown error occured. Please contact support!'));
 						}
 						$item->save();
 						continue;
@@ -335,7 +344,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 					$item->setState(
 							Mage_Sales_Model_Order::STATE_CANCELED,
 							false,
-							Mage::helper('paymentbase')->__('Payment session has expired.'),
+							$translateHelper->__('Payment session has expired.'),
 							false
 					);
 					Mage::dispatchEvent('order_cancel_after', array('order' => $item));
