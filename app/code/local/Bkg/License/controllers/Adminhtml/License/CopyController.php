@@ -75,22 +75,23 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				$uploader->setAllowCreateFolders(true);
 
 				$file = Mage::getModel('bkg_license/copy_file');
-				$path = Mage::helper('bkg_license')->getLicenseFilePath($license_id).DS.$file->getHashFilename();
+				$path = Mage::helper('bkg_license')->getLicenseFilePath($license_id);
 				$file->setCopyId($license_id);
 				$file->setOrigFilename($_FILES['Filedata']['name']);
 
 				//$uploader->setAllowedExtensions(array('pdf')); //server-side validation of extension
-				$uploadSaveResult = $uploader->save($path, $_FILES['Filedata']['name']);
+				$uploadSaveResult = $uploader->save($path, $file->getHashFilename());
 
 				$file->save();
 
 				$result = array(
-					'filename' => $uploadSaveResult['file'],
+					'filename' => $_FILES['Filedata']['name'],
 					'download' => $this->getUrl('adminhtml/license_copy/download'  ,array('id'=>$file->getHashFilename())),
 					'delete'   => $this->getUrl('adminhtml/license_copy/deletefile',array('id'=>$file->getHashFilename())),
 					'created'  => now(),
+					'db_id'	=> $file->getId(),
 
-					'path'     => str_replace(DS, "/", $uploadSaveResult['path']),
+					//'path'     => str_replace(DS, "/", $uploadSaveResult['path']),
 					'cookie'   => array(
 		                'name'     => session_name(),
 		                'value'    => $this->_getSession()->getSessionId(),
@@ -203,6 +204,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				$this->_saveAgreements($data,$model);
 				$this->_saveToll($data,$model);
 				$this->_saveAddress($data,$model);
+				$this->_saveFiles($data,$model);
 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkg_license')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
@@ -400,6 +402,37 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 
     }
 
+    protected function _saveFiles($data,$model)
+    {
+    	if(!isset($data['doctype']))
+    	{
+    		return $this;
+    	}
+    	
+    	$doctypes = $data['doctype'];
+    	foreach($doctypes as $k=>$v)
+    	{
+    		$file= Mage::getModel('bkg_license/copy_file')->load($k);
+    		if($file->getUsage() != $v){
+    			$file->setUsage($v)->save();
+    		}
+    	}
+    	
+    	if(!isset($data['file_deleted']))
+    	{
+    		return $this;
+    	}
+    	 
+    	$file_deleted = $data['file_deleted'];
+    	foreach ($file_deleted as $k=>$v)
+    	{
+    		if($v){
+    			$file= Mage::getModel('bkg_license/copy_file')->load($k);
+    			$file->delete();
+    		}
+    	}
+    		
+    }
     protected function _saveToll($data,$model)
     {
         if(!isset($data['toll']))

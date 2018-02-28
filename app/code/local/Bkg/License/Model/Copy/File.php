@@ -33,4 +33,14 @@ class Bkg_License_Model_Copy_File extends Mage_Core_Model_Abstract
     	}
     	return parent::_beforeSave();
     }
+    
+    protected function _beforeDelete()
+    {
+    	$path = Mage::helper('bkg_license')->getLicenseFilePath($this->getCopyId()).DS.$this->getHashFilename();
+    	if(file_exists($path))
+    	{
+    		unlink($path);
+    	}
+    	return parent::_beforeDelete();
+    }
 }
