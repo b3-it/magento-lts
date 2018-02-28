@@ -4,23 +4,19 @@
     <modules>
 	    <B3it_Admin>
            <active>false</active>
-           <codePool>local</codePool>
+           <codePool>local</codePool>     	    	
 	    </B3it_Admin>
         <B3it_Ids>
             <active>false</active>
-            <codePool>local</codePool>
+            <codePool>local</codePool>          
         </B3it_Ids>
         <B3it_Maintenance>
             <active>false</active>
             <codePool>local</codePool>
         </B3it_Maintenance>
-        <B3it_Modelhistory>
-            <active>false</active>
-            <codePool>local</codePool>
-        </B3it_Modelhistory>
 		<B3it_ConfigCompare>
 			<active>false</active>
 			<codePool>local</codePool>
-		</B3it_ConfigCompare>
+		</B3it_ConfigCompare>    
     </modules>
 </config>

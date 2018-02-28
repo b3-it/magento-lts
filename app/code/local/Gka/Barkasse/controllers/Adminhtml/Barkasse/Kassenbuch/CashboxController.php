@@ -105,7 +105,7 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('gka_barkasse/kassenbuchcashbox');
+				$model = Mage::getModel('gka_barkasse/kassenbuch_cashbox');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

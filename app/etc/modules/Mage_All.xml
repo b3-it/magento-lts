@@ -373,7 +373,7 @@
             </depends>
         </Mage_Dataflow>
         <Mage_Rss>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
              <depends>
                 <Mage_Catalog/>
