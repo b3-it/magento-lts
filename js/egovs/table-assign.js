@@ -38,8 +38,6 @@ function assignTable(tableId,name)
 			data.right_text = $j('#right-assign-'+this.tableId + ' option[value="'+data.right_value+'"]').text();
 		}
 
-
-
 		if((!data.left_value) || (!data.right_value)){
 			return;
 		}
@@ -52,13 +50,6 @@ function assignTable(tableId,name)
 	    var cellRight = $j('<td />', {
 	        'text': data.right_text
 	    });
-
-	    var cellDelete = $j('<button />', {
-	        'class':'scalable delete add-widget position-delete',
-	        'type' : 'button',
-	        'onclick' : 'assign_'+ this.tableId +'.deleteRow('+ this.nextID +')'
-	    });
-	    cellDelete.append($j('<span />'));
 
 	    var inputLeft = $j('<input />', {
 	        'id'   : 'left_value-' + this.tableId + '-' + this.nextID,
@@ -84,22 +75,26 @@ function assignTable(tableId,name)
 	        'value': data.db_id,
 	        'type' : this.inputtype
 	    });
-
-
 	    cellRight.append(inputLeft).append(inputRigth).append(inputDelete).append(inputId);
 
-	    var cellFunction = $j('<td />', {
-	        'class': 'position-sorting',
-	        //'html' : $j('#' + destTable + ' tbody tr:first td:last').html()
-	        'html' : templateDelButton
+		var cellDelete = $j('<button />', {
+	        'class':'scalable delete add-widget position-delete',
+	        'type' : 'button',
+	        'onclick' : 'assign_'+ this.tableId +'.deleteRow('+ this.nextID +')'
 	    });
+	    cellDelete.append($j('<span />'));
+
+	    var cellFunction = $j('<td />', {
+	        'class': 'position-sorting'
+	    });
+		cellFunction.append(cellDelete);
 
 	    var newRow = $j('<tr />', {
 	        'id'        : 'row-' + this.tableId + '-' + this.nextID,
 	        'data-id'   : this.nextID,
 	        'data-table': this.tableId
 	    });
-	    newRow.append(cellLeft).append(cellRight).append(cellDelete);
+	    newRow.append(cellLeft).append(cellRight).append(cellFunction);
 
 	    $j('#table-' + this.tableId + ' tbody').append(newRow);
 	}
