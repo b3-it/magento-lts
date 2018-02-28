@@ -1,5 +1,4 @@
-(function($j){
-    $j.LicenseCopy = function(element, options) {
+LicenseCopy = function(element, options = {}) {
         var defaults = {
             containerId : '',
             template    : '',
@@ -8,22 +7,13 @@
             curRowCount : 0
         };
 
-        this.settings = {}
-        this.settings = $j.extend({}, defaults, options);
+        var instance = this;
+       
+        this.defaults = $j.extend({}, element, options);
 
-        init = function() {
-            defaults.containerId = element;
-            defaults.templateId  = options.templateId;
-            defaults.newRowId    = options.newRowId;
-            options.curRowCount  = getNextId();
+       
 
-            document.on('uploader:fileSuccess', function(event) {
-                var memo = event.memo;
-                UploadComplete([{response: memo.response}]);
-            });
-        }
-
-        UploadComplete = function(files) {
+        this.UploadComplete = function(files) {
             $j.each(files, function(index, item){
                 var response = $j.parseJSON(item.response);
                 if ( !response ) {
@@ -39,64 +29,46 @@
                     return;
                 }
 
-                appendRow(response);
+                instance.appendRow(response);
             });
         }
 
-        appendRow = function(response) {
-            if ( !defaults.template ) {
-                getTemplate();
+        this.deleteRow = function(id)
+        {
+        	var row = $j('#row-'+this.defaults.containerId+'-'+id);
+        	$j('#file-deleted-'+id).val(1);
+        	row.hide();
+        }
+        
+        this.replaceAll = function (str, find, replace) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        }
+        
+        this.appendRow = function(response) {
+            if ( !this.defaults.template ) {
+                this.getTemplate();
             }
 
-            var newTableCells = defaults.template;
-            newTableCells = newTableCells.replace("__id__"       , options.curRowCount)
-                                         .replace("__did__"      , options.curRowCount)
-                                         .replace("__filename__" , response.filename)
+            var newTableCells = this.defaults.template;
+            newTableCells = newTableCells.replace("__filename__" , response.filename)
                                          .replace("__created__"  , response.created)
-                                         .replace("__download__" , response.download)
-                                         .replace("__delete__"   , response.delete);
-
+                                         .replace("__download__" , response.download);
+            newTableCells = this.replaceAll(newTableCells,"__id__", response.db_id)
             var newTableRow = $j('<tr />', {
-                'id'        : 'row-' + defaults.newRowId + '-' + options.curRowCount,
-                'data-id'   : options.curRowCount,
-                'data-table': defaults.newRowId
+                'id'        : 'row-' + this.defaults.newRowId + '-' + response.db_id,
+                'data-id'   : this.defaults.curRowCount,
+                'data-table': this.defaults.newRowId
             });
             newTableRow.append(newTableCells);
-            $j(defaults.containerId).append(newTableRow);
-
-            options.curRowCount += 1;
+          
+            $j('#table-'+this.defaults.containerId+'_grid').append(newTableRow);
         }
 
-        getTemplate = function() {
-            defaults.template = $j(defaults.templateId).html();
+        this.getTemplate = function() {
+            this.defaults.template = $j(this.defaults.templateId).html();
         }
 
-        getNextId = function() {
-            var currId = 0;
-
-            $j('#' + defaults.containerId.id + ' tr').each(function(){
-                if ( ($j(this).attr('data-id') !== typeof undefined) && ($j(this).attr('data-id') !== false) ) {
-                    currId = parseInt( $j(this).attr('data-id') );
-                }
-            });
-
-            if ( isNaN(currId) ) {
-                return 1;
-            }
-            else {
-                return currId + 1;
-            }
-        }
-
-        init();
+        
     };
 
-    $j.fn.LicenseCopy = function(options) {
-        return this.each(function() {
-            if (undefined == $j(this).data('LicenseCopy')) {
-                var plugin = new $j.LicenseCopy(this, options);
-                $j(this).data('LicenseCopy', plugin);
-            }
-        });
-    }
-})(jQuery);
+    
