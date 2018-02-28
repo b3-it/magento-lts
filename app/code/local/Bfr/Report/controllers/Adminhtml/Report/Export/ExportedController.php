@@ -48,7 +48,7 @@ class Bfr_Report_Adminhtml_Report_Export_ExportedController extends Mage_Adminht
         $fileName   = $this->_getFileName('xml');
         $content    = $this->getLayout()->createBlock('bfr_report/adminhtml_export_exported_grid')
             ->getExcel($fileName);
-
+            $this->_saveExport();
         $this->_prepareDownloadResponse($fileName,$content);
     }
 
@@ -57,7 +57,7 @@ class Bfr_Report_Adminhtml_Report_Export_ExportedController extends Mage_Adminht
         $fileName   = $this->_getFileName('xls');
         $content    = $this->getLayout()->createBlock('bfr_report/adminhtml_export_exported_grid')
             ->getXml();
-
+            $this->_saveExport();
          $this->_prepareDownloadResponse($fileName,$content);
     }
 
