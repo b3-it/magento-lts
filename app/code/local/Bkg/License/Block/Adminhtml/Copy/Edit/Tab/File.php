@@ -72,21 +72,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_File extends Mage_Adminhtml_Bloc
         return $this->getHtmlId() . 'JsObject';
     }
 
-	public function getImagesJson()
-    {
-        if(is_array($this->getElement()->getValue())) {
-            $value = $this->getElement()->getValue();
-            if(count($value[$this->_uploaderFieldName]) > 0) {
-                foreach ($value[$this->_uploaderFieldName] as &$image) {
-                    $image['url'] = Mage::getSingleton('catalog/product_media_config')
-                                        ->getMediaUrl($image['file']);
-                }
-                return Mage::helper('core')->jsonEncode($value[$this->_uploaderFieldName]);
-            }
-        }
-        return '[]';
-    }
-
+	
 
 
 
