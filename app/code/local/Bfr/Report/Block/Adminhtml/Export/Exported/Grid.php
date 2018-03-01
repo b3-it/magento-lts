@@ -103,7 +103,7 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
       		'type' => 'currency',
       		'renderer' => 'egovsbase/adminhtml_widget_grid_column_renderer_balance',
       		'currency' => 'base_currency_code',
-      		'filter_condition_callback' => array('Egovs_Extsalesorder_Helper_Data', 'filterbaseGrantTotalCondition'),
+      		'filter_condition_callback' => array($this, '_filterbaseSaldoCondition'),
       ));
       
       $this->addColumn('payment_method', array(
@@ -184,6 +184,19 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
       return parent::_prepareColumns();
   }
 
+    protected  function _filterbaseSaldoCondition($collection, $column) {
+        if (!$value = $column->getFilter()->getValue()) {
+            return;
+        }
+
+        if (isset($value['from'])){
+            $collection->getSelect()->where('(ifnull(main_table.base_total_paid, 0) - order.base_grand_total)  >='.$value['from']*1);
+        }
+        if (isset($value['to'])){
+            $collection->getSelect()->where('(ifnull(main_table.base_total_paid, 0) - order.base_grand_total)  <='.$value['to']*1);
+        }
+       //die( $collection->getSelect()->__toString());
+    }
   protected function _filterConditionExportStatus($collection, $column)
   {
   	$value = $column->getFilter()->getValue();

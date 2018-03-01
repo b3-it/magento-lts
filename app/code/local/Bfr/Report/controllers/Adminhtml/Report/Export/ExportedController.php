@@ -20,7 +20,7 @@ class Bfr_Report_Adminhtml_Report_Export_ExportedController extends Mage_Adminht
 	}
 
 	public function indexAction() {
-        
+
 	    $this->_initAction()
 			->renderLayout();
 	}
