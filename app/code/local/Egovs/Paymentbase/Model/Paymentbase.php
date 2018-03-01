@@ -232,10 +232,12 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			$this->_getOrder()->setBaseTotalPaid($_betrag);
     			/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
     			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($_betrag));
-    		}
-            $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
 
-            $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
+    			//Normale Bezahlungen werden über Observer behandelt
+                //@see Egovs_Paymentbase_Model_Observer::onSalesOrderInvoicePay
+                $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
+                $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
+    		}
 
     		$this->_getOrder()->getPayment()->setEpayblCaptureDate(Varien_Date::now());
     		$this->_getOrder()->save();
