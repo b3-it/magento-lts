@@ -34,12 +34,23 @@
             </adminhtml>
         </blocks>
         <models>
+        	<adminhtml>
+        		<rewrite>
+        			<customer_renderer_region>Bkg_Orgunit_Model_Rewrite_Customer_Renderer_Region</customer_renderer_region>
+        		</rewrite>
+        	</adminhtml>
         	<customer_resource>
         		<rewrite>
         			<!-- To prevent the Org addresses from being deleted by customer save -->
             		<customer>Bkg_Orgunit_Model_Resource_Customer</customer>
         		</rewrite>
-    		</customer_resource>     
+    		</customer_resource>
+    		<egovsbase>
+    			<rewrite>
+    				<!-- rewrite to set own address template -->
+    				<adminhtml_observer>Bkg_Orgunit_Model_Rewrite_Observer</adminhtml_observer>
+    			</rewrite>
+    		</egovsbase>  
             <bkg_orgunit>
                 <class>Bkg_Orgunit_Model</class>
                 <resourceModel>bkg_orgunit_resource</resourceModel>
@@ -56,6 +67,12 @@
                   <unit_address_entity_varchar>
                         <table>bkg_orgunit_unit_address_entity_varchar</table>
                   </unit_address_entity_varchar>
+                  <eav_attribute>
+                        <table>bkg_orgunit_eav_attribute</table>
+                  </eav_attribute>
+                  <form_attribute>
+                        <table>bkg_orgunit_form_attribute</table>
+                  </form_attribute>
                 </entities>
             </bkg_orgunit_resource>
         </models>
@@ -126,42 +143,6 @@
       </routers>
     </admin>
     <adminhtml>
-      <menu>
-          <bkgorgunit module="bkg_orgunit">
-              <title>Bkg Orgunit</title>
-              <sort_order>50</sort_order>
-              <children>
-                  <bkgorgunit_unit module="bkg_orgunit">
-                      <title>Unit</title>
-                      <sort_order>10</sort_order>
-                      <action>adminhtml/orgunit_unit/index</action>
-                  </bkgorgunit_unit>
-
-              </children>
-          </bkgorgunit>
-      </menu>
-      <acl>
-          <resources>
-              <all>
-                  <title>Allow Everything</title>
-              </all>
-              <admin>
-                  <children>
-                      <bkgorgunit module="bkg_orgunit">
-                          <title>Bkg Orgunit</title>
-                          <sort_order>10</sort_order>
-                          <children>
-                                <bkgorgunit_unit module="bkg_orgunit">
-                                  <title>Unit</title>
-                                  <sort_order>10</sort_order>
-                              </bkgorgunit_unit>
-
-                          </children>
-                      </bkgorgunit>
-                  </children>
-              </admin>
-          </resources>
-      </acl>
         <translate>
             <modules>
                 <Bkg_Orgunit>

@@ -34,9 +34,27 @@ if (!$installer->tableExists($unit))
 		");
 }
 
+$org_eav_attribute = $installer->getTable('bkg_orgunit/eav_attribute');
+
+if (!$installer->tableExists($org_eav_attribute)) {
+    $installer->run("CREATE TABLE {$org_eav_attribute} (
+        `attribute_id` smallint(5) unsigned NOT NULL COMMENT 'Attribute Id',
+        `is_visible` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Is Visible',
+        `input_filter` varchar(255) DEFAULT NULL COMMENT 'Input Filter',
+        `multiline_count` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Multiline Count',
+        `validate_rules` text COMMENT 'Validate Rules',
+        `is_system` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is System',
+        `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Sort Order',
+        `data_model` varchar(255) DEFAULT NULL COMMENT 'Data Model',
+        PRIMARY KEY (`attribute_id`),
+        FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB");
+}
+
 $installer->addEntityType('bkg_orgunit', array(
-    'entity_model'    => 'bkg_orgunit/unit_address',
-    'table'           =>'bkg_orgunit/unit_address_entity',
+    'entity_model'               => 'bkg_orgunit/unit_address',
+    'table'                      => 'bkg_orgunit/unit_address_entity',
+    'additional_attribute_table' => 'bkg_orgunit/eav_attribute'
 ));
 
 if (!$installer->tableExists($unit_address))
@@ -135,6 +153,20 @@ if (!$installer->getAttribute('customer', 'org_unit'))
     ));
 }
 
+$org_form_attribute = $installer->getTable('bkg_orgunit/form_attribute');
+
+if (!$installer->tableExists($org_form_attribute)) {
+    
+    $installer->run("CREATE TABLE {$org_form_attribute} (
+        `form_code` varchar(32) NOT NULL COMMENT 'Form Code',
+        `attribute_id` smallint(5) unsigned NOT NULL COMMENT 'Attribute Id',
+        PRIMARY KEY (`form_code`,`attribute_id`),
+        KEY (`attribute_id`),
+        FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB");
+}
+
+
 $store = 0;
 
 $addressHelper = Mage::helper('customer/address');
@@ -142,6 +174,7 @@ $addressHelper = Mage::helper('customer/address');
 $attributes = array(
     'prefix'            => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Prefix',
         'is_user_defined'   => 0,
         'is_system'         => 0,
         'is_visible'        => $addressHelper->getConfig('prefix_show', $store) == '' ? 0 : 1,
@@ -150,6 +183,7 @@ $attributes = array(
     ),
     'firstname'         => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'First Name',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -162,6 +196,7 @@ $attributes = array(
     ),
     'middlename'        => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Middle Name/Initial',
         'is_user_defined'   => 0,
         'is_system'         => 0,
         'is_visible'        => $addressHelper->getConfig('middlename_show', $store) == '' ? 0 : 1,
@@ -170,6 +205,7 @@ $attributes = array(
     ),
     'lastname'          => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Last Name',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -182,6 +218,7 @@ $attributes = array(
     ),
     'suffix'            => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Suffix',
         'is_user_defined'   => 0,
         'is_system'         => 0,
         'is_visible'        => $addressHelper->getConfig('suffix_show', $store) == '' ? 0 : 1,
@@ -190,6 +227,7 @@ $attributes = array(
     ),
     'company'           => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Company',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -202,6 +240,8 @@ $attributes = array(
     ),
     'street'           => array(
         'backend_type'      => 'varchar', // FIXME text currently break the code
+        'backend_model'     => 'customer/entity_address_attribute_backend_street',
+        'frontend_label'    => 'Street Address',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -215,6 +255,7 @@ $attributes = array(
     ),
     'city'              => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'City',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -227,6 +268,9 @@ $attributes = array(
     ),
     'country_id'        => array(
         'backend_type'      => 'varchar',
+        'frontend_input'    => 'select',
+        'frontend_label'    => 'Country',
+        'source_model'      => 'customer/entity_address_attribute_source_country',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -250,6 +294,7 @@ $attributes = array(
     ),*/
     'postcode'          => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Zip/Postal Code',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -260,6 +305,7 @@ $attributes = array(
     ),
     'telephone'         => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Telephone',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -272,6 +318,7 @@ $attributes = array(
     ),
     'fax'               => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Fax',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -284,6 +331,7 @@ $attributes = array(
     ),
     'email'               => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'e-Mail',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -296,6 +344,7 @@ $attributes = array(
     ),
     'web'               => array(
         'backend_type'      => 'varchar',
+        'frontend_label'    => 'Web',
         'is_user_defined'   => 0,
         'is_system'         => 1,
         'is_visible'        => 1,
@@ -321,6 +370,11 @@ foreach ($attributes as $attributeCode => $data) {
         $attribute = $eavConfig->getAttribute('bkg_orgunit', $attributeCode);
         $attribute->addData($data);
         $attribute->save();
+
+        $this->getConnection()->insert($org_form_attribute, array(
+            'form_code'     => 'adminhtml_bkg_orgunit_address',
+            'attribute_id'  => $attribute->getAttributeId()
+        ));
     }
 }
 
