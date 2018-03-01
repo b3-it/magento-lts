@@ -654,6 +654,10 @@
             <invoice>
                 <send_mail>1</send_mail>
             </invoice>
+            <email_thumbnail>
+            	<show_thumbnail_in_email>1</show_thumbnail_in_email>
+            	<thumbnail_dimension>150</thumbnail_dimension>
+            </email_thumbnail>
         </sales_email>
         <customer>
             <guestrequired>

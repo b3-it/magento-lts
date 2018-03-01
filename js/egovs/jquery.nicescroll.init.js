@@ -24,6 +24,16 @@ function detectIE() {
     return false;
 }
 
+function resizeOnOpc()
+{
+	if ( detectIE() == false ) {
+		setTimeout(function(){
+			$j(scroll_element).getNiceScroll().resize();
+			resizeOnOpc();
+		}, 1000);
+	}
+}
+
 $j(document).ready(function () {
 	if ( typeof(isDWD) !== 'undefined' ) {
 		var color_element  = '#top-row';
@@ -43,5 +53,12 @@ $j(document).ready(function () {
 	        'cursorborderradius': '3px',
 	        'horizrailenabled'  : false
 	    });
+		
+		$j(scroll_element).getNiceScroll().resize();
+	}
+
+	if ( $j('#checkoutSteps').length ) {
+		// NiceScroll-Fix für OPC
+		resizeOnOpc();
 	}
 });
