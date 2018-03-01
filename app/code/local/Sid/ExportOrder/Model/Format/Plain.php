@@ -29,7 +29,7 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
     	 $result = array();
 
 
-        $result[] = 'Kundenadresse';
+        $result[] = '-- KUNDENADRESSE --';
         $result[] = $order->getBillingAddress()->getName();
         $result[] = $order->getBillingAddress()->getCompany();
         $result[] = $order->getBillingAddress()->getCompany2();
@@ -42,11 +42,13 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
         $result[] = 'Email:'. $order->getCustomerEmail();
 
 
+        $result[] = '';
+        $result[] = '';
+        $result[] = '';
 
 
 
-
-    	 $result[] = 'Rechnungsadresse';
+    	 $result[] = '-- RECHNUNGSADRESSE --';
     	 $result[] = $order->getBillingAddress()->getName();
     	 $result[] = $order->getBillingAddress()->getCompany();
     	 $result[] = $order->getBillingAddress()->getCompany2();
@@ -57,10 +59,12 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
     	 $result[] = 'Tel: '.$order->getBillingAddress()->getTelephone();
     	 $result[] = 'Fax: '.$order->getBillingAddress()->getFax();
     	 $result[] = 'Email:'. $order->getBillingAddress()->getEmail();
-    	 
+        $result[] = '';
+        $result[] = '';
+        $result[] = '';
     	 if($order->getShippingAddress())
     	 {
-	    	$result[] = 'Lieferadresse';
+	    	$result[] = '-- LIEFERADRESSE --';
 	    	$result[] = $order->getShippingAddress()->getName();
 	    	$result[] = $order->getShippingAddress()->getCompany();
 	    	$result[] = $order->getShippingAddress()->getCompany2();
@@ -74,7 +78,9 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
 	    	if($order->getShippingAddress()->getDap()){
 	    		$result[] = 'Abholort:'. $order->getShippingAddress()->getDap();
 	    	}
-	    	
+             $result[] = '';
+             $result[] = '';
+             $result[] = '';
     	 }
     	 
     	 $result[] = implode($item_separator,array('Artikelnummer','Bezeichnung','Menge','Preis'));
