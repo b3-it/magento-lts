@@ -20,8 +20,7 @@ class Bfr_Report_Adminhtml_Report_Export_ExportedController extends Mage_Adminht
 	}
 
 	public function indexAction() {
-        $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
-       // $incomingPayment->saveIncomingPayment(1,18,18);
+        
 	    $this->_initAction()
 			->renderLayout();
 	}
