@@ -234,11 +234,8 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($_betrag));
     		}
             $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
-            $incomingPayment->setOrderId($this->_getOrder()->getId());
-            $incomingPayment->setBaseTotalPaid($this->_getOrder()->getBaseTotalPaid());
-            $incomingPayment->setTotalPaid($this->_getOrder()->getTotalPaid());
-            $incomingPayment->setEpayblCaptureDate(Varien_Date::now());
-            $incomingPayment->save();
+
+            $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
 
     		$this->_getOrder()->getPayment()->setEpayblCaptureDate(Varien_Date::now());
     		$this->_getOrder()->save();
@@ -266,13 +263,10 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     				min($this->_getOrder()->getStore()->convertPrice($_betrag), $this->_getOrder()->getGrandTotal())
     		);
             $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
-            $incomingPayment->setOrderId($this->_getOrder()->getId());
-            $incomingPayment->setBaseTotalPaid($this->_getOrder()->getBaseTotalPaid());
-            $incomingPayment->setTotalPaid($this->_getOrder()->getTotalPaid());
-            $incomingPayment->setEpayblCaptureDate(Varien_Date::now());
-            $incomingPayment->save();
-    	
-    		$this->_getOrder()->getResource()->saveAttribute($this->_getOrder(), array('base_total_paid', 'total_paid'));
+            $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
+
+
+            $this->_getOrder()->getResource()->saveAttribute($this->_getOrder(), array('base_total_paid', 'total_paid'));
     	}
     }
     

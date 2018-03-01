@@ -20,16 +20,18 @@ class Bfr_Report_Adminhtml_Report_Export_ExportedController extends Mage_Adminht
 	}
 
 	public function indexAction() {
-		$this->_initAction()
+        $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
+       // $incomingPayment->saveIncomingPayment(1,18,18);
+	    $this->_initAction()
 			->renderLayout();
 	}
 
 	protected function _saveExport()
 	{
-		$order_ids = Mage::registry('order_ids');
+        $incoming_payment_ids = Mage::registry('incoming_payment_ids');
 		$user = Mage::getSingleton('admin/session')->getUser();
 		$export = Mage::getModel('bfr_report/export_exported');
-		$export->saveHistory($order_ids, trim($user->getFirstname()." ".$user->getLastname()));
+		$export->saveHistory($incoming_payment_ids, trim($user->getFirstname()." ".$user->getLastname()));
 	}
 	
    

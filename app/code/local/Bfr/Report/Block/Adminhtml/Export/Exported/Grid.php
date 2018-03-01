@@ -23,21 +23,21 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
 
   protected function _prepareCollection()
   {
-  	  $collection = Mage::getResourceModel('sales/order_grid_collection');
+  	  $collection = Mage::getModel('paymentbase/incoming_payment')->getCollection();
 
   	  $order_item_expr = new Zend_Db_Expr("(SELECT order_id, group_concat(sku  SEPARATOR ', ') as skus FROM {$collection->getTable('sales/order_item')} Group BY order_id)");
   	  
       $collection->getSelect()
-      
-      ->joinleft(array('export'=>$collection->getTable('bfr_report/export_exported')),'main_table.entity_id = export.order_id',array('exported_at'=>'exported_at',
+      ->join(array('order'=>$collection->getTable('sales/order_grid')),'order.entity_id = main_table.order_id',array('increment_id','billing_name','base_grand_total','payment_method','status','created_at','base_currency_code'))
+      ->joinleft(array('export'=>$collection->getTable('bfr_report/export_exported')),'main_table.id = export.incoming_payment_id',array('exported_at'=>'exported_at',
       		'exported_by'=>'exported_by',
       		'exported' => new Zend_Db_Expr('(exported_at IS NOT NULL)')
       		
       ))
       ->join(array('bkz' => $collection->getTable('sales/order_payment')),
-      		'main_table.entity_id = bkz.parent_id',
-      		array('kassenzeichen','epaybl_capture_date'))
-      ->join(array('oi'=>$order_item_expr),'oi.order_id=main_table.entity_id',array('skus'))
+      		'main_table.order_id = bkz.parent_id',
+      		array('kassenzeichen'))
+      ->join(array('oi'=>$order_item_expr),'oi.order_id=main_table.order_id',array('skus'))
       ;
       $collection->setIsCustomerMode(true);
       
@@ -45,23 +45,23 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
       
       $this->setCollection($collection);
        parent::_prepareCollection();
-      $order_ids = array();
+      $incoming_payment_ids = array();
       
       
       
       
       foreach($this->getCollection() as $item){
-      	$order_ids[] = $item->getId();
+          $incoming_payment_ids[] = $item->getId();
       }
        
-      Mage::register('order_ids', $order_ids);
+      Mage::register('incoming_payment_ids', $incoming_payment_ids);
        return $this;
   }
 
   protected function _prepareColumns()
   {
       $this->addColumn('increment_id', array(
-          'header'    => Mage::helper('bfr_report')->__('ID'),
+          'header'    => Mage::helper('sales')->__('Order #'),
           'align'     =>'right',
           'width'     => '50px',
           'index'     => 'increment_id',
@@ -89,9 +89,9 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
       		'currency' => 'base_currency_code',
       ));
       
-      $this->addColumn('base_total_paid', array(
+      $this->addColumn('base_paid', array(
       		'header' => Mage::helper('sales')->__('Total Paid (Base)'),
-      		'index' => 'base_total_paid',
+      		'index' => 'base_paid',
       		'type'  => 'currency',
       		'currency' => 'base_currency_code',
       ));

@@ -12,22 +12,22 @@
 $installer = $this;
 
 $installer->startSetup();
+
 if (!$installer->tableExists($installer->getTable('bfr_report/export_exported')))
 {
-	$installer->run("
+    $installer->run("
 	-- DROP TABLE IF EXISTS {$installer->getTable('bfr_report/export_exported')};
 	CREATE TABLE {$installer->getTable('bfr_report/export_exported')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
-    	`order_id` int(11) unsigned NOT NULL ,
+    	`incoming_payment_id` int(11) unsigned NOT NULL ,
         `exported_at` datetime default now(),
         `exported_by` varchar(128) default '',
 	  PRIMARY KEY (`id`),
-     FOREIGN KEY (`order_id`) REFERENCES `{$this->getTable('sales/order')}`(`entity_id`) ON DELETE CASCADE
+     FOREIGN KEY (`incoming_payment_id`) REFERENCES `{$this->getTable('paymentbase/incoming_payment')}`(`id`) ON DELETE CASCADE
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 		");
 }
-
 
 
 /*

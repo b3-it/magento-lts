@@ -17,14 +17,14 @@ class Bfr_Report_Model_Resource_Export_Exported extends Mage_Core_Model_Resource
     }
     
     //alle gleichzeitig einfügen
-    public function saveHistory($orderIds, $user)
+    public function saveHistory($incoming_payment_ids, $user)
     {
     	 
-    	foreach ($orderIds as $order)
+    	foreach ($incoming_payment_ids as $incoming_payment_id)
     	{
-    		$data[] = array('exported_by'=>$user,'order_id'=>$order);
+    		$data[] = array('exported_by'=>$user,'incoming_payment_id'=>$incoming_payment_id);
     	}
-    	$this->_getWriteAdapter()->delete($this->getTable('bfr_report/export_exported'),array('order_id'=>$orderIds));
+    	$this->_getWriteAdapter()->delete($this->getTable('bfr_report/export_exported'),array('incoming_payment_id'=>$incoming_payment_ids));
     	$this->_getWriteAdapter()->insertMultiple($this->getTable('bfr_report/export_exported'), $data);
     }
 }
