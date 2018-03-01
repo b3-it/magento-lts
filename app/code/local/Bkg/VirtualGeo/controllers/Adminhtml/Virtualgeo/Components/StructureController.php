@@ -79,6 +79,10 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
 				->setStoreId($store_id)
 				->setId($this->getRequest()->getParam('id'));
 
+            if(!$model->getShowLayer()){
+                $model->unsetData('service_id');
+            }
+
 			try {
 				$model->save();
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('virtualgeo')->__('Item was successfully saved'));

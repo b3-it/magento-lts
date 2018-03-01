@@ -75,6 +75,16 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
           'value' => $dataModel->getStoreId()
       ));
 
+      $categroys =  Mage::getModel('virtualgeo/components_structure_category')->getCollection()->toOptionHash();
+
+      $fieldset->addField('category', 'select', array(
+          'label'     => Mage::helper('virtualgeo')->__('Category'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'category_id',
+          'options' => $categroys,
+          'value'	=> $dataModel->getCategoryId()
+      ));
 
       	$services = Mage::getModel('bkgviewer/service_service')->getCollection();
 

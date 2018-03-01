@@ -141,7 +141,12 @@
 								<sort_order>50</sort_order>
 								<action>adminhtml/virtualgeo_components_structure/index</action>
 							</virtualgeo_components_structure>
-							<virtualgeo_components_storage module="virtualgeo">
+                            <virtualgeo_components_structure_category module="virtualgeo">
+                                <title>Structure Category</title>
+                                <sort_order>55</sort_order>
+                                <action>adminhtml/virtualgeo_components_structure_category/index</action>
+                            </virtualgeo_components_structure_category>
+                            <virtualgeo_components_storage module="virtualgeo">
 								<title>Storage</title>
 								<sort_order>60</sort_order>
 								<action>adminhtml/virtualgeo_components_storage/index</action>
@@ -344,6 +349,9 @@
                     <components_content_category>
                         <table>virtualgeo_components_content_category</table>
                     </components_content_category>
+                    <components_structure_category>
+                        <table>virtualgeo_components_structure_category</table>
+                    </components_structure_category>
 				   <quote_options>
                         <table>virtualgeo_quote_options</table>
                     </quote_options>
