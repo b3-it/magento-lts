@@ -150,10 +150,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
       	$collection->getSelect()->where('entity_id=0');
       }
       
-  
-      //die( $collection->getSelect()->__toString());  
+      $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
+
       $this->setCollection($collection);
-     
+
+      //die( $collection->getSelect()->__toString());
       parent::_prepareCollection();
       //$this->_prepareTotals();
       return $this;

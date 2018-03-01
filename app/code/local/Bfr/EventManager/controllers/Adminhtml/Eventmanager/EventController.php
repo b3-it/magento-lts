@@ -398,7 +398,37 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	}
     	$this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
     }
-    
+
+
+    public function massStatusParticipantCopyAction()
+    {
+        $participantIds = $this->getRequest()->getParam('participant');
+        $new_event = $this->getRequest()->getParam('new_event');
+        if(!is_array($participantIds)) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
+        } else if(!$new_event) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select Event'));
+        
+        } else {
+            try {
+            	foreach($participantIds as $participantId){
+            		$participant = Mage::getModel('eventmanager/participant')->load($participantId);
+            		$clone = $participant->copy();
+            		$clone->setEventId($new_event)->save();
+            	}
+
+                $this->_getSession()->addSuccess(
+                    $this->__('Total of %d record(s) were copied', count($participantIds))
+                );
+            } catch (Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+            }
+        }
+        $this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
+    }
+
+
+
     protected function _isAllowed() {
     	return Mage::getSingleton('admin/session')->isAllowed('bfr_eventmanager/eventmanager_event');
     }

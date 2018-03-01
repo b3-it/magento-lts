@@ -36,6 +36,15 @@
                 <Mage_Catalog/>
                 <Mage_Customer/>
            </depends>
-        </Bfr_Mach>   
+        </Bfr_Mach> 
+     <Bfr_Report>
+      <active>true</active>
+      <codePool>local</codePool>
+       <depends>
+        <Mage_Sales />
+        <Mage_Catalog />
+        <Mage_Customer />
+      </depends>
+    </Bfr_Report>		
   </modules>
 </config>
