@@ -610,6 +610,12 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         if (!$payment) {
             return null;
         }
+        $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
+        $incomingPayment->setOrderId($invoice->getOrderId());
+        $incomingPayment->setBaseTotalPaid($invoice->getOrder()->getBaseTotalPaid());
+        $incomingPayment->setTotalPaid($invoice->getOrder()->getTotalPaid());
+        $incomingPayment->setEpayblCaptureDate(Varien_Date::now());
+        $incomingPayment->save();
         $payment->setEpayblCaptureDate(Varien_Date::now());
         $payment->getResource()->saveAttribute($payment, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CAPTURE_DATE);
     }
