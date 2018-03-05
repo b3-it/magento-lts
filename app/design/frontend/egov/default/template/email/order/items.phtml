@@ -7,35 +7,40 @@
  */
 ?>
 
-<?php $_order = $this->getOrder(); ?>
+<?php
+$_order = $this->getOrder();
+
+$_thStyle = 'border:1px solid #bebcb7; padding:5px 9px 6px 9px; background-color:#d9e5ee;';
+?>
 
 <?php if ($_order): ?>
     <?php $_items = $_order->getAllItems(); ?>
     <?php $_itemCount = count($_items); ?>
     <tr>
         <td>
-            <table class="items" style="border:0; width:100%;">
+            <br />
+            <table class="items" style="width:100%; border-collapse:collapse;">
                 <thead>
                     <tr>
-                        <th class="cell-name">
+                        <th class="cell-name" style="<?php echo $_thStyle; ?>">
                             <?php if($_itemCount > 1): ?>
                                 <?php echo $this->__('Items in your order'); ?>
                             <?php else: ?>
                                 <?php echo $this->__('Item in your order'); ?>
                             <?php endif; ?>
                         </th>
-                        <th class="cell-name align-center">
+                        <th class="cell-name align-center" style="<?php echo $_thStyle; ?>">
                             <?php echo $this->__('Sku'); ?>
                         </th>
-                        <th class="cell-name align-center">
+                        <th class="cell-name align-center" style="<?php echo $_thStyle; ?>">
                             <?php echo $this->__('Qty'); ?>
                         </th>
-                        <th class="cell-name align-right">
+                        <th class="cell-name align-right" style="<?php echo $_thStyle; ?>">
                             <?php echo $this->__('Price'); ?>
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="border:1px solid #bebcb7; border-top-width:0;">
                  <?php $i=0; foreach ($_order->getAllItems() as $_item): ?>
                   <?php if($_item->getParentItem()) continue; else $i++; ?>
                    <?php echo $this->getItemHtml($_item) ?>
