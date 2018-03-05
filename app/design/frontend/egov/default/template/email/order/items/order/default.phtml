@@ -7,15 +7,19 @@
  */
 ?>
 <?php
-$_item    = $this->getItem();
-$_product = $this->getItem()->getProduct();
-$_order   = $this->getItem()->getOrder();
+$_item  = $this->getItem();
+$_order = $this->getItem()->getOrder();
+
+$_helper  = $this->helper('catalog/output');
+$_product = $_item->getProduct();
 
 $_showThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/show_thumbnail_in_email');
 $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_dimension');
+
+$_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;';
 ?>
 <tr>
-    <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+    <td align="left" valign="top" style="<?php echo $_cellStyle; ?>">
       <?php if($_showThumbnail): ?>
         <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_sizeThumbnail); ?>"
              alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
@@ -39,12 +43,13 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
             <?php echo $addInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
         <div class="default-short">
-            <?php echo $_product->getShortDescription(); ?>
+            1)<?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description'); ?>
+            2)<?php echo $_product->getShortDescription(); ?>
         </div>
     </td>
-    <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;"><?php echo $this->escapeHtml($this->getSku($_item)) ?></td>
-    <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;"><?php echo $_item->getQtyOrdered()*1 ?></td>
-    <td align="right" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+    <td align="left" valign="top" style="<?php echo $_cellStyle; ?>"><?php echo $this->escapeHtml($this->getSku($_item)) ?></td>
+    <td align="center" valign="top" style="<?php echo $_cellStyle; ?>"><?php echo $_item->getQtyOrdered()*1 ?></td>
+    <td align="right" valign="top" style="<?php echo $_cellStyle; ?>">
         <?php if ($this->helper('tax')->displaySalesPriceExclTax($_order->getStore()) || $this->helper('tax')->displaySalesBothPrices($_order->getStore())): ?>
             <?php if ($this->helper('tax')->displaySalesBothPrices($_order->getStore())): ?>
                 <span class="label"><?php echo Mage::helper('tax')->__('Excl. Tax'); ?>:</span>
