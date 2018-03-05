@@ -10,8 +10,7 @@
 $_item  = $this->getItem();
 $_order = $this->getItem()->getOrder();
 
-$_helper  = $this->helper('catalog/output');
-$_product = $_item->getProduct();
+$_product = Mage::getModel('catalog/product')->load($_item->getProductId()); //$_item->getProduct();
 
 $_showThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/show_thumbnail_in_email');
 $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_dimension');
@@ -43,7 +42,6 @@ $_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC
             <?php echo $addInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
         <div class="default-short">
-            1)<?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description'); ?>
             2)<?php echo $_product->getShortDescription(); ?>
         </div>
     </td>
