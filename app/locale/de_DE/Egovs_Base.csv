@@ -123,3 +123,6 @@
 "Allowed file types: jpg, jpeg, gif, png.","Erlaubte Datei-Typen: jpg, jpeg, gif, png."
 "Custome Style Definition","eigene Sytle-Anweisungen"
 "Example: max-height:200px; height:auto; width:auto;","Beispiel: max-height:200px; height:auto; width:auto;"
+"View thumbnails in order emails","Einstellungen für verkleinerte Produktbilder in der Bestellemail"
+"Show Product Thumbnail in eMail","zeige Produkt-Miniatur-Bild in der eMail"
+"Width Product Thumbnail","Breite des Produkt-Miniatur-Bildes"
