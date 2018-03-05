@@ -51,6 +51,12 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
 	        		'onclick'   => 'processTextAndContinueEdit()',
 	        		'class'     => 'save',
 	        ), -100);
+
+            $this->_addButton('email', array(
+                'label'     => Mage::helper('adminhtml')->__('Email'),
+                'onclick'   => '',
+                'class'     => 'save',
+            ), -100);
         
         }
         

@@ -288,8 +288,9 @@
     </adminhtml>
     <bkg_lizense>
     <address_type>
+       <ansprech>Ansprechpartner</ansprech>
        <technischer_ansprech>Technischer Ansprechpartner</technischer_ansprech>
-         <lizenz_nehmer>Lizenznehmer</lizenz_nehmer>
-        </address_type>
+       <lizenz_nehmer>Lizenznehmer</lizenz_nehmer>
+     </address_type>
         </bkg_lizense>
 </config>
