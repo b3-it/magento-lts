@@ -41,9 +41,6 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
         <div class="default-short">
             <?php echo $_product->getShortDescription(); ?>
         </div>
-        <pre style="display:none;">
-            <?php print_r($_product->getData()); ?>
-        </pre>
     </td>
     <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;"><?php echo $this->escapeHtml($this->getSku($_item)) ?></td>
     <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;"><?php echo $_item->getQtyOrdered()*1 ?></td>
