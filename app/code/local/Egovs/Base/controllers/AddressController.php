@@ -53,7 +53,7 @@ class Egovs_Base_AddressController extends Mage_Customer_AddressController
         $id = $this->getRequest()->getParam('id', false);
         $result = new Varien_Object();
         $data = array('result' => $result, "address_id" => $id);
-        Mage::dispatchEvent('egovs_base_customer_reject_address_delete', $data);
+        Mage::dispatchEvent($event, $data);
 
         $_res = boolval($result->getIsDenied());
 

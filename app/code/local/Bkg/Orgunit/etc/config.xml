@@ -26,11 +26,6 @@
             <bkg_orgunit>
                 <class>Bkg_Orgunit_Block</class>
             </bkg_orgunit>
-            <customer>
-                <rewrite>
-                    <address_edit>Bkg_Orgunit_Block_Customer_Address_Edit</address_edit>
-                </rewrite>
-            </customer>
             <adminhtml>
                 <rewrite>
                     <!-- To hide Org addresses in customer edit -->
@@ -82,6 +77,15 @@
             </bkg_orgunit_resource>
         </models>
         <events>
+            <egovs_base_customer_address_edit_block_before_html>
+                <observers>
+                    <bkg_orgunit_customer_address_block_edit>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>address_block_edit</method>
+                    </bkg_orgunit_customer_address_block_edit>
+                </observers>
+            </egovs_base_customer_address_edit_block_before_html>
             <customer_save_before>
                 <observers>
                     <bkg_orgunit_customer_save_before>

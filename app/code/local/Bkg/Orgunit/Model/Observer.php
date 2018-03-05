@@ -70,4 +70,27 @@ class Bkg_Orgunit_Model_Observer
             }
         }
     }
+
+    public function address_block_edit(Varien_Event_Observer $observer)
+    {
+        /**
+         * @var Mage_Core_Block_Abstract $block
+         */
+        $block = $observer->getBlock();
+        /**
+         * @var Mage_Customer_Model_Address $address
+         */
+        $address  = $observer->getParent()->getAddress();
+        
+        if ($block->getType() === "egovsbase/customer_widget_name") {
+            if ($address->getData('org_address_id') !== null) {
+                $block->setFieldParams('disabled="disabled" readonly="readonly"');
+            }
+        } else if ($block->getType() === "core/html_select") {
+            if ($address->getData('org_address_id') !== null) {
+                $block->setExtraParams('disabled="disabled" readonly="readonly"');
+                $block->setClass('');
+            }
+        }
+    }
 }
