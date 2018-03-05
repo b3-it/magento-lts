@@ -126,6 +126,44 @@
               </Bkg_License>
             </modules>
         </translate>
+        <events>
+            <egovs_base_customer_reject_address_editing>
+                <observers>
+                    <bkg_license_customer_reject_address_editing>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressEditing</method>
+                    </bkg_license_customer_reject_address_editing>
+                </observers>
+            </egovs_base_customer_reject_address_editing>
+            <egovs_base_customer_reject_address_delete>
+                <observers>
+                    <bkg_license_customer_reject_address_delete>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressDelete</method>
+                    </bkg_license_customer_reject_address_delete>
+                </observers>
+            </egovs_base_customer_reject_address_delete>
+            <egovs_base_customer_reject_address_edit>
+                <observers>
+                    <bkg_license_customer_reject_address_editing>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressEdit</method>
+                    </bkg_license_customer_reject_address_editing>
+                </observers>
+            </egovs_base_customer_reject_address_edit>
+            <egovs_base_customer_reject_address_save>
+                <observers>
+                    <bkg_license_customer_reject_address_editing>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressEdit</method>
+                    </bkg_license_customer_reject_address_editing>
+                </observers>
+            </egovs_base_customer_reject_address_save>
+        </events>
     </frontend>
     <admin>
       <routers>

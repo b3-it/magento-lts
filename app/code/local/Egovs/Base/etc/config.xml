@@ -197,6 +197,15 @@
                 </egovsbase>
             </updates>
         </layout>
+        <routers>
+            <customer>
+                <args>
+                    <modules>
+                        <general before="Mage_Customer">Egovs_Base</general>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
     </frontend>
 
     <global>

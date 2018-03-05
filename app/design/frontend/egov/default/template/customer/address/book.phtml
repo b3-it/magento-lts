@@ -164,8 +164,8 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
         <?php if($_pAddress = $this->getAdditionalAddresses()): ?>
         <?php foreach($_pAddress as $_address): ?>
         <div class="box">
-            <div class="box-title">
-                <h3>
+             <?php if(!$this->rejectAddressEditing($_address->getId())):?>
+                    <h3>
                     <?php echo $this->__('Edit Address') ?>
                     <span class="spacer">|</span>
                     <a class="egov-pencile"
@@ -178,6 +178,15 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                        onclick="return deleteAddress('<?php echo $_address->getId() ?>');"
                        title="<?php echo $this->__('Delete Address') ?>"> </a>
                 </h3>
+                  <?php else: ?>
+                    <span class="locked_address_text egov-password">
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
+                    </span>
+                  <?php endif;?>
+			<div class="box-title">
+                
             </div>
             <div class="box-content">
                 <address>
