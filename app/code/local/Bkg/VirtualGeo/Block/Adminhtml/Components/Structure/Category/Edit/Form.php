@@ -43,6 +43,14 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Category_Edit_Form ext
   			'value'	=> $dataModel->getLabel()
   	));
 
+  	$fieldset->addField('code', 'text', array(
+  			'label'     => Mage::helper('virtualgeo')->__('Code'),
+  			//'class'     => 'required-entry',
+  			//'required'  => true,
+  			'name'      => 'label',
+  			'value'	=> $dataModel->getCode()
+  	));
+  	 
   
 
 

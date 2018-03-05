@@ -105,7 +105,7 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_FormatController extends Ma
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('virtualgeo/componentsformatentity');
+				$model = Mage::getModel('virtualgeo/components_format');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

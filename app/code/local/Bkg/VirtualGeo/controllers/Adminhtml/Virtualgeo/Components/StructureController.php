@@ -108,7 +108,7 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('virtualgeo/componentsstructureentity');
+				$model = Mage::getModel('virtualgeo/components_structure');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

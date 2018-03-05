@@ -104,6 +104,7 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_structu
 	  CREATE TABLE {$installer->getTable('virtualgeo/components_structure_category')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `label` varchar(128) default '',
+	  `code` varchar(128) default '',
 	  `pos` int(11) unsigned default 0,
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

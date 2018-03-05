@@ -49,6 +49,13 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Category_Grid extends 
       		'index'     => 'label',
       ));
       
+      $this->addColumn('code', array(
+      		'header'    => Mage::helper('virtualgeo')->__('Code'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'code',
+      ));
+      
  
 
         $this->addColumn('action',
