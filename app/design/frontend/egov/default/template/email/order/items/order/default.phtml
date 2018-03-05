@@ -42,7 +42,7 @@ $_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC
             <?php echo $addInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
         <div class="default-short">
-            2)<?php echo $_product->getShortDescription(); ?>
+            <?php echo $_product->getShortDescription(); ?>
         </div>
     </td>
     <td align="left" valign="top" style="<?php echo $_cellStyle; ?>"><?php echo $this->escapeHtml($this->getSku($_item)) ?></td>
