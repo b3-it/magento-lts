@@ -38,7 +38,7 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
         <?php if ($addInfoBlock) :?>
             <?php echo $addInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
-        <div>
+        <div class="default-short">
             <?php echo $_product->getShortDescription(); ?>
         </div>
     </td>

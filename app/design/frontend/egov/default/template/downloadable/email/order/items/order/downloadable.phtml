@@ -16,7 +16,7 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
 ?>
 <tr>
     <td align="left" valign="top" style="padding:3px 9px">
-      <?php if($_showThumbnail): ?>  
+      <?php if($_showThumbnail): ?>
         <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_sizeThumbnail); ?>"
              alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
              title="<?php echo $this->escapeHtml($_item->getName()) ?>" />
@@ -44,7 +44,7 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
                 <?php endforeach; ?>
             </dl>
         <?php endif; ?>
-        <?php echo $this->escapeHtml($_item->getDescription()) ?>
+        <div class="download-short"><?php echo $this->escapeHtml($_item->getDescription()) ?></div>
         <?php if ($_item->getGiftMessageId() && $_giftMessage = $this->helper('giftmessage/message')->getGiftMessage($_item->getGiftMessageId())): ?>
             <br/><strong><?php echo $this->__('Gift Message') ?></strong>
             <br/><?php echo $this->__('From:'); ?> <?php echo $this->escapeHtml($_giftMessage->getSender()) ?>

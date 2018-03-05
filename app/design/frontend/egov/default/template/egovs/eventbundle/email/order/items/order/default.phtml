@@ -33,7 +33,7 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
     <?php if ($_prevOptionId != $attributes['option_id']): ?>
     <tr>
         <td align="left" valign="top" style="padding:3px 9px">
-            <?php if($_showThumbnail): ?>  
+            <?php if($_showThumbnail): ?>
               <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_sizeThumbnail); ?>"
                    alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
                    title="<?php echo $this->escapeHtml($_item->getName()) ?>" />
@@ -41,7 +41,7 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
             <div>
             	<strong><em><?php echo $attributes['option_label'] ?></em></strong>
             </div>
-            <div>
+            <div class="eventbundle-short">
                 <?php echo $_helper->productAttribute($_item, $_item->getShortDescription(), 'short_description'); ?>
             <div>
         </td>
