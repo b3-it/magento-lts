@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+-->
+<layout version="0.1.0">    
+    <default>
+    </default>
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="bkg_license"><name>abo_account</name><path>bkg_license/index/view</path><label>My Licenses</label></action>
+        </reference>
+    </customer_account>
+    
+    <bkg_license_index_view translate="label">
+        <label>My Licenses</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="bkg_license/customer_account_view" name="license_info" template="bkg/license/view.phtml" >
+                <block type="bkg_license/customer_account_items" name="license_details" template="bkg/license/items.phtml">
+                    <label>Order History Info</label>
+                </block>
+            </block>
+        </reference>
+        <reference name="root">
+            <action method="setHeaderTitle" translate="title" module="bkg_license"><title>My Licenses</title></action>
+        </reference>
+
+		<reference name="breadcrumbs">
+		   <action method="addCrumb">
+		      <crumbname>Home</crumbname>
+		      <crumbinfo>
+		         <label>Home</label>
+		         <title>Home</title>
+		         <url>/</url>
+		      </crumbinfo>
+		   </action>
+		   <action method="addCrumb">
+		      <crumbname>My Account</crumbname>
+		      <crumbinfo>
+		         <label>My Account</label>
+		         <title>My Account</title>
+		         <url>customer/account/</url>
+		      </crumbinfo>
+		   </action>
+		   <action method="addCrumb">
+		      <crumbname>My Licenses</crumbname>
+		      <crumbinfo>
+		         <label>My Licenses</label>
+		         <title>My Licenses</title>
+		      </crumbinfo>
+		   </action>
+		</reference>
+    </bkg_license_index_view>
+</layout>

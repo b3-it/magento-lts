@@ -134,7 +134,7 @@
                     $this->addValuesToNamePrefixElement($_address->getPrefix())
                         ->addValuesToNameSuffixElement($_address->getSuffix());
 
-                    $form->setReadonly($org, $org);
+                    $form->setReadonly($org, true);
 
             ?>
             <?php echo $this->getForm()->getHtml() ?>
