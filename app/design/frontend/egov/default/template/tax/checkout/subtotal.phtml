@@ -48,7 +48,13 @@
 <?php else : ?>
 <tr id="subtotal-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right subtotal-label" colspan="<?php echo $this->getColspan(); ?>">
+      <?php if ( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
+        <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
+      <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
+        <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?>
+      <?php else: ?>
         <?php echo $this->getTotal()->getTitle() ?>
+      <?php endif; ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right subtotal-value">
         <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
