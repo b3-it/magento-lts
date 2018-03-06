@@ -1,0 +1,34 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2018 B3-IT Systeme GmbH
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+$_invoice = $this->getInvoice();
+$_order   = $this->getOrder();
+$_thStyle = 'border:1px solid #bebcb7; font-size:13px; padding:3px 9px; background-color:#d9e5ee;';
+?>
+<?php if ($_invoice && $_order): ?>
+<table style="width:100%; border-collapse:collapse;">
+    <thead>
+        <tr>
+            <th align="left" style="<?php echo $_thStyle; ?>"><?php echo $this->__('Item') ?></th>
+            <th align="left" style="<?php echo $_thStyle; ?>"><?php echo $this->__('Sku') ?></th>
+            <th align="center" style="<?php echo $_thStyle; ?>"><?php echo $this->__('Qty') ?></th>
+            <th align="right" style="<?php echo $_thStyle; ?>"><?php echo $this->__('Subtotal') ?></th>
+        </tr>
+    </thead>
+    <tbody style="border:1px solid #bebcb7; border-top-width:0;">
+     <?php $i=0; foreach ($_invoice->getAllItems() as $_item): ?>
+      <?php if($_item->getOrderItem()->getParentItem()) continue; else $i++; ?>
+        <?php echo $this->getItemHtml($_item) ?>
+     <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+        <?php echo $this->getChildHtml('invoice_totals')?>
+    </tfoot>
+</table>
+<?php endif; ?>

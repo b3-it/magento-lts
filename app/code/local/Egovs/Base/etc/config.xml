@@ -654,10 +654,18 @@
             <invoice>
                 <send_mail>1</send_mail>
             </invoice>
-            <email_thumbnail>
-            	<show_thumbnail_in_email>1</show_thumbnail_in_email>
+            <order_additional>
+            	<show_thumbnail_in_email>0</show_thumbnail_in_email>
             	<thumbnail_dimension>150</thumbnail_dimension>
-            </email_thumbnail>
+                <show_description_in_order>0</show_description_in_order>
+                <show_short_description_in_order>0</show_short_description_in_order>
+            </order_additional>
+            <invoice_additional>
+                <show_thumbnail_in_email>0</show_thumbnail_in_email>
+            	<thumbnail_dimension>150</thumbnail_dimension>
+                <show_description_in_invoice>0</show_description_in_invoice>
+                <show_short_description_in_invoice>0</show_short_description_in_invoice>
+            </invoice_additional>
         </sales_email>
         <customer>
             <guestrequired>

@@ -10,10 +10,12 @@
 $_item  = $this->getItem();
 $_order = $this->getItem()->getOrder();
 
-$_product = Mage::getModel('catalog/product')->load($_item->getProductId()); //$_item->getProduct();
+$_product = Mage::getModel('catalog/product')->load($_item->getProductId());
 
-$_showThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/show_thumbnail_in_email');
-$_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_dimension');
+$_showThumbnail = Mage::getStoreConfig('sales_email/order_additional/show_thumbnail_in_email');
+$_sizeThumbnail = Mage::getStoreConfig('sales_email/order_additional/thumbnail_dimension');
+$_showLong      = Mage::getStoreConfig('sales_email/order_additional/show_description_in_order');
+$_showShort     = Mage::getStoreConfig('sales_email/order_additional/show_short_description_in_order');
 
 $_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;';
 ?>
@@ -41,9 +43,16 @@ $_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC
         <?php if ($addInfoBlock) :?>
             <?php echo $addInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
-        <div class="default-short">
-            <?php echo $_product->getShortDescription(); ?>
-        </div>
+        <?php if($_showLong): ?>
+            <div class="default-long">
+                <?php echo $this->escapeHtml($_product->getDescription()); ?>
+            </div>
+        <?php endif; ?>
+        <?php if($_showShort): ?>
+          <div class="default-short">
+              <?php echo $this->escapeHtml($_product->getShortDescription()); ?>
+          </div>
+        <?php endif; ?>
     </td>
     <td align="left" valign="top" style="<?php echo $_cellStyle; ?>"><?php echo $this->escapeHtml($this->getSku($_item)) ?></td>
     <td align="center" valign="top" style="<?php echo $_cellStyle; ?>"><?php echo $_item->getQtyOrdered()*1 ?></td>

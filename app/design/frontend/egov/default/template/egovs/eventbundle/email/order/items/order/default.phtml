@@ -7,12 +7,15 @@
  */
 ?>
 <?php
-$_item    = $this->getItem();
-$_product = $this->getItem()->getProduct();
-$_order   = $this->getOrder();
+$_item  = $this->getItem();
+$_order = $this->getOrder();
 
-$_showThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/show_thumbnail_in_email');
-$_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_dimension');
+$_product = Mage::getModel('catalog/product')->load($_item->getProductId());
+
+$_showThumbnail = Mage::getStoreConfig('sales_email/order_additional/show_thumbnail_in_email');
+$_sizeThumbnail = Mage::getStoreConfig('sales_email/order_additional/thumbnail_dimension');
+$_showLong      = Mage::getStoreConfig('sales_email/order_additional/show_description_in_order');
+$_showShort     = Mage::getStoreConfig('sales_email/order_additional/show_short_description_in_order');
 ?>
 
 <?php $parentItem = $this->getItem() ?>
@@ -41,9 +44,16 @@ $_sizeThumbnail = Mage::getStoreConfig('sales_email/email_thumbnail/thumbnail_di
             <div>
             	<strong><em><?php echo $attributes['option_label'] ?></em></strong>
             </div>
-            <div class="eventbundle-short">
-                <?php echo $_helper->productAttribute($_item, $_item->getShortDescription(), 'short_description'); ?>
-            <div>
+            <?php if($_showLong): ?>
+                <div class="eventbundle-long">
+                    <?php echo $this->escapeHtml($_product->getDescription()); ?>
+                </div>
+            <?php endif; ?>
+            <?php if($_showShort): ?>
+              <div class="eventbundle-short">
+                  <?php echo $this->escapeHtml($_product->getShortDescription()); ?>
+              </div>
+            <?php endif; ?>
         </td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
