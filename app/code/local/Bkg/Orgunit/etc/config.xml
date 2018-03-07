@@ -26,31 +26,8 @@
             <bkg_orgunit>
                 <class>Bkg_Orgunit_Block</class>
             </bkg_orgunit>
-            <adminhtml>
-                <rewrite>
-                    <!-- To hide Org addresses in customer edit -->
-                    <customer_edit_tab_addresses>Bkg_Orgunit_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
-                </rewrite>
-            </adminhtml>
         </blocks>
         <models>
-            <adminhtml>
-                <rewrite>
-                    <customer_renderer_region>Bkg_Orgunit_Model_Rewrite_Customer_Renderer_Region</customer_renderer_region>
-                </rewrite>
-            </adminhtml>
-            <customer_resource>
-                <rewrite>
-                    <!-- To prevent the Org addresses from being deleted by customer save -->
-                    <customer>Bkg_Orgunit_Model_Resource_Customer</customer>
-                </rewrite>
-            </customer_resource>
-            <egovsbase>
-                <rewrite>
-                    <!-- rewrite to set own address template -->
-                    <adminhtml_observer>Bkg_Orgunit_Model_Rewrite_Observer</adminhtml_observer>
-                </rewrite>
-            </egovsbase>
             <bkg_orgunit>
                 <class>Bkg_Orgunit_Model</class>
                 <resourceModel>bkg_orgunit_resource</resourceModel>
@@ -104,6 +81,24 @@
                     </bkg_orgunit_customer_save_after>
                 </observers>
             </customer_save_after>
+            <egovs_base_customer_address_readonly>
+                <observers>
+                    <bkg_orgunit_customer_save_after>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>customer_address_readonly</method>
+                    </bkg_orgunit_customer_save_after>
+                </observers>
+            </egovs_base_customer_address_readonly>
+            <egovs_base_customer_reject_address_delete>
+                <observers>
+                    <bkg_orgunit_customer_save_after>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>customer_address_reject_address_delete</method>
+                    </bkg_orgunit_customer_save_after>
+                </observers>
+            </egovs_base_customer_reject_address_delete>
         </events>
     </global>
     <frontend>

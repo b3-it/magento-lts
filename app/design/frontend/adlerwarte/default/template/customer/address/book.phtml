@@ -1,4 +1,4 @@
-﻿<?php
+﻿﻿<?php
 /**
  * @category    design
  * @package     dwd_default
@@ -8,7 +8,7 @@
 
 /**
  * Temlate for Mage_Customer_Block_Address_Book block
- * @var $test Mage_Customer_Block_Address_Book
+ * @var $this Mage_Customer_Block_Address_Book
  */
 $customer = Mage::getSingleton('customer/session')->getCustomer();
 $shippingIsBilling = false;
@@ -192,7 +192,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
     </div>
 </div>
 <div class="buttons-set">
-    <button class="button back-button egov-float-left" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
+    <button class="button back-button egov-float-left" type="button" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
         <small>&laquo; </small>
         <?php echo $this->__('Back') ?>
     </button>

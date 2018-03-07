@@ -98,30 +98,8 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 				            // Address Deleted, remove UserAddresses thanks to FK Cascade
 				        }
 				    }
-				    
-				    $allIds = array($model->getId());
-				    $newIds = array($model->getId());
-				    
-				    // need to find all customers recrusive to update their address objects if needed
-				    while(!empty($newIds)) {
-				        /**
-				         * @var Bkg_Orgunit_Model_Resource_Unit_Collection $unitCollection
-				         */
-				        $unitCollection = Mage::getModel('bkg_orgunit/unit')->getCollection();
-				        $unitCollection->addFieldToFilter('parent_id', array('in' => $newIds));
-				        $unitCollection->addFieldToSelect('id');
-				        
-				        $newIds = $unitCollection->getAllIds();
-				        $allIds = array_merge($allIds, $newIds);
-				    }
-				    
-				    /**
-				     * @var Mage_Customer_Model_Resource_Customer_Collection $collection
-				     */
-				    $collection = Mage::getModel('customer/customer')->getCollection();
-				    // get customer by org_unit attribute
-				    $collection->addAttributeToFilter('org_unit', array('in' => $allIds));
-				    $customers = $collection->getItems();
+
+				    $customers =  Mage::helper('bkg_orgunit')->getUserByOrganisation($model->getId());
 				    
 				    foreach($data['address'] as $key => $value) {
 				        // ignore template

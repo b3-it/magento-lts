@@ -127,15 +127,15 @@
             </modules>
         </translate>
         <events>
-            <egovs_base_customer_reject_address_editing>
+            <egovs_base_frontend_customer_reject_address_editing>
                 <observers>
-                    <bkg_license_customer_reject_address_editing>
+                    <bkg_license_frontend_customer_reject_address_editing>
                         <type>singleton</type>
                         <class>bkg_license/customer_observer</class>
                         <method>rejectAddressEditing</method>
-                    </bkg_license_customer_reject_address_editing>
+                    </bkg_license_frontend_customer_reject_address_editing>
                 </observers>
-            </egovs_base_customer_reject_address_editing>
+            </egovs_base_frontend_customer_reject_address_editing>
             <egovs_base_customer_reject_address_delete>
                 <observers>
                     <bkg_license_customer_reject_address_delete>

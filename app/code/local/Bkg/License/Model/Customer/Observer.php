@@ -3,7 +3,12 @@ class Bkg_License_Model_Customer_Observer
 {
 	public function rejectAddressEditing($observer) {
 		$block = $observer ['block'];
-		$address_id = intval ( $observer ['address_id'] );
+
+		/**
+		 * @var Mage_Customer_Model_Address $address
+		 */
+		$address = $observer->getAddress();
+		$address_id =  $address->getAddressId();
 		if ($address_id == 0)
 			return;
 		

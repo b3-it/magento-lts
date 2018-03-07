@@ -31,7 +31,7 @@
  * @package    Mage_Adminhtml
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Bkg_Orgunit_Model_Rewrite_Customer_Renderer_Region implements Varien_Data_Form_Element_Renderer_Interface
+class Egovs_Base_Model_Customer_Renderer_Region implements Varien_Data_Form_Element_Renderer_Interface
 {
     /**
      * Country region collections
