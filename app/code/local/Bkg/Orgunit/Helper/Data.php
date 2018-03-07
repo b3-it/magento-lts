@@ -42,12 +42,12 @@ class Bkg_Orgunit_Helper_Data extends Mage_Core_Helper_Abstract
      * @param Mage_Customer_Model_Customer|int $user
      * @return array
      */
-    public function getOrganisationByUser($user) {
-        if (is_numeric($user)) {
-            $user = Mage::getModel('customer/customer')->load($user);
+    public function getOrganisationByCustomer($customer) {
+        if (is_numeric($customer)) {
+            $customer = Mage::getModel('customer/customer')->load($customer);
         }
         $result = array();
-        $orgId = $user->getData('org_unit');
+        $orgId = $customer->getData('org_unit');
         while($orgId !== null) {
             $result[] = $orgId;
             /**

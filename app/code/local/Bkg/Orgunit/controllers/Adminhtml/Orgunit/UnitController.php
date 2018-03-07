@@ -13,9 +13,9 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('unit/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Unit Manager'), Mage::helper('adminhtml')->__('Unit Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('Unit Manager'));
+			->_setActiveMenu('customer/bkgorgunit_unit')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Organisation'), Mage::helper('adminhtml')->__('Organisation'));
+		$this->_title(Mage::helper('adminhtml')->__('Organisation'));
 		return $this;
 	}
 
@@ -36,11 +36,8 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 
 			Mage::register('unit_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('bkg_orgunit/items');
+			$this->_initAction();
 
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
@@ -98,9 +95,9 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 				            // Address Deleted, remove UserAddresses thanks to FK Cascade
 				        }
 				    }
-
-				    $customers =  Mage::helper('bkg_orgunit')->getUserByOrganisation($model->getId());
 				    
+				
+				    $customers =  Mage::helper('bkg_orgunit')->getUserByOrganisation($model->getId());
 				    foreach($data['address'] as $key => $value) {
 				        // ignore template
 				        if ("_template_" === $key) {

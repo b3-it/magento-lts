@@ -34,8 +34,17 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
               'title' => Mage::helper('bkg_license')->__('Address Information'),
               'content' => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_address')->toHtml(),
           ));
+          
+         // if(Mage::registry('entity_data')->getIsOrgunit())
+          {
+	          $this->addTab('form_section1b', array(
+	          		'label' => Mage::helper('bkg_license')->__('Authorized Customer'),
+	          		'title' => Mage::helper('bkg_license')->__('Authorized Customer'),
+	          		'content' => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_authorizedcustomer')->toHtml(),
+	          ));
+          }
       }
-      $this->addTab('form_section1b', array(
+      $this->addTab('form_section1c', array(
           'label'     => Mage::helper('bkg_license')->__('Agreement'),
           'title'     => Mage::helper('bkg_license')->__('Agreement Information'),
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_agreement')->toHtml(),

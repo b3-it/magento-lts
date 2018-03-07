@@ -36,27 +36,23 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
         	$this->_addButton('previewpdf', array(
         			'label'     => Mage::helper('adminhtml')->__('Preview Pdf'),
         			'onclick'   => 'previewPdf(); return false;',
-        			'class'     => 'save',
+        			//'class'     => 'save',
         	), -100);
         	
 	        $this->_addButton('pdf', array(
 	        		'label'     => Mage::helper('adminhtml')->__('Create Pdf'),
 	        		'onclick'   => 'createPdfAndContinueEdit()',
-	        		'class'     => 'save',
+	        		//'class'     => 'save',
 	        ), -100);
 	        
 	        $id = Mage::registry('entity_data')->getId();
 	        $this->_addButton('newtext', array(
 	        		'label'     => Mage::helper('adminhtml')->__('Process Template'),
 	        		'onclick'   => 'processTextAndContinueEdit()',
-	        		'class'     => 'save',
+	        		//'class'     => 'save',
 	        ), -100);
 
-            $this->_addButton('email', array(
-                'label'     => Mage::helper('adminhtml')->__('Email'),
-                'onclick'   => '',
-                'class'     => 'save',
-            ), -100);
+           
         
         }
         

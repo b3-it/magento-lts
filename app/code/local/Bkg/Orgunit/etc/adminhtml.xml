@@ -30,7 +30,7 @@
           <customer module="bkg_orgunit">
               <children>
                   <bkgorgunit_unit module="bkg_orgunit">
-                      <title>Orgunit</title>
+                      <title>Organisation</title>
                       <sort_order>110</sort_order>
                       <action>adminhtml/orgunit_unit/index</action>
                   </bkgorgunit_unit>
@@ -47,7 +47,7 @@
                       <customer>
                           <children>
                                 <bkgorgunit_unit module="bkg_orgunit">
-                                  <title>Orgunit</title>
+                                  <title>Organisation</title>
                                   <sort_order>110</sort_order>
                               </bkgorgunit_unit>
                           </children>

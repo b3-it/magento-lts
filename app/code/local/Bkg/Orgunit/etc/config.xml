@@ -140,8 +140,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <Bkg_Orgunit_Adminhtml after="Mage_Adminhtml">Bkg_Orgunit_Adminhtml
-                        </Bkg_Orgunit_Adminhtml>
+                        <Bkg_Orgunit_Adminhtml after="Mage_Adminhtml">Bkg_Orgunit_Adminhtml</Bkg_Orgunit_Adminhtml>
                     </modules>
                 </args>
             </adminhtml>

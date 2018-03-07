@@ -16,7 +16,7 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
         $this->_init('bkg_license/master');
     }
     
-    public function getLicense($customer,$product,$toll, $online_only = true)
+    public function getLicense($customer,$product,$toll, $online_only = true, $find_all = false)
     {
     	$collection = $this->getCollection();
     	$date = date('Y-m-d');
@@ -36,6 +36,11 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
         }
     	
     	//die($collection->getSelect()->__toString());
+    	
+        if($find_all){
+        	return $collection;
+        }
+        
     	//der erste Treffer gewinnt
     	foreach($collection as $item)
     	{

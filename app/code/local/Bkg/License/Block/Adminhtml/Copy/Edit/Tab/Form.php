@@ -192,6 +192,14 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
       		'values' => $pdfs,
       		'value' => $model->getData('pdf_template_id'),
       ));
+      
+      $fieldset->addField('send_email', 'checkbox', array(
+      		'label'     => Mage::helper('bkg_license')->__('Send Email to Contact Person'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'send_email',
+      		
+      ));
 
       
 
