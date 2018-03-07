@@ -192,7 +192,8 @@
                             <show_in_store>1</show_in_store>
                             <sort_order>50</sort_order>
             			</show_delivery_time_in_invoice>
-                    </invoice_additional>
+                    </fields>
+                </invoice_additional>
                 <invoice>
                     <fields>
                         <send_mail translate="label">

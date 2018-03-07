@@ -1,3 +1,4 @@
+"-- Please Select --","-- Bitte Wählen --"
 "Sku","Art-Nr."
 "Selected store and website are not associated!","Der gewählte Store befindet sich nicht in der Website!"
 "Attach Pdf - Document to E-Mail","Pdf - Dokument an Email anhängen"
@@ -131,3 +132,5 @@
 "Additional information in the invoice confirmation","Zusätzliche Informationen in der Rechnungsemail"
 "Description in the invoice confirmation","Beschreibung in der Rechnungsemail"
 "Short description in the invoice confirmation","Kurz-Beschreibung in der Rechnungsemail"
+"Show delivery time in the order confirmation","zeige Lieferzeit in der Bestellbestätigung"
+"Show delivery time in the invoice confirmation","zeige Lieferzeit in der Rechnungsemail"
