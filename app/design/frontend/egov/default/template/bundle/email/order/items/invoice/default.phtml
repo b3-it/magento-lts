@@ -15,10 +15,11 @@
 <?php $_prevOptionId = '' ?>
 
 <?php
-$_showThumbnail = Mage::getStoreConfig('sales_email/order_additional/show_thumbnail_in_email');
-$_sizeThumbnail = Mage::getStoreConfig('sales_email/order_additional/thumbnail_dimension');
-$_showLong      = Mage::getStoreConfig('sales_email/order_additional/show_description_in_order');
-$_showShort     = Mage::getStoreConfig('sales_email/order_additional/show_short_description_in_order');
+$_showThumbnail = Mage::getStoreConfig('sales_email/invoice_additional/show_thumbnail_in_email');
+$_sizeThumbnail = Mage::getStoreConfig('sales_email/invoice_additional/thumbnail_dimension');
+$_showLong      = Mage::getStoreConfig('sales_email/invoice_additional/show_description_in_invoice');
+$_showShort     = Mage::getStoreConfig('sales_email/invoice_additional/show_short_description_in_invoice');
+$_showDelivery  = Mage::getStoreConfig('sales_email/invoice_additional/show_delivery_time_in_invoice');
 ?>
 
 <?php foreach ($items as $_item): ?>
@@ -43,6 +44,11 @@ $_showShort     = Mage::getStoreConfig('sales_email/order_additional/show_short_
             <div>
             	<strong><em><?php echo $attributes['option_label'] ?></em></strong>
             </div>
+          <?php if ($_showDelivery): ?>
+              <div class="bundle-delivery">
+                  <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
+              </div>
+          <?php endif; ?>
           <?php if($_showLong): ?>
               <div class="bundle-long">
                   <?php echo $this->escapeHtml($_product->getDescription()); ?>

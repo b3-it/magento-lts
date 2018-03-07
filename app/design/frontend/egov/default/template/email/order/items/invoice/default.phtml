@@ -16,6 +16,7 @@ $_showThumbnail = Mage::getStoreConfig('sales_email/invoice_additional/show_thum
 $_sizeThumbnail = Mage::getStoreConfig('sales_email/invoice_additional/thumbnail_dimension');
 $_showLong      = Mage::getStoreConfig('sales_email/invoice_additional/show_description_in_invoice');
 $_showShort     = Mage::getStoreConfig('sales_email/invoice_additional/show_short_description_in_invoice');
+$_showDelivery  = Mage::getStoreConfig('sales_email/invoice_additional/show_delivery_time_in_invoice');
 
 $_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;';
 ?>
@@ -38,6 +39,11 @@ $_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC
         <?php $addInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
         <?php if ($addInfoBlock) :?>
             <?php echo $addInfoBlock->setItem($_item->getOrderItem())->toHtml(); ?>
+        <?php endif; ?>
+        <?php if ($_showDelivery): ?>
+            <div class="default-delivery">
+                <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
+            </div>
         <?php endif; ?>
         <?php if($_showLong): ?>
             <div class="default-long">

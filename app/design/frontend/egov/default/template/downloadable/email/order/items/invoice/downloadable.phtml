@@ -16,6 +16,7 @@ $_showThumbnail = Mage::getStoreConfig('sales_email/invoice_additional/show_thum
 $_sizeThumbnail = Mage::getStoreConfig('sales_email/invoice_additional/thumbnail_dimension');
 $_showLong      = Mage::getStoreConfig('sales_email/invoice_additional/show_description_in_invoice');
 $_showShort     = Mage::getStoreConfig('sales_email/invoice_additional/show_short_description_in_invoice');
+$_showDelivery  = Mage::getStoreConfig('sales_email/invoice_additional/show_delivery_time_in_invoice');
 
 $taxHelper = $this->helper('tax');
 $weeHelper = Mage::helper('weee');
@@ -48,6 +49,11 @@ $weeHelper = Mage::helper('weee');
                     </dd>
                 <?php endforeach; ?>
             </dl>
+        <?php endif; ?>
+        <?php if ($_showDelivery): ?>
+            <div class="downloadable-delivery">
+                <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
+            </div>
         <?php endif; ?>
         <?php if($_showLong): ?>
             <div class="downloadable-long">

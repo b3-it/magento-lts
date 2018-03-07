@@ -16,6 +16,7 @@ $_showThumbnail = Mage::getStoreConfig('sales_email/order_additional/show_thumbn
 $_sizeThumbnail = Mage::getStoreConfig('sales_email/order_additional/thumbnail_dimension');
 $_showLong      = Mage::getStoreConfig('sales_email/order_additional/show_description_in_order');
 $_showShort     = Mage::getStoreConfig('sales_email/order_additional/show_short_description_in_order');
+$_showDelivery  = Mage::getStoreConfig('sales_email/order_additional/show_delivery_time_in_order');
 ?>
 <tr>
     <td align="left" valign="top" style="padding:3px 9px">
@@ -46,6 +47,11 @@ $_showShort     = Mage::getStoreConfig('sales_email/order_additional/show_short_
                     </dd>
                 <?php endforeach; ?>
             </dl>
+        <?php endif; ?>
+        <?php if ($_showDelivery): ?>
+          <div class="bundle-delivery">
+              <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
+          </div>
         <?php endif; ?>
         <?php if($_showLong): ?>
             <div class="download-long">
