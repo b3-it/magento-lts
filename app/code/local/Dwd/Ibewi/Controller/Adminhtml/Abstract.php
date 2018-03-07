@@ -65,7 +65,7 @@ class Dwd_Ibewi_Controller_Adminhtml_Abstract extends Mage_Adminhtml_Controller_
   	
   	protected function verifyDate()
   	{
-  		//return $this;
+  		return $this;
   	  	$from = $this->getRequest()->getParam('from');
   	  	$to =  $this->getRequest()->getParam('to');
   	  
