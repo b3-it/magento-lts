@@ -43,8 +43,8 @@ class Bkg_Orgunit_Helper_Addresses extends Mage_Core_Helper_Abstract
      */
     public function processStreetAttribute(Mage_Eav_Model_Entity_Attribute $attribute)
     {
-        if($attribute->getScopeMultilineCount() <= 0) {
-            $attribute->setScopeMultilineCount(self::DEFAULT_STREET_LINES_COUNT);
+        if($attribute->getMultilineCount() <= 0) {
+            $attribute->setMultilineCount(self::DEFAULT_STREET_LINES_COUNT);
         }
         return $attribute;
     }

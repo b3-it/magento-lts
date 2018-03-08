@@ -31,7 +31,7 @@ class Bkg_Orgunit_Model_Observer
             /**
              * @var Bkg_Orgunit_Helper_Data $helper
              */
-            $helper = Mage::helper('bkg_unit');
+            $helper = Mage::helper('bkg_orgunit');
             $orgs = $helper->getOrganisationByCustomer($customer);
             
             /**
