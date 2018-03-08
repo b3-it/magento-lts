@@ -85,9 +85,23 @@
 			      <thead>
 			          <tr>
 			              <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
-			              <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
-			              <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Qty') ?></th>
-			              <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
+			              <th colspan="<?php echo $colspan ?>" class="a-center">
+                              <?php echo $this->__('Price') ?><br />
+                              <?php if( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                <?php echo $this->__('(Excl. Tax)'); ?>
+                              <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                <?php echo $this->__('(Incl. Tax)'); ?>
+                              <?php endif; ?>
+                          </th>
+			              <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
+			              <th colspan="<?php echo $colspan ?>" class="a-center">
+                              <?php echo $this->__('Subtotal') ?>
+                              <?php if( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                <?php echo $this->__('(Excl. Tax)'); ?>
+                              <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                <?php echo $this->__('(Incl. Tax)'); ?>
+                              <?php endif; ?>
+                          </th>
 			          </tr>
 			      <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
 			          <tr>

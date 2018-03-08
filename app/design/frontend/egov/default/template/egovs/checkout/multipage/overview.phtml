@@ -14,20 +14,6 @@
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
 	<?php echo $this->getBlockHtml('formkey'); ?>
-	<fieldset>
-			<ul class="form-list group-select">
-				<li>
-					<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
-				</li>
-			</ul>
-
-			<div>
-				<?php echo $this->getChildHtml('infotexts'); ?>
-				<?php echo $this->getChildHtml('agreementtexts'); ?>
-
-				<?php echo $this->getChildHtml('agreements') ?>
-			</div>
-	</fieldset>
 	<fieldset class="multiple-checkout">
 		<?php $_address=$this->getBaseAddress() ?>
 		<?php if (Mage::helper('core')->isModuleEnabled('Egovs_GermanTax') && $_address):?>
@@ -35,7 +21,7 @@
 				<h3>
 					<?php echo $this->__('Tax Information') ?>
 				</h3>
-				<div class="col-1">	
+				<div class="col-1">
 					<h4>
 						<?php echo $this->__('Base Address') ?>
 					</h4>
@@ -138,7 +124,21 @@
 		<?php endif; ?>
 
 		<div class="col1-wide">
+			<br /><hr /><br />
+			<fieldset>
+					<ul class="form-list group-select">
+						<li>
+							<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
+						</li>
+					</ul>
 
+					<div>
+						<?php echo $this->getChildHtml('infotexts'); ?>
+						<?php echo $this->getChildHtml('agreementtexts'); ?>
+
+						<?php echo $this->getChildHtml('agreements') ?>
+					</div>
+			</fieldset>
 			<table class="data-table" id="checkout-review-table">
 				<?php if ($this->helper('tax')->displayCartBothPrices()): $colspan = $rowspan = 2; else: $colspan = $rowspan = 1; endif; ?>
 				<col />
@@ -152,9 +152,23 @@
 				<thead>
 					<tr>
 						<th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
-						<th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
-						<th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Qty') ?></th>
-						<th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
+						<th colspan="<?php echo $colspan ?>" class="a-center">
+							<?php echo $this->__('Price') ?><br />
+							<?php if( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                              <?php echo $this->__('(Excl. Tax)'); ?>
+                            <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                              <?php echo $this->__('(Incl. Tax)'); ?>
+                            <?php endif; ?>
+						</th>
+						<th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
+						<th colspan="<?php echo $colspan ?>" class="a-center">
+							<?php echo $this->__('Subtotal') ?>
+							<?php if( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                              <?php echo $this->__('(Excl. Tax)'); ?>
+                            <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                              <?php echo $this->__('(Incl. Tax)'); ?>
+                            <?php endif; ?>
+						</th>
 					</tr>
 					<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
 					<tr>
@@ -195,4 +209,3 @@
 		</span>
 	</fieldset>
 </form>
-
