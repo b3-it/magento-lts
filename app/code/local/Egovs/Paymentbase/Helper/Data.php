@@ -1688,8 +1688,12 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * einer Liste der verbuchten Zahlungseingänge zu Kassenzeichen des anfragenden
 	 * Mandanten und andererseits wird die Liste der von ZÜV zurückgemeldeten Zahlungseingangselemente zurückgegeben
 	 */
-	public function lesenKassenzeichenInfo($kzeichen) {
+	public function lesenKassenzeichenInfo($kzeichen,$mandant = null) {
 
+	    if($mandant != null)
+        {
+            $this->__mandantNr = $mandant;
+        }
 		// Webservice-Client holen
 		$objSOAPClientBfF = Mage::helper('paymentbase')->getSoapClient();
 
@@ -1736,7 +1740,11 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				$arrResult->ergebnis->setCode(-9999);
 			}
 		}
-
+		
+        if($mandant != null)
+        {
+            $this->__mandantNr = null;
+        }
 		// wenn SOAP-Fehler
 		if (!$arrResult || !is_object($arrResult)) {
 			// dann Abbruch mit Fehler

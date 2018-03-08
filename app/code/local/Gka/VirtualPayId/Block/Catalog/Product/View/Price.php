@@ -9,13 +9,13 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Price extends Mage_Catalog_Blo
 {
 	protected $_kassenzeichen = null;
 	
-	public function fetchPrice($kz) {
+	public function fetchPrice($mandant,$kz) {
 		$this->_kassenzeichen = $kz;
 		
 		if (!empty($kz) && is_string($kz)) {
 			/** @var $helper Egovs_Paymentbase_Helper_Data */
 			$helper = Mage::helper('paymentbase');
-			$kInfo = $helper->lesenKassenzeichenInfo($kz);
+			$kInfo = $helper->lesenKassenzeichenInfo($kz,$mandant);
 			if ($kInfo instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis) {
 				if ($kInfo->ergebnis->isOk() == false) {
 					$msg = sprintf(

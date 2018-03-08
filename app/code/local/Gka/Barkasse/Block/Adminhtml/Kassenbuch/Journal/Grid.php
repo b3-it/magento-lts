@@ -20,22 +20,23 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       $this->setUseAjax(true);
   }
 
-  protected function _prepareCollection()
-  {
+  protected function _prepareCollection() {
       $collection = Mage::getModel('gka_barkasse/kassenbuch_journal')->getCollection();
-      $expr = new Zend_Db_Expr('(SELECT sum(id) as sum_id, sum(booking_amount) as sum_booking_amount, journal_id FROM '.$collection->getTable('gka_barkasse/kassenbuch_journal_items').' GROUP BY journal_id)');
-      
+      $expr = new Zend_Db_Expr('(SELECT sum(id) as sum_id, sum(booking_amount) as sum_booking_amount, journal_id FROM ' . $collection->getTable('gka_barkasse/kassenbuch_journal_items') . ' GROUP BY journal_id)');
+
       $collection->getSelect()
-      ->joinLeft(array('items'=>$expr), 'items.journal_id=main_table.id',array('sum_id','sum_booking_amount'));
-      
-      $helper = Mage::helper('isolation');
-      if(!$helper->getUserIsAdmin()){
-      	$views = $helper->getUserStoreViews();
-      	$views[] = '-1'; //damit das Array gefüllt ist
-      	$collection->getSelect()
-      	->joinLeft(array('cashbox'=>$collection->getTable('gka_barkasse/kassenbuch_cashbox')), 'main_table.cashbox_id=cashbox.id',array())
-      	->where('cashbox.store_id IN ('.implode(',',$views).')')
-      	;
+          ->joinLeft(array('items' => $expr), 'items.journal_id=main_table.id', array('sum_id', 'sum_booking_amount'));
+
+      if (Mage::helper('gka_barkasse')->isModuleEnabled('Egovs_Isolation'))
+      {
+          $helper = Mage::helper('isolation');
+          if (!$helper->getUserIsAdmin()) {
+              $views = $helper->getUserStoreViews();
+              $views[] = '-1'; //damit das Array gefüllt ist
+              $collection->getSelect()
+                  ->join(array('cashbox' => $collection->getTable('gka_barkasse/kassenbuch_cashbox')), 'main_table.cashbox_id=cashbox.id', array())
+                  ->where('cashbox.store_id IN (' . implode(',', $views) . ')');
+          }
       }
       
       

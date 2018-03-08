@@ -1,10 +1,12 @@
 function fetchPrice(){
-    $j.ajax({
+    var pay_client = $j('#pay_client option:selected').val();
+	$j.ajax({
 		'method': 'POST',
 		'url'   : fetch_price_url,
 		'cache' : false,
 		'data'  : {
-			'pay_id': $j('#pay-id').val()
+			'pay_id': $j('#pay-id').val(),
+			'pay_client': pay_client
 	    },
         'beforeSend': function() {
         	$j('img.ajax-spinner').toggle();

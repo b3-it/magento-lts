@@ -34,6 +34,8 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
 				$model->setData($data);
 			}
 
+            $this->_storeIsolation($model->getStoreId());
+
 			Mage::register('kassenbuchcashbox_data', $model);
 			$this->_initAction();
 			
@@ -63,6 +65,8 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
 			$model = Mage::getModel('gka_barkasse/kassenbuch_cashbox');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
+
+            $this->_storeIsolation($model->getStoreId());
 
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
@@ -107,8 +111,10 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
 			try {
 				$model = Mage::getModel('gka_barkasse/kassenbuchcashbox');
 
-				$model->setId($this->getRequest()->getParam('id'))
-					->delete();
+                $model  = Mage::getModel('gka_barkasse/kassenbuch_cashbox')->load($id);
+
+                $this->_storeIsolation($model->getStoreId());
+                $model->delete();
 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
 				$this->_redirect('*/*/');
@@ -205,4 +211,19 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
     	$res =  Mage::getSingleton('admin/session')->isAllowed('admin/gkabarkasse/gkabarkasse_kassenbuch_cashbox');
     	return $res;
     }
+
+
+    protected function _storeIsolation($storeId)
+    {
+        if(Mage::helper('gka_barkasse')->isModuleEnabled('Egovs_Isolation'))
+        {
+            if (!Mage::helper('isolation')->getUserIsAdmin()) {
+                $stores = Mage::helper('isolation')->getUserStoreViews();
+                if (!in_array($storeId, $stores)) {
+                    die(Mage::helper('isolation')->__('Denied'));
+                }
+            }
+        }
+    }
+
 }

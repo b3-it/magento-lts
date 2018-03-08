@@ -22,6 +22,17 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Cashbox_Grid extends Mage_Adminhtm
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('gka_barkasse/kassenbuch_cashbox')->getCollection();
+
+      if(Mage::helper('gka_barkasse')->isModuleEnabled('Egovs_Isolation')) {
+          if (!Mage::helper('isolation')->getUserIsAdmin()) {
+            $stores = Mage::helper('isolation')->getUserStoreViews();
+            $collection->getSelect()->where("store_id IN (?)", $stores);
+        }
+      }
+
+
+
+
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -79,19 +90,6 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Cashbox_Grid extends Mage_Adminhtm
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('kassenbuchcashbox_id');
-
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('gka_barkasse')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('gka_barkasse')->__('Are you sure?')
-        ));
-
-        return $this;
-    }
 
 	public function getGridUrl($params = array())
     {

@@ -21,11 +21,12 @@ class Gka_VirtualPayId_IndexController extends Mage_Core_Controller_Front_Action
     
     public function kzinfoAction()
     {
-    	$kz     =  ($this->getRequest()->getParam('pay_id'));
-    	
+        $kz     =  ($this->getRequest()->getParam('pay_id'));
+        $client     =  ($this->getRequest()->getParam('pay_client'));
+
     	$block = Mage::getBlockSingleton('virtualpayid/catalog_product_view_price');
     	
-    	$block->fetchPrice($kz);
+    	$block->fetchPrice($client,$kz);
     	//return $block->renderView();
     	
     	$this->loadLayout(false);

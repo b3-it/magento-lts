@@ -59,6 +59,9 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 		$model  = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
 
 		if ($model->getId() || $id == 0) {
+
+            $this->_storeIsolation($model->getCashboxId());
+
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
 			if (!empty($data)) {
 				$model->setData($data);
@@ -87,7 +90,7 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 	public function pdfAction() {
 		$id     =  intval($this->getRequest()->getParam('id'));
 		$model  = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
-	
+        $this->_storeIsolation($model->getCashboxId());
 		if ($model->getId() || $id == 0) {
 			$pdf = Mage::getModel('gka_barkasse/kassenbuch_journal_pdf');
 			//$pdf->preparePdf();
@@ -110,6 +113,9 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 			if($id > 0)
 			{
 				$model = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
+
+                $this->_storeIsolation($model->getCashboxId());
+
 				foreach($data as $k=>$v)
 				{
 					if(!empty($v)){
@@ -152,8 +158,11 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
 			try {
 				$model = Mage::getModel('gka_barkasse/kassenbuchjournal');
 
-				$model->setId($this->getRequest()->getParam('id'))
-					->delete();
+                $model = Mage::getModel('gka_barkasse/kassenbuch_journal')->load($id);
+
+                $this->_storeIsolation($model->getCashboxId());
+
+                $model->delete();
 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
 				$this->_redirect('*/*/');
@@ -204,5 +213,19 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_JournalController extends Mage_
     {
     	$res =  Mage::getSingleton('admin/session')->isAllowed('admin/gkabarkasse/gkabarkasse_kassenbuch_journal');
     	return $res;
+    }
+
+    protected function _storeIsolation($cashboxId)
+    {
+        if(Mage::helper('gka_barkasse')->isModuleEnabled('Egovs_Isolation'))
+        {
+            if (!Mage::helper('isolation')->getUserIsAdmin()) {
+                $stores = Mage::helper('isolation')->getUserStoreViews();
+                $cashbox = Mage::getModel('gka_barkasse/kassenbuch_cashbox')->load($cashboxId);
+                if (!in_array($cashbox->getStoreId(), $stores)) {
+                    die(Mage::helper('isolation')->__('Denied'));
+                }
+            }
+        }
     }
 }
