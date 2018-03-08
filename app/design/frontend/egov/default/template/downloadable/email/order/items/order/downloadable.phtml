@@ -50,7 +50,7 @@ $_showDelivery  = Mage::getStoreConfig('sales_email/order_additional/show_delive
         <?php endif; ?>
         <?php if ($_showDelivery): ?>
           <div class="bundle-delivery">
-              <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
+              <?php echo $this->__('Delivery Time'); ?>: <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
           </div>
         <?php endif; ?>
         <?php if($_showLong): ?>

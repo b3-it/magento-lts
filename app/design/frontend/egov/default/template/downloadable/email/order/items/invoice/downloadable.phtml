@@ -52,7 +52,7 @@ $weeHelper = Mage::helper('weee');
         <?php endif; ?>
         <?php if ($_showDelivery): ?>
             <div class="downloadable-delivery">
-                <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
+                <?php echo $this->__('Delivery Time'); ?>: <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
             </div>
         <?php endif; ?>
         <?php if($_showLong): ?>

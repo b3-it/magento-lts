@@ -46,7 +46,7 @@ $_cellStyle = 'font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC
         <?php endif; ?>
         <?php if ($_showDelivery): ?>
           <div class="default-delivery">
-              <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
+              <?php echo $this->__('Delivery Time'); ?>: <?php echo $this->escapeHtml($_product->getDeliveryTime()); ?>
           </div>
         <?php endif; ?>
         <?php if($_showLong): ?>
