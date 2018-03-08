@@ -15,7 +15,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('event/items')
+			->_setActiveMenu('bfr_eventmanager/eventmanager_event')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
 
 		return $this;
@@ -38,11 +38,8 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 
 			Mage::register('event_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('eventmanager/items');
+			$this->_initAction();
 
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 

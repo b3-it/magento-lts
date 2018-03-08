@@ -349,6 +349,28 @@ where participant_id = 1 AND el.typ = 3
                      )
              )
         ));
+
+        $events = array();
+        $collection = Mage::getSingleton('eventmanager/event')->getCollection();
+        $collection->getSelect()->where("event_from >= ?",date('Y-m-d'));
+        foreach($collection as $item)
+        {
+            $events[] = array('label'=>$item->getTitle(),'value'=>$item->getId());
+        }
+
+        $this->getMassactionBlock()->addItem('copy', array(
+            'label'=> Mage::helper('eventmanager')->__('Copy'),
+            'url'  => $this->getUrl('*/eventmanager_participant/massStatusParticipantCopy', array('_current'=>true)),
+            'additional' => array(
+                'visibility' => array(
+                    'name' => 'new_event',
+                    'type' => 'select',
+                    //'class' => 'required-entry',
+                    'label' => Mage::helper('eventmanager')->__('Events'),
+                    'values' => $events
+                )
+            )
+        ));
         return $this;
     }
 

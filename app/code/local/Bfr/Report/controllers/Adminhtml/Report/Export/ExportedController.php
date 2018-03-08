@@ -70,6 +70,8 @@ class Bfr_Report_Adminhtml_Report_Export_ExportedController extends Mage_Adminht
     	return $fileName;
     }
 
-
+    protected function _isAllowed() {
+        return Mage::getSingleton('admin/session')->isAllowed('report/salesroot/bfrreport_export_exported');
+    }
   
 }
