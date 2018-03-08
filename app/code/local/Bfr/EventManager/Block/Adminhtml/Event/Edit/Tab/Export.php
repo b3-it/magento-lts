@@ -147,7 +147,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
       
       //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
       if($col == null){
-      	$collection->getSelect()->where('entity_id=0');
+      	$collection->getSelect()->where('order.entity_id=0');
       }
       
       $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
