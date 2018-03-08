@@ -204,6 +204,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
       		'index'     => 'created_at',
+      		'filter_index'     => 'order.created_at',
       		'type'	=> 'Date',
       		'width'     => '100px',
       ));

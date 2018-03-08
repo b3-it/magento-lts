@@ -83,7 +83,7 @@
                                  <salesroot>
 	                          <children>
 	                                <bfrreport_export_exported module="bfr_report">
-	                                  <title>Export Exported</title>
+	                                  <title>Order Export</title>
 	                                  <sort_order>10</sort_order>
 	                              </bfrreport_export_exported>
                           </children>
