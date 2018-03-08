@@ -56,4 +56,23 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     {
     	$this->getResource()->saveDefault($defaultId, $productId, $storeId);
     }
+
+
+    /**
+     * Alle Inhalte die für dieses Produkt und Store verfügbar sind ermittel
+     * @param int $productId
+     * @param int $storeId
+     * @return array| NULL[]
+     */
+    public function getComponents4Product($productId, $storeId = 0)
+    {
+        $productId = intval($productId);
+        $storeId = intval($storeId);
+        $collection = $this->getCollection();
+        $collection->getSelect()->where('product_id=?',$productId);
+        $collection->getSelect()->where('store_id=?',$storeId);
+        $collection->getSelect()->order('pos');
+        $items = $collection->getItems();
+        return $items;
+    }
 }

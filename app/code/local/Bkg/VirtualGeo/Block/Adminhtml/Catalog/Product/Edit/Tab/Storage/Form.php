@@ -33,7 +33,17 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Storage_Form exten
 					);
 		}
 
-
+/*
+        $fieldset->addType('ol','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts');
+        $fieldset->addField('agreement', 'ol', array(
+            'label'     => Mage::helper('bkg_orgunit')->__('Block'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
+            'name'      => 'agreement',
+            'values' => Mage::getModel('virtualgeo/components_storage')->getCollectionAsOptions($this->getProduct()->getId()),
+            'value' => Mage::getModel('virtualgeo/components_storageproduct')->getComponents4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
+        ));
+*/
 		return parent::_prepareForm();
 	}
 
