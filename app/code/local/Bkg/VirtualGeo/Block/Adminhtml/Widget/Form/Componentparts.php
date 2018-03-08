@@ -79,7 +79,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts extends Varien_D
     public function getName($field = 'value')
     {
     	$name = parent::getName();
-    	if (strpos($name, '[') === false) {
+    	//if (strpos($name, '[') === false)
+    	{
     		$name.= '['.$field.'][]';
     	}
     	return $name;

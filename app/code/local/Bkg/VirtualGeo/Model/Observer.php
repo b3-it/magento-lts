@@ -113,6 +113,8 @@ class Bkg_VirtualGeo_Model_Observer
     		$this->_saveRap($dataObject->getRap(),$product);
     	}
 
+        $this->_saveComponent_v2($dataObject->getStorage1(), $dataObject->getStorageDefault(),$product,'virtualgeo/components_storageproduct');
+
     	$this->_saveComponent($dataObject->getGeoref(), $dataObject->getGeorefDefault(),$product,'virtualgeo/components_georefproduct');
     	$this->_saveComponent($dataObject->getFormat(), $dataObject->getFormatDefault(),$product,'virtualgeo/components_formatproduct');
         $this->_saveComponent($dataObject->getStorage(), $dataObject->getStorageDefault(),$product,'virtualgeo/components_storageproduct');
@@ -202,10 +204,25 @@ class Bkg_VirtualGeo_Model_Observer
     
     	return null;
     }
+
+    protected function _saveComponent_v2($data, $default, $product, $model)
+    {
+        if (empty($data)) {
+            $data = array();
+        }
+        if (empty($default)) {
+            $default = array();
+        }
+        //evtl. vorhandene laden
+        $collection = Mage::getModel($model)->getCollection();
+        $collection->getSelect()
+            ->where('product_id = ' . intval($product->getId()))
+            ->where('store_id = ' . intval($product->getStoreId()));
+        $newItems = array();
+    }
     
     
-    
-    protected function _saveComponent($data, $default, $product,$model)
+    protected function _saveComponent($data, $default, $product, $model)
     {
     	if(empty($data)){
     		$data = array();

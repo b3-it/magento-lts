@@ -31,15 +31,16 @@
 					<tr id="row-<?php echo $_itemID . '-' . $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $_itemID; ?>">
 						<td>
 							<?php echo $_item->getLabel(); ?>
+                            <input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('db_id')?>" value="<?php echo $_item->getId()?>" />
 							<input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item->getEntityId()?>" />
 							<input type="hidden" id="pos-<?php echo    $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item->getPos() ?>" class="position" />
 							<input type="hidden" id="delete-<?php echo $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('delete')?>" value="0" />
 						</td>
                         <td>
-                            <input type="radio" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item->getEntityId()?>" />
+                            <input type="radio" id="default-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('default')?>" />
                         </td>
                         <td>
-                            <input type="checkbox" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item->getEntityId()?>" />
+                            <input type="checkbox" id="admin-only-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('admin_only')?>" />
                         </td>
 						<td class="position-sorting">
 						<?php if($this->getElement()->getShowUpDown() !== false):?>
