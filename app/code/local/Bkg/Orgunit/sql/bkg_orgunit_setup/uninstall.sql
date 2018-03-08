@@ -7,5 +7,5 @@ drop table IF EXISTS bkg_orgunit_eav_attribute;
 drop table IF EXISTS bkg_orgunit_form_attribute;
 delete from core_resource where code = 'bkg_orgunit_setup';
 -- Delete bkg orgunit address type and let the attributes cascade delete
-DELETE FROM eav_entity_type WHERE entity_type_code ='bkg_orgunit';
 SET foreign_key_checks = 1;
+DELETE FROM eav_entity_type WHERE entity_type_code ='bkg_orgunit';
