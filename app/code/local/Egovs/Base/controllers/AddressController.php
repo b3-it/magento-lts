@@ -72,7 +72,7 @@ class Egovs_Base_AddressController extends Mage_Customer_AddressController
      */
     public function deleteAction()
     {
-        if ($this->__reject_check('egovs_base_customer_reject_address_delete')) {
+        if (!$this->__reject_check('egovs_base_customer_reject_address_delete')) {
             return parent::deleteAction();
         }else{
             $this->_getSession()->addError($this->__('This address can not be changed.'));
@@ -90,7 +90,6 @@ class Egovs_Base_AddressController extends Mage_Customer_AddressController
         Mage::dispatchEvent($event, $data);
 
         $_res = boolval($result->getIsDenied());
-
-        return !$_res;
+        return $_res;
     }
 }
