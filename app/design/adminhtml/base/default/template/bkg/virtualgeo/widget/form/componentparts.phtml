@@ -14,11 +14,15 @@
 		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>">
 			<colgroup>
 				<col />
+                <col style="width: 80px;"/>
+                <col style="width: 100px;" />
 				<col style="width: 110px;" />
 			</colgroup>
 			<thead>
 				<tr class="headings">
-					<th><?php echo $this->__($this->getElement()->getLabel())?></th>
+					<th><?php echo $this->__('Name')?></th>
+					<th><?php echo $this->__('Default')?></th>
+					<th><?php echo $this->__('Admin Only')?></th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -26,11 +30,18 @@
 				<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
 					<tr id="row-<?php echo $_itemID . '-' . $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $_itemID; ?>">
 						<td>
-							<?php echo $_item['label']; ?>
-							<input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item['value']?>" />
-							<input type="hidden" id="pos-<?php echo    $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item['pos']?>" class="position" />
+							<?php echo $_item->getLabel(); ?>
+                            <input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('db_id')?>" value="<?php echo $_item->getId()?>" />
+							<input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item->getEntityId()?>" />
+							<input type="hidden" id="pos-<?php echo    $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item->getPos() ?>" class="position" />
 							<input type="hidden" id="delete-<?php echo $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('delete')?>" value="0" />
 						</td>
+                        <td>
+                            <input type="radio" id="default-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('default')?>" />
+                        </td>
+                        <td>
+                            <input type="checkbox" id="admin-only-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('admin_only')?>" />
+                        </td>
 						<td class="position-sorting">
 						<?php if($this->getElement()->getShowUpDown() !== false):?>
 							<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>

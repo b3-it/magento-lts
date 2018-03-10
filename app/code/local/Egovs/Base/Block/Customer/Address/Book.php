@@ -37,7 +37,9 @@ class Egovs_Base_Block_Customer_Address_Book extends Mage_Customer_Block_Address
 
     public function rejectAddressEditing($address)
     {
-        if (is_string($address)) {
+        if (false === $address) {
+            $address = null;
+        } elseif (is_string($address)) {
             $address = Mage::getModel('customer/address')->load($address);
         }
         return Mage::helper('egovsbase/customer_address')->rejectAddressEditing($address, $this);

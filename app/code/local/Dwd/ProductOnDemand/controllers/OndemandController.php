@@ -162,6 +162,13 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$linkItem['url'] = (string) $downloadInfo->descend('url');
 		$linkItem['type'] = Mage_Downloadable_Helper_Download::LINK_TYPE_URL;
 		$linkId = $product->getTypeInstance(true)->setProduct($product)->addLinkItem($linkItem);
+		if (!($linkId > 0)) {
+            $msg = Mage::helper('prondemand')->__('Product not available');
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            Mage::getSingleton('catalog/session')->addError($msg);
+            $this->_redirectUrl($referer);
+            return;
+        }
 		$params['links'] = array($linkId);
 		$params[Mage_Core_Model_Url::FORM_KEY] = Mage::getSingleton('core/session')->getFormKey();
 

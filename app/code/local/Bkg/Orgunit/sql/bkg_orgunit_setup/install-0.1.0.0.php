@@ -9,7 +9,7 @@
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 
-/** @var $this Mage_Catalog_Model_Resource_Setup */
+/** @var $this Mage_Customer_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();
@@ -169,196 +169,214 @@ if (!$installer->tableExists($org_form_attribute)) {
 
 $store = 0;
 
+/**
+ * @var Mage_Customer_Helper_Address $addressHelper
+ */
 $addressHelper = Mage::helper('customer/address');
 // update customer address system attributes data
 $attributes = array(
     'prefix'            => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Prefix',
-        'is_user_defined'   => 0,
-        'is_system'         => 0,
-        'is_visible'        => $addressHelper->getConfig('prefix_show', $store) == '' ? 0 : 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Prefix',
+        'user_defined'   => 0,
+        'system'         => 0,
+        'visible'        => $addressHelper->getConfig('prefix_show', $store) == '' ? 0 : 1,
         'sort_order'        => 10,
-        'is_required'       => $addressHelper->getConfig('prefix_show', $store) == 'req' ? 1 : 0,
+        'required'       => $addressHelper->getConfig('prefix_show', $store) == 'req' ? 1 : 0,
     ),
     'firstname'         => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'First Name',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'First Name',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 20,
-        'is_required'       => 1,
-        'validate_rules'    => array(
+        'required'       => 1,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'middlename'        => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Middle Name/Initial',
-        'is_user_defined'   => 0,
-        'is_system'         => 0,
-        'is_visible'        => $addressHelper->getConfig('middlename_show', $store) == '' ? 0 : 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Middle Name/Initial',
+        'user_defined'   => 0,
+        'system'         => 0,
+        'visible'        => $addressHelper->getConfig('middlename_show', $store) == '' ? 0 : 1,
         'sort_order'        => 30,
-        'is_required'       => $addressHelper->getConfig('middlename_show', $store) == 'req' ? 1 : 0,
+        'required'       => $addressHelper->getConfig('middlename_show', $store) == 'req' ? 1 : 0,
     ),
     'lastname'          => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Last Name',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Last Name',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 40,
-        'is_required'       => 1,
-        'validate_rules'    => array(
+        'required'       => 1,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'suffix'            => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Suffix',
-        'is_user_defined'   => 0,
-        'is_system'         => 0,
-        'is_visible'        => $addressHelper->getConfig('suffix_show', $store) == '' ? 0 : 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Suffix',
+        'user_defined'   => 0,
+        'system'         => 0,
+        'visible'        => $addressHelper->getConfig('suffix_show', $store) == '' ? 0 : 1,
         'sort_order'        => 50,
-        'is_required'       => $addressHelper->getConfig('suffix_show', $store) == 'req' ? 1 : 0,
+        'required'       => $addressHelper->getConfig('suffix_show', $store) == 'req' ? 1 : 0,
     ),
     'company'           => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Company',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Company',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 60,
-        'is_required'       => 0,
-        'validate_rules'    => array(
+        'required'       => 0,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'street'           => array(
-        'backend_type'      => 'varchar', // FIXME text currently break the code
-        'backend_model'     => 'customer/entity_address_attribute_backend_street',
-        'frontend_label'    => 'Street Address',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar', // FIXME text currently break the code
+        'backend'     => 'customer/entity_address_attribute_backend_street',
+        'input'    => 'multiline',
+        'label'    => 'Street Address',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 70,
         'multiline_count'   => $addressHelper->getConfig('street_lines', $store),
-        'is_required'       => 1,
-        'validate_rules'    => array(
+        'required'       => 1,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'city'              => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'City',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'City',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 80,
-        'is_required'       => 1,
-        'validate_rules'    => array(
+        'required'       => 1,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'country_id'        => array(
-        'backend_type'      => 'varchar',
-        'frontend_input'    => 'select',
-        'frontend_label'    => 'Country',
-        'source_model'      => 'customer/entity_address_attribute_source_country',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'select',
+        'label'    => 'Country',
+        'source'      => 'customer/entity_address_attribute_source_country',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 90,
-        'is_required'       => 1,
+        'required'       => 1,
     ),
     /*
     'region'            => array(
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 100,
-        'is_required'       => 0,
+        'required'       => 0,
     ),
     'region_id'         => array(
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 100,
-        'is_required'       => 0,
+        'required'       => 0,
     ),*/
     'postcode'          => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Zip/Postal Code',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Zip/Postal Code',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 110,
-        'is_required'       => 1,
-        'validate_rules'    => array(
-        ),
+        'required'       => 1,
+        'validate_rules'    => serialize(array(
+        )),
     ),
     'telephone'         => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Telephone',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Telephone',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 120,
-        'is_required'       => 1,
-        'validate_rules'    => array(
+        'required'       => 1,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'fax'               => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Fax',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Fax',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 130,
-        'is_required'       => 0,
-        'validate_rules'    => array(
+        'required'       => 0,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'email'               => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'e-Mail',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'e-Mail',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 130,
-        'is_required'       => 0,
-        'validate_rules'    => array(
+        'required'       => 0,
+        'validate_rules'    => serialize(array(
+            'input_validation'  => "email",
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'web'               => array(
-        'backend_type'      => 'varchar',
-        'frontend_label'    => 'Web',
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
-        'is_visible'        => 1,
+        'type'      => 'varchar',
+        'input'    => 'text',
+        'label'    => 'Web',
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 1,
         'sort_order'        => 130,
-        'is_required'       => 0,
-        'validate_rules'    => array(
+        'required'       => 0,
+        'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
-        ),
+        )),
     ),
     'unit_id'           => array(
-        'backend_type'      => 'static', // need to be static otherwise insert fail
-        'is_user_defined'   => 0,
-        'is_system'         => 1,
+        'type'      => 'static', // need to be static otherwise insert fail
+        'user_defined'   => 0,
+        'system'         => 1,
+        'visible'        => 0,
     )
 );
 /**
@@ -367,14 +385,16 @@ $attributes = array(
 $eavConfig = Mage::getSingleton('eav/config');
 foreach ($attributes as $attributeCode => $data) {
     if (!$installer->getAttribute('bkg_orgunit', $attributeCode)) {
-        $attribute = $eavConfig->getAttribute('bkg_orgunit', $attributeCode);
-        $attribute->addData($data);
-        $attribute->save();
-
-        $this->getConnection()->insert($org_form_attribute, array(
-            'form_code'     => 'adminhtml_bkg_orgunit_address',
-            'attribute_id'  => $attribute->getAttributeId()
-        ));
+        $installer->addAttribute('bkg_orgunit', $attributeCode, $data);
+        
+        if ($data['type'] !== 'static') {
+            $attrId = $installer->getAttributeId('bkg_orgunit', $attributeCode);
+    
+            $this->getConnection()->insert($org_form_attribute, array(
+                'form_code'     => 'adminhtml_bkg_orgunit_address',
+                'attribute_id'  => $attrId
+            ));
+        }
     }
 }
 

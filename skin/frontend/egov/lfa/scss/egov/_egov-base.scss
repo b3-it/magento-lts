@@ -8,6 +8,10 @@
     @include default-form;
 }
 
+#locationfinder-link {
+    display: none;
+}
+
 .egov-base-table {
     width: 100%;
     font-family: $base-font-family;
@@ -66,12 +70,12 @@
                 vertical-align: top;
                 overflow: hidden;
             }
-            
+
             h3 {
                 margin: 0px;
                 padding: 0px;
             }
-            
+
             .product-details {
                 width: 90%;
             }
@@ -85,7 +89,7 @@
         td:nth-child(5), td:nth-child(6) {
             text-align: right;
         }
-        
+
         @include bp(max-width, $bp-medium) {
         	td:nth-child(2), td:nth-child(3) , td:nth-child(4)
             td:nth-child(5), td:nth-child(6), td:nth-child(7) {
