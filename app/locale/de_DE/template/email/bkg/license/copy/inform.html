@@ -1,0 +1,52 @@
+<!--@subject 
+Ihre BKG Lizenz
+@-->
+
+<!--@vars
+{"store url=\"\"":"Store Url",
+"skin url=\"images/logo_email.gif\" _area=\"frontend\"":"Email Logo Image",
+"var link":"Link zum Download"}
+@-->
+
+<!--@styles
+body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+a { color:#1E7EC8; }
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <table style="width:98%; border:0; margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+        <tr>
+            <td align="center" valign="top">
+                <!-- [ header starts here] -->
+                <table style="border:0; width:650px;">
+                    <tr>
+                        <td valign="top">
+                            <a href="{{store url=""}}">
+                                <img src="{{skin url="images/logo_email.gif" _area="frontend"}}" alt="{{block type="imprint/field" value="shop_name"}}"  style="margin-bottom:10px;" border="0"/>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <!-- [ middle starts here] -->
+                <table style="border:0; width:650px;">
+                    <tr>
+                        <td valign="top">
+                            <h2>Lizenz</h2> 
+							
+							<hr />
+							<p>Ihre Lizenz "{{var license.getTitleFe()}}" mit der Nummer {{var license.getIdent()}} ist im Status {{var license.getStatusText()}}</p>
+                            
+                            <a href="{{var link}}">Link</a>
+                                                        
+                            <br/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+{{template config_path="design/email/footer"}}

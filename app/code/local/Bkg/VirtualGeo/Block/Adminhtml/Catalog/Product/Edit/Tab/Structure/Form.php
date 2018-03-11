@@ -10,21 +10,14 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Structure_Form ext
 				'legend' => Mage::helper('virtualgeo')->__('Structure')
 		));
 
-		$fieldset->addField('use_structure', 'select', array(
-				'label'     => Mage::helper('regionallocation')->__('Use Structure'),
-				//'class'     => 'required-entry',
-				//'required'  => true,
-				'name'      => 'product[use_structure]',
-				'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
-		));
+		
 
-		$field = $fieldset->addField('structure', 'multiselect', array(
+		$fieldset->addType('componentparts','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts');
+		$field = $fieldset->addField('structure', 'componentparts', array(
 				'label'     => Mage::helper('virtualgeo')->__('Usage'),
-				'name'      => 'product[structure][]',
-				'defaultname'      => 'product[structure_default][]',
+				'name'      => 'product[structure]',
 				'values'    => Mage::getModel('virtualgeo/components_structure')->getCollectionAsOptions($this->getProduct()->getId()),
-				'value'		=> Mage::getModel('virtualgeo/components_structureproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
-				'default'	=> Mage::getModel('virtualgeo/components_structureproduct')->getDefaul4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
+				'value'		=> Mage::getModel('virtualgeo/components_structureproduct')->getComponents4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
 
 		));
 		if ($field) {
