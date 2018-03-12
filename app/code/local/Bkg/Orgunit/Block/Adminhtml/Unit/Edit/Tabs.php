@@ -21,6 +21,7 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tabs extends Mage_Adminhtml_Block_Wi
 
   protected function _beforeToHtml()
   {
+
       $this->addTab('form_section', array(
           'label'     => Mage::helper('bkg_orgunit')->__('Organisation Information'),
           'title'     => Mage::helper('bkg_orgunit')->__('Organisation Information'),
@@ -28,8 +29,8 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tabs extends Mage_Adminhtml_Block_Wi
       ));
       
       $this->addTab('form_section2', array(
-      		'label'     => Mage::helper('bkg_orgunit')->__('Adresses'),
-      		'title'     => Mage::helper('bkg_orgunit')->__('Adresses'),
+      		'label'     => Mage::helper('bkg_orgunit')->__('Addresses'),
+      		'title'     => Mage::helper('bkg_orgunit')->__('Addresses'),
       		'content'   => $this->getLayout()->createBlock('bkg_orgunit/adminhtml_unit_edit_tab_addresses')->toHtml(),
       ));
 

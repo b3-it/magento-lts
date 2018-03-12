@@ -110,7 +110,7 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Addresses extends Mage_Adminhtml
     {
        $form = new Varien_Data_Form();
         $fieldset = $form->addFieldset('address_fieldset', array(
-            'legend'    => Mage::helper('customer')->__("Edit Customer's Address"))
+            'legend'    => Mage::helper('customer')->__("Edit Organisation's Address"))
         );
         
         /**

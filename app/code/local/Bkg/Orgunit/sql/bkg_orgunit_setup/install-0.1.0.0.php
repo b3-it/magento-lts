@@ -199,6 +199,7 @@ $attributes = array(
             'min_text_length'   => 1
         )),
     ),
+    /*
     'middlename'        => array(
         'type'      => 'varchar',
         'input'    => 'text',
@@ -209,6 +210,7 @@ $attributes = array(
         'sort_order'        => 30,
         'required'       => $addressHelper->getConfig('middlename_show', $store) == 'req' ? 1 : 0,
     ),
+    */
     'lastname'          => array(
         'type'      => 'varchar',
         'input'    => 'text',
@@ -315,6 +317,14 @@ $attributes = array(
         'validate_rules'    => serialize(array(
         )),
     ),
+    'vat_id' => array(
+        'label'     => 'VAT number',
+        'type'      => 'varchar',
+        'input'     => 'text',
+        'position'  => 140,
+        'visible'   => true,
+        'required'  => false
+    ),
     'telephone'         => array(
         'type'      => 'varchar',
         'input'    => 'text',
@@ -323,7 +333,7 @@ $attributes = array(
         'system'         => 1,
         'visible'        => 1,
         'sort_order'        => 120,
-        'required'       => 1,
+        'required'       => 0,
         'validate_rules'    => serialize(array(
             'max_text_length'   => 255,
             'min_text_length'   => 1
@@ -351,7 +361,7 @@ $attributes = array(
         'system'         => 1,
         'visible'        => 1,
         'sort_order'        => 130,
-        'required'       => 0,
+        'required'       => 1,
         'validate_rules'    => serialize(array(
             'input_validation'  => "email",
             'max_text_length'   => 255,
