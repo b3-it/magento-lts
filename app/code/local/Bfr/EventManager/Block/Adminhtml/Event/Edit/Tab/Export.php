@@ -115,7 +115,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		$collection = Mage::getModel('eventmanager/participant')->getCollection();
 		$collection->getSelect()
 		->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','created_at','base_grand_total','base_currency_code','base_total_paid'))
-		->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
+		->join(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
 		->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
 		->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
 		->columns(array('balance'=> new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)')))
@@ -126,7 +126,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		;		
 		$col = null;
 		$coalesce = array();
-		
+
 		foreach($this->getOptions() as $option)
 		{
 	      foreach($this->getSelections($option) as $product){
@@ -137,25 +137,26 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 	      	
 	      }
 		}
-      
+
       $coalesce[] = '0';
       
       $collection->getSelect()
       ->distinct()
       ->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
-      ->where(new Zend_Db_Expr('coalesce('.implode(',', $coalesce).') > 0'));
+      ->where(new Zend_Db_Expr('(coalesce('.implode(',', $coalesce).') > 0) OR (event_id='.intval($this->getEvent()->getId()).')'));
       
       //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
       if($col == null){
       	$collection->getSelect()->where('order.entity_id=0');
       }
       
-      $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
+     // $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
 
       $this->setCollection($collection);
 
-      //die( $collection->getSelect()->__toString());
+
       parent::_prepareCollection();
+      //die( $collection->getSelect()->__toString());
       //$this->_prepareTotals();
       return $this;
   }
