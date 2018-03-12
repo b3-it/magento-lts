@@ -179,7 +179,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 				}
 				$this->_handle->open(array('path'=>Mage::getBaseDir('var')));
 				if (!$this->_handle->fileExists($this->_resourceFile, true)) {
-					Mage::throwException(Mage::helper('downloadable')->__('The file does not exist.'));
+					Mage::throwException(Mage::helper('downloadable')->__('The file %s does not exist.', $this->_resourceFile));
 				}
 				$this->_handle->streamOpen($this->_resourceFile, 'r');
 			}
