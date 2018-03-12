@@ -180,7 +180,7 @@ class Mage_Downloadable_Helper_Download extends Mage_Core_Helper_Abstract
                 }
                 $this->_handle->open(array('path'=>Mage::getBaseDir('var')));
                 if (!$this->_handle->fileExists($this->_resourceFile, true)) {
-                    Mage::throwException(Mage::helper('downloadable')->__('The file %s does not exist.', $this->_resourceFile));
+                    Mage::throwException(Mage::helper('downloadable')->__('The file does not exist.'));
                 }
                 $this->_handle->streamOpen($this->_resourceFile, 'r');
             }
