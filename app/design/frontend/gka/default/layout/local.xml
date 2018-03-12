@@ -8,6 +8,10 @@
             <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
         </reference>
 
+        <reference name="left">
+            <remove name="catalog.leftnav" />
+		</reference>
+
         <reference name="content">
             <!-- zusätzliche Miniatur-Ansichten entfernen -->
             <remove name="product.info.media" />
