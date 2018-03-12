@@ -15,10 +15,10 @@ $tables[] = 'virtualgeo/components_storage';
 
 foreach ($tables as $table)
 {
-	if ($installer->tableExists($installer->getTable($table.'_entity'))
-			&& !$installer->getConnection()->tableColumnExists($installer->getTable($table.'_entity'), 'is_visible_only_in_admin'))
+	if ($installer->tableExists($installer->getTable($table.'_product'))
+			&& !$installer->getConnection()->tableColumnExists($installer->getTable($table.'_product'), 'is_visible_only_in_admin'))
 	{
-		$installer->run("ALTER TABLE {$installer->getTable($table.'_entity')}
+		$installer->run("ALTER TABLE {$installer->getTable($table.'_product')}
 		ADD is_visible_only_in_admin SMALLINT default 0
 		");
 	}
