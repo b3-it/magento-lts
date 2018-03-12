@@ -18,7 +18,7 @@ class Egovs_Base_Helper_Customer_Address extends Mage_Core_Helper_Abstract
             return false;
         }
         $_res = false;
-        $address_id = $address->getAddressId();
+        $address_id = $address->getId();
         if (!is_null($block)) {
             $data = array('block' => $block, "address" => $address, "address_id" => $address_id);
             Mage::dispatchEvent('egovs_base_frontend_customer_reject_address_editing', $data);
