@@ -10,21 +10,14 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Format_Form extend
 				'legend' => Mage::helper('virtualgeo')->__('Format')
 		));
 
-		$fieldset->addField('use_format', 'select', array(
-				'label'     => Mage::helper('regionallocation')->__('Use Format'),
-				//'class'     => 'required-entry',
-				//'required'  => true,
-				'name'      => 'product[use_format]',
-				'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
-		));
+		
 
-		$field = $fieldset->addField('format', 'multiselect', array(
+		$fieldset->addType('componentparts','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts');
+		$field = $fieldset->addField('format', 'componentparts', array(
 				'label'     => Mage::helper('virtualgeo')->__('Usage'),
-				'name'      => 'product[format][]',
-				'defaultname'      => 'product[format_default][]',
+				'name'      => 'product[format]',
 				'values'    => Mage::getModel('virtualgeo/components_format')->getCollectionAsOptions($this->getProduct()->getId()),
-				'value'		=> Mage::getModel('virtualgeo/components_formatproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
-				'default'	=> Mage::getModel('virtualgeo/components_formatproduct')->getDefaul4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
+				'value'		=> Mage::getModel('virtualgeo/components_formatproduct')->getComponents4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
 
 		));
 		if ($field) {

@@ -10,6 +10,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Storage_Form exten
 				'legend' => Mage::helper('virtualgeo')->__('Storage')
 		));
 
+		/*
 		$fieldset->addField('use_storage', 'select', array(
 				'label'     => Mage::helper('regionallocation')->__('Use Storage'),
 				//'class'     => 'required-entry',
@@ -32,18 +33,18 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Storage_Form exten
 					$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_renderer_list')
 					);
 		}
+*/
 
-/*
-        $fieldset->addType('ol','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts');
-        $fieldset->addField('agreement', 'ol', array(
-            'label'     => Mage::helper('bkg_orgunit')->__('Block'),
+        $fieldset->addType('componentparts','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts');
+        $fieldset->addField('storage', 'componentparts', array(
+            'label'     => Mage::helper('bkg_orgunit')->__('Storage'),
             //'class'     => 'required-entry',
             //'required'  => true,
-            'name'      => 'agreement',
+            'name'      => 'product[storage]',
             'values' => Mage::getModel('virtualgeo/components_storage')->getCollectionAsOptions($this->getProduct()->getId()),
             'value' => Mage::getModel('virtualgeo/components_storageproduct')->getComponents4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
         ));
-*/
+
 		return parent::_prepareForm();
 	}
 

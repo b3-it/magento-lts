@@ -113,11 +113,11 @@ class Bkg_VirtualGeo_Model_Observer
     		$this->_saveRap($dataObject->getRap(),$product);
     	}
 
-    	$this->_saveComponent($dataObject->getGeoref(), $dataObject->getGeorefDefault(),$product,'virtualgeo/components_georefproduct');
-    	$this->_saveComponent($dataObject->getFormat(), $dataObject->getFormatDefault(),$product,'virtualgeo/components_formatproduct');
-        $this->_saveComponent($dataObject->getStorage(), $dataObject->getStorageDefault(),$product,'virtualgeo/components_storageproduct');
-        $this->_saveComponent($dataObject->getStructure(), $dataObject->getStructureDefault(),$product,'virtualgeo/components_structureproduct');
-        $this->_saveComponent($dataObject->getResolution(), $dataObject->getResolutionDefault(),$product,'virtualgeo/components_resolutionproduct');
+        $this->_saveComponent($dataObject->getStorage(),$product,'virtualgeo/components_storageproduct');
+    	$this->_saveComponent($dataObject->getGeoref(),$product,'virtualgeo/components_georefproduct');
+    	$this->_saveComponent($dataObject->getFormat(),$product,'virtualgeo/components_formatproduct');
+        $this->_saveComponent($dataObject->getStructure(), $product,'virtualgeo/components_structureproduct');
+        $this->_saveComponent($dataObject->getResolution(),$product,'virtualgeo/components_resolutionproduct');
         $content = $dataObject->getContentLayerOptions();
         $this->_saveContentLayer($content,$product->getId());
 
@@ -202,10 +202,51 @@ class Bkg_VirtualGeo_Model_Observer
     
     	return null;
     }
+
+    protected function _saveComponent($data, $product, $modelname)
+    {
+        if (empty($data)) {
+            $data = array();
+        }
+       
+            
+        foreach($data as $key => $item){
+        	if($key == 'is_default'){
+        		continue;
+        	}
+        	$model = Mage::getModel($modelname);
+        	if(isset($item['id']) && !empty($item['id'])){
+        		$model->load($item['id']);
+        		
+        		if($item['deleted']  ){
+        			$model->delete();
+        			continue;
+        		}
+        	}
+        	
+        	
+        	$model->setPos($item['position']);
+        	$model->setEntityId($item['entity_id']);
+        	$model->setProductId($product->getId());
+        	$model->setStoreId($product->getStoreId());
+        	$model->setIsDefault(0);
+        	
+        	if(isset($data['is_default']) && ($data['is_default'] == $item['my_id'])){
+        		$model->setIsDefault(1);
+        	}
+        	$model->setData('is_visible_only_in_admin',0);
+        	if(isset($item['admin_only'])){
+        		$model->setData('is_visible_only_in_admin',1);
+        	}
+        	
+        	$model->save();
+        }
+        
+        $newItems = array();
+    }
     
     
-    
-    protected function _saveComponent($data, $default, $product,$model)
+    protected function _saveComponent_v1($data, $default, $product, $model)
     {
     	if(empty($data)){
     		$data = array();
