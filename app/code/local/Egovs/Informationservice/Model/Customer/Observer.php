@@ -1,9 +1,14 @@
 <?php
 class Egovs_Informationservice_Model_Customer_Observer
 {
-	public function rejectAddressEditing($observer) {
+    public function rejectAddressEditing(Varien_Event_Observer $observer) {
 		$block = $observer ['block'];
-		$address_id = intval ( $observer ['address_id'] );
+
+		/**
+		 * @var Mage_Customer_Model_Address $address
+		 */
+		$address = $observer->getAddress();
+		$address_id =  $address->getAddressId();
 		if ($address_id == 0)
 			return;
 		

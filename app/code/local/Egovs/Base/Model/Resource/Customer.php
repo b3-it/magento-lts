@@ -1,7 +1,7 @@
 <?php 
 
 
-class Bkg_Orgunit_Model_Resource_Customer extends Mage_Customer_Model_Resource_Customer
+class Egovs_Base_Model_Resource_Customer extends Mage_Customer_Model_Resource_Customer
 {
     /**
      * {@inheritDoc}
@@ -12,9 +12,10 @@ class Bkg_Orgunit_Model_Resource_Customer extends Mage_Customer_Model_Resource_C
         foreach ($customer->getAddresses() as $addr) {
             /**
              * @var Mage_Customer_Model_Address $addr
+             * @var Egovs_Base_Helper_Customer_Address $helper
              */
-            // Addresses inside Customer with org_address_id should not be deleted that way
-            if ($addr->getData('org_address_id') !== null) {
+            $helper = Mage::helper('egovsbase/customer_address');
+            if ($addr->getData("_deleted") === true && $helper->isAddressReadOnly($addr)) {
                 $addr->setData("_deleted", false);
             }
         }

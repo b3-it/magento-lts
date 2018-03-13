@@ -100,7 +100,7 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_GeorefController extends Ma
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('virtualgeo/componentsgeorefentity');
+				$model = Mage::getModel('virtualgeo/components_georef');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

@@ -98,6 +98,19 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_resolut
 	  ");
 }
 
+if (!$installer->tableExists($installer->getTable('virtualgeo/components_structure_category')))
+{
+    $installer->run("
+	  CREATE TABLE {$installer->getTable('virtualgeo/components_structure_category')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `label` varchar(128) default '',
+	  `code` varchar(128) default '',
+	  `pos` int(11) unsigned default 0,
+	  PRIMARY KEY (`id`)
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  ");
+}
+
 if (!$installer->tableExists($installer->getTable('virtualgeo/components_structure_entity')))
 {
     $installer->run("
@@ -106,9 +119,11 @@ if (!$installer->tableExists($installer->getTable('virtualgeo/components_structu
 	  `code` varchar(128) default '',
 	  `type` varchar(128) default '',
 	  `pos` int(11) unsigned default 0,
+	  `category_id` int(11) unsigned default NULL,
 	  INDEX ìdx_structure_code (`code`), 
   	  show_layer SMALLINT default 0,
       service_id int(11) unsigned default NULL,
+      FOREIGN KEY (`category_id`) REFERENCES `{$this->getTable('virtualgeo/components_structure_category')}`(`id`) ON DELETE SET NULL
   	  CONSTRAINT fk_components_structure_service FOREIGN KEY (service_id) REFERENCES {$installer->getTable('bkgviewer/service_service')}(id) ON DELETE SET NULL,
 	  PRIMARY KEY (`id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

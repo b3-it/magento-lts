@@ -197,10 +197,25 @@
                 </egovsbase>
             </updates>
         </layout>
+        <routers>
+            <customer>
+                <args>
+                    <modules>
+                        <general before="Mage_Customer">Egovs_Base</general>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
     </frontend>
 
     <global>
         <models>
+            <adminhtml>
+                <rewrite>
+                	<!--  -->
+                    <customer_renderer_region>Egovs_Base_Model_Customer_Renderer_Region</customer_renderer_region>
+                </rewrite>
+            </adminhtml>
             <egovsbase>
                 <class>Egovs_Base_Model</class>
                 <resourceModel>egovsbase_resource</resourceModel>
@@ -221,6 +236,8 @@
             <customer_resource>
                 <rewrite>
                     <address>Egovs_Base_Model_Resource_Customer_Address</address>
+                    <!-- To prevent the Org addresses from being deleted by customer save -->
+                    <customer>Egovs_Base_Model_Resource_Customer</customer>
                 </rewrite>
             </customer_resource>
             <core>

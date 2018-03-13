@@ -20,9 +20,10 @@ class Bkg_License_Block_Adminhtml_Test_Search extends Mage_Adminhtml_Block_Widge
         $this->_mode = 'search';
 
         $this->_updateButton('save', 'label', Mage::helper('bkg_license')->__('Create Copy License'));
-        
+        $this->_updateButton('back', 'onclick', 'setLocation(\'' . $this->getUrl('*/license_test/index') . '\');');
+         
         $this->_removeButton('delete');
-        $this->_removeButton('back');
+        //$this->_removeButton('back');
         $this->_removeButton('reset');
 
 

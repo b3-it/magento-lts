@@ -16,6 +16,14 @@ class Bkg_Orgunit_Model_Resource_Unit extends Mage_Core_Model_Resource_Db_Abstra
         $this->_init('bkg_orgunit/unit', 'id');
     }
 
-
+    public function deleteCustomerAttribute($object)
+    {
+    	$eav = Mage::getResourceModel('eav/entity_attribute');
+    	$eav_id =  $eav->getIdByCode('customer', 'org_unit');
+    	
+    	$this->_getWriteAdapter()->delete($this->getTable('customer/entity').'_int',"attribute_id = {$eav_id} AND value = {$object->getId()}" );
+    	
+    	return $this;
+    }
 
 }

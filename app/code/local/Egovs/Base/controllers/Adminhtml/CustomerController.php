@@ -111,7 +111,7 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
                     $formData = $addressForm->setEntity($address)
                         ->extractData($this->getRequest(), $requestScope);
 
-                    // Set default billing, shipping and base flags to address
+                    // Set default billing and shipping flags to address
                     $isDefaultBilling = isset($data['account']['default_billing'])
                         && $data['account']['default_billing'] == $index;
                     $address->setIsDefaultBilling($isDefaultBilling);
@@ -184,6 +184,7 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
                 // Force new customer confirmation
                 if ($isNewCustomer) {
                     $customer->setPassword($data['account']['password']);
+                    $customer->setPasswordCreatedAt(time());
                     $customer->setForceConfirmed(true);
                     if ($customer->getPassword() == 'auto') {
                         $sendPassToEmail = true;

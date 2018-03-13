@@ -38,8 +38,9 @@ $_class   = $_element->getFieldsetHtmlClass();
     	<div class="div-table-head">
     		<div style="width:4%;"><?php echo $this->__('Use'); ?></div>
     		<div style="width:5%;"><?php echo $this->__('Default'); ?></div>
+    		<div style="width:5%;"><?php echo $this->__('Admin <br/> Only'); ?></div>
     		<div style="width:5%;"><?php echo $this->__('Pos'); ?></div>
-    		<div style="width:84%;"><?php echo $this->__('Label'); ?></div>
+    		<div style="width:79%;"><?php echo $this->__('Label'); ?></div>
     	</div>
     	<?php foreach ($_element->getValues() as $value): $value = new Varien_Object($value);?>
     	<div class="div-table-body">
@@ -55,6 +56,13 @@ $_class   = $_element->getFieldsetHtmlClass();
                        name="<?php echo $_element->getDefaultname();?>"
                        value="<?php echo $value->getValue()?>"
                        <?php if($value->getValue() ==  $_element->getDefault()) echo 'checked="checked"'; ?>
+                />
+            </div>
+            <div style="width:4%;">
+                <input type="checkbox"
+                       name="<?php echo $_element->getIsVisibleOnlyInAdmin();?>"
+                       value="<?php echo $value->getValue()?>"
+                       <?php //if(in_array($value->getValue(), $_element->getIsVisibleOnlyInAdmin())) echo 'checked="checked"'; ?>
                 />
             </div>
     		<div style="width:5%;">

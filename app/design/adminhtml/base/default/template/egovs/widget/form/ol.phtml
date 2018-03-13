@@ -6,9 +6,9 @@
 	<td class="value">
 		<script type="text/javascript">
 			var messageNoItemSelected = '<?php echo $this->__('At least one option must be selected.'); ?>';
-			var templateUpDownButtons = '<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('bkg_license')->__('Up')?>"><span></span></button>' +
-			                            '<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('bkg_license')->__('Down')?>"><span></span></button>';
-			var templateDelButton = '<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('bkg_license')->__('Remove')?>"><span></span></button>';
+			var templateUpDownButtons = '<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>' +
+			                            '<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('egovsbase')->__('Down')?>"><span></span></button>';
+			var templateDelButton = '<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>';
 		</script>
 		<?php echo $this->getElement()->getAddPane()->toHtml()?>
 		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>">
@@ -33,10 +33,10 @@
 						</td>
 						<td class="position-sorting">
 						<?php if($this->getElement()->getShowUpDown() !== false):?>
-							<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('bkg_license')->__('Up')?>"><span></span></button>
-							<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('bkg_license')->__('Down')?>"><span></span></button>
+							<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>
+							<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('egovsbase')->__('Down')?>"><span></span></button>
 						<?php endif;?>
-							<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('bkg_license')->__('Remove')?>"><span></span></button>
+							<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>
 						</td>
 					</tr>
 				<?php endforeach;?>

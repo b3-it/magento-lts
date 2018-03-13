@@ -21,7 +21,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Address extends Mage_Adminhtml_B
 	public function getAddressTypes()
 	{
 		$result= array();
-		$sect = Mage::getConfig()->getNode('bkg_lizense/address_type')->asArray();
+		$sect = Mage::getConfig()->getNode('bkg_license/address_type')->asArray();
 		foreach($sect as $k=>$v)
 		{
 			$result[] = array('value'=>$k,'label'=>$this->__($v));

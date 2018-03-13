@@ -26,15 +26,15 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Georef_Edit_Form extends Mage_Ad
   	$fieldset = $form->addFieldset('componentsgeoref_entity_form', array('legend'=>Mage::helper('virtualgeo')->__('Components Georefentity information')));
 
   	$dataModel = Mage::registry('componentsgeoref_entity_data');
-/*
-  	$fieldset->addField('georef', 'text', array(
-  			'label'     => Mage::helper('virtualgeo')->__('Georef'),
-  			//'class'     => 'required-entry',
-  			//'required'  => true,
-  			'name'      => 'georef',
-  			'value'	=> $dataModel->getGeoref()
+
+  	$fieldset->addField('code', 'text', array(
+  			'label'     => Mage::helper('virtualgeo')->__('Code'),
+  			'class'     => 'required-entry',
+  			'required'  => true,
+  			'name'      => 'code',
+  			'value'	=> $dataModel->getCode()
   	));
-  	//*/
+
   	
   	
   	$store_id = intval($this->getRequest()->getParam('store', 0));
@@ -44,8 +44,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Georef_Edit_Form extends Mage_Ad
   	
   	$field =$fieldset->addField('epsg_code', 'text', array(
   			'label'     => Mage::helper('virtualgeo')->__('EPSG Code'),
-  			//'class'     => 'required-entry',
-  			//'required'  => true,
+  			'class'     => 'required-entry',
+  			'required'  => true,
   			'name'      => 'epsg_code',
   			'value'	=> $dataModel->getEpsgCode()
   	));

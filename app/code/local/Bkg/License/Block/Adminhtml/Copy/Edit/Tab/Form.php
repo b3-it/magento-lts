@@ -28,6 +28,14 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
       		'value' => $model->getData('name'),
       ));
 
+      $fieldset->addField('title_fe', 'text', array(
+          'label'     => Mage::helper('bkg_license')->__('Title (FE)'),
+          'class'     => 'required-entry',
+          'required'  => true,
+          'name'      => 'title_fe',
+          'value' => $model->getData('title_fe'),
+      ));
+
       $fieldset->addField('ident', 'text', array(
           'label'     => Mage::helper('bkg_license')->__('Number of License'),
           //'class'     => 'required-entry',
@@ -183,6 +191,14 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Form extends Mage_Adminhtml_Bloc
       		'name'      => 'pdf_template_id',
       		'values' => $pdfs,
       		'value' => $model->getData('pdf_template_id'),
+      ));
+      
+      $fieldset->addField('send_email', 'checkbox', array(
+      		'label'     => Mage::helper('bkg_license')->__('Send Email to Contact Person'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'send_email',
+      		
       ));
 
       

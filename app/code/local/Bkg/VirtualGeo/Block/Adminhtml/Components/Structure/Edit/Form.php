@@ -75,6 +75,16 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
           'value' => $dataModel->getStoreId()
       ));
 
+      $categroys =  Mage::getModel('virtualgeo/components_structure_category')->getCollection()->toOptionHash();
+
+      $fieldset->addField('category', 'select', array(
+          'label'     => Mage::helper('virtualgeo')->__('Category'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'category_id',
+          'options' => $categroys,
+          'value'	=> $dataModel->getCategoryId()
+      ));
 
       	$services = Mage::getModel('bkgviewer/service_service')->getCollection();
 
@@ -117,6 +127,18 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
       		'class'     =>  ($store_id != 0) ? 'readonly' : '',
             'value'    => $dataModel->getServiceId(),
       
+      ));
+      
+      
+      
+      $fieldset->addField('bildungsregel', 'checkbox', array(
+      		'label'     => Mage::helper('virtualgeo')->__('bildungsregel'),
+      		'name'      => 'bildungsregel',
+      		'checked'	=> boolval($dataModel->getBildungsregel()),
+      		//'onchange'  => 'toogleLayer()',
+      		'readonly' => $store_id != 0,
+      		'disabled' => $store_id != 0,
+      		'class'     =>  ($store_id != 0) ? 'readonly' : '',
       ));
       
       
