@@ -58,7 +58,7 @@ class Egovs_Base_Helper_Customer_Address extends Mage_Core_Helper_Abstract
         }
 
         $result = new Varien_Object();
-        $data = array('result' => $result, "addr" => $addr, "address_id" => $addr->getAddressId());
+        $data = array('result' => $result, "addr" => $addr, "address_id" => $addr->getId());
         Mage::dispatchEvent('egovs_base_customer_address_readonly', $data);
         return $result->getIsReadOnly() === true;
     }
