@@ -15,4 +15,6 @@ class Bkg_License_Model_Resource_Master extends Mage_Core_Model_Resource_Db_Abst
         // Note that the id refers to the key field in your database table.
         $this->_init('bkg_license/master', 'id');
     }
+    
+  
 }

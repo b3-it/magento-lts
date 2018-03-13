@@ -110,6 +110,17 @@
                 </bkg_license_email_copy_license_inform_template>
              </email>
         </template>
+        <events>
+            <bkg_orgunit_is_used>
+                <observers>
+                    <license_bkg_orgunit_is_used>
+                        <class>bkg_license/observer</class>
+                        <method>onBkgOrgunitIsUsed</method>
+                    </license_bkg_orgunit_is_used>
+                </observers>
+            </bkg_orgunit_is_used>
+           
+        </events>
     </global>
     <frontend>
       <routers>

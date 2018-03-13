@@ -33,17 +33,27 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 			if (!empty($data)) {
 				$model->setData($data);
 			}
-
+			$is_used= $model->isOrganisationUsed();
+			if($is_used !== false)
+			{
+				$used = implode(',',array_keys($is_used));
+				
+				Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('adminhtml')->__("Organisation is used by '%s'",$used));
+			}
+			
 			Mage::register('unit_data', $model);
 
 			$this->_initAction();
-
+			
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
 			$this->_addContent($this->getLayout()->createBlock('bkg_orgunit/adminhtml_unit_edit'))
 				->_addLeft($this->getLayout()->createBlock('bkg_orgunit/adminhtml_unit_edit_tabs'));
 
+				
+					
+				
 			$this->renderLayout();
 		} else {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkg_orgunit')->__('Item does not exist'));
@@ -193,6 +203,11 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 			try {
 				$model = Mage::getModel('bkg_orgunit/unit');
 
+				if($model->isOrganisationUsed()!== false)
+				{
+					Mage::throwException($this->__("Orgunit can not deletetd!"));
+				}
+				
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();
 
