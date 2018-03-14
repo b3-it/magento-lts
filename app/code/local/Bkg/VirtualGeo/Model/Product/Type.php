@@ -112,6 +112,35 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
     }
   
     
+    public function isSalable($product = null)
+    {
+    	$salable = parent::isSalable($product);
+    	if (!is_null($salable)) {
+    		return $salable;
+    	}
+    
+    	$storageCollection = Mage::getModel('virtualgeo/components_storageproduct')->getComponents4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId());
+    	
+    	
+    
+    	if (!count($storageCollection->getItems())) {
+    		return false;
+    	}
+    
+    	
+    
+    	foreach ($storageCollection->getItems() as $storage) {
+    		$storageProduct = Mage::getModel('catalog/product')->load($storage->getTransportProductId());
+    		if($storageProduct->isSalable()){
+    			return true;
+    		}
+    	}
+    
+    	return false;
+    }
+    
+    
+    
     protected function _getRapRelation($product, $fee, $usage)
     {
     	$items = $this->_getRapRelationCollection($product, $usage);

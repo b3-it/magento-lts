@@ -1,3 +1,4 @@
+<?php if($this->hasOptions()):?>
     <h3>
         <?php echo $this->getTitle(); ?>
         <div class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></div>
@@ -23,3 +24,4 @@
         </div>
       <?php endforeach; ?>
     </div>
+<?php endif;?>

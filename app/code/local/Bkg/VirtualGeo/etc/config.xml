@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bkg_VirtualGeo>
-            <version>0.1.2.0</version>
+            <version>0.1.3.0</version>
         </Bkg_VirtualGeo>
     </modules>
 
@@ -256,7 +256,7 @@
                         <price_model>virtualgeo/product_price</price_model>
                         <index_data_retreiver>bundle/catalogIndex_data_bundle</index_data_retreiver>
                         <index_priority>40</index_priority>
-                        <price_indexer>bundle/indexer_price</price_indexer>
+                        <price_indexer>virtualgeo/indexer_price</price_indexer>
                         <stock_indexer>virtualgeo/indexer_stock</stock_indexer>
                     </virtualgeo>
                     <configurable>

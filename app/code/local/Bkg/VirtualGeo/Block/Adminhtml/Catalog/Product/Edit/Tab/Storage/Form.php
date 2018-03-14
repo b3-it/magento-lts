@@ -34,13 +34,23 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Storage_Form exten
 					);
 		}
 */
-
-        $fieldset->addType('componentparts','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts');
+		
+		$productCollection = Mage::getModel('catalog/product')->getCollection();
+		$productCollection->addAttributeToSelect('name');
+		$products = array();
+		
+		foreach($productCollection as $p)
+		{
+			$products[] = array('label'=> $p->getSku() .", ". $p->getName(),'value'=>$p->getId());
+		}
+		
+        $fieldset->addType('componentparts','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts_Bundle');
         $fieldset->addField('storage', 'componentparts', array(
             'label'     => Mage::helper('bkg_orgunit')->__('Storage'),
             //'class'     => 'required-entry',
             //'required'  => true,
             'name'      => 'product[storage]',
+        	'products' => $products,
             'values' => Mage::getModel('virtualgeo/components_storage')->getCollectionAsOptions($this->getProduct()->getId()),
             'value' => Mage::getModel('virtualgeo/components_storageproduct')->getComponents4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
         ));

@@ -97,11 +97,12 @@ Layout handle for budle products
           <action method="addJs"><script>lib/jstree/jstree.js</script></action>
           <action method="addCss"><stylesheet>lib/jstree/themes/default/style.min.css</stylesheet></action>
            <action method="addJs"><script>bkg/virtualgeo/componentparts.js</script></action>
+           <action method="addJs"><script>bkg/virtualgeo/componentparts.bundle.js</script></action>
         </reference>
         <reference name="product_tabs">
             <action method="addTab"><name>virtualgeo_fees</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_fees</block></action>
             <action method="bindShadowTabs"><first>virtualgeo_fees</first><second>price</second></action>
-            <action method="addTab"><name>bundle_items</name><block>bundle/adminhtml_catalog_product_edit_tab_bundle</block></action>
+          
             <action method="bindShadowTabs"><first>bundle_items</first><second>customer_options</second></action>
             <action method="addTab"><name>virtualgeo_georef</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_georef</block></action>
             <action method="addTab"><name>virtualgeo_format</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_format</block></action>
