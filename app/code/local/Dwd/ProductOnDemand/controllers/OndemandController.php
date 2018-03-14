@@ -5,10 +5,10 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$id = $this->getRequest()->getParam('id', 0);
 		$hash = $this->getRequest()->getParam('hash', null);
 		$protocol = $this->getRequest()->isSecure() ? 'https://' : 'http://';
-		$hashPrefix = $protocol.$this->getRequest()->getHttpHost().$this->getRequest()->getRequestUri();
-		$hashPrefix = substr($hashPrefix, 0, strpos($hashPrefix, '&') !== false ? strpos($hashPrefix, '&') : count($hashPrefix));
+		$webshopURL = $protocol.$this->getRequest()->getHttpHost().$this->getRequest()->getRequestUri();
+		$webshopURL = substr($webshopURL, 0, strpos($webshopURL, '&') !== false ? strpos($webshopURL, '&') : count($webshopURL));
 		$salt = (string) Mage::getStoreConfig('catalog/dwd_pod/salt');
-		Mage::log(sprintf("pod::Weste-Hash:%s\nwebshopURL:%s", $hash, $hashPrefix), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+		Mage::log(sprintf("pod::Weste-Hash:%s\nwebshopURL:%s", $hash, $webshopURL), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		$referer = Mage::getSingleton('customer/session')->getPodReferer();
 		Mage::getSingleton('customer/session')->unsetData('pod_referer');
 		if (!$referer) {
@@ -16,9 +16,9 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		}
 		//$hashPrefix = 'https://kunden.dwd.de/asterixep/webshop?id='.$id;
 		$hashAlgo = (string) Mage::getStoreConfig('catalog/dwd_pod/hash_algorithm');
-		if (!$hash || hash($hashAlgo, $salt.$hashPrefix) != $hash) {
+		if (!$hash || hash($hashAlgo, $salt.$webshopURL) != $hash) {
 			$msg = Mage::helper('prondemand')->__('Transaction ID is incorrect');
-            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s\nWebshopURL:%s", $msg, $id, $hash, $webshopURL), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
