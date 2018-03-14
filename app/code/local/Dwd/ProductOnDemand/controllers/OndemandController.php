@@ -231,17 +231,17 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$redirect = Mage::helper('core/url')->urlDecode($redirect);
 		}
 
-		$back = Mage::getSingleton('customer/session')->getPodBackUrl();
-		if (!$back) {
-			$back = $id = $this->getRequest()->getParam('back', null);
-			$back = Mage::helper('core/url')->urlDecode($back);
-		}
+        $sendBackUrl = (bool) Mage::getStoreConfigFlag('catalog/dwd_pod/send_back_url');
+		if ($sendBackUrl) {
+            /* @var $urlModel Mage_Core_Model_Url */
+            $urlModel = Mage::getModel('core/url');
+            $backUrl = $urlModel->getUrl(
+                'prondemand/ondemand/processWesteData',
+                array('_secure' => Mage::app()->getRequest()->isSecure())
+            );
 
-		$debug = (bool) Mage::getStoreConfigFlag('catalog/dwd_pod/is_debug');
-
-		if ($debug) {
-			$url = sprintf('%s?westeTypID=%s&webshopURL=%s', $redirect, urlencode($id), urlencode($back));
-			Mage::log(sprintf('pod::WebshopURL:%s', $back), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+			$url = sprintf('%s?westeTypID=%s&webshopURL=%s', $redirect, urlencode($id), urlencode($backUrl));
+			Mage::log(sprintf('pod::WebshopURL:%s', $backUrl), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		} else {
 			$url = $redirect;
 		}
