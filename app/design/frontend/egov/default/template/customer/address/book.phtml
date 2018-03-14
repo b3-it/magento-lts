@@ -8,7 +8,7 @@
 
 /**
  * Temlate for Mage_Customer_Block_Address_Book block
- * @var Egovs_Base_Block_Customer_Address_Book $this 
+ * @var Egovs_Base_Block_Customer_Address_Book $this
  * @var Egovs_Base_Helper_Customer_Address $addressHelper
  */
 $addressHelper = Mage::helper('egovsbase/customer_address');
@@ -65,7 +65,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                         </span>
                     </span>
                   <?php endif;?>
-                    
+
 
                 </h3>
             </div>
@@ -94,8 +94,8 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                         </span>
                     </span>
                   <?php endif;?>
-                    
-                    
+
+
                 </h3>
             </div>
             <div class="box-content">
@@ -173,7 +173,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                     <a class="egov-pencile"
                        href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"
                        title="<?php echo $this->__('Edit Address') ?>"> </a>
-                    <?php if (!$addressHelper->isAddressReadOnly($_pAddress)):?>
+                    <?php if (!$addressHelper->isAddressReadOnly($_address)):?>
                     <span class="spacer">|</span>
                     <a class="egov-delete"
                        href="javascript:void(0);"
@@ -190,7 +190,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                     </span>
                   <?php endif;?>
 			<div class="box-title">
-                
+
             </div>
             <div class="box-content">
                 <address>
