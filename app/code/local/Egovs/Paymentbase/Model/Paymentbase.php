@@ -128,11 +128,14 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 			$kzeichen = $this->_getKassenzeichen();
 			Mage::log(
 			    sprintf(
-			        "paymentbase::Kassenzeichen %s für Store %s(%s) abfragen:",
+			        "paymentbase::Kassenzeichen %s für Store '%s'(ID:%s) und Mandant '%s' abfragen:",
                     $kzeichen,
                     Mage::app()->getStore()->getName(),
-                    Mage::app()->getStore()->getId()
-                ), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                    Mage::app()->getStore()->getId(),
+                    Mage::helper('paymentbase')->getMandantNr()
+                ),
+                Zend_Log::DEBUG, Egovs_Helper::LOG_FILE
+            );
 			//Wenn Kassenzeichen verfügbar
 			if (!empty($kzeichen)) {
 				$this->setKassenzeichenInfo($this->_lesenKassenzeichenInfo($kzeichen));
