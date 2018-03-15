@@ -115,12 +115,15 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 	 	$this->_paidKassenzeichen = 0;
 	 	$this->_notBalanced = 0;
 	 	$errors = array();
+	 	$_currentStore = null;
         // Alle relevanten Bestellungen durchgehen und übereinstimmende Kassenzeichen auf processing setzen
 		foreach ($collection->getItems() as $invoice) {
 	 		
 			$this->setInvoice($invoice);
 	 		/* @var $order Mage_Sales_Model_Order */
 			$order = $invoice->getOrder();
+			$_currentStore = Mage::app()->getStore();
+			Mage::app()->setCurrentStore($order->getStore());
 			
 			$kzeichen = $this->_getKassenzeichen();
 			Mage::log("paymentbase::Kassenzeichen abfragen: ".$kzeichen , Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
@@ -161,6 +164,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 			}
 			
 			$this->_processIncomingPayments();
+            Mage::app()->setCurrentStore($_currentStore);
 		}
 		
 		Mage::log("paymentbase::Bezahlte Kassenzeichen wurden abgerufen", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
