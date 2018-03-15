@@ -56,6 +56,14 @@ class Bkg_Orgunit_Model_Observer
                         $newData[$code]=$address->getData($code);
                     }
                 }
+
+                // try to get the company name from the organisation instead
+                $unit_id = $address->getData('unit_id');
+                if (intval($unit_id) > 0) {
+                    $org = Mage::getModel('bkg_orgunit/unit')->load($unit_id);
+                    $newData['company'] = $org->getData('company');
+                }
+
                 try {
                     $customer_address = Mage::getModel('customer/address');
                     $customer_address->setData($newData);

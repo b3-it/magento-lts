@@ -28,6 +28,12 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           //'required'  => true,
           'name'      => 'name',
       ));
+      $fieldset->addField('company', 'text', array(
+          'label'     => Mage::helper('bkg_orgunit')->__('Company'),
+          //'class'     => 'required-entry',
+          'required'  => true,
+          'name'      => 'company',
+      ));
       $fieldset->addField('line', 'text', array(
           'label'     => Mage::helper('bkg_orgunit')->__('Industry'),
           //'class'     => 'required-entry',

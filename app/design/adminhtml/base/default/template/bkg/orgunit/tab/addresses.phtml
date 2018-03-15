@@ -403,6 +403,8 @@ addressesModel.prototype = {
                 delete data['region_id'];
             }
 
+            // get company from parent Form
+            data['company'] = document.getElementById('company').value;
             // Set data to html
             var itemContainer = container.addressItem.getElementsBySelector('address');
             if(itemContainer[0]){

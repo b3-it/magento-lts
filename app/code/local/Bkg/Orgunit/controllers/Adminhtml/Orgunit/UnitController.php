@@ -68,6 +68,9 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
+		    /**
+		     * @var Bkg_Orgunit_Model_Unit $model
+		     */
 			$model = Mage::getModel('bkg_orgunit/unit');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
@@ -97,11 +100,10 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 				    
 				    foreach($col->getItemsByColumnValue('unit_id', intval($model->getId())) as $val) {
 				        /**
-				         * @var Bkg_Orgunit_Model_Resource_Unit_Address $val
+				         * @var Bkg_Orgunit_Model_Unit_Address $val
 				         */
-				        $unitAddressId = $val->getId();
-				        if (!in_array($unitAddressId, $keys)) {
-				            $val->delete($unitAddressId);
+				        if (!in_array($val->getId(), $keys)) {
+				            $val->delete();
 				            // Address Deleted, remove UserAddresses thanks to FK Cascade
 				        }
 				    }
@@ -145,6 +147,8 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 				                $newData[$code]=$address->getData($code);
 				            }
 				        }
+				        // set company from organisation
+				        $newData['company'] = $model->getData('company');
 				        
 				        foreach ($customers as $customer) {
 				            /**

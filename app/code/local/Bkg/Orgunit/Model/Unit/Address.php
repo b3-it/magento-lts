@@ -65,7 +65,7 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
         if (is_null($attributes)) {
             $attributes = $this->_getResource()
                 ->loadAllAttributes($this)
-                ->getAttributesByCode(); // getSortedAttributes doesn't work because of of missing SetID 
+                ->getAttributesByCode(); // getSortedAttributes doesn't work because of missing SetID 
             $this->setData('attributes', $attributes);
         }
         return $attributes;

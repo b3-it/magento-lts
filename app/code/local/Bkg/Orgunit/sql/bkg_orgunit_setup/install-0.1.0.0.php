@@ -25,6 +25,7 @@ if (!$installer->tableExists($unit))
         `shortname` varchar(255) default '',
         `name` varchar(255) default '',
         `line` varchar(255) default '',
+        `company` varchar(255) default '',
         `note` varchar(128) default '',
         `parent_id` int(11) unsigned default null,
     
@@ -235,6 +236,7 @@ $attributes = array(
         'sort_order'        => 50,
         'required'       => $addressHelper->getConfig('suffix_show', $store) == 'req' ? 1 : 0,
     ),
+    /*
     'company'           => array(
         'type'      => 'varchar',
         'input'    => 'text',
@@ -249,6 +251,7 @@ $attributes = array(
             'min_text_length'   => 1
         )),
     ),
+    */
     'street'           => array(
         'type'      => 'varchar', // FIXME text currently break the code
         'backend'     => 'customer/entity_address_attribute_backend_street',
