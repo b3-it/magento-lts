@@ -41,7 +41,15 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
         $this->_init('bkg_orgunit/unit_address');
     }
 
- 
+    protected function _beforeDelete() {
+
+        $this->getResource()->removeCustomerAddresses($this);
+
+
+
+        return parent::_beforeDelete();
+    }
+
     /**
      * Delete customer address
      *

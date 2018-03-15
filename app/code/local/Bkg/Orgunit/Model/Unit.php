@@ -40,4 +40,16 @@ class Bkg_Orgunit_Model_Unit extends Mage_Core_Model_Abstract
     {
     	$this->getResource()->deleteCustomerAttribute($this);
     }
+
+
+    protected function _beforeDelete() {
+        $collection = Mage::getModel("bkg_orgunit/unit_address")->getCollection();
+
+         foreach($collection->getItemsByColumnValue('unit_id', intval($this->getId())) as $adr) {
+            $adr->delete();
+
+        }
+        return parent::_beforeDelete();
+    }
+
 }
