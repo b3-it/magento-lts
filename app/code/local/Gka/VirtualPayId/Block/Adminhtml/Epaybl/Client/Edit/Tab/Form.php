@@ -29,15 +29,31 @@ class Gka_VirtualPayId_Block_Adminhtml_Epaybl_Client_Edit_Tab_Form extends Mage_
           'name'      => 'client',
       ));
 
-
-
+      
       if ( Mage::getSingleton('adminhtml/session')->getepayblclientData() )
       {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getepayblclientData());
-          Mage::getSingleton('adminhtml/session')->setepayblclientData(null);
+      	$form->setValues(Mage::getSingleton('adminhtml/session')->getepayblclientData());
+      	Mage::getSingleton('adminhtml/session')->setepayblclientData(null);
       } elseif ( Mage::registry('epayblclient_data') ) {
-          $form->setValues(Mage::registry('epayblclient_data')->getData());
+      	$form->setValues(Mage::registry('epayblclient_data')->getData());
       }
+      $storeGroups = array();
+      foreach(Mage::getModel('adminhtml/system_store')->getGroupCollection()  as $storegroup)
+      {
+      	$storeGroups[] = array('label' => $storegroup->getName(), 'value' =>$storegroup->getId());
+      }
+      
+      $fieldset->addField('stores', 'multiselect', array(
+      		'label'     => Mage::helper('virtualpayid')->__('Stores'),
+      		//                'required'  => true,
+      		'name'      => 'store_groups[]',
+      		'values'    => $storeGroups,
+      		'value' 	=> Mage::registry('epayblclient_data')->getStores()
+      ));
+      
+
+
+     
       return parent::_prepareForm();
   }
 }

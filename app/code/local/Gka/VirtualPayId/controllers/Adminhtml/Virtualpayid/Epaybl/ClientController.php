@@ -34,6 +34,8 @@ class Gka_VirtualPayId_Adminhtml_Virtualpayid_Epaybl_ClientController extends Ma
 				$model->setData($data);
 			}
 
+			
+			
 			Mage::register('epayblclient_data', $model);
 
 			$this->loadLayout();
@@ -61,45 +63,21 @@ class Gka_VirtualPayId_Adminhtml_Virtualpayid_Epaybl_ClientController extends Ma
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
-				try {
-					/* Starting upload */
-					$uploader = new Varien_File_Uploader('filename');
-
-					// Any extention would work
-	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-					$uploader->setAllowRenameFiles(false);
-
-					// Set the file upload mode
-					// false -> get the file directly in the specified folder
-					// true -> get the file in the product like folders
-					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
-
-					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS ;
-					$uploader->save($path, $_FILES['filename']['name'] );
-
-				} catch (Exception $e) {
-
-		        }
-
-		        //this way the name is saved in DB
-	  			$data['filename'] = $_FILES['filename']['name'];
-			}
 
 
 			$model = Mage::getModel('virtualpayid/epaybl_client');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
+			
+				
+				$stores = array();
+				if(isset($data['store_groups'])){
+					$stores = $data['store_groups'];
+				}
+				$model->setStores($stores);
 
 			try {
-				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
-					$model->setCreatedTime(now())
-						->setUpdateTime(now());
-				} else {
-					$model->setUpdateTime(now());
-				}
+				
 
 				$model->save();
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('virtualpayid')->__('Item was successfully saved'));

@@ -89,6 +89,7 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Type extends Mage_Catalog_Bloc
 		public function getClientSelectBox()
 		{
 			$collection = Mage::getModel('virtualpayid/epaybl_client')->getCollection();
+			$collection->getSelect()->where("FIND_IN_SET(?,visible_in_stores) > 0", Mage::app()->getStore()->getId());
 			$txt = array();
 			$txt[] = '<select id="pay_client" name="pay_client" >';
 			$txt[] = '<option value="">-- Bitte wählen --</option>';
