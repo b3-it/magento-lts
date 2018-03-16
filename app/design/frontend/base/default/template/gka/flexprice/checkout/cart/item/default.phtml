@@ -165,7 +165,8 @@
     </td>
     <?php endif; ?>
     <td class="product-cart-actions">
-        <input type="tel" pattern="\d*"
+    	<?php echo $this->getQty() ?>
+        <input type="hidden" pattern="\d*"
                name="cart[<?php echo $_item->getId() ?>][qty]"
                value="<?php echo $this->getQty() ?>"
                title='<?php echo Mage::helper('checkout')->__("Please put in Quantity for: "). $this->getProductName()?>'

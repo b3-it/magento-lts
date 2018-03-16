@@ -95,7 +95,9 @@
             </action>
         </reference>
 
- 
+         <reference name="minicart_content">
+            <action method="addItemRender"><type>flexprice</type><block>checkout/cart_item_renderer</block><template>gka/flexprice/checkout/cart/minicart/default.phtml</template></action>
+        </reference>
     </default>
 
     <!-- Preisblock für Steuer und Versandkosten hinzufügen -->
