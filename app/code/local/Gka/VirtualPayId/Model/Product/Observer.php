@@ -151,7 +151,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		$quote->setExternesKassenzeichen(sprintf('%s/%s', $payClient, $payId));
 
 		$br = $quoteItem->getBuyRequest();
-		$specialPrice = (float)($br->getAmount());
+		$specialPrice = Gka_Flexprice_Helper_Data::parseFloat($br->getAmount());
 
 
 		if ($specialPrice > 0) {

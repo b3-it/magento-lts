@@ -23,7 +23,7 @@ class Gka_Flexprice_Model_Product_Observer extends Varien_Object
 
 
 		$br = $quoteItem->getBuyRequest();
-		$specialPrice = (float)($br->getAmount());
+		$specialPrice = Gka_Flexprice_Helper_Data::parseFloat($br->getAmount());
 
 
 		if ($specialPrice > 0) {
@@ -31,7 +31,9 @@ class Gka_Flexprice_Model_Product_Observer extends Varien_Object
 				$quoteItem->setOriginalCustomPrice($specialPrice);
 				$quoteItem->getProduct()->setIsSuperMode(true);
 		} else {
-			//throw new Exception('Preis darf nicht null sein!');
+			if($product->getAllowPriceZero() == 0)	{
+			throw new Exception('Preis darf nicht null sein!');
+			}
 		}
 	}
 
