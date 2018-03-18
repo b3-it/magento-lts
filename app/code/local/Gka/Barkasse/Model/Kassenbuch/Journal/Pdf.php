@@ -21,17 +21,29 @@ class Gka_Barkasse_Model_Kassenbuch_Journal_Pdf extends Egovs_Pdftemplate_Model_
 			
 			$items = $journal->getItemsCollection()->getItems();
 			
+			$extKzA = array();
+			$extKzS = 0.0;
+			
+			$intKzA = array();
+			$intKzS = 0.0;
+			
 			foreach($items as $item){
 				if(empty($item->getExternesKassenzeichen())){
 					$item->setExternesKassenzeichenText(Mage::helper('gka_barkasse')->__('No'));
+						$intKzA[] = $item;
+						$intKzS += $item->getSumBookingAmount();
 				}
 				else{
 					$item->setExternesKassenzeichenText(Mage::helper('gka_barkasse')->__('Yes'));
+					$extKzA[] = $item;
+					$extKzS += $item->getSumBookingAmount();
 				}
 				$item->setStatus(Mage::helper('gka_barkasse')->__($item->getStatus()));
 			}
 			
 			
+			$journal->setInternalItems($intKzA);
+			$journal->setExternalItems($extKzA);
 			
 			$journal->setItems($items);
 			
