@@ -701,6 +701,13 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @var string
 	 */
 	private $__mandantNr = null;
+
+    /**
+     * Aktueller Store
+     *
+     * @var Mage_Core_Model_Store
+     */
+	private $__store = null;
 	/**
 	 * Liefert die Mandanten-Nr für die ePayment Plattform
 	 *
@@ -709,7 +716,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return string
 	 */
 	public function getMandantNr() {
-		if (!$this->__mandantNr) {
+		if (!$this->__mandantNr || $this->__store !== Mage::app()->getStore()) {
 			if (strlen(Mage::getStoreConfig('payment_services/paymentbase/mandantnr')) <= 0) {
 				$msg = $this->__('MandantNr not set');
 				$session = Mage::getSingleton("admin/session");
@@ -723,6 +730,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				Mage::log('paymentbase::'.$msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				$this->sendMailToAdmin('Fehler in ePayment Konfiguration: \n'. $msg);
 			} else {
+			    $this->__store = Mage::app()->getStore();
 				$this->__mandantNr = Mage::getStoreConfig('payment_services/paymentbase/mandantnr');
 			}
 		}
