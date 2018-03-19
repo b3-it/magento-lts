@@ -752,7 +752,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return string
 	 */
 	public function getBewirtschafterNr() {
-		if (!$this->__bewirtschfterNr) {
+		if (!$this->__bewirtschfterNr || $this->__store !== Mage::app()->getStore()) {
 			if (strlen(Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')) <= 0) {
 				$msg = $this->__('BewirtschafterNr not set');
 				$session = Mage::getSingleton("admin/session");
@@ -766,6 +766,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				Mage::log('paymentbase::'.$msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				$this->sendMailToAdmin('Fehler in ePayment Konfiguration: \n'. $msg);
 			} else {
+                $this->__store = Mage::app()->getStore();
 				$this->__bewirtschfterNr = trim(Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr'));
 			}
 		}
@@ -787,7 +788,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return string
 	 */
 	public function getWebShopDesMandanten() {
-		if (!$this->__webshopDesMandanten) {
+		if (!$this->__webshopDesMandanten || $this->__store !== Mage::app()->getStore()) {
 			if (strlen(Mage::getStoreConfig('payment_services/paymentbase/webshopdesmandanten')) <= 0) {
 				$msg = $this->__('Webshopdesmandanten not set');
 				$session = Mage::getSingleton("admin/session");
@@ -801,6 +802,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				Mage::log('paymentbase::'.$msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				$this->sendMailToAdmin('Fehler in ePayment Konfiguration: \n'. $msg);
 			} else {
+                $this->__store = Mage::app()->getStore();
 				$this->__webshopDesMandanten = trim(substr(Mage::getStoreConfig('payment_services/paymentbase/webshopdesmandanten'), 0, 4));
 			}
 		}

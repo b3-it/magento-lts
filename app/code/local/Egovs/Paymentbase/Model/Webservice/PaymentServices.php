@@ -37,6 +37,13 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @var Zend_Soap_Client
 	 */
 	protected $_soapClient = null;
+
+    /**
+     * Aktueller Store
+     *
+     * @var Mage_Core_Model_Store
+     */
+	private $__store = null;
 	
 	/**
 	 * Flag für Reset SoapClient
@@ -126,11 +133,12 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @return string
 	 */
 	protected function _getClientCertificate() {
-		if ($this->_clientCert == null) {
+		if ($this->_clientCert == null || $this->__store !== Mage::app()->getStore()) {
 			$this->_clientCert = Mage::getStoreConfig('payment_services/paymentbase/client_certificate');
 			if (empty($this->_clientCert)) {
 				throw new Zend_Soap_Client_Exception(Mage::helper('paymentbase')->__('No client certificate for ePayBL specified!'));
 			}
+            $this->__store = Mage::app()->getStore();
 			$this->_clientCert = Mage::getBaseDir().$this->_clientCert;
 		}
 		
@@ -143,11 +151,12 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @return string
 	 */
 	protected function _getCaCertificate() {
-		if ($this->_caCert == null) {
+		if ($this->_caCert == null || $this->__store !== Mage::app()->getStore()) {
 			$this->_caCert = Mage::getStoreConfig('payment_services/paymentbase/ca_certificate');
 			if (empty($this->_caCert)) {
 				throw new Zend_Soap_Client_Exception(Mage::helper('paymentbase')->__('No CA certifacte for ePayBL specified!'));
 			}
+            $this->__store = Mage::app()->getStore();
 			$this->_caCert = Mage::getBaseDir().$this->_caCert;
 		}
 	
@@ -222,7 +231,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @return Zend_Soap_Client
 	 */
 	protected function _getSoapClient() {
-		if (!$this->_soapClient) {
+		if (!$this->_soapClient || $this->__store !== Mage::app()->getStore()) {
 	
 			if (Mage::getStoreConfig('web/proxy/use_proxy') == true
 				&& Mage::getStoreConfig('web/proxy/use_proxy_egovs_payments') == true
@@ -261,6 +270,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 						'stream_context' => $this->_getStreamContext(),
 				));			
 			}
+            $this->__store = Mage::app()->getStore();
+
 			//ePayBL unterstützt nur Soap < 1.2
 			$this->_soapClient->setSoapVersion(SOAP_1_1);
 			$_classmap = $this->_classmap;
