@@ -80,6 +80,13 @@ class Egovs_Checkout_Block_Multipage_Review_Totals extends Mage_Checkout_Block_C
             ->toHtml();
     }
 
+    /**
+     * Render totals html for specific totals area (footer, body)
+     *
+     * @param   null|string $area
+     * @param   int $colspan
+     * @return  string
+     */
     public function renderTotals($area = null, $colspan = 1)
     {
         $html = '';

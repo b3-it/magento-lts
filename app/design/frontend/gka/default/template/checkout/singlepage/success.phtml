@@ -43,6 +43,11 @@ $_orderItems = $this->getOrderItems();
         <?php echo $this->__('Your order number is ') ?> <a href="<?php echo $this->getViewOrderUrl($orderId) ?>"><?php echo $this->getOrder()->getIncrementId() ?></a>
     </p>
   <?php endif; ?>
+    <div class="buttons-set">
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Print Page')) ?>" class="button" onclick="window.print();" style="width:20%; float:left;">
+            <span><?php echo $this->__('Print Page') ?></span>
+        </button>
+    </div>
     <?php echo $this->getChildHtml() ?>
     <div class="buttons-set">
         <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?>" class="button" onclick="setLocation('<?php echo $this->getContinueUrl() ?>')">
@@ -52,11 +57,6 @@ $_orderItems = $this->getOrderItems();
         <p data-role="print-pdf" style="width:31%; float:right;">
             <a class="button" href="<?php echo $this->getPrintUrl() ?>"><?php echo $this->__('Print preview') ?></a>
         </p>
-        <!--
-        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Print Page')) ?>" class="button" onclick="window.print();">
-            <span><?php echo $this->__('Print Page') ?></span>
-        </button>
-        -->
     </div>
 
     <div class="print-payment-method show-print-only">
