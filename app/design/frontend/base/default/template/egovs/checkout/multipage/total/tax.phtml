@@ -12,9 +12,15 @@
 <?php
     $_value = $this->getTotal()->getValue();
     $_style = $this->getTotal()->getStyle();
+    
+    $_colSpan = $this->getColspan();
+    
+    // ersatz für $this->helper('tax')->displayFullSummary()
+    $_showFullSummary = Mage::getStoreConfig('tax/cart_display/full_summary');
+    $_showZeroTax     = Mage::getStoreConfig('tax/cart_display/zero_tax');
 ?>
 <?php global $taxIter; $taxIter++; ?>
-<?php if ($this->helper('tax')->displayFullSummary() && $_value!=0): ?>
+<?php if ( ($_showFullSummary AND $_value!=0)  OR ($_value == 0 AND $_showZeroTax) ): ?>
 	<?php $isTop = 1; ?>
     <?php foreach ($this->getTotal()->getFullInfo() as $info): ?>
         <?php if (isset($info['hidden']) && $info['hidden']) continue; ?>
@@ -25,15 +31,12 @@
 
         <?php foreach ($rates as $rate): ?>
         <tr class="tax-details tax-details-<?php echo $taxIter; ?>">
-            <td class="a-right" style="<?php echo $this->getTotal()->getStyle() ?>" colspan="<?php echo $this->getColspan(); ?>">
-                <?php echo $rate['title']; ?>
-                <?php if ($rate['percent']): ?>
-                    (<?php echo $rate['percent']; ?>%)
-                <?php endif; ?>
+            <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $_colSpan; ?>">
+                <?php echo $rate['title']; ?> <?php if ($rate['percent']): ?>(<?php echo $rate['percent']; ?>%)<?php endif; ?>
                 <br />
             </td>
             <?php if ($isFirst): ?>
-            <td rowspan="<?php echo count($rates); ?>" class="a-right" style="<?php echo $this->getTotal()->getStyle() ?>">
+            <td rowspan="<?php echo count($rates); ?>" class="a-right" style="<?php echo $_style ?>">
                 <?php echo $this->helper('checkout')->formatPrice($amount); ?>
             </td>
             <?php endif; ?>
@@ -46,7 +49,7 @@
 
         <?php foreach ($weees as $weeeTitle => $weeeAmount): ?>
         <tr class="summary-details-<?php echo $taxIter; ?> summary-details<?php if ($isTop): echo ' summary-details-first'; endif; ?>" style="display:none;">
-            <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $this->getColspan(); ?>">
+            <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $_colSpan; ?>">
                 <?php echo $this->escapeHtml($weeeTitle); ?>
                 <br />
             </td>
@@ -61,7 +64,7 @@
 
 <tr id="overview-tax" <?php if ($this->helper('tax')->displayFullSummary() && $_value!=0): ?> class="summary-total" onclick="expandDetails(this, '.summary-details-<?php echo $taxIter;?>')"<?php endif; ?>>
     <td style="<?php echo $_style ?>" class="a-right" colspan="<?php echo $this->getColspan(); ?>">
-        <?php if ($this->helper('tax')->displayFullSummary()): ?>
+        <?php if ($_showFullSummary): ?>
             <div class="summary-collapse"><?php echo $this->getTotal()->getTitle() ?></div>
         <?php else: ?>
             <?php echo $this->getTotal()->getTitle() ?>
