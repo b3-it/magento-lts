@@ -11,6 +11,12 @@ class Gka_Flexprice_Model_Product_Price extends Mage_Catalog_Model_Product_Type_
      * @return float
      */
     public function getFinalPrice($qty=null, $product) {
+    	$pre = $product->getPreconfiguredValues();
+		$price = 0;
+		if($pre && $pre->getFelxprice())
+		{
+			return floatval($pre->getFelxprice());
+		}
         return parent::getFinalPrice($qty, $product);
     }
     

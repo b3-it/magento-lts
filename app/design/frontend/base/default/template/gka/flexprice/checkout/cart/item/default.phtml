@@ -41,10 +41,7 @@
         </h2>
         <div class="product-cart-sku">
 	        <?php echo $this->__('Sku').': '.$this->htmlEscape($_item->getSku()) ?>
-	  <?php if($pay_id = $this->getPayId($_item)):?>
-		    <br />
-		    <?php echo $this->__('Payment Ident').': '.$pay_id; ?>
-	  <?php endif;?>
+	 
 		</div>
 
 		<?php if ($_options = $this->getOptionList()):?>

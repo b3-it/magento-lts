@@ -7,7 +7,14 @@
  */
 ?>
 <?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
-<?php $_product = $this->getProduct() ?>
+<?php $_product = $this->getProduct();
+$pre = $_product->getPreconfiguredValues();
+$price = 0;
+if($pre)
+{
+	$price = floatval($pre->getFelxprice());
+}
+?>
 
 <?php if ($this->displayProductStockStatus()): ?>
     <?php if ($_product->isAvailable()): ?>
@@ -22,7 +29,7 @@
         <?php echo $this->__('Amount'); ?>
         <?php if(!$_product->getAllowPriceZero()):?><span class="required">*</span><?php endif;?>
     </label>
-	<input type="text" name="amount" id="amount" value="0" <?php if(!$_product->getAllowPriceZero()):?>class="input-text required-entry validate-amount"<?php else: ?>class="input-text"<?php endif; ?> />
+	<input type="text" name="amount" id="amount" value="<?php echo $price?>" <?php if(!$_product->getAllowPriceZero()):?>class="input-text required-entry validate-amount"<?php else: ?>class="input-text"<?php endif; ?> />
 </div>
 <?php if(!$_product->getAllowPriceZero()): ?>
 <script type="text/javascript">
