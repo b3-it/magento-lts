@@ -5,7 +5,7 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
-#virtual-pay-block, #additional-information {
+#virtual-pay-block, #additional-information, #flexprice-block {
 	@extend .block;
 
 	padding: 10px;
@@ -24,7 +24,7 @@
 	    height: 25px;
 	}
 
-	textarea {
+	textarea, input.input-text {
 	    width: 82%;
 	}
 }
