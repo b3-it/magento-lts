@@ -35,6 +35,15 @@
             </modules>
         </translate>
         <menu>
+            <cms>
+                <children>
+                    <media_gallery module="egovsbase">
+                        <title>Upload media</title>
+                        <sort_order>900</sort_order>
+                        <action>adminhtml/cms_wysiwyg_media</action>
+                    </media_gallery>
+                </children>
+            </cms>
             <sales>
                 <children>
                     <egovs_base_order_item module="egovsbase">
@@ -177,7 +186,24 @@
                     </egovs_base_security_trace_observer>
                 </observers>
             </core_config_data_save_commit_after>
+            <cms_wysiwyg_images_static_urls_allowed>
+                <observers>
+                    <egovs_wysiwyg>
+                        <class>egovsbase/observer</class>
+                        <method>mediaCheckIsUsingStaticUrlsAllowed</method>
+                    </egovs_wysiwyg>
+                </observers>
+            </cms_wysiwyg_images_static_urls_allowed>
         </events>
+        <cms>
+            <browser>
+                <extensions>
+                    <doc_allowed>
+                        <pdf>1</pdf>
+                    </doc_allowed>
+                </extensions>
+            </browser>
+        </cms>
     </adminhtml>
     <frontend>
         <translate>
@@ -228,6 +254,11 @@
                     </mail_attachment>
                 </entities>
             </egovsbase_resource>
+            <cms>
+                <rewrite>
+                    <wysiwyg_images_storage>Egovs_Base_Model_Cms_Wysiwyg_Media_Storage</wysiwyg_images_storage>
+                </rewrite>
+            </cms>
             <customer>
                 <rewrite>
                     <address_config>Egovs_Base_Model_Customer_Address_Config</address_config>

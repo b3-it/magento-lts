@@ -9,6 +9,8 @@
  * @copyright	Copyright (c) 2011-2012 EDV Beratung Hempel
  * @copyright	Copyright (c) 2011-2012 TRW-NET 
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ * @method Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis getKassenzeichenInfo() Kassenzeichen Info
  */
 class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 {
@@ -198,25 +200,41 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     protected function _processIncomingPayments() {
     	//Wenn Rechnung bezahlt wurde
     	if ($this->getKassenzeichenInfo() && $this->getKassenzeichenInfo()->saldo <= 0.0) {
-    		//Reset möglicher Teilzahlungen
+            $_saldo = $this->getKassenzeichenInfo()->saldo;
+
+            /**
+             * #3026 ZV_FM-720
+             * Stornierungen nicht verarbeiten
+             *
+             * betragHauptforderungen - betragStornos == 0
+             */
+            if ($_saldo == 0.0
+                && round($this->getKassenzeichenInfo()->betragHauptforderungen - $this->getKassenzeichenInfo()->betragStornos, 4) == 0.0
+                && round($this->getKassenzeichenInfo()->betragZahlungseingaenge, 4) == 0.0
+            ) {
+                //TODO Stornierung implementieren
+                return;
+            }
+
+            //Reset möglicher Teilzahlungen
     		$this->_getOrder()->setBaseTotalPaid(0);
     		$this->_getOrder()->setTotalPaid(0);
-    		
-    		if ($this->getKassenzeichenInfo()->saldo < 0.0 && $this->_notBalanced <= self::MAX_UNBALANCED) {
+
+            if ($_saldo < 0.0 && $this->_notBalanced <= self::MAX_UNBALANCED) {
     			Mage::getSingleton('adminhtml/session')->addNotice(
-    				Mage::helper('paymentbase')->__('The balance of invoice #%s for order #%s is %s', $this->getInvoice()->getIncrementId(), $this->_getOrder()->getIncrementId(), $this->getKassenzeichenInfo()->saldo)
+    				Mage::helper('paymentbase')->__('The balance of invoice #%s for order #%s is %s', $this->getInvoice()->getIncrementId(), $this->_getOrder()->getIncrementId(), $_saldo)
     			);
     			$this->_notBalanced++;
-    		} elseif ($this->getKassenzeichenInfo()->saldo < 0.0 && $this->_notBalanced == self::MAX_UNBALANCED+1) {
+    		} elseif ($_saldo < 0.0 && $this->_notBalanced == self::MAX_UNBALANCED+1) {
     			Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('paymentbase')->__('...'));
     			$this->_notBalanced++;
     		}
-    		if ($this->getKassenzeichenInfo()->saldo < 0.0) {
-    			$this->getInvoice()->addComment(Mage::helper('paymentbase')->__('The balance of this invoice is %s', $this->getKassenzeichenInfo()->saldo))
+    		if ($_saldo < 0.0) {
+    			$this->getInvoice()->addComment(Mage::helper('paymentbase')->__('The balance of this invoice is %s', $_saldo))
     				->save()
     			;
     		}
-    	
+
     		$orderStatus = $this->_setOrderStateAfterPayment($this->_getOrder());
     		$this->_getOrder()->setStatus($orderStatus);
     		//Hier Rechnungen noch auf bezahlt setzen!
@@ -227,7 +245,14 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			$this->_getOrder()->setBaseTotalPaid($_betrag);
     			/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
     			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($_betrag));
+
+    			//Normale Bezahlungen werden über Observer behandelt
+                //@see Egovs_Paymentbase_Model_Observer::onSalesOrderInvoicePay
+                $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
+                $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
     		}
+
+    		$this->_getOrder()->getPayment()->setEpayblCaptureDate(Varien_Date::now());
     		$this->_getOrder()->save();
     		$this->_paidKassenzeichen++;
     		$this->_grantedKassenzeichen[] = $this->_getKassenzeichen();
@@ -252,8 +277,11 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     		$this->_getOrder()->setTotalPaid(
     				min($this->_getOrder()->getStore()->convertPrice($_betrag), $this->_getOrder()->getGrandTotal())
     		);
-    	
-    		$this->_getOrder()->getResource()->saveAttribute($this->_getOrder(), array('base_total_paid', 'total_paid'));
+            $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
+            $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
+
+
+            $this->_getOrder()->getResource()->saveAttribute($this->_getOrder(), array('base_total_paid', 'total_paid'));
     	}
     }
     
