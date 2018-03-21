@@ -22,14 +22,19 @@
         <?php echo $this->__('Amount'); ?>
         <?php if(!$_product->getAllowPriceZero()):?><span class="required">*</span><?php endif;?>
     </label>
-	<input type="text" name="amount" id="amount" value="0" <?php if(!$_product->getAllowPriceZero()):?>class="input-text required-entry validate-amount"<?php else: ?>class="input-text"<?php endif; ?> />
+	<input type="text"
+           name="amount"
+           id="amount"
+           value=""
+           placeholder="<?php echo $this->__('Please insert an valid Amount.'); ?>"
+           <?php if(!$_product->getAllowPriceZero()):?>class="input-text required-entry validate-amount"<?php else: ?>class="input-text"<?php endif; ?> />
 </div>
 <?php if(!$_product->getAllowPriceZero()): ?>
 <script type="text/javascript">
 if(Validation) {
     Validation.addAllThese([
         ['validate-amount', '<?php echo $this->__('The amount must be greather than 0') ?>', function(v) {
-            return parseInt(v) > 0;
+            return parseFloat(v) > 0;
         }]
     ]);
 }
