@@ -195,10 +195,12 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
         }
         
 		Mage::log("saferpay::KASSENZEICHEN ANGELEGT:$Kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
-        $payment->setData('kassenzeichen', $Kassenzeichen);
+        $payment->setKassenzeichen($Kassenzeichen);
+        $payment->setPayClient(Mage::helper('paymentbase')->getMandantNr());
+        $payment->setPayOperator(Mage::helper('paymentbase')->getBewirtschafterNr());
         
         //Verhindert im Kommentarverlauf den grünen Haken für die Kundenbenachrichtigung.
-        $order = $this->getOrder();
+        $order = $this->_getOrder();
         if ($order) {
         	$order->setCustomerNoteNotify(false);
         }
@@ -263,7 +265,7 @@ abstract class Egovs_Paymentbase_Model_Saferpay extends Egovs_Paymentbase_Model_
 					$this->_getPayerNote(),
 					$saferpayType,
 					$this->getBuchungsListeParameter($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal())
-			);			
+			);
 			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
 				//Fallback zu alter Methode
 				Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);

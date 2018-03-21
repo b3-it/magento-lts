@@ -1206,7 +1206,9 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 		$this->validateSoapResult($objResult, $objBuchungsliste, $_method);
 		
 		//das kassenzeichen sollte erst abgeholt werden wenn das ergebniss geprueft wurde
-		$payment->setData('kassenzeichen', $objResult->buchungsListe->kassenzeichen);
+		$payment->setKassenzeichen($objResult->buchungsListe->kassenzeichen);
+        $payment->setPayClient(Mage::helper('paymentbase')->getMandantNr());
+        $payment->setPayOperator(Mage::helper('paymentbase')->getBewirtschafterNr());
 		$payment->setData( Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID, $mandate->getReference());
 		//print_r($objResult->buchungsListe->kassenzeichen);
 		$this->loeschenKunde();

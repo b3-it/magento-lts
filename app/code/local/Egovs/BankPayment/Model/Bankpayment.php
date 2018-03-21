@@ -356,7 +356,9 @@ class Egovs_BankPayment_Model_Bankpayment extends Egovs_Paymentbase_Model_Abstra
 		$this->validateSoapResult($objResult, $objBuchungsliste, 'ueberweisenVorLieferung');
 		
     	//das kassenzeichen sollte erst abgeholt werden wenn das ergebniss geprueft wurde
-    	$payment->setData('kassenzeichen', $objResult->buchungsListe->kassenzeichen);
+    	$payment->setKassenzeichen($objResult->buchungsListe->kassenzeichen);
+        $payment->setPayClient(Mage::helper('paymentbase')->getMandantNr());
+        $payment->setPayOperator(Mage::helper('paymentbase')->getBewirtschafterNr());
 		
     	$this->loeschenKunde();
     	

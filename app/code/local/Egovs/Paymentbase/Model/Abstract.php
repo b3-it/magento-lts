@@ -1043,6 +1043,13 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 		    return true;
         }
 
+        /**
+         * Besonderheit für externe Kassenzeichen
+         * @see #3051
+         *
+         * Wichtig: Das externe Kassenzeichen besteht aus Mandant/Kassenzeichen
+         *      und nicht aus Bewirtschafter/Kassenzeichen wie sonst üblich!
+         */
         $eKz = $this->_getOrder()->getExternesKassenzeichen();
 		if (!$eKz || strlen($eKz) < 1) {
 		    return false;
@@ -1050,6 +1057,9 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 
         $data = explode('/', $eKz);
 		if (count($data) == 2) {
+		    $payment->setPayClient($data[0]);
+		    //Bewirtschafter ist nicht verfügbar
+		    $payment->setPayOperator('');
 		    $payment->setKassenzeichen($data[1]);
             //Kassenzeichen auch in Quote ablegen
             $payment->getOrder()->getQuote()->getPayment()->setKassenzeichen($data[1]);

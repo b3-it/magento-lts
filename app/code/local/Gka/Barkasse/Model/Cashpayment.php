@@ -345,9 +345,9 @@ class Gka_Barkasse_Model_Cashpayment extends Egovs_Paymentbase_Model_Abstract
 		$this->validateSoapResult($objResult, $objBuchungsliste, 'anlegenKassenzeichen[Barzahlung]');
 		
     	//das kassenzeichen sollte erst abgeholt werden wenn das ergebniss geprueft wurde
-    	$payment->setData('kassenzeichen', $objResult->buchungsListe->kassenzeichen);
-    	
-    	
+    	$payment->setKassenzeichen($objResult->buchungsListe->kassenzeichen);
+        $payment->setPayClient(Mage::helper('paymentbase')->getMandantNr());
+        $payment->setPayOperator(Mage::helper('paymentbase')->getBewirtschafterNr());
     	
     	$objResult = null;
     	try {
