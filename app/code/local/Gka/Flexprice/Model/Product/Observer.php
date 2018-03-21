@@ -1,9 +1,6 @@
 <?php
 class Gka_Flexprice_Model_Product_Observer extends Varien_Object
 {
-
-
-
 	/**
 	 * Wenn Produkt in Quote gesetzt wird
 	 *
@@ -11,7 +8,8 @@ class Gka_Flexprice_Model_Product_Observer extends Varien_Object
 	 *
 	 * @return Gka_Flexprice_Model_Product_Observer
 	 */
-	public function onSalesQuoteItemSetProduct($observer) {
+	public function onSalesQuoteItemSetProduct(Varien_Event_Observer $observer)
+	{
 		$quoteItem = $observer->getQuoteItem();
 		/** @var $product Mage_Catalog_Model_Product */
 		$product = $observer->getProduct();
@@ -21,20 +19,16 @@ class Gka_Flexprice_Model_Product_Observer extends Varien_Object
 			return $this;
 		}
 
-
 		$br = $quoteItem->getBuyRequest();
 		$specialPrice = Gka_Flexprice_Helper_Data::parseFloat($br->getAmount());
 
-
-		if ($specialPrice > 0) {
+		if ( ($specialPrice > 0) OR $product->getAllowPriceZero() ) {
 				$quoteItem->setCustomPrice($specialPrice);
 				$quoteItem->setOriginalCustomPrice($specialPrice);
 				$quoteItem->getProduct()->setIsSuperMode(true);
 				$quoteItem->getProduct($product)->addCustomOption('flexprice', $specialPrice);
 		} else {
-			if($product->getAllowPriceZero() == 0)	{
-			throw new Exception('Preis darf nicht null sein!');
-			}
+			throw new Exception('Price must not be zero!');
 		}
 	}
 
