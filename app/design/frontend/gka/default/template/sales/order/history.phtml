@@ -44,7 +44,7 @@
         <tr>
             <th class="number"><?php echo $this->__('Order #') ?></th>
             <th class="date"><?php echo $this->__('Date') ?></th>
-            <th class=""><?php echo $this->__('Ship To') ?></th>
+            <th class=""><?php echo $this->__('Bill To') ?></th>
             <th class=""><?php echo $this->__('Article') ?></th>
             <th class="total"><span class="nobr"><?php echo $this->__('Order Total') ?></span></th>
             <th class="status"><span class="nobr"><?php echo $this->__('Order Status') ?></span></th>
@@ -57,7 +57,7 @@
         <tr>
             <td class="number"><?php echo $_order->getRealOrderId() ?></td>
             <td class="date"><span class="nobr"><?php echo $this->formatDate($_order->getCreatedAtStoreDate()) ?></span></td>
-            <td class=""><?php echo $_order->getShippingAddress() ? $this->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+            <td class=""><?php echo $_order->getBillingAddress() ? $this->escapeHtml($_order->getBillingAddress()->getName()) : '&nbsp;' ?></td>
             <td class="">
             	<?php foreach ($_order->getAllItems() as $_item): ?>
             		<?php echo $_item->getSku()." ";?>

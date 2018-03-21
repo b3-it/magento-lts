@@ -26,8 +26,8 @@ class Gka_Flexprice_Model_Product_Observer extends Varien_Object
 				$quoteItem->setCustomPrice($specialPrice);
 				$quoteItem->setOriginalCustomPrice($specialPrice);
 				$quoteItem->getProduct()->setIsSuperMode(true);
-		}
-		else {
+				$quoteItem->getProduct($product)->addCustomOption('flexprice', $specialPrice);
+		} else {
 			throw new Exception('Price must not be zero!');
 		}
 	}

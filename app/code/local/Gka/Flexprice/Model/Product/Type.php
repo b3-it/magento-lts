@@ -31,6 +31,12 @@ class Gka_Flexprice_Model_Product_Type extends Mage_Catalog_Model_Product_Type_V
     	return true;
     }
 
+    public function processBuyRequest($product, $buyRequest)
+    {
+    	$options = parent::processBuyRequest($product,$buyRequest);
+    	$options['felxprice'] = $buyRequest->getAmount();
+    	return $options;
+    }
 
     /**
      * Prepare product and its configuration to be added to some products list.
@@ -52,6 +58,7 @@ class Gka_Flexprice_Model_Product_Type extends Mage_Catalog_Model_Product_Type_V
         if( ($specialPrice > 0) OR $product->getAllowPriceZero() ) {
 			$this->getProduct($product)->setCustomPrice($specialPrice);
 			$this->getProduct($product)->setOriginalCustomPrice($specialPrice);
+            $this->getProduct($product)->addCustomOption('flexprice', $specialPrice );
 			$product->setIsSuperMode(true);
 		}
         else {
