@@ -31,6 +31,11 @@ class Gka_Flexprice_Model_Product_Type extends Mage_Catalog_Model_Product_Type_V
     	return true;
     }
 
+    /**
+     * @param  Mage_Catalog_Model_Product $product
+     * @param  Varien_Object $buyRequest
+     * @return array|string
+     */
     public function processBuyRequest($product, $buyRequest)
     {
     	$options = parent::processBuyRequest($product,$buyRequest);
