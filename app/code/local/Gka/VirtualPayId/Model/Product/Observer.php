@@ -138,6 +138,9 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		    Mage::throwException(Mage::helper('virtualpayid')->__('No external Payment code available!'));
         }
         $payId = $payId->getValue();
+        /**
+         * @var Varien_Object $payClient Enthält Fachverfahren (Mandant an ePayBL)
+         */
         $payClient = $product->getCustomOption('pay_client');
 		if (is_null($payClient) || $payClient->isEmpty() || !$payClient->getValue()) {
             $quote->removeItem($quoteItem->getId());
@@ -146,7 +149,7 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
         $payClient = $payClient->getValue();
 
         /*
-         * Format: Bewirtschafter/Kassenzeichen
+         * Format: Mandant/Kassenzeichen
          */
 		$quote->setExternesKassenzeichen(sprintf('%s/%s', $payClient, $payId));
 

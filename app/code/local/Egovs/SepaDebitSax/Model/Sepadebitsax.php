@@ -526,7 +526,9 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		
 		
 		//das kassenzeichen sollte erst abgeholt werden wenn das ergebniss geprueft wurde
-		$payment->setData('kassenzeichen', $objResult->buchungsListe->kassenzeichen);
+		$payment->setKassenzeichen($objResult->buchungsListe->kassenzeichen);
+        $payment->setPayClient(Mage::helper('paymentbase')->getMandantNr());
+        $payment->setPayOperator(Mage::helper('paymentbase')->getBewirtschafterNr());
 		$payment->setData(Egovs_SepaDebitSax_Helper_Data::ATTRIBUTE_ESHOP_TRANSACTION_ID, $EShopTransaktionsNr);
 		$payment->setData(Egovs_SepaDebitSax_Helper_Data::ATTRIBUTE_SEPA_MATURITY, $objResult->buchungsListe->faelligkeitsdatum);
 		$payment->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID, $mandate_ref);

@@ -222,6 +222,8 @@ abstract class Egovs_Paymentbase_Model_Payplace extends Egovs_Paymentbase_Model_
         	$kassenzeichen = $this->_anlegenKassenzeichen($this->_type);
         	Mage::log("{$this->getCode()}::KASSENZEICHEN ANGELEGT:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
         	$payment->setKassenzeichen($kassenzeichen);
+            $payment->setPayClient(Mage::helper('paymentbase')->getMandantNr());
+            $payment->setPayOperator(Mage::helper('paymentbase')->getBewirtschafterNr());
         } else {
         	$kassenzeichen = $payment->getKassenzeichen();
         	Mage::log("{$this->getCode()}::KASSENZEICHEN BEREITS VORHANDEN:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);

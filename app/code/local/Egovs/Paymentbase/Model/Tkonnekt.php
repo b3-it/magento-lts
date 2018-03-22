@@ -220,6 +220,8 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 
                 Mage::log("{$this->getCode()}::KASSENZEICHEN ANGELEGT:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
                 $payment->setKassenzeichen($kassenzeichen);
+                $payment->setPayClient(Mage::helper('paymentbase')->getMandantNr());
+                $payment->setPayOperator(Mage::helper('paymentbase')->getBewirtschafterNr());
                 //20160712 :: Frank Rochlitzer : Kassenzeichen auch in Quote ablegen
                 $payment->getOrder()->getQuote()->getPayment()->setKassenzeichen($kassenzeichen);
 
