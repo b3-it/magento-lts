@@ -61,6 +61,8 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	->where('customer_id = '.$customerId)
     	->where('id = '. $id);
     	
+    	//die($collection->getSelect()->__toString());
+    	
     	//if(count($collection->getItems()) == 0) return null;
     	
     	$model =  $collection->getFirstItem();

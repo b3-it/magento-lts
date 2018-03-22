@@ -165,7 +165,7 @@ class Gka_Barkasse_Model_Kassenbuch_Journal extends Mage_Core_Model_Abstract
      	$collection = Mage::getModel('gka_barkasse/kassenbuch_journalitems')->getCollection();
      	$collection->getSelect()
      	->join(array('order' => $collection->getTable('sales/order')),'order.entity_id=main_table.order_id')
-     	->joinleft(array('payment' => $collection->getTable('sales/order_payment')),'payment.parent_id=main_table.order_id',array('kassenzeichen'))
+     	->joinleft(array('payment' => $collection->getTable('sales/order_payment')),'payment.parent_id=main_table.order_id',array('kassenzeichen','pay_client'))
      	->where('journal_id=?',$this->getId());
      	return $collection;
      }

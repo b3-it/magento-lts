@@ -29,8 +29,9 @@ class Gka_Flexprice_Model_Product_Observer extends Varien_Object
 				$quoteItem->getProduct()->setIsSuperMode(true);
 				$quoteItem->getProduct($product)->addCustomOption('flexprice', $specialPrice);
 		} else {
-		    //FIXME :: Meldung anzeigen
-			$msg = Mage::helper('flexprice')->__('Price cannot be zero!');
+		   
+			Mage::getSingleton('checkout/session')->getMessages(true);
+			$msg = Mage::helper('flexprice')->__('Price is missing!');
 			$quote->deleteItem($quoteItem);
 			if ($quote->isEmpty()) {
                 Mage::getSingleton('checkout/session')->addError($msg);

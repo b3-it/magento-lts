@@ -58,7 +58,7 @@ class Gka_Flexprice_Model_Product_Type extends Mage_Catalog_Model_Product_Type_V
 
     	$result = parent::_prepareProduct($buyRequest, $product, $processMode);
 
-    	$specialPrice = (float)($buyRequest->getAmount());
+    	$specialPrice = Gka_Flexprice_Helper_Data::parseFloat($buyRequest->getAmount());
 
         if( ($specialPrice > 0) || ($specialPrice >= 0 && $product->getAllowPriceZero() )) {
 			$this->getProduct($product)->setCustomPrice($specialPrice);

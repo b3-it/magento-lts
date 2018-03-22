@@ -79,6 +79,15 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
           'index'     => 'increment_id',
       ));
       
+      
+      $this->addColumn('pay_client_grid', array(
+      		'header' => Mage::helper('sales')->__('Pay Client'),
+      		'index' => 'pay_client',
+      		'type' => 'text',
+      		'width' => '100px',
+      		'filter_index' => 'payment.pay_client',
+      ));
+      
       $this->addColumn('kassenzeichen_grid', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Checkout Number'),
       		//'align'     =>'left',
