@@ -70,11 +70,6 @@
             <?php echo $this->getChildHtml('media'); ?>
 
             <?php echo $this->getChildHtml('product_type_data') ?>
-            
-            <div id="additional-information">
-                <label for="add_info"><?php echo $this->__('Additional Information'); ?></label>
-                <textarea name="add_info" id="add_info" placeholder="<?php echo $this->__('for additional Information'); ?>"></textarea>
-            </div>
 
             <div class="product-additional-information">
                 <?php if ($_product->getShortDescription()):?>
