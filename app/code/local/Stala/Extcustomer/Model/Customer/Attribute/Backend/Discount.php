@@ -11,6 +11,8 @@
  */
 class Stala_Extcustomer_Model_Customer_Attribute_Backend_Discount extends Mage_Eav_Model_Entity_Attribute_Backend_Abstract
 {
+    protected static $_isrunning = false;
+
     /**
      * Wird nach dem Laden aufgerufen
      * 
@@ -23,6 +25,11 @@ class Stala_Extcustomer_Model_Customer_Attribute_Backend_Discount extends Mage_E
      * @see Mage_Eav_Model_Entity_Attribute_Backend_Abstract::afterLoad()
      */
 	public function afterLoad($object) {
+	    if (self::$_isrunning) {
+	        return $this;
+        }
+
+	    self::$_isrunning = true;
 		$value = $object->getData($this->getAttribute()->getAttributeCode());
 		
 		/*
@@ -43,8 +50,10 @@ class Stala_Extcustomer_Model_Customer_Attribute_Backend_Discount extends Mage_E
 			$this->getAttribute()->setNote(Mage::helper('extcustomer')->__('Current abandoned discount quota: %s', $abandoned));			
 		}
 		
-		if ($object->isEmpty())
-			return $this;
+		if ($object->isEmpty()) {
+            self::$_isrunning = false;
+            return $this;
+        }
 		
 		//Float in Preis formatieren
 		$object->setData(
@@ -52,7 +61,8 @@ class Stala_Extcustomer_Model_Customer_Attribute_Backend_Discount extends Mage_E
 				//Mage::helper('core')->formatCurrency($value, false),
 				Mage_Core_Helper_Data::currency($value, true, false)
 		);
-		
+
+        self::$_isrunning = false;
 		return $this;
     }
     
