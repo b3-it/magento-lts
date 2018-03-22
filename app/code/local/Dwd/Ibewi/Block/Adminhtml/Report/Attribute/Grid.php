@@ -224,7 +224,7 @@ class Dwd_Ibewi_Block_Adminhtml_Report_Attribute_Grid extends Mage_Adminhtml_Blo
       ));
       
       $this->addColumn('konto', array(
-      		'header'    => Mage::helper('ibewi')->__('Konto'),
+      		'header'    => Mage::helper('ibewi')->__('BuKa-Schlüssel'),
       		//'align'     =>'right',
       		'width'     => '50px',
       		'index'     => 'konto',
