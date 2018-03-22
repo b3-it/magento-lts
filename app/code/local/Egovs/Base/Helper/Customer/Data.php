@@ -54,7 +54,7 @@ class Egovs_Base_Helper_Customer_Data extends Mage_Customer_Helper_Data
             ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
         ;
         $customer->getResource()
-            ->load($customer, (int)$customerId, array('password_created_at', 'created_at', 'website_id'));
+            ->load($customer, (int)$customerId, array('password_created_at'));
         $passwordCreatedAt = $customer->getPasswordCreatedAt();
 
         return is_null($passwordCreatedAt) ? $customer->getCreatedAtTimestamp() : $passwordCreatedAt;
