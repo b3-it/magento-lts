@@ -48,5 +48,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Gka_VirtualPayId>
+		<Gka_Flexprice>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Gka_Flexprice>
     </modules>
 </config>
