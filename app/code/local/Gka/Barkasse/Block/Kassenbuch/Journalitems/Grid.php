@@ -91,7 +91,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
       ));
 
       $this->addColumn('pay_client', array(
-      		'header' => Mage::helper('sales')->__('Pay Client'),
+      		'header' => Mage::helper('sales')->__('ePayBL Client'),
       		'index' => 'pay_client',
       		'type' => 'text',
       		'width' => '100px',

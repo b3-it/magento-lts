@@ -81,7 +81,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
       
       
       $this->addColumn('pay_client_grid', array(
-      		'header' => Mage::helper('sales')->__('Pay Client'),
+      		'header' => Mage::helper('sales')->__('ePayBL Client'),
       		'index' => 'pay_client',
       		'type' => 'text',
       		'width' => '100px',
