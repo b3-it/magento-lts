@@ -1,8 +1,8 @@
 <?php
 class Egovs_Base_Helper_Config extends Mage_Core_Helper_Abstract
 {
-    //protected $_guestconfig;
-    //protected $_shippingconfig;
+    protected $_guestconfig = null;
+    protected $_shippingconfig = null;
 
     protected $_registerconfig;
     protected $_arrShippingReq = array(
