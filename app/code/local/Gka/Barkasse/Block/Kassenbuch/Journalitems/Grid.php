@@ -133,6 +133,9 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
     	if (!isset($params['_current'])) {
     		$params['_current'] = true;
     	}
+    	if (!isset($params['_secure'])) {
+    	    $params['_secure'] = Mage::app()->getRequest()->isSecure();
+        }
     	return $this->getUrl('*/*/grid', $params);
 
     }

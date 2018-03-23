@@ -206,6 +206,9 @@ class Gka_Barkasse_Block_Kassenbuch_Journal_Grid extends Mage_Adminhtml_Block_Wi
     	if (!isset($params['_current'])) {
     		$params['_current'] = true;
     	}
+        if (!isset($params['_secure'])) {
+            $params['_secure'] = Mage::app()->getRequest()->isSecure();
+        }
     	$params['_store'] = Mage::app()->getStore();
     	return $this->getUrl('*/*/grid', $params);
 
