@@ -721,10 +721,10 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	}
 	
 	
-	protected function replaceVariables($data, $html) {
+	protected function replaceVariables($data, $html, $root = null) {
 		$html = $this->filter($data, $html);
 		$html = str_replace("\n", '', $html);
-		preg_match_all("|{{(.*)}}|U", $html, $ausgabe, PREG_SET_ORDER);
+		preg_match_all("~{{(.*)}}~U", $html, $ausgabe, PREG_SET_ORDER);
 
 		foreach ($ausgabe as $treffer) {
 				
@@ -753,14 +753,17 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 						$parentline = $line[0][2];
 						foreach($value as $item)
 						{
-							$this->setItem($item);
-							$linehtml .= $this->replaceVariables($this,$parentline);
+							$this->setLoopitem($item);
+							$linehtml .= $this->replaceVariables($this,$parentline,$parent);
 						}
 						$html = str_replace($line[0][0], $linehtml, $html);
 					}
 					else 
 					{
-						$html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
+						if((strpos($treffer[1], 'loopitem') === false) || $root != null)
+						{
+							$html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
+						}
 					}
 				}
 			}

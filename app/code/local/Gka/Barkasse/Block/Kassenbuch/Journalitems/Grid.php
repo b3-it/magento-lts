@@ -37,7 +37,7 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
   	$collection->getSelect()
   	->columns(array('externes_kassenzeichen_bool' => "IF(LENGTH(externes_kassenzeichen),1,0)"))
   	->join(array('journal'=> $collection->getTable('gka_barkasse/kassenbuch_journal')),'main_table.journal_id=journal.id',array())
-  	->joinLeft(array('payment'=>'sales_flat_order_payment'), 'payment.parent_id=main_table.order_id',array('method'=>'method','kassenzeichen'=>'kassenzeichen'))
+  	->joinLeft(array('payment'=>'sales_flat_order_payment'), 'payment.parent_id=main_table.order_id',array('method'=>'method','kassenzeichen'=>'kassenzeichen','pay_client'=>'pay_client'))
   	->join(array('order'=> $collection->getTable('sales/order')),'main_table.order_id=order.entity_id',array('status','increment_id','externes_kassenzeichen'))
   	->where('journal.customer_id = ' . $userId)
   	->where('journal_id = ' . $id);
@@ -90,6 +90,14 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
           'index'     => 'increment_id',
       ));
 
+      $this->addColumn('pay_client', array(
+      		'header' => Mage::helper('sales')->__('Pay Client'),
+      		'index' => 'pay_client',
+      		'type' => 'text',
+      		'width' => '100px',
+      		'filter_index' => 'payment.pay_client',
+      ));
+      
       $this->addColumn('kz', array(
       		'header'    => Mage::helper('sales')->__('Kassenzeichen'),
       		'index'     => 'kassenzeichen',

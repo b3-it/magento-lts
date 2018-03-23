@@ -32,7 +32,7 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
         $userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
 
         $collection->getSelect()
-            ->joinleft(array('payment' => $collection->getTable('sales/order_payment')), 'payment.parent_id=main_table.entity_id', array('kassenzeichen','method'))
+            ->joinleft(array('payment' => $collection->getTable('sales/order_payment')), 'payment.parent_id=main_table.entity_id', array('kassenzeichen','method','pay_client'))
             ->where('customer_id = ' . $userId)
             ->where('main_table.store_id = ' . intval(Mage::app()->getStore()->getId()));
 
@@ -95,12 +95,20 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
         );
         */
 
-        $this->addColumn('kassenzeichen', array(
-            'header' => Mage::helper('sales')->__('Kassenzeichen'),
-            'index' => 'kassenzeichen',
+        $this->addColumn('pay_client', array(
+            'header' => Mage::helper('sales')->__('Pay Client'),
+            'index' => 'pay_client',
             'type' => 'text',
             'width' => '100px',
-            'filter_index' => 'payment.kassenzeichen',
+            'filter_index' => 'payment.pay_client',
+        ));
+        
+        $this->addColumn('kassenzeichen', array(
+        		'header' => Mage::helper('sales')->__('Kassenzeichen'),
+        		'index' => 'kassenzeichen',
+        		'type' => 'text',
+        		'width' => '100px',
+        		'filter_index' => 'payment.kassenzeichen',
         ));
 
         $this->addColumn('created_at', array(
