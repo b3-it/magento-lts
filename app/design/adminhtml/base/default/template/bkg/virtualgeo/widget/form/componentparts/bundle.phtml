@@ -89,12 +89,14 @@
 		
 		
 		<script type="text/javascript" >
-		ComponentParts_<?php echo $this->getElement()->getId();?> = new ComponentPartsBundle('<?php echo $this->getElement()->getId();?>','<?php echo $this->getElement()->getName()?>');
-		
-		<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
-		<?php ?>
-			ComponentParts_<?php echo $this->getElement()->getId();?>.appendRow(<?php echo json_encode($_item->getData())?> );
-		<?php endforeach;?>
+            <?php if (!$this->getElement()):?>
+            <?php return;?>
+            <?php endif;?>
+            ComponentParts_<?php echo $this->getElement()->getId();?> = new ComponentPartsBundle('<?php echo $this->getElement()->getId();?>','<?php echo $this->getElement()->getName()?>');
+
+            <?php foreach($this->getElement()->getElements() AS $key => $_item):?>
+                ComponentParts_<?php echo $this->getElement()->getId();?>.appendRow(<?php echo json_encode($_item->getData())?> );
+            <?php endforeach;?>
 		</script>
 		
 	</td>
