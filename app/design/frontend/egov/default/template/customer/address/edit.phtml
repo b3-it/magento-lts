@@ -16,7 +16,11 @@ $addressHelper = Mage::helper('egovsbase/customer_address');
 
 if ($addressHelper->isAddressReadOnly($this->getAddress())) {
     $readOnly = true;
-    $extra ='disabled="disabled" readonly="readonly"';
+    $extra = 'disabled="disabled" readonly="readonly"';
+}
+else {
+    $readOnly = false;
+    $extra = '';
 }
 $_isAdditionalCompany = Mage::getStoreConfig('customer/registerrequired/additionalcompany');
 ?>
