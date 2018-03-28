@@ -1027,7 +1027,12 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	//falls das feld nicht gesetzt wurde braucht es nicht geprüft werden
     	if(!isset($data[$key])) return true;
     	
-    	if((strlen($data[$key]) < 1))
+    	$value = $data[$key];
+    	if(is_string($value)){
+    		$value = trim($value);
+    	}
+    	
+    	if((strlen($value) < 1))
     	{
     		if($this->isFieldRequired($key,$method)) return false;
     		else 
@@ -1062,7 +1067,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	{
     		$adr = $data['street'];
     		if (is_array($adr)) $adr = implode('',$adr);
-    		if(strlen($adr) < 1) $errors[] = Mage::helper('mpcheckout')->__('Please enter street.');
+    		if(strlen(trim($adr)) < 1) $errors[] = Mage::helper('mpcheckout')->__('Please enter street.');
     	}
     	    	
     	if(!$this->isValid($data,'city',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter city.');
