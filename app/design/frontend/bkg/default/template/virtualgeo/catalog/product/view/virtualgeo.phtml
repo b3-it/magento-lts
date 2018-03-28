@@ -11,7 +11,7 @@
  *
  * @see Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo
  */
-/* @var $this Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo */
+/** @var $this Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo */
 ?>
 <?php $_product = $this->getProduct() ?>
 
@@ -44,6 +44,14 @@
 	left: 5.5em;
 }
 </style>
+<pre>
+<?php 
+    /**
+     * @var Mage_Customer_Model_Customer $customer
+     */
+    $customer = Mage::getSingleton('customer/session')->getCustomer();
+?>
+</pre>
 <script type="text/javascript">
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
     <?php if ($this->getComposit()): ?>
@@ -55,14 +63,54 @@
 	var toolsfunc = function(epsg) {
       var tools = [];
       <?php
-      $tools = $this->getSelectionTools();
-      foreach ($tools as $tool) {
-          /**
-           * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
-           */
-          echo ($tool->getOpenLayers("epsg"));
-      }
-      ?>
+        $tools = $this->getSelectionTools();
+        foreach ($tools as $tool) {
+            /**
+             *
+             * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
+             */
+            echo ($tool->getOpenLayers("epsg"));
+        }
+        ?>
+
+      <?php if(Mage::helper('core')->isModuleEnabled("Bkg_Shapefile")): ?>
+	  url = baseUrl + "index.php/shapefile/file/files/id/" + <?php echo $customer->getId(); ?>;
+	  $j.ajax(url, {
+		async: false,
+		success: function(files) {
+  			fileIdx = 0;
+			files.forEach(function(file) {
+  	  			filesource = new ol.source.Vector({
+  					format: new ol.format.WKT(),
+  					loader: function(extent, resolution, projection) {
+  	  					var self = this; 
+  						url = baseUrl + "index.php/shapefile/file/shapes/id/" + file['id'];
+  	  					$j.ajax(url, {
+  	  						success: function(shapes) {
+  	  	  						dataProj = ol.proj.get("EPSG:" + file['epsg_code']);
+  	  	  						if (ol.proj.equivalent(dataProj, projection)) {
+      	  	  						shapes.forEach(function(el) {
+          	  	  						self.addFeature(self.getFormat().readFeature(el['shape'], {
+          	  								dataProjection: dataProj,
+          	  								featureProjection: projection
+          	  							}));
+      	  	  						});
+  	  	  						}
+  	  						}
+  	  					});
+  					}
+				});
+  				tools.push(new ol.layer.Vector({
+  					title: file['name'],
+  					visible: false,
+  					source: filesource,
+  					zIndex: 500 + fileIdx
+  				}));
+  				fileIdx += 1;
+			});
+		}
+	  });
+      <?php endif; ?>
       return new ol.layer.Group({
         //title: 'Tools',
         layers: tools

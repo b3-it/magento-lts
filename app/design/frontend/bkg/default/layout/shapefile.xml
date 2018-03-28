@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="bkg_shapefile">
+            	<name>shapefile_files</name><path>shapefile/customer/list</path><label>My Shape Files</label>
+            </action>
+        </reference>
+    </customer_account>
+    
+    <shapefile_customer_list translate="label">
+        <label>My Shapefiles</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="bkg_shapefile/customer_list" name="shapefile_customer_list" template="shapefile/customer/list.phtml" />
+        </reference>
+        <reference name="root">
+            <action method="setHeaderTitle" translate="title" module="bkg_shapefile"><title>My Shape files</title></action>
+        </reference>
+
+
+    </shapefile_customer_list>
+</layout>

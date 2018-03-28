@@ -83,11 +83,11 @@
             </customer_save_after>
             <egovs_base_customer_address_readonly>
                 <observers>
-                    <bkg_orgunit_customer_save_after>
+                    <bkg_orgunit_customer_address_readonly>
                         <type>singleton</type>
                         <class>bkg_orgunit/observer</class>
                         <method>customer_address_readonly</method>
-                    </bkg_orgunit_customer_save_after>
+                    </bkg_orgunit_customer_address_readonly>
                 </observers>
             </egovs_base_customer_address_readonly>
             <egovs_base_customer_reject_address_delete>

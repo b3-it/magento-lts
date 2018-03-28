@@ -278,7 +278,7 @@ $j(document).ready(function(){
 
             			var layers = _layerFunc.call(null, _epsg);
 
-        				var tools = toolsfunc.call(null, _epsg);
+        				tools = toolsfunc.call(null, _epsg);
         			    selections = makeSelection(tools);
         			    
         			    updateKachel(layers);
