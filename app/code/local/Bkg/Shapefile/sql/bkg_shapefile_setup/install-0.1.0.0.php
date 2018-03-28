@@ -6,7 +6,7 @@ $installer = $this;
 
 $installer->startSetup();
 
-$shapefile = 'bkg_shapefile/shapefile';
+$shapefile = 'bkg_shapefile/file';
 $shape = 'bkg_shapefile/shape';
 
 if (!$installer->tableExists($installer->getTable($shapefile))) {
