@@ -8,7 +8,7 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-class Bkg_Regionallocation_Block_Adminhtml_Koenigsteinerschluessel_Kst_Edit_Tab_Kstvalue_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Bkg_RegionAllocation_Block_Adminhtml_Koenigsteinerschluessel_Kst_Edit_Tab_Kstvalue_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {

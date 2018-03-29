@@ -8,7 +8,7 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_Regionallocation_Adminhtml_Regionallocation_Koenigsteinerschluessel_KstController extends Mage_Adminhtml_Controller_action
+class Bkg_RegionAllocation_Adminhtml_Regionallocation_Koenigsteinerschluessel_KstController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
