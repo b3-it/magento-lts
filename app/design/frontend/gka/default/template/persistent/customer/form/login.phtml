@@ -53,11 +53,6 @@
                         <span class="required">
                             <?php echo $this->__('* Required Fields') ?>
                         </span>
-                        <span class="securityLabel">
-			              <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
-				            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
-			              <?php endif; ?>
-			            </span>
                     </div>
                     <div class="buttons-set">
                         <button type="submit" class="button" title="<?php echo $this->quoteEscape($this->__('Login')) ?>" name="send" id="send2">
