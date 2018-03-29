@@ -8,7 +8,7 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-class Bkg_Regionallocation_Model_Resource_Koenigsteinerschluessel_Kst extends Mage_Core_Model_Resource_Db_Abstract
+class Bkg_RegionAllocation_Model_Resource_Koenigsteinerschluessel_Kst extends Mage_Core_Model_Resource_Db_Abstract
 {
     public function _construct()
     {
