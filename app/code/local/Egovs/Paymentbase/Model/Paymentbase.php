@@ -376,7 +376,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 		// Liste abfragen
 		$arrResult = null;
 		try {
-			$arrResult = $objSOAPClientBfF->listeUngeleseneZahlungseingaenge($mandantNr);
+			$arrResult = $objSOAPClientBfF->listeUngeleseneZahlungseingaenge(false);
 		} catch (Exception $e) {
 			Mage::log($e, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 		}
