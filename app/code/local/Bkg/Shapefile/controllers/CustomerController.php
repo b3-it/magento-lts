@@ -27,8 +27,13 @@ class Bkg_Shapefile_CustomerController extends Mage_Core_Controller_Front_Action
              * @var Bkg_Shapefile_Helper_Data $helper
              */
             $helper = Mage::helper('bkg_shapefile');
-            
-            $helper->newShapeFile($shp, $dbf, $shx, "", $this->getRequest()->getParam('georef'), $this->_getSession()->getCustomerId());
+            try {
+                $helper->newShapeFile($shp, $dbf, $shx, $this->getRequest()->getParam('name'), $this->getRequest()->getParam('georef'), $this->_getSession()->getCustomerId());
+            } catch (\ShapeFile\ShapeFileException $e) {
+                $this->_getSession()->addException($e, Mage::helper('bkg_shapefile')->__('Error with shape file upload'));
+            } catch (\Exception $e) {
+                $this->_getSession()->addException($e, $e->getMessage());
+            }
             return $this->_redirect('*/*/list');
             
         }
