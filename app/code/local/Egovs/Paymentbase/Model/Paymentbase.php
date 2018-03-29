@@ -151,22 +151,23 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 								$this->getKassenzeichenInfo()->ergebnis->getCode(),
 								$kzeichen
 						);
+                        Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])) {
 							$errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] = $msg;
-							Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-							Mage::getSingleton('adminhtml/session')->addError($msg);
-						}
+						} elseif (isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])
+                            && mb_strlen($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()]) <= 104) {
+                            $errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] .= " ".Mage::helper('paymentbase')->__("The error file contains further information...");
+                        }
 						$this->unsKassenzeichenInfo();
 					} else {
 						//Alles OK Kassenzeichen wurde abgerufen
 						$kassenzeichenCount++;
 					}
 				} else {
+                    $msg = Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_STANDARD');
+                    Mage::log("paymentbase::Kassenzeichen:$kzeichen:$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 					if (!isset($errors[-9999])) {
-						$msg = Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_STANDARD');
 						$errors[-9999] = $msg;
-						Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-						Mage::getSingleton('adminhtml/session')->addError($msg);
 					}
 					$this->unsKassenzeichenInfo();
 				}
@@ -177,6 +178,10 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 			$this->_processIncomingPayments();
             Mage::app()->setCurrentStore($_currentStore);
 		}
+
+		foreach ($errors as $errorCode => $msg) {
+            Mage::getSingleton('adminhtml/session')->addError($msg);
+        }
 		
 		Mage::log("paymentbase::Bezahlte Kassenzeichen wurden abgerufen", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('paymentbase')->__('Anzahl der abgerufenen Kassenzeichen: ').$kassenzeichenCount);
