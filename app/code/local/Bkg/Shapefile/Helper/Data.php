@@ -24,6 +24,20 @@ class Bkg_Shapefile_Helper_Data extends Mage_Core_Helper_Data {
 	        // Geometry
 	        $shapes[] =$record['shp'];
 	    }
+	    // this should close the files
+	    $shapeFile = NULL;
+
+	    // check if file exist and try to delete them
+	    if (file_exists($shp)) {
+	        @unlink($shp);
+	    }
+	    if (file_exists($dbf)) {
+	        @unlink($dbf);
+	    }
+	    if (file_exists($shx)) {
+	        @unlink($shx);
+	    }
+
 	    /**
 	     * @var Bkg_Shapefile_Model_File $m
 	     */
