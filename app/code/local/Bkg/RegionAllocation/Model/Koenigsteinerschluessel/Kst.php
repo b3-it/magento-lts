@@ -20,7 +20,7 @@
  *  @method  getActiveTo()
  *  @method setActiveTo( $value)
  */
-class Bkg_Regionallocation_Model_Koenigsteinerschluessel_Kst extends Mage_Core_Model_Abstract
+class Bkg_RegionAllocation_Model_Koenigsteinerschluessel_Kst extends Mage_Core_Model_Abstract
 {
 	
 	protected $_Portions = null;

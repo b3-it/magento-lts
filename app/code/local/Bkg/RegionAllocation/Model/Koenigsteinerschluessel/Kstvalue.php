@@ -20,7 +20,7 @@
  *  @method  getPortion()
  *  @method setPortion( $value)
  */
-class Bkg_Regionallocation_Model_Koenigsteinerschluessel_Kstvalue extends Mage_Core_Model_Abstract
+class Bkg_RegionAllocation_Model_Koenigsteinerschluessel_Kstvalue extends Mage_Core_Model_Abstract
 {
     public function _construct()
     {
