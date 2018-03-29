@@ -47,9 +47,9 @@
 <pre>
 <?php 
     /**
-     * @var Mage_Customer_Model_Customer $customer
+     * @var int $cid
      */
-    $customer = Mage::getSingleton('customer/session')->getCustomer();
+    $cid = Mage::getSingleton('customer/session')->getCustomerId();
 ?>
 </pre>
 <script type="text/javascript">
@@ -73,8 +73,8 @@
         }
         ?>
 
-      <?php if(Mage::helper('core')->isModuleEnabled("Bkg_Shapefile")): ?>
-	  url = baseUrl + "index.php/shapefile/file/files/id/" + <?php echo $customer->getId(); ?>;
+      <?php if(Mage::helper('core')->isModuleEnabled("Bkg_Shapefile") && isset($cid)): ?>
+	  url = baseUrl + "index.php/shapefile/file/files/id/" + <?php echo $cid; ?>;
 	  $j.ajax(url, {
 		async: false,
 		success: function(files) {

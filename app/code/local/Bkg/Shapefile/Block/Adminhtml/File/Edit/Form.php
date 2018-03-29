@@ -20,6 +20,7 @@ class Bkg_Shapefile_Block_Adminhtml_File_Edit_Form extends Mage_Adminhtml_Block_
        ));
       
       $fieldset = $form->addFieldset('file_form', array('legend'=>Mage::helper('bkg_shapefile')->__('Information')));
+
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('bkg_shapefile')->__('Name'),
           'class'     => 'required-entry',

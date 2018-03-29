@@ -64,13 +64,14 @@ class Bkg_Shapefile_Adminhtml_Shapefile_FileController extends Mage_Adminhtml_Co
 
 
 	public function saveAction() {
-	    if (!$this->getRequest()->isPost()) {
+	    $r = $this->getRequest();
+	    if (!$r->isPost()) {
 	        return $this->_redirect('*/*/');
 	    }
-	    if (null === $this->getRequest()->getParam('customer_id')) {
+	    if (null === $r->getParam('customer_id')) {
 	        return $this->_redirect('*/*/');
 	    }
-	    if (null === $this->getRequest()->getParam('georef_id')) {
+	    if (null === $r->getParam('georef_id')) {
 	        return $this->_redirect('*/*/');
 	    }
 		if (!empty($_FILES)) {
@@ -93,7 +94,7 @@ class Bkg_Shapefile_Adminhtml_Shapefile_FileController extends Mage_Adminhtml_Co
 		     */
 		    $helper = Mage::helper('bkg_shapefile');
 		    
-		    $helper->newShapeFile($shp, $dbf, $shx, "", $this->getRequest()->get('georef_id'), $this->getRequest()->get('customer_id'));
+		    $helper->newShapeFile($shp, $dbf, $shx, $r->getParam('name'), $r->getParam('georef_id'), $r->getParam('customer_id'));
 		    
 		    return $this->_redirect('*/*/index');
 		}

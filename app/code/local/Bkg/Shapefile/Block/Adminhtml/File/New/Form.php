@@ -28,7 +28,15 @@ class Bkg_Shapefile_Block_Adminhtml_File_New_Form extends Mage_Adminhtml_Block_W
 
 		$fieldset = $form->addFieldset('file_form', array('legend'=>Mage::helper('bkg_shapefile')->__('Information')));
 		
+		// to use the accept attributes
 		$fieldset->addType('file', "Bkg_Shapefile_Model_Form_File");
+		
+		$fieldset->addField('name', 'text', array(
+		    'label'     => Mage::helper('bkg_shapefile')->__('Name'),
+		    'class'     => 'required-entry',
+		    'required'  => true,
+		    'name'      => 'name'
+		));
 		
 		$fieldset->addField('shp', 'file', array(
 			'label'     => Mage::helper('bkg_shapefile')->__('shp'),
