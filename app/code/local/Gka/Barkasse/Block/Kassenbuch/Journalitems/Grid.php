@@ -75,12 +75,13 @@ class Gka_Barkasse_Block_Kassenbuch_Journalitems_Grid extends Mage_Adminhtml_Blo
       	  'type'	=> 'datetime'
       ));
       $this->addColumn('booking_amount', array(
-          'header'    => Mage::helper('gka_barkasse')->__('Amount'),
+          'header'        => Mage::helper('gka_barkasse')->__('Amount'),
           //'align'     =>'left',
           //'width'     => '150px',
-          'index'     => 'booking_amount',
-      	  'filter_index' => 'main_table.booking_amount'
-      	//	'type'	=> 'datetime'
+          'index'         => 'booking_amount',
+          'filter_index'  => 'main_table.booking_amount',
+          'type'          => 'currency',
+          'currency_code' => 'EUR',
       ));
  
       $this->addColumn('increment_id', array(
