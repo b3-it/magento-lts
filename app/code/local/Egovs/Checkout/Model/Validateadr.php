@@ -123,7 +123,7 @@ class Egovs_Checkout_Model_Validateadr extends Varien_Object
 
 
 	private function __testShipping($data, $key) {
-		return ((isset($data[$key])) && (strlen($data[$key]) > 1));
+		return ((isset($data[$key])) && (strlen(trim($data[$key])) > 1));
 	}
 
 
@@ -137,7 +137,7 @@ class Egovs_Checkout_Model_Validateadr extends Varien_Object
 		//falls das feld nicht gesetzt wurde braucht es nicht geprüft werden
 		if (!isset($data[$key])) return true;
 		 
-		if ((strlen($data[$key]) < 1)) {
+		if ((strlen(trim($data[$key])) < 1)) {
 			if ($this->__isFieldRequired($key,$method)) {
 				return false;
 			} else {
