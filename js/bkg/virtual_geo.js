@@ -251,13 +251,13 @@ $j(document).ready(function(){
         			    
         			    $j('#select-vg').on( "selectmenuchange", function( event, ui ) {
         			    	id = ui.item.element.attr('id');
-        			    	idx = id.slice(5);
-        			    	
-        			    	// only one tool is visible
+        			    	// only one tool is visible, or no one
         			    	tools.getLayers().forEach(function(f) {f.setVisible(false);});
-        			    	tools.getLayers().item(idx-1).setVisible(true);
         			    	
         			    	if (id !== undefined) {
+        			    		idx = id.slice(5);
+            			    	tools.getLayers().item(idx-1).setVisible(true);
+            			    	
         			    		$j('input[name=radio-toogleSelect]').prop( "checked", false ).checkboxradio( "refresh" );
         			    		$j('#select-vg-button').addClass('ui-state-active');
         			    		sel = selections[id];
@@ -308,7 +308,11 @@ $j(document).ready(function(){
         			}
         			_select = null;
         			//alert("clean map");
-        			
+
+			    	// disable Vg selected
+			    	$j('#select-vg').val('').selectmenu( "refresh" );
+			    	$j('#select-vg-button').removeClass('ui-state-active');
+			    	
         			//_map.setView(null);
         		}
         	}

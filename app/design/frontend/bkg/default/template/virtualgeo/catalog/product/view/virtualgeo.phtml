@@ -90,7 +90,7 @@
   	  	  						dataProj = ol.proj.get("EPSG:" + file['epsg_code']);
   	  	  						if (ol.proj.equivalent(dataProj, projection)) {
       	  	  						shapes.forEach(function(el) {
-          	  	  						self.addFeature(self.getFormat().readFeature(el['shape'], {
+          	  	  						self.addFeatures(self.getFormat().readFeatures(el['shape'], {
           	  								dataProjection: dataProj,
           	  								featureProjection: projection
           	  							}));
@@ -104,6 +104,12 @@
   					title: file['name'],
   					visible: false,
   					source: filesource,
+  					style: new ol.style.Style({
+  	  					stroke: new ol.style.Stroke({
+  	  	  					color: 'green',
+  	  	  					width: 2
+  	  					})
+  	  				}),
   					zIndex: 500 + fileIdx
   				}));
   				fileIdx += 1;
