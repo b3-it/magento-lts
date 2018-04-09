@@ -47,9 +47,9 @@
 <pre>
 <?php 
     /**
-     * @var Mage_Customer_Model_Customer $customer
+     * @var int $cid
      */
-    $customer = Mage::getSingleton('customer/session')->getCustomer();
+    $cid = Mage::getSingleton('customer/session')->getCustomerId();
 ?>
 </pre>
 <script type="text/javascript">
@@ -73,8 +73,8 @@
         }
         ?>
 
-      <?php if(Mage::helper('core')->isModuleEnabled("Bkg_Shapefile")): ?>
-	  url = baseUrl + "index.php/shapefile/file/files/id/" + <?php echo $customer->getId(); ?>;
+      <?php if(Mage::helper('core')->isModuleEnabled("Bkg_Shapefile") && isset($cid)): ?>
+	  url = baseUrl + "index.php/shapefile/file/files/id/" + <?php echo $cid; ?>;
 	  $j.ajax(url, {
 		async: false,
 		success: function(files) {
@@ -90,7 +90,7 @@
   	  	  						dataProj = ol.proj.get("EPSG:" + file['epsg_code']);
   	  	  						if (ol.proj.equivalent(dataProj, projection)) {
       	  	  						shapes.forEach(function(el) {
-          	  	  						self.addFeature(self.getFormat().readFeature(el['shape'], {
+          	  	  						self.addFeatures(self.getFormat().readFeatures(el['shape'], {
           	  								dataProjection: dataProj,
           	  								featureProjection: projection
           	  							}));
@@ -104,6 +104,12 @@
   					title: file['name'],
   					visible: false,
   					source: filesource,
+  					style: new ol.style.Style({
+  	  					stroke: new ol.style.Stroke({
+  	  	  					color: 'green',
+  	  	  					width: 2
+  	  					})
+  	  				}),
   					zIndex: 500 + fileIdx
   				}));
   				fileIdx += 1;

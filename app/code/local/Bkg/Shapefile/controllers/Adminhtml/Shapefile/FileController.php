@@ -8,6 +8,7 @@
 * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
 * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
 */
+
 class Bkg_Shapefile_Adminhtml_Shapefile_FileController extends Mage_Adminhtml_Controller_action
 {
 
@@ -64,15 +65,21 @@ class Bkg_Shapefile_Adminhtml_Shapefile_FileController extends Mage_Adminhtml_Co
 
 
 	public function saveAction() {
-	    if (!$this->getRequest()->isPost()) {
+	    $r = $this->getRequest();
+	    if (!$r->isPost()) {
 	        return $this->_redirect('*/*/');
 	    }
-	    if (null === $this->getRequest()->getParam('customer_id')) {
+	    if (null === $r->getParam('customer_id')) {
 	        return $this->_redirect('*/*/');
 	    }
-	    if (null === $this->getRequest()->getParam('georef_id')) {
+	    if (null === $r->getParam('georef_id')) {
 	        return $this->_redirect('*/*/');
 	    }
+	    /**
+	     * @var Mage_Adminhtml_Model_Session $as
+	     */
+	    $as = Mage::getSingleton('adminhtml/session');
+	    
 		if (!empty($_FILES)) {
 		    if (array_key_exists('shp', $_FILES)) {
 		        $shp = $_FILES['shp']['tmp_name'];
@@ -85,21 +92,27 @@ class Bkg_Shapefile_Adminhtml_Shapefile_FileController extends Mage_Adminhtml_Co
 		    }
 		    
 		    if (empty($shp) || empty($dbf) || empty($shx)) {
-		        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkg_shapefile')->__('One of the Files missing'));
+		        $as->addError(Mage::helper('bkg_shapefile')->__('One of the Files missing'));
 		        return $this->_redirect('*/*/');
 		    }
+		    try {
 		    /**
 		     * @var Bkg_Shapefile_Helper_Data $helper
 		     */
 		    $helper = Mage::helper('bkg_shapefile');
 		    
-		    $helper->newShapeFile($shp, $dbf, $shx, "", $this->getRequest()->get('georef_id'), $this->getRequest()->get('customer_id'));
-		    
+		    $helper->newShapeFile($shp, $dbf, $shx, $r->getParam('name'), $r->getParam('georef_id'), $r->getParam('customer_id'));
+		    } catch (\ShapeFile\ShapeFileException $e) {
+		        $as->addException($e, Mage::helper('bkg_shapefile')->__('Error with shape file upload'));
+		        return $this->_redirect('*/*/');
+		    } catch (\Exception $e) {
+		        
+		        return $this->_redirect('*/*/');
+		    }
 		    return $this->_redirect('*/*/index');
 		}
-		//die();
 
-		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkg_shapefile')->__('Unable to find item to save'));
+		$as->addError(Mage::helper('bkg_shapefile')->__('Unable to find item to save'));
 		$this->_redirect('*/*/');
 	}
 

@@ -1,0 +1,32 @@
+<?php
+/**
+* @category    design
+* @package     egov_sid
+* @copyright   Copyright (c) 2018 B3-it System GmbH (https://www.b3-it.de)
+* @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php if ( Mage::helper('customer')->isLoggedIn() ) : ?>
+    <form id="search_mini_form" action="<?php echo $this->helper('catalogSearch')->getResultUrl() ?>" method="get">
+        <fieldset class="form-search">
+
+            <label for="search"><?php echo $this->__('Search:') ?></label>
+            <!--Sprungziel Tastatursteuerung -->
+            <span id="<?php echo $this->helper('bitv')->getJumpTarget($this);?>">
+                <input id="search" type="text" class="input-text" name="<?php echo $this->helper('catalogSearch')->getQueryParamName() ?>" title="Geben Sie hier den Suchbegriff ein." value="<?php echo $this->helper('catalogSearch')->getEscapedQueryText() ?>" />
+            </span>
+
+            <button type="submit" class="button"><span><?php echo $this->__('Search ') ?></span></button>
+            <div id="search_autocomplete" class="search-autocomplete"></div>
+
+            <script type="text/javascript">
+                //<![CDATA[
+                var searchForm = new Varien.searchForm('search_mini_form', 'search', '');
+                searchForm.initAutocomplete('<?php echo $this->helper('catalogSearch')->getSuggestUrl() ?>', 'search_autocomplete');
+                //]]>
+            </script>
+
+        </fieldset>
+
+    </form>
+<?php endif; ?>

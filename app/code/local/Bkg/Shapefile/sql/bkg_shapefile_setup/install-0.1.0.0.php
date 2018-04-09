@@ -42,12 +42,12 @@ if (!$installer->tableExists($installer->getTable($shapefile))) {
     $installer->getConnection()->createTable($table);
 }
 if (!$installer->tableExists($installer->getTable($shape))) {
-    // need this for MULTIPOLYGON
+    // need to use geometry there, because it can be different types
 
     $installer->run("CREATE TABLE {$installer->getTable($shape)} (
     `id` int(11) unsigned NOT NULL auto_increment,
 	`file_id` int(11) unsigned NOT NULL,
-    `shape` multipolygon NOT NULL,
+    `shape` geometry NOT NULL,
     
     PRIMARY KEY (`id`),
     FOREIGN KEY (`file_id`) REFERENCES `{$installer->getTable($shapefile)}`(`id`) ON DELETE CASCADE

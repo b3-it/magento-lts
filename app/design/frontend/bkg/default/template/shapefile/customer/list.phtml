@@ -10,6 +10,15 @@
 <form action="<?php echo $this->getAddUrl() ?>" method="post" enctype="multipart/form-data">
 	<div class="fieldset">
     	<ul class="form-list">
+    		<li class="fields">
+        		<div class="field">
+        			<label for="shp_name">
+            			<span class="required">*</span>
+            			<?php echo $this->__('Name') ?>
+        			</label>
+        			<input type="text" name="name" id="shp_name" required="required" />
+        		</div>
+        	</li>
         	<li class="fields">
         		<div class="field">
         			<label for="shp_file">
