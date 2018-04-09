@@ -79,11 +79,13 @@
 		
 		<script type="text/javascript" >
 		ComponentParts_<?php echo $this->getElement()->getId();?> = new ComponentParts('<?php echo $this->getElement()->getId();?>','<?php echo $this->getElement()->getName()?>');
-		
+
+		<?php if($this->getElement()->getElements()):?>
 		<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
 		<?php ?>
 			ComponentParts_<?php echo $this->getElement()->getId();?>.appendRow(<?php echo json_encode($_item->getData())?> );
 		<?php endforeach;?>
+        <?php endif;?>
 		</script>
 		
 	</td>
