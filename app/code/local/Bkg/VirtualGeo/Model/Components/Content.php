@@ -25,12 +25,17 @@ class Bkg_VirtualGeo_Model_Components_Content extends Bkg_VirtualGeo_Model_Compo
 	{
         $productId = intval($productId);
         $storeId = intval($storeId);
-		$collection = $this->getCollection();
-		$collection->setStoreId($storeId);
+		$collection = Mage::getModel('virtualgeo/components_contentproduct')->getCollection();
+
+		//$collection->setStoreId($storeId);
+
+
 		$collection->getSelect()
-		->join(array('product'=>$collection->getTable($this->_productRelationTable)),"product.entity_id = main_table.id AND product_id={$productId} AND ((product.store_id= 0) OR (product.store_id={$storeId}))",
-			array('is_default','component_product_relation_id'=>'id','parent_node_id','readonly','is_checked','pos'));
-		 
+            ->join(array('label'=>$this->getCollection()->getLabelTable()), "label.entity_id=main_table.entity_id AND label.store_id=".$this->getStoreId(),array('entity_id','shortname','name','description'))
+            ->join(array('entity'=>$this->getCollection()->getMainTable()),"main_table.entity_id = entity.id",array('code'))
+            ->where("main_table.product_id={$productId}")
+            ->where(new Zend_Db_Expr("((main_table.store_id= 0) OR (main_table.store_id={$storeId}))"));
+		//die($collection->getSelect()->__toString());
 		return $collection;
 	}
 	

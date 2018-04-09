@@ -32,8 +32,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 		$res = array();
 		$product = $this->_getProduct();
 		$collection = Mage::getModel('virtualgeo/components_content')->getOptions4Product($product->getId(), $product->getStoreId());
-        $collection->getSelect()->order('product.pos');
-		$items = $collection->getItems();
+        $collection->getSelect()->order('main_table.pos');
+	//	$items = $collection->getItems();
 	//die($collection->getSelect()->__toString());
 		foreach($collection->getItems() as $item)
 		{
