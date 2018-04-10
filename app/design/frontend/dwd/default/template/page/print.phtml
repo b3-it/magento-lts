@@ -28,7 +28,7 @@
     <div class="print-head">
         <img src="<?php echo $this->getPrintLogoUrl() ? $this->getPrintLogoUrl() : $this->getChild('header')->getLogoSrc() ?>" class="logo" alt="" style="max-height:none;" />
         <?php if ($this->getPrintLogoText()):?>
-            <address><?php echo nl2br($this->escapeHtml($this->getPrintLogoText())) ?></address>
+            <address style="color:#555555;"><?php echo nl2br($this->escapeHtml($this->getPrintLogoText())) ?></address>
         <?php endif;?>
     </div>
     <?php echo $this->getChildHtml('content') ?>
