@@ -72,6 +72,13 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
             }else{
                 $data['show_layer'] = 0;
             }
+            
+            if(isset($data['show_map']))
+            {
+            	$data['show_map'] = 1;
+            }else{
+            	$data['show_map'] = 0;
+            }
 			$store_id     =  intval($this->getRequest()->getParam('store'));
 
 			$model = Mage::getModel('virtualgeo/components_structure');
