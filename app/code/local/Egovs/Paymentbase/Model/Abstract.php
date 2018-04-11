@@ -1056,11 +1056,11 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
         }
 
         $data = explode('/', $eKz);
-		if (count($data) == 2) {
+		if (count($data) == 3) {
 		    $payment->setPayClient($data[0]);
 		    //Bewirtschafter ist nicht verfügbar
-		    $payment->setPayOperator('');
-		    $payment->setKassenzeichen($data[1]);
+		    $payment->setPayOperator($data[1]);
+		    $payment->setKassenzeichen($data[2]);
             //Kassenzeichen auch in Quote ablegen
             $payment->getOrder()->getQuote()->getPayment()->setKassenzeichen($data[1]);
 

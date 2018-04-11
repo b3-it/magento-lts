@@ -47,6 +47,13 @@ class Gka_VirtualPayId_Block_Adminhtml_Epaybl_Client_Grid extends Mage_Adminhtml
           //'width'     => '150px',
           'index'     => 'client',
       ));
+      
+      $this->addColumn('pay_operator', array(
+      		'header'    => Mage::helper('virtualpayid')->__('Pay Operator'),
+      		//'align'     =>'left',
+      		//'width'     => '150px',
+      		'index'     => 'pay_operator',
+      ));
 
         $this->addColumn('action',
             array(

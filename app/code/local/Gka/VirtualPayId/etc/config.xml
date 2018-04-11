@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Gka_VirtualPayId>
-            <version>0.0.3.0</version>
+            <version>0.0.4.0</version>
         </Gka_VirtualPayId>
     </modules>
     <adminhtml>
