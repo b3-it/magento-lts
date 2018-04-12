@@ -587,6 +587,7 @@
                 <logo_alt>Egov Sachsen</logo_alt>
                 <logo_src_small>images/logo_sachsen_smartphone.png</logo_src_small>
                 <welcome>Herzlich Willkommen!</welcome>
+                <enable_ajax_search>0</enable_ajax_search>
             </header>
             <footer>
                 <copyright><![CDATA[&copy; 2017 Magento Egov Sachsen.]]></copyright>

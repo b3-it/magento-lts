@@ -112,7 +112,20 @@
 "Integration","Integrations-System"
 "Production","Produktivsystem"
 "Migration","Migrations-System"
-
-
-
-
+"Use a banner graphic above the shop","Benutze Bannergrafik oberhalb des Shop"
+"Use a banner image","zeige Banner"
+"Select ""Yes"" to use a image above the shop.","Wähle ""Ja"" um ein Bannerbild oberhalb des Shops anzuzeigen."
+"Show banner in","zeige Banner in"
+"Not selected","nicht gewählt"
+"Above the page content","Oberhalb des Seiten-Inhalt"
+"Inside the page content","Innerhalb des Seiten-Inhalt"
+"Banner Image","Banner-Bild"
+"Allowed file types: jpg, jpeg, gif, png.","Erlaubte Datei-Typen: jpg, jpeg, gif, png."
+"Custome Style Definition","eigene Sytle-Anweisungen"
+"Example: max-height:200px; height:auto; width:auto;","Beispiel: max-height:200px; height:auto; width:auto;"
+"Activate search field in header","aktiviere Schnellsuche im Header"
+"Always display","immer anzeigen"
+"Always hide","niemals anzeigen"
+"Only visible for registered customers","nur für angemeldete Kunden sichtbar"
+"Enter the search term here.","Geben Sie hier den Suchbegriff ein."
+"Search term","Suchbegriff"
