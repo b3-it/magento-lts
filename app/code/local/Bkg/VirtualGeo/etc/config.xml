@@ -50,6 +50,14 @@
                     </virtualgeo_observer_onProductSaveAfter>
                 </observers>
             </catalog_product_save_after>
+            <virtualgeo_components_georefproduct_save_after>
+                <observers>
+                    <virtualgeo_observer_georef_save_after>
+                        <class>virtualgeo/bundle_observer</class>
+                        <method>onComponentsSaveAfter</method>
+                    </virtualgeo_observer_georef_save_after>
+                </observers>
+            </virtualgeo_components_georefproduct_save_after>
             <!--
             <sales_convert_quote_item_to_order_item>
                 <observers>
@@ -355,6 +363,12 @@
 				   <quote_options>
                         <table>virtualgeo_quote_options</table>
                     </quote_options>
+                    <bundle_option>
+                        <table>virtualgeo_bundle_option</table>
+                    </bundle_option>
+                    <bundle_selection>
+                        <table>virtualgeo_bundle_selection</table>
+                    </bundle_selection>
                 </entities>
             </virtualgeo_resource>
 
