@@ -10,7 +10,14 @@
  */
 class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_Abstract
 {
-	
+    /**
+     * Parameter name in event
+     *
+     * In observe method you can use $observer->getEvent()->getObject() in this case
+     *
+     * @var string
+     */
+    protected $_eventObject = 'geo_component';
 
     /**
      * Alle Inhalte die für dieses Produkt und Store verfügbar sind ermittel

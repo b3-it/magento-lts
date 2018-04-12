@@ -10,11 +10,11 @@
  */
 class Bkg_VirtualGeo_Model_Components_Georefproduct extends Bkg_VirtualGeo_Model_Components_Componentproduct
 {
+    protected $_eventPrefix = 'virtualgeo_components_georefproduct';
+
     public function _construct()
     {
         parent::_construct();
         $this->_init('virtualgeo/components_georefproduct');
     }
-    
- 
 }
