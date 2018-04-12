@@ -70,7 +70,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                             <?php echo $this->__('Continue Shopping') ?>
                         </button>
                     <?php endif; ?>
-                        
+
                         <button class="button btn-update" type="submit" name="update_cart_action" data-cart-item-update value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>">
                             <?php echo $this->__('Update Shopping Cart'); ?>
                         </button>
@@ -128,7 +128,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                 <div id="proceed-button-first">
                     <?php echo $this->__('Order now'); ?>
                 </div>
-                (<?php echo $this->__('Checkout'); ?>)
+                <?php echo $this->__('(Checkout)'); ?>
             </button>
             <?php echo $this->getChildHtml('cartinfo') ?>
             <?php endif; ?>
