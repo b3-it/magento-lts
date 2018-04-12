@@ -32,4 +32,16 @@ class Bkg_VirtualGeo_Model_Resource_Components_Componentproduct_Collection exten
         return $this;
     }
 
+    public function addVirtualGeoBundleSelection($parentProductId, $resource) {
+        $parentProductId = intval($parentProductId);
+        $resource = $resource = $this->getSelect()->getAdapter()->quote($resource);
+        $this->getSelect()->joinLeft(
+            array('selection' => $this->getTable('virtualgeo/bundle_selection')),
+            "selection.ref_id = main_table.id and selection.resource = {$resource} and selection.parent_product_id = {$parentProductId}",
+            array('selection_id', 'option_id')
+        );
+
+        return $this;
+    }
+
 }
