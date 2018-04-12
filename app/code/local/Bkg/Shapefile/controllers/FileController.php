@@ -7,19 +7,12 @@ class Bkg_Shapefile_FileController extends Mage_Core_Controller_Front_Action
         $srs = $this->getRequest()->get('srs');
         
         /**
-         * @var Bkg_Shapefile_Model_Resource_File_Collection $col
+         * @var Bkg_Shapefile_Helper_Data $helper
          */
-        $col = Mage::getModel('bkg_shapefile/file')->getCollection();
-        $col->join(['georef' => 'virtualgeo/components_georef_entity'], 'main_table.georef_id = georef.id', 'epsg_code');
-        $col->addFieldToFilter('customer_id',['eq' => $id]);
-        if (isset($srs)) {
-            $col->addFieldToFilter('georef.epsg_code', ['eq' => $srs]);
-        }
-
-        $data = $col->toArray(['id', 'name', 'epsg_code']);
+        $helper = Mage::helper('bkg_shapefile');
         
         $this->getResponse()->setHeader('Content-type', 'application/json');
-        $this->getResponse()->setBody(json_encode($data['items']));
+        $this->getResponse()->setBody(json_encode($helper->getFilesByUser($id, $srs)));
     }
     
     
@@ -37,5 +30,34 @@ class Bkg_Shapefile_FileController extends Mage_Core_Controller_Front_Action
 
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(json_encode($data['items']));
+    }
+    
+    public function shapeIntersectionAction() {
+        $id = $this->getRequest()->get('id');
+        $lid = $this->getRequest()->get('layer');
+        
+        // TODO add caching there or in the helper
+        $key = implode("_", array(
+            'intersectShape',
+            $id, $lid
+        ));
+        
+        if (($data = Mage::app()->getCache()->load($key))) {
+            //var_dump("data found!");
+            $data = gzuncompress($data);
+        } else {
+            /**
+             * @var Bkg_Shapefile_Helper_Data $helper
+             */
+            $helper = Mage::helper('bkg_shapefile');
+            $data = $helper->getShapeIntersection($id, $lid);
+            $data = json_encode($data);
+            $str = gzcompress($data, 9);
+            
+            Mage::app()->getCache()->save($str, $key, array(), null);
+        }
+        
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody($data);
     }
 }

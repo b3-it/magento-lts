@@ -22,13 +22,13 @@
         <?php if (!$_order->getIsVirtual()): ?>
             <h3><?php echo $this->__('Shipping Address') ?></h3>
             <?php $_shipping = $_invoice->getShippingAddress() ?>
-            <address><?php echo $_shipping->format('html') ?></address>
+            <address style="color:#555555;"><?php echo $_shipping->format('html') ?></address>
         </div>
         <div class="col-2">
         <?php endif; ?>
             <h3><?php echo $this->__('Billing Address') ?></h3>
             <?php $_billing = $_invoice->getbillingAddress() ?>
-            <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
+            <address style="color:#555555;"><?php echo $_order->getBillingAddress()->format('html') ?></address>
         </div>
         <?php if (!$_order->getIsVirtual()): ?>
     </div>

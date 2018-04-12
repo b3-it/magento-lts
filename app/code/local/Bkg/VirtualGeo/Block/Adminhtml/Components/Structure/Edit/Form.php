@@ -142,6 +142,18 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
       ));
       
       
+      $fieldset->addField('show_map', 'checkbox', array(
+      		'label'     => Mage::helper('virtualgeo')->__('Show Map'),
+      		'name'      => 'show_map',
+      		'checked'	=> boolval($dataModel->getShowMap()),
+      		//'onchange'  => 'toogleLayer()',
+      		'readonly' => $store_id != 0,
+      		'disabled' => $store_id != 0,
+      		'class'     =>  ($store_id != 0) ? 'readonly' : '',
+      		'note'		=> "Show Map Configuration Within Product Configuration"
+      ));
+      
+      
 //       $fieldset->addField('layer_id', 'select', array(
 //       		'label'     => Mage::helper('bkgviewer')->__('Layer'),
 //       		'name'      => 'layer_id',

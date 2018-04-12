@@ -99,6 +99,13 @@ class Bkg_Shapefile_Block_Adminhtml_File_New_Form extends Mage_Adminhtml_Block_W
 		    'values' => $georef->toOptionArray()
 		    
 		));
+		
+		$fieldset->addField('zIndex', 'text', array(
+		    'label'     => Mage::helper('bkg_shapefile')->__('z-Index'),
+		    'class'     => 'validate-number',
+		    'required'  => false,
+		    'name'      => 'zIndex'
+		));
 		return parent::_prepareForm();
 	}
 }

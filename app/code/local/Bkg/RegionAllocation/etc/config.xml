@@ -87,7 +87,7 @@
     </adminhtml>
 
     <global>
-		<regions>
+		<regions_de>
 			<BW>
 				<label>Baden-Württemberg</label>
 			</BW>
@@ -136,7 +136,7 @@
 			<TH>
 				<label>Thüringen</label>
 			</TH>
-		</regions>
+		</regions_de>
         <sales>
             <quote>
                 <item>
