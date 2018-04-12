@@ -84,14 +84,10 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
         $text[] = "var vector = new ol.layer.Vector({";
         $text[] = "  source: vectorSource".self::$Count.",";
         $text[] = "  title: '" . $helper->jsQuoteEscape($this->getLabel()) . "',";
-        $text[] = "  zIndex: " .(100+self::$Count). ",";
+        $text[] = "  layer_id: ".$this->getLayerId().",";
+        $text[] = "  zIndex: " .$this->getVisualPos(). ",";
         $text[] = "  visible: false,";
-        $text[] = "  style: new ol.style.Style({";
-        $text[] = "    stroke: new ol.style.Stroke({";
-        $text[] = "      color: 'red',";
-        $text[] = "      width: 2";
-        $text[] = "    }),";
-        $text[] = "  }),";
+        $text[] = "  style: selectionStyle,";
         $text[] = "});";
         $text[] = "tools.push(vector);";
         

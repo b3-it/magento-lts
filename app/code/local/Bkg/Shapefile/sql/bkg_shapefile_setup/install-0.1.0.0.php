@@ -30,6 +30,10 @@ if (!$installer->tableExists($installer->getTable($shapefile))) {
         'default' => '0',
     ), 'Georef Id')
     ->addColumn('name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(), 'Name')
+    ->addColumn('zIndex', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
+        'nullable' => false,
+        'default' => '0',
+    ), 'ZIndex')
     ->addForeignKey(
         $installer->getFkName($shapefile, 'customer_id', "customer/entity", 'entity_id'),
         'customer_id', $installer->getTable("customer/entity"), 'entity_id',

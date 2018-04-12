@@ -3,7 +3,7 @@ class Bkg_Geometry_Multipolygon extends Bkg_Geometry_Geometry
 {
 	/**
 	 * 
-	 * @var array Bkg_Geometry_Multipolygon
+	 * @var Bkg_Geometry_Polygon[] $_polygons
 	 */
 	protected $_polygons = array();
 	
@@ -14,7 +14,7 @@ class Bkg_Geometry_Multipolygon extends Bkg_Geometry_Geometry
 	
 	public function setPolygon($polygons)
 	{
-		$this->_polygons = $points;
+	    $this->_polygons = $polygons;
 		return $this;
 	}
 	
