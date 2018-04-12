@@ -28,6 +28,13 @@ class Gka_VirtualPayId_Block_Adminhtml_Epaybl_Client_Edit_Tab_Form extends Mage_
           //'required'  => true,
           'name'      => 'client',
       ));
+      
+      $fieldset->addField('pay_operator', 'text', array(
+      		'label'     => Mage::helper('virtualpayid')->__('Pay Operator'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'pay_operator',
+      ));
 
       
       if ( Mage::getSingleton('adminhtml/session')->getepayblclientData() )

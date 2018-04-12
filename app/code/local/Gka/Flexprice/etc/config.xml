@@ -82,7 +82,7 @@
             <product>
                 <type>
                     <flexprice translate="label" module="flexprice">
-                        <label>Fexible Price</label>
+                        <label>Flexible Price</label>
                         <model>flexprice/product_type</model>
                         <composite>0</composite>
                         <price_model>flexprice/product_price</price_model>
