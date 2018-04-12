@@ -14,8 +14,8 @@
             <div>
                 <input type="radio"
                        class="radio"
-                       name="<?php echo $this->getHtmlID(); ?>[]"
-                       value="<?php echo $option->getEntityId(); ?>"
+                       name="bundle_option[<?php echo $option->getOptionId(); ?>]"
+                       value="<?php echo $option->getSelectionId(); ?>"
                        data-id="<?php echo $this->getHtmlID(); ?>"
                        data-code="<?php echo $option->getCode(); ?>"
                        data-epsg="<?php echo $option->getEpsgCode(); ?>"
