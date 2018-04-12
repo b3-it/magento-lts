@@ -234,6 +234,19 @@
         </admin>
         <design>
             <groups>
+                <header>
+                    <fields>
+                        <enable_ajax_search translate="label" module="egovsbase">
+                            <label>Activate search field in header</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovsbase/system_config_design_header_ajaxsearch_modes</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable_ajax_search>
+                    </fields>
+                </header>
                 <banner translate="label" module="egovsbase">
                     <label>Use a banner graphic above the shop</label>
                     <frontend_type>text</frontend_type>

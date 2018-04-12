@@ -4,48 +4,48 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 {
 	/**
 	 * Liefert ein Array von aktiven Bezahlmodulen zur�ck
-	 * 
+	 *
 	 * array(PAYMENT_CODE => PAYMENT_TITLE)
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getActivPaymentMethods()
 	{
 		$payments = Mage::getSingleton('payment/config')->getActiveMethods();
-	
+
 		$methods = array();
-	
+
 		foreach ($payments as $paymentCode=>$paymentModel) {
 			$paymentTitle = Mage::getStoreConfig('payment/'.$paymentCode.'/title');
 			$methods[$paymentCode] = $paymentTitle;
 		}
-	
-		return $methods;	
+
+		return $methods;
 	}
-	
+
 	/**
-	 * Dekodiert HTML - Entities zur�ck in ihre Charakterdarstellung.
-	 * 
+	 * Dekodiert HTML - Entities zurück in ihre Charakterdarstellung.
+	 *
 	 * Als charset wird UTF-8 genutzt
-	 * 
+	 *
 	 * @param string $string String
-	 * 
+	 *
 	 * @return string
 	 */
 	public function htmlEntityDecode($string) {
 		return html_entity_decode($string, ENT_COMPAT, 'UTF-8');
 	}
-	
+
 	/**
 	 * Liefert den Knoten und seine Childs als array
-	 * 
+	 *
 	 * Diese Funktion behebt einen Bug bei dem sich gleiche Knoten überschreiben.
 	 *
 	 * @param Varien_Simplexml_Element $xml         XML Daten
 	 * @param bool                     $isCanonical whether to ignore attributes
-	 * 
+	 *
 	 * @return array|string
-	 * 
+	 *
 	 * @see Varien_Simplexml_Element::_asArray
 	 */
 	protected function _xmlToArray($xml, $isCanonical = false) {
@@ -81,33 +81,33 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Liefert den Knoten und seine Childs als array
-	 * 
+	 *
 	 * Falls die Knoten Attribute enthalten werden dieses ebenfalls ins Array übernommen.
-	 * 
+	 *
 	 * @param Varien_Simplexml_Element $xml XML Daten
-	 * 
+	 *
 	 * @return array
 	 */
 	public function xmlToArray($xml) {
 		return $this->_xmlToArray($xml);
 	}
-	
+
 	/**
 	 * Rechnet eine Byte-Größe in eine angemessene Nutzerfreundliche Größe um
-	 * 
+	 *
 	 * @param int    $size    Größe in Byte
 	 * @param string $praefix Soll Faktor 1000 oder 1024 genutzt werden (Kilo vs Kibi)
 	 * @param string $short   Kurz- oder Langdarstellung
-	 * 
+	 *
 	 * @return string
-	 * 
+	 *
 	 * @see http://www.selfphp.info/kochbuch/kochbuch.php?code=61
 	 */
 	public function binaryHumanReadable($size, $praefix=true, $short= true) {
-	
+
 		if ($praefix === true) {
 			if ($short === true) {
 				$norm = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
@@ -124,7 +124,7 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 						'Yottabyte'
 				);
 			}
-	
+
 			$factor = 1000;
 		} else {
 			if ($short === true) {
@@ -143,24 +143,24 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 						'Yobibyte'
 				);
 			}
-	
+
 			$factor = 1024;
-	
+
 		}
-	
+
 		$count = count($norm) -1;
-	
+
 		$x = 0;
 		while ($size >= $factor && $x < $count) {
 			$size /= $factor;
 			$x++;
 		}
-	
+
 		$size = sprintf("%01.2f", $size) . ' ' . $norm[$x];
-	
+
 		return $size;
 	}
-	
+
 	/**
 	 * ermittelt die im Pfad angegeben Konfiguration der speziellen AdminEMail Adresse
 	 * falls diese nicht vorhanden wird auf "'trans_email/ident_admin/email" ausgewichen
@@ -176,13 +176,13 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 		if (strlen(trim($mail)) > 0) {
 			return $mail;
 		}
-		
+
 		$mail = Mage::getStoreConfig('trans_email/ident_general/email');
 		if (strlen(trim($mail)) > 0) {
 			return $mail;
 		}
 		return "";
 	}
-	
-	
+
+
 }
