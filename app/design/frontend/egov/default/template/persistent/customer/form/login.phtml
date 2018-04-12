@@ -15,6 +15,8 @@
 ?>
 
 <?php
+$_allowedRegister = Mage::getStoreConfig('customer/create_account/register_user_on_login', $this->getStoreId());
+
 $_use_ssl_logo  = Mage::getStoreConfig('design/login/ssl_logo_use', Mage::app()->getStore());
 $_ssl_image     = Mage::getStoreConfig('design/login/ssl_logo', Mage::app()->getStore());
 $_ssl_image_css = Mage::getStoreConfig('design/login/ssl_logo_style', Mage::app()->getStore());
@@ -34,19 +36,19 @@ if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
 }
 ?>
 
-<div class="account-login<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
+<div class="account-login<?php if (!$_allowedRegister) echo ' login-only' ?>">
     <?php echo $this->getMessagesBlock()->toHtml() ?>
         <div class="col2-set egov-account-login">
 
             <div class="page-title">
-                <h1><?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
+                <h1><?php if ($_allowedRegister): ?>
                         <?php echo $this->__('Login or Create an Account') ?>
                     <?php else: ?>
                         <?php echo $this->__('Login'); ?>
                     <?php endif; ?></h1>
             </div>
 
-            <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
+            <?php if ($_allowedRegister): ?>
             <div class="col-1 new-users">
                 <form action="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>" method="get" id="register-form" class="scaffold-form">
                     <h2><?php echo $this->__('New Here?') ?></h2>
