@@ -644,6 +644,11 @@
             <footer>
                 <copyright><![CDATA[&copy; 2017 Magento Egov Sachsen.]]></copyright>
             </footer>
+            <login>
+                <ssl_logo_use>2</ssl_logo_use>
+                <ssl_logo_alt><![CDATA[Certified safety - Positive SSL Label]]></ssl_logo_alt>
+                <ssl_logo_title><![CDATA[Positive SSL]]></ssl_logo_title>
+            </login>
         </design>
         <system>
             <smtp>
