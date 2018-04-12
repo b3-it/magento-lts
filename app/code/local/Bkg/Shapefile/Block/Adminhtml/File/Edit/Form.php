@@ -28,6 +28,13 @@ class Bkg_Shapefile_Block_Adminhtml_File_Edit_Form extends Mage_Adminhtml_Block_
           'name'      => 'name'
       ));
       
+      $fieldset->addField('zIndex', 'text', array(
+          'label'     => Mage::helper('bkg_shapefile')->__('z-Index'),
+          'class'     => 'validate-number',
+          'required'  => false,
+          'name'      => 'zIndex'
+      ));
+      
       /**
        * @var Mage_Customer_Model_Resource_Customer_Collection $customer
        */
