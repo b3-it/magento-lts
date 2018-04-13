@@ -43,7 +43,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 				$parent = $this->_findItem($items,$item->getParentNodeId());
 			}
 			
-			$res[] = new Varien_Object(array('id'=>$item->getComponentProductRelationId(),
+			$res[] = new Varien_Object(array('id'=>$item->getId(),
 					'label'=>trim($item->getName()." " . $item->getDescription()) ,
 					'entity_id'=>$item->getEntityId(),
 					'is_readonly'=>boolval($item->getReadonly()),
