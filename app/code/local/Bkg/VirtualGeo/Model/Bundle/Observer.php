@@ -74,6 +74,15 @@ class Bkg_VirtualGeo_Model_Bundle_Observer
     }
 
     public function onComponentsSaveAfter(Varien_Object $observer) {
+        /** @var Varien_Db_Adapter_Interface $adapter */
+        $adapter = Mage::getResourceModel('core/resource')->getReadConnection();
+
+        if (!$adapter->isTableExists($adapter->getTableName('virtualgeo/bundle_option'))
+            || !$adapter->isTableExists($adapter->getTableName('virtualgeo/bundle_selection'))
+        ) {
+            return;
+        }
+
         $geoComponent = $observer->getGeoComponent();
 
         if (!($geoComponent instanceof Bkg_VirtualGeo_Model_Components_Componentproduct)) {
