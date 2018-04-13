@@ -10,6 +10,10 @@
  */
 class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_Abstract
 {
+    const COMPONENT_TYPE_CONTENT = 1;
+    const COMPONENT_TYPE_FORMAT = 2;
+    const COMPONENT_TYPE_GEOREF = 3;
+
     /**
      * Parameter name in event
      *
@@ -30,8 +34,11 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
         $productId = intval($productId);
         $storeId = intval($storeId);
     	$collection = $this->getCollection();
-    	$collection->getSelect()->where('product_id=?',$productId);
-    	$collection->getSelect()->where('store_id=?',$storeId);
+    	$collection->addFieldToFilter('product_id', $productId);
+        $collection->addFieldToFilter('store_id', $storeId);
+        if (method_exists($this, 'getType')) {
+            $collection->addFieldToFilter('type', $this->getType());
+        }
     	$res = array();
     	foreach ($collection->getItems() as $item)
     	{
@@ -46,10 +53,13 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
         $productId = intval($productId);
     	$storeId = intval($storeId);
     	$collection = $this->getCollection();
-    	$collection->getSelect()->where('product_id=?',$productId);
-    	$collection->getSelect()->where('store_id=?',$storeId);
-    	$collection->getSelect()->where('is_default=?','1');
-    	
+        $collection->addFieldToFilter('product_id', $productId);
+        $collection->addFieldToFilter('store_id', $storeId);
+        if (method_exists($this, 'getType')) {
+            $collection->addFieldToFilter('type', $this->getType());
+        }
+        $collection->addFieldToFilter('is_default', 1);
+
     	$res = 0;
     	foreach ($collection->getItems() as $item)
     	{
@@ -76,8 +86,11 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
         $productId = intval($productId);
         $storeId = intval($storeId);
         $collection = $this->getCollection();
-        $collection->getSelect()->where('product_id=?',$productId);
-        $collection->getSelect()->where('store_id=?',$storeId);
+        $collection->addFieldToFilter('product_id', $productId);
+        $collection->addFieldToFilter('store_id', $storeId);
+        if (method_exists($this, 'getType')) {
+            $collection->addFieldToFilter('type', $this->getType());
+        }
         $collection->getSelect()->order('pos');
         $items = $collection->getItems();
         return $items;
