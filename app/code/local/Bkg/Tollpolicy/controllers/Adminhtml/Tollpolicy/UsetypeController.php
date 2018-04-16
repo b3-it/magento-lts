@@ -42,7 +42,8 @@ class Bkg_Tollpolicy_Adminhtml_Tollpolicy_UsetypeController extends Mage_Adminht
 
 			$ssw = $this->getLayout()->createBlock('adminhtml/store_switcher');
 			$this->_addContent($this->getLayout()->createBlock('bkg_tollpolicy/adminhtml_usetype_edit'))
-				->_addLeft($ssw);
+				->_addLeft($this->getLayout()->createBlock('bkg_tollpolicy/adminhtml_usetype_edit_tabs'));
+                //->_addLeft($ssw);
 
 			$this->renderLayout();
 		} else {
