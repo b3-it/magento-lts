@@ -128,6 +128,38 @@ $table = $installer->getConnection()
 $installer->getConnection()->createTable($table);
 
 
+
+
+/**
+ * Create table 'virtualaccess/purchased_account'
+ */
+$table = $installer->getConnection()
+->newTable($installer->getTable('virtualaccess/purchased_account'))
+->addColumn('id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+		'identity'  => true,
+		'unsigned'  => true,
+		'nullable'  => false,
+		'primary'   => true,
+), 'ID')
+->addColumn('external_link_url', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
+), 'External Link Url')
+->addColumn('status', Varien_Db_Ddl_Table::TYPE_TEXT, 50, array(
+), 'Status')
+->addColumn('created_at', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, array(
+		'nullable'  => false,
+), 'Creation Time')
+->addColumn('updated_at', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, array(
+		'nullable'  => false,
+), 'Update Time')
+->addColumn('valid_until', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, array(
+		'nullable'  => false,
+), 'Update Time')
+->setComment('Virtual Access Purchased Account Table')
+				;
+				$installer->getConnection()->createTable($table);
+
+
+
 /**
  * Create table 'virtualaccess/purchased_credential'
  */
@@ -139,7 +171,7 @@ $table = $installer->getConnection()
         'nullable'  => false,
         'primary'   => true,
     ), 'Credential ID')
-    ->addColumn('purchased_item_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+    ->addColumn('purchased_account_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'unsigned'  => true,
         'nullable'  => false
     ), 'Purchased ID')
@@ -171,12 +203,12 @@ $table = $installer->getConnection()
     ), 'Update Time')
     ->addForeignKey(
         $installer->getFkName(
-            'virtualaccess/purchased_item',
-            'item_id',
-            'virtualaccess/purchased',
-            'purchased_item_id'
+            'virtualaccess/purchased_account',
+            'id',
+            'virtualaccess/purchased_credential',
+            'purchased_account_id'
         ),
-        'purchased_item_id', $installer->getTable('virtualaccess/purchased_item'), 'item_id',
+        'purchased_account_id', $installer->getTable('virtualaccess/purchased_account'), 'id',
         Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE
     )
     ->addIndex($installer->getIdxName('virtualaccess/purchased_credential', 'customer_id'), 'customer_id')
