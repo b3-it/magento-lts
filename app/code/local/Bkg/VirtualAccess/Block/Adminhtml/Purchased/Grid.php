@@ -1,6 +1,6 @@
 <?php
 
-class Bkg_VirtualAccess_Block_Adminhtml_Purchaseditem_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Bkg_VirtualAccess_Block_Adminhtml_Purchased_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
@@ -13,12 +13,10 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchaseditem_Grid extends Mage_Adminhtm
 
   protected function _prepareCollection()
   {
-      $collection = Mage::getModel('virtualaccess/purchased_item')->getCollection();
+      $collection = Mage::getModel('virtualaccess/purchased')->getCollection();
       $collection->getSelect()
-
-      	->join(array('purchased'=>'virtualaccess_purchased'),'main_table.purchased_id = purchased.purchased_id',array('order_id','order_increment_id'))
-      	->join(array('order'=>'sales_flat_order'),'order.entity_id = purchased.order_id',array('order_status'=>'status','customer_email'=>'customer_email','order_date'=>'created_at'))
-      	->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id = main_table.order_item_id',array())
+       	->join(array('order'=>'sales_flat_order'),'order.entity_id = main_table.order_id',array('order_status'=>'status','customer_email'=>'customer_email','order_date'=>'created_at'))
+      	->join(array('order_item'=>'sales_flat_order_item'),'order_item.item_id = main_table.order_item_id',array('name'=>'name'))
       	;
       //die($collection->getSelect()->__toString());
       $this->setCollection($collection);
@@ -36,14 +34,20 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchaseditem_Grid extends Mage_Adminhtm
       ));
       */
       $this->addColumn('item_id', array(
-          'header'    => Mage::helper('virtualaccess')->__('Item ID'),
+          'header'    => Mage::helper('virtualaccess')->__('ID'),
           'align'     =>'right',
           'width'     => '50px',
       	  'type'	=> 'number',
-          'index'     => 'item_id',
-      	'filter_index' => 'main_table.item_id'
+          'index'     => 'id',
+      	'filter_index' => 'main_table.id'
       ));
       
+      $this->addColumn('oracle_acount_id', array(
+      		'header'    => Mage::helper('virtualaccess')->__('External Account Id'),
+      		'align'     =>'left',
+      		'width' => '100',
+      		'index'     => 'oracle_acount_id',
+      ));
      $this->addColumn('customer_id', array(
           'header'    => Mage::helper('virtualaccess')->__('Customer ID'),
           'align'     =>'right',
@@ -76,7 +80,7 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchaseditem_Grid extends Mage_Adminhtm
       ));
 
 
-
+/*
       
       $this->addColumn('created_at', array(
           'header'    => Mage::helper('virtualaccess')->__('Created At'),
@@ -97,12 +101,12 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchaseditem_Grid extends Mage_Adminhtm
       ));
       
 
-      
-     $this->addColumn('external_link_url', array(
+*/      
+     $this->addColumn('base_url', array(
           'header'    => Mage::helper('virtualaccess')->__('URL'),
           'align'     =>'left',
       	  'width' => '200',
-          'index'     => 'external_link_url',
+          'index'     => 'base_url',
       ));
       
 	  
@@ -114,6 +118,24 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchaseditem_Grid extends Mage_Adminhtm
             'width' => '70px',
             'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
         ));
+     
+     $this->addColumn('status', array(
+     		'header' => Mage::helper('virtualaccess')->__('Status'),
+     		'index' => 'status',
+    		
+     		'type'  => 'options',
+     		'width' => '70px',
+     		'options' =>Bkg_VirtualAccess_Model_Service_AccountStatus::getOptionArray()
+     ));
+     
+     $this->addColumn('sync_status', array(
+     		'header' => Mage::helper('virtualaccess')->__('Sync Status'),
+     		'index' => 'sync_status',
+     		
+     		'type'  => 'options',
+     		'width' => '70px',
+     		'options' => Bkg_VirtualAccess_Model_Service_Syncstatus::getOptionArray()
+     ));
 
 
 	  
@@ -136,24 +158,25 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchaseditem_Grid extends Mage_Adminhtm
                 'is_system' => true,
         ));
         
-       $this->addColumn('action2',
-            array(
-                'header'    =>  Mage::helper('virtualaccess')->__('Action'),
-                'width'     => '100',
-                'type'      => 'action',
-                'getter'    => 'getItemId',
-                'actions'   => array(
-                    array(
-                        'caption'   => Mage::helper('virtualaccess')->__('Edit Credential'),
-                        'url'       => array('base'=> '*/*/show'),
-                        'field'     => 'id'
-                    )
-                ),
-                'filter'    => false,
-                'sortable'  => false,
-                'index'     => 'stores',
-                'is_system' => true,
-        ));
+        $this->addColumn('action2',
+        		array(
+        				'header'    =>  Mage::helper('virtualaccess')->__('Action'),
+        				'width'     => '100',
+        				'type'      => 'action',
+        				'getter'    => 'getId',
+        				'actions'   => array(
+        						array(
+        								'caption'   => Mage::helper('virtualaccess')->__('Synchronice'),
+        								'url'       => array('base'=> 'adminhtml/virtualaccess_purchased/sync'),
+        								'field'     => 'id'
+        						)
+        				),
+        				'filter'    => false,
+        				'sortable'  => false,
+        				'index'     => 'stores',
+        				'is_system' => true,
+        		));
+      
 		
 		$this->addExportType('*/*/exportCsv', Mage::helper('virtualaccess')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('virtualaccess')->__('XML'));

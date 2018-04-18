@@ -1,5 +1,5 @@
 <?php
-class Bkg_VirtualAccess_Model_Product_Type_Configurable extends Mage_Catalog_Model_Product_Type_Virtual
+class Bkg_VirtualAccess_Model_Product_Type extends Mage_Catalog_Model_Product_Type_Virtual
 {
 	/**
 	 * Type ID
@@ -8,7 +8,7 @@ class Bkg_VirtualAccess_Model_Product_Type_Configurable extends Mage_Catalog_Mod
 	 *
 	 * @var string
 	 */
-	const TYPE_CONFIGURABLE_ACCESS = 'virtualaccess';
+	const TYPE_CODE = 'virtualaccess';
 
 
 	private $_stationen = null;
@@ -68,7 +68,7 @@ class Bkg_VirtualAccess_Model_Product_Type_Configurable extends Mage_Catalog_Mod
 	 * 
 	 * @param Mage_Catalog_Model_Product $product Produkt
 	 * 
-	 * @return Bkg_VirtualAccess_Model_Product_Type_Configurable
+	 * @return Bkg_VirtualAccess_Model_Product_Type
 	 */
 	public function limitMaxSaleQty($product) {
 		/* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
