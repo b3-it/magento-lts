@@ -132,7 +132,6 @@
                 <item>
                     <product_attributes>
                         <virtualaccess_base_url/>
-                        <always_create_new_credentials/>
                     </product_attributes>
                 </item>
             </quote>
@@ -242,7 +241,18 @@
         </events>
        
     </global>
-    
+    <crontab>
+        <jobs>
+            <bkg_account_sync>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>virtualaccess/cron::runSync</model>
+                </run>
+            </bkg_account_sync>
+        </jobs>
+    </crontab>
     <frontend>
         <routers>
             <virtualaccess>
@@ -268,7 +278,7 @@
         <layout>
             <updates>
                 <virtualaccess module="Bkg_VirtualAccess">
-                    <file>dwd/virtualaccess.xml</file>
+                    <file>bkg/virtualaccess.xml</file>
                 </virtualaccess>
             </updates>
         </layout>

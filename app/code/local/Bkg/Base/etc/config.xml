@@ -18,5 +18,14 @@
                 </connection>
             </bkg_base_setup>
         </resources>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <product_code/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
     </global>
 </config>

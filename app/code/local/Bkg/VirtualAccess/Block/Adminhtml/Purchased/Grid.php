@@ -46,7 +46,7 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchased_Grid extends Mage_Adminhtml_Bl
       		'header'    => Mage::helper('virtualaccess')->__('External Account Id'),
       		'align'     =>'left',
       		'width' => '100',
-      		'index'     => 'oracle_acount_id',
+      		'index'     => 'oracle_account_id',
       ));
      $this->addColumn('customer_id', array(
           'header'    => Mage::helper('virtualaccess')->__('Customer ID'),

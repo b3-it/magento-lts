@@ -30,7 +30,9 @@ class Bkg_VirtualAccess_Model_Purchased extends Mage_Core_Model_Abstract
 	 *  @method int getCustomerId()
 	 *  @method setCustomerId(int $value)
 	 */
-	
+
+	protected $_credentials = null;
+
 	/**
 	 * Initialize resource model
 	 *
@@ -92,7 +94,28 @@ class Bkg_VirtualAccess_Model_Purchased extends Mage_Core_Model_Abstract
 		}
 		
 	}
-	
+
+    public function getCredentials()
+    {
+        if($this->_credentials == null)
+        {
+            /** @var $service Bkg_VirtualAccess_Model_Service_Account */
+            $service = Mage::getModel('virtualaccess/service_account');
+
+            try
+            {
+                $this->_credentials = $service->getCredentials($this->getOracleAccountId());
+            }
+            catch(Exception $e) {
+                Mage::logException($e);
+                $this->_log('ERROR', sprintf('Error: %s', $e->getMessage()));
+                $this->_credentials = array();
+            }
+        }
+
+        return $this->_credentials;
+    }
+
 	protected function _log($status,$msg)
 	{
 		$log = Mage::getModel('virtualaccess/service_log');
