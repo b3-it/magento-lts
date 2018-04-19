@@ -36,8 +36,8 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     	$collection = $this->getCollection();
     	$collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('store_id', $storeId);
-        if (method_exists($this, 'getType')) {
-            $collection->addFieldToFilter('type', $this->getType());
+        if (method_exists($this, 'getComponentType')) {
+            $collection->addFieldToFilter('component_type', $this->getComponentType());
         }
     	$res = array();
     	foreach ($collection->getItems() as $item)
@@ -55,8 +55,8 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     	$collection = $this->getCollection();
         $collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('store_id', $storeId);
-        if (method_exists($this, 'getType')) {
-            $collection->addFieldToFilter('type', $this->getType());
+        if (method_exists($this, 'getComponentType')) {
+            $collection->addFieldToFilter('component_type', $this->getComponentType());
         }
         $collection->addFieldToFilter('is_default', 1);
 
@@ -88,8 +88,8 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
         $collection = $this->getCollection();
         $collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('store_id', $storeId);
-        if (method_exists($this, 'getType')) {
-            $collection->addFieldToFilter('type', $this->getType());
+        if (method_exists($this, 'getComponentType')) {
+            $collection->addFieldToFilter('component_type', $this->getComponentType());
         }
         $collection->getSelect()->order('pos');
         $items = $collection->getItems();

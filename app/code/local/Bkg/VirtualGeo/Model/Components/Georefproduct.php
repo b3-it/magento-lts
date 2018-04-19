@@ -16,7 +16,7 @@ class Bkg_VirtualGeo_Model_Components_Georefproduct extends Bkg_VirtualGeo_Model
     {
         parent::_construct();
         $this->_init('virtualgeo/components_georefproduct');
-        $this->setType();
+        $this->setComponentType();
     }
 
     /**
@@ -24,7 +24,15 @@ class Bkg_VirtualGeo_Model_Components_Georefproduct extends Bkg_VirtualGeo_Model
      *
      * Type darf nur von Klasse selbst gesetzt werden
      */
-    protected function setType() {
-        $this->setData('type', self::COMPONENT_TYPE_GEOREF);
+    protected function setComponentType() {
+        $this->setData('component_type', self::COMPONENT_TYPE_GEOREF);
+    }
+
+    /**
+     * TODO : gehört in Parent
+     * @return mixed
+     */
+    public function getComponentType() {
+        return $this->getData('component_type');
     }
 }
