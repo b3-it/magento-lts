@@ -71,7 +71,7 @@ class Bkg_VirtualGeo_Model_Components_Component extends Mage_Core_Model_Abstract
         $this->setName($obj->getName());
         $this->setDescription($obj->getDescription());
 
-        parent:$this->_afterLoad();
+        parent::_afterLoad();
 
         return $this;
     }
