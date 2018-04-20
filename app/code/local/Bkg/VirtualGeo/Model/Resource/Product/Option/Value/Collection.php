@@ -6,7 +6,12 @@
  * Time: 11:07
  */
 
-class Bkg_VirtualGeo_Model_Resource_Product_Option_Collection extends Mage_Catalog_Model_Resource_Product_Option_Collection
+/**
+ * Class Bkg_VirtualGeo_Model_Resource_Product_Option_Value_Collection
+ *
+ * @see Mage_Catalog_Model_Resource_Product_Option_Collection
+ */
+class Bkg_VirtualGeo_Model_Resource_Product_Option_Value_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     /**
      * Init model and resource model
@@ -14,16 +19,16 @@ class Bkg_VirtualGeo_Model_Resource_Product_Option_Collection extends Mage_Catal
      */
     protected function _construct()
     {
-        $this->_init('virtualgeo/product_option');
+        $this->_init('virtualgeo/product_option_value');
     }
 
     /**
      * Adds name attributes to result
      *
      * @param int $storeId
-     * @return Mage_Catalog_Model_Resource_Product_Option_Collection
+     * @return self
      */
-    public function getOptions($storeId)
+    public function getValues($storeId)
     {
         $this->addTitleToResult($storeId);
 

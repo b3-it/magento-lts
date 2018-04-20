@@ -488,11 +488,9 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
         $transport = new StdClass;
         $transport->options = array();
 
-        $options = Mage::getModel('virtualgeo/product_option')->getCollection();
-        $options->addFieldToFilter('product_id', $product->getId());
-
-        foreach ($options->getOptions() as $_option) {
-            /* @var $_option Bkg_VirtualGeo_Model_Product_Option */
+        foreach (Bkg_VirtualGeo_Model_Product_Option::createOptionInstances() as $_option) {
+            /** @var Bkg_VirtualGeo_Model_Product_Option $_option */
+            /** @var Mage_Catalog_Model_Product_Option_Type_Default $group */
             $group = $_option->groupFactory($_option->getType())
                 ->setOption($_option)
                 ->setProduct($this->getProduct($product))

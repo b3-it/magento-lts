@@ -372,9 +372,9 @@
                     <bundle_selection>
                         <table>virtualgeo_bundle_selection</table>
                     </bundle_selection>
-                    <product_option>
+                    <product_option_value>
                         <table>virtualgeo_components_option_type_value</table>
-                    </product_option>
+                    </product_option_value>
                 </entities>
             </virtualgeo_resource>
 

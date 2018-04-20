@@ -6,7 +6,7 @@
  * Time: 11:06
  */
 
-class Bkg_VirtualGeo_Model_Resource_Product_Option extends Mage_Catalog_Model_Resource_Product_Option
+class Bkg_VirtualGeo_Model_Resource_Product_Option_Value extends Mage_Core_Model_Resource_Db_Abstract
 {
     /**
      * Initialize connection and define resource
@@ -14,6 +14,6 @@ class Bkg_VirtualGeo_Model_Resource_Product_Option extends Mage_Catalog_Model_Re
      */
     protected function _construct()
     {
-        $this->_init('virtualgeo/product_option', 'id');
+        $this->_init('virtualgeo/product_option_value', 'id');
     }
 }
