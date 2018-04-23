@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <B3it_Subscription>
+            <version>0.1.2</version>
+        </B3it_Subscription>
+    </modules>
+    <frontend>
+        <routers>
+            <b3it_subscription>
+                <use>standard</use>
+                <args>
+                    <module>B3it_Subscription</module>
+                    <frontName>b3it_subscription</frontName>
+                </args>
+            </b3it_subscription>
+        </routers>
+        <layout>
+            <updates>
+                <b3it_subscription>
+                    <file>b3it/subscription.xml</file>
+                </b3it_subscription>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <B3it_Subscription>
+                    <files>
+                        <default>B3it_Subscription.csv</default>
+                    </files>
+                </B3it_Subscription>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+		<routers>
+			<adminhtml>	
+				<args>
+					<modules>
+						<B3it_Subscription_Adminhtml after="Mage_Adminhtml">B3it_Subscription_Adminhtml</B3it_Subscription_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+    </admin>
+    <adminhtml>
+		    <menu>
+		    	<!-- Nur für intern -->
+		        <!-- <b3it_subscription module="b3it_subscription">
+		    		<title>Subscription</title>
+		    		<sort_order>71</sort_order>
+		    		<children>
+		    		    <subscription module="b3it_subscription">
+		    				<title>Show Subscriptions</title>
+		    				<sort_order>0</sort_order>
+		    				<action>adminhtml/subscription_subscription</action>
+		    			</subscription>
+		    		    <collect module="b3it_subscription">
+		    		        <title>Collect Subscriptions</title>
+		    		        <sort_order>0</sort_order>
+		    		        <action>adminhtml/subscription_subscription/collect</action>
+		    		    </collect>
+		    		</children>
+		        </b3it_subscription> -->
+		        <sales>
+					<children>
+		    			<b3it_subscription module="b3it_subscription">
+		    				<title>Show Subscriptions</title>
+		    				<sort_order>100</sort_order>
+		    				<action>adminhtml/subscription_subscription</action>
+		    			</b3it_subscription>
+		    		</children>
+		    	</sales>
+		    </menu>
+		    <acl>
+		    	<resources>
+		    		<all>
+		    			<title>Allow Everything</title>
+		    		</all>
+		    		<admin>
+		    			<children>
+		    				<b3it_subscription>
+		    					<title>Subscription Module</title>
+		    					<sort_order>10</sort_order>
+		    					<children>
+		    						<subscription module="b3it_subscription">
+					    				<title>Show Subscriptions</title>
+					    				<sort_order>0</sort_order>
+					    			</subscription>
+					    		    <collect module="b3it_subscription">
+					    		        <title>Collect Subscriptions</title>
+					    		        <sort_order>10</sort_order>
+					    		    </collect>
+		    					</children>
+		    			    </b3it_subscription>
+		    				<sales>
+					    		<children>
+					    			<b3it_subscription module="b3it_subscription">
+										<title>Subscription</title>
+									</b3it_subscription>
+								</children>
+							</sales>
+		    			    <system>
+		    			        <children>
+		    			            <config>
+		    			                <children>
+		    			                    <b3it_subscription translate="title" module="b3it_subscription">
+		    			                        <title>Subscription Section</title>
+		    			                    </b3it_subscription>
+		    			                </children>
+		    			            </config>
+		    			        </children>
+		    			    </system>
+		    			</children>
+		    		</admin>
+		    	</resources>
+		    </acl>
+		    <layout>
+		    	<updates>
+		    	    <b3it_subscription>
+		    			<file>b3it/subscription.xml</file>
+		    	    </b3it_subscription>
+		    	</updates>
+		    </layout>
+        <translate>
+            <modules>
+                <B3it_Subscription>
+                    <files>
+                        <default>B3it_Subscription.csv</default>
+                    </files>
+                </B3it_Subscription>
+            </modules>
+        </translate>
+    </adminhtml>
+    <global>
+        <models>
+            <b3it_subscription>
+                <class>B3it_Subscription_Model</class>
+                <resourceModel>b3it_subscription_mysql4</resourceModel>
+            </b3it_subscription>
+            <b3it_subscription_mysql4>
+                <class>B3it_Subscription_Model_Mysql4</class>
+                <entities>
+                    <subscription>
+                        <table>b3it_subscription</table>
+                    </subscription>
+                    <tierprice_depends>
+                        <table>b3it_subscription_tierprice_depends</table>
+                    </tierprice_depends>
+                </entities>
+            </b3it_subscription_mysql4>
+        </models>
+        <resources>
+            <b3it_subscription_setup>
+                <setup>
+                    <module>B3it_Subscription</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </b3it_subscription_setup>
+            <subscription_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </subscription_write>
+            <subscription_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </subscription_read>
+        </resources>
+        <blocks>
+            <b3it_subscription>
+                <class>B3it_Subscription_Block</class>
+            </b3it_subscription>
+        </blocks>
+        <helpers>
+            <b3it_subscription>
+                <class>B3it_Subscription_Helper</class>
+            </b3it_subscription>
+        </helpers>
+    	<allowed_renewal_payment_methods>	
+    		<openaccount>openaccount</openaccount>
+			<sepadebitbund>sepadebitbund</sepadebitbund>
+    	</allowed_renewal_payment_methods>
+    </global>
+        <crontab>
+        <jobs>
+            <b3it_subscription_collect>
+                <schedule>
+                    <cron_expr>0,10,20,30,40,50 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>b3it_subscription/cron::collect</model>
+                </run>
+            </b3it_subscription_collect>
+        </jobs>
+    </crontab>
+</config>
