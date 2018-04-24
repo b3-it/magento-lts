@@ -10,7 +10,8 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
 {
 
     protected static $_componentTypes = array(
-        Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF => 'GeoRef'
+        Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF => 'GeoRef',
+        Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT => 'Format'
     );
 
     /**
@@ -34,6 +35,7 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
     public function getType() {
         switch ($this->getComponentType()) {
             case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF:
+            case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT:
             default:
                 return Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO;
         }
@@ -84,7 +86,7 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
 
         $values = Mage::getModel('virtualgeo/product_option_value')->getCollection();
         $values->addFieldToFilter('product_id', $productId);
-        $values->addFieldToFilter('component_type', $this->getComponentType());
+        $values->addComponentTypeFilter($this->getComponentType());
 
         foreach ($values->getValues(Mage::app()->getStore($storeId)->getId()) as $value) {
             $this->addValue($value);

@@ -13,6 +13,9 @@
  */
 class Bkg_VirtualGeo_Model_Resource_Product_Option_Value_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
+
+    protected $_componentType = null;
+
     /**
      * Init model and resource model
      *
@@ -44,34 +47,45 @@ class Bkg_VirtualGeo_Model_Resource_Product_Option_Value_Collection extends Mage
     public function addTitleToResult($storeId)
     {
         $components = array(
-            'georef' => Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF
+            Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF => 'georef',
+            Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT => 'format'
         );
 
-        foreach ($components as $component => $type) {
-            $productOptionTitleTable = $this->getTable("virtualgeo/components_{$component}_label");
-            $adapter = $this->getConnection();
-            $nameExpr = $adapter->getCheckSql(
-                'store_option_name.name IS NULL',
-                'default_option_name.name',
-                'store_option_name.name'
-            );
+        $productOptionTitleTable = $this->getTable("virtualgeo/components_{$components[$this->getComponentType()]}_label");
+        $adapter = $this->getConnection();
+        $nameExpr = $adapter->getCheckSql(
+            'store_option_name.name IS NULL',
+            'default_option_name.name',
+            'store_option_name.name'
+        );
 
-            $this->getSelect()
-                ->join(array('default_option_name' => $productOptionTitleTable),
-                    'default_option_name.entity_id = main_table.entity_id AND '
-                    . $adapter->quoteInto('default_option_name.store_id = ?', Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID) . ' AND '
-                    . $adapter->quoteInto('main_table.component_type = ?', intval($type)),
-                    array('default_name' => 'name'))
-                ->joinLeft(
-                    array('store_option_name' => $productOptionTitleTable),
-                    'store_option_name.entity_id = main_table.entity_id AND '
-                    . $adapter->quoteInto('store_option_name.store_id = ?', $storeId),
-                    array(
-                        'store_name' => 'name',
-                        'name' => $nameExpr
-                    ))
-                ->where('default_option_name.store_id = ?', Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID);
-        }
-        return $this;
+        $this->getSelect()
+            ->joinLeft(array('default_option_name' => $productOptionTitleTable),
+                'default_option_name.entity_id = main_table.entity_id AND '
+                . $adapter->quoteInto('default_option_name.store_id = ?', Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID) . ' AND '
+                . $adapter->quoteInto('main_table.component_type = ?', intval($this->getComponentType())),
+                array('default_name' => 'name'))
+            ->joinLeft(
+                array('store_option_name' => $productOptionTitleTable),
+                'store_option_name.entity_id = main_table.entity_id AND '
+                . $adapter->quoteInto('store_option_name.store_id = ?', $storeId),
+                array(
+                    'store_name' => 'name',
+                    'name' => $nameExpr
+                )
+            )->where('default_option_name.store_id = ?', Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID);
+    }
+
+    public function addComponentTypeFilter($componentType) {
+        $this->setComponentType($componentType);
+        $this->addFieldToFilter('component_type', $this->getComponentType());
+    }
+
+    public function setComponentType($componentType) {
+        $this->_componentType = intval($componentType);
+    }
+
+    public function getComponentType() {
+        return $this->_componentType;
     }
 }

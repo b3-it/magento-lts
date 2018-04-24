@@ -313,7 +313,7 @@
                     <table>virtualgeo_components_option_type_value</table>
                    </components_georef_product>
                    <components_format_product>
-                    <table>virtualgeo_components_format_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_format_product>
 				   <components_content_entity>
                     <table>virtualgeo_components_content_entity</table>

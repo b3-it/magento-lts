@@ -16,8 +16,8 @@
             <div>
                 <input type="radio"
                        class="radio"
-                       name="<?php echo $this->getHtmlID(); ?>[]"
-                       value="<?php echo $option->getEntityId(); ?>"
+                       name="options[<?php echo $option->getComponentType(); ?>]"
+                       value="<?php echo $option->getId(); ?>"
                        data-id="<?php echo $this->getHtmlID(); ?>"
                        data-code="<?php echo $this->escapeHtml($option->getCode()); ?>"
                        data-shortname="<?php echo $this->escapeHtml($option->getShortname()); ?>"
