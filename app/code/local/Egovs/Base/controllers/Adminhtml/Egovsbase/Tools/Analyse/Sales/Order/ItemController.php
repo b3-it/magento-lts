@@ -27,6 +27,6 @@ class Egovs_Base_Adminhtml_Egovsbase_Tools_Analyse_Sales_Order_ItemController ex
 
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('sales/order/egovs_base_order_item');
+        return Mage::getSingleton('admin/session')->isAllowed('sales/egovs_base_order_item');
     }
 }
