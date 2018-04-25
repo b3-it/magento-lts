@@ -16,7 +16,7 @@ class B3it_Subscription_Block_Adminhtml_Subscription_Grid extends Mage_Adminhtml
 	{
 		parent::__construct();
 		$this->setId('subscriptionGrid');
-		$this->setDefaultSort('subscription_id');
+		$this->setDefaultSort('id');
 		$this->setDefaultDir('ASC');
 		$this->setSaveParametersInSession(true);
 	}
@@ -34,9 +34,7 @@ class B3it_Subscription_Block_Adminhtml_Subscription_Grid extends Mage_Adminhtml
 		->join(array('order'=>'sales_flat_order'),'order.entity_id=main_table.current_order_id',array('order_increment_id'=>'increment_id'))
 		//->join(array('first_order'=>'sales_flat_order'),'order.entity_id=main_table.first_order_id',array('first_order_increment_id'=>'increment_id'))
 		->join(array('customer'=>'customer_entity'),'order.customer_id=customer.entity_id',array('email'=>'email'))
-		->joinleft(array('stationen'=>'stationen_entity'),'stationen.entity_id=orderitem.station_id',array('stationskennung'=>'stationskennung'))
-		->joinleft(array('icd'=>'icd_orderitem'),'icd.order_item_id=main_table.current_orderitem_id',array('icd_id'=>'id'))
-		->joinleft(array('periode'=>'periode_periode'),'periode.entity_id=orderitem.period_id',array('periode'=>'label'))
+		
 		;
 
 		//die($collection->getSelect()->__toString());
@@ -63,11 +61,11 @@ class B3it_Subscription_Block_Adminhtml_Subscription_Grid extends Mage_Adminhtml
 
 	protected function _prepareColumns()
 	{
-		$this->addColumn('subscription_id', array(
+		$this->addColumn('id', array(
 				'header'    => Mage::helper('b3it_subscription')->__('ID'),
 				'align'     =>'right',
 				'width'     => '50px',
-				'index'     => 'subscription_id',
+				'index'     => 'id',
 		));
 
 
@@ -121,20 +119,7 @@ class B3it_Subscription_Block_Adminhtml_Subscription_Grid extends Mage_Adminhtml
 		));
 
 
-		$this->addColumn('stationskennung', array(
-				'header'    => Mage::helper('b3it_subscription')->__('Station'),
-				'align'     =>'left',
-				'index'     => 'stationskennung',
-				'width'     => '150px',
-		));
 		
-		$this->addColumn('periode', array(
-				'header'    => Mage::helper('b3it_subscription')->__('Periode'),
-				'align'     =>'left',
-				'index'     => 'periode',
-				'width'     => '150px',
-				'filter_index' => 'periode.label'
-		));
 
 		$this->addColumn('start_date', array(
 				'header'    => Mage::helper('b3it_subscription')->__('Start Date'),
@@ -153,10 +138,10 @@ class B3it_Subscription_Block_Adminhtml_Subscription_Grid extends Mage_Adminhtml
 				'type' => 'date'
 		));
 
-		$this->addColumn('cancelation_period_end', array(
-				'header'    => Mage::helper('b3it_subscription')->__('Cancelation Periode End'),
+		$this->addColumn('renewal_date', array(
+				'header'    => Mage::helper('b3it_subscription')->__('Renewal Date'),
 				'align'     =>'left',
-				'index'     => 'cancelation_period_end',
+				'index'     => 'renewal_date',
 				'width'     => '150px',
 				'type' => 'date'
 		));
@@ -204,26 +189,7 @@ class B3it_Subscription_Block_Adminhtml_Subscription_Grid extends Mage_Adminhtml
 						'is_system' => true,
 				));
 
-		$this->addColumn('action1',
-				array(
-						'header'    =>  Mage::helper('b3it_subscription')->__('Action'),
-						'width'     => '100',
-						'type'      => 'action',
-						'getter'    => 'getIcdId',
-						'actions'   => array(
-
-								array(
-										'caption'   => Mage::helper('b3it_subscription')->__('Change Station'),
-										'url'       => array('base'=> 'adminhtml/icd_orderitem/edit','params'=>array('back_url'=>'subscription')),
-										'field'     => 'id'
-								)
-						),
-						'filter'    => false,
-						'sortable'  => false,
-						'index'     => 'stores',
-						'is_system' => true,
-				));
-
+		
 		$this->addExportType('*/*/exportCsv', Mage::helper('b3it_subscription')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('b3it_subscription')->__('XML'));
 		 

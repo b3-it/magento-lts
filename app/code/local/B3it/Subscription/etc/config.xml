@@ -3,7 +3,7 @@
 <config>
     <modules>
         <B3it_Subscription>
-            <version>0.1.2</version>
+            <version>0.1.0</version>
         </B3it_Subscription>
     </modules>
     <frontend>
@@ -72,6 +72,15 @@
 		    			</b3it_subscription>
 		    		</children>
 		    	</sales>
+				<catalog>
+					<children>
+						<subscription module="b3it_subscription">
+							<title>Subscription Period</title>
+									<sort_order>10</sort_order>
+									<action>adminhtml/subscription_period/index</action>
+						</subscription>
+					</children>
+				</catalog>
 		    </menu>
 		    <acl>
 		    	<resources>
@@ -97,7 +106,7 @@
 		    				<sales>
 					    		<children>
 					    			<b3it_subscription module="b3it_subscription">
-										<title>Subscription</title>
+										<title>Subscription Period</title>
 									</b3it_subscription>
 								</children>
 							</sales>
@@ -112,6 +121,19 @@
 		    			            </config>
 		    			        </children>
 		    			    </system>
+		    			    <catalog>
+                    <children>
+                        <subscription module="b3it_subscription">
+                            <title>Subscription Period</title>
+                            <sort_order>10</sort_order>
+                            <children>
+                                <b3it_subscription_period module="b3it_subscription">
+                                    <title>Subscription Period</title>
+                                </b3it_subscription_period>
+                            </children>
+                        </subscription>
+                    </children>
+                </catalog>
 		    			</children>
 		    		</admin>
 		    	</resources>
@@ -132,24 +154,41 @@
                 </B3it_Subscription>
             </modules>
         </translate>
+        <events>
+           <catalog_product_save_after>
+                <observers>
+                    <subscription_observer_onProductSaveAfter>
+                        <class>b3it_subscription/observer</class>
+                        <method>onProductSaveAfter</method>
+                    </subscription_observer_onProductSaveAfter>
+                </observers>
+            </catalog_product_save_after>
+        </events>
     </adminhtml>
     <global>
         <models>
             <b3it_subscription>
                 <class>B3it_Subscription_Model</class>
-                <resourceModel>b3it_subscription_mysql4</resourceModel>
+                <resourceModel>b3it_subscription_resource</resourceModel>
             </b3it_subscription>
-            <b3it_subscription_mysql4>
-                <class>B3it_Subscription_Model_Mysql4</class>
+            <b3it_subscription_resource>
+                <class>B3it_Subscription_Model_resource</class>
                 <entities>
                     <subscription>
                         <table>b3it_subscription</table>
                     </subscription>
-                    <tierprice_depends>
-                        <table>b3it_subscription_tierprice_depends</table>
-                    </tierprice_depends>
+                     <period_label>
+                        <table>b3it_subscription_period_label</table>
+                    </period_label>
+                     <period_entity>
+                        <table>b3it_subscription_period_entity</table>
+                    </period_entity>
+                     <period_product>
+                        <table>b3it_subscription_period_product</table>
+                    </period_product>
+                  
                 </entities>
-            </b3it_subscription_mysql4>
+            </b3it_subscription_resource>
         </models>
         <resources>
             <b3it_subscription_setup>
@@ -190,7 +229,7 @@
         <jobs>
             <b3it_subscription_collect>
                 <schedule>
-                    <cron_expr>0,10,20,30,40,50 * * * *</cron_expr>
+                    <cron_expr>* * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>b3it_subscription/cron::collect</model>

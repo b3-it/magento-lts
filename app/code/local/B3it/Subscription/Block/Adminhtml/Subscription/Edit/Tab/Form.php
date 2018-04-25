@@ -108,7 +108,7 @@ class B3it_Subscription_Block_Adminhtml_Subscription_Edit_Tab_Form extends Mage_
       
       $dateFormatIso = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
       $fieldset->addField('cancelation_period_end', 'date', array(
-      		'label'     => Mage::helper('b3it_subscription')->__('Cancelation Periode End'),
+      		'label'     => Mage::helper('b3it_subscription')->__('Cancelation Period End'),
       		'required'  => true,
       		'name'      => 'cancelation_period_end',
       		'input_format' => Varien_Date::DATETIME_INTERNAL_FORMAT,

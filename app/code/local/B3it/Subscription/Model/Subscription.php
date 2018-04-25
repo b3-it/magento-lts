@@ -25,13 +25,13 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
     /**
      * Neue Bestellungen als Abonement einordnen
      * @param $orderItem Item der Bestellung
-     * @param null $startDate Tag des Anfangs diesert Periode
-     * @param int $periodeLength Länge der Periode in Tagen
+     * @param null $startDate Tag des Anfangs diesert Period
+     * @param int $periodLength Länge der Period in Tagen
      * @param int $renewalOffsett Zeitpunkt der Erneuerung in Tagen vom errechneten Enddatum ggf. mit negativem Vorzeichen
      * @return B3it_Subscription_Model_Subscription
      * @throws Exception
      */
-    protected function _addNewOrderItem($orderItem, $startDate = null, $periodeLength = 365, $renewalOffset = 0 )
+    protected function _addNewOrderItem($orderItem, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
     {
     	$subscription = Mage::getModel('b3it_subscription/subscription');
     	$subscription->setFirstOrderId($orderItem->getOrderId());
@@ -47,11 +47,11 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         }
 
     	$subscription->setStartDate($startDate);
-    	$subscription->setPeriodeLength($periodeLength);
+    	$subscription->setPeriodLength($periodLength);
     	$subscription->setRenewalOffset($renewalOffset);
 
         $stopDate = new Zend_Date($startDate, Varien_Date::DATETIME_INTERNAL_FORMAT, null);
-        $stopDate->add($periodeLength, Zend_Date::DAY);
+        $stopDate->add($periodLength, Zend_Date::DAY);
 
     	$subscription->setStopDate($stopDate);
 
@@ -64,6 +64,13 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         return $this;
     }
 
+    
+    
+    public function renewOrders()
+    {
+    	return $this->_renewOrders();
+    }
+    
     
     /**
      * SubscriptionProdukte neu bestellen
@@ -97,12 +104,11 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 
     		if(($item->getCustomerId() != $customerId ) || ($item->getOrderGroup() != $orderGroup))
     		{
-    			$this->_orderItems($items);
-    			$items = array();
+    			$items[$item->getOrderGroup()] = array();
     			
     		}
     		if($this->_isAvailable($item)){
-    			$items[] = $item;
+    			$items[$item->getOrderGroup()][] = $item;
     		}else {
     			$notAvilable[] = $item;
     		}
@@ -110,11 +116,12 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
             $customerId = $item->getCustomerId();
     		
     	}
-    	//die Letzten bearbeiten
+    	
     	$this->_orderItems($items);
   		
     	//nicht verfügbare bearbeiten
     	$this->_processNotAvailableItems($notAvilable);
+    	return $this;
     }
     
     /**
@@ -133,19 +140,22 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
     
     
    /**
-    * für die Items einse Abonnements eine Bestellung erstellen
+    * für die Items eines Abonnements eine Bestellung erstellen
     * @param array B3it_Subscription_Model_Subscription  $items
     */ 
-   protected function _orderItems($items)
+   protected function _orderItems($items2D)
    {
 	   	try
 	   	{
-	   		if (count($items) > 0) {
-	   			/** @var $order B3it_Subscription_Model_Order_Order */
-	   			$order = Mage::getModel('b3it_subscription/order_order');
-                Mage::dispatchEvent('b3it_subscription_order_create_before',array('data'=>$items));
-	   			$order->createOrders($items);
-                Mage::dispatchEvent('b3it_subscription_order_create_after',array('data'=>$items));
+	   		foreach ($items2D as $item1D)
+	   		{
+		   		if (count($item1D) > 0) {
+		   			/** @var $order B3it_Subscription_Model_Order_Order */
+		   			$order = Mage::getModel('b3it_subscription/order_order');
+	                Mage::dispatchEvent('b3it_subscription_order_create_before',array('data'=>$item1D));
+		   			$order->createOrders($item1D);
+	                Mage::dispatchEvent('b3it_subscription_order_create_after',array('data'=>$item1D));
+		   		}
 	   		}
 	   	}
 	   	catch(Exception $ex)

@@ -61,7 +61,7 @@ class B3it_Subscription_Block_Customer_Account_Items extends Mage_Core_Block_Tem
 		return $this->getSubscriptions();
 	}
 
-	public function getItemPeriode($item)
+	public function getItemPeriod($item)
 	{
 		$a = Mage::app()->getLocale()->date($item->getStartDate(), null, null, true);
 		$b = Mage::app()->getLocale()->date($item->getStopDate(), null, null, true);

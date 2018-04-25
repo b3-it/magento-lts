@@ -16,7 +16,6 @@ class B3it_Subscription_Model_Cron extends Mage_Core_Model_Abstract
     public static function collect()
     {
     	$model = Mage::getModel('b3it_subscription/subscription');
-
     	$model->renewOrders();
     }
     

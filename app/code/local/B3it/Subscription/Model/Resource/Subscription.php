@@ -10,23 +10,15 @@
  * @copyright  	Copyright (c) 2017 2014 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class B3it_Subscription_Model_Mysql4_Subscription extends Mage_Core_Model_Mysql4_Abstract
+class B3it_Subscription_Model_Resource_Subscription extends Mage_Core_Model_Mysql4_Abstract
 {
     public function _construct()
     {    
         // Note that the subscription_subscription_id refers to the key field in your database table.
-        $this->_init('b3it_subscription/subscription', 'subscription_id');
+        $this->_init('b3it_subscription/subscription', 'id');
     }
     
-    
-    public function removeTierPriceDepends($OrderItemId)
-    {
-    	if($OrderItemId){
-    		$table = $this->getTable('b3it_subscription/tierprice_depends');
-    		$this->_getWriteAdapter()->delete($table,"benefit_orderitem_id='" . $OrderItemId ."'");
-    		$this->_getWriteAdapter()->delete($table,"provider_orderitem_id='" . $OrderItemId ."'");
-    	}
-    }
+   
     
     /**
      * Ermitteln wieviele AktiveSubscriptions der Kunde von diesem Produkt hat
@@ -50,22 +42,6 @@ class B3it_Subscription_Model_Mysql4_Subscription extends Mage_Core_Model_Mysql4
     	return intval($result);
     }
     
-    public function switchTierPriceDepends($newOderItemId,$oldOrderItemId)
-    {
-    	if(!$newOderItemId) {return $this;}
-    	if(!$oldOrderItemId) {return $this;}
-    	
-    	$table = $this->getTable('b3it_subscription/tierprice_depends');
-    	//tierprice_depends_id, provider_orderitem_id, benefit_orderitem_id
-    	$sql = "UPDATE " .$table . " SET provider_orderitem_id = ".$newOderItemId. " where provider_orderitem_id =". $oldOrderItemId;	
-    	$this->_getReadAdapter()->query($sql);
-    	
-    	$sql = "UPDATE " .$table . " SET benefit_orderitem_id = ".$newOderItemId. " where benefit_orderitem_id =". $oldOrderItemId;
-    	$this->_getReadAdapter()->query($sql);
-    	
-    	return $this;
-    	
-    }
-    
+  
     
 }

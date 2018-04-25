@@ -20,23 +20,19 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		$product->setData('website_id', 0);
 		
 		$buyRequest = new Varien_Object();
-		$buyRequest->setData('periode',$subscriptionitem->getPeriodId());
-		$buyRequest->setData('station',$subscriptionitem->getStationId());
+		$buyRequest->setData('period',$subscriptionitem->getPeriodId());
+		
 		
 		$product->setSubscriptionItem($subscriptionitem);
 		$item = $quote->addProduct($product, $buyRequest);
 		$item->setQty(1);
 		
 
-       
-        /* @var $item Mage_Sales_Model_Quote_Item */
-        $item->addOption(array('code'=>'periode_id','value'=>$subscriptionitem->getPeriodId()));
-        $item->addOption(array('code'=>'station_id','value'=>$subscriptionitem->getStationId()));
-        $item->addOption(array('code'=>'previous_periode_end','value'=>$subscriptionitem->getStopDate()));
+      
       
        
-        $p = Mage::getModel('periode/periode')->load($subscriptionitem->getPeriodId());
-        $item->setPeriode($p);
+       
+        $item->setPeriod($p);
         $item->setSubscriptionItem($subscriptionitem);
         
 
@@ -156,20 +152,20 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	        	/** @var $orderItem Mage_Sales_Model_Order_Item **/
 	        	foreach($order->getItemsCollection() as $orderItem)
 	        	{
-	        		$periode_id = $orderItem->getPeriodId();
-	        		if($periode_id)
+	        		$period_id = $orderItem->getPeriodId();
+	        		if($period_id)
 	        		{
-	        			$periode = Mage::getModel('periode/periode')->load($periode_id);
+	        			$period = Mage::getModel('period/period')->load($period_id);
 	        			/** @var $quoteItem Mage_Sales_Model_Quote_Item **/
 	        			
 	        			$quoteItem = $this->_findQuoteItem($quote, $orderItem->getQuoteItemId());	
 	        			if($quoteItem){
-		        			$enddate = $quoteItem->getOptionByCode('previous_periode_end');
+		        			$enddate = $quoteItem->getOptionByCode('previous_period_end');
 		        			if($enddate){
 			        			$enddate = $enddate->getValue();
 			        			//$enddate= $item->getSubscriptionItem()->getStopDate();
 				           		$orderItem->setPeriodStart($enddate);
-				        		$orderItem->setPeriodEnd($periode->getEndDate(strtotime($enddate)));
+				        		$orderItem->setPeriodEnd($period->getEndDate(strtotime($enddate)));
 				        		$orderItem->save();
 		        			}
 	        			}
@@ -256,7 +252,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	    		$subscription->setStatus(B3it_Subscription_Model_Status::STATUS_ACTIVE);
 	    		$subscription->setStartDate($orderitem->getPeriodStart());
 	    		$subscription->setStopDate($orderitem->getPeriodEnd());
-	    		$p = Mage::getModel('periode/periode')->load($orderitem->getPeriodId());
+	    		$p = Mage::getModel('period/period')->load($orderitem->getPeriodId());
 	    		if($p->getId())
 	    		{
 	    			$p = intval($p->getCancelationPeriod());

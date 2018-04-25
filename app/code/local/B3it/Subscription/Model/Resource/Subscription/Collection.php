@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2017 2014 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class B3it_Subscription_Model_Mysql4_Subscription_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class B3it_Subscription_Model_Resource_Subscription_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
     public function _construct()
     {

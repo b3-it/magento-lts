@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <adminhtml_subscription_subscription_index>
+        <reference name="content">
+            <block type="b3it_subscription/adminhtml_subscription" name="subscription" >
+            </block>
+        </reference>
+    </adminhtml_subscription_subscription_index>
+    <adminhtml_subscription_period_index>
+        <reference name="content">
+            <block type="b3it_subscription/adminhtml_period" name="subscription" >
+            </block>
+        </reference>
+    </adminhtml_subscription_period_index>    
+    <adminhtml_catalog_product_edit>
+        <reference name="product_tabs">
+            <block type="b3it_subscription/adminhtml_catalog_product_edit_tab_period" name="tab_period" />                   
+            <action method="addTabAfter"><name>period</name><block>tab_period</block><after>inventory</after></action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+</layout> 
