@@ -13,6 +13,9 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     const COMPONENT_TYPE_CONTENT = 1;
     const COMPONENT_TYPE_FORMAT = 2;
     const COMPONENT_TYPE_GEOREF = 3;
+    const COMPONENT_TYPE_RESOLUTION = 4;
+    const COMPONENT_TYPE_STRUCTURE = 5;
+
 
     /**
      * Parameter name in event

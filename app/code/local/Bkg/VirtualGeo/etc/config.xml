@@ -352,7 +352,7 @@
                     <table>virtualgeo_components_resolution_label</table>
                    </components_resolution_label>
                    <components_resolution_product>
-                    <table>virtualgeo_components_resolution_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_resolution_product>
                     <components_content_category>
                         <table>virtualgeo_components_content_category</table>
