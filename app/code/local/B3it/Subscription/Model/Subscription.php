@@ -22,6 +22,11 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         $this->_init('b3it_subscription/subscription');
     }
 
+    public function addNewOrderItem($orderItem, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
+    {
+        return $this->_addNewOrderItem($orderItem, $startDate, $periodLength, $renewalOffset );
+    }
+
     /**
      * Neue Bestellungen als Abonement einordnen
      * @param $orderItem Item der Bestellung
@@ -33,34 +38,35 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
      */
     protected function _addNewOrderItem($orderItem, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
     {
-    	$subscription = Mage::getModel('b3it_subscription/subscription');
-    	$subscription->setFirstOrderId($orderItem->getOrderId());
-    	$subscription->setFirstOrderitemId($orderItem->getId());
-    	$subscription->setCurrentOrderId($orderItem->getOrderId());
-    	$subscription->setCurrentOrderitemId($orderItem->getId());
-    	$subscription->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_PAUSE);
-    	$subscription->setStatus(B3it_Subscription_Model_Status::STATUS_ACTIVE);
-    	$subscription->setOrderGroup($orderItem->getOrder()->getIncrementId());
+
+    	$this->setFirstOrderId($orderItem->getOrderId());
+        $this->setFirstOrderitemId($orderItem->getId());
+        $this->setCurrentOrderId($orderItem->getOrderId());
+        $this->setCurrentOrderitemId($orderItem->getId());
+        $this->setProductId($orderItem->getProduct()->getId());
+        $this->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_PAUSE);
+        $this->setStatus(B3it_Subscription_Model_Status::STATUS_ACTIVE);
+        $this->setOrderGroup($orderItem->getOrder()->getIncrementId());
 
     	if($startDate == null){
             $startDate = new Zend_Date();
         }
 
-    	$subscription->setStartDate($startDate);
-    	$subscription->setPeriodLength($periodLength);
-    	$subscription->setRenewalOffset($renewalOffset);
+        $this->setStartDate($startDate);
+        $this->setPeriodLength($periodLength);
+        $this->setRenewalOffset($renewalOffset);
 
         $stopDate = new Zend_Date($startDate, Varien_Date::DATETIME_INTERNAL_FORMAT, null);
         $stopDate->add($periodLength, Zend_Date::DAY);
 
-    	$subscription->setStopDate($stopDate);
+        $this->setStopDate($stopDate);
 
 
     	$date = new Zend_Date($stopDate, Varien_Date::DATETIME_INTERNAL_FORMAT, null);
 
     	$date->add($renewalOffset, Zend_Date::DAY);
-    	$subscription->setCancelationPeriodEnd($date);
-    	$subscription->save();
+        $this->setRenewalDate($date);
+        $this->save();
         return $this;
     }
 

@@ -155,14 +155,7 @@
             </modules>
         </translate>
         <events>
-           <catalog_product_save_after>
-                <observers>
-                    <subscription_observer_onProductSaveAfter>
-                        <class>b3it_subscription/observer</class>
-                        <method>onProductSaveAfter</method>
-                    </subscription_observer_onProductSaveAfter>
-                </observers>
-            </catalog_product_save_after>
+
         </events>
     </adminhtml>
     <global>
@@ -194,6 +187,7 @@
             <b3it_subscription_setup>
                 <setup>
                     <module>B3it_Subscription</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
@@ -220,10 +214,30 @@
                 <class>B3it_Subscription_Helper</class>
             </b3it_subscription>
         </helpers>
-    	<allowed_renewal_payment_methods>	
+    	<subscription_allowed_renewal_payment_methods>
     		<openaccount>openaccount</openaccount>
 			<sepadebitbund>sepadebitbund</sepadebitbund>
-    	</allowed_renewal_payment_methods>
+    	</subscription_allowed_renewal_payment_methods>
+        <events>
+            <checkout_type_onepage_save_order_after>
+                <observers>
+                    <eventmanager_save_order>
+                        <type>singleton</type>
+                        <class>b3it_subscription/observer</class>
+                        <method>onCheckoutSubmitAllAfter</method>
+                    </eventmanager_save_order>
+                </observers>
+            </checkout_type_onepage_save_order_after>
+        </events>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <subscription_period/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
     </global>
         <crontab>
         <jobs>

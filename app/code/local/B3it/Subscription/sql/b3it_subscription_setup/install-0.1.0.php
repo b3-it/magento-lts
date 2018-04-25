@@ -77,6 +77,7 @@ if (!$installer->tableExists($installer->getTable($table."_label")))
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 }
 
+/*
 if (!$installer->tableExists($installer->getTable($table.'_product'))) {
 	$installer->run("
 
@@ -94,6 +95,20 @@ if (!$installer->tableExists($installer->getTable($table.'_product'))) {
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	  ");
 }
+*/
+// Add new attributes
+$installer->addAttribute('catalog_product', 'subscription_period', array(
+    'label' => 'Subscription Period',
+    'group' => 'General',
+    'type' => 'text',
+    'input' => 'select',
+    'source' => 'b3it_subscription/entity_attribute_source_period',
+    'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
+    'required' => 0,
+    'user_defined' => 0,
+    'filterable_in_search' => 0,
+    'is_configurable' => 0,
 
+));
 
 $installer->endSetup();
