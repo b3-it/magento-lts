@@ -13,6 +13,7 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
         Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF => 'GeoRef',
         Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT => 'Format',
         Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_RESOLUTION => 'Resolution',
+        Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_STRUCTURE => 'Structure',
     );
 
     /**
@@ -38,6 +39,7 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
             case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF:
             case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT:
             case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_RESOLUTION:
+            case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_STRUCTURE:
             default:
                 return Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO;
         }

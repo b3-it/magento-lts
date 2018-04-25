@@ -343,7 +343,7 @@
                     <table>virtualgeo_components_structure_label</table>
                    </components_structure_label>
                    <components_structure_product>
-                    <table>virtualgeo_components_structure_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_structure_product>
                    <components_resolution_entity>
                     <table>virtualgeo_components_resolution_entity</table>
