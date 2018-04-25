@@ -13,21 +13,21 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content extends Bkg_V
 	public function getOptions($fields = null)
 	{
 		$options = parent::getOptions();
-		$res = $this->_findCildren(null,$options);
+		$res = $this->_findChildren(null,$options);
 		
 		
 		//var_dump($res); die;
 		return $res;
 	}
 	
-	protected function _findCildren($parentId,$options)
+	protected function _findChildren($parentId, $options)
 	{
 		$res = array();
 		foreach($options as $opt)
 		{
 			if($opt->getParentNodeId() == $parentId)
 			{
-				$opt->setChildren($this->_findCildren($opt->getId(),$options));
+				$opt->setChildren($this->_findChildren($opt->getId(),$options));
 				$res[] = $opt;
 			}
 		}

@@ -14,6 +14,7 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
         Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT => 'Format',
         Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_RESOLUTION => 'Resolution',
         Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_STRUCTURE => 'Structure',
+        Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_CONTENT => 'Content'
     );
 
     /**
@@ -36,6 +37,8 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
 
     public function getType() {
         switch ($this->getComponentType()) {
+            case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_CONTENT:
+                return Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX;
             case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_GEOREF:
             case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT:
             case Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_RESOLUTION:

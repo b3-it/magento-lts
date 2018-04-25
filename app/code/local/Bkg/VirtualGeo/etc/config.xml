@@ -322,8 +322,11 @@
                     <table>virtualgeo_components_content_label</table>
                    </components_content_label>
                    <components_content_product>
-                    <table>virtualgeo_components_content_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_content_product>
+                    <components_content_option_value>
+                        <table>virtualgeo_components_content_option_value</table>
+                    </components_content_option_value>
                    <components_content_category>
                     <table>virtualgeo_components_content_category</table>
                    </components_content_category>

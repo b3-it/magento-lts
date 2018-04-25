@@ -1,0 +1,19 @@
+<?php
+/** @var Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content $this */
+/** @var Varien_Object $_node */
+$_node = $this->getNode();
+
+if (!$_node) {
+    return;
+}
+?>
+<li>
+    <div>
+        <input
+                type="checkbox"
+                class="checkbox"
+                <?php echo $_node->getIsChecked() ? 'checked="checked"' : ''; ?>
+                <?php echo $_node->getReadonly() ? 'disabled="disabled"' : ''; ?>
+        >
+    </div>
+</li>

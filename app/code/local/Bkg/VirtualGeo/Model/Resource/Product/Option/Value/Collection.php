@@ -51,6 +51,7 @@ class Bkg_VirtualGeo_Model_Resource_Product_Option_Value_Collection extends Mage
             Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT => 'format',
             Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_RESOLUTION => 'resolution',
             Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_STRUCTURE => 'structure',
+            Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_CONTENT => 'Content',
         );
 
         $productOptionTitleTable = $this->getTable("virtualgeo/components_{$components[$this->getComponentType()]}_label");
