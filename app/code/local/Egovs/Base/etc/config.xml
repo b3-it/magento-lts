@@ -123,6 +123,9 @@
 	                                        </printingnote>
 	                                        </children>
 	                                    </actions>
+                                        <egovs_base_order_item module="egovsbase">
+                                            <title>Produkte pro Bestellung</title>
+                                        </egovs_base_order_item>
                                     </children>
                                 </order>
                             </children>
