@@ -389,6 +389,16 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
         return Mage::getSingleton('checkout/cart');
     }
 
+    // FIXME XXX no options for you!
+    public function hasOptions($product=NULL) {
+        return false;
+    }
+
+    // FIXME XXX no options for you!
+    public function getOptionsIds($product=NULL) {
+        return array();
+    }
+    
     /**
      * Retrieve bundle option collection
      *

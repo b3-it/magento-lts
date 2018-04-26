@@ -77,7 +77,10 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
 
         $text[] = "	url: url,";
         // srsName set somehow?
-
+        
+        // ajaxLoader to be make use of Overlay
+        $text[] = " loader: ajaxLoader,";
+        
         //$text[] = "	strategy: ol.loadingstrategy.bbox";
         $text[] = "});";
         
@@ -86,6 +89,7 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
         $text[] = "  title: '" . $helper->jsQuoteEscape($this->getLabel()) . "',";
         $text[] = "  layer_id: ".$this->getLayerId().",";
         $text[] = "  zIndex: " .$this->getVisualPos(). ",";
+        // default invisible, will be set visible with menu
         $text[] = "  visible: false,";
         $text[] = "  style: selectionStyle,";
         $text[] = "});";

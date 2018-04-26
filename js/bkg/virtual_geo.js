@@ -32,15 +32,46 @@ function polyIntersectsPoly(polygeomA, polygeomB) {
 	return geomA.intersects(geomB);
 };
 
-function makeview(epsg) {
-	pro = ol.proj.get("EPSG:"+ epsg);
-	return new ol.View({
-	     center: ol.proj.fromLonLat([13.73836, 51.049259], pro),
-	     projection: pro,
-	     maxZoom: 10,
-	     zoom: 6,
-	     minZoom: 2
-   });
+
+//Testing API for Virtual Geo
+function getAvailableTiles() {
+    return kachelSource.getFeatures();
+}
+
+function getSelectedTiles() {
+    return _kachelFinalSource.getFeatures();
+}
+
+function selectTiles(ids) {
+	addGridSelection(ids);
+}
+
+function removeTiles(ids) {
+	removeGridSelection(ids);
+}
+
+
+function getAvailableTools() {
+    return tools == null ? [] : tools.getLayers().getArray();
+}
+
+function getFeaturesByTool(toolLayer) {
+	return toolLayer == null ? [] : toolLayer.getSource().getFeatures();
+}
+
+function selectWithTool(toolLayer, features) {
+	getIntersectionTool(toolLayer, features, addGridSelection);
+}
+function removeWithTool(toolLayer, features) {
+	getIntersectionTool(toolLayer, features, removeGridSelection);
+}
+
+function incLoading() {
+	$j('#virtualgeo-openlayer').LoadingOverlay("show");
+}
+
+function decLoading() {
+	$j('#virtualgeo-openlayer').LoadingOverlay("hide");
 }
 
 function updateHiddenKachel() {
@@ -166,7 +197,9 @@ function getIntersectionTool(t, v, func) {
 
 	var lid = t.get('layer_id');
 	var kid = kachelVector.get('layer_id');
-	var sid = $j("input:checked[name='virtualgeo-components-georef[]']").val();
+	
+	// FIXME use epsg for now  
+	var sid = $j("input:checked[data-id='virtualgeo-components-georef']").attr('data-epsg');
 	var vid = v.getId();
 	
 	// TODO there add JS cache?
@@ -179,6 +212,8 @@ function getIntersectionTool(t, v, func) {
 	
 	url = baseUrl + "index.php/virtualgeo/map/intersectGeometry/select/" + lid + "/target/" + kid + "/srs/" + sid + "/id/" + vid;
 	$j.ajax(url, {
+		beforeSend: incLoading,
+		complete: decLoading,
 		success: function(data) {
 			intersectionCache[cachekey] = data;
 			func.call(null, data);
@@ -219,7 +254,6 @@ function baseSelection(lay, func) {
 		multi: true
 	});
 	sel.on('select', function(e) {
-		console.log(e);
 		if (!kachelSource || !_kachelFinalSource) {
 			// can't do anything with Kacheln, just deselect
 			e.target.getFeatures().clear();
@@ -325,7 +359,7 @@ $j(document).ready(function(){
         	if (ui.newPanel.length > 0) {
 
 				if (ui.newPanel.is('#virtualgeo-openlayer')) {
-					_epsg = $j("input:checked[name='virtualgeo-components-georef[]']").attr("data-epsg");
+					_epsg = $j("input:checked[data-id='virtualgeo-components-georef']").attr("data-epsg");
 					//_epsg = "3857";
 					//console.log(_epsg);
         			if (_map == null) {
@@ -443,7 +477,7 @@ $j(document).ready(function(){
             			    	
         			    		var lid = t.get('layer_id');
         			    		var kid = kachelVector.get('layer_id');
-        			    		var sid = $j("input:checked[name='virtualgeo-components-georef[]']").val();
+        			    		var sid = $j("input:checked[data-id='virtualgeo-components-georef']").val();
         			    		
         			    		$j('input[name=radio-toogleSelect]').prop( "checked", false ).checkboxradio( "refresh" );
         			    		$j('.toogleSelectCtrl > .ui-selectmenu-button').removeClass('ui-state-active');
@@ -524,7 +558,7 @@ $j(document).ready(function(){
         setOptionForTitle( $j(this) );
     });
     
-    $j(_accordionElement + " input[name='virtualgeo-components-structure[]']").on('change', function(event){
+    $j(_accordionElement + " input[data-id='virtualgeo-components-structure']").on('change', function(event){
     	// the structure doesn't want to show map
     	// add state disabled to the h3 to disable the tab
     	// disabled tabs can't open so no need to capture beforeActivate
