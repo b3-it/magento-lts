@@ -27,3 +27,33 @@ var selectStyle = new ol.style.Style({
 });
 
 var kachelZIndex = 300;
+
+//Mapseries colors:
+
+var mapseries_missing = new ol.style.Style({
+    stroke: new ol.style.Stroke({
+        color: 'rgba(0, 0, 0, 1.0)',
+        width: 1
+    }),
+    fill: new ol.style.Fill({
+        color: 'rgba(255, 0, 0, 0.25)',
+    }),
+});
+var mapseries_available = new ol.style.Style({
+    stroke: new ol.style.Stroke({
+        color: 'rgba(0, 0, 0, 1.0)',
+        width: 1
+    }),
+    fill: new ol.style.Fill({
+        color: 'rgba(0, 0, 255, 0.25)',
+    }),
+});
+var mapseries_selected = new ol.style.Style({
+    stroke: new ol.style.Stroke({
+        color: 'rgba(0, 0, 0, 1.0)',
+        width: 1
+    }),
+    fill: new ol.style.Fill({
+        color: 'rgba(0, 255, 0, 0.25)',
+    }),
+});

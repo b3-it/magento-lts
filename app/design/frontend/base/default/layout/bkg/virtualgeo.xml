@@ -193,6 +193,8 @@ Additional block for bundle product type
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
             <action method="addItem"><type>js</type><name>bkg/ol.tooglectrl.js</name></action>
+            <action method="addItem"><type>js</type><name>bkg/helper.js</name></action>
+            <action method="addItem"><type>js</type><name>lib/jquery/loadingoverlay.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/bkg/color.js</name></action>
             <action method="addJs"><script>bkg/virtual_geo.js</script></action>
         </reference>

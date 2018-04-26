@@ -154,4 +154,9 @@ class Bkg_VirtualGeo_Model_Product_Price extends Mage_Bundle_Model_Product_Price
 		return array($minimalPrice, $maximalPrice);
 	}
 	
+	// XXX TODO FIXME for now
+	public function getOptions($product)
+	{
+	    return null;
+	}
 }
