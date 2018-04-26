@@ -40,7 +40,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 			$parent = null;
 			if($item->getParentNodeId())
 			{
-				$parent = $this->_findItem($items,$item->getParentNodeId());
+				$parent = $this->_findItem($item,$item->getParentNodeId());
 			}
 			
 			$res[] = new Varien_Object(array('id'=>$item->getId(),

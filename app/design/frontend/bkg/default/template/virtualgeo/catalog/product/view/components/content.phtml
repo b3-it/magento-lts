@@ -8,6 +8,8 @@
 
 <div class="option-row">
     <ul>
-        <?php echo $this->getTreeHtml(); ?>
+        <?php foreach($this->getOptions() as $_node): ?>
+            <?php echo $this->getNodeHtml($_node) ?>
+        <?php endforeach ?>
     </ul>
 </div>
