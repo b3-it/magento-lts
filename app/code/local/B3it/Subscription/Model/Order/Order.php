@@ -7,8 +7,7 @@
  * @package    	B3it_Subscription
  * @name       	B3it_Subscription_Model_Order_Order
  * @author 		Holger Kögel <h.koegel@b3-it.de>
- * @copyright  	Copyright (c) 2012 2014 B3 IT Systeme GmbH - http://www.b3-it.de
- * @copyright  	Copyright (c) 2014 B3 - IT Systeme GmbH - http://www.b3-it.de
+ * @copyright  	Copyright (c) 2017 B3 - IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class B3it_Subscription_Model_Order_Order extends B3it_Subscription_Model_Order_Abstract
@@ -33,15 +32,21 @@ class B3it_Subscription_Model_Order_Order extends B3it_Subscription_Model_Order_
 	
 	/**
 	 * Bestellung für einen Liste von Subscription Items erstellen
-	 * @param array $items
+	 * @param array B3it_Subscription_Model_Subscription $items
 	 * @return B3it_Subscription_Model_Order_Order
 	 */
-	public function createOrders($items)
+	public function placeOrder( $items)
 	{
-
+        $isVirtual = $this->_isVirtual($items);
+        //erstes Element
 		$first = array_shift($items);
-		$subscription_quote = $this->getQuote($first);
-		$this->addItem($subscription_quote,$first);
+        //array shift rückgangig machen
+        $items[] = $first;
+
+        $this->_customer = Mage::getModel('customer/customer')->load($first->getCustomerId());
+
+        $subscription_quote = $this->getQuote($first,$isVirtual);
+
 		
 		$oldOrder = Mage::getModel('sales/order')->load($first->getFirstOrderId());
 		
@@ -53,13 +58,14 @@ class B3it_Subscription_Model_Order_Order extends B3it_Subscription_Model_Order_
 		//add Items to Quote
 		foreach ($items as $item)
 		{
-			$this->addItem($subscription_quote,$item);
+			$this->addItem2Quote($subscription_quote,$item);
 		}
 		
 		$this->setRuleData($subscription_quote);
 		$subscription_quote->collectTotals()->save();
-		
-		
+
+        $totals = $subscription_quote->getTotals();
+
 		$lastmethod = $this->getLastOrderPaymentMethod($first->getFirstOrderId());
 				
 		$subscription_quote->setIsBatchOrder(true);
@@ -83,6 +89,11 @@ class B3it_Subscription_Model_Order_Order extends B3it_Subscription_Model_Order_
 			
 			try {
 				$order = $this->getOrder($subscription_quote, $AllowedPaymentMethod, $first_increment_id);
+                foreach($items as $item)
+                {
+                    $item->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_REORDERD);
+                    $item->getResource()->saveField($item,'renewal_status');
+                }
 			}
 			catch(Exception $ex)
 			{
@@ -91,9 +102,9 @@ class B3it_Subscription_Model_Order_Order extends B3it_Subscription_Model_Order_
 		}
 		else 
 		{
-			//array shift rückgangig machen
-			$items[] = $first;
+
 			$this->sendSubscriptionRefreshEMail($subscription_quote->getCustomer(), $items);
+
 		}
 		return $this;
 	}
@@ -107,7 +118,7 @@ class B3it_Subscription_Model_Order_Order extends B3it_Subscription_Model_Order_
 	 */
 	protected function getAllowedPaymentMethod($subscription_quote, $lastmethod)
 	{
-			$allowed = Mage::getConfig()->getNode('global/allowed_renewal_payment_methods')->asArray();
+			$allowed = Mage::getConfig()->getNode('global/subscription/allowed_renewal_payment_methods')->asArray();
 			$store = $subscription_quote ? $subscription_quote->getStoreId() : null;
             $methods = Mage::helper('payment')->getStoreMethods($store, $subscription_quote);
             $total = $subscription_quote->getBaseSubtotal();

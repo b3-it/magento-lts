@@ -41,7 +41,18 @@ class B3it_Subscription_Model_Resource_Subscription extends Mage_Core_Model_Mysq
     	
     	return intval($result);
     }
-    
+
+    public function saveField($object,$field)
+    {
+        if ($object->getId() && !empty($field))
+        {
+            $table = $this->getMainTable();
+            $data = array($field => $object->getData($field));
+            $this->_getWriteAdapter()->update($table, $data, 'id ='. intval($object->getId()));
+        }
+
+        return $this;
+    }
   
     
 }

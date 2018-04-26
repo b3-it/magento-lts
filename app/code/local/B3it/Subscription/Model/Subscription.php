@@ -16,15 +16,49 @@
 
 class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstract
 {
+    /**
+     *  @method int getId()
+     *  @method setId(int $value)
+     *  @method int getFirstOrderId()
+     *  @method setFirstOrderId(int $value)
+     *  @method int getFirstOrderitemId()
+     *  @method setFirstOrderitemId(int $value)
+     *  @method int getCurrentOrderId()
+     *  @method setCurrentOrderId(int $value)
+     *  @method int getCurrentOrderitemId()
+     *  @method setCurrentOrderitemId(int $value)
+     *  @method int getProductId()
+     *  @method setProductId(int $value)
+     *  @method int getCounter()
+     *  @method setCounter(int $value)
+     *  @method int getRenewalStatus()
+     *  @method setRenewalStatus(int $value)
+     *  @method int getStatus()
+     *  @method setStatus(int $value)
+     *  @method  getStartDate()
+     *  @method setStartDate( $value)
+     *  @method  getStopDate()
+     *  @method setStopDate( $value)
+     *  @method  getRenewalDate()
+     *  @method setRenewalDate( $value)
+     *  @method int getPeriodLength()
+     *  @method setPeriodLength(int $value)
+     *  @method int getRenewalOffset()
+     *  @method setRenewalOffset(int $value)
+     *  @method string getOrderGroup()
+     *  @method setOrderGroup(string $value)
+*/
+    protected $_currentOrderItem = null;
+
     public function _construct()
     {
         parent::_construct();
         $this->_init('b3it_subscription/subscription');
     }
 
-    public function addNewOrderItem($orderItem, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
+    public function addNewOrderItem($orderItem, $quote, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
     {
-        return $this->_addNewOrderItem($orderItem, $startDate, $periodLength, $renewalOffset );
+        return $this->_addNewOrderItem($orderItem, $quote, $startDate, $periodLength, $renewalOffset );
     }
 
     /**
@@ -36,8 +70,9 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
      * @return B3it_Subscription_Model_Subscription
      * @throws Exception
      */
-    protected function _addNewOrderItem($orderItem, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
+    protected function _addNewOrderItem($orderItem, $quote, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
     {
+
 
     	$this->setFirstOrderId($orderItem->getOrderId());
         $this->setFirstOrderitemId($orderItem->getId());
@@ -47,6 +82,16 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         $this->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_PAUSE);
         $this->setStatus(B3it_Subscription_Model_Status::STATUS_ACTIVE);
         $this->setOrderGroup($orderItem->getOrder()->getIncrementId());
+
+        //falls es eine Verlängerung ist
+        $oldSubscription = $this->_getSubscriptionItem($orderItem,$quote);
+        if($oldSubscription){
+            $this->setFirstOrderId($oldSubscription->getFirstOrderId());
+            $this->setFirstOrderitemId($oldSubscription->getFirstOrderitemId());
+            $this->setOrderGroup($oldSubscription->getOrderGroup());
+            $this->setCounter(intval($oldSubscription->getCounter()) +1);
+            $startDate = new Zend_Date($oldSubscription->getStopDate());
+        }
 
     	if($startDate == null){
             $startDate = new Zend_Date();
@@ -70,124 +115,27 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         return $this;
     }
 
-    
-    
-    public function renewOrders()
-    {
-    	return $this->_renewOrders();
-    }
-    
-    
     /**
-     * SubscriptionProdukte neu bestellen
-     *
+     * @param Mage_Sales_Model_Order_Item $orderItem
+     * @param Mage_Sales_Model_Quote $quote
      */
-    protected function _renewOrders($limit = 20)
+    protected function _getSubscriptionItem($orderItem, $quote)
     {
-    	$exp1 = new Zend_Db_Expr("(order.status = '".Mage_Sales_Model_Order::STATE_COMPLETE ."') OR (order.status = '".Mage_Sales_Model_Order::STATE_PROCESSING."')");
-    	 
-    	$collection = $this->getCollection();
-    	
-    	$collection->getSelect()
-    		->join(array('order'=>'sales_flat_order'),'order.entity_id=main_table.first_order_id',array('order_status'=>'status','store_id'=>'store_id'))
-    		->join(array('customer'=>'customer_entity'),'order.customer_id=customer.entity_id',array('customer_id'=>'customer.entity_id'))
-    		->where("(renewal_date) <= ('".Mage::getModel('core/date')->gmtDate()."')")
-    		->where('main_table.status = '.B3it_Subscription_Model_Status::STATUS_ACTIVE)
-    		->where('renewal_status = '.B3it_Subscription_Model_Renewalstatus::STATUS_PAUSE)
-    		->where($exp1)
-    		->order('main_table.order_group')
-    		->limit($limit);
-    	
-    	//die($collection->getSelect()->__toString());
-        $customerId = 0;
-        $orderGroup = null;
-    	$items = array();
-    	$notAvilable = array();
-    	foreach ($collection->getItems() as $item)
-    	{
-    		$item->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_ORDER_PENDING);
-    		$item->saveField('renewal_status');
-
-    		if(($item->getCustomerId() != $customerId ) || ($item->getOrderGroup() != $orderGroup))
-    		{
-    			$items[$item->getOrderGroup()] = array();
-    			
-    		}
-    		if($this->_isAvailable($item)){
-    			$items[$item->getOrderGroup()][] = $item;
-    		}else {
-    			$notAvilable[] = $item;
-    		}
-            $orderGroup = $item->getOrderGroup();
-            $customerId = $item->getCustomerId();
-    		
-    	}
-    	
-    	$this->_orderItems($items);
-  		
-    	//nicht verfügbare bearbeiten
-    	$this->_processNotAvailableItems($notAvilable);
-    	return $this;
-    }
-    
-    /**
-     * prüfen ob das ursprüngliche Produkt noch zu verfügung steht
-     * @return boolean
-     */
-    protected function _isAvailable($orderItem)
-    {
-    	$p = Mage::getModel('catalog/product')->load($orderItem->getProductId());
-    	if(($p->getId() == 0) || ($p->getStatus() == Mage_Catalog_Model_Product_Status::STATUS_DISABLED)){
-    		return false;
-    	}
-    	
-    	return true;
-    }
-    
-    
-   /**
-    * für die Items eines Abonnements eine Bestellung erstellen
-    * @param array B3it_Subscription_Model_Subscription  $items
-    */ 
-   protected function _orderItems($items2D)
-   {
-	   	try
-	   	{
-	   		foreach ($items2D as $item1D)
-	   		{
-		   		if (count($item1D) > 0) {
-		   			/** @var $order B3it_Subscription_Model_Order_Order */
-		   			$order = Mage::getModel('b3it_subscription/order_order');
-	                Mage::dispatchEvent('b3it_subscription_order_create_before',array('data'=>$item1D));
-		   			$order->createOrders($item1D);
-	                Mage::dispatchEvent('b3it_subscription_order_create_after',array('data'=>$item1D));
-		   		}
-	   		}
-	   	}
-	   	catch(Exception $ex)
-	   	{
-	   		Mage::log($ex->getMessage(), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
-	   	}
-   } 
-   
-   
-   /**
-    * nicht verfügbare Produkte (Zeitraum, Station, Produkt fehlt) einen Nachrichtverseneden und Subscription deaktivieren
-    * @param  array B3it_Subscription_Model_Subscription $items
-    */
-   protected function _processNotAvailableItems($items)
-   {
-        if (count($items) > 0) {
-            foreach ($items as $item){
-                $item->setStatus(B3it_Subscription_Model_Status::STATUS_DELETE);
-                $item->saveField('status');
-                Mage::dispatchEvent('b3it_subscription_product_not_available',array('data'=>$item));
+        $quoteItem = null;
+        foreach($quote->getAllItems() as $item)
+        {
+            if($item->getId() == $orderItem->getQuoteItemId()){
+                $quoteItem = $item;
             }
         }
-   }
-   
 
-   
+
+        if($quoteItem){
+            return $quoteItem->getSubscriptionItem();
+        }
+        return null;
+    }
+
    /**
     * Helper Datun in Lokaler Zeit formatieren
     * @return string <string, unknown>
@@ -237,5 +185,16 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 	   	$date = Mage::app()->getLocale()->date($sDate, null, null, true);
 	   	return $date->toString(Zend_Date::DATETIME_MEDIUM);
    }
-   
+
+    /**
+     * @return Mage_Sales_Model_Order_Item
+     */
+   public function getCurrentOrderItem()
+   {
+        if($this->_currentOrderItem == null)
+        {
+            $this->_currentOrderItem = Mage::getModel('sales/order_item')->load($this->getCurrentOrderitemId());
+        }
+        return $this->_currentOrderItem;
+   }
 }

@@ -6,7 +6,10 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	/* @var $_SepaMandate Egovs_Paymentbase_Model_Sepa_Mandate */
 	protected $_SepaMandate = null;
 	protected $_customer = null;
-	
+
+    const SHIPPING_DEFAULT = 'freeshipping_freeshipping';
+    protected $_shippingmethod = null;
+
 	/**
 	 * 
 	 * 
@@ -14,32 +17,64 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	 * @param B3it_Subscription_Model_Subscription $subscriptionitem
 	 * @return Mage_Sales_Model_Quote_Item
 	 */
-	protected function addItem($quote,$subscriptionitem)
+	protected function addItem2Quote($quote,$subscriptionitem)
 	{
 		$product = Mage::getModel('catalog/product')->load($subscriptionitem->getProductId());
 		$product->setData('website_id', 0);
 		
 		$buyRequest = new Varien_Object();
-		$buyRequest->setData('period',$subscriptionitem->getPeriodId());
-		
-		
+		$buyRequest->setData('qty',1);
+		//$buyRequest->setData('period',$subscriptionitem->getPeriodId());
+
+        $oldOptions = $this->_getLastOptions($subscriptionitem);
+        $buyRequest->setOptions($oldOptions);
+
 		$product->setSubscriptionItem($subscriptionitem);
 		$item = $quote->addProduct($product, $buyRequest);
-		$item->setQty(1);
-		
 
-      
-      
-       
-       
-        $item->setPeriod($p);
+
         $item->setSubscriptionItem($subscriptionitem);
-        
+
+        $item->save();
+        if($quote->getIsVirtual()){
+            //$quote->getBillingAddress()->addItem($item);
+        }else{
+            //$quote->getShippingAddress()->addItem($item);
+        }
 
 
 		return $item;
 	}
-	
+
+    /**
+     * @param B3it_Subscription_Model_Subscription $subscriptionitems
+     * @return bool
+     */
+	protected function _isVirtual($subscriptionitems)
+    {
+        foreach($subscriptionitems as $item)
+        {
+            if(!$item->getCurrentOrderItem()->getIsVirtual()){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+	protected function _getLastOptions($subscriptionitem)
+    {
+        $oldOrderItem = $subscriptionitem->getCurrentOrderItem();
+        $oldOptions = $oldOrderItem->getProductOptions();
+        if(isset($oldOptions['info_buyRequest'])) {
+            $oldBuyRequest = $oldOptions['info_buyRequest'];
+            if(isset($oldBuyRequest['options'])) {
+                return $oldBuyRequest['options'];
+            }
+        }
+
+        return array();
+    }
 	
 	protected function setRuleData($quote)
 	{
@@ -53,29 +88,72 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		            'customer_group_id' => $quote->getCustomerGroupId(),
 		)));
 	}
-	
-    protected function getQuote($item)
+
+    protected function _getShippingMethod() {
+        if ($this->_shippingmethod == null) {
+            $this->_shippingmethod = Mage::getStoreConfig('b3it_subscription/general/shippingmethod');
+            if (!is_string($this->_shippingmethod)) {
+                $this->_shippingmethod = self::SHIPPING_DEFAULT;
+            }
+        }
+        return $this->_shippingmethod;
+    }
+
+    protected function _setShippingMethod($quote)
     {
-    	$customer = Mage::getModel('customer/customer')->load($item->getCustomerId());
+        $addresses = $quote->getAllShippingAddresses();
+        foreach ($addresses as $address)
+        {
+            $address->setShippingMethod($this->_getShippingMethod());
+            //wichtig damit die ShippingRates geladen werden
+            $address->requestShippingRates();
+            $address->save();
+        }
+        return $this;
+    }
+
+    protected function getQuote($item, $isVirtual)
+    {
+    	$customer = $this->_customer;
     	Mage::getSingleton('customer/session')->setCustomerGroupId($customer->getGroupId());
 		$quote = Mage::getModel('sales/quote');
 		
 		$storeId = $customer->getStoreId();		
 		if (empty($storeId) || '' == $storeId) {
-			$storeId = 0;//Mage::getStoreConfig('stalasubscription/invoice/subscription_invoice_store');
+			$storeId = 0;
 		}				
 		$quote->setStoreId($storeId);
 		$quote->reserveOrderId();
-		
+		$quote->setIsVirtual($isVirtual);
 		$quote->setCustomer($customer);
 		
 		$billingAdr = $customer->getDefaultBillingAddress();
 
-        
+		if(!$billingAdr){
+		    Mage::throwException('DefaultBillingAddress not found! CustomerId: '.$customer->getId());
+        }
+
         $billingAdr = Mage::getModel('sales/quote_address')->importCustomerAddress($billingAdr);
         $billingAdr->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_BILLING);
         $quote->setBillingAddress($this->addressToQuoteAddress($billingAdr));
         $billingAdr->setQuote($quote);
+
+        if(!$isVirtual) {
+            $shippingAdr = $customer->getDefaultShippingAddress();
+
+            if (!$shippingAdr) {
+                Mage::throwException('DefaultShippingAddress not found! CustomerId: '.$customer->getId());
+            }
+
+            $shippingAdr = Mage::getModel('sales/quote_address')->importCustomerAddress($shippingAdr);
+            $shippingAdr->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_SHIPPING);
+            $quote->setShippingAddress($this->addressToQuoteAddress($shippingAdr));
+            $shippingAdr->setQuote($quote);
+            $this->_setShippingMethod($quote);
+
+        }
+
+
         
         $baseAdr = $customer->getBaseAddress();
         
@@ -98,6 +176,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
     protected function getOrder($quote, $payment, $first_increment_id=null)
     {
     	/* @var $quote Mage_Sales_Model_Quote */
+
         $totals = $quote->getTotals();
        
        	if($totals['grand_total']['value'] < 0.01)
@@ -109,20 +188,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
         {
         	$this->addPaymentMethode($quote,$payment->getCode());
         }
-        
-        
-        
-        if($this->_customer)
-        {
-        	if($this->_customer->getId() != $quote->getCustomerId())
-        	{
-        		$this->_customer = Mage::getModel('customer/customer')->load($quote->getCustomerId());
-        	}
-        }
-        else
-        {
-        	$this->_customer = Mage::getModel('customer/customer')->load($quote->getCustomerId());
-        }
+
         $payment = $quote->getPayment();
         
         if( $lastSepa =  $payment->getLastSepaMethod())
@@ -152,25 +218,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	        	/** @var $orderItem Mage_Sales_Model_Order_Item **/
 	        	foreach($order->getItemsCollection() as $orderItem)
 	        	{
-	        		$period_id = $orderItem->getPeriodId();
-	        		if($period_id)
-	        		{
-	        			$period = Mage::getModel('period/period')->load($period_id);
-	        			/** @var $quoteItem Mage_Sales_Model_Quote_Item **/
-	        			
-	        			$quoteItem = $this->_findQuoteItem($quote, $orderItem->getQuoteItemId());	
-	        			if($quoteItem){
-		        			$enddate = $quoteItem->getOptionByCode('previous_period_end');
-		        			if($enddate){
-			        			$enddate = $enddate->getValue();
-			        			//$enddate= $item->getSubscriptionItem()->getStopDate();
-				           		$orderItem->setPeriodStart($enddate);
-				        		$orderItem->setPeriodEnd($period->getEndDate(strtotime($enddate)));
-				        		$orderItem->save();
-		        			}
-	        			}
-		        		
-	        		}
+
 	        	}
 	        	
 	        	
@@ -182,11 +230,12 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		        Mage::dispatchEvent('checkout_type_onepage_save_order_after',
 		        		array('order'=>$order, 'quote'=>$quote));
 	        }
-	        $this->createNewSubscription($order,$quote);
+
         }
         catch (Exception $ex)
         {
-        	$this->onFailure($order,$quote);
+
+        	$this->onFailure($order,$quote, $ex);
         }
         $quote->setIsActive(false)->save();
         
@@ -217,69 +266,8 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
     	return null;
     }
     
-    
-    /**
-     * Einträge füe die Subscriptions anlegen
-     * @param Mage_Sales_Model_Order $order
-     * @param Mage_Sales_Model_Quote $quote
-     * @return B3it_Subscription_Model_Order_Abstract
-     */
-    public function createNewSubscription($order,$quote)
-    {
-    	
-    	//nur für automatische Verlängerungen
-    	if(!$quote->getIsBatchOrder()){
-    		return $this;
-    	}
-    	
-    	
-    	//gleich die neuen Subscriptions anlegen
-    	foreach ($quote->getAllItems() as $quoteitem)
-    	{
-    		 
-    		$subscriptionitem = $quoteitem->getSubscriptionItem();
-    		if($subscriptionitem != null)
-    		{
-	    		$orderitem = $order->getItemByQuoteItemId($quoteitem->getId());
-	    		 
-	    		//neues Subscription erzeugen
-	    		$subscription = Mage::getModel('b3it_subscription/subscription');
-	    		$subscription->setFirstOrderId($subscriptionitem->getFirstOrderId());
-	    		$subscription->setFirstOrderitemId($subscriptionitem->getFirstOrderitemId());
-	    		$subscription->setCurrentOrderId($orderitem->getOrderId());
-	    		$subscription->setCurrentOrderitemId($orderitem->getId());
-	    		$subscription->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_PAUSE);
-	    		$subscription->setStatus(B3it_Subscription_Model_Status::STATUS_ACTIVE);
-	    		$subscription->setStartDate($orderitem->getPeriodStart());
-	    		$subscription->setStopDate($orderitem->getPeriodEnd());
-	    		$p = Mage::getModel('period/period')->load($orderitem->getPeriodId());
-	    		if($p->getId())
-	    		{
-	    			$p = intval($p->getCancelationPeriod());
-	    		} else {
-	    			$p = 14; //default 14 Tage Kündigungsfrist
-	    		}
-	    	
-	    		 
-	    		$date = new Zend_Date($orderitem->getPeriodEnd(), Varien_Date::DATETIME_INTERNAL_FORMAT, null);
-	    		//$date = new Zend_Date(strtotime($orderitem->getPeriodEnd()));
-	    		$date->add($p *-1, Zend_Date::DAY);
-	    		$subscription->setCancelationPeriodEnd($date);
-	    		$subscription->save();
-	    	
-	    		//ids switchen vor löschen des alten subscriptions
-	    		$subscription->switchTierPriceDepends($subscriptionitem);
-	    	
-	    		//beim speichern eines nicht aktiven des Subscriptions werden die Staffelpreisabhängigkeiten gelöscht
-	    		$subscriptionitem->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_REORDERD);
-	    		$subscriptionitem->setStatus(B3it_Subscription_Model_Status::STATUS_EXPIRED);
-	    		$subscriptionitem->save();
-    		}
-    	
-    		 
-    	}
-    	return $this;
-    }
+
+
     
     /**
      * Fehlerbehandlung
@@ -287,18 +275,18 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
      * @param Mage_Sales_Model_Quote $quote
      * @return B3it_Subscription_Model_Order_Abstract
      */
-    public function onFailure($order,$quote)
+    public function onFailure($order,$quote,$ex)
     {
-    	
+        Mage::logException($ex);
     	
     	//nur für automatische Verlängerungen
     	if(!$quote->getIsBatchOrder()){
     		return $this;
     	}
-    	
-    	
-    	$order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED,"Fehler bei der Subscriptionverlängerung",false);
-    	$order->save();
+    	if($order) {
+            $order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED, "Fehler bei der Subscriptionverlängerung", false);
+            $order->save();
+        }
     	$subscriptionIds = array();
     	foreach ($quote->getAllItems() as $quoteitem)
     	{

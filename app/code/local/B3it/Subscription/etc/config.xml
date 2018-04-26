@@ -214,10 +214,13 @@
                 <class>B3it_Subscription_Helper</class>
             </b3it_subscription>
         </helpers>
-    	<subscription_allowed_renewal_payment_methods>
-    		<openaccount>openaccount</openaccount>
-			<sepadebitbund>sepadebitbund</sepadebitbund>
-    	</subscription_allowed_renewal_payment_methods>
+    	<subscription>
+            <allowed_renewal_payment_methods>
+                <openaccount>openaccount</openaccount>
+                <sepadebitbund>sepadebitbund</sepadebitbund>
+                <checkmo>checkmo</checkmo>
+    	    </allowed_renewal_payment_methods>
+        </subscription>
         <events>
             <checkout_type_onepage_save_order_after>
                 <observers>
@@ -246,7 +249,7 @@
                     <cron_expr>* * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>b3it_subscription/cron::collect</model>
+                    <model>b3it_subscription/cron::run</model>
                 </run>
             </b3it_subscription_collect>
         </jobs>
