@@ -131,14 +131,15 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
       
       
       
-      $fieldset->addField('bildungsregel', 'checkbox', array(
-      		'label'     => Mage::helper('virtualgeo')->__('bildungsregel'),
-      		'name'      => 'bildungsregel',
-      		'checked'	=> boolval($dataModel->getBildungsregel()),
+      $fieldset->addField('layer_naming_rule', 'text', array(
+      		'label'     => Mage::helper('virtualgeo')->__('Layer Naming Rule'),
+      		'name'      => 'layer_naming_rule',
+      	
       		//'onchange'  => 'toogleLayer()',
       		'readonly' => $store_id != 0,
       		'disabled' => $store_id != 0,
-      		'class'     =>  ($store_id != 0) ? 'readonly' : '',
+      		'value' => $dataModel->getLayerNamingRule(),
+      		'note'		=> "{{product_code}}_{{crs_code}}_{{structure_code}}"
       ));
       
       
