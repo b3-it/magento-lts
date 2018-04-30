@@ -10,28 +10,24 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content extends Bkg_V
 	
 	
 	
-	public function getOptions($fields = null)
-	{
-		$options = parent::getOptions();
-		$res = $this->_findChildren(null,$options);
-		
-		
-		//var_dump($res); die;
+	public function getOptions($fields = null) {
+        parent::getOptions($fields);
+
+		$res = $this->_findChildren(null);
+
 		return $res;
 	}
 	
-	protected function _findChildren($parentId, $options)
+	protected function _findChildren($parentId)
 	{
 		$res = array();
-		foreach($options as $opt)
-		{
-			if($opt->getParentNodeId() == $parentId)
-			{
-				$opt->setChildren($this->_findChildren($opt->getId(),$options));
+		foreach($this->_options as $opt) {
+			if ($opt->getParentNodeId() == $parentId) {
+				$opt->setChildren($this->_findChildren($opt->getNodeId()));
 				$res[] = $opt;
 			}
 		}
-		if(count($res) == null){
+		if (count($res) == null){
 			return null;
 		}
 		return $res;

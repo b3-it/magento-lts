@@ -146,36 +146,26 @@ class Bkg_VirtualGeo_Model_Observer
                 ->setEntityId($node['entity_id'])
                 ->setProductId($productId) //FK
                 ->setReadonly($node['is_readonly'])
-                ->setIsChecked($node['is_checked']);
-    		if(!$model->getId())
-    		{
-    			$model->save();
-    		}
-            $nodes[$key]['id'] = $model->getId();
-    		$node['model'] = $model;
-
-
+                ->setIsChecked($node['is_checked'])
+            ;
 
     		$model->save();
+            $nodes[$key]['id'] = $model->getId();
+            $node['model'] = $model;
             $nodes[$key] = $node;
     	}
     
     	//jetzt die Elternbeziehung und die Reihenfolge
-    	foreach($nodes as $node)
-    	{
-    
+    	foreach($nodes as $node) {
     		$model = $node['model'];
 
-
-            if(!isset($node['parent_number']) || empty($node['parent_number']))
-            {
+            if (!isset($node['parent_number']) || empty($node['parent_number'])) {
                 $model->setData('parent_node_id',null);
-            }else{
+            } else {
                 $parentNode = $this->findByNumber($nodes, $node['parent_number']);
-                $model->setParentNodeId($parentNode['model']->getId());
+                $model->setParentNodeId($parentNode['model']->getNodeId());
             }
-    
-    
+
     		$model->save();
     
     	}

@@ -28,7 +28,7 @@ class Bkg_VirtualGeo_Model_Components_Content extends Bkg_VirtualGeo_Model_Compo
 		$contentProductModel = Mage::getModel('virtualgeo/components_contentproduct');
 		$contentOptionValueTable = $contentProductModel->getResource()->getContentOptionValueTable();
 		$contentOptionValueFields = $contentProductModel->getResource()->getOptionValueAdditionalFields();
-		$contentOptionValueFields['additional_id'] = 'id';
+		$contentOptionValueFields['node_id'] = 'id';
 		$contentOptionValueEntityIdFieldName = $contentProductModel->getResource()->getOptionValueEntityIdFieldName();
 		$collection = $contentProductModel->getCollection();
 		//$collection->setStoreId($storeId);

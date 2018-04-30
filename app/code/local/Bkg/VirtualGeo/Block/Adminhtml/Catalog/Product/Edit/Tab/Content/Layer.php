@@ -49,6 +49,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 					    'is_readonly'=>boolval($item->getReadonly()),
 					    'is_checked'=>boolval($item->getIsChecked()) ,
 					    'pos' =>$item->getPos(),
+					    'node_id' => $item->getNodeId(),
+					    'parent_node_id' => $item->getParentNodeId() ? $item->getParentNodeId() : '',
 					    'parent' => $parent != null ? $parent->getId() : ''
 			        )
             );
@@ -58,9 +60,9 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 		return $res;
 	}
 	
-	protected function _findItem($items, $component_product_relation_id) {
+	protected function _findItem($items, $parentId) {
 		foreach ($items as $item) {
-			if ($item->getAdditionalId() == $component_product_relation_id) {
+			if ($item->getNodeId() == $parentId) {
 				return $item;
 			}
 		}

@@ -57,7 +57,9 @@ class Bkg_VirtualGeo_Model_Resource_Components_Contentproduct extends Bkg_Virtua
             $condition = $this->_getWriteAdapter()->prepareSqlCondition('id', intval($object->getId()));
             $this->_getWriteAdapter()->update($this->getContentOptionValueTable(), $optionValueItem->getData(), $condition);
         } else {
+            $entityId = $optionValueItem->getId();
             $optionValueItem->unsetData('id');
+            $optionValueItem->setEntityId($entityId);
             $this->_getWriteAdapter()->insert($this->getContentOptionValueTable(), $optionValueItem->getData());
         }
     }
@@ -68,6 +70,9 @@ class Bkg_VirtualGeo_Model_Resource_Components_Contentproduct extends Bkg_Virtua
 
     protected function _loadAdditional(Varien_Object $object)
     {
+        if (!$object->getId()) {
+            return $this;
+        }
         $table = $this->getContentOptionValueTable();
 
         $read = $this->_getReadAdapter();
