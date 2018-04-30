@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Egovs_ContextHelp>
+            <version>0.0.0.1</version>
+        </Egovs_ContextHelp>
+    </modules>
+    <global>
+        <blocks>
+            <contexthelp>
+                <class>Egovs_ContextHelp_Block</class>
+            </contexthelp>
+            <adminhtml />
+        </blocks>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <contexthelp>
+                    <file>egovs/contexthelp.xml</file>
+                </contexthelp>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Egovs_ContextHelp>
+                    <files>
+                        <default>Egovs/ContextHelp.csv</default>
+                    </files>
+                </Egovs_ContextHelp>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

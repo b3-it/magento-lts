@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.0.1">
+    <adminhtml_widget_instance_edit>
+        <reference name="widget_instance_edit_tabs">
+            <block type="contexthelp/adminhtml_widget_instance_edit_tab_contexthelp" name="widget_instance_edit_tab_contexthelp" />
+            <action method="addTab">
+                <name>contexthelp_section</name>
+                <block>widget_instance_edit_tab_contexthelp</block>
+            </action>
+        </reference>
+    </adminhtml_widget_instance_edit>
+</layout>
