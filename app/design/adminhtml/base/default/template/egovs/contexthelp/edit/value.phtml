@@ -1,0 +1,58 @@
+<div class="entry-edit-head">
+    <h4><?php echo $this->__('URL Set') ?></h4>
+    <div class="right"><?php echo $this->getAddUrlButtonHtml(); ?></div>
+</div>
+<div class="fieldset">
+    <div class="hor-scroll">
+        <div id="url_group_container"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var UrlTemplate = '<div class="options-box url_group_container" id="url_group_container_{{id}}">' +
+    '<div class="option-box">' +
+        '<div class="option-title">' +
+            '<?php echo $this->getRemoveUrlButtonHtml(); ?>' +
+            '<label for="widget_instance[{{id}}][url_group]">Page URL <span class="required">*</span></label>' +
+            '<input type="text" class="input-text" name="widget_instance[{{id}}][url_group]" value="" style="width:75%;" />' +
+        '</div>' +
+    '</div>' +
+'</div>';
+
+var ContextHelp = {
+    UrlTemplate     : UrlTemplate,
+    ContainerId     : 'url_group_container',
+    templatePattern : /(^|.|\r|\n)({{(\w+)}})/,
+    count           : 0,
+    activeUrlGroups : $H({}),
+    selectedItems   : {},
+
+    addUrlGroup: function(data) {
+        if (!data.page_id) {
+            data          = {};
+            data.page_id  = 0;
+            data.entities = '';
+        }
+        data.id = this.count++;
+
+        if (this.UrlTemplate && (UrlContainer = $(this.ContainerId))) {
+            TemplateObj = new Template(this.UrlTemplate, this.templatePattern);
+            Element.insert(UrlContainer, {'top': TemplateObj.evaluate(data)});
+        }
+    },
+    removeUrlGroup: function(element) {
+        container = element.up('div.url_group_container');
+        if (container) {
+            container.remove();
+        }
+    }
+};
+
+Ext.onReady(function(){
+    <?php foreach ($this->getUrlGroups() as $urlGroup): ?>
+        ContextHelp.addUrlGroup(<?php echo Zend_Json::encode($urlGroup) ?>);
+    <?php endforeach; ?>
+});
+//]]>
+</script>
