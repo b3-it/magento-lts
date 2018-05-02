@@ -136,6 +136,20 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         return null;
     }
 
+    public function saveStatus($status)
+    {
+    	$this->setStatus($status);
+    	$this->getResource()->saveField($this,'status');
+    	return $this;
+    }
+    
+    public function saveRenewalStatus($status)
+    {
+    	$this->setRenewalStatus($status);
+    	$this->getResource()->saveField($this,'renewal_status');
+    	return $this;
+    }
+    
    /**
     * Helper Datun in Lokaler Zeit formatieren
     * @return string <string, unknown>

@@ -29,8 +29,8 @@ class B3it_Subscription_Model_Order_Renewal extends B3it_Subscription_Model_Abst
     	$notAvilable = array();
     	foreach ($collection->getItems() as $item)
     	{
-    		$item->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_ORDER_PENDING);
-    		$item->getResource()->saveField($item,'renewal_status');
+    		$item->saveRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_ORDER_PENDING);
+    		
 
     		if(($item->getCustomerId() != $customerId ) || ($item->getOrderGroup() != $orderGroup))
     		{
@@ -79,7 +79,8 @@ class B3it_Subscription_Model_Order_Renewal extends B3it_Subscription_Model_Abst
                        /** @var $order B3it_Subscription_Model_Order_Order */
                        $order = Mage::getModel('b3it_subscription/order_order');
                        Mage::dispatchEvent('b3it_subscription_order_create_before', array('data' => $item1D));
-                       $order->placeOrder($item1D);
+                       $order->setItems($item1D);
+                       $order->placeOrder();
                        Mage::dispatchEvent('b3it_subscription_order_create_after', array('data' => $item1D));
 
                }

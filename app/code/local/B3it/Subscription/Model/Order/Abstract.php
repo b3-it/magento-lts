@@ -7,9 +7,20 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	protected $_SepaMandate = null;
 	protected $_customer = null;
 
-    const SHIPPING_DEFAULT = 'freeshipping_freeshipping';
-    protected $_shippingmethod = null;
-
+ 
+    protected $_shippingMethod = null;
+    protected $_paymentMethod = null;
+    /**
+     * 
+     * @var array B3it_Subscription_Model_Subscription
+     */
+	protected $_items = array();
+    
+	public function setItems($items)
+	{
+		$this->_items = $items;
+	}
+    
 	/**
 	 * 
 	 * 
@@ -17,7 +28,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	 * @param B3it_Subscription_Model_Subscription $subscriptionitem
 	 * @return Mage_Sales_Model_Quote_Item
 	 */
-	protected function addItem2Quote($quote,$subscriptionitem)
+	protected function _addItem2Quote($quote,$subscriptionitem)
 	{
 		$product = Mage::getModel('catalog/product')->load($subscriptionitem->getProductId());
 		$product->setData('website_id', 0);
@@ -36,12 +47,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
         $item->setSubscriptionItem($subscriptionitem);
 
         $item->save();
-        if($quote->getIsVirtual()){
-            //$quote->getBillingAddress()->addItem($item);
-        }else{
-            //$quote->getShippingAddress()->addItem($item);
-        }
-
+       
 
 		return $item;
 	}
@@ -50,9 +56,9 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
      * @param B3it_Subscription_Model_Subscription $subscriptionitems
      * @return bool
      */
-	protected function _isVirtual($subscriptionitems)
+	protected function _isVirtual()
     {
-        foreach($subscriptionitems as $item)
+        foreach($this->_items as $item)
         {
             if(!$item->getCurrentOrderItem()->getIsVirtual()){
                 return false;
@@ -92,19 +98,17 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
     protected function _getShippingMethod() {
         if ($this->_shippingmethod == null) {
             $this->_shippingmethod = Mage::getStoreConfig('b3it_subscription/general/shippingmethod');
-            if (!is_string($this->_shippingmethod)) {
-                $this->_shippingmethod = self::SHIPPING_DEFAULT;
-            }
         }
         return $this->_shippingmethod;
     }
 
-    protected function _setShippingMethod($quote)
+    protected function _setShippingMethod($quote,$shippingMethod)
     {
+    	
         $addresses = $quote->getAllShippingAddresses();
         foreach ($addresses as $address)
         {
-            $address->setShippingMethod($this->_getShippingMethod());
+            $address->setShippingMethod($shippingMethod);
             //wichtig damit die ShippingRates geladen werden
             $address->requestShippingRates();
             $address->save();
@@ -112,7 +116,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
         return $this;
     }
 
-    protected function getQuote($item, $isVirtual)
+    protected function _getQuote($isVirtual)
     {
     	$customer = $this->_customer;
     	Mage::getSingleton('customer/session')->setCustomerGroupId($customer->getGroupId());
@@ -126,7 +130,13 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		$quote->reserveOrderId();
 		$quote->setIsVirtual($isVirtual);
 		$quote->setCustomer($customer);
+		$quote->save();
+		return $quote;
+    }
 		
+	protected function _setQuoteAddresses($quote)
+	{
+		$customer = $this->_customer;
 		$billingAdr = $customer->getDefaultBillingAddress();
 
 		if(!$billingAdr){
@@ -138,7 +148,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
         $quote->setBillingAddress($this->addressToQuoteAddress($billingAdr));
         $billingAdr->setQuote($quote);
 
-        if(!$isVirtual) {
+        if(!$quote->isVirtual()) {
             $shippingAdr = $customer->getDefaultShippingAddress();
 
             if (!$shippingAdr) {
@@ -149,7 +159,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
             $shippingAdr->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_SHIPPING);
             $quote->setShippingAddress($this->addressToQuoteAddress($shippingAdr));
             $shippingAdr->setQuote($quote);
-            $this->_setShippingMethod($quote);
+            
 
         }
 
@@ -173,10 +183,10 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
     }
     
     
-    protected function getOrder($quote, $payment, $first_increment_id=null)
+    protected function _getOrder($quote, $first_increment_id=null)
     {
+    	$payment = $this->_paymentMethod;
     	/* @var $quote Mage_Sales_Model_Quote */
-
         $totals = $quote->getTotals();
        
        	if($totals['grand_total']['value'] < 0.01)
@@ -186,7 +196,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		}
         else 
         {
-        	$this->addPaymentMethode($quote,$payment->getCode());
+        	$this->addPaymentMethode($quote,$this->_paymentMethod->getCode());
         }
 
         $payment = $quote->getPayment();
@@ -291,11 +301,14 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
     	foreach ($quote->getAllItems() as $quoteitem)
     	{
     	
-    		$a = $quoteitem->getSubscriptionItem();
-    		$subscriptionIds[] = $a->getId();
+    		$subscript = $quoteitem->getSubscriptionItem();
+    		$subscriptionIds[] = $subscript->getId();
+    		$subscript->saveRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_ERROR);
     	}
     	$msg = "Die Subscription(s) mit den Id(s) ". implode(',', $subscriptionIds)." konnte(n) nicht verlängert werden." ;
-    	$msg .= " Die Bestellung " . $order->getIncrementId() ." wurde storniert.";
+    	if($order) {
+    		$msg .= " Die Bestellung " . $order->getIncrementId() ." wurde storniert.";
+    	}
     	$msg .= " Meldung: " . $ex->getMessage();
     	$this->sendMailToAdmin($msg);
     }
@@ -510,5 +523,151 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 			}
 		}
 	}
+	
+	
+	
+	protected function _getPaymentMethode($quote,$lastOrderId)
+	{
+		$lastmethod = $this->_getLastOrderPaymentMethod($lastOrderId);
+		$AllowedPaymentMethod = $this->_getAllowedPaymentMethod($quote, $lastmethod);
+		if($AllowedPaymentMethod)
+		{
+			//falls die letzte Bezahlmethode nicht mehr zur Verfügung steht
+			//$AllowedPaymentMethod =  array_shift($AllowedPaymentMethods);
+				
+			if(($AllowedPaymentMethod->getCode() == 'sepadebitbund') && ($lastmethod->getMethod() == 'sepadebitbund'))
+			{
+				$AllowedPaymentMethod->setLastSepaMethod($lastmethod);
+			}
+				
+			if(!$AllowedPaymentMethod)
+			{
+				Mage::log("Erlaubte Zahlmethode für Subscriptionverlängerung nicht gefunden!", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+				return null;
+			}
+			return $AllowedPaymentMethod;
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * letzte Zahlmethode ermitteln
+	 * @param integer $lastOrderId
+	 * @return <Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|string
+	 */
+	protected function _getLastOrderPaymentMethod($lastOrderId)
+	{
+		$payment = Mage::getModel('sales/order_payment')->load($lastOrderId,'parent_id');
+		if($payment->getId()){
+			return $payment;
+		}
+		return '';
+	}
+	
+	/**
+	 * Ermitteln der gültigen Zahlmethode, die zuletzt benutzte hat Vorrang
+	 * debit ist nur erlaubt wenn die initiale Methode debit war
+	 * @param Mage_Sales_Model_Quote $subscription_quote
+	 * @param Mage_Payment_Model_Method_Abstract $lastmethod
+	 * @return Mage_Payment_Model_Method_Abstract|NULL
+	 */
+	protected function _getAllowedPaymentMethod($subscription_quote, $lastmethod)
+	{
+		$allowed = Mage::getConfig()->getNode('global/subscription/allowed_renewal_payment_methods')->asArray();
+		$store = $subscription_quote ? $subscription_quote->getStoreId() : null;
+		$methods = Mage::helper('payment')->getStoreMethods($store, $subscription_quote);
+		$total = $subscription_quote->getBaseSubtotal();
+		$result = array();
+		foreach ($methods as $key => $method) {
+			if ($this->_canUseMethod($method, $subscription_quote,$allowed, $lastmethod)){
+				 
+				if ($method->getCode() == $lastmethod->getMethod())
+				{
+					return $method;
+				}
+				if ($method->getCode() != 'sepadebitbund')
+				{
+					$result[] = $method;
+				}
+			}
+		}
+	
+		//umsortieren: der erste Wert aus $allowed soll zurückgeliefert werden
+		if(count($result) > 0){
+			foreach($allowed as $a)
+			{
+				foreach ($result as $method)
+				{
+					if($method->getCode() == $a){
+						return $method;
+					}
+				}
+			}
+		}
+	
+		return null;
+	}
+	
+	/**
+	 * ermitteln ob die Zahlmethode zu verfügung steht, berücksichtigen und priorisieren der ersten Zahlmethode
+	 * @param Mage_Payment_Model_Method_Abstract $method
+	 * @param Mage_Sales_Model_Quote $subscription_quote
+	 * @param Mage_Payment_Model_Method_Abstract $allowed
+	 * @param Mage_Payment_Model_Method_Abstract $lastmethod
+	 * @return boolean
+	 */
+	protected function _canUseMethod($method,$subscription_quote, $allowed, $lastmethod)
+	{
+		if(!in_array($method->getCode(), $allowed)){
+			return false;
+		}
+	
+		if (!$method->canUseForCountry($subscription_quote->getBillingAddress()->getCountry())) {
+			return false;
+		}
+	
+		if (!$method->canUseForCurrency(Mage::app()->getStore()->getBaseCurrencyCode())) {
+			return false;
+		}
+	
+	
+		if(($lastmethod->getMethod() == "sepadebitbund") && ($method->getCode() == "sepadebitbund" )) {
+			//$ref = $lastmethod->getAdditionalInformation('mandate_reference');
+			$customer = $subscription_quote->getCustomer();
+			if(!$customer->getSepaMandateId()){
+				return false;
+			}else
+			{
+				$this->_SepaMandate = Mage::getModel('sepadebitbund/sepadebitbund')->getMandate($customer->getSepaMandateId());
+				if(!$this->_SepaMandate)
+				{
+					return false;
+				}
+				if(!$this->_SepaMandate->isActive())
+				{
+					return false;
+				}
+				if(!$this->_SepaMandate->isMultiPayment())
+				{
+					return false;
+				}
+			}
+				
+		}
+	
+		/**
+		 * Checking for min/max order total for assigned payment method
+		 */
+		$total = $subscription_quote->getBaseGrandTotal();
+		$minTotal = Mage::app()->getLocale()->getNumber($method->getConfigData('min_order_total'));
+		$maxTotal = Mage::app()->getLocale()->getNumber($method->getConfigData('max_order_total'));
+	
+		if((!empty($minTotal) && ($total < $minTotal)) || (!empty($maxTotal) && ($total > $maxTotal))) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 }

@@ -16,6 +16,7 @@ class B3it_Subscription_Model_Renewalstatus extends Varien_Object
     const STATUS_REORDERD	= 2;
     const STATUS_EMAIL_SEND	= 3;
     const STATUS_ORDER_PENDING	= 4;
+    const STATUS_ERROR	= 5;
 
     static public function getOptionArray()
     {
@@ -23,7 +24,8 @@ class B3it_Subscription_Model_Renewalstatus extends Varien_Object
             self::STATUS_PAUSE    		=> Mage::helper('b3it_subscription')->__('Pause'),
             self::STATUS_REORDERD   	=> Mage::helper('b3it_subscription')->__('Reorderd'),
         	self::STATUS_EMAIL_SEND 	=> Mage::helper('b3it_subscription')->__('Email sent'),
-        	self::STATUS_ORDER_PENDING=> Mage::helper('b3it_subscription')->__('in Bestellung')
+        	self::STATUS_ORDER_PENDING=> Mage::helper('b3it_subscription')->__('Procesing'),
+        	self::STATUS_ERROR=> Mage::helper('b3it_subscription')->__('Error')
         );
     }
 }
