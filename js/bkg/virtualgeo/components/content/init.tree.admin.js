@@ -168,10 +168,10 @@ var nodeOptions = {
     'move' : function(node, pos) {
         if(node) {
             var ref = this.tree.jstree(true);
-            var parent = ref.get_node(node.parent);
+            var parent = ref.get_node(node.parent, false);
             //var pos = 0;
             for(var childId in parent.children){
-                var child = ref.get_node(parent.children[childId]);
+                var child = ref.get_node(parent.children[childId], false);
                 if(child) {
                     var data = this.getPostData(child.data.number);
                     if(parent.data != null)
@@ -212,30 +212,25 @@ var nodeOptions = {
         return pos;
 
     },
-    'add': function(data, sel) {
+    'add': function(data, parentId) {
         var ref = this.tree.jstree(true);
         var edit = false;
-        var parentnode = null;
+        var parentnode;
         this.itemCount++;
-        if(!sel) {
-            var	sel = ref.get_selected();
-            if(!sel.length) {
-                //alert( element_not_selected );
-                //return false;
-                sel =  ref.get_node('j1_1');
+        if (!parentId) {
+            var	selectedNodes = ref.get_selected();
+            if(!selectedNodes.length) {
+                parentId =  'root';
             }else{
-                sel = sel[0];
-                ref.open_node(sel);
+                parentId = selectedNodes[0];
+                ref.open_node(parentId);
                 edit = true;
-                parentnode = ref.get_node(sel);
             }
         }
-        else if(sel == 'root') {
-            sel =  ref.get_node('j1_1');
-
-        }else{
-            parentnode = ref.get_node(sel);
+        if(parentId == 'root') {
+            parentId =  'j1_1';
         }
+        parentnode = ref.get_node(parentId, false);
 
         if(!data){
             var data = new Object();
@@ -248,15 +243,15 @@ var nodeOptions = {
         data.pos = this.itemCount;
 
 
-        if(parentnode != null){
+        if(parentnode != null && parentnode.data != null){
             data.parent_number = parentnode.data.number;
         }
 
-        sel = this.createTextNode(sel,data);
-        if(sel && edit) {
-            ref.edit(sel);
+        parentId = this.createTextNode(parentId,data);
+        if(parentId && edit) {
+            ref.edit(parentId);
         }
-        var node = ref.get_node(sel);
+        var node = ref.get_node(parentId);
 
         //this.move(node, this.itemCount);
         this.open_all();
@@ -309,11 +304,11 @@ var nodeOptions = {
         text += '<div class="inline-tree-cell option-tree-' + (data.is_readonly ? 'true' : 'false') + ' option-readonly"></div>';
         text += '</div>';
 
-        data['parent_number'] = 0;
         data['deleted'] = false;
-        if(parent.data != null)
-        {
+        if (parent.data != null) {
             data['parent_number'] = parent.data.number;
+        } else if (data['parent_number'] === undefined) {
+            data['parent_number'] = 0
         }
         this.setPostData(data);
 
@@ -321,7 +316,6 @@ var nodeOptions = {
         var sel = ref.create_node(parent, {"type":data.type,"data":data, "text" : text});
         return sel;
     },
-
 
     setPostData:function (nodeData)
     {
@@ -342,6 +336,7 @@ var nodeOptions = {
             $j('#jstree-data').append(inputField);
         }
     },
+
     getPostData:function (number)
     {
         var data = JSON.parse($j('#'+this.PostDataId+'_' + number).val());

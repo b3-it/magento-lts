@@ -147,6 +147,7 @@ class Bkg_VirtualGeo_Model_Observer
                 ->setProductId($productId) //FK
                 ->setReadonly($node['is_readonly'])
                 ->setIsChecked($node['is_checked'])
+                ->setNodeId($node['node_id'])
             ;
 
     		$model->save();
@@ -160,9 +161,9 @@ class Bkg_VirtualGeo_Model_Observer
     		$model = $node['model'];
 
             if (!isset($node['parent_number']) || empty($node['parent_number'])) {
-                $model->setData('parent_node_id',null);
+                $model->unsetData('parent_node_id');
             } else {
-                $parentNode = $this->findByNumber($nodes, $node['parent_number']);
+                $parentNode = $this->__findByNumber($nodes, $node['parent_number']);
                 $model->setParentNodeId($parentNode['model']->getNodeId());
             }
 
@@ -182,7 +183,7 @@ class Bkg_VirtualGeo_Model_Observer
     
     }
     
-    private function findByNumber($nodes,$number)
+    private function __findByNumber($nodes, $number)
     {
     	foreach ($nodes as $node){
     		if($node['number'] == $number){

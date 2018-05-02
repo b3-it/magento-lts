@@ -32,7 +32,11 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 		$res = array();
 		$product = $this->_getProduct();
 		$collection = Mage::getModel('virtualgeo/components_content')->getOptions4Product($product->getId(), $product->getStoreId());
-        $collection->getSelect()->order('main_table.pos');
+        /*
+         * Erst nach ID, dann nach POS! Sonst wird child vor parent in Tree eingefügt!
+         */
+		$collection->getSelect()->order('main_table.id');
+		$collection->getSelect()->order('main_table.pos');
         $items = $collection->getItems();
 
 		foreach ($items as $item) {
@@ -50,7 +54,6 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 					    'is_checked'=>boolval($item->getIsChecked()) ,
 					    'pos' =>$item->getPos(),
 					    'node_id' => $item->getNodeId(),
-					    'parent_node_id' => $item->getParentNodeId() ? $item->getParentNodeId() : '',
 					    'parent' => $parent != null ? $parent->getId() : ''
 			        )
             );

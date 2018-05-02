@@ -34,6 +34,10 @@ class Bkg_VirtualGeo_Model_Resource_Components_Contentproduct extends Bkg_Virtua
             throw new Varien_Db_Exception("No ID for object given!");
         }
 
+        if ($object->getNodeId()) {
+            return (int)$object->getNodeId();
+        }
+
         $select = $this->getReadConnection()->select()
             ->from($this->getContentOptionValueTable(), 'id')
             ->where('entity_id=?', (int)$object->getId())
@@ -54,8 +58,12 @@ class Bkg_VirtualGeo_Model_Resource_Components_Contentproduct extends Bkg_Virtua
         $optionValueId = $this->_getOptionValueId($optionValueItem);
         if ($optionValueId > 0) {
             $optionValueItem->setId($optionValueId);
-            $condition = $this->_getWriteAdapter()->prepareSqlCondition('id', intval($object->getId()));
-            $this->_getWriteAdapter()->update($this->getContentOptionValueTable(), $optionValueItem->getData(), $condition);
+            $optionValueItem->setEntityId($object->getId());
+            $conditions = array(
+                $this->_getWriteAdapter()->prepareSqlCondition('id', intval($optionValueItem->getId())),
+                $this->_getWriteAdapter()->prepareSqlCondition('entity_id', intval($object->getId()))
+            );
+            $this->_getWriteAdapter()->update($this->getContentOptionValueTable(), $optionValueItem->getData(), join(' AND ', $conditions));
         } else {
             $entityId = $optionValueItem->getId();
             $optionValueItem->unsetData('id');
