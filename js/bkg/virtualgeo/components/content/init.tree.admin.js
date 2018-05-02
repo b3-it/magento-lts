@@ -350,15 +350,23 @@ var nodeOptions = {
             alert(node_element_is_null);
             return false;
         }
-        var node = ref.get_node(sel);
+        var oneSel;
+        for (i in sel) {
+            oneSel = sel[i];
+            var node = ref.get_node(oneSel, false);
 
-        //Delete Flag setzten
-        var data = JSON.parse($j('#virtualgeo_content_layer_options_' + node.data.number).val());
-        data['deleted'] = true;
-        $j('#virtualgeo_content_layer_options_' + node.data.number).val(JSON.stringify(data));
+            if (node.data == null) {
+                continue;
+            }
+            //Delete Flag setzten
+            var data = JSON.parse($j('#virtualgeo_content_layer_options_' + node.data.number).val());
+            data['deleted'] = true;
+            $j('#virtualgeo_content_layer_options_' + node.data.number).val(JSON.stringify(data));
 
-        //knoten entfernen
-        ref.delete_node(sel);
+            //knoten entfernen
+            ref.delete_node(oneSel);
+        }
+
     },
 
     'open_all': function() {
