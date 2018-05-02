@@ -51,7 +51,7 @@ class Bkg_VirtualGeo_Model_Resource_Product_Option_Value_Collection extends Mage
             Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_FORMAT => 'format',
             Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_RESOLUTION => 'resolution',
             Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_STRUCTURE => 'structure',
-            Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_CONTENT => 'Content',
+            Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_CONTENT => 'content',
         );
 
         $productOptionTitleTable = $this->getTable("virtualgeo/components_{$components[$this->getComponentType()]}_label");
@@ -90,5 +90,21 @@ class Bkg_VirtualGeo_Model_Resource_Product_Option_Value_Collection extends Mage
 
     public function getComponentType() {
         return $this->_componentType;
+    }
+
+    /**
+     * Add option filter
+     *
+     * @param array $optionIds
+     * @param int $storeId
+     * @return Mage_Catalog_Model_Resource_Product_Option_Value_Collection
+     */
+    public function getValuesByOption($optionIds, $storeId = null)
+    {
+        if (!is_array($optionIds)) {
+            $optionIds = array($optionIds);
+        }
+
+        return $this->addFieldToFilter('main_table.id', array('in' => $optionIds));
     }
 }

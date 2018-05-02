@@ -108,4 +108,19 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
         }
         return parent::groupFactory($type);
     }
+
+    /**
+     * Get collection of values by given option ids
+     *
+     * @param array $optionIds
+     * @param int $store_id
+     * @return unknown
+     */
+    public function getOptionValuesByOptionId($optionIds, $store_id)
+    {
+        $collection = Mage::getModel('virtualgeo/product_option_value')
+            ->getValuesByOption($optionIds, $this->getId(), $store_id);
+
+        return $collection;
+    }
 }
