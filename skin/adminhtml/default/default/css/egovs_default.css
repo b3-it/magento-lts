@@ -154,3 +154,16 @@ ins {
     color: #3E3E3E;
 }
 /* Ende für Auswahl bei VirtualGeo-Inhalt */
+
+.egovs-base-madia-block {
+    width: 45%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    display: inline-block;
+    vertical-align: top;
+}
+.egovs-base-madia-block p.nm {
+    float: left;
+    margin-right: 10px !important;
+    display: inline-block;
+}

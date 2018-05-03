@@ -37,11 +37,20 @@ $_height = $this->getImagesHeight();
 ?>
 <?php if ($this->getFilesCount() > 0): ?>
     <?php foreach ($this->getFiles() as $file): ?>
-    <div class="filecnt" id="<?php echo $this->getFileId($file) ?>">
-        <p class="nm" style="height:<?php echo $_height ?>px;width:<?php echo $_width ?>px;">
-        <?php if($this->getFileThumbUrl($file)):?>
-            <img src="<?php echo $this->getFileThumbUrl($file) ?>" alt="<?php echo $this->getFileName($file) ?>" title="<?php echo $this->getFileName($file); ?>"/>
-        <?php endif; ?>
+    <div class="filecnt egovs-base-madia-block" id="<?php echo $this->getFileId($file) ?>">
+        <p class="nm" style="height:<?php echo $_height ?>px; width:<?php echo $_width ?>px;">
+        <?php
+        $_info = pathinfo($this->getFileName($file));
+        $_imgs = array('jpg','jepg','gif','png','bmp','tiff');
+        if( in_array($_info['extension'],$_imgs) ) {
+            if($this->getFileThumbUrl($file)) {
+                ?><img src="<?php echo $this->getFileThumbUrl($file) ?>" alt="<?php echo $this->getFileName($file) ?>" title="<?php echo $this->getFileName($file); ?>" /><?php
+            }
+        }
+        else {
+            ?><img src="<?php echo $this->getSkinUrl('images/placeholder/thumbnail.jpg') ?>" alt="<?php echo $this->getFileName($file) ?>" title="<?php echo $this->getFileName($file); ?>" /><?php
+        }
+        ?>
         </p>
         <?php if($this->getFileWidth($file)): ?>
             <small><?php echo $this->getFileWidth($file) ?>x<?php echo $this->getFileHeight($file) ?> <?php echo $this->helper('cms')->__('px.') ?></small><br/>
