@@ -206,8 +206,9 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             $this->renderLayout();
         }
         catch (Mage_Core_Exception $e) {
+            Mage::logException($e);
             $this->_getCheckoutSession()->addError($e->getMessage());
-            $this->_redirect('*/*/card', array('_secure'=>true));
+            $this->_redirect('*/cart', array('_secure'=>true));
         }
         catch (Exception $e) {
             Mage::logException($e);
