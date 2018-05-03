@@ -166,6 +166,28 @@ ins {
 }
 /* Ende für Auswahl bei VirtualGeo-Inhalt */
 
+.egovs-base-media-block {
+    width: 45%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 3px;
+}
+.egovs-base-media-block:hover {
+    background: #f5d6c7;
+    -webkit-transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+}
+.egovs-base-media-block p.nm {
+    float: left;
+    margin-right: 10px !important;
+    display: inline-block;
+}
+
 .select-button-container {
     width: 100%;
 }
