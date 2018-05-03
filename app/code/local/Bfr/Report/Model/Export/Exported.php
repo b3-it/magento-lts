@@ -18,6 +18,9 @@ class Bfr_Report_Model_Export_Exported extends Mage_Core_Model_Abstract
     
     public function saveHistory($incoming_payment_ids, $user)
     {
+    	if(empty($incoming_payment_ids)){
+    		return $this;
+    	}
     	$this->getResource()->saveHistory($incoming_payment_ids, $user);
     }
 }

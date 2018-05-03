@@ -131,6 +131,7 @@ class Bfr_Report_Block_Adminhtml_Export_Exported_Grid extends Mage_Adminhtml_Blo
       $this->addColumn('epaybl_capture_date', array(
       		'header' => Mage::helper('bfr_report')->__('Payment Capture Date'),
       		'index' => 'epaybl_capture_date',
+      		'filter_index' => 'main_table.epaybl_capture_date',
       		'type' => 'datetime',
       		'width' => '100px',
       ));
