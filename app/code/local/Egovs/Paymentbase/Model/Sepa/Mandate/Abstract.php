@@ -395,7 +395,7 @@ extends Varien_Object
 		if ($AllowOneof && $payment->getAdditionalInformation('sequence_type') == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
 			$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF);
 		} else {
-			$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_FRST);
+			$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_RCUR);
 		}
 		$this->setType($payment->getAdditionalInformation('mandate_type'));
 		

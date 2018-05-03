@@ -51,7 +51,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
      * The SequenzTyp
      * @var Egovs_SepaDebitSax_Model_Webservice_Enum_SequenzTyp
      */
-    public $SequenzTyp = Egovs_SepaDebitSax_Model_Webservice_Enum_SequenzTyp::VALUE_FRST;
+    public $SequenzTyp = Egovs_SepaDebitSax_Model_Webservice_Enum_SequenzTyp::VALUE_RCUR;
     /**
      * The Kategorie
      * @var Egovs_SepaDebitSax_Model_Webservice_Enum_MandatKategorie
@@ -970,7 +970,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
     	if ($AllowOneof && $payment->getAdditionalInformation('sequence_type') == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
     		$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF);
     	} else {
-    		$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_FRST);
+    		$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_RCUR);
     	}
     	$this->setType($payment->getAdditionalInformation('mandate_type'));
     
