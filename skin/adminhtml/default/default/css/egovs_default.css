@@ -161,6 +161,15 @@ ins {
     margin-bottom: 1%;
     display: inline-block;
     vertical-align: top;
+    padding: 3px;
+}
+.egovs-base-madia-block:hover {
+    background: #f5d6c7;
+    -webkit-transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
 }
 .egovs-base-madia-block p.nm {
     float: left;
