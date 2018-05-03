@@ -249,8 +249,8 @@ extends Varien_Object
 	
 	public function __get($var) {
 		if ($this->getAdapteeMandate()) {
-			if (isset($this->_mandate->$key)) {
-				return  $this->_mandate->$key;
+			if (isset($this->_mandate->$var)) {
+				return  $this->_mandate->$var;
 			}
 		}
 		return parent::__get($var);
