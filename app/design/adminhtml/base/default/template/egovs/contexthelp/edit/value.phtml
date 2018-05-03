@@ -48,11 +48,13 @@ var ContextHelp = {
         }
     }
 };
-
+<?php $_urlData = $this->getUrlGroups(); ?>
+<?php if(count($_urlData)): ?>
 Ext.onReady(function(){
-    <?php foreach ($this->getUrlGroups() as $urlGroup): ?>
-        ContextHelp.addUrlGroup(<?php echo Zend_Json::encode($urlGroup) ?>);
+    <?php foreach ($_urlData AS $urlGroup): ?>
+        ContextHelp.addUrlGroup(<?php echo Zend_Json::encode($urlGroup); ?>);
     <?php endforeach; ?>
 });
+<?php endif; ?>
 //]]>
 </script>

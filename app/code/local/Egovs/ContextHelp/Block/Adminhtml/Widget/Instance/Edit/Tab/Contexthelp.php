@@ -5,7 +5,9 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp
         public function _construct()
         {
             parent::_construct();
-            $this->setActive(true);
+
+            // nicht auf Aktiv setzen
+            $this->setActive(false);
         }
 
         /**
