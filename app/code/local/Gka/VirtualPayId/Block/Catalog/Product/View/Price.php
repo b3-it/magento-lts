@@ -11,7 +11,11 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Price extends Mage_Catalog_Blo
 	
 	public function fetchPrice($mandant,$kz) {
 		$this->_kassenzeichen = $kz;
-		
+
+		$tmp = explode('/',$mandant);
+		if(count($tmp) == 2){
+		    $mandant = reset($tmp);
+        }
 		if (!empty($kz) && is_string($kz)) {
 			/** @var $helper Egovs_Paymentbase_Helper_Data */
 			$helper = Mage::helper('paymentbase');
