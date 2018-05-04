@@ -50,28 +50,47 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 */
     protected $_currentOrderItem = null;
 
+
     public function _construct()
     {
         parent::_construct();
         $this->_init('b3it_subscription/subscription');
     }
 
-    public function addNewOrderItem($orderItem, $quote, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
-    {
-        return $this->_addNewOrderItem($orderItem, $quote, $startDate, $periodLength, $renewalOffset );
-    }
+
 
     /**
      * Neue Bestellungen als Abonement einordnen
      * @param $orderItem Item der Bestellung
+     * @param B3it_Subscription_Model_Period $period Periode des Abos
      * @param null $startDate Tag des Anfangs diesert Period
-     * @param int $periodLength Länge der Period in Tagen
-     * @param int $renewalOffsett Zeitpunkt der Erneuerung in Tagen vom errechneten Enddatum ggf. mit negativem Vorzeichen
      * @return B3it_Subscription_Model_Subscription
      * @throws Exception
      */
-    protected function _addNewOrderItem($orderItem, $quote, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
+    public function addNewOrderItem($orderItem, $quote, $period = null, $startDate = null)
     {
+        $this->setPeriod($period);
+        $data['subscription'] = $this;
+        Mage::dispatchEvent('B3it_Subscription_Model_Create_Calculate', $data);
+        $renewalOffset = 0;
+        $periodLength = 1;
+        $periodUnit = Zend_Date::YEAR;
+
+        $initialPeriodLength = 1;
+        $initialPeriodUnit = Zend_Date::YEAR;
+
+        if($period){
+            $renewalOffset = $period->getRenewalOffset();
+            $periodLength = $period->getPeriodLength();
+            $periodUnit = $period->getPeriodUnit();
+
+            $initialPeriodLength = $period->getInitialPeriodLength();
+            $initialPeriodUnit = $period->getInitialPeriodUnit();
+        }
+
+        $length = $initialPeriodLength;
+        $unit = $initialPeriodUnit;
+
 
 
     	$this->setFirstOrderId($orderItem->getOrderId());
@@ -91,6 +110,9 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
             $this->setOrderGroup($oldSubscription->getOrderGroup());
             $this->setCounter(intval($oldSubscription->getCounter()) +1);
             $startDate = new Zend_Date($oldSubscription->getStopDate());
+
+            $length = $periodLength;
+            $unit = $periodUnit;
         }
 
     	if($startDate == null){
@@ -102,7 +124,7 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         $this->setRenewalOffset($renewalOffset);
 
         $stopDate = new Zend_Date($startDate, Varien_Date::DATETIME_INTERNAL_FORMAT, null);
-        $stopDate->add($periodLength, Zend_Date::DAY);
+        $stopDate->add($length, $unit);
 
         $this->setStopDate($stopDate);
 
@@ -111,7 +133,11 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 
     	$date->add($renewalOffset, Zend_Date::DAY);
         $this->setRenewalDate($date);
+        $data = array();
+
+        Mage::dispatchEvent('B3it_Subscription_Model_Create_Save_Before', $data);
         $this->save();
+        Mage::dispatchEvent('B3it_Subscription_Model_Create_Save_After', $data);
         return $this;
     }
 

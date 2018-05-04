@@ -22,9 +22,11 @@ class B3it_Subscription_Model_Observer extends Varien_Object
 			$product= $item->getProduct();
 			$periodId = intval($product->getSubscriptionPeriod());
 
+
+
 			if($periodId){
 			    $period = Mage::getModel('b3it_subscription/period')->load($periodId);
-                Mage::getModel('b3it_subscription/subscription')->addNewOrderItem($item, $quote, null,$period->getPeriodLength(),$period->getRenewalOffset());
+                Mage::getModel('b3it_subscription/subscription')->addNewOrderItem($item, $quote, $period);
 			}	
 		}
 	}
