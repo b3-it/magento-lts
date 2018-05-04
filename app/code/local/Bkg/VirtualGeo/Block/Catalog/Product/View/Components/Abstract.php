@@ -18,6 +18,8 @@ abstract class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Abstract ext
 	        $collection = Mage::getModel($this->_component_model_type.'product')->getCollection();
 	        $collection->addComponentToSelect($this->_component_model_type,$productId,$storeId,$fields);
 
+	        $this->_getOptions($fields, $collection, $productId, $storeId);
+
             // check if the current store is admin
             if (!Mage::app()->getStore()->isAdmin()) {
                 $collection->getSelect()->where("main_table.is_visible_only_in_admin = 0");
@@ -44,4 +46,8 @@ abstract class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Abstract ext
 	{
 		return str_replace(array('/', '_'), '-', $this->_component_model_type);
 	}
+
+    protected function _getOptions($fields, $collection, $productId = NULL, $storeId = NULL) {
+	    return $this;
+    }
 }
