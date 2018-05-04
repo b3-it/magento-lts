@@ -94,7 +94,7 @@ where participant_id = 1 AND el.typ = 3
        
       $this->addColumn('pa_status', array(
       		'header' => Mage::helper('sales')->__('Order Status'),
-      		'index' => 'order_status',
+      		'index' => 'order.status',
       		'type'  => 'options',
       		'width' => '70px',
       		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),

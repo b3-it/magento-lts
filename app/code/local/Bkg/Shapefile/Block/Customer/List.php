@@ -43,6 +43,13 @@ class Bkg_Shapefile_Block_Customer_List extends Mage_Core_Block_Template
         return $this;
     }
     
+    public function getAllowShapefile()
+    {
+    	$customer = $this->_getSession()->getCustomer();
+    	if(!$customer) return false;
+    	return boolval($customer->getAllowShapefile());
+    }
+    
     public function getAddUrl() {
         return Mage::getUrl('shapefile/customer/new');
     }

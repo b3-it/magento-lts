@@ -10,11 +10,11 @@
     	<menu>
 			<sales>           
 				<children>
-					<credential module="virtualaccess">
+					<purchased module="virtualaccess">
 						<title>Credential</title>
 						<sort_order>100</sort_order>
-						<action>adminhtml/virtualaccess_credential</action>
-					</credential>
+						<action>adminhtml/virtualaccess_purchased</action>
+					</purchased>
 				</children>
 			</sales>
 		</menu>
@@ -70,9 +70,9 @@
 					<children>
 					    <sales>
 					        <children>
-					            <credential translate="title" module="virtualaccess">
-					                <title>KVP Zugangsdaten</title>
-					            </credential>
+					            <purchased translate="title" module="virtualaccess">
+					                <title>Credential</title>
+					            </purchased>
 					        </children>
 					    </sales>
 					  <system>
@@ -132,7 +132,6 @@
                 <item>
                     <product_attributes>
                         <virtualaccess_base_url/>
-                        <always_create_new_credentials/>
                     </product_attributes>
                 </item>
             </quote>
@@ -142,7 +141,7 @@
                 <type>
                     <virtualaccess translate="label" module="virtualaccess">
                         <label>Virtual Access Product</label>
-                        <model>virtualaccess/product_type_configurable</model>
+                        <model>virtualaccess/product_type</model>
                         <composite>0</composite>
                         <price_model>virtualaccess/product_price</price_model>
                         <is_qty>1</is_qty>
@@ -181,14 +180,14 @@
                 <class>Bkg_VirtualAccess_Model_Resource</class>
                 <entities>                    
                     <purchased>
-                        <table>virtualaccess_purchased</table>
+                        <table>bkg_virtualaccess_purchased</table>
                     </purchased>
-                    <purchased_credential>
-                        <table>virtualaccess_purchased_credential</table>
-                    </purchased_credential>
-                    <purchased_item>
-                        <table>virtualaccess_purchased_item</table>
-                    </purchased_item>
+                    <periodical_abo>
+                        <table>bkg_virtualaccess_periodical_abo</table>
+                    </periodical_abo>
+                    <service_log>
+                        <table>bkg_virtualaccess_service_log</table>
+                    </service_log>
                 </entities>
             </virtualaccess_resource>
         </models>
@@ -211,6 +210,7 @@
                 </observers>
             </sales_order_item_save_commit_after>  
             -->
+            <!--
             <sales_order_item_save_before>
               <observers>
                     <virtualaccess_product_save_orderitem_before>
@@ -218,8 +218,8 @@
                         <method>onBeforeSaveOrderItem</method>
                     </virtualaccess_product_save_orderitem_before>
                 </observers>
-            
             </sales_order_item_save_before>
+            -->
         <!--
             <sales_quote_item_set_product>
                 <observers>
@@ -241,7 +241,18 @@
         </events>
        
     </global>
-    
+    <crontab>
+        <jobs>
+            <bkg_account_sync>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>virtualaccess/cron::runSync</model>
+                </run>
+            </bkg_account_sync>
+        </jobs>
+    </crontab>
     <frontend>
         <routers>
             <virtualaccess>
@@ -267,7 +278,7 @@
         <layout>
             <updates>
                 <virtualaccess module="Bkg_VirtualAccess">
-                    <file>dwd/virtualaccess.xml</file>
+                    <file>bkg/virtualaccess.xml</file>
                 </virtualaccess>
             </updates>
         </layout>

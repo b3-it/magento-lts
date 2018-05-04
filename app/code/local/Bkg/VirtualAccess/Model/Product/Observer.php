@@ -25,7 +25,7 @@ class Bkg_VirtualAccess_Model_Product_Observer extends Varien_Object
 	public function prepareProductEdit($observer) {
 		/* @var $product Mage_Catalog_Model_Product */
 		$product = $observer->getProduct();
-		if (!$product || $product->getTypeId() != Bkg_VirtualAccess_Model_Product_Type_Configurable::TYPE_CONFIGURABLE_ACCESS) {
+		if (!$product || $product->getTypeId() != Bkg_VirtualAccess_Model_Product_Type::TYPE_CODE) {
 			return;
 		}
 
@@ -111,11 +111,11 @@ class Bkg_VirtualAccess_Model_Product_Observer extends Varien_Object
 		} else {
 			$product = Mage::getModel('catalog/product')->load($product->getId());
 		}
-		if ($product && $product->getTypeId() != Bkg_VirtualAccess_Model_Product_Type_Configurable::TYPE_CONFIGURABLE_ACCESS) {
+		if ($product && $product->getTypeId() != Bkg_VirtualAccess_Model_Product_Type::TYPE_CODE) {
 			return $this;
 		}
 
-		$this->saveCredentials($orderitem,$order, $product);
+		$this->savePurchased($orderitem,$order, $product);
 
 
 
@@ -136,7 +136,7 @@ class Bkg_VirtualAccess_Model_Product_Observer extends Varien_Object
 			if(count($orderItem->getChildrenItems()) > 0){
 				continue;
 			}
-			if($orderItem->getProductType() != Bkg_VirtualAccess_Model_Product_Type_Configurable::TYPE_CONFIGURABLE_ACCESS){
+			if($orderItem->getProductType() != Bkg_VirtualAccess_Model_Product_Type::TYPE_CODE){
 				continue;
 			}
 
@@ -202,141 +202,36 @@ class Bkg_VirtualAccess_Model_Product_Observer extends Varien_Object
 
     public function onBeforeSaveOrderItem($observer)
     {
-    	$orderItem = $observer->getItem();
-    	if($orderItem->getProductType() != Bkg_VirtualAccess_Model_Product_Type_Configurable::TYPE_CONFIGURABLE_ACCESS)
-    	{
-    		return $this;
-    	}
-    	$options = $orderItem->getBuyRequest();
-
-    	if(!$orderItem->getPeriodId())
-    	{
-	    	if($options->getPeriode())
-	    	{
-	    		$periode = Mage::getModel('periode/periode')->load($options->getPeriode());
-	    		if($periode->getId())
-	    		{
-	    			$orderItem->setPeriodType($periode->getType());
-	    			$orderItem->setPeriodStart($periode->getStartDate());
-	    			$orderItem->setPeriodEnd($periode->getEndDate());
-	    			$orderItem->setPeriodId($periode->getId());
-	
-	
-	    		}
-	    	}
-    	}
-    	if($options->getStation())
-    	{
-    		$orderItem->setStationId($options->getStation());
-    	}
-
+    	return $this;
 
     }
 
 
-
-
-
-
-    protected function saveCredentials($orderItem, $order, $product)
+    protected function savePurchased($orderItem, $order, $product)
     {
-  			//Abfrage wg. doppeltem Aufruf bei Kreditkarte
-  			$purchasedItem = Mage::getModel('virtualaccess/purchased_item')->load($orderItem->getId(),'order_item_id');
- 			if($purchasedItem->getId()) return $this;
-
-	        $purchased = Mage::getModel('virtualaccess/purchased')->load($order->getId(),'order_id');
+    	/** @var $purchased Bkg_VirtualAccess_Model_Purchased */
+  			$purchased = Mage::getModel('virtualaccess/purchased')->load($order->getId(),'order_id');
 	        if($purchased->getId() == 0)
 	        {
-	        	$purchased->setOrderId($order->getId())
+	        	$purchased 	->setOrderId($order->getId())
 	        				->setOrderIncrementId($order->getIncrementId())
+	        				->setOrderItemId($orderItem->getId())
+	        				->setProductSku($orderItem->getProduct()->getSku())
+	        				->setProductCode($orderItem->getProduct()->getProductCode())
+	        				->setBaseUrl($orderItem->getProduct()->getVirtualaccessBaseUrl())
 	        				->setCreatedAt(now())
 							->setUpdatedAt(now())
 							->setCustomerId($order->getCustomerId())
-							//->setProduct
+							->setStatus(Bkg_VirtualAccess_Model_Service_AccountStatus::ACCOUNTSTATUS_NEW)
+							->setSyncStatus(Bkg_VirtualAccess_Model_Service_Syncstatus::SYNCSTATUS_PENDING)
 							->save();
 							;
 	        }
 
 
-
-
-	         $purchasedItem = Mage::getModel('virtualaccess/purchased_item');
-	         $purchasedItem->setPurchasedId($purchased->getId())
-	         			   ->setOrderItemId($orderItem->getId())
-	         			   ->setProductId($product->getId())
-	         			   ->setExternalLinkUrl($product->getData('virtualaccess_base_url'))
-	         			   ->setCreatedAt(now())
-						   ->setUpdatedAt(now())
-	         			   ->save();
-
-        $credential = $this->getCredential($order->getCustomerId(),$purchasedItem,$order->getCustomerEmail());
-
-
     }
 
-    private function getCredential($customerId, $purchasedItem, $email)
-    {
-
-    			$credential = Mage::getModel('virtualaccess/purchased_credential');
-    			$credential->setUsername($email);
-
-    			$credential	->setCustomerId($customerId)
-    						->createUuid()
-    						->setCreatedAt(now())
-							->setUpdatedAt(now())
-                            ->setPurchasedItemId($purchasedItem->getId())
-							->save();
-
-
-    	return $credential;
-    }
-
-
-
-    public function sendMailToBearbeiter($product, $category, $purchase_item) {
-
-    	$p = Mage::getModel('catalog/product')->load($product->getId());
-
-   		$customerEMail = mb_ereg_replace(' ', '', $p->getBearbeiterEmail());
-   		if (strlen($customerEMail) < 1) {
-   			return;
-   		}
-   		$customerEMail = explode(';', $customerEMail);
-
-    	$translate = Mage::getSingleton('core/translate');
-        /* @var $translate Mage_Core_Model_Translate */
-        $translate->setTranslateInline(false);
-
-        $mailTemplate = Mage::getModel('core/email_template');
-        /* @var $mailTemplate Mage_Core_Model_Email_Template */
-
-        $template = Mage::getStoreConfig("virtualaccess/email/owner_template", $this->getStoreId());
-        $customerName = null;// $this->getCustomerName();
-
-
-        $data = array();
-		$data['product_name'] = $product->getName();
-		$data['product_sku'] = $product->getSku();
-		$data['category'] = $category;
-		$data['link'] = Mage::helper("adminhtml")->getUrl('adminhtml/virtualaccess_credential/index',array('item_id'=>$purchase_item->getId()));
-		$data['item_id'] = $purchase_item->getId();
-
-
-        $mailTemplate->setDesignConfig(array('area'=>'frontend', 'store'=>$this->getStoreId()))
-                ->sendTransactional(
-                    $template,
-                    'virtualaccess',
-                    $customerEMail,
-                    $customerName,
-                   	$data
-                );
-
-
-        $translate->setTranslateInline(true);
-
-        return $this;
-    }
-
+  
 
 
     public function getStoreId($item = null)

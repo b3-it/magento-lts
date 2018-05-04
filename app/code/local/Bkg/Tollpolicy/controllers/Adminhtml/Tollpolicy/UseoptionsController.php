@@ -83,7 +83,8 @@ class Bkg_Tollpolicy_Adminhtml_Tollpolicy_UseoptionsController extends Mage_Admi
 					$this->_redirect('*/*/edit', array('id' => $model->getId()));
 					return;
 				}
-				$this->_redirect('*/*/');
+
+				$this->_redirect('*/tollpolicy_usetype/edit',array('id' => $model->getUseTypeId() ));
 				return;
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -99,13 +100,13 @@ class Bkg_Tollpolicy_Adminhtml_Tollpolicy_UseoptionsController extends Mage_Admi
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('bkg_tollpolicy/useoptions');
+				$model = Mage::getModel('bkg_tollpolicy/useoptions')->load(intval($this->getRequest()->getParam('id')));
 
-				$model->setId($this->getRequest()->getParam('id'))
-					->delete();
+				$model->delete();
 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
-				$this->_redirect('*/*/');
+                $this->_redirect('*/tollpolicy_usetype/edit',array('id' => $model->getUseTypeId()));
+				return;
 			} catch (Exception $e) {
 				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
 				$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));

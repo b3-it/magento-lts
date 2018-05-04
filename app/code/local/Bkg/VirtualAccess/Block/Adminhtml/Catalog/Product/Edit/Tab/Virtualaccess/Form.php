@@ -28,7 +28,7 @@ class Bkg_VirtualAccess_Block_Adminhtml_Catalog_Product_Edit_Tab_Virtualaccess_F
 				$applyTo = $attribute->getApplyTo();
 				if (count($applyTo) == 1
 					&& $attribute->hasFrontendLabel()
-					&& array_search(Bkg_VirtualAccess_Model_Product_Type_Configurable::TYPE_CONFIGURABLE_ACCESS, $applyTo) !== false) {
+					&& array_search(Bkg_VirtualAccess_Model_Product_Type::TYPE_CODE, $applyTo) !== false) {
 					$attributes[$attributeCode] = $attribute;
 				}
 			}

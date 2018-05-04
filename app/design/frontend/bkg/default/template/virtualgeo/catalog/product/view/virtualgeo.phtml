@@ -129,16 +129,18 @@
     	kachelSource = null;
     	kachelVector = null;
 
-    	struct = $j("input:checked[data-id='virtualgeo-components-structure[]']");
+    	struct = $j("input:checked[data-id='virtualgeo-components-structure']");
     	if (struct.length > 0) {
     		structid = struct.val();
-    		georef = $j("input:checked[data-id='virtualgeo-components-georef[]']");
+    		georef = $j("input:checked[data-id='virtualgeo-components-georef']");
     		if (georef.length > 0) {
     			geocode = georef.attr("data-code");
 
     	        // the url should already support that epsg
     			url = baseUrl + "index.php/virtualgeo/map/structurLayer/id/" + structid + "/georef/" + geocode;
     			$j.ajax(url, {
+    				beforeSend: incLoading,
+    				complete: decLoading,
     				//async: false,
         			success: function(data) {
             			

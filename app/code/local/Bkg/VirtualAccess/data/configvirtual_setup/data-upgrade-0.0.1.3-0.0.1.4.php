@@ -25,7 +25,7 @@ $fieldList = array(
 $productList = array();
 
 if (Mage::helper ('core')->isModuleEnabled ('Bkg_VirtualAccess')) {
-	$productList[] = Bkg_VirtualAccess_Model_Product_Type_Configurable::TYPE_CONFIGURABLE_ACCESS;
+	$productList[] = Bkg_VirtualAccess_Model_Product_Type::TYPE_CODE;
 }
 
 // make these attributes applicable to special products

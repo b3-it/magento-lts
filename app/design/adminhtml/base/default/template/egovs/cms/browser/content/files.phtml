@@ -37,19 +37,32 @@ $_height = $this->getImagesHeight();
 ?>
 <?php if ($this->getFilesCount() > 0): ?>
     <?php foreach ($this->getFiles() as $file): ?>
-    <div class="filecnt" id="<?php echo $this->getFileId($file) ?>">
-        <p class="nm" style="height:<?php echo $_height ?>px;width:<?php echo $_width ?>px;">
-        <?php if($this->getFileThumbUrl($file)):?>
-            <img src="<?php echo $this->getFileThumbUrl($file) ?>" alt="<?php echo $this->getFileName($file) ?>" title="<?php echo $this->getFileName($file); ?>"/>
-        <?php endif; ?>
+    <div class="filecnt egovs-base-media-block" id="<?php echo $this->getFileId($file) ?>">
+        <p class="nm" style="height:<?php echo $_height ?>px; width:<?php echo $_width ?>px;">
+        <?php
+        $_info = pathinfo($this->getFileName($file));
+        $_imgs = array('jpg','jepg','gif','png','bmp','tiff');
+        $_fname = $this->getFileName($file);
+
+        if( in_array($_info['extension'],$_imgs) ) {
+            if($this->getFileThumbUrl($file)) {
+                ?><img src="<?php echo $this->getFileThumbUrl($file) ?>" alt="<?php echo $_fname; ?>" title="<?php echo $_fname; ?>" /><?php
+            }
+        }
+        else {
+            ?><img src="<?php echo $this->getSkinUrl('images/placeholder/thumbnail.jpg') ?>" alt="<?php echo $_fname; ?>" title="<?php echo $_fname; ?>" /><?php
+        }
+        ?>
         </p>
         <?php if($this->getFileWidth($file)): ?>
             <small><?php echo $this->getFileWidth($file) ?>x<?php echo $this->getFileHeight($file) ?> <?php echo $this->helper('cms')->__('px.') ?></small><br/>
         <?php endif; ?>
-        <small title="<?php echo $this->getFileName($file); ?>"><?php echo $this->getFileShortName($file); ?></small>
+        <small title="<?php echo $_fname; ?>"><?php echo $this->getFileShortName($file); ?></small>
         <?php if ($this->getFileShortName($file) != $this->getFileName($file)): ?>
             <small style="display: none"><?php echo $this->getFileName($file); ?></small>
         <?php endif; ?>
+        <br />
+        <small><?php echo $this->__('Template-URL:'); ?> <?php echo $this->escapeHtml(sprintf('{{media url="wysiwyg/%s"}}', $_fname)); ?></small>
     </div>
     <?php endforeach; ?>
 <?php else: ?>

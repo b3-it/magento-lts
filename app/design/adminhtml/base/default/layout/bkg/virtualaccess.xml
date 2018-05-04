@@ -80,10 +80,10 @@
         </reference>
     </adminhtml_sales_order_creditmemo_view>
     
-    <adminhtml_virtualaccess_credential_index>
+    <adminhtml_virtualaccess_purchased_index>
         <reference name="content">
-            <block type="virtualaccess/adminhtml_credential" name="credential" />
+            <block type="virtualaccess/adminhtml_purchased" name="purchased" />
         </reference>
-    </adminhtml_virtualaccess_credential_index>
+    </adminhtml_virtualaccess_purchased_index>
         
 </layout>

@@ -4,6 +4,7 @@
  */
 ?>
 <?php $_items = $this->getItems(); ?>
+<?php if($this->getAllowShapefile()):?>
 <div class="page-title">
     <h1><?php echo Mage::helper('bkg_shapefile')->__('My Shape files') ?></h1>
 </div>
@@ -112,3 +113,4 @@
     <p><?php echo Mage::helper('bkg_shapefile')->__('You have no shape file yet.'); ?></p>
 <?php endif; ?>
 <?php echo $this->getChildHtml('pager'); ?>
+<?php endif; //getAllowShapefile?>

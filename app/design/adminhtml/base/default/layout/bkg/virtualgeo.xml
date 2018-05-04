@@ -48,10 +48,15 @@ Layout handle for budle products
     <adminhtml_virtualgeo_components_format_index>
         <reference name="content">
             <block type="virtualgeo/adminhtml_components_format" name="format" >
-            
                </block>
         </reference>
     </adminhtml_virtualgeo_components_format_index>
+    <adminhtml_virtualgeo_components_accounting_index>
+        <reference name="content">
+            <block type="virtualgeo/adminhtml_components_accounting" name="accounting" >
+            </block>
+        </reference>
+    </adminhtml_virtualgeo_components_accounting_index>
     <adminhtml_virtualgeo_components_resolution_index>
         <reference name="content">
             <block type="virtualgeo/adminhtml_components_resolution" name="resolution" >

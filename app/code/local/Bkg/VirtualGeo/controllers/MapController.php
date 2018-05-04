@@ -86,6 +86,10 @@ class Bkg_VirtualGeo_MapController extends Mage_Core_Controller_Front_Action
             $s, $t, $c, $si
         ));
         
+        // FIXME use epsg code as id for now
+        $geo = Mage::getModel('virtualgeo/components_georef')->load($c, 'epsg_code');
+        $c = $geo->getId();
+        
         if (($data = Mage::app()->getCache()->load($key))) {
             //var_dump("data found!");
             $data = gzuncompress($data);
