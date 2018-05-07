@@ -16,38 +16,40 @@
 
 class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstract
 {
-    /**
-     *  @method int getId()
-     *  @method setId(int $value)
-     *  @method int getFirstOrderId()
-     *  @method setFirstOrderId(int $value)
-     *  @method int getFirstOrderitemId()
-     *  @method setFirstOrderitemId(int $value)
-     *  @method int getCurrentOrderId()
-     *  @method setCurrentOrderId(int $value)
-     *  @method int getCurrentOrderitemId()
-     *  @method setCurrentOrderitemId(int $value)
-     *  @method int getProductId()
-     *  @method setProductId(int $value)
-     *  @method int getCounter()
-     *  @method setCounter(int $value)
-     *  @method int getRenewalStatus()
-     *  @method setRenewalStatus(int $value)
-     *  @method int getStatus()
-     *  @method setStatus(int $value)
-     *  @method  getStartDate()
-     *  @method setStartDate( $value)
-     *  @method  getStopDate()
-     *  @method setStopDate( $value)
-     *  @method  getRenewalDate()
-     *  @method setRenewalDate( $value)
-     *  @method int getPeriodLength()
-     *  @method setPeriodLength(int $value)
-     *  @method int getRenewalOffset()
-     *  @method setRenewalOffset(int $value)
-     *  @method string getOrderGroup()
-     *  @method setOrderGroup(string $value)
-*/
+	/**
+	 *  @method int getId()
+	 *  @method setId(int $value)
+	 *  @method int getFirstOrderId()
+	 *  @method setFirstOrderId(int $value)
+	 *  @method int getFirstOrderitemId()
+	 *  @method setFirstOrderitemId(int $value)
+	 *  @method int getCurrentOrderId()
+	 *  @method setCurrentOrderId(int $value)
+	 *  @method int getCurrentOrderitemId()
+	 *  @method setCurrentOrderitemId(int $value)
+	 *  @method int getProductId()
+	 *  @method setProductId(int $value)
+	 *  @method int getCounter()
+	 *  @method setCounter(int $value)
+	 *  @method int getRenewalStatus()
+	 *  @method setRenewalStatus(int $value)
+	 *  @method int getStatus()
+	 *  @method setStatus(int $value)
+	 *  @method  getStartDate()
+	 *  @method setStartDate( $value)
+	 *  @method  getStopDate()
+	 *  @method setStopDate( $value)
+	 *  @method  getRenewalDate()
+	 *  @method setRenewalDate( $value)
+	 *  @method int getPeriodLength()
+	 *  @method setPeriodLength(int $value)
+	 *  @method int getRenewalOffset()
+	 *  @method setRenewalOffset(int $value)
+	 *  @method string getOrderGroup()
+	 *  @method setOrderGroup(string $value)
+	 *  @method string getPeriodUnit()
+	 *  @method setPeriodUnit(string $value)
+	 */
     protected $_currentOrderItem = null;
 
 
@@ -154,7 +156,6 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
                 $quoteItem = $item;
             }
         }
-
 
         if($quoteItem){
             return $quoteItem->getSubscriptionItem();
