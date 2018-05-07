@@ -81,6 +81,18 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
     	}
     }
 
+
+    protected function _beforeSave() {
+        parent::_beforeSave();
+
+        if($this->_period != null){
+            $this->_period->save();
+            $this->setPeriodId($this->_period->getId());
+        }
+    }
+
+
+
     /**
      *
      * @param unknown $resourceName

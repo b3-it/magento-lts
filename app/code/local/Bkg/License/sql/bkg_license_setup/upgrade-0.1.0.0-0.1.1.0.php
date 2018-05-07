@@ -9,6 +9,9 @@
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
 
+/**
+ * @var Mage_Catalog_Model_Resource_Setup $installer
+ */
 $installer = $this;
 
 $installer->startSetup();
@@ -31,12 +34,13 @@ if (!$installer->tableExists($installer->getTable($table)))
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	  ");
 }
+
 if ($installer->tableExists($installer->getTable('bkg_license/master')))
 {
 	$installer->run("
 	ALTER TABLE {$installer->getTable('bkg_license/master')} 
-		ADD period_id int(11) unsigned default NULL,
-	   ADD CONSTRAINT bkg_license_master_period FOREIGN KEY (`period_id`) REFERENCES `{$this->getTable('b3it_subscription/period_entity')}`(`id`) ON DELETE SET NULL;
+	  ADD period_id int(11) unsigned default NULL,
+	  ADD CONSTRAINT bkg_license_master_period FOREIGN KEY (`period_id`) REFERENCES `{$this->getTable('b3it_subscription/period_entity')}`(`id`) ON DELETE SET NULL;
     ");
 }
 
@@ -44,7 +48,7 @@ $installer->startSetup();
 if ($installer->tableExists($installer->getTable('bkg_license/copy')))
 {
 	$installer->run("
-	ALTER TABLE {$installer->getTable('bkg_license/copy')} (
+	ALTER TABLE {$installer->getTable('bkg_license/copy')} 
 		ADD period_id int(11) unsigned default NULL,
 		ADD CONSTRAINT bkg_license_copy_period FOREIGN KEY (`period_id`) REFERENCES `{$this->getTable('bkg_license/copy_period')}`(`id`) ON DELETE SET NULL;
 	");

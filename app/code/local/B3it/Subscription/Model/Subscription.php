@@ -71,9 +71,31 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
      */
     public function addNewOrderItem($orderItem, $quote, $period = null, $startDate = null)
     {
+
+        $this->setFirstOrderId($orderItem->getOrderId());
+        $this->setFirstOrderitemId($orderItem->getId());
+        $this->setCurrentOrderId($orderItem->getOrderId());
+        $this->setCurrentOrderitemId($orderItem->getId());
+        $this->setProductId($orderItem->getProduct()->getId());
+        $this->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_PAUSE);
+        $this->setStatus(B3it_Subscription_Model_Status::STATUS_ACTIVE);
+        $this->setOrderGroup($orderItem->getOrder()->getIncrementId());
+
+        //falls es eine Verlängerung ist
+        $oldSubscription = $this->_getSubscriptionItem($orderItem,$quote);
+        if($oldSubscription) {
+            $this->setFirstOrderId($oldSubscription->getFirstOrderId());
+            $this->setFirstOrderitemId($oldSubscription->getFirstOrderitemId());
+            $this->setOrderGroup($oldSubscription->getOrderGroup());
+            $this->setCounter(intval($oldSubscription->getCounter()) + 1);
+        }
         $this->setPeriod($period);
         $data['subscription'] = $this;
-        Mage::dispatchEvent('B3it_Subscription_Model_Create_Calculate', $data);
+        $data['order_item'] = $orderItem;
+
+        //Falls andere Module die Periode überschreiben wollen
+        Mage::dispatchEvent('b3it_subscription_model_create_calculate', $data);
+
         $renewalOffset = 0;
         $periodLength = 1;
         $periodUnit = Zend_Date::YEAR;
@@ -94,25 +116,8 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         $unit = $initialPeriodUnit;
 
 
-
-    	$this->setFirstOrderId($orderItem->getOrderId());
-        $this->setFirstOrderitemId($orderItem->getId());
-        $this->setCurrentOrderId($orderItem->getOrderId());
-        $this->setCurrentOrderitemId($orderItem->getId());
-        $this->setProductId($orderItem->getProduct()->getId());
-        $this->setRenewalStatus(B3it_Subscription_Model_Renewalstatus::STATUS_PAUSE);
-        $this->setStatus(B3it_Subscription_Model_Status::STATUS_ACTIVE);
-        $this->setOrderGroup($orderItem->getOrder()->getIncrementId());
-
-        //falls es eine Verlängerung ist
-        $oldSubscription = $this->_getSubscriptionItem($orderItem,$quote);
         if($oldSubscription){
-            $this->setFirstOrderId($oldSubscription->getFirstOrderId());
-            $this->setFirstOrderitemId($oldSubscription->getFirstOrderitemId());
-            $this->setOrderGroup($oldSubscription->getOrderGroup());
-            $this->setCounter(intval($oldSubscription->getCounter()) +1);
             $startDate = new Zend_Date($oldSubscription->getStopDate());
-
             $length = $periodLength;
             $unit = $periodUnit;
         }

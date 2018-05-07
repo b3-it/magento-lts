@@ -23,7 +23,7 @@ class B3it_Subscription_Model_Observer extends Varien_Object
 			$periodId = intval($product->getSubscriptionPeriod());
 
 			/* @var $oldSubscription  B3it_Subscription_Model_Subscription */
-			$oldSubscription = $this->_getSubscriptionItem($orderItem,$quote);
+			$oldSubscription = $this->_getSubscriptionItem($item,$quote);
 			
 			
 			//falls abo Produkt oder Bestellung aus Abo

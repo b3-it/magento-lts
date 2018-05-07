@@ -24,7 +24,7 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tab_Subscription extends Mage_Adminh
         
         
         $fieldset->addField('subscripe', 'checkbox', array(
-        		'label'     => Mage::helper('b3it_subscription')->__('subscripe'),
+        		'label'     => Mage::helper('b3it_subscription')->__('Subscription'),
         		//'class'     => 'required-entry',
         		//'required'  => true,
         		'name'      => 'subscripe',
