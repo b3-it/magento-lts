@@ -4,9 +4,15 @@ class BKG_VirtualGeo_Helper_Gdz extends Mage_Core_Helper_Abstract
     public function describe($typeName) {
         try {
             $fdata = $this->__curl_get("http://sg.geodatenzentrum.de/gdz_interrest/describe?typeName=".$typeName);
+
             // fdata has attributeName, srs and geometryName
-            return json_decode($fdata, true);
+            $data = json_decode($fdata, true);
+            if ($data === false) {
+                throw new Exception(json_last_error_msg());
+            }
+            return $data;
         } catch (Exception $e) {
+            Mage::logException($e);
             // do nothing for now
         }
         return array();
@@ -15,8 +21,13 @@ class BKG_VirtualGeo_Helper_Gdz extends Mage_Core_Helper_Abstract
     public function listLayer() {
         try {
             $fdata = $this->__curl_get("http://sg.geodatenzentrum.de/gdz_interrest/list");
-            return json_decode($fdata, true);
+            $data = json_decode($fdata, true);
+            if ($data === false) {
+                throw new Exception(json_last_error_msg());
+            }
+            return $data;
         } catch (Exception $e) {
+            Mage::logException($e);
             // do nothing for now
         }
         return array();
@@ -59,7 +70,7 @@ class BKG_VirtualGeo_Helper_Gdz extends Mage_Core_Helper_Abstract
         $result = json_decode($data, true);
         // throw exception if the respond of the service is no valid json
         if ($result === false) {
-            throw new Exception(json_last_error());
+            throw new Exception(json_last_error_msg());
         }
         return $result;
     }
