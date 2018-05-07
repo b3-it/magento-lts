@@ -8,7 +8,9 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-
+/**
+ * @var Bkg_License_Model_Resource_Setup $this
+ */
 $installer = $this;
 
 $installer->startSetup();
