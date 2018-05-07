@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Bkg_License>
-            <version>0.1.0.0</version>
+            <version>0.1.1.0</version>
         </Bkg_License>
     </modules>
     <global>
@@ -92,7 +92,9 @@
                    <copy_authorized_customer>
                     <table>bkg_license_copy_authorized_customer</table>
                    </copy_authorized_customer>
-
+                    <copy_period>
+                    <table>bkg_license_copy_period</table>
+                   </copy_period>
                 </entities>
             </bkg_license_resource>
         </models>

@@ -163,6 +163,47 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
                     tinyMCE.execCommand('mceRemoveControl', false, 'text_template');
                 }
             }
+        				
+        	function toogleSubscription()
+			{
+        		if(\$j('#subscripe').is(':checked'))
+        		{
+        			\$j('#initial_period_length').parent().parent().show();
+        			\$j('#initial_period_length').show();
+        			\$j('#initial_period_length').addClass('required-entry');
+        			\$j('#initial_period_unit').show();
+        			\$j('#initial_period_unit').parent().parent().show();
+        				
+        			\$j('#period_length').parent().parent().show();
+        			\$j('#period_length').show();
+        			\$j('#period_length').addClass('required-entry');
+        			\$j('#period_unit').show();
+        			\$j('#period_unit').parent().parent().show();
+        				
+        			\$j('#renewal_offset').parent().parent().show();
+        			\$j('#renewal_offset').show();
+        			\$j('#renewal_offset').addClass('required-entry');
+        		}
+        		else
+        		{
+        			\$j('#initial_period_length').parent().parent().hide();
+        			\$j('#initial_period_length').hide();
+        			\$j('#initial_period_length').removeClass('required-entry');
+        			\$j('#initial_period_unit').hide();
+        			\$j('#initial_period_unit').parent().parent().hide();
+        				
+        			\$j('#period_length').parent().parent().hide();
+					\$j('#period_length').hide();
+        			\$j('#period_length').removeClass('required-entry');
+        			\$j('#period_unit').hide();  
+        			\$j('#period_unit').parent().parent().hide();
+        				
+        			\$j('#renewal_offset').parent().parent().hide();
+        			\$j('#renewal_offset').hide();
+        			\$j('#renewal_offset').removeClass('required-entry');
+        		}
+			}
+        	toogleSubscription();
             
             switchIsOrgunit();
 		 ";

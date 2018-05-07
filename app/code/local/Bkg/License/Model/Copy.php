@@ -42,12 +42,35 @@
  */
 class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 {
+	
+	protected $_period = null;
+	
     public function _construct()
     {
         parent::_construct();
         $this->_init('bkg_license/copy');
     }
 
+    public function setPeriod($period)
+    {
+    	$this->_period = $period;
+    }
+    
+    
+    public function getPeriod()
+    {
+    	if($this->_period == null)
+    	{
+    		
+    		$this->_period = Mage::getModel('bkg_license/copy_period');
+    		if($this->getPeriodId())
+    		{
+    			$this->_period->load($this->getPeriodId());
+    		}
+    	}
+    	return $this->_period;
+    }
+    
     protected function _saveRelated($collection)
     {
     	if($collection != null){
