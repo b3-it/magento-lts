@@ -28,7 +28,7 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable($tableN
     ));
     $installer->getConnection()->addForeignKey(
             $installer->getFkName($tableName, $columnName, $tableName, 'id'),
-           $tableName, $columnName,'bkg_license/copy_period', 'id' , Varien_Db_Ddl_Table::ACTION_SET_NULL
+        $installer->getTable($tableName), $columnName,'bkg_license/copy_period', 'id' , Varien_Db_Ddl_Table::ACTION_SET_NULL
         )
     ;
 }
@@ -43,7 +43,7 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable($tableN
     ));
     $installer->getConnection()->addForeignKey(
         $installer->getFkName($tableName, $columnName, $tableName, 'id'),
-        $tableName, $columnName,'bkg_license/copy_period', 'id' , Varien_Db_Ddl_Table::ACTION_SET_NULL
+        $installer->getTable($tableName), $columnName,'bkg_license/copy_period', 'id' , Varien_Db_Ddl_Table::ACTION_SET_NULL
     )
     ;
 }
