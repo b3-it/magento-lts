@@ -46,7 +46,7 @@ $data[] = array(
     "Ehemaliges Standardsystem der deutschen Landesvermessung. <br> Besonders geeignet für blattschnittfreie Daten im äußersten Osten Deutschlands.",
     "Gauss Kruger Projection in the 5th longitude zone<br>(Central Meridian 15°)<br>Ellipsoid Bessel, Datum Potsdam",
     "especially suited for data without sheet line system in the extreme East of Germany",
-    "31469","gk5","5","GK5","GK5", "+proj=tmerc +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs");
+    "31469","gk5","5","GK5","GK5", "+proj=tmerc +axis=neu +lat_0=0 +lon_0=15 +k=1 +x_0=5500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs");
 $data[] = array(
     "Lambert-Abbildung (winkeltreu)<br> längentreue Breitenkreise: 48°40' und 53°40'<br> Bezugsmittelpunkt: 10°30' ö.L., 51°00' n.B.<br> Ellipsoid GRS80, Datum ETRS89",
     "besonders geeignet für deutschlandweite blattschnittfreie Daten bei möglichst geringen Verzerrungen",

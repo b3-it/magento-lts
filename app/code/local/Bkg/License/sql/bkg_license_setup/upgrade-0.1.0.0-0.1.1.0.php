@@ -10,7 +10,7 @@
   */
 
 /**
- * @var Mage_Catalog_Model_Resource_Setup $installer
+ * @var Bkg_License_Model_Resource_Setup $this
  */
 $installer = $this;
 
@@ -35,24 +35,24 @@ if (!$installer->tableExists($installer->getTable($table)))
 	  ");
 }
 
-if ($installer->tableExists($installer->getTable('bkg_license/master')))
+$tmaster = $installer->getTable('bkg_license/master');
+if ($installer->tableExists($tmaster) && !$installer->getConnection()->tableColumnExists($installer->getTable($tmaster), 'period_id'))
 {
 	$installer->run("
-	ALTER TABLE {$installer->getTable('bkg_license/master')} 
+	ALTER TABLE {$tmaster} 
 	  ADD period_id int(11) unsigned default NULL,
 	  ADD CONSTRAINT bkg_license_master_period FOREIGN KEY (`period_id`) REFERENCES `{$this->getTable('b3it_subscription/period_entity')}`(`id`) ON DELETE SET NULL;
     ");
 }
 
-$installer->startSetup();
-if ($installer->tableExists($installer->getTable('bkg_license/copy')))
+$tcopy = $installer->getTable('bkg_license/copy');
+if ($installer->tableExists($tcopy) && !$installer->getConnection()->tableColumnExists($installer->getTable($tcopy), 'period_id'))
 {
 	$installer->run("
-	ALTER TABLE {$installer->getTable('bkg_license/copy')} 
+	ALTER TABLE {$installer->getTable('bkg_license/copy')}
 		ADD period_id int(11) unsigned default NULL,
 		ADD CONSTRAINT bkg_license_copy_period FOREIGN KEY (`period_id`) REFERENCES `{$this->getTable('bkg_license/copy_period')}`(`id`) ON DELETE SET NULL;
 	");
 }
-
 
 $installer->endSetup();
