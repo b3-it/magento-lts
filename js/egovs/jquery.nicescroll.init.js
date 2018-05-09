@@ -24,24 +24,29 @@ function detectIE() {
     return false;
 }
 
-$j(document).ready(function () {
-	if ( typeof(isDWD) !== 'undefined' ) {
-		var color_element  = '#top-row';
-		var color_proberty = 'background-color';
-		var scroll_element = 'body';
-	}
-	else {
-		var color_element  = '.page-title h1';
-		var color_proberty = 'color';
-		var scroll_element = 'body';
-	}
+(function($){
+    $(document).ready(function() {
+        if ( detectIE() == false ) {
+            if ( typeof(isDWD) !== 'undefined' ) {
+        		var color_element  = '#top-row';
+        		var color_proberty = 'background-color';
+        		var scroll_element = 'body';
+        	}
+        	else {
+        		var color_element  = '.page-title h1';
+        		var color_proberty = 'color';
+        		var scroll_element = 'body';
+        	}
 
-	if ( detectIE() == false ) {
-		$j(scroll_element).niceScroll({
-	        'cursorcolor'       : $j(color_element).css(color_proberty),
-	        'cursorwidth'       : '15px',
-	        'cursorborderradius': '3px',
-	        'horizrailenabled'  : false
-	    });
-	}
-});
+            $(scroll_element).niceScroll({
+                cursorcolor:   $(color_element).css(color_proberty),
+                cursorwidth:   "15px",
+                autohidemode:  true,
+                bouncescroll:  false,
+                smoothscroll:  true,
+                touchbehavior: false,
+                zindex:        999
+            }).resize();
+        }
+    });
+})(jQuery);

@@ -10,7 +10,7 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Format extends Mag
 	{
 		$this->_attributes = $attributes;
 		parent::__construct();
-		$this->setId('fees');
+		$this->setId('format');
 	
 	}
 	

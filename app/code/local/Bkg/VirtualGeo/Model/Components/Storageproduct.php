@@ -10,6 +10,8 @@
  */
 class Bkg_VirtualGeo_Model_Components_Storageproduct extends Bkg_VirtualGeo_Model_Components_Componentproduct
 {
+    protected $_eventPrefix = 'virtualgeo_components_storageproduct';
+
     public function _construct()
     {
         parent::_construct();

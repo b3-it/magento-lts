@@ -10,9 +10,21 @@
  */
 class Bkg_VirtualGeo_Model_Components_Structureproduct extends Bkg_VirtualGeo_Model_Components_Componentproduct
 {
+    protected $_eventPrefix = 'virtualgeo_components_structureproduct';
+
     public function _construct()
     {
         parent::_construct();
         $this->_init('virtualgeo/components_structureproduct');
+        $this->setComponentType();
+    }
+
+    /**
+     * Setzt den Type
+     *
+     * Type darf nur von Klasse selbst gesetzt werden
+     */
+    protected function setComponentType() {
+        $this->setData('component_type', self::COMPONENT_TYPE_STRUCTURE);
     }
 }
