@@ -20,6 +20,7 @@
                        name="options[<?php echo $option->getComponentType(); ?>]"
                        value="<?php echo $option->getId(); ?>"
                        data-id="<?php echo $this->getHtmlID(); ?>"
+                       data-entity-id="<?php echo $option->getEntityId(); ?>"
                        data-code="<?php echo $this->escapeHtml($option->getCode()); ?>"
                        data-shortname="<?php echo $this->escapeHtml($option->getShortname()); ?>"
                        data-name="<?php echo $this->escapeHtml($option->getName());?>"

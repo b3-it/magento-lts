@@ -15,8 +15,8 @@ class Bkg_VirtualGeo_MapController extends Mage_Core_Controller_Front_Action
 
    	    $data = $this->__structureLayerData($structureId, $geoepsg, $productCode);
 
-    	$this->getResponse()->setHeader('Content-type', 'application/json', true);
-    	$this->getResponse()->setBody(json_encode($data));
+   	    $this->getResponse()->setHeader('Content-type', 'application/json', true);
+    	$this->getResponse()->setBody(json_encode($data, JSON_FORCE_OBJECT));
     }
     
     private function __structureLayerData($structureId, $geoepsg, $productCode) {
