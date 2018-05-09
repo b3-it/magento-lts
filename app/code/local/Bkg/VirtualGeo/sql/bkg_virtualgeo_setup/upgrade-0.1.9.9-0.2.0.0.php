@@ -124,7 +124,6 @@ if (!$installer->tableExists($tableName)) {
         ->addColumn('ref_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
             'unsigned'  => true,
             'nullable'  => false,
-            'default'   => null,
         ), 'Reference ID')
         ->addIndex($installer->getIdxName($tableName, 'option_id'), array('option_id'))
         ->addIndex($installer->getIdxName($tableName, 'product_id'), array('product_id'))
@@ -165,6 +164,10 @@ if (!$installer->tableExists($tableName)) {
             'unsigned'  => true,
             'nullable'  => false,
         ), 'Store ID')
+        ->addColumn('pos', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+            'unsigned'  => true,
+            'nullable'  => false,
+        ), 'Position')
         ->addColumn('is_default', Varien_Db_Ddl_Table::TYPE_SMALLINT, 5, array(
             'unsigned'  => true,
             'nullable'  => false,
