@@ -27,12 +27,4 @@ class Bkg_VirtualGeo_Model_Components_Formatproduct extends Bkg_VirtualGeo_Model
     protected function setComponentType() {
         $this->setData('component_type', self::COMPONENT_TYPE_FORMAT);
     }
-
-    /**
-     * TODO : gehört in Parent
-     * @return mixed
-     */
-    public function getComponentType() {
-        return $this->getData('component_type');
-    }
 }

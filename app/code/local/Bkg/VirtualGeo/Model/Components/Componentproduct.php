@@ -15,6 +15,7 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     const COMPONENT_TYPE_GEOREF = 3;
     const COMPONENT_TYPE_RESOLUTION = 4;
     const COMPONENT_TYPE_STRUCTURE = 5;
+    const COMPONENT_TYPE_ACCOUNTING = 6;
 
 
     /**
@@ -39,7 +40,7 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     	$collection = $this->getCollection();
     	$collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('store_id', $storeId);
-        if (method_exists($this, 'getComponentType')) {
+        if (method_exists($this, 'getComponentType') && $this->getComponentType() > 0) {
             $collection->addFieldToFilter('component_type', $this->getComponentType());
         }
     	$res = array();
@@ -58,7 +59,7 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
     	$collection = $this->getCollection();
         $collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('store_id', $storeId);
-        if (method_exists($this, 'getComponentType')) {
+        if (method_exists($this, 'getComponentType') && $this->getComponentType() > 0) {
             $collection->addFieldToFilter('component_type', $this->getComponentType());
         }
         $collection->addFieldToFilter('is_default', 1);
@@ -91,11 +92,20 @@ class Bkg_VirtualGeo_Model_Components_Componentproduct extends Mage_Core_Model_A
         $collection = $this->getCollection();
         $collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('store_id', $storeId);
-        if (method_exists($this, 'getComponentType')) {
+        if (method_exists($this, 'getComponentType') && $this->getComponentType() > 0) {
             $collection->addFieldToFilter('component_type', $this->getComponentType());
         }
         $collection->getSelect()->order('pos');
         $items = $collection->getItems();
         return $items;
+    }
+
+    /**
+     * Component type
+     *
+     * @return mixed
+     */
+    public function getComponentType() {
+        return $this->getData('component_type');
     }
 }

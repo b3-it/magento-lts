@@ -118,6 +118,7 @@ class Bkg_VirtualGeo_Model_Observer
     	$this->_saveComponent($dataObject->getFormat(),$product,'virtualgeo/components_formatproduct');
         $this->_saveComponent($dataObject->getStructure(), $product,'virtualgeo/components_structureproduct');
         $this->_saveComponent($dataObject->getResolution(),$product,'virtualgeo/components_resolutionproduct');
+        $this->_saveComponent($dataObject->getAccounting(),$product,'virtualgeo/components_accountingproduct');
         $content = $dataObject->getContentLayerOptions();
         $this->_saveContentLayer($content,$product->getId());
 

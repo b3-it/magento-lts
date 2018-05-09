@@ -27,12 +27,4 @@ class Bkg_VirtualGeo_Model_Components_Resolutionproduct extends Bkg_VirtualGeo_M
     protected function setComponentType() {
         $this->setData('component_type', self::COMPONENT_TYPE_RESOLUTION);
     }
-
-    /**
-     * TODO : gehört in Parent
-     * @return mixed
-     */
-    public function getComponentType() {
-        return $this->getData('component_type');
-    }
 }
