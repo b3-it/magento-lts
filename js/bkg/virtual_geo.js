@@ -24,6 +24,9 @@ var ol3DrawGeo = null;
 
 var finalDrawFeature = null; 
 var finalDrawSource = null;
+
+// fix for the animation thing
+var mapClosed = true;
 /**
 * check whether the supplied polygons have any spatial interaction
 * @{ol.geometry.Polygon} polygeomA 
@@ -107,14 +110,47 @@ function removeWithTool(toolLayer, features) {
 	getIntersectionTool(toolLayer, features, removeGridSelection);
 }
 
-function incLoading() {
+function incLoading(e) {
+	// map is not visible, don't show loading overlay
+	if (!$j('#virtualgeo-openlayer').is(":visible") || mapClosed) {
+		return;
+	}
+	//console.log("incLoading");
 	$j('#virtualgeo-openlayer').LoadingOverlay("show");
 }
 
 function decLoading() {
+	//console.log("decLoading");
 	$j('#virtualgeo-openlayer').LoadingOverlay("hide");
 }
 
+function stopLoading() {
+	//console.log("stopLoading");
+	$j('#virtualgeo-openlayer').LoadingOverlay("hide", true);
+}
+
+function cleanupMap() {
+	if (_map === null) {
+		return false;
+	}
+	//clean map of layers
+	//_layerSwitcher.setMap(null);
+	_map.getLayers().clear();
+	if (_kachelFinalSource !== null) {
+		_kachelFinalSource.clear();        				
+	}
+	if (_select !== null) {
+		_map.removeInteraction(_select);        				
+	}
+	_select = null;
+	//alert("clean map");
+
+	// disable selectmenu selected
+	$j('.toogleSelectCtrl > select').val('').selectmenu( "refresh" );
+	$j('.toogleSelectCtrl > .ui-selectmenu-button').removeClass('ui-state-active');
+	
+	//_map.setView(null);
+}
 function makeDrawLayer() {
 	finalDrawFeature = new ol.Feature(); 
 	finalDrawSource = new ol.source.Vector({
@@ -640,25 +676,17 @@ $j(document).ready(function(){
             // wird aktiviert
         },
         'beforeActivate': function(event, ui) {
+        	if (ui.oldPanel.length > 0) {
+        		if (ui.oldPanel.is('#virtualgeo-openlayer')) {
+        			mapClosed = true;
+        			stopLoading();
+        			cleanupMap();
+        		}
+        	}
         	if (ui.newPanel.length > 0) {
-        		if (ui.newPanel.is('#virtualgeo-openlayer') && _map != null) {
-        			//clean map of layers
-        			//_layerSwitcher.setMap(null);
-        			_map.getLayers().clear();
-        			if (_kachelFinalSource !== null) {
-            			_kachelFinalSource.clear();        				
-        			}
-        			if (_select !== null) {
-        				_map.removeInteraction(_select);        				
-        			}
-        			_select = null;
-        			//alert("clean map");
-
-			    	// disable selectmenu selected
-		    		$j('.toogleSelectCtrl > select').val('').selectmenu( "refresh" );
-		    		$j('.toogleSelectCtrl > .ui-selectmenu-button').removeClass('ui-state-active');
-			    	
-        			//_map.setView(null);
+        		if (ui.newPanel.is('#virtualgeo-openlayer')) {
+        			cleanupMap();
+        			mapClosed = false;
         		}
         	}
         }
