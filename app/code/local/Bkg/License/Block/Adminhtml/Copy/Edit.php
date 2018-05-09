@@ -163,6 +163,30 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
                     tinyMCE.execCommand('mceRemoveControl', false, 'text_template');
                 }
             }
+        				
+        	function toogleSubscription()
+			{
+			    var elements = ['initial_period_length','initial_period_unit','period_length','period_unit','renewal_offset'];
+        		if(\$j('#subscripe').is(':checked'))
+        		{
+        		    elements.forEach(function(elem)
+        		    {
+        		        \$j('#'+elem).parent().parent().show();
+        			    \$j('#'+elem).show();
+        			    \$j('#'+elem).addClass('required-entry');
+        		    });
+        		}
+        		else
+        		{
+        		    elements.forEach(function(elem)
+        		    {
+        		        \$j('#'+elem).parent().parent().hide();
+        			    \$j('#'+elem).hide();
+        			    \$j('#'+elem).removeClass('required-entry');
+        		    });
+        		}
+			}
+        	toogleSubscription();
             
             switchIsOrgunit();
 		 ";

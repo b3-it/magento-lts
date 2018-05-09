@@ -1,7 +1,7 @@
 <?php
  /**
   *
-  * @category   	Bkg
+  * @category   	B3it
   * @package    	B3it_Subscription
   * @name       	B3it_Subscription_Block_Adminhtml_Periodntity_Grid
   * @author 		Holger Kögel <h.koegel@b3-it.de>
@@ -35,7 +35,7 @@ class B3it_Subscription_Block_Adminhtml_Period_Grid extends Mage_Adminhtml_Block
           'index'     => 'id',
       ));
 
-    
+    /*
       
       $this->addColumn('shortname', array(
       		'header'    => Mage::helper('b3it_subscription')->__('Shortname'),
@@ -43,7 +43,7 @@ class B3it_Subscription_Block_Adminhtml_Period_Grid extends Mage_Adminhtml_Block
       		'width'     => '150px',
       		'index'     => 'shortname',
       ));
-      
+      */
       $this->addColumn('name', array(
       		'header'    => Mage::helper('b3it_subscription')->__('name'),
       		//'align'     =>'left',

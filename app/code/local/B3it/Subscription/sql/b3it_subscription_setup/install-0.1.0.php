@@ -34,6 +34,7 @@ CREATE TABLE {$this->getTable('b3it_subscription/subscription')} (
   `stop_date` datetime NULL,
   `renewal_date` datetime NULL,
   `period_length` int default 365,
+  `period_unit` varchar(8)  default 'y',
   `renewal_offset` int default 0,
   `order_group` varchar(128) default '',
   
@@ -52,6 +53,7 @@ if (!$installer->tableExists($installer->getTable($table.'_entity')))
 	CREATE TABLE {$installer->getTable($table.'_entity')} (
 	  `id` int(11) unsigned NOT NULL auto_increment,
 	  `pos` int(11) unsigned default 0,
+	  `name` varchar(512) default '',
 	  `initial_period_length` int(11) unsigned default 2,
 	  `initial_period_unit` varchar(8)  default 'y',
 	  `period_length` int(11) unsigned default 1,
@@ -62,14 +64,14 @@ if (!$installer->tableExists($installer->getTable($table.'_entity')))
 	  ");
 }
 
-
+/*
 if (!$installer->tableExists($installer->getTable($table."_label")))
 {
 	$installer->run("CREATE TABLE {$installer->getTable($table.'_label')} (
 	`id` int(11) unsigned NOT NULL auto_increment,
 	`store_id` smallint unsigned NOT NULL,
 	`entity_id` int(11) unsigned NOT NULL,
-	`name` varchar(512) default '',
+	`label` varchar(512) default '',
 	`description` varchar(1024) default '',
 	`shortname` varchar(255) default '',
 	PRIMARY KEY (`id`),
@@ -78,7 +80,7 @@ if (!$installer->tableExists($installer->getTable($table."_label")))
 	)
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 }
-
+*/
 
 // Add new attributes
 $installer->addAttribute('catalog_product', 'subscription_period', array(
