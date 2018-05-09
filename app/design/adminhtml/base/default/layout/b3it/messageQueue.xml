@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <adminhtml_messageQueue_queue_message_index>
+        <reference name="content">
+            <block type="b3it_mq/adminhtml_queue_message" name="queue_message" />
+        </reference>
+    </adminhtml_messageQueue_queue_message_index>
+    <adminhtml_messagequeue_queue_ruleset_index>
+        <reference name="content">
+            <block type="b3it_mq/adminhtml_queue_ruleset" name="queue_ruleset" />
+        </reference>
+    </adminhtml_messagequeue_queue_ruleset_index>
+        <adminhtml_messagequeue_queue_ruleset_edit>
+      <reference name="head">
+           <action method="addJs"><script>b3it/messagequeue/rule.js</script></action>
+        </reference>
+    </adminhtml_messagequeue_queue_ruleset_edit>
+
+</layout>
