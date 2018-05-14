@@ -50,7 +50,7 @@ class B3it_Messagequeue_Block_Adminhtml_Queue_Ruleset_Edit_Tab_Form extends Mage
           'name'      => 'owner_id',
       	  'values'	=> Mage::getModel('b3it_mq/queue_owner')->getOptionArray()
       ));
-      $fieldset->addField('template', 'text', array(
+      $fieldset->addField('template', 'textarea', array(
           'label'     => Mage::helper('b3it_mq')->__('Template'),
           //'class'     => 'required-entry',
           //'required'  => true,

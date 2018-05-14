@@ -15,17 +15,46 @@ class B3it_Messagequeue_Model_Queue_Category extends Varien_Object
     
    
     public function getOptionArray(){
-    	if($this->_options == null)
-    	{
-    		$this->_options = array();
-	    	$opt = Mage::getConfig()->getNode('global/b3it_messagequeue/category')->asArray();
-	    	
-	    	foreach($opt as $k=>$v)
-	    	{
-	    		$this->_options[$k] = Mage::helper('b3it_mq')->__($v['label']);
-	    	}
-    	}
-    
-    	return $this->_options;
+
+        $res = array();
+        $opt = $this->getOptions();
+        foreach($opt as $k=>$v)
+        {
+            $res[$k] = $v->getLabel();
+        }
+
+    	return $res;
     }
+
+
+    public function getOptions()
+    {
+        if($this->_options == null)
+        {
+            $this->_options = array();
+            $opt = Mage::getConfig()->getNode('global/b3it_messagequeue/category')->asArray();
+
+            foreach($opt as $k=>$v)
+            {
+                $model = Mage::getModel($v['label']);
+                if($model) {
+                    $model->setLabel($v['label']);
+                    $this->_options[$k] =$model;
+                }
+            }
+        }
+    }
+
+    public function getModelByName($name)
+    {
+
+        $opt = $this->getOptions();
+
+        if(isset($opt[$name])){
+            return $opt[$name];
+        }
+
+        return null;
+    }
+
 }

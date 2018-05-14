@@ -16,10 +16,10 @@ implements B3it_Messagequeue_Model_Compare_Interface
 	public function getOptionArray(){
 		if($this->_options == null)
 		{
-			$collection = Mage::getModel('customer/group')->getCollection();
+			$collection = Mage::getConfig()->getNode('global/catalog/product/type')->asArray();
 			$this->_options = array();
-			foreach($collection as $item){
-				$this->_options[$item->getId()] = $item->getCustomerGroupCode();
+			foreach($collection as $key =>$item){
+				$this->_options[$key] = $item['label'];
 			}
 		}
 

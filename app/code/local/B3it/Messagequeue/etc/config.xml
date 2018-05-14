@@ -68,6 +68,7 @@
             <category>
                 <order>
                     <label>Order</label>
+                    <model>b3it_mq/queue_processing_order</model>
                 </order>
             </category>
         </b3it_messagequeue>
@@ -112,28 +113,28 @@
     </admin>
     <adminhtml>
       <menu>
+          <system>
+              <children>
           <b3itmessageQueue module="b3it_mq">
-              <title>B3it Messagequeue</title>
+              <title>Message Queue</title>
               <sort_order>50</sort_order>
               <children>
-                  <b3itmessageQueue_queue_rule module="b3it_mq">
-                      <title>Queue Rule</title>
-                      <sort_order>10</sort_order>
-                      <action>adminhtml/messageQueue_queue_rule/index</action>
-                  </b3itmessageQueue_queue_rule>
+
                   <b3itmessageQueue_queue_message module="b3it_mq">
-                      <title>Queue Message</title>
+                      <title>Messages</title>
                       <sort_order>20</sort_order>
                       <action>adminhtml/messageQueue_queue_message/index</action>
                   </b3itmessageQueue_queue_message>
                   <b3itmessageQueue_queue_ruleset module="b3it_mq">
-                      <title>Queue Ruleset</title>
+                      <title>Rules</title>
                       <sort_order>30</sort_order>
                       <action>adminhtml/messageQueue_queue_ruleset/index</action>
                   </b3itmessageQueue_queue_ruleset>
 
               </children>
           </b3itmessageQueue>
+              </children>
+          </system>
       </menu>
       <acl>
           <resources>

@@ -8,6 +8,27 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method string getName()
+ *  @method setName(string $value)
+ *  @method int getStatus()
+ *  @method setStatus(int $value)
+ *  @method string getCategory()
+ *  @method setCategory(string $value)
+ *  @method string getRecipients()
+ *  @method setRecipients(string $value)
+ *  @method int getOwnerId()
+ *  @method setOwnerId(int $value)
+ *  @method string getRenderer()
+ *  @method setRenderer(string $value)
+ *  @method string getTransfer()
+ *  @method setTransfer(string $value)
+ *  @method string getFormat()
+ *  @method setFormat(string $value)
+ */
 class B3it_Messagequeue_Model_Queue_Ruleset extends Mage_Core_Model_Abstract
 {
 	protected $_rules = null;
@@ -30,4 +51,31 @@ class B3it_Messagequeue_Model_Queue_Ruleset extends Mage_Core_Model_Abstract
     	return $this->_rules;
     
     }
+
+    public function processEvent($data,$event)
+    {
+        $message = Mage::getModel('b3it_mq/queue_message');
+        $message->setRulesetId($this->getId());
+        $message->setOwnerId($this->getOwnerId());
+        $message->setRecipients($this->getRecipients());
+        $message->setCategory($this->getCategory());
+        $message->setCreatedAt(now());
+        $message->setEvent($event);
+        $message->setStatus(B3it_Messagequeue_Model_Queue_Messagestatus::STATUS_NEW);
+        $message->setStoreId($data->getStoreId());
+
+        $model = $this->_getProcessingModel();
+        if($model)
+        {
+            $model->preProccessing($this,$message,$data);
+
+        }
+    }
+
+
+    protected function _getProcessingModel()
+    {
+        return  Mage::getModel('b3it_mq/queue_category')->getModelByName($this->getCategory());
+    }
+
 }

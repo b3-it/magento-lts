@@ -164,7 +164,7 @@ if (!$installer->tableExists($installer->getTable('b3it_mq/email_recipient'))) {
 	), 'Error')
 	->addIndex($installer->getIdxName('b3it_mq/email_recipient', array('email')), array('email'))
 	->addIndex($installer->getIdxName('b3it_mq/email_recipient', array('message_id', 'email'), Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE), array('message_id', 'email'), array('type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE))
-	->addForeignKey($installer->getFkName('b3it_mq/email_recipient', 'message_id', 'infoletter/queue', 'message_id'), 'message_id', $installer->getTable('infoletter/queue'), 'message_id', Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
+	->addForeignKey($installer->getFkName('b3it_mq/email_recipient', 'message_id', 'b3it_mq/email_queue', 'message_id'), 'message_id', $installer->getTable('b3it_mq/email_queue'), 'message_id', Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
 	->setComment('Email Queue');
 	$installer->getConnection()->createTable($table);
 }

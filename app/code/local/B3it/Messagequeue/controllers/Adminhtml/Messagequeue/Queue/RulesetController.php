@@ -116,8 +116,9 @@ class B3it_Messagequeue_Adminhtml_Messagequeue_Queue_RulesetController extends M
 					$model->delete();
 					continue;
 				}
-			}
-			//unset($item['id']);
+			}else {
+                unset($item['id']);
+            }
 			$model->setData($item);
 			$model->setRulesetId($ruleset->getId());
 			$model->save();
