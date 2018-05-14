@@ -16,7 +16,7 @@ implements B3it_Messagequeue_Model_Queue_Processing_Interface
         //testen ob Regel gilt:
         foreach($ruleset->getRules() as $rule)
         {
-            
+
         }
 
     }

@@ -31,15 +31,16 @@ foreach ($components as $srcTableName => $componentType) {
 }
 
 $destContentTable = $installer->getTable('virtualgeo/components_content_option_value');
-$installer->run(sprintf("
-    INSERT INTO $destContentTable
+$type =  Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_CONTENT;
+$installer->run("
+    INSERT INTO {$destContentTable}
         (`entity_id`,
         `parent_node_id`,
         `readonly`,
         `is_checked`)
     SELECT `src`.`id`, `parent_node_id`, `readonly`, `is_checked`
-    FROM $destTable as src
-    inner join {$installer->getTable('virtualgeo_components_content_product')} as old on old.entity_id = src.entity_id and component_type = %s;
-"), Bkg_VirtualGeo_Model_Components_Componentproduct::COMPONENT_TYPE_CONTENT);
+    FROM {$destTable} as src
+    inner join {$installer->getTable('virtualgeo_components_content_product')} as old on old.entity_id = src.entity_id and component_type = {$type};
+");
 
 $installer->endSetup();
