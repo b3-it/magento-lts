@@ -12,15 +12,15 @@
 class B3it_Messagequeue_Model_Queue_Messagestatus extends Varien_Object
 {
     const STATUS_NEW	= 0;
-    const STATUS_ENABLED	= 1;
-    const STATUS_DISABLED	= 2;
+    const STATUS_PROCESSING	= 1;
+    const STATUS_FINISHED	= 2;
 
     static public function getOptionArray()
     {
         return array(
             self::STATUS_NEW        => Mage::helper('b3it_mq')->__('New'),
-            self::STATUS_ENABLED    => Mage::helper('b3it_mq')->__('Enabled'),
-            self::STATUS_DISABLED   => Mage::helper('b3it_mq')->__('Disabled')
+            self::STATUS_PROCESSING    => Mage::helper('b3it_mq')->__('Processing'),
+            self::STATUS_FINISHED   => Mage::helper('b3it_mq')->__('Finished')
         );
     }
 }

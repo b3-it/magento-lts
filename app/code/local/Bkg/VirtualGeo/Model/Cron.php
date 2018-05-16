@@ -11,27 +11,7 @@
 class Bkg_VirtualGeo_Model_Cron extends Mage_Core_Model_Abstract
 {
  
-    public function run()
-    {
-    	return;
-    	$this->getIsRunning('Bkg_VirtualGeo',1);
-    	
-    	try{
-    		
-			$this->setIsNotSaleable();
-			$this->setDisabled();
-	    	
 
-    	}
-    	catch(Exception $ex)
-    	{
-    		$this->setLogException($ex);
-    		Mage::logException($ex);
-    		Mage::throwException('Bkg_VirtualGeo Error running Service');	
-    	}
-    	return true;
-    }
-    
     
     
     protected function setIsNotSaleable()
@@ -81,7 +61,7 @@ class Bkg_VirtualGeo_Model_Cron extends Mage_Core_Model_Abstract
 	{		
 		Mage::app()->addEventArea(Mage_Core_Model_App_Area::AREA_FRONTEND);
 		if ($this->getIsRunning($schedule->getJobCode(), $schedule->getId())) {
-			$message ='dwd::abomigration Some abomigration service running';
+			$message ='found running service '.$schedule->getJobCode() ;
 			$this->setLog('Found running Service my Id is:' . $schedule->getId());
 			Mage::throwException($message);
 		}

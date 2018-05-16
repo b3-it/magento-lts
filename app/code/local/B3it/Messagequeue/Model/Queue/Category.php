@@ -36,13 +36,14 @@ class B3it_Messagequeue_Model_Queue_Category extends Varien_Object
 
             foreach($opt as $k=>$v)
             {
-                $model = Mage::getModel($v['label']);
+                $model = Mage::getModel($v['model']);
                 if($model) {
                     $model->setLabel($v['label']);
                     $this->_options[$k] =$model;
                 }
             }
         }
+        return $this->_options;
     }
 
     public function getModelByName($name)

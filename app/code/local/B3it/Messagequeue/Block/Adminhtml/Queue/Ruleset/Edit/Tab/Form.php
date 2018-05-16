@@ -43,6 +43,21 @@ class B3it_Messagequeue_Block_Adminhtml_Queue_Ruleset_Edit_Tab_Form extends Mage
           //'required'  => true,
           'name'      => 'recipients',
       ));
+      
+      $fieldset->addField('sender_name', 'text', array(
+      		'label'     => Mage::helper('b3it_mq')->__('Sender Name'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'sender_name',
+      ));
+      
+      $fieldset->addField('sender_email', 'text', array(
+      		'label'     => Mage::helper('b3it_mq')->__('Sender Email'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'sender_email',
+      ));
+      
       $fieldset->addField('owner_id', 'select', array(
           'label'     => Mage::helper('b3it_mq')->__('Owner'),
           //'class'     => 'required-entry',
@@ -50,11 +65,24 @@ class B3it_Messagequeue_Block_Adminhtml_Queue_Ruleset_Edit_Tab_Form extends Mage
           'name'      => 'owner_id',
       	  'values'	=> Mage::getModel('b3it_mq/queue_owner')->getOptionArray()
       ));
+      
+      $fieldset->addField('subject', 'text', array(
+      		'label'     => Mage::helper('b3it_mq')->__('Subject'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'subject',
+      ));
       $fieldset->addField('template', 'textarea', array(
           'label'     => Mage::helper('b3it_mq')->__('Template'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'template',
+      ));
+      $fieldset->addField('template_html', 'textarea', array(
+      		'label'     => Mage::helper('b3it_mq')->__('HTML Template'),
+      		//'class'     => 'required-entry',
+      		//'required'  => true,
+      		'name'      => 'template_html',
       ));
 
 

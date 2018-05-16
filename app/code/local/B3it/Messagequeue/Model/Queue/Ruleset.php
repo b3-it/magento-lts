@@ -10,25 +10,25 @@
  */
 
 /**
- *  @method int getId()
- *  @method setId(int $value)
- *  @method string getName()
- *  @method setName(string $value)
- *  @method int getStatus()
- *  @method setStatus(int $value)
- *  @method string getCategory()
- *  @method setCategory(string $value)
- *  @method string getRecipients()
- *  @method setRecipients(string $value)
- *  @method int getOwnerId()
- *  @method setOwnerId(int $value)
- *  @method string getRenderer()
- *  @method setRenderer(string $value)
- *  @method string getTransfer()
- *  @method setTransfer(string $value)
- *  @method string getFormat()
- *  @method setFormat(string $value)
- */
+*  @method int getId()
+*  @method setId(int $value)
+*  @method string getName()
+*  @method setName(string $value)
+*  @method int getStatus()
+*  @method setStatus(int $value)
+*  @method string getCategory()
+*  @method setCategory(string $value)
+*  @method string getRecipients()
+*  @method setRecipients(string $value)
+*  @method int getOwnerId()
+*  @method setOwnerId(int $value)
+*  @method string getTemplate()
+*  @method setTemplate(string $value)
+*  @method string getTransfer()
+*  @method setTransfer(string $value)
+*  @method string getFormat()
+*  @method setFormat(string $value)
+*/
 class B3it_Messagequeue_Model_Queue_Ruleset extends Mage_Core_Model_Abstract
 {
 	protected $_rules = null;
@@ -62,13 +62,17 @@ class B3it_Messagequeue_Model_Queue_Ruleset extends Mage_Core_Model_Abstract
         $message->setCreatedAt(now());
         $message->setEvent($event);
         $message->setStatus(B3it_Messagequeue_Model_Queue_Messagestatus::STATUS_NEW);
-        $message->setStoreId($data->getStoreId());
+        //$message->setStoreId($data->getStoreId());
+        $message->setSubject($this->getSubject());
 
         $model = $this->_getProcessingModel();
         if($model)
         {
-            $model->preProccessing($this,$message,$data);
-
+           if($model->preProcessing($this,$message,$data))
+           {
+           		$model->processText($this, $message, $data);
+           		$message->save();
+           }
         }
     }
 

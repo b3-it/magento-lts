@@ -30,7 +30,8 @@ implements B3it_Messagequeue_Model_Compare_Interface
 public function getFormInputHtml()
 	{
 		$res = array();
-		$res[] = "<select id=\"compare-value-producttype\" name=\"compare-value-producttype\" multiple=\"multiple\" size=\"5\">";
+		//$res[] = "<select id=\"compare-value-producttype\" name=\"compare-value-producttype\" multiple=\"multiple\" size=\"5\">";
+		$res[] = "<select id=\"compare-value-producttype\" name=\"compare-value-producttype\" size=\"5\">";
 		foreach($this->getOptionArray() as $k=>$v){
 			$res[] = "<option value=\"{$k}\">{$v}</option>";
 		}

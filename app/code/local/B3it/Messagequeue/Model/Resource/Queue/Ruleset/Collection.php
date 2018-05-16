@@ -19,7 +19,7 @@ class B3it_Messagequeue_Model_Resource_Queue_Ruleset_Collection extends Mage_Cor
 
     public function getModels4Categrory($category)
     {
-        $this->getSelect
+        $this->getSelect()
             ->where('category=?',$category)
             ->where('status=?',B3it_Messagequeue_Model_Queue_Status::STATUS_ENABLED);
 

@@ -81,14 +81,14 @@ RuleSet = function(elementId,name) {
             data.my_id = this.my_id;
             data.inputname = this.inputName;
           
+            //damits plausibler aussieht
+           if(this.my_id == 1){
+        	   data.join_text = "";
+           }
            
-           
-            
-            var newTableRow = this.processTemplate(this.getTemplate(),data);
-            
-            
-          
-            $j('#table-'+this.elementId+'_grid tbody').append(newTableRow);
+           var newTableRow = this.processTemplate(this.getTemplate(),data);
+
+           $j('#table-'+this.elementId+'_grid tbody').append(newTableRow);
             //this.setPosition();
             //this.toogleUpDownButtons();
         }

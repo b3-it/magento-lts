@@ -8,7 +8,7 @@
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class B3it_Messagequeue_Model_Queue_Processing_Order extends B3it_Messagequeue_Model_Queue_Processing_Abstract
+class B3it_Messagequeue_Model_Queue_Processing_Invoicepay extends B3it_Messagequeue_Model_Queue_Processing_Abstract
 implements B3it_Messagequeue_Model_Queue_Processing_Interface
 {
     public function preProcessing($ruleset,$message,$data)
@@ -25,11 +25,15 @@ implements B3it_Messagequeue_Model_Queue_Processing_Interface
     {
     	$keys = explode('.', $field);
     	
+    	if($data->getOrder() == null){
+    		$data->setOrder(Mage::getModel('sales/order')->load($data->getOrderId()));
+    	}
+    	
     	$res = null;
     	if(reset($keys) == 'orderitem'){
     		$res = array();
     		array_shift($keys);
-    		foreach($data->getAllItems() as $item)
+    		foreach($data->getOrder()->getAllItems() as $item)
     		{
     			$res[] = $this->_extractData($item, $keys);
     		}

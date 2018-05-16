@@ -23,13 +23,18 @@ if (!$installer->tableExists($installer->getTable('b3it_mq/queue_ruleset')))
 			`name` varchar(128) default '',
 			`status` smallint(6) unsigned default '0',
 			`category` varchar(128) default '',
-			`recipients` varchar(128) default '',
+			`recipients` varchar(512) default '',
+			`sender_name` varchar(512) default '',
+			`sender_email` varchar(512) default '',
 			`owner_id` int(11) unsigned default null,
 			`renderer` varchar(128) default '',
 			`transfer` varchar(128) default 'email',
 			`format` varchar(128) default 'plain',
-	  PRIMARY KEY (`id`),
-	   FOREIGN KEY (`owner_id`) REFERENCES `{$this->getTable('admin/user')}`(`user_id`) ON DELETE SET NULL
+			`subject` varchar(1024) default '',
+			`template` text default '',
+			`template_html` text default '',
+	  		PRIMARY KEY (`id`),
+	   		FOREIGN KEY (`owner_id`) REFERENCES `{$this->getTable('admin/user')}`(`user_id`) ON DELETE SET NULL
 
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -64,8 +69,10 @@ if (!$installer->tableExists($installer->getTable('b3it_mq/queue_message')))
 	  	`id` int(11) unsigned NOT NULL auto_increment,
     	`ruleset_id` int(11) unsigned default NULL,
         `owner_id` int(11) unsigned default NULL,
-        `text` text default '',
-        `recipients` varchar(512) default '',
+        `content` text default '',
+        `content_html` text default '',
+        `recipients` varchar(1024) default '',
+        `subject` varchar(1024) default '',
         `created_at` datetime default now(),
         `event` varchar(128) default '',
         `category` varchar(128) default '',

@@ -64,14 +64,42 @@
                     <label>Product Type</label>
                     <model>b3it_mq/compare_producttype</model>
                 </producttype>
+                 <orderstatus>
+                    <label>Order Status</label>
+                    <model>b3it_mq/compare_orderstatus</model>
+                </orderstatus>                
             </compare>
             <category>
                 <order>
                     <label>Order</label>
                     <model>b3it_mq/queue_processing_order</model>
                 </order>
+                <invoicepay>
+                    <label>Invoice Pay</label>
+                    <model>b3it_mq/queue_processing_invoicepay</model>
+                </invoicepay>
             </category>
         </b3it_messagequeue>
+                <events>
+            <checkout_submit_all_after>
+                <observers>
+                    <b3it_mq_order_submit>
+                        <type>singleton</type>
+                        <class>b3it_mq/observer</class>
+                        <method>onCheckoutSubmitAllAfter</method>
+                    </b3it_mq_order_submit>
+                </observers>
+            </checkout_submit_all_after>
+             <sales_order_invoice_pay>
+                <observers>
+                    <b3it_mq_invoice_pay>
+                        <type>singleton</type>
+                        <class>b3it_mq/observer</class>
+                        <method>onSalesOrderInvoicePay</method>
+                    </b3it_mq_invoice_pay>
+                </observers>
+            </sales_order_invoice_pay>
+            </events>
     </global>
     <frontend>
       <routers>
@@ -183,4 +211,16 @@
           </updates>
         </layout>
     </adminhtml>
+       <crontab>
+        <jobs>
+            <mq_queue_process>
+                <schedule><cron_expr>*/1 * * * *</cron_expr></schedule>
+                <run><model>b3it_mq/queue_cron::runCron</model></run>
+            </mq_queue_process>
+            <mq_email_queue_send_all>
+                <schedule><cron_expr>*/1 * * * *</cron_expr></schedule>
+                <run><model>b3it_mq/email_queue::sendAll</model></run>
+            </mq_email_queue_send_all>
+        </jobs>
+    </crontab>
 </config>

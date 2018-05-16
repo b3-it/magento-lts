@@ -10,6 +10,6 @@
  */
 interface  B3it_Messagequeue_Model_Queue_Processing_Interface
 {
- 	public function preProccessing($ruleset,$message,$data);
- 	public function proccessing($message);
+ 	public function preProcessing($ruleset,$message,$data);
+ 	public function processText($ruleset, $message, $data = null);
 }
