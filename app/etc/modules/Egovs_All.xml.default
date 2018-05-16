@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config>
+<?xml version="1.0"?>
 <config>
   <modules>
     <Egovs_Acl>
@@ -95,12 +94,8 @@
       </depends>
     </Egovs_GermanTax>
     <Egovs_Girosolution>
-        <active>true</active>
+        <active>false</active>
         <codePool>local</codePool>
-        <depends>
-            <Mage_Payment />
-            <Egovs_Paymentbase />
-      </depends>
     </Egovs_Girosolution>
     <Egovs_Import>
       <active>false</active>

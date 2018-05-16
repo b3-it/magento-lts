@@ -34,13 +34,7 @@ class Bkg_VirtualGeo_Model_Bundle_Observer
     protected function _processSelections(Bkg_VirtualGeo_Model_Components_Componentproduct $geoComponent) {
         $selection = Mage::getModel('virtualgeo/bundle_selection');
 
-        $selCollection = $selection->getCollection();
-        $selCollection->addFieldToFilter('selection.resource', $geoComponent->getResourceName());
-        $selCollection->addFieldToFilter('selection.parent_product_id', $geoComponent->getProductId());
-        $selCollection->addFieldToFilter('selection.ref_id', $geoComponent->getId());
-
         $option = Mage::getModel('virtualgeo/bundle_option');
-
         $optCollection = $option->getCollection();
         $optCollection->addFieldToFilter('resource', $geoComponent->getResourceName());
         $optCollection->addFieldToFilter('parent_id', $geoComponent->getProductId());
@@ -50,6 +44,12 @@ class Bkg_VirtualGeo_Model_Bundle_Observer
         }
 
         $optionId = $optCollection->getFirstItem()->getId();
+
+        $selCollection = $selection->getCollection();
+        $selCollection->addFieldToFilter('selection.resource', $geoComponent->getResourceName());
+        $selCollection->addFieldToFilter('selection.parent_product_id', $geoComponent->getProductId());
+        $selCollection->addFieldToFilter('selection.ref_id', $geoComponent->getId());
+        $selCollection->addFieldToFilter('selection.option_id', $optionId);
 
         if ($selCollection->getSize() > 0) {
             foreach ($selCollection->getItems() as $selection) {
@@ -61,6 +61,9 @@ class Bkg_VirtualGeo_Model_Bundle_Observer
 
         $selection->setOptionId($optionId);
         $selection->setParentProductId($geoComponent->getProductId());
+        if ($geoComponent->getTransportProductId() > 0) {
+            $selection->setProductId($geoComponent->getTransportProductId());
+        }
         $selection->setPosition($geoComponent->getPos());
         $selection->setSelectionQty(1);
         $selection->setSelectionCanChangeQty(0);
@@ -74,11 +77,13 @@ class Bkg_VirtualGeo_Model_Bundle_Observer
     }
 
     public function onComponentsSaveAfter(Varien_Object $observer) {
+        /** @var \Mage_Core_Model_Resource_Resource $rsce */
+        $rsce = Mage::getResourceModel('core/resource');
         /** @var Varien_Db_Adapter_Interface $adapter */
-        $adapter = Mage::getResourceModel('core/resource')->getReadConnection();
+        $adapter = $rsce->getReadConnection();
 
-        if (!$adapter->isTableExists($adapter->getTableName('virtualgeo/bundle_option'))
-            || !$adapter->isTableExists($adapter->getTableName('virtualgeo/bundle_selection'))
+        if (!$adapter->isTableExists($rsce->getTable('virtualgeo/bundle_option'))
+            || !$adapter->isTableExists($rsce->getTable('virtualgeo/bundle_selection'))
         ) {
             return;
         }

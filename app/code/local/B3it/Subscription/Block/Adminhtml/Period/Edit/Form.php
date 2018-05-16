@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @category   	Bkg
+ * @category   	B3it
  * @package    	B3it_Subscription
  * @name       	B3it_Subscription_Block_Adminhtml_Periodntity_Grid
  * @author 		Holger Kögel <h.koegel@b3-it.de>
@@ -27,16 +27,16 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
 
       $fieldset = $form->addFieldset('entity_form', array('legend'=>Mage::helper('b3it_subscription')->__('Period Information')));
 
-        $store_id = intval($this->getRequest()->getParam('store', 0));
+      $store_id = intval($this->getRequest()->getParam('store', 0));
 
 
-
+/*
         
         if($store_id != 0)
         {
         	$fieldset->addField('initial_period_length', 'text', array(
         		'label'     => Mage::helper('b3it_subscription')->__('Initial Period Length'),
-        		//'class'     => 'required-entry',
+        		'class'     => 'required-entry',
         		//'required'  => true,
         		'name'      => 'initial_period_length',
         		'readonly' => 'readonly',
@@ -74,11 +74,20 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
         			'disabled' => 'disabled',
         			'value'	=> $dataModel->getRenewalOffset()
         	));
-        }else{
+        }else{*/
+        
+	        $fieldset->addField('name', 'text', array(
+	        		'label'     => Mage::helper('b3it_subscription')->__('Name'),
+	        		'class'     => 'required-entry',
+	        		'required'  => true,
+	        		'name'      => 'name',
+	        		'value'	=> $dataModel->getName()
+	        ));
+        
             $fieldset->addField('initial_period_length', 'text', array(
                 'label'     => Mage::helper('b3it_subscription')->__('Initial Period Length'),
-                //'class'     => 'required-entry',
-                //'required'  => true,
+                'class'     => 'required-entry',
+                'required'  => true,
                 'name'      => 'initial_period_length',
 
                 'value'	=> $dataModel->getInitialPeriodLength()
@@ -86,8 +95,8 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
 
             $fieldset->addField('initial_period_unit', 'select', array(
                 'label'     => Mage::helper('b3it_subscription')->__('Initial Period Unit'),
-                //'class'     => 'required-entry',
-                //'required'  => true,
+                'class'     => 'required-entry',
+                'required'  => true,
                 'name'      => 'initial_period_unit',
 
                 'values' => $this->_getOptions(),
@@ -105,8 +114,8 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
 
             $fieldset->addField('period_unit', 'select', array(
                 'label'     => Mage::helper('b3it_subscription')->__('Period Unit'),
-                //'class'     => 'required-entry',
-                //'required'  => true,
+                'class'     => 'required-entry',
+                'required'  => true,
                 'name'      => 'period_unit',
 
                 'values' => $this->_getOptions(),
@@ -118,13 +127,13 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
         			'class'     => 'required-entry',
         			'required'  => true,
         			'name'      => 'renewal_offset',
-        			
+        			'note'	=>Mage::helper('b3it_subscription')->__('-1 means: create new order one day before period will end'),
         			'value'	=> $dataModel->getRenewalOffset()
         	));
-        }
+       // }
         
         
-  
+  /*
    
   	$fieldset->addField('shortname', 'text', array(
   			'label'     => Mage::helper('b3it_subscription')->__('Short Name'),
@@ -134,13 +143,7 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
   			'value'	=> $dataModel->getShortname()
   	));
 
-  	$fieldset->addField('name', 'text', array(
-  			'label'     => Mage::helper('b3it_subscription')->__('Name'),
-  			//'class'     => 'required-entry',
-  			//'required'  => true,
-  			'name'      => 'name',
-  			'value'	=> $dataModel->getName()
-  	));
+  	
 
   	$fieldset->addField('description', 'text', array(
   			'label'     => Mage::helper('b3it_subscription')->__('Description'),
@@ -157,6 +160,7 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
   			'name'      => 'store',
   			'value'	=> $dataModel->getStoreId()
   	));
+  	*/
 
 
 
@@ -167,10 +171,6 @@ class B3it_Subscription_Block_Adminhtml_Period_Edit_Form extends Mage_Adminhtml_
 
   protected function _getOptions()
   {
-      $opt = array();
-      $opt[] = array('value'=>Zend_Date::DAY, 'label' =>  Mage::helper('b3it_subscription')->__('Day'));
-      $opt[] = array('value'=>Zend_Date::MONTH, 'label' =>  Mage::helper('b3it_subscription')->__('Month'));
-      $opt[] = array('value'=>Zend_Date::YEAR, 'label' =>  Mage::helper('b3it_subscription')->__('Year'));
-      return $opt;
+     return B3it_Subscription_Model_Period_Unit::getOptions();
   }
 }

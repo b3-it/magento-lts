@@ -55,6 +55,8 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit extends Mage_Adminhtml_B
         		\$j('#layer_title').val(data);
 			}	
         	
+        	
+        	
         ";
     }
     

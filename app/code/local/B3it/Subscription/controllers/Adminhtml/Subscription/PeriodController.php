@@ -1,9 +1,9 @@
 <?php
 /**
  *
- * @category   	Bkg
- * @package    	Bkg_VirtualGeo
- * @name        Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_FormatentityController
+ * @category   	B3it
+ * @package    	B3it_Subscription
+ * @name        B3it_Subscription_Adminhtml_Subscription_PeriodController
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
@@ -50,7 +50,8 @@ class B3it_Subscription_Adminhtml_Subscription_PeriodController extends Mage_Adm
 			$ssw = $this->getLayout()->createBlock('adminhtml/store_switcher');
 			//$ssw->setUseConfirm(0);
 			$this->_addContent($this->getLayout()->createBlock('b3it_subscription/adminhtml_period_edit'))
-				->_addLeft($ssw);
+				//->_addLeft($ssw)
+			;
 
 			$this->renderLayout();
 		} else {

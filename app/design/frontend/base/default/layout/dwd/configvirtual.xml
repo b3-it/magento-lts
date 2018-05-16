@@ -29,8 +29,17 @@
 -->
 <layout version="0.1.0">
     <PRODUCT_TYPE_configvirtual translate="label" module="configvirtual">
-       <label>Catalog Product View (Virtual)</label>
-       <reference name="product.info">
+        <label>Catalog Product View (Virtual)</label>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>lib/polyfill/Object.assign.js</name></action>
+
+            <action method="addItem"><type>js</type><name>lib/ol/ol-debug.js</name></action>
+            <action method="addItem"><type>js</type><name>lib/ol/ol3-popup.js</name></action>
+            <action method="addItem"><type>js</type><name>lib/ol/ol3pz-debug.js</name></action>
+
+            <action method="addItem"><type>skin_js</type><name>geomap/js/map_plugin.js</name></action>
+        </reference>
+        <reference name="product.info">
        		<block type="configvirtual/catalog_product_view_type" name="product.info.configvirtual" as="product_type_data" template="dwd/configvirtual/catalog/product/type.phtml">
                  <block type="cataloginventory/stockqty_default" name="product.info.configvirtual.extra" as="product_type_data_extra" template="cataloginventory/stockqty/default.phtml"/>
                  <block type="stationen/catalog_product_view_map" name="product.info.configvirtual.stationen" as="map" template="dwd/stationen/catalog/product/view/map.phtml"/>

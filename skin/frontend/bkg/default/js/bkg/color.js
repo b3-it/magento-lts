@@ -21,7 +21,7 @@ var selectStyle = new ol.style.Style({
 		color: "yellow",
 	}),
 	stroke: new ol.style.Stroke({
-		color: "yellow",
+		color: "red",
 		width: 1
 	})
 });
