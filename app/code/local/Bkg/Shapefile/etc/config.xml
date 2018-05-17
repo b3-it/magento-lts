@@ -41,7 +41,7 @@
                 </connection>
                 <setup>
                     <module>Bkg_Shapefile</module>
-                    <class>Mage_Core_Model_Resource_Setup</class>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
             </bkg_shapefile_setup>
         </resources>
