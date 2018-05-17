@@ -81,6 +81,14 @@
                     $_productPrefix = $_product->getNamePrefix();
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
 
+                    $_isorder = Mage::getModel('catalog/product')->load($_product->getId())->getShowOrderability();
+                    if ( is_null($_isorder) || $_isorder == '1' ) {
+                        $_isorder = true;
+                    }
+                    else {
+                        $_isorder = false;
+                    }
+
                     if ( strlen($_productName) > $name_limit ) {
                         $_productName = substr($_productName, 0, $name_limit) . '...';
                     }
@@ -128,7 +136,7 @@
                     }
                     ?>
                 </div>
-
+              <?php if ($_isorder): ?>
                 <div class="product-price">
                     <?php echo $this->getPriceHtml($_product, true) ?>
                 </div>
@@ -155,8 +163,7 @@
                         <p class="action availability out-of-stock"><span><?php echo $this->__('Event not available') ?></span></p>
                     <?php endif; ?>
                 </div>
-
-
+              <?php endif; ?>
             </div>
         </li>
     <?php endforeach; ?>
@@ -186,6 +193,14 @@
                     $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
                     if ( strlen($_productName) > $name_limit ) {
                         $_productName = substr($_productName, 0, $name_limit) . '...';
+                    }
+
+                    $_isorder = Mage::getModel('catalog/product')->load($_product->getId())->getShowOrderability();
+                    if ( is_null($_isorder) || $_isorder == '1' ) {
+                        $_isorder = true;
+                    }
+                    else {
+                        $_isorder = false;
                     }
                     ?>
                     <h2 class="product-name">
@@ -220,6 +235,7 @@
                     <?php if($_product->getRatingSummary()): ?>
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                     <?php endif; ?>
+                    <?php if ($_isorder): ?>
                     <div class="actions">
                         <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
                             <button type="button"
@@ -257,6 +273,7 @@
                             <?php endif; ?>
                         </ul>
                     </div>
+                    <?php endif; ?>
                 </div>
             </li>
         <?php endforeach ?>
