@@ -111,7 +111,7 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 				->group('main_table.order_id')
 				->group('main_table.created_at')
 		;
-		
+		//die($this->getSelect()->__toString());
 		//Mage::log(sprintf('sql: %s', $this->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 
 		
@@ -147,7 +147,7 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 	}
 	
 	
-	protected function _afterLoadData()
+	protected function x_afterLoadData()
 	{
 		$hhCollection = Mage::getModel('paymentbase/haushaltsparameter')->getCollection();
 		$hh = $hhCollection->getItems();

@@ -11,6 +11,8 @@
  */
 class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
+    protected $_hhParameter = null;
+
 	/**
 	 * Initialisiert das Grid
 	 *
@@ -207,7 +209,9 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 					array(
 							'header'=> Mage::helper('extreport')->__('Cost unit'),
 							'index' => 'kostenstelle',
-							'filter_index' => sprintf('_left_%s.value', $kostenstelle->getAttributeCode())
+							'filter_index' => sprintf('_left_%s.value', $kostenstelle->getAttributeCode()),
+
+
 					)
 			);
 		}
@@ -218,7 +222,8 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 					array(
 							'header'=> Mage::helper('extreport')->__('Cost object'),
 							'index' => 'kostentraeger',
-							'filter_index' => sprintf('_left_%s.value', $kostentraeger->getAttributeCode())
+							'filter_index' => sprintf('_left_%s.value', $kostentraeger->getAttributeCode()),
+
 					)
 			);
 		}
@@ -228,6 +233,8 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 						'header'=> Mage::helper('extreport')->__('Haushaltsstelle'),
 						'index' => 'haushaltsstelle',
 						'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('haushaltsstelle')->getAttributeCode()),
+                    'type'  => 'options',
+                    'options' => $this->_getHHParamOptions(Egovs_Paymentbase_Model_Haushaltsparameter_Type::HAUSHALTSTELLE),
 				)
 		);
 		
@@ -236,6 +243,8 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 						'header'=> Mage::helper('extreport')->__('Object number'),
 						'index' => 'objektnummer',
 						'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('objektnummer')->getAttributeCode()),
+                    'type'  => 'options',
+                    'options' => $this->_getHHParamOptions(Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER),
 				)
 		);
 		
@@ -244,6 +253,8 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 						'header'=> Mage::helper('extreport')->__('Object number VAT'),
 						'index' => 'objektnummer_mwst',
 						'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('objektnummer_mwst')->getAttributeCode()),
+                    'type'  => 'options',
+                    'options' => $this->_getHHParamOptions(Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER_MWST),
 				)
 		);
 
@@ -296,4 +307,21 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 	{
 		return $this->getUrl('*/*/grid', array('_current'=>true, 'action'=>'costunit'));
 	}
+
+	protected function _getHHParamOptions($type)
+    {
+        $res = array();
+        if($this->_hhParameter == null){
+            $this->_hhParameter = Mage::getModel('paymentbase/haushaltsparameter')->getCollection();
+        }
+
+        foreach( $this->_hhParameter as $hh)
+        {
+            if($hh->getType() == $type){
+                $res[$hh->getId()] = $hh->getTitle();
+            }
+        }
+
+        return $res;
+    }
 }
