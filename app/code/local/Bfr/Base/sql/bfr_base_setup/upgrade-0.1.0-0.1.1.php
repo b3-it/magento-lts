@@ -12,11 +12,11 @@ $installer = $this;
 
 $installer->startSetup();
 
-$entityType    = 'catalog_product';
 $attributeCode = 'show_orderability';
+$entityType    = Mage_Catalog_Model_Product::ENTITY;
 $attr          = Mage::getResourceModel('catalog/eav_attribute')->loadByCode($entityType, $attributeCode);
 
-if (!$attr || $attr->isEmpty()) {
+if ( !$attr || $attr->isEmpty() ) {
 	$installer->addAttribute(
 		$entityType,		// Attribut-Typ
 		$attributeCode,		// Attribut-Code
@@ -37,6 +37,20 @@ if (!$attr || $attr->isEmpty()) {
 			'user_defined'      => true,														// von Benutzer
 		)
 	);
+
+	$attrBefore   = Mage::getResourceModel('catalog/eav_attribute')->loadByCode($entityType, 'visibility');
+	$attrBeforeId = $attrBefore->getId();
+	if ( $attrBeforeId ) {
+		$newAttrId = intval($attrBeforeId) + 1;
+
+		$installer->addAttributeToSet(
+			$entityType,
+			'Default',
+			'General',
+			$attributeCode,
+			$newAttrId
+		);
+	}
 }
 
 $installer->endSetup();
