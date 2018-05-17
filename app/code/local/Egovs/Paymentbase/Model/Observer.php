@@ -608,7 +608,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         /** @var \Mage_Sales_Model_Order_Invoice $invoice */
 	    $invoice = $observer->getEvent()->getInvoice();
         if (is_null($invoice)) {
-            return;
+            return null;
         }
 
         if (!$invoice->getOrder()) {
@@ -619,6 +619,11 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         if (!$payment) {
             return null;
         }
+
+        if(!$invoice->getOrderId()){
+            return null;
+        }
+
         $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
         $incomingPayment->saveIncomingPayment($invoice->getOrderId(),$invoice->getOrder()->getBaseTotalPaid(),$invoice->getOrder()->getTotalPaid());
 

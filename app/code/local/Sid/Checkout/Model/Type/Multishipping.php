@@ -818,7 +818,9 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
                 $order->place();
                 $order->save();
                 if($order->getContract() == null){
-                    $order->setContract(Mage::getModel('framecontract/contract')->load($order->getFramecontract()));
+                    if($order->getFramecontract()) {
+                        $order->setContract(Mage::getModel('framecontract/contract')->load($order->getFramecontract()));
+                    }
                 }
                 if ($order->getCanSendNewEmailFlag()){
                     $order->sendNewOrderEmail();
