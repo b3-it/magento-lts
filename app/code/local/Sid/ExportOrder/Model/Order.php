@@ -133,7 +133,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    	$data = array();
 	    	$data['contract'] = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
 	    	$data['order'] = $order;
-	    	$msg = $transfer->send($content,$order,$data);
+	    	$msg = $transfer->send($content,$order,$data,$storeId);
 	    	
 	    	if($msg === false)
 	    	{
