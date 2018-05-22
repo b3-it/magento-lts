@@ -151,10 +151,11 @@ class Bkg_VirtualGeo_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Block
     	foreach($childs as $child)
     	{
     		$id = $child->getOptionByCode('selection_id');
-    		if($id->getValue() == $selectionId)
-    		{
-    			return $child;
-    		}
+    		if($id) {
+                if ($id->getValue() == $selectionId) {
+                    return $child;
+                }
+            }
     	}
        
         return null;

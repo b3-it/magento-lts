@@ -148,7 +148,7 @@ class Bkg_VirtualGeo_Model_Observer
                 ->setProductId($productId) //FK
                 ->setReadonly($node['is_readonly'])
                 ->setIsChecked($node['is_checked'])
-                ->setNodeId($node['node_id'])
+              //  ->setNodeId($node['node_id'])
             ;
 
     		$model->save();
