@@ -18,18 +18,27 @@
             </contexthelp>
         </helpers>
     </global>
-    <admin>
-        <routers>
-            <adminhtml>
-                <args>
-                    <modules>
-                        <Egovs_ContextHelp_Adminhtml before="Mage_Adminhtml">Egovs_ContextHelp_Adminhtml</Egovs_ContextHelp_Adminhtml>
-                    </modules>
-                </args>
-            </adminhtml>
-        </routers>
-    </admin>
     <adminhtml>
+    	<events>
+    		<widget_widget_instance_save_after>
+    			<observers>
+    				<egovs_contextHelp_observer>
+    					<type>singleton</type>
+                        <class>egovs_contexthelp/observer</class>
+                        <method>onWidgetSaveAfter</method>
+    				</egovs_contextHelp_observer>
+    			</observers>
+    		</widget_widget_instance_save_after>
+    		<widget_widget_instance_delete_after>
+    			<observers>
+    				<egovs_contextHelp_observer>
+    					<type>singleton</type>
+                        <class>egovs_contexthelp/observer</class>
+                        <method>onWidgetDeleteAfter</method>
+    				</egovs_contextHelp_observer>
+    			</observers>
+    		</widget_widget_instance_delete_after>
+    	</events>
         <layout>
             <updates>
                 <contexthelp>

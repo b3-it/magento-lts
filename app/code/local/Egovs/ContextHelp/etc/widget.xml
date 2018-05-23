@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE widgets>
+<widgets>
+    <egovs_context_help type="cms/widget_context_help" translate="name description" module="cms">
+        <name>Context Help</name>
+        <description>Link to a Popup for CMS Blocks</description>
+        <is_email_compatible>1</is_email_compatible>
+        <parameters>
+            <anchor_text translate="label description">
+                <visible>1</visible>
+                <label>Anchor Custom Text</label>
+                <description>If empty, the Page Title will be used</description>
+                <type>text</type>
+            </anchor_text>
+            <title translate="label">
+                <visible>1</visible>
+                <label>Anchor Custom Title</label>
+                <type>text</type>
+            </title>
+            <!--
+            <template translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <type>select</type>
+                <value>cms/widget/link/link_block.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>cms/widget/link/link_block.phtml</value>
+                        <label>CMS Page Link Block Template</label>
+                    </default>
+                    <link_inline translate="label">
+                        <value>cms/widget/link/link_inline.phtml</value>
+                        <label>CMS Page Link Inline Template</label>
+                    </link_inline>
+                </values>
+            </template>
+            -->
+        </parameters>
+    </egovs_context_help>
+</widgets>
