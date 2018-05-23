@@ -1,5 +1,5 @@
 <div class="entry-edit-head">
-    <h4><?php echo $this->__('URL Set') ?></h4>
+    <h4><?php echo $this->__('URL Set'); ?></h4>
     <div class="right"><?php echo $this->getAddUrlButtonHtml(); ?></div>
 </div>
 <div class="fieldset">
@@ -14,11 +14,31 @@ var UrlTemplate = '<div class="options-box url_group_container" id="url_group_co
     '<div class="option-box">' +
         '<div class="option-title">' +
             '<?php echo $this->getRemoveUrlButtonHtml(); ?>' +
-            '<label for="widget_instance[{{id}}][url_group]">Page URL <span class="required">*</span></label>' +
+            '<label for="widget_instance[{{id}}][url_group]"><?php echo $this->__('Page URL'); ?> <span class="required">*</span></label>' +
             '<input type="text" class="input-text" name="widget_instance[{{id}}][url_group]" value="" style="width:75%;" />' +
+        '</div>' +
+        '<div>' +
+            '<label style="padding-right:1em;"><?php echo $this->__('Static Block'); ?> <span class="required">*</span></label>' +
+            '<span id="widget_instance_{{id}}_url_block"><?php echo $this->__('Not Selected'); ?></span>' +
+            '<input type="hidden" name="widget_instance[{{id}}][url_block]" value="" />' +
+            '<div style="padding-top:1em; padding-left:9em;">' +
+                '<?php echo $this->getBlockChooserButton(); ?>' +
+            '</div>' +
         '</div>' +
     '</div>' +
 '</div>';
+
+function initBlockChooser(elementID)
+{
+    var senderElement = 'chooser' + parseInt(elementID);
+    var chooseEvent = new WysiwygWidget.chooser(
+        senderElement,
+        "<?php echo $this->getSourceUrl(); ?>",
+        <?php echo $this->getConfigJson(); ?>
+    );
+
+    chooseEvent.choose();
+}
 
 var ContextHelp = {
     UrlTemplate     : UrlTemplate,

@@ -13,7 +13,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp
         /**
          * Prepare form before rendering HTML
          *
-         * @return Egovs_ConextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp
+         * @return Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp
          */
         protected function _prepareForm()
         {
@@ -84,7 +84,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp
         /**
          * Ermittelt die aktuelle Widget-Instanz
          *
-         * @return Widget_Model_Widget_Instance
+         * @return Mage_Widget_Model_Resource_Widget_Instance
          */
         public function getWidgetInstance()
         {

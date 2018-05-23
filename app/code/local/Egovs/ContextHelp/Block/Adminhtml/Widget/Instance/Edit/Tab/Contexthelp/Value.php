@@ -56,6 +56,16 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp_Val
     }
 
     /**
+     * AjaxURL für den Block-Wähler
+     *
+     * @return string
+     */
+    public function getSourceUrl()
+    {
+        return Mage::helper('adminhtml')->getUrl('contexthelp/ajax');
+    }
+
+    /**
      * HTML-Button zum hinzufügen eines neuen Eintrages
      *
      * @return string
@@ -64,9 +74,11 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp_Val
     {
         $button = $this->getLayout()->createBlock('adminhtml/widget_button')
                        ->setData(array(
-                           'label'     => $this->__('Add URL'),
-                           'onclick'   => 'ContextHelp.addUrlGroup({})',
-                           'class'     => 'add'
+                           'label'   => $this->__('Add URL'),
+                           'onclick' => 'ContextHelp.addUrlGroup({})',
+                           'type'    => 'button',
+                           'id'      => $buttonId . 'control',
+                           'class'   => 'add'
                        ));
         return $button->toHtml();
     }
@@ -80,11 +92,33 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp_Val
     {
         $button = $this->getLayout()->createBlock('adminhtml/widget_button')
                        ->setData(array(
-                           'label'     => $this->__('Remove URL'),
-                           'onclick'   => 'ContextHelp.removeUrlGroup(this)',
-                           'class'     => 'delete'
+                           'label'   => $this->__('Remove URL'),
+                           'onclick' => 'ContextHelp.removeUrlGroup(this)',
+                           'type'    => 'button',
+                           'class'   => 'delete'
                        ));
         return $button->toHtml();
+    }
+
+    /**
+     * HTML-Button zum auswählen eines statischen Blocks
+     *
+     * @return string
+     */
+    public function getBlockChooserButton()
+    {
+        $element = $this->getElement();
+
+        $chooseButton = $this->getLayout()->createBlock('adminhtml/widget_button')
+                             ->setData(array(
+                                 'label'   => $this->__('Choose Block'),
+                                 'type'    => 'button',
+                                 'id'      => 'chooser{{id}}',
+                                 'class'   => 'btn-chooser',
+                                 'onclick' => 'initBlockChooser({{id}})',
+                                 'disabled'=> $element->getReadonly()
+                             ));
+        return $chooseButton->toHtml();
     }
 
     /**
@@ -99,4 +133,40 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp_Val
 
         return $urlGroups;
     }
+
+    /**
+     * Convert Array config to Object
+     *
+     * @return Varien_Object
+     */
+    public function getConfig()
+    {
+        $config = new Varien_Object();
+
+        // chooser control buttons
+        $buttons = array(
+            'open'  => Mage::helper('widget')->__('Choose...'),
+            'close' => Mage::helper('widget')->__('Close')
+        );
+        if (isset($configArray['button']) && is_array($configArray['button'])) {
+            foreach ($configArray['button'] as $id => $label) {
+                $buttons[$id] = $this->__($label);
+            }
+        }
+        $config->setButtons($buttons);
+
+        return $config;
+    }
+
+    /**
+     * Config-Array in JSON umwandeln
+     *
+     * @return string
+     */
+    public function getConfigJson()
+    {
+        $config = $this->getConfig();
+        return Mage::helper('core')->jsonEncode($config->getData());
+    }
+
 }

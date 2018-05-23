@@ -11,9 +11,24 @@
             <contexthelp>
                 <class>Egovs_ContextHelp_Block</class>
             </contexthelp>
-            <adminhtml />
         </blocks>
+        <helpers>
+            <contexthelp>
+                <class>Egovs_ContextHelp_Helper</class>
+            </contexthelp>
+        </helpers>
     </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Egovs_ContextHelp_Adminhtml before="Mage_Adminhtml">Egovs_ContextHelp_Adminhtml</Egovs_ContextHelp_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <adminhtml>
         <layout>
             <updates>
