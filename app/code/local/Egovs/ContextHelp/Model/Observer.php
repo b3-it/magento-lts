@@ -14,7 +14,7 @@ class Egovs_ContextHelp_Model_Observer extends Varien_Object
      * @see Varien_Object::_construct()
      */
     public function _construct() {
-        Zend_Debug::dump('Start');
+        //Zend_Debug::dump('Start');
     }
     
     /**
@@ -24,7 +24,16 @@ class Egovs_ContextHelp_Model_Observer extends Varien_Object
      * @return void
      */
     public function onWidgetSaveAfter(Varien_Event_Observer $observer) {
-        die('Save');
+        $_postData = Mage::app()->getRequest()->getPost('widget_instance');
+        $_widget = $observer->getObject();
+
+        $this->_deleteUrlByWidgetId( $_widget->getInstanceId() );
+        
+        echo '<pre>';
+        print_r($_postData);
+        print_r($_widget);
+        
+        die;
     }
 
     /**
@@ -34,6 +43,16 @@ class Egovs_ContextHelp_Model_Observer extends Varien_Object
      * @return void
      */
     public function onWidgetDeleteAfter(Varien_Event_Observer $observer) {
-        Zend_Debug::dump('Delete');
+        //Zend_Debug::dump('Delete');
+    }
+    
+    private function _deleteUrlByWidgetId($widgetId) {
+        $widgetId = intval($widgetId);
+        
+        if ( !$widgetId ) {
+            return;
+        }
+        
+        Zend_Debug::dump($widgetId);
     }
 }

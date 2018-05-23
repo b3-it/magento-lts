@@ -7,6 +7,11 @@
         </Egovs_ContextHelp>
     </modules>
     <global>
+    	<models>
+    		<contexthelp>
+                <class>Egovs_ContextHelp_Model</class>
+            </contexthelp>
+    	</models>
         <blocks>
             <contexthelp>
                 <class>Egovs_ContextHelp_Block</class>
@@ -24,7 +29,7 @@
     			<observers>
     				<egovs_contextHelp_observer>
     					<type>singleton</type>
-                        <class>egovs_contexthelp/observer</class>
+                        <class>contexthelp/observer</class>
                         <method>onWidgetSaveAfter</method>
     				</egovs_contextHelp_observer>
     			</observers>
@@ -33,7 +38,7 @@
     			<observers>
     				<egovs_contextHelp_observer>
     					<type>singleton</type>
-                        <class>egovs_contexthelp/observer</class>
+                        <class>contexthelp/observer</class>
                         <method>onWidgetDeleteAfter</method>
     				</egovs_contextHelp_observer>
     			</observers>

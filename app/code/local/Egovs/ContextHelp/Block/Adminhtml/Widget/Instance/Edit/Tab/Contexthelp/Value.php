@@ -77,7 +77,6 @@ class Egovs_ContextHelp_Block_Adminhtml_Widget_Instance_Edit_Tab_Contexthelp_Val
                            'label'   => $this->__('Add URL'),
                            'onclick' => 'ContextHelp.addUrlGroup({})',
                            'type'    => 'button',
-                           'id'      => $buttonId . 'control',
                            'class'   => 'add'
                        ));
         return $button->toHtml();
