@@ -715,12 +715,46 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
+        $catched = false;
+        try {
+            $this->loadLayout();
+            $this->_initLayoutMessages('customer/session');
+            $this->_initLayoutMessages('checkout/session');
+            $this->renderLayout();
+        } catch (Egovs_Paymentbase_Exception_Validation $ve) {
+            $types = array(
+                Mage_Core_Model_Message::ERROR,
+                Mage_Core_Model_Message::WARNING,
+                Mage_Core_Model_Message::NOTICE,
+            );
+            foreach ($types as $type) {
+                $msgs = $ve->getMessages($type);
+                foreach ($msgs as $msg) {
+                    switch ($type) {
+                        case Mage_Core_Model_Message::ERROR:
+                            $this->_getCheckout()->getCheckoutSession()->addError($msg);
+                            break;
+                        case Mage_Core_Model_Message::WARNING:
+                            $this->_getCheckout()->getCheckoutSession()->addWarning($msg);
+                            break;
+                        default:
+                            $this->_getCheckout()->getCheckoutSession()->addNotice($msg);
+                    }
+                }
+            }
+            $catched = true;
+        } catch (Exception $e) {
+            Mage::logException($e);
+            $this->_getCheckout()->getCheckoutSession()->addError($this->__('Internal server error occurred, please try again later.'));
+            $catched = true;
+        }
 
+        if ($catched) {
+            $this->_redirect('*/*/billing', array('_secure'=>true));
+            return $this;
+        }
 
-        $this->loadLayout();
-        $this->_initLayoutMessages('customer/session');
-        $this->_initLayoutMessages('checkout/session');
-        $this->renderLayout();
+        return $this;
     }
 
 
