@@ -10,4 +10,9 @@
             </action>
         </reference>
     </adminhtml_widget_instance_edit>
+	<adminhtml_contexthelp_contexthelp_index>
+        <reference name="content">
+            <block type="contexthelp/adminhtml_contexthelp" name="contexthelp" />
+        </reference>
+    </adminhtml_contexthelp_contexthelp_index>
 </layout>

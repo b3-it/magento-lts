@@ -1,64 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config>
+<?xml version="1.0"?>
 <config>
     <modules>
         <Egovs_ContextHelp>
-            <version>0.0.0.1</version>
+            <version>0.1.0.0</version>
         </Egovs_ContextHelp>
     </modules>
     <global>
-    	<models>
-    		<contexthelp>
-                <class>Egovs_ContextHelp_Model</class>
-            </contexthelp>
-    	</models>
-        <blocks>
-            <contexthelp>
-                <class>Egovs_ContextHelp_Block</class>
-            </contexthelp>
-        </blocks>
         <helpers>
             <contexthelp>
                 <class>Egovs_ContextHelp_Helper</class>
             </contexthelp>
         </helpers>
+        <resources>
+            <egovs_contexthelp_setup>
+                <setup>
+                    <module>Egovs_ContextHelp</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </egovs_contexthelp_setup>
+        </resources>
+        <blocks>
+          <contexthelp>
+              <class>Egovs_ContextHelp_Block</class>
+          </contexthelp>
+        </blocks>
+        <models>
+            <contexthelp>
+                <class>Egovs_ContextHelp_Model</class>
+                <resourceModel>contexthelp_resource</resourceModel>
+            </contexthelp>
+            <contexthelp_resource>
+                <class>Egovs_ContextHelp_Model_Resource</class>
+                <entities>
+                  <contexthelp>
+                    <table>egovs_contexthelp</table>
+                  </contexthelp>
+                  <contexthelp_handle>
+                    <table>egovs_contexthelp_handle</table>
+                  </contexthelp_handle>
+                  <contexthelp_block>
+                    <table>egovs_contexthelp_block</table>
+                  </contexthelp_block>
+
+                </entities>
+            </contexthelp_resource>
+        </models>
+        <egovs_contexthelp>
+        <category>
+        <order>Order</order>
+        <others>Others</others>
+        </category>
+        </egovs_contexthelp>
     </global>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <Egovs_ContextHelp_Adminhtml after="Mage_Adminhtml">Egovs_ContextHelp_Adminhtml</Egovs_ContextHelp_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
     <adminhtml>
-    	<events>
-    		<widget_widget_instance_save_after>
-    			<observers>
-    				<egovs_contextHelp_observer>
-    					<type>singleton</type>
-                        <class>contexthelp/observer</class>
-                        <method>onWidgetSaveAfter</method>
-    				</egovs_contextHelp_observer>
-    			</observers>
-    		</widget_widget_instance_save_after>
-    		<widget_widget_instance_delete_after>
-    			<observers>
-    				<egovs_contextHelp_observer>
-    					<type>singleton</type>
-                        <class>contexthelp/observer</class>
-                        <method>onWidgetDeleteAfter</method>
-    				</egovs_contextHelp_observer>
-    			</observers>
-    		</widget_widget_instance_delete_after>
-    	</events>
-        <layout>
-            <updates>
-                <contexthelp>
-                    <file>egovs/contexthelp.xml</file>
-                </contexthelp>
-            </updates>
-        </layout>
+      <menu>
+          <cms module="contexthelp">
+              <children>
+                  <contexthelp module="contexthelp">
+                      <title>Contexthelp</title>
+                      <sort_order>50</sort_order>
+                      <action>adminhtml/contexthelp_contexthelp/index</action>
+                  </contexthelp>
+              </children>
+          </cms>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <cms >
+                         
+                          <children>
+                                <contexthelp module="contexthelp">
+                                  <title>Contexthelp</title>
+                                  <sort_order>10</sort_order>
+                              </contexthelp>
+                          </children>
+                      </cms>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
         <translate>
             <modules>
                 <Egovs_ContextHelp>
                     <files>
-                        <default>Egovs/ContextHelp.csv</default>
+                        <default>egovs/contextHelp.csv</default>
                     </files>
                 </Egovs_ContextHelp>
             </modules>
         </translate>
+        <layout>
+          <updates>
+            <egovscontextHelp>
+              <file>egovs/contexthelp.xml</file>
+            </egovscontextHelp>
+          </updates>
+        </layout>
     </adminhtml>
 </config>
