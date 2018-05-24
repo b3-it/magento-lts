@@ -390,7 +390,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			
 			$adr = Mage::getStoreConfig('payment/sepadebitsax/adr_mandatsverwaltung');
 			$message = Mage::helper('sepadebitsax')->__("You will get a new SEPA Mandate via email. Please subscribe and send it back to %s", $adr);
-			Mage::getSingleton('checkout/session')->addNotice($message);
+			Mage::getSingleton('checkout/session')->addUniqueMessages(Mage::getModel('core/message_notice', $message));
 			
 			Mage::helper('paymentbase')->changeAdditionalCustomerMandateData($this->getCustomer(),array("new_mandate"=>$mandate->getReference()));
 				
@@ -413,7 +413,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			$this->closeMandate($old);
 			$adr = Mage::getStoreConfig('payment/sepadebitsax/adr_mandatsverwaltung');
 			$message = Mage::helper('sepadebitsax')->__("You will get a new SEPA Mandate via email. Please subscribe and send it back to %s", $adr);
-			Mage::getSingleton('checkout/session')->addNotice($message);
+            Mage::getSingleton('checkout/session')->addUniqueMessages(Mage::getModel('core/message_notice', $message));
 		} elseif ($has_changed == Egovs_SepaDebitSax_Model_Webservice_Types_Mandat::MANDATE_CHANGE) {
 			$mandate->importData($payment,$this->getCreditorId(), $this->getAllowOneoff(),null);
 			$pdf = $this->__changeMandate($mandate, true);
