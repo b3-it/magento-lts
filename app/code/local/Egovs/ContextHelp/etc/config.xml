@@ -55,6 +55,17 @@
         </category>
         </egovs_contexthelp>
     </global>
+      <frontend>
+      <routers>
+            <contexthelp>
+                <use>standard</use>
+                <args>
+                    <module>Egovs_ContextHelp</module>
+                    <frontName>contexthelp</frontName>
+                </args>
+            </contexthelp>
+        </routers>
+    </frontend>
     <admin>
       <routers>
           <adminhtml>

@@ -38,37 +38,33 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 
       
       $model = Mage::registry('contexthelp_data');
-      
-      $collection = Mage::getModel('contexthelp/contexthelphandle')->getCollection();
-      $collection->getSelect()->where('parent_id=?',intval($model->getId()));
+
       $value = array();
-      foreach($collection as $item)
+      foreach($model->getHandles() as $item)
       {
       	$value[] = array('value'=>$item->getHandle());
       }
       
-      $values = $this->getCmsBlocks();
+      $values = $this->_getHandles();
       $fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
       $fieldset->addField('handle', 'ol', array(
       		'label'     => Mage::helper('contexthelp')->__('Handler'),
       		//'class'     => 'required-entry',
       		//'required'  => true,
+      		'show_up_down' =>false,
       		'name'      => 'handle',
       		'values' =>$values,
       		'value' => $value
       ));
       
       
-      $collection = Mage::getModel('contexthelp/contexthelpblock')->getCollection();
-      $collection->getSelect()->where('parent_id=?',intval($model->getId()))->order('pos');
-      
       $value = array();
-      foreach($collection as $item)
+      foreach($model->getBlocks() as $item)
       {
       	$value[] = array('value'=>$item->getBlockId(),'pos'=>$item->getPos());
       }
       
-      $values = $this->getCmsBlocks();
+      $values = $this->_getCmsBlocks();
       $fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
       $fieldset->addField('block', 'ol', array(
       		'label'     => Mage::helper('contexthelp')->__('Block'),
@@ -80,7 +76,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
       ));
       
      
-
+/*
 
       if ( Mage::getSingleton('adminhtml/session')->getcontexthelpData() )
       {
@@ -89,11 +85,25 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
       } elseif ( Mage::registry('contexthelp_data') ) {
           $form->setValues(Mage::registry('contexthelp_data')->getData());
       }
+      */
       return parent::_prepareForm();
   }
   
   
-  public function getCmsBlocks()
+  protected function _getCmsBlocks()
+  {
+  	$collection = Mage::getModel('cms/block')->getCollection();
+  	$res = array();
+  
+  
+  	foreach($collection as $item)
+  	{
+  		$res[$item->getIdentifier()] = array('label'=>$item->getTitle(), 'value'=>$item->getId());
+  	}
+  	return $res;
+  }
+  
+  protected function _getHandles()
   {
   	$collection = Mage::getModel('cms/block')->getCollection();
   	$res = array();
@@ -103,8 +113,6 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
   	{
   		$res[$item->getIdentifier()] = array('label'=>$item->getTitle(), 'value'=>$item->getIdentifier());
   	}
-  
-  
   	return $res;
   }
   

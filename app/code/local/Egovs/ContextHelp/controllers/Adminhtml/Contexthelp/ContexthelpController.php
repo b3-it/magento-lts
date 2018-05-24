@@ -72,6 +72,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 				
 				$model->save();
 				$this->_saveHandle($data, $model);
+				$this->_saveBlocks($data, $model);
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('contexthelp')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -130,30 +131,66 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 		}
 		
 		
-	
-		$collection = Mage::getModel('contexthelp/contexthelphandle')->getCollection();
-		$collection->getSelect()->where('parent_id=?',intval($model->getId()));
 		$items = array();
-		/*
-		foreach($collection as $item)
+		
+		foreach($model->getHandles() as $item)
 		{
-			if(in_array($item->getHandle(),$groups[''])) {
-				$items[$item->getProductId()] = $item;
-			}else{
-				$item->delete();
-			}
+			$items[$item->getHandle()] = $item;
+			
 		}
-	*/
+	
 		foreach($data as $dat)
 		{
-			if(isset($items[$group])){
-				$item = $items[$group];
+			if(isset($items[$dat->getValue()])){
+				$item = $items[$dat->getValue()];
+				if($dat->getDelete()){
+					$item->delete();
+					continue;
+				}
 			}else{
 				$item = Mage::getModel('contexthelp/contexthelphandle');
 			}
-	
+			
 			$item->setParentId(intval($model->getId()));
 			$item->setHandle($dat->getValue());
+			
+			$item->save();
+		}
+	
+	}
+	
+	protected function _saveBlocks($data,$model)
+	{
+		$data = $this->_reorderData($data,'block');
+		if(!$data)
+		{
+			return $this;
+		}
+	
+	
+		$items = array();
+	
+		foreach($model->getBlocks() as $item)
+		{
+			$items[$item->getBlocks()] = $item;
+				
+		}
+	
+		foreach($data as $dat)
+		{
+			if(isset($items[$dat->getValue()])){
+				$item = $items[$dat->getValue()];
+				if($dat->getDelete()){
+					$item->delete();
+					continue;
+				}
+			}else{
+				$item = Mage::getModel('contexthelp/contexthelpblock');
+			}
+				
+			$item->setParentId(intval($model->getId()));
+			$item->setBlockId($dat->getValue());
+			$item->setPos($dat->getPos());
 			$item->save();
 		}
 	
@@ -164,7 +201,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('egovs_contextHelp/contexthelp');
+				$model = Mage::getModel('contexthelp/contexthelp');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();
