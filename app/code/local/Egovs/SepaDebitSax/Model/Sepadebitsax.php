@@ -110,9 +110,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 	 */
 	protected function _getMandate($_mandateReference) {
 		$objResult = null;
-// 		if ($mandate = $this->__getMandateFromSession($_mandateReference)) {
-// 			return $mandate;
-// 		}
+
 		/* @var $client Egovs_SepaDebitSax_Model_Webservice_Soap_Service */
 		$client = Mage::helper('sepadebitsax')->getZmvSoapClient();
 		try {
@@ -121,8 +119,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			Mage::log(sprintf("%s in %s Line: %d", $e->getMessage(), $e->getFile(), $e->getLine()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			Mage::logException($e);
 		}
-		$sMailText = '';
-		$result = -9999;
+
 		if ($objResult instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_LesenSEPAMandatResult) {
 			if ($objResult->getResult()->getResultCode()->getCode() ==  0) {
 				$mandate = $objResult->getMandat();
@@ -134,10 +131,10 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		if ($objResult instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result) {
 			$msg = $objResult->getResult()->getResultCode()->getDescription();
 			Mage::log($msg, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
-
 		}
-		//bis hierher dürfte er nicht kommen
+
 		$client->saveError();
+		return null;
 	}
 
 	public function readMandate($_mandateReference) {
@@ -371,8 +368,12 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		$has_changed = Egovs_SepaDebitSax_Model_Webservice_Types_Mandat::MANDATE_CHANGE_NEW;
 		if ($ref) {
 			$mandate = $this->_getMandate($ref);
-			//hat sich was verändert?
-			$has_changed = $mandate->hasChanged($payment);
+			if ($mandate) {
+                //hat sich was verändert?
+                $has_changed = $mandate->hasChanged($payment);
+            } else {
+			    $customer->unsetData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID);
+            }
 		}
 				
 		if ($has_changed == Egovs_SepaDebitSax_Model_Webservice_Types_Mandat::MANDATE_CHANGE_NEW) {
