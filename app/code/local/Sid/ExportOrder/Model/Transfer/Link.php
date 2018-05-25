@@ -96,7 +96,12 @@ class Sid_ExportOrder_Model_Transfer_Link extends Sid_ExportOrder_Model_Transfer
     		$recipients = array();
     		$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
     		Sid_ExportOrder_Model_History::createHistory($orderIds, 'Link erzeugt');
-    		$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('link' =>$link->getUrl(),'contract'=>$contract));
+    		$order= $contract->getOrder();
+    		$storeId = 0;
+    		if($order){
+    			$storeId = $order->getStoreId();
+    		}
+    		$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,array('link' =>$link->getUrl(),'contract'=>$contract),$storeId);
     		if($res === false){
     			$link->saveOrderStatus($orderIds, Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR, $res);
     			Sid_ExportOrder_Model_History::createHistory($orderIds, 'Email mit Link nicht versendet', Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR);

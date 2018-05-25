@@ -192,6 +192,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     		if($contract == null)
     		{
     			$contract = Mage::getModel('framecontract/contract')->load( $order->getContractId());
+    			$contract->setOrder($order);
     		}
     		
     		if($vendorId != $order->getVendorId()){
