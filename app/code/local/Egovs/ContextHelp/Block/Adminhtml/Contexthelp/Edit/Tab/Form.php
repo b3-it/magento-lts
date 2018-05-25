@@ -29,6 +29,10 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
+      
+      
+      $model = Mage::registry('contexthelp_data');
+      
       $fieldset = $form->addFieldset('contexthelp_form', array('legend'=>Mage::helper('contexthelp')->__(' Contexthelp information')));
 
       $fieldset->addField('title', 'text', array(
@@ -36,6 +40,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'title',
+      		'value' => $model->getTitle()
       ));
       
 
@@ -48,11 +53,12 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
           //'required'  => true,
           'name'      => 'category_id',
       		'options' => $opt,
+      		'value' => $model->getCategoryId()
       ));
     
 
       
-      $model = Mage::registry('contexthelp_data');
+      
 
       $value = array();
       foreach($model->getHandles() as $item)
