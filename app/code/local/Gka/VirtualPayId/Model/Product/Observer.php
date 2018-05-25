@@ -139,10 +139,15 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
         }
         $payId = $payId->getValue();
         /**
-         * @var Varien_Object $payClient Enthält Fachverfahren (Mandant an ePayBL)
+         * @var Varien_Object $payClient Enthält Fachverfahren (Mandant/Bewirtschafter an ePayBL)
          */
         $payClient = $product->getCustomOption('pay_client');
-		if (is_null($payClient) || $payClient->isEmpty() || !$payClient->getValue()) {
+		if (
+		    is_null($payClient)
+            || $payClient->isEmpty()
+            || !$payClient->getValue()
+            || !preg_match('/^[\w]+\/[\w]+$/', $payClient->getValue())
+            ) {
             $quote->removeItem($quoteItem->getId());
             Mage::throwException(Mage::helper('virtualpayid')->__('No external operator available!'));
         }

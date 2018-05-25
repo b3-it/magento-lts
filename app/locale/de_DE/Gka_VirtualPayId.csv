@@ -9,3 +9,4 @@
 "No external operator available!","Kein externes Fachverfahren verfügbar!"
 "Products for external Payment code may only be invoiced individually.","Produkte für externe Kassenzeichen dürfen nur einzeln abgerechnet werden."
 "Pay Operator","Bewirtschafter"
+"No valid ePayBL Client configuration available","Für den ePayBL Client exisitiert keine gültige Konfiguration!"
