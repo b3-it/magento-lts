@@ -22,12 +22,16 @@ class Egovs_ContextHelp_IndexController extends Mage_Core_Controller_Front_Actio
       
       $output = array();
       foreach($model->getBlocks() as $helpblock){
-	      $block = Mage::getModel('cms/block')->load($helpblock->getBlockId());
+	      $block = Mage::getModel('cms/block')
+	      ->setStoreId(Mage::app()->getStore()->getId())
+	      ->load($helpblock->getBlockId());
 	      if ($block->isEmpty() || !$block->getIsActive()) {
 	      	continue;
 	      }
-	      //ToDo:: StoreId
-	      $output[] = $block->getContent();
+	      /* @var $helper Mage_Cms_Helper_Data */
+	      $helper = Mage::helper('cms');
+	      $processor = $helper->getBlockTemplateProcessor();
+	      $output[] = $processor->filter($block->getContent());
       }
       
       $response = $this->getResponse();
