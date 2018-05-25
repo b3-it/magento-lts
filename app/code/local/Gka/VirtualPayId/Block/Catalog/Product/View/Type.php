@@ -91,23 +91,29 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Type extends Mage_Catalog_Bloc
 			$collection = Mage::getModel('virtualpayid/epaybl_client')->getCollection();
 			$collection->getSelect()->where("FIND_IN_SET(?,visible_in_stores) > 0", Mage::app()->getStore()->getId());
 			$txt = array();
-			$txt[] = '<select id="pay_client" name="pay_client" >';
-			$txt[] = '<option value="">-- Bitte wählen --</option>';
+			$txtAdditionalOptions = array();
 			$_clientsAvailable = false;
+			$_htmlClass = '';
+
 			foreach ($collection as $client) {
 			    if (!$client->getClient() || !$client->getPayOperator()) {
 			        continue;
                 }
 				$tmp = sprintf('%s/%s', $client->getClient(), $client->getPayOperator());
-				$txt[] = '<option value="'.$tmp.'">'. $client->getTitle() .'</option>';
+                $txtAdditionalOptions[] = '<option value="'.$tmp.'">'. $client->getTitle() .'</option>';
 				$_clientsAvailable = true;
 			}
-			$txt[] = '</select>';
+
 
 			if (!$_clientsAvailable) {
 			    $this->setPayClientValidationAdvice($this->__("No valid ePayBL Client configuration available"));
+			    $_htmlClass = 'validation-failed';
             }
-			 
+            $txt[] = sprintf('<select id="pay_client" name="pay_client" class="%s">', $_htmlClass);
+            $txt[] = '<option value="">-- Bitte wählen --</option>';
+            $txt = array_merge($txt, $txtAdditionalOptions);
+            $txt[] = '</select>';
+
 			return implode(' ',$txt);
 		}
 }
