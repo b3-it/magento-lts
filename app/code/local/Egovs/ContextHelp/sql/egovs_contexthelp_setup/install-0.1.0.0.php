@@ -33,9 +33,10 @@ if (!$installer->tableExists($installer->getTable('contexthelp/contexthelp_handl
 	 `id` int(11) unsigned NOT NULL auto_increment,
      `handle` varchar(255) default '',
      `parent_id` int(11) unsigned NOT NULL,
-    	
+     INDEX ìdx_handle (`handle`), 	
 	  PRIMARY KEY (`id`),
-      FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('contexthelp/contexthelp')}`(`id`) ON DELETE CASCADE
+      FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('contexthelp/contexthelp')}`(`id`) ON DELETE CASCADE,
+      
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 		");

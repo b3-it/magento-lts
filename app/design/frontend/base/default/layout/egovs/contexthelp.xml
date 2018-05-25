@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+
+<layout version="0.1.0">
+    <default>
+        <reference name="content" >              
+          <block type="contexthelp/contexthelp" name="contexthelp" template="egovs/contexthelp/contexthelp.phtml"/>
+        </reference>
+    </default>
+    
+</layout>

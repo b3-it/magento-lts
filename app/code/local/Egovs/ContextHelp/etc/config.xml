@@ -65,6 +65,13 @@
                 </args>
             </contexthelp>
         </routers>
+           <layout>
+            <updates>
+                <egovs_contextHelp>
+                  <file>egovs/contexthelp.xml</file>
+                </egovs_contextHelp>
+            </updates>
+        </layout>
     </frontend>
     <admin>
       <routers>
