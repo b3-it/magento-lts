@@ -135,6 +135,8 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
 		$payId = $product->getCustomOption('pay_id');
 		if (is_null($payId) || $payId->isEmpty() || !$payId->getValue()) {
             $quote->removeItem($quoteItem->getId());
+            $quote->setExternesKassenzeichen(null);
+            $quote->save();
 		    Mage::throwException(Mage::helper('virtualpayid')->__('No external Payment code available!'));
         }
         $payId = $payId->getValue();
@@ -149,6 +151,8 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
             || !preg_match('/^[\w]+\/[\w]+$/', $payClient->getValue())
             ) {
             $quote->removeItem($quoteItem->getId());
+            $quote->setExternesKassenzeichen(null);
+            $quote->save();
             Mage::throwException(Mage::helper('virtualpayid')->__('No external operator available!'));
         }
         $payClient = $payClient->getValue();

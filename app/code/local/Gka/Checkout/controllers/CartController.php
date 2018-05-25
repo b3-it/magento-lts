@@ -130,14 +130,20 @@ class Gka_Checkout_CartController extends Mage_Checkout_CartController
     public function indexAction()
     {
         $cart = $this->_getCart();
-        if ($cart->getQuote()->getItemsCount()) {
-            $cart->init();
-            $cart->save();
+        try {
+            if ($cart->getQuote()->getItemsCount()) {
+                $cart->init();
+                $cart->save();
 
-            if (!$this->_getQuote()->validateMinimumAmount()) {
-                $warning = Mage::getStoreConfig('sales/minimum_order/description');
-                $cart->getCheckoutSession()->addNotice($warning);
+                if (!$this->_getQuote()->validateMinimumAmount()) {
+                    $warning = Mage::getStoreConfig('sales/minimum_order/description');
+                    $cart->getCheckoutSession()->addNotice($warning);
+                }
             }
+        } catch (Exception $e) {
+            $cart->getCheckoutSession()->addUniqueMessages(Mage::getModel('core/message_notice', $e->getMessage()));
+            //Falls Problem nicht korrekt behandelt wurde, endet das in einer Endlosschleife!
+            $this->_redirect('*/*');
         }
 
         // Compose array of messages to add
