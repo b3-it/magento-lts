@@ -10,6 +10,21 @@
  */
 class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
+	
+	protected $_layoutHandles = null;
+  
+	
+	/**
+	 * layout handles wildcar patterns
+	 *
+	 * @var array
+	 */
+	protected $_layoutHandlePatterns = array(
+			'^default$',
+			'^catalog_category_*',
+			'^catalog_product_*',
+			'^PRODUCT_*'
+	);
   protected function _prepareForm()
   {
       $form = new Varien_Data_Form();
@@ -103,17 +118,107 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
   	return $res;
   }
   
+  /**
+   * Getter
+   *
+   * @return string
+   */
+  protected function _getArea()
+  {
+  	if (!$this->_getData('area')) {
+  		return Mage_Core_Model_Design_Package::DEFAULT_AREA;
+  	}
+  	return $this->_getData('area');
+  }
+  
+  /**
+   * Getter
+   *
+   * @return string
+   */
+  protected function _getPackage()
+  {
+  	if (!$this->_getData('package')) {
+  		return Mage_Core_Model_Design_Package::DEFAULT_PACKAGE;
+  	}
+  	return $this->_getData('package');
+  }
+  
+  /**
+   * Getter
+   *
+   * @return string
+   */
+  protected function _getTheme()
+  {
+  	if (!$this->_getData('theme')) {
+  		return Mage_Core_Model_Design_Package::DEFAULT_THEME;
+  	}
+  	return $this->_getData('theme');
+  }
+  
+  
+  
+  
   protected function _getHandles()
   {
-  	$collection = Mage::getModel('cms/block')->getCollection();
+  	
+  	if($this->_layoutHandles == null)
+  	{
+  		/* @var $update Mage_Core_Model_Layout_Update */
+  	 	$update = Mage::getModel('core/layout')->getUpdate();
+     	$this->_layoutHandles = array();
+     	
+    	$this->_collectLayoutHandles($update->getFileLayoutUpdatesXml($this->_getArea(), $this->_getPackage(), $this->_getTheme()));
+  	}
   	$res = array();
   
   
-  	foreach($collection as $item)
+  	foreach($this->_layoutHandles as $k=>$v)
   	{
-  		$res[$item->getIdentifier()] = array('label'=>$item->getTitle(), 'value'=>$item->getIdentifier());
+  		$res[$k] = array('label'=>$v, 'value'=>$k);
   	}
   	return $res;
+  }
+  
+  protected function _collectLayoutHandles($layoutHandles)
+  {
+  	if ($layoutHandlesArr = $layoutHandles->xpath('/*/*/label/..')) {
+  		foreach ($layoutHandlesArr as $node) {
+  			if ($this->_filterLayoutHandle($node->getName())) {
+  				$helper = Mage::helper(Mage_Core_Model_Layout::findTranslationModuleName($node));
+  				$this->_layoutHandles[$node->getName()] = $this->helper('core')->jsQuoteEscape(
+  						$helper->__((string)$node->label)
+  						);
+  			}
+  		}
+  		asort($this->_layoutHandles, SORT_STRING);
+  	}
+  }
+  
+  /**
+   * Getter
+   *
+   * @return array
+   */
+  public function getLayoutHandlePatterns()
+  {
+  	return $this->_layoutHandlePatterns;
+  }
+  
+  /**
+   * Check if given layout handle allowed (do not match not allowed patterns)
+   *
+   * @param string $layoutHandle
+   * @return boolean
+   */
+  protected function _filterLayoutHandle($layoutHandle)
+  {
+  	$wildCard = '/('.implode(')|(', $this->getLayoutHandlePatterns()).')/';
+  	if (preg_match($wildCard, $layoutHandle)) {
+  		return false;
+  	}
+  	return true;
   }
   
 }
