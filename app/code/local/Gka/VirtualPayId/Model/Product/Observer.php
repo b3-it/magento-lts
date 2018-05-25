@@ -149,7 +149,8 @@ class Gka_VirtualPayId_Model_Product_Observer extends Varien_Object
         $payClient = $payClient->getValue();
 
         /*
-         * Format: Mandant/Kassenzeichen
+         * Format: Mandant/Bewirtschafter/Kassenzeichen
+         * $payClient = Mandant/Bewirtschafter
          */
 		$quote->setExternesKassenzeichen(sprintf('%s/%s', $payClient, $payId));
 
