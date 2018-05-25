@@ -240,15 +240,6 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
                 Mage::log("{$this->getCode()}::KASSENZEICHEN BEREITS VORHANDEN:$kassenzeichen, OrderID: {$this->getInfoInstance()->getOrder()->getIncrementId()}", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
             }
         }
-        
-        //Verhindert im Kommentarverlauf den grünen Haken für die Kundenbenachrichtigung.
-        $order = $this->_getOrder();
-        if ($order) {
-        	$order->setCustomerNoteNotify(false);
-        }
-        
-        //Wichtig für richtigen State und Status
-        $payment->setIsTransactionPending(true);
 		
         return $this;
 	}
@@ -567,7 +558,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
      * @see Gka_Tkonnketpay_Model_Adminhtml_System_Config_Source_Debug
 	 */
 	public function getDebug() {
-		return Mage::getStoreConfigFlag('payment/'.$this->getCode().'/debug_level');
+		return Mage::getStoreConfig('payment/'.$this->getCode().'/debug_level');
 	}
 
 	/**
@@ -884,4 +875,17 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 		
 		return $this;
 	}
+
+	protected function _afterAuthorize($payment, $amount) {
+        parent::_afterAuthorize($payment, $amount);
+
+        //Verhindert im Kommentarverlauf den grünen Haken für die Kundenbenachrichtigung.
+        $order = $this->_getOrder();
+        if ($order) {
+            $order->setCustomerNoteNotify(false);
+        }
+
+        //Wichtig für richtigen State und Status
+        $payment->setIsTransactionPending(true);
+    }
 }

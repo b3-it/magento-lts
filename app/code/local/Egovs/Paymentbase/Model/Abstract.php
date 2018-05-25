@@ -445,47 +445,49 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			Mage::throwException("{$this->getCode()}::".Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_STANDARD99989', Mage::helper("paymentbase")->getAdminMail()));
 		}
 
-		if ($this->hasKassenzeichen()) {
-			Mage::log("paymentbase::The Kassenzeichen exists already: {$payment->getKassenzeichen()}", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-			return $this;
-		}
-		try {
-		        $this->_authorize($payment, $amount);
-		} catch (Exception $e) {
-			//Möglichen Kunden löschen
-			$this->loeschenKunde();
-			Mage::logException($e);
-			throw $e;
-		}
-		
-		if ($payment->hasData('kassenzeichen')) {
-			/*
-			 * Es geht hier nur darum das Kassenzeichen bis zum ersten speichern der Order zu sichern.
-			 * Bei Gatewayzahlungen (Saferpay) ist die Zahlung zwar erst nach der der Rückkehr vom Gateway gültig, das
-			 * Kassenzeichen wurde aber schon vorher in der Order gespeichert. 
-			 */
-			/* @var $transaction Egovs_Paymentbase_Model_Transaction */
-			$transaction = Mage::getModel('paymentbase/transaction');
-			$transaction->setId($payment->getKassenzeichen());
-			$transaction->setQuoteId($payment->getOrder()->getQuoteId());
-			$transaction->setPaymentMethod($this->getCode());
-			try {
-				$transaction->save();
-			} catch (Exception $e) {
-				Mage::log(
-						sprintf(
-								"%s::Can't save transaction with Kassenzeichen: %s for Order: %s. See exception log for further information!",
-								$this->getCode(),
-								$payment->getKassenzeichen(),
-								$payment->getOrder()->getIncrementId()								
-						),
-						Zend_Log::ERR,
-						Egovs_Helper::EXCEPTION_LOG_FILE
-				);
-				Mage::logException($e);
-			}
-		}
-		
+		if (!$this->hasKassenzeichen()) {
+            try {
+                $this->_authorize($payment, $amount);
+            } catch (Exception $e) {
+                //Möglichen Kunden löschen
+                $this->loeschenKunde();
+                Mage::logException($e);
+                throw $e;
+            }
+
+            if ($payment->hasData('kassenzeichen')) {
+                /*
+                 * Es geht hier nur darum das Kassenzeichen bis zum ersten speichern der Order zu sichern.
+                 * Bei Gatewayzahlungen (Saferpay) ist die Zahlung zwar erst nach der Rückkehr vom Gateway gültig, das
+                 * Kassenzeichen wurde aber schon vorher in der Order gespeichert.
+                 */
+                /* @var $transaction Egovs_Paymentbase_Model_Transaction */
+                $transaction = Mage::getModel('paymentbase/transaction');
+                $transaction->setId($payment->getKassenzeichen());
+                $transaction->setQuoteId($payment->getOrder()->getQuoteId());
+                $transaction->setPaymentMethod($this->getCode());
+                try {
+                    $transaction->save();
+                } catch (Exception $e) {
+                    Mage::log(
+                        sprintf(
+                            "%s::Can't save transaction with Kassenzeichen: %s for Order: %s. See exception log for further information!",
+                            $this->getCode(),
+                            $payment->getKassenzeichen(),
+                            $payment->getOrder()->getIncrementId()
+                        ),
+                        Zend_Log::ERR,
+                        Egovs_Helper::EXCEPTION_LOG_FILE
+                    );
+                    Mage::logException($e);
+                }
+            }
+		} else {
+            Mage::log("paymentbase::The Kassenzeichen exists already: {$payment->getKassenzeichen()}", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+        }
+
+        $this->_afterAuthorize($payment, $amount);
+
 		return $this;
 	}
 
@@ -1047,8 +1049,8 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
          * Besonderheit für externe Kassenzeichen
          * @see #3051
          *
-         * Wichtig: Das externe Kassenzeichen besteht aus Mandant/Kassenzeichen
-         *      und nicht aus Bewirtschafter/Kassenzeichen wie sonst üblich!
+         * Wichtig: Das externe Kassenzeichen besteht aus Mandant/Bewirtschafter/Kassenzeichen
+         *          und nicht aus Bewirtschafter/Kassenzeichen wie sonst üblich!
          */
         $eKz = $this->_getOrder()->getExternesKassenzeichen();
 		if (!$eKz || strlen($eKz) < 1) {
@@ -1062,7 +1064,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 		    $payment->setPayOperator($data[1]);
 		    $payment->setKassenzeichen($data[2]);
             //Kassenzeichen auch in Quote ablegen
-            $payment->getOrder()->getQuote()->getPayment()->setKassenzeichen($data[1]);
+            $payment->getOrder()->getQuote()->getPayment()->setKassenzeichen($payment->getKassenzeichen());
 
             /** @var $payment Mage_Sales_Model_Order_Payment */
             $payment->setTransactionId($eKz);
@@ -1089,4 +1091,18 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	public function getCustomText() {
 		return $this->getConfigData('customtext');
 	}
+
+    /**
+     * After authorize
+     *
+     * @param Varien_Object $payment Payment
+     * @param float         $amount  Betrag
+     *
+     * @return Mage_Payment_Model_Method_Abstract
+     *
+     * @see Egovs_Paymentbase_Model_Paymentbase::authorize
+     */
+    protected function _afterAuthorize($payment, $amount) {
+	    return $this;
+    }
 }
