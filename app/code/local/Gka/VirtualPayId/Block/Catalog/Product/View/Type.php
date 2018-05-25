@@ -105,7 +105,7 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Type extends Mage_Catalog_Bloc
 			$txt[] = '</select>';
 
 			if (!$_clientsAvailable) {
-                $this->getMessagesBlock()->addNotice($this->__("No valid ePayBL Client configuration available"));
+			    Mage::getSingleton('catalog/session')->addNotice($this->__("No valid ePayBL Client configuration available"));
             }
 			 
 			return implode(' ',$txt);
