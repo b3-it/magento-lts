@@ -484,6 +484,19 @@ abstract class Egovs_Paymentbase_Controller_Tkonnekt_Abstract extends Mage_Core_
     		}
     	} catch (Exception $e) {
     		Mage::logException($e);
+            $msg = Mage::helper("gka_tkonnektpay")->__("Can't validate TKonnekt message or message was invalid!");
+
+            $orderFound = $paymentMethod->modifyOrderAfterPayment(
+                false,
+                $this->getRequest()->getParam('tkMerchantTxId', ''),
+                true,
+                $msg,
+                true,
+                false,
+                '',
+                '',
+                $this->getRequest()->getParams()
+            );
     	}
     	Mage::log("$module::... _checkReturnedMessage finished.", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	return false;
