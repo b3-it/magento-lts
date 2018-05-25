@@ -92,13 +92,13 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
         }
 
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
-            if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
-                Mage::throwException($this->__('No kassenzeichen available!'));
-            } else {
+            if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF == $this->getDebug()) {
                 $incrementId = $this->_getOrderIncrementId();
                 $incrementId = array_shift($incrementId);
 
                 $payment->setKassenzeichen($incrementId);
+            } else {
+                Mage::throwException($this->__('No kassenzeichen available!'));
             }
     	}
     	return "{$this->_getBewirtschafterNr()}/{$payment->getKassenzeichen()}";
