@@ -62,9 +62,10 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
     /**
      * Liefert die Transaktions ID
      * 
-     * Wichtig für Zahlpartnerkonten (ZPK), da dort nicht das Kassenzeichen als ID genutzt
-     * werden kann!<br>
-     * Ohne ZPK wird "BewirtschafterNr/Kassenzeichen" als ID genutzt.
+     * Die Transaktions ID setzt sich wie folgt zusammen:
+     * "BewirtschafterNr/Kassenzeichen"
+     * oder ohne ePayBL-Kommunikation
+     * "BewirtschafterNr/OrderIncrementID"
      * 
      * @return string
      */
@@ -79,10 +80,17 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
     	}
 
     	if (($txId = $payment->getTransactionId()) || ($txId = $payment->getOrder()->getExternesKassenzeichen())) {
-            if (preg_match('/[\w]+\/[\w]+$/', $txId)) {
-                return $txId;
+            $_matches = array();
+    	    if (preg_match('/[\w]+\/[\w]+$/', $txId, $_matches)) {
+                return $_matches[0];
             }
+            $helper = Mage::helper('gka_tkonnektpay');
+            $msg = $helper->__('Invalid external Kassenzeichen: %s. Please check ePayBL-Client setting configuration!', $txId);
+    	    $helper->sendMailToAdmin("{$this->getCode()}::$msg", $helper->__('TKonnekt Error').':', $this->getCode());
+            Mage::log($this->getCode()."::".$msg, Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+            Mage::throwException($helper->__('TEXT_PROCESS_ERROR_STANDARD', Mage::helper("paymentbase")->getAdminMail()));
         }
+
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
             if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                 Mage::throwException($this->__('No kassenzeichen available!'));
