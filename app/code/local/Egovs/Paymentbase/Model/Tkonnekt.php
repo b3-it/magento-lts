@@ -79,7 +79,18 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
     		}
     	}
 
-    	if (($txId = $payment->getTransactionId()) || ($txId = $payment->getOrder()->getExternesKassenzeichen())) {
+        /**
+         * 20180525::Frank Rochlitzer
+         * TransactionId aus Payment enthält im Order Payment die tkRef
+         * @see modifyOrderAfterPayment
+         */
+        $txId = $payment->getTransactionId();
+    	if (!$txId || $payment->getTransactionIdIsProviderId()) {
+    	    if (!($txId = $payment->getEpayblTransactionId())) {
+                $txId = $payment->getOrder()->getExternesKassenzeichen();
+            }
+        }
+    	if ($txId) {
             $_matches = array();
     	    if (preg_match('/[\w]+\/[\w]+$/', $txId, $_matches)) {
                 return $_matches[0];
@@ -648,7 +659,6 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 					Mage::log("{$this->getCode()}::Es ist keine Bestellung verfügbar!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 					return false;
 				}
-				$orderId = $order->getIncrementId();
 
                 if (self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
                     if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
@@ -665,7 +675,11 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 				} else {
 					//update transaction
 					$payment = $order->getPayment();
+					if ($payment->getTransactionId()) {
+					    $payment->setEpayblTransactionId($payment->getTransactionId());
+                    }
 					$payment->setTransactionId($tkRef);
+					$payment->setTransactionIdIsProviderId(true);
 					$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_ORDER, null, false, '');
 					$transaction->setParentTxnId($this->getTransactionId($payment));
 					$transaction->setIsClosed(1);
@@ -707,7 +721,6 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 					return true;
 				}
 
-				//TODO : Providername ermitteln
 				$_providerName = 'TERMINALZAHLUNG';
 
                 if (!$order->getExternesKassenzeichen() && self::TKONNEKT_DEBUG_ON_EPAYBL_OFF != $this->getDebug()) {
@@ -887,5 +900,7 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 
         //Wichtig für richtigen State und Status
         $payment->setIsTransactionPending(true);
+
+        return $this;
     }
 }
