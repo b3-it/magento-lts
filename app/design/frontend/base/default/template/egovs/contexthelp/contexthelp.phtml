@@ -1,6 +1,55 @@
 <?php $urls = $this->getContentUrls();?>
 <?php if($urls != null):?>
-	<?php foreach($urls as $url):?>
-		<h1><?php echo $url?></h1>
-	<?php endforeach;?>
+    <div id="context-help-popup">
+        <div id="context-help-popup-head">
+            <?php echo $this->__('Contexthelp'); ?>
+            <a href="javascript:void(0);" onclick="hidePopup()">
+                <span class="icon egov-delete2" title="<?php echo $this->__('Close'); ?>"> </span>
+            </a>
+        </div>
+        <div id="context-help-popup-body"></div>
+    </div>
+
+	<script type="text/javascript">
+	    var readyToShow = false;
+	    $j(document).ready(function(){
+	        $j('#context-help').css('display', 'inline-block');
+	    });
+
+	    function resetPopup()
+	    {
+	        $j('#context-help-popup-body').html('');
+	        hidePopup();
+	    }
+
+	    function hidePopup()
+	    {
+	        $j('#context-help-popup').css('display', 'none');
+	    }
+
+	    function showPopup()
+	    {
+	        if ( readyToShow == false ) {
+	            resetPopup();
+
+	          <?php foreach($urls as $url):?>
+	            $j.ajax({
+	                'url'     : "<?php echo $url?>",
+	                'dataType': 'html',
+
+	                'beforeSend': function() {}
+	            })
+	            .done(function(data) {
+	                $j('#context-help-popup-body').append(data);
+	            })
+	            .fail(function(jqXHR, status){
+	                alert( "Request failed: " + status );
+	            });
+	          <?php endforeach;?>
+
+	            readyToShow = true;
+	        }
+	        $j('#context-help-popup').css('display', 'block');
+	    }
+	</script>
 <?php endif;?>

@@ -23,9 +23,9 @@
             </egovs_contexthelp_setup>
         </resources>
         <blocks>
-          <contexthelp>
-              <class>Egovs_ContextHelp_Block</class>
-          </contexthelp>
+            <contexthelp>
+                <class>Egovs_ContextHelp_Block</class>
+            </contexthelp>
         </blocks>
         <models>
             <contexthelp>
@@ -35,28 +35,37 @@
             <contexthelp_resource>
                 <class>Egovs_ContextHelp_Model_Resource</class>
                 <entities>
-                  <contexthelp>
-                    <table>egovs_contexthelp</table>
-                  </contexthelp>
-                  <contexthelp_handle>
-                    <table>egovs_contexthelp_handle</table>
-                  </contexthelp_handle>
-                  <contexthelp_block>
-                    <table>egovs_contexthelp_block</table>
-                  </contexthelp_block>
+                    <contexthelp>
+                        <table>egovs_contexthelp</table>
+                    </contexthelp>
+                    <contexthelp_handle>
+                        <table>egovs_contexthelp_handle</table>
+                    </contexthelp_handle>
+                    <contexthelp_block>
+                        <table>egovs_contexthelp_block</table>
+                    </contexthelp_block>
 
                 </entities>
             </contexthelp_resource>
         </models>
         <egovs_contexthelp>
-        <category>
-        <order>Order</order>
-        <others>Others</others>
-        </category>
+            <category>
+                <order>Order</order>
+                <others>Others</others>
+            </category>
         </egovs_contexthelp>
     </global>
-      <frontend>
-      <routers>
+    <frontend>
+        <translate>
+            <modules>
+                <Egovs_ContextHelp>
+                    <files>
+                        <default>egovs/contextHelp.csv</default>
+                    </files>
+                </Egovs_ContextHelp>
+            </modules>
+        </translate>
+        <routers>
             <contexthelp>
                 <use>standard</use>
                 <args>
@@ -65,57 +74,56 @@
                 </args>
             </contexthelp>
         </routers>
-           <layout>
+        <layout>
             <updates>
                 <egovs_contextHelp>
-                  <file>egovs/contexthelp.xml</file>
+                    <file>egovs/contexthelp.xml</file>
                 </egovs_contextHelp>
             </updates>
         </layout>
     </frontend>
     <admin>
-      <routers>
-          <adminhtml>
-              <args>
-                  <modules>
-                      <Egovs_ContextHelp_Adminhtml after="Mage_Adminhtml">Egovs_ContextHelp_Adminhtml</Egovs_ContextHelp_Adminhtml>
-                  </modules>
-              </args>
-          </adminhtml>
-      </routers>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Egovs_ContextHelp_Adminhtml after="Mage_Adminhtml">Egovs_ContextHelp_Adminhtml</Egovs_ContextHelp_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
     </admin>
     <adminhtml>
-      <menu>
-          <cms module="contexthelp">
-              <children>
-                  <contexthelp module="contexthelp">
-                      <title>Contexthelp</title>
-                      <sort_order>50</sort_order>
-                      <action>adminhtml/contexthelp_contexthelp/index</action>
-                  </contexthelp>
-              </children>
-          </cms>
-      </menu>
-      <acl>
-          <resources>
-              <all>
-                  <title>Allow Everything</title>
-              </all>
-              <admin>
-                  <children>
-                      <cms >
-                         
-                          <children>
+        <menu>
+            <cms module="contexthelp">
+                <children>
+                    <contexthelp module="contexthelp">
+                        <title>Contexthelp</title>
+                        <sort_order>50</sort_order>
+                        <action>adminhtml/contexthelp_contexthelp/index</action>
+                    </contexthelp>
+                </children>
+            </cms>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <cms>
+                            <children>
                                 <contexthelp module="contexthelp">
-                                  <title>Contexthelp</title>
-                                  <sort_order>10</sort_order>
-                              </contexthelp>
-                          </children>
-                      </cms>
-                  </children>
-              </admin>
-          </resources>
-      </acl>
+                                    <title>Contexthelp</title>
+                                    <sort_order>10</sort_order>
+                                </contexthelp>
+                            </children>
+                        </cms>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
         <translate>
             <modules>
                 <Egovs_ContextHelp>
@@ -126,11 +134,11 @@
             </modules>
         </translate>
         <layout>
-          <updates>
-            <egovscontextHelp>
-              <file>egovs/contexthelp.xml</file>
-            </egovscontextHelp>
-          </updates>
+            <updates>
+                <egovscontextHelp>
+                    <file>egovs/contexthelp.xml</file>
+                </egovscontextHelp>
+            </updates>
         </layout>
     </adminhtml>
 </config>
