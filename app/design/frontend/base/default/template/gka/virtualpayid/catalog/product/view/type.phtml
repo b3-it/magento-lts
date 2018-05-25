@@ -35,18 +35,23 @@
     <?php endif; ?>
 <?php endif; ?>
 
-<div id="virtual-pay-block">
-	
-	<label for="pay_client"><?php echo $this->__('ePayBL Client') ?></label>
-	<?php echo $this->getClientSelectBox();?>
+<div id="virtual-pay-block" style="vertical-align:top;">
+    <div style="display:inline-block; vertical-align:top; width:29%; margin-right:10px;">
+	    <label for="pay_client"><?php echo $this->__('ePayBL Client') ?></label>
+	    <?php echo $this->getClientSelectBox();?>
+        <?php if ($this->getPayClientValidationAdvice()): ?>
+            <div class="validation-advice" id="advice-required-entry-pay-client"><?php echo $this->getPayClientValidationAdvice()?></div>
+        <?php endif; ?>
+    </div>
 
-
-	<label for="pay_id"><?php echo $this->__('Payment code') ?></label>
-	<input name="pay_id" class="required-entry" id="pay-id" value="" />
+    <div style="display:inline-block; vertical-align:top; width:25%;">
+        <label for="pay_id"><?php echo $this->__('Payment code') ?></label>
+	    <input name="pay_id" class="required-entry" id="pay-id" value="" />
+    </div>
     <img src="<?php echo $this->getSkinUrl(); ?>images/opc-ajax-loader.gif" style="display:none;" class="ajax-spinner" />
-	<button type="button" class="button" onclick="fetchPrice();" id="fetchprice">
-	    <?php echo $this->helper('virtualpayid')->__('Fetch Price')?>
-	</button>
+    <button type="button" class="button" onclick="fetchPrice();" id="fetchprice">
+        <?php echo $this->helper('virtualpayid')->__('Fetch Price')?>
+    </button>
 	
 	<div id="price-container"></div>
 </div>
