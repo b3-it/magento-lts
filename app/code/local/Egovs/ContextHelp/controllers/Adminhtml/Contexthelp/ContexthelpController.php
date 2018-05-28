@@ -162,8 +162,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 	protected function _saveBlocks($data,$model)
 	{
 		$data = $this->_reorderData($data,'block');
-		if(!$data)
-		{
+		if(!$data) {
 			return $this;
 		}
 
@@ -176,7 +175,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 		foreach($data as $dat) {
 			if(isset($items[$dat->getValue()])) {
 				$item = $items[$dat->getValue()];
-				if($dat->getDelete() {
+				if($dat->getDelete()) {
 					$item->delete();
 					continue;
 				}
@@ -189,10 +188,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 			$item->setPos($dat->getPos());
 			$item->save();
 		}
-
 	}
-
-
 
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {

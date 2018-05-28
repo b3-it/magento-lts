@@ -44,13 +44,14 @@
                     <contexthelp_block>
                         <table>egovs_contexthelp_block</table>
                     </contexthelp_block>
-
                 </entities>
             </contexthelp_resource>
         </models>
         <egovs_contexthelp>
             <category>
                 <order>Order</order>
+                <customer>Customer Account</customer>
+                <product>Product</product>
                 <others>Others</others>
             </category>
         </egovs_contexthelp>
