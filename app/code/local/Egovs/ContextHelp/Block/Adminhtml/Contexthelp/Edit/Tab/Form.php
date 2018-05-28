@@ -57,8 +57,26 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 		));
 
 
+        $fieldset->addField('package_theme', 'text', array(
+            'label'     => Mage::helper('contexthelp')->__('Package/Theme'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
+            'readonly'  =>true,
+            'disabled'  => true,
+            'name'      => 'package_theme',
+            'value' => $model->getPackageTheme()
+        ));
 
+        $options = Mage::getModel('core/store')->getCollection()->toOptionArray();
+        $fieldset->addField('store_id', 'multiselect', array(
+            'label'     => Mage::helper('contexthelp')->__('Store'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
 
+            'name'      => 'store_id',
+            'values'	 => $options,
+            'value' => $model->getStoreId(),
+        ));
 
 		$value = array();
 		foreach($model->getHandles() as $item)
@@ -77,6 +95,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 			'values' =>$values,
 			'value' => $value
 		));
+
 
 
 		$value = array();
@@ -144,10 +163,13 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	*/
 	protected function _getPackage()
 	{
-		if (!$this->_getData('package')) {
-			return Mage_Core_Model_Design_Package::DEFAULT_PACKAGE;
-		}
-		return $this->_getData('package');
+	    $var = explode('/',$this->getPackageTheme);
+	    if(count($var) == 2)
+        {
+            return $var[0];
+        }
+        return Mage_Core_Model_Design_Package::DEFAULT_PACKAGE;
+
 	}
 
 	/**
@@ -157,10 +179,13 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	*/
 	protected function _getTheme()
 	{
-		if (!$this->_getData('theme')) {
-			return Mage_Core_Model_Design_Package::DEFAULT_THEME;
-		}
-		return $this->_getData('theme');
+        $var = explode('/',$this->getPackageTheme);
+        if(count($var) == 2)
+        {
+            return $var[1];
+        }
+        return Mage_Core_Model_Design_Package::DEFAULT_THEME;
+
 	}
 
 

@@ -37,7 +37,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 			Mage::register('contexthelp_data', $model);
 
 			$this->loadLayout();
-			$this->_setActiveMenu('egovs_contextHelp/items');
+			$this->_setActiveMenu('cms/contexthelp');
 
 			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
 			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
@@ -54,9 +54,49 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 		}
 	}
 
-	public function newAction() {
+	public function xnewAction() {
 		$this->_forward('edit');
 	}
+
+    /**
+     * Neu Aktion
+     *
+     * @return void
+     */
+    public function newAction() {
+
+        $this->loadLayout();
+        $this->_setActiveMenu('cms/contexthelp');
+
+        $this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+        $this->_addContent($this->getLayout()->createBlock('contexthelp/adminhtml_contexthelp_new'));
+        $this->renderLayout();
+    }
+
+    public function createAction() {
+        if ($data = $this->getRequest()->getPost()) {
+            $model = Mage::getModel('contexthelp/contexthelp');
+            $model->setData($data)
+                ->setId($this->getRequest()->getParam('id'));
+
+            try {
+
+                $model->save();
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('contexthelp')->__('Item was successfully saved'));
+                Mage::getSingleton('adminhtml/session')->setFormData(false);
+
+
+                $this->_redirect('*/*/edit',array('id'=>$model->getId()));
+                return;
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                $this->_redirect('*/*/*', array('id' => $this->getRequest()->getParam('id')));
+                return;
+            }
+        }
+        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('contexthelp')->__('Unable to find item to save'));
+        $this->_redirect('*/*/');
+    }
 
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
