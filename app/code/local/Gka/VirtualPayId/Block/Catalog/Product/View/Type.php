@@ -93,7 +93,7 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Type extends Mage_Catalog_Bloc
 			$txt = array();
 			$txtAdditionalOptions = array();
 			$_clientsAvailable = false;
-			$_htmlClass = '';
+			$_htmlClass = array('required-entry');
 
 			foreach ($collection as $client) {
 			    if (!$client->getClient() || !$client->getPayOperator()) {
@@ -107,8 +107,9 @@ class Gka_VirtualPayId_Block_Catalog_Product_View_Type extends Mage_Catalog_Bloc
 
 			if (!$_clientsAvailable) {
 			    $this->setPayClientValidationAdvice($this->__("No valid ePayBL Client configuration available"));
-			    $_htmlClass = 'validation-failed';
+			    $_htmlClass[] = 'validation-failed';
             }
+            $_htmlClass = implode(" ", $_htmlClass);
             $txt[] = sprintf('<select id="pay_client" name="pay_client" class="%s">', $_htmlClass);
             $txt[] = '<option value="">-- Bitte wählen --</option>';
             $txt = array_merge($txt, $txtAdditionalOptions);
