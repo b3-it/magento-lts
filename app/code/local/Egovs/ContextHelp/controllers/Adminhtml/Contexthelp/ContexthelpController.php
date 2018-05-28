@@ -61,7 +61,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
-			
+
 
 
 			$model = Mage::getModel('contexthelp/contexthelp');
@@ -69,7 +69,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 				->setId($this->getRequest()->getParam('id'));
 
 			try {
-				
+
 				$model->save();
 				$this->_saveHandle($data, $model);
 				$this->_saveBlocks($data, $model);
@@ -100,28 +100,28 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 			return null;
 		}
 		$data =$data[$key];
-		
+
 		$res = array();
 		foreach($data['value'] as $key => $val)
 		{
 			$obj = new Varien_Object();
 			$obj->setValue($val);
-			
+
 			if(isset($data['pos'][$key])){
 				$obj->setPos($data['pos'][$key]);
 			}
 			if(isset($data['delete'][$key])){
 				$obj->setDelete($data['delete'][$key]);
 			}
-			
+
 			$res[$key] = $obj;
 		}
-			
+
 		return $res;
-		
+
 	}
-	
-	
+
+
 	protected function _saveHandle($data,$model)
 	{
 		$data = $this->_reorderData($data,'handle');
@@ -129,16 +129,16 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 		{
 			return $this;
 		}
-		
-		
+
+
 		$items = array();
-		
+
 		foreach($model->getHandles() as $item)
 		{
 			$items[$item->getHandle()] = $item;
-			
+
 		}
-	
+
 		foreach($data as $dat)
 		{
 			if(isset($items[$dat->getValue()])){
@@ -150,15 +150,15 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 			}else{
 				$item = Mage::getModel('contexthelp/contexthelphandle');
 			}
-			
+
 			$item->setParentId(intval($model->getId()));
 			$item->setHandle($dat->getValue());
-			
+
 			$item->save();
 		}
-	
+
 	}
-	
+
 	protected function _saveBlocks($data,$model)
 	{
 		$data = $this->_reorderData($data,'block');
@@ -166,38 +166,34 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
 		{
 			return $this;
 		}
-	
-	
+
 		$items = array();
-	
-		foreach($model->getBlocks() as $item)
-		{
+
+		foreach($model->getBlocks() as $item) {
 			$items[$item->getBlockId()] = $item;
-				
 		}
-	
-		foreach($data as $dat)
-		{
-			if(isset($items[$dat->getValue()])){
+
+		foreach($data as $dat) {
+			if(isset($items[$dat->getValue()])) {
 				$item = $items[$dat->getValue()];
-				if($dat->getDelete()){
+				if($dat->getDelete() {
 					$item->delete();
 					continue;
 				}
-			}else{
+			} else {
 				$item = Mage::getModel('contexthelp/contexthelpblock');
 			}
-				
+
 			$item->setParentId(intval($model->getId()));
 			$item->setBlockId($dat->getValue());
 			$item->setPos($dat->getPos());
 			$item->save();
 		}
-	
+
 	}
-	
-	
-	
+
+
+
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
@@ -223,7 +219,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
         } else {
             try {
                 foreach ($contexthelpIds as $contexthelpId) {
-                    $egovs_contextHelp = Mage::getModel('egovs_contextHelp/contexthelp')->load($contexthelpId);
+					$egovs_contextHelp = Mage::getModel('contexthelp/contexthelp')->load($contexthelpId);
                     $egovs_contextHelp->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
@@ -266,7 +262,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
     {
         $fileName   = $this->_getFileName('csv');
         $content    = $this->getLayout()->createBlock('egovs_contextHelp/adminhtml_contexthelp_grid')
-            ->getCsv();
+                           ->getCsv();
 
         $this->_prepareDownloadResponse($fileName,$content);
     }
@@ -275,7 +271,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
     {
         $fileName   = $this->_getFileName('xml');
         $content    = $this->getLayout()->createBlock('egovs_contextHelp/adminhtml_contexthelp_grid')
-            ->getExcel($fileName);
+                           ->getExcel($fileName);
 
         $this->_prepareDownloadResponse($fileName,$content);
     }
@@ -284,19 +280,19 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
     {
         $fileName   = $this->_getFileName('xls');
         $content    = $this->getLayout()->createBlock('egovs_contextHelp/adminhtml_contexthelp_grid')
-            ->getXml();
+                           ->getXml();
 
          $this->_prepareDownloadResponse($fileName,$content);
     }
 
     protected function _getFileName($ext = "csv")
     {
-    	  $fileName   = $this->__('contexthelp');
+    	$fileName   = $this->__('contexthelp');
     	$fileName .= "_".date('Y-m-d') . ".".$ext;
 
     	return $fileName;
     }
 
 
-  
+
 }
