@@ -61,7 +61,7 @@
             <modules>
                 <Egovs_ContextHelp>
                     <files>
-                        <default>egovs/ContextHelp.csv</default>
+                        <default>Egovs/ContextHelp.csv</default>
                     </files>
                 </Egovs_ContextHelp>
             </modules>
@@ -129,7 +129,7 @@
             <modules>
                 <Egovs_ContextHelp>
                     <files>
-                        <default>egovs/ContextHelp.csv</default>
+                        <default>Egovs/ContextHelp.csv</default>
                     </files>
                 </Egovs_ContextHelp>
             </modules>
