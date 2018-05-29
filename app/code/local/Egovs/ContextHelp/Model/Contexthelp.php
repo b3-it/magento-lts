@@ -12,13 +12,41 @@ class Egovs_ContextHelp_Model_Contexthelp extends Mage_Core_Model_Abstract
 {
 	protected $_blocks = null;
 	protected $_handles = null;
-	
+	protected $_storeids = null;
+
     public function _construct()
     {
         parent::_construct();
         $this->_init('contexthelp/contexthelp');
     }
-    
+
+    protected function _beforeSave()
+	{
+		if( Mage::app()->getRequest()->getParam('store_id') ) {
+			$this->setData('store_ids', implode( ',', Mage::app()->getRequest()->getParam('store_id') ) );
+			$this->_storeids = $this->getData('store_ids');
+		}
+
+		return parent::_beforeSave();
+	}
+
+	protected function _afterLoad()
+	{
+		if ( $this->getData('store_ids') ) {
+			$this->_storeids = explode( ',', $this->getData('store_ids') );
+		}
+		return parent::_afterLoad();
+	}
+
+	public function getStoreId()
+	{
+		if($this->_storeids == null) {
+			$this->_storeids = explode( ',', $this->getData('store_ids') );
+		}
+
+		return $this->_storeids;
+	}
+
     public function getBlocks()
     {
     	if($this->_blocks == null){
@@ -26,7 +54,7 @@ class Egovs_ContextHelp_Model_Contexthelp extends Mage_Core_Model_Abstract
     		$collection->getSelect()->where('parent_id=?',intval($this->getId()))->order('pos');
     		$this->_blocks = $collection->getItems();
     	}
-    		
+
     	return $this->_blocks;
     }
     public function getHandles()
@@ -36,7 +64,7 @@ class Egovs_ContextHelp_Model_Contexthelp extends Mage_Core_Model_Abstract
     		$collection->getSelect()->where('parent_id=?',intval($this->getId()));
     		$this->_handles = $collection->getItems();
     	}
-    	
+
     	return $this->_handles;
     }
 }

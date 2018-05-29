@@ -40,10 +40,8 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 			//'class'     => 'required-entry',
 			//'required'  => true,
 			'name'      => 'title',
-			'value' => $model->getTitle()
+			'value'     => $model->getTitle()
 		));
-
-
 
 		$opt= Mage::getModel('contexthelp/category')->getOptions();
 
@@ -52,8 +50,8 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 			//'class'     => 'required-entry',
 			//'required'  => true,
 			'name'      => 'category_id',
-			'options' => $opt,
-			'value' => $model->getCategoryId()
+			'options'   => $opt,
+			'value'     => $model->getCategoryId()
 		));
 
 
@@ -64,7 +62,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
             'readonly'  =>true,
             'disabled'  => true,
             'name'      => 'package_theme',
-            'value' => $model->getPackageTheme()
+            'value'     => $model->getPackageTheme()
         ));
 
         $options = Mage::getModel('core/store')->getCollection()->toOptionArray();
@@ -74,8 +72,8 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
             //'required'  => true,
 
             'name'      => 'store_id',
-            'values'	 => $options,
-            'value' => $model->getStoreId(),
+            'values'	=> $options,
+            'value'     => $model->getStoreId(),
         ));
 
 		$value = array();
@@ -92,8 +90,8 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 			//'required'  => true,
 			'show_up_down' =>false,
 			'name'      => 'handle',
-			'values' =>$values,
-			'value' => $value
+			'values'    => $values,
+			'value'     => $value
 		));
 
 
@@ -111,8 +109,8 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 			//'class'     => 'required-entry',
 			//'required'  => true,
 			'name'      => 'block',
-			'values' =>$values,
-			'value' => $value
+			'values'    => $values,
+			'value'     => $value
 		));
 
 
