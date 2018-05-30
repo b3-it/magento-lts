@@ -17,7 +17,7 @@ class Egovs_ContextHelp_Block_Contexthelp extends Mage_Core_Block_Template
     		return null;
     	}
 
-    	$storeid = Mage::app()->getStore()->getId();
+    	$storeid = intval( Mage::app()->getStore()->getId() );
     	if ( !$storeid ) {
     	    return null;
     	}
