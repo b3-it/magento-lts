@@ -16,20 +16,30 @@ class Egovs_ContextHelp_Block_Contexthelp extends Mage_Core_Block_Template
     	if(count($handles) == 0){
     		return null;
     	}
-    	
-    	    	
-    	$collection = Mage::getModel('contexthelp/contexthelphandle')->getCollection();
-    	$collection->getSelect()->where('handle IN (?)',$handles);
 
-    	$urls = array();    	
+    	$storeid = Mage::app()->getStore()->getId();
+    	if ( !$storeid ) {
+    	    return null;
+    	}
+
+        /**
+         * @var $collection Egovs_ContextHelp_Model_Resource_Contexthelphandle_Collection
+         */
+        $collection = Mage::getModel('contexthelp/contexthelphandle')->getCollection();
+
+    	$collection->getSelect()
+                   ->join(
+                         array('contexthelp' => $collection->getTable('contexthelp/contexthelp')),
+                         'FIND_IN_SET(' . $storeid . ', `store_ids`) AND `main_table`.`parent_id` = `contexthelp`.`id`',
+                         array()
+                     )
+                   ->where('handle IN (?)', $handles);
+
+    	$urls = array();
     	foreach($collection->getItems() as $item){
     		$urls[] = $this->getUrl('contexthelp/index/index/',array('id'=>$item->getParentId()));
     	}
-    	
+
     	return $urls;
-    	
-    	
     }
-    
-    
 }

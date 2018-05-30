@@ -26,7 +26,6 @@ class Egovs_ContextHelp_Model_Contexthelp extends Mage_Core_Model_Abstract
 			$this->setData('store_ids', implode( ',', Mage::app()->getRequest()->getParam('store_id') ) );
 			$this->_storeids = $this->getData('store_ids');
 		}
-
 		return parent::_beforeSave();
 	}
 
