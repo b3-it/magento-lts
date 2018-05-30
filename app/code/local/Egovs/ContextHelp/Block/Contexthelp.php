@@ -10,6 +10,11 @@
  */
 class Egovs_ContextHelp_Block_Contexthelp extends Mage_Core_Block_Template
 {
+    /**
+     * Ermittelt alle zum Store/Haldels enthalten CMS-Blöcke
+     * 
+     * @return NULL|array[]
+     */
     public function getContentUrls()
     {
     	$handles = $this->getLayout()->getUpdate()->getHandles();
