@@ -1,32 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE layout>
-<!--
-/**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category   design_default
- * @package    Mage
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
- * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-
--->
 <layout version="0.1.0">
 
 <!--
@@ -68,7 +41,6 @@ Default layout, loads most of the pages
     </default>
 
     <checkout_cart_index translate="label">
-        <label>SiD Checkout Cart Index</label>
         <remove name="right"/>
 		<remove name="breadcrumbs"/>
 
@@ -113,9 +85,8 @@ Multi address shipping checkout main layout,
 will be rendered on all checkout pages
 -->
 
-    <checkout_multishipping translate="label">
+    <checkout_multishipping>
         <!-- Mage_Checkout -->
-        <label>SiD Checkout Multishipping</label>
         <remove name="right"/>
         <remove name="left"/>
 
@@ -142,8 +113,7 @@ will be rendered on all checkout pages
 Multi address shipping checkout selection of address per item page
 -->
 
-    <checkout_multishipping_address_select translate="label">
-        <label>SiD Checkout Multishipping Address select</label>
+    <checkout_multishipping_address_select>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -152,7 +122,6 @@ Multi address shipping checkout selection of address per item page
     </checkout_multishipping_address_select>
 
     <checkout_multishipping_address_selectbilling>
-        <label>SiD Checkout Multishipping Address select billing</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -196,8 +165,7 @@ Multi address shipping checkout selection of address per item page
 Multi address shipping checkout address page
 -->
 
-    <checkout_multishipping_addresses translate="label">
-        <label>SiD Checkout Multishipping Addresses</label>
+    <checkout_multishipping_addresses>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -213,8 +181,7 @@ Multi address shipping checkout address page
 Multi address shipping checkout shipping information
 -->
 
-    <checkout_multishipping_shipping translate="label">
-        <label>SiD Checkout Multishipping Shipping</label>
+    <checkout_multishipping_shipping>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -236,8 +203,7 @@ Multi address shipping checkout shipping information
 Multi address shipping checkout billing information
 -->
 
-    <checkout_multishipping_billing translate="label">
-        <label>SiD Checkout Multishipping Billing</label>
+    <checkout_multishipping_billing>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -259,7 +225,6 @@ Multi address shipping checkout overview
 -->
 
     <checkout_multishipping_overview translate="label">
-        <label>SiD Checkout Multishipping Overview</label>
         <update handle="checkout_multishipping"/>
 
         <reference name="root">
@@ -286,7 +251,6 @@ Multi address shipping checkout success
 -->
 
     <checkout_multishipping_success translate="label">
-        <label>SiD Checkout Multishipping Success</label>
         <update handle="checkout_multishipping"/>
 
         <reference name="root">

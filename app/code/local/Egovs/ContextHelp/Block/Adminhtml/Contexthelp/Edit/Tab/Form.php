@@ -25,11 +25,11 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 		'^catalog_product_*',
 		'^PRODUCT_*'
 	);
+
 	protected function _prepareForm()
 	{
 		$form = new Varien_Data_Form();
 		$this->setForm($form);
-
 
 		$model = Mage::registry('contexthelp_data');
 
@@ -53,7 +53,6 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 			'options'   => $opt,
 			'value'     => $model->getCategoryId()
 		));
-
 
         $fieldset->addField('package_theme', 'text', array(
             'label'     => Mage::helper('contexthelp')->__('Package/Theme'),
@@ -127,7 +126,10 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 		return parent::_prepareForm();
 	}
 
-
+    /**
+     * 
+     * @return array[]
+     */
 	protected function _getCmsBlocks()
 	{
 		$collection = Mage::getModel('cms/block')->getCollection();
@@ -157,7 +159,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	/**
 	* Getter
 	*
-	* @return string
+	* @return Mage_Core_Model_Design_Package string
 	*/
 	protected function _getPackage()
 	{
@@ -173,7 +175,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	/**
 	* Getter
 	*
-	* @return string
+	* @return Mage_Core_Model_Design_Package string
 	*/
 	protected function _getTheme()
 	{
@@ -183,36 +185,42 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
             return $var[1];
         }
         return Mage_Core_Model_Design_Package::DEFAULT_THEME;
-
 	}
-
-
-
-
+	
+    /**
+     * 
+     * @return array[]
+     */
 	protected function _getHandles()
 	{
-
-		if($this->_layoutHandles == null)
-		{
+		if($this->_layoutHandles == null) {
 			/* @var $update Mage_Core_Model_Layout_Update */
 			$update = Mage::getModel('core/layout')->getUpdate();
 			$this->_layoutHandles = array();
 
-			$this->_collectLayoutHandles($update->getFileLayoutUpdatesXml($this->_getArea(), $this->_getPackage(), $this->_getTheme()));
+			$this->_collectLayoutHandles(
+			    $update->getFileLayoutUpdatesXml(
+			        $this->_getArea(),
+			        $this->_getPackage(),
+			        $this->_getTheme()
+			    )
+			);
 		}
 		$res = array();
 
-
-		foreach($this->_layoutHandles as $k=>$v)
-		{
-			$res[$k] = array('label'=>$v, 'value'=>$k);
+		foreach($this->_layoutHandles as $k => $v) {
+			$res[$k] = array('label' => $v, 'value' => $k);
 		}
 		return $res;
 	}
 
+	/**
+	 * 
+	 * @param Mage_Core_Model_Layout_Update $layoutHandles
+	 */
 	protected function _collectLayoutHandles($layoutHandles)
 	{
-		if ($layoutHandlesArr = $layoutHandles->xpath('/*/*/label/..')) {
+	    if ($layoutHandlesArr = $layoutHandles->xpath('/*/*/label/..')) {
 			foreach ($layoutHandlesArr as $node) {
 				if ($this->_filterLayoutHandle($node->getName())) {
 					$helper = Mage::helper(Mage_Core_Model_Layout::findTranslationModuleName($node));
