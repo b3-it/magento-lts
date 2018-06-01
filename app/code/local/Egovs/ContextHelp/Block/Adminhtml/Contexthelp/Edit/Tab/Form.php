@@ -16,14 +16,14 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 
 	/**
 	* layout handles wildcar patterns
-	*
+	* diese Handels werden NICHT angezeigt!!
 	* @var array
 	*/
 	protected $_layoutHandlePatterns = array(
 		'^default$',
-		'^catalog_category_*',
-		'^catalog_product_*',
-		'^PRODUCT_*'
+		//'^catalog_category_*',
+		//'^catalog_product_*',
+		//'^PRODUCT_*'
 	);
 
 	protected function _prepareForm()
@@ -127,7 +127,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	}
 
     /**
-     * 
+     *
      * @return array[]
      */
 	protected function _getCmsBlocks()
@@ -186,9 +186,9 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
         }
         return Mage_Core_Model_Design_Package::DEFAULT_THEME;
 	}
-	
+
     /**
-     * 
+     *
      * @return array[]
      */
 	protected function _getHandles()
@@ -215,7 +215,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	}
 
 	/**
-	 * 
+	 *
 	 * @param Mage_Core_Model_Layout_Update $layoutHandles
 	 */
 	protected function _collectLayoutHandles($layoutHandles)
