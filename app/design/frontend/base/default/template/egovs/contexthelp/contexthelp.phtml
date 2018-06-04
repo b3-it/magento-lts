@@ -9,6 +9,7 @@
         </div>
         <div id="context-help-popup-body"></div>
     </div>
+    <input type="hidden" name="showBlocks" id="showBlocks" value="0" />
 
 	<script type="text/javascript">
 	    var readyToShow = false;                         // Kann das Popup angezeigt werden (Inhalt?)
@@ -27,12 +28,14 @@
 
                 <?php foreach($urls as $url):?>
                 $j.ajax({
-                    'url'       : "<?php echo $url?>",
-                    'dataType'  : 'html',
+                    'url'       : "<?php echo $url?>?showblocks=" + $j('#showBlocks').val(),
+                    'dataType'  : 'json',
+                    'async'     : false,
                     'beforeSend': function() {},
                 })
                 .done(function(data) {
-                    $j(popupBodyId).append(data);
+                    $j(popupBodyId).append(data.html);
+                    $j('#showBlocks').val(data.blocks);
                 })
                 .fail(function(jqXHR, status){
                     alert( "Request failed: " + status );

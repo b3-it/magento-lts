@@ -16,28 +16,52 @@
         */
        public function indexAction()
        {
-           $id    = intval($this->getRequest()->getParam('id'));
-           $model = Mage::getModel('contexthelp/contexthelp')->load($id);
+           $blocks = $this->_cleanBlockIdsFromRequest(explode(',', $this->getRequest()->getParam('showblocks')));
+           $id     = intval($this->getRequest()->getParam('id'));
+           $model  = Mage::getModel('contexthelp/contexthelp')->load($id);
 
            $output = array();
-           foreach($model->getBlocks() as $helpblock){
-               $block = Mage::getModel('cms/block')
-                        ->setStoreId(Mage::app()->getStore()->getId())
-                        ->load($helpblock->getBlockId());
 
-               if ($block->isEmpty() || !$block->getIsActive()) {
-                   continue;
-               }
+           foreach($model->getBlocks() as $helpblock){
+                $blockId = $helpblock->getBlockId();
+                $block = Mage::getModel('cms/block')
+                            ->setStoreId(Mage::app()->getStore()->getId())
+                            ->load($blockId);
+
+                if ( $block->isEmpty() || !$block->getIsActive() || in_array($blockId, $blocks) ) {
+                    continue;
+                }
 
                /* @var $helper Mage_Cms_Helper_Data */
                $helper    = Mage::helper('cms');
                $processor = $helper->getBlockTemplateProcessor();
                $output[]  = $processor->filter($block->getContent());
+               $blocks[]  = $blockId;
            }
 
            $response = $this->getResponse();
-           $response->setBody(implode("\n", $output));
+           $response->setHeader('Cpontent-type', 'application/json');
+           $response->setBody( json_encode( array('html' => implode("\n", $output), 'blocks' => implode(',', $blocks)) ) );
            $response->sendResponse();
            die;
+       }
+
+       /**
+        * Parameter-IDs der Blöcke filtern
+        *
+        * @param  array[]   Array mit BlockIDs, welche bereits angezeigt werden
+        * @return array[]
+        */
+       private function _cleanBlockIdsFromRequest($blockarray = array())
+       {
+           if ( !count($blockarray) ) {
+               return;
+           }
+
+           foreach( $blockarray AS $key => $value ) {
+               $blockarray[$key] = intval($value);
+           }
+
+           return $blockarray;
        }
    }
