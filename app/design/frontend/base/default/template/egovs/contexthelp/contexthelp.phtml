@@ -1,6 +1,6 @@
 <?php $urls = $this->getContentUrls(); ?>
 <?php if($urls != null):?>
-    <div id="context-help-popup">
+    <div id="context-help-popup" style="left:-100000px;">
         <div id="context-help-popup-head">
             <?php echo $this->__('Contexthelp'); ?>
             <a href="javascript:void(0)" onclick="hidePopup()">
@@ -43,7 +43,7 @@
               <?php endforeach;?>
                 readyToShow = true;
             }
-            $j('#context-help-popup').css('z-index', showLevel);
+            viewPopup();
             updatePopupScrollBar();
         }
 	</script>

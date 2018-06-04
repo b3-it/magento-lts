@@ -16,7 +16,21 @@ function resetPopup()
  */
 function hidePopup()
 {
-    $j('#context-help-popup').css('z-index', hideLevel);
+    $j('#context-help-popup').css({
+        'z-index': hideLevel,
+        'left'   : '-100000px'
+    });
+}
+
+/**
+ * Popup anzeigen
+ */
+function viewPopup()
+{
+    $j('#context-help-popup').css({
+        'z-index': showLevel,
+        'left'   : '20%'
+    });
 }
 
 /**
