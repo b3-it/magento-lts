@@ -1,57 +1,29 @@
 <?php
 /**
- * Sid ExportOrder_Transfer
- *
- *
- * @category   	Sid
- * @package		Sid_ExportOrder_Transfer
- * @name	   	Sid_ExportOrder_Transfer_Model_Post
- * @author 		Holger Kögel <h.koegel@b3-it.de>
- * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
- * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ * 
+ *  TODO:: -- DOKU -- kurze Beschreibung einfügen
+ *  @category Egovs
+ *  @package  Bkg_VirtualAccess_Model_Service_Webservice_Client
+ *  @author Frank Rochlitzer <​f.rochlitzer@b3-it.de>
+ *  @author Holger Kögel <​h.koegel@b3-it.de>
+ *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
+ *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-/**
- *  @method int getId()
- *  @method setId(int $value)
- *  @method int getVendorId()
- *  @method setVendorId(int $value)
- *  @method string getAddress()
- *  @method setAddress(string $value)
- *  @method string getPort()
- *  @method setPort(string $value)
- *  @method string getUser()
- *  @method setUser(string $value)
- *  @method string getPwd()
- *  @method setPwd(string $value)
- *  @method string getField()
- *  @method setField(string $value)
- */
-class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
+class Bkg_VirtualAccess_Model_Service_Webservice_Client extends Varien_Object
 {
-	public function _construct()
-	{
-		parent::_construct();
-		$this->_init('exportorder/transfer_post');
-	}
 
 	/**
 	 * (non-PHPdoc)
 	 * @see Sid_ExportOrder_Model_Transfer::send()
 	 */
-	public function send($content,$order = null, $data = array(), $storeId = 0)
+	public function send($content, $storeId = 0)
 	{
+		$url = Mage::getStoreConfig('virtualaccess/webservice/url');
 		$output = "";
 		try
 		{
 			$curl_opt = array();
-			//$tmp = tmpfile();
-			//$a = stream_get_meta_data($tmp);
-			$filename = tempnam (Mage::getBaseDir('tmp'), "ExportOrder".$order->getIncrementId() ); // $a['uri'];
-
-			$wantedFileName = "Order".$order->getIncrementId().'_'.date('d-m-Y_H-i-s').$this->getFileExtention();
-			file_put_contents($filename, $content);
 			
-			$cfile = curl_file_create($filename,'application/xml', $wantedFileName);
 			$ch = curl_init();
 
 			// Follow any Location headers
@@ -142,12 +114,11 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 		catch(Exception $ex)
 		{
 			Mage::logException($ex);
-			Sid_ExportOrder_Model_History::createHistory($order->getId(), "Fehler: Die Datei wurde nicht übertragen");
+			
 			return false;
 		}
 
-		Sid_ExportOrder_Model_History::createHistory($order->getId(), 'per Post übertragen');
-		Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Antwort des Servers: ' . $output);
+	
 
 		return trim($output);
 	}

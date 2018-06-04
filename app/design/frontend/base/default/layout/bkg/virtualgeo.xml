@@ -241,7 +241,7 @@ Additional block for bundle product type
                     <template>virtualgeo/catalog/product/view/components/toll.phtml</template>
                 </action>
                 <action method="addComponentsBlock">
-                    <type>toll</type>
+                    <type>accounting</type>
                     <block>virtualgeo/catalog_product_view_components_accounting</block>
                     <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>

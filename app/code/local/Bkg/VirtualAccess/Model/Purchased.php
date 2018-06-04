@@ -1,36 +1,39 @@
 <?php
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method int getOrderId()
+ *  @method setOrderId(int $value)
+ *  @method string getOrderIncrementId()
+ *  @method setOrderIncrementId(string $value)
+ *  @method int getOrderItemId()
+ *  @method setOrderItemId(int $value)
+ *  @method  getCreatedAt()
+ *  @method setCreatedAt( $value)
+ *  @method  getUpdatedAt()
+ *  @method setUpdatedAt( $value)
+ *  @method string getProductName()
+ *  @method setProductName(string $value)
+ *  @method string getProductSku()
+ *  @method setProductSku(string $value)
+ *  @method string getBaseUrl()
+ *  @method setBaseUrl(string $value)
+ *  @method string getOracleAccountId()
+ *  @method setOracleAccountId(string $value)
+ *  @method int getStatus()
+ *  @method setStatus(int $value)
+ *  @method int getSyncStatus()
+ *  @method setSyncStatus(int $value)
+ *  @method int getCustomerId()
+ *  @method setCustomerId(int $value)
+ */
 class Bkg_VirtualAccess_Model_Purchased extends Mage_Core_Model_Abstract
 {
 	
-	/**
-	 *  @method int getId()
-	 *  @method setId(int $value)
-	 *  @method int getOrderId()
-	 *  @method setOrderId(int $value)
-	 *  @method string getOrderIncrementId()
-	 *  @method setOrderIncrementId(string $value)
-	 *  @method int getOrderItemId()
-	 *  @method setOrderItemId(int $value)
-	 *  @method  getCreatedAt()
-	 *  @method setCreatedAt( $value)
-	 *  @method  getUpdatedAt()
-	 *  @method setUpdatedAt( $value)
-	 *  @method string getProductName()
-	 *  @method setProductName(string $value)
-	 *  @method string getProductSku()
-	 *  @method setProductSku(string $value)
-	 *  @method string getBaseUrl()
-	 *  @method setBaseUrl(string $value)
-	 *  @method string getOracleAccountId()
-	 *  @method setOracleAccountId(string $value)
-	 *  @method int getStatus()
-	 *  @method setStatus(int $value)
-	 *  @method int getSyncStatus()
-	 *  @method setSyncStatus(int $value)
-	 *  @method int getCustomerId()
-	 *  @method setCustomerId(int $value)
-	 */
+	
 
+	protected $_customer = null;
+	protected $_order = null;
 	protected $_credentials = null;
 
 	/**
@@ -45,6 +48,13 @@ class Bkg_VirtualAccess_Model_Purchased extends Mage_Core_Model_Abstract
 	
 	public function sync()
 	{
+		//zum testen:
+		$this->_newAccount();
+		
+		
+		
+		
+		
 		
 		if($this->getSyncStatus() == Bkg_VirtualAccess_Model_Service_Syncstatus::SYNCSTATUS_PERMANENTERROR){
 			return;
@@ -71,8 +81,9 @@ class Bkg_VirtualAccess_Model_Purchased extends Mage_Core_Model_Abstract
 			$data = array();
 			$data['sku'] = $this->getProductSku();
 			$data['product_code'] = $this->getProductCode();
+			$data['customer'] = 
 			
-			$account_id = $service->create($data);
+			$account_id = $service->create($this);
 			$this->setOracleAccountId($account_id)
 				->setSyncStatus(Bkg_VirtualAccess_Model_Service_Syncstatus::SYNCSTATUS_SUCCESS)
 				->setStatus(Bkg_VirtualAccess_Model_Service_AccountStatus::ACCOUNTSTATUS_ACTIVE)
@@ -95,6 +106,32 @@ class Bkg_VirtualAccess_Model_Purchased extends Mage_Core_Model_Abstract
 		
 	}
 
+	/**
+	 * 
+	 * @return Mage_Customer_Model_Customer
+	 */
+	public function getCustomer()
+	{
+		if($this->_customer == null){
+			$this->_customer = Mage::getModel('customer/customer')->load($this->getCustomerId());
+		}
+		
+		return $this->_customer;
+	}
+	
+	/**
+	 *
+	 * @return Mage_Sales_Model_Order
+	 */
+	public function getOrder()
+	{
+		if($this->_order == null){
+			$this->_order = Mage::getModel('sales/order')->load($this->getCustomerId());
+		}
+	
+		return $this->_order;
+	}
+	
     public function getCredentials()
     {
         if($this->_credentials == null)
