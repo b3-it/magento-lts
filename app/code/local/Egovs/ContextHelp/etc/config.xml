@@ -50,9 +50,13 @@
         </models>
         <egovs_contexthelp>
             <category>
-                <order>Order</order>
+                <catalog>Catalog</catalog>
+                <checkout>Checkout</checkout>
                 <customer>Customer Account</customer>
+                <cms>CMS Page</cms>
+                <order>Order</order>
                 <product>Product</product>
+                <wishlist>Wishlist</wishlist>
                 <others>Others</others>
             </category>
         </egovs_contexthelp>

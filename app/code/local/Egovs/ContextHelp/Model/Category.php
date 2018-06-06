@@ -16,8 +16,8 @@ class Egovs_ContextHelp_Model_Category extends Mage_Core_Model_Abstract
      */
 	public function getOptions()
 	{
-		$result= array();
-		$sect = Mage::getConfig()->getNode('global/egovs_contexthelp/category')->asArray();
+		$result = array();
+		$sect   = Mage::getConfig()->getNode('global/egovs_contexthelp/category')->asArray();
 		foreach($sect as $k=>$v) {
 			$result[$k] =$this->__($v);
 		}
@@ -30,8 +30,8 @@ class Egovs_ContextHelp_Model_Category extends Mage_Core_Model_Abstract
      */
 	public function getOptionsHash()
 	{
-		$result= array();
-		$sect = Mage::getConfig()->getNode('global/egovs_contexthelp/category')->asArray();
+		$result = array();
+		$sect   = Mage::getConfig()->getNode('global/egovs_contexthelp/category')->asArray();
 		foreach($sect as $k=>$v)
 		{
 			$result[] = array('value'=>$k,'label'=>$this->__($v));

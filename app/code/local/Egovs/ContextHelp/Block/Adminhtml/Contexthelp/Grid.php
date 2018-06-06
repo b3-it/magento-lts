@@ -17,11 +17,23 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Grid extends Mage_Adminhtml_
         $this->setDefaultSort('contexthelp_id');
         $this->setDefaultDir('ASC');
         $this->setSaveParametersInSession(true);
+
+        $this->_emptyText = Mage::helper('adminhtml')->__('No records found.');
     }
 
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('contexthelp/contexthelp')->getCollection();
+
+        foreach($collection as $item) {
+            if( $item->getStoreIds() ) {
+                $item->setStoreIds( explode( ',', $item->getStoreIds() ) );
+            }
+            else {
+                $item->setStoreIds( array('0') );
+            }
+        }
+
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -34,12 +46,34 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Grid extends Mage_Adminhtml_
             'width'     => '50px',
             'index'     => 'id',
         ));
+
         $this->addColumn('title', array(
             'header'    => Mage::helper('contexthelp')->__('Title'),
             //'align'     =>'left',
             //'width'     => '150px',
             'index'     => 'title',
         ));
+
+        $this->addColumn('store_ids', array(
+            'header'     => Mage::helper('cms')->__('Store View'),
+            'index'      => 'store_ids',
+            'type'       => 'store',
+            'width'      => '300px',
+            'store_all'  => true,
+            'store_view' => true,
+            'sortable'   => false,
+            'filter_condition_callback'
+                         => array($this, '_filterStoreCondition'),
+        ));
+
+        $this->addColumn('package_theme', array(
+            'header'     => Mage::helper('widget')->__('Design Package/Theme'),
+            'index'      => 'package_theme',
+            'type'       => 'theme',
+            'width'      => '200px',
+            'with_empty' => true,
+        ));
+
         $this->addColumn('category_id', array(
             'header'    => Mage::helper('contexthelp')->__('Category'),
             'type'      => 'options',
@@ -69,6 +103,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Grid extends Mage_Adminhtml_
         $this->addExportType('*/*/exportCsv', Mage::helper('contexthelp')->__('CSV'));
         $this->addExportType('*/*/exportXml', Mage::helper('contexthelp')->__('XML'));
         $this->addExportType('*/*/exportExcel', Mage::helper('contexthelp')->__('XML (Excel)'));
+
         return parent::_prepareColumns();
     }
 
@@ -84,6 +119,15 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Grid extends Mage_Adminhtml_
         ));
 
         return $this;
+    }
+
+    protected function _filterStoreCondition($collection, $column)
+    {
+        if (!$value = $column->getFilter()->getValue()) {
+            return;
+        }
+
+        $this->getCollection()->addStoreFilter($value);
     }
 
     public function getGridUrl($params = array())

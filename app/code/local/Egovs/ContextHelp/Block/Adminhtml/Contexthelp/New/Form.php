@@ -26,7 +26,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_New_Form extends Mage_Adminh
             'label'    => Mage::helper('widget')->__('Design Package/Theme'),
             'title'    => Mage::helper('widget')->__('Design Package/Theme'),
             'required' => true,
-            'values'   => $this->getPackegeThemeOptionsArray()
+            'values'   => $this->getPackageThemeOptionsArray()
         ));
 
 		return parent::_prepareForm();
@@ -37,7 +37,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_New_Form extends Mage_Adminh
      *
      * @return array
      */
-    public function getPackegeThemeOptionsArray()
+    public function getPackageThemeOptionsArray()
     {
         return Mage::getModel('core/design_source_design')
             ->setIsFullLabel(true)->getAllOptions(true);

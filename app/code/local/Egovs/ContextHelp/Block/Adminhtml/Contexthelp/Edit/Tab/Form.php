@@ -13,7 +13,6 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 
 	protected $_layoutHandles = null;
 
-
 	/**
 	* layout handles wildcar patterns
 	* diese Handels werden NICHT angezeigt!!
@@ -37,93 +36,101 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 
 		$fieldset->addField('title', 'text', array(
 			'label'     => Mage::helper('contexthelp')->__('Title'),
-			//'class'     => 'required-entry',
-			//'required'  => true,
 			'name'      => 'title',
 			'value'     => $model->getTitle()
 		));
 
-		$opt= Mage::getModel('contexthelp/category')->getOptions();
-
 		$fieldset->addField('category_id', 'select', array(
 			'label'     => Mage::helper('contexthelp')->__('Category'),
-			//'class'     => 'required-entry',
-			//'required'  => true,
 			'name'      => 'category_id',
-			'options'   => $opt,
+		    'options'   => Mage::getModel('contexthelp/category')->getOptions(),
 			'value'     => $model->getCategoryId()
 		));
 
         $fieldset->addField('package_theme', 'text', array(
             'label'     => Mage::helper('contexthelp')->__('Package/Theme'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
-            'readonly'  =>true,
+            'readonly'  => true,
             'disabled'  => true,
             'name'      => 'package_theme',
             'value'     => $model->getPackageTheme()
         ));
 
-        $options = Mage::getModel('core/store')->getCollection()->toOptionArray();
-        $fieldset->addField('store_id', 'multiselect', array(
-            'label'     => Mage::helper('contexthelp')->__('Store'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
-
-            'name'      => 'store_id',
-            'values'	=> $options,
-            'value'     => $model->getStoreId(),
-        ));
-
-		$value = array();
-		foreach($model->getHandles() as $item)
-		{
-			$value[] = array('value'=>$item->getHandle());
+		/**
+		 * Check is single store mode
+		 */
+		if (!Mage::app()->isSingleStoreMode()) {
+			$field = $fieldset->addField('store_id', 'multiselect', array(
+				'name'     => 'store_id[]',
+				'label'    => Mage::helper('contexthelp')->__('Store'),
+				'title'    => Mage::helper('contexthelp')->__('Store'),
+				'required' => true,
+				'disabled' => false,
+				'values'   => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true),
+				'value'    => $model->getStoreId()
+			));
+			$renderer = $this->getLayout()->createBlock('adminhtml/store_switcher_form_renderer_fieldset_element');
+			$field->setRenderer($renderer);
+		}
+		else {
+			$fieldset->addField('store_id', 'hidden', array(
+				'name'     => 'store_id[]',
+				'value'    => $model->getStoreId()
+			));
 		}
 
-		$values = $this->_getHandles();
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
 		$fieldset->addField('handle', 'ol', array(
-			'label'     => Mage::helper('contexthelp')->__('Handler'),
-			//'class'     => 'required-entry',
-			//'required'  => true,
-			'show_up_down' =>false,
-			'name'      => 'handle',
-			'values'    => $values,
-			'value'     => $value
+			'label'        => Mage::helper('contexthelp')->__('Handler'),
+			'show_up_down' => false,
+			'name'         => 'handle',
+		    'values'       => $this->_getHandles(),
+		    'value'        => $this->_getSelectedHandles($model),
 		));
 
 
-
-		$value = array();
-		foreach($model->getBlocks() as $item)
-		{
-			$value[] = array('value'=>$item->getBlockId(),'pos'=>$item->getPos());
-		}
-
-		$values = $this->_getCmsBlocks();
 		$fieldset->addType('ol','Egovs_Base_Block_Adminhtml_Widget_Form_Ol');
 		$fieldset->addField('block', 'ol', array(
 			'label'     => Mage::helper('contexthelp')->__('Block'),
-			//'class'     => 'required-entry',
-			//'required'  => true,
 			'name'      => 'block',
-			'values'    => $values,
-			'value'     => $value
+		    'values'    => $this->_getCmsBlocks(),
+		    'value'     => $this->_getSelectedBlocks($model),
 		));
 
-
-		/*
-
-		if ( Mage::getSingleton('adminhtml/session')->getcontexthelpData() )
-		{
-			$form->setValues(Mage::getSingleton('adminhtml/session')->getcontexthelpData());
-			Mage::getSingleton('adminhtml/session')->setcontexthelpData(null);
-		} elseif ( Mage::registry('contexthelp_data') ) {
-			$form->setValues(Mage::registry('contexthelp_data')->getData());
-		}
-		*/
 		return parent::_prepareForm();
+	}
+	
+	/**
+	 * get all selected Handles
+	 * 
+	 * @param  $model     Egovs_ContextHelp_Model_Resource_Contexthelp_Collection
+	 * @access public
+	 * @return array[]
+	 */
+	public function _getSelectedHandles(Egovs_ContextHelp_Model_Resource_Contexthelp_Collection $model)
+	{
+	    $value = array();
+	    foreach($model->getHandles() as $item) {
+	        $value[] = array('value' => $item->getHandle());
+	    }
+	    
+	    return $value;
+	}
+
+	/**
+	 * get all selected Blocks
+	 *
+	 * @param  $model     Egovs_ContextHelp_Model_Resource_Contexthelp_Collection
+	 * @access public
+	 * @return array[]
+	 */
+	public function _getSelectedBlocks(Egovs_ContextHelp_Model_Resource_Contexthelp_Collection $model)
+	{
+		$value = array();
+		foreach($model->getBlocks() as $item) {
+			$value[] = array('value' => $item->getBlockId(),'pos' => $item->getPos());
+		}
+
+		return $value;
 	}
 
     /**
@@ -135,9 +142,7 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 		$collection = Mage::getModel('cms/block')->getCollection();
 		$res = array();
 
-
-		foreach($collection as $item)
-		{
+		foreach($collection as $item) {
 			$res[$item->getIdentifier()] = array('label'=>$item->getTitle(), 'value'=>$item->getId());
 		}
 		return $res;
@@ -163,9 +168,8 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	*/
 	protected function _getPackage()
 	{
-	    $var = explode('/',$this->getPackageTheme);
-	    if(count($var) == 2)
-        {
+	    $var = explode('/', $this->getPackageTheme);
+	    if(count($var) == 2) {
             return $var[0];
         }
         return Mage_Core_Model_Design_Package::DEFAULT_PACKAGE;
@@ -179,9 +183,8 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	*/
 	protected function _getTheme()
 	{
-        $var = explode('/',$this->getPackageTheme);
-        if(count($var) == 2)
-        {
+        $var = explode('/', $this->getPackageTheme);
+        if(count($var) == 2) {
             return $var[1];
         }
         return Mage_Core_Model_Design_Package::DEFAULT_THEME;
