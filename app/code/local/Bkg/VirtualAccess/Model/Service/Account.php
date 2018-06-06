@@ -41,7 +41,7 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	
 	/**
 	 * Auslesen der Zugangsparameter
-	 * @param unknown $accountId
+	 * @param int|string $accountId
 	 * @return Varien_Object[]
 	 */
 	public function getCredentials($accountId)
@@ -56,8 +56,8 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	
 	/**
 	 * Neuer Account auf Basis eines Besetehenden erstellen
-	 * @param unknown $accountId alte Kennung
-	 * @return accountID neue Kennung
+	 * @param int|string $accountId alte Kennung
+	 * @return string neue Kennung
 	 */
 	public function renew($accountId)
 	{
@@ -67,7 +67,7 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	
 	/**
 	 * Verbrauch ermitteln
-	 * @param unknown $accountId Kennung
+	 * @param int|string $accountId Kennung
 	 * @return Varien_Object Verbrauchsdaten
 	 */
 	public function getConsumtion($accountId)
@@ -77,7 +77,7 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	
 	/**
 	 * Status ändern
-	 * @param unknown $accountId Kennung
+	 * @param int|string $accountId Kennung
 	 * @return Varien_Object Verbrauchsdaten
 	 */
 	public function changeState($accountId)

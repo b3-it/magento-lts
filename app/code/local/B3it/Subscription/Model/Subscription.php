@@ -63,7 +63,7 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 
     /**
      * Neue Bestellungen als Abonement einordnen
-     * @param $orderItem Item der Bestellung
+     * @param Mage_Sales_Model_Entity_Order_Item $orderItem Item der Bestellung
      * @param B3it_Subscription_Model_Period $period Periode des Abos
      * @param null $startDate Tag des Anfangs diesert Period
      * @return B3it_Subscription_Model_Subscription

@@ -25,7 +25,7 @@ class Bkg_License_Model_Abstract extends Mage_Core_Model_Abstract
     
     /**
      * 
-     * @param unknown $resourceName
+     * @param string $resourceName
      * @return Mage_Core_Model_Resource_Db_Collection_Abstract
      */
     protected function _getRelated($resourceName)
