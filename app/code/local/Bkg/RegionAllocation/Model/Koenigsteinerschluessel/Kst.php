@@ -67,7 +67,7 @@ class Bkg_RegionAllocation_Model_Koenigsteinerschluessel_Kst extends Mage_Core_M
     
     /***
      * die Beiträge der Länder am Preis
-     * @param decimal $price NettoPreis
+     * @param float $price NettoPreis
      * @param int $tax see Bkg_RegionAllocation_Model_Product_Type_Regionallocation_Tax
      * @return array
      */

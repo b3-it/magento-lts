@@ -95,7 +95,7 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 
     /**
      *
-     * @param unknown $resourceName
+     * @param string $resourceName
      * @return Mage_Core_Model_Resource_Db_Collection_Abstract
      */
     protected function _getRelated($resourceName)

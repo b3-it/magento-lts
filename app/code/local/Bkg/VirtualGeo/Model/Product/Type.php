@@ -291,7 +291,7 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
      *
      * @param Mage_Catalog_Model_Product $product
      *
-     * @return array[fee][usage]
+     * @return array[]
      */
     protected function _getRapRelationCollection($product, $usage) {
         $expr = new Zend_Db_Expr("`usage` = '".$usage."' OR `usage` = '".$usage."_tax'");
