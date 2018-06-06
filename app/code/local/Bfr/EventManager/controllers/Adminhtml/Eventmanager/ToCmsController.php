@@ -26,8 +26,15 @@ class Bfr_EventManager_Adminhtml_EventManager_ToCmsController extends Mage_Admin
 	{
 		if ($data = $this->getRequest()->getPost()) {
 			if(isset($data['event_id'])){
-				$block = Mage::getModel('eventmanager/copyToCms')->createCmsBlock($data);
-				$this->_redirect('*/cms_block/edit',array('block_id' => $block->getId())); 
+			    try {
+                    $block = Mage::getModel('eventmanager/copyToCms')->createCmsBlock($data);
+                }catch(Exception $e)
+                {
+                    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                    $this->_redirect('*/eventmanager_event/edit', array('id' => intval($data['event_id'])));
+                    return;
+                }
+				$this->_redirect('*/cms_block/edit',array('block_id' => $block->getId()));
 				return;
 			}
 		}

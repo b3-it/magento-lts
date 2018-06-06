@@ -30,15 +30,30 @@ class Bfr_EventManager_Model_CopyToCms extends Varien_Object
    		/** @var $block Mage_Cms_Model_Block */
    		$block = Mage::getModel('cms/block');
    		$block->setContent($content);
-   		$block->setTitle($viewHelper->getProduct()->getName());
-   		$block->setIdentifier($viewHelper->getProduct()->getSku());
+   		$block->setTitle($data['title']);
+   		$block->setIdentifier($data['identifier']);
    		$block->setCreationTime(now());
    		$block->setUpdateTime(now());
    		$block->setIsActive(1);
    		$block->setStores(array($store_id));
    		
    		$block->save();
-   		
+
+
+       $category = Mage::getModel('catalog/category');
+       $category->setName($data['category']);
+       //$category->setUrlKey('new-category');
+       $category->setIsActive(1);
+       $category->setDisplayMode(Mage_Catalog_Model_Category::DM_PAGE);
+       $category->setIsAnchor(1); //for active achor
+       $category->setLandingPage($block->getId());
+       //$category->setStoreId(Mage::app()->getStore()->getId());
+       $parentCategory = Mage::getModel('catalog/category')->load($data['parent_category']);
+       $category->setPath($parentCategory->getPath());
+       $category->save();
+
+
+
    		return $block;
    }
    

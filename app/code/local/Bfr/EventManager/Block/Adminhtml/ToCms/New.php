@@ -25,7 +25,7 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New extends Mage_Adminhtml_Block_Wi
 
 	public function getHeaderText() {
 
-		return Mage::helper('eventmanager')->__('New Context Help');
+		return Mage::helper('eventmanager')->__('New CMS Block');
 
 	}
 	
