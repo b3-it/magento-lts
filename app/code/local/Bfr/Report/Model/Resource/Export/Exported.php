@@ -24,7 +24,9 @@ class Bfr_Report_Model_Resource_Export_Exported extends Mage_Core_Model_Resource
     	{
     		$data[] = array('exported_by'=>$user,'incoming_payment_id'=>$incoming_payment_id);
     	}
-    	$this->_getWriteAdapter()->delete($this->getTable('bfr_report/export_exported'),array('incoming_payment_id'=>$incoming_payment_ids));
+        $incoming_payment_ids[] = 0;
+    	$where = 'incoming_payment_id IN('. implode(',',$incoming_payment_ids). ' )';
+    	$this->_getWriteAdapter()->delete($this->getTable('bfr_report/export_exported'),$where);
     	$this->_getWriteAdapter()->insertMultiple($this->getTable('bfr_report/export_exported'), $data);
     }
 }
