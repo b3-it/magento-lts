@@ -101,6 +101,26 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	}
 	
 	/**
+	 * ermitteln aller für das Layout verfügbaren Handels
+	 *
+	 * @return array[]
+	 */
+	protected function _getHandles()
+	{
+	    if($this->_layoutHandles == null) {
+	        /* @var $helper Egovs_ContextHelp_Helper_Data */
+	        $helper = Mage::helper('contexthelp');
+	        $this->_layoutHandles = $helper->getAllLayoutUpdates(false, $this);
+	    }
+	    $res = array();
+	    
+	    foreach($this->_layoutHandles as $k => $v) {
+	        $res[$k] = array('label' => $v, 'value' => $k);
+	    }
+	    return $res;
+	}
+	
+	/**
 	 * get all selected Handles
 	 * 
 	 * @param  $model     Egovs_ContextHelp_Model_Resource_Contexthelp_Collection
@@ -118,6 +138,18 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	}
 
 	/**
+	 * ermitteln aller für das Layout verfügbaren CMS-Blöcke
+	 *
+	 * @return array[]
+	 */
+	protected function _getCmsBlocks()
+	{
+	    /* @var $helper Egovs_ContextHelp_Helper_Data */
+	    $helper = Mage::helper('contexthelp');
+	    return $helper->getAllAvailableBlocks();
+	}
+	
+	/**
 	 * get all selected Blocks
 	 *
 	 * @param  $model     Egovs_ContextHelp_Model_Resource_Contexthelp_Collection
@@ -133,37 +165,4 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 
 		return $value;
 	}
-
-    /**
-     * ermitteln aller für das Layout verfügbaren CMS-Blöcke
-     * 
-     * @return array[]
-     */
-	protected function _getCmsBlocks()
-	{
-	    /* @var $helper Egovs_ContextHelp_Helper_Data */
-	    $helper = Mage::helper('contexthelp');
-	    return $helper->getAllAvailableBlocks();
-	}
-
-    /**
-     * ermitteln aller für das Layout verfügbaren Handels
-     * 
-     * @return array[]
-     */
-	protected function _getHandles()
-	{
-		if($this->_layoutHandles == null) {
-		    /* @var $helper Egovs_ContextHelp_Helper_Data */
-		    $helper = Mage::helper('contexthelp');
-			$this->_layoutHandles = $helper->getAllLayoutUpdates(false, $this);
-		}
-		$res = array();
-
-		foreach($this->_layoutHandles as $k => $v) {
-			$res[$k] = array('label' => $v, 'value' => $k);
-		}
-		return $res;
-	}
-
 }
