@@ -10,7 +10,11 @@
 */
 class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
-
+    /**
+     * Liste alles aktiven Layout-Handles
+     *
+     * @var Mage_Core_Model_Layout
+     */
 	protected $_layoutHandles = null;
 
 	/**
@@ -20,9 +24,6 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	*/
 	protected $_layoutHandlePatterns = array(
 		'^default$',
-		//'^catalog_category_*',
-		//'^catalog_product_*',
-		//'^PRODUCT_*'
 	);
 
 	protected function _prepareForm()
@@ -134,80 +135,28 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 	}
 
     /**
-     *
+     * ermitteln aller für das Layout verfügbaren CMS-Blöcke
+     * 
      * @return array[]
      */
 	protected function _getCmsBlocks()
 	{
-		$collection = Mage::getModel('cms/block')->getCollection();
-		$res = array();
-
-		foreach($collection as $item) {
-			$res[$item->getIdentifier()] = array('label'=>$item->getTitle(), 'value'=>$item->getId());
-		}
-		return $res;
-	}
-
-	/**
-	* Getter
-	*
-	* @return string
-	*/
-	protected function _getArea()
-	{
-		if (!$this->_getData('area')) {
-			return Mage_Core_Model_Design_Package::DEFAULT_AREA;
-		}
-		return $this->_getData('area');
-	}
-
-	/**
-	* Getter
-	*
-	* @return Mage_Core_Model_Design_Package string
-	*/
-	protected function _getPackage()
-	{
-	    $var = explode('/', $this->getPackageTheme);
-	    if(count($var) == 2) {
-            return $var[0];
-        }
-        return Mage_Core_Model_Design_Package::DEFAULT_PACKAGE;
-
-	}
-
-	/**
-	* Getter
-	*
-	* @return Mage_Core_Model_Design_Package string
-	*/
-	protected function _getTheme()
-	{
-        $var = explode('/', $this->getPackageTheme);
-        if(count($var) == 2) {
-            return $var[1];
-        }
-        return Mage_Core_Model_Design_Package::DEFAULT_THEME;
+	    /* @var $helper Egovs_ContextHelp_Helper_Data */
+	    $helper = Mage::helper('contexthelp');
+	    return $helper->getAllAvailableBlocks();
 	}
 
     /**
-     *
+     * ermitteln aller für das Layout verfügbaren Handels
+     * 
      * @return array[]
      */
 	protected function _getHandles()
 	{
 		if($this->_layoutHandles == null) {
-			/* @var $update Mage_Core_Model_Layout_Update */
-			$update = Mage::getModel('core/layout')->getUpdate();
-			$this->_layoutHandles = array();
-
-			$this->_collectLayoutHandles(
-			    $update->getFileLayoutUpdatesXml(
-			        $this->_getArea(),
-			        $this->_getPackage(),
-			        $this->_getTheme()
-			    )
-			);
+		    /* @var $helper Egovs_ContextHelp_Helper_Data */
+		    $helper = Mage::helper('contexthelp');
+			$this->_layoutHandles = $helper->getAllLayoutUpdates(false, $this);
 		}
 		$res = array();
 
@@ -215,50 +164,6 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit_Tab_Form extends Mage_A
 			$res[$k] = array('label' => $v, 'value' => $k);
 		}
 		return $res;
-	}
-
-	/**
-	 *
-	 * @param Mage_Core_Model_Layout_Update $layoutHandles
-	 */
-	protected function _collectLayoutHandles($layoutHandles)
-	{
-	    if ($layoutHandlesArr = $layoutHandles->xpath('/*/*/label/..')) {
-			foreach ($layoutHandlesArr as $node) {
-				if ($this->_filterLayoutHandle($node->getName())) {
-					$helper = Mage::helper(Mage_Core_Model_Layout::findTranslationModuleName($node));
-					$this->_layoutHandles[$node->getName()] = $this->helper('core')->jsQuoteEscape(
-						$helper->__((string)$node->label)
-					);
-				}
-			}
-			asort($this->_layoutHandles, SORT_STRING);
-		}
-	}
-
-	/**
-	* Getter
-	*
-	* @return array
-	*/
-	public function getLayoutHandlePatterns()
-	{
-		return $this->_layoutHandlePatterns;
-	}
-
-	/**
-	* Check if given layout handle allowed (do not match not allowed patterns)
-	*
-	* @param string $layoutHandle
-	* @return boolean
-	*/
-	protected function _filterLayoutHandle($layoutHandle)
-	{
-		$wildCard = '/('.implode(')|(', $this->getLayoutHandlePatterns()).')/';
-		if (preg_match($wildCard, $layoutHandle)) {
-			return false;
-		}
-		return true;
 	}
 
 }

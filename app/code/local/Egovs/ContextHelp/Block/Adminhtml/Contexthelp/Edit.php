@@ -38,7 +38,10 @@ class Egovs_ContextHelp_Block_Adminhtml_Contexthelp_Edit extends Mage_Adminhtml_
     public function getHeaderText()
     {
         if( Mage::registry('contexthelp_data') && Mage::registry('contexthelp_data')->getId() ) {
-            return Mage::helper('contexthelp')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('contexthelp_data')->getId()));
+            $_id    = Mage::registry('contexthelp_data')->getId();
+            $_title = Mage::registry('contexthelp_data')->getTitle();
+            
+            return Mage::helper('contexthelp')->__( "Edit Item '%s'", $this->escapeHtml('(' . $_id . ') ' . $_title) );
         } else {
             return Mage::helper('contexthelp')->__('Add Item');
         }
