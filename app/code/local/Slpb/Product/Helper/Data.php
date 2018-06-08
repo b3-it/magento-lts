@@ -56,7 +56,7 @@ class Slpb_Product_Helper_Data extends Mage_Core_Helper_Abstract
      * @see http://api.zippopotam.us/
      * @see http://download.geonames.org/export/zip/
      *
-     * @param $postcode PLZ
+     * @param string $postcode PLZ
      *
      * @return boolean
      */

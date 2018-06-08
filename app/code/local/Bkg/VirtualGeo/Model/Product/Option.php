@@ -114,7 +114,7 @@ class Bkg_VirtualGeo_Model_Product_Option extends Mage_Catalog_Model_Product_Opt
      *
      * @param array $optionIds
      * @param int $store_id
-     * @return unknown
+     * @return Mage_Catalog_Model_Resource_Eav_Mysql4_Attribute
      */
     public function getOptionValuesByOptionId($optionIds, $store_id)
     {

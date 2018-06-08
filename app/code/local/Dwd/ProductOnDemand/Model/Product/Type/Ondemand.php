@@ -132,8 +132,7 @@ class Dwd_ProductOnDemand_Model_Product_Type_Ondemand extends Mage_Downloadable_
 	    	);
     		$linksCollectionById = array();
     		foreach ($_linkCollection as $link) {
-    			/* @var Dwd_ProductOnDemand_Model_Extendedlink $link */
-    
+    			/* @var Dwd_ConfigurableDownloadable_Model_Extendedlink $link */
     			$link->setProduct($product);
     			$linksCollectionById[$link->getId()] = $link;
     		}
