@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_ids_dos_url_index>
+        <reference name="content">
+            <block type="b3it_ids/adminhtml_dos_url" name="dos_url" />
+        </reference>
+    </adminhtml_ids_dos_url_index>
+    <adminhtml_ids_dos_visit_index>
+        <reference name="content">
+            <block type="b3it_ids/adminhtml_dos_visit" name="dos_visit" />
+        </reference>
+    </adminhtml_ids_dos_visit_index>
+
+</layout>
