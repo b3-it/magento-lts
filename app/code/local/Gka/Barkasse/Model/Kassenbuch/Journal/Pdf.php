@@ -20,7 +20,9 @@ class Gka_Barkasse_Model_Kassenbuch_Journal_Pdf extends Egovs_Pdftemplate_Model_
 			$template = Mage::getStoreConfig('payment/epaybl_cashpayment/pdf_report',$storeId);
 			
 			$items = $journal->getItemsCollection()->getItems();
-			
+            $journal->setConfig($this->getConfig($storeId));
+            $journal->setImprint($this->getImprint($storeId));
+
 			$extKzA = array();
 			$extKzS = 0.0;
 			

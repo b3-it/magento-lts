@@ -763,7 +763,9 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 						if((strpos($treffer[1], 'loopitem') === false) || $root != null)
 						{
 							$html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
-						}
+						}else if((strpos($treffer[1], 'loopitem') !== false) && empty($value)){
+                            $html = str_replace($treffer[0], "", $html);
+                        }
 					}
 				}
 			}
