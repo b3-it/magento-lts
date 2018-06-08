@@ -439,15 +439,25 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 				$mandate = $mandate->getAdapteeMandate();
 			}
 			
-		
+		    if ($mandate->MandatStatus == Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_GESCHLOSSEN) {
+			    return $this;
+            }
 			$mandate->MandatStatus = Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_GESCHLOSSEN;
 			
 			try {
 				$this->__changeMandate($mandate, false);
-			} catch (Exception $ex) {
-				Mage::helper("paymentbase")->sendMailToAdmin("Altes Mandate konnte nicht geschlossen werden. Refrerenz: ".$mandate->getReference());
+			} catch (Egovs_SepaDebitSax_Model_SepaMvException $e) {
+			    switch ($e->getCode()) {
+                    case 1601:
+                        //Das Mandat ist geschlossen. Geschlossenen Mandat können nicht geändert werden.
+                        break;
+                    default:
+                        Mage::helper("paymentbase")->sendMailToAdmin("Altes Mandat konnte nicht geschlossen werden. Referenz: ".$mandate->getReference()."\n".$e->getMessage());
+                }
+            } catch (Exception $ex) {
+				Mage::helper("paymentbase")->sendMailToAdmin("Altes Mandat konnte nicht geschlossen werden. Referenz: ".$mandate->getReference());
 			}
-		return $this;
+		    return $this;
 	}
 	
 	
@@ -1064,6 +1074,8 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 	private function __changeMandate($mandate, $Amendment = true)
 	{
 		$objResult = null;
+		$eMsg = "Mandat konnte nicht geändert werden!";
+		$e = null;
 		
 		if ($mandate instanceof Egovs_SepaDebitSax_Model_Sepa_Mandate) {
 			$_mandate = $mandate->getAdapteeMandate();
@@ -1079,8 +1091,6 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 				Mage::log(sprintf("%s in %s Line: %d", $e->getMessage(), $e->getFile(), $e->getLine()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				Mage::logException($e);
 			}
-			$sMailText = '';
-			$result = -9999;
 			if ($objResult instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAKreditorenMandatMitAmendmentMitPDFResult) {
 				if ($objResult->getResult()->getResultCode()->getCode() ==  0) {
 					//$mandate = $objResult->getMandat();
@@ -1094,19 +1104,25 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 				Mage::log(sprintf("%s in %s Line: %d", $e->getMessage(), $e->getFile(), $e->getLine()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 				Mage::logException($e);
 			}
-			$sMailText = '';
-			$result = -9999;
 			if ($objResult instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAMandatResult) {
 				if ($objResult->getResult()->getResultCode()->getCode() ==  0) {
 					//$mandate = $objResult->getMandat();
-					
-			
 					return null;//$mandate;
 				}
 			}
 		}
-		Mage::helper('sepadebitsax')->getZmvSoapClient()->saveError();
-		Mage::throwException("Mandat konnte nicht geändert werden!");
+        Mage::helper('sepadebitsax')->getZmvSoapClient()->saveError();
+		if (
+		    $objResult instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAKreditorenMandatMitAmendmentMitPDFResult ||
+            $objResult instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_AendernSEPAMandatResult
+        ) {
+		    $eMsg = $objResult->getResult()->getResultCode()->getDescription();
+		    $code = $objResult->getResult()->getResultCode()->getCode();
+		    $code = intval($code);
+		    throw new Egovs_SepaDebitSax_Model_SepaMvException($eMsg, $code, $e);
+        }
+
+		Mage::throwException($eMsg);
 		
 	}
 	
