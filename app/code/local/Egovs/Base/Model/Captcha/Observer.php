@@ -18,6 +18,7 @@ class Egovs_Base_Model_Captcha_Observer extends Mage_Captcha_Model_Observer
             $postData = $controller->getRequest()->getPost();
             $postData = var_export($postData, true);
             $valid = "valid";
+            $captchaRequired = $captchaModel->getWord();
             if (!$captchaModel->isCorrect($captchaString)) {
                 Mage::getSingleton('customer/session')->addError(Mage::helper('captcha')->__('Incorrect CAPTCHA.'));
                 $controller->setFlag('', Mage_Core_Controller_Varien_Action::FLAG_NO_DISPATCH, true);
@@ -26,7 +27,7 @@ class Egovs_Base_Model_Captcha_Observer extends Mage_Captcha_Model_Observer
                 $valid = "in".$valid;
             }
 
-            $msg = sprintf("captcha::$valid:From IP {$controller->getRequest()->getClientIp(true)} with captcha entered:$captchaString and captcha required:{$captchaModel->getWord()}\nDump:$postData");
+            $msg = sprintf("captcha::$valid:From IP {$controller->getRequest()->getClientIp(true)} with captcha entered:'$captchaString' and captcha required:'$captchaRequired'\nDump:$postData");
             Mage::log($msg, Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         }
         return $this;
