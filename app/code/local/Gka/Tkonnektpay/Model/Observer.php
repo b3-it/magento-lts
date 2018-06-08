@@ -49,6 +49,13 @@ class Gka_Tkonnektpay_Model_Observer
 	    				if(isset($data['raw_details_info']['tkCustomerReceipt'])){
 	    					$order->setTerminalCustomerReceipt($data['raw_details_info']['tkCustomerReceipt']);
 	    				}
+                        if(isset($data['raw_details_info']['tkMerchantReceipt'])){
+                            $order->setTerminalMerchantReceipt($data['raw_details_info']['tkMerchantReceipt']);
+                            if(strpos($data['raw_details_info']['tkMerchantReceipt'],"Unterschrift") !== false) {
+                                $order->setSignatureRequired(true);
+                            }
+                        }
+
     				}
     			}
     		}
