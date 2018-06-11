@@ -37,12 +37,15 @@ class B3it_Ids_Model_Dos_Visit extends Mage_Core_Model_Abstract
         if($visit->getId())
         {
             $reaction = true;
+            $visit->setCounter($visit->getCounter()+1);
             $visit->setCurrentDelay($visit->getCurrentDelay()*2);
+
         }else {
 
             $visit->setCurrentDelay($url->getDelay())
                 ->setIp($ip)
-                ->setAgent($agent);
+                ->setAgent($agent)
+                ->setCounter(1);
         }
 
         $visit->setLastVisit(now())
@@ -59,6 +62,7 @@ class B3it_Ids_Model_Dos_Visit extends Mage_Core_Model_Abstract
                 case B3it_Ids_Model_Dos_Action::ACTION_THROTTLE_40: sleep(40); break;
                 case B3it_Ids_Model_Dos_Action::ACTION_THROTTLE_60: sleep(60); break;
             }
+            http_response_code(503);
             die();
         }
 
