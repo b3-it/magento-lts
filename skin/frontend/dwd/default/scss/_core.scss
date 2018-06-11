@@ -89,7 +89,7 @@
 @import "../../../egov_old/default/scss/module/cookies";
 @import "../../../egov_old/default/scss/module/sales-guest-form";
 @import "../../../egov_old/default/scss/module/tags";
-@import "../../../egov_old/default/scss/module/captcha";
+@import "module/captcha";
 @import "../../../egov_old/default/scss/module/account-orders";
 @import "../../../egov_old/default/scss/module/recurring-profiles";
 @import "../../../egov_old/default/scss/module/billing-agreements";
@@ -102,4 +102,3 @@
 
 // ----------------------------------------------
 // Override
-
