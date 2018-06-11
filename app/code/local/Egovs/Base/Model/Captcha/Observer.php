@@ -23,7 +23,7 @@ class Egovs_Base_Model_Captcha_Observer extends Mage_Captcha_Model_Observer
                 $postData = "\nDump:".$postData;
             } else {
                 $postData = $controller->getRequest()->getPost('email', null);
-                $postData = sprintf('\nDump:email=>%s', $postData);
+                $postData = sprintf("\nDump:email=>%s", $postData);
             }
             $_fromIp = null;
             if ($_logLevel > Zend_Log::NOTICE) {
