@@ -358,7 +358,7 @@ foreach( $allStores AS $storeId => $storeData ) {
 foreach( $_contextHelpEntity AS $helpId => $newHelpItem ) {
     /** @var Egovs_ContextHelp_Helper_Contexthelpsetup_Data $helper */
     $helper = Mage::helper('contexthelp_setup');
-    
+
     if ( is_array($newHelpItem['store_ids']) ) {
         $tmp = array();
         foreach( $newHelpItem['store_ids'] AS $store ) {
@@ -373,15 +373,15 @@ foreach( $_contextHelpEntity AS $helpId => $newHelpItem ) {
             foreach( $_usedBlocks AS $blockIdent => $blockPosition ) {
                 /** @var Mage_Cms_Model_Block $block */
                 $block = Mage::getModel('cms/block');
-                
+
                 $destBlock = $block->load($blockIdent, 'identifier');
-                
+
                 if ( !$destBlock->isEmpty() ) {
                     $helper->linkBlock($newContexthelp, $destBlock->getBlockId(), $blockPosition);
                 }
             }
         }
-        
+
         $_usedHandels = $_contextHelpHandels[$helpId];
         if ( strlen($_usedHandels) ) {
             $_usedHandels = explode(',', $_usedHandels);
