@@ -1,8 +1,10 @@
 <?php
 /**
  *
- *  @category Egovs
- *  @package  Egovs_ContextHelp
+ *  @category       Egovs
+ *  @package        Egovs_ContextHelp
+ *  @copyright  	Copyright (c) 2018 B3-IT Systeme GmbH - http://www.b3-it.de
+ *  @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_ContextHelp_Helper_Data extends Mage_Core_Helper_Abstract
 {
@@ -29,7 +31,7 @@ class Egovs_ContextHelp_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $data['area'];
     }
-    
+
     /**
      * Package-Getter
      *
@@ -43,9 +45,8 @@ class Egovs_ContextHelp_Helper_Data extends Mage_Core_Helper_Abstract
             return $var[0];
         }
         return Mage_Core_Model_Design_Package::DEFAULT_PACKAGE;
-        
     }
-    
+
     /**
      * Theme-Getter
      *
@@ -60,17 +61,17 @@ class Egovs_ContextHelp_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return Mage_Core_Model_Design_Package::DEFAULT_THEME;
     }
-    
+
     /**
      * alle aktuell verfügbaren Blöcke ermitteln
-     * 
+     *
      * @return array[]
      * @access public
      */
     public function getAllAvailableBlocks()
     {
         $collection = Mage::getModel('cms/block')->getCollection();
-        
+
         $return = array();
         foreach($collection as $item) {
             $return[$item->getIdentifier()] = array(
@@ -78,13 +79,13 @@ class Egovs_ContextHelp_Helper_Data extends Mage_Core_Helper_Abstract
                                                   'value' => $item->getId()
                                               );
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Liste mit allen verfügbaren LayoutUpdates erzeugen
-     * 
+     *
      * @param boolean            $showKeyOnly
      * @param Varien_Object      $parent
      * @return array[]
@@ -122,11 +123,11 @@ class Egovs_ContextHelp_Helper_Data extends Mage_Core_Helper_Abstract
                 asort($return, SORT_STRING);
             }
         }
-        
+
         return $return;
     }
-    
-    
+
+
     /**
      * Check if given layout handle allowed (do not match not allowed patterns)
      *

@@ -391,7 +391,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
         foreach($model->getBlocks() as $item) {
             $items[$item->getBlockId()] = $item;
         }
-        
+
         foreach($data as $dat) {
             if(isset($items[$dat->getValue()])) {
                 $item = $items[$dat->getValue()];

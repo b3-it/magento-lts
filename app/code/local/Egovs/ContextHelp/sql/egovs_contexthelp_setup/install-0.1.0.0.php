@@ -9,6 +9,9 @@
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
 
+  /** @var Mage_Core_Model_Resource_Setup $installer */
+  /** @var Mage_Eav_Model_Entity_Setup $this */
+
 $installer = $this;
 
 $installer->startSetup();
@@ -18,11 +21,10 @@ if (!$installer->tableExists($installer->getTable('contexthelp/contexthelp')))
 	-- DROP TABLE IF EXISTS {$installer->getTable('contexthelp/contexthelp')};
 	CREATE TABLE {$installer->getTable('contexthelp/contexthelp')} (
 	 `id` int(11) unsigned NOT NULL auto_increment,
-    `title` varchar(255) default '',
-    `category_id` varchar(255) default '' ,
+     `title` varchar(255) default '',
+     `category_id` varchar(255) default '' ,
  	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	");
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 }
 
 if (!$installer->tableExists($installer->getTable('contexthelp/contexthelp_handle')))
@@ -37,9 +39,7 @@ if (!$installer->tableExists($installer->getTable('contexthelp/contexthelp_handl
 	  PRIMARY KEY (`id`),
       FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('contexthelp/contexthelp')}`(`id`) ON DELETE CASCADE
 
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-		");
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 }
 
 if (!$installer->tableExists($installer->getTable('contexthelp/contexthelp_block')))
@@ -55,9 +55,7 @@ if (!$installer->tableExists($installer->getTable('contexthelp/contexthelp_block
 	  PRIMARY KEY (`id`),
       FOREIGN KEY (`parent_id`) REFERENCES `{$this->getTable('contexthelp/contexthelp')}`(`id`) ON DELETE CASCADE,
       FOREIGN KEY (`block_id`) REFERENCES `{$this->getTable('cms/block')}`(`block_id`) ON DELETE CASCADE
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-		");
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 }
 
 $installer->endSetup();

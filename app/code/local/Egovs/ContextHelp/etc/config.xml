@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Egovs_ContextHelp>
-            <version>0.1.1.0</version>
+            <version>0.1.1.1</version>
         </Egovs_ContextHelp>
     </modules>
     <global>
@@ -11,12 +11,15 @@
             <contexthelp>
                 <class>Egovs_ContextHelp_Helper</class>
             </contexthelp>
+            <contexthelp_setup>
+                <class>Egovs_ContextHelp_Helper_Contexthelpsetup</class>
+            </contexthelp_setup>
         </helpers>
         <resources>
             <egovs_contexthelp_setup>
                 <setup>
                     <module>Egovs_ContextHelp</module>
-                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
