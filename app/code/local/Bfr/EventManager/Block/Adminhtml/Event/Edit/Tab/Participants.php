@@ -375,6 +375,15 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                 )
             )
         ));
+
+
+        if(Mage::helper('eventmanager')->isModuleEnabled('Egovs_Infoletter'))
+        {
+            $url = $this->getUrl('adminhtml/eventmanager_event/massInfoletter',array('id'=>$this->getEvent()->getId()));
+            Mage::helper('infoletter')->addInfoLetter2Massaction($this->getMassactionBlock(), $url);
+        }
+
+
         return $this;
     }
 
