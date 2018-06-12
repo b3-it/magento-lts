@@ -40,7 +40,7 @@ class Egovs_Paymentbase_Model_Search_Sepa extends Varien_Object
         }
 
         
-        /* @var $collection Egovs_Paymentbase_Model_Mysql4_Sepa_Mandate_Historty_Collection */
+        /* @var $collection Egovs_Paymentbase_Model_Mysql4_Sepa_Mandate_History_Collection */
         $collection = Mage::getResourceModel('paymentbase/sepa_mandate_history_collection');
         $collection->getSelect()
         ->join(array('customer'=>'customer_entity'), 'customer.entity_id=main_table.customer_id',array('email'))

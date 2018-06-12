@@ -67,7 +67,7 @@ class Egovs_Extreport_Model_Mysql4_Product_Collection extends Mage_Catalog_Model
     public function __construct()
     {
         $product = Mage::getResourceSingleton('catalog/product');
-        /* @var $product Mage_Catalog_Model_Entity_Product */
+        /* @var $product Mage_Catalog_Model_Entity_Attribute */
         $this->setProductEntityId($product->getEntityIdField());
         $this->setProductEntityTableName($product->getEntityTable());
         $this->setProductEntityTypeId($product->getTypeId());
