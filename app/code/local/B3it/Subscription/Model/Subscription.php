@@ -56,6 +56,16 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         $this->_init('b3it_subscription/subscription');
     }
 
+    /**
+     * Neue Bestellungen als Abonement einordnen
+     * @param Mage_Sales_Model_Order_Item  $orderItem      Item der Bestellung
+     * @param Mage_Sales_Model_Quote       $quote
+     * @param null                         $startDate      Tag des Anfangs diesert Period
+     * @param int                          $periodLength   Länge der Period in Tagen
+     * @param int                          $renewalOffsett Zeitpunkt der Erneuerung in Tagen vom errechneten Enddatum ggf. mit negativem Vorzeichen
+     * @return B3it_Subscription_Model_Subscription
+     * @throws Exception
+     */
     public function addNewOrderItem($orderItem, $quote, $startDate = null, $periodLength = 365, $renewalOffset = 0 )
     {
         return $this->_addNewOrderItem($orderItem, $quote, $startDate, $periodLength, $renewalOffset );
@@ -63,10 +73,11 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 
     /**
      * Neue Bestellungen als Abonement einordnen
-     * @param $orderItem Item der Bestellung
-     * @param null $startDate Tag des Anfangs diesert Period
-     * @param int $periodLength Länge der Period in Tagen
-     * @param int $renewalOffsett Zeitpunkt der Erneuerung in Tagen vom errechneten Enddatum ggf. mit negativem Vorzeichen
+     * @param Mage_Sales_Model_Order_Item  $orderItem      Item der Bestellung
+     * @param Mage_Sales_Model_Quote       $quote
+     * @param null                         $startDate      Tag des Anfangs diesert Period
+     * @param int                          $periodLength   Länge der Period in Tagen
+     * @param int                          $renewalOffsett Zeitpunkt der Erneuerung in Tagen vom errechneten Enddatum ggf. mit negativem Vorzeichen
      * @return B3it_Subscription_Model_Subscription
      * @throws Exception
      */
@@ -117,7 +128,7 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 
     /**
      * @param Mage_Sales_Model_Order_Item $orderItem
-     * @param Mage_Sales_Model_Quote $quote
+     * @param Mage_Sales_Model_Quote      $quote
      */
     protected function _getSubscriptionItem($orderItem, $quote)
     {
