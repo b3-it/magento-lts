@@ -40,9 +40,16 @@ class Egovs_ContextHelp_Block_Contexthelp extends Mage_Core_Block_Template
                      )
                    ->where('handle IN (?)', $handles);
 
-    	$urls = array();
+        $isSecure = Mage::app()->getStore()->isCurrentlySecure();
+        $urls = array();
     	foreach($collection->getItems() as $item){
-    		$urls[] = $this->getUrl('contexthelp/index/index/',array('id'=>$item->getParentId()));
+    	    $urls[] = $this->getUrl(
+    	                  'contexthelp/index/index/',
+    	                  array(
+    	                      'id'      => $item->getParentId(),
+    	                      '_secure' => $isSecure
+    	                  )
+    	              );
     	}
 
     	return $urls;

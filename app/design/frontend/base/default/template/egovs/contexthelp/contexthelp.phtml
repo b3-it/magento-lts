@@ -28,7 +28,7 @@
 
                 <?php foreach($urls as $url):?>
                 $j.ajax({
-                    'url'       : "<?php echo $url?>?showblocks=" + $j('#showBlocks').val(),
+                    'url'       : "<?php echo $url; ?>?showblocks=" + $j('#showBlocks').val(),
                     'dataType'  : 'json',
                     'async'     : false,
                     'beforeSend': function() {},

@@ -166,91 +166,91 @@ $_contextHelpEntity  = array(
                                     'title'         => 'Hilfe-Adressbuch',
                                     'category_id'   => 'customer',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            1 => array(
                                     'title'         => 'Hilfe Konfiguration Merklisten',
                                     'category_id'   => 'others',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            2 => array(
                                     'title'         => 'Hilfe Bedarfsermittlung',
                                     'category_id'   => 'others',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            3 => array(
                                     'title'         => 'Hilfe Produkte ansehen',
                                     'category_id'   => 'product',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            4 => array(
                                     'title'         => 'Hilfe Merklisten verteilen 2',
                                     'category_id'   => 'others',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            5 => array(
                                     'title'         => 'Hilfe-Adresse bearbeiten',
                                     'category_id'   => 'others',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            6 => array(
                                     'title'         => 'Hilfe-Artikel-Detailansicht',
                                     'category_id'   => 'product',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            7 => array(
                                     'title'         => 'Hilfe Aufruf Merklisten',
                                     'category_id'   => 'others',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            8 => array(
                                     'title'         => 'Hilfe Merklisten verteilen 1',
                                     'category_id'   => 'order',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            9 => array(
                                     'title'         => 'Hilfe Merklisten bestellen Warenkorb',
                                     'category_id'   => 'order',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            10 => array(
                                     'title'         => 'Hilfe Merklisten bestellen Adressen',
                                     'category_id'   => 'order',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            11 => array(
                                     'title'         => 'Hilfe Merklisten bestellen Overview',
                                     'category_id'   => 'order',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            12 => array(
                                     'title'         => 'Hilfe Merklisten bestellen Erfolg',
                                     'category_id'   => 'order',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            13 => array(
                                     'title'         => 'Hilfe Bestellung stornieren',
                                     'category_id'   => 'customer',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
                            14 => array(
                                     'title'         => 'Hilfe Kundenkonto',
                                     'category_id'   => 'order',
                                     'package_theme' => 'egov/sid',
-                                    'store_ids'     => '1,5,2'
+                                    'store_ids'     => array('default', 'sidshop', 'esvshop')
                                 ),
     					);
 /**
@@ -335,6 +335,12 @@ $_contextHelpHandels = array(
                            14 => 'customer_account_index',
                        );
 
+/**
+ * StoreDaten
+ * @var array $_stores
+ */
+$_stores = array();
+
 foreach( $cms_blocks AS $data ) {
     /** @var Mage_Cms_Model_Block $block */
     $block = Mage::getModel('cms/block');
@@ -344,9 +350,22 @@ foreach( $cms_blocks AS $data ) {
     }
 }
 
+$allStores = Mage::app()->getStores();
+foreach( $allStores AS $storeId => $storeData ) {
+    $_stores[Mage::app()->getStore($storeId)->getCode()] = Mage::app()->getStore($storeId)->getId();
+}
+
 foreach( $_contextHelpEntity AS $helpId => $newHelpItem ) {
     /** @var Egovs_ContextHelp_Helper_Contexthelpsetup_Data $helper */
-    $helper = Mage::helper('contexthelp_setup');    
+    $helper = Mage::helper('contexthelp_setup');
+    
+    if ( is_array($newHelpItem['store_ids']) ) {
+        $tmp = array();
+        foreach( $newHelpItem['store_ids'] AS $store ) {
+            $tmp[] = $_stores[$store];
+        }
+        $newHelpItem['store_ids'] = implode(',', $tmp);
+    }
 
     if ( $newContexthelp = $helper->addNewContextHelp($newHelpItem) ) {
         $_usedBlocks = $_contextHelpBlocks[$helpId];
