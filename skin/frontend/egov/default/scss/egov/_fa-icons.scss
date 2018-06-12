@@ -193,6 +193,16 @@
     margin-right: 15px;
 }
 
+.egov-refresh {
+    @extend .egov-fa-base;
+	@extend .fa-refresh;
+	font-size: $global-fontsize + 13;
+	
+	&:hover, &:active {
+	    @extend .fa-spin;
+	}
+}
+
 span.default-font {
 	font-family: $base-font-family;
 }
