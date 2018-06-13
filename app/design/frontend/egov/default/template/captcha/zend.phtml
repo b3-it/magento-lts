@@ -13,6 +13,7 @@
         <li class="fields captcha-img-container">
             <div class="captcha-image" id="captcha-image-box-<?php echo $this->getFormId()?>">
                 <img id="<?php echo $this->getFormId() ?>" class="captcha-img" height="<?php echo $this->getImgHeight() ?>" src="<?php echo $captcha->getImgSrc() ?>"/>
+                <span id="captcha-reload-mobile" class="captcha-reload egov-refresh show-on-mobile" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Reload captcha')) ?>" onclick="$('<?php echo $this->getFormId()?>').captcha.refresh(this)"></span>
                 <?php if ($captcha->isCaseSensitive()) :?>
                     <div class="captcha-note">
                         <?php echo $this->__('<strong>Attention</strong>: Captcha is case sensitive.') ?>
@@ -38,6 +39,6 @@
 <div class="fieldset half-space">
     <ul class="form-list">
         <li class="fields captcha-image-reload-info">
-        	<span id="captcha-reload" class="captcha-reload egov-refresh" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Reload captcha')) ?>" onclick="$('<?php echo $this->getFormId()?>').captcha.refresh(this)"></span>
+        	<span id="captcha-reload" class="captcha-reload egov-refresh hide-on-mobile" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Reload captcha')) ?>" onclick="$('<?php echo $this->getFormId()?>').captcha.refresh(this)"></span>
             <?php echo $this->__('If the code is not readable, please click on the button'); ?>
         </li>

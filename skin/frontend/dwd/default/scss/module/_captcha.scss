@@ -17,18 +17,19 @@
     display: inline;
     max-width: 100%;
     position: relative;
-    width: 258px;
     margin-bottom: 10px;
 }
 .captcha-image .captcha-img {
-    border: 1px solid #b6b6b6;
+    border: $global-active-border solid $global-active-color;
     vertical-align: bottom;
-    width: 100%;
+    display: inline-block;
+    width: 258px;
 }
 .registered-users .captcha-image { margin: 0 }
 .captcha-reload {
     cursor: pointer;
     display: inline-block;
+    color: $global-h1-color;
 }
 .captcha-reload.refreshing {
     animation: rotate 1.5s infinite linear;
@@ -41,6 +42,10 @@
 .control.newsletter-box, .captcha-input-container, .captcha-img-container {
     float: none;
     clear: both;
+    
+    label {
+    	width: 100% !important;
+    }
 
     &:after{
         content:'';
