@@ -14,8 +14,10 @@ class Egovs_Infoletter_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
     /**
-     * @param $mblock der MassenaktionsBlock
-     * @param $url des Controllers der die Daten einfügt
+     * @param Mage_Adminhtml_Block_Widget_Grid_Massaction_Abstract    $mblock    der MassenaktionsBlock
+     * @param Mage_Core_Controller_Front_Router                       $url       des Controllers der die Daten einfügt
+     * @access public
+     * @return void|NULL[]
      */
     public function addInfoLetter2Massaction($mblock, $url)
     {
@@ -31,10 +33,10 @@ class Egovs_Infoletter_Helper_Data extends Mage_Core_Helper_Abstract
                 'url'  => $url,
                 'additional' => array(
                     'visibility' => array(
-                        'name' => 'queue_id',
-                        'type' => 'select',
-                        'class' => 'required-entry',
-                        'label' => Mage::helper('infoletter')->__('Queue'),
+                        'name'   => 'queue_id',
+                        'type'   => 'select',
+                        'class'  => 'required-entry',
+                        'label'  => Mage::helper('infoletter')->__('Queue'),
                         'values' => $issues
                     )
                 )
@@ -42,6 +44,10 @@ class Egovs_Infoletter_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
+    /**
+     * @access private
+     * @return array[]
+     */
     private function __getQueueCollection()
     {
         $collection = Mage::getModel('infoletter/queue')->getCollection();

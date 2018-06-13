@@ -22,25 +22,28 @@
         <h2><?php echo $this->__('Billing Address') ?></h2>
         <address style="color:#555555;"><?php echo $_order->getBillingAddress()->format('html') ?></address>
     </div>
-<?php if (!$_order->getIsVirtual()): ?>
-</div>
-<div class="col2-set">
-    <div class="col-1">
-        <h2><?php echo $this->__('Shipping Method') ?></h2>
-         <?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
-    </div>
-<?php endif; ?>
-    <div class="col-2">
-        <h2><?php echo $this->__('Payment Method') ?></h2>
-        <?php echo $this->getPaymentInfoHtml() ?>
-    </div>
+	<?php if (!$_order->getIsVirtual()): ?>
+	</div>
+	<div class="col2-set">
+    	<div class="col-1">
+        	<h2><?php echo $this->__('Shipping Method') ?></h2>
+         	<?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
+    	</div>
+	<?php endif; ?>
+    	<div class="col-2">
+        	<h2><?php echo $this->__('Payment Method') ?></h2>
+       		<?php echo $this->getPaymentInfoHtml() ?>
+    	</div>
+	</div>
 </div>
 <h2><?php echo $this->__('Items Ordered') ?></h2>
 <table class="data-table" id="my-orders-table">
-    <col />
-    <col width="1" />
-    <col width="1" />
-    <col width="1" />
+	<colgroup>
+	    <col />
+    	<col width="1" />
+    	<col width="1" />
+    	<col width="1" />
+	</colgroup>
     <thead>
         <tr>
             <th><?php echo $this->__('Product Name') ?></th>

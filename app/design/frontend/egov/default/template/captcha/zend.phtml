@@ -21,7 +21,13 @@
                 <?php endif; ?>
             </div>
             <script type="text/javascript">//<![CDATA[
-                $('<?php echo $this->getFormId() ?>').captcha = new Captcha('<?php echo $this->getRefreshUrl() ?>', '<?php echo $this->getFormId() ?>');
+                <?php
+                    $_url = Mage::app()->getStore()->isAdmin() ? 'adminhtml/refresh/refresh' : 'captcha/refresh';
+                    $_sec = Mage::app()->getStore()->isCurrentlySecure();
+                    
+                    $_captchaUrl = $this->getUrl($_url, array('_secure' => $_sec));
+                ?>
+                $('<?php echo $this->getFormId() ?>').captcha = new Captcha('<?php echo $_captchaUrl; ?>', '<?php echo $this->getFormId() ?>');
                 //]]></script>
         </li>
     </ul>

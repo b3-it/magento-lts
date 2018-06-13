@@ -4,7 +4,7 @@
 <?php if($this->hasOptions()):?>
     <h3>
         <?php echo $this->escapeHtml($this->getTitle()); ?>
-        <div class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></div>
+        <span class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></span>
     </h3>
     <div class="virtualgeo-default">
       <?php foreach($this->getOptions() as $option): ?>
