@@ -20,7 +20,7 @@ class Sid_Import_Adminhtml_Sidimport_ImportController extends Mage_Adminhtml_Con
     	$xml = file_get_contents(__DIR__.'/bmecat-bundle.xml');
     	$products = new B3it_XmlBind_Bmecat2005_Bmecat();
     	$products->bindXml($xml);
-    	/* @var $builder Sid_Import_Model_Itw */
+    	/* @var $builder Sid_Import_Model_Builder_Itw */
     	$builder = Mage::getModel('sidimport/builder_itw');
     	$builder->setSkuPrefix("los1");
        

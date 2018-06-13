@@ -42,6 +42,7 @@ $fa-var-balance-scale: "\f24e";
 $fa-var-rss-square   : "\f143";
 $fa-var-credit-card  : "\f09d";
 $fa-var-eur          : "\f153";
+$fa-var-refresh      : "\f021";
 
 /* FONT PATH
  * -------------------------- */
@@ -99,6 +100,7 @@ $fa-var-eur          : "\f153";
 .#{$fa-css-prefix}-times:before         { content: $fa-var-times; }
 .#{$fa-css-prefix}-credit-card:before   { content: $fa-var-credit-card; }
 .#{$fa-css-prefix}-eur:before           { content: $fa-var-eur; }
+.#{$fa-css-prefix}-refresh:before       { content: $fa-var-refresh; }
 
 // Spinning Icons
 // --------------------------

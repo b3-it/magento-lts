@@ -1,18 +1,19 @@
 <?php
 /**
  * @category    design
- * @package     dwd_default
+ * @package     egov_default
  * @copyright   Copyright (c) 2018 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php /* @var $this Mage_Core_Block_Captcha_Zend */ ?>
+<?php /* @var $this Mage_Captcha_Block_Captcha_Zend */ ?>
 
-<?php /* @var $captcha Mage_Core_Model_Captcha_Zend */ ?>
+<?php /* @var $captcha Mage_Captcha_Model_Zend */ ?>
 <?php $captcha = $this->getCaptchaModel() ?>
         <li class="fields captcha-img-container">
             <div class="captcha-image" id="captcha-image-box-<?php echo $this->getFormId()?>">
                 <img id="<?php echo $this->getFormId() ?>" class="captcha-img" height="<?php echo $this->getImgHeight() ?>" src="<?php echo $captcha->getImgSrc() ?>"/>
+                <span id="captcha-reload-mobile" class="captcha-reload egov-refresh show-on-mobile" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Reload captcha')) ?>" onclick="$('<?php echo $this->getFormId()?>').captcha.refresh(this)"></span>
                 <?php if ($captcha->isCaseSensitive()) :?>
                     <div class="captcha-note">
                         <?php echo $this->__('<strong>Attention</strong>: Captcha is case sensitive.') ?>
@@ -20,7 +21,13 @@
                 <?php endif; ?>
             </div>
             <script type="text/javascript">//<![CDATA[
-                $('<?php echo $this->getFormId() ?>').captcha = new Captcha('<?php echo $this->getRefreshUrl() ?>', '<?php echo $this->getFormId() ?>');
+                <?php
+                    $_url = Mage::app()->getStore()->isAdmin() ? 'adminhtml/refresh/refresh' : 'captcha/refresh';
+                    $_sec = Mage::app()->getStore()->isCurrentlySecure();
+                    
+                    $_captchaUrl = $this->getUrl($_url, array('_secure' => $_sec));
+                ?>
+                $('<?php echo $this->getFormId() ?>').captcha = new Captcha('<?php echo $_captchaUrl; ?>', '<?php echo $this->getFormId() ?>');
                 //]]></script>
         </li>
     </ul>
@@ -38,6 +45,6 @@
 <div class="fieldset half-space">
     <ul class="form-list">
         <li class="fields captcha-image-reload-info">
-            <img id="captcha-reload" class="captcha-reload" src="<?php echo $this->getSkinUrl('images/reload.png') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Reload captcha')) ?>" onclick="$('<?php echo $this->getFormId()?>').captcha.refresh(this)">
+        	<span id="captcha-reload" class="captcha-reload egov-refresh hide-on-mobile" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Reload captcha')) ?>" onclick="$('<?php echo $this->getFormId()?>').captcha.refresh(this)"></span>
             <?php echo $this->__('If the code is not readable, please click on the button'); ?>
         </li>
