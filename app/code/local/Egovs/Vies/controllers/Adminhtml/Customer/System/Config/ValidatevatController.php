@@ -64,7 +64,7 @@ class Egovs_Vies_Adminhtml_Customer_System_Config_ValidatevatController extends 
         		
         	//Falls nichts gematched hat!!!
         	if (is_null($groupId)) {
-        		$groupId = Mage::helper('customer')->getDefaultCustomerGroupId($customer->getStore());
+        		$groupId = Mage::helper('customer')->getDefaultCustomerGroupId($storeId);
         	}
         }
 
