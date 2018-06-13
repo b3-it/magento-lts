@@ -106,10 +106,10 @@ ul {
 }
 
 .show-on-mobile {
-	display: none;
+	display: none !important;
 	
 	@include bp(max-width, $bp-mobil) {
-	    display: inline-block;
+	    display: inline-block !important;
 	}
 }
 .hide-on-mobile {
