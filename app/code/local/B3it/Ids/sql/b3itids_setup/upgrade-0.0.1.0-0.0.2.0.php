@@ -39,6 +39,7 @@ if (!$installer->tableExists($installer->getTable('b3it_ids/dos_visit')))
         `last_visit` datetime,
         `barrier_time` datetime,
         `current_delay` int(11) unsigned default 5,
+        `counter` int(11) unsigned default 0,
         `ip` varchar(255) default '',
         `agent` varchar(255) default '',
 	  PRIMARY KEY (`id`),

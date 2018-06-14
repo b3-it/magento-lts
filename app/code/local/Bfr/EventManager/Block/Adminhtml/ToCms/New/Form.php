@@ -64,14 +64,23 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New_Form extends Mage_Adminhtml_Blo
 
         $fieldset->addField('parent_category', 'select', array(
             'label'     => Mage::helper('eventmanager')->__('Parent Category'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
+            'class'     => 'required-entry',
+            'required'  => true,
 
             'name'      => 'parent_category',
             'values'	=> $categorys,
 
         ));
 
+        $fieldset->addField('new_category', 'checkbox', array(
+            'name'      => 'new_category',
+            'onclick' => "switchNew();",
+            'label'     => Mage::helper('cms')->__('Create Category'),
+           // 'required'  => true,
+          //  'value' => '1'
+
+
+        ));
         $fieldset->addField('category', 'text', array(
             'name'      => 'category',
             'label'     => Mage::helper('cms')->__('Category Name'),
@@ -114,5 +123,10 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New_Form extends Mage_Adminhtml_Blo
 
         return $options;
     }
-    
+
+
+    public function _toHtml() {
+        return parent::_toHtml() ." <script type=\"text/javascript\"> switchNew();</script> ";
+    }
+
 }

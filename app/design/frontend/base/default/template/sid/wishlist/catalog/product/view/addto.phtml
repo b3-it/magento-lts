@@ -33,7 +33,6 @@
 	<li>
 		<a href="<?php echo $this->helper('sidwishlist')->getAddUrl($_product, array('_secure' => $this->_isSecure())) ?>"
 		class="link-wishlist"
-		alt="<?php echo $this->__('Add to Collector List') ?>"
 		title="<?php echo $this->__('Add to Collector List') ?>"
 		onclick="productAddToCartForm.submit(this, this.href); return false;"><?php echo $this->__('Add to Collector List') ?></a>
 	</li>
@@ -42,7 +41,6 @@
 	<li>
 		<a href="<?php echo $_wishlistSubmitUrl ?>"
 			class="link-wishlist"
-			alt="<?php echo $this->__('Add to Wishlist') ?>"
 			title="<?php echo $this->__('Add to Wishlist') ?>"
 			onclick="productAddToCartForm.submitLight(this, this.href); return false;"><?php echo $this->__('Add to Wishlist') ?></a>
 	</li>

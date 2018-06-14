@@ -20,7 +20,7 @@ $installer->startSetup();
         ->setUrl('/customer/account/createpost/')
         ->setDelay(5)
         ->save();
-
+    $object = Mage::getModel('b3it_ids/dos_url');
     $object
         ->setUrl('/customer/account/loginPost/')
         ->setDelay(5)

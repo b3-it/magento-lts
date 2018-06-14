@@ -57,15 +57,28 @@ body {
 
         > div {
             display: inline-block;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	display: block;
+            }
         }
 
         .notice-text {
             width: 70%;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	width: 100%;
+            }
         }
         .actions {
             width: 18.5%;
             margin: 0;
             padding: 0;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	display: block;
+            	width: 100%;
+            }
         }
     }
 }

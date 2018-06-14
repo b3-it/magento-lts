@@ -169,6 +169,35 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $this->_redirect('*/*/index');
     }
 
+    public function massInfoletterAction()
+    {
+
+        $Ids = $this->getRequest()->getPost('participant');
+        $queueId = $this->getRequest()->getPost('queue_id');
+
+        if($Ids && is_array($Ids) && $queueId)
+        {
+
+            $custommers = array();
+
+            $collection = Mage::getModel('eventmanager/participant')->getCollection();
+            $collection->getSelect()
+                ->where("main_table.participant_id IN (?)", $Ids);
+            foreach($collection->getItems() as $item)
+            {
+                $custommers[$item->getEmail()] = array('prefix'=>$item->getPrefix(),
+                    'firstname'=>$item->getFirstname(),
+                    'lastname'=>$item->getLastname(),
+                    'company'=>trim($item->getCompany(). " ".$item->getCompany2(). " ".$item->getCompany3())
+                );
+            }
+
+            $res = Mage::getModel('infoletter/queue')->load($queueId)->addEmailToQueue($custommers);
+            Mage::getSingleton('adminhtml/session')-> addSuccess($this->__('%s Entries are added!', $res));
+        }
+        $this->_redirect('adminhtml/eventmanager_event/edit',array('id'=>$this->getRequest()->getParam('id')));
+    }
+
     public function exportCsvAction()
     {
         $fileName   = 'event.csv';
