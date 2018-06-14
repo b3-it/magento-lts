@@ -20,16 +20,12 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New extends Mage_Adminhtml_Block_Wi
         	{
         		if(\$j('#new_category').is(':checked'))
         		{
-        			\$j('#category').show();
-        			\$j('#category').addClass(\"required-entry\");
-        			\$j('label[for=\"category\"]').show();
+        			
                     \$j('label[for=\"parent_category\"]').html('" . Mage::helper('eventmanager')->__('Parent Category') . "');
         		}
         		else
         		{
-        			\$j('#category').hide();
-        			\$j('#category').removeClass(\"required-entry\");
-        			\$j('label[for=\"category\"]').hide();
+        			
                     \$j('label[for=\"parent_category\"]').html('" . Mage::helper('eventmanager')->__('Category') . "');
         		}
         	}
