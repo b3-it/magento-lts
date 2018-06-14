@@ -1049,25 +1049,12 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
     	{
     		//Mage::throwException("You can not change your inactive Mandate!");
     	}
-    
-    
-    
-    	if($mandate->getSequenceType() == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF)
-    	{
-    		return self::MANDATE_CHANGE_ACCOUNT;
-    	}
-    
     	
     	if ($this->getAllowOneoff() && $payment->getAdditionalInformation('sequence_type') == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
     		if($mandate->getSequenceType() != Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF)
     		{
     			return self::MANDATE_CHANGE_ACCOUNT;
     		}
-    	}
-    
-    	if($mandate->getSequenceType() == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF)
-    	{
-    		return self::MANDATE_CHANGE_ACCOUNT;
     	}
     
     	/* @var $payment Mage_Sales_Model_Order_Payment */
