@@ -61,9 +61,18 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New_Form extends Mage_Adminhtml_Blo
 
         $categorys = $this->_getCategories();
 
-
+        $fieldset->addField('new_category', 'checkbox', array(
+            'name'      => 'new_category',
+            'onclick' => "switchNew();",
+            'label'     => Mage::helper('cms')->__('Create Category'),
+            // 'required'  => true,
+            //  'value' => '1'
+            
+            
+        ));
+        
         $fieldset->addField('parent_category', 'select', array(
-            'label'     => Mage::helper('eventmanager')->__('Parent Category'),
+            'label'     => Mage::helper('eventmanager')->__('Category'),
             'class'     => 'required-entry',
             'required'  => true,
 
@@ -72,15 +81,6 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New_Form extends Mage_Adminhtml_Blo
 
         ));
 
-        $fieldset->addField('new_category', 'checkbox', array(
-            'name'      => 'new_category',
-            'onclick' => "switchNew();",
-            'label'     => Mage::helper('cms')->__('Create Category'),
-           // 'required'  => true,
-          //  'value' => '1'
-
-
-        ));
         $fieldset->addField('category', 'text', array(
             'name'      => 'category',
             'label'     => Mage::helper('cms')->__('Category Name'),
@@ -107,7 +107,7 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New_Form extends Mage_Adminhtml_Blo
 
         if ($addEmpty) {
             $options[] = array(
-                'label' => Mage::helper('adminhtml')->__('-- Please Select a Parent Category --'),
+                'label' => Mage::helper('adminhtml')->__('-- Please Select a Category --'),
                 'value' => ''
             );
         }

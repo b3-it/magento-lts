@@ -57,6 +57,7 @@ class Bfr_EventManager_Model_CopyToCms extends Varien_Object
            $category->setDisplayMode(Mage_Catalog_Model_Category::DM_PAGE);
            $category->setIsAnchor(1); //for active achor
            $category->setLandingPage($block->getId());
+           $category->setName($data['category']);
            $category->setStoreId($store_id);
            $category->save();
        }
