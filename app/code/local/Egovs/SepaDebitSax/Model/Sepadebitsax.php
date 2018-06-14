@@ -87,15 +87,17 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			$infos = new Varien_Object($payment->getAdditionalInformation());
 			$mandate->setAccountholderBankname($infos->getCustomAccountholderBankname());
 		}
-
+		/*
+		 * CreditorId aus importData entfernen
+		 * CreditorId aus Konfiguration != KreditorGläubigerId der MV
+		 */
+        $mandate->setCreditorId(null);
 		$customer = $this->getCustomer();
 		Mage::helper('paymentbase')->loeschenKunde($customer,"sepadebitsax");
 		$customer->unsetData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
 
 		$resource = $customer->getResource();
 		$resource->saveAttribute($customer,Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
-
-
 
 		return $mandate;
 	}
@@ -200,18 +202,19 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		$client = Mage::helper('sepadebitsax')->getZmvSoapClient();
 		try {
 			$objResult = $client->AnlegenSEPAKreditorenMandatMitPdf($this->_getIdentifierzierung(), $mandate, $this->_getAgent());
-			//$objResult = Mage::helper('sepadebitsax')->getZmvSoapClient()->AnlegenSEPAKreditorenMandat($this->_getIdentifierzierung(), $mandate, $this->_getAgent());
 		} catch (Exception $e) {
 			Mage::log(sprintf("%s in %s Line: %d", $e->getMessage(), $e->getFile(), $e->getLine()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 			Mage::logException($e);
 		}
 		$sMailText = '';
-		$result = -9999;
 		if ($objResult instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMandatMitPDFResult) {
 			if ($objResult->getResult()->getResultCode()->getCode() ==  0) {
 				$mandate->setMandatsreferenz($objResult->getMandatsdaten()->getMandatsreferenz());
-
-				//Mage::register('sepadebitsaxmandate', $mandate);
+				/*
+				 * ZV_FM-1465
+				 * CreditorId aus Konfiguration != KreditorGläubigerId der MV
+				 */
+				$mandate->setCreditorId($objResult->getMandatsdaten()->getKreditorGlaeubigerId());
 
 				//mandate versenden
 				$email = Mage::getModel('sepadebitsax/email');
@@ -236,7 +239,6 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			$client->saveError();
 			$sMailText .= "Code: {$objResult->getResult()->getResultCode()->getCode()}\n";
 			$sMailText .= "Beschreibung: {$objResult->getResult()->getResultCode()->getDescription()}\n";
-			$result = intval($objResult->getResult()->getResultCode()->getCode());
 		} elseif ($objResult instanceof SoapFault) {
 			$sMailText .= "SOAP: " . $objResult->getMessage(). "\n\n";
 		} else {
@@ -378,7 +380,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 				
 		if ($has_changed == Egovs_SepaDebitSax_Model_Webservice_Types_Mandat::MANDATE_CHANGE_NEW) {
 			$mandate = $this->createNewAdapterMandate();
-			$mandate->importData($payment, $this->getCreditorId(), $this->getAllowOneoff(),null);
+			$mandate->importData($payment, null, $this->getAllowOneoff(),null);
 			$mandate = $this->_constructSepaMandate($mandate, $payment);
 			$mandate = $this->createSepaMandate($mandate);
 			$customer->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID, $mandate->getReference());
@@ -397,7 +399,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		} elseif ($has_changed == Egovs_SepaDebitSax_Model_Webservice_Types_Mandat::MANDATE_CHANGE_ACCOUNT) {
 			$old = $mandate;
 			$mandate = $this->createNewAdapterMandate();
-			$mandate->importData($payment, $this->getCreditorId(), $this->getAllowOneoff(),null);
+			$mandate->importData($payment, null, $this->getAllowOneoff(),null);
 			$mandate = $this->_constructSepaMandate($mandate, $payment);
 			$mandate = $this->createSepaMandate($mandate);
 			$customer->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID, $mandate->getReference());
@@ -415,7 +417,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 			$message = Mage::helper('sepadebitsax')->__("You will get a new SEPA Mandate via email. Please subscribe and send it back to %s", $adr);
             Mage::getSingleton('checkout/session')->addUniqueMessages(Mage::getModel('core/message_notice', $message));
 		} elseif ($has_changed == Egovs_SepaDebitSax_Model_Webservice_Types_Mandat::MANDATE_CHANGE) {
-			$mandate->importData($payment,$this->getCreditorId(), $this->getAllowOneoff(),null);
+			$mandate->importData($payment, null, $this->getAllowOneoff(),null);
 			$pdf = $this->__changeMandate($mandate, true);
 			//mandate versenden
 			if ($pdf) {
