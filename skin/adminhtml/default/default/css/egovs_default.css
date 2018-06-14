@@ -244,3 +244,7 @@ tr.move-row-highlight {
     margin-right: 10px;
     min-width: 100px;
 }
+
+#contexthelp_form .select-button-container select {
+	width: 45% !important;
+}

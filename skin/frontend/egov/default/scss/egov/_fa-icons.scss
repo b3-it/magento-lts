@@ -197,10 +197,18 @@
     @extend .egov-fa-base;
 	@extend .fa-refresh;
 	font-size: $global-fontsize + 13;
-	
+
 	&:hover, &:active {
 	    @extend .fa-spin;
 	}
+}
+
+// Icon für Context-Hilfe
+.egov-help {
+    @extend .egov-fa-base;
+    @extend .fa-question-circle;
+    font-size: $global-fontsize + 12;
+    margin: $fa-icon-margin;
 }
 
 span.default-font {

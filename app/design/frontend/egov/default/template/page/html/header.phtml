@@ -48,6 +48,9 @@
             </a>
 
             <div id="jumptargetheader" class="account-cart-wrapper">
+                <a href="javascript:void(0)" id="context-help" class="skip-link skip-help" onclick="showPopup()">
+                    <span class="icon egov-help" title="<?php echo $this->__('Contexthelp'); ?>"> </span>
+                </a>
                 <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
                     <span class="icon egov-home"> </span>
                     <span class="label"><?php echo $this->__('Startup Page'); ?></span>
