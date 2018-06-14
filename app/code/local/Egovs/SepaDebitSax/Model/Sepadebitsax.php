@@ -92,13 +92,19 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 		 * CreditorId aus Konfiguration != KreditorGläubigerId der MV
 		 */
         $mandate->setCreditorId(null);
+
+        /*
+         * [5934] | hkoegel | 2014-04-04 17:14:10 MESZ
+         * SEPA SAX EKunde immer neu anlegen bei neuem Mandate
+         */
+        /*
 		$customer = $this->getCustomer();
 		Mage::helper('paymentbase')->loeschenKunde($customer,"sepadebitsax");
 		$customer->unsetData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
 
 		$resource = $customer->getResource();
 		$resource->saveAttribute($customer,Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CUSTOMER_ID);
-
+        */
 		return $mandate;
 	}
 
