@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.0.1">
+
+	<adminhtml_contexthelp_contexthelp_index>
+        <reference name="content">
+            <block type="contexthelp/adminhtml_contexthelp" name="contexthelp" />
+        </reference>
+    </adminhtml_contexthelp_contexthelp_index>
+</layout>

@@ -166,7 +166,7 @@
     position: relative;
     right: 6px;
     top: 70px;
-    z-index: 999;
+    z-index: 800;
 
     label {
         display: none;
@@ -482,11 +482,15 @@ a.skip-link {
     }
 }
 
-.skip-egov{
+.skip-egov, .skip-help{
     display: inline-block;
     float: none !important;
     padding: 0 10px;
     text-transform: uppercase;
     vertical-align: top;
     width: auto;
+}
+
+.skip-help {
+    display: none;
 }

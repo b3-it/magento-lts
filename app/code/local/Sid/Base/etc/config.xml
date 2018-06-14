@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Sid_Base>
-            <version>0.0.0.1</version>
+            <version>0.0.0.2</version>
         </Sid_Base>
     </modules>
     <global>

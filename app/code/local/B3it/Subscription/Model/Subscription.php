@@ -59,13 +59,13 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
         $this->_init('b3it_subscription/subscription');
     }
 
-
-
     /**
      * Neue Bestellungen als Abonement einordnen
-     * @param Mage_Sales_Model_Entity_Order_Item $orderItem Item der Bestellung
-     * @param B3it_Subscription_Model_Period $period Periode des Abos
-     * @param null $startDate Tag des Anfangs diesert Period
+     * @param Mage_Sales_Model_Order_Item    $orderItem Item der Bestellung
+     * @param Mage_Sales_Model_Quote         $quote
+     * @param B3it_Subscription_Model_Period $period
+     * @param Zend_Date                      $startDate Tag des Anfangs diesert Period
+     *
      * @return B3it_Subscription_Model_Subscription
      * @throws Exception
      */
@@ -150,7 +150,7 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
 
     /**
      * @param Mage_Sales_Model_Order_Item $orderItem
-     * @param Mage_Sales_Model_Quote $quote
+     * @param Mage_Sales_Model_Quote      $quote
      */
     protected function _getSubscriptionItem($orderItem, $quote)
     {
@@ -174,14 +174,14 @@ class B3it_Subscription_Model_Subscription extends B3it_Subscription_Model_Abstr
     	$this->getResource()->saveField($this,'status');
     	return $this;
     }
-    
+
     public function saveRenewalStatus($status)
     {
     	$this->setRenewalStatus($status);
     	$this->getResource()->saveField($this,'renewal_status');
     	return $this;
     }
-    
+
    /**
     * Helper Datun in Lokaler Zeit formatieren
     * @return string <string, unknown>
