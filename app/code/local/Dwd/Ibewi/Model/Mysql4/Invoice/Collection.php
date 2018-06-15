@@ -73,6 +73,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->columns($suffixIncrementId)
       	->joinleft(array('address'=>'sales_flat_order_address'), "address.address_type= IF (order.is_virtual=0,'shipping','base_address') AND address.parent_id = order.entity_id",array('base_address_id'=>'address.entity_id'))
       	->columns($leistungsAdr)
+        ->where('invoice.state != '.Mage_Sales_Model_Order_Invoice::STATE_CANCELED)
       	;
       	
  // die($this->getSelect()->__toString());    	
@@ -117,8 +118,10 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->columns(new Zend_Db_Expr("(SELECT 0) as base_address_id"))
       	->columns(new Zend_Db_Expr("(SELECT order.shipping_address_id) AS leistungs_addresse"))
       	
-      	->where('`sales_flat_invoice`.`shipping_amount` > 0');
- 
+      	->where('`sales_flat_invoice`.`shipping_amount` > 0')
+      	->where('sales_flat_invoice.state != '.Mage_Sales_Model_Order_Invoice::STATE_CANCELED)
+        ;
+
       	$sql1 = $this->getSelect();
       	
       	

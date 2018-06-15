@@ -133,10 +133,14 @@
 "Empty identifier field name","Leerer Bezeichner-Feldname"
 "Empty main table name","Leerer Name der Haupttabelle"
 "Enable Charts","Grafische Auswertung aktivieren"
+"<strong style=""color:red"">Important!</strong> Enabling this option means
+                            that your custom templates used in checkout process contain form_key output.
+                            Otherwise checkout may not work.","<strong style=""color:red"">Wichtig!</strong> Diese Option zu aktivieren bedeutet dass Ihre benutzerdefinierten Templates, die beim Checkout verwendet werden, welche eine form_key-Ausgaben enthalten. Andernfalls funktioniert der Checkout möglicherweise nicht."
 "Enabled","Aktiviert"
 "Enable CAPTCHA in Admin","Aktiviere CAPTCHA für Admin-Bereich"
 "Enabled for Admin","Aktiviert für Admin-Bereich"
 "Enabled for Frontend","Aktiviert für Shop"
+"Enable Form Key Validation On Checkout","Formularschlüsselüberprüfung beim Checkout aktivieren"
 "Enabling ability to run Magento in a frame is not recommended for security reasons.","Aktiviert die Fähigkeit, Magento in einem Frame auszuführen. Dies wird aus Sicherheitsgründen nicht empfohlen."
 "Enabling this setting increases risk of automated attacks against admin functionality.","Die Aktivierung dieser Einstellung erhöht die Gefahr von automatisierten Angriffen gegen Admin-Funktionalität."
 "Entity types declaration cache.","Deklarations-Cache für Entitäts Typen."
@@ -537,3 +541,10 @@
 "Wrong file info format","Falsches Format Dateiinfo"
 "Your order cannot be completed at this time as there is no payment methods available for it.","Ihre Bestellung kann momentan nicht abgeschlossen werden, da keine Zahlungsarten dafür verfügbar sind."
 "Your order cannot be completed at this time as there is no shipping methods available for it. Please make necessary changes in your shipping address.","Ihre Bestellung kann momentan nicht abgeschlossen werden, da keine Versandarten dafür verfügbar sind. Bitte führen Sie die nötigen Änderungen an Ihrer Versandadresse durch."
+
+"SiD Wishlist Index View","SID Merkliste - Übersicht anzeigen"
+"SiD Wishlist Index","SID Merkliste - Übersicht"
+"SiD Wishlist Share","SID Merkliste - Merkliste teilen"
+"SiD Wishlist add","SID Merkliste - neue Merkliste hinzufügen"
+"SiD Wishlist new Wishlist","SID Merkliste - neue Merkliste anlegen"
+

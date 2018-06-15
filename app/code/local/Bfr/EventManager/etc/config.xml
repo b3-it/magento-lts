@@ -19,7 +19,7 @@
         <layout>
             <updates>
                 <eventmanager>
-                    <file>eventmanager.xml</file>
+                    <file>bfr/eventmanager.xml</file>
                 </eventmanager>
             </updates>
         </layout>

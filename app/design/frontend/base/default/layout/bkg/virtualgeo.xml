@@ -233,12 +233,17 @@ Additional block for bundle product type
                  <action method="addComponentsBlock">
                     <type>storage</type>
                     <block>virtualgeo/catalog_product_view_components_storage</block>
-                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
+                    <template>virtualgeo/catalog/product/view/components/storage.phtml</template>
                 </action>
                  <action method="addComponentsBlock">
                     <type>toll</type>
                     <block>virtualgeo/catalog_product_view_components_toll</block>
                     <template>virtualgeo/catalog/product/view/components/toll.phtml</template>
+                </action>
+                <action method="addComponentsBlock">
+                    <type>accounting</type>
+                    <block>virtualgeo/catalog_product_view_components_accounting</block>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
                 </action>
                 <action method="addPriceBlockType">
                     <type>virtualgeo</type>

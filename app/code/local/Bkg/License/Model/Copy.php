@@ -42,12 +42,35 @@
  */
 class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
 {
+	
+	protected $_period = null;
+	
     public function _construct()
     {
         parent::_construct();
         $this->_init('bkg_license/copy');
     }
 
+    public function setPeriod($period)
+    {
+    	$this->_period = $period;
+    }
+    
+    
+    public function getPeriod()
+    {
+    	if($this->_period == null)
+    	{
+    		
+    		$this->_period = Mage::getModel('bkg_license/copy_period');
+    		if($this->getPeriodId())
+    		{
+    			$this->_period->load($this->getPeriodId());
+    		}
+    	}
+    	return $this->_period;
+    }
+    
     protected function _saveRelated($collection)
     {
     	if($collection != null){
@@ -58,9 +81,21 @@ class Bkg_License_Model_Copy extends Bkg_License_Model_Textprocess
     	}
     }
 
+
+    protected function _beforeSave() {
+        parent::_beforeSave();
+
+        if($this->_period != null){
+            $this->_period->save();
+            $this->setPeriodId($this->_period->getId());
+        }
+    }
+
+
+
     /**
      *
-     * @param unknown $resourceName
+     * @param string $resourceName
      * @return Mage_Core_Model_Resource_Db_Collection_Abstract
      */
     protected function _getRelated($resourceName)

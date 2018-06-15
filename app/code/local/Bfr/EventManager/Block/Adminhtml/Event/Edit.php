@@ -29,6 +29,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit extends Mage_Adminhtml_Block_W
             'onclick'   => 'saveAndContinueEdit()',
             'class'     => 'save',
         ), -100);
+        
+        $this->_addButton('copytocms', array(
+        		'label'     => Mage::helper('adminhtml')->__('Create CMS'),
+        		'onclick'   => 'setLocation(\''
+				. $this->getUrl('*/eventmanager_toCms/index', array('id'=>$this->getRequest()->getParam('id', 0))).'\')',
+        		'class'     => 'save',
+        ), -100);
 
         $this->_formScripts[] = "
             function toggleEditor() {

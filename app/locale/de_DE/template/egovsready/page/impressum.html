@@ -13,10 +13,11 @@
 	</strong><br />
 	{{block type="egovsready/imprint_field" value="ceo"}}
 </p>
-<p>{{block type="egovsready/imprint_content"
-	template="egovs/ready/imprint/communication.phtml"}}</p>
 <p>
-	<strong>Verantwortlich: </strong><br />Max Mustermann
+	{{block type="egovsready/imprint_content" template="egovs/ready/imprint/communication.phtml"}}
+</p>
+<p>
+	<strong>Verantwortlich:</strong><br />{{block type="egovsready/imprint_field" value="ceo"}}
 </p>
 <p>
 	Steuernummer: {{block type="egovsready/imprint_field" value="tax_number"}}<br />
@@ -27,7 +28,7 @@
 <p>
 	Sie erreichen unseren Kundendienst f&uuml;r Fragen Reklamationen und
 	Beanstandungen unter Telefon: {{block type="egovsready/imprint_field" value="telephone"}}
-	sowie per Email unter <a href="mailto:{{block type=" egovsready/imprint_field" value="email"}}">
+	sowie per Email unter <a href="mailto:{{block type="egovsready/imprint_field" value="email"}}">
 	{{block type="egovsready/imprint_field" value="email"}}</a>.
 	F&uuml;r Anfragen k&ouml;nnen Sie auch das Kontaktformular auf unserer Internetseite nutzen.
 </p>

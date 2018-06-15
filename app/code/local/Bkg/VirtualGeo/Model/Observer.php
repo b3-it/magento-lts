@@ -118,6 +118,7 @@ class Bkg_VirtualGeo_Model_Observer
     	$this->_saveComponent($dataObject->getFormat(),$product,'virtualgeo/components_formatproduct');
         $this->_saveComponent($dataObject->getStructure(), $product,'virtualgeo/components_structureproduct');
         $this->_saveComponent($dataObject->getResolution(),$product,'virtualgeo/components_resolutionproduct');
+        $this->_saveComponent($dataObject->getAccounting(),$product,'virtualgeo/components_accountingproduct');
         $content = $dataObject->getContentLayerOptions();
         $this->_saveContentLayer($content,$product->getId());
 
@@ -146,36 +147,27 @@ class Bkg_VirtualGeo_Model_Observer
                 ->setEntityId($node['entity_id'])
                 ->setProductId($productId) //FK
                 ->setReadonly($node['is_readonly'])
-                ->setIsChecked($node['is_checked']);
-    		if(!$model->getId())
-    		{
-    			$model->save();
-    		}
-            $nodes[$key]['id'] = $model->getId();
-    		$node['model'] = $model;
-
-
+                ->setIsChecked($node['is_checked'])
+              //  ->setNodeId($node['node_id'])
+            ;
 
     		$model->save();
+            $nodes[$key]['id'] = $model->getId();
+            $node['model'] = $model;
             $nodes[$key] = $node;
     	}
     
     	//jetzt die Elternbeziehung und die Reihenfolge
-    	foreach($nodes as $node)
-    	{
-    
+    	foreach($nodes as $node) {
     		$model = $node['model'];
 
-
-            if(!isset($node['parent_number']) || empty($node['parent_number']))
-            {
-                $model->setData('parent_node_id',null);
-            }else{
-                $parentNode = $this->findByNumber($nodes, $node['parent_number']);
-                $model->setParentNodeId($parentNode['model']->getId());
+            if (!isset($node['parent_number']) || empty($node['parent_number'])) {
+                $model->unsetData('parent_node_id');
+            } else {
+                $parentNode = $this->__findByNumber($nodes, $node['parent_number']);
+                $model->setParentNodeId($parentNode['model']->getNodeId());
             }
-    
-    
+
     		$model->save();
     
     	}
@@ -192,7 +184,7 @@ class Bkg_VirtualGeo_Model_Observer
     
     }
     
-    private function findByNumber($nodes,$number)
+    private function __findByNumber($nodes, $number)
     {
     	foreach ($nodes as $node){
     		if($node['number'] == $number){

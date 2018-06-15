@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bkg_VirtualGeo>
-            <version>0.1.6.0</version>
+            <version>0.2.0.0</version>
         </Bkg_VirtualGeo>
     </modules>
 
@@ -50,14 +50,14 @@
                     </virtualgeo_observer_onProductSaveAfter>
                 </observers>
             </catalog_product_save_after>
-            <virtualgeo_components_georefproduct_save_after>
+            <virtualgeo_components_storageproduct_save_after>
                 <observers>
-                    <virtualgeo_observer_georef_save_after>
+                    <virtualgeo_observer_storage_save_after>
                         <class>virtualgeo/bundle_observer</class>
                         <method>onComponentsSaveAfter</method>
-                    </virtualgeo_observer_georef_save_after>
+                    </virtualgeo_observer_storage_save_after>
                 </observers>
-            </virtualgeo_components_georefproduct_save_after>
+            </virtualgeo_components_storageproduct_save_after>
             <!--
             <sales_convert_quote_item_to_order_item>
                 <observers>
@@ -319,10 +319,10 @@
                     <table>virtualgeo_components_georef_label</table>
                    </components_georef_label>
                    <components_georef_product>
-                    <table>virtualgeo_components_georef_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_georef_product>
                    <components_format_product>
-                    <table>virtualgeo_components_format_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_format_product>
 				   <components_content_entity>
                     <table>virtualgeo_components_content_entity</table>
@@ -331,8 +331,11 @@
                     <table>virtualgeo_components_content_label</table>
                    </components_content_label>
                    <components_content_product>
-                    <table>virtualgeo_components_content_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_content_product>
+                    <components_content_option_value>
+                        <table>virtualgeo_components_content_option_value</table>
+                    </components_content_option_value>
                    <components_content_category>
                     <table>virtualgeo_components_content_category</table>
                    </components_content_category>
@@ -352,7 +355,7 @@
                     <table>virtualgeo_components_structure_label</table>
                    </components_structure_label>
                    <components_structure_product>
-                    <table>virtualgeo_components_structure_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_structure_product>
                    <components_resolution_entity>
                     <table>virtualgeo_components_resolution_entity</table>
@@ -361,7 +364,7 @@
                     <table>virtualgeo_components_resolution_label</table>
                    </components_resolution_label>
                    <components_resolution_product>
-                    <table>virtualgeo_components_resolution_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_resolution_product>
                     <components_content_category>
                         <table>virtualgeo_components_content_category</table>
@@ -390,6 +393,9 @@
                     <bundle_selection>
                         <table>virtualgeo_bundle_selection</table>
                     </bundle_selection>
+                    <product_option_value>
+                        <table>virtualgeo_components_option_type_value</table>
+                    </product_option_value>
                 </entities>
             </virtualgeo_resource>
 

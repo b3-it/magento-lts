@@ -10,20 +10,38 @@
  */
 class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 {
-	
+	protected $_client = NULL;
+		
 	/**
-	 * Erzeugen eines Accounts
-	 * @param unknown $data user,produkt,lizenz..
-	 * @return accountID
+	 *  Erzeugen eines Accounts
+	 * @param Bkg_VirtualAccess_Model_Purchased $purchased
+	 * @return number
 	 */
-	public function create($data)
+	public function create(Bkg_VirtualAccess_Model_Purchased $purchased)
 	{
+		
+		$xmldoc = new DOMDocument('1.0', 'utf-8');
+		$xml = new Bkg_VirtualAccess_Model_Service_Webservice_Freischaltung();
+		
+		$xml->getAuftrag()->setValue($purchased->getOrderIncrementId());
+		$xml->getService()->setValue($purchased->getProductCode());
+		$xml->getPerson()->getVorname()->setValue($purchased->getOrder()->getCustomerFirstname());
+		$xml->getPerson()->getName()->setValue($purchased->getOrder()->getCustomerLastname());
+		$xml->getPerson()->getEmail()->setValue($purchased->getOrder()->getCustomerEmail());		
+		
+		$xml->toXml($xmldoc);
+		$xmldoc->preservWhiteSpace = true;
+		$xmldoc->formatOutput = true;
+		echo('<pre>');
+		die (htmlentities($xmldoc->saveXML()));
+		
+		
 		return time();
 	}
 	
 	/**
 	 * Auslesen der Zugangsparameter
-	 * @param unknown $accountId
+	 * @param int|string $accountId
 	 * @return Varien_Object[]
 	 */
 	public function getCredentials($accountId)
@@ -38,8 +56,8 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	
 	/**
 	 * Neuer Account auf Basis eines Besetehenden erstellen
-	 * @param unknown $accountId alte Kennung
-	 * @return accountID neue Kennung
+	 * @param int|string $accountId alte Kennung
+	 * @return string neue Kennung
 	 */
 	public function renew($accountId)
 	{
@@ -49,7 +67,7 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	
 	/**
 	 * Verbrauch ermitteln
-	 * @param unknown $accountId Kennung
+	 * @param int|string $accountId Kennung
 	 * @return Varien_Object Verbrauchsdaten
 	 */
 	public function getConsumtion($accountId)
@@ -59,7 +77,7 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	
 	/**
 	 * Status ändern
-	 * @param unknown $accountId Kennung
+	 * @param int|string $accountId Kennung
 	 * @return Varien_Object Verbrauchsdaten
 	 */
 	public function changeState($accountId)
@@ -68,5 +86,13 @@ class Bkg_VirtualAccess_Model_Service_Account extends Varien_Object
 	}
 	
 	
-
+	protected function _getClient()
+	{
+		if($this->_client == null){
+			$this->_client = Mage::getModel('virtualaccess/service_webservice_client');
+		}
+		
+		return $this->_client;
+	}
+	
 }

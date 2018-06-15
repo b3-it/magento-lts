@@ -38,7 +38,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 	 * (non-PHPdoc)
 	 * @see Sid_ExportOrder_Model_Transfer::send()
 	 */
-	public function send($content,$order = null, $data = array())
+	public function send($content,$order = null, $data = array(), $storeId = 0)
 	{
 		$output = "";
 		try

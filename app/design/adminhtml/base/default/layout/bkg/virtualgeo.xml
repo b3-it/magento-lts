@@ -116,6 +116,7 @@ Layout handle for budle products
             <action method="addTab"><name>virtualgeo_structure</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_structure</block></action>
             <action method="addTab"><name>virtualgeo_storage</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_storage</block></action>
             <action method="addTab"><name>virtualgeo_resolution</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_resolution</block></action>
+            <action method="addTab"><name>virtualgeo_accounting</name><block>virtualgeo/adminhtml_catalog_product_edit_tab_accounting</block></action>
         </reference>
     </adminhtml_catalog_product_virtualgeo>
 

@@ -87,6 +87,11 @@ class Bkg_License_Block_Adminhtml_Copy_Edit_Tabs extends Mage_Adminhtml_Block_Wi
           'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_product')->toHtml(),
       ));
 
+      $this->addTab('form_section8', array(
+      		'label'     => Mage::helper('bkg_license')->__('Subscription'),
+      		'title'     => Mage::helper('bkg_license')->__('Subscription Information'),
+      		'content'   => $this->getLayout()->createBlock('bkg_license/adminhtml_copy_edit_tab_subscription')->toHtml(),
+      ));
 
       if($id)
       {

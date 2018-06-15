@@ -35,7 +35,7 @@ $tables[] = 'virtualgeo/components_structure';
 foreach ($tables as $table)
 {
 	if ($installer->tableExists($installer->getTable($table.'_entity'))
-			&& !$installer->getConnection()->tableColumnExists($installer->getTable($table.'_product'), 'show_map'))
+			&& !$installer->getConnection()->tableColumnExists($installer->getTable($table.'_entity'), 'show_map'))
 	{
 		$installer->run("ALTER TABLE {$installer->getTable($table.'_entity')}
 		ADD show_map SMALLINT default 0

@@ -37,6 +37,10 @@
       <active>true</active>
       <codePool>local</codePool>
     </Egovs_Checkout>
+      <Egovs_ContextHelp>
+          <active>false</active>
+          <codePool>local</codePool>
+      </Egovs_ContextHelp>
     <Egovs_Debit>
       <active>false</active>
       <codePool>local</codePool>

@@ -32,7 +32,7 @@ if ( ($_use_ssl_logo == 0) || ($_use_ssl_logo == 2 && $_is_https) ) {
 }
 $show_css = '';
 if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
-    $show_css = ' style="' . $this->htmlEscape($_ssl_image_css) . '"';
+    $show_css = ' style="' . $this->escapeHtml($_ssl_image_css) . '"';
 }
 ?>
 

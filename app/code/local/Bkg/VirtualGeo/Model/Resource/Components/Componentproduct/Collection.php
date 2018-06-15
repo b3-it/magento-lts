@@ -24,8 +24,22 @@ class Bkg_VirtualGeo_Model_Resource_Components_Componentproduct_Collection exten
            $fields = array('code');
         }
 
-        $select->join(array('entity'=>$model->getResource()->getMainTable()),'main_table.entity_id = entity.id',$fields)
-            ->join(array('label'=>$model->getResource()->getLabelTable()), "label.entity_id=main_table.entity_id AND label.store_id=".intval(0),array('shortname','name','description'))
+        $productModel = $this->getNewEmptyItem();
+        if (method_exists($productModel, 'getComponentType') && $productModel->getComponentType() > 0) {
+            $select->join(
+                array('entity'=>$model->getResource()->getMainTable()),
+                "main_table.entity_id = entity.id and main_table.component_type = {$productModel->getComponentType()}",
+                $fields
+            );
+        } else {
+            $select->join(
+                array('entity'=>$model->getResource()->getMainTable()),
+                "main_table.entity_id = entity.id",
+                $fields
+            );
+        }
+
+        $select->join(array('label'=>$model->getResource()->getLabelTable()), "label.entity_id=main_table.entity_id AND label.store_id=".intval(0),array('shortname','name','description'))
             ->where('main_table.product_id = ' .intval($productId))
             ->where('main_table.store_id IN (0,?)', intval($storeId))
         	->order('pos');

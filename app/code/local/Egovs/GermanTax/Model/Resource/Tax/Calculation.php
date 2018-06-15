@@ -159,7 +159,7 @@ class Egovs_GermanTax_Model_Resource_Tax_Calculation extends Mage_Tax_Model_Reso
 	 * 
 	 * @return array
 	 */
-public function getCalculationProcess($request, $rates = null)
+    public function getCalculationProcess($request, $rates = null)
     {
         if (is_null($rates)) {
             $rates = $this->_getRates($request);
@@ -277,6 +277,10 @@ public function getCalculationProcess($request, $rates = null)
             }
         }
 
+        if (empty($result)) {
+            $msg = sprintf("tax::calculation_process:EMPTY RESULT\nRequest:\n%s", var_export($result, true));
+            Mage::log($msg, Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+        }
         return $result;
     }
 }

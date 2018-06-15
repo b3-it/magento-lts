@@ -1,7 +1,7 @@
 <?php
  /**
   *
-  * @category   	Bkg
+  * @category   	B3it
   * @package    	B3it_Subscription
   * @name       	B3it_Subscription_Model_Resource_Periodentity
   * @author 		Holger Kögel <h.koegel@b3-it.de>

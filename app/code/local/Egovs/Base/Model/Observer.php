@@ -1,8 +1,38 @@
 <?php
 class Egovs_Base_Model_Observer
 {
-    public function replaceTemplateAbbr( Varien_Event_Observer $observer ) {
+    private $_demoPath = 'design/head/demonotice';
+    private $_checkUrlForTest = array(
+                                    'b3-it.local',
+                                    'testshop.org',
+                                    'eshop-test'
+                                );
 
+    /**
+     * Prüfen, ein ein Teil des Hostnamens auf ein Test-System hinweist
+     * und wenn dies der Fall ist, wird der Demo-Hinweis aktiviert und angezeigt
+     * @access public
+     */
+    public function checkShopState()
+    {
+        $_currHost = parse_url(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB), PHP_URL_HOST);
+
+        foreach( $this->_checkUrlForTest AS $_host ) {
+            // Prüfen, ob es ein Test-System ist .... (DSGVO)
+            if ( stripos($_currHost, $_host) !== false ) {
+                if ( !Mage::getStoreConfig($this->_demoPath) ) {
+                    $_config = Mage::getConfig();
+
+                    $_config->saveConfig($this->_demoPath, '1');
+                    $_config->reinit();
+                    Mage::app()->reinitStores();
+                }
+            }
+        }
+    }
+
+    public function replaceTemplateAbbr( Varien_Event_Observer $observer )
+    {
         if ( !$observer->hasBlock() ) {
             return;
         }
@@ -79,7 +109,7 @@ class Egovs_Base_Model_Observer
             if ( !strpos($html, $replace) ) {
                 $html = str_replace($key, $replace, $html);
             }
-            
+
             // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
             if ( strpos($html, '="<abbr') ) {
             	$html = str_replace('="' . $replace, '="' . $key, $html);

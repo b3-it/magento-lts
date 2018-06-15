@@ -226,7 +226,7 @@ class B3it_Subscription_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	        if($order)
 	        {
 	        	/** @var $orderItem Mage_Sales_Model_Order_Item **/
-	        	foreach($order->getItemsCollection() as $orderItem)
+	        	//foreach($order->getItemsCollection() as $orderItem)
 	        	{
 
 	        	}

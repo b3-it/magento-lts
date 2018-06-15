@@ -186,7 +186,7 @@ class Bkg_VirtualAccess_Block_Adminhtml_Purchased_Grid extends Mage_Adminhtml_Bl
 
 
 
-  public function getRowUrl($row)
+  public function xgetRowUrl($row)
   {
       return $this->getUrl('*/*/show', array('id' => $row->getItemId()));
   }

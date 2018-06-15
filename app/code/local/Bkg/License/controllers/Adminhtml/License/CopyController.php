@@ -212,6 +212,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				$addresses = $this->_saveAddress($data,$model);
 				$this->_saveFiles($data,$model);
 				$this->_saveAuthorizedCustomer($data,$model);
+				$this->_saveSubscription($data,$model);
 
 				if(isset($data['send_email']))
 				{
@@ -408,6 +409,31 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
     		$item->save();
     	}
 
+    }
+    
+    protected function _saveSubscription($data,Varien_Object $model)
+    {
+    	if(!isset($data['period']))
+    	{
+    		return $this;
+    	}
+    	
+    	if(!isset($data['subscripe']))
+    	{
+    		if($model->getPeriod()->getId()){
+    			$model->getPeriod()->delete();
+    			$model->setPeriod(null);
+    		}
+    		$model->setData('period_id',0)->save();
+    		
+    	}
+    	else 
+    	{
+    		$data = $data['period'];
+    		$model->getPeriod()->setData($data)->save();
+    	   	$model->setPeriodId($model->getPeriod()->getId())->save();
+    	}
+    
     }
     
     

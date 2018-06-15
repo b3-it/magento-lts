@@ -1,18 +1,46 @@
 <?php
 /**
  *
- * @category   	Bkg
+ * @category   	B3it
  * @package    	B3it_Subscription
  * @name       	B3it_Subscription_Model_Period_entity
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+/**
+ *  @method int getId()
+ *  @method setId(int $value)
+ *  @method int getPos()
+ *  @method setPos(int $value)
+ *  @method int getPeriodLength()
+ *  @method setPeriodLength(int $value)
+ *  @method int getRenewalOffset()
+ *  @method setRenewalOffset(int $value)
+ *  @method string getPeriodUnit()
+ *  @method setPeriodUnit(string $value)
+ *  @method int getInitialPeriodLength()
+ *  @method setInitialPeriodLength(int $value)
+ *  @method string getInitialPeriodUnit()
+ *  @method setInitialPeriodUnit(string $value)
+ */
 class B3it_Subscription_Model_Period extends Mage_Core_Model_Abstract
 {
 	//alias der Tabelle für die Verbindung zum Produkt
 	protected $_productRelationTable = 'b3it_subscription/period_product';
 	
+
+	
+	
+	public function _construct()
+	{
+		parent::_construct();
+		$this->_init('b3it_subscription/period');
+	}
+	
+	/* folgendes ist nur sinnvoll falls die Perioden im FE angezeigt werden sollen
+	 * 
+	 * 	
 	protected $_storeid = 0;
 	
 	public function setStoreId($id)
@@ -25,14 +53,6 @@ class B3it_Subscription_Model_Period extends Mage_Core_Model_Abstract
 	{
 		return $this->_storeid;
 	}
-	
-	
-	public function _construct()
-	{
-		parent::_construct();
-		$this->_init('b3it_subscription/period');
-	}
-	
 	public function save()
 	{
 		if($this->getStoreId() == 0){
@@ -75,6 +95,7 @@ class B3it_Subscription_Model_Period extends Mage_Core_Model_Abstract
 	
 		return $this;
 	}
+	*/
 	
 	public function getCollectionAsOptions($productId,$storeId = 0)
 	{

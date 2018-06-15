@@ -13,5 +13,18 @@
  */
 class Sid_Wishlist_Model_Quote_NoProductException extends Mage_Core_Exception
 {
-	
+	protected $_refererUrl = null;
+
+	public function getRefererUrl() {
+	    return (string)$this->_refererUrl;
+    }
+
+    public function setRefererUrl($url) {
+	    if (!is_string($url)) {
+	        return $this;
+        }
+
+        $this->_refererUrl = $url;
+        return $this;
+    }
 }

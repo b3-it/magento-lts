@@ -1,0 +1,204 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * @var Mage_Customer_Model_Customer $customer
+ * @var Bkg_Orgunit_Block_Adminhtml_Customer_Edit_Tab_Addresses $this
+ * @var array $addressCollection
+ */
+?>
+
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-edit-form fieldset-legend">Queue Rule
+			information</h4>
+		<div class="form-buttons"></div>
+	</div>
+	<div class="fieldset " id="queueruleset_form">
+		<div class="hor-scroll">
+			<table class="form-list" cellspacing="0">
+				<tbody>
+				<tr class='grid'>
+	
+	<td class="value">
+		<script type="text/javascript">
+			var messageNoItemSelected = '<?php echo $this->__('At least one option must be selected.'); ?>';
+			var templateUpDownButtons = '<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>' +
+			                            '<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('egovsbase')->__('Down')?>"><span></span></button>';
+			var templateDelButton = '<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>';
+		</script>
+		
+		<table cellspacing="0" class="data" id="table-<?php echo $this->getId(); ?>_grid">
+			<colgroup>
+				<col style="width: 80px;"/>
+                <col />
+                <col style="width: 80px;" />
+				
+                <col />
+                <col />
+                <col style="width: 50px;" />
+			</colgroup>
+			<thead>
+				<tr class="headings">
+					<th><?php echo $this->__('Join')?></th>
+					<th><?php echo $this->__('Source')?></th>
+					<th><?php echo $this->__('Operator')?></th>
+					
+					<th><?php echo $this->__('Compare')?></th>
+					<th><?php echo $this->__('Value')?></th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template id="<?php echo $this->getId(); ?>_template">
+                <tr id="row-{{elementId}}-{{my_id}}" data-id="{{my_id}}">
+						<td>
+							{{join_text}}
+                            <input type="hidden" id="id-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][id]" value="{{id}}" />
+                            <input type="hidden" id="id-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][my_id]" value="{{my_id}}" />
+							<input type="hidden" id="entityid-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][ruleset_id]" value="{{ruleset_id}}" />
+							<input type="hidden" id="pos-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][position]" value="{{pos}}" class="position" />
+							<input type="hidden" id="deleted-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][deleted]" value="0" />
+							
+							<input type="hidden" id="join-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][join]" value="{{join}}" />
+							<input type="hidden" id="compare_source-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][source]" value="{{compare_source}}" />
+							<input type="hidden" id="compare_operator-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][operator]" value="{{compare_operator}}" />
+							<input type="hidden" id="not-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][is_not]" value="{{not}}" />
+							<input type="hidden" id="compare-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][compare]" value="{{compare}}" />
+							<input type="hidden" id="compare_value-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][compare_value]" value="{{compare_value}}" />
+							
+							
+						</td>
+                        <td>
+                            {{compare_source_text}}
+                        </td>
+                        <td>
+                            {{compare_operator_text}}
+                        </td>
+                        <td>
+                            {{compare_text}}
+                        </td>
+                         <td>
+                            {{compare_value_text}}
+                        </td>
+						<td class="position-sorting">
+						
+							<button class="scalable delete add-widget position-delete" type="button" onclick="ruleset.removeRow({{my_id}})" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>
+						</td>
+					</tr>
+                  </template>
+			</tbody>
+		</table>
+		
+	</td>
+</tr>
+				
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-edit-form fieldset-legend">Add Rule</h4>
+		<div class="form-buttons"></div>
+	</div>
+	<div class="fieldset " id="queueruleset_form">
+		<div class="hor-scroll">
+			<table class="form-list" cellspacing="0">
+				<tbody>
+					<tr>
+						<td class="label"><label for="compare_join_operator">Join</label></td>
+						<td class="value"><select id="compare_join_operator" name="compare_join_operator">
+							<option value="and"><?php echo $this->__("And")?> </option>
+							<option value="or"><?php echo $this->__("Or")?> </option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="label"><label for="status">Source</label></td>
+						<td class="value"><input id="compare_source" name="compare_source" type="text"/></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="compare_operator">Operator</label></td>
+						<td class="value"><select id="compare_operator" name="compare_operator">
+							<option value="eq"><?php echo $this->__("Equal")?> </option>
+							<option value="neq"><?php echo $this->__("Not Equal")?> </option>
+							<!-- 
+							<option value="lt"><?php echo $this->__("Less than")?> </option>
+							<option value="gt"><?php echo $this->__("Greater than")?> </option>
+							-->
+							</select>
+						</td>
+					</tr>
+					<!-- 
+					<tr>
+						<td class="label"><label for="compare_is_not">Not</label></td>
+						<td class="value"><input id="compare_is_not" name="compare_is_not" type="checkbox"/></td>
+					</tr>
+					 -->
+					<tr>
+						<td class="label"><label for="compare">Compare</label></td>
+						<td class="value"><select id="rule_compare" name="compare"
+							class="select" onchange="rule.switchCompare();">
+							<?php foreach ($this->getCompareOptions() as $k=>$v):?>
+								<option value="<?php echo $k?>"><?php echo $v;?></option>
+							<?php endforeach;?>
+							</select>
+							<span  id="compare_input"></span>
+						</td>
+					</tr>
+					<tr>
+					<td></td>
+					<td>
+					<button title="<?php echo $this->__('Add');?>" type="button" class="scalable save" onclick="ruleset.addRow(rule.getRule());" style=""><span><span><span><?php echo $this->__('Add');?></span></span></span></button>
+					</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+           var rule = new Rule();
+           rule.setCompareInputList(<?php echo $this->getCompareInputList();?>);
+           var ruleset = new RuleSet('<?php echo $this->getId(); ?>','ruleset');
+
+			<?php foreach($this->getRules() as $rule ):?>
+			ruleset.appendRow(<?php echo $rule?>);
+			<?php endforeach;?>
+
+           
+//]]>
+</script>
+</td>
+</tr>
+</table>

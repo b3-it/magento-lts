@@ -25,16 +25,47 @@ class Bkg_VirtualGeo_Model_Components_Content extends Bkg_VirtualGeo_Model_Compo
 	{
         $productId = intval($productId);
         $storeId = intval($storeId);
-		$collection = Mage::getModel('virtualgeo/components_contentproduct')->getCollection();
-
+		$contentProductModel = Mage::getModel('virtualgeo/components_contentproduct');
+		$contentOptionValueTable = $contentProductModel->getResource()->getContentOptionValueTable();
+		$contentOptionValueFields = $contentProductModel->getResource()->getOptionValueAdditionalFields();
+		$contentOptionValueFields['node_id'] = 'id';
+		$contentOptionValueEntityIdFieldName = $contentProductModel->getResource()->getOptionValueEntityIdFieldName();
+		$collection = $contentProductModel->getCollection();
 		//$collection->setStoreId($storeId);
 
+        $conditionLabel = array(
+            'label.entity_id=main_table.entity_id',
+            $collection->getConnection()->quoteInto('label.store_id=?', (int)$this->getStoreId()),
+            $collection->getConnection()->quoteInto('main_table.component_type=?', (int)$contentProductModel->getComponentType()),
+        );
 
+        $conditionCode = array(
+            "main_table.entity_id = entity.id",
+            $collection->getConnection()->quoteInto('main_table.component_type=?', (int)$contentProductModel->getComponentType()),
+        );
+
+        $conditionAdditional = array(
+            "main_table.id = additional.entity_id",
+            $collection->getConnection()->quoteInto('main_table.component_type=?', (int)$contentProductModel->getComponentType()),
+        );
 		$collection->getSelect()
-            ->join(array('label'=>$this->getCollection()->getLabelTable()), "label.entity_id=main_table.entity_id AND label.store_id=".$this->getStoreId(),array('entity_id','shortname','name','description'))
-            ->join(array('entity'=>$this->getCollection()->getMainTable()),"main_table.entity_id = entity.id",array('code'))
+            ->join(
+                array('label'=>$this->getCollection()->getLabelTable()),
+                join(' AND ', $conditionLabel),
+                array('entity_id','shortname','name','description'))
+            ->join(
+                array('entity'=>$this->getCollection()->getMainTable()),
+                join(' AND ', $conditionCode),
+                array('code'))
+            ->join(
+                array('additional' => $contentOptionValueTable),
+                join(' AND ', $conditionAdditional),
+                $contentOptionValueFields
+            )
             ->where("main_table.product_id={$productId}")
-            ->where(new Zend_Db_Expr("((main_table.store_id= 0) OR (main_table.store_id={$storeId}))"));
+            ->where(new Zend_Db_Expr("((main_table.store_id= 0) OR (main_table.store_id={$storeId}))"))
+            ->where('main_table.component_type=?', (int)$contentProductModel->getComponentType())
+        ;
 		//die($collection->getSelect()->__toString());
 		return $collection;
 	}

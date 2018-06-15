@@ -20,7 +20,7 @@ class B3it_Subscription_Model_Entity_Attribute_Source_Period
             $collection = Mage::getModel('b3it_subscription/period')->getCollection();
             $this->_options[] = array('label'=> "",'value'=>"");
             foreach ($collection as $item){
-                $this->_options[] = array('label'=> $item->getShortname(),'value'=>$item->getId());
+                $this->_options[] = array('label'=> $item->getName(),'value'=>$item->getId());
             }
         }
         return $this->_options;

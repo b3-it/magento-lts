@@ -1,5 +1,6 @@
 var tableID;                   // Wird dynamisch bei jeder Aktion neu ermittelt
 var tabelPrefix = 'table-';    // Prefix der Tabell-ID
+var highlightClass = 'move-row-highlight'; // CSS-Klasse zum hervorheben des bewegten Elementes
 
 $j(document).ready(function(){
     // Button-Clock im System anmelden
@@ -30,18 +31,27 @@ function registerClickEvent()
 
         // alles aktivieren
         activateAllButtons();
+        
+        // alle HighLights entfernen
+        $j('#' + tabelPrefix + tableID + ' tbody tr').removeClass(highlightClass);
 
         if ( $j(this).is('.position-up') ) {
             row.insertBefore( row.prev() );
 
             // Positionen neu setzen
             setNewPositions();
+            
+            // Hervorhebung der aktuellen Zeile
+            row.addClass(highlightClass);
         }
         else if ( $j(this).is('.position-down') ) {
             row.insertAfter( row.next() );
 
             // Positionen neu setzen
             setNewPositions();
+            
+            // Hervorhebung der aktuellen Zeile
+            row.addClass(highlightClass);
         }
         else if ( $j(this).is('.position-delete') ) {
             row.css('display', 'none');

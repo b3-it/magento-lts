@@ -11,7 +11,7 @@ class B3it_Subscription_Block_Customer_Account_Items extends Mage_Core_Block_Tem
     /**
      * Enter description here...
      *
-     * @return B3it_Icd_Block_Customer_Credentials_Items
+     * @return B3it_Subscription_Block_Customer_Account_Items
      */
     protected function _prepareLayout()
     {
@@ -30,7 +30,7 @@ class B3it_Subscription_Block_Customer_Account_Items extends Mage_Core_Block_Tem
 		if (!$this->hasSubscriptions()) {
 			$eav = Mage::getResourceModel('eav/entity_attribute');
 			$userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
-			/* @var $collection B3it_Subscription_Model_Mysql4_Subscription_Collection */
+			/* @var $collection B3it_Subscription_Model_Resource_Subscription_Collection */
 			$collection = Mage::getModel('b3it_subscription/subscription')->getCollection();
 			$collection->getSelect()
 				//->join(array('items'=>'icd_orderitem'),'items.account_id=main_table.id',array('item_status'=>'status','item_id'=>'id'))

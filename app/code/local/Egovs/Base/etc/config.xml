@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Egovs_Base>
-            <version>2.0.1.4</version>
+            <version>2.0.1.5</version>
         </Egovs_Base>
     </modules>
     <admin>
@@ -367,6 +367,14 @@
             </egovsbase_setup>
         </resources>
         <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <egovs_controller_action_layout_load_before>
+                        <class>egovsbase/observer</class>
+                        <method>checkShopState</method>
+                    </egovs_controller_action_layout_load_before>
+                </observers>
+            </controller_action_layout_load_before>
             <page_block_html_topmenu_gethtml_before>
                 <observers>
                     <catalog_add_topmenu_items>
@@ -437,6 +445,14 @@
                     </mpcheckout_invoice>
                 </observers>
             </egovs_paymentbase_saferpay_sales_order_invoice_after_pay>
+            <controller_action_predispatch_customer_account_createpost>
+                <observers>
+                    <captcha>
+                        <class>egovsbase/captcha_observer</class>
+                        <method>checkUserCreate</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_customer_account_createpost>
         </events>
         <!-- Änderungen des Cores aus [1999] -->
         <fieldsets>

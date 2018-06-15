@@ -248,11 +248,12 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	self::$Count++;
     	$text = array();
     	
-    	$text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName() . "';";
+    	$name = $this->getServiceLayer()->getName();
+    	$text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=".$helper->jsQuoteEscape($name). "';";
     	if ($espg) {
     	    $text[] = "url += '&srsname=EPSG:' + " . $espg .";";
     	}
-    	
+
     	$text[] = "var vectorSource".self::$Count." = new ol.source.Vector({";
     	$text[] = "	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),";
 /*
@@ -273,7 +274,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	$text[] = "  source: vectorSource".self::$Count.",";
     	$text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
     	$text[] = "  visible: " . ($this->getIsChecked() ? "true" : "false") . ",";
-    	$text[] = "  zIndex: " . $this->getVisualPos();
+    	$text[] = "  zIndex: " . intval($this->getVisualPos());
     	$text[] = "});";
     	$text[] = "layers_$level.push(vector);";
     	 

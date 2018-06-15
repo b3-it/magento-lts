@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @category   	Bkg
+ * @category   	B3it
  * @package    	B3it_Subscription
  * @name       	B3it_Subscription_Model_Resource_Period_entity_Collection
  * @author 		Holger Kögel <h.koegel@b3-it.de>
@@ -20,6 +20,8 @@ class B3it_Subscription_Model_Resource_Period_Collection extends Mage_Core_Model
     {
     	return $this->getTable('b3it_subscription/period_label');
     }
+    
+    /*
     
     protected $_storeid = 0;
     
@@ -42,4 +44,6 @@ class B3it_Subscription_Model_Resource_Period_Collection extends Mage_Core_Model
     	$select->join(array('label'=>$this->getLabelTable()), "label.entity_id=main_table.id AND label.store_id=".$this->getStoreId(),array('entity_id','shortname','name','description'));
     	return $this;
     }
+    
+    */
 }

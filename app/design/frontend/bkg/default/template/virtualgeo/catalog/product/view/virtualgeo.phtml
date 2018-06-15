@@ -49,15 +49,15 @@
      * @var int $cid
      */
     $cid = Mage::getSingleton('customer/session')->getCustomerId();
+    ;
 ?>
 </pre>
 <script type="text/javascript">
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
     <?php if ($this->getComposit()): ?>
 
-    <?php
-        echo Mage::helper("virtualgeo/data")->getProj4();
-    ?>
+	var pcode = "<?php echo $_product->getData('product_code'); ?>";
+    <?php echo Mage::helper("virtualgeo/data")->getProj4(); ?>
 
     var shapesfunc = function(epsg) {
         var layers = [];
@@ -126,38 +126,40 @@
 
 	function _kachelFunc(f) {
 
+		// reset the source and vector
     	kachelSource = null;
     	kachelVector = null;
 
     	struct = $j("input:checked[data-id='virtualgeo-components-structure']");
     	if (struct.length > 0) {
-    		structid = struct.val();
+    		structid = struct.attr("data-entity-id");
     		georef = $j("input:checked[data-id='virtualgeo-components-georef']");
     		if (georef.length > 0) {
-    			geocode = georef.attr("data-code");
+    			geoepsg = georef.attr("data-epsg");
 
     	        // the url should already support that epsg
-    			url = baseUrl + "index.php/virtualgeo/map/structurLayer/id/" + structid + "/georef/" + geocode;
+    			url = baseUrl + "index.php/virtualgeo/map/structurLayer/id/" + structid + "/geoepsg/" + geoepsg + "/procode/" + pcode;
     			$j.ajax(url, {
     				beforeSend: incLoading,
     				complete: decLoading,
     				//async: false,
         			success: function(data) {
-            			
-            			if (!!data) {
+        				if (!!data.url) {
             				kachelSource = new ol.source.Vector({
                 		    	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),
-                		    	url: data.url
+                		    	url: data.url,
+                		    	loader: ajaxLoader
                 			});
 
                 			// need to update the ID values for them
-                			kachelSource.once('change', function(e) {
-                    			kachelSource.getFeatures().forEach(function(y) {
-                        			if (!y.getId()) {
-                            			y.setId(y.get('ID'));
-                        			}
-                    			});
-                    		});
+                			// need to use feature id attribute if able
+                			if (!!data.fid) {
+                    			kachelSource.once('change', function(e) {
+                        			e.target.getFeatures().forEach(function(y) {
+                               			y.setId(y.get(data.fid));
+                        			});
+                        		});
+                			}
 
                 			kachelVector = new ol.layer.Vector({
                     		  layer_id: data.id,

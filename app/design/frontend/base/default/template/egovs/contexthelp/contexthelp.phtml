@@ -1,0 +1,51 @@
+<?php $urls = $this->getContentUrls(); ?>
+<?php if($urls != null):?>
+    <div id="context-help-popup" style="left:-100000px;">
+        <div id="context-help-popup-head">
+            <?php echo $this->__('Contexthelp'); ?>
+            <a href="javascript:void(0)" onclick="hidePopup()">
+                <span class="icon egov-delete2" title="<?php echo $this->__('Close'); ?>"> </span>
+            </a>
+        </div>
+        <div id="context-help-popup-body"></div>
+    </div>
+    <input type="hidden" name="showBlocks" id="showBlocks" value="0" />
+
+	<script type="text/javascript">
+	    var readyToShow = false;                         // Kann das Popup angezeigt werden (Inhalt?)
+        var popupBodyId = '#context-help-popup-body';    // ID des Scroll-Containers
+        var hideLevel   = '-1';                          // Level, bei welchem das Popup unsichtbar ist
+        var showLevel   = '900';                         // Level, bei welchem das Popup sichtbar ist
+
+        /**
+         * Inhalt per AJAX-Request laden
+         * Popup anzeigen
+         */
+        function showPopup()
+        {
+            if ( readyToShow == false ) {
+                resetPopup();
+
+                <?php foreach($urls as $url):?>
+                $j.ajax({
+                    'url'       : "<?php echo $url; ?>?showblocks=" + $j('#showBlocks').val(),
+                    'dataType'  : 'json',
+                    'async'     : false,
+                    'beforeSend': function() {},
+                })
+                .done(function(data) {
+                    $j(popupBodyId).append(data.html);
+                    $j('#showBlocks').val(data.blocks);
+                })
+                .fail(function(jqXHR, status){
+                    alert( "Request failed: " + status );
+                });
+              <?php endforeach;?>
+                readyToShow = true;
+            }
+            viewPopup();
+            updatePopupScrollBar();
+        }
+	</script>
+    <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.context.helper.popup.js"></script>
+<?php endif;?>

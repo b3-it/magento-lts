@@ -291,7 +291,7 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
      *
      * @param Mage_Catalog_Model_Product $product
      *
-     * @return array[fee][usage]
+     * @return array[]
      */
     protected function _getRapRelationCollection($product, $usage) {
         $expr = new Zend_Db_Expr("`usage` = '".$usage."' OR `usage` = '".$usage."_tax'");
@@ -389,16 +389,6 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
         return Mage::getSingleton('checkout/cart');
     }
 
-    // FIXME XXX no options for you!
-    public function hasOptions($product=NULL) {
-        return false;
-    }
-
-    // FIXME XXX no options for you!
-    public function getOptionsIds($product=NULL) {
-        return array();
-    }
-    
     /**
      * Retrieve bundle option collection
      *
@@ -483,5 +473,43 @@ class Bkg_VirtualGeo_Model_Product_Type extends Mage_Bundle_Model_Product_Type
             $this->getProduct($product)->setData($key, $selectionsCollection);
         }
         return $this->getProduct($product)->getData($key);
+    }
+
+    /**
+     * Process custom defined options for product
+     *
+     * @param Varien_Object $buyRequest
+     * @param Mage_Catalog_Model_Product $product
+     * @param string $processMode
+     * @return array
+     */
+    protected function _prepareOptions(Varien_Object $buyRequest, $product, $processMode)
+    {
+        $transport = new StdClass;
+        $transport->options = array();
+
+        foreach (Bkg_VirtualGeo_Model_Product_Option::createOptionInstances() as $_option) {
+            /** @var Bkg_VirtualGeo_Model_Product_Option $_option */
+            /** @var Mage_Catalog_Model_Product_Option_Type_Default $group */
+            $group = $_option->groupFactory($_option->getType())
+                ->setOption($_option)
+                ->setProduct($this->getProduct($product))
+                ->setRequest($buyRequest)
+                ->setProcessMode($processMode)
+                ->validateUserValue($buyRequest->getOptions());
+
+            $preparedValue = $group->prepareForCart();
+            if ($preparedValue !== null) {
+                $transport->options[$_option->getId()] = $preparedValue;
+            }
+        }
+
+        $eventName = sprintf('catalog_product_type_prepare_%s_options', $processMode);
+        Mage::dispatchEvent($eventName, array(
+            'transport'   => $transport,
+            'buy_request' => $buyRequest,
+            'product' => $product
+        ));
+        return $transport->options;
     }
 }

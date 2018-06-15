@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <Bkg_License>
-            <version>0.1.0.0</version>
+            <version>0.1.2.0</version>
         </Bkg_License>
     </modules>
     <global>
@@ -92,7 +93,9 @@
                    <copy_authorized_customer>
                     <table>bkg_license_copy_authorized_customer</table>
                    </copy_authorized_customer>
-
+                    <copy_period>
+                    <table>bkg_license_copy_period</table>
+                   </copy_period>
                 </entities>
             </bkg_license_resource>
         </models>
@@ -119,7 +122,14 @@
                     </license_bkg_orgunit_is_used>
                 </observers>
             </bkg_orgunit_is_used>
-           
+           <b3it_subscription_model_create_calculate>
+               <observers>
+               <license_bkg_orgunit_is_used>
+                   <class>bkg_license/copy_observer</class>
+                   <method>onSubscriptionCalculate</method>
+               </license_bkg_orgunit_is_used>
+           </observers>
+           </b3it_subscription_model_create_calculate>
         </events>
     </global>
     <frontend>

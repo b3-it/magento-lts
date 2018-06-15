@@ -126,6 +126,17 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Form extends Mage_Adminhtml_Bl
       		'values' => $pdfs,
       		'value' => $model->getData('pdf_template_id'),
       ));
+      
+
+      
+      $fieldset->addField('period', 'select', array(
+      		'label'     => Mage::helper('bkg_license')->__('Subscription'),
+      		'class'     => 'required-entry',
+      		'required'  => true,
+      		'name'      => 'period_id',
+      		'values' => Mage::getModel('b3it_subscription/entity_attribute_source_period')->getAllOptions(),
+      		'value' => $model->getData('period_id'),
+      ));
 
      
 

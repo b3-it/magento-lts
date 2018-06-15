@@ -20,6 +20,13 @@ var intersectionCache = {};
 var myDrawSource = new ol.source.Vector({wrapX: false});
 var ol3Parser = new jsts.io.OL3Parser();
 
+var ol3DrawGeo = null;
+
+var finalDrawFeature = null; 
+var finalDrawSource = null;
+
+// fix for the animation thing
+var mapClosed = true;
 /**
 * check whether the supplied polygons have any spatial interaction
 * @{ol.geometry.Polygon} polygeomA 
@@ -34,47 +41,133 @@ function polyIntersectsPoly(polygeomA, polygeomB) {
 
 
 //Testing API for Virtual Geo
+
+/**
+ * List of Tiles that can be selected 
+ * @returns Array.<ol.Feature>
+ */
 function getAvailableTiles() {
-    return kachelSource.getFeatures();
+    return kachelSource === null ? [] : kachelSource.getFeatures();
 }
 
+/**
+ * List of Tiles that are selected
+ * @returns Array.<ol.Feature>
+ */
 function getSelectedTiles() {
-    return _kachelFinalSource.getFeatures();
+    return _kachelFinalSource === null ? [] : _kachelFinalSource.getFeatures();
 }
 
+/**
+ * Select the tiles with the given ids
+ * @param Array.<id>
+ */
 function selectTiles(ids) {
 	addGridSelection(ids);
 }
 
+/**
+ * Unselect the tiles with the given ids
+ * @param Array.<id>
+ */
 function removeTiles(ids) {
 	removeGridSelection(ids);
 }
 
 
+
+/**
+ * Returns list of Layer that can be used as Tools
+ * @returns Array.<ol.layer.Vector>
+ */
 function getAvailableTools() {
     return tools == null ? [] : tools.getLayers().getArray();
 }
 
+/**
+ * Returns array of Features for the given ToolLayer
+ * @param ol.layer.Vector toolLayer
+ * @returns Array.<ol.Feature>
+ */
 function getFeaturesByTool(toolLayer) {
 	return toolLayer == null ? [] : toolLayer.getSource().getFeatures();
 }
 
+/**
+ * Selects Tiles with using the features of the given Tool Layer
+ * @param ol.layer.Vector toolLayer
+ * @param Array.<ol.Feature> features
+ */
 function selectWithTool(toolLayer, features) {
 	getIntersectionTool(toolLayer, features, addGridSelection);
 }
+/**
+ * Unselects Tiles with using the features of the given Tool Layer
+ * @param ol.layer.Vector toolLayer
+ * @param Array.<ol.Feature> features
+ */
 function removeWithTool(toolLayer, features) {
 	getIntersectionTool(toolLayer, features, removeGridSelection);
 }
 
-function incLoading() {
+function incLoading(e) {
+	// map is not visible, don't show loading overlay
+	if (!$j('#virtualgeo-openlayer').is(":visible") || mapClosed) {
+		return;
+	}
+	//console.log("incLoading");
 	$j('#virtualgeo-openlayer').LoadingOverlay("show");
 }
 
 function decLoading() {
+	//console.log("decLoading");
 	$j('#virtualgeo-openlayer').LoadingOverlay("hide");
 }
 
+function stopLoading() {
+	//console.log("stopLoading");
+	$j('#virtualgeo-openlayer').LoadingOverlay("hide", true);
+}
+
+function cleanupMap() {
+	if (_map === null) {
+		return false;
+	}
+	//clean map of layers
+	//_layerSwitcher.setMap(null);
+	_map.getLayers().clear();
+	if (_kachelFinalSource !== null) {
+		_kachelFinalSource.clear();        				
+	}
+	if (_select !== null) {
+		_map.removeInteraction(_select);        				
+	}
+	_select = null;
+	//alert("clean map");
+
+	// disable selectmenu selected
+	$j('.toogleSelectCtrl > select').val('').selectmenu( "refresh" );
+	$j('.toogleSelectCtrl > .ui-selectmenu-button').removeClass('ui-state-active');
+	
+	//_map.setView(null);
+}
+function makeDrawLayer() {
+	finalDrawFeature = new ol.Feature(); 
+	finalDrawSource = new ol.source.Vector({
+		features: [finalDrawFeature],
+		wrapX: false
+	});
+	return new ol.layer.Vector({
+		source: finalDrawSource,
+		zIndex: kachelZIndex + 2,
+		style: selectStyle
+	});
+}
+
 function updateHiddenKachel() {
+	if (kachelSource == null || _kachelFinalSource == null) {
+		return;
+	}
 	d=[];
 	_kachelFinalSource.forEachFeature(function(f) {
 		d.push(f.getId());
@@ -97,6 +190,7 @@ function updateKachel(layers)
 			zIndex: k.getZIndex() + 1,
 			style: selectStyle
 		}));
+		
 		
 		selections['radio-grid'] = new ol.interaction.Select({
 			addCondition: function(e) { return $j("#radio-plus:checked").length > 0;},
@@ -157,10 +251,13 @@ function buildSelectionCtrl(lools, shapes) {
 }
 
 function removeGridSelection(gids) {
+	if (!kachelSource || !_kachelFinalSource) {
+		return;
+	}
 	var removeGrids = [];
 	gids.forEach(function(gid) {
 		g = kachelSource.getFeatureById(gid);
-		if(removeGrids.indexOf(g) === -1) {
+		if(g !== null && removeGrids.indexOf(g) === -1) {
 			removeGrids.push(g);
 		}
 	});
@@ -173,18 +270,21 @@ function removeGridSelection(gids) {
 }
 
 function addGridSelection(gids) {
+	if (!kachelSource || !_kachelFinalSource) {
+		return;
+	}
 	addGrids = [];
 	gids.forEach(function(gid) {
 		g = kachelSource.getFeatureById(gid);
-		if(addGrids.indexOf(g) === -1) {
+		if(g !== null && addGrids.indexOf(g) === -1) {
 			addGrids.push(g);
 		}
 	});
 
-	if (jQuery('#radio-plus:checked').length > 0) {
+	if ($j('#radio-plus:checked').length > 0) {
 		// doesn't crash if ti has id
 		_kachelFinalSource.addFeatures(addGrids);
-	} else if (jQuery('#radio-minus:checked').length > 0) {
+	} else if ($j('#radio-minus:checked').length > 0) {
 		addGrids.forEach(function(grid) {
 			if (_kachelFinalSource.getFeatures().indexOf(grid) !== -1) {
 				_kachelFinalSource.removeFeature(grid);
@@ -194,15 +294,26 @@ function addGridSelection(gids) {
 }
 
 function getIntersectionTool(t, v, func) {
-
+	// prevent from crashing
+	if (!kachelSource || !_kachelFinalSource || !kachelVector) {
+		handleGeometry(v.getGeometry());
+		return;
+	}
 	var lid = t.get('layer_id');
 	var kid = kachelVector.get('layer_id');
 	
-	// FIXME use epsg for now  
+	// FIXME use epsg for now
 	var sid = $j("input:checked[data-id='virtualgeo-components-georef']").attr('data-epsg');
 	var vid = v.getId();
 	
-	// TODO there add JS cache?
+	// some layer use attribute code, this might not be used as ID because not uniqness,
+	// for this need to check if the source has a attribute name to use
+	var an = t.getSource().get('attributeName');
+	if (an !== undefined) {
+		vid = v.get(an);
+	}
+	
+
 	var cachekey = 'layer'+ lid + "_" + kid + "_" + sid + "_" + vid;
 	
 	if (intersectionCache[cachekey] !== undefined) {
@@ -215,7 +326,9 @@ function getIntersectionTool(t, v, func) {
 		beforeSend: incLoading,
 		complete: decLoading,
 		success: function(data) {
-			intersectionCache[cachekey] = data;
+			if (vid !== undefined) {
+				intersectionCache[cachekey] = data;
+			}
 			func.call(null, data);
 		}
 	});
@@ -254,11 +367,6 @@ function baseSelection(lay, func) {
 		multi: true
 	});
 	sel.on('select', function(e) {
-		if (!kachelSource || !_kachelFinalSource) {
-			// can't do anything with Kacheln, just deselect
-			e.target.getFeatures().clear();
-			return;
-		}
 		var removeGrids = [];
 		var addGrids = [];
 
@@ -274,6 +382,31 @@ function baseSelection(lay, func) {
 		updateHiddenKachel();
 	});
 	return sel;
+}
+
+function updateHiddenGeometry() {
+	var wkt = new jsts.io.WKTWriter();
+	$j('#hiddenwkt').val(wkt.write(ol3DrawGeo));
+}
+//
+function handleGeometry(geomA) {
+	//finalDrawSource.clear();
+	
+	// Currently it does crash on Self Intersecting geometries and i can't check that
+	
+	if ($j('#radio-plus:checked').length > 0) {
+		var geoRead = ol3Parser.read(geomA);
+		ol3DrawGeo = ol3DrawGeo == null ? geoRead : ol3DrawGeo.union(geoRead);
+		finalDrawFeature.setGeometry(ol3Parser.write(ol3DrawGeo));
+		updateHiddenGeometry();
+	} else if ($j('#radio-minus:checked').length > 0) {
+		if (ol3DrawGeo != null) {
+			var geoRead = ol3Parser.read(geomA);
+			ol3DrawGeo = ol3DrawGeo.difference(geoRead);
+			finalDrawFeature.setGeometry(ol3Parser.write(ol3DrawGeo));
+			updateHiddenGeometry();
+		}
+	}
 }
 
 function makeSelection(tools, shapes) {
@@ -306,6 +439,15 @@ function makeSelection(tools, shapes) {
 		draw.on('drawend',function(e){
 			var geomA = e.feature.getGeometry();
 			var extent = geomA.getExtent();
+			
+			if (kachelSource == null) {
+				//console.log(geomA);
+				handleGeometry(geomA);
+				
+				return;
+			}
+			
+			// TODO add what to do when kachelSource is null
 			var grids = [];
 			kachelSource.forEachFeatureInExtent(extent,function(aa){
 				if (polyIntersectsPoly(geomA, aa.getGeometry()) === true){
@@ -317,7 +459,7 @@ function makeSelection(tools, shapes) {
 				}
 			});
 			var changed = false;
-			if (jQuery('#radio-plus:checked').length > 0) {
+			if ($j('#radio-plus:checked').length > 0) {
 				// Crasht nicht mehr?
 				_kachelFinalSource.addFeatures(grids);
 				/*
@@ -328,7 +470,7 @@ function makeSelection(tools, shapes) {
 					}
 				});
 				//*/
-			} else if (jQuery('#radio-minus:checked').length > 0) {
+			} else if ($j('#radio-minus:checked').length > 0) {
 				grids.forEach(function(grid) {
 					if (_kachelFinalSource.getFeatures().indexOf(grid) !== -1) {
 						_kachelFinalSource.removeFeature(grid);
@@ -369,10 +511,12 @@ $j(document).ready(function(){
         				shapes = shapesfunc.call(null, _epsg);
         			    selections = makeSelection(tools, shapes);
         			    
-        			    updateKachel(layers, selections);
+        			    updateKachel(layers);
 
         				layers.push(tools);
         				layers.push(shapes);
+
+        				layers.push(makeDrawLayer());
         				//console.log(layers);
         				view = makeview(_epsg);
         				_map = new ol.Map({
@@ -519,6 +663,8 @@ $j(document).ready(function(){
             			
         				layers.push(tools);
         				layers.push(shapes);
+
+        				layers.push(makeDrawLayer());
             			// use this to add new Layers
             			_map.getLayerGroup().setLayers(layers);
         			}
@@ -530,25 +676,17 @@ $j(document).ready(function(){
             // wird aktiviert
         },
         'beforeActivate': function(event, ui) {
+        	if (ui.oldPanel.length > 0) {
+        		if (ui.oldPanel.is('#virtualgeo-openlayer')) {
+        			mapClosed = true;
+        			stopLoading();
+        			cleanupMap();
+        		}
+        	}
         	if (ui.newPanel.length > 0) {
-        		if (ui.newPanel.is('#virtualgeo-openlayer') && _map != null) {
-        			//clean map of layers
-        			//_layerSwitcher.setMap(null);
-        			_map.getLayers().clear();
-        			if (_kachelFinalSource !== null) {
-            			_kachelFinalSource.clear();        				
-        			}
-        			if (_select !== null) {
-        				_map.removeInteraction(_select);        				
-        			}
-        			_select = null;
-        			//alert("clean map");
-
-			    	// disable selectmenu selected
-		    		$j('.toogleSelectCtrl > select').val('').selectmenu( "refresh" );
-		    		$j('.toogleSelectCtrl > .ui-selectmenu-button').removeClass('ui-state-active');
-			    	
-        			//_map.setView(null);
+        		if (ui.newPanel.is('#virtualgeo-openlayer')) {
+        			cleanupMap();
+        			mapClosed = false;
         		}
         	}
         }

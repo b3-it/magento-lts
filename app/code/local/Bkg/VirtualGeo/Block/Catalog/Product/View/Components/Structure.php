@@ -11,7 +11,7 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Structure extends Bkg
 
     public function getOptions($fields = null)
     {
-        $fields = array('service_id', 'show_map');
+        $fields = array('service_id', 'show_map', 'code');
         return parent::getOptions($fields);
     }
 }

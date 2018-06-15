@@ -13,6 +13,9 @@
         <Bkg_License>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+            	<B3it_Subscription />
+            </depends>
         </Bkg_License>
         <Bkg_MapSeries>
             <active>true</active>

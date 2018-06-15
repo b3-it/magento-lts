@@ -210,10 +210,10 @@ class Dwd_Ibewi_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_Widge
       
 
       
-    $this->addColumn('taxvat', array(
+    $this->addColumn('vat_id', array(
           'header'    => 'Steuernummer',
           'width'     => '50px',
-          'index'     => 'taxvat',
+          'index'     => 'vat_id',
     		'renderer'	=> 'ibewi/adminhtml_widget_grid_column_renderer_plaintext'
       ));
     

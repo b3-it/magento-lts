@@ -86,6 +86,8 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
 				->setStoreId($store_id)
 				->setId($this->getRequest()->getParam('id'));
 
+				//var_dump($model);
+				//die();
             if(!$model->getShowLayer()){
                 $model->unsetData('service_id');
             }

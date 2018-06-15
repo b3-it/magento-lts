@@ -136,8 +136,8 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
       		'name'      => 'layer_naming_rule',
       	
       		//'onchange'  => 'toogleLayer()',
-      		'readonly' => $store_id != 0,
-      		'disabled' => $store_id != 0,
+//      	'readonly' => $store_id != 0,
+//      	'disabled' => $store_id != 0,
       		'value' => $dataModel->getLayerNamingRule(),
       		'note'		=> "{{product_code}}_{{crs_code}}_{{structure_code}}"
       ));

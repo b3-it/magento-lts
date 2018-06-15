@@ -52,7 +52,9 @@
                 <!-- added jQuery-Egov-Funktions -->
                 <action method="addJs"><script>egovs/jquery.egov.js</script></action>
                 <action method="addJs"><script>egovs/jquery.nicescroll.min.js</script></action>
+                <!-- <action method="addJs"><script>egovs/jquery.nicescroll.iframehelper.min.js</script></action> -->
                 <action method="addJs"><script>egovs/jquery.nicescroll.init.js</script></action>
+                <action method="addJs"><script>egovs/jquery.resize.js</script></action>
                 <!--  <action method="addJs"><script>egovs/jquery.prevent.lostsession.js</script></action> -->
 
                 <!-- Add stylesheets with no media queries for use in IE 8 and below -->
@@ -118,7 +120,7 @@
             </block>
 
             <block type="page/html_wrapper" name="footer.before" as="footer_before" translate="label">
-                <label>Page Footer</label>
+                <label>Before Page Footer</label>
                 <action method="setElementClass"><value>footer-before-container</value></action>
             </block>
 
