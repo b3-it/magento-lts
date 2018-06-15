@@ -112,6 +112,7 @@
 "Use mandate one times","Mandat nur für einmalige Nutzung"
 "View mandate","Mandat aufrufen"
 "You will get a new SEPA Mandate via email. Please subscribe and send it back to %s","Sie bekommen Ihr neues SEPA Mandat via Email zugesandt. Bitte senden Sie es unterschrieben zurück an %s"
+"Your actual SEPA mandate is only a one off mandate, please create a new one.","Ihr aktuelles SEPA Mandat ist ein Einmalmandat. Bitte erzeugen Sie ein neues Mandat!"
 "Your SEPA Mandate can not used for multi payment. Please create a new one!","Ihr Mandat ist nicht für mehrfache Zahlungen gedacht, bitte erzeugen Sie ein Neues!"
 "Your SEPA Mandate is canceled! Please create a new one.","Ihr SEPA Mandat ist gekündigt! Bitte erzeugen Sie ein Neues."
 "Your SEPA Mandate is canceled! Please create a new one.","Ihre SEPA-Mandat ist abgelaufen! Bitte erstellen Sie ein neues."

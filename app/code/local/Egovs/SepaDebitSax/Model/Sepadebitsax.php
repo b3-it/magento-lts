@@ -227,7 +227,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
                 $email = Mage::getModel('sepadebitsax/email');
                 $email->setTemplate("payment/sepadebitsax/mandate_template");
                 try {
-                    $email->send($this->getCustomer(), $objResult->getMandatPdf());
+                    $email->sendEmail($this->getCustomer(), $objResult->getMandatPdf());
                 } catch (Exception $e) {
                     Mage::logException($e);
                     $sMailText = sprintf("Exception:\n%s\n\n", $e->getMessage());
@@ -348,6 +348,16 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
                         || ($mandate->getMandatStatus() == Egovs_SepaDebitSax_Model_Webservice_Enum_MandatStatus::VALUE_AUFUNTERSCHRIFTWARTEND)
                     ) {
                         Mage::throwException(Mage::helper('sepadebitsax')->__('Your SEPA Mandate is still waiting for signig!'));
+                    }
+
+                    if ($mandate->isActive() && !$mandate->isMultiPayment()) {
+                        $message = Mage::helper('sepadebitsax')->__("Your actual SEPA mandate is only a one off mandate, please create a new one.");
+                        Mage::getSingleton('checkout/session')->addUniqueMessages(Mage::getModel('core/message_notice', $message));
+                    }
+
+                    if (!$mandate->isActive()) {
+                        $message = Mage::helper('sepadebitsax')->__("Your actual SEPA mandate is no more valid, please create a new one.");
+                        Mage::getSingleton('checkout/session')->addUniqueMessages(Mage::getModel('core/message_notice', $message));
                     }
                 }
             }

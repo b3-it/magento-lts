@@ -1146,6 +1146,12 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Mandat
             //Mage::throwException("You can not change your inactive Mandate!");
         }
 
+        if ($mandate->getSequenceType() == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
+            if ($mandate->isActive() && !$mandate->isMultiPayment()) {
+                return self::MANDATE_CHANGE_NEW;
+            }
+        }
+
         if ($this->getAllowOneoff() && $payment->getAdditionalInformation('sequence_type') == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
             if ($mandate->getSequenceType() != Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
                 return self::MANDATE_CHANGE_ACCOUNT;
