@@ -609,7 +609,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
         }
 
         $stateObject->setState($orderState);
-        $stateObject->setStatus($orderState);
+        $stateObject->setStatus($orderStatus);
         $stateObject->setIsNotified(false);
 
         return $this;
