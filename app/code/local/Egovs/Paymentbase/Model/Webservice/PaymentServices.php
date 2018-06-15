@@ -1074,7 +1074,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 						'eShopKundenNr' => $customerId,
 						'mandat' => $mandat,
 						'buchungsListe' => $objBuchungsliste,
-						'buchungslisteParameterSet' => null,//$buchungsListeParameterSet->isEmpty() ? null : $buchungsListeParameterSet
+						'buchungslisteParameterSet' => $buchungsListeParameterSet->isEmpty() ? null : $buchungsListeParameterSet
 				)
 		);
 		
