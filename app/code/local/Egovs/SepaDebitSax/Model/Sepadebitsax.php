@@ -4,7 +4,7 @@
  * ePayment-Kommunikation im SEPA-Debit-Verfahren (Lastschrift) für Bund.
  *
  * @category       Egovs
- * @package        Egovs_Paymentbase
+ * @package        Egovs_SepaDebitSax
  * @author         Holger Kögel <h.koegel@b3-it.de>
  * @author         Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @copyright      Copyright (c) 2013 - 2018 B3 IT System GmbH <hhtps://www.b3-it.de>
@@ -326,6 +326,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
     public function validate() {
         Mage_Payment_Model_Method_Abstract::validate();
 
+        /* @var \Mage_Sales_Model_Quote_Payment $payment */
         $payment = $this->getInfoInstance();
         if (($this->getIbanOnly() || $payment->getData('cc_type')) && $payment->getData('cc_number')) {
             $this->_validateBankdata();
@@ -488,8 +489,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
 
             //falls mandat aktiv ist die erste Bestellung schon durch
             if (!$mandate->isMultiPayment()) {
-
-                Mage::throwException($this->__("Your SEPA Mandate can not used for multi payment. Please create a new one!"));
+                throw new Mage_Core_Exception($this->__("Your SEPA Mandate can not used for multi payment. Please create a new one!"), Egovs_Helper::EXCEPTION_CODE_PUBLIC);
             }
         } elseif ($this->isMandatNew($payment)) {
             $mandateNeu = true;
