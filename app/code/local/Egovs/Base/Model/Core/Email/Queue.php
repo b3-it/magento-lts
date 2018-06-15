@@ -24,6 +24,7 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
 	protected function _getBaseMail() {
 		if (is_null($this->_baseMail)) {
 			$this->_baseMail = Mage::getModel('egovsbase/core_basemail');
+			$this->_baseMail->setIsQueueProcess();
 		}
 	
 		return $this->_baseMail;
