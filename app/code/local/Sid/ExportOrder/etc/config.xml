@@ -7,17 +7,17 @@
         </Sid_ExportOrder>
     </modules>
     <admin>
-         <routers>
-			<adminhtml>	
-				<args>
-					<modules>
-						<Sid_ExportOrder_Adminhtml after="Mage_Adminhtml">Sid_ExportOrder_Adminhtml</Sid_ExportOrder_Adminhtml>
-					</modules>
-				</args>
-			</adminhtml>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Sid_ExportOrder_Adminhtml after="Mage_Adminhtml">Sid_ExportOrder_Adminhtml</Sid_ExportOrder_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
         </routers>
     </admin>
-       <frontend>
+    <frontend>
         <routers>
             <exportorder>
                 <use>standard</use>
@@ -45,30 +45,29 @@
                     </transfer_email>
                     <transfer_post>
                         <table>sidexportorder_transfer_post</table>
-                    </transfer_post> 
-                     <transfer_link>
+                    </transfer_post>
+                    <transfer_link>
                         <table>sidexportorder_transfer_link</table>
-                    </transfer_link> 
+                    </transfer_link>
                     <format_plain>
                         <table>sidexportorder_format_plain</table>
                     </format_plain>
                     <format_transdoc>
                         <table>sidexportorder_format_transdoc</table>
-                    </format_transdoc>  
+                    </format_transdoc>
                     <format_opentrans>
                         <table>sidexportorder_format_opentrans</table>
                     </format_opentrans>
-                     <history>
+                    <history>
                         <table>sidexportorder_history</table>
                     </history>
-                     <link>
+                    <link>
                         <table>sidexportorder_link</table>
                     </link>
                     <link_order>
                         <table>sidexportorder_link_order</table>
                     </link_order>
-                   
-               </entities>
+                </entities>
             </exportorder_resource>
         </models>
         <resources>
@@ -123,59 +122,69 @@
                     <file>sid/exportorder/error.html</file>
                     <type>html</type>
                 </framecontract_email_exportorder_error_template>
-             </email>
+            </email>
         </template>
     </global>
     <adminhtml>
-    <events>
-      <framecontract_vendor_save_after>
-        <observers>
-          <exportorder_vendor_save_observer>
-            <class>exportorder/observer</class>
-            <method>onVendorSaveAfter</method>
-          </exportorder_vendor_save_observer>
-        </observers>
-      </framecontract_vendor_save_after>
-      </events>
-	<menu>
-		<framecontract >
+        <events>
+            <framecontract_vendor_save_after>
+                <observers>
+                    <exportorder_vendor_save_observer>
+                        <class>exportorder/observer</class>
+                        <method>onVendorSaveAfter</method>
+                    </exportorder_vendor_save_observer>
+                </observers>
+            </framecontract_vendor_save_after>
+        </events>
+        <menu>
+            <framecontract>
+                <children>
+                    <export translate='title' module="exportorder">
+                        <title>Vendor Order</title>
+                        <sort_order>50</sort_order>
+                        <action>adminhtml/exportOrder_export</action>
+                    </export>
+                </children>
+            </framecontract>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
                     <children>
-                          <export translate='title' module="exportorder">
-                                <title>Vendor Order</title>
-                                <sort_order>50</sort_order>
-                                <action>adminhtml/exportOrder_export</action>
-                          </export>
-                        
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <sid_exportorder translate="title" module="exportorder">
+                                            <title>PlainText Export Order</title>
+                                        </sid_exportorder>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                        <framecontract>
+                            <children>
+                                <export module="exportorder">
+                                    <title>Export Order</title>
+                                    <sort_order>20</sort_order>
+                                </export>
+                            </children>
+                        </framecontract>
                     </children>
-              </framecontract>
-	</menu>
-	<acl>
-		<resources>
-			<all>
-				<title>Allow Everything</title>
-			</all>
-			<admin>
-				<children>
-					<framecontract>
-						<children>
-							<export module="exportorder">
-								<title>Export Order</title>
-								<sort_order>20</sort_order>
-							</export>
-						</children>
-					</framecontract>
-				</children>
-			</admin>
-		</resources>
-	</acl>
-	<layout>
-		<updates>
-			<exportorder>
-				<file>sid/exportorder.xml</file>
-			</exportorder>
-		</updates>
-	</layout>
-	 <translate>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <exportorder>
+                    <file>sid/exportorder.xml</file>
+                </exportorder>
+            </updates>
+        </layout>
+        <translate>
             <modules>
                 <Sid_ExportOrder>
                     <files>
@@ -186,39 +195,39 @@
         </translate>
     </adminhtml>
     <sid_exportorder>
-    	<format>
-    		<plain>
-	    		<label>Plain</label>
-	    		<typ>plain</typ>
-    		</plain>
-    		<opentrans>
-	    		<label>Opentrans</label>
-	    		<typ>opentrans</typ>
-    		</opentrans>
-    	</format>
-    	<transfer>
-    		<email>
-    			<label>Email</label>
-	    		<typ>email</typ>
-    		</email>
-    		<email_attachment>
-    			<label>Email Attachment</label>
-	    		<typ>email_attachment</typ>
-    		</email_attachment>
-    		<post>
-    			<label>Post</label>
-	    		<typ>post</typ>
-	    	</post>
-	    	<link>
+        <format>
+            <plain>
+                <label>Plain</label>
+                <typ>plain</typ>
+            </plain>
+            <opentrans>
+                <label>Opentrans</label>
+                <typ>opentrans</typ>
+            </opentrans>
+        </format>
+        <transfer>
+            <email>
+                <label>Email</label>
+                <typ>email</typ>
+            </email>
+            <email_attachment>
+                <label>Email Attachment</label>
+                <typ>email_attachment</typ>
+            </email_attachment>
+            <post>
+                <label>Post</label>
+                <typ>post</typ>
+            </post>
+            <link>
                 <label>Link</label>
                 <typ>link</typ>
             </link>
-    	</transfer>
-    	<delete_old_links>
-    	   <days>14</days>
-    	</delete_old_links>
+        </transfer>
+        <delete_old_links>
+            <days>14</days>
+        </delete_old_links>
     </sid_exportorder>
-        <crontab>
+    <crontab>
         <jobs>
             <exportorder>
                 <schedule>
@@ -231,16 +240,33 @@
         </jobs>
     </crontab>
     <default>
-        <exportorder>
-            <email>
-                <vendor_order_plain>exportorder_vendor_order_plain</vendor_order_plain>
-                <error>exportorder_vendor_error</error>
-            </email>
-        </exportorder>
-        <framecontract>
-            <email>
-                <exportorder_error_template>framecontract_email_exportorder_error_template</exportorder_error_template>
-            </email>
-        </framecontract>
-    </default>
-</config>
+        <sid_exportorder>
+            <sid_exportorder_plaintext>
+                <plaintext_template><![CDATA[-- KUNDENADRESSE --
+{{CustomerAddress}}
+
+
+-- RECHNUNGSADRESSE --
+{{InvoiceAddress}}
+
+
+-- LIEFERADRESSE --
+{{ShippingAddress}}
+
+
+{{OrderItems}}]]></plaintext_template>
+                </sid_exportorder_plaintext>
+            </sid_exportorder>
+            <exportorder>
+                <email>
+                    <vendor_order_plain>exportorder_vendor_order_plain</vendor_order_plain>
+                    <error>exportorder_vendor_error</error>
+                </email>
+            </exportorder>
+            <framecontract>
+                <email>
+                    <exportorder_error_template>framecontract_email_exportorder_error_template</exportorder_error_template>
+                </email>
+            </framecontract>
+        </default>
+    </config>
