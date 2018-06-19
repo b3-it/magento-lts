@@ -34,7 +34,9 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
 				$model->setData($data);
 			}
 
-            $this->_storeIsolation($model->getStoreId());
+            if($model->getId()) {
+                $this->_storeIsolation($model->getStoreId());
+            }
 
 			Mage::register('kassenbuchcashbox_data', $model);
 			$this->_initAction();
@@ -66,7 +68,9 @@ class Gka_Barkasse_Adminhtml_Barkasse_Kassenbuch_CashboxController extends Mage_
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 
-            $this->_storeIsolation($model->getStoreId());
+			if($model->getId()) {
+                $this->_storeIsolation($model->getStoreId());
+            }
 
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
