@@ -223,6 +223,7 @@ class Egovs_SepaDebitSax_Model_Sepadebitsax extends Egovs_Paymentbase_Model_Sepa
                  */
                 $mandate->setCreditorId($objResult->getMandatsdaten()->getKreditorGlaeubigerId());
 
+                $this->getCustomer()->setMandate($mandate);
                 //mandate versenden
                 $email = Mage::getModel('sepadebitsax/email');
                 $email->setTemplate("payment/sepadebitsax/mandate_template");

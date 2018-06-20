@@ -90,6 +90,10 @@ class Egovs_SepaDebitSax_Model_Email extends Varien_Object
 		}
 		
 		$this->_templatedata["customer"] = $customer;
+		if (($mandate = $customer->getMandate())) {
+		    /** @var $mandate \Egovs_SepaDebitSax_Model_Sepa_Mandate */
+		    $this->_templatedata["mandate_reference"] = $mandate->getReference();
+        }
 		
 		// Set all required params and send emails
 		$sender = array();
