@@ -24,24 +24,41 @@ function detectIE() {
     return false;
 }
 
+function updateScrollbar(localScrollElement)
+{
+    if ( detectIE() == false ) {
+        return;
+    }
+
+    $j(localScrollElement).niceScroll({
+        'cursorcolor'       : $j(color_element).css(color_proberty),
+        'cursorwidth'       : '15px',
+        'cursorborderradius': '3px',
+        'horizrailenabled'  : false
+    }).resize();
+}
+
+var color_element  = '';
+var color_proberty = '';
+var scroll_element = '';
+
 $j(document).ready(function () {
 	if ( typeof(isDWD) !== 'undefined' ) {
-		var color_element  = '#top-row';
-		var color_proberty = 'background-color';
-		var scroll_element = 'body';
+		color_element  = '#top-row';
+		color_proberty = 'background-color';
+		scroll_element = 'body';
 	}
 	else {
-		var color_element  = '.page-title h1';
-		var color_proberty = 'color';
-		var scroll_element = 'body';
+		color_element  = '.page-title h1';
+		color_proberty = 'color';
+		scroll_element = 'body';
 	}
 
 	if ( detectIE() == false ) {
-		$j(scroll_element).niceScroll({
-	        'cursorcolor'       : $j(color_element).css(color_proberty),
-	        'cursorwidth'       : '15px',
-	        'cursorborderradius': '3px',
-	        'horizrailenabled'  : false
-	    });
+        $j('<script />').attr('type', 'text/javascript')
+                        .attr('src', baseUrl + 'js/egovs/jquery.nicescroll.min.js').
+                        .appendTo('head');
+
+        updateScrollbar(scroll_element);
 	}
 });
