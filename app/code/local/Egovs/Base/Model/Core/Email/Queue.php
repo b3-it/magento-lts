@@ -42,6 +42,7 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
        
     	$att = Mage::getModel('egovsbase/core_email_queue_attachment');
     	$att->setBody($body);
+    	$att->setBodyHash(md5($body));
     	$att->setMimeType($mimeType);
     	$att->setDisposition($disposition);
     	$att->setEncoding($encoding);
@@ -50,12 +51,10 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
         return $this;
     }
     
-    protected function _afterSave()
-    {
+    protected function _afterSave() {
     	parent::_afterSave();
     	
-    	foreach($this->_attachment as $att)
-    	{
+    	foreach($this->_attachment as $att) {
     		$att->setMessageId($this->getId());
     		$att->save();
     	}
@@ -144,11 +143,10 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
 
                 
                 $attachments = Mage::getModel('egovsbase/core_email_queue_attachment')->getCollection();
-                $attachments->getSelect()->where('message_id='.$message->getId());
+                $attachments->getSelect()->where('message_id = ? ', $message->getId());
                 foreach ($attachments->getItems() as $att) {
                 	$mailer->createAttachment($att->getBody(),$att->getMimeType(),$att->getDisposition(),$att->getEncoding(),$att->getFilename());
                 }
-                
                 
                 try {
                 	$this->_getBaseMail()->send();
@@ -172,5 +170,31 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
         return $this;
     }
 
- 
+    /**
+     * Add message to queue
+     *
+     * @return Mage_Core_Model_Email_Queue
+     */
+    public function addMessageToQueue() {
+        if ($this->getIsForceCheck() && $this->_getResource()->wasEmailQueued($this)) {
+            Mage::log("egovs::email_queue: Mail already queued!", Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
+            return $this;
+        }
+        try {
+            $this->save();
+            $this->setId(null);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
+        return $this;
+    }
+
+    public function hasAttachments() {
+        return !empty($this->_attachment);
+    }
+
+    public function getAttachments() {
+        return $this->_attachment;
+    }
 }
