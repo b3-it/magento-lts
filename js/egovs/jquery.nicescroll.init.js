@@ -26,6 +26,10 @@ function detectIE() {
 
 function updateScrollbar(localScrollElement)
 {
+    if ( detectIE() == false ) {
+        return;
+    }
+
     $j(localScrollElement).niceScroll({
         'cursorcolor'       : $j(color_element).css(color_proberty),
         'cursorwidth'       : '15px',
@@ -51,6 +55,10 @@ $j(document).ready(function () {
 	}
 
 	if ( detectIE() == false ) {
+        $j('<script />').attr('type', 'text/javascript')
+                        .attr('src', baseUrl + 'js/egovs/jquery.nicescroll.min.js').
+                        .appendTo('head');
+
         updateScrollbar(scroll_element);
 	}
 });
