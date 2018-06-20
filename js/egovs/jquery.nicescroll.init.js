@@ -56,7 +56,7 @@ $j(document).ready(function () {
 
 	if ( detectIE() == false ) {
         $j('<script />').attr('type', 'text/javascript')
-                        .attr('src', baseUrl + 'js/egovs/jquery.nicescroll.min.js').
+                        .attr('src', baseUrl + 'js/egovs/jquery.nicescroll.min.js')
                         .appendTo('head');
 
         updateScrollbar(scroll_element);
