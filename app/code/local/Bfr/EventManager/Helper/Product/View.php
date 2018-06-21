@@ -179,15 +179,10 @@ class Bfr_EventManager_Helper_Product_View extends Mage_Core_Helper_Abstract
      */
     public function initProduct($productId)
     {
+
     	$params = new Varien_Object();
+
     	
-    
-    	// Init and load product
-    	Mage::dispatchEvent('catalog_controller_product_init_before', array(
-    			'controller_action' => $controller,
-    			'params' => $params,
-    	));
-    
     	if (!$productId) {
     		return false;
     	}

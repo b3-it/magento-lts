@@ -51,9 +51,9 @@
 
                 <!-- added jQuery-Egov-Funktions -->
                 <action method="addJs"><script>egovs/jquery.egov.js</script></action>
-                <action method="addJs"><script>egovs/jquery.nicescroll.min.js</script></action>
+                <!-- <action method="addJs"><script>egovs/jquery.nicescroll.min.js</script></action> -->
                 <!-- <action method="addJs"><script>egovs/jquery.nicescroll.iframehelper.min.js</script></action> -->
-                <action method="addJs"><script>egovs/jquery.nicescroll.init.js</script></action>
+                <!-- <action method="addJs"><script>egovs/jquery.nicescroll.init.js</script></action> -->
                 <action method="addJs"><script>egovs/jquery.resize.js</script></action>
                 <!--  <action method="addJs"><script>egovs/jquery.prevent.lostsession.js</script></action> -->
 
