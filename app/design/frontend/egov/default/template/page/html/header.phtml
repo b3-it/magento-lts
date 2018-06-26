@@ -48,6 +48,11 @@
             </a>
 
             <div id="jumptargetheader" class="account-cart-wrapper">
+              <?php if( Mage::helper('core')->isModuleEnabled('Egovs_ContextHelp') ): ?>
+                <a href="javascript:void(0)" id="context-help" class="skip-link skip-help" onclick="showPopup()">
+                    <span class="icon egov-help" title="<?php echo $this->__('Contexthelp'); ?>"> </span>
+                </a>
+              <?php endif; ?>
                 <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
                     <span class="icon egov-home"> </span>
                     <span class="label"><?php echo $this->__('Startup Page'); ?></span>
@@ -101,5 +106,4 @@
         -->
     </div>
 </header>
-
 <?php echo $this->getChildHtml('topContainer'); ?>
