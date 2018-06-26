@@ -18,6 +18,24 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
       $this->setDefaultLimit(100);
+      $this->setUseAjax(true);
+
+      $from = date("Y-m-d", strtotime('-1 day'));
+      $to = date("Y-m-d", strtotime('-0 day'));
+      $locale = Mage::app()->getLocale()->getLocaleCode();
+      /*
+      $this->setDefaultFilter(array(
+          "created_at"=>array(
+              'from'=> new Zend_Date($from, null, $locale),
+              'to'=> new Zend_Date($to, null, $locale),
+              'locale' => $locale,
+              'orig_to' => Mage::helper('core')->formatDate($to),
+              'orig_from' => Mage::helper('core')->formatDate($from),
+              'datetime' => true
+          )
+
+        ));
+      */
   }
 
     protected function _prepareCollection() {
@@ -79,6 +97,8 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
             'index' => 'created_at',
             'type' => 'datetime',
             'width' => '100px',
+            'value'=>array(
+                'from'=>date('Y-m-d'))
         ));
 
          $this->addColumn('billing_name', array(
@@ -118,10 +138,38 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
         $this->addExportType('*/*/exportCsv', Mage::helper('gka_reports')->__('CSV'));
         $this->addExportType('*/*/exportXml', Mage::helper('gka_reports')->__('XML'));
         $this->addExportType('*/*/exportExcel', Mage::helper('gka_reports')->__('XML (Excel)'));
-        //$this->setCountTotals(true);
+        $this->setCountTotals(true);
         return parent::_prepareColumns();
     }
 
+
+    public function getTotals() {
+        return $this->_varTotals;
+    }
+    
+
+    protected function _afterLoadCollection() {
+        $data = array();
+        foreach ($this->getCollection() as $item) {
+            foreach ($this->getColumns() as $col) {
+                if ($col->getTotal()) {
+                    if (!isset($data[$col->getId()])) {
+                        $data[$col->getId()] = $item->getData($col->getIndex());
+                    } else {
+                        $data[$col->getId()] += $item->getData($col->getIndex());
+                    }
+                }
+            }
+        }
+
+        $helper = Mage::helper('core');
+        foreach ($data as $key => $value) {
+            $data[$key] = $helper->currency($value, true, false);
+        }
+
+
+        $this->setTotals(new Varien_Object($data));
+    }
 
 
 	public function getGridUrl($params = array())

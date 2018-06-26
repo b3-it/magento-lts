@@ -15,9 +15,10 @@ class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminh
 		$this->loadLayout()
 			->_setActiveMenu('report/gka')
 			//->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'))
-            //->setTitle(Mage::helper('adminhtml')->__('Report'), Mage::helper('adminhtml')->__('Report'))
+
             ;
-		
+        $this->_title(Mage::helper('adminhtml')->__('Report'));
+
 		return $this;
 	}   
  
