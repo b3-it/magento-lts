@@ -45,20 +45,22 @@
     </admin>
     <adminhtml>
 		<menu>
-            <!-- wird noch nicht benötigt
-            TODO: Liefert 404 Fehler
-			<reports module="gka_reports">
-				<title>Reports</title>
-				<sort_order>71</sort_order>
-				<children>
-					<items module="reports">
-						<title>Manage Items</title>
-						<sort_order>0</sort_order>
-						<action>reports/adminhtml_reports</action>
-					</items>
-				</children>
-			</reports>
-			-->
+			<report>
+                <children>
+                <gka module="gka_reports">
+                    <title>GKA</title>
+                    <sort_order>71</sort_order>
+                    <children>
+                        <transaction module="gka_reports">
+                            <title>Transaction</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/gkareports_transaction/index</action>
+                        </transaction>
+
+                    </children>
+                </gka>
+                </children>
+			</report>
 		</menu>
 		<acl>
 			<resources>

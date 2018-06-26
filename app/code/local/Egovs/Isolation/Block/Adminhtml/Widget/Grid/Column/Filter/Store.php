@@ -48,9 +48,11 @@ class Egovs_Isolation_Block_Adminhtml_Widget_Grid_Column_Filter_Store
         $websiteCollection = $storeModel->getWebsiteCollection();
         $groupCollection = $storeModel->getGroupCollection();
         $storeCollection = $storeModel->getStoreCollection();
+        /** @var  $helper Egovs_Isolation_Helper_Data */
         $helper  = Mage::helper('isolation');
         $storeGroups = $helper->getUserStoreGroups();
-        
+
+        $admin = $helper->getUserIsAdmin();
         $allShow = $this->getColumn()->getStoreAll();
 
         $html  = '<select name="' . $this->escapeHtml($this->_getHtmlName()) . '" '
@@ -68,10 +70,11 @@ class Egovs_Isolation_Block_Adminhtml_Widget_Grid_Column_Filter_Store
                 if ($group->getWebsiteId() != $website->getId()) {
                     continue;
                 }
+                if(!$admin) {
+                    if (array_search($group->getId(), $storeGroups) === false) {
+                        continue;
 
-                if(array_search($group->getId(), $storeGroups) === false) {
-                	continue;
-                	
+                    }
                 }
                 $groupShow = false;
                 foreach ($storeCollection as $store) {

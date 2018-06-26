@@ -22,12 +22,11 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
-
+        $this->setDefaultLimit(100);
     }
 
     protected function _prepareCollection() {
         $collection = Mage::getResourceModel('sales/order_grid_collection');
-
 
         $userId = intval(Mage::getSingleton('customer/session')->getCustomerId());
 
@@ -36,6 +35,8 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
             ->where('customer_id = ' . $userId)
             ->where('main_table.store_id = ' . intval(Mage::app()->getStore()->getId()));
 
+
+
         $this->setCollection($collection);
 
         //$this->_addCostUnits();
@@ -43,28 +44,6 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
         return parent::_prepareCollection();
     }
 
-//     protected function _addCostUnits() {
-//         //TODO: 20171215: Frank Rochlitzer:: Funktioniert nicht so einfach, Transaktionen/Bestellungen können mehrere Produkte enthalten!!!
-//         /* @var $catalog Mage_Catalog_Model_Resource_Product */
-//         $catalog = Mage::getResourceSingleton('catalog/product');
-//         $kfr = array();
-//         $kfr[] = $catalog->getAttribute('haushaltsstelle');
-//         $kfr[] = $catalog->getAttribute('objektnummer');
-
-//         foreach ($kfr as $attribute) {
-//             if (!$attribute) {
-//                 continue;
-//             }
-//             $alias = sprintf('_left_%s', $attribute->getAttributeCode());
-//             /** @var $collection Mage_Sales_Model_Resource_Order_Grid_Collection */
-//             $collection = $this->getCollection();
-//             $collection->getSelect()
-//                 ->joinLeft(array($alias => $attribute->getBackendTable()),
-//                     sprintf('%1$s.attribute_id = %2$s and %1$s.entity_id = main_table.product_id', $alias, $attribute->getAttributeId()),
-//                     array($attribute->getAttributeCode() => 'value')
-//                 );
-//         }
-//     }
 
     protected function _prepareColumns() {
         $this->addColumn('real_order_id', array(
@@ -74,26 +53,7 @@ class Gka_Reports_Block_Transaction_Grid extends Mage_Adminhtml_Block_Widget_Gri
             'index' => 'increment_id',
         ));
 
-        /* @var $catalog Mage_Catalog_Model_Resource_Product */
-        //$catalog = Mage::getResourceSingleton('catalog/product');
-        /*
-         * TODO: 20171215: Frank Rochlitzer:: Funktioniert nicht so einfach, Transaktionen/Bestellungen können mehrere Produkte enthalten!!!
-        $this->addColumn('haushaltsstelle',
-            array(
-                'header' => Mage::helper('extreport')->__('Haushaltsstelle'),
-                'index' => 'haushaltsstelle',
-                'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('haushaltsstelle')->getAttributeCode()),
-            )
-        );
 
-        $this->addColumn('objnumber',
-            array(
-                'header' => Mage::helper('extreport')->__('Object number'),
-                'index' => 'objektnummer',
-                'filter_index' => sprintf('_left_%s.value', $catalog->getAttribute('objektnummer')->getAttributeCode()),
-            )
-        );
-        */
 
         $this->addColumn('pay_client', array(
             'header' => Mage::helper('sales')->__('ePayBL Client'),

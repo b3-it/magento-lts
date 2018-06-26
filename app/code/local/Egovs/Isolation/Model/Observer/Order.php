@@ -40,7 +40,7 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
     
     public function onOrderCollectionLoad($observer)
     {
-    	$this->addStoreGroupFilterToCollection($observer->getOrderGridCollection(),'entity_id');
+    	$this->addStoreGroupFilterToCollection($observer->getOrderGridCollection(),'main_table.entity_id');
     }
     
 	public function onOrderLoad($observer)
