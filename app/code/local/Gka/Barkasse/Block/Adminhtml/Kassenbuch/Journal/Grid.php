@@ -94,7 +94,7 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       		//'align'     =>'left',
       		//'width'     => '150px',
       		'index'     => 'sum_id',
-      		'type'  => 'currency',
+      		//'type'  => 'currency',
       		'currency_code' => 'EUR',
       ));
       

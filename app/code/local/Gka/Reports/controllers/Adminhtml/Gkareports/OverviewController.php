@@ -8,7 +8,7 @@
  *  @copyright Copyright (c) 2017 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */ 
-class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminhtml_Controller_action
+class Gka_Reports_Adminhtml_Gkareports_OverviewController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
@@ -17,7 +17,7 @@ class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminh
 			//->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'))
 
             ;
-        $this->_title(Mage::helper('adminhtml')->__('Transactions'));
+        $this->_title(Mage::helper('adminhtml')->__('Overview'));
 
 		return $this;
 	}   
@@ -36,7 +36,7 @@ class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminh
         }
         $this->loadLayout(false);
         $this->getResponse()->setBody(
-            $this->getLayout()->createBlock('gka_reports/adminhtml_transaction_grid')->toHtml()
+            $this->getLayout()->createBlock('gka_reports/adminhtml_overview_grid')->toHtml()
         );
     }
 
@@ -45,7 +45,7 @@ class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminh
     public function exportCsvAction()
     {
         $fileName   = $this->_getFileName('csv');
-        $content    = $this->getLayout()->createBlock('gka_reports/adminhtml_transaction_grid')
+        $content    = $this->getLayout()->createBlock('gka_reports/adminhtml_overview_grid')
             ->getCsv();
 
         $this->_prepareDownloadResponse($fileName, $content);
@@ -54,7 +54,7 @@ class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminh
     public function exportXmlAction()
     {
         $fileName   = $this->_getFileName('xml');
-        $content    = $this->getLayout()->createBlock('gka_reports/adminhtml_transaction_grid')
+        $content    = $this->getLayout()->createBlock('gka_reports/adminhtml_overview_grid')
             ->getXml();
 
         $this->_prepareDownloadResponse($fileName, $content);
@@ -63,14 +63,14 @@ class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminh
     public function exportExcelAction()
     {
         $fileName   = $this->_getFileName('xls');
-        $content    = $this->getLayout()->createBlock('gka_reports/transaction_grid')
+        $content    = $this->getLayout()->createBlock('gka_reports/overview_grid')
             ->getExcel($fileName);
         $this->_prepareDownloadResponse($fileName, $content);
     }
 
     protected function _getFileName($ext = "csv")
     {
-        $fileName   = $this->__('Transactions');
+        $fileName   = $this->__('Overviews');
         $fileName .= "_".date('Y-m-d') . ".".$ext;
 
         return $fileName;

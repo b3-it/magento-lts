@@ -56,6 +56,11 @@
                             <sort_order>10</sort_order>
                             <action>adminhtml/gkareports_transaction/index</action>
                         </transaction>
+                        <overview module="gka_reports">
+                            <title>Overview</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/gkareports_overview/index</action>
+                        </overview>
 
                     </children>
                 </gka>
@@ -89,11 +94,11 @@
         <models>
             <gka_reports>
                 <class>Gka_Reports_Model</class>
-                <resourceModel>gka_reports_mysql4</resourceModel>
+                <resourceModel>gka_reports_resource</resourceModel>
             </gka_reports>
-            <gka_reports_mysql4>
-                <class>Gka_Reports_Model_Mysql4</class>
-            </gka_reports_mysql4>
+            <gka_reports_resource>
+                <class>Gka_Reports_Model_Resource</class>
+            </gka_reports_resource>
         </models>
         <resources>
             <gkareports_setup>

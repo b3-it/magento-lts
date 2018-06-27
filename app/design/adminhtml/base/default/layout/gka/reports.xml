@@ -5,4 +5,9 @@
             <block type="gka_reports/adminhtml_transaction" name="transaction" />
         </reference>
     </adminhtml_gkareports_transaction_index>
+    <adminhtml_gkareports_overview_index>
+        <reference name="content">
+            <block type="gka_reports/adminhtml_overview" name="overview" />
+        </reference>
+    </adminhtml_gkareports_overview_index>
 </layout>
