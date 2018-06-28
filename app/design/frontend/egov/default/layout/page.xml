@@ -112,6 +112,9 @@
             <block type="core/messages" name="messages" as="messages"/>
 
             <block type="core/text_list" name="content" as="content" translate="label">
+                <block type="core/text_list" name="before_content" as="before_content" translate="label">
+                    <label>Before Main Content Area</label>
+                </block>
                 <label>Main Content Area</label>
             </block>
 
