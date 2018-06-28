@@ -44,7 +44,7 @@ class Egovs_Paymentbase_Helper_Tkonnekt_Factory
      *
      * @return int
      *
-     * @see Gka_Tkonnketpay_Model_Adminhtml_System_Config_Source_Debug
+     * @see Gka_Tkonnektpay_Model_Adminhtml_System_Config_Source_Debug
      */
     public static function getDebug() {
         return Mage::getStoreConfigFlag('payment/gka_tkonnektpay_debitcard/debug_level');
