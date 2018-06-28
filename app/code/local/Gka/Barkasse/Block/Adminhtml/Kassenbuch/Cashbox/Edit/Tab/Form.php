@@ -65,18 +65,39 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Cashbox_Edit_Tab_Form extends Mage
   private function __getCustomerList()
   {
   		$collection = Mage::getResourceModel('customer/customer_collection')
-  		->addNameToSelect()
+  		->addAttributeToSelect('company')
+  		->addAttributeToSelect('store_id')
   		->addAttributeToSelect('email')
   		//->joinField('store_name', 'core/store', 'name', 'store_id=store_id', null, 'left')
   		;
-  	
 
-  		$res = array();
-  		$res[0] = Mage::helper('gka_barkasse')->__('-- Please Select --');
-  		foreach($collection->getItems() as $item)
-  		{
-  			$res[$item->getEntityId()] = $item->getName(); 
-  		}
+      $res = array();
+      $res[0] = Mage::helper('gka_barkasse')->__('-- Please Select --');
+
+      if(Mage::helper('core')->isModuleEnabled('Egovs_Isolation')){
+
+          $storeIds = Mage::helper('isolation')->getUserStoreViews();
+          $admin =  Mage::helper('isolation')->getUserIsAdmin();
+
+          foreach($collection->getItems() as $item)
+          {
+              if(in_array($item->getStoreId(),$storeIds) || $admin) {
+                  $res[$item->getEntityId()] = $item->getCompany();
+              }
+          }
+      }
+      else{
+
+          foreach($collection->getItems() as $item)
+          {
+              $res[$item->getEntityId()] = $item->getCompany();
+          }
+
+        }
+
+
+  		;
+
   		
   		return $res;
   }

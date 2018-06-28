@@ -15,7 +15,8 @@ class Gka_Reports_Block_Adminhtml_Transaction extends Mage_Adminhtml_Block_Widge
     $this->_controller = 'adminhtml_transaction';
     $this->_blockGroup = 'gka_reports';
     $this->_headerText = Mage::helper('gka_reports')->__('Transaction Manager');
-      $this->_removeButton('add');
+
     parent::__construct();
+      $this->_removeButton('add');
   }
 }

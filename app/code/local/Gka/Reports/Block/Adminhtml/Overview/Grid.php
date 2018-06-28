@@ -8,24 +8,23 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Report_Grid
+class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
       parent::__construct();
       $this->setId('overviewBEGrid');
-      $this->setDefaultSort('increment_id');
-      $this->setDefaultDir('ASC');
+      //$this->setDefaultSort('increment_id');
+      //$this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
       $this->setDefaultLimit(100);
-      //$this->setUseAjax(true);
+      $this->setUseAjax(true);
 
-      $this->setTemplate('egovs/extreport/grid.phtml');
 
       $from = date("Y-m-d", strtotime('-1 day'));
       $to = date("Y-m-d", strtotime('-0 day'));
       $locale = Mage::app()->getLocale()->getLocaleCode();
-      /*
+
       $this->setDefaultFilter(array(
           "created_at"=>array(
               'from'=> new Zend_Date($from, null, $locale),
@@ -37,12 +36,27 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Rep
           )
 
         ));
-      */
+
   }
 
     protected function _prepareCollection() {
+
+        //$this->getCollection()->initReport('gka_reports/overview_collection');
+
+        $collection = Mage::getResourceModel('sales/order_grid_collection');
+        $eav = Mage::getResourceModel('eav/entity_attribute');
+
+        $collection->getSelect()
+            //->joinleft(array('payment' => $collection->getTable('sales/order_payment')), 'payment.parent_id=main_table.entity_id', array('kassenzeichen','method','pay_client'))
+            ->joinleft(array('t1'=>$collection->getTable('customer/entity').'_varchar'), 'main_table.customer_id=t1.entity_id AND t1.attribute_id = '.intval($eav->getIdByCode('customer','company')),array('company'=>'value') )
+            ->group(array('customer_id','payment_method'))
+            ->columns(array('amount'=>new Zend_Db_Expr("sum(base_grand_total)")));
+
+        ;
+        //die($collection->getSelect()->__toString());
+        $this->setCollection($collection);
         parent::_prepareCollection();
-        $this->getCollection()->initReport('gka_reports/overview_collection');
+        $this->_afterLoadCollection();
         return $this;
     }
 
@@ -56,61 +70,56 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Rep
 //       ));
 
 
-        $this->addColumn('owner', array(
-            'header'    => Mage::helper('gka_barkasse')->__('Owner'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index'     => 'owner',
+        $this->addColumn('created_at', array(
+            'header'    => Mage::helper('sales')->__('Created At'),
+            'align'     =>'left',
+            'index'     => 'created_at',
+            'width'		=> '150',
+            'type'	=> 'date',
         ));
 
-        $this->addColumn('opening_balance', array(
-            'header'    => Mage::helper('gka_barkasse')->__('Opening Balance'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index'     => 'opening_balance',
-            //'type'	=> 'price'
-            'type'  => 'currency',
-            'currency_code' => 'EUR',
+        $this->addColumn('store_id', array(
+            'header'    => Mage::helper('sales')->__('Store'),
+            'index'     => 'store_id',
+            'type'      => 'store',
+            'width'     => '300px',
+            'store_view'=> true,
+            'display_deleted' => true,
+        ));
+
+        $this->addColumn('company', array(
+            'header' => Mage::helper('sales')->__('Operator'),
+            'index' => 'company',
         ));
 
 
-
-        $this->addColumn('sum_booking_amount', array(
-            'header'    => Mage::helper('gka_barkasse')->__('Total Taking'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index'     => 'sum_booking_amount',
-            'type'  => 'currency',
-            'currency_code' => 'EUR',
+        $this->addColumn('payment_method', array(
+            'header' => Mage::helper('sales')->__('Payment Method'),
+            'index' => 'payment_method',
+            'type' => 'options',
+            'width' => '200px',
+           // 'filter_index' => 'payment_method',
+            'options' => Mage::helper('gka_reports')->getActivePaymentMethods(),
         ));
 
-        $this->addColumn('withdrawal', array(
-            'header'    => Mage::helper('gka_barkasse')->__('Withdrawal'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index'     => 'withdrawal',
+        $this->addColumn('amount', array(
+            'header' => Mage::helper('sales')->__('G.T. (Base)'),
+            'index' => 'amount',
             'type'  => 'currency',
-            'currency_code' => 'EUR',
+            'currency' => 'base_currency_code',
+            'filter' => false,
+            'sort' => false,
+            'total' => 'sum'
         ));
 
-        $this->addColumn('closing_balance', array(
-            'header'    => Mage::helper('gka_barkasse')->__('Closing Balance'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index'     => 'closing_balance',
-            //	'type'	=> 'price'
-            'type'  => 'currency',
-            'currency_code' => 'EUR',
-        ));
 
-        $this->addColumn('terminal', array(
-            'header'    => Mage::helper('gka_barkasse')->__('Terminal'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index'     => 'terminal',
-            //	'type'	=> 'price'
-            'type'  => 'currency',
-            'currency_code' => 'EUR',
+        $this->addColumn('status', array(
+            'header' => Mage::helper('sales')->__('Status'),
+            'index' => 'status',
+            'type'  => 'options',
+            'width' => '180px',
+            'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+
         ));
 
 
@@ -123,7 +132,7 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Rep
     }
 
 
-    public function getTotals() {
+    public function xgetTotals() {
         return $this->_varTotals;
     }
     
@@ -157,7 +166,7 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Rep
     	if (!isset($params['_current'])) {
     		$params['_current'] = true;
     	}
-    	return $this->getUrl('*/*/*', $params);
+    	return $this->getUrl('*/*/grid', $params);
 
     }
 

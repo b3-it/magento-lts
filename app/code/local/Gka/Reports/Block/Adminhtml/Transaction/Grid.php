@@ -14,16 +14,17 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
   {
       parent::__construct();
       $this->setId('transactionBEGrid');
-      $this->setDefaultSort('increment_id');
-      $this->setDefaultDir('ASC');
+      //$this->setDefaultSort('increment_id');
+      //$this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
       $this->setDefaultLimit(100);
       $this->setUseAjax(true);
 
+
       $from = date("Y-m-d", strtotime('-1 day'));
       $to = date("Y-m-d", strtotime('-0 day'));
       $locale = Mage::app()->getLocale()->getLocaleCode();
-      /*
+
       $this->setDefaultFilter(array(
           "created_at"=>array(
               'from'=> new Zend_Date($from, null, $locale),
@@ -34,8 +35,8 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
               'datetime' => true
           )
 
-        ));
-      */
+      ));
+
   }
 
     protected function _prepareCollection() {
@@ -59,12 +60,25 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
     }
 
     protected function _prepareColumns() {
+
+        $this->addColumn('created_at', array(
+            'header'    => Mage::helper('sales')->__('Created At'),
+            'align'     =>'left',
+            'index'     => 'created_at',
+            'width'		=> '150',
+            'type'	=> 'date',
+        ));
+
+
         $this->addColumn('real_order_id', array(
             'header' => Mage::helper('sales')->__('Order #'),
             'width' => '80px',
             'type' => 'text',
             'index' => 'increment_id',
         ));
+
+
+
 
         $this->addColumn('store_id', array(
             'header'    => Mage::helper('sales')->__('Store'),
@@ -75,6 +89,11 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
             'display_deleted' => true,
         ));
 
+        $this->addColumn('billing_name', array(
+            'header' => Mage::helper('sales')->__('Operator'),
+            'index' => 'company',
+            'filter_index' => 't1.value'
+        ));
 
         $this->addColumn('pay_client', array(
             'header' => Mage::helper('sales')->__('ePayBL Client'),
@@ -92,20 +111,16 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
             'filter_index' => 'payment.kassenzeichen',
         ));
 
-        $this->addColumn('created_at', array(
-            'header' => Mage::helper('sales')->__('Purchased On'),
-            'index' => 'created_at',
-            'type' => 'datetime',
-            'width' => '100px',
-            'value'=>array(
-                'from'=>date('Y-m-d'))
-        ));
 
-         $this->addColumn('billing_name', array(
-             'header' => Mage::helper('sales')->__('Operator'),
-             'index' => 'company',
-             'filter_index' => 't1.value'
-         ));
+
+        $this->addColumn('payment_method', array(
+            'header' => Mage::helper('sales')->__('Payment Method'),
+            'index' => 'method',
+            'type' => 'options',
+            'width' => '200px',
+            'filter_index' => 'payment.method',
+            'options' => Mage::helper('gka_reports')->getActivePaymentMethods(),
+        ));
 
         $this->addColumn('base_grand_total', array(
             'header' => Mage::helper('sales')->__('Amount'),
@@ -115,20 +130,13 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
             'total' => 'sum',
         ));
 
-        $this->addColumn('payment_method', array(
-            'header' => Mage::helper('sales')->__('Payment Method'),
-            'index' => 'method',
-            'type' => 'options',
-            'width' => '70px',
-            'filter_index' => 'payment.method',
-            'options' => Mage::helper('gka_reports')->getActivePaymentMethods(),
-        ));
+
 
         $this->addColumn('status', array(
             'header' => Mage::helper('sales')->__('Status'),
             'index' => 'status',
             'type' => 'options',
-            'width' => '60px',
+            'width' => '180px',
             'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
         ));
 
@@ -146,7 +154,7 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
     public function getTotals() {
         return $this->_varTotals;
     }
-    
+
 
     protected function _afterLoadCollection() {
         $data = array();
@@ -177,7 +185,7 @@ class Gka_Reports_Block_Adminhtml_Transaction_Grid extends Mage_Adminhtml_Block_
     	if (!isset($params['_current'])) {
     		$params['_current'] = true;
     	}
-    	return $this->getUrl('*/*/*', $params);
+    	return $this->getUrl('*/*/grid', $params);
 
     }
 
