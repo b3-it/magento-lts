@@ -47,12 +47,12 @@
 		<menu>
 			<report>
                 <children>
-                <gka module="gka_reports">
+                <gka_reports module="gka_reports">
                     <title>GKA</title>
                     <sort_order>71</sort_order>
                     <children>
                         <transaction module="gka_reports">
-                            <title>Transaction</title>
+                            <title>Transactions</title>
                             <sort_order>10</sort_order>
                             <action>adminhtml/gkareports_transaction/index</action>
                         </transaction>
@@ -63,7 +63,7 @@
                         </overview>
 
                     </children>
-                </gka>
+                </gka_reports>
                 </children>
 			</report>
 		</menu>
@@ -73,12 +73,16 @@
 					<title>Allow Everything</title>
 				</all>
 				<admin>
+                    <children>
+                    <report>
 					<children>
-						<Gka_Reports>
-							<title>Reports Module</title>
+						<gka_reports>
+							<title>GKA Reports Module</title>
 							<sort_order>10</sort_order>
-						</Gka_Reports>
+						</gka_reports>
 					</children>
+                    </report>
+                    </children>
 				</admin>
 			</resources>
 		</acl>
@@ -89,6 +93,15 @@
 				</reports>
 			</updates>
 		</layout>
+        <translate>
+            <modules>
+                <Gka_Reports>
+                    <files>
+                        <default>Gka_Reports.csv</default>
+                    </files>
+                </Gka_Reports>
+            </modules>
+        </translate>
     </adminhtml>   
     <global>
         <models>

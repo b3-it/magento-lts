@@ -49,6 +49,7 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
         $collection->getSelect()
             //->joinleft(array('payment' => $collection->getTable('sales/order_payment')), 'payment.parent_id=main_table.entity_id', array('kassenzeichen','method','pay_client'))
             ->joinleft(array('t1'=>$collection->getTable('customer/entity').'_varchar'), 'main_table.customer_id=t1.entity_id AND t1.attribute_id = '.intval($eav->getIdByCode('customer','company')),array('company'=>'value') )
+            ->join(array('payment'=>$collection->getTable('sales/order_payment')),'payment.parent_id= main_table.entity_id', array('paymentmethod'=>'method'))
             ->group(array('customer_id','payment_method'))
             ->columns(array('amount'=>new Zend_Db_Expr("sum(base_grand_total)")));
 
@@ -93,12 +94,12 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
         ));
 
 
-        $this->addColumn('payment_method', array(
+        $this->addColumn('paymentmethod', array(
             'header' => Mage::helper('sales')->__('Payment Method'),
-            'index' => 'payment_method',
+            'index' => 'paymentmethod',
             'type' => 'options',
             'width' => '200px',
-           // 'filter_index' => 'payment_method',
+            'filter_index' => 'payment.method',
             'options' => Mage::helper('gka_reports')->getActivePaymentMethods(),
         ));
 

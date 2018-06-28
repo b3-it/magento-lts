@@ -77,4 +77,7 @@ class Gka_Reports_Adminhtml_Gkareports_TransactionController extends Mage_Adminh
 
     }
 
+    protected function _isAllowed() {
+        return Mage::getSingleton('admin/session')->isAllowed('report/gka_reports');
+    }
 }

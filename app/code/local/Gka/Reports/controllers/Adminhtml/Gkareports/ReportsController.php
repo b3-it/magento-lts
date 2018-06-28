@@ -11,6 +11,7 @@
 class Gka_Reports_Adminhtml_Gkareports_ReportsController extends Mage_Adminhtml_Controller_action
 {
 
+    /*
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('report/gka')
@@ -35,5 +36,5 @@ class Gka_Reports_Adminhtml_Gkareports_ReportsController extends Mage_Adminhtml_
 
 	}
  
-
+*/
 }
