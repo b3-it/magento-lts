@@ -13,7 +13,7 @@ class Gka_Tkonnektpay_Model_Adminhtml_System_Config_Backend_Alive extends Mage_C
 	/**
 	 * Prüft ob ePayBL erreicht werden kann
 	 * 
-	 * @return Gka_Tkonnketpay_Model_Adminhtml_System_Config_Backend_Alive
+	 * @return Gka_Tkonnektpay_Model_Adminhtml_System_Config_Backend_Alive
 	 * 
 	 * @see Mage_Core_Model_Abstract::_beforeSave()
 	 */
