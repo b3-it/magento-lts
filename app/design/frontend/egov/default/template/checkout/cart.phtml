@@ -126,7 +126,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             <button class="button btn-proceed-checkout btn-checkout"
                     onclick="window.location='<?php echo $this->helper('mpcheckout/url')->getCheckoutUrl();?>';"
                     title="<?php echo $this->__('Proceed to checkout'); ?>"
-                    type="button">
+                    type="button" style="font-weight:bold;">
                 <div id="proceed-button-first" style="display:none;">
                     <?php echo $this->__('Order now'); ?>
                 </div>
