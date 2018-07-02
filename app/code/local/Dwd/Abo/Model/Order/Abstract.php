@@ -190,7 +190,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         }
         catch (Exception $ex)
         {
-        	$this->onFailure($order,$quote);
+        	$this->onFailure($order,$quote, $ex);
         }
         $quote->setIsActive(false)->save();
         
@@ -291,19 +291,21 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
      * @param Mage_Sales_Model_Quote $quote
      * @return Dwd_Abo_Model_Order_Abstract
      */
-    public function onFailure($order,$quote)
-    {
-    	
-    	
-    	//nur für automatische Verlängerungen
-    	if(!$quote->getIsBatchOrder()){
-    		return $this;
-    	}
-    	
-    	
-    	$order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED,"Fehler bei der Aboverlängerung",false);
-    	$order->save();
+    public function onFailure($order,$quote,$ex = null) {
+
+
+        //nur für automatische Verlängerungen
+        if (!$quote->getIsBatchOrder()) {
+            return $this;
+        }
+
+        if ($order) {
+            $order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED, "Fehler bei der Aboverlängerung", false);
+            $order->save();
+        }
+
     	$aboIds = array();
+
     	foreach ($quote->getAllItems() as $quoteitem)
     	{
     	
@@ -311,8 +313,12 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
     		$aboIds[] = $a->getId();
     	}
     	$msg = "Die Abo(s) mit den Id(s) ". implode(',', $aboIds)." konnte(n) nicht verlängert werden." ;
-    	$msg .= " Die Bestellung " . $order->getIncrementId() ." wurde storniert.";
-    	$msg .= " Meldung: " . $ex->getMessage();
+        if ($order) {
+            $msg .= " Die Bestellung " . $order->getIncrementId() . " wurde storniert.";
+        }
+        if($ex){
+    	    $msg .= " Meldung: " . $ex->getMessage();
+        }
     	$this->sendMailToAdmin($msg);
     }
     
