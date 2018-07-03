@@ -105,6 +105,7 @@ class Egovs_Base_Model_Observer
 
         foreach ( $data AS $key => $val ) {
             $replace = '<abbr title="' . $val . '">' . $key . '</abbr>';
+
             // nur ersetzen, wenn noch nicht enthalten und Abk. überhaupt enthalten
             if ( !strpos($html, $replace) ) {
                 $html = str_replace($key, $replace, $html);
@@ -113,6 +114,9 @@ class Egovs_Base_Model_Observer
             // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
             if ( strpos($html, '="<abbr') ) {
             	$html = str_replace('="' . $replace, '="' . $key, $html);
+            }
+            if ( strpos($html, '</abbr>">') ) {
+                $html = str_replace($replace, $key, $html);
             }
         }
 

@@ -79,7 +79,7 @@ if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
 				            <img src="<?php echo $_show_image; ?>" alt="<?php echo $this->__($_ssl_alt); ?>" title="<?php echo $this->__($_ssl_title); ?>" />
 			              <?php endif; ?>
 			            </div>
-			            <fieldset<?php if( $_secure != true ): ?> class="width"<?php endif; ?>>
+			            <fieldset<?php if( $_is_https != true ): ?> class="width"<?php endif; ?>>
                         <ul class="form-list">
                             <li>
                                 <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
