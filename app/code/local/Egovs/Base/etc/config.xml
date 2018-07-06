@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Egovs_Base>
-            <version>2.0.1.5</version>
+            <version>2.0.2.0</version>
         </Egovs_Base>
     </modules>
     <admin>
@@ -242,7 +242,7 @@
         <models>
             <adminhtml>
                 <rewrite>
-                	<!--  -->
+                    <!--  -->
                     <customer_renderer_region>Egovs_Base_Model_Customer_Renderer_Region</customer_renderer_region>
                 </rewrite>
             </adminhtml>
@@ -282,6 +282,11 @@
                     <email_queue>Egovs_Base_Model_Core_Email_Queue</email_queue>
                 </rewrite>
             </core>
+            <core_resource>
+                <rewrite>
+                    <email_queue>Egovs_Base_Model_Resource_Core_Email_Queue</email_queue>
+                </rewrite>
+            </core_resource>
             <newsletter>
                 <rewrite>
                     <template>Egovs_Base_Model_Newsletter_Template</template>
