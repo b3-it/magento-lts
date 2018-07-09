@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Gka_Reports>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Gka_Reports>
     </modules>
     <frontend>
@@ -61,6 +61,11 @@
                             <sort_order>10</sort_order>
                             <action>adminhtml/gkareports_overview/index</action>
                         </overview>
+                        <minority module="gka_reports">
+                            <title>Minority Interest</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/gkareports_minority/index</action>
+                        </minority>
 
                     </children>
                 </gka_reports>
@@ -79,6 +84,24 @@
 						<gka_reports>
 							<title>GKA Reports Module</title>
 							<sort_order>10</sort_order>
+                            <children>
+                                <transaction module="gka_reports">
+                                    <title>Transactions</title>
+                                    <sort_order>10</sort_order>
+                                    <action>adminhtml/gkareports_transaction/index</action>
+                                </transaction>
+                                <overview module="gka_reports">
+                                    <title>Overview</title>
+                                    <sort_order>10</sort_order>
+                                    <action>adminhtml/gkareports_overview/index</action>
+                                </overview>
+                                <minority module="gka_reports">
+                                    <title>Minority Interest</title>
+                                    <sort_order>10</sort_order>
+                                    <action>adminhtml/gkareports_minority/index</action>
+                                </minority>
+
+                            </children>
 						</gka_reports>
 					</children>
                     </report>
@@ -117,6 +140,7 @@
             <gkareports_setup>
                 <setup>
                     <module>Gka_Reports</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
@@ -143,5 +167,26 @@
                 <class>Gka_Reports_Helper</class>
             </gka_reports>
         </helpers>
+        <fieldsets>
+            <sales_convert_quote_item>
+                <minority_interest>
+                    <to_order_item>*</to_order_item>
+                </minority_interest>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                 <minority_interest>
+                    <to_quote_item>*</to_quote_item>
+                </minority_interest>
+            </sales_convert_order_item>
+        </fieldsets>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <minority_interest/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
     </global>
 </config>
