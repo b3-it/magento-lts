@@ -52,7 +52,14 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * 
 	 * @var boolean
 	 */
-	protected static $_alwaysResetSoapClient = false; 
+	protected static $_alwaysResetSoapClient = false;
+
+    /**
+     * Zeigt an ob das Ergebnis aus dem Cache stammt.
+     *
+     * @var bool
+     */
+	protected $_isCachedResult = false;
 	
 	/**
 	 * Mapped die WSDL Klassen zu PHP-Klassen für ePayBL 2.x
@@ -334,6 +341,10 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
     	if (self::$_alwaysResetSoapClient || version_compare(phpversion(), '5.3', '<')===true) {
     		$this->_soapClient = false;
     	}
+
+    	//Reset cache result flag
+        $this->_isCachedResult = false;
+
     	if (array_search(sprintf("_%s", $method), $this->_deniedMethods) === false && method_exists($this, sprintf("_%s", $method))) {
     		$paramA = isset($args[0]) && !is_object($args[0]) && !is_array($args[0])? $args[0] : '';
     		$this->_writeLog($method, "Mandant: {$this->getMandantNr()}, Param 0: $paramA");
@@ -389,23 +400,31 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
     			throw $e;
     		}
     		if (Mage::getStoreConfig('dev/log/log_level') == Zend_Log::DEBUG) {
-    			$lastRequest = $this->_getSoapClient()->getLastRequest();
-    			if (!empty($lastRequest)) {
-	    			//Format XML to save indented tree rather than one line
-	    			$dom = new DOMDocument('1.0');
-	    			$dom->preserveWhiteSpace = false;
-	    			$dom->formatOutput = true;
-	    			$dom->loadXML($lastRequest);
-	    			
-	    			Mage::log(
-		    			sprintf("soap::Request:\n%s\nResponse:\n%s",
-			    			$dom->saveXML(),
-			    			$this->_getSoapClient()->getLastResponse()
-	    				),
-	    				Zend_Log::DEBUG,
-	    				Egovs_Helper::LOG_FILE
-	    			);
-    			}
+    		    if ($this->_isCachedResult()) {
+                    Mage::log(
+                        sprintf("Returning cached value! This would only log an already logged result!"),
+                        Zend_Log::DEBUG,
+                        Egovs_Helper::LOG_FILE
+                    );
+                } else {
+                    $lastRequest = $this->_getSoapClient()->getLastRequest();
+                    if (!empty($lastRequest)) {
+                        //Format XML to save indented tree rather than one line
+                        $dom = new DOMDocument('1.0');
+                        $dom->preserveWhiteSpace = false;
+                        $dom->formatOutput = true;
+                        $dom->loadXML($lastRequest);
+
+                        Mage::log(
+                            sprintf("soap::Request:\n%s\nResponse:\n%s",
+                                $dom->saveXML(),
+                                $this->_getSoapClient()->getLastResponse()
+                            ),
+                            Zend_Log::DEBUG,
+                            Egovs_Helper::LOG_FILE
+                        );
+                    }
+                }
     		}
     		
     		if ($erg instanceof SoapFault) {
@@ -486,7 +505,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 				if ($this->_eCustomerResult[$kunde->EShopKundenNr] instanceof Exception) {
 					throw $this->_eCustomerResult[$kunde->EShopKundenNr];
 				} elseif ($this->_eCustomerResult[$kunde->EShopKundenNr] instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis) {
-					return $this->_eCustomerResult[$kunde->EShopKundenNr];
+					$this->_isCachedResult = true;
+				    return $this->_eCustomerResult[$kunde->EShopKundenNr];
 				}
 				
 				unset($this->_eCustomerResult[$kunde->EShopKundenNr]);
@@ -1074,7 +1094,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 						'eShopKundenNr' => $customerId,
 						'mandat' => $mandat,
 						'buchungsListe' => $objBuchungsliste,
-						'buchungslisteParameterSet' => null,//$buchungsListeParameterSet->isEmpty() ? null : $buchungsListeParameterSet
+						'buchungslisteParameterSet' => $buchungsListeParameterSet->isEmpty() ? null : $buchungsListeParameterSet
 				)
 		);
 		
@@ -1410,4 +1430,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	
 		return $erg;
 	}
+
+	protected function _isCachedResult() {
+	    return $this->_isCachedResult;
+    }
 }

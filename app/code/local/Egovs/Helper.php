@@ -23,6 +23,7 @@ class Egovs_Helper
 	const CUSTOMER_LOG = "egovs_customer.log";
 	const PRODUCT_LOG = "egovs_product.log";
 	const BACKEND_TRACE_LOG = "egovs_backend_trace.log";
+	const EXCEPTION_CODE_PUBLIC = 100000;
 	
 	private static $lastMem = 0;
 	private static $maxMem = 0;
