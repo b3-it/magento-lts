@@ -224,4 +224,8 @@ class Egovs_SepaDebitBund_Block_Form extends Mage_Payment_Block_Form
 	public function getIbanOnly() {
 		return $this->getMethod()->getIbanOnly();
 	}
+
+	public function getSequenceTypeForMultiUsage() {
+        return Mage::helper('sepadebitbund')->getSequenceTypeForMultiUsage();
+    }
 }
