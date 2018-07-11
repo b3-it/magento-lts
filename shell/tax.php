@@ -113,5 +113,5 @@ USAGE;
     }
 }
 
-$shell = new B3it_Shell_Test();
+$shell = new B3it_Shell_Tax();
 $shell->run();

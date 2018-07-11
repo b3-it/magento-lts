@@ -1,6 +1,5 @@
 <script type="text/javascript">
 //<![CDATA[
-	
 	function putbackItem(obj,id)
 	{
 		var qty = $('qty_' + id).value;
@@ -14,9 +13,9 @@
 						$('quoteitems').update(transport.responseText);
 				    },
 				    onFailure: function(){ alert('Something went wrong...') }
-				  });	
+				  });
 	}
-	
+
 	function takeItem(obj,id)
 	{
 		var qty = $('qty_' + id).value;
@@ -30,21 +29,21 @@
 						$('quoteitems').update(transport.responseText);
 				    },
 				    onFailure: function(){ alert('Something went wrong...') }
-				  });	
+				  });
 	}
-	           
-
 //]]>
 </script>
 
-<?php $cartitems = $this->getQuoteItems(false);?>    
+<?php $cartitems = $this->getQuoteItems(false);?>
 <?php if(count($cartitems) > 0){?>
 <h3><?php echo $this->__('Please select shipping address and quantity for applicable items') ?></h3>
     <table class="data-table" id="multiship-addresses-quote-table">
-        <col />
-        <col width="1" />
-        <col width="1" />
-        <col width="1" />
+		<colset>
+			<col />
+        	<col width="1" />
+        	<col width="1" />
+        	<col width="1" />
+		</colset>
         <thead>
             <tr>
                 <th><?php echo $this->__('Product') ?></th>
@@ -57,27 +56,34 @@
         </thead>
         <tbody>
         <?php foreach ($cartitems as $_index => $_item): ?>
+			<?php $_buttonName = 'checkout-assign-address-' . $_index; ?>
             <tr>
                 <td><?php echo $_item->getProduct()->getName()?></td>
                 <td><?php echo $_item->getProduct()->getSku()?></td>
                 <td><?php echo $this->htmlEscape($_item->getCalcQty()) ?></td>
                 <td><input type="text" id="qty_<?php echo $_item->getId() ?>" value="<?php echo $this->htmlEscape($_item->getCalcQty()) ?>" size="2" class="input-text qty" /></td>
                 <td><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable'); else: echo $this->getAddressesHtmlSelect($_item, $_index); endif; ?></td>
-                <td><button onclick="takeItem(this,<?php echo $_item->getId() ?>);return;" class="button" type="reset"><span><?php echo $this->__('Assign Address')?></span></button></td>
+                <td>
+					<button id="<?php echo $_buttonName ?>" name="<?php echo $_buttonName ?>" onclick="takeItem(this,<?php echo $_item->getId() ?>);return;" class="button" type="reset">
+						<span><?php echo $this->__('Assign Address')?></span>
+					</button>
+				</td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-<?php }?>    
+<?php }?>
     <br><br>
-<?php $items = $this->getQuoteItems(true);?>    
+<?php $items = $this->getQuoteItems(true);?>
 <?php if(count($items) > 0){?>
-<h3><?php echo $this->__('Assigned Items') ?></h3>    
+<h3><?php echo $this->__('Assigned Items') ?></h3>
     <table class="data-table" id="multiship-addresses-table">
-        <col />
-        <col width="1" />
-        <col width="1" />
-        <col/>
+		<colset>
+        	<col />
+        	<col width="1" />
+        	<col width="1" />
+        	<col />
+		</colset>
         <thead>
             <tr>
                 <th><?php echo $this->__('Product') ?></th>
@@ -89,17 +95,21 @@
         </thead>
         <tbody>
         <?php foreach ($items as $_index => $_item): ?>
+			<?php $_buttonName = 'checkout-unassign-address-' . $_index; ?>
             <tr>
                 <td><?php echo $_item->getProduct()->getName()?></td>
                 <td><?php echo $_item->getProduct()->getSku()?></td>
                 <td><?php echo $this->htmlEscape($_item->getQty()) ?>
-                	<input type="hidden" id="qty_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getQty()) ?>"  />
-                 	<input type="hidden" id="adr_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getAddressId()) ?>"  />
+                	<input type="hidden" id="qty_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getQty()) ?>" />
+                 	<input type="hidden" id="adr_<?php echo $_item->getQuoteItemId() ?>" value="<?php echo $this->htmlEscape($_item->getAddressId()) ?>" />
                  	<input type="hidden" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->htmlEscape($_item->getQty()) ?>" size="2" class="input-text qty" />
                  </td>
                 <td><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable'); else: echo $this->getAddressesHtml($_item->getAddressId()); endif; ?></td>
-                <td><button onclick="putbackItem(this,<?php echo $_item->getQuoteItemId() ?>);return;" class="button" type="reset"><span><?php echo $this->__('Unassign Address')?></span></button></td>
-                
+                <td>
+					<button id="<?php echo $_buttonName ?>" name="<?php echo $_buttonName ?>" onclick="putbackItem(this,<?php echo $_item->getQuoteItemId() ?>);return;" class="button" type="reset">
+						<span><?php echo $this->__('Unassign Address')?></span>
+					</button>
+				</td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -108,8 +118,12 @@
 
     <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
     <div class="buttons-set">
-        <a href="<?php echo $this->getBackUrl() ?>" class="button">&laquo; <?php echo $this->__('Back to Shopping Cart') ?></a>
+        <a id="checkout-back-to-cart" name="checkout-back-to-cart" href="<?php echo $this->getBackUrl() ?>" class="button">
+			&laquo; <?php echo $this->__('Back to Shopping Cart') ?>
+		</a>
         <?php if(count($cartitems) == 0){?>
-        <button type="submit" class="button" onclick="$('can_continue_flag').value=1" ><span><?php echo $this->__('Continue to Overview') ?></span></button>
+        <button id="checkout-go-to-overview" name="checkout-go-to-overview" type="submit" class="button" onclick="$('can_continue_flag').value=1" >
+			<span><?php echo $this->__('Continue to Overview') ?></span>
+		</button>
     	<?php }?>
     </div>

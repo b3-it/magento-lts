@@ -10,18 +10,25 @@
  */
 
 $_links = $this->getLinks();
-$_allowedRegister = Mage::getStoreConfig('customer/create_account/register_user_on_login', $this->getStoreId());
+$_homeUrl = Mage::app()->getStore()->getHomeUrl();
+$_storeCode = Mage::app()->getStore()->getCode();
 
-if ( !$_allowedRegister ) {
+if ( strpos($_homeUrl, $_storeCode) ) {
+    $_startPos = strpos( $_homeUrl, 'index.php' ) + strlen('index.php') + strlen($_storeCode) + 2;
+}
+else {
+    $_startPos = strpos( $_homeUrl, 'index.php' ) + strlen('index.php') + 1;
+}
+
+if(count($_links)>0):
+    $_allowedRegister = Mage::getStoreConfig('customer/create_account/register_user_on_login', $this->getStoreId());
+
     foreach($_links as $id => $_link) {
-        if ( $_link->getTitle() == $this->__('Register') ) {
+        if ( !$_allowedRegister && ($_link->getTitle() == $this->__('Register')) ) {
             unset( $_links[$id] );
         }
     }
-}
 ?>
-
-<?php if(count($_links)>0): ?>
 <div class="links">
     <?php if($this->getTitle()): ?>
     <div class="block-title"><strong><span><?php echo $this->__($this->getTitle()); ?></span></strong></div>
@@ -31,7 +38,19 @@ if ( !$_allowedRegister ) {
             <?php if ($_link instanceof Mage_Core_Block_Abstract):?>
                 <?php echo $_link->toHtml() ?>
             <?php else: ?>
-                <li<?php if($_link->getIsFirst()||$_link->getIsLast()): ?> class="<?php if($_link->getIsFirst()): ?>first<?php endif; ?><?php if($_link->getIsLast()): ?> last<?php endif; ?>"<?php endif; ?> <?php echo $_link->getLiParams() ?>><?php echo $_link->getBeforeText() ?><a href="<?php echo $_link->getUrl() ?>" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><?php echo $_link->getLabel() ?></a><?php echo $_link->getAfterText() ?></li>
+                <?php
+                    $_url = $_link->getUrl();
+                    $_tmp = substr($_url, $_startPos);
+                    $_tmp = substr($_tmp, 0, strpos($_tmp, '/?') );
+                    $_tmp = str_replace('/', '-', $_tmp);
+                ?>
+                <li<?php if($_link->getIsFirst()||$_link->getIsLast()): ?> class="<?php if($_link->getIsFirst()): ?>first<?php endif; ?><?php if($_link->getIsLast()): ?> last<?php endif; ?>"<?php endif; ?> <?php echo $_link->getLiParams() ?>>
+                    <?php echo $_link->getBeforeText() ?>
+                    <a href="<?php echo $_link->getUrl() ?>" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?> id="<?php echo $_tmp; ?>" name="<?php echo $_tmp; ?>">
+                        <?php echo $_link->getLabel() ?>
+                    </a>
+                    <?php echo $_link->getAfterText() ?>
+                </li>
             <?php endif;?>
         <?php endforeach; ?>
     </ul>

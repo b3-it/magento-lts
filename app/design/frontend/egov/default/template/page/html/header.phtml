@@ -37,21 +37,23 @@
         <!-- Skip Links -->
 
         <div class="skip-links">
-            <a href="#header-nav" class="skip-link skip-nav" data-target-element="#egov-nav">
+            <a href="#header-nav" class="skip-link skip-nav" data-target-element="#egov-nav" id="header-nav-menu" name="header-nav-menu">
                 <span class="icon egov-list"></span>
                 <span class="label"><?php echo $this->__('Menu'); ?></span>
             </a>
 
-            <a href="#header-search" class="skip-link skip-search">
+            <a href="#header-search" class="skip-link skip-search" id="header-nav-search" name="header-nav-search">
                 <span class="icon egov-search"></span>
                 <span class="label"><?php echo $this->__('Search'); ?></span>
             </a>
 
             <div id="jumptargetheader" class="account-cart-wrapper">
-                <a href="javascript:void(0)" id="context-help" class="skip-link skip-help" onclick="showPopup()">
+              <?php if( Mage::helper('core')->isModuleEnabled('Egovs_ContextHelp') ): ?>
+                <a href="javascript:void(0)" id="context-help" name="context-help" class="skip-link skip-help" onclick="showPopup()">
                     <span class="icon egov-help" title="<?php echo $this->__('Contexthelp'); ?>"> </span>
                 </a>
-                <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
+              <?php endif; ?>
+                <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" name="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
                     <span class="icon egov-home"> </span>
                     <span class="label"><?php echo $this->__('Startup Page'); ?></span>
                 </a>
@@ -62,7 +64,7 @@
                 </a>
                 -->
 
-                <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
+                <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" name="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
                     <span class="icon egov-user"></span>
                     <span class="label"><?php echo $this->__('Account'); ?></span>
                 </a>

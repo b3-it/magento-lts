@@ -25,3 +25,4 @@
 "Thank you for your purchase!","Vielen Dank für Ihren Einkauf!"
 "There are <a href=""%s""><strong>%s items</strong></a> in your cart.","<a href=""%s""><strong>%s Artikel</strong></a> im Warenkorb."
 "There is <a href=""%s""><strong>1 item</strong></a> in your cart.","<a href=""%s""><strong>1 Artikel</strong></a> im Warenkorb."
+"Please use Paymentmethods without user input only!","Bitte verwenden Sie nur Zahlungsmethoden ohne Benutzereingabe!"

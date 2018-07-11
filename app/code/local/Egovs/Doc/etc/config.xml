@@ -148,6 +148,12 @@
                 <PolarionTesttool>
                     <label>Polarion-Testtool</label>
                 </PolarionTesttool>
+                <Preislisten>
+                    <label>Preislisten</label>
+                </Preislisten>
+                <SpezielleUebersichten>
+                    <label>Spezielle Übersichten</label>
+                </SpezielleUebersichten>
             </categories>
         </egovs_doc>
     </global>
