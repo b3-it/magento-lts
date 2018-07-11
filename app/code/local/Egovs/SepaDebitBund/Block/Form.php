@@ -7,8 +7,8 @@
  *
  * @category   	Egovs
  * @package    	Egovs_SepaDebitBund
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @copyright  	Copyright (c) 2013 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2013-2018 B3 IT Systeme GmbH - https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  * @see Mage_Payment_Block_Form
@@ -19,10 +19,7 @@ class Egovs_SepaDebitBund_Block_Form extends Mage_Payment_Block_Form
 	protected $_mandate = null;
 	
 	protected $_invalidMandate = false;
-	
-	
-	
-	
+
 	/**
 	 * Setzt ein eigenes Template
 	 * 
@@ -83,9 +80,11 @@ class Egovs_SepaDebitBund_Block_Form extends Mage_Payment_Block_Form
 	
 	public function getAddressesHtmlSelect()
 	{
+        $helper = Mage::helper('mpcheckout/Addressformat');
+
 		if ($this->isCustomerLoggedIn()) {
 			$options = array();
-			$helper = Mage::helper('mpcheckout/Addressformat');
+
 			foreach ($this->getCustomer()->getAddresses() as $address) {
 				$options[] = array(
 						'value'=>$address->getId(),
@@ -110,8 +109,6 @@ class Egovs_SepaDebitBund_Block_Form extends Mage_Payment_Block_Form
 						->setValue($addressId)
 						->setOptions($options)
 			;
-	
-			// $select->addOption('', Mage::helper('checkout')->__('New Address'));
 	
 			return $select->getHtml();
 		}
