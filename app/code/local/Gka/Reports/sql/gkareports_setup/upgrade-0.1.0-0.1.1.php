@@ -17,7 +17,7 @@ $installer->addAttribute('catalog_product', 'minority_interest', array(
     'comparable' => false,
     'visible_on_front' => false,
     'visible_in_advanced_search' => false,
-    'source'  => 'eav/entity_attribute_source_boolean',
+    'source'  => 'gka_reports/attribute_source_boolean',
     'default' => '0',
     //'option' => $option,
     'group' => 'General',
