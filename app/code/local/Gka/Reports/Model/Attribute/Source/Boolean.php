@@ -32,7 +32,7 @@ class Gka_Reports_Model_Attribute_Source_Boolean extends Mage_Eav_Model_Entity_A
      */
     const VALUE_YES = 1;
     const VALUE_NO = 0;
-   
+
 
     /**
      * Retrieve all options array
