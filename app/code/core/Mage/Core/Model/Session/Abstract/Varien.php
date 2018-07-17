@@ -385,16 +385,6 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     }
 
     /**
-     * Use password creation timestamp in validator key
-     *
-     * @return bool
-     */
-    public function useValidateSessionPasswordTimestamp()
-    {
-        return true;
-    }
-
-    /**
      * Use session expire timestamp in validator key
      *
      * @return bool
@@ -480,14 +470,6 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
                     return true;
                 }
             }
-            return false;
-        }
-        if ($this->useValidateSessionPasswordTimestamp()
-            && isset($validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP])
-            && isset($sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP])
-            && $validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP]
-            > $sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] - $this->getCookie()->getLifetime()
-        ) {
             return false;
         }
 
