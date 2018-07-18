@@ -25,9 +25,14 @@
  *  @method setPwd(string $value)
  *  @method string getField()
  *  @method setField(string $value)
+ *  @method string getClientCertificate()
+ *  @method string getClientCa()
+ *
  */
 class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 {
+    private $_filenameWithPath = null;
+
 	public function _construct()
 	{
 		parent::_construct();
@@ -38,7 +43,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 	 * (non-PHPdoc)
 	 * @see Sid_ExportOrder_Model_Transfer::send()
 	 */
-	public function send($content,$order = null, $data = array(), $storeId = 0)
+	protected function _sendCurl($content,$order = null, $data = array(), $storeId = 0)
 	{
 		$output = "";
 		try
@@ -151,4 +156,104 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 
 		return trim($output);
 	}
+
+	protected function _sendHttpful($content, $order = null, $data = array(), $storeId = 0) {
+	    require_once 'lib/Httpful/Bootstrap.php';
+	    \Httpful\Bootstrap::init();
+
+	    $uri = $this->getAddress();
+	    $parsedUri = parse_url($uri);
+	    if (!isset($parsedUri['scheme'])) {
+	        $uri = 'http://'.ltrim($uri, ':/');
+        }
+
+	    $request = \Httpful\Request::post($uri)
+            ->followRedirects(true)
+        ;
+
+        if(!empty($this->getPort())) {
+            $request->addOnCurlOption(CURLOPT_PORT, $this->getPort());
+        }
+
+        if (Mage::getStoreConfig('framecontract/proxy_exportorder/use_proxy') == true) {
+            $host = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_name');
+            $port = 8080;
+            if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')>0)) {
+                $port =  Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port');
+            }
+
+            $user = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user');
+            $pwd = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user_pwd');
+            $request->useProxy(
+                $host,
+                $port,
+                empty($user) ? null : CURLAUTH_BASIC,
+                empty($user) ? null : $user,
+                empty($user) || empty($pwd) ? null : $pwd
+            );
+            $request->addOnCurlOption(CURLOPT_HTTPPROXYTUNNEL, true);
+        }
+
+        $filename = "Order".$order->getIncrementId().'_'.date('d-m-Y_H-i-s').$this->getFileExtention();
+        $filenameWithPath = Mage::getBaseDir('tmp') .DS . $filename;
+        $this->_filenameWithPath = $filenameWithPath;
+
+        try {
+            file_put_contents($filenameWithPath, $content);
+            $request->attach(array($filename => $filenameWithPath));
+        } catch(Exception $ex) {
+            Mage::logException($ex);
+            Sid_ExportOrder_Model_History::createHistory($order->getId(), "Fehler: Die Datei wurde nicht übertragen");
+            return false;
+        }
+
+
+        if ($this->getClientCertificate()) {
+            $key = $cert = Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCertificate();
+            $request
+                ->authenticateWithCert($cert, $key)
+                ->addOnCurlOption(CURLOPT_CAINFO, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
+            ;
+        } elseif (isset($parsedUri['scheme']) && strtolower($parsedUri['scheme']) == 'https') {
+            $request->withoutStrictSSL();
+        }
+
+        $response = $request->send();
+
+        $http_status = $response->code;
+        $output = $response->raw_body;
+
+        if (($http_status < 200) || ($http_status > 210)) {
+            Sid_ExportOrder_Model_History::createHistory($order->getId(), $output);
+            throw new Exception("HTTP Status: " . $http_status ." ".$output);
+        }
+
+        Sid_ExportOrder_Model_History::createHistory($order->getId(), 'per Post übertragen');
+        Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Antwort des Servers: ' . $output);
+    }
+
+    protected function _removeFile($filenameWithPath = null) {
+	    if (is_null($filenameWithPath)) {
+	        $filenameWithPath = $this->_filenameWithPath;
+        }
+
+        if(!is_null($filenameWithPath) && file_exists($filenameWithPath)){
+            @unlink($filenameWithPath);
+        }
+
+        return $this;
+    }
+
+    public function send($content,$order = null, $data = array(), $storeId = 0) {
+        $this->_filenameWithPath = null;
+        $_result = false;
+        try {
+            $_result = $this->_sendHttpful($content, $order, $data, $storeId);
+        } catch (Exception $e) {
+            $this->_removeFile();
+            throw $e;
+        }
+        $this->_removeFile();
+        return $_result;
+    }
 }
