@@ -100,7 +100,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
  				
  				$user = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user');
  				if (isset($user) && (strlen($user) > 0)) {
- 					curl_setopt($cs, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user_pwd'));
+ 					curl_setopt($ch, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user_pwd'));
  				}
  			}
 			
