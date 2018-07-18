@@ -59,10 +59,66 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
  
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
-			$model = Mage::getModel('framecontract/vendor');
-			$model->setData($data)
-				->setId($this->getRequest()->getParam('id'));
-			
+
+            if (isset($data['client_certificate_delete'])) {
+                $data['transfer']['client_certificate'] = null;
+            }
+
+            if (isset($data['client_ca_delete'])) {
+                $data['transfer']['client_ca'] = null;
+            }
+
+            if(isset($_FILES['client_certificate']['name']) && $_FILES['client_certificate']['name'] != '') {
+                try {
+                    $uploader = new Varien_File_Uploader('client_certificate');
+                    // Any extention would work
+                    $uploader->setAllowedExtensions(array('cer', 'cert', 'crt', 'pem'));
+                    $uploader->setValidMimeTypes(array('application/octet-stream', 'text/plain'));
+                    $uploader->setAllowRenameFiles(false);
+                    $uploader->setFilesDispersion(true);
+                    $uploader->setAllowCreateFolders(true);
+
+                    $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
+                    $uploader->save($path);
+
+                    //this way the name is saved in DB
+                    $data['transfer']['client_certificate'] = $uploader->getUploadedFileName();
+                } catch (Exception $e) {
+                    $msg = Mage::helper('framecontract')->__("Can't save client certificate! Error Message was: ");
+                    $msg .= Mage::helper('framecontract')->__($e->getMessage());
+                    Mage::getSingleton('adminhtml/session')->addError($msg);
+                }
+            }
+
+            if(isset($_FILES['client_ca']['name']) && $_FILES['client_ca']['name'] != '') {
+                try {
+                    $uploader = new Varien_File_Uploader('client_ca');
+                    // Any extention would work
+                    $uploader->setAllowedExtensions(array('cer', 'cert', 'crt', 'pem'));
+                    $uploader->setValidMimeTypes(array('application/x-x509-ca-cert', 'text/plain'));
+                    $uploader->setAllowRenameFiles(false);
+                    $uploader->setFilesDispersion(true);
+                    $uploader->setAllowCreateFolders(true);
+
+                    $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
+                    $uploader->save($path);
+
+                    //this way the name is saved in DB
+                    $data['transfer']['client_ca'] = $uploader->getUploadedFileName();
+                } catch (Exception $e) {
+                    $msg = Mage::helper('framecontract')->__("Can't save CA certificate! Error Message was: ");
+                    $msg .= Mage::helper('framecontract')->__($e->getMessage());
+                    Mage::getSingleton('adminhtml/session')->addError($msg);
+                }
+            }
+
+            $model = Mage::getModel('framecontract/vendor');
+            $model->setData($data)
+                ->setId($this->getRequest()->getParam('id'));
+
+            if ($model->hasClientCertificateDelete()) {
+                $model->setClientCertificate('');
+            }
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())

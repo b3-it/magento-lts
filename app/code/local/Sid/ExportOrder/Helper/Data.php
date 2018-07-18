@@ -246,6 +246,8 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
 		return false;
 	}
 	
-	
+	public function getBaseStorePathForCertificates() {
+       return Mage::getBaseDir('var') . DS . 'transfer_post' . DS;
+    }
 	
 }
