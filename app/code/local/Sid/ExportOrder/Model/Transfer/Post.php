@@ -215,6 +215,11 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             $key = $cert = Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCertificate();
             $request
                 ->authenticateWithCert($cert, $key)
+                ->withStrictSSL()
+            ;
+        }
+        if ($this->getClientCa()) {
+            $request
                 ->addOnCurlOption(CURLOPT_CAINFO, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
                 ->withStrictSSL()
             ;
