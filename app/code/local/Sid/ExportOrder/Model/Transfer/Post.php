@@ -157,7 +157,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 		return trim($output);
 	}
 
-	protected function _sendHttpful($content, $order = null, $data = array(), $storeId = 0) {
+	protected function _sendHttpful($content, $order = null, $data = array()) {
 	    require_once 'lib/Httpful/Bootstrap.php';
 	    \Httpful\Bootstrap::init();
 
@@ -194,25 +194,29 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             $request->addOnCurlOption(CURLOPT_HTTPPROXYTUNNEL, true);
         }
 
-        $filename = "Order".$order->getIncrementId().'_'.date('d-m-Y_H-i-s').$this->getFileExtention();
-        $filenameWithPath = Mage::getBaseDir('tmp') .DS . $filename;
-        $this->_filenameWithPath = $filenameWithPath;
+        if($order) {
+            $filename = "Order" . $order->getIncrementId() . '_' . date('d-m-Y_H-i-s') . $this->getFileExtention();
+            $filenameWithPath = Mage::getBaseDir('tmp') .DS . $filename;
+            $this->_filenameWithPath = $filenameWithPath;
 
-        try {
-            file_put_contents($filenameWithPath, $content);
-            $request->attach(array($filename => $filenameWithPath));
-        } catch(Exception $ex) {
-            Mage::logException($ex);
-            Sid_ExportOrder_Model_History::createHistory($order->getId(), "Fehler: Die Datei wurde nicht übertragen");
-            return false;
+            try {
+                file_put_contents($filenameWithPath, $content);
+                $request->attach(array($filename => $filenameWithPath));
+            } catch(Exception $ex) {
+                Mage::logException($ex);
+                Sid_ExportOrder_Model_History::createHistory($order->getId(), "Fehler: Die Datei wurde nicht übertragen");
+                return false;
+            }
+        } else {
+            $request->body('CHECK CONNECTION');
         }
-
 
         if ($this->getClientCertificate()) {
             $key = $cert = Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCertificate();
             $request
                 ->authenticateWithCert($cert, $key)
                 ->addOnCurlOption(CURLOPT_CAINFO, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
+                ->withStrictSSL()
             ;
         } elseif (isset($parsedUri['scheme']) && strtolower($parsedUri['scheme']) == 'https') {
             $request->withoutStrictSSL();
@@ -220,16 +224,22 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 
         $response = $request->send();
 
-        $http_status = $response->code;
+        $httpStatus = $response->code;
         $output = $response->raw_body;
 
-        if (($http_status < 200) || ($http_status > 210)) {
-            Sid_ExportOrder_Model_History::createHistory($order->getId(), $output);
-            throw new Exception("HTTP Status: " . $http_status ." ".$output);
+        if (($httpStatus < 200) || ($httpStatus > 210)) {
+            if ($order) {
+                Sid_ExportOrder_Model_History::createHistory($order->getId(), $output);
+            }
+            throw new Exception("HTTP Status/Output: " . $httpStatus ." / ".$output);
         }
 
-        Sid_ExportOrder_Model_History::createHistory($order->getId(), 'per Post übertragen');
-        Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Antwort des Servers: ' . $output);
+        if ($order) {
+            Sid_ExportOrder_Model_History::createHistory($order->getId(), 'per Post übertragen');
+            Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Antwort des Servers: ' . $output);
+        }
+
+        return true;
     }
 
     protected function _removeFile($filenameWithPath = null) {
@@ -244,16 +254,39 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
         return $this;
     }
 
-    public function send($content,$order = null, $data = array(), $storeId = 0) {
+    public function send($content, $order = null, $data = array()) {
         $this->_filenameWithPath = null;
         $_result = false;
         try {
-            $_result = $this->_sendHttpful($content, $order, $data, $storeId);
+            $_result = $this->_sendHttpful($content, $order, $data);
         } catch (Exception $e) {
             $this->_removeFile();
             throw $e;
         }
         $this->_removeFile();
+        return $_result;
+    }
+
+    /**
+     * Check connection
+     *
+     * @return bool|string
+     */
+    public function checkConnection() {
+        $this->_filenameWithPath = null;
+        $_result = false;
+        try {
+            $_result = $this->_sendHttpful(null);
+        } catch (\Httpful\Exception\ConnectionErrorException $cee) {
+            Mage::logException($cee);
+            if ($cee->getCurlErrorNumber() == 35) {
+                $_result = Mage::helper('exportorder')->__("Wrong client certificate specified!");
+                $_result .= " " . $cee->getMessage();
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+            $_result = $e->getMessage();
+        }
         return $_result;
     }
 }

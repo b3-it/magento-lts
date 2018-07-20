@@ -119,6 +119,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
             if ($model->hasClientCertificateDelete()) {
                 $model->setClientCertificate('');
             }
+
+            if ($model->hasClientCaDelete()) {
+                $model->setClientCa('');
+            }
+
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())
@@ -128,6 +133,20 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 				}	
 				
 				$model->save();
+
+                if ($transfer = $model->getTransfer()) {
+                    if (is_array($transfer)) {
+                        $transfer = new Varien_Object($transfer);
+                    }
+                    if ($transfer->getCheckConnection() == true && $model->getTransferType() == 'post') {
+                        if (($_result = $model->getTransferModel()->checkConnection()) === true) {
+                            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Successfully connected to remote host'));
+                        } else {
+                            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('framecontract')->__('Error while connection to remote host: %s', $_result));
+                        }
+                    }
+                }
+
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
