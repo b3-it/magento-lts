@@ -27,6 +27,7 @@
  *  @method setField(string $value)
  *  @method string getClientCertificate()
  *  @method string getClientCa()
+ *  @method bool getClientcertAuth()
  *
  */
 class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
@@ -211,18 +212,18 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             $request->body('CHECK CONNECTION');
         }
 
-        if ($this->getClientCertificate()) {
-            $key = $cert = Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCertificate();
-            $request
-                ->authenticateWithCert($cert, $key)
-                ->withStrictSSL()
-            ;
-        }
-        if ($this->getClientCa()) {
-            $request
-                ->addOnCurlOption(CURLOPT_CAINFO, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
-                ->withStrictSSL()
-            ;
+        if ($this->getClientcertAuth()) {
+            if ($this->getClientCertificate()) {
+                $key = $cert = Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCertificate();
+                $request
+                    ->authenticateWithCert($cert, $key)
+                    ->withStrictSSL();
+            }
+            if ($this->getClientCa()) {
+                $request
+                    ->addOnCurlOption(CURLOPT_CAINFO, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
+                    ->withStrictSSL();
+            }
         } elseif (isset($parsedUri['scheme']) && strtolower($parsedUri['scheme']) == 'https') {
             $request->withoutStrictSSL();
         }
