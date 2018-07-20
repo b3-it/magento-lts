@@ -430,16 +430,6 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     }
 
     /**
-     * Use password creation timestamp in validator key
-     *
-     * @return bool
-     */
-    public function useValidateSessionPasswordTimestamp()
-    {
-        return true;
-    }
-
-    /**
      * Use session expire timestamp in validator key
      *
      * @return bool
@@ -447,6 +437,16 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     public function useValidateSessionExpire()
     {
         return $this->getCookie()->getLifetime() > 0;
+    }
+
+    /**
+     * Use password creation timestamp in validator key
+     *
+     * @return bool
+     */
+    public function useValidateSessionPasswordTimestamp()
+    {
+        return true;
     }
 
     /**
@@ -519,14 +519,6 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             }
             return false;
         }
-        if ($this->useValidateSessionPasswordTimestamp()
-            && isset($validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP])
-            && isset($sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP])
-            && $validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP]
-            > $sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] - $this->getCookie()->getLifetime()
-        ) {
-            return false;
-        }
 
         if ($this->useValidateSessionExpire()
             && isset($sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP])
@@ -535,6 +527,14 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         } else {
             $this->_data[self::VALIDATOR_KEY][self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP]
                 = $validatorData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP];
+        }
+        if ($this->useValidateSessionPasswordTimestamp()
+            && isset($validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP])
+            && isset($sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP])
+            && $validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP]
+            > $sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] - $this->getCookie()->getLifetime()
+        ) {
+            return false;
         }
 
         return true;
