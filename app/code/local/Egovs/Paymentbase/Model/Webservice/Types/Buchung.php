@@ -17,7 +17,17 @@
  */
 class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 {
-    const LENGTH_BUCHUNGSTEXT = 120;
+    // Länge des Buchungs-Textes
+    const LENGTH_BUCHUNGSTEXT    = 120;
+
+    // Länge für Haushaltstelle und ObjektNummer
+    const LENGTH_HAUSHALT_OBJECT = 10;
+
+    // Länge für HREF
+    const LENGTH_DEFAULT_HREF = 100;
+
+    // Default-Wert für Feld-Länge
+    CONST LENGTH_DEFAULT = 1000;
 
 	/**
 	 * Konstruktor
@@ -40,7 +50,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase
 			$href = null
 	) {
 		// betrag auf zwei nachkommastellen runden
-		$betrag = round($betrag, 2);		 
+		$betrag = round($betrag, 2);
 	
 		$this->haushaltsstelle = $haushaltsstelle;
 		
@@ -61,6 +71,11 @@ class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase
 		}
 		parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
 	}
+	
+	public function getParamLength($name = '')
+    {
+        return $this->_getParamLength($name);
+    }
 	
 	/**
 	 * Liefert die Längenbeschränkungen der Werte
@@ -88,7 +103,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase
 				break;
 			case 'haushaltsstelle':
 			case 'objektnummer':
-				$length = 10;
+				$length = self::LENGTH_HAUSHALT_OBJECT;
 				break;
 			case 'buchungstext':
 				$length = self::LENGTH_BUCHUNGSTEXT;
@@ -99,12 +114,12 @@ class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase
 					$length = min($length, 255);
 					$length = max(0, $length);
 				} else {
-					$length = 100;
+					$length = self::LENGTH_DEFAULT_HREF;
 				}
 				
 				break;
 			default:
-				$length = 1000;
+				$length = self::LENGTH_DEFAULT;
 		}
 		
 		return $length;

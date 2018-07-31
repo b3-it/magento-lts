@@ -13,17 +13,24 @@
  */
 function changeHHType(element)
 {
-	if( $j(element).attr('name') == 'type' ) {
-		var hh_sel = $j(element).val();
+    if( $j(element).attr('name') == 'type' ) {
+        var hh_sel = $j(element).val();
 
-		if ( hh_sel == '2' || hh_sel == '3' ) {
-			$j('#hhstelle').prop("disabled", false);
-		}
-		else {
-			$j('#hhstelle').prop("disabled", true);
-			$j("#hhstelle > option").removeAttr("selected");
-		}
-	}
+        // aus der aktuellen Auswahl den zugehörigen Var-Namen zum Längen-Wert ermitteln
+        var name   = 'select' + hh_sel;
+        // aus dem dynamischen Var-Namen den betreffenden Wert ermitteln
+        var l_neu  = eval( eval(name) );
+        // Wert dem Element als max zuweisen
+        $j('#value').attr('maxlength', l_neu);
+
+        if ( hh_sel == '2' || hh_sel == '3' ) {
+            $j('#hhstelle').prop("disabled", false);
+        }
+        else {
+            $j('#hhstelle').prop("disabled", true);
+            $j("#hhstelle > option").removeAttr("selected");
+        }
+    }
 }
 
 /**
@@ -32,5 +39,5 @@ function changeHHType(element)
  * @returns
  */
 $j(document).ready(function(){
-	changeHHType('#haushaltsparameter_form select');
+    changeHHType('#haushaltsparameter_form select');
 });

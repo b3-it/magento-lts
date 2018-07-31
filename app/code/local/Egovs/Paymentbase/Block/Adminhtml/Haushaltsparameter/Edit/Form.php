@@ -1,6 +1,6 @@
 <?php
 /**
- * Form-Block zum bearbeiten von Haushaltsparametern
+ * Form-Block zum Bearbeiten von Haushaltsparametern
  *
  * @category	Egovs
  * @package		Egovs_Paymentbase
@@ -23,6 +23,8 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 				'enctype' => 'multipart/form-data'
 			)
 		);
+		
+		$laengen = Mage::getModel('paymentbase/webservice_types_buchung');
 
 		$form->setUseContainer(true);
 		$this->setForm($form);
@@ -44,17 +46,24 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 				'name'      => 'value',
 				'onchange'  => '',
 				'disabled'  => false,
+                'maxlength' => '-1'
 		));
 
-
 		$types = Mage::getModel('paymentbase/haushaltsparameter_type');
-		$fieldset->addField('type', 'select', array(
+        $HHType = $fieldset->addField('type', 'select', array(
 				'label'     => Mage::helper('paymentbase')->__('Type'),
 				'name'      => 'type',
 				'onchange'  => 'changeHHType(this);',
 				'disabled'  => false,
 				'values'    => $types->getOptionHashArray()
 		));
+
+		$type = array();
+		foreach( $types->getOptionHashArray() AS $param ) {
+            $type[] = 'var select' . $param['value'] . ' = "' . $types->getAttributeName($param['value']) . '";';
+            $type[] = 'var ' . $types->getAttributeName($param['value']) . ' = ' . $laengen->getParamLength($types->getAttributeName($param['value'])) . ';';
+        }
+        $HHType->setAfterElementHtml("\n<script type=\"text/javascript\">\n" . implode("\n", $type) . "\n</script>");
 
 		if ( Mage::getSingleton('adminhtml/session')->getPaymentbaseData() ) {
 			$form->setValues(Mage::getSingleton('adminhtml/session')->getPaymentbaseData());
