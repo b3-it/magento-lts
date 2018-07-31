@@ -35,16 +35,14 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 				'class'     => 'required-entry',
 				'required'  => true,
 				'name'      => 'title',
-				'onchange'  => '',
 				'disabled'  => false,
 		));
 
 		$fieldset->addField('value', 'text', array(
 				'label'     => Mage::helper('paymentbase')->__('Value'),
-				'class'     => 'required-entry',
+				'class'     => 'input-text required-entry validate-digits validate-length',
 				'required'  => true,
 				'name'      => 'value',
-				'onchange'  => '',
 				'disabled'  => false,
                 'maxlength' => '-1'
 		));
@@ -59,6 +57,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 		));
 
 		$type = array();
+        $type[] = 'var DefaultValidator = "";';
 		foreach( $types->getOptionHashArray() AS $param ) {
             $type[] = 'var select' . $param['value'] . ' = "' . $types->getAttributeName($param['value']) . '";';
             $type[] = 'var ' . $types->getAttributeName($param['value']) . ' = ' . $laengen->getParamLength($types->getAttributeName($param['value'])) . ';';

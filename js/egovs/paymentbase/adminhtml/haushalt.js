@@ -23,6 +23,13 @@ function changeHHType(element)
         // Wert dem Element als max zuweisen
         $j('#value').attr('maxlength', l_neu);
 
+        // Validator-Klasse erzeugen
+        var validator_class = 'maximum-length-' + l_neu;
+        // Validator-Klasse zuweisen
+        $j('#value').removeClass(DefaultValidator).addClass(validator_class);
+        // Validator-Klasse speichern
+        DefaultValidator = validator_class;
+
         if ( hh_sel == '2' || hh_sel == '3' ) {
             $j('#hhstelle').prop("disabled", false);
         }
