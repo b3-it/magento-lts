@@ -16,11 +16,11 @@
 	margin-top: $global-category-margintop;
 	margin-right: $global-category-marginright;
 	margin-bottom: $global-boxmargin;
-	
+
 	@include bp(max-width, $bp-medium) {
 	    margin-bottom: 0;
 	}
-	
+
 	@include bp(max-width, $bp-small) {
 	    margin-bottom: 0;
 	}
@@ -39,7 +39,7 @@
             overflow: hidden;
             border-bottom: $global-active-border solid $global-navigation-border-color;
         }
-       
+
         @include bp(min-width, $bp-small + 1) {
             display: none;
         }
@@ -49,11 +49,11 @@
     li.account-block-title,
     li.egov-catalog-title {
         @extend .egov-navigation-background;
-        
+
         margin: 0;
         padding: 0;
         cursor: pointer;
-        
+
         > a {
             @extend .egov-navigation-base;
 
@@ -65,20 +65,20 @@
             text-transform: uppercase;
         }
     }
-    
+
     .no-touch #mobile-nav a:hover,
     .no-touch #header-account a:hover,
     .no-touch .nav-primary a:hover {
         background-color: $global-category-item-color;
         text-decoration: none;
     }
-   
+
     a {
         display: block;
         color: $global-linkcolor;
         font-family: $base-font-family;
         border: $global-active-border solid transparent;
-        
+
         &:hover, &:active {
             color: $global-navigation-font-hover !important;
             text-decoration: none;
@@ -102,22 +102,56 @@
             }
         }
     }
-    
+
     li {
         position: relative;
         display: block;
         width: 100%;
-        
+
         &:last-child > a {
             border-bottom: none;
         }
     }
-   
+
     li:last-child a,
     li.level0:last-child a.level0 {
         border-bottom: 0;
     }
-   
+
+    li.level0 {
+        @extend .egov-navigation-background;
+
+        // Default styles for 1+ drop-down menus
+        ul {
+            position: relative;
+            z-index: 10;
+            width: auto;
+
+            padding-top: $global-subcat-paddingtop;
+            padding-right: $global-subcat-paddingright;
+            padding-bottom: $global-subcat-paddingbottom;
+            padding-left: $global-subcat-paddingleft;
+
+            // Hide until displayed.
+            //display: none;
+
+            li {
+                border-top: $global-box-border solid $global-subcat-bordercolor;
+
+                a {
+                    padding-top: $global-navigation-link-padding-top;
+                    padding-bottom: $global-navigation-link-padding-bottom;
+
+                    display: block;
+                }
+
+                @include bp(max-width, $bp-medium) {
+                	padding: 0 0 0 25px;
+                }
+            }
+        }
+    }
+
     li.level0,
     li.account-block-title {
         > ul > li > a {
@@ -152,7 +186,7 @@
     a.level0 {
         display: inline-block;
     }
-   
+
     // Correct menus that will hang off the page (class added by js)
     li.level0 ul.level0.spill {
         right: 0;
@@ -165,40 +199,40 @@
             top: 20px;
         }
     }
-   
+
     // Level 1+
     li.level0 li.parent > a {
         position: relative;
-    }    
-        
+    }
+
     a:hover,
     li:hover > a,
     li.active > a {
         color: $global-category-hover-color;
         text-decoration: underline;
     }
-    
+
     .menu-active {
         z-index: 200;
     }
-    
+
     // Show sub-menus when JS adds the appropriate classes
     .menu-active > ul,
     .menu-active > ul.level0,
     li.level0 li.sub-menu-active > ul {
         display: block;
     }
-    
+
     //Class for js to add briefly to evaluate element positioning.
     li.level0 ul.level0.position-test {
         display: block;
     }
-    
+
     li.menu-active > a,
     li.sub-menu-active > a {
         color: $global-linkcolor-active;
     }
-   
+
     li.level1 {
         padding-left: 0 !important;
     }
