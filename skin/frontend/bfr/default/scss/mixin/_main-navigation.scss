@@ -133,10 +133,14 @@
             padding-left: $global-subcat-paddingleft;
 
             // Hide until displayed.
-            //display: none;
+            display: none;
 
             li {
                 border-top: $global-box-border solid $global-subcat-bordercolor;
+
+                &:first-child {
+                    border-top: none;
+                }
 
                 a {
                     padding-top: $global-navigation-link-padding-top;
