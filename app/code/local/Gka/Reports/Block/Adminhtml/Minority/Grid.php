@@ -56,6 +56,23 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
         //    ->where('main_table.store_id = ' . intval(Mage::app()->getStore()->getId()))
         ;
 
+
+        if(Mage::helper('gka_reports')->isModuleEnabled('Egovs_Isolation'))
+        {
+            $helper = Mage::helper('isolation');
+            if(!$helper->getUserIsAdmin()) {
+                $storeGroups = $helper->getUserStoreGroups();
+                if(($storeGroups) && (count($storeGroups) > 0)) {
+                    $storeGroups = implode(',', $storeGroups);
+                }else{
+                    $storeGroups[] = '-1';
+                }
+                $collection->getSelect()->where("store_group in ({$storeGroups})");
+            }
+
+        }
+
+
         //die($collection->getSelect()->__toString());
 
         $this->setCollection($collection);
