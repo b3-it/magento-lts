@@ -1,7 +1,7 @@
 ﻿//
 // @category    design
-// @package     egov_stala
-// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @package     egov_smul
+// @copyright   Copyright (c) 2018 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
@@ -54,7 +54,8 @@ $global-btn-padding-v: 5px;
 
 $global-logo-width: 225px;
 $global-logo-height: 35px;
-$global-logo-top: 30px;
+//$global-logo-top: 30px;  // SMUL-Logo - Eisbär
+$global-logo-top: 60px;
 $global-logo-left: 0px;
 
 $global-skiplinks-space: 70px;
