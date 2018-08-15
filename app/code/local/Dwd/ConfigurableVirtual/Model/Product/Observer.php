@@ -353,6 +353,28 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
     	}
 
 
+        $periode_id = $orderItem->getPeriodId();
+        if($periode_id)
+        {
+            $periode = Mage::getModel('periode/periode')->load($periode_id);
+            /** @var $quoteItem Mage_Sales_Model_Quote_Item **/
+
+            $quoteItem = $this->_findQuoteItem($order->getQuote(), $orderItem->getQuoteItemId());
+            if($quoteItem){
+                $enddate = $quoteItem->getOptionByCode('previous_periode_end');
+                if($enddate){
+                    $enddate = $enddate->getValue();
+                    //$enddate= $item->getAboItem()->getStopDate();
+                    $orderItem->setPeriodStart($enddate);
+                    $orderItem->setPeriodEnd($periode->getEndDate(strtotime($enddate)));
+                    //$orderItem->save();
+                }
+            }
+
+        }
+
+
+
 
     	$purchasedItem = Mage::getModel('dwd_icd/orderitem');
     	$purchasedItem//->setPurchasedId($purchased->getId())
@@ -383,6 +405,22 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
     }
 
 
+    /**
+     * Ein Item innerhalb einer Quote anhand seiner Id finden
+     * @param Mage_Sales_Model_Quote $quote
+     * @param int $id
+     * @return Mage_Sales_Model_Quote_Item|NULL
+     */
+    protected function _findQuoteItem($quote,$id)
+    {
+        /** @var $quote Mage_Sales_Model_Quote **/
+        foreach($quote->getAllItems() as $item){
+            if($item->getId() == $id){
+                return $item;
+            }
+        }
+        return null;
+    }
 
     protected function saveCredentials($orderItem, $order, $product)
     {

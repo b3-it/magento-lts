@@ -34,6 +34,13 @@
         </product>
     </frontend>
     <adminhtml>
+        <layout>
+            <updates>
+                <bfrbase>
+                    <file>bfr/base.xml</file>
+                </bfrbase>
+            </updates>
+        </layout>
         <translate>
             <modules>
                 <Bfr_Base>

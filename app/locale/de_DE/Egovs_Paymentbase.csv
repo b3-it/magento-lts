@@ -223,6 +223,7 @@
 "TEXT_PROCESS_ERROR_-0611","Abwicklung auf Grund eines Konfigurationsproblems fehlgeschlagen. Der Support wurde informiert, wenn Sie noch Fragen haben wenden Sie sich bitte an unseren Service: %s"
 "TEXT_PROCESS_ERROR_-0702","Bankverbindung Fehler: Die von Ihnen einegegebene BLZ ist ungültig."
 "TEXT_PROCESS_ERROR_-0703","Bankverbindung Fehler: Die von Ihnen einegegebene Kontonummer ist ungültig."
+"TEXT_PROCESS_ERROR_-5115","Ihr SEPA Mandat ist abgelaufen. Die letzte Benutzung darf maximal 36 Monate zurückliegen."
 "TEXT_PROCESS_ERROR_-5126","Der abweichende Kontoinhaber ist nicht vollständig angegeben. Es müssen angegebene werden: Name, Vorname, Straße, Hausnummer, PLZ, Ort, Land, IBAN, BIC, Bankname."
 "TEXT_PROCESS_ERROR_-9999","Abwicklung auf Grund eines technischen Problems fehlgeschlagen - versuchen Sie es in ein paar Minuten noch einmal. Falls die Abwicklung weiterhin fehlschlägt, wenden Sie sich bitte an unseren Service: %s"
 "TEXT_PROCESS_ERROR_ALT_BANK_OWNER-5120","Der angegebene abweichende Name und Vorname für Kontoinhaber ist zu kurz oder zu lang (insgesamt maximal 25 Zeichen)."

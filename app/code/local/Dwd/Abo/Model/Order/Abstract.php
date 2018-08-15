@@ -291,6 +291,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
      * @param Mage_Sales_Model_Quote $quote
      * @return Dwd_Abo_Model_Order_Abstract
      */
+   
     public function onFailure($order,$quote, $ex = null)
     {
     	
@@ -305,6 +306,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
             $order->save();
         }
     	$aboIds = array();
+
     	foreach ($quote->getAllItems() as $quoteitem)
     	{
     	
@@ -312,6 +314,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
     		$aboIds[] = $a->getId();
     	}
     	$msg = "Die Abo(s) mit den Id(s) ". implode(',', $aboIds)." konnte(n) nicht verlängert werden." ;
+    	
     	if($order) {
             $msg .= " Die Bestellung " . $order->getIncrementId() . " wurde storniert.";
         }
