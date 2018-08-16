@@ -21,7 +21,7 @@ class Bootstrap
      */
     public static function init()
     {
-        spl_autoload_register(array('\Httpful\Bootstrap', 'autoload'));
+        spl_autoload_register(array('\Httpful\Bootstrap', 'autoload'), true, true);
         self::registerHandlers();
     }
 
