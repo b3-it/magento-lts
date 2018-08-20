@@ -14,6 +14,7 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New extends Mage_Adminhtml_Block_Wi
 		$this->removeButton('reset');
 		$this->removeButton('delete');
 
+		$translateUrl = $this->getUrl('*/eventmanager_toCms/translate',array('store_id'=>'store_xx','product_id'=>'product_xx'));
 
         $this->_formInitScripts[]="
         function switchNew()
@@ -29,6 +30,21 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New extends Mage_Adminhtml_Block_Wi
                     \$j('label[for=\"parent_category\"]').html('" . Mage::helper('eventmanager')->__('Category') . "');
         		}
         	}
+        function translateTitle()
+        {
+            var store = \$j('#store_id').val();
+            var product = \$j('#product_id').val();
+            var url = '{$translateUrl}';
+            url = url.replace('product_xx',product);
+            url = url.replace('store_xx',store);
+            
+            \$j.getJSON( url, function( data ) {
+              \$j('#category').val(data['name']);
+              \$j('#title').val(data['name']);
+              
+            });
+                        
+        }
         
         ";
 	}
