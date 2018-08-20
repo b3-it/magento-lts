@@ -323,6 +323,12 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
 
     /***
      * Daten an ICd übergeben
+     *
+     * @param Mage_Sales_Model_Order_Item $orderItem
+     * @param Mage_Sales_Model_Order      $order
+     * @param Mage_Catalog_Model_Product  $product
+     *
+     * @return Dwd_ConfigurableVirtual_Model_Product_Observer
      */
     protected function save4Icd($orderItem, $order, $product)
     {
@@ -360,7 +366,7 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
             /** @var $quoteItem Mage_Sales_Model_Quote_Item **/
 
             $quoteItem = $this->_findQuoteItem($order->getQuote(), $orderItem->getQuoteItemId());
-            if($quoteItem){
+            if ($quoteItem && $quoteItem->getQuoteId() == $order->getQuoteId()){
                 $enddate = $quoteItem->getOptionByCode('previous_periode_end');
                 if($enddate){
                     $enddate = $enddate->getValue();
@@ -407,18 +413,29 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
 
     /**
      * Ein Item innerhalb einer Quote anhand seiner Id finden
+     *
      * @param Mage_Sales_Model_Quote $quote
      * @param int $id
+     *
      * @return Mage_Sales_Model_Quote_Item|NULL
      */
-    protected function _findQuoteItem($quote,$id)
+    protected function _findQuoteItem($quote, $id)
     {
-        /** @var $quote Mage_Sales_Model_Quote **/
-        foreach($quote->getAllItems() as $item){
-            if($item->getId() == $id){
-                return $item;
+        if ($quote && !$quote->isEmpty()) {
+            foreach($quote->getAllItems() as $item){
+                if($item->getId() == $id){
+                    return $item;
+                }
             }
+
+            return null;
         }
+
+        $item = Mage::getModel('sales/quote_item')->load($id);
+        if ($item && !$item->isEmpty()) {
+            return $item;
+        }
+
         return null;
     }
 
