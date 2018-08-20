@@ -162,14 +162,19 @@
     </td>
     <?php endif; ?>
     <td class="product-cart-actions">
-    	<?php echo $this->getQty() ?>
-        <input type="hidden" pattern="\d*"
+        <?php if($_item->getProduct()->getCanChangeQty()):?>
+
+        <input type="text" pattern="\d*"
                name="cart[<?php echo $_item->getId() ?>][qty]"
                value="<?php echo $this->getQty() ?>"
                title='<?php echo Mage::helper('checkout')->__("Please put in Quantity for: "). $this->getProductName()?>'
                size="4"
                class="input-text qty"
                maxlength="8" />
+        <?php else: ?>
+            <?php echo $this->getQty() ?>
+            <input type="hidden"  name="cart[<?php echo $_item->getId() ?>][qty]"  value="<?php echo $this->getQty() ?>" />
+        <?php endif; ?>
     </td>
     <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
     <td class="product-cart-total">
