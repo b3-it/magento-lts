@@ -165,15 +165,19 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
         }
 
 
-        foreach ($order->getAllItems() as $orderitem) {
-            /* @var $orderitem Mage_Sales_Model_Order_Item */
-            if (count($orderitem->getChildrenItems()) > 0) {
-                continue;
+        try {
+            foreach ($order->getAllItems() as $orderitem) {
+                /* @var $orderitem Mage_Sales_Model_Order_Item */
+                if (count($orderitem->getChildrenItems()) > 0) {
+                    continue;
+                }
+                $this->processOrderItem($orderitem, $order);
             }
-            $this->processOrderItem($orderitem, $order);
+        } catch (Exception $e) {
+            $order->hold();
+            $order->addStatusHistoryComment($e->getMessage());
+            Mage::logException($e);
         }
-
-
     }
 
     /**
