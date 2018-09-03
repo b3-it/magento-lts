@@ -32,8 +32,8 @@ function setDiffPrice(total, giff, element, highlight)
 	if ( isNaN(diff) ) {
 		diff = 0;
 	}
-
-	$j(element).html( diff.toFixed(2) + ' ' + currency );
+	diff = diff.toFixed(2).replace(".",",");
+	$j(element).html( diff + ' ' + currency );
 
 	if ( highlight == true ) {
 		highlightLowerCash(diff, element);
