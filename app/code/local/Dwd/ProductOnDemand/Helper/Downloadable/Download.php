@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Class Dwd_ProductOnDemand_Helper_Downloadable_Download
+ *
+ * @category  Dwd
+ * @package   Dwd_ProductOnDemand
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright Copyright (c) 2013 - 2018 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable_Helper_Download
 {
 	/**
