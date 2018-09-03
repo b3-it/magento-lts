@@ -48,7 +48,20 @@ class Bfr_EventManager_Adminhtml_EventManager_ToCmsController extends Mage_Admin
     }
     
     
-    
+
+    public function translateAction()
+    {
+        $store_id = intval($this->getRequest()->getParam('store_id'));
+        $product_id = intval($this->getRequest()->getParam('product_id'));
+
+        $product = Mage::getModel('catalog/product');
+        $product->setStoreId($store_id)->load($product_id);
+
+
+        $this->getResponse()->setBody(json_encode($product->getData()));
+        return;
+
+    }
     
     
 
