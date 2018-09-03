@@ -35,8 +35,8 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 					$urlProp = parse_url($this->_resourceFile);
 					if (!isset($urlProp['scheme'])
 						|| (
-								strtolower($urlProp['scheme'] != 'http')
-								&& strtolower($urlProp['scheme'] != 'https')
+								strtolower($urlProp['scheme']) != 'http'
+								&& strtolower($urlProp['scheme']) != 'https'
 						)
 					) {
 						Mage::throwException(Mage::helper('downloadable')->__('Invalid download URL scheme.'));
@@ -46,7 +46,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 					}
 					
 					$hostname = $urlProp['host'];
-					if (strtolower($urlProp['scheme'] == 'https')) {
+					if (strtolower($urlProp['scheme']) == 'https') {
 						/*
 						 * 20150929::Frank Rochlitzer
 						 * PHP < 5.6 unterstützt TLS > 1.0 nur über SSL Transport!
@@ -80,7 +80,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 		
 					try {
 						$_verifyPeer = Mage::getStoreConfigFlag('catalog/dwd_pod/verfiy_peer');
-						if (strtolower($urlProp['scheme'] == 'https') && $_verifyPeer) {
+						if (strtolower($urlProp['scheme']) == 'https' && $_verifyPeer) {
 							
 							if (version_compare(phpversion(), '5.6.0', '<')===true) {
 								$context = stream_context_create(
