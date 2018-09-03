@@ -80,7 +80,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 					        <label for="opening"><?php echo $_helper->__('Amount at cash point opening')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="opening" name="opening" readonly="readonly" value="<?php echo number_format($this->getOpeningBalance(), 2); ?>" class="input-text" />
+					        	<input type="text" id="opening" name="opening" readonly="readonly" value="<?php echo number_format($this->getOpeningBalance(), 2,',',''); ?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>
@@ -89,7 +89,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 			        		<label for="saldo"><?php echo $_helper->__('Sum of cash payments')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="saldo" name="saldo" readonly="readonly" value="<?php echo number_format($this->getTotal(), 2); ?>" class="input-text" />
+					        	<input type="text" id="saldo" name="saldo" readonly="readonly" value="<?php echo number_format($this->getTotal(), 2,',',''); ?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>
@@ -107,7 +107,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 			        		<label for="withdrawal"><?php echo $_helper->__('Withdrawal')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="withdrawal" name="withdrawal" id="withdrawal" value="<?php echo number_format($this->getTotal(), 2); ?>" class="input-text" />
+					        	<input type="text" id="withdrawal" name="withdrawal" id="withdrawal" value="<?php echo number_format($this->getTotal(), 2, 2,',',''); ?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>

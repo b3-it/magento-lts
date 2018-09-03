@@ -37,7 +37,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 					    	<label for="last_balance"><?php echo $_helper->__('Last Balance')?></label>
 					        <div class="input-box">
-						    	<input type="text" id="last_balance" name="last_balance" readonly="readonly" value="<?php echo number_format($this->getLastBalance(), 2); ?>" class="input-text" />
+						    	<input type="text" id="last_balance" name="last_balance" readonly="readonly" value="<?php echo number_format($this->getLastBalance(),  2,',',''); ?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>
@@ -80,7 +80,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 					        <label for="opening"><?php echo $_helper->__('Amount at cash point opening')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="opening" name="opening" readonly="readonly" value="<?php echo number_format($this->getOpeningBalance(), 2); ?>" class="input-text" />
+					        	<input type="text" id="opening" name="opening" readonly="readonly" value="<?php echo number_format($this->getOpeningBalance(), 2, ',',''); ?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>
@@ -89,7 +89,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 			        		<label for="saldo"><?php echo $_helper->__('Sum of cash payments')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="saldo" name="saldo" readonly="readonly" value="<?php echo number_format($this->getTotal(), 2); ?>" class="input-text" />
+					        	<input type="text" id="saldo" name="saldo" readonly="readonly" value="<?php echo number_format($this->getTotal(), 2, ',',''); ?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>
@@ -98,7 +98,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 			        		<label for="endsaldo"><?php echo $_helper->__('Closing balance of the cash desk')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="endsaldo" name="endsaldo" readonly="readonly" value="<?php echo $this->getSaldo()?>" class="input-text" />
+					        	<input type="text" id="endsaldo" name="endsaldo" readonly="readonly" value="<?php echo number_format($this->getSaldo(), 2,',','')?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>
@@ -107,7 +107,7 @@ $_timeMask = str_replace(array('.M.', '.y'), array('.m.', '.Y'), preg_replace('/
 					    <div class="field">
 			        		<label for="withdrawal"><?php echo $_helper->__('Withdrawal')?></label>
 					        <div class="input-box">
-					        	<input type="text" id="withdrawal" name="withdrawal" id="withdrawal" value="<?php echo number_format($this->getTotal(), 2); ?>" class="input-text" />
+					        	<input type="text" id="withdrawal" name="withdrawal" id="withdrawal" value="<?php echo number_format($this->getTotal(), 2, ',',''); ?>" class="input-text" />
                                 <?php echo $this->getCurrencySymbol(); ?>
 					        </div>
 					    </div>

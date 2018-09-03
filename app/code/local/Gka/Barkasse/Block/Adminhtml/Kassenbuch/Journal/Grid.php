@@ -22,10 +22,10 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
 
   protected function _prepareCollection() {
       $collection = Mage::getModel('gka_barkasse/kassenbuch_journal')->getCollection();
-      $expr = new Zend_Db_Expr('(SELECT sum(id) as sum_id, sum(booking_amount) as sum_booking_amount, journal_id FROM ' . $collection->getTable('gka_barkasse/kassenbuch_journal_items') . ' GROUP BY journal_id)');
+      $expr = new Zend_Db_Expr('(SELECT count(id) as count_id, sum(booking_amount) as sum_booking_amount, journal_id FROM ' . $collection->getTable('gka_barkasse/kassenbuch_journal_items') . ' GROUP BY journal_id)');
 
       $collection->getSelect()
-          ->joinLeft(array('items' => $expr), 'items.journal_id=main_table.id', array('sum_id', 'sum_booking_amount'));
+          ->joinLeft(array('items' => $expr), 'items.journal_id=main_table.id', array('count_id', 'sum_booking_amount'));
 
       if (Mage::helper('gka_barkasse')->isModuleEnabled('Egovs_Isolation'))
       {
@@ -89,13 +89,13 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Grid extends Mage_Adminhtm
       		'currency_code' => 'EUR',
       ));
       
-      $this->addColumn('sum_id', array(
+      $this->addColumn('count_id', array(
       		'header'    => Mage::helper('gka_barkasse')->__('Deposits'),
       		//'align'     =>'left',
       		//'width'     => '150px',
-      		'index'     => 'sum_id',
+      		'index'     => 'count_id',
       		//'type'  => 'currency',
-      		'currency_code' => 'EUR',
+      		//'currency_code' => 'EUR',
       ));
       
       $this->addColumn('sum_booking_amount', array(

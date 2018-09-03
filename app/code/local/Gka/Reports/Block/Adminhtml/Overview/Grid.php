@@ -17,6 +17,7 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
       //$this->setDefaultSort('increment_id');
       //$this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
+
       $this->setDefaultLimit(100);
       $this->setUseAjax(true);
 
@@ -51,9 +52,17 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
             ->joinleft(array('t1'=>$collection->getTable('customer/entity').'_varchar'), 'main_table.customer_id=t1.entity_id AND t1.attribute_id = '.intval($eav->getIdByCode('customer','company')),array('company'=>'value') )
             ->join(array('payment'=>$collection->getTable('sales/order_payment')),'payment.parent_id= main_table.entity_id', array('paymentmethod'=>'method'))
             ->group(array('customer_id','payment.method'))
-            ->columns(array('amount'=>new Zend_Db_Expr("sum(base_grand_total)")));
-
+            ->columns(array('amount'=>new Zend_Db_Expr("sum(base_grand_total)")))
+            ->columns(array('period'=>new Zend_Db_Expr("concat(min(created_at),'-',max(created_at))")));
+            //->where(status)
         ;
+
+        $collection->addFieldToFilter('status',
+            array(
+                array('eq' => Mage_Sales_Model_Order::STATE_PROCESSING),
+                array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE)
+            ));
+
         //die($collection->getSelect()->__toString());
         $this->setCollection($collection);
         parent::_prepareCollection();
@@ -74,10 +83,19 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
         $this->addColumn('created_at', array(
             'header'    => Mage::helper('sales')->__('Created At'),
             'align'     =>'left',
-            'index'     => 'created_at',
+            'index'     => 'period',
+            'filter_index'     => 'created_at',
             'width'		=> '150',
             'type'	=> 'date',
         ));
+
+        /*
+        $this->addColumn('period', array(
+            'header' => Mage::helper('sales')->__('period'),
+            'index' => 'period',
+            'filter_index' => 't1.value',
+        ));
+*/
 
         $this->addColumn('store_id', array(
             'header'    => Mage::helper('sales')->__('Store'),
@@ -91,6 +109,7 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
         $this->addColumn('company', array(
             'header' => Mage::helper('sales')->__('Operator'),
             'index' => 'company',
+            'filter_index' => 't1.value',
         ));
 
 
@@ -113,7 +132,7 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
             'total' => 'sum'
         ));
 
-
+/*
         $this->addColumn('status', array(
             'header' => Mage::helper('sales')->__('Status'),
             'index' => 'status',
@@ -122,7 +141,7 @@ class Gka_Reports_Block_Adminhtml_Overview_Grid extends Mage_Adminhtml_Block_Wid
             'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
 
         ));
-
+*/
 
 
         $this->addExportType('*/*/exportCsv', Mage::helper('gka_reports')->__('CSV'));
