@@ -663,6 +663,17 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	                	$pos++;
 	                	$childpos = 0;
 	                }
+
+	                $options = $oi->getProductOptions();
+	                $res = array();
+	                $res[] = ""; //leerzeile
+                    if(isset($options['options'])){
+                        foreach($options['options'] as $opt) {
+                            $res[] = sprintf('%s: %s',$opt['label'],$opt['option_value']);
+                        }
+                    }
+
+                    $item->setProductOptions(implode('<br>',$res));
 				}
                 
                 $item->setPosition($pos);
@@ -697,7 +708,11 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 		$this->_Pdf->lastPage();
 		return $this;
 	}
-	
+
+
+
+
+
 	protected function RenderEntity($data,$template)
 	{
 		$html = $template->getContent();

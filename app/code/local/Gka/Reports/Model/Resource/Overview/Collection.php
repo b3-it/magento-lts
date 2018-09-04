@@ -1,7 +1,7 @@
 <?php
 
 
-class Gka_Reports_Model_Resource_Overview_Collection extends Gka_Barkasse_Model_Resource_Kassenbuch_Journal_Collection
+class Gka_Reports_Model_Resource_Overview_Collection extends Mage_Sales_Model_Resource_Order_Grid_Collection
 {
 
     protected $_from = null;
@@ -10,26 +10,24 @@ class Gka_Reports_Model_Resource_Overview_Collection extends Gka_Barkasse_Model_
     protected function _initSelect()
     {
         parent::_initSelect();
-        $expr = new Zend_Db_Expr('(SELECT sum(id) as sum_id, sum(booking_amount) as sum_booking_amount, journal_id FROM ' . $this->getTable('gka_barkasse/kassenbuch_journal_items') . ' GROUP BY journal_id)');
+
+        $eav = Mage::getResourceModel('eav/entity_attribute');
 
         $this->getSelect()
-            ->joinLeft(array('items' => $expr), 'items.journal_id=main_table.id', array('sum_id', 'sum_booking_amount'));
+            ->joinleft(array('t1'=>$this->getTable('customer/entity').'_varchar'), 'main_table.customer_id=t1.entity_id AND t1.attribute_id = '.intval($eav->getIdByCode('customer','company')),array('company'=>'value') )
+        ;
 
-        if (Mage::helper('gka_barkasse')->isModuleEnabled('Egovs_Isolation'))
-        {
-            $helper = Mage::helper('isolation');
-            if (!$helper->getUserIsAdmin()) {
-                $views = $helper->getUserStoreViews();
-                $views[] = '-1'; //damit das Array gefüllt ist
-                $this->getSelect()
-                    ->join(array('cashbox' => $this->getTable('gka_barkasse/kassenbuch_cashbox')), 'main_table.cashbox_id=cashbox.id', array())
-                    ->where('cashbox.store_id IN (' . implode(',', $views) . ')');
-            }
-        }
+       // die($this->getSelect()->__toString());
         return $this;
     }
-	
-	/**
+
+
+    protected function x_afterLoad() {
+        die($this->getSelect()->__toString());
+
+    }
+
+    /**
 	 * Setzt die Datumsspanne der Collection
 	 *
 	 * @param string $from Von Datum
@@ -63,8 +61,8 @@ class Gka_Reports_Model_Resource_Overview_Collection extends Gka_Barkasse_Model_
         }
         $this->_reset() //Wichtig für Datefilter; Reset ruft initSelect() auf!!
             ->getSelect()
-            ->where('closing <= ?', $this->_to)
-            ->where('closing >= ?', $this->_from)
+            ->where('created_at <= ?', $this->_to)
+            ->where('created_at >= ?', $this->_from)
         ;
 
         return $this;

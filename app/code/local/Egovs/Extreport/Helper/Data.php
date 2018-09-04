@@ -24,7 +24,9 @@ class Egovs_Extreport_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getHaushaltsstelleAsOptionArray() {
 		
 		$collection = Mage::getModel('paymentbase/haushaltsparameter')->getCollection();
-		$collection->getSelect()->where('type='.Egovs_Paymentbase_Model_Haushaltsparameter_Type::HAUSHALTSTELLE);
+		$collection->getSelect()
+            ->where('type='.Egovs_Paymentbase_Model_Haushaltsparameter_Type::HAUSHALTSTELLE)
+            ->order('title');
 		$res = array();
 		foreach ($collection->getItems() as $item) {
 	

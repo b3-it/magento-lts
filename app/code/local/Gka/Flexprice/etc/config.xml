@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Gka_Flexprice>
-            <version>0.0.1.0</version>
+            <version>0.0.2.0</version>
         </Gka_Flexprice>
     </modules>
     <adminhtml>
@@ -41,6 +41,7 @@
                  <item>
                      <product_attributes>
                          <allow_price_zero />
+                         <can_change_qty />
                        </product_attributes>
                  </item>
              </quote>

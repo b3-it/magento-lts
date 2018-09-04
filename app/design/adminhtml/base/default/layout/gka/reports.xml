@@ -10,4 +10,9 @@
             <block type="gka_reports/adminhtml_overview" name="overview" />
         </reference>
     </adminhtml_gkareports_overview_index>
+    <adminhtml_gkareports_minority_index>
+        <reference name="content">
+            <block type="gka_reports/adminhtml_minority" name="minority" />
+        </reference>
+    </adminhtml_gkareports_minority_index>
 </layout>

@@ -54,7 +54,8 @@ class Gka_Flexprice_Model_Product_Type extends Mage_Catalog_Model_Product_Type_V
      */
     protected function _prepareProduct(Varien_Object $buyRequest, $product, $processMode)
     {
-    	$buyRequest->setQty(1);
+
+        //$buyRequest->setQty(1);
 
     	$result = parent::_prepareProduct($buyRequest, $product, $processMode);
 

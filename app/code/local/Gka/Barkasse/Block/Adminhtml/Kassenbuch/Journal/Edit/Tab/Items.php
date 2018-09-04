@@ -61,7 +61,9 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
           'header'    => Mage::helper('gka_barkasse')->__('Booking Amount'),
           //'align'     =>'left',
           'width'     => '150px',
+          'type'  => 'currency',
           'index'     => 'booking_amount',
+          'currency_code' => 'EUR',
       ));
       
       $this->addColumn('given_amount_grid', array(
@@ -69,7 +71,9 @@ class Gka_Barkasse_Block_Adminhtml_Kassenbuch_Journal_Edit_Tab_Items extends Mag
       		//'align'     =>'left',
       		'width'     => '150px',
       		'index'     => 'given_amount',
-      		'filter_index' => 'main_table.given_amount'
+          'type'  => 'currency',
+      		'filter_index' => 'main_table.given_amount',
+          'currency_code' => 'EUR',
       ));
       
       $this->addColumn('increment_id_grid', array(
