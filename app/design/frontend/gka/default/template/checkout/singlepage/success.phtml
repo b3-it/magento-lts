@@ -32,7 +32,9 @@ $_orderItems = $this->getOrderItems();
     	<div class="col-2">
     		<div id="depos-label"><?php echo $this->__('Depositors:'); ?></div>
     		<div id="depos-company"><?php echo $_order->getBillingAddress()->getCompany(); ?></div>
-    		<?php echo $_order->getBillingAddress()->getFirstname() . ' ' . $_order->getBillingAddress()->getLastname(); ?>
+            <div id="depos-name"><?php echo $_order->getBillingAddress()->getFirstname() . ' ' . $_order->getBillingAddress()->getLastname(); ?></div>
+            <div id="depos-street"><?php echo $_order->getBillingAddress()->getData('street'); ?></div>
+            <div id="depos-plz-city"><?php echo $_order->getBillingAddress()->getPostcode() . ' ' . $_order->getBillingAddress()->getCity(); ?></div>
     	</div>
     </div>
 

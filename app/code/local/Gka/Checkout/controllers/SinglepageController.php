@@ -324,6 +324,12 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         Mage::register('current_order', $order);
         $this->loadLayout();
         $this->_initLayoutMessages('checkout/session');
+
+        //erst am Ende deaktivieren
+        if(!$this->__isDebug()){
+            $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
+        }
+
         $ids = $this->_getCheckout()->getOrderIds();
         Mage::dispatchEvent('checkout_multishipping_controller_success_action', array('order_ids' => $ids));
         $this->renderLayout();
