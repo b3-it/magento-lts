@@ -12,6 +12,7 @@
  */
 class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
 {
+    protected $_checkout = null;
     /**
      * Retrieve checkout model
      *
@@ -19,7 +20,11 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
      */
     protected function _getCheckout()
     {
-        return Mage::getSingleton('gkacheckout/type_singlepage');
+        if($this->_checkout == null)
+        {
+            $this->_checkout = Mage::getSingleton('gkacheckout/type_singlepage');
+        }
+        return $this->_checkout;
     }
 
     /**
@@ -99,7 +104,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
         }
 
-        if ($action == 'success' && $this->_getCheckout()->getCheckoutSession()->getDisplaySuccess(true)) {
+        if ($action == 'success' && $this->_getCheckout()->getCheckoutSession()->getDisplaySuccess()) {
             return $this;
         }
 
@@ -328,6 +333,8 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         //erst am Ende deaktivieren
         if(!$this->__isDebug()){
             $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
+        }else{
+            $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(true);
         }
 
         $ids = $this->_getCheckout()->getOrderIds();

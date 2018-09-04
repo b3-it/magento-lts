@@ -306,7 +306,7 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     
     public function getCheckout()
     {
-    	return Mage::getSingleton('checkout/session');
+    	return $this->getCheckoutSession();
     }
     
     /**
