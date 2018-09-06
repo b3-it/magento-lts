@@ -96,7 +96,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
  			if (Mage::getStoreConfig('framecontract/proxy_exportorder/use_proxy') == true) {
 				$host = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_name');
  				$port = 8080;
- 				if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')>0)) {
+ 				if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')) > 0) {
  					$port =  Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port');
  				}
  			
@@ -159,7 +159,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 	}
 
 	protected function _sendHttpful($content, $order = null, $data = array()) {
-	    require_once 'lib/Httpful/Bootstrap.php';
+	    require_once 'Httpful/Bootstrap.php';
 	    \Httpful\Bootstrap::init();
 
 	    $uri = $this->getAddress();
@@ -176,10 +176,10 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             $request->addOnCurlOption(CURLOPT_PORT, $this->getPort());
         }
 
-        if (Mage::getStoreConfig('framecontract/proxy_exportorder/use_proxy') == true) {
+        if (Mage::getStoreConfigFlag('framecontract/proxy_exportorder/use_proxy') == true) {
             $host = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_name');
             $port = 8080;
-            if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')>0)) {
+            if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')) > 0) {
                 $port =  Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port');
             }
 
