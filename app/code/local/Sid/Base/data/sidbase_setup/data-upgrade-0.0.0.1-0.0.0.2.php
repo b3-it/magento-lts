@@ -355,6 +355,9 @@ foreach( $allStores AS $storeId => $storeData ) {
     $_stores[Mage::app()->getStore($storeId)->getCode()] = Mage::app()->getStore($storeId)->getId();
 }
 
+if (!Mage::helper('core')->isModuleEnabled('Egovs_ContextHelp')) {
+    Mage::throwException("Module Egovs_ContextHelp is required!");
+}
 foreach( $_contextHelpEntity AS $helpId => $newHelpItem ) {
     /** @var Egovs_ContextHelp_Helper_Contexthelpsetup_Data $helper */
     $helper = Mage::helper('contexthelp_setup');
