@@ -158,6 +158,16 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 		return trim($output);
 	}
 
+    /**
+     * Sendet Daten per POST
+     *
+     * @param       $content
+     * @param null  $order
+     * @param array $data
+     *
+     * @return string Bei Erfolg Body des Response
+     * @throws \Exception Im Fehlerfall
+     */
 	protected function _sendHttpful($content, $order = null, $data = array()) {
 	    require_once 'Httpful/Bootstrap.php';
 	    \Httpful\Bootstrap::init();
@@ -202,11 +212,11 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 
             try {
                 file_put_contents($filenameWithPath, $content);
-                $request->attach(array($filename => $filenameWithPath));
+                $request->attach(array('file' => $filenameWithPath));
             } catch(Exception $ex) {
                 Mage::logException($ex);
                 Sid_ExportOrder_Model_History::createHistory($order->getId(), "Fehler: Die Datei wurde nicht übertragen");
-                return false;
+                throw new Exception('Dateianhang konnte nicht erstellt werden!');
             }
         } else {
             $request->body('CHECK CONNECTION');
@@ -228,7 +238,15 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             $request->withoutStrictSSL();
         }
 
-        $response = $request->send();
+        try {
+            $response = $request->send();
+        } catch (Exception $e) {
+            Mage::logException($e);
+            if ($order) {
+                Sid_ExportOrder_Model_History::createHistory($order->getId(), $e->getMessage());
+            }
+            throw $e;
+        }
 
         $httpStatus = $response->code;
         $output = $response->raw_body;
@@ -245,7 +263,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Antwort des Servers: ' . $output);
         }
 
-        return true;
+        return $output;
     }
 
     protected function _removeFile($filenameWithPath = null) {
@@ -265,9 +283,13 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
         $_result = false;
         try {
             $_result = $this->_sendHttpful($content, $order, $data);
+            //$_result = $this->_sendCurl($content, $order, $data);
         } catch (Exception $e) {
             $this->_removeFile();
             throw $e;
+        }
+        if ($_result === true) {
+            $_result = "Die Bestellung wurde erfolgreich versendet.";
         }
         $this->_removeFile();
         return $_result;
@@ -292,6 +314,9 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
         } catch (Exception $e) {
             Mage::logException($e);
             $_result = $e->getMessage();
+        }
+        if (is_string($_result)) {
+            $_result = true;
         }
         return $_result;
     }
