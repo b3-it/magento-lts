@@ -150,7 +150,7 @@ class Gka_Barkasse_Kassenbuch_JournalController extends Mage_Core_Controller_Fro
     	}
     	$balance = $model->getOpeningBalance() + $model->getTotal() - $withdrawal;
     	
-    	if($balance < 0)
+    	if($balance < -0.001)
     	{
     		Mage::getSingleton('core/session')->addError($this->__('Closing balance must be greather than zero!'));
     		$this->_redirect('gka_barkasse/kassenbuch_journal/');
