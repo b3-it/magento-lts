@@ -47,6 +47,14 @@ class Egovs_Base_Model_Observer
             return;
         }
 
+        if (empty($html)) {
+            return;
+        }
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        if (!$dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED)) {
+            return;
+        }
+
         $data = array(
                        'inkl.'  => 'inklusive',
                        'zzgl.'  => 'zuz&uuml;glich',
@@ -101,26 +109,43 @@ class Egovs_Base_Model_Observer
                        //'Q4'         => '4. Quartal',
                        //'WKM'        => 'Wechselkursmechanismus',
                        //'WTO'        => 'Welthandelsorganisation'
-                     );
+        );
 
-        foreach ( $data AS $key => $val ) {
-            $replace = '<abbr title="' . $val . '">' . $key . '</abbr>';
+        $xPath = new DOMXPath($dom);
+        $matched = false;
+        foreach ($data as $key => $val) {
+            $nodes = $xPath->query("//text()[normalize-space()][string-length()>0][not(parent::script)][contains(.,'$key')]");
+            foreach ($nodes as $node) {
+                /** @var DOMText $node */
+                $replace = ' ';
+                $node->textContent = str_replace($key, $replace, $node->textContent);
+                $abbr = $dom->createElement('abbr', $key);
+                $abbr->setAttribute('title', $val);
+                $node->parentNode->insertBefore($abbr, $node);
+                $matched = true;
+                /*
+                // nur ersetzen, wenn noch nicht enthalten und Abk. überhaupt enthalten
+                if ( !strpos($node->textContent, $replace) ) {
+                    $node->textContent = str_replace($key, $replace, $node->textContent);
+                }
+                */
 
-            // nur ersetzen, wenn noch nicht enthalten und Abk. überhaupt enthalten
-            if ( !strpos($html, $replace) ) {
-                $html = str_replace($key, $replace, $html);
-            }
-
-            // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
-            if ( strpos($html, '="<abbr') ) {
-            	$html = str_replace('="' . $replace, '="' . $key, $html);
-            }
-            if ( strpos($html, '</abbr>">') ) {
-                $html = str_replace($replace, $key, $html);
+                /*
+                 * Sollte nicht mehr relevant sein
+                // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
+                if ( strpos($html, '="<abbr') ) {
+                    $html = str_replace('="' . $replace, '="' . $key, $html);
+                }
+                if ( strpos($html, '</abbr>">') ) {
+                    $html = str_replace($replace, $key, $html);
+                }
+                */
             }
         }
-
-        $transport->setHtml($html);
+        if ($matched) {
+            $html = $dom->saveHTML($dom->documentElement);
+            $transport->setHtml($html);
+        }
     }
 
     public function mediaCheckIsUsingStaticUrlsAllowed($observer) {
