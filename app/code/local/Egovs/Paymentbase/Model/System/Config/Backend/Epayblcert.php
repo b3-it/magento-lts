@@ -40,51 +40,21 @@ class Egovs_Paymentbase_Model_System_Config_Backend_Epayblcert extends Egovs_Pay
     	parent::_beforeSave();
     	
     	$value = $this->getValue();
-    	
-        $groups = $this->getGroups();
         
         if (strpos($value, '../') !== false) {
         	Mage::getSingleton('adminhtml/session')->addError(Mage::helper('paymentbase')->__('The %s you entered is invalid. Relative paths with .. are not allowed!', $this->getFieldConfig()->label));
         	$value = null;
         }
-        $fieldGroup = null;
-        if (is_array($groups) && key_exists($this->getGroupId(), $groups)) {
-        	$group = $groups[$this->getGroupId()];
-        	if (is_array($group)) {
-        		if (key_exists('fields', $group)) {
-	        		$fields = $group['fields'];
-		
-		        	if (is_array($fields))
-		        		$fieldGroup = $fields;
-        		}
-        	}
-        }
         
-        
-        //$mandant = (string) Mage::getStoreConfig ( sprintf('payment/%s/mandantnr', $this->getGroupId()) );
-        if ($fieldGroup && key_exists('mandantnr', $fieldGroup)) {
-        	$mandant = $fieldGroup['mandantnr'];
-        	$mandant = (string) $mandant['value'];
-        }
-        
-        //bewirtschafternr
-        if ($fieldGroup && key_exists('bewirtschafternr', $fieldGroup)) {
-        	$bewirtschafter = $fieldGroup['bewirtschafternr'];
-        	$bewirtschafter = (string) $bewirtschafter['value'];
-        }
-        
-        if (empty($mandant) && empty($bewirtschafter) && (!isset($value) || strlen($value) < 1)) {
+        if (!isset($value) || strlen($value) < 1) {
         	$this->setValue($value);
         	return $this;
-        } elseif (!empty($mandant) && !empty($bewirtschafter) && strlen($value) < 1) {
-        	Mage::getSingleton('adminhtml/session')->addError(Mage::helper('paymentbase')->__('The %s you entered is invalid. You have to enter a valid path for the certificate', $this->getFieldConfig()->label));
-        	$value = null;
         }
         	
         if (!file_exists(Mage::getBaseDir().$value)) {
             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('paymentbase')->__('The %s you entered is invalid. Please make sure that the certificate exists.', $this->getFieldConfig()->label));
             $value = null;
-        }         
+        }
 
         $this->setValue($value);
         return $this;
