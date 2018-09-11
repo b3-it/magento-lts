@@ -251,11 +251,13 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
         $httpStatus = $response->code;
         $output = $response->raw_body;
 
-        if (($httpStatus < 200) || ($httpStatus > 210)) {
-            if ($order) {
+        if ($order) {
+            if (($httpStatus < 200) || ($httpStatus > 210)) {
                 Sid_ExportOrder_Model_History::createHistory($order->getId(), $output);
+                throw new Exception("HTTP Status/Output: " . $httpStatus . " / " . $output);
             }
-            throw new Exception("HTTP Status/Output: " . $httpStatus ." / ".$output);
+        } elseif (!$httpStatus || empty($output)) {
+            throw new Exception("HTTP Status/Output: " . $httpStatus . " / " . $output);
         }
 
         if ($order) {
