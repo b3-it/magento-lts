@@ -310,12 +310,14 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             if ($cee->getCurlErrorNumber() == 35) {
                 $_result = Mage::helper('exportorder')->__("Wrong client certificate specified!");
                 $_result .= " " . $cee->getMessage();
+            } else {
+                $_result = $cee->getMessage();
             }
         } catch (Exception $e) {
             Mage::logException($e);
             $_result = $e->getMessage();
         }
-        if (is_string($_result)) {
+        if (is_string($_result) && !isset($e) && !isset($cee)) {
             $_result = true;
         }
         return $_result;
