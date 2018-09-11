@@ -2,6 +2,62 @@
 
 class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    protected $_abbrData = array(
+        'inkl.'  => 'inklusive',
+        'zzgl.'  => 'zuz&uuml;glich',
+        'MwSt.'  => 'Mehrwertsteuer',
+        'etc.'   => 'und so weiter',
+        'etw.'   => 'etwas',
+        'VIES'   => 'VAT Information Exchange System',
+        'USt.ID' => 'Umsatzsteuer-ID',
+        'BZSt'   => 'Bundeszentralamt f&uuml;r Steuern',
+        'MIAS'   => 'Mehrwertsteuer-Informationsaustauschsystem',
+        //'' => '',
+
+        // Allgemeine Abkürzungen der Deutschen Bank
+        //'ann.'       => 'annualisiert',
+        //'BaFin'      => 'Bundesanstalt f&uuml;r Finanzdienstleistungsaufsicht',
+        //'BDA'        => 'Bundesvereinigung der Arbeitgeberverb&auml;nde',
+        //'BdB'        => 'Bundesverband deutscher Banken',
+        //'BDI'        => 'Bundesverband der Deutschen Industrie',
+        //'BfA'        => 'Bundesversicherungsanstalt f&uuml;r Angestellte',
+        //'Bill.'      => 'Billionen',
+        //'BIP'        => 'Bruttoinlandsprodukt',
+        //'BIZ'        => 'Bank f&uuml;r Internationalen Zahlungsausgleich',
+        //'BMF'        => 'Bundesministerium der Finanzen',
+        //'BuBa'       => 'Bundesbank',
+        //'DAX'        => 'Deutscher Aktienindex',
+        //'DIW'        => 'Deutsches Institut f&uuml;r Wirtschaftsforschung',
+        //'EBWE'       => 'Europ&auml;ische Bank f&uuml;r Wiederaufbau und Entwicklung',
+        //'EG'         => 'Europ&auml;ische Gemeinschaft',
+        //'EIB'        => 'Europ&auml;ische Investitionsbank',
+        //'EP'         => 'Euro&auml;isches Parlament',
+        //'EStG'       => 'Einkommensteuergesetz',
+        //'EU'         => 'Europ&auml;ische Union',
+        //'EuGH'       => 'Europ&auml;ischer Gerichtshof',
+        //'EuRH'       => 'Europ&auml;ischer Rechnungshof',
+        //'Eurostat'   => 'Europ&auml;isches Amt der EU',
+        //'Euro-STOXX' => 'Europ&auml;ischer Aktienindex',
+        //'EZB'        => 'Europ&auml;ische Zentralbank',
+        //'HGB'        => 'Handelsgesetzbuch',
+        //'HVPI'       => 'Handels- und Verbraucherpreisindex',
+        //'H1'         => '1. Halbjahr',
+        //'H2'         => '2. Halbjahr',
+        //'H3'         => '3. Halbjahr',
+        //'H4'         => '4. Halbjahr',
+        //'Ifo'        => 'Institut f&uuml;r Wirtschaftsforschung',
+        //'IfW'        => 'Institut f&uuml;r Weltwirtschaft',
+        //'IWF'        => 'Internationaler W&auml;hrungsfond',
+        //'nom.'       => 'nominal',
+        //'p.a.'       => 'per annum',
+        //'Q1'         => '1. Quartal',
+        //'Q2'         => '2. Quartal',
+        //'Q3'         => '3. Quartal',
+        //'Q4'         => '4. Quartal',
+        //'WKM'        => 'Wechselkursmechanismus',
+        //'WTO'        => 'Welthandelsorganisation'
+    );
+
 	/**
 	 * Liefert ein Array von aktiven Bezahlmodulen zur�ck
 	 *
@@ -184,5 +240,60 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 		return "";
 	}
 
+    /**
+     * Sucht nach Abkürzungen und ersetzt diese durch ein abbr-Tag
+     *
+     * @param $html
+     *
+     * @return string
+     */
+    public function replaceTemplateAbbr($html)
+    {
+        if (empty($html)) {
+            return $html;
+        }
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->substituteEntities = false;
+        //loadHTML macht mit UTF-8 Probleme
+        if (!$dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED)) {
+            $error = error_get_last();
+            return $html;
+        }
 
+        $xPath = new DOMXPath($dom);
+        $matched = false;
+        foreach ($this->_abbrData as $key => $val) {
+            $nodes = $xPath->query("//text()[normalize-space()][string-length()>0][not(parent::script)][contains(.,'$key')]");
+            foreach ($nodes as $node) {
+                /** @var DOMText $node */
+                $node->textContent = str_replace($key, '', $node->textContent);
+                $abbr = $dom->createElement('abbr', $key.'&nbsp;');
+                $abbr->setAttribute('title', $val);
+                $node->parentNode->insertBefore($abbr, $node);
+                $matched = true;
+                /*
+                // nur ersetzen, wenn noch nicht enthalten und Abk. überhaupt enthalten
+                if ( !strpos($node->textContent, $replace) ) {
+                    $node->textContent = str_replace($key, $replace, $node->textContent);
+                }
+                */
+
+                /*
+                 * Sollte nicht mehr relevant sein
+                // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
+                if ( strpos($html, '="<abbr') ) {
+                    $html = str_replace('="' . $replace, '="' . $key, $html);
+                }
+                if ( strpos($html, '</abbr>">') ) {
+                    $html = str_replace($replace, $key, $html);
+                }
+                */
+            }
+        }
+        if ($matched) {
+            //saveHTML macht mit ENTITIES und UTF-8 Probleme
+            $html = $dom->saveHTML();
+        }
+        return $html;
+    }
 }
