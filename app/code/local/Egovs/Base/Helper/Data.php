@@ -1,21 +1,34 @@
 <?php
+/**
+ * Class Egovs_Base_Helper_Data
+ *
+ * @category  Egovs
+ * @package   Egovs_Base
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright Copyright (c) 2018 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 
 class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 {
     protected $_abbrData = array(
         'inkl.'  => 'inklusive',
-        'zzgl.'  => 'zuz&uuml;glich',
+        'zzgl.'  => 'zuzüglich',
         'MwSt.'  => 'Mehrwertsteuer',
+        'USt.'   => 'Umsatzsteuer',
         'etc.'   => 'und so weiter',
         'etw.'   => 'etwas',
         'VIES'   => 'VAT Information Exchange System',
         'USt.ID' => 'Umsatzsteuer-ID',
-        'BZSt'   => 'Bundeszentralamt f&uuml;r Steuern',
+        'BZSt'   => 'Bundeszentralamt für Steuern',
         'MIAS'   => 'Mehrwertsteuer-Informationsaustauschsystem',
+        'EStG'   => 'Einkommensteuergesetz',
+        'nom.'   => 'nominal',
+        'p.a.'   => 'per annum',
+        'ann.'   => 'annualisiert',
         //'' => '',
 
         // Allgemeine Abkürzungen der Deutschen Bank
-        //'ann.'       => 'annualisiert',
         //'BaFin'      => 'Bundesanstalt f&uuml;r Finanzdienstleistungsaufsicht',
         //'BDA'        => 'Bundesvereinigung der Arbeitgeberverb&auml;nde',
         //'BdB'        => 'Bundesverband deutscher Banken',
@@ -32,7 +45,6 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         //'EG'         => 'Europ&auml;ische Gemeinschaft',
         //'EIB'        => 'Europ&auml;ische Investitionsbank',
         //'EP'         => 'Euro&auml;isches Parlament',
-        //'EStG'       => 'Einkommensteuergesetz',
         //'EU'         => 'Europ&auml;ische Union',
         //'EuGH'       => 'Europ&auml;ischer Gerichtshof',
         //'EuRH'       => 'Europ&auml;ischer Rechnungshof',
@@ -48,8 +60,6 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         //'Ifo'        => 'Institut f&uuml;r Wirtschaftsforschung',
         //'IfW'        => 'Institut f&uuml;r Weltwirtschaft',
         //'IWF'        => 'Internationaler W&auml;hrungsfond',
-        //'nom.'       => 'nominal',
-        //'p.a.'       => 'per annum',
         //'Q1'         => '1. Quartal',
         //'Q2'         => '2. Quartal',
         //'Q3'         => '3. Quartal',
@@ -59,7 +69,7 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
     );
 
 	/**
-	 * Liefert ein Array von aktiven Bezahlmodulen zur�ck
+	 * Liefert ein Array von aktiven Bezahlmodulen zurück
 	 *
 	 * array(PAYMENT_CODE => PAYMENT_TITLE)
 	 *
@@ -155,14 +165,14 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 	 * Rechnet eine Byte-Größe in eine angemessene Nutzerfreundliche Größe um
 	 *
 	 * @param int    $size    Größe in Byte
-	 * @param string $praefix Soll Faktor 1000 oder 1024 genutzt werden (Kilo vs Kibi)
-	 * @param string $short   Kurz- oder Langdarstellung
+	 * @param bool   $praefix Soll Faktor 1000 oder 1024 genutzt werden (Kilo vs Kibi)
+	 * @param bool   $short   Kurz- oder Langdarstellung
 	 *
 	 * @return string
 	 *
 	 * @see http://www.selfphp.info/kochbuch/kochbuch.php?code=61
 	 */
-	public function binaryHumanReadable($size, $praefix=true, $short= true) {
+	public function binaryHumanReadable($size, $praefix = true, $short = true) {
 
 		if ($praefix === true) {
 			if ($short === true) {
@@ -184,8 +194,7 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 			$factor = 1000;
 		} else {
 			if ($short === true) {
-				$norm = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB',
-						'EiB', 'ZiB', 'YiB');
+				$norm = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB');
 			} else {
 				$norm = array(
 						'Byte',
@@ -220,6 +229,7 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 	/**
 	 * ermittelt die im Pfad angegeben Konfiguration der speziellen AdminEMail Adresse
 	 * falls diese nicht vorhanden wird auf "'trans_email/ident_admin/email" ausgewichen
+     *
 	 * @param string $path
 	 * @return string Admin EMail Adresse
 	 */
@@ -244,7 +254,6 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
      * Sucht nach Abkürzungen und ersetzt diese durch ein abbr-Tag
      *
      * @param $html
-     *
      * @return string
      */
     public function replaceTemplateAbbr($html)

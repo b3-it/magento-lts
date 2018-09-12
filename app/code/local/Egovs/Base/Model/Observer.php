@@ -11,6 +11,7 @@ class Egovs_Base_Model_Observer
     /**
      * Prüfen, ein ein Teil des Hostnamens auf ein Test-System hinweist
      * und wenn dies der Fall ist, wird der Demo-Hinweis aktiviert und angezeigt
+     *
      * @access public
      */
     public function checkShopState()
@@ -31,6 +32,12 @@ class Egovs_Base_Model_Observer
         }
     }
 
+    /**
+     * Text der Ausgabeseite nach Abkürzungen durchsuchen und diese mit ABBR-Tag versehen
+     *
+     * @param $observer   \Mage_Core_Model_Observer
+     * @access public
+     */
     public function replaceTemplateAbbr($observer) {
         if (!$observer->hasFront()) {
             return;
@@ -44,6 +51,14 @@ class Egovs_Base_Model_Observer
         $front->getResponse()->setBody($html);
     }
 
+
+    /**
+     * Überprüfung, ob statische URL für Mediathek benutzt wird
+     *
+     * @param $observer    \Mage_Core_Model_Observer
+     * @return null
+     * @access public
+     */
     public function mediaCheckIsUsingStaticUrlsAllowed($observer) {
         $controller = Mage::app()->getFrontController()->getAction();
         if (!$controller || !$controller instanceof Egovs_Base_Adminhtml_Cms_Wysiwyg_MediaController) {
