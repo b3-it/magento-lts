@@ -236,6 +236,16 @@
                 </args>
             </customer>
         </routers>
+        <events>
+            <controller_front_send_response_before>
+                <observers>
+                    <egovs_base_core_block_abstract_to_html_after>
+                        <class>egovsbase/observer</class>
+                        <method>replaceTemplateAbbr</method>
+                    </egovs_base_core_block_abstract_to_html_after>
+                </observers>
+            </controller_front_send_response_before>
+        </events>
     </frontend>
 
     <global>
@@ -406,14 +416,6 @@
                     </germantax_checkout_type_onepage_save_order>
                 </observers>
             </checkout_type_onepage_save_order>
-            <controller_front_send_response_before>
-                <observers>
-                    <egovs_base_core_block_abstract_to_html_after>
-                        <class>egovsbase/observer</class>
-                        <method>replaceTemplateAbbr</method>
-                    </egovs_base_core_block_abstract_to_html_after>
-                </observers>
-            </controller_front_send_response_before>
             <customer_save_before>
                 <observers>
                     <egovs_base_customer_save_observer>

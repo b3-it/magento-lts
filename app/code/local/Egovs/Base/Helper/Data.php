@@ -264,10 +264,37 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->substituteEntities = false;
         //loadHTML macht mit UTF-8 Probleme
-        if (!$dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED)) {
+        $useInternalErrors = libxml_use_internal_errors(true);
+        if (!$dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED | LIBXML_NONET)) {
             $error = error_get_last();
             return $html;
         }
+        $errors = "";
+        foreach (libxml_get_errors() as $error) {
+            /** @var \LibXMLError $error */
+            // handle errors here
+            //Warning: DOMDocument::loadHTML(): Unexpected end tag : a in Entity, line: 761  in D:\git\magento1.9.x\app\code\local\Egovs\Base\Helper\Data.php on line 267
+            $level = "None";
+            switch ($error->level) {
+                case (LIBXML_ERR_FATAL):
+                    $level = "Fatal";
+                    break;
+                case (LIBXML_ERR_ERROR):
+                    $level = "Error";
+                    break;
+                case (LIBXML_ERR_WARNING):
+                    $level = "Warning";
+                    break;
+            }
+            $errors .= sprintf("%s: %s, line: %s\n", $level, trim($error->message), $error->line);
+        }
+        if (!empty($errors)) {
+            $errors = "DOMDocument::loadHTML():\n" . $errors;
+            Mage::log($errors, Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+        }
+
+        libxml_clear_errors();
+        libxml_use_internal_errors($useInternalErrors);
 
         $xPath = new DOMXPath($dom);
         $matched = false;
