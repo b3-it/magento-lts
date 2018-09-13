@@ -10,7 +10,7 @@
  * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Block_Adminhtml_System_Config_Form_Field_Cert
-    extends Mage_Adminhtml_Block_System_Config_Form_Field
+    extends Egovs_Paymentbase_Block_Adminhtml_System_Config_Form_Field_Acl
 {
 	/**
 	 * Enter description here...
