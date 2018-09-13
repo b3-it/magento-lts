@@ -1148,7 +1148,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Mandat
 
         if ($mandate->getSequenceType() == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
             if ($mandate->isActive() && !$mandate->isMultiPayment()) {
-                return self::MANDATE_CHANGE_NEW;
+                return self::MANDATE_CHANGE_ACCOUNT;
             }
         }
 

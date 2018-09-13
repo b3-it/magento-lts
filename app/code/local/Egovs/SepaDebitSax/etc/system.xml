@@ -286,6 +286,7 @@
                             <label>Client Zertifikat</label>
                             <frontend_type>text</frontend_type>
                             <backend_model>paymentbase/system_config_backend_epayblcert</backend_model>
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_cert</frontend_model>
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

@@ -30,6 +30,22 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New_Form extends Mage_Adminhtml_Blo
 				'value'	=> $this->getRequest()->getParam('id'),
 		
 		));
+        $fieldset->addField('product_id', 'hidden', array(
+            'name'      => 'product_id',
+            'value'	=> $event->getProduct()->getId(),
+
+        ));
+
+
+        $fieldset->addField('store_id', 'select', array(
+            'label'     => Mage::helper('eventmanager')->__('Store'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
+            'onchange'  => "translateTitle()",
+            'name'      => 'store_id',
+            'values'	=> $options,
+
+        ));
 
 
         $fieldset->addField('title', 'text', array(
@@ -49,15 +65,7 @@ class Bfr_EventManager_Block_Adminhtml_ToCms_New_Form extends Mage_Adminhtml_Blo
             'value' => $event->getProduct()->getSku()
         ));
 
-        $fieldset->addField('store_id', 'select', array(
-            'label'     => Mage::helper('eventmanager')->__('Store'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
 
-            'name'      => 'store_id',
-            'values'	=> $options,
-
-        ));
 
         $categorys = $this->_getCategories();
 
