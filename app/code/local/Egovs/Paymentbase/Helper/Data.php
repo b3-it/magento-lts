@@ -29,6 +29,11 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
      * Datum des Abrufs des Zahlungseingangs von der ePayBL
      */
     const ATTRIBUTE_EPAYBL_CAPTURE_DATE = 'epaybl_capture_date';
+
+    /**
+     * Status für den automatischen Zahlungsabruf
+     */
+    const ATTRIBUTE_EPAYBL_APR_STATUS = 'epaybl_apr_status';
 	
 	
 	const ATTRIBUTE_SEPA_ADDITIONAL = 'sepa_additional_data';

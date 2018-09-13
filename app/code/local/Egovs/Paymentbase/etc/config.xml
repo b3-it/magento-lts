@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Egovs_Paymentbase>
-			<version>2.1.2.0</version>
+			<version>2.2.0.0</version>
 		</Egovs_Paymentbase>
 	</modules>
 	<global>
@@ -267,6 +267,10 @@
 									<title>Orders Overview</title>
 									<sort_order>30</sort_order>
 								</order_overview>
+                                <incoming_payments>
+                                    <title>Incoming Payments</title>
+                                    <sort_order>30</sort_order>
+                                </incoming_payments>
 							</children>
 						</sales>
 						<system>
@@ -332,18 +336,23 @@
 					<retrievepayedorders translate="title" module="sales">
 						<title>Retrieve payed orders</title>
 						<action>adminhtml/paymentbase_retrievepayedorders</action>
-						<sort_order>20</sort_order>
+						<sort_order>1000</sort_order>
 					</retrievepayedorders>
 					<invalid_kassenzeichen translate="title" module="paymentbase">
 						<title>Invalid Kassenzeichen</title>
 						<action>adminhtml/paymentbase_invalid_kassenzeichen</action>
-						<sort_order>21</sort_order>
+						<sort_order>1001</sort_order>
 					</invalid_kassenzeichen>
 					<order_overview translate="title" module="paymentbase">
 						<title>Orders Overview</title>
 						<action>adminhtml/paymentbase_sales_overview</action>
 						<sort_order>21</sort_order>
 					</order_overview>
+                    <incoming_payments translate="title" module="paymentbase">
+                        <title>Incoming Payments</title>
+                        <action>adminhtml/paymentbase_sales_incomingPayments</action>
+                        <sort_order>30</sort_order>
+                    </incoming_payments>
 				</children>
 			</sales>
 			<system>
@@ -464,6 +473,7 @@
                 <href_max_length>100</href_max_length>
                 <company_lastname>1</company_lastname>
                 <epaybl_to_use>2</epaybl_to_use>
+				<apr_cronjob>0 8 * * *</apr_cronjob>
             </paymentbase>
             <saferpay>
     	        <active>1</active>
@@ -499,6 +509,14 @@
 					<model>paymentbase/observer::syncBankAccountDataWithePayBL</model>
 				</run>
 			</egovs_epaybl_auto_sync>
+			<egovs_epaybl_auto_payment_rerieval>
+				<schedule>
+					<config_path>payment_services/paymentbase/apr_cronjob</config_path>
+				</schedule>
+				<run>
+					<model>paymentbase/observer::runAutomaticPaymentRetrieval</model>
+				</run>
+			</egovs_epaybl_auto_payment_rerieval>
 		</jobs>
 	</crontab>
 </config>
