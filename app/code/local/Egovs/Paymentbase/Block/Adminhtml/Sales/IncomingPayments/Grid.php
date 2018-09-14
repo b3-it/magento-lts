@@ -38,7 +38,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
 
         $collection->addFieldToFilter('kassenzeichen', array('notnull' => true));
         $collection->addFieldToFilter(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, array('notnull' => true));
-        $collection->join(array('sales_order' => 'sales/order'), 'main_table.parent_id = sales_order.entity_id', 'increment_id');
+        $collection->join(array('sales_order' => 'sales/order'), 'main_table.parent_id = sales_order.entity_id', array('increment_id', 'store_id'));
 
         $this->setCollection($collection);
 
@@ -81,6 +81,17 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
             'type'  => 'text',
             'index' => 'increment_id',
         ));
+
+        if (!Mage::app()->isSingleStoreMode()) {
+            $this->addColumn('store_id', array(
+                'header'    => Mage::helper('sales')->__('Purchased From (Store)'),
+                'index'     => 'store_id',
+                'type'      => 'store',
+                'store_view'=> true,
+                'display_deleted' => true,
+                'escape'  => true,
+            ));
+        }
 
         $this->addColumn('apr_status', array(
                 'header'    => Mage::helper('paymentbase')->__('Status'),
@@ -139,5 +150,10 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
                 'order_id'=> $row->getParentId(),
             )
         );
+    }
+
+    public function getGridUrl()
+    {
+        return $this->getUrl('*/*/grid', array('_current'=>true));
     }
 }
