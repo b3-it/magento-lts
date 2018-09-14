@@ -640,4 +640,50 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     protected function _getKassenzeichenMaxErrorCount() {
 	    return (int)Mage::getStoreConfig('payment_services/paymentbase/apr_max_error_count');
     }
+
+    public function hasIncomingPayments() {
+	    return $this->_notBalanced > 0 || $this->_paidKassenzeichen > 0;
+    }
+
+    /**
+     * Informiert über neue Zahlungseingänge
+     *
+     * @param string $body    Body der Mail
+     * @param string $subject Betreff
+     *
+     * @return void
+     */
+    public function sendMailForNewPayments() {
+        if (strlen(Mage::getStoreConfig('payment_services/paymentbase/apr_new_payments')) < 1) {
+            return;
+        }
+        $subject = Mage::helper("paymentbase")->__("New Payments:");
+        $mailTo = Mage::getStoreConfig('payment_services/paymentbase/apr_new_payments');
+        $mailTo = explode(';', $mailTo);
+        /* @var $mail Mage_Core_Model_Email */
+        $mail = Mage::getModel('core/email');
+        $shopName = Mage::getStoreConfig('general/imprint/shop_name');
+        $body = sprintf(
+            "Shop Name: %s\nWebsite: %s\n\n%s",
+            $shopName,
+            Mage::getBaseUrl(),
+            Mage::helper("paymentbase")->__('New payments arrived!')
+        );
+        $mail->setBody($body);
+        $mailFrom = Mage::helper("paymentbase")->getGeneralContact();
+        $mail->setFromEmail($mailFrom['mail']);
+        $mail->setFromName($mailFrom['name']);
+        $mail->setToEmail($mailTo);
+
+        $sdm = Mage::getStoreConfig('payment_services/paymentbase/webshopdesmandanten');
+        $subject = sprintf("%s::%s", $sdm, $subject);
+        $mail->setSubject($subject);
+        try {
+            $mail->send();
+        } catch(Exception $ex) {
+            $error = Mage::helper("paymentbase")->__('Unable to send email.');
+
+            Mage::log($error.": {$ex->getTraceAsString()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+        }
+    }
 }

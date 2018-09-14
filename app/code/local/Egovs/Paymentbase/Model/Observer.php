@@ -668,9 +668,23 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
             throw new Mage_Cron_Exception($message);
         }
 
+        // Start store emulation process for translation while running by cron
+        $appEmulation = Mage::getSingleton('core/app_emulation');
+        $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation(Mage::app()->getDefaultStoreView());
+        //Dealing with uninitialized translator!
+        Mage::app()->getTranslator()->init('frontend', true);
+        //init helper
+        Mage::helper('paymentbase');
+        // Stop store emulation process
+        $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
         try {
-            $model = Mage::getModel('paymentbase/paymentbase');
-            $model->getZahlungseingaenge();
+            $paymentbase = Mage::getModel('paymentbase/paymentbase');
+            $paymentbase->getZahlungseingaenge();
+
+            if ($paymentbase->hasIncomingPayments()) {
+                $paymentbase->sendMailForNewPayments();
+            }
         } catch (Exception $e) {
             Mage::logException($e);
             Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
