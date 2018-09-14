@@ -17,8 +17,15 @@ class Egovs_Paymentbase_Model_Incoming_Payment extends Mage_Core_Model_Abstract
         $this->_init('paymentbase/incoming_payment');
     }
 
-    public function saveIncomingPayment($order_id, $base_amount, $amount)
+    /**
+     * @param int    $order_id
+     * @param float  $base_amount
+     * @param float  $amount
+     * @param string $msg
+     * @param bool   $force Force SQL insert, usually on error
+     */
+    public function saveIncomingPayment($order_id, $base_amount, $amount, $msg = null, $force = false)
     {
-        $this->getResource()->saveIncomingPayment($this, $order_id, $base_amount, $amount);
+        $this->getResource()->saveIncomingPayment($this, $order_id, $base_amount, $amount, $msg, $force);
     }
 }

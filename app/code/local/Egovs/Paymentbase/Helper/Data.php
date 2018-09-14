@@ -34,7 +34,11 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
      * Status für den automatischen Zahlungsabruf
      */
     const ATTRIBUTE_EPAYBL_APR_STATUS = 'epaybl_apr_status';
-	
+
+    /**
+     * Anzahl Fehler seit letztem erfolgreichem Abruf
+     */
+    const ATTRIBUTE_EPAYBL_APR_ERROR_COUNT = 'epaybl_apr_error_count';
 	
 	const ATTRIBUTE_SEPA_ADDITIONAL = 'sepa_additional_data';
 	
@@ -42,7 +46,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	
 	const EPAYBL_2_X_VERSION = 2;
 
-	/**
+    /**
 	 * Client zur Soap - Kommunikation
 	 *
 	 * @var SOAP_Client

@@ -437,6 +437,15 @@
                             <comment><![CDATA[P1 P2 P3 P4 P5<br/>P1 Minute (0-59)<br/>P2 Hour (0-23)<br/>P3 Day (0-31)<br/>P4 Month (1-12)<br/>P5 Day of Week (0-7, Sunday is 0 or 7)]]></comment>
                             <tooltip>Default is: 0 8 * * 1,2,3,4,5<br/> Cron runs every weekday at 08:00</tooltip>
                         </apr_cronjob>
+                        <apr_max_error_count translate="label comment tooltip">
+                            <label>Payment retrieval max retries</label>
+                            <sort_order>912</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry validate-number validate-greater-than-zero</validate>
+                            <comment>Number of maximal errors for payment retrievals</comment>
+                        </apr_max_error_count>
                         <apr_new_payments translate="label comment tooltip">
                             <label>Inform for new payment retrievals</label>
                             <sort_order>920</sort_order>

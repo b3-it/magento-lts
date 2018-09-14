@@ -474,6 +474,7 @@
                 <company_lastname>1</company_lastname>
                 <epaybl_to_use>2</epaybl_to_use>
 				<apr_cronjob>0 8 * * *</apr_cronjob>
+				<apr_max_error_count>3</apr_max_error_count>
             </paymentbase>
             <saferpay>
     	        <active>1</active>

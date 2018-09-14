@@ -24,11 +24,11 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
         $this->_init('paymentbase/incoming_payment', 'id');
     }
 
-    public function saveIncomingPayment($object, $order_id, $base_amount, $amount )
+    public function saveIncomingPayment($object, $order_id, $base_amount, $amount, $msg = null, $force = false)
     {
-        $order_id = intval($order_id);
-        $amount = floatval($amount);
-        $base_amount = floatval($base_amount);
+        $order_id = (int)$order_id;
+        $amount = (float)$amount;
+        $base_amount = (float)$base_amount;
         /*
          * set @base_amount = 10.52;
          * set @amount = @base_amount;
@@ -41,13 +41,13 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
          *     HAVING (IFNULL(@base_amount - sum(base_paid), @base_amount) > 0.00)
          * )
          */
-        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, paid, base_paid,  epaybl_capture_date) ";
-        $sql .= "(";
-        $sql .= "SELECT {$order_id}, {$amount}, {$base_amount}, IFNULL({$amount} - sum(paid), {$amount}), IFNULL({$base_amount} - sum(base_paid), {$base_amount}) , UTC_TIMESTAMP()";
+        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, paid, base_paid, epaybl_capture_date, message) ";
+        $sql .= '(';
+        $sql .= "SELECT {$order_id}, {$amount}, {$base_amount}, IFNULL({$amount} - sum(paid), {$amount}), IFNULL({$base_amount} - sum(base_paid), {$base_amount}), UTC_TIMESTAMP(), '{$msg}'";
         $sql .= " FROM {$this->getMainTable()}";
         $sql .= " WHERE order_id = {$order_id}";
-        $sql .= " HAVING (IFNULL({$base_amount} - sum(base_paid), {$base_amount}) > 0.00)";
-        $sql .= ")";
+        $sql .= " HAVING (IFNULL({$base_amount} - sum(base_paid), {$base_amount}) > 0.00) OR {$force}=1";
+        $sql .= ')';
         $this->_getWriteAdapter()->query($sql);
     }
 }

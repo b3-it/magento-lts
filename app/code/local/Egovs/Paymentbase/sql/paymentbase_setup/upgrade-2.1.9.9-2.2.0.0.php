@@ -18,7 +18,6 @@ $installer->startSetup();
 
 $entityTypeId = 'order_payment';
 $attributeId = Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS;
-
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/order_payment'), $attributeId)) {
     $installer->getConnection()->addColumn(
         $installer->getTable('sales/order_payment'),
@@ -26,9 +25,22 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/
         array(
             'type' => Varien_Db_Ddl_Table::TYPE_INTEGER,
             'unsigned'  => true,
-            'nullable' => true,
-            'default' => null,
+            'default' => 0,
             'comment' => 'APR Status'
+        )
+    );
+}
+
+$attributeId = Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT;
+if (!$installer->getConnection()->tableColumnExists($installer->getTable('sales/order_payment'), $attributeId)) {
+    $installer->getConnection()->addColumn(
+        $installer->getTable('sales/order_payment'),
+        $attributeId,
+        array(
+            'type' => Varien_Db_Ddl_Table::TYPE_INTEGER,
+            'unsigned'  => true,
+            'default' => 0,
+            'comment' => 'APR Errors'
         )
     );
 }

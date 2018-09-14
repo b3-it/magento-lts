@@ -2,25 +2,28 @@
 /**
  * Basisklasse für gemeinsam genutzte Methoden zur ePayment-Kommunikation.
  *
- * @category	Egovs
- * @package		Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@trw-net.de>
- * @author		René Sieberg <rsieberg@web.de>
- * @copyright	Copyright (c) 2011-2012 EDV Beratung Hempel
- * @copyright	Copyright (c) 2011-2012 TRW-NET 
- * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ * @category  Egovs
+ * @package   Egovs_Paymentbase
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright Copyright (c) 2011 - 2018 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  * @method Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis getKassenzeichenInfo() Kassenzeichen Info
  */
 class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 {
 	/**
-	 * Maximale Anzahl an Rechungen die unausgeglichen sind.
+	 * Maximale Anzahl an Rechnungen die unausgeglichen sind.
 	 * Wird zur Anzeige von Warnmeldungen benötigt
 	 * 
 	 * @var int
 	 */
 	const MAX_UNBALANCED = 15;
+
+	const KASSENZEICHEN_STATUS_NEW = 0;
+    const KASSENZEICHEN_STATUS_PROCESSING = 1;
+    const KASSENZEICHEN_STATUS_DONE = 2;
+    const KASSENZEICHEN_STATUS_ERROR = 3;
 	
 	/**
 	 * Bezahlte Kassenzeichen
@@ -72,7 +75,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 	}
 	
 	/**
-	 * Liefert das Kassenzeichen zur aktuellen Bestellungsinstanz
+	 * Liefert das Kassenzeichen zur aktuellen Bestellinstanz
 	 * 
 	 * @return string|null
 	 */
@@ -83,31 +86,59 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 		
 		return $this->_getOrder()->getPayment()->getKassenzeichen();
 	}
-	
-	/**
-	 * Verarbeitet die Informationen die von der ePayment Plattform geliefert werden.
-	 * 
-	 * Die ePayment Plattform wird auf aktuelle Zahlungsinformationen abgefragt. Mit den erhaltenen Kassenzeichen,
-	 * wird eine Liste von Bestellungen im Shop abgearbeitet.
-	 * Die Bestellungen erhalten somit den korrekten State im Shop.
-	 * 
-	 * Der aktuelle Saldo des BKZ wird in der Order im Feld 'total_paid' und 'base_total_paid' mitgeführt.
-	 * 
-	 * Für den Fall einer Unterzahlung zu einem BKZ wird dem Backendbenutzer eine Rückmeldung gegeben (max:MAX_UNBALANCED).
-	 * Diese sollte neben dem BKZ, auch die Bestellnummer sowie die Rechnungsnummer beinhalten.
-	 * 
-	 * Für den Fall einer Überzahlung zu einem BKZ wird dem BE-Benutzer eine sprechende Rückmeldung gegeben (max:MAX_UNBALANCED).
-	 * Diese sollte neben dem BKZ, auch die Bestellnummer sowie die Rechnungsnummer beinhalten.
-	 * Der Hinweis erfolgt nur einmal. Überzahlte BKZ werden nicht erneut abgerufen.
-	 * 
-	 * Unterzahle BKZ werden erneut abgerufen.
-	 *  
-	 * @return Egovs_Paymentbase_Model_Paymentbase
-	 * 
-	 * @see Egovs_Paymentbase_Model_Paymentbase::_lesenKassenzeichenInfo
-	 * @see Egovs_Paymentbase_Model_Paymentbase::_ePaymentUpdatePaymentStatus
-	 * @see Egovs_Paymentbase_Model_Paymentbase::_ePaymentZahlungenGelesen
-	 */
+
+    /**
+     * Liefert den Kassenzeichen-Status zur aktuellen Bestellinstanz
+     *
+     * @return int|null
+     */
+    protected function _getKassenzeichenStatus() {
+        if (!self::isRunning() || !$this->hasInvoice()) {
+            return null;
+        }
+
+        return (int)$this->_getOrder()->getPayment()->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS);
+    }
+
+    /**
+     * Liefert den Kassenzeichen-Error-Zähler zur aktuellen Bestellinstanz
+     *
+     * @return int
+     */
+    protected function _getKassenzeichenErrorCount() {
+        if (!self::isRunning() || !$this->hasInvoice()) {
+            return 0;
+        }
+
+        return (int)$this->_getOrder()->getPayment()->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT);
+    }
+
+    /**
+     * Verarbeitet die Informationen die von der ePayment Plattform geliefert werden.
+     *
+     * Die ePayment Plattform wird auf aktuelle Zahlungsinformationen abgefragt. Mit den erhaltenen Kassenzeichen,
+     * wird eine Liste von Bestellungen im Shop abgearbeitet.
+     * Die Bestellungen erhalten somit den korrekten State im Shop.
+     *
+     * Der aktuelle Saldo des BKZ wird in der Order im Feld 'total_paid' und 'base_total_paid' mitgeführt.
+     *
+     * Für den Fall einer Unterzahlung zu einem BKZ wird dem Backendbenutzer eine Rückmeldung gegeben
+     * (max:MAX_UNBALANCED). Diese sollte neben dem BKZ, auch die Bestellnummer sowie die Rechnungsnummer beinhalten.
+     *
+     * Für den Fall einer Überzahlung zu einem BKZ wird dem BE-Benutzer eine sprechende Rückmeldung gegeben
+     * (max:MAX_UNBALANCED). Diese sollte neben dem BKZ, auch die Bestellnummer sowie die Rechnungsnummer beinhalten.
+     * Der Hinweis erfolgt nur einmal. Überzahlte BKZ werden nicht erneut abgerufen.
+     *
+     * Unterzahle BKZ werden erneut abgerufen.
+     *
+     * @return Egovs_Paymentbase_Model_Paymentbase
+     *
+     * @see Egovs_Paymentbase_Model_Paymentbase::_lesenKassenzeichenInfo
+     * @see Egovs_Paymentbase_Model_Paymentbase::_ePaymentUpdatePaymentStatus
+     * @see Egovs_Paymentbase_Model_Paymentbase::_ePaymentZahlungenGelesen
+     *
+     * @throws \Mage_Core_Model_Store_Exception
+     */
 	public function getZahlungseingaenge() {
 		self::$_running = true;
 	 	
@@ -138,42 +169,46 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
                 ),
                 Zend_Log::DEBUG, Egovs_Helper::LOG_FILE
             );
-			//Wenn Kassenzeichen verfügbar
-			if (!empty($kzeichen)) {
-				$this->setKassenzeichenInfo($this->_lesenKassenzeichenInfo($kzeichen));
-				
-				$kInfo = $this->getKassenzeichenInfo();
-				if ($kInfo instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis) {
-					if ($kInfo->ergebnis->istOk == false) {
-						$msg = sprintf(
-								"%s; Error code: %s; Kassenzeichen: %s",
-								$this->getKassenzeichenInfo()->ergebnis->getLongText(),
-								$this->getKassenzeichenInfo()->ergebnis->getCode(),
-								$kzeichen
-						);
-                        Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-						if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])) {
-							$errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] = $msg;
-						} elseif (isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])
-                            && mb_strlen($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()]) <= 104) {
-                            $errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] .= " ".Mage::helper('paymentbase')->__("The error file contains further information...");
-                        }
-						$this->unsKassenzeichenInfo();
-					} else {
-						//Alles OK Kassenzeichen wurde abgerufen
-						$kassenzeichenCount++;
-					}
-				} else {
-                    $msg = Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_STANDARD');
-                    Mage::log("paymentbase::Kassenzeichen:$kzeichen:$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-					if (!isset($errors[-9999])) {
-						$errors[-9999] = $msg;
-					}
-					$this->unsKassenzeichenInfo();
-				}
-			} else {
-				$this->unsKassenzeichenInfo();
-			}
+
+			if (empty($kzeichen) || $this->_getKassenzeichenErrorCount() >= $this->_getKassenzeichenMaxErrorCount()) {
+                $this->unsKassenzeichenInfo();
+                continue;
+            }
+
+            //Wenn Kassenzeichen verfügbar
+            $this->setKassenzeichenInfo($this->_lesenKassenzeichenInfo($kzeichen));
+
+            $kInfo = $this->getKassenzeichenInfo();
+            if ($kInfo instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis) {
+                if ($kInfo->ergebnis->istOk == false) {
+                    $msg = sprintf(
+                            "%s; Error code: %s; Kassenzeichen: %s",
+                            $this->getKassenzeichenInfo()->ergebnis->getLongText(),
+                            $this->getKassenzeichenInfo()->ergebnis->getCode(),
+                            $kzeichen
+                    );
+                    Mage::log("paymentbase::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+                    if (!isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])) {
+                        $errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] = $msg;
+                    } elseif (isset($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()])
+                        && mb_strlen($errors[$this->getKassenzeichenInfo()->ergebnis->getCode()]) <= 104) {
+                        $errors[$this->getKassenzeichenInfo()->ergebnis->getCode()] .= " ".Mage::helper('paymentbase')->__("The error file contains further information...");
+                    }
+                    $this->_saveIncomingPayment(self::KASSENZEICHEN_STATUS_ERROR, $msg);
+                    $this->unsKassenzeichenInfo();
+                } else {
+                    //Alles OK Kassenzeichen wurde abgerufen
+                    $kassenzeichenCount++;
+                }
+            } else {
+                $msg = Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_STANDARD');
+                Mage::log("paymentbase::Kassenzeichen:$kzeichen:$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+                if (!isset($errors[-9999])) {
+                    $errors[-9999] = $msg;
+                }
+                $this->_saveIncomingPayment(self::KASSENZEICHEN_STATUS_ERROR, $msg);
+                $this->unsKassenzeichenInfo();
+            }
 			
 			$this->_processIncomingPayments();
             Mage::app()->setCurrentStore($_currentStore);
@@ -224,6 +259,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
             //Reset möglicher Teilzahlungen
     		$this->_getOrder()->setBaseTotalPaid(0);
     		$this->_getOrder()->setTotalPaid(0);
+            $msg = null;
 
             if ($_saldo < 0.0 && $this->_notBalanced <= self::MAX_UNBALANCED) {
     			Mage::getSingleton('adminhtml/session')->addNotice(
@@ -234,8 +270,9 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('paymentbase')->__('...'));
     			$this->_notBalanced++;
     		}
+            $msg = Mage::helper('paymentbase')->__('The balance of this invoice is %s', $_saldo);
     		if ($_saldo < 0.0) {
-    			$this->getInvoice()->addComment(Mage::helper('paymentbase')->__('The balance of this invoice is %s', $_saldo))
+    			$this->getInvoice()->addComment($msg)
     				->save()
     			;
     		}
@@ -251,10 +288,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
     			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($_betrag));
 
-    			//Normale Bezahlungen werden über Observer behandelt
-                //@see Egovs_Paymentbase_Model_Observer::onSalesOrderInvoicePay
-                $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
-                $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
+    			$this->_saveIncomingPayment(self::KASSENZEICHEN_STATUS_DONE, $msg);
     		}
 
     		$this->_getOrder()->getPayment()->setEpayblCaptureDate(Varien_Date::now());
@@ -272,7 +306,8 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('paymentbase')->__('...'));
     			$this->_notBalanced++;
     		}
-    		$this->getInvoice()->addComment(Mage::helper('paymentbase')->__('The balance of this invoice is %s', $this->getKassenzeichenInfo()->saldo))
+    		$msg = Mage::helper('paymentbase')->__('The balance of this invoice is %s', $this->getKassenzeichenInfo()->saldo);
+    		$this->getInvoice()->addComment($msg)
     			->save()
     		;
     		$this->_getOrder()->setBaseTotalPaid(
@@ -282,9 +317,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     		$this->_getOrder()->setTotalPaid(
     				min($this->_getOrder()->getStore()->convertPrice($_betrag), $this->_getOrder()->getGrandTotal())
     		);
-            $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
-            $incomingPayment->saveIncomingPayment($this->_getOrder()->getId(),$this->_getOrder()->getBaseTotalPaid(),$this->_getOrder()->getTotalPaid());
-
+            $this->_saveIncomingPayment(self::KASSENZEICHEN_STATUS_PROCESSING, $msg);
 
             $this->_getOrder()->getResource()->saveAttribute($this->_getOrder(), array('base_total_paid', 'total_paid'));
     	}
@@ -515,15 +548,12 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     	$order->setState($orderState);
     	$customerNote = Mage::helper('paymentbase')->__('Your payment has been received');
     	$isCustomerNotified = false;
-    	//Wurde in BankPayment Modul ausgelagert
-    	/* if ($order->getPayment()->getMethodInstance() instanceof Egovs_BankPayment_Model_Bankpayment) {
-    		$isCustomerNotified = true;
-    	} */
-    	$order->addStatusToHistory(
-	    	$orderStatus,
-	    	$customerNote,
-	    	$isCustomerNotified
-    	);
+
+    	$order->addStatusHistoryComment(
+                $customerNote,
+                $orderStatus
+            )->setIsCustomerNotified($isCustomerNotified)
+        ;
     	//Erst muss Status gesetzt sein.
     	if ($isCustomerNotified) {
     		$order->sendOrderUpdateEmail(true, $customerNote);
@@ -531,28 +561,26 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     	
     	return $orderStatus;
     }
-    
+
     /**
      * Setzt den Status aller Rechnungen der Bestellung
-     * 
+     *
      * @param Mage_Sales_Model_Order $order Bestellung
-     * 
+     *
      * @return Egovs_Paymentbase_Model_Paymentbase
+     *
+     * @throws \Exception
      */
 	protected  function _setInvoicePaymentStatus(Mage_Sales_Model_Order $order) {
     	if (is_null($order)) {
     		return $this;
     	}
     	//Paymentmodul wird schon bei getZahlungseingaenge abgefragt!
-		/*TODO : Sollte hier vielleicht noch zwischen Paymentmodulen (Vorkasse und Rechnung)
-				 bzgl. des States differenziert werden?
+		/*TODO : Sollte hier vielleicht noch zwischen Paymentmodulen (Vorkasse und Rechnung) bzgl. des States differenziert werden?
 		*/
-    	if (!(
-    			$order->getState() == Mage_Sales_Model_Order::STATE_PROCESSING
-				|| $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
-    			|| $order->getState() == Mage_Sales_Model_Order::STATE_COMPLETE
-    			)
-			) {
+    	if ($order->getState() != Mage_Sales_Model_Order::STATE_PROCESSING
+            && $order->getState() != Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
+            && $order->getState() != Mage_Sales_Model_Order::STATE_COMPLETE) {
 	    	return $this;
 	    }
 	    	
@@ -567,5 +595,49 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     	}
     	
     	return $this;
+    }
+
+    protected function _saveIncomingPayment($status, $msg = null) {
+        if (!self::isRunning() || !$this->hasInvoice()) {
+            return $this;
+        }
+
+        $force = false;
+        if ($status == self::KASSENZEICHEN_STATUS_ERROR) {
+            $this->_getOrder()->getPayment()->setData(
+                Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
+                $this->_getKassenzeichenErrorCount()+1
+            );
+            $force = true;
+        } else {
+            $this->_getOrder()->getPayment()->setData(
+                Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
+                0
+            );
+        }
+        $this->_getOrder()->getPayment()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, $status);
+        /** @var \Mage_Sales_Model_Resource_Order_Payment $resource */
+        $resource = $this->_getOrder()->getPayment()->getResource();
+        $resource->saveAttribute($this->_getOrder()->getPayment(), array(
+            Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
+            Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS
+        ));
+
+        //Normale Bezahlungen werden über Observer behandelt
+        //@see Egovs_Paymentbase_Model_Observer::onSalesOrderInvoicePay
+        $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
+        $incomingPayment->saveIncomingPayment(
+            $this->_getOrder()->getId(),
+            $this->_getOrder()->getBaseTotalPaid(),
+            $this->_getOrder()->getTotalPaid(),
+            $msg,
+            $force
+        );
+
+        return $this;
+    }
+
+    protected function _getKassenzeichenMaxErrorCount() {
+	    return (int)Mage::getStoreConfig('payment_services/paymentbase/apr_max_error_count');
     }
 }

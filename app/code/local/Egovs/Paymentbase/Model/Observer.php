@@ -669,7 +669,8 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         }
 
         try {
-
+            $model = Mage::getModel('paymentbase/paymentbase');
+            $model->getZahlungseingaenge();
         } catch (Exception $e) {
             Mage::logException($e);
             Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
