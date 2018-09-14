@@ -26,6 +26,27 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_Sales_IncomingPaymentsController e
     }
 
     /**
+     * Initialize order model instance
+     *
+     * @return Mage_Sales_Model_Order || false
+     */
+    protected function _initOrder()
+    {
+        $id = $this->getRequest()->getParam('order_id');
+        $order = Mage::getModel('sales/order')->load($id);
+
+        if (!$order->getId()) {
+            $this->_getSession()->addError($this->__('This order no longer exists.'));
+            $this->_redirect('*/*/');
+            $this->setFlag('', self::FLAG_NO_DISPATCH, true);
+            return false;
+        }
+        Mage::register('sales_order', $order);
+        Mage::register('current_order', $order);
+        return $order;
+    }
+
+    /**
      * Export nach CSV
      * 
      * @return void
@@ -63,6 +84,21 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_Sales_IncomingPaymentsController e
     }
 
     /**
+     * Grid Aktion
+     *
+     * Wird meist durch einen Ajax-Aufruf genutzt
+     *
+     * @return void
+     */
+    public function transactionsAction() {
+        $this->loadLayout();
+        $this->_initOrder();
+        $this->getResponse()->setBody(
+            $this->getLayout()->createBlock('paymentbase/adminhtml_sales_incomingPayments_view_tab_transactions')->toHtml()
+        );
+    }
+
+    /**
      * Standard Aktion
      * 
      * @return void
@@ -70,7 +106,19 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_Sales_IncomingPaymentsController e
     public function indexAction() {
         $this->_initAction()
             ->_addContent($this->getLayout()->createBlock('paymentbase/adminhtml_sales_incomingPayments'))
-            ->renderLayout();
+            ;
+        $this->renderLayout();
+    }
+
+    /**
+     * Standard Aktion
+     *
+     * @return void
+     */
+    public function viewAction() {
+        $this->_initAction();
+        $this->_initOrder();
+        $this->renderLayout();
     }
     
     protected function _isAllowed() {
