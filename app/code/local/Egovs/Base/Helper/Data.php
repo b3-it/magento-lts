@@ -299,31 +299,35 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         $xPath = new DOMXPath($dom);
         $matched = false;
         foreach ($this->_abbrData as $key => $val) {
-            $nodes = $xPath->query("//text()[normalize-space()][string-length()>0][not(parent::script)][contains(.,'$key')]");
+            $nodes = $xPath->query("//text()[normalize-space()][string-length()>0][not(parent::script)][not(parent::p)][not(parent::title)][contains(.,'$key')]");
+            $abbr = $dom->createElement('abbr', $key);
+            $abbr->setAttribute('title', $val);
             foreach ($nodes as $node) {
                 /** @var DOMText $node */
-                $node->textContent = str_replace($key, '', $node->textContent);
-                $abbr = $dom->createElement('abbr', $key.'&nbsp;');
-                $abbr->setAttribute('title', $val);
-                $node->parentNode->insertBefore($abbr, $node);
-                $matched = true;
-                /*
-                // nur ersetzen, wenn noch nicht enthalten und Abk. überhaupt enthalten
-                if ( !strpos($node->textContent, $replace) ) {
-                    $node->textContent = str_replace($key, $replace, $node->textContent);
-                }
-                */
+                $pieces = explode($key, $node->textContent);
+                $parent = $node->parentNode;
+                //Workaround to preserve order
+                $newNode = $dom->createDocumentFragment();
+                $last = count($pieces)-1;
+                foreach ($pieces as $i => $piece) {
+                    if (empty($piece)) {
+                        if ($i != $last) {
+                            //Without clone only the last one is used!
+                            $newNode->appendChild(clone $abbr);
+                        }
+                        continue;
+                    }
 
-                /*
-                 * Sollte nicht mehr relevant sein
-                // Fehlerhaftes Ersetzen in DATA-Tags von HTML-Elementen korrigieren
-                if ( strpos($html, '="<abbr') ) {
-                    $html = str_replace('="' . $replace, '="' . $key, $html);
+                    $textNode = $dom->createTextNode($piece);
+                    $newNode->appendChild($textNode);
+
+                    if ($i != $last) {
+                        //Without clone only the last one is used!
+                        $newNode->appendChild(clone $abbr);
+                    }
                 }
-                if ( strpos($html, '</abbr>">') ) {
-                    $html = str_replace($replace, $key, $html);
-                }
-                */
+                $parent->replaceChild($newNode, $node);
+                $matched = true;
             }
         }
         if ($matched) {
