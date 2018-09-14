@@ -299,7 +299,7 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         $xPath = new DOMXPath($dom);
         $matched = false;
         foreach ($this->_abbrData as $key => $val) {
-            $nodes = $xPath->query("//text()[normalize-space()][string-length()>0][not(parent::script)][not(parent::p)][contains(.,'$key')]");
+            $nodes = $xPath->query("//text()[normalize-space()][string-length()>0][not(parent::script)][not(parent::p)][not(parent::title)][contains(.,'$key')]");
             $abbr = $dom->createElement('abbr', $key);
             $abbr->setAttribute('title', $val);
             foreach ($nodes as $node) {
