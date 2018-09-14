@@ -86,13 +86,37 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
                 'header'    => Mage::helper('paymentbase')->__('Status'),
                 'width' => '80px',
                 'index'     => Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS,
-                //TODO Should be options
-                'type'      => 'text',
+                'type'      => 'options',
+                'options'    => Mage::getModel('paymentbase/system_config_source_incomingPaymentStatus')->toArray()
             )
         );
 
-        $this->addExportType('*/*/exportCsv', Mage::helper('sales')->__('CSV'));
-        $this->addExportType('*/*/exportExcel', Mage::helper('sales')->__('Excel XML'));
+        $this->addColumn('error_count', array(
+            'header'=> Mage::helper('sales')->__('Errors #'),
+            'width' => '80px',
+            'type'  => 'number',
+            'index' => Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
+        ));
+
+        $this->addColumn('action',
+            array(
+                'header'    =>  Mage::helper('paymentbase')->__('Action'),
+                'width'     => '100',
+                'type'      => 'action',
+                'getter'    => 'getParentId',
+                'actions'   => array(
+                    array(
+                        'caption'   => Mage::helper('paymentbase')->__('View'),
+                        'url'       => array('base'=> '*/*/view'),
+                        'field'     => 'order_id',
+                        'data-column' => 'action'
+                    )
+                ),
+                'filter'    => false,
+                'sortable'  => false,
+                'index'     => 'stores',
+                'is_system' => true,
+            ));
 
         return parent::_prepareColumns();
     }
@@ -110,9 +134,9 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
             return false;
         }
 
-        return $this->getUrl('adminhtml/sales_order/view',
+        return $this->getUrl('*/*/view',
             array(
-                'order_id'=> $row->getOrderId(),
+                'order_id'=> $row->getParentId(),
             )
         );
     }

@@ -22,5 +22,13 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments extends Mage_Admi
         $this->_headerText = Mage::helper('sales')->__('Incoming Payments');
         parent::__construct();
         $this->_removeButton('add');
+        $this->_addButton(
+            'run_button',
+            array(
+                'label'     => Mage::helper('adminhtml')->__('Retrieve Payments'),
+                'onclick'   => "setLocation('{$this->getUrl('*/paymentbase_retrievepayedorders/index')}')",
+                'class'   => 'task'
+            )
+        );
     }
 }
