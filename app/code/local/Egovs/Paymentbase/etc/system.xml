@@ -444,7 +444,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <validate>required-entry validate-number validate-greater-than-zero</validate>
-                            <comment>Number of maximal errors for payment retrievals</comment>
+                            <comment>Number of maximum errors for incoming payments</comment>
                         </apr_max_error_count>
                         <apr_new_payments translate="label comment tooltip">
                             <label>Inform for new payment retrievals</label>
