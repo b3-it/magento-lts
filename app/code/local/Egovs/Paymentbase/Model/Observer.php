@@ -641,7 +641,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 
         $lockKey = 'egovs_paymentbase_apr_cron_mutex' . $schedule->getId();
 
-        $lockResult = Mage::helper('paymentbase/lock')->getLock($lockKey, 300);
+        $lockResult = Mage::helper('egovsbase/lock')->getLock($lockKey, 300);
         if ($lockResult === null) {
             Mage::log("egovs_paymentbase::apr:LOCK $lockKey couldn't be obtained!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
             throw new Mage_Cron_Exception("LOCK $lockKey couldn't be obtained!");
@@ -664,6 +664,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         if ($collection->count() > 0) {
             $message = Mage::helper('paymentbase')->__('Service is still running');
             Mage::log($message, Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            Mage::helper('egovsbase/lock')->releaseLock($lockKey);
             throw new Mage_Cron_Exception($message);
         }
 
@@ -672,6 +673,9 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         } catch (Exception $e) {
             Mage::logException($e);
             Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+        }
+        Mage::helper('egovsbase/lock')->releaseLock($lockKey);
+        if (isset($e)) {
             throw $e;
         }
 

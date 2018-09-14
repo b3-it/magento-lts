@@ -1,5 +1,15 @@
 <?php
-class Egovs_Paymentbase_Helper_Lock extends Mage_Core_Helper_Abstract
+
+/**
+ * Class Egovs_Base_Helper_Lock
+ *
+ * @category  Egovs
+ * @package   Egovs_Base
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright Copyright (c) 2018 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
 {
     protected static $dbLockResult = array();
 
