@@ -40,7 +40,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_View_Tabs extends
         parent::__construct();
         $this->setId('sales_incomingpayments_view_tabs');
         $this->setDestElementId('sales_incomingpayments_view_form');
-        $this->setTitle(Mage::helper('sales')->__('Incoming Payments'));
+        $this->setTitle(Mage::helper('paymentbase')->__('Incoming Payments'));
     }
 
     /**
