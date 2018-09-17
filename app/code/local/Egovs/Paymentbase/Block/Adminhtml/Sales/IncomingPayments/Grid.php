@@ -37,7 +37,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
         $collection = Mage::getResourceModel('sales/order_payment_collection');
 
         $collection->addFieldToFilter('kassenzeichen', array('notnull' => true));
-        $collection->addFieldToFilter(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, array('notnull' => true));
+        $collection->addFieldToFilter(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, array('gt' => 0));
         $collection->join(array('sales_order' => 'sales/order'), 'main_table.parent_id = sales_order.entity_id', array('increment_id', 'store_id'));
 
         $this->setCollection($collection);
