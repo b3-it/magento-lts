@@ -287,3 +287,5 @@
 "Paid (Base)","Bezahlt (Base)"
 "Total Paid (Base)","Gesamt Bezahlt (Base)"
 "Retrieve Payments","Zahlungen abrufen"
+"Reset error status for Kassenzeichen %s","Fehler-Status für Kassenzeichen %s zurückgesetzt"
+"Reset not possible no Kassenzeichen or order %s!","Zurücksetzen für Bestell-ID nicht möglich, kein Kassenzeichen vorhanden!"

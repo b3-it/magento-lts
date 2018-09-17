@@ -27,6 +27,14 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_View extends Mage
         $this->_removeButton('delete');
         $this->_removeButton('reset');
         $this->_removeButton('save');
+
+        $resetUrl = $this->getUrl('*/*/reset', array('order_id' => $this->getRequest()->getParam('order_id')));
+        $this->_addButton('reset', array(
+            'label'     => Mage::helper('adminhtml')->__('Reset'),
+            'onclick'   => "setLocation('$resetUrl')",
+            'class'   => 'task'
+        ), -1);
+
         $this->setId('sales_incomingpayments_view');
     }
 

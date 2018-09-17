@@ -38,7 +38,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
 
         $collection->addFieldToFilter('kassenzeichen', array('notnull' => true));
         $collection->addFieldToFilter(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, array('gt' => 0));
-        $collection->join(array('sales_order' => 'sales/order'), 'main_table.parent_id = sales_order.entity_id', array('increment_id', 'store_id'));
+        $collection->join(array('sales_order' => 'sales/order'), 'main_table.parent_id = sales_order.entity_id', array('increment_id', 'store_id', 'created_at'));
 
         $this->setCollection($collection);
 
@@ -93,6 +93,13 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
             ));
         }
 
+        $this->addColumn('created_at', array(
+            'header' => Mage::helper('sales')->__('Purchased On'),
+            'index' => 'created_at',
+            'type' => 'datetime',
+            'width' => '100px',
+        ));
+
         $this->addColumn('apr_status', array(
                 'header'    => Mage::helper('paymentbase')->__('Status'),
                 'width' => '80px',
@@ -119,6 +126,12 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
                     array(
                         'caption'   => Mage::helper('paymentbase')->__('View'),
                         'url'       => array('base'=> '*/*/view'),
+                        'field'     => 'order_id',
+                        'data-column' => 'action'
+                    ),
+                    array(
+                        'caption'   => Mage::helper('paymentbase')->__('Reset'),
+                        'url'       => array('base'=> '*/*/reset'),
                         'field'     => 'order_id',
                         'data-column' => 'action'
                     )
