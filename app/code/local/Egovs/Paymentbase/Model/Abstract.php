@@ -306,15 +306,15 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
             $_adminHelper = Mage::helper('adminhtml');
 
 			$sMailText .= "ePayBL-Kundennummer: {$this->_getECustomerId()}\n";
-			if ($customer = $this->_getOrder()->getCustomer()) {
+			if (($customer = $this->_getOrder()->getCustomer()) && $customer->getId() > 0) {
 				$backendUrl = $_adminHelper->getUrl('adminhtml/customer/edit', array('id' => $this->_getCustomerId()));
 				$sMailText .= "Kundennummer: {$this->_getCustomerId()} $backendUrl\n";
-				$sMailText .= "Name: {$this->_getOrder()->getCustomer()->getFirstname()} {$this->_getOrder()->getCustomer()->getLastname()}\n\n";
+				$sMailText .= "Name: {$customer->getFirstname()} {$customer->getLastname()}\n\n";
 			} else {
 				$customer = $this->_getCustomerId();
 				if ($customer > 0) {
 					$customer = Mage::getModel('customer/customer')->load($customer);
-					if ($customer instanceof Mage_Customer_Model_Customer) {
+					if ($customer instanceof Mage_Customer_Model_Customer && !$customer->isEmpty()) {
 						$sMailText .= "Name: {$customer->getFirstname()} {$customer->getLastname()}\n\n";
 					} else {
 						$customer = false;
