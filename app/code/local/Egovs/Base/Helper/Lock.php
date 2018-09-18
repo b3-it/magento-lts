@@ -20,7 +20,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
         try {
             $dbVersion = $adapter->fetchOne("SELECT @@version;");
             if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
-                Mage::log("{$this->getCode()}::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                Mage::log("egovsbase::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
                 /*
                  * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
                  * (for example, because another client has previously locked the name),
