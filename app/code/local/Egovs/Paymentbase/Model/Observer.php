@@ -625,10 +625,19 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
             return null;
         }
 
+        /** @var \Mage_Sales_Model_Resource_Order_Invoice_Comment_Collection $comments */
+        $comments = $invoice->getCommentsCollection();
+        $msg = null;
+        if ($comments) {
+            /** @var \Mage_Sales_Model_Order_Invoice_Comment $lastItem */
+            $lastItem = $comments->getLastItem();
+            if ($lastItem) {
+                $msg = $lastItem->getComment();
+            }
+        }
+
         $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
-        $incomingPayment->saveIncomingPayment($invoice->getOrderId(),$invoice->getOrder()->getBaseTotalPaid(),$invoice->getOrder()->getTotalPaid());
-
-
+        $incomingPayment->saveIncomingPayment($invoice->getOrderId(),$invoice->getOrder()->getBaseTotalPaid(),$invoice->getOrder()->getTotalPaid(), $msg);
 
         $payment->setEpayblCaptureDate(Varien_Date::now());
         $payment->getResource()->saveAttribute($payment, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CAPTURE_DATE);
