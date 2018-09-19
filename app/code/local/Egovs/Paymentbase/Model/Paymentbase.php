@@ -22,7 +22,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 
 	const KASSENZEICHEN_STATUS_NEW = 0;
     const KASSENZEICHEN_STATUS_PROCESSING = 1;
-    const KASSENZEICHEN_STATUS_DONE = 2;
+    const KASSENZEICHEN_STATUS_COMPLETE = 2;
     const KASSENZEICHEN_STATUS_ERROR = 3;
 	
 	/**
@@ -288,7 +288,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
     			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($_betrag));
 
-    			$this->_saveIncomingPayment(self::KASSENZEICHEN_STATUS_DONE, $msg);
+    			$this->_saveIncomingPayment(self::KASSENZEICHEN_STATUS_COMPLETE, $msg);
     		}
 
     		$this->_getOrder()->getPayment()->setEpayblCaptureDate(Varien_Date::now());

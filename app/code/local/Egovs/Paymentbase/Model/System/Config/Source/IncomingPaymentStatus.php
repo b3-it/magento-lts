@@ -25,7 +25,7 @@ class Egovs_Paymentbase_Model_System_Config_Source_IncomingPaymentStatus
         );
         $status[] = array('value' => Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_NEW, 'label' => Mage::helper('paymentbase')->__('New'));
         $status[] = array('value' => Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_PROCESSING, 'label' => Mage::helper('paymentbase')->__('Processing'));
-        $status[] = array('value' => Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_DONE, 'label' => Mage::helper('paymentbase')->__('Done'));
+        $status[] = array('value' => Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_COMPLETE, 'label' => Mage::helper('paymentbase')->__('Complete'));
         $status[] = array('value' => Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_ERROR, 'label' => Mage::helper('paymentbase')->__('Error'));
 
         return $status;
