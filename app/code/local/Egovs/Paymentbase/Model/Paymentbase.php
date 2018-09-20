@@ -149,14 +149,13 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 	 	$this->_paidKassenzeichen = 0;
 	 	$this->_notBalanced = 0;
 	 	$errors = array();
-	 	$_currentStore = null;
+        $_currentStore = Mage::app()->getStore();
         // Alle relevanten Bestellungen durchgehen und übereinstimmende Kassenzeichen auf processing setzen
 		foreach ($collection->getItems() as $invoice) {
 	 		
 			$this->setInvoice($invoice);
 	 		/* @var $order Mage_Sales_Model_Order */
 			$order = $invoice->getOrder();
-			$_currentStore = Mage::app()->getStore();
 			Mage::app()->setCurrentStore($order->getStore());
 			
 			$kzeichen = $this->_getKassenzeichen();
@@ -212,8 +211,8 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
             }
 			
 			$this->_processIncomingPayments();
-            Mage::app()->setCurrentStore($_currentStore);
 		}
+        Mage::app()->setCurrentStore($_currentStore);
 
 		foreach ($errors as $errorCode => $msg) {
             Mage::getSingleton('adminhtml/session')->addError($msg);

@@ -24,6 +24,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_RetrievepayedordersController exte
 			Mage::getSingleton('core/session')->addError($e->getMessage());
 		}
 
+
 		$this->_redirectReferer($this->getUrl('adminhtml/sales_order'));
 	}
 	

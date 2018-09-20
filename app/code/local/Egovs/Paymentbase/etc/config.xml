@@ -408,6 +408,14 @@
 	</admin>
 
     <frontend>
+        <secure_url>
+            <egovs_paymentbase_sepa>
+                /paymentbase/sepa_mandate/
+            </egovs_paymentbase_sepa>
+            <egovs_payplace>
+                /paymentbase/payplace/
+            </egovs_payplace>
+        </secure_url>
     	<routers>
     		<paymentbase>
     			<use>standard</use>
