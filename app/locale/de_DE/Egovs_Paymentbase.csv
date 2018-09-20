@@ -289,3 +289,7 @@
 "Retrieve Payments","Zahlungen abrufen"
 "Reset error status for Kassenzeichen %s","Fehler-Status für Kassenzeichen %s zurückgesetzt"
 "Reset not possible no Kassenzeichen or order %s!","Zurücksetzen für Bestell-ID nicht möglich, kein Kassenzeichen vorhanden!"
+"New payments arrived!","Es gibt neue Zahlungseingänge"
+"Reset error status for Kassenzeichen %s","Fehler-Status für Kassenzeichen %s zurückgesetzt."
+"Reset not possible no Kassenzeichen or order %s!","Zurücksetzen nicht möglich, keine Bestellung oder Kassenzeichen %s vorhanden!"
+"Reset error status for Kassenzeichen %s not possible, no error status set!","Fehler-Status für Kassenzeichen kann nicht zurückgesetzt werden, kein Fehler-Status gesetzt!"

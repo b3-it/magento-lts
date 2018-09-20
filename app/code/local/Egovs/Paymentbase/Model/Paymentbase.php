@@ -9,6 +9,7 @@
  * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  * @method Egovs_Paymentbase_Model_Webservice_Types_Response_KassenzeichenInfoErgebnis getKassenzeichenInfo() Kassenzeichen Info
+ * @method \Mage_Sales_Model_Order_Invoice                                             getInvoice()           Rechnung
  */
 class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 {
@@ -22,7 +23,7 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 
 	const KASSENZEICHEN_STATUS_NEW = 0;
     const KASSENZEICHEN_STATUS_PROCESSING = 1;
-    const KASSENZEICHEN_STATUS_DONE = 2;
+    const KASSENZEICHEN_STATUS_COMPLETE = 2;
     const KASSENZEICHEN_STATUS_ERROR = 3;
 	
 	/**
@@ -287,10 +288,9 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
     			$this->_getOrder()->setBaseTotalPaid($_betrag);
     			/* $this->getKassenzeichenInfo()->betragZahlungseingaenge kommt als base price */
     			$this->_getOrder()->setTotalPaid($this->_getOrder()->getStore()->convertPrice($_betrag));
-
-    			$this->_saveIncomingPayment(self::KASSENZEICHEN_STATUS_DONE, $msg);
     		}
 
+    		$this->_saveIncomingPaymentStatus(self::KASSENZEICHEN_STATUS_COMPLETE);
     		$this->_getOrder()->getPayment()->setEpayblCaptureDate(Varien_Date::now());
     		$this->_getOrder()->save();
     		$this->_paidKassenzeichen++;
@@ -604,24 +604,9 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 
         $force = false;
         if ($status == self::KASSENZEICHEN_STATUS_ERROR) {
-            $this->_getOrder()->getPayment()->setData(
-                Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
-                $this->_getKassenzeichenErrorCount()+1
-            );
             $force = true;
-        } else {
-            $this->_getOrder()->getPayment()->setData(
-                Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
-                0
-            );
         }
-        $this->_getOrder()->getPayment()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, $status);
-        /** @var \Mage_Sales_Model_Resource_Order_Payment $resource */
-        $resource = $this->_getOrder()->getPayment()->getResource();
-        $resource->saveAttribute($this->_getOrder()->getPayment(), array(
-            Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
-            Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS
-        ));
+        $this->_saveIncomingPaymentStatus($status);
 
         //Normale Bezahlungen werden über Observer behandelt
         //@see Egovs_Paymentbase_Model_Observer::onSalesOrderInvoicePay
@@ -633,6 +618,34 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
             $msg,
             $force
         );
+
+        return $this;
+    }
+
+    protected function _saveIncomingPaymentStatus($status) {
+        if (!self::isRunning() || !$this->hasInvoice()) {
+            return $this;
+        }
+
+        if ($status == self::KASSENZEICHEN_STATUS_ERROR) {
+            $this->_getOrder()->getPayment()->setData(
+                Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
+                $this->_getKassenzeichenErrorCount()+1
+            );
+        } else {
+            $this->_getOrder()->getPayment()->setData(
+                Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
+                0
+            );
+        }
+
+        $this->_getOrder()->getPayment()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, $status);
+        /** @var \Mage_Sales_Model_Resource_Order_Payment $resource */
+        $resource = $this->_getOrder()->getPayment()->getResource();
+        $resource->saveAttribute($this->_getOrder()->getPayment(), array(
+            Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT,
+            Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS
+        ));
 
         return $this;
     }

@@ -29,6 +29,7 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
         $order_id = (int)$order_id;
         $amount = (float)$amount;
         $base_amount = (float)$base_amount;
+        $force = (int)$force;
         /*
          * set @base_amount = 10.52;
          * set @amount = @base_amount;

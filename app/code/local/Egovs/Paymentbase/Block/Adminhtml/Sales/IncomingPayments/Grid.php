@@ -20,7 +20,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_IncomingPayments_Grid extends Mage
         parent::__construct();
         $this->setId('sales_incoming_payments_grid');
         $this->setUseAjax(true);
-        $this->setDefaultSort('kassenzeichen');
+        $this->setDefaultSort('created_at');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
     }

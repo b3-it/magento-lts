@@ -113,11 +113,15 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_Sales_IncomingPaymentsController e
     public function resetAction() {
         $order = $this->_initOrder();
         if ($order) {
-            $order->getPayment()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT, 0);
-            $order->getPayment()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_PROCESSING);
-            $resource = $order->getPayment()->getResource();
-            $resource->saveAttribute($order->getPayment(), array(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS));
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('paymentbase')->__('Reset error status for Kassenzeichen %s', $order->getPayment()->getKassenzeichen()));
+            if ($order->getPayment()->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS) == Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_ERROR) {
+                $order->getPayment()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT, 0);
+                $order->getPayment()->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS, Egovs_Paymentbase_Model_Paymentbase::KASSENZEICHEN_STATUS_PROCESSING);
+                $resource = $order->getPayment()->getResource();
+                $resource->saveAttribute($order->getPayment(), array(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_ERROR_COUNT, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_APR_STATUS));
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('paymentbase')->__('Reset error status for Kassenzeichen %s', $order->getPayment()->getKassenzeichen()));
+            } else {
+                Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('paymentbase')->__('Reset error status for Kassenzeichen %s not possible, no error status set!', $order->getPayment()->getKassenzeichen()));
+            }
         } else {
             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('paymentbase')->__('Reset not possible no Kassenzeichen or order %s!', $this->getRequest()->getParam('order_id')));
         }
