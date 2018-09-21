@@ -46,8 +46,9 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
         ;
 
         $collection->getSelect()
-            ->join(array('torder' => $collection->getTable('sales/order_grid')), 'torder.entity_id = main_table.order_id',array('status','order_currency_code'))
+            ->join(array('torder' => $collection->getTable('sales/order_grid')), 'torder.entity_id = main_table.order_id',array('status','order_currency_code','payment_method'))
             ->joinleft(array('product'=>$collection->getTable("catalog/product")."_varchar"),'product.entity_id=main_table.product_id AND product.attribute_id='.intval($eav->getIdByCode('catalog_product','minority_interest')),array('minority_interest'=>'value') )
+            ->joinleft(array('product_name'=>$collection->getTable("catalog/product")."_varchar"),'product_name.entity_id=main_table.product_id AND product_name.attribute_id='.intval($eav->getIdByCode('catalog_product','name')),array('product_name'=>'value') )
             ->joinleft(array('t1'=>$collection->getTable('customer/entity').'_varchar'), 'torder.customer_id=t1.entity_id AND t1.attribute_id = '.intval($eav->getIdByCode('customer','company')),array('company'=>'value') )
             ->columns(array('sum_total'=>'sum(base_row_total)'))
             ->group(array('main_table.store_id', 'customer_id', 'product_id'))
@@ -102,15 +103,29 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
         ));
 
         $this->addColumn('billing_name', array(
-            'header' => Mage::helper('sales')->__('Operator'),
+            'header' => Mage::helper('sales')->__('Users'),
             'index' => 'company',
             'filter_index' => 't1.value'
         ));
 
         $this->addColumn('sku', array(
-            'header' => Mage::helper('sales')->__('sku'),
+            'header' => Mage::helper('catalog')->__('SKU'),
             'index' => 'sku',
             //'filter_index' => 't1.value'
+        ));
+
+        $this->addColumn('product_name', array(
+            'header' => Mage::helper('catalog')->__('Name'),
+            'index' => 'product_name',
+            //'filter_index' => 't1.value'
+        ));
+
+        $this->addColumn('payment_method', array(
+            'header'    => Mage::helper('sales')->__('Payment Method Name'),
+            'index'     => 'payment_method',
+            'type'      => 'options',
+            'options'       => Mage::helper('payment')->getPaymentMethodList(true),
+            'option_groups' => Mage::helper('payment')->getPaymentMethodList(true, true, true),
         ));
 
         $this->addColumn('sum_total', array(
