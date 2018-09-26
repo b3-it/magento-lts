@@ -25,10 +25,10 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         'EStG'   => 'Einkommensteuergesetz',
         'nom.'   => 'nominal',
         'p.a.'   => 'per annum',
-        'ann.'   => 'annualisiert',
         //'' => '',
 
         // Allgemeine Abkürzungen der Deutschen Bank
+        //'ann.'   => 'annualisiert',
         //'BaFin'      => 'Bundesanstalt f&uuml;r Finanzdienstleistungsaufsicht',
         //'BDA'        => 'Bundesvereinigung der Arbeitgeberverb&auml;nde',
         //'BdB'        => 'Bundesverband deutscher Banken',
