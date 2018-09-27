@@ -22,6 +22,10 @@
     $_imgSize_list = 300;
     $_imgSize_grid = 210;
     $_attributes = new Varien_Object();
+    $_hidePrice = false;
+    if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
+        $_hidePrice = Mage::helper('egovs_b2b')->hidePrice();
+    }
 ?>
 <?php if(!$_productCollection->count()): ?>
     <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
@@ -122,11 +126,12 @@
                         </div>
 
                         <div class="product-price">
-                            <?php echo $this->getPriceHtml($_product, true) ?>
+
+                            <?php if(!$_hidePrice) echo $this->getPriceHtml($_product, true) ?>
                         </div>
 
                         <div class="product-action">
-                            <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
+                            <?php if(!$_product->canConfigure() && $_product->isSaleable() && (!$_hidePrice) ): ?>
                                 <button type="button"
                                         title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
                                         class="button btn-cart egov-cart"
@@ -205,12 +210,12 @@
                                 }
                             }
                             ?>
-                            <?php echo $this->getPriceHtml($_product, true) ?>
+                            <?php if(!$_hidePrice) echo $this->getPriceHtml($_product, true) ?>
                             <?php if($_product->getRatingSummary()): ?>
                             <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                             <?php endif; ?>
                             <div class="actions">
-                                <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
+                                <?php if(!$_product->canConfigure() && $_product->isSaleable() && ((!$_hidePrice))): ?>
                                     <button type="button"
                                             title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
                                             class="button btn-cart egov-cart"
