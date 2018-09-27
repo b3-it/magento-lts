@@ -77,6 +77,11 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 				)
 			;
 		}
+        $this->getSelect()
+            ->join(
+                array('payment'=>$this->getTable('sales/order_payment')),
+                "order.entity_id = payment.parent_id ",
+                array("method"));
 		
 		
 	

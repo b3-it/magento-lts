@@ -73,6 +73,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 
 		$this->setCollection($collection);
 
+		//die($collection->getSelect()->__toString());
 		parent::_prepareCollection();
 		//$this->getCollection()->addWebsiteNamesToResult();
 		return $this;
@@ -281,7 +282,14 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 							//'filter_index' => 'order_state.value'
 					));
 		}
-		
+
+        $this->addColumn('payment_method', array(
+            'header'    => Mage::helper('sales')->__('Payment Method'),
+            'index'     => 'method',
+            'type'      => 'options',
+            'width'     => '130px',
+            'options'   => Mage::helper('paymentbase')->getActivePaymentMethods(),
+        ));
 		
 		$this->setCountTotals(true);
 		return parent::_prepareColumns();
