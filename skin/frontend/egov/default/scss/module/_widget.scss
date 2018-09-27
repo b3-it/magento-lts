@@ -39,10 +39,6 @@
 }
 
 .widget-products {
-    a.product-image {
-        top: 0;
-    }
-
 	ul {
 	    list-style: none;
 	    
@@ -50,6 +46,12 @@
 	        margin-left: 0;
 	    }
 	}
+}
+
+.widget-products, #upsell-product-table {
+    a.product-image {
+        top: 0;
+    }
 }
 /*
 // Implement custom grid breakpoints for grids that are contained within widgets
