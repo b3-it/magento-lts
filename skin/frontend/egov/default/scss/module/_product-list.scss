@@ -513,7 +513,7 @@ p.product-name {
         // Vertically center product name
         p.product-name {
     	    padding-top: 0;
-    	    height: auto;
+    	    height: auto !important;
 	    }
 	    div.truncated {
 	        display: none;
