@@ -23,7 +23,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 				'enctype' => 'multipart/form-data'
 			)
 		);
-		
+
 		$laengen = Mage::getModel('paymentbase/webservice_types_buchung');
 
 		$form->setUseContainer(true);
@@ -40,7 +40,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Haushaltsparameter_Edit_Form extends Mag
 
 		$fieldset->addField('value', 'text', array(
 				'label'     => Mage::helper('paymentbase')->__('Value'),
-				'class'     => 'input-text required-entry validate-digits validate-length',
+				'class'     => 'input-text required-entry validate-length',
 				'required'  => true,
 				'name'      => 'value',
 				'disabled'  => false,
