@@ -127,10 +127,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		$col = null;
 		$coalesce = array();
 
+		$i  = 0;
 		foreach($this->getOptions() as $option)
 		{
 	      foreach($this->getSelections($option) as $product){
-	      	$col = 'col_'.$product->getId();
+	          $i++;
+	      	$col = 'col_'.$i.'_'.$product->getId();
 	      	$coalesce[] = $col.'.product_id';
 	      	$collection->getSelect()
 	      	->joinleft(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = order.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'qty_ordered'));
