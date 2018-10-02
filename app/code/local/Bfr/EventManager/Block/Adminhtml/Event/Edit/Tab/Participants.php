@@ -190,6 +190,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'header'    => Mage::helper('eventmanager')->__('Email'),
   			'align'     =>'left',
   			'index'     => 'email',
+  			'filter_index' => 'main_table.email'
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
   	
