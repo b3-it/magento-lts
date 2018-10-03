@@ -155,13 +155,17 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       
 
       $columns = array();
+      $i = 0;
 		foreach($this->getSelections() as $col)
 		{
+            $i++;
+            $colname = 'col_'.$i.'_'.$col->getId();
 			$columns[] = 'op_col_'.$col->getId();
-			$this->addColumn('op_col_'.$col->getId(), array(
+			$this->addColumn('op_col_'.$i.'_'.$col->getId(), array(
 					'header'    => $col->getName(),
 					'align'     =>'left',
-					'index'     => 'col_'.$col->getId(),
+					'index'     => $colname,
+					'filter_index'     => $colname.".qty_ordered",
 					'total'		=> 'sum',
 					'type'      => 'number',
 					//'total_label'=> 'xxx',
@@ -237,9 +241,29 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   	if (!$value = $column->getFilter()->getValue()) {
   		return;
   	}
-  
+
+  	if($column->getType() == 'number'){
+
+
+        $filter = $column->getFilter()->getValue();
+        $select = $this->getCollection()->getSelect();
+        $index = $column->getFilterIndex();
+        if(isset($filter['from']) && isset($filter['to'])){
+            $select->where("{$index} >=".$filter['from']." AND {$index}<=".$filter['to'] );
+        }elseif (isset($filter['from'])){
+            $select->where("{$index} >=".$filter['from']);
+        }elseif (isset($filter['to'])){
+            $select->where("{$index}<=".$filter['to'] );
+        }
+
+
+        return;
+    }
+
+
   	$condition = $column->getIndex().'.name like ?';
   	$collection->getSelect()->where($condition, "%$value%");
+  	//die($collection->getSelect()->__toString());
   }
   
   
