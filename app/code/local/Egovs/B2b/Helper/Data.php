@@ -23,4 +23,24 @@
 class Egovs_B2b_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
+    public function hidePrice($customer = null)
+    {
+        $hideGroups = explode(',',Mage::getStoreConfig('catalog/price/customergroups_hide_price'));
+        if(array_search((string)Egovs_B2b_Model_System_Config_Source_Customergroup::HIDE_NOTHING, $hideGroups ) !== false){
+            return false;
+        }
+        if($customer == null) {
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+        }
+
+        $groupId = 0;
+
+        if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $groupId = $customer->getGroupId();
+        }
+        if(array_search($groupId, $hideGroups ) !== false){
+            return true;
+        }
+        return false;
+    }
 }
