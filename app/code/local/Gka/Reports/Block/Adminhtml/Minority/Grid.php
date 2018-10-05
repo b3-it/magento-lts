@@ -97,6 +97,7 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
             'header'    => Mage::helper('sales')->__('Store'),
             'index'     => 'store_id',
             'type'      => 'store',
+            'filter_index' => 'torder.store_id',
             'width'     => '400px',
             'store_view'=> true,
             'display_deleted' => true,
