@@ -36,7 +36,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Grid extends Mage_Adminhtml_Block_W
           'header'    => Mage::helper('eventmanager')->__('ID'),
           'align'     =>'right',
           'width'     => '50px',
-          'index'     => 'eventmanager_event_id',
+          'index'     => 'event_id',
       ));
 
       $this->addColumn('title', array(

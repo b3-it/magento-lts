@@ -507,12 +507,16 @@ p.product-name {
     }
     .product-details {
         display: inline-block;
-        width: 70%;
+        width: 80%;
         vertical-align: top;
 
         // Vertically center product name
-        .product-name {
-    	    padding-top: 10px;
+        p.product-name {
+    	    padding-top: 0;
+    	    height: auto !important;
+	    }
+	    div.truncated {
+	        display: none;
 	    }
     }
 
