@@ -46,7 +46,8 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
         ;
 
         $collection->getSelect()
-            ->join(array('torder' => $collection->getTable('sales/order_grid')), 'torder.entity_id = main_table.order_id',array('status','order_currency_code','payment_method'))
+            ->join(array('torder' => $collection->getTable('sales/order_grid')), 'torder.entity_id = main_table.order_id',array('status','order_currency_code'))
+            ->join(array('payment' => $collection->getTable('sales/order_payment')), 'payment.entity_id = main_table.order_id',array('method'))
             ->joinleft(array('product'=>$collection->getTable("catalog/product")."_varchar"),'product.entity_id=main_table.product_id AND product.attribute_id='.intval($eav->getIdByCode('catalog_product','minority_interest')),array('minority_interest'=>'value') )
             ->joinleft(array('product_name'=>$collection->getTable("catalog/product")."_varchar"),'product_name.entity_id=main_table.product_id AND product_name.attribute_id='.intval($eav->getIdByCode('catalog_product','name')),array('product_name'=>'value') )
             ->joinleft(array('t1'=>$collection->getTable('customer/entity').'_varchar'), 'torder.customer_id=t1.entity_id AND t1.attribute_id = '.intval($eav->getIdByCode('customer','company')),array('company'=>'value') )
@@ -123,7 +124,7 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
 
         $this->addColumn('payment_method', array(
             'header'    => Mage::helper('sales')->__('Payment Method Name'),
-            'index'     => 'payment_method',
+            'index'     => 'method',
             'type'      => 'options',
             'options'       => Mage::helper('payment')->getPaymentMethodList(true),
             'option_groups' => Mage::helper('payment')->getPaymentMethodList(true, true, true),
