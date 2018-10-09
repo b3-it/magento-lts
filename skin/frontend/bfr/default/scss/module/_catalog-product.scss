@@ -5,6 +5,11 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.category-veranstaltungen-archiv div.category-title {
+    // Im Veranstaltungs-Archiv darf kein Titel angezeigt werden
+    display: none !important;
+}
+
 .catalog-product-view,
 .catalog-category-view {
     .main-container {
