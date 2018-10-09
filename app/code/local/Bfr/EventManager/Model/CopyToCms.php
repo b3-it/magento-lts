@@ -42,10 +42,11 @@ class Bfr_EventManager_Model_CopyToCms extends Varien_Object
        {
            $category = Mage::getModel('catalog/category');
            $category->setName($data['category']);
+           $category->setCustomUseParentSettings(true);   // for "use parent settings"
            //$category->setUrlKey('new-category');
-           $category->setIsActive(1);
+           $category->setIsActive(true);
            $category->setDisplayMode(Mage_Catalog_Model_Category::DM_PAGE);
-           $category->setIsAnchor(1); //for active achor
+           $category->setIsAnchor(true); //for active achor
            $category->setLandingPage($block->getId());
            //$category->setStoreId(Mage::app()->getStore()->getId());
            $parentCategory = Mage::getModel('catalog/category')->load($data['parent_category']);
@@ -54,8 +55,9 @@ class Bfr_EventManager_Model_CopyToCms extends Varien_Object
        }else {
            $category = Mage::getModel('catalog/category')->load($data['parent_category']);
 
+           $category->setCustomUseParentSettings(true);   // for "use parent settings"
            $category->setDisplayMode(Mage_Catalog_Model_Category::DM_PAGE);
-           $category->setIsAnchor(1); //for active achor
+           $category->setIsAnchor(true); //for active achor
            $category->setLandingPage($block->getId());
            $category->setName($data['category']);
            $category->setStoreId($store_id);
