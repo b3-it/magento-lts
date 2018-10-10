@@ -2,233 +2,278 @@
 /**
  * SEPA Lastschriftverfahren Form-Block
  *
- * @category	Egovs
- * @package    	Egovs_SepaDebit
- * @author		Frank Rochlitzer <f.rochlitzer@b3-it.de>
- * @copyright	Copyright (c) 2013-2018 B3 IT Systeme GmbH - https://www.b3-it.de
- * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ * @category       Egovs
+ * @package        Egovs_SepaDebit
+ * @author         Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright      Copyright (c) 2013-2018 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license        http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 /* @var $this Egovs_SepaDebitBund_Block_Form */
 ?>
 <?php if (!$this->hasMandate()): ?>
-<fieldset class="form-list">
-    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
-        <li>
-        	<div class="input-box">
-	                <label for="custom_owner"><?php echo $this->__('Debitor differs from banking account holder?') ?> </label>
-	                <input type="checkbox" id="custom_owner" name="payment[additional_information][custom_owner]]" value="1" onchange="toggleFields(this)"/>
-	            </div>
-        </li>
-        <li>
-            <div class="input-box">
-                <label for="custom_accountholder_surname"><?php echo $this->__('account holder surname/company name') ?> <span class="required">*</span></label><br />
-                <input type="text" id="custom_accountholder_surname" name="payment[additional_information][custom_accountholder_surname]" title="<?php echo $this->__('account holder name/company name') ?>" class="input-text required-entry" value="" maxlength="23" />
-            </div>
-		</li>
-        <li>
-            <div class="input-box">
-                <label for="custom_accountholder_name"><?php echo $this->__('account holder name/company contact person') ?> <span class="required">*</span></label><br />
-                <input type="text" id="custom_accountholder_name" name="payment[additional_information][custom_accountholder_name]" title="<?php echo $this->__('account holder surname/company authorised signatory') ?>" class="input-text required-entry" value="" maxlength="23" />
-            </div>
-		</li>
-		<li>
-            <div class="input-box">
-                <label for="custom_accountholder_street"><?php echo $this->__('account holder street') ?> <span class="required">*</span></label><br />
-                <input type="text" id="custom_accountholder_street" name="payment[additional_information][custom_accountholder_street]" title="<?php echo $this->__('account holder street') ?>" class="input-text required-entry" value="" />
-            </div>
-		</li>
-		<li>
-            <div class="input-box">
-                <label for="custom_accountholder_housenumber"><?php echo $this->__('account holder housenumber') ?> <span class="required">*</span></label><br />
-                <input type="text" id="custom_accountholder_housenumber" name="payment[additional_information][custom_accountholder_housenumber]" title="<?php echo $this->__('account holder housenumber') ?>" class="input-text required-entry" value="" />
-            </div>
-		</li>
-		<li>
-            <div class="input-box">
-                <label for="custom_accountholder_city"><?php echo $this->__('account holder city') ?> <span class="required">*</span></label><br />
-                <input type="text" id="custom_accountholder_city" name="payment[additional_information][custom_accountholder_city]" title="<?php echo $this->__('account holder city') ?>" class="input-text required-entry" value="" />
-            </div>
-		</li>
-		<li>
-            <div class="input-box">
-                <label for="custom_accountholder_zip"><?php echo $this->__('account holder zip') ?> <span class="required">*</span></label><br />
-                <input type="text" id="custom_accountholder_zip" name="payment[additional_information][custom_accountholder_zip]" title="<?php echo $this->__('account holder zip') ?>" class="input-text required-entry" value="" />
-            </div>
-		</li>
-		<li>
-            <div class="input-box">
-                <label for="custom_accountholder_land"><?php echo $this->__('account holder land') ?> <span class="required">*</span></label><br />
-                <?php echo $this->getCountriesHtmlSelect('custom_accountholder_land', 'payment[additional_information][custom_accountholder_land]'); ?>
-            </div>
-		</li>
-		<!-- <li>
+    <fieldset class="form-list">
+        <ul id="payment_form_<?php echo $this->getMethodCode() ?>">
+            <li>
+                <div class="input-box">
+                    <label for="custom_owner"><?php echo $this->__('Debitor differs from banking account holder?') ?> </label>
+                    <input type="checkbox" id="custom_owner" name="payment[additional_information][custom_owner]]"
+                           value="1" onchange="toggleFields(this)"/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="custom_accountholder_surname"><?php echo $this->__('account holder surname/company name') ?>
+                        <span class="required">*</span></label><br/>
+                    <input type="text" id="custom_accountholder_surname"
+                           name="payment[additional_information][custom_accountholder_surname]"
+                           title="<?php echo $this->__('account holder name/company name') ?>"
+                           class="input-text required-entry" value="" maxlength="23"/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="custom_accountholder_name"><?php echo $this->__('account holder name/company contact person') ?>
+                        <span class="required">*</span></label><br/>
+                    <input type="text" id="custom_accountholder_name"
+                           name="payment[additional_information][custom_accountholder_name]"
+                           title="<?php echo $this->__('account holder surname/company authorised signatory') ?>"
+                           class="input-text required-entry" value="" maxlength="23"/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="custom_accountholder_street"><?php echo $this->__('account holder street') ?> <span
+                                class="required">*</span></label><br/>
+                    <input type="text" id="custom_accountholder_street"
+                           name="payment[additional_information][custom_accountholder_street]"
+                           title="<?php echo $this->__('account holder street') ?>" class="input-text required-entry"
+                           value=""/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="custom_accountholder_housenumber"><?php echo $this->__('account holder housenumber') ?>
+                        <span class="required">*</span></label><br/>
+                    <input type="text" id="custom_accountholder_housenumber"
+                           name="payment[additional_information][custom_accountholder_housenumber]"
+                           title="<?php echo $this->__('account holder housenumber') ?>"
+                           class="input-text required-entry" value=""/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="custom_accountholder_city"><?php echo $this->__('account holder city') ?> <span
+                                class="required">*</span></label><br/>
+                    <input type="text" id="custom_accountholder_city"
+                           name="payment[additional_information][custom_accountholder_city]"
+                           title="<?php echo $this->__('account holder city') ?>" class="input-text required-entry"
+                           value=""/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="custom_accountholder_zip"><?php echo $this->__('account holder zip') ?> <span
+                                class="required">*</span></label><br/>
+                    <input type="text" id="custom_accountholder_zip"
+                           name="payment[additional_information][custom_accountholder_zip]"
+                           title="<?php echo $this->__('account holder zip') ?>" class="input-text required-entry"
+                           value=""/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="custom_accountholder_land"><?php echo $this->__('account holder land') ?> <span
+                                class="required">*</span></label><br/>
+                    <?php echo $this->getCountriesHtmlSelect('custom_accountholder_land', 'payment[additional_information][custom_accountholder_land]'); ?>
+                </div>
+            </li>
+            <!-- <li>
             <div class="input-box">
                 <label for="abweichender_kontoinhaber"><?php echo $this->__('Deviation from account holder') ?> </label><br />
                 <input type="text" id="abweichender_kontoinhaber" name="payment[additional_information][abweichender_kontoinhaber]" title="<?php echo $this->__('Deviation from account holder') ?>" class="input-text " value="" />
             </div>
 		</li> -->
-		<li>
-            <div class="input-box">
-                <label for="iban"><?php echo $this->__('IBAN') ?> <span class="required">*</span></label><br />
-                <input type="text" id="iban" name="payment[cc_number]" title="<?php echo $this->__('IBAN') ?>" class="input-text required-entry validate-debit-iban" value="" />
-            </div>
-		</li>
-		<li>
-            <div class="input-box">
-                <label for="bic"><?php echo $this->__('BIC') ?> <?php if (!$this->getIbanOnly()) echo '<span class="required">*</span>'; ?></label><br />
-                <input type="text" id="bic" name="payment[cc_type]" title="<?php echo $this->__('BIC') ?>" class="input-text <?php if (!$this->getIbanOnly()) echo "required-entry"; ?> validate-alphanum validate-debit-bic validate-debit-iban-bic-match" value="" />
-            </div>
-		</li>
-		<li>
-            <div class="input-box">
-                <label for="sequence_type_frst"><?php echo $this->__('Use mandate multiple times') ?> </label>
-                <input type="radio" style="width: 25px; float: right" id="sequence_type_frst" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate multiple times') ?>" class="input-text " value="<?php echo $this->getSequenceTypeForMultiUsage() ?>" checked="checked" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?>/>
-            </div>
-            <br />
-            <div class="input-box">
-                <label for="sequence_type_ooff"><?php echo $this->__('Use mandate one times') ?> </label>
-                <input type="radio" style="width: 25px; float: right" id="sequence_type_ooff" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate one times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF ?>" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?> />
-            </div>
-		</li>
-		<li>
-			<div>
-				<?php if ($this->getMethod()->getCustomText()): ?>
-                    <?php echo $this->getMethod()->getCustomText() ?><br />
-                <?php endif; ?>
-			</div>
-			<div class="input-box" style="width:100%;">
-                <label for="authorised_signatory"><?php echo $this->__('Authorised signatory (First- Lastname)') ?> <span class="required">*</span></label><br />
-                <input type="text" id="authorised_signatory" name="payment[additional_information][authorised_signatory]" title="<?php echo $this->__('Authorised signatory') ?>" class="input-text required-entry" value="" maxlength="54" />
-            </div>
-		</li>
-	</ul>
-</fieldset>
+            <li>
+                <div class="input-box">
+                    <label for="iban"><?php echo $this->__('IBAN') ?> <span class="required">*</span></label><br/>
+                    <input type="text" id="iban" name="payment[cc_number]" title="<?php echo $this->__('IBAN') ?>"
+                           class="input-text required-entry validate-debit-iban" value=""/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="bic"><?php echo $this->__('BIC') ?><?php if (!$this->getIbanOnly()) echo '<span class="required">*</span>'; ?></label><br/>
+                    <input type="text" id="bic" name="payment[cc_type]" title="<?php echo $this->__('BIC') ?>"
+                           class="input-text <?php if (!$this->getIbanOnly()) echo "required-entry"; ?> validate-alphanum validate-debit-bic validate-debit-iban-bic-match"
+                           value=""/>
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <label for="sequence_type_frst"><?php echo $this->__('Use mandate multiple times') ?> </label>
+                    <input type="radio" style="width: 25px; float: right" id="sequence_type_frst"
+                           name="payment[additional_information][sequence_type]"
+                           title="<?php echo $this->__('Use mandate multiple times') ?>" class="input-text "
+                           value="<?php echo $this->getSequenceTypeForMultiUsage() ?>" checked="checked"
+                           <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?>/>
+                </div>
+                <br/>
+                <div class="input-box">
+                    <label for="sequence_type_ooff"><?php echo $this->__('Use mandate one times') ?> </label>
+                    <input type="radio" style="width: 25px; float: right" id="sequence_type_ooff"
+                           name="payment[additional_information][sequence_type]"
+                           title="<?php echo $this->__('Use mandate one times') ?>" class="input-text "
+                           value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF ?>"
+                           <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?> />
+                </div>
+            </li>
+            <li>
+                <div>
+                    <?php if ($this->getMethod()->getCustomText()): ?>
+                        <?php echo $this->getMethod()->getCustomText() ?><br/>
+                    <?php endif; ?>
+                </div>
+                <div class="input-box" style="width:100%;">
+                    <label for="authorised_signatory"><?php echo $this->__('Authorised signatory (First- Lastname)') ?>
+                        <span class="required">*</span></label><br/>
+                    <input type="text" id="authorised_signatory"
+                           name="payment[additional_information][authorised_signatory]"
+                           title="<?php echo $this->__('Authorised signatory') ?>" class="input-text required-entry"
+                           value="" maxlength="54"/>
+                </div>
+            </li>
+        </ul>
+    </fieldset>
 <?php else: ?>
-<div>
-	<div>
-		<div style="font-style: italic; font-size: 12pt;"><?php echo $this->__('Mandate info'); ?></div>
-		<br/>
-			<fieldset class="form-list">
-			    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" >
-			    	<?php if ($this->getAccountName()): ?>
-	            		<?php echo '<div><li>' . $this->__('Account holder') . ': ' . $this->getAccountName() . '</li></div>'; ?>
-	        		<?php endif; ?>
-	        		<?php if ($this->getIban()): ?>
-	            		<?php echo '<div><li>' . $this->__('IBAN') . ': ' . $this->getIban() . '</li></div>'; ?>
-	        		<?php endif; ?>
-	        		<?php if ($this->getBic()): ?>
-	            		<?php echo '<div><li>' . $this->__('BIC') . ': ' . $this->getBic() . '</li></div>'; ?>
-	        		<?php endif; ?>
-	        		<?php if ($this->getAccountBankname()): ?>
-	            		<?php echo '<div><li>' . $this->__('Bank name') . ': ' . $this->getAccountBankname() . '</li></div>'; ?>
-	        		<?php endif; ?>
-					<li>
-						<div>
-							<a href="<?php echo $this->getMandateDownloadUrl() ?>" target="_blank"><?php echo $this->__('View current mandate')?></a>
-						</div>
-					</li>
-					<li>
-			            <div class="input-box">
-			                <label for="change_mandate"><?php echo $this->__('Refuse current and create a new one.') ?> </label>
-			                <input type="checkbox" id="change_mandate" name="payment[additional_information][change_mandate]" value="1" />
-			            </div>
-					</li>
-			    </ul>
-			</fieldset>
-	</div>
-	<?php if ($this->getMethod()->getEmailSettings()): ?>
-    	<?php echo $this->getMethod()->getEmailSettings(); ?>
-    	<br /><br />
-    <?php endif; ?>
+    <div>
+        <div>
+            <div style="font-style: italic; font-size: 12pt;"><?php echo $this->__('Mandate info'); ?></div>
+            <br/>
+            <fieldset class="form-list">
+                <ul id="payment_form_<?php echo $this->getMethodCode() ?>">
+                    <?php if ($this->getAccountName()): ?>
+                        <?php echo '<div><li>' . $this->__('Account holder') . ': ' . $this->getAccountName() . '</li></div>'; ?>
+                    <?php endif; ?>
+                    <?php if ($this->getIban()): ?>
+                        <?php echo '<div><li>' . $this->__('IBAN') . ': ' . $this->getIban() . '</li></div>'; ?>
+                    <?php endif; ?>
+                    <?php if ($this->getBic()): ?>
+                        <?php echo '<div><li>' . $this->__('BIC') . ': ' . $this->getBic() . '</li></div>'; ?>
+                    <?php endif; ?>
+                    <?php if ($this->getAccountBankname()): ?>
+                        <?php echo '<div><li>' . $this->__('Bank name') . ': ' . $this->getAccountBankname() . '</li></div>'; ?>
+                    <?php endif; ?>
+                    <li>
+                        <div>
+                            <a href="<?php echo $this->getMandateDownloadUrl() ?>"
+                               target="_blank"><?php echo $this->__('View current mandate') ?></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="input-box">
+                            <label for="change_mandate"><?php echo $this->__('Refuse current and create a new one.') ?> </label>
+                            <input type="checkbox" id="change_mandate"
+                                   name="payment[additional_information][change_mandate]" value="1"/>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+        </div>
+        <?php if ($this->getMethod()->getEmailSettings()): ?>
+            <?php echo $this->getMethod()->getEmailSettings(); ?>
+            <br/><br/>
+        <?php endif; ?>
 
-    <?php if ($this->getMethod()->getCustomText()): ?>
-        <?php echo $this->getMethod()->getCustomText() ?><br />
-    <?php endif; ?>
-</div>
-<?php endif;?>
+        <?php if ($this->getMethod()->getCustomText()): ?>
+            <?php echo $this->getMethod()->getCustomText() ?><br/>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
 <p class="required">
     <?php echo $this->__('* Required Fields') ?>
 </p>
 <script type="text/javascript">
-//<![CDATA[
-	/*
-	 * http://stackoverflow.com/questions/15027613/magento-prototype-custom-validation
-	 */
-	var lngg = 1;
-	var baseUrl = '<?php echo Mage::getBaseUrl('js').'egovs/sepa'; ?>';
-	var iban = "";
-	var bic = ""
-	if(Validation) {
-		Validation.addAllThese([
-			['validate-debit-bic', '<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>', function(v, r) {
-				if (v.length < 1) {
-					return true;
-				}
-				if (v.length != 8 && v.length != 11) {
-					return false;
-				}
-				if (v && v.length > 0) {
-					bic = v.trim().toUpperCase();
-				} else {
-					bic = "";
-				}
-				return true;
-			}],
-			['validate-debit-iban', '<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>', function(v, r) {
-				if (v && v.length > 0) {
-					v = v.trim().toUpperCase();
-				}
-				res = checkibancore(v);
-				if (res == 0) {
-					return false;
-				}
-				iban = v;
-				return true;
-			}],
-			['validate-debit-iban-bic-match', '<?php echo Mage::helper('paymentbase')->__('BIC does not fit IBAN.') ?>', function(v, r) {
-				<?php if ($this->getIbanOnly()) : ?>
-				if (bic.length < 1) {
-					return true;
-				}
-				<?php endif;?>
-				if (iban && iban.length > 1 && bic && bic.length > 4) {
-					if (iban[0] == bic[4] && iban[1] == bic[5]) {
-						return true;
-					}
-				}
-				return false;
-			}],
-			['validate-alphanum_ws', '<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>', function(v) {
-                return Validation.get('IsEmpty').test(v) ||  /^[a-zA-Z0-9 ]+$/.test(v) /*!/\W/.test(v)*/
+    //<![CDATA[
+    /*
+     * http://stackoverflow.com/questions/15027613/magento-prototype-custom-validation
+     */
+    var lngg = 1;
+    var baseUrl = '<?php echo Mage::getBaseUrl('js') . 'egovs/sepa'; ?>';
+    var iban = "";
+    var bic = ""
+    if (Validation) {
+        Validation.addAllThese([
+            ['validate-debit-bic', '<?php echo Mage::helper('paymentbase')->__('BIC must be either 8 or 11 characters long') ?>', function (v, r) {
+                if (v.length < 1) {
+                    return true;
+                }
+                if (v.length != 8 && v.length != 11) {
+                    return false;
+                }
+                if (v && v.length > 0) {
+                    bic = v.trim().toUpperCase();
+                } else {
+                    bic = "";
+                }
+                return true;
             }],
-		])
-	}
-//]]>
+            ['validate-debit-iban', '<?php echo Mage::helper('paymentbase')->__('IBAN not valid.') ?>', function (v, r) {
+                if (v && v.length > 0) {
+                    v = v.trim().toUpperCase();
+                }
+                res = checkibancore(v);
+                if (res == 0) {
+                    return false;
+                }
+                iban = v;
+                return true;
+            }],
+            ['validate-debit-iban-bic-match', '<?php echo Mage::helper('paymentbase')->__('BIC does not fit IBAN.') ?>', function (v, r) {
+                <?php if ($this->getIbanOnly()) : ?>
+                if (bic.length < 1) {
+                    return true;
+                }
+                <?php endif;?>
+                if (iban && iban.length > 1 && bic && bic.length > 4) {
+                    if (iban[0] == bic[4] && iban[1] == bic[5]) {
+                        return true;
+                    }
+                }
+                return false;
+            }],
+            ['validate-alphanum_ws', '<?php echo Mage::helper('paymentbase')->__('Please use only letters (a-z or A-Z), numbers (0-9) or whitespaces in this field. No other characters are allowed.') ?>', function (v) {
+                return Validation.get('IsEmpty').test(v) || /^[a-zA-Z0-9 ]+$/.test(v)
+                /*!/\W/.test(v)*/
+            }],
+        ])
+    }
+    //]]>
 </script>
 <?php
 /*
  * http://www.tbg5-finance.org/?ibandocs.shtml
  */
 ?>
-<script charset="utf-8" src="<?php echo Mage::getBaseUrl('js').'egovs/sepa'?>/checkiban.js" type="text/javascript"></script>
+<script charset="utf-8" src="<?php echo Mage::getBaseUrl('js') . 'egovs/sepa' ?>/checkiban.js"
+        type="text/javascript"></script>
 <script type="text/javascript">
-//<![CDATA[
-	<?php if (Mage::getStoreConfig('checkout/options/checkout_type') != Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE) : ?>
-		var sepaDebitForm = new VarienForm('multishipping-billing-form');
-	<?php endif; ?>
+    //<![CDATA[
+    <?php if (Mage::getStoreConfig('checkout/options/checkout_type') != Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE) : ?>
+    var sepaDebitForm = new VarienForm('multishipping-billing-form');
+    <?php endif; ?>
 
-function toggleFields(element) {
-	$('custom_accountholder_surname').up('li').toggle();
-	$('custom_accountholder_name').up('li').toggle();
-	$('custom_accountholder_street').up('li').toggle();
-	$('custom_accountholder_housenumber').up('li').toggle();
-	$('custom_accountholder_city').up('li').toggle();
-	$('custom_accountholder_zip').up('li').toggle();
-	$('custom_accountholder_land').up('li').toggle();
-}
+    function toggleFields(element) {
+        $('custom_accountholder_surname').up('li').toggle();
+        $('custom_accountholder_name').up('li').toggle();
+        $('custom_accountholder_street').up('li').toggle();
+        $('custom_accountholder_housenumber').up('li').toggle();
+        $('custom_accountholder_city').up('li').toggle();
+        $('custom_accountholder_zip').up('li').toggle();
+        $('custom_accountholder_land').up('li').toggle();
+    }
 
-document.observe("dom:loaded", function() {
-	toggleFields(null);
-});
-//]]>
+    document.observe("dom:loaded", function () {
+        toggleFields(null);
+    });
+    //]]>
 </script>
