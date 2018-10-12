@@ -625,12 +625,86 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
             return null;
         }
 
+        /** @var \Mage_Sales_Model_Resource_Order_Invoice_Comment_Collection $comments */
+        $comments = $invoice->getCommentsCollection();
+        $msg = null;
+        if ($comments) {
+            /** @var \Mage_Sales_Model_Order_Invoice_Comment $lastItem */
+            $lastItem = $comments->getLastItem();
+            if ($lastItem) {
+                $msg = $lastItem->getComment();
+            }
+        }
+
         $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
-        $incomingPayment->saveIncomingPayment($invoice->getOrderId(),$invoice->getOrder()->getBaseTotalPaid(),$invoice->getOrder()->getTotalPaid());
-
-
+        $incomingPayment->saveIncomingPayment($invoice->getOrderId(),$invoice->getOrder()->getBaseTotalPaid(),$invoice->getOrder()->getTotalPaid(), $msg);
 
         $payment->setEpayblCaptureDate(Varien_Date::now());
         $payment->getResource()->saveAttribute($payment, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CAPTURE_DATE);
     }
+
+    public function runAutomaticPaymentRetrieval($schedule) {
+        if (!Mage::getStoreConfigFlag('payment_services/paymentbase/enable_apr')) {
+            return;
+        }
+
+        $lockKey = 'egovs_paymentbase_apr_cron_mutex' . $schedule->getId();
+
+        $lockResult = Mage::helper('egovsbase/lock')->getLock($lockKey, 300);
+        if ($lockResult === null) {
+            Mage::log("egovs_paymentbase::apr:LOCK $lockKey couldn't be obtained!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            throw new Mage_Cron_Exception("LOCK $lockKey couldn't be obtained!");
+        }
+
+        if ($lockResult == 0) {
+            Mage::log("egovs_paymentbase::apr:LOCK $lockKey already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            return true;
+        }
+
+        $lastRun = date("Y-m-d H:i:s", (time() - (60 * 60)));
+        $statusRun = Mage_Cron_Model_Schedule::STATUS_RUNNING;
+
+        $collection = $schedule->getCollection();
+        $collection->addFieldToFilter('job_code', $schedule->getJobCode())
+            ->addFieldToFilter($schedule->getIdFieldName(), array('neq' => $schedule->getId()))
+            ->addFieldToSelect('status')
+            ->getSelect()->where("(executed_at >'" . $lastRun . "'  AND status = '" . $statusRun . "')");
+
+        if ($collection->count() > 0) {
+            $message = Mage::helper('paymentbase')->__('Service is still running');
+            Mage::log($message, Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            Mage::helper('egovsbase/lock')->releaseLock($lockKey);
+            throw new Mage_Cron_Exception($message);
+        }
+
+        // Start store emulation process for translation while running by cron
+        $appEmulation = Mage::getSingleton('core/app_emulation');
+        $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation(Mage::app()->getDefaultStoreView());
+        //Dealing with uninitialized translator!
+        Mage::app()->getTranslator()->init('frontend', true);
+        //init helper
+        Mage::helper('paymentbase');
+        // Stop store emulation process
+        $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
+        try {
+            $paymentbase = Mage::getModel('paymentbase/paymentbase');
+            $paymentbase->getZahlungseingaenge();
+
+            if ($paymentbase->hasIncomingPayments()) {
+                $paymentbase->sendMailForNewPayments();
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+            Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+        }
+        Mage::helper('egovsbase/lock')->releaseLock($lockKey);
+        if (isset($e)) {
+            throw $e;
+        }
+
+        return true;
+    }
+
+
 }
