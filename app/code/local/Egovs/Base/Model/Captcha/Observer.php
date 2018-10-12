@@ -26,7 +26,7 @@ class Egovs_Base_Model_Captcha_Observer extends Mage_Captcha_Model_Observer
                 $postData = sprintf("\nDump:email=>%s", $postData);
             }
             $_fromIp = null;
-            if ($_logLevel > Zend_Log::NOTICE) {
+            if ($_logLevel > Zend_Log::WARN) {
                 $_fromIp = "From IP {$controller->getRequest()->getClientIp(true)}";
             }
 
