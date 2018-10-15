@@ -21,11 +21,12 @@ class Egovs_Base_Model_Cms_Wysiwyg_Media_Storage extends Mage_Cms_Model_Wysiwyg_
         if (is_string($type) && array_key_exists("{$type}_allowed", $extensions)) {
             $allowed = $extensions["{$type}_allowed"];
         } else {
-            $allowed = array();
+            $allowed = array(array());
             $types = array('media', 'image', 'doc');
-            foreach ($types as $type) {
-                $allowed = array_merge($allowed, $extensions["{$type}_allowed"]);
+            foreach ($types as $_type) {
+                $allowed[] = $extensions["{$_type}_allowed"];
             }
+            $allowed = call_user_func_array('array_merge', $allowed);
         }
 
         return array_keys(array_filter($allowed));
@@ -52,11 +53,19 @@ class Egovs_Base_Model_Cms_Wysiwyg_Media_Storage extends Mage_Cms_Model_Wysiwyg_
         }
         $uploader->setAllowRenameFiles(true);
         $uploader->setFilesDispersion(false);
-        $uploader->addValidateCallback(
-            'isMedia',
-            Mage::getModel('egovsbase/file_validator_media'),
-            'validate'
-        );
+        if ($type == 'image') {
+            $uploader->addValidateCallback(
+                Mage_Core_Model_File_Validator_Image::NAME,
+                Mage::getModel('core/file_validator_image'),
+                'validate'
+            );
+        } else {
+            $uploader->addValidateCallback(
+                'isMedia',
+                Mage::getModel('egovsbase/file_validator_media'),
+                'validate'
+            );
+        }
         $result = $uploader->save($targetPath);
 
         if (!$result) {

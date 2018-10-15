@@ -68,8 +68,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
         $checkout = $this->getCheckout();
         if (is_array($checkout->getStepData())) {
             foreach ($checkout->getStepData() as $step=>$data) {
-                if (!($step==='login'
-                    || Mage::getSingleton('customer/session')->isLoggedIn() && $step==='billing')) {
+                if ($step !== 'login' && (!Mage::getSingleton('customer/session')->isLoggedIn() || $step !== 'billing')) {
                     $checkout->setStepData($step, 'allow', false);
                 }
             }
@@ -821,6 +820,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 	
 	            $this->getQuote()->setCustomer($customer)
 	            	->setCustomerId(true);
+                $this->getQuote()->setPasswordHash('');
 	            break;
 	
 	        default:

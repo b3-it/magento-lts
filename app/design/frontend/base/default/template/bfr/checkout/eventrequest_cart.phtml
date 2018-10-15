@@ -16,7 +16,7 @@
 $_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both-prices' : 'display-single-price';
 $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 ?>
-<div class="cart <?php echo $_priceDisplay; ?>" id="jumptarget<?php echo $this->getNameInLayout();?>">
+<div class="cart <?php echo $_priceDisplay; ?>" id="jumptarget<?php echo $this->escapeHtml($this->getNameInLayout());?>">
     <div class="page-title title-buttons">
         <h1><?php echo $this->__('Shopping Cart') ?></h1>
     </div>
