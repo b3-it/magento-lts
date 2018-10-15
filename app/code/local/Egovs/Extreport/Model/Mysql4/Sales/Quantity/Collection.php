@@ -92,16 +92,19 @@ class Egovs_Extreport_Model_Mysql4_Sales_Quantity_Collection extends Mage_Sales_
 			//->group('main_table.product_id')
 			//->group('order.entity_id')
         ;
-        $this->getSelect()->where("product_type != '".Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE."'")
+        $compositeTypeIds     = Mage::getSingleton('catalog/product_type')->getCompositeTypes();
+        $this->getSelect()->where("product_type NOT IN (?)",$compositeTypeIds);
         ;
         
         if($this->_storefilter)
         {
         	$this->addFieldToFilter('main_table.store_id', array('in' => (array)$this->_storefilter));
         }
+        $this->_from = $from;
+        $this->_to = $to;
         //20100414: fix für #351 und #356
         $this->addFieldToFilter('main_table.created_at', array('from' => $from, 'to' => $to));
-        //die($this->getSelect()->__toString());
+//        die($this->getSelect()->__toString());
         return $this;
     }
     

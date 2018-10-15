@@ -71,6 +71,9 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 			$storeIds = array('');
 		}
 
+        $compositeTypeIds     = Mage::getSingleton('catalog/product_type')->getCompositeTypes();
+        $collection->getSelect()->where("main_table.product_type NOT IN (?)",$compositeTypeIds);
+
 		$this->setCollection($collection);
 
 		//die($collection->getSelect()->__toString());

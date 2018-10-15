@@ -32,6 +32,7 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
     
     public function kassenzeichenAction()
     {
+        $this->_title(Mage::helper('extreport')->__('Kassenzeichen'));
          $this->_initAction()
          	->_setActiveMenu('report/salesroot/kassenzeichen')
          	->_addBreadcrumb(Mage::helper('extreport')->__('Kassenzeichen'), Mage::helper('extreport')->__('Kassenzeichen'))
@@ -41,7 +42,8 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
     
  	public function revenueAction()
     {
-         $this->_initAction()
+        $this->_title(Mage::helper('extreport')->__('Revenue'));
+        $this->_initAction()
          	->_setActiveMenu('report/salesroot/revenue')
          	->_addBreadcrumb(Mage::helper('extreport')->__('Revenue'), Mage::helper('extreport')->__('Revenue'))
          	->_addContent($this->getLayout()->createBlock('extreport/sales_revenue'))
@@ -50,16 +52,19 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
     
     public function costunitAction()
     {
+        $this->_title(Mage::helper('extreport')->__('Revenue'));
     	Mage::getSingleton('adminhtml/session')->addNotice($this->__('Last 30 days are shown by default.'));
     	$this->_initAction()
     	->_setActiveMenu('report/salesroot/costunit')
     	->_addBreadcrumb(Mage::helper('extreport')->__('Revenue'), Mage::helper('extreport')->__('Revenue'))
     	->_addContent($this->getLayout()->createBlock('extreport/sales_costunit'))
     	->renderLayout();
+
     }
     
 	public function quantityorderedAction()
     {
+        $this->_title(Mage::helper('extreport')->__('Sold Products'));
         $this->_initAction()
             ->_setActiveMenu('report/salesroot/quantityordered')
             ->_addBreadcrumb(Mage::helper('extreport')->__('Sold Products'), Mage::helper('extreport')->__('Sold Products'))
@@ -69,34 +74,41 @@ class Egovs_Extreport_Adminhtml_Extreport_SalesController extends Egovs_Extrepor
     
     public function haushaltsstelleAction()
     {
+        $this->_title(Mage::helper('extreport')->__('Haushaltsstelle'));
     	     $this->_initAction()
             ->_setActiveMenu('report/salesroot/haushaltsstelle')
             ->_addBreadcrumb('Haushaltsstelle', 'Haushaltsstelle')
             ->_addContent($this->getLayout()->createBlock('extreport/sales_haushaltsstelle'))
             ->renderLayout();
+
     }
     
 	public function weightAction()
     {
+        $this->_title(Mage::helper('extreport')->__('Weight per Order'));
         $this->_initAction()
             ->_setActiveMenu('report/salesroot/weight')
             ->_addBreadcrumb(Mage::helper('extreport')->__('Weight per Order'), Mage::helper('extreport')->__('Weight per Order'))
             ->_addContent($this->getLayout()->createBlock('extreport/sales_weight'))
             ->renderLayout();
+
     }
     
     public function pbcAction()
     {
+        $this->_title(Mage::helper('extreport')->__('Products by Customer'));
     	$this->_initAction()
 	    	->_setActiveMenu('report/salesroot/pbc')
 	    	->_addBreadcrumb(Mage::helper('extreport')->__('Products by Customer'), Mage::helper('extreport')->__('Products by Customer'))
 	    	/* TODO : Layout XML benutzen! */
 	    	->_addContent($this->getLayout()->createBlock('extreport/sales_pbc'))
 	    	->renderLayout();
+
     }
     
     public function optionsAction()
     {
+        $this->_title(Mage::helper('extreport')->__('Products Options'));
     	$this->_initAction()
 	    	->_setActiveMenu('report/salesroot/poptions')
 	    	->_addBreadcrumb(Mage::helper('extreport')->__('Product Options'), Mage::helper('extreport')->__('Product Options'))

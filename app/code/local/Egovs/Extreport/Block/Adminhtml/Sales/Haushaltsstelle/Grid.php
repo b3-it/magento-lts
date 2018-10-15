@@ -99,8 +99,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Haushaltsstelle_Grid extends Egovs_E
 		}
 		//$this->getCollection()->setCategoryFilter($filter);
 
-
-		return $this;
+       	return $this;
 	}
 	/**
 	 * Initialisiert die Spalten
