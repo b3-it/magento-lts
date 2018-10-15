@@ -27,43 +27,62 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
 <?php $buttonTitle = Mage::helper('core')->quoteEscape($this->__('Add to Cart')); ?>
 <?php if($_product->isSaleable()): ?>
     <div class="add-to-cart">
-    <?php if(!$_isLoggedIn): ?>
-        <button type="button"
-                title="<?php echo $this->quoteEscape($this->__('Login')) ?>"
-                class="button btn-cart"
-                onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
-            <span>
-                <?php echo $this->__('Login') ?>
-            </span>
-        </button>
-    <?php else: ?>
-        <?php if(!$_hidePrice): ?>
-            <?php if(!$_product->isGrouped()): ?>
-                <div class="qty-wrapper">
-                    <label for="qty"><?php echo $this->__('Qty:') ?></label>
-                    <input type="tel" pattern="\d*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
-                </div>
-            <?php endif; ?>
-            <div class="add-to-cart-buttons">
-                <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
-                    <span class="egov-cart">
-                        <span class="default-font">
-                            <?php echo $buttonTitle ?>
-                        </span>
-                    </span>
-                </button>
-                <?php echo $this->getChildHtml('', true, true) ?>
-            </div>
-        <?php else: ?>
+    <?php if( Mage::helper('core')->isModuleEnabled('Egovs_B2b') ): ?>
+        <?php if(!$_isLoggedIn): ?>
             <button type="button"
-                    title="<?php echo $this->quoteEscape($this->__('Send request')) ?>"
+                    title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
                     class="button btn-cart"
-                    onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
+                    onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
                 <span>
-                    <?php echo $this->__('Send request') ?>
+                    <?php echo $this->__('Price on request') ?>
                 </span>
             </button>
+        <?php else: ?>
+            <?php if(!$_hidePrice): ?>
+                <?php if(!$_product->isGrouped()): ?>
+                    <div class="qty-wrapper">
+                        <label for="qty"><?php echo $this->__('Qty:') ?></label>
+                        <input type="tel" pattern="\d*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+                    </div>
+                <?php endif; ?>
+                <div class="add-to-cart-buttons">
+                    <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+                        <span class="egov-cart">
+                            <span class="default-font">
+                                <?php echo $buttonTitle ?>
+                            </span>
+                        </span>
+                    </button>
+                    <?php echo $this->getChildHtml('', true, true) ?>
+                </div>
+            <?php else: ?>
+                <button type="button"
+                        title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
+                        class="button btn-cart"
+                        onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
+                    <span>
+                        <?php echo $this->__('Price on request') ?>
+                    </span>
+                </button>
+            <?php endif; ?>
         <?php endif; ?>
+    <?php else: ?>
+        <?php if(!$_product->isGrouped()): ?>
+            <div class="qty-wrapper">
+                <label for="qty"><?php echo $this->__('Qty:') ?></label>
+                <input type="tel" pattern="\d*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+            </div>
+        <?php endif; ?>
+        <div class="add-to-cart-buttons">
+            <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+                <span class="egov-cart">
+                    <span class="default-font">
+                        <?php echo $buttonTitle ?>
+                    </span>
+                </span>
+            </button>
+            <?php echo $this->getChildHtml('', true, true) ?>
+        </div>
     <?php endif; ?>
     </div>
 <?php endif; ?>

@@ -138,35 +138,46 @@
 
                         <div class="product-action">
                             <?php if(!$_product->canConfigure() && $_product->isSaleable() ): ?>
-                              <?php if(!$_isLoggedIn): ?>
+                              <?php if( Mage::helper('core')->isModuleEnabled('Egovs_B2b') ): ?>
+                                  <?php if(!$_isLoggedIn): ?>
+                                    <button type="button"
+                                            title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
+                                            class="button btn-cart"
+                                            onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
+                                        <span>
+                                            <?php echo $this->__('Price on request') ?>
+                                        </span>
+                                    </button>
+                                  <?php else: ?>
+                                    <?php if(!$_hidePrice): ?>
+                                      <button type="button"
+                                              title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
+                                              class="button btn-cart egov-cart"
+                                              onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, array('_secure' => $this->getRequest()->isSecure())) ?>')">
+                                          <span>
+                                              <?php echo $this->__('Add to Cart') ?>
+                                          </span>
+                                      </button>
+                                    <?php else: ?>
+                                      <button type="button"
+                                              title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
+                                              class="button btn-cart"
+                                              onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
+                                          <span>
+                                              <?php echo $this->__('Price on request') ?>
+                                          </span>
+                                      </button>
+                                    <?php endif; ?>
+                                  <?php endif; ?>
+                              <?php else: ?>
                                 <button type="button"
-                                        title="<?php echo $this->quoteEscape($this->__('Login')) ?>"
-                                        class="button btn-cart"
-                                        onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
+                                        title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
+                                        class="button btn-cart egov-cart"
+                                        onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, array('_secure' => $this->getRequest()->isSecure())) ?>')">
                                     <span>
-                                        <?php echo $this->__('Login') ?>
+                                        <?php echo $this->__('Add to Cart') ?>
                                     </span>
                                 </button>
-                              <?php else: ?>
-                                <?php if(!$_hidePrice): ?>
-                                  <button type="button"
-                                          title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
-                                          class="button btn-cart egov-cart"
-                                          onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, array('_secure' => $this->getRequest()->isSecure())) ?>')">
-                                      <span>
-                                          <?php echo $this->__('Add to Cart') ?>
-                                      </span>
-                                  </button>
-                                <?php else: ?>
-                                  <button type="button"
-                                          title="<?php echo $this->quoteEscape($this->__('Send request')) ?>"
-                                          class="button btn-cart"
-                                          onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
-                                      <span>
-                                          <?php echo $this->__('Send request') ?>
-                                      </span>
-                                  </button>
-                                <?php endif; ?>
                               <?php endif; ?>
                             <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
                                 <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>"
@@ -242,13 +253,14 @@
                             <?php endif; ?>
                             <div class="actions">
                                 <?php if( !$_product->canConfigure() && $_product->isSaleable() ): ?>
+                                  <?php if( Mage::helper('core')->isModuleEnabled('Egovs_B2b') ): ?>
                                     <?php if(!$_isLoggedIn): ?>
                                         <button type="button"
-                                                title="<?php echo $this->quoteEscape($this->__('Login')) ?>"
+                                                title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
                                                 class="button btn-cart"
                                                 onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
                                             <span>
-                                                <?php echo $this->__('Login') ?>
+                                                <?php echo $this->__('Price on request') ?>
                                             </span>
                                         </button>
                                     <?php else: ?>
@@ -263,15 +275,25 @@
                                             </button>
                                         <?php else: ?>
                                             <button type="button"
-                                                    title="<?php echo $this->quoteEscape($this->__('Send request')) ?>"
+                                                    title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
                                                     class="button btn-cart"
                                                     onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
                                                 <span>
-                                                    <?php echo $this->__('Send request') ?>
+                                                    <?php echo $this->__('Price on request') ?>
                                                 </span>
                                             </button>
                                         <?php endif; ?>
                                     <?php endif; ?>
+                                  <?php else: ?>
+                                    <button type="button"
+                                            title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
+                                            class="button btn-cart egov-cart"
+                                            onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, array('_secure' => $this->getRequest()->isSecure())) ?>')">
+                                        <span>
+                                            <?php echo $this->__('Add to Cart') ?>
+                                        </span>
+                                    </button>
+                                  <?php endif; ?>
                                 <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
                                     <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>"
                                        class="button egov-view"
