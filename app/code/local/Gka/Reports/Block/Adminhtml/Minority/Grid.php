@@ -119,7 +119,7 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
         $this->addColumn('product_name', array(
             'header' => Mage::helper('catalog')->__('Name'),
             'index' => 'product_name',
-            //'filter_index' => 't1.value'
+            'filter_index' => 'product_name.value'
         ));
 
         $this->addColumn('payment_method', array(
@@ -136,6 +136,7 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
             'type' => 'currency',
             'currency' => 'order_currency_code',
             'total' => 'sum',
+            'filter_condition_callback' => array($this, '_filterSumCondition'),
         ));
 
         $yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
@@ -190,6 +191,37 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
         $this->setTotals(new Varien_Object($data));
     }
 
+
+    protected function _filterSumCondition($collection, $column) {
+        $filter = $column->getFilter()->getValue();
+        $von = null;
+        $bis = null;
+        if (isset($filter['from'])) {
+            $von = $filter['from']+0;
+        }
+        if (isset($filter['to'])) {
+            $bis = $filter['to']+0;
+        }
+
+
+        if (($von !== null) && ($bis !== null)) {
+            $this->getCollection()
+                ->getSelect()
+                ->having('sum(main_table.base_row_total) >= '.$filter['from'].' AND sum(main_table.base_row_total) <= '.$filter['to'] )
+            ;
+        } elseif ($von !== null) {
+            $this->getCollection()
+                ->getSelect()
+                ->having('sum(main_table.base_row_total) >= '.$filter['from'])
+            ;
+        } elseif ($bis !== null) {
+            $this->getCollection()
+                ->getSelect()
+                ->having('sum(main_table.base_row_total) <= '.$filter['to'] )
+            ;
+        }
+        return $this;
+    }
 
 	public function getGridUrl($params = array())
     {
