@@ -28,6 +28,11 @@ $_hidePrice = false;
 if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
     $_hidePrice = Mage::helper('egovs_b2b')->hidePrice();
 }
+
+$_isLoggedIn = false;
+if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $_isLoggedIn = true;
+}
 ?>
 <?php if(count($this->getItemCollection()->getItems())): ?>
 <?php $_columnCount = $this->getColumnCount(); ?>
@@ -46,7 +51,29 @@ if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
                 <img src="<?php echo $this->helper('catalog/image')->init($_link, 'small_image')->resize(280) ?>" alt="<?php echo $this->escapeHtml($_link->getName()) ?>" />
             </a>
             <h3 class="product-name"><a href="<?php echo $_link->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_link->getName()) ?>"><?php echo $this->escapeHtml($_link->getName()) ?></a></h3>
-            <?php if(!$_hidePrice) echo $this->getPriceHtml($_link, true, '-upsell') ?>
+            <?php if(!$_isLoggedIn): ?>
+                <button type="button"
+                        title="<?php echo $this->quoteEscape($this->__('Login')) ?>"
+                        class="button btn-cart"
+                        onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
+                    <span>
+                        <?php echo $this->__('Login') ?>
+                    </span>
+                </button>
+            <?php else: ?>
+                <?php if(!$_hidePrice): ?>
+                    <?php echo $this->getPriceHtml($_link, true, '-upsell'); ?>
+                <?php else: ?>
+                    <button type="button"
+                            title="<?php echo $this->quoteEscape($this->__('Send request')) ?>"
+                            class="button btn-cart"
+                            onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
+                        <span>
+                            <?php echo $this->__('Send request') ?>
+                        </span>
+                    </button>
+                <?php endif; ?>
+            <?php endif; ?>
             <?php echo $this->getReviewsSummaryHtml($_link) ?>
         </li>
             <?php /*else: ?>

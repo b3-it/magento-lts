@@ -28,6 +28,11 @@ $_hidePrice = false;
 if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
     $_hidePrice = Mage::helper('egovs_b2b')->hidePrice();
 }
+
+$_isLoggedIn = false;
+if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $_isLoggedIn = true;
+}
 ?>
 <?php
 /**
@@ -47,16 +52,42 @@ if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
                         <div class="product-details">
                             <div class="f-fix">
                                 <h3 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $this->helper('catalog/output')->productAttribute($_product, $_product->getName() , 'name') ?></a></h3>
-                                <?php
-                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
-                        <?php echo $this->getPriceHtml($_product, true, '-widget-viewed-list') ?>
-                        <?php if($_product->isSaleable()): ?>
-                          <?php if(!$_hidePrice): ?>
-                        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-                          <?php endif; ?>
-                            <?php else: ?>
-                                <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                        <?php endif; ?>
+                                <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                                <?php echo $this->getPriceHtml($_product, true, '-widget-viewed-list') ?>
+                                <?php if($_product->isSaleable()): ?>
+                                    <?php if(!$_isLoggedIn): ?>
+                                        <button type="button"
+                                                title="<?php echo $this->quoteEscape($this->__('Login')) ?>"
+                                                class="button btn-cart"
+                                                onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
+                                            <span>
+                                                <?php echo $this->__('Login') ?>
+                                            </span>
+                                        </button>
+                                    <?php else: ?>
+                                        <?php if(!$_hidePrice): ?>
+                                            <button type="button"
+                                                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>"
+                                                    class="button btn-cart"
+                                                    onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                                <span>
+                                                    <?php echo $this->__('Add to Cart') ?>
+                                                </span>
+                                            </button>
+                                        <?php else: ?>
+                                            <button type="button"
+                                                    title="<?php echo $this->quoteEscape($this->__('Send request')) ?>"
+                                                    class="button btn-cart"
+                                                    onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
+                                                <span>
+                                                    <?php echo $this->__('Send request') ?>
+                                                </span>
+                                            </button>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                <?php endif; ?>
                         <ul class="add-to-links">
                             <?php if ($this->helper('wishlist')->isAllow()) : ?>
                                 <li><a href="<?php echo $this->getAddToWishlistUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>

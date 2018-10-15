@@ -20,9 +20,15 @@ $_product = $this->getProduct();
 // Attribut-Konfiguration ermitteln
 $_attributes = new Varien_Object();
 $_attributes->setData($_product->getAttributes());
+
 $_hidePrice = false;
 if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
     $_hidePrice = Mage::helper('egovs_b2b')->hidePrice();
+}
+
+$_isLoggedIn = false;
+if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $_isLoggedIn = true;
 }
 ?>
 
@@ -69,8 +75,30 @@ if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
                     <?php echo $this->getChildHtml('extrahint') ?>
 
                   <?php if (!$this->hasOptions()):?>
-                    <?php if($_product->isSaleable() && (!$_hidePrice)): ?>
-                      <?php echo $this->getChildHtml('addtocart') ?>
+                    <?php if ($_product->isSaleable() ): ?>
+                        <?php if(!$_isLoggedIn): ?>
+                            <button type="button"
+                                    title="<?php echo $this->quoteEscape($this->__('Login')) ?>"
+                                    class="button btn-cart"
+                                    onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
+                                    <span>
+                                        <?php echo $this->__('Login') ?>
+                                    </span>
+                            </button>
+                        <?php else: ?>
+                            <?php if(!$_hidePrice): ?>
+                                  <?php echo $this->getChildHtml('addtocart') ?>
+                            <?php else: ?>
+                                  <button type="button"
+                                          title="<?php echo $this->quoteEscape($this->__('Send request')) ?>"
+                                          class="button btn-cart"
+                                          onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
+                                      <span>
+                                          <?php echo $this->__('Send request') ?>
+                                      </span>
+                                  </button>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     <?php endif; ?>
                   <?php elseif (!$_product->isSaleable()): ?>
                     <?php echo $this->getChildHtml('addto') ?>
