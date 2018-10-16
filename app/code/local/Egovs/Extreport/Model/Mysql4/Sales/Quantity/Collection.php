@@ -68,7 +68,7 @@ class Egovs_Extreport_Model_Mysql4_Sales_Quantity_Collection extends Mage_Sales_
 	        ;
         } else {
         	$this->getSelect()->columns(array('category_ids' => new Zend_Db_Expr("GROUP_CONCAT(DISTINCT CONCAT_WS(', ', category_id))")));
-        	$this->getSelect()->group('main_table.quote_item_id');
+        	$this->getSelect()->group('main_table.item_id');
         	$this->getSelect()
 	        	->join(
 	        			array('order'=>$this->getTable('sales/order')),
