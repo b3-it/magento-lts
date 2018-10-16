@@ -91,9 +91,10 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         $this->addColumn('created_at', array(
             'header' => Mage::helper('sales')->__('Purchased On'),
             'index' => 'created_at',
+            'filter_index' => 'order.created_at',
             'type' => 'datetime',
             'width' => '100px',
-        	'filter_condition_callback' => array($this, '_filterCreatedAtCondition'),
+        
         ));
         
         $this->addColumn('type',
@@ -193,38 +194,7 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
    
     
     
-    /**
-     * FilterIndex Base Name
-     *
-     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
-     * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
-     *
-     * @return void
-     */
-    protected function _filterCreatedAtCondition($collection, $column) {
-    	if (!$value = $column->getFilter()->getValue()) {
-    		return;
-    	}
-    	 
-    	$filters = $column->getFilter()->getValue();
-    	 
-    	$from = $filters['from'];
-    	$to = $filters['to'];
-    	 
-    	
-    	
-    	if(isset($from)){
-    		$this->getCollection()->addFieldToFilter('order.created_at', array('gteq' => $from->toString('yyyy-MM-dd')));
-    	}
-    	if(isset($to)){
-    		$this->getCollection()->addFieldToFilter('order.created_at', array('lteq' => $to->toString('yyyy-MM-dd')));
-    	}
-    	 
-    	//$condition = "(sales.created_at= ?)";
-    	//$collection->getSelect()->where($condition, $value);
-    	
-    }
-    
+
    
     protected function _prepareMassaction() {
     	$this->setMassactionIdField('entity_id');

@@ -133,7 +133,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 				array(
 						'header'=> Mage::helper('catalog')->__('Date'),
 						'width' => '50px',
-						'type'  => 'date',
+						'type'  => 'datetime',
 						'format' => $dateFormatIso,
 						'index' => 'order_date',
 						'filter_index' => 'order.created_at'
