@@ -52,29 +52,9 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
             </a>
             <h3 class="product-name"><a href="<?php echo $_link->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_link->getName()) ?>"><?php echo $this->escapeHtml($_link->getName()) ?></a></h3>
             <?php if( Mage::helper('core')->isModuleEnabled('Egovs_B2b') ): ?>
-                <?php if(!$_isLoggedIn): ?>
-                    <button type="button"
-                            title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
-                            class="button btn-cart"
-                            onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
-                        <span>
-                            <?php echo $this->__('Price on request') ?>
-                        </span>
-                    </button>
-                <?php else: ?>
                     <?php if(!$_hidePrice): ?>
                         <?php echo $this->getPriceHtml($_link, true, '-upsell'); ?>
-                    <?php else: ?>
-                        <button type="button"
-                                title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
-                                class="button btn-cart"
-                                onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
-                            <span>
-                                <?php echo $this->__('Price on request') ?>
-                            </span>
-                        </button>
                     <?php endif; ?>
-                <?php endif; ?>
             <?php else: ?>
                 <?php echo $this->getPriceHtml($_link, true, '-upsell'); ?>
             <?php endif; ?>

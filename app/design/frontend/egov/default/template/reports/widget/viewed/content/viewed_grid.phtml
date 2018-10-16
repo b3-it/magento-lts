@@ -60,16 +60,6 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
                     <div class="actions">
                         <?php if($_product->isSaleable()): ?>
                             <?php if( Mage::helper('core')->isModuleEnabled('Egovs_B2b') ): ?>
-                                <?php if(!$_isLoggedIn): ?>
-                                    <button type="button"
-                                            title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
-                                            class="button btn-cart"
-                                            onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>customer/account/login/')">
-                                        <span>
-                                            <?php echo $this->__('Price on request') ?>
-                                        </span>
-                                    </button>
-                                <?php else: ?>
                                     <?php if(!$_hidePrice): ?>
                                         <button type="button"
                                                 title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>"
@@ -79,17 +69,7 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
                                                 <?php echo $this->__('Add to Cart') ?>
                                             </span>
                                         </button>
-                                    <?php else: ?>
-                                        <button type="button"
-                                                title="<?php echo $this->quoteEscape($this->__('Price on request')) ?>"
-                                                class="button btn-cart"
-                                                onclick="setLocation('<?php echo Mage::getBaseUrl(); ?>contacts/')">
-                                            <span>
-                                                <?php echo $this->__('Price on request') ?>
-                                            </span>
-                                        </button>
                                     <?php endif; ?>
-                                <?php endif; ?>
                             <?php else: ?>
                                 <button type="button"
                                         title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>"
