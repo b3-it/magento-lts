@@ -7,13 +7,12 @@
  */
 $_product = $this->getProduct(); ?>
 <?php if ($this->displayProductStockStatus()): ?>
-        <p class="availability">
+        <div id="availability">
+            <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
         <?php if ($_product->isAvailable()): ?>
-            <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
-            <span class="value in-stock"><?php echo $this->helper('catalog')->__('In stock') ?></span>
+            <p class="availability value in-stock"><?php echo $this->helper('catalog')->__('In stock') ?></p>
         <?php else: ?>
-            <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
-            <span class="value out-of-stock"><?php echo $this->helper('catalog')->__('Out of stock') ?></span>
+            <p class="availability value out-of-stock"><?php echo $this->helper('catalog')->__('Out of stock') ?></p>
         <?php endif; ?>
-        </p>
+        </div>
 <?php endif; ?>

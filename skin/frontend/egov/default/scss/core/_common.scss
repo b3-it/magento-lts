@@ -153,12 +153,16 @@ h6, .h6 { @include h6; }
     margin-bottom: 1em;
 }
 
-.availability {
+#availability {
     font-size: $global-fontsize-big;
     margin-bottom: 0;
 
     .label {
          font-size: $global-fontsize;
+    }
+
+    p {
+        display: inline-block;
     }
 
     .in-stock {
