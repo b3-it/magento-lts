@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <sections>
+        <customer>
+            <groups>
+                <icon_captcha translate="label">
+                    <label>IconCaptcha</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>115</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable CAPTCHA on Frontend</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <theme translate="label">
+                            <label>Theme of the captcha</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </theme>
+                        <fontfamily>
+                            <label>Font family of the captcha</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Leaving this option blank will result in the use of the default font Arial.</comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </fontfamily>
+                        <clickdelay>
+                            <label>Click delay</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>The time (in milliseconds) during which the user can't select an image. Set to 0 to disable.</comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </clickdelay>
+                        <hoverdetection>
+                            <label>Hover Detection</label>
+                            <comment>Prevent clicking on any captcha icon until the cursor hovered over the captcha at least once.</comment>
+                            <sort_order>40</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </hoverdetection>
+                        <loadinganimation>
+                            <label>Loading Animation</label>
+                            <comment>Enable or disable the fake loading animation after clicking on an image.</comment>
+                            <sort_order>50</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </loadinganimation>
+                        <animationdelay>
+                            <label>Animation Delay</label>
+                            <comment>The time (in milliseconds) during which the fake loading animation will play until the user input actually gets validated.</comment>
+                            <sort_order>60</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </animationdelay>
+                        <requesticonsdelay>
+                            <label>Request Icons Delay</label>
+                            <comment>The captcha will not request hashes or images from the server until after this delay (in milliseconds). If a page displaying one or more captchas gets constantly refreshed (during an attack?), it will not request the resources right away.</comment>
+                            <sort_order>70</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </requesticonsdelay>
+                        <captchamessages>
+                            <label>Captcha Messages</label>
+                            <comment>Change the messages used by the captcha. All the changeable strings can be found down below.</comment>
+                            <sort_order>80</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </captchamessages>
+                    </fields>
+                </icon_captcha>
+                <google_captcha translate="label">
+                    <label>Google reCaptcha</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>116</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable CAPTCHA on Frontend</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                    </fields>
+                </google_captcha>
+            </groups>
+        </customer>
+    </sections>
+</config>

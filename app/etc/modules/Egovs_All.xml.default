@@ -26,6 +26,13 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Bitv>
+        <Egovs_Captcha>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Captcha />
+            </depends>
+        </Egovs_Captcha>
         <Egovs_Cashpayment>
             <active>false</active>
             <codePool>local</codePool>
