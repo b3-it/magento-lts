@@ -55,11 +55,11 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 			$this->getSelect()
 			->join(
 					array('order'=>$this->getTable('sales/order')),
-					"order.entity_id = main_table.order_id AND order.state <> 'canceled'",
+					"order.entity_id = main_table.order_id AND order.state <> 'canceled' AND store_group IN ({$sg}) ",
 					array('order_date'=>'created_at', "state")
-					)->join(
+					)->joinLeft(
 							array('e'=>$this->getTable('catalog/category_product')),
-							'e.product_id = main_table.product_id AND store_group IN ('.$sg.")",
+							'e.product_id = main_table.product_id',
 							array('category_ids' => new Zend_Db_Expr("GROUP_CONCAT(DISTINCT CONCAT_WS(', ', category_id))"))
 							)
 							;
