@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Egovs_Captcha>
-            <version>0.0.1</version>
+            <version>0.0.1.0</version>
         </Egovs_Captcha>
     </modules>
     <default>
@@ -30,11 +30,9 @@
     </default>
     <global>
         <blocks>
-            <captcha>
-                <rewrite>
-                    <captcha_zend>Egovs_Captcha_Block_Googlecaptcha</captcha_zend>
-                </rewrite>
-            </captcha>
+            <egovscaptcha>
+                <class>Egovs_Captcha_Block</class>
+            </egovscaptcha>
         </blocks>
         <models>
             <egovscaptcha>
