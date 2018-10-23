@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <default>
+        <block type="egovscaptcha/iconcaptcha" output="toHtml" name="icon_captcha" />
+        <block type="egovscaptcha/googlecaptcha" output="toHtml" name="google_captcha" />
+    </default>
+    <customer_account_create>
+        <reference name="captcha">
+            <action method="append">
+                <block>icon_captcha</block>
+            </action>
+<!--
+            <action method="append" ifconfig="customer/captcha/enable" value="3">
+                <block>google_captcha</block>
+            </action>
+-->
+        </reference>
+    </customer_account_create>
+    <customer_account_login>
+        <reference name="customer_form_login">
+            <block type="core/text_list" name="form.additional.info">
+                <action method="append" ifconfig="customer/captcha/enable" value="2">
+                    <block>icon_captcha</block>
+                </action>
+                <action method="append" ifconfig="customer/captcha/enable" value="3">
+                    <block>google_captcha</block>
+                </action>
+<!--
+                <block type="captcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>user_login</formId></action>
+                    <action method="append" ifconfig="customer/captcha/enable" value="2">
+                        <block>icon_captcha</block>
+                    </action>
+                    <action method="append" ifconfig="customer/captcha/enable" value="3">
+                        <block>google_captcha</block>
+                    </action>
+                </block>
+-->
+            </block>
+        </reference>
+    </customer_account_login>
+    <customer_account_forgotpassword>
+        <reference name="forgotPassword">
+            <block type="core/text_list" name="form.additional.info">
+                <action method="append" ifconfig="customer/captcha/enable" value="2">
+                    <block>icon_captcha</block>
+                </action>
+                <action method="append" ifconfig="customer/captcha/enable" value="3">
+                    <block>google_captcha</block>
+                </action>
+<!--
+                <block type="captcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>user_forgotpassword</formId></action>
+                    <action method="append" ifconfig="customer/captcha/enable" value="2">
+                        <block>icon_captcha</block>
+                    </action>
+                    <action method="append" ifconfig="customer/captcha/enable" value="3">
+                        <block>google_captcha</block>
+                    </action>
+                </block>
+-->
+            </block>
+        </reference>
+    </customer_account_forgotpassword>
+</layout>

@@ -29,6 +29,13 @@
         </customer>
     </default>
     <global>
+        <blocks>
+            <captcha>
+                <rewrite>
+                    <captcha_zend>Egovs_Captcha_Block_Googlecaptcha</captcha_zend>
+                </rewrite>
+            </captcha>
+        </blocks>
         <models>
             <egovscaptcha>
                 <class>Egovs_Captcha_Model</class>
@@ -54,6 +61,13 @@
                 </Egovs_Captcha>
             </modules>
         </translate>
+        <layout>
+            <updates>
+                <egovscaptcha>
+                    <file>egovs/captcha.xml</file>
+                </egovscaptcha>
+            </updates>
+        </layout>
     </frontend>
     <adminhtml>
         <translate>
