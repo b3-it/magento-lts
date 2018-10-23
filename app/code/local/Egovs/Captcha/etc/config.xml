@@ -8,23 +8,41 @@
     </modules>
     <default>
         <customer>
-            <icon_captcha>
-                <enable>0</enable>
-                <theme>light</theme>
-                <fontfamily></fontfamily>
-                <clickdelay>100</clickdelay>
-                <hoverdetection>1</hoverdetection>
-                <loadinganimation>1</loadinganimation>
-                <animationdelay>100</animationdelay>
-                <requesticonsdelay>100</requesticonsdelay>
-                <captchamessages>0</captchamessages>
-            </icon_captcha>
-            <google_captcha>
-                <enable>0</enable>
-            </google_captcha>
+            <captcha>
+                <iconcaptcha_theme>light</iconcaptcha_theme>
+                <iconcaptcha_fontfamily><![CDATA[Arial]]></iconcaptcha_fontfamily>
+                <iconcaptcha_clickdelay>100</iconcaptcha_clickdelay>
+                <iconcaptcha_hoverdetection>1</iconcaptcha_hoverdetection>
+                <iconcaptcha_loadinganimation>1</iconcaptcha_loadinganimation>
+                <iconcaptcha_animationdelay>100</iconcaptcha_animationdelay>
+                <iconcaptcha_requesticonsdelay>100</iconcaptcha_requesticonsdelay>
+                <iconcaptcha_captchamessages>0</iconcaptcha_captchamessages>
+                <iconcaptcha_captchaheader><![CDATA[Wählen Sie das Symbol aus, das nicht in die Zeile gehört.]]></iconcaptcha_captchaheader>
+                <iconcaptcha_correcttitle><![CDATA[Ihre Auswahl ist richtig.]]></iconcaptcha_correcttitle>
+                <iconcaptcha_correctsubtitle><![CDATA[Sie scheinen kein Roboter zu sein.]]></iconcaptcha_correctsubtitle>
+                <iconcaptcha_incorrecttitle><![CDATA[Ihre Auswahl ist falsch.]]></iconcaptcha_incorrecttitle>
+                <iconcaptcha_incorrectsubtitle><![CDATA[Sie haben das falsche Bild ausgewählt.]]></iconcaptcha_incorrectsubtitle>
+                <googlecaptcha_apiurl><![CDATA[https://www.google.com/recaptcha/api.js]]></googlecaptcha_apiurl>
+                <googlecaptcha_apiparams><![CDATA[?onload=onloadCallback&render=explicit]]></googlecaptcha_apiparams>
+                <googlecaptcha_language>0</googlecaptcha_language>
+            </captcha>
         </customer>
     </default>
     <global>
+        <models>
+            <egovscaptcha>
+                <class>Egovs_Captcha_Model</class>
+                <resourceModel>egovscaptcha_resource</resourceModel>
+            </egovscaptcha>
+            <egovscaptcha_resource>
+                <class>Egovs_Captcha_Model_Resource</class>
+            </egovscaptcha_resource>
+        </models>
+        <helpers>
+            <egovscaptcha>
+                <class>Egovs_Captcha_Helper</class>
+            </egovscaptcha>
+        </helpers>
     </global>
     <frontend>
         <translate>

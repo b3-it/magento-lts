@@ -4,142 +4,230 @@
     <sections>
         <customer>
             <groups>
-                <icon_captcha translate="label">
-                    <label>IconCaptcha</label>
-                    <frontend_type>text</frontend_type>
-                    <sort_order>115</sort_order>
-                    <show_in_default>1</show_in_default>
-                    <show_in_website>1</show_in_website>
-                    <show_in_store>0</show_in_store>
+                <captcha>
                     <fields>
                         <enable translate="label">
-                            <label>Enable CAPTCHA on Frontend</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
+                            <source_model>egovscaptcha/system_config_source_captcha_modes</source_model>
                         </enable>
-                        <theme translate="label">
+                        <iconcaptcha_theme translate="label comment" module="egovscaptcha">
                             <label>Theme of the captcha</label>
-                            <frontend_type>text</frontend_type>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovscaptcha/system_config_source_iconcaptcha_modes</source_model>
+                            <comment>Allows you to select the theme of the captcha. At the moment you can only choose between light and dark.</comment>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </theme>
-                        <fontfamily>
+                        </iconcaptcha_theme>
+                        <iconcaptcha_fontfamily translate="label comment" module="egovscaptcha">
                             <label>Font family of the captcha</label>
                             <frontend_type>text</frontend_type>
                             <comment>Leaving this option blank will result in the use of the default font Arial.</comment>
-                            <sort_order>20</sort_order>
+                            <sort_order>11</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </fontfamily>
-                        <clickdelay>
+                        </iconcaptcha_fontfamily>
+                        <iconcaptcha_clickdelay translate="label comment" module="egovscaptcha">
                             <label>Click delay</label>
                             <frontend_type>text</frontend_type>
                             <comment>The time (in milliseconds) during which the user can't select an image. Set to 0 to disable.</comment>
-                            <sort_order>30</sort_order>
+                            <sort_order>12</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </clickdelay>
-                        <hoverdetection>
+                        </iconcaptcha_clickdelay>
+                        <iconcaptcha_hoverdetection translate="label comment" module="egovscaptcha">
                             <label>Hover Detection</label>
                             <comment>Prevent clicking on any captcha icon until the cursor hovered over the captcha at least once.</comment>
-                            <sort_order>40</sort_order>
+                            <sort_order>13</sort_order>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </hoverdetection>
-                        <loadinganimation>
+                        </iconcaptcha_hoverdetection>
+                        <iconcaptcha_loadinganimation translate="label comment" module="egovscaptcha">
                             <label>Loading Animation</label>
                             <comment>Enable or disable the fake loading animation after clicking on an image.</comment>
-                            <sort_order>50</sort_order>
+                            <sort_order>14</sort_order>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </loadinganimation>
-                        <animationdelay>
+                        </iconcaptcha_loadinganimation>
+                        <iconcaptcha_animationdelay translate="label comment" module="egovscaptcha">
                             <label>Animation Delay</label>
                             <comment>The time (in milliseconds) during which the fake loading animation will play until the user input actually gets validated.</comment>
-                            <sort_order>60</sort_order>
+                            <sort_order>15</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </animationdelay>
-                        <requesticonsdelay>
+                        </iconcaptcha_animationdelay>
+                        <iconcaptcha_requesticonsdelay translate="label comment" module="egovscaptcha">
                             <label>Request Icons Delay</label>
                             <comment>The captcha will not request hashes or images from the server until after this delay (in milliseconds). If a page displaying one or more captchas gets constantly refreshed (during an attack?), it will not request the resources right away.</comment>
-                            <sort_order>70</sort_order>
+                            <sort_order>16</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </requesticonsdelay>
-                        <captchamessages>
-                            <label>Captcha Messages</label>
+                        </iconcaptcha_requesticonsdelay>
+                        <iconcaptcha_captchamessages translate="label comment" module="egovscaptcha">
+                            <label>Custom Captcha Messages</label>
                             <comment>Change the messages used by the captcha. All the changeable strings can be found down below.</comment>
-                            <sort_order>80</sort_order>
+                            <sort_order>17</sort_order>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enable>2</enable>
                             </depends>
-                        </captchamessages>
-                    </fields>
-                </icon_captcha>
-                <google_captcha translate="label">
-                    <label>Google reCaptcha</label>
-                    <frontend_type>text</frontend_type>
-                    <sort_order>116</sort_order>
-                    <show_in_default>1</show_in_default>
-                    <show_in_website>1</show_in_website>
-                    <show_in_store>0</show_in_store>
-                    <fields>
-                        <enable translate="label">
-                            <label>Enable CAPTCHA on Frontend</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
+                        </iconcaptcha_captchamessages>
+                        <iconcaptcha_captchaheader>
+                            <label>Captcha Header</label>
+                            <comment>This text should help the user to use the captcha correctly.<br />Leave blank for standard.</comment>
+                            <sort_order>18</sort_order>
+                            <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </enable>
+                            <depends>
+                                <enable>2</enable>
+                                <iconcaptcha_captchamessages>1</iconcaptcha_captchamessages>
+                            </depends>
+                        </iconcaptcha_captchaheader>
+                        <iconcaptcha_correcttitle>
+                            <label>Correct Title</label>
+                            <comment>This text is displayed if the user's selection is correct.<br />Leave blank for standard.</comment>
+                            <sort_order>19</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>2</enable>
+                                <iconcaptcha_captchamessages>1</iconcaptcha_captchamessages>
+                            </depends>
+                        </iconcaptcha_correcttitle>
+                        <iconcaptcha_correctsubtitle>
+                            <label>Correct Subtitle</label>
+                            <comment>Additional information if user input is correct.<br />Leave blank for standard.</comment>
+                            <sort_order>20</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>2</enable>
+                                <iconcaptcha_captchamessages>1</iconcaptcha_captchamessages>
+                            </depends>
+                        </iconcaptcha_correctsubtitle>
+                        <iconcaptcha_incorrecttitle>
+                            <label>Incorrect Title</label>
+                            <comment>This text is displayed if the user's selection is not correct.<br />Leave blank for standard.</comment>
+                            <sort_order>21</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>2</enable>
+                                <iconcaptcha_captchamessages>1</iconcaptcha_captchamessages>
+                            </depends>
+                        </iconcaptcha_incorrecttitle>
+                        <iconcaptcha_incorrectsubtitle>
+                            <label>Incorrect Subtitle</label>
+                            <comment>Additional information if user input is not correct.<br />Leave blank for standard.</comment>
+                            <sort_order>22</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>2</enable>
+                                <iconcaptcha_captchamessages>1</iconcaptcha_captchamessages>
+                            </depends>
+                        </iconcaptcha_incorrectsubtitle>
+
+                        <googlecaptcha_apiurl>
+                            <label><![CDATA[API-URL <span style="color:#FF0000;">*</span>]]></label>
+                            <comment>URL to the Captcha-Api</comment>
+                            <sort_order>50</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>3</enable>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </googlecaptcha_apiurl>
+                        <googlecaptcha_apiparams>
+                            <label>Custom parameters</label>
+                            <comment>Enter your own parameters for the API here (Start with a ?)</comment>
+                            <sort_order>51</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>3</enable>
+                            </depends>
+                        </googlecaptcha_apiparams>
+                        <googlecaptcha_sitekey>
+                            <label><![CDATA[Site Key <span style="color:#FF0000;">*</span>]]></label>
+                            <comment><![CDATA[Unique site key, which must be generated at Google.<br /><a href="https://www.google.com/recaptcha/admin" target="_blank">https://www.google.com/recaptcha/admin</a>]]></comment>
+                            <sort_order>52</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>3</enable>
+                            </depends>
+                            <validate>required-entry</validate>
+                        </googlecaptcha_sitekey>
+                        <googlecaptcha_language>
+                            <label>Language</label>
+                            <comment>Forces the widget to render in a specific language. Auto-detects the user's language if unspecified.</comment>
+                            <sort_order>53</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovscaptcha/system_config_source_googlecaptcha_language</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>3</enable>
+                            </depends>
+                        </googlecaptcha_language>
                     </fields>
-                </google_captcha>
+                </captcha>
             </groups>
         </customer>
     </sections>
