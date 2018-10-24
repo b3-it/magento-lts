@@ -22,7 +22,7 @@ class Egovs_Captcha_Helper_Data extends Mage_Captcha_Helper_Data
         if (!array_key_exists($formId, $this->_captcha)) {
             $type = $this->getConfigNode('type');
             switch ($type) {
-                case 'Zend':
+                case 'zend':
                     $this->_captcha[$formId] = Mage::getModel('captcha/' . $type, array('formId' => $formId));
                     break;
                 default:
