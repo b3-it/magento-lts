@@ -17,8 +17,8 @@ class Egovs_Captcha_Model_System_Config_Source_Iconcaptcha_Modes
     public function toOptionArray()
     {
         return array(
-            array('value'=>light, 'label'=>Mage::helper('egovscaptcha')->__('Light Theme')),
-            array('value'=>dark, 'label'=>Mage::helper('egovscaptcha')->__('Dark Theme')),
+            array('value'=>'light', 'label'=>Mage::helper('egovscaptcha')->__('Light Theme')),
+            array('value'=>'dark' , 'label'=>Mage::helper('egovscaptcha')->__('Dark Theme')),
         );
     }
 

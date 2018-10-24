@@ -25,7 +25,9 @@
     <customer_account_forgotpassword>
         <reference name="forgotPassword">
             <block type="core/text_list" name="form.additional.info">
-
+                <block type="egovscaptcha/captcha" output="toHtml" name="captcha">
+                    <action method="setFormId"><formId>user_forgotpassword</formId></action>
+                </block>
             </block>
         </reference>
     </customer_account_forgotpassword>
