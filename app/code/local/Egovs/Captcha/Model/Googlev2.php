@@ -18,7 +18,6 @@
 class Egovs_Captcha_Model_Googlev2 extends Egovs_Captcha_Model_Abstract
     implements Mage_Captcha_Model_Interface
 {
-
     /**
      * Generates captcha
      *

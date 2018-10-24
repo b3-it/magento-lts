@@ -11,8 +11,6 @@
  */
 class Egovs_Captcha_Block_Captcha extends Mage_Captcha_Block_Captcha_Zend
 {
-    protected $_template = 'egovs/captcha/iconcaptcha.phtml';
-
     /**
      * Internal constructor, that is called from real constructor
      *
