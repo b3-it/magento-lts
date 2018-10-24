@@ -6,6 +6,10 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Acl>
+		<Egovs_B2b>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_B2b>
         <Egovs_Base>
             <active>true</active>
             <codePool>local</codePool>
