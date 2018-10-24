@@ -28,7 +28,6 @@ class Egovs_Captcha_Helper_Data extends Mage_Captcha_Helper_Data
                 default:
                     $this->_captcha[$formId] = Mage::getModel('egovscaptcha/' . $type, array('formId' => $formId));
             }
-
         }
         return $this->_captcha[$formId];
     }

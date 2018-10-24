@@ -17,7 +17,14 @@ class Egovs_Captcha_Block_Captcha extends Mage_Captcha_Block_Captcha_Zend
      */
     protected function _construct()
     {
-        parent::_construct();
+        $type = Mage::helper('egovscaptcha')->getConfigNode('type');
+        switch ($type) {
+            case 'zend':
+                parent::_construct();
+                break;
+            default:
+                Mage::getModel('egovscaptcha/' . $type);
+        }
     }
 
     /**
