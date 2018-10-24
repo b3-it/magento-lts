@@ -60,7 +60,9 @@
 	    <?php endif ?>
     <?php endif ?>
     <?php if ( $this->getProduct()->isVirtual() && ($wscText = $this->getWithoutShippingCostsText())): ?>
-        <span class="tax-separator">, </span>
+        <?php if ($this->getFormattedTaxRate() !== false): ?>
+            <span class="tax-separator">, </span>
+        <?php endif ?>
         <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
     <?php endif; ?>
 <?php endif ?>
