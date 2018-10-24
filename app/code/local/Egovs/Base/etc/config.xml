@@ -677,12 +677,6 @@
                 <ssl_logo_title><![CDATA[Positive SSL]]></ssl_logo_title>
             </login>
         </design>
-        <catalog>
-            <advancedsearch>
-                <search_available_in_stock>1</search_available_in_stock>
-                <product_category_search>1</product_category_search>
-            </advancedsearch>
-        </catalog>
         <system>
             <smtp>
                 <log_mails>1</log_mails>

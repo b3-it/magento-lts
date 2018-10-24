@@ -772,39 +772,6 @@
             </groups>
         </customer>
 
-        <catalog>
-            <groups>
-                <advancedsearch translate="label" module="catalogsearch">
-                    <label>Advanced Catalog Search</label>
-                    <frontend_type>text</frontend_type>
-                    <sort_order>501</sort_order>
-                    <show_in_default>1</show_in_default>
-                    <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>
-                    <fields>
-                        <search_available_in_stock translate="label" module="catalogsearch">
-                            <label>Show in Stock</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </search_available_in_stock>
-                        <product_category_search translate="label" module="catalogsearch">
-                            <label>Show Category</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </product_category_search>
-                    </fields>
-                </advancedsearch>
-            </groups>
-        </catalog>
-
         <trans_email translate="label" module="egovsbase">
             <class>separator-top</class>
             <label>Store Email Addresses</label>

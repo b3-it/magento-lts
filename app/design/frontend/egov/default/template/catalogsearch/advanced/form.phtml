@@ -33,15 +33,20 @@
 
 $maxQueryLength= $this->helper('catalogsearch')->getMaxQueryLength();
 
-$_fieldList = array(
-                  'search_available_in_stock', 'product_category_search'
-              );
-$_hideList = array();
-foreach( $_fieldList AS $field ) {
-    $value = Mage::getStoreConfig('catalog/advancedsearch/' . $field , Mage::app()->getStore());
-    if ( $value == false ) {
-        $_hideList[] = $field;
+if ( Mage::helper('core')->isModuleEnabled('B3it_Base') ) {
+    $_fieldList = array(
+        'search_available_in_stock', 'product_category_search'
+    );
+    $_hideList = array();
+    foreach( $_fieldList AS $field ) {
+        $value = Mage::getStoreConfig('catalog/advancedsearch/' . $field , Mage::app()->getStore());
+        if ( $value == false ) {
+            $_hideList[] = $field;
+        }
     }
+}
+else {
+    $_hideList = array();
 }
 ?>
 <div class="page-title">
