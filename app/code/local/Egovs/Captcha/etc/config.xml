@@ -29,6 +29,16 @@
         </customer>
     </default>
     <global>
+        <events>
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <Egovs_Captcha_Observer>
+                        <class>egovscaptcha/observer</class>
+                        <method>headBeforeHtmlforCaptcha</method>
+                    </Egovs_Captcha_Observer>
+                </observers>
+            </core_block_abstract_to_html_before>
+        </events>
         <blocks>
             <egovscaptcha>
                 <class>Egovs_Captcha_Block</class>
@@ -50,6 +60,15 @@
         </helpers>
     </global>
     <frontend>
+        <routers>
+            <captcha>
+                <use>standard</use>
+                <args>
+                    <module>Egovs_Captcha</module>
+                    <frontName>egovscaptcha</frontName>
+                </args>
+            </captcha>
+        </routers>
         <translate>
             <modules>
                 <Egovs_Captcha>

@@ -55,6 +55,11 @@ class Egovs_Captcha_Block_Captcha extends Mage_Captcha_Block_Captcha_Zend
         return $block;
     }
 
+    /**
+     * Returns template path
+     *
+     * @return string
+     */
     public function getTemplate() {
         if ($this->_decoratedInstance === null) {
             return parent::getTemplate();

@@ -1,69 +1,60 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config>
+<?xml version="1.0"?>
 <config>
-	<modules>
-	    <Sid_Base>
+    <modules>
+        <Sid_Base>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_Base>
+        <Sid_Checkout>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
-                <Egovs_ContextHelp/>
+                <Mage_Sales />
+                <Sid_Framecontract />
             </depends>
-        </Sid_Base>
-		<Sid_Checkout>
-			<active>true</active>
-			<codePool>local</codePool>
-			<depends>
-				<Mage_Sales />
-				<Sid_Base />
-				<Sid_Framecontract />
-			</depends>
-		</Sid_Checkout>
-		<Sid_Cms>
-			<active>true</active>
-			<codePool>local</codePool>
-		</Sid_Cms>
-		<Sid_ExportOrder>
-			<active>true</active>
-			<codePool>local</codePool>
-			<depends>
-                <Sid_Base/>
+        </Sid_Checkout>
+        <Sid_Cms>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_Cms>
+        <Sid_ExportOrder>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_ExportOrder>
+        <Sid_Framecontract>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Sid_Import />
             </depends>
-		</Sid_ExportOrder>
-		<Sid_Framecontract>
-			<active>true</active>
-			<codePool>local</codePool>
-			<depends>
-				<Sid_Import />
-				<Sid_Base/>
-			</depends>
-		</Sid_Framecontract>
-		<Sid_Haushalt>
-			<active>true</active>
-			<codePool>local</codePool>
-		</Sid_Haushalt>
-		<Sid_Import>
-			<active>true</active>
-			<codePool>local</codePool>
-		</Sid_Import>
-		<Sid_PurchaseOrder>
-			<active>true</active>
-			<codePool>local</codePool>
-		</Sid_PurchaseOrder>
-		<Sid_Report>
-			<active>true</active>
-			<codePool>local</codePool>
-		</Sid_Report>
-		<Sid_Roles>
-			<active>true</active>
-			<codePool>local</codePool>
-		</Sid_Roles>
-		<Sid_Wishlist>
-			<active>true</active>
-			<codePool>local</codePool>
-			<depends>
-				<Mage_Sales />
-				<Sid_Framecontract />
-			</depends>
-		</Sid_Wishlist>
-	</modules>
+        </Sid_Framecontract>
+        <Sid_Haushalt>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_Haushalt>
+        <Sid_Import>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_Import>
+        <Sid_PurchaseOrder>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_PurchaseOrder>
+        <Sid_Report>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_Report>
+        <Sid_Roles>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sid_Roles>
+        <Sid_Wishlist>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Sales />
+                <Sid_Framecontract />
+            </depends>
+        </Sid_Wishlist>
+    </modules>
 </config>

@@ -31,4 +31,14 @@ class Egovs_Captcha_Helper_Data extends Mage_Captcha_Helper_Data
         }
         return $this->_captcha[$formId];
     }
+
+    /**
+     * Retrieve Iconcaptcha ajax url
+     *
+     * @return string
+     */
+    public function getIconCaptchaUrl()
+    {
+        return Mage::getUrl('egovscaptcha/iconcaptcha/index');
+    }
 }
