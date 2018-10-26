@@ -1,1 +1,36 @@
-<h1>Google</h1>
+<?php
+/**
+ * Template für Google reCAPTCHA v2
+ * https://developers.google.com/recaptcha/
+ *
+ * @category   	Egovs
+ * @package    	Egovs_Captcha
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2011-2018 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ *
+ */
+
+$_store = Mage::app()->getStore();
+
+$_siteKey    = Mage::getStoreConfig('customer/captcha/googlecaptcha_sitekey'  , $_store);
+$_captchaUrl = Mage::getStoreConfig('customer/captcha/googlecaptcha_apiurl'   , $_store);
+$_captchaApi = Mage::getStoreConfig('customer/captcha/googlecaptcha_apiparams', $_store);
+$_captchaLng = Mage::getStoreConfig('customer/captcha/googlecaptcha_language' , $_store);
+?>
+<div id="google-recaptcha" class="google-recaptcha" data-sitekey="<?php echo $_siteKey ?>"></div>
+<script type="text/javascript" src="<?php echo $_captchaUrl . $_captchaApi; ?>&hl=<?php echo $_captchaLng; ?>" async defer></script>
+<script type="text/javascript">
+    var verifyCallback = function(response) {
+        alert(response);
+    };
+
+    var onloadCallback = function() {
+        grecaptcha.render("google-recaptcha", {
+            "sitekey" : "<?php echo $_siteKey; ?>",
+            "callback": verifyCallback,
+            "theme"   : "<?php echo Mage::getStoreConfig('customer/captcha/googlecaptcha_theme', $_store); ?>",
+            "size"    : "<?php echo Mage::getStoreConfig('customer/captcha/googlecaptcha_size' , $_store); ?>"
+        });
+    };
+</script>

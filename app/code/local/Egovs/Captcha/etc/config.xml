@@ -25,6 +25,8 @@
                 <googlecaptcha_apiurl><![CDATA[https://www.google.com/recaptcha/api.js]]></googlecaptcha_apiurl>
                 <googlecaptcha_apiparams><![CDATA[?onload=onloadCallback&render=explicit]]></googlecaptcha_apiparams>
                 <googlecaptcha_language>0</googlecaptcha_language>
+                <googlecaptcha_theme>light</googlecaptcha_theme>
+                <googlecaptcha_size>normal</googlecaptcha_size>
             </captcha>
         </customer>
     </default>
