@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE layout>
 <layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+    </default>
+
     <customer_account_create>
         <reference name="customer_form_register">
             <block type="core/text_list" name="form.additional.info">

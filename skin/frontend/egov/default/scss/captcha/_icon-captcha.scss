@@ -63,6 +63,11 @@ $theme-dark-error-iconcolor        : #ef5858;
     #{$property}         : $css;
 }
 
+.account-login .col2-set .col-2 .content,
+.egovs-checkout-multipage-login .col2-set .col-2 .content{
+    height: auto !important;
+}
+
 .captcha-holder {
     position: relative;
     max-width: $captcha-max-width;
@@ -74,7 +79,7 @@ $theme-dark-error-iconcolor        : #ef5858;
     line-height: 1;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    margin-bottom: 20px;
+    margin: 20px 0;
 
     .captcha-modal {
         width: 100%;

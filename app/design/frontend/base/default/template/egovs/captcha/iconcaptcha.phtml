@@ -13,28 +13,29 @@
 
 $_store = Mage::app()->getStore();
 ?>
+<input type="email" spellcheck="false" name="email_confirmation" id="email_address_confirmation" value="" class="input-text validate-email required-entry" />
 <div id="captcha-holder" class="captcha-holder"></div>
 <script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/captcha/icon-captcha.min.js" type="text/javascript"></script>
 <script async type="text/javascript">
     $j('.captcha-holder').iconCaptcha({
         "captchaAjaxFile"       : "<?php echo $this->helper('egovscaptcha')->getIconCaptchaUrl(); ?>",
-        "captchaTheme"          : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_theme' , $_store); ?>",
-        "captchaFontFamily"     : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_fontfamily' , $_store); ?>",
-        "captchaClickDelay"     : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_clickdelay' , $_store); ?>,
-        "captchaHoverDetection" : <?php echo (Mage::getStoreConfig('customer/captcha/iconcaptcha_hoverdetection' , $_store) == '1' ? 'true' : 'false'); ?>,
-        "enableLoadingAnimation": <?php echo (Mage::getStoreConfig('customer/captcha/iconcaptcha_loadinganimation' , $_store) == '1' ? 'true' : 'false'); ?>,
-        "loadingAnimationDelay" : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_animationdelay' , $_store); ?>,
+        "captchaTheme"          : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_theme'           , $_store); ?>",
+        "captchaFontFamily"     : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_fontfamily'      , $_store); ?>",
+        "captchaClickDelay"     : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_clickdelay'       , $_store); ?>,
+        "captchaHoverDetection" : <?php echo (Mage::getStoreConfig('customer/captcha/iconcaptcha_hoverdetection'  , $_store) == '1' ? 'true' : 'false'); ?>,
+        "enableLoadingAnimation": <?php echo (Mage::getStoreConfig('customer/captcha/iconcaptcha_loadinganimation', $_store) == '1' ? 'true' : 'false'); ?>,
+        "loadingAnimationDelay" : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_animationdelay'   , $_store); ?>,
+        "requestIconsDelay"     : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_requesticonsdelay', $_store); ?>,
         "showCredits"           : "disabled",
-        "requestIconsDelay"     : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_requesticonsdelay' , $_store); ?>,
         "captchaMessages": {
-            "header" : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_captchaheader' , $_store); ?>",
+            "header" : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_captchaheader', $_store); ?>",
             "correct": {
-                "top"   : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_correcttitle' , $_store); ?>",
-                "bottom": "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_correctsubtitle' , $_store); ?>"
+                "top"   : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_correcttitle'   , $_store); ?>",
+                "bottom": "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_correctsubtitle', $_store); ?>"
             },
             "incorrect": {
-                "top"   : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_incorrecttitle' , $_store); ?>",
-                "bottom": "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_incorrectsubtitle' , $_store); ?>"
+                "top"   : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_incorrecttitle'   , $_store); ?>",
+                "bottom": "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_incorrectsubtitle', $_store); ?>"
             }
 
         }
@@ -44,6 +45,7 @@ $_store = Mage::app()->getStore();
     .bind('refreshed.iconCaptcha', function(e, id) {
     })
     .bind('success.iconCaptcha', function(e, id) {
+        enableSubmitButton();
     })
     .bind('error.iconCaptcha', function(e, id) {
     });

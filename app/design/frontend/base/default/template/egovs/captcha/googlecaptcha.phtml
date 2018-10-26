@@ -18,11 +18,12 @@ $_captchaUrl = Mage::getStoreConfig('customer/captcha/googlecaptcha_apiurl'   , 
 $_captchaApi = Mage::getStoreConfig('customer/captcha/googlecaptcha_apiparams', $_store);
 $_captchaLng = Mage::getStoreConfig('customer/captcha/googlecaptcha_language' , $_store);
 ?>
+<input type="email" spellcheck="false" name="email_confirmation" id="email_address_confirmation" value="" class="input-text validate-email required-entry" />
 <div id="google-recaptcha" class="google-recaptcha" data-sitekey="<?php echo $_siteKey ?>"></div>
 <script type="text/javascript" src="<?php echo $_captchaUrl . $_captchaApi; ?>&hl=<?php echo $_captchaLng; ?>" async defer></script>
 <script type="text/javascript">
     var verifyCallback = function(response) {
-        alert(response);
+        enableSubmitButton();
     };
 
     var onloadCallback = function() {
