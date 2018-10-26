@@ -17,7 +17,7 @@
                 <iconcaptcha_animationdelay>100</iconcaptcha_animationdelay>
                 <iconcaptcha_requesticonsdelay>100</iconcaptcha_requesticonsdelay>
                 <iconcaptcha_captchamessages>0</iconcaptcha_captchamessages>
-                <iconcaptcha_captchaheader><![CDATA[Wählen Sie das Symbol aus, das nicht in die Zeile gehört.]]></iconcaptcha_captchaheader>
+                <iconcaptcha_captchaheader><![CDATA[Bitte wählen Sie das abweichende Symbol aus.]]></iconcaptcha_captchaheader>
                 <iconcaptcha_correcttitle><![CDATA[Ihre Auswahl ist richtig.]]></iconcaptcha_correcttitle>
                 <iconcaptcha_correctsubtitle><![CDATA[Sie scheinen kein Roboter zu sein.]]></iconcaptcha_correctsubtitle>
                 <iconcaptcha_incorrecttitle><![CDATA[Ihre Auswahl ist falsch.]]></iconcaptcha_incorrecttitle>

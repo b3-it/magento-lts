@@ -186,48 +186,43 @@ class IconCaptcha
      *
      * @since 2.0.0                     Function was introduced.
      *
-     * @param array $post			    The HTTP Post request.
+     * @param int $postCID			    Captcha-ID.
+     * @param string $postPC            Captcha-Hash
      *
      * @return boolean			        TRUE if the correct image was selected, FALSE if not.
      */
-    //public static function setSelectedAnswer($post) {
     public static function setSelectedAnswer($postCID, $postPC) {
-        //if(!empty($post)) {
-        if(!empty($postCID) && !empty($postPC)) {
-            // Check if the captcha ID is set.
-            //if(!isset($_POST['cID']) || !is_numeric($_POST['cID'])) {
-            if(empty($postCID) || !is_numeric($postCID)) {
-                return false;
-            }
+        // Check if the captcha ID is set.
+        if( !is_numeric($postCID) ) {
+            return false;
+        }
 
-            // Set the captcha id property
-            self::$captcha_id = $postCID;
+        // Set the captcha id property
+        self::$captcha_id = $postCID;
 
-            // If the session is not loaded yet, load it.
-            if(!isset(self::$session)) {
-                self::$session = new CaptchaSession(self::$captcha_id);
-            }
+        // If the session is not loaded yet, load it.
+        if(!isset(self::$session)) {
+            self::$session = new CaptchaSession(self::$captcha_id);
+        }
 
-            // Check if the hash is set and matches the correct hash.
-            if(!empty($postPC) && (self::getCorrectIconHash() === $postPC)) {
-                self::$session->completed = true;
+        // Check if the hash is set and matches the correct hash.
+        if(!empty($postPC) && (self::getCorrectIconHash() === $postPC)) {
+            self::$session->completed = true;
 
-                // Unset the data to at least save some space in the session.
-                self::$session->clear();
-                self::$session->save();
-                return true;
-            } else {
-                self::$session->completed = false;
-                self::$session->save();
+            // Unset the data to at least save some space in the session.
+            self::$session->clear();
+            self::$session->save();
+            return true;
+        } else {
+            self::$session->completed = false;
+            self::$session->save();
 
-                // Set the clicked icon ID
-                if(in_array($postPC, self::$session->hashes[2])) {
-                    $i = array_search($postPC, self::$session->hashes[2]);
-                    self::$session->last_clicked = $i + 1;
-                }
+            // Set the clicked icon ID
+            if(in_array($postPC, self::$session->hashes[2])) {
+                $i = array_search($postPC, self::$session->hashes[2]);
+                self::$session->last_clicked = $i + 1;
             }
         }
-        return false;
     }
 
     /**
