@@ -90,9 +90,9 @@
                             $_productNameStripped = $this->stripTags($_product->getName(), null, true);
                             $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
 
-                            if ( strlen($_productName) > $name_limit ) {
-                                $_productName = mb_substr($_productName, 0, $name_limit) . '...';
-                            }
+                            //if ( strlen($_productName) > $name_limit ) {
+                            //    $_productName = mb_substr($_productName, 0, $name_limit) . '...';
+                            //}
                             ?>
                             <h2 class="product-name">
                                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
@@ -214,9 +214,9 @@
                             <?php
                             $_productNameStripped = $this->stripTags($_product->getName(), null, true);
                             $_productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
-                            if ( strlen($_productName) > $name_limit ) {
-                                $_productName = mb_substr($_productName, 0, $name_limit) . '...';
-                            }
+                            //if ( strlen($_productName) > $name_limit ) {
+                            //    $_productName = mb_substr($_productName, 0, $name_limit) . '...';
+                            //}
                             ?>
                             <h2 class="product-name">
                                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>">
