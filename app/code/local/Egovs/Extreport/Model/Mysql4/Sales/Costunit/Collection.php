@@ -112,7 +112,11 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 				->joinLeft(array('left_sale'=>$this->getTable('sales/order_item')),
 						'left_sale.item_id = main_table.parent_item_id',
 						array()
-				)->group('main_table.product_id')
+				)
+                ->columns(array('sum_qty_ordered'=>'sum(`main_table`.`qty_ordered`)',
+                                'sum_qty_ordered_base_row_total_incl_tax'=>'sum(`main_table`.`qty_ordered`)*main_table.base_row_total_incl_tax',
+                                'sum_qty_ordered_base_row_total'=>'sum(`main_table`.`qty_ordered`)*main_table.base_row_total'))
+                ->group('main_table.product_id')
 				->group('main_table.order_id')
 				->group('main_table.created_at')
 		;

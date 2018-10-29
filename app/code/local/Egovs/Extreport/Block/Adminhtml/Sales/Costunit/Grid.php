@@ -170,8 +170,9 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 						'header'=> Mage::helper('catalog')->__('Qty'),
 						'width' => '100px',
 						'type'  => 'number',
-						'index' => 'qty_ordered',
-						'filter_index' => 'main_table.qty_ordered',
+						'index' => 'sum_qty_ordered',
+						//'filter_index' => 'main_table.qty_ordered',
+                        'filter_condition_callback' => array($this, '_filterGroupCondition'),
 						'total' => 'sum',
 				));
 
@@ -191,17 +192,18 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 						'header'=> Mage::helper('extreport')->__('Sales Total'),
 						'type'  => 'price',
 						'currency_code' => $store->getBaseCurrency()->getCode(),
-						'index' => 'base_row_total',
-						'filter_index' => 'main_table.base_row_total',
+						//'index' => 'sum_qty_ordered_price',
+						//'filter_index' => 'main_table.base_row_total',
 						'total' => 'sum',
 						 
 		);
 		if (Mage::getStoreConfig('reports/costunit/tax_sales_display_price', $this->_getStore()) == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX) {
-			$_priceOptions['index'] = 'base_row_total_incl_tax';
-			$_priceOptions['filter_index'] = 'main_table.base_row_total_incl_tax';
+			$_priceOptions['index'] = 'sum_qty_ordered_base_row_total_incl_tax';
+            $_priceOptions['filter_condition_callback'] = array($this, '_filterGroupCondition');
+
 		} elseif (Mage::getStoreConfig('reports/costunit/tax_sales_display_price', $this->_getStore()) == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX) {
-			$_priceOptions['index'] = 'base_row_total';
-			$_priceOptions['filter_index'] = 'main_table.base_row_total';
+			$_priceOptions['index'] = 'sum_qty_ordered_base_row_total';
+            $_priceOptions['filter_condition_callback'] = array($this, '_filterGroupCondition');
 		}
 		
 		$this->addColumn('price', $_priceOptions);
@@ -298,6 +300,37 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 		return parent::_prepareColumns();
 	}
 
+
+
+    protected function _filterGroupCondition($collection, $column) {
+        if (!$value = $column->getFilter()->getValue()) {
+            return;
+        }
+
+        if($column->getIndex() == 'sum_qty_ordered_base_row_total_incl_tax'){
+            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_row_total_incl_tax";
+        }else if($column->getIndex() == 'sum_qty_ordered_base_row_total'){
+            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_row_total";
+        }else{
+            $expr = "sum(`main_table`.`qty_ordered`)";
+        }
+
+
+        if(isset( $value['from']) && isset( $value['to'])){
+            $condition = sprintf("({$expr} >= '%s') && ({$expr} <= '%s')", $value['from'],  $value['to']);
+            $collection->getSelect()->having($condition);
+            //die($condition);
+        }
+        else if(isset( $value['from'])){
+            $condition = sprintf("({$expr} >= '%s')", $value['from']);
+            $collection->getSelect()->having($condition);
+        }
+        else if(isset( $value['to'])){
+            $condition = sprintf("({$expr} <= '%s')", $value['to']);
+            $collection->getSelect()->having($condition);
+        }
+
+    }
 	/**
 	 * Wird nach dem Laden der Colelction aufgerufen
 	 * 

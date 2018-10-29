@@ -63,7 +63,7 @@ class Gka_Reports_Adminhtml_Gkareports_OverviewController extends Mage_Adminhtml
     public function exportExcelAction()
     {
         $fileName   = $this->_getFileName('xls');
-        $content    = $this->getLayout()->createBlock('gka_reports/overview_grid')
+        $content    = $this->getLayout()->createBlock('gka_reports/adminhtml_overview_grid')
             ->getExcel($fileName);
         $this->_prepareDownloadResponse($fileName, $content);
     }

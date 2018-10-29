@@ -63,7 +63,7 @@ class Gka_Reports_Adminhtml_Gkareports_MinorityController extends Mage_Adminhtml
     public function exportExcelAction()
     {
         $fileName   = $this->_getFileName('xls');
-        $content    = $this->getLayout()->createBlock('gka_reports/minority_grid')
+        $content    = $this->getLayout()->createBlock('gka_reports/adminhtml_minority_grid')
             ->getExcel($fileName);
         $this->_prepareDownloadResponse($fileName, $content);
     }
