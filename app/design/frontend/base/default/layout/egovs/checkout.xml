@@ -47,6 +47,7 @@
        <remove name="catalog.leftnav_sachsen"/>
        <remove name="right.newsletter"/>
        <reference name="left">
+           <!--
             <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml" before="-">
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
@@ -55,7 +56,7 @@
                     <label>Shopping Cart Sidebar Extra Actions</label>
                 </block>
             </block>
-
+            -->
         </reference>
         <reference name="content">
             <block type="mpcheckout/multipage_state" name="checkout_state" template="egovs/checkout/multipage/state.phtml"/>
