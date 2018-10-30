@@ -57,11 +57,13 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 					array('order'=>$this->getTable('sales/order')),
 					"order.entity_id = main_table.order_id AND order.state <> 'canceled' AND store_group IN ({$sg}) ",
 					array('order_date'=>'created_at', "state")
-					)->joinLeft(
+					)
+                /*
+            ->joinLeft(
 							array('e'=>$this->getTable('catalog/category_product')),
 							'e.product_id = main_table.product_id',
 							array('category_ids' => new Zend_Db_Expr("GROUP_CONCAT(DISTINCT CONCAT_WS(', ', category_id))"))
-							)
+							)*/
 							;
 		
 		} else {
@@ -70,11 +72,13 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 						array('order'=>$this->getTable('sales/order')),
 						"order.entity_id = main_table.order_id AND order.state <> 'canceled'",
 						array('order_date'=>'created_at', "state")
-				)->joinLeft(
+				)
+                /*
+                ->joinLeft(
 						array('e'=>$this->getTable('catalog/category_product')),
 						'e.product_id = main_table.product_id',
 						array('category_ids' => new Zend_Db_Expr("GROUP_CONCAT(DISTINCT CONCAT_WS(', ', category_id))"))
-				)
+				)*/
 			;
 		}
         $this->getSelect()
@@ -123,7 +127,17 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 		//die($this->getSelect()->__toString());
 		//Mage::log(sprintf('sql: %s', $this->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 
-		
+		$select = clone($this->getSelect());
+		$expr = new Zend_Db_Expr("({$select->__toString()})");
+        $select = new Varien_Db_Select($select->getAdapter());
+        $select->from(array('main_table'=> $expr));
+        $categorys = new Zend_Db_Expr("(select product_id,  GROUP_CONCAT(DISTINCT(CONCAT_WS(', ', category_id))) AS `category_ids` FROM `{$this->getTable('catalog/category_product')}` group by product_id)");
+        $select->joinLeft(
+            array('e'=>$categorys),
+            'e.product_id = main_table.product_id',
+            array('category_ids')
+            );
+		$this->_select = $select;
 		
 		
 		return $this;
@@ -139,7 +153,7 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 	public function addWebsiteFilter($filter)
 	{
 		$filter = implode(',', $filter);
-		$this->getSelect()->where('order.store_id in ('.$filter.')');
+		$this->getSelect()->where('main_table.store_id in ('.$filter.')');
 	}
 
 	/**
@@ -152,7 +166,7 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 	public function addStoreFilter($filter)
 	{
 		//var_dump($filter);
-		$this->getSelect()->where('order.store_id = '.$filter);
+		$this->getSelect()->where('main_table.store_id = '.$filter);
 	}
 	
 	
