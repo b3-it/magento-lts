@@ -118,8 +118,8 @@ class Egovs_Extreport_Model_Mysql4_Sales_Costunit_Collection extends Mage_Sales_
 						array()
 				)
                 ->columns(array('sum_qty_ordered'=>'sum(`main_table`.`qty_ordered`)',
-                                'sum_qty_ordered_base_row_total_incl_tax'=>'sum(`main_table`.`qty_ordered`)*main_table.base_row_total_incl_tax',
-                                'sum_qty_ordered_base_row_total'=>'sum(`main_table`.`qty_ordered`)*main_table.base_row_total'))
+                                'sum_qty_ordered_base_price_incl_tax'=>'sum(`main_table`.`qty_ordered`)*main_table.base_price_incl_tax',
+                                'sum_qty_ordered_base_price'=>'sum(`main_table`.`qty_ordered`)*main_table.base_price'))
                 ->group('main_table.product_id')
 				->group('main_table.order_id')
 				->group('main_table.created_at')

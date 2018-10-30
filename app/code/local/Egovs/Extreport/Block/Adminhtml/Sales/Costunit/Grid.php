@@ -198,11 +198,11 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 						 
 		);
 		if (Mage::getStoreConfig('reports/costunit/tax_sales_display_price', $this->_getStore()) == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX) {
-			$_priceOptions['index'] = 'sum_qty_ordered_base_row_total_incl_tax';
+			$_priceOptions['index'] = 'sum_qty_ordered_base_price_incl_tax';
             $_priceOptions['filter_condition_callback'] = array($this, '_filterGroupCondition');
 
 		} elseif (Mage::getStoreConfig('reports/costunit/tax_sales_display_price', $this->_getStore()) == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX) {
-			$_priceOptions['index'] = 'sum_qty_ordered_base_row_total';
+			$_priceOptions['index'] = 'sum_qty_ordered_base_price';
             $_priceOptions['filter_condition_callback'] = array($this, '_filterGroupCondition');
 		}
 		
@@ -307,10 +307,10 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
             return;
         }
 
-        if($column->getIndex() == 'sum_qty_ordered_base_row_total_incl_tax'){
-            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_row_total_incl_tax";
-        }else if($column->getIndex() == 'sum_qty_ordered_base_row_total'){
-            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_row_total";
+        if($column->getIndex() == 'sum_qty_ordered_base_price_incl_tax'){
+            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_price_incl_tax";
+        }else if($column->getIndex() == 'sum_qty_ordered_base_price'){
+            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_price";
         }else{
             $expr = "sum(`main_table`.`qty_ordered`)";
         }
