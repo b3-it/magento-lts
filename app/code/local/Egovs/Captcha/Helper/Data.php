@@ -32,13 +32,37 @@ class Egovs_Captcha_Helper_Data extends Mage_Captcha_Helper_Data
         return $this->_captcha[$formId];
     }
 
-    /**
-     * Retrieve Iconcaptcha ajax url
-     *
-     * @return string
-     */
-    public function getIconCaptchaUrl()
-    {
-        return Mage::getUrl('egovscaptcha/iconcaptcha/index');
+    public function isEnabledRegexFilter() {
+        if (Mage::app()->getStore()->isAdmin()) {
+            return false;
+        }
+        return (bool)Mage::getStoreConfigFlag('customer/captcha/enable_regex_filter');
+    }
+
+    public function getRegexFilter() {
+        return (string)Mage::getStoreConfig('customer/captcha/regex_filter');
+    }
+
+    public function matchesRegexFilter($post) {
+        foreach ($post as $key => $value) {
+            if (preg_match_all('/'.$this->getRegexFilter().'/im', $value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isEnabledHoneypot() {
+        if (Mage::app()->getStore()->isAdmin()) {
+            return false;
+        }
+        return (bool)Mage::getStoreConfigFlag('customer/captcha/enable_honeypot');
+    }
+
+    public function getHoneypotFieldName() {
+        return Mage::helper('core')->escapeHtml(
+            (string)Mage::getStoreConfig('customer/captcha/honeypot_field_name')
+        );
     }
 }

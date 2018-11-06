@@ -36,6 +36,17 @@ abstract class Egovs_Captcha_Model_Abstract extends Mage_Core_Model_Abstract
     }
 
     /**
+     * Returns key with respect of current form ID
+     *
+     * @param string $key
+     * @return string
+     */
+    protected function _getFormIdKey($key)
+    {
+        return $this->_formId . '_' . $key;
+    }
+
+    /**
      * Returns captcha helper
      *
      * @return Mage_Captcha_Helper_Data
@@ -141,6 +152,32 @@ abstract class Egovs_Captcha_Model_Abstract extends Mage_Core_Model_Abstract
     }
 
     /**
+     * Check is overlimit attempts
+     *
+     * @param string $login
+     * @return bool
+     */
+    protected function _isOverLimitAttempts($login)
+    {
+        return ($this->_isOverLimitIpAttempt() || $this->_isOverLimitLoginAttempts($login));
+    }
+
+    /**
+     * Is Over Limit Login Attempts
+     *
+     * @param string $login
+     * @return bool
+     */
+    protected function _isOverLimitLoginAttempts($login)
+    {
+        if ($login != false) {
+            $countAttemptsByLogin = Mage::getResourceModel('captcha/log')->countAttemptsByUserLogin($login);
+            return ($countAttemptsByLogin >= $this->_getAllowedAttemptsForSameLogin());
+        }
+        return false;
+    }
+
+    /**
      * Whether captcha is required to be inserted to this form
      *
      * @param null|string $login
@@ -172,5 +209,76 @@ abstract class Egovs_Captcha_Model_Abstract extends Mage_Core_Model_Abstract
             $this->_expiration = (int)$this->_getHelper()->getConfigNode('timeout') * 60;
         }
         return $this->_expiration;
+    }
+
+    /**
+     * Returns session instance
+     *
+     * @return Mage_Customer_Model_Session
+     */
+    public function getSession()
+    {
+        return Mage::getSingleton('customer/session');
+    }
+
+    /**
+     * Checks whether solution entered by user corresponds to the one generated
+     *
+     * @param array $post
+     *
+     * @return bool
+     */
+    final public function isCorrect($post) {
+        $sessionData = $this->getSession()->getData($this->_getFormIdKey('icon'));
+        if (time() >= $sessionData['expires']) {
+            return false;
+        }
+        if ($this->isEnabledRegexFilter() && $this->matchesRegexFilter($post)) {
+            return false;
+        }
+
+        $this->getSession()->unsetData($this->_getFormIdKey('icon'));
+        return $this->_isCorrect($post);
+    }
+
+    abstract protected function _isCorrect(array $post);
+
+    public function isEnabledRegexFilter() {
+        return Mage::helper('egovscaptcha')->isEnabledRegexFilter();
+    }
+
+    public function getRegexFilter() {
+        return Mage::helper('egovscaptcha')->getRegexFilter();
+    }
+
+    public function isEnabledHoneypot() {
+        return Mage::helper('egovscaptcha')->isEnabledHoneypot();
+    }
+
+    public function getHoneypotFieldName() {
+        return Mage::helper('egovscaptcha')->getHoneypotFieldName();
+    }
+
+    public function matchesRegexFilter($post) {
+        return Mage::helper('egovscaptcha')->matchesRegexFilter($post);
+    }
+
+    abstract public function getRequiredPostFields($controller);
+
+    /**
+     * log Attempt
+     *
+     * @param string $login
+     * @return Mage_Captcha_Model_Zend
+     */
+    public function logAttempt($login)
+    {
+        if ($this->_isEnabled() && in_array($this->_formId, $this->_getTargetForms())) {
+            Mage::getResourceModel('captcha/log')->logAttempt($login);
+            if ($this->_isOverLimitLoginAttempts($login)) {
+                $this->getSession()->setData($this->_getFormIdKey('show_captcha'), 1);
+            }
+        }
+        return $this;
     }
 }

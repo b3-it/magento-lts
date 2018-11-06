@@ -452,14 +452,6 @@
                     </mpcheckout_invoice>
                 </observers>
             </egovs_paymentbase_saferpay_sales_order_invoice_after_pay>
-            <controller_action_predispatch_customer_account_createpost>
-                <observers>
-                    <captcha>
-                        <class>egovsbase/captcha_observer</class>
-                        <method>checkUserCreate</method>
-                    </captcha>
-                </observers>
-            </controller_action_predispatch_customer_account_createpost>
         </events>
         <!-- Änderungen des Cores aus [1999] -->
         <fieldsets>

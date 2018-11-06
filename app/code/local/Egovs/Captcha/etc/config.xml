@@ -7,7 +7,7 @@
         </Egovs_Captcha>
     </modules>
     <default>
-        <customer>
+        <admin>
             <captcha>
                 <iconcaptcha_theme>light</iconcaptcha_theme>
                 <iconcaptcha_fontfamily><![CDATA[Arial]]></iconcaptcha_fontfamily>
@@ -28,6 +28,32 @@
                 <googlecaptcha_theme>light</googlecaptcha_theme>
                 <googlecaptcha_size>normal</googlecaptcha_size>
             </captcha>
+        </admin>
+        <customer>
+            <captcha>
+                <iconcaptcha_theme>light</iconcaptcha_theme>
+                <iconcaptcha_fontfamily><![CDATA[Arial]]></iconcaptcha_fontfamily>
+                <iconcaptcha_clickdelay>100</iconcaptcha_clickdelay>
+                <iconcaptcha_hoverdetection>1</iconcaptcha_hoverdetection>
+                <iconcaptcha_loadinganimation>1</iconcaptcha_loadinganimation>
+                <iconcaptcha_animationdelay>100</iconcaptcha_animationdelay>
+                <iconcaptcha_requesticonsdelay>100</iconcaptcha_requesticonsdelay>
+                <iconcaptcha_captchamessages>0</iconcaptcha_captchamessages>
+                <iconcaptcha_captchaheader><![CDATA[Bitte wählen Sie das abweichende Symbol aus.]]></iconcaptcha_captchaheader>
+                <iconcaptcha_correcttitle><![CDATA[Ihre Auswahl ist richtig.]]></iconcaptcha_correcttitle>
+                <iconcaptcha_correctsubtitle><![CDATA[Sie scheinen kein Roboter zu sein.]]></iconcaptcha_correctsubtitle>
+                <iconcaptcha_incorrecttitle><![CDATA[Ihre Auswahl ist falsch.]]></iconcaptcha_incorrecttitle>
+                <iconcaptcha_incorrectsubtitle><![CDATA[Sie haben das falsche Bild ausgewählt.]]></iconcaptcha_incorrectsubtitle>
+                <googlecaptcha_apiurl><![CDATA[https://www.google.com/recaptcha/api.js]]></googlecaptcha_apiurl>
+                <googlecaptcha_apiparams><![CDATA[?onload=onloadCallback&render=explicit]]></googlecaptcha_apiparams>
+                <googlecaptcha_language>0</googlecaptcha_language>
+                <googlecaptcha_theme>light</googlecaptcha_theme>
+                <googlecaptcha_size>normal</googlecaptcha_size>
+                <enable_honeypot>1</enable_honeypot>
+                <honeypot_field_name>email_confirmation</honeypot_field_name>
+                <enable_regex_filter>1</enable_regex_filter>
+                <regex_filter><![CDATA[(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])]]></regex_filter>
+            </captcha>
         </customer>
     </default>
     <global>
@@ -40,6 +66,47 @@
                     </Egovs_Captcha_Observer>
                 </observers>
             </core_block_abstract_to_html_before>
+
+            <controller_action_predispatch_customer_account_loginpost>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkUserLogin</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_customer_account_loginpost>
+            <controller_action_predispatch_customer_account_forgotpasswordpost>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkForgotPassword</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_customer_account_forgotpasswordpost>
+            <controller_action_predispatch_customer_account_createpost>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkUserCreate</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_customer_account_createpost>
+            <controller_action_predispatch_adminhtml_index_forgotpassword>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkUserForgotPasswordBackend</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_adminhtml_index_forgotpassword>
+            <admin_user_authenticate_before>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkUserLoginBackend</method>
+                    </captcha>
+                </observers>
+            </admin_user_authenticate_before>
         </events>
         <blocks>
             <egovscaptcha>
@@ -98,5 +165,23 @@
                 </Egovs_Captcha>
             </modules>
         </translate>
+        <layout>
+            <updates>
+                <captcha>
+                    <file>egovs/captcha.xml</file>
+                </captcha>
+            </updates>
+        </layout>
     </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Egovs_Captcha before="Mage_Adminhtml">Egovs_Captcha_Adminhtml</Egovs_Captcha>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>

@@ -12,4 +12,18 @@
 class Egovs_Captcha_Block_IconCaptcha extends Mage_Captcha_Block_Captcha_Zend
 {
     protected $_template = 'egovs/captcha/iconcaptcha.phtml';
+
+    /**
+     * Returns URL to controller action which returns new captcha image
+     *
+     * @return string
+     */
+    public function getRefreshUrl()
+    {
+        $formId = $this->getFormId();
+        return Mage::getUrl(
+            Mage::app()->getStore()->isAdmin() ? 'adminhtml/iconcaptcha/refresh' : 'egovscaptcha/iconcaptcha/index',
+            array('_secure' => Mage::app()->getStore()->isCurrentlySecure(), 'form_id' => $formId)
+        );
+    }
 }

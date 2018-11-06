@@ -71,10 +71,25 @@ class Egovs_Captcha_Block_Captcha extends Mage_Captcha_Block_Captcha_Zend
     /**
      * Returns captcha model
      *
-     * @return Mage_Captcha_Model_Abstract
+     * @return Egovs_Captcha_Model_Abstract
      */
     public function getCaptchaModel()
     {
         return Mage::helper('egovscaptcha')->getCaptcha($this->getFormId());
+    }
+
+    public function getRefreshUrl() {
+        if ($this->_decoratedInstance === null) {
+            return parent::getRefreshUrl();
+        }
+
+        return $this->_decoratedInstance->getRefreshUrl();
+    }
+
+    public function setFormId($formId) {
+        if ($this->_decoratedInstance !== null) {
+            $this->_decoratedInstance->setFormId($formId);
+        }
+        return parent::setFormId($formId);
     }
 }

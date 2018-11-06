@@ -1,34 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE layout>
 <layout version="0.1.0">
-    <default>
+    <customer_account_login>
         <reference name="head">
             <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
         </reference>
-    </default>
-
-    <customer_account_create>
-        <reference name="customer_form_register">
-            <block type="core/text_list" name="form.additional.info">
-                <block type="egovscaptcha/captcha" name="captcha">
-                    <action method="setFormId"><formId>user_create</formId></action>
-                </block>
-            </block>
-        </reference>
-    </customer_account_create>
-
-    <customer_account_login>
-        <update handle="additional_captcha" />
         <reference name="customer_form_login">
             <block type="core/text_list" name="form.additional.info">
                 <block type="egovscaptcha/captcha" name="captcha">
-                    <action method="setFormId"><formId>user_create</formId></action>
+                    <action method="setFormId"><formId>user_login</formId></action>
                 </block>
             </block>
         </reference>
     </customer_account_login>
-
     <customer_account_forgotpassword>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
         <reference name="forgotPassword">
             <block type="core/text_list" name="form.additional.info">
                 <block type="egovscaptcha/captcha" name="captcha">
@@ -37,4 +25,16 @@
             </block>
         </reference>
     </customer_account_forgotpassword>
+    <customer_account_create>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+        <reference name="customer_form_register">
+            <block type="core/text_list" name="form.additional.info">
+                <block type="egovscaptcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>user_create</formId></action>
+                </block>
+            </block>
+        </reference>
+    </customer_account_create>
 </layout>

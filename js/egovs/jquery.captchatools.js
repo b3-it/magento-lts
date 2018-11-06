@@ -1,8 +1,10 @@
 $j(document).ready(function(){
     if( $j("#google-recaptcha").length || $j("#captcha-holder").length ) {
-        $j("#email_address_confirmation").removeClass("validate-email")
-                                         .removeClass("required-entry")
-                                         .css("display", "none");
+        if (typeof idName !== 'undefined') {
+            $j("#" + idName).removeClass("validate-email")
+                .removeClass("required-entry")
+                .css("display", "none");
+        }
         disableSubmitButton();
     }
 });
@@ -10,7 +12,7 @@ $j(document).ready(function(){
 function disableSubmitButton()
 {
     // disable Submit
-    $j("#email_address_confirmation").closest("form")
+    $j("#captcha-holder").closest("form")
                                      .find("input[type=\"submit\"], button[type=\"submit\"]")
                                      .attr("onclick", "return false;")
                                      .addClass("disabled");
@@ -19,7 +21,7 @@ function disableSubmitButton()
 function enableSubmitButton()
 {
     // enable Submit
-    $j("#email_address_confirmation").closest("form")
+    $j("#captcha-holder").closest("form")
                                      .find("input[type=\"submit\"], button[type=\"submit\"]")
                                      .attr("onclick", "")
                                      .removeClass("disabled");
