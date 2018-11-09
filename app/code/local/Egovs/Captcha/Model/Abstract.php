@@ -229,7 +229,7 @@ abstract class Egovs_Captcha_Model_Abstract extends Mage_Core_Model_Abstract
      * @return bool
      */
     final public function isCorrect($post) {
-        $sessionData = $this->getSession()->getData($this->_getFormIdKey('icon'));
+        $sessionData = $this->getSession()->getData($this->_getFormIdKey('captcha'));
         if (time() >= $sessionData['expires']) {
             return false;
         }
@@ -237,7 +237,7 @@ abstract class Egovs_Captcha_Model_Abstract extends Mage_Core_Model_Abstract
             return false;
         }
 
-        $this->getSession()->unsetData($this->_getFormIdKey('icon'));
+        $this->getSession()->unsetData($this->_getFormIdKey('captcha'));
         return $this->_isCorrect($post);
     }
 

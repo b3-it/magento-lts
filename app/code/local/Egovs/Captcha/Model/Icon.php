@@ -88,7 +88,7 @@ class Egovs_Captcha_Model_Icon extends Egovs_Captcha_Model_Abstract
      * @return string JSON
      */
     public function getCaptchaData($theme, $cID) {
-        $this->getSession()->setData($this->_getFormIdKey('icon'),
+        $this->getSession()->setData($this->_getFormIdKey('captcha'),
             array('expires' => time() + $this->getTimeout())
         );
         return IconCaptcha::getCaptchaData($theme, $cID);

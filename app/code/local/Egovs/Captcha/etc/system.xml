@@ -693,7 +693,6 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
                             </depends>
                         </enable_honeypot>
                         <enable_regex_filter translate="label comment" module="egovscaptcha">
@@ -706,7 +705,6 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
                             </depends>
                         </enable_regex_filter>
                         <regex_filter translate="label comment" module="egovscaptcha">
@@ -718,7 +716,6 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
                                 <enable_regex_filter>1</enable_regex_filter>
                             </depends>
                             <validate>required-entry</validate>

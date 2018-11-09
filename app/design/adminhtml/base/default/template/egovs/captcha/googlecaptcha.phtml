@@ -11,14 +11,20 @@
  *
  */
 
-$_store = Mage::app()->getStore();
+/** @var $this \Egovs_Captcha_Block_Captcha */
 
-$_siteKey    = Mage::getStoreConfig('customer/captcha/googlecaptcha_sitekey'  , $_store);
-$_captchaUrl = Mage::getStoreConfig('customer/captcha/googlecaptcha_apiurl'   , $_store);
-$_captchaApi = Mage::getStoreConfig('customer/captcha/googlecaptcha_apiparams', $_store);
-$_captchaLng = Mage::getStoreConfig('customer/captcha/googlecaptcha_language' , $_store);
+$_siteKey    = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_sitekey'));
+$_captchaUrl = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_apiurl'));
+$_captchaApi = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_apiparams'));
+$_captchaLng = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_language'));
 ?>
-<input type="email" spellcheck="false" name="email_confirmation" id="email_address_confirmation" value="" class="input-text validate-email required-entry" />
+<?php
+/**
+ * AddJs im Layout ist für Anmeldung und ForgotPassword im BE nicht verfügbar!
+ */
+?>
+<link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('css/googlecaptcha.css') ?>" media="all" />
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/captcha/icon-captcha.min.js" type="text/javascript"></script>
 <div id="google-recaptcha" class="google-recaptcha" data-sitekey="<?php echo $_siteKey ?>"></div>
 <script type="text/javascript" src="<?php echo $_captchaUrl . $_captchaApi; ?>&hl=<?php echo $_captchaLng; ?>" async defer></script>
 <script type="text/javascript">
@@ -30,8 +36,8 @@ $_captchaLng = Mage::getStoreConfig('customer/captcha/googlecaptcha_language' , 
         grecaptcha.render("google-recaptcha", {
             "sitekey" : "<?php echo $_siteKey; ?>",
             "callback": verifyCallback,
-            "theme"   : "<?php echo Mage::getStoreConfig('customer/captcha/googlecaptcha_theme', $_store); ?>",
-            "size"    : "<?php echo Mage::getStoreConfig('customer/captcha/googlecaptcha_size' , $_store); ?>"
+            "theme"   : "<?php echo $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_theme')); ?>",
+            "size"    : "<?php echo $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_size')); ?>"
         });
     };
 </script>

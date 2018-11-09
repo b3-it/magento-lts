@@ -125,6 +125,7 @@ class Egovs_Captcha_Model_Observer extends Mage_Captcha_Model_Observer
             $_logLevel = (int)Mage::getStoreConfig('dev/log/log_level');
             if ($_logLevel > Zend_Log::INFO) {
                 $postData = $controller->getRequest()->getPost();
+                unset($postData['password'], $postData['confirmation']);
                 $postData = var_export($postData, true);
                 $postData = "\nDump:" . $postData;
             } else {
