@@ -142,7 +142,7 @@
             <modules>
                 <Egovs_Captcha>
                     <files>
-                        <default>Egovs_Captcha.csv</default>
+                        <default>Egovs/Captcha.csv</default>
                     </files>
                 </Egovs_Captcha>
             </modules>
@@ -160,7 +160,7 @@
             <modules>
                 <Egovs_Captcha>
                     <files>
-                        <default>Egovs_Captcha.csv</default>
+                        <default>Egovs/Captcha.csv</default>
                     </files>
                 </Egovs_Captcha>
             </modules>

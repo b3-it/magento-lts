@@ -684,10 +684,10 @@
                             </depends>
                         </googlecaptcha_size>
                         <enable_honeypot translate="label comment" module="egovscaptcha">
-                            <label>Enable honeypot?</label>
+                            <label>Enable Honeypot?</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_enabledisable</source_model>
-                            <comment>Field which is only visible for bots.</comment>
+                            <comment>Field in form which is only visible for bots.</comment>
                             <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
@@ -710,7 +710,7 @@
                         <regex_filter translate="label comment" module="egovscaptcha">
                             <label>REGEX-Filter</label>
                             <frontend_type>text</frontend_type>
-                            <comment>Filter fields by regular expressions</comment>
+                            <comment>Filter fields by regular expressions. Filter URIs by default.</comment>
                             <sort_order>111</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
