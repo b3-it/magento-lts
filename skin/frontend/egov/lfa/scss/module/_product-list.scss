@@ -61,11 +61,18 @@ p.product-name {
 .products-grid .product-name,
 .products-list .product-name {
     margin-bottom: 5px;
-    font-size: $base-font-family;
-    font-family: $global-fontsize;
+    font-size: $global-fontsize;
+    font-family: $base-font-family;
 
     a {
     }
+}
+
+.products-grid .product-name {
+    height: $global-lineheight * $catalog-product-name-max-lines;
+}
+.products-list .product-name {
+    max-height: $global-lineheight * $catalog-product-name-max-lines;
 }
 
 /* ============================================ *

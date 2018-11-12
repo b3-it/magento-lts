@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <B3it_Base>
+            <version>0.0.1.0</version>
+        </B3it_Base>
+    </modules>
+    <adminhtml>
+        <translate>
+            <modules>
+                <B3it_Base>
+                    <files>
+                        <default>B3it_Base.csv</default>
+                    </files>
+                </B3it_Base>
+            </modules>
+        </translate>
+    </adminhtml>
+    <frontend>
+        <translate>
+            <modules>
+                <B3it_Base>
+                    <files>
+                        <default>B3it_Base.csv</default>
+                    </files>
+                </B3it_Base>
+            </modules>
+        </translate>
+    </frontend>
+    <default>
+        <catalog>
+            <advancedsearch>
+                <search_available_in_stock>1</search_available_in_stock>
+                <product_category_search>1</product_category_search>
+            </advancedsearch>
+        </catalog>
+    </default>
+</config>
