@@ -42,7 +42,7 @@ class Egovs_Captcha_Model_Googlev2 extends Egovs_Captcha_Model_Abstract
      *
      * @param array $post
      *
-     * @return void
+     * @return bool
      */
     protected function _isCorrect(array $post) {
         require_once 'Httpful/Bootstrap.php';
@@ -52,12 +52,34 @@ class Egovs_Captcha_Model_Googlev2 extends Egovs_Captcha_Model_Abstract
             'secret' => $this->_getHelper()->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_secretkey')),
             'response' => $post['g-recaptcha-response']
         );
-        $response = \Httpful\Request::post(self::VERIFY_URL)
+        /** @var \Httpful\Request $request */
+        $request = \Httpful\Request::post(self::VERIFY_URL)
             ->expectsJson()
             ->sendsForm()
             ->body($verifyPostData)
-            ->send()
-        ;
+            ;
+        if (Egovs_Base_Helper_Data::canUseProxy(self::VERIFY_URL)) {
+            $user = Egovs_Base_Helper_Data::getProxyUser();
+            $pwd = Egovs_Base_Helper_Data::getProxyPassword();
+            $request->useProxy(
+                Egovs_Base_Helper_Data::getProxyAddress(),
+                Egovs_Base_Helper_Data::getProxyPort(),
+                empty($user) ? NULL : CURLAUTH_BASIC,
+                empty($user) ? NULL : $user,
+                empty($user) || empty($pwd) ? NULL : $pwd
+            );
+            $request->addOnCurlOption(CURLOPT_HTTPPROXYTUNNEL, true);
+        }
+        try {
+            $response = \Httpful\Request::post(self::VERIFY_URL)
+                ->expectsJson()
+                ->sendsForm()
+                ->body($verifyPostData)
+                ->send();
+        } catch (Exception $e) {
+            Mage::logException($e);
+            return false;
+        }
 
         if (!$response || $response->code != 200 || !$response->hasBody() || empty($response->body)) {
             if ($response && $response->hasBody()) {
