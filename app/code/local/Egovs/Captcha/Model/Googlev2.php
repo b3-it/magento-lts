@@ -58,7 +58,9 @@ class Egovs_Captcha_Model_Googlev2 extends Egovs_Captcha_Model_Abstract
             ->sendsForm()
             ->body($verifyPostData)
             ;
+        $proxy = 'out';
         if (Egovs_Base_Helper_Data::canUseProxy(self::VERIFY_URL)) {
+            $proxy = '';
             $user = Egovs_Base_Helper_Data::getProxyUser();
             $pwd = Egovs_Base_Helper_Data::getProxyPassword();
             $request->useProxy(
@@ -70,11 +72,9 @@ class Egovs_Captcha_Model_Googlev2 extends Egovs_Captcha_Model_Abstract
             );
             $request->addOnCurlOption(CURLOPT_HTTPPROXYTUNNEL, true);
         }
+        Mage::log("captcha::Try connect with$proxy proxy!", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         try {
-            $response = \Httpful\Request::post(self::VERIFY_URL)
-                ->expectsJson()
-                ->sendsForm()
-                ->body($verifyPostData)
+            $response = $request
                 ->send();
         } catch (Exception $e) {
             Mage::logException($e);
