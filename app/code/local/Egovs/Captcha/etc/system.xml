@@ -158,10 +158,23 @@
                                 <type>icon</type>
                             </depends>
                         </iconcaptcha_requesticonsdelay>
+                        <iconcaptcha_requestfaildelay translate="label comment" module="egovscaptcha">
+                            <label>Request Fail Delay</label>
+                            <comment><![CDATA[The captcha is only reloaded after this delay (in milliseconds) if an incorrect entry is made.<br />The value should not be too small. It is recommended that it is not less than 1000 milliseconds.]]></comment>
+                            <sort_order>18</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                                <type>icon</type>
+                            </depends>
+                        </iconcaptcha_requestfaildelay>
                         <iconcaptcha_captchamessages translate="label comment" module="egovscaptcha">
                             <label>Custom Captcha Messages</label>
                             <comment>Change the messages used by the captcha. All the changeable strings can be found down below.</comment>
-                            <sort_order>18</sort_order>
+                            <sort_order>19</sort_order>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <show_in_default>1</show_in_default>
@@ -174,8 +187,8 @@
                         </iconcaptcha_captchamessages>
                         <iconcaptcha_captchaheader>
                             <label>Captcha Header</label>
-                            <comment>This text should help the user to use the captcha correctly.<br />Leave blank for standard.</comment>
-                            <sort_order>19</sort_order>
+                            <comment><![CDATA[This text should help the user to use the captcha correctly.<br />Leave blank for standard.]]></comment>
+                            <sort_order>20</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -188,8 +201,8 @@
                         </iconcaptcha_captchaheader>
                         <iconcaptcha_correcttitle>
                             <label>Correct Title</label>
-                            <comment>This text is displayed if the user's selection is correct.<br />Leave blank for standard.</comment>
-                            <sort_order>20</sort_order>
+                            <comment><![CDATA[This text is displayed if the user's selection is correct.<br />Leave blank for standard.]]></comment>
+                            <sort_order>21</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -202,8 +215,8 @@
                         </iconcaptcha_correcttitle>
                         <iconcaptcha_correctsubtitle>
                             <label>Correct Subtitle</label>
-                            <comment>Additional information if user input is correct.<br />Leave blank for standard.</comment>
-                            <sort_order>21</sort_order>
+                            <comment><![CDATA[Additional information if user input is correct.<br />Leave blank for standard.]]></comment>
+                            <sort_order>22</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -216,8 +229,8 @@
                         </iconcaptcha_correctsubtitle>
                         <iconcaptcha_incorrecttitle>
                             <label>Incorrect Title</label>
-                            <comment>This text is displayed if the user's selection is not correct.<br />Leave blank for standard.</comment>
-                            <sort_order>22</sort_order>
+                            <comment><![CDATA[This text is displayed if the user's selection is not correct.<br />Leave blank for standard.]]></comment>
+                            <sort_order>23</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -230,8 +243,8 @@
                         </iconcaptcha_incorrecttitle>
                         <iconcaptcha_incorrectsubtitle>
                             <label>Incorrect Subtitle</label>
-                            <comment>Additional information if user input is not correct.<br />Leave blank for standard.</comment>
-                            <sort_order>23</sort_order>
+                            <comment><![CDATA[Additional information if user input is not correct.<br />Leave blank for standard.]]></comment>
+                            <sort_order>24</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -501,6 +514,19 @@
                                 <type>icon</type>
                             </depends>
                         </iconcaptcha_requesticonsdelay>
+                        <iconcaptcha_requestfaildelay translate="label comment" module="egovscaptcha">
+                            <label>Request Fail Delay</label>
+                            <comment><![CDATA[The captcha is only reloaded after this delay (in milliseconds) if an incorrect entry is made.<br />The value should not be too small. It is recommended that it is not less than 1000 milliseconds.]]></comment>
+                            <sort_order>18</sort_order>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                                <type>icon</type>
+                            </depends>
+                        </iconcaptcha_requestfaildelay>
                         <iconcaptcha_captchamessages translate="label comment" module="egovscaptcha">
                             <label>Custom Captcha Messages</label>
                             <comment>Change the messages used by the captcha. All the changeable strings can be found down below.</comment>
@@ -517,7 +543,7 @@
                         </iconcaptcha_captchamessages>
                         <iconcaptcha_captchaheader>
                             <label>Captcha Header</label>
-                            <comment>This text should help the user to use the captcha correctly.<br />Leave blank for standard.</comment>
+                            <comment><![CDATA[This text should help the user to use the captcha correctly.<br />Leave blank for standard.]]></comment>
                             <sort_order>19</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
@@ -531,7 +557,7 @@
                         </iconcaptcha_captchaheader>
                         <iconcaptcha_correcttitle>
                             <label>Correct Title</label>
-                            <comment>This text is displayed if the user's selection is correct.<br />Leave blank for standard.</comment>
+                            <comment><![CDATA[This text is displayed if the user's selection is correct.<br />Leave blank for standard.]]></comment>
                             <sort_order>20</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
@@ -545,7 +571,7 @@
                         </iconcaptcha_correcttitle>
                         <iconcaptcha_correctsubtitle>
                             <label>Correct Subtitle</label>
-                            <comment>Additional information if user input is correct.<br />Leave blank for standard.</comment>
+                            <comment><![CDATA[Additional information if user input is correct.<br />Leave blank for standard.]]></comment>
                             <sort_order>21</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
@@ -559,7 +585,7 @@
                         </iconcaptcha_correctsubtitle>
                         <iconcaptcha_incorrecttitle>
                             <label>Incorrect Title</label>
-                            <comment>This text is displayed if the user's selection is not correct.<br />Leave blank for standard.</comment>
+                            <comment><![CDATA[This text is displayed if the user's selection is not correct.<br />Leave blank for standard.]]></comment>
                             <sort_order>22</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>
@@ -573,7 +599,7 @@
                         </iconcaptcha_incorrecttitle>
                         <iconcaptcha_incorrectsubtitle>
                             <label>Incorrect Subtitle</label>
-                            <comment>Additional information if user input is not correct.<br />Leave blank for standard.</comment>
+                            <comment><![CDATA[Additional information if user input is not correct.<br />Leave blank for standard.]]></comment>
                             <sort_order>23</sort_order>
                             <frontend_type>text</frontend_type>
                             <show_in_default>1</show_in_default>

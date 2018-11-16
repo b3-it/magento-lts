@@ -21,6 +21,8 @@
 "The time (in milliseconds) during which the fake loading animation will play until the user input actually gets validated.","Die Zeit (in Millisekunden), in der die Animation des gefälschten Ladens abgespielt wird, bis die Benutzereingabe tatsächlich validiert wird."
 "Request Icons Delay","Abfragesymbole Verzögerung"
 "The captcha will not request hashes or images from the server until after this delay (in milliseconds). If a page displaying one or more captchas gets constantly refreshed (during an attack?), it will not request the resources right away.","Das Captcha wird erst nach dieser Verzögerung (in Millisekunden) Hashes oder Bilder vom Server anfordern. Wenn eine Seite, die ein oder mehrere Captchas anzeigt, ständig aktualisiert wird (während eines Angriffs?), wird sie die Ressourcen nicht sofort anfordern."
+"Request Fail Delay","Verzögerung bei Falscheingabe"
+"The captcha is only reloaded after this delay (in milliseconds) if an incorrect entry is made.<br />The value should not be too small. It is recommended that it is not less than 1000 milliseconds.","Das Captcha wird bei einer Falscheingabe erst nach dieser Verzögerung (in Millisekunden) neu geladen.<br />Der Wert sollte nicht zu klein gewählt werden. Es wird Empfohlen, das er nicht unter 1000 Millisekunden liegt."
 "Custom Captcha Messages","eigene Captcha-Nachrichten"
 "Change the messages used by the captcha. All the changeable strings can be found down below.","Ändert die vom Captcha verwendeten Nachrichten. Alle änderbaren Zeichenketten finden Sie weiter unten."
 "Captcha Header","Captcha Titel"

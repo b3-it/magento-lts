@@ -16,6 +16,7 @@
                 <iconcaptcha_loadinganimation>1</iconcaptcha_loadinganimation>
                 <iconcaptcha_animationdelay>100</iconcaptcha_animationdelay>
                 <iconcaptcha_requesticonsdelay>100</iconcaptcha_requesticonsdelay>
+                <iconcaptcha_requestfaildelay>3000</iconcaptcha_requestfaildelay>
                 <iconcaptcha_captchamessages>0</iconcaptcha_captchamessages>
                 <iconcaptcha_captchaheader><![CDATA[Bitte wählen Sie das abweichende Symbol aus.]]></iconcaptcha_captchaheader>
                 <iconcaptcha_correcttitle><![CDATA[Ihre Auswahl ist richtig.]]></iconcaptcha_correcttitle>
@@ -38,6 +39,7 @@
                 <iconcaptcha_loadinganimation>1</iconcaptcha_loadinganimation>
                 <iconcaptcha_animationdelay>100</iconcaptcha_animationdelay>
                 <iconcaptcha_requesticonsdelay>100</iconcaptcha_requesticonsdelay>
+                <iconcaptcha_requestfaildelay>3000</iconcaptcha_requestfaildelay>
                 <iconcaptcha_captchamessages>0</iconcaptcha_captchamessages>
                 <iconcaptcha_captchaheader><![CDATA[Bitte wählen Sie das abweichende Symbol aus.]]></iconcaptcha_captchaheader>
                 <iconcaptcha_correcttitle><![CDATA[Ihre Auswahl ist richtig.]]></iconcaptcha_correcttitle>
