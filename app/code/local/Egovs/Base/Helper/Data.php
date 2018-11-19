@@ -336,4 +336,110 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $html;
     }
+
+    /**
+     * Prüft ob die URI in der Proxy-Ausnahmeliste enthalten ist.
+     *
+     * @param string $uri     URI
+     *
+     * @return bool
+     */
+    public static function isUriInProxyExcludeList($uri) {
+        $excludeList = null;
+        try {
+            $excludeList = Mage::getStoreConfig('web/proxy/exclude_list');
+        } catch (Exception $e) {
+            return false;
+        }
+
+        $excludeArray = explode("\n", $excludeList);
+
+        if (empty($excludeArray) || empty($uri)) {
+            return false;
+        }
+
+        foreach ($excludeArray as $exclude) {
+            if (stripos($uri, trim($exclude)) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if use of proxy is possible
+     *
+     * @param $uri
+     *
+     * @return bool
+     */
+    public static function canUseProxy($uri) {
+        if (Mage::getStoreConfigFlag('web/proxy/use_proxy') && self::getProxyAddress() !== null && !self::isUriInProxyExcludeList($uri)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get proxy hostname or ip
+     *
+     * @return null|string
+     */
+    public static function getProxyAddress() {
+        $proxy = (string)Mage::getStoreConfig('web/proxy/proxy_name');
+        if (empty($proxy)) {
+            return null;
+        }
+
+        if (!preg_match_all('/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/', $proxy)) {
+            Mage::log("proxy::Invalid proxy address: $proxy", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            return null;
+        }
+
+        return $proxy;
+    }
+
+    /**
+     * Get proxy port
+     *
+     * @return int
+     */
+    public static function getProxyPort() {
+        $port = (int)Mage::getStoreConfig('web/proxy/proxy_port');
+        if (empty($port) || !is_int($port)|| $port < 1 || $port > 65536) {
+            return 80;
+        }
+
+        return $port;
+    }
+
+    /**
+     * Get proxy user name
+     *
+     * @return null|string
+     */
+    public static function getProxyUser() {
+        $user = (string)Mage::getStoreConfig('web/proxy/proxy_user');
+        if (empty($user)) {
+            return NULL;
+        }
+
+        return $user;
+    }
+
+    /**
+     * Get proxy password
+     *
+     * @return null|string
+     */
+    public static function getProxyPassword() {
+        $pwd = (string)Mage::getStoreConfig('web/proxy/proxy_user_pwd');
+        if (empty($pwd)) {
+            return NULL;
+        }
+
+        return $pwd;
+    }
 }

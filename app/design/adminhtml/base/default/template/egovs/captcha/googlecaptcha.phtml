@@ -1,0 +1,43 @@
+<?php
+/**
+ * Template für Google reCAPTCHA v2
+ * https://developers.google.com/recaptcha/
+ *
+ * @category   	Egovs
+ * @package    	Egovs_Captcha
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2011-2018 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ *
+ */
+
+/** @var $this \Egovs_Captcha_Block_Captcha */
+
+$_siteKey    = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_sitekey'));
+$_captchaUrl = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_apiurl'));
+$_captchaApi = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_apiparams'));
+$_captchaLng = $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_language'));
+?>
+<?php
+/**
+ * AddJs im Layout ist für Anmeldung und ForgotPassword im BE nicht verfügbar!
+ */
+?>
+<link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('css/googlecaptcha.css') ?>" media="all" />
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/captcha/icon-captcha.min.js" type="text/javascript"></script>
+<div id="google-recaptcha" class="google-recaptcha" data-sitekey="<?php echo $_siteKey ?>"></div>
+<script type="text/javascript" src="<?php echo $_captchaUrl . $_captchaApi; ?>&hl=<?php echo $_captchaLng; ?>" async defer></script>
+<script type="text/javascript">
+    var verifyCallback = function(response) {
+        enableSubmitButton();
+    };
+
+    var onloadCallback = function() {
+        grecaptcha.render("google-recaptcha", {
+            "sitekey" : "<?php echo $_siteKey; ?>",
+            "callback": verifyCallback,
+            "theme"   : "<?php echo $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_theme')); ?>",
+            "size"    : "<?php echo $this->escapeHtml(Mage::getStoreConfig('customer/captcha/googlecaptcha_size')); ?>"
+        });
+    };
+</script>

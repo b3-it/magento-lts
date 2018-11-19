@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <config>
     <modules>
@@ -30,6 +30,13 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Bitv>
+        <Egovs_Captcha>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Captcha/>
+            </depends>
+        </Egovs_Captcha>
         <Egovs_Cashpayment>
             <active>false</active>
             <codePool>local</codePool>

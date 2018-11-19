@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <customer_account_login>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+        <reference name="customer_form_login">
+            <block type="core/text_list" name="form.additional.info">
+                <block type="egovscaptcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>user_login</formId></action>
+                </block>
+            </block>
+        </reference>
+    </customer_account_login>
+    <customer_account_forgotpassword>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+        <reference name="forgotPassword">
+            <block type="core/text_list" name="form.additional.info">
+                <block type="egovscaptcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>user_forgotpassword</formId></action>
+                </block>
+            </block>
+        </reference>
+    </customer_account_forgotpassword>
+    <customer_account_create>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+        <reference name="customer_form_register">
+            <block type="core/text_list" name="form.additional.info">
+                <block type="egovscaptcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>user_create</formId></action>
+                </block>
+            </block>
+        </reference>
+    </customer_account_create>
+</layout>

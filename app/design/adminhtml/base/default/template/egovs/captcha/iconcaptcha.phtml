@@ -1,0 +1,64 @@
+<?php
+/**
+ * Template für IconCaptcha Plugin - jQuery & PHP
+ * https://github.com/fabianwennink/IconCaptcha-Plugin-jQuery-PHP
+ *
+ * @category   	Egovs
+ * @package    	Egovs_Captcha
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2011-2018 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license		http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ *
+ */
+
+/** @var $this \Egovs_Captcha_Block_Captcha */
+?>
+<div id="captcha-holder" class="captcha-holder"></div>
+<?php
+/**
+ * AddJs im Layout ist für Anmeldung und ForgotPassword im BE nicht verfügbar!
+ */
+?>
+<link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('css/iconcaptcha.css') ?>" media="all" />
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>lib/jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>lib/jquery/noconflict.js" type="text/javascript"></script>
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.captchatools.js" type="text/javascript"></script>
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/captcha/icon-captcha.min.js" type="text/javascript"></script>
+<script async type="text/javascript">
+    $j('.captcha-holder').iconCaptcha({
+        "captchaAjaxFile"       : "<?php echo $this->getRefreshUrl(); ?>",
+        "captchaTheme"          : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_theme'); ?>",
+        "captchaFontFamily"     : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_fontfamily'); ?>",
+        "captchaClickDelay"     : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_clickdelay'); ?>,
+        "captchaHoverDetection" : <?php echo (int)Mage::getStoreConfigFlag('customer/captcha/iconcaptcha_hoverdetection'); ?>,
+        "enableLoadingAnimation": <?php echo (int)Mage::getStoreConfigFlag('customer/captcha/iconcaptcha_loadinganimation'); ?>,
+        "loadingAnimationDelay" : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_animationdelay'); ?>,
+        "requestIconsDelay"     : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_requesticonsdelay'); ?>,
+        "requestFalseDelay"     : <?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_requestfaildelay'); ?>,
+        "showCredits"           : "disabled",
+        "captchaMessages": {
+            "header" : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_captchaheader'); ?>",
+            "correct": {
+                "top"   : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_correcttitle'); ?>",
+                "bottom": "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_correctsubtitle'); ?>"
+            },
+            "incorrect": {
+                "top"   : "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_incorrecttitle'); ?>",
+                "bottom": "<?php echo Mage::getStoreConfig('customer/captcha/iconcaptcha_incorrectsubtitle'); ?>"
+            }
+
+        }
+    })
+    .bind('init.iconCaptcha', function(e, id) {
+        disableSubmitButton();
+    })
+    .bind('refreshed.iconCaptcha', function(e, id) {
+        disableSubmitButton();
+    })
+    .bind('success.iconCaptcha', function(e, id) {
+        enableSubmitButton();
+    })
+    .bind('error.iconCaptcha', function(e, id) {
+        disableSubmitButton();
+    });
+</script>
