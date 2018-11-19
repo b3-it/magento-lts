@@ -33,16 +33,30 @@ class Egovs_Base_Model_Sales_Order_Observer extends Mage_Core_Model_Abstract {
 		
 		$this->_sendInvoice ( $invoice );
 	}
-	
+
+    /**
+     * @param $invoice \Mage_Sales_Model_Order_Invoice
+     *
+     * @return void
+     */
 	private function _sendInvoice($invoice) {
-		if ($invoice == null)
-			return;
-		if ($invoice->getEmailSent ())
-			return;
-		if ($invoice->getDoNotSendEmail ())
-			return;
-		if (Mage::getStoreConfig ( "sales_email/invoice/send_mail", $invoice->getStoreId () ) == 0)
-			return;
+		if ($invoice == null) {
+            return;
+        }
+		if ($invoice->getEmailSent ()) {
+            return;
+        }
+		if ($invoice->getDoNotSendEmail ()) {
+            return;
+        }
+		if (Mage::getStoreConfig ( "sales_email/invoice/send_mail", $invoice->getStoreId () ) == 0) {
+            return;
+        }
+        if (Mage::getStoreConfig ( "sales_email/invoice/send_mail", $invoice->getStoreId () ) == 2
+            && (0.01 <= (float)$invoice->getGrandTotal())
+        ) {
+            return;
+        }
 		try {
 			$invoice->sendEmail ();
 		} catch ( Exception $ex ) {
