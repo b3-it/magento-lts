@@ -195,23 +195,25 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
         $text[] = "})";
         
         $text[] = "var wmfsparser = new ol.format.WMTSCapabilities();";
-        $text[] = "fetch('".$this->getService()->getUrl()."').then(function(response) {";
-        $text[] = "  return response.text();";
-        $text[] = "}).then(function(text) {";
+
+        $text[] = "\$j.ajax('".$this->getService()->getUrl()."',{";
+        // TODO add ajax handler for loading overlay
+        $text[] = "dataType: 'text',";
+        
+        $text[] = "beforeSend: incLoading,";
+        $text[] = "complete: decLoading,";
+        $text[] = "success: function(text) {";
         $text[] = "  var result = wmfsparser.read(text);";
         $text[] = "  var options = ol.source.WMTS.optionsFromCapabilities(result, {";
         $text[] = "    layer: '".$this->getServiceLayer()->getName()."',";
         if ($espg) {
             $text[] = "   projection: 'EPSG:' + " . $espg .",";
         }
-        $text[] = "  });";
-        //$text[] = "  console.log(options);";
-        
-        //$text[] = "  console.log(ol.proj.getTransform(options.projection, 'EPSG:4647'));";
-        //$text[] = "  layer".self::$Count.".setSource(new ol.source.OSM({projection: _epsg}));";
-        $text[] = "  layer".self::$Count.".setSource(new ol.source.WMTS(options));";
         $text[] = "});";
-        
+        $text[] = "  layer".self::$Count.".setSource(new ol.source.WMTS(options));";
+        $text[] = "}";
+        $text[] = "});";
+
         $text[] = "layers_$level.push(layer".self::$Count.");";
         
         return implode(PHP_EOL, $text);
@@ -241,19 +243,17 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     
     public function getOpenLayerWfs($level, $espg = false)
     {
-//        var_dump($this);
-//        die();
-        
         $helper = Mage::helper('core');
         
     	self::$Count++;
     	$text = array();
     	
-    	$text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName() . "';";
+    	$name = $this->getServiceLayer()->getName();
+    	$text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=".$helper->jsQuoteEscape($name). "';";
     	if ($espg) {
     	    $text[] = "url += '&srsname=EPSG:' + " . $espg .";";
     	}
-    	
+
     	$text[] = "var vectorSource".self::$Count." = new ol.source.Vector({";
     	$text[] = "	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),";
 /*
@@ -265,60 +265,8 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
 //*/
 
     	$text[] = "	url: url,";
-    	// srsName set somehow?
+    	$text[] = " loader: ajaxLoader,";
 
-/*//    	
-    	$text[] = "	loader: function(extent, resolution, projection) {";
-    	//$text[] = "	console.log(extent, resolution, projection);";
-    	$text[] = "	console.log(this.getUrl());";
-    	$text[] = "	src = this;";
-
-    	$text[] = "	jQuery.get(this.getUrl(), function( data ) {";
-    	//$text[] = "	console.log(data);";
-    	$text[] = "	srcProjection = ol.proj.get(src.getFormat().readProjection(data));";
-    	$text[] = "	console.log(srcProjection, projection);";
-    	$text[] = "	features = src.getFormat().readFeatures(data, {dataProjection: projection, featureProjection: srcProjection});";
-    	$text[] = "for (var i=0;i<features.length;i++) {";
-    	// BUG in OL
-    	//$text[] = "    features[i].getGeometry().transform(srcProjection, projection);";
-    	$text[] = "}";
-    	$text[] = "	src.addFeatures(features);";
-    	$text[] = "});";
-    	$text[] = "	},";
-
-//*/
-    	
-    	// TODO fixed bugs in OL and others, no loader is needed
-/*
-    	// need loader to convert features
-//*
-
-        $text[] = "for (var i=0;i<data.length;i++) {";
-
-        // need to flip x and y cordinates BUG in OL
-        // this can be fixed in manipulate the proj4 file
-/* //
-        $text[] = "  data[i].getGeometry().applyTransform(function (coords, coords2, stride) {";
-        $text[] = "    for (var j=0;j<coords.length;j+=stride) {";
-        $text[] = "      var y = coords[j];";
-        $text[] = "      var x = coords[j+1];";
-        $text[] = "      coords[j] = x;";
-        $text[] = "      coords[j+1] = y;";
-        $text[] = "    }";
-        $text[] = "  });";
-//* /  
-      
-        // currently it doesn't transform into the wanted projection, need to do it myself
-        // BUG in OL
-        //$text[] = "    data[i].getGeometry().transform(srcProjection, projection);";
-        $text[] = "}";
-//* /
-        $text[] = "src.addFeatures(data);";
-
-        $text[] = "});";
-    
-    	$text[] = "},";
-//*/
     	//$text[] = "	strategy: ol.loadingstrategy.bbox";
     	$text[] = "});";
 
@@ -326,7 +274,7 @@ class Bkg_Viewer_Model_Composit_Layer extends Mage_Core_Model_Abstract
     	$text[] = "  source: vectorSource".self::$Count.",";
     	$text[] = "  title: '" . $helper->jsQuoteEscape($this->getTitle()) . "',";
     	$text[] = "  visible: " . ($this->getIsChecked() ? "true" : "false") . ",";
-    	$text[] = "  zIndex: " . $this->getVisualPos();
+    	$text[] = "  zIndex: " . intval($this->getVisualPos());
     	$text[] = "});";
     	$text[] = "layers_$level.push(vector);";
     	 

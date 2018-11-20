@@ -105,7 +105,7 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StorageController extends M
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('virtualgeo/componentsstorageentity');
+				$model = Mage::getModel('virtualgeo/components_storage');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

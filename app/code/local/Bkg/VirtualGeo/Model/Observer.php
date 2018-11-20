@@ -113,11 +113,12 @@ class Bkg_VirtualGeo_Model_Observer
     		$this->_saveRap($dataObject->getRap(),$product);
     	}
 
-    	$this->_saveComponent($dataObject->getGeoref(), $dataObject->getGeorefDefault(),$product,'virtualgeo/components_georefproduct');
-    	$this->_saveComponent($dataObject->getFormat(), $dataObject->getFormatDefault(),$product,'virtualgeo/components_formatproduct');
-        $this->_saveComponent($dataObject->getStorage(), $dataObject->getStorageDefault(),$product,'virtualgeo/components_storageproduct');
-        $this->_saveComponent($dataObject->getStructure(), $dataObject->getStructureDefault(),$product,'virtualgeo/components_structureproduct');
-        $this->_saveComponent($dataObject->getResolution(), $dataObject->getResolutionDefault(),$product,'virtualgeo/components_resolutionproduct');
+        $this->_saveComponentStorage($dataObject->getStorage(),$product,'virtualgeo/components_storageproduct');
+    	$this->_saveComponent($dataObject->getGeoref(),$product,'virtualgeo/components_georefproduct');
+    	$this->_saveComponent($dataObject->getFormat(),$product,'virtualgeo/components_formatproduct');
+        $this->_saveComponent($dataObject->getStructure(), $product,'virtualgeo/components_structureproduct');
+        $this->_saveComponent($dataObject->getResolution(),$product,'virtualgeo/components_resolutionproduct');
+        $this->_saveComponent($dataObject->getAccounting(),$product,'virtualgeo/components_accountingproduct');
         $content = $dataObject->getContentLayerOptions();
         $this->_saveContentLayer($content,$product->getId());
 
@@ -146,36 +147,27 @@ class Bkg_VirtualGeo_Model_Observer
                 ->setEntityId($node['entity_id'])
                 ->setProductId($productId) //FK
                 ->setReadonly($node['is_readonly'])
-                ->setIsChecked($node['is_checked']);
-    		if(!$model->getId())
-    		{
-    			$model->save();
-    		}
-            $nodes[$key]['id'] = $model->getId();
-    		$node['model'] = $model;
-
-
+                ->setIsChecked($node['is_checked'])
+              //  ->setNodeId($node['node_id'])
+            ;
 
     		$model->save();
+            $nodes[$key]['id'] = $model->getId();
+            $node['model'] = $model;
             $nodes[$key] = $node;
     	}
     
     	//jetzt die Elternbeziehung und die Reihenfolge
-    	foreach($nodes as $node)
-    	{
-    
+    	foreach($nodes as $node) {
     		$model = $node['model'];
 
-
-            if(!isset($node['parent_number']) || empty($node['parent_number']))
-            {
-                $model->setData('parent_node_id',null);
-            }else{
-                $parentNode = $this->findByNumber($nodes, $node['parent_number']);
-                $model->setParentNodeId($parentNode['model']->getId());
+            if (!isset($node['parent_number']) || empty($node['parent_number'])) {
+                $model->unsetData('parent_node_id');
+            } else {
+                $parentNode = $this->__findByNumber($nodes, $node['parent_number']);
+                $model->setParentNodeId($parentNode['model']->getNodeId());
             }
-    
-    
+
     		$model->save();
     
     	}
@@ -192,7 +184,7 @@ class Bkg_VirtualGeo_Model_Observer
     
     }
     
-    private function findByNumber($nodes,$number)
+    private function __findByNumber($nodes, $number)
     {
     	foreach ($nodes as $node){
     		if($node['number'] == $number){
@@ -202,68 +194,94 @@ class Bkg_VirtualGeo_Model_Observer
     
     	return null;
     }
-    
-    
-    
-    protected function _saveComponent($data, $default, $product,$model)
+
+    protected function _saveComponent($data, $product, $modelname)
     {
-    	if(empty($data)){
-    		$data = array();
-    	}
-    	if(empty($default))
-    	{
-    		$default = array();
-    	}
-    	//evtl. vorhandene laden
-    	$collection = Mage::getModel($model)->getCollection();
-    	$collection->getSelect()
-    	->where('product_id = '.intval($product->getId()))
-    	->where('store_id = '.intval($product->getStoreId()));
-    	$newItems = array();
-		
-    	$defaultId = null;
-    	//speichern
-    	foreach($data as $id)
-    	{
-    		//ertmal die erste verwenden
-    		if($defaultId === null)
-    		{
-    			$defaultId = $id;
-    		}
-    		if(in_array($id, $default)){
-    			$defaultId = $id;
-    		}
-    		$found = false;
-    		foreach($collection->getItems() as $item)
-    		{
-    			if($item->getEntityId() == $id){
-    				$found = true;
-    				$newItems[] = $id;
-    				break;
-    			}
-    		}
-    		if(!$found)
-    		{
-    			$item = Mage::getModel($model);
-    			$item
-    			->setProductId($product->getId())
-    			->setStoreId($product->getStoreId())
-    			->setEntityId($id)
-    			->save();
-    			$newItems[] = $id;
-    		}
-    	}
-    	
-    	foreach($collection->getItems() as $item)
-    	{
-    		if(!in_array($item->getEntityId(), $newItems)){
-    			$item->delete();
-    		}
-    	}
-    	 
-    	Mage::getModel($model)->saveDefault($defaultId,intval($product->getId()), intval($product->getStoreId()));
+        if (empty($data)) {
+            $data = array();
+        }
+       
+            
+        foreach($data as $key => $item){
+        	if($key == 'is_default'){
+        		continue;
+        	}
+        	$model = Mage::getModel($modelname);
+        	if(isset($item['id']) && !empty($item['id'])){
+        		$model->load($item['id']);
+        		
+        		if($item['deleted']  ){
+        			$model->delete();
+        			continue;
+        		}
+        	}
+        	
+        	
+        	$model->setPos($item['position']);
+        	$model->setEntityId($item['entity_id']);
+        	$model->setProductId($product->getId());
+        	$model->setStoreId($product->getStoreId());
+        	$model->setIsDefault(0);
+        	
+        	if(isset($data['is_default']) && ($data['is_default'] == $item['my_id'])){
+        		$model->setIsDefault(1);
+        	}
+        	$model->setData('is_visible_only_in_admin',0);
+        	if(isset($item['admin_only'])){
+        		$model->setData('is_visible_only_in_admin',1);
+        	}
+        	
+        	$model->save();
+        }
+        
+        $newItems = array();
     }
     
+    protected function _saveComponentStorage($data, $product, $modelname)
+    {
+    	if (empty($data)) {
+    		$data = array();
+    	}
+    	 
+    
+    	foreach($data as $key => $item){
+    		if($key == 'is_default'){
+    			continue;
+    		}
+    		$model = Mage::getModel($modelname);
+    		if(isset($item['id']) && !empty($item['id'])){
+    			$model->load($item['id']);
+    
+    			if($item['deleted']  ){
+    				$model->delete();
+    				continue;
+    			}
+    		}
+    		 
+    		 
+    		$model->setPos($item['position']);
+    		$model->setEntityId($item['entity_id']);
+    		$model->setProductId($product->getId());
+    		$model->setTransportProductId($item['transport_product_id']);
+    		$model->setStoreId($product->getStoreId());
+    		$model->setIsDefault(0);
+    		 
+    		if(isset($data['is_default']) && ($data['is_default'] == $item['my_id'])){
+    			$model->setIsDefault(1);
+    		}
+    		$model->setData('is_visible_only_in_admin',0);
+    		if(isset($item['admin_only'])){
+    			$model->setData('is_visible_only_in_admin',1);
+    		}
+    		
+    		$model->save();
+    	}
+    
+    	$newItems = array();
+    }
+    
+    
+  
 
     
     protected function _saveRap($rapData, $parent = null)

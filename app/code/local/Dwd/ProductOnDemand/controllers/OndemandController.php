@@ -5,10 +5,10 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$id = $this->getRequest()->getParam('id', 0);
 		$hash = $this->getRequest()->getParam('hash', null);
 		$protocol = $this->getRequest()->isSecure() ? 'https://' : 'http://';
-		$hashPrefix = $protocol.$this->getRequest()->getHttpHost().$this->getRequest()->getRequestUri();
-		$hashPrefix = substr($hashPrefix, 0, strpos($hashPrefix, '&') !== false ? strpos($hashPrefix, '&') : count($hashPrefix));
+		$webshopURL = $protocol.$this->getRequest()->getHttpHost().$this->getRequest()->getRequestUri();
+		$webshopURL = substr($webshopURL, 0, strpos($webshopURL, '&') !== false ? strpos($webshopURL, '&') : count($webshopURL));
 		$salt = (string) Mage::getStoreConfig('catalog/dwd_pod/salt');
-		Mage::log(sprintf("pod::Weste-Hash:%s\nwebshopURL:%s", $hash, $hashPrefix), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+		Mage::log(sprintf("pod::Weste-Hash:%s\nwebshopURL:%s", $hash, $webshopURL), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		$referer = Mage::getSingleton('customer/session')->getPodReferer();
 		Mage::getSingleton('customer/session')->unsetData('pod_referer');
 		if (!$referer) {
@@ -16,9 +16,9 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		}
 		//$hashPrefix = 'https://kunden.dwd.de/asterixep/webshop?id='.$id;
 		$hashAlgo = (string) Mage::getStoreConfig('catalog/dwd_pod/hash_algorithm');
-		if (!$hash || hash($hashAlgo, $salt.$hashPrefix) != $hash) {
+		if (!$hash || hash($hashAlgo, $salt.$webshopURL) != $hash) {
 			$msg = Mage::helper('prondemand')->__('Transaction ID is incorrect');
-            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s\nWebshopURL:%s", $msg, $id, $hash, $webshopURL), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 			Mage::getSingleton('catalog/session')->addError($msg);
 			$this->_redirectUrl($referer);
 			return;
@@ -162,6 +162,13 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 		$linkItem['url'] = (string) $downloadInfo->descend('url');
 		$linkItem['type'] = Mage_Downloadable_Helper_Download::LINK_TYPE_URL;
 		$linkId = $product->getTypeInstance(true)->setProduct($product)->addLinkItem($linkItem);
+		if (!($linkId > 0)) {
+            $msg = Mage::helper('prondemand')->__('Product not available');
+            Mage::log(sprintf("pod::%s\nID:%s\nhash:%s", $msg, $id, $hash), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            Mage::getSingleton('catalog/session')->addError($msg);
+            $this->_redirectUrl($referer);
+            return;
+        }
 		$params['links'] = array($linkId);
 		$params[Mage_Core_Model_Url::FORM_KEY] = Mage::getSingleton('core/session')->getFormKey();
 
@@ -224,17 +231,17 @@ class Dwd_ProductOnDemand_OndemandController extends Mage_Core_Controller_Front_
 			$redirect = Mage::helper('core/url')->urlDecode($redirect);
 		}
 
-		$back = Mage::getSingleton('customer/session')->getPodBackUrl();
-		if (!$back) {
-			$back = $id = $this->getRequest()->getParam('back', null);
-			$back = Mage::helper('core/url')->urlDecode($back);
-		}
+        $sendBackUrl = (bool) Mage::getStoreConfigFlag('catalog/dwd_pod/send_back_url');
+		if ($sendBackUrl) {
+            /* @var $urlModel Mage_Core_Model_Url */
+            $urlModel = Mage::getModel('core/url');
+            $backUrl = $urlModel->getUrl(
+                'prondemand/ondemand/processWesteData',
+                array('_secure' => Mage::app()->getRequest()->isSecure())
+            );
 
-		$debug = (bool) Mage::getStoreConfigFlag('catalog/dwd_pod/is_debug');
-
-		if ($debug) {
-			$url = sprintf('%s?westeTypID=%s&webshopURL=%s', $redirect, urlencode($id), urlencode($back));
-			Mage::log(sprintf('pod::WebshopURL:%s', $back), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+			$url = sprintf('%s?westeTypID=%s&webshopURL=%s', $redirect, urlencode($id), urlencode($backUrl));
+			Mage::log(sprintf('pod::WebshopURL:%s', $backUrl), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		} else {
 			$url = $redirect;
 		}

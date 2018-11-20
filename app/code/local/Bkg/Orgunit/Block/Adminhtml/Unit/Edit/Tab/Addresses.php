@@ -110,23 +110,28 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Addresses extends Mage_Adminhtml
     {
        $form = new Varien_Data_Form();
         $fieldset = $form->addFieldset('address_fieldset', array(
-            'legend'    => Mage::helper('customer')->__("Edit Customer's Address"))
+            'legend'    => Mage::helper('customer')->__("Edit Organisation's Address"))
         );
-
-        // TODO FIX THE USAGE OF CUSTOMER MODELS
         
-        $addressModel = Mage::getModel('customer/address');
+        /**
+         * @var Bkg_Orgunit_Model_Unit_Address $addressModel
+         */
+        $addressModel = Mage::getModel('bkg_orgunit/unit_address');
         //$addressModel->setCountryId(Mage::helper('core')->getDefaultCountry($customer->getStore()));
-        /** @var $addressForm Mage_Customer_Model_Form */
-        $addressForm = Mage::getModel('customer/form');
-        $addressForm->setFormCode('adminhtml_customer_address')
+        /** @var Bkg_Orgunit_Model_Unit_Address_Form $addressForm */
+        $addressForm = Mage::getModel('bkg_orgunit/unit_address_form');
+        $addressForm->setFormCode('adminhtml_bkg_orgunit_address')
             ->setEntity($addressModel)
             ->initDefaultValues();
 
         $attributes = $addressForm->getAttributes();
+
         if(isset($attributes['street'])) {
-            Mage::helper('adminhtml/addresses')
-                ->processStreetAttribute($attributes['street']);
+            /**
+             * @var Bkg_Orgunit_Helper_Addresses $addressHelper
+             */
+            $addressHelper = Mage::helper('bkg_orgunit/addresses');
+            $addressHelper->processStreetAttribute($attributes['street']);
         }
         foreach ($attributes as $attribute) {
             /** @var $attribute Mage_Eav_Model_Entity_Attribute */
@@ -134,7 +139,6 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Addresses extends Mage_Adminhtml
             $attribute->unsIsVisible();
         }
         $this->_setFieldset($attributes, $fieldset);
-
        
         $country = $form->getElement('country_id');
         if ($country) {

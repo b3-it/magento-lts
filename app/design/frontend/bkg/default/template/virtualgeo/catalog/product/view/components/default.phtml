@@ -1,6 +1,12 @@
+<?php
+/**
+ * @var Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Abstract $this
+ */
+?>
+<?php if($this->hasOptions()):?>
     <h3>
-        <?php echo $this->getTitle(); ?>
-        <div class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></div>
+        <?php echo $this->escapeHtml($this->getTitle()); ?>
+        <span class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></span>
     </h3>
     <div class="virtualgeo-default">
       <?php foreach($this->getOptions() as $option): ?>
@@ -10,16 +16,17 @@
             <div>
                 <input type="radio"
                        class="radio"
-                       name="<?php echo $this->getHtmlID(); ?>[]"
-                       value="<?php echo $option->getEntityId(); ?>"
+                       name="options[<?php echo $option->getComponentType(); ?>]"
+                       value="<?php echo $option->getId(); ?>"
                        data-id="<?php echo $this->getHtmlID(); ?>"
-                       data-code="<?php echo $option->getCode(); ?>"
-                       data-shortname="<?php echo $option->getShortname(); ?>"
-                       data-name="<?php echo $option->getName();?>"
+                       data-code="<?php echo $this->escapeHtml($option->getCode()); ?>"
+                       data-shortname="<?php echo $this->escapeHtml($option->getShortname()); ?>"
+                       data-name="<?php echo $this->escapeHtml($option->getName());?>"
                        <?php echo $_default; ?> />
             </div>
-            <div class="virtualgeo-name"><?php echo $option->getName();?></div>
-            <div class="virtualgeo-desc"><?php echo $option->getDescription();?></div>
+            <div class="virtualgeo-name"><?php echo $this->escapeHtml($option->getName());?></div>
+            <div class="virtualgeo-desc"><?php echo $this->escapeHtml($option->getDescription());?></div>
         </div>
       <?php endforeach; ?>
     </div>
+<?php endif;?>

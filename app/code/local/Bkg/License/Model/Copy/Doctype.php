@@ -11,8 +11,9 @@
 
 class Bkg_License_Model_Copy_Doctype extends Varien_Object
 {
-  const TYPE_DRAFT	= 1;
-    const TYPE_FINAL	= 2;
+  	const TYPE_HIDDEN	= 1;
+  	const TYPE_DRAFT	= 2;
+    const TYPE_FINAL	= 3;
   
 
     /**
@@ -23,6 +24,7 @@ class Bkg_License_Model_Copy_Doctype extends Varien_Object
     static public function getOptionArray()
     {
         return array(
+            self::TYPE_HIDDEN    => Mage::helper('bkg_license')->__('Hidden'),
             self::TYPE_DRAFT    => Mage::helper('bkg_license')->__('Draft'),
             self::TYPE_FINAL   => Mage::helper('bkg_license')->__('Final'),
         );

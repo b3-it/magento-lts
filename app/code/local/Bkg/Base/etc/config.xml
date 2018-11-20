@@ -8,7 +8,7 @@
     </modules>
     <global>
         <resources>
-            <bkgbase_setup>
+            <bkg_base_setup>
                 <setup>
                     <module>Bkg_Base</module>
                     <class>Mage_Eav_Model_Entity_Setup</class>
@@ -16,7 +16,16 @@
                 <connection>
                     <use>core_setup</use>
                 </connection>
-            </bkgbase_setup>
+            </bkg_base_setup>
         </resources>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <product_code/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
     </global>
 </config>

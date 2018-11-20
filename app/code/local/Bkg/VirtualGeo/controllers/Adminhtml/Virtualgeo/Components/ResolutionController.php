@@ -105,7 +105,7 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_ResolutionController extend
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('virtualgeo/componentsresolutionentity');
+				$model = Mage::getModel('virtualgeo/components_resolution');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

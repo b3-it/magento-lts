@@ -2,8 +2,8 @@
 /* @var $this Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Toll */
 ?>
     <h3>
-        <?php echo $this->getTitle(); ?>
-        <div class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></div>
+        <?php echo $this->escapeHtml($this->getTitle()); ?>
+        <span class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></span>
     </h3>
     <div class="virtualgeo-default">
       
@@ -13,9 +13,8 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
      * @var Bkg_Tollpolicy_Model_Toll $toll
      */
     //echo "<span>".$toll->getName()."</span>";
-    echo "<input id='virtualgeo-components-toll-int' name='virtualgeo-components-toll[int][use]' value='' type='checkbox'/>";
     echo "<fieldset class='virtualgeo-components-toll' style='border: 1px solid #c0c0c0; padding: 5px;'>";
-    echo "<legend>".$this->__('Internal Usage')."</legend>";
+    echo "<legend><input id='virtualgeo-components-toll-int' name='virtualgeo-components-toll[int][use]' value='' type='checkbox'/>".$this->__('Internal Usage')."</legend>";
 
     echo "<ul>";
     foreach ($toll->getActiveUseTypes(true) as $use) {
@@ -28,7 +27,7 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
         /**
          * @var Bkg_Tollpolicy_Model_Usetype $use
          */
-        $label = "<label for='".$useId."'>".$use->getName()."</label>";
+        $label = "<label for='".$useId."'>".$this->escapeHtml($use->getName())."</label>";
 
         $options = $use->getOptions();
 
@@ -37,7 +36,7 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
              * @var Bkg_Tollpolicy_Model_Useoptions $opt
              */
             $opt = array_values($options)[0];
-            $val = $opt->getCode();
+            $val = $this->escapeHtml($opt->getCode());
             if (empty($val)) {
                 $val = $opt->getId();
             }
@@ -59,7 +58,7 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
                 /**
                  * @var Bkg_Tollpolicy_Model_Useoptions $opt
                  */
-                echo "<option value='".$opt->getCode()."'>".$opt->getName()."</option>";
+                echo "<option value='".$this->escapeHtml($opt->getCode())."'>".$this->escapeHtml($opt->getName())."</option>";
             }
             echo "</select>";
         }
@@ -68,9 +67,8 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
     echo "</ul>";
     echo "</fieldset>";
 
-    echo "<input id='ext' name='virtualgeo-components-toll[ext][use]' value='' type='checkbox'/>";
     echo "<fieldset class='virtualgeo-components-toll' style='border: 1px solid #c0c0c0; padding: 5px;'>";
-    echo "<legend>". $this->__('External Usage')."</legend>";
+    echo "<legend><input id='ext' name='virtualgeo-components-toll[ext][use]' value='' type='checkbox'/>". $this->__('External Usage')."</legend>";
 
     echo "<ul>";
     foreach ($toll->getActiveUseTypes(false) as $use) {
@@ -83,14 +81,14 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
         /**
          * @var Bkg_Tollpolicy_Model_Usetype $use
          */
-        $label = "<label for='".$useId."'>".$use->getName()."</label>";
+        $label = "<label for='".$useId."'>".$this->escapeHtml($use->getName())."</label>";
         
         if (sizeof($options) == 1) {
             /**
              * @var Bkg_Tollpolicy_Model_Useoptions $opt
              */
             $opt = array_values($options)[0];
-            $val = $opt->getCode();
+            $val = $this->escapeHtml($opt->getCode());
             if (empty($val)) {
                 $val = $opt->getId();
             }
@@ -111,7 +109,7 @@ foreach ($this->getTollCategory()->getActiveTolls() as $toll) {
                 /**
                  * @var Bkg_Tollpolicy_Model_Useoptions $opt
                  */
-                echo "<option value='".$opt->getCode()."'>".$opt->getName()."</option>";
+                echo "<option value='".$this->escapeHtml($opt->getCode())."'>".$this->escapeHtml($opt->getName())."</option>";
             }
             echo "</select>";
         }

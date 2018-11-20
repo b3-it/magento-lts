@@ -45,7 +45,6 @@ p.product-name {
     font-family: $base-font-family;
     font-weight: bold;
     line-height: $global-lineheight;
-    max-height: $global-lineheight * 2.8;
     height: auto;
     overflow: hidden;
 
@@ -62,11 +61,18 @@ p.product-name {
 .products-grid .product-name,
 .products-list .product-name {
     margin-bottom: 5px;
-    font-size: $base-font-family;
-    font-family: $global-fontsize;
+    font-size: $global-fontsize;
+    font-family: $base-font-family;
 
     a {
     }
+}
+
+.products-grid .product-name {
+    height: $global-lineheight * $catalog-product-name-max-lines;
+}
+.products-list .product-name {
+    max-height: $global-lineheight * $catalog-product-name-max-lines;
 }
 
 /* ============================================ *
@@ -507,12 +513,16 @@ p.product-name {
     }
     .product-details {
         display: inline-block;
-        width: 70%;
+        width: 80%;
         vertical-align: top;
 
         // Vertically center product name
-        .product-name {
-    	    padding-top: 10px;
+        p.product-name {
+    	    padding-top: 0;
+    	    height: auto !important;
+	    }
+	    div.truncated {
+	        display: none;
 	    }
     }
 

@@ -36,21 +36,23 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
         	$this->_addButton('previewpdf', array(
         			'label'     => Mage::helper('adminhtml')->__('Preview Pdf'),
         			'onclick'   => 'previewPdf(); return false;',
-        			'class'     => 'save',
+        			//'class'     => 'save',
         	), -100);
         	
 	        $this->_addButton('pdf', array(
 	        		'label'     => Mage::helper('adminhtml')->__('Create Pdf'),
 	        		'onclick'   => 'createPdfAndContinueEdit()',
-	        		'class'     => 'save',
+	        		//'class'     => 'save',
 	        ), -100);
 	        
 	        $id = Mage::registry('entity_data')->getId();
 	        $this->_addButton('newtext', array(
 	        		'label'     => Mage::helper('adminhtml')->__('Process Template'),
 	        		'onclick'   => 'processTextAndContinueEdit()',
-	        		'class'     => 'save',
+	        		//'class'     => 'save',
 	        ), -100);
+
+           
         
         }
         
@@ -161,6 +163,30 @@ class Bkg_License_Block_Adminhtml_Copy_Edit extends Mage_Adminhtml_Block_Widget_
                     tinyMCE.execCommand('mceRemoveControl', false, 'text_template');
                 }
             }
+        				
+        	function toogleSubscription()
+			{
+			    var elements = ['initial_period_length','initial_period_unit','period_length','period_unit','renewal_offset'];
+        		if(\$j('#subscripe').is(':checked'))
+        		{
+        		    elements.forEach(function(elem)
+        		    {
+        		        \$j('#'+elem).parent().parent().show();
+        			    \$j('#'+elem).show();
+        			    \$j('#'+elem).addClass('required-entry');
+        		    });
+        		}
+        		else
+        		{
+        		    elements.forEach(function(elem)
+        		    {
+        		        \$j('#'+elem).parent().parent().hide();
+        			    \$j('#'+elem).hide();
+        			    \$j('#'+elem).removeClass('required-entry');
+        		    });
+        		}
+			}
+        	toogleSubscription();
             
             switchIsOrgunit();
 		 ";

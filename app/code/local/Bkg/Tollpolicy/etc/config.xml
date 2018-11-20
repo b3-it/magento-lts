@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <Bkg_Tollpolicy>
@@ -124,13 +125,7 @@
                       <sort_order>40</sort_order>
                       <action>adminhtml/tollpolicy_usetype/index</action>
                   </bkgtollpolicy_use_type>
-                  
-                  <bkgtollpolicy_use_options module="bkg_tollpolicy">
-                      <title>Type of Use Options</title>
-                      <sort_order>60</sort_order>
-                      <action>adminhtml/tollpolicy_useoptions/index</action>
-                  </bkgtollpolicy_use_options>
-                 
+
 
               </children>
           </bkgtollpolicy>
@@ -159,11 +154,7 @@
                                   <title>Use_type_entity</title>
                                   <sort_order>40</sort_order>
                               </bkgtollpolicy_use_type_entity>
-                               
-                                <bkgtollpolicy_use_options_entity module="bkg_tollpolicy">
-                                  <title>Use_options_entity</title>
-                                  <sort_order>60</sort_order>
-                              </bkgtollpolicy_use_options_entity>
+
                                
 
                           </children>

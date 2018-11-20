@@ -13,9 +13,9 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('unit/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Unit Manager'), Mage::helper('adminhtml')->__('Unit Manager'));
-		$this->_title(Mage::helper('adminhtml')->__('Unit Manager'));
+			->_setActiveMenu('customer/bkgorgunit_unit')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Organisation'), Mage::helper('adminhtml')->__('Organisation'));
+		$this->_title(Mage::helper('adminhtml')->__('Organisation'));
 		return $this;
 	}
 
@@ -33,20 +33,27 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 			if (!empty($data)) {
 				$model->setData($data);
 			}
-
+			$is_used= $model->isOrganisationUsed();
+			if($is_used !== false)
+			{
+				$used = implode(',',array_keys($is_used));
+				
+				Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('adminhtml')->__("Organisation is used by '%s'",$used));
+			}
+			
 			Mage::register('unit_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('bkg_orgunit/items');
-
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
+			$this->_initAction();
+			
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
 			$this->_addContent($this->getLayout()->createBlock('bkg_orgunit/adminhtml_unit_edit'))
 				->_addLeft($this->getLayout()->createBlock('bkg_orgunit/adminhtml_unit_edit_tabs'));
 
+				
+					
+				
 			$this->renderLayout();
 		} else {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkg_orgunit')->__('Item does not exist'));
@@ -61,6 +68,9 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
+		    /**
+		     * @var Bkg_Orgunit_Model_Unit $model
+		     */
 			$model = Mage::getModel('bkg_orgunit/unit');
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
@@ -90,39 +100,16 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 				    
 				    foreach($col->getItemsByColumnValue('unit_id', intval($model->getId())) as $val) {
 				        /**
-				         * @var Bkg_Orgunit_Model_Resource_Unit_Address $val
+				         * @var Bkg_Orgunit_Model_Unit_Address $val
 				         */
-				        $unitAddressId = $val->getId();
-				        if (!in_array($unitAddressId, $keys)) {
-				            $val->delete($unitAddressId);
+				        if (!in_array($val->getId(), $keys)) {
+				            $val->delete();
 				            // Address Deleted, remove UserAddresses thanks to FK Cascade
 				        }
 				    }
 				    
-				    $allIds = array($model->getId());
-				    $newIds = array($model->getId());
-				    
-				    // need to find all customers recrusive to update their address objects if needed
-				    while(!empty($newIds)) {
-				        /**
-				         * @var Bkg_Orgunit_Model_Resource_Unit_Collection $unitCollection
-				         */
-				        $unitCollection = Mage::getModel('bkg_orgunit/unit')->getCollection();
-				        $unitCollection->addFieldToFilter('parent_id', array('in' => $newIds));
-				        $unitCollection->addFieldToSelect('id');
-				        
-				        $newIds = $unitCollection->getAllIds();
-				        $allIds = array_merge($allIds, $newIds);
-				    }
-				    
-				    /**
-				     * @var Mage_Customer_Model_Resource_Customer_Collection $collection
-				     */
-				    $collection = Mage::getModel('customer/customer')->getCollection();
-				    // get customer by org_unit attribute
-				    $collection->addAttributeToFilter('org_unit', array('in' => $allIds));
-				    $customers = $collection->getItems();
-				    
+				
+				    $customers =  Mage::helper('bkg_orgunit')->getUserByOrganisation($model->getId());
 				    foreach($data['address'] as $key => $value) {
 				        // ignore template
 				        if ("_template_" === $key) {
@@ -160,6 +147,8 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 				                $newData[$code]=$address->getData($code);
 				            }
 				        }
+				        // set company from organisation
+				        $newData['company'] = $model->getData('company');
 				        
 				        foreach ($customers as $customer) {
 				            /**
@@ -218,6 +207,11 @@ class Bkg_Orgunit_Adminhtml_Orgunit_UnitController extends Mage_Adminhtml_Contro
 			try {
 				$model = Mage::getModel('bkg_orgunit/unit');
 
+				if($model->isOrganisationUsed()!== false)
+				{
+					Mage::throwException($this->__("Orgunit can not deletetd!"));
+				}
+				
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();
 

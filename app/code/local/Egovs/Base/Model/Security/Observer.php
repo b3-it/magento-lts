@@ -196,7 +196,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 				if (method_exists($this, $method) && isset($args[0])) {
 					$this->$method($args[0]);
 				} else {
-					Mage::log(sprintf("Function '%s' doesn't exist or no data given, tracing not available!", Zend_Log::ERR, Egovs_Helper::BACKEND_TRACE_LOG));
+					Mage::log(sprintf("Function '%s' doesn't exist or no data given, tracing not available!", $method), Zend_Log::ERR, Egovs_Helper::BACKEND_TRACE_LOG);
 				}
 				//Varien_Profiler::stop('GETTER: '.get_class($this).'::'.$method);
 				return;
@@ -446,7 +446,7 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 			return;
 		}
 
-		if (count($diff) == 1 && isset($diff['updated_at']) || empty($diff)) {
+		if (empty($diff) || (count($diff) == 1 && isset($diff['updated_at']))) {
 			return;
 		}
 		
@@ -567,18 +567,18 @@ class Egovs_Base_Model_Security_Observer extends Varien_Object
 	}
 	
 	protected function _conditionalExcludeKey($key, $origValue, $newValue, $level = 0) {
-		if (empty($newValue) && $newValue != 0 && empty($origValue) && $origValue != 0 //empty außer 0
-			|| strpos($key, '_is_formated') !== false && $newValue == true && empty($origValue)
-			|| strpos($key, 'use_config_') !== false && $newValue == true && empty($origValue)
-			|| $key == 'parent_id' && $newValue == 0 && empty($origValue)
+		if ((empty($newValue) && $newValue != 0 && empty($origValue) && $origValue != 0) //empty außer 0
+			|| (strpos($key, '_is_formated') !== false && $newValue == true && empty($origValue))
+			|| (strpos($key, 'use_config_') !== false && $newValue == true && empty($origValue))
+			|| ($key == 'parent_id' && $newValue == 0 && empty($origValue))
 			|| $key == 'post_index' //Gilt für Änderung an Adressen
-			|| $key == 'created_at' && !empty($origValue) && empty($newValue)
-			|| $key == 'is_active' && $origValue == true && empty($newValue)
-			|| $key == 'attribute_set_id' && $origValue == 0 && empty ($newValue)
+			|| ($key == 'created_at' && !empty($origValue) && empty($newValue))
+			|| ($key == 'is_active' && $origValue == true && empty($newValue))
+			|| ($key == 'attribute_set_id' && $origValue == 0 && empty ($newValue))
 			|| $key == 'is_customer_save_transaction'
 			|| $key == 'is_saved'
-			|| $key == 'customer_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
-			|| $key == 'store_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
+			|| ($key == 'customer_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address)
+			|| ($key == 'store_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address)
 			|| $key == 'new_password'
 			|| $key == 'password_confirmation'
 			|| $key == 'form_key'

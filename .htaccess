@@ -50,7 +50,7 @@
 ## adjust memory limit
 
 #    php_value memory_limit 64M
-    php_value memory_limit 256M
+    php_value memory_limit 512M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
     php_value post_max_size 10M
@@ -75,11 +75,6 @@
 ## Session-Configuration
 ## https://trac.kawatest.de/ticket/1647
 
-    php_value session.gc_probability 1
-    php_value session.gc_divisor 100
-    php_value session.gc_maxlifetime 86400
-
-    # https://trac.kawatest.de/ticket/1647
     php_value session.gc_probability 1
     php_value session.gc_divisor 100
     php_value session.gc_maxlifetime 86400

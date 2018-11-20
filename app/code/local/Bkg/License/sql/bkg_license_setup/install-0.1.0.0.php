@@ -8,7 +8,9 @@
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-
+/**
+ * @var Bkg_License_Model_Resource_Setup $this
+ */
 $installer = $this;
 
 $installer->startSetup();
@@ -22,6 +24,7 @@ if (!$installer->tableExists($installer->getTable('bkg_license/master')))
         `reuse` smallint(6) unsigned default '0',
         `ident` varchar(255) default '',
         `name` varchar(255) default '',
+        `title_fe` varchar(255) default '',
         `date_from` date default NULL,
         `date_to` date default NULL,
         `active` smallint(6) unsigned default '0',
@@ -147,9 +150,11 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy')))
 	  `reuse` smallint(6) unsigned default '0',
 	  `ident` varchar(255) default '',
 	  `name` varchar(255) default '',
+	  `title_fe` varchar(255) default '',
 	  `date_from` date default NULL,
 	  `date_to` date default NULL,
 	  `status` smallint(6) unsigned default '0',
+	  `order_allow_all_customer` smallint(6) unsigned default '1',
 	  `accounting` smallint(6) unsigned default '0',
 	  `consternation_check` smallint(6) unsigned default '0',
 	  `template` MEDIUMTEXT default '',
@@ -212,6 +217,23 @@ if (!$installer->tableExists($installer->getTable('bkg_license/copy_customergrou
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE,
 	  FOREIGN KEY (`customergroup_id`) REFERENCES `{$this->getTable('customer/customer_group')}`(`customer_group_id`) ON DELETE CASCADE
+	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+	  ");
+}
+
+if (!$installer->tableExists($installer->getTable('bkg_license/copy_authorized_customer')))
+{
+	$installer->run("
+	-- DROP TABLE IF EXISTS {$installer->getTable('bkg_license/copy_authorized_customer')};
+	CREATE TABLE {$installer->getTable('bkg_license/copy_authorized_customer')} (
+	  `id` int(11) unsigned NOT NULL auto_increment,
+	  `customer_id` int(11) unsigned NOT NULL ,
+	  `copy_id` int(11) unsigned NOT NULL ,
+
+	  PRIMARY KEY (`id`),
+	  FOREIGN KEY (`copy_id`) REFERENCES `{$this->getTable('bkg_license/copy')}`(`id`) ON DELETE CASCADE,
+	  FOREIGN KEY (`customer_id`) REFERENCES `{$this->getTable('customer/entity')}`(`entity_id`) ON DELETE CASCADE
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 	  ");

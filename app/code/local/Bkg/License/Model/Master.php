@@ -16,7 +16,7 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
         $this->_init('bkg_license/master');
     }
     
-    public function getLicense($customer,$product,$toll, $online_only = true)
+    public function getLicense($customer,$product,$toll, $online_only = true, $find_all = false)
     {
     	$collection = $this->getCollection();
     	$date = date('Y-m-d');
@@ -36,6 +36,11 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
         }
     	
     	//die($collection->getSelect()->__toString());
+    	
+        if($find_all){
+        	return $collection;
+        }
+        
     	//der erste Treffer gewinnt
     	foreach($collection as $item)
     	{
@@ -71,16 +76,33 @@ class Bkg_License_Model_Master extends Bkg_License_Model_Abstract
 			$func = 'set'.$member;
 			$copy->$func($values);
 		}
-		
-		$copy->save();
+
+        $period = $this->getPeriod();
+        if($period) {
+            $copy->getPeriod()->setData($period->getData());
+        }
+
+        $copy->save();
 		$copy->processTemplate()->save();
 		$file = $copy->createPdfFile();
 		if($this->getType() == Bkg_License_Model_Type::TYPE_ONLINE)
 		{
 			$file->setDoctype(Bkg_License_Model_Copy_Doctype::TYPE_FINAL);
 		}
+
+
+
+
     	return $copy;
     }
     
- 
+    public function getPeriod()
+    {
+        $period = null;
+
+        if($this->getPeriodId()) {
+            $period = Mage::getModel('b3it_subscription/period')->load($this->getPeriodId());
+        }
+        return $period;
+    }
 }

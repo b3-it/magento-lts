@@ -47,6 +47,32 @@
 	    }
 	}
 }
+
+.widget-products, #upsell-product-table {
+    display: flex;
+    width: 100%;
+
+    li {
+        display: inline-grid;
+
+        > * {
+            display: block;
+        }
+
+        .shipping-cost-details {
+            margin: 0 auto;
+        }
+    }
+
+    a.product-image {
+        top: 0;
+    }
+
+    .product-name {
+        padding-bottom: 4em;
+        border-bottom: none;
+    }
+}
 /*
 // Implement custom grid breakpoints for grids that are contained within widgets
 @include bp(min-width, $bp-xlarge) {

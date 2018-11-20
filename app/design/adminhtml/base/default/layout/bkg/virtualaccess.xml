@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout>
+    <adminhtml_catalog_product_virtualaccess>
+        <reference name="product_tabs">
+            <action method="addTab"><name>virtualaccess_form</name><block>virtualaccess/adminhtml_catalog_product_edit_tab_virtualaccess</block></action>
+
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>dwd/period.js</script></action>
+        </reference>
+    </adminhtml_catalog_product_virtualaccess>
+    
+    <adminhtml_virtualaccess_product_edit_form>
+        <!-- Es muss alles entfernt werden, wir brauchen eine leere Seite -->
+        <!-- <remove name="root"/> -->
+        <!-- Oder wir überschreiben root -->
+        <!-- <block type="extcustomer/adminhtml_customer_tabs_freecopies" name="root" template="egovs/widget/grid/container.phtml" output="toHtml">
+			<block type="extcustomer/adminhtml_customer_tabs_freecopies_form" name="overview"/>
+		</block> -->
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="virtualaccess/adminhtml_catalog_product_edit_tab_virtualaccess_form" name="product.edit.tab.virtualaccess.form"/>
+        </block>
+      </adminhtml_virtualaccess_product_edit_form>
+    
+    
+    <PRODUCT_TYPE_virtualaccess>
+        <reference name="product.composite.fieldset"> 
+             <block type="virtualaccess/adminhtml_catalog_product_composite_fieldset_virtualaccess" name="product.composite.fieldset.downloadable" before="product.composite.fieldset.options" template="dwd/virtualaccess/product/composite/fieldset/virtualaccess.phtml" >
+            </block>
+        </reference>
+    </PRODUCT_TYPE_virtualaccess>
+    
+    <adminhtml_sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender"><type>virtualaccess</type><block>adminhtml/sales_order_view_items_renderer_default</block><template>dwd/virtualaccess/sales/order/view/items/renderer/virtualaccess.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>virtualaccess/adminhtml_sales_items_column_name</block><template>dwd/virtualaccess/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>virtualaccess</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/virtualaccess/sales/order/invoice/create/items/renderer/virtualaccess.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>virtualaccess/adminhtml_sales_items_column_name</block><template>dwd/virtualaccess/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>virtualaccess</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/virtualaccess/sales/order/invoice/view/items/renderer/virtualaccess.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>virtualaccess/adminhtml_sales_items_column_name</block><template>dwd/virtualaccess/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_items">
+            <action method="addItemRender"><type>virtualaccess</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/virtualaccess/sales/order/invoice/view/items/renderer/virtualaccess.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>virtualaccess/adminhtml_sales_items_column_name</block><template>dwd/virtualaccess/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>virtualaccess</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/virtualaccess/sales/order/creditmemo/create/items/renderer/virtualaccess.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>virtualaccess/adminhtml_sales_items_column_name</block><template>dwd/virtualaccess/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>virtualaccess</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/virtualaccess/sales/order/creditmemo/view/items/renderer/virtualaccess.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>virtualaccess/adminhtml_sales_items_column_name</block><template>dwd/virtualaccess/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_items">
+            <action method="addItemRender"><type>virtualaccess</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/virtualaccess/sales/order/creditmemo/view/items/renderer/virtualaccess.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>virtualaccess/adminhtml_sales_items_column_name</block><template>dwd/virtualaccess/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    
+    <adminhtml_virtualaccess_purchased_index>
+        <reference name="content">
+            <block type="virtualaccess/adminhtml_purchased" name="purchased" />
+        </reference>
+    </adminhtml_virtualaccess_purchased_index>
+        
+</layout>

@@ -63,6 +63,17 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Content_Grid extends Mage_Adminh
       		'index'     => 'description',
       ));
 
+      $categroys =  Mage::getModel('virtualgeo/components_content_category')->getCollection()->toOptionHash();
+      $this->addColumn('category', array(
+          'header'    => Mage::helper('virtualgeo')->__('Category'),
+          'width'     => '150',
+          'align'     => 'left',
+          'index'     => 'category_id',
+          'type'      => 'options',
+          'options'   =>  $categroys
+      ));
+
+
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('virtualgeo')->__('Action'),

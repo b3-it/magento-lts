@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <Bkg_License>
-            <version>0.1.0.0</version>
+            <version>0.1.2.0</version>
         </Bkg_License>
     </modules>
     <global>
@@ -89,8 +90,12 @@
                   <copy_useoption>
                     <table>bkg_license_copy_useoption</table>
                   </copy_useoption>
-
-
+                   <copy_authorized_customer>
+                    <table>bkg_license_copy_authorized_customer</table>
+                   </copy_authorized_customer>
+                    <copy_period>
+                    <table>bkg_license_copy_period</table>
+                   </copy_period>
                 </entities>
             </bkg_license_resource>
         </models>
@@ -99,6 +104,33 @@
               <license_copy>License</license_copy>
           </types>
         </pdftemplate>
+        <template>
+            <email>
+                <bkg_license_email_copy_license_inform_template translate="label" module="framecontract">
+                    <label>Catalog Upload Request</label>
+                    <file>bkg/license/copy/inform.html</file>
+                    <type>html</type>
+                </bkg_license_email_copy_license_inform_template>
+             </email>
+        </template>
+        <events>
+            <bkg_orgunit_is_used>
+                <observers>
+                    <license_bkg_orgunit_is_used>
+                        <class>bkg_license/observer</class>
+                        <method>onBkgOrgunitIsUsed</method>
+                    </license_bkg_orgunit_is_used>
+                </observers>
+            </bkg_orgunit_is_used>
+           <b3it_subscription_model_create_calculate>
+               <observers>
+               <license_bkg_orgunit_is_used>
+                   <class>bkg_license/copy_observer</class>
+                   <method>onSubscriptionCalculate</method>
+               </license_bkg_orgunit_is_used>
+           </observers>
+           </b3it_subscription_model_create_calculate>
+        </events>
     </global>
     <frontend>
       <routers>
@@ -126,6 +158,44 @@
               </Bkg_License>
             </modules>
         </translate>
+        <events>
+            <egovs_base_frontend_customer_reject_address_editing>
+                <observers>
+                    <bkg_license_frontend_customer_reject_address_editing>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressEditing</method>
+                    </bkg_license_frontend_customer_reject_address_editing>
+                </observers>
+            </egovs_base_frontend_customer_reject_address_editing>
+            <egovs_base_customer_reject_address_delete>
+                <observers>
+                    <bkg_license_customer_reject_address_delete>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressDelete</method>
+                    </bkg_license_customer_reject_address_delete>
+                </observers>
+            </egovs_base_customer_reject_address_delete>
+            <egovs_base_customer_reject_address_edit>
+                <observers>
+                    <bkg_license_customer_reject_address_editing>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressEdit</method>
+                    </bkg_license_customer_reject_address_editing>
+                </observers>
+            </egovs_base_customer_reject_address_edit>
+            <egovs_base_customer_reject_address_save>
+                <observers>
+                    <bkg_license_customer_reject_address_editing>
+                        <type>singleton</type>
+                        <class>bkg_license/customer_observer</class>
+                        <method>rejectAddressEdit</method>
+                    </bkg_license_customer_reject_address_editing>
+                </observers>
+            </egovs_base_customer_reject_address_save>
+        </events>
     </frontend>
     <admin>
       <routers>
@@ -224,9 +294,19 @@
                                   <title>Text</title>
                                   <sort_order>60</sort_order>
                               </bkglicense_text>
-
                           </children>
                       </bkglicense>
+						<system>
+						<children>
+							<config>
+								<children>
+									<bkg_license translate="title" module="bkg_license">
+                                                <title>Bkg License Section</title>
+                                    </bkg_license>
+								</children>
+							</config>
+							</children>
+						</system>
                   </children>
               </admin>
           </resources>
@@ -248,10 +328,18 @@
           </updates>
         </layout>
     </adminhtml>
-    <bkg_lizense>
+    <bkg_license>
     <address_type>
+       <contact>Contact Person</contact>
        <technischer_ansprech>Technischer Ansprechpartner</technischer_ansprech>
-         <lizenz_nehmer>Lizenznehmer</lizenz_nehmer>
-        </address_type>
-        </bkg_lizense>
+       <lizenz_nehmer>Lizenznehmer</lizenz_nehmer>
+     </address_type>
+     </bkg_license>
+        <default>
+           <bkg_license>
+            <email>
+                <copy_license_inform_template>license_email_copy_license_inform_template</copy_license_inform_template>
+            </email>
+        </bkg_license>
+    </default>
 </config>

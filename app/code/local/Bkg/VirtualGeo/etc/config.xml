@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bkg_VirtualGeo>
-            <version>0.1.1.0</version>
+            <version>0.2.0.0</version>
         </Bkg_VirtualGeo>
     </modules>
 
@@ -50,6 +50,14 @@
                     </virtualgeo_observer_onProductSaveAfter>
                 </observers>
             </catalog_product_save_after>
+            <virtualgeo_components_storageproduct_save_after>
+                <observers>
+                    <virtualgeo_observer_storage_save_after>
+                        <class>virtualgeo/bundle_observer</class>
+                        <method>onComponentsSaveAfter</method>
+                    </virtualgeo_observer_storage_save_after>
+                </observers>
+            </virtualgeo_components_storageproduct_save_after>
             <!--
             <sales_convert_quote_item_to_order_item>
                 <observers>
@@ -126,6 +134,11 @@
 								<sort_order>20</sort_order>
 								<action>adminhtml/virtualgeo_components_format/index</action>
 							</virtualgeo_components_format>
+                            <virtualgeo_components_accounting module="virtualgeo">
+                                <title>Accounting</title>
+                                <sort_order>20</sort_order>
+                                <action>adminhtml/virtualgeo_components_accounting/index</action>
+                            </virtualgeo_components_accounting>
 							<virtualgeo_components_content module="virtualgeo">
 								<title>Content</title>
 								<sort_order>30</sort_order>
@@ -141,7 +154,12 @@
 								<sort_order>50</sort_order>
 								<action>adminhtml/virtualgeo_components_structure/index</action>
 							</virtualgeo_components_structure>
-							<virtualgeo_components_storage module="virtualgeo">
+                            <virtualgeo_components_structure_category module="virtualgeo">
+                                <title>Structure Category</title>
+                                <sort_order>55</sort_order>
+                                <action>adminhtml/virtualgeo_components_structure_category/index</action>
+                            </virtualgeo_components_structure_category>
+                            <virtualgeo_components_storage module="virtualgeo">
 								<title>Storage</title>
 								<sort_order>60</sort_order>
 								<action>adminhtml/virtualgeo_components_storage/index</action>
@@ -175,6 +193,10 @@
 									<title>Format</title>
 									<sort_order>10</sort_order>
 								</virtualgeo_components_format>
+                                <virtualgeo_components_accounting	module="virtualgeo">
+                                        <title>Accounting</title>
+                                        <sort_order>10</sort_order>
+                                    </virtualgeo_components_accounting>
 								<virtualgeo_components_structure	module="virtualgeo">
 									<title>Structure</title>
 									<sort_order>10</sort_order>
@@ -251,7 +273,7 @@
                         <price_model>virtualgeo/product_price</price_model>
                         <index_data_retreiver>bundle/catalogIndex_data_bundle</index_data_retreiver>
                         <index_priority>40</index_priority>
-                        <price_indexer>bundle/indexer_price</price_indexer>
+                        <price_indexer>virtualgeo/indexer_price</price_indexer>
                         <stock_indexer>virtualgeo/indexer_stock</stock_indexer>
                     </virtualgeo>
                     <configurable>
@@ -297,10 +319,10 @@
                     <table>virtualgeo_components_georef_label</table>
                    </components_georef_label>
                    <components_georef_product>
-                    <table>virtualgeo_components_georef_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_georef_product>
                    <components_format_product>
-                    <table>virtualgeo_components_format_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_format_product>
 				   <components_content_entity>
                     <table>virtualgeo_components_content_entity</table>
@@ -309,8 +331,11 @@
                     <table>virtualgeo_components_content_label</table>
                    </components_content_label>
                    <components_content_product>
-                    <table>virtualgeo_components_content_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_content_product>
+                    <components_content_option_value>
+                        <table>virtualgeo_components_content_option_value</table>
+                    </components_content_option_value>
                    <components_content_category>
                     <table>virtualgeo_components_content_category</table>
                    </components_content_category>
@@ -330,7 +355,7 @@
                     <table>virtualgeo_components_structure_label</table>
                    </components_structure_label>
                    <components_structure_product>
-                    <table>virtualgeo_components_structure_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_structure_product>
                    <components_resolution_entity>
                     <table>virtualgeo_components_resolution_entity</table>
@@ -339,14 +364,38 @@
                     <table>virtualgeo_components_resolution_label</table>
                    </components_resolution_label>
                    <components_resolution_product>
-                    <table>virtualgeo_components_resolution_product</table>
+                    <table>virtualgeo_components_option_type_value</table>
                    </components_resolution_product>
                     <components_content_category>
                         <table>virtualgeo_components_content_category</table>
                     </components_content_category>
+                    <components_structure_category>
+                        <table>virtualgeo_components_structure_category</table>
+                    </components_structure_category>
+
+                    <components_accounting_entity>
+                        <table>virtualgeo_components_accounting_entity</table>
+                    </components_accounting_entity>
+                    <components_accounting_label>
+                        <table>virtualgeo_components_accounting_label</table>
+                    </components_accounting_label>
+
+
 				   <quote_options>
                         <table>virtualgeo_quote_options</table>
                     </quote_options>
+                    <service_geometry>
+                    	<table>virtualgeo_service_geometry</table>
+                    </service_geometry>
+                    <bundle_option>
+                        <table>virtualgeo_bundle_option</table>
+                    </bundle_option>
+                    <bundle_selection>
+                        <table>virtualgeo_bundle_selection</table>
+                    </bundle_selection>
+                    <product_option_value>
+                        <table>virtualgeo_components_option_type_value</table>
+                    </product_option_value>
                 </entities>
             </virtualgeo_resource>
 

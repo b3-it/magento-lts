@@ -59,13 +59,28 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Grid extends Mage_Adminhtml_Block_Widget_
           //'width'     => '150px',
           'index'     => 'note',
       ));
+      
+      
+      $collection = Mage::getModel('bkg_orgunit/unit')->getCollection();
+      $orgs = array();
+      
+      foreach($collection as $item)
+      {
+      	  $orgs[$item->getId()] = $item->getShortname();
+      }
+      
       $this->addColumn('parent_id', array(
           'header'    => Mage::helper('bkg_orgunit')->__('Übergeordnete Organisation'),
           //'align'     =>'left',
           //'width'     => '150px',
           'index'     => 'parent_id',
+      		'type' => 'options',
+      		'options'=>$orgs
       ));
 
+     
+      
+      
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('bkg_orgunit')->__('Action'),

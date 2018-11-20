@@ -28,7 +28,7 @@ class Bkg_License_Block_Adminhtml_Test_Search_Form extends Mage_Adminhtml_Block_
       $form->setUseContainer(true);
       $this->setForm($form);
       
-      $fieldset = $form->addFieldset('entity_form', array('legend'=>Mage::helper('bkg_license')->__('Master License')));
+      $fieldset = $form->addFieldset('entity_form', array('legend'=>Mage::helper('bkg_license')->__('Selected Master License')));
       
      
       if(Mage::registry('license_master') != null)
@@ -79,10 +79,54 @@ class Bkg_License_Block_Adminhtml_Test_Search_Form extends Mage_Adminhtml_Block_
       		'values' => $values
       ));
       
-      $fieldset = $form->addFieldset('entity_form2', array('legend'=>Mage::helper('bkg_license')->__('Copy License')));
+      if(Mage::registry('license_masters') != null)
+      {
+      	$fieldset = $form->addFieldset('entity_form2', array('legend'=>Mage::helper('bkg_license')->__('Template Licenses')));
+      	$fieldset->addType('table','Egovs_Base_Block_Adminhtml_Widget_Form_Table');
+      	 
+      	$columns = array();
+      	$columns['id'] = $this->__('Id');
+      	$columns['ident'] = $this->__('License Number');
+      	$columns['name'] = $this->__('Name');
+      
+      	 
+      	 
+      	$fieldset->addField('masters', 'table', array(
+      			'label'     => Mage::helper('bkg_orgunit')->__('Templates'),
+      			//'class'     => 'required-entry',
+      			//'required'  => true,
+      			'name'      => 'masters',
+      			'value' => Mage::registry('license_masters'),
+      			'columns' => $columns
+      	));
+      }
+      
+      if(Mage::registry('license_copies') != null)
+      {
+	      $fieldset = $form->addFieldset('entity_form3', array('legend'=>Mage::helper('bkg_license')->__('Copy Licenses')));
+	      $fieldset->addType('table','Egovs_Base_Block_Adminhtml_Widget_Form_Table');
+	      
+	      $columns = array();
+	      $columns['id'] = $this->__('Id');
+	      $columns['ident'] = $this->__('License Number');
+	      $columns['name'] = $this->__('Name');
+	     
+	      
+	      
+	      $fieldset->addField('copies', 'table', array(
+	      		'label'     => Mage::helper('bkg_orgunit')->__('Copies'),
+	      		//'class'     => 'required-entry',
+	      		//'required'  => true,
+	      		'name'      => 'copies',
+	      		'value' => Mage::registry('license_copies'),
+	      		'columns' => $columns
+	      ));
+      }
       
       if(Mage::registry('license_copy') != null)
       {
+      	$fieldset = $form->addFieldset('entity_form4', array('legend'=>Mage::helper('bkg_license')->__('Created License')));
+      	
       	$copy = Mage::registry('license_copy');
       
       	$fieldset->addField('copy_id', 'text', array(

@@ -6,14 +6,15 @@
 <div id="map">
 
 </div>
-   <script>
+	<script>
+	var tools = [];
+   
    <?php 
         echo Mage::helper("virtualgeo/data")->getProj4();
    ?>
 	$j(function() {
 		epsg = "<?php echo $this->getESPGfromTool(); ?>";
         <?php echo $this->getComposit()->getOpenLayer("epsg"); ?>
-        var tools = [];
     <?php
         /**
          * @var Bkg_Viewer_Model_Resource_Composit_Selectiontools_Collection $tools
@@ -26,32 +27,22 @@
             echo ($tool->getOpenLayers("epsg"));
         }
     ?>
-
-    function makeview(epsg) {
-    	pro = ol.proj.get("EPSG:"+ epsg);
-    	return new ol.View({
-    	     center: ol.proj.fromLonLat([13.73836, 51.049259], pro),
-    	     projection: pro,
-    	     maxZoom: 10,
-    	     zoom: 6,
-    	     minZoom: 2
-       });
-    }
-
+    
      // set style
      tools[0].setVisible(true);
+
+     // set style depending function depending on the state of the feature
      tools[0].setStyle(function(feature, resolution) {
           j = $j('#qty-' + feature.get('sku'));
-          return new ol.style.Style({
-              stroke: new ol.style.Stroke({
-                  color: 'rgba(0, 0, 0, 1.0)',
-                  width: 1
-              }),
-              fill: new ol.style.Fill({
-                  color: j.length == 0 ? 'rgba(255, 0, 0, 0.25)' : j.val() == 0 ? 'rgba(0, 0, 255, 0.25)' : 'rgba(0, 255, 0, 0.25)',
-              }),
-          });
+          return j.length == 0 ? mapseries_missing : j.val() == 0 ? mapseries_available : mapseries_selected;
       });
+
+     // when loaded use SKU as ID for the features there
+     tools[0].getSource().once('change', function(e) {
+		e.target.getFeatures().forEach(function(y) {
+ 			y.setId(y.get('sku'));
+		});
+	});
      
      layers_0.push(new ol.layer.Group({
          //title: 'Tools',
@@ -64,65 +55,18 @@
         target: document.getElementById('map'),
         view: makeview(epsg)
       });
-
-      var dialogFunction = function(list) {
-    	  str = "<table title='Füge hinzu?'>";
-          list.forEach( function(f) {
-        	  var sku = f.get('sku');
-        	  var price = $j("#price-" + sku + " .price").text();
-        	  var name = $j("#name-" + sku).text();
-              str += "<tr>";
-
-              str += "<td><label><input id='confirm-chk-"+ sku +"' type='checkbox' checked='checked' name='ids' value='" + sku + "' />" + name + "</td>";
-              str += "<td>" + price + "</td>";
-              str += "<td><input id='confirm-qty-" + sku + "' type='number' value='1' min='0' /></td>";
-              
-              str += "</tr>";
-          });
-          str += "</table>";
-          $j(str).dialog({
-              resizable: false,
-              height: "auto",
-              width: 400,
-              modal: true,
-              buttons: {
-                Confirm: function() {
-                  $j( this ).find(":checked").each(function(index) {
-                      sku = $j(this).val();
-
-                      v = $j('#confirm-qty-' + sku).val();
-                      qty = $j('#qty-' + sku);
-                      qty.val(function(i, oldval) {
-                          return parseInt(oldval, 10) + parseInt(v, 10);
-                      });
-                      // call changed so the map get updated
-                      qty.change();
-                  });
-
-                  // need to destroy so it is removed from code
-                  $j( this ).dialog( "destroy" ).remove();
-                },
-                Cancel: function() {
-                  // need to destroy so it is removed from code
-                  $j( this ).dialog( "destroy" ).remove();
-                }
-              }
-            });
-      };
       
        var select = new ol.interaction.Select({
-    	   multi: true
+    	   multi: true,
+    	   filter: function(f, l) {
+    		   var sku = f.get('sku');
+               var j = $j("#qty-" + sku);
+               return j.length != 0;
+    	   }
        });
        
        select.on('select', function(e) {
-    	   var list = [];
-    	   e.target.getFeatures().forEach(function(f) {
-    		   var sku = f.get('sku');
-               var j = $j("#qty-" + sku);
-               if (j.length != 0) {
-                 list.push(f);
-               }
-           });
+    	   var list = e.selected;
     	   e.target.getFeatures().clear();
     	   if (list.length <= 0) {
                return;

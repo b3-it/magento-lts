@@ -34,7 +34,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	$case .= " END) ";
       	
       	$versandSKU = new Zend_Db_Expr("(select case COALESCE(round(100 * `sales_flat_invoice`.`shipping_tax_amount` / `sales_flat_invoice`.`shipping_amount`),0) $case as sku");    	
-      	$suffixIncrementId = new Zend_Db_Expr("CONCAT_WS('_',order.increment_id, order_item.is_virtual ) as suffixincrementid") ;
+      	$suffixIncrementId = new Zend_Db_Expr("order.increment_id as suffixincrementid") ;
         
       	$leistungsAdr = new Zend_Db_Expr("(SELECT IF(order_item.is_virtual = 0,order.shipping_address_id,base_address_id)) AS leistungs_addresse");
       	
@@ -71,8 +71,9 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->columns($bewirtschafter)
       	->columns($konto)
       	->columns($suffixIncrementId)
-      	->joinleft(array('address'=>'sales_flat_order_address'), "address.address_type='base_address' AND address.parent_id = order.entity_id",array('base_address_id'=>'address.entity_id'))
+      	->joinleft(array('address'=>'sales_flat_order_address'), "address.address_type= IF (order.is_virtual=0,'shipping','base_address') AND address.parent_id = order.entity_id",array('base_address_id'=>'address.entity_id'))
       	->columns($leistungsAdr)
+        ->where('invoice.state != '.Mage_Sales_Model_Order_Invoice::STATE_CANCELED)
       	;
       	
  // die($this->getSelect()->__toString());    	
@@ -82,7 +83,7 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
         $hh_versand = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/haushaltsstelle')."' as haushaltsstelle");	
         $obj_versand = new Zend_Db_Expr("'".Mage::getStoreConfig('payment_services/paymentbase/objektnummer')."' as objektnummer");	
         $tax_percent = new Zend_Db_Expr('COALESCE(round(100 * `sales_flat_invoice`.`shipping_tax_amount` / `sales_flat_invoice`.`shipping_amount`),0.0000) as tax_percent');
-        $suffixIncrementId = new Zend_Db_Expr("CONCAT_WS('_',order.increment_id, is_virtual ) as suffixincrementid") ;
+        $suffixIncrementId = new Zend_Db_Expr("order.increment_id as suffixincrementid") ;
       	
         $leistungsAdr = new Zend_Db_Expr("(SELECT order.shipping_address_id AS leistungs_addresse, 0 as base_address_id)");
         
@@ -117,8 +118,10 @@ class Dwd_Ibewi_Model_Mysql4_Invoice_Collection extends Mage_Sales_Model_Mysql4_
       	->columns(new Zend_Db_Expr("(SELECT 0) as base_address_id"))
       	->columns(new Zend_Db_Expr("(SELECT order.shipping_address_id) AS leistungs_addresse"))
       	
-      	->where('`sales_flat_invoice`.`shipping_amount` > 0');
- 
+      	->where('`sales_flat_invoice`.`shipping_amount` > 0')
+      	->where('sales_flat_invoice.state != '.Mage_Sales_Model_Order_Invoice::STATE_CANCELED)
+        ;
+
       	$sql1 = $this->getSelect();
       	
       	

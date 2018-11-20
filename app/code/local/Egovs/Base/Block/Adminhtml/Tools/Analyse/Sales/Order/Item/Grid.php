@@ -31,15 +31,19 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         
        	$collection->getSelect()
        	->join(array('order'=>$collection->getTable('sales/order')),'main_table.order_id = order.entity_id',array('increment_id'=>'increment_id','orderstatus'=>'status','customer_id','customer_email'));
-       	
+
+
        	//StoreIsolation
        	if(Mage::helper('egovsbase')->isModuleEnabled('Egovs_Isolation'))
        	{
-       		$stores = Mage::helper('isolation')->getUserStoreViews();
-       		if(count($stores) > 0)
-       		{
-       			$collection->getSelect()->where('store_group IN ('.implode(',',$stores).')');
-       		}
+            if(!Mage::helper('isolation')->getUserIsAdmin())
+            {
+                $stores = Mage::helper('isolation')->getUserStoreGroups();
+                if (count($stores) == 0) {
+                    $stores[] = -1;
+                }
+                $collection->getSelect()->where('store_group IN (' . implode(',', $stores) . ')');
+            }
        	}
         
         //die($collection->getSelect()->__toString());

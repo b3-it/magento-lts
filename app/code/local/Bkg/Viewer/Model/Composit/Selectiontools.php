@@ -67,9 +67,11 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
         $text = array();
         $helper = Mage::helper("core");
 
-        $text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=".$this->getServiceLayer()->getName() . "';";
+        $name = $this->getServiceLayer()->getName();
+        $text[] = "var url = '" . $this->getService()->getUrlFeatureinfo()."&typename=". $helper->jsQuoteEscape($name) . "';";
         if ($geocode) {
-            $text[] = "url += '&srsname=EPSG:' + " . $geocode .";";
+            // need urn:x-ogc:def:crs, otherwise it might be wrong Axis?
+            $text[] = "url += '&srsname=urn:x-ogc:def:crs:EPSG:' + " . $geocode .";";
         }
 
         $text[] = "var vectorSource".self::$Count." = new ol.source.Vector({";
@@ -77,21 +79,42 @@ class Bkg_Viewer_Model_Composit_Selectiontools extends Mage_Core_Model_Abstract
 
         $text[] = "	url: url,";
         // srsName set somehow?
-
+        
+        // ajaxLoader to be make use of Overlay
+        $text[] = " loader: ajaxLoader,";
+        
         //$text[] = "	strategy: ol.loadingstrategy.bbox";
         $text[] = "});";
         
+        // need to use gdz helper there?
+        if (class_exists(Mage::getConfig()->getHelperClassName("virtualgeo/gdz"))) {
+            $exp =  explode(":", $name);
+            /**
+             * @var BKG_VirtualGeo_Helper_Gdz $gdz
+             */
+            $gdz = Mage::helper("virtualgeo/gdz");
+
+            if ($gdz != null && isset($exp[1]) && $gdz->includeLayer($exp[1])) {
+                $json = $gdz->describe($exp[1]);
+                if (isset($json['attributeName'])) {
+                    $text[] = "vectorSource".self::$Count.".set('attributeName','" . $helper->jsQuoteEscape($json['attributeName']) . "');";
+                }
+            }
+        }
+
         $text[] = "var vector = new ol.layer.Vector({";
         $text[] = "  source: vectorSource".self::$Count.",";
         $text[] = "  title: '" . $helper->jsQuoteEscape($this->getLabel()) . "',";
-        $text[] = "  zIndex: " .(100+self::$Count). ",";
+        $text[] = "  layer_id: ".intval($this->getLayerId()).",";
+        
+        $vpos = $this->getVisualPos();
+        if ($vpos === null) {
+            $vpos = $this->getPos();
+        }
+        $text[] = "  zIndex: " .intval($vpos). ",";
+        // default invisible, will be set visible with menu
         $text[] = "  visible: false,";
-        $text[] = "  style: new ol.style.Style({";
-        $text[] = "    stroke: new ol.style.Stroke({";
-        $text[] = "      color: 'red',";
-        $text[] = "      width: 2";
-        $text[] = "    }),";
-        $text[] = "  }),";
+        $text[] = "  style: selectionStyle,";
         $text[] = "});";
         $text[] = "tools.push(vector);";
         

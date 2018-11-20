@@ -75,6 +75,16 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
           'value' => $dataModel->getStoreId()
       ));
 
+      $categroys =  Mage::getModel('virtualgeo/components_structure_category')->getCollection()->toOptionHash();
+
+      $fieldset->addField('category', 'select', array(
+          'label'     => Mage::helper('virtualgeo')->__('Category'),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'category_id',
+          'options' => $categroys,
+          'value'	=> $dataModel->getCategoryId()
+      ));
 
       	$services = Mage::getModel('bkgviewer/service_service')->getCollection();
 
@@ -117,6 +127,31 @@ class Bkg_VirtualGeo_Block_Adminhtml_Components_Structure_Edit_Form extends Mage
       		'class'     =>  ($store_id != 0) ? 'readonly' : '',
             'value'    => $dataModel->getServiceId(),
       
+      ));
+      
+      
+      
+      $fieldset->addField('layer_naming_rule', 'text', array(
+      		'label'     => Mage::helper('virtualgeo')->__('Layer Naming Rule'),
+      		'name'      => 'layer_naming_rule',
+      	
+      		//'onchange'  => 'toogleLayer()',
+//      	'readonly' => $store_id != 0,
+//      	'disabled' => $store_id != 0,
+      		'value' => $dataModel->getLayerNamingRule(),
+      		'note'		=> "{{product_code}}_{{crs_code}}_{{structure_code}}"
+      ));
+      
+      
+      $fieldset->addField('show_map', 'checkbox', array(
+      		'label'     => Mage::helper('virtualgeo')->__('Show Map'),
+      		'name'      => 'show_map',
+      		'checked'	=> boolval($dataModel->getShowMap()),
+      		//'onchange'  => 'toogleLayer()',
+      		'readonly' => $store_id != 0,
+      		'disabled' => $store_id != 0,
+      		'class'     =>  ($store_id != 0) ? 'readonly' : '',
+      		'note'		=> "Show Map Configuration Within Product Configuration"
       ));
       
       

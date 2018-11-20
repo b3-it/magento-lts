@@ -32,37 +32,40 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Content_Layer exte
 		$res = array();
 		$product = $this->_getProduct();
 		$collection = Mage::getModel('virtualgeo/components_content')->getOptions4Product($product->getId(), $product->getStoreId());
-        $collection->getSelect()->order('product.pos');
-		$items = $collection->getItems();
-	//die($collection->getSelect()->__toString());
-		foreach($collection->getItems() as $item)
-		{
+        /*
+         * Erst nach ID, dann nach POS! Sonst wird child vor parent in Tree eingefügt!
+         */
+		$collection->getSelect()->order('main_table.id');
+		$collection->getSelect()->order('main_table.pos');
+        $items = $collection->getItems();
+
+		foreach ($items as $item) {
 			$parent = null;
-			if($item->getParentNodeId())
-			{
-				$parent = $this->_findItem($items,$item->getParentNodeId());
+			if ($item->getParentNodeId()) {
+				$parent = $this->_findItem($items, $item->getParentNodeId());
 			}
 			
-			$res[] = new Varien_Object(array('id'=>$item->getComponentProductRelationId(),
-					'label'=>trim($item->getName()." " . $item->getDescription()) ,
-					'entity_id'=>$item->getEntityId(),
-					'is_readonly'=>boolval($item->getReadonly()),
-					'is_checked'=>boolval($item->getIsChecked()) ,
-					'pos' =>$item->getPos(),
-					'parent' => $parent != null? $parent->getComponentProductRelationId() : ''
-			));
+			$res[] = new Varien_Object(
+			        array(
+			            'id'=>$item->getId(),
+					    'label'=>trim($item->getName()." " . $item->getDescription()) ,
+					    'entity_id'=>$item->getEntityId(),
+					    'is_readonly'=>boolval($item->getReadonly()),
+					    'is_checked'=>boolval($item->getIsChecked()) ,
+					    'pos' =>$item->getPos(),
+					    'node_id' => $item->getNodeId(),
+					    'parent' => $parent != null ? $parent->getId() : ''
+			        )
+            );
 		}
 		
 		
 		return $res;
 	}
 	
-	protected function _findItem($items,$component_product_relation_id)
-	{
-		foreach ($items as $item)
-		{
-			if($item->getComponentProductRelationId() == $component_product_relation_id)
-			{
+	protected function _findItem($items, $parentId) {
+		foreach ($items as $item) {
+			if ($item->getNodeId() == $parentId) {
 				return $item;
 			}
 		}

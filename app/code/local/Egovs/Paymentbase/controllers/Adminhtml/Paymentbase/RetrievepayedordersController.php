@@ -2,13 +2,11 @@
 /**
  * Controller zur Abfrage der Zahlungseingänge
  *
- * @category   	Egovs
- * @package    	Egovs_Paymentbase
- * @author 		Rene Sieberg <rsieberg@web.de>
- * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
- * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
- *
- * @see Mage_Adminhtml_Controller_Action
+ * @category  Egovs
+ * @package   Egovs_Paymentbase
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright Copyright (c) 2018 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Paymentbase_Adminhtml_Paymentbase_RetrievepayedordersController extends Mage_Adminhtml_Controller_Action
 {
@@ -22,15 +20,12 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_RetrievepayedordersController exte
 		try {
 			$model = Mage::getModel('paymentbase/paymentbase');
 			$model->getZahlungseingaenge();
-			// Auf Bestellübersicht umleiten
-			$this->_redirect('adminhtml/sales_order/index');
-
 		} catch (Exception $e) {
 			Mage::getSingleton('core/session')->addError($e->getMessage());
-			// Auf Bestellübersicht umleiten
-			$this->_redirect('adminhtml/sales_order/index');
-			return;
 		}
+
+
+		$this->_redirectReferer($this->getUrl('adminhtml/sales_order'));
 	}
 	
 	protected function _isAllowed() {

@@ -9,6 +9,7 @@
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
 
+/* @var $this Mage_Catalog_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();

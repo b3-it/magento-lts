@@ -11,7 +11,7 @@
  *
  * @see Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo
  */
-/* @var $this Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo */
+/** @var $this Bkg_VirtualGeo_Block_Catalog_Product_View_Virtualgeo */
 ?>
 <?php $_product = $this->getProduct() ?>
 
@@ -32,8 +32,7 @@
 .ui-controlgroup > .ui-helper-hidden-accessible {
   position: absolute !important;
 }
-
-#select-vg-menu > .ui-menu-item {
+.ui-selectmenu-menu > ul > li.ui-menu-item {
   line-height: normal;
 }
 .toogleModeCtrl {
@@ -44,25 +43,81 @@
 	left: 5.5em;
 }
 </style>
+<pre>
+<?php 
+    /**
+     * @var int $cid
+     */
+    $cid = Mage::getSingleton('customer/session')->getCustomerId();
+    ;
+?>
+</pre>
 <script type="text/javascript">
     var strPrefixSelected = '<?php echo $this->__('Selected Options'); ?>:';
     <?php if ($this->getComposit()): ?>
 
-    <?php
-        echo Mage::helper("virtualgeo/data")->getProj4();
-    ?>
+	var pcode = "<?php echo $_product->getData('product_code'); ?>";
+    <?php echo Mage::helper("virtualgeo/data")->getProj4(); ?>
 
+    var shapesfunc = function(epsg) {
+        var layers = [];
+    	<?php if(Mage::helper('core')->isModuleEnabled("Bkg_Shapefile") && isset($cid)) :?>
+    	files = <?php echo json_encode(Mage::helper("bkg_shapefile")->getFilesByUser($cid)); ?>;
+        fileIdx = 0;
+		files.forEach(function(file) {
+			if (epsg != file['epsg_code']) {
+				return;
+			}
+  			layers.push(new ol.layer.Vector({
+				title: file['name'],
+				layer_id: file['id'],
+				visible: false,
+				source: new ol.source.Vector({
+					format: new ol.format.WKT(),
+					loader: function(extent, resolution, projection) {
+	  					var self = this; 
+						url = baseUrl + "index.php/shapefile/file/shapes/id/" + file['id'];
+	  					$j.ajax(url, {
+	  						success: function(shapes) {
+	  	  						dataProj = ol.proj.get("EPSG:" + file['epsg_code']);
+      	  						shapes.forEach(function(el) {
+          	  						list = self.getFormat().readFeatures(el['shape'], {
+      	  								dataProjection: dataProj,
+      	  								featureProjection: projection
+      	  							});
+      	  							list.forEach(function(l) {
+          	  							l.setId(el['id']);
+          	  						});
+      	  	  						self.addFeatures(list);
+      	  						});
+	  						}
+	  					});
+					}
+				}),
+				style: shapeStyle,
+				zIndex: file['zIndex']
+			}));
+			fileIdx += 1;
+		});
+        <?php endif; ?>
+        return new ol.layer.Group({
+            //title: 'Tools',
+            layers: layers
+        });
+    }
+    
 	var toolsfunc = function(epsg) {
       var tools = [];
       <?php
-      $tools = $this->getSelectionTools();
-      foreach ($tools as $tool) {
-          /**
-           * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
-           */
-          echo ($tool->getOpenLayers("epsg"));
-      }
-      ?>
+        $tools = $this->getSelectionTools();
+        foreach ($tools as $tool) {
+            /**
+             *
+             * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
+             */
+            echo ($tool->getOpenLayers("epsg"));
+        }
+        ?>
       return new ol.layer.Group({
         //title: 'Tools',
         layers: tools
@@ -71,30 +126,45 @@
 
 	function _kachelFunc(f) {
 
+		// reset the source and vector
     	kachelSource = null;
     	kachelVector = null;
 
-    	struct = $j("input:checked[name='virtualgeo-components-structure[]']");
+    	struct = $j("input:checked[data-id='virtualgeo-components-structure']");
     	if (struct.length > 0) {
-    		structid = struct.val();
-    		georef = $j("input:checked[name='virtualgeo-components-georef[]']");
+    		structid = struct.attr("data-entity-id");
+    		georef = $j("input:checked[data-id='virtualgeo-components-georef']");
     		if (georef.length > 0) {
-    			geocode = georef.attr("data-code");
+    			geoepsg = georef.attr("data-epsg");
 
     	        // the url should already support that epsg
-    			url = baseUrl + "index.php/virtualgeo/map/structurLayer/id/" + structid + "/georef/" + geocode;
+    			url = baseUrl + "index.php/virtualgeo/map/structurLayer/id/" + structid + "/geoepsg/" + geoepsg + "/procode/" + pcode;
     			$j.ajax(url, {
+    				beforeSend: incLoading,
+    				complete: decLoading,
     				//async: false,
-        			success: function(str) {
-            			//console.log(str);
-            			if (!!str) {
+        			success: function(data) {
+        				if (!!data.url) {
             				kachelSource = new ol.source.Vector({
                 		    	format: new ol.format.WFS({gmlFormat: new ol.format.GML3()}),
-                		    	url: str
+                		    	url: data.url,
+                		    	loader: ajaxLoader
                 			});
+
+                			// need to update the ID values for them
+                			// need to use feature id attribute if able
+                			if (!!data.fid) {
+                    			kachelSource.once('change', function(e) {
+                        			e.target.getFeatures().forEach(function(y) {
+                               			y.setId(y.get(data.fid));
+                        			});
+                        		});
+                			}
+
                 			kachelVector = new ol.layer.Vector({
+                    		  layer_id: data.id,
                 	    	  source: kachelSource,
-                	    	  zIndex: 1000
+                	    	  zIndex: kachelZIndex
                 	    	});
                 			f.call(null, kachelVector);
             			}

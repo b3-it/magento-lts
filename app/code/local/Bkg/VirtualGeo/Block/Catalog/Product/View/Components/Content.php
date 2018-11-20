@@ -10,89 +10,47 @@ class Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content extends Bkg_V
 	
 	
 	
-	public function getOptions($fields = null)
-	{
-		$options = parent::getOptions();
-		$res = $this->_findCildren(null,$options);
-		
-		
-		//var_dump($res); die;
+	public function getOptions($fields = null) {
+        parent::getOptions($fields);
+
+		$res = $this->_findChildren(null);
+
 		return $res;
 	}
 	
-	protected function _findCildren($parentId,$options)
+	protected function _findChildren($parentId)
 	{
 		$res = array();
-		foreach($options as $opt)
-		{
-			if($opt->getParentNodeId() == $parentId)
-			{
-				$opt->setChildren($this->_findCildren($opt->getId(),$options));
+		foreach($this->_options as $opt) {
+			if ($opt->getParentNodeId() == $parentId) {
+				$opt->setChildren($this->_findChildren($opt->getNodeId()));
 				$res[] = $opt;
 			}
 		}
-		if(count($res) == null){
+		if (count($res) == null){
 			return null;
 		}
 		return $res;
 	}
+
+	public function getNodeRenderer() {
+        $nodeRenderer = $this->getData('node_renderer');
+        if (!$nodeRenderer) {
+            $nodeRenderer = array(
+                'block' => 'virtualgeo/catalog_product_view_components_content_renderer_node',
+                'template' => 'virtualgeo/catalog/product/view/components/content/renderer/node.phtml'
+            );
+        }
+
+        return $this->getLayout()
+            ->createBlock($nodeRenderer['block'])
+            ->setTemplate($nodeRenderer['template'])
+            ->setRenderedBlock($this);
+    }
 	
-	
-	public function getTreeHtml()
-	{
-		$options = $this->getOptions();
-		if ($options === null) {
-		    return "";
-		}
-		$res = array();
-		foreach($options as $option)
-		{
-			$res[] = $this->_getNodeHtml($option);
-		}
-		
-		return implode(' ', $res);
+	public function getNodeHtml($node) {
+		$nodeRenderer = $this->getNodeRenderer()->setNodeData($node);
+		return $nodeRenderer->toHtml();
+
 	}
-	
-	
-	
-	
-	protected function _getNodeHtml($node)
-	{
-		$res = array();
-		$res[] = '<li>';
-		
-		$res[] = '<div>';
-		$res[] = '<input type="checkbox"';
-		$res[] = 'class="checkbox"';
-		if($node->getIsChecked())
-		{
-			$res[] = 'checked="checked"';
-		}
-		if($node->getReadonly())
-		{
-			$res[] = 'disabled="disabled"';
-		}
-		$res[] = 'name="'.$this->getHtmlID().'[]"';
-		$res[] = 'value="'.$node->getEntityId().'"';
-		$res[] = 'data-id="'.$this->getHtmlID().'"';
-		$res[] = 'data-code="'.$node->getCode().'"';
-		$res[] = 'data-shortname="'.$node->getShortname().'"';
-		$res[] = 'data-name="'.$node->getName().'"/>';
-		$res[] = trim($node->getName()." " . $node->getDescription()).  '</div>';
-		
-		if($node->getChildren())
-		{
-			$res[] = '<ul style="margin-left:20px;">';
-			foreach($node->getChildren() as $child)
-			{
-				$res[] = $this-> _getNodeHtml($child);
-			}
-			$res[] = '</ul>';
-		}
-		
-		$res[] = '</li>';
-		
-		return implode(' ', $res);
-	}
-	
 }

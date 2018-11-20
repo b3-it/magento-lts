@@ -29,7 +29,7 @@
 <tr>
 <td class="address-list">
     <div class="entry-edit-head">
-        <h4 class="icon-head head-customer-address-list"><?php echo Mage::helper('customer')->__('Customer Addresses') ?></h4>
+        <h4 class="icon-head head-customer-address-list"><?php echo Mage::helper('bkg_orgunit')->__('Organisation Addresses') ?></h4>
     </div>
     <div class="sub-btn-set"><?php echo $this->getAddNewButtonHtml() ?></div>
     <ul id="address_list">
@@ -403,6 +403,8 @@ addressesModel.prototype = {
                 delete data['region_id'];
             }
 
+            // get company from parent Form
+            data['company'] = document.getElementById('company').value;
             // Set data to html
             var itemContainer = container.addressItem.getElementsBySelector('address');
             if(itemContainer[0]){

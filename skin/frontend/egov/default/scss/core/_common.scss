@@ -128,6 +128,7 @@ input[type="checkbox"]:focus, input[type="radio"]:focus {
     outline-color: $global-active-color !important;
 }
 
+
 /* ============================================ *
  * Typography
  * ============================================ */
@@ -152,12 +153,16 @@ h6, .h6 { @include h6; }
     margin-bottom: 1em;
 }
 
-.availability {
+#availability {
     font-size: $global-fontsize-big;
     margin-bottom: 0;
 
     .label {
          font-size: $global-fontsize;
+    }
+
+    p {
+        display: inline-block;
     }
 
     .in-stock {
@@ -837,9 +842,10 @@ body:not(.customer-account) .block:first-child .block-title {
         min-height: 40px;
         padding-top: (40px - $f-size-xxs) / 2;
         padding-bottom: (40px - $f-size-xxs) / 2;
-        background-image: url('../images/demo-logo.png');
-        background-position: left;
-        background-repeat: no-repeat;
+        
+        @include bp(max-width, $bp-medium + 1) {
+        	padding-left: 0;
+        }
     }
 
     p {
@@ -1295,7 +1301,7 @@ span.weee {
 .no-touch .product-img-box .product-image:not(.zoom-available):hover {
     position: relative;
     display: block;
-    top: -15px;
+    //top: -15px;
     //border: 1px solid $global-border-color-light;
 }
 

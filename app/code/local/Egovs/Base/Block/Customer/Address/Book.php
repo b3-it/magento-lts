@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Magento
  *
@@ -27,22 +28,30 @@
 /**
  * Customer address book block
  *
- * @category   Egovs
- * @package    Egovs_Base
- * @author     
+ * @category Egovs
+ * @package Egovs_Base
+ * @author
  */
 class Egovs_Base_Block_Customer_Address_Book extends Mage_Customer_Block_Address_Book
 {
-	public function rejectAddressEditing($address_id) {
-		 return Mage::helper('egovsbase/customer_address')->rejectAddressEditing($address_id, $this);
-	}
-	
-	public function getLockedAddressText() {
-		return $this->__('This address is used by additional service. For changeing contact our customer service please!');
-	}
 
-    public function getAdditionalAddresses() {
+    public function rejectAddressEditing($address)
+    {
+        if (false === $address) {
+            $address = null;
+        } elseif (is_string($address)) {
+            $address = Mage::getModel('customer/address')->load($address);
+        }
+        return Mage::helper('egovsbase/customer_address')->rejectAddressEditing($address, $this);
+    }
 
+    public function getLockedAddressText()
+    {
+        return $this->__('This address is used by additional service. For changeing contact our customer service please!');
+    }
+
+    public function getAdditionalAddresses()
+    {
         $addresses = $this->getCustomer()->getAdditionalAddresses();
         $base = $this->getCustomer()->getBaseAddress();
         if ($base) {
@@ -52,8 +61,7 @@ class Egovs_Base_Block_Customer_Address_Book extends Mage_Customer_Block_Address
                 }
             }
         }
-
+        
         return empty($addresses) ? false : $addresses;
     }
-	
 }

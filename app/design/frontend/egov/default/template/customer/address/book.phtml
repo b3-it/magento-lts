@@ -8,8 +8,10 @@
 
 /**
  * Temlate for Mage_Customer_Block_Address_Book block
- * @var $test Mage_Customer_Block_Address_Book
+ * @var Egovs_Base_Block_Customer_Address_Book $this
+ * @var Egovs_Base_Helper_Customer_Address $addressHelper
  */
+$addressHelper = Mage::helper('egovsbase/customer_address');
 $customer = Mage::getSingleton('customer/session')->getCustomer();
 $shippingIsBilling = false;
 $billingIsBase = false;
@@ -63,7 +65,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                         </span>
                     </span>
                   <?php endif;?>
-                    
+
 
                 </h3>
             </div>
@@ -92,8 +94,8 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                         </span>
                     </span>
                   <?php endif;?>
-                    
-                    
+
+
                 </h3>
             </div>
             <div class="box-content">
@@ -164,20 +166,31 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
         <?php if($_pAddress = $this->getAdditionalAddresses()): ?>
         <?php foreach($_pAddress as $_address): ?>
         <div class="box">
-            <div class="box-title">
-                <h3>
+             <?php if(!$this->rejectAddressEditing($_address)):?>
+                    <h3>
                     <?php echo $this->__('Edit Address') ?>
                     <span class="spacer">|</span>
                     <a class="egov-pencile"
                        href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"
                        title="<?php echo $this->__('Edit Address') ?>"> </a>
+                    <?php if (!$addressHelper->isAddressReadOnly($_address)):?>
                     <span class="spacer">|</span>
                     <a class="egov-delete"
                        href="javascript:void(0);"
                        class="link-remove"
                        onclick="return deleteAddress('<?php echo $_address->getId() ?>');"
                        title="<?php echo $this->__('Delete Address') ?>"> </a>
+                  <?php endif;?>
                 </h3>
+                  <?php else: ?>
+                    <span class="locked_address_text egov-password">
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
+                    </span>
+                  <?php endif;?>
+			<div class="box-title">
+
             </div>
             <div class="box-content">
                 <address>
@@ -196,7 +209,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
     </div>
 </div>
 <div class="buttons-set">
-    <button class="button back-button egov-float-left" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
+    <button class="button back-button egov-float-left" type="button" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
         <small>&laquo; </small>
         <?php echo $this->__('Back') ?>
     </button>

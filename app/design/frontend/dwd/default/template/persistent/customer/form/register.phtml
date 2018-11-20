@@ -279,7 +279,7 @@
             </ul>
         </div>
 
-        <div class="fieldset wide half-space">
+        <div class="fieldset half-space">
             <ul class="form-list">
               <?php echo $this->getChildHtml('form.additional.info'); ?>
               <?php if ($this->isNewsletterEnabled()): ?>
@@ -311,7 +311,7 @@
             </button>
         </div>
     </form>
-    
+
     <script charset="utf-8" src="<?php echo Mage::getBaseUrl('js').'prototype' ?>/validation.js" type="text/javascript"></script>
     <script type="text/javascript">
         var dataForm = new VarienForm('form-validate', true);
@@ -325,7 +325,7 @@
         $j(document).ready(function(){
             $j('#firstname').focus();
         });
-        
+
         if ( $j('#adress-new-taxvat').length ) {
 	        new Validation('form-validate');
 	        if (Validation) {
@@ -336,7 +336,7 @@
 	                    function() {
 	                        var company = $F('company');
 	                        var taxvat = $F('vat_id');
-	
+
 	                        if ( (company.length == 0) && (taxvat.length > 0) ) {
 	                            return false;
 	                        }

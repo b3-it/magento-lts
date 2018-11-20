@@ -66,6 +66,7 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Edit_Form extends Mage_Adminhtml
       		'name'      => 'is_calculable',
           'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
       ));
+      /*
       $values = Mage::getModel('bkg_tollpolicy/usetype')->getCollection()->toOptionArray();
       $fieldset->addField('use_type_id', 'select', array(
       		'label'     => Mage::helper('bkg_tollpolicy')->__('Type of Use'),
@@ -75,20 +76,35 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Edit_Form extends Mage_Adminhtml
       		'values' => $values
       ));
 
+
+      */
       $fieldset->addField('pos', 'text', array(
           'label'     => Mage::helper('bkg_tollpolicy')->__('Pos'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'pos',
       ));
-      
-      if ( Mage::getSingleton('adminhtml/session')->getuse_options_entityData() )
-      {
-      	$form->setValues(Mage::getSingleton('adminhtml/session')->getuse_options_entityData());
-      	Mage::getSingleton('adminhtml/session')->setuse_options_entityData(null);
-      } elseif ( Mage::registry('use_options_entity_data') ) {
-      	$form->setValues(Mage::registry('use_options_entity_data')->getData());
+
+
+      $fieldset->addField('use_type_id', 'hidden', array(
+          'name'      => 'use_type_id',
+          'value' => intval($this->getRequest()->getParam('useid'))
+      ));
+
+      $data = Mage::registry('use_options_entity_data');
+      if(intval($this->getRequest()->getParam('useid'))){
+          $data['use_type_id'] = intval($this->getRequest()->getParam('useid'));
       }
+
+
+      $form->setValues($data);
+
+
+
+
+
+
+
       return parent::_prepareForm();
   }
 }

@@ -9,7 +9,7 @@
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 
-class Bkg_Regionallocation_Block_Adminhtml_Koenigsteinerschluessel_Kst_Edit_Tab_Kstvalue_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
+class Bkg_RegionAllocation_Block_Adminhtml_Koenigsteinerschluessel_Kst_Edit_Tab_Kstvalue_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
   protected function _prepareForm()
   {

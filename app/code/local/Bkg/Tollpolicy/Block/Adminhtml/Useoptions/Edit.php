@@ -22,17 +22,11 @@ class Bkg_Tollpolicy_Block_Adminhtml_Useoptions_Edit extends Mage_Adminhtml_Bloc
         $this->_updateButton('delete', 'label', Mage::helper('bkg_tollpolicy')->__('Delete Item'));
 
 
-        $this->_addButton('saveandcontinue', array(
-            'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
-            'onclick'   => 'saveAndContinueEdit()',
-            'class'     => 'save',
-        ), -100);
+    }
 
-        $this->_formScripts[] = "
-            function saveAndContinueEdit(){
-                editForm.submit($('edit_form').action+'back/edit/');
-            }
-        ";
+    public function getBackUrl()
+    {
+        return $this->getUrl('*/tollpolicy_usetype/edit',array('id' => intval($this->getRequest()->getParam('useid'))));
     }
 
     public function getHeaderText()

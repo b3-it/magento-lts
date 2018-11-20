@@ -41,7 +41,15 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
         $this->_init('bkg_orgunit/unit_address');
     }
 
- 
+    protected function _beforeDelete() {
+
+        $this->getResource()->removeCustomerAddresses($this);
+
+
+
+        return parent::_beforeDelete();
+    }
+
     /**
      * Delete customer address
      *
@@ -65,7 +73,7 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
         if (is_null($attributes)) {
             $attributes = $this->_getResource()
                 ->loadAllAttributes($this)
-                ->getAttributesByCode(); // getSortedAttributes doesn't work because of of missing SetID 
+                ->getAttributesByCode(); // getSortedAttributes doesn't work because of missing SetID 
             $this->setData('attributes', $attributes);
         }
         return $attributes;
@@ -102,6 +110,69 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
     }
 
     
+    /**
+     * get address street
+     *
+     * @param   int $line address line index
+     * @return  string
+     */
+    public function getStreet($line=0)
+    {
+        $street = parent::getData('street');
+        if (-1 === $line) {
+            return $street;
+        } else {
+            $arr = is_array($street) ? $street : explode("\n", $street);
+            if (0 === $line || $line === null) {
+                return $arr;
+            } elseif (isset($arr[$line-1])) {
+                return $arr[$line-1];
+            } else {
+                return '';
+            }
+        }
+    }
+    
+    
+    /**
+     * set address street informa
+     *
+     * @param array|string $street
+     * @return Bkg_Orgunit_Model_Unit_Address
+     */
+    public function setStreet($street)
+    {
+        if (is_array($street)) {
+            $street = trim(implode("\n", $street));
+        }
+        $this->setData('street', $street);
+        return $this;
+    }
+    
+    /**
+     * Create fields street1, street2, etc.
+     *
+     * To be used in controllers for views data
+     *
+     */
+    public function explodeStreetAddress()
+    {
+        $streetLines = $this->getStreet();
+        foreach ($streetLines as $i=>$line) {
+            $this->setData('street'.($i+1), $line);
+        }
+        return $this;
+    }
+    
+    /**
+     * To be used when processing _POST
+     */
+    public function implodeStreetAddress()
+    {
+        $this->setStreet($this->getData('street'));
+        return $this;
+    }
+    
     public function format($type) {
 
 
@@ -116,7 +187,8 @@ class Bkg_Orgunit_Model_Unit_Address extends Mage_Core_Model_Abstract
                     $rows[] = $this->getCompany();
                     $rows[] = $this->getCompany2();
                     $rows[] = $this->getCompany3();
-                    $rows[] = $this->getStreet();
+                    $rows[] = $this->getStreet(1);
+                    $rows[] = $this->getStreet(2);
                     $rows[] = $this->getEmail();
 
                     $rows = array_filter($rows);

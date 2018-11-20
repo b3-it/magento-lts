@@ -33,12 +33,23 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit extends Mage_Adminhtml_Block_Widget_
                 editForm.submit($('edit_form').action+'back/edit/');
             }
         ";
+        
+         if( Mage::registry('unit_data') && Mage::registry('unit_data')->getId())
+         {
+         	$orgunit = Mage::registry('unit_data');
+         	$is_used=$orgunit->isOrganisationUsed();
+         	if($is_used !== false){
+         		$this->removeButton('delete');
+         		
+         	}
+         }
+        
     }
 
     public function getHeaderText()
     {
         if( Mage::registry('unit_data') && Mage::registry('unit_data')->getId() ) {
-            return Mage::helper('bkg_orgunit')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('unit_data')->getId()));
+            return Mage::helper('bkg_orgunit')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('unit_data')->getName()));
         } else {
             return Mage::helper('bkg_orgunit')->__('Add Item');
         }

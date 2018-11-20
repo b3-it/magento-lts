@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/admin_bfr.css</stylesheet></action>
+            <action method="addJs"><script>bfr/admin_bfr.js</script></action>
+        </reference>
+    </default>
+</layout>

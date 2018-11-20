@@ -14,7 +14,7 @@ class Bkg_Orgunit_Block_Adminhtml_Unit extends Mage_Adminhtml_Block_Widget_Grid_
   {
     $this->_controller = 'adminhtml_unit';
     $this->_blockGroup = 'bkg_orgunit';
-    $this->_headerText = Mage::helper('bkg_orgunit')->__('Unit Manager');
+    $this->_headerText = Mage::helper('bkg_orgunit')->__('Organisation');
     $this->_addButtonLabel = Mage::helper('bkg_orgunit')->__('Add Item');
     parent::__construct();
   }

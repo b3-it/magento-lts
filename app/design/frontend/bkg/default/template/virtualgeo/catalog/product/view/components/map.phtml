@@ -1,6 +1,8 @@
- <h3>
-        <?php echo $this->getTitle(); ?>
-        <div class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></div>
-    </h3>
+<h3>
+    <?php echo $this->getTitle(); ?>
+    <span class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></span>
+</h3>
 <div class="virtualgeo-map" id="virtualgeo-openlayer">
+	<input id="hiddenkachel" type="hidden" name="hiddenkachel" />
+	<input id="hiddenwkt" type="hidden" name="hiddenwkt" />
 </div>

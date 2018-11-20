@@ -17,8 +17,10 @@ class Bkg_License_Block_Adminhtml_Master_Edit_Tab_Agreement extends Mage_Adminht
 	}
 
 
-
-	protected function _prepareForm()
+    /**
+     * @return Mage_Adminhtml_Block_Widget_Form|void
+     */
+    protected function _prepareForm()
 	{
 		$form = new Varien_Data_Form();
 		$this->setForm($form);

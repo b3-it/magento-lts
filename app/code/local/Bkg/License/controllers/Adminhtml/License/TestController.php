@@ -43,6 +43,11 @@ class Bkg_License_Adminhtml_License_TestController extends Mage_Adminhtml_Contro
 
 			$master = Mage::getModel('bkg_license/master')->getLicense($customer,$product,$toll,$online_only);
 			Mage::register('license_master', $master);
+			$masters = Mage::getModel('bkg_license/master')->getLicense($customer,$product,$toll,$online_only,true);
+			Mage::register('license_masters', $masters);
+			
+			$copies = Mage::getModel('bkg_license/copy')->getLicense($customer,$product,$toll,$online_only,true);
+			Mage::register('license_copies', $copies);
 		}
 		
 		$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);

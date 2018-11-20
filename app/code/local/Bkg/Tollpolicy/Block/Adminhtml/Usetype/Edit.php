@@ -38,7 +38,9 @@ class Bkg_Tollpolicy_Block_Adminhtml_Usetype_Edit extends Mage_Adminhtml_Block_W
     public function getHeaderText()
     {
         if( Mage::registry('use_type_entity_data') && Mage::registry('use_type_entity_data')->getId() ) {
-            return Mage::helper('bkg_tollpolicy')->__("Edit Item '%s'", $this->htmlEscape(Mage::registry('use_type_entity_data')->getId()));
+            $model= Mage::registry('use_type_entity_data');
+            $toll = Mage::getModel('bkg_tollpolicy/toll')->load(intval($model->getTollId()));
+            return Mage::helper('bkg_tollpolicy')->__("Edit Item '%s', Toll '%s'", $this->htmlEscape($model->getName()),$this->htmlEscape($toll->getName()));
         } else {
             return Mage::helper('bkg_tollpolicy')->__('Add Item');
         }

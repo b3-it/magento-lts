@@ -17,7 +17,7 @@ class Sid_ExportOrder_Model_Transfer_Attachment extends Sid_ExportOrder_Model_Tr
     * (non-PHPdoc)
     * @see Sid_ExportOrder_Model_Transfer_Email::send()
     */ 
-    public function send($content,$order = null, $data = array())
+    public function send($content,$order = null, $data = array(), $storeId = 0)
     {
     	$recipients = array();
     	$recipients[] = array('name' => $this->getEmail(), 'email' => $this->getEmail());
@@ -28,7 +28,7 @@ class Sid_ExportOrder_Model_Transfer_Attachment extends Sid_ExportOrder_Model_Tr
     	$attachments[] = array('filename' => $filename, 'content' => $content);
     	
     	
-    	$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,$data,0,$attachments);
+    	$res = Mage::helper('exportorder')->sendEmail($this->getTemplate(),$recipients,$data,$storeId,$attachments);
     	
     	if($res !== false){
     		$txt = "Die Email wurde versendet.";

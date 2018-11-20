@@ -106,12 +106,20 @@ ul {
 }
 
 .show-on-mobile {
-	display: none;
+	display: none !important;
 	
 	@include bp(max-width, $bp-mobil) {
-	    display: inline-block;
+	    display: inline-block !important;
 	}
 }
+.hide-on-mobile {
+	display: inline-block;
+	
+	@include bp(max-width, $bp-mobil) {
+	    display: none !important;
+	}
+}
+
 
 /* ============================================ *
  * Typography
@@ -779,9 +787,10 @@ div.block-reorder {
         min-height: 40px;
         padding-top: (40px - $f-size-xxs) / 2;
         padding-bottom: (40px - $f-size-xxs) / 2;
-        background-image: url('../images/demo-logo.png');
-        background-position: left;
-        background-repeat: no-repeat;
+        
+        @include bp(max-width, $bp-medium + 1) {
+        	padding-left: 0;
+        }
     }
 
     p {

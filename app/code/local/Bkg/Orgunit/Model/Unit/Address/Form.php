@@ -22,7 +22,7 @@ class Bkg_Orgunit_Model_Unit_Address_Form extends Mage_Eav_Model_Form
      *
      * @return Mage_Customer_Model_Resource_Form_Attribute_Collection
      */
-    protected function x_getFormAttributeCollection()
+    protected function _getFormAttributeCollection()
     {
         return parent::_getFormAttributeCollection()
             ->addFieldToFilter('attribute_code', array('neq' => 'created_at'));

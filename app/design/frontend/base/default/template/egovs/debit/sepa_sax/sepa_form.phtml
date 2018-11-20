@@ -31,7 +31,7 @@ else {
         <li class="double-line">
             <div class="input-box">
                 <label for="iban"><span class="required">*</span><?php echo $this->__('IBAN') ?> </label>
-                <input type="text" id="iban" name="payment[cc_number]" title="<?php echo $this->__('IBAN') ?>" class="input-text required-entry validate-debit-iban" value="<?php echo $this->getIban()?>" />
+                <input type="text" id="iban" name="payment[cc_number]" title="<?php echo $this->__('IBAN') ?>" class="input-text required-entry validate-debit-iban" value="<?php echo $this->getIban()?>" onkeyup="cleanupIbanChars()" onblur="cleanupIbanChars()" />
             </div>
         </li>
         <li class="double-line no-right-space">
@@ -61,7 +61,7 @@ else {
         </li>
 
         <li class="single-line">
-            <div id="custom-accountholder-box">
+            <div id="custom-accountholder-box" style="display: none;">
                 <div class="block">
 	                  <div class="block-title">
 	                      <h2><?php echo $this->__('Deviation account holder'); ?></h2>
@@ -100,7 +100,7 @@ else {
 	              </div>
             </div>
 
-            <div id="debitor-box">
+            <div id="debitor-box" style="width: 100%;">
                 <div class="block">
 	                  <div class="block-title">
 	                      <h2><?php echo $this->__('Details Debitor'); ?></h2>
@@ -151,7 +151,7 @@ else {
 
 		    <li class="single-line option-line">
             <div class="input-box option-field">
-                <input type="radio" id="sequence_type_frst" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate multiple times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_FRST ?>" checked="checked" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?>/>
+                <input type="radio" id="sequence_type_frst" name="payment[additional_information][sequence_type]" title="<?php echo $this->__('Use mandate multiple times') ?>" class="input-text " value="<?php echo Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_RCUR ?>" checked="checked" <?php if (!$this->getAllowOneoff()): ?>disabled="disabled"<?php endif; ?>/>
                 <label for="sequence_type_frst"><?php echo $this->__('Use mandate multiple times') ?> </label>
             </div>
             <div class="input-box option-field">
@@ -208,10 +208,16 @@ else {
 	// http://www.tbg5-finance.org/?ibandocs.shtml
 	var sepaDebitForm = new VarienForm('multishipping-billing-form');
 
-$j(document).ready(function(){
-    opcToggle();
-    toggleFields();
-});
+    function cleanupIbanChars() {
+        var inputIban = $j('#iban').val();
+        inputIban = inputIban.replace(/[^0-9A-Za-z]+/g, '');
+        $j('#iban').val(inputIban);
+    }
+
+    $j(document).ready(function(){
+        opcToggle();
+        toggleFields();
+    });
 
 //document.observe("dom:loaded", function() {
 //    toggleFields();

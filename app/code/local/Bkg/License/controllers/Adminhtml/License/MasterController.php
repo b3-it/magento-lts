@@ -65,6 +65,8 @@ class Bkg_License_Adminhtml_License_MasterController extends Mage_Adminhtml_Cont
 
 			try {
 
+				
+				
 				$model->save();
 				
 				$this->_saveCustomerGroup($data,$model);

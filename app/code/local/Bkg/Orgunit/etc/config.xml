@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <Bkg_Orgunit>
@@ -15,7 +16,7 @@
             <bkg_orgunit_setup>
                 <setup>
                     <module>Bkg_Orgunit</module>
-                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                    <class>Mage_Customer_Model_Resource_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
@@ -23,23 +24,11 @@
             </bkg_orgunit_setup>
         </resources>
         <blocks>
-          <bkg_orgunit>
-              <class>Bkg_Orgunit_Block</class>
-          </bkg_orgunit>
-          <adminhtml>
-                <rewrite>
-                	<!-- To hide Org addresses in customer edit -->
-                    <customer_edit_tab_addresses>Bkg_Orgunit_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
-                </rewrite>
-            </adminhtml>
+            <bkg_orgunit>
+                <class>Bkg_Orgunit_Block</class>
+            </bkg_orgunit>
         </blocks>
         <models>
-        	<customer_resource>
-        		<rewrite>
-        			<!-- To prevent the Org addresses from being deleted by customer save -->
-            		<customer>Bkg_Orgunit_Model_Resource_Customer</customer>
-        		</rewrite>
-    		</customer_resource>     
             <bkg_orgunit>
                 <class>Bkg_Orgunit_Model</class>
                 <resourceModel>bkg_orgunit_resource</resourceModel>
@@ -47,41 +36,74 @@
             <bkg_orgunit_resource>
                 <class>Bkg_Orgunit_Model_Resource</class>
                 <entities>
-                  <unit>
-                    <table>bkg_orgunit_unit</table>
-                  </unit>
-                  <unit_address_entity>
+                    <unit>
+                        <table>bkg_orgunit_unit</table>
+                    </unit>
+                    <unit_address_entity>
                         <table>bkg_orgunit_unit_address_entity</table>
-                  </unit_address_entity>
-                  <unit_address_entity_varchar>
+                    </unit_address_entity>
+                    <unit_address_entity_varchar>
                         <table>bkg_orgunit_unit_address_entity_varchar</table>
-                  </unit_address_entity_varchar>
+                    </unit_address_entity_varchar>
+                    <eav_attribute>
+                        <table>bkg_orgunit_eav_attribute</table>
+                    </eav_attribute>
+                    <form_attribute>
+                        <table>bkg_orgunit_form_attribute</table>
+                    </form_attribute>
                 </entities>
             </bkg_orgunit_resource>
         </models>
         <events>
-        	<customer_save_before>
-        		<observers>
-        			<bkg_orgunit_customer_save_before>
-        				<type>singleton</type>
-        				<class>bkg_orgunit/observer</class>
-        				<method>customer_save_before</method>
-        			</bkg_orgunit_customer_save_before>
-        		</observers>
-        	</customer_save_before>
-        	<customer_save_after>
-        		<observers>
-        			<bkg_orgunit_customer_save_after>
-        				<type>singleton</type>
-        				<class>bkg_orgunit/observer</class>
-        				<method>customer_save_after</method>
-        			</bkg_orgunit_customer_save_after>
-        		</observers>
-        	</customer_save_after>
+            <egovs_base_customer_address_edit_block_before_html>
+                <observers>
+                    <bkg_orgunit_customer_address_block_edit>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>address_block_edit</method>
+                    </bkg_orgunit_customer_address_block_edit>
+                </observers>
+            </egovs_base_customer_address_edit_block_before_html>
+            <customer_save_before>
+                <observers>
+                    <bkg_orgunit_customer_save_before>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>customer_save_before</method>
+                    </bkg_orgunit_customer_save_before>
+                </observers>
+            </customer_save_before>
+            <customer_save_after>
+                <observers>
+                    <bkg_orgunit_customer_save_after>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>customer_save_after</method>
+                    </bkg_orgunit_customer_save_after>
+                </observers>
+            </customer_save_after>
+            <egovs_base_customer_address_readonly>
+                <observers>
+                    <bkg_orgunit_customer_address_readonly>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>customer_address_readonly</method>
+                    </bkg_orgunit_customer_address_readonly>
+                </observers>
+            </egovs_base_customer_address_readonly>
+            <egovs_base_customer_reject_address_delete>
+                <observers>
+                    <bkg_orgunit_customer_save_after>
+                        <type>singleton</type>
+                        <class>bkg_orgunit/observer</class>
+                        <method>customer_address_reject_address_delete</method>
+                    </bkg_orgunit_customer_save_after>
+                </observers>
+            </egovs_base_customer_reject_address_delete>
         </events>
     </global>
     <frontend>
-      <routers>
+        <routers>
             <bkg_orgunit>
                 <use>standard</use>
                 <args>
@@ -90,78 +112,42 @@
                 </args>
             </bkg_orgunit>
             <customer>
-            	<args>
-            		<modules>
+                <args>
+                    <modules>
                         <general before="Mage_Customer">Bkg_Orgunit</general>
                     </modules>
-            	</args>
+                </args>
             </customer>
         </routers>
         <layout>
             <updates>
                 <bkg_orgunit>
-                  <file>bkg/orgunit.xml</file>
+                    <file>bkg/orgunit.xml</file>
                 </bkg_orgunit>
             </updates>
         </layout>
         <translate>
             <modules>
-              <Bkg_Orgunit>
-                  <files>
-                      <default>bkg/orgunit.csv</default>
-                  </files>
-              </Bkg_Orgunit>
+                <Bkg_Orgunit>
+                    <files>
+                        <default>bkg/orgunit.csv</default>
+                    </files>
+                </Bkg_Orgunit>
             </modules>
         </translate>
     </frontend>
     <admin>
-      <routers>
-          <adminhtml>
-              <args>
-                  <modules>
-                      <Bkg_Orgunit_Adminhtml after="Mage_Adminhtml">Bkg_Orgunit_Adminhtml</Bkg_Orgunit_Adminhtml>
-                  </modules>
-              </args>
-          </adminhtml>
-      </routers>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bkg_Orgunit_Adminhtml after="Mage_Adminhtml">Bkg_Orgunit_Adminhtml</Bkg_Orgunit_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
     </admin>
     <adminhtml>
-      <menu>
-          <bkgorgunit module="bkg_orgunit">
-              <title>Bkg Orgunit</title>
-              <sort_order>50</sort_order>
-              <children>
-                  <bkgorgunit_unit module="bkg_orgunit">
-                      <title>Unit</title>
-                      <sort_order>10</sort_order>
-                      <action>adminhtml/orgunit_unit/index</action>
-                  </bkgorgunit_unit>
-
-              </children>
-          </bkgorgunit>
-      </menu>
-      <acl>
-          <resources>
-              <all>
-                  <title>Allow Everything</title>
-              </all>
-              <admin>
-                  <children>
-                      <bkgorgunit module="bkg_orgunit">
-                          <title>Bkg Orgunit</title>
-                          <sort_order>10</sort_order>
-                          <children>
-                                <bkgorgunit_unit module="bkg_orgunit">
-                                  <title>Unit</title>
-                                  <sort_order>10</sort_order>
-                              </bkgorgunit_unit>
-
-                          </children>
-                      </bkgorgunit>
-                  </children>
-              </admin>
-          </resources>
-      </acl>
         <translate>
             <modules>
                 <Bkg_Orgunit>
@@ -172,11 +158,11 @@
             </modules>
         </translate>
         <layout>
-          <updates>
-            <bkgorgunit>
-              <file>bkg/orgunit.xml</file>
-            </bkgorgunit>
-          </updates>
+            <updates>
+                <bkgorgunit>
+                    <file>bkg/orgunit.xml</file>
+                </bkgorgunit>
+            </updates>
         </layout>
     </adminhtml>
 </config>

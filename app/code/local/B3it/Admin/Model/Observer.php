@@ -46,9 +46,11 @@ class B3it_Admin_Model_Observer
 
                 $msg = sprintf('permissions:: Failed login for user with ID %s from IP %s', $observer->getUser()->getId(), Mage::app()->getFrontController()->getRequest()->getClientIp());
                 Mage::log($msg, Zend_Log::ALERT, '', true);
-                $fails = intval($fails) < 3 ? 2 : intval($fails);
-                $maxTime = ini_get("max_execution_time");
-                sleep(max(0, min((2^$fails)-2, intval($maxTime)-2)));
+                //Prevent DOS
+                if ($fails > 25) {
+                    include_once Mage::getBaseDir() . '/errors/503.php';
+                    exit;
+                }
 			} else {
 				$user = $observer->getUser();
 				$user->setFailedLoginsCount(0);

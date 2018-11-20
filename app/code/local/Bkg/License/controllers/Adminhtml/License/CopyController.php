@@ -176,6 +176,12 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 			    $model->setId($id);
 			}
 
+			if(isset($data['order_allow_all_customer'] ))
+			{
+				$model->setData('order_allow_all_customer',1);
+			}else{
+				$model->setData('order_allow_all_customer',0);
+			}
 			
 			if (($model->getOrigData('customer_address_id') != $model->getData('customer_address_id')) ||
 				($model->getOrigData('orgunit_address_id') != $model->getData('orgunit_address_id')) ||
@@ -203,9 +209,38 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 				$this->_saveProduct($data,$model);
 				$this->_saveAgreements($data,$model);
 				$this->_saveToll($data,$model);
-				$this->_saveAddress($data,$model);
+				$addresses = $this->_saveAddress($data,$model);
 				$this->_saveFiles($data,$model);
+				$this->_saveAuthorizedCustomer($data,$model);
+				$this->_saveSubscription($data,$model);
 
+				if(isset($data['send_email']))
+				{
+					$recipients = array();
+					foreach($addresses as $item)
+					{
+						
+						if($item->getCode()=="contact"){
+							if($item->getIsOrgunit())
+							{
+								$adress = Mage::getModel('customer/address')->load($item->getOrgunitAddressId());
+							}else{
+								$adress = Mage::getModel('customer/address')->load($item->getCustomerAddressId());
+							}
+							
+							$name = trim($adress->getFirstname() ." " .$adress->getLastname());
+							$recipients[] = array('name' => $name,'email'=>$adress->getEmail());
+						}
+					}
+					
+					if(count($recipients) == 0){
+						Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkg_license')->__('Contact Person not set.'));
+					}else{
+						$this->_sendEmail($model, $recipients);
+					}
+				}
+				
+				
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkg_license')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -237,6 +272,28 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
 		}
 	}
 
+	protected function _sendEMail($license,$recipients)
+	{
+		//Email senden
+		$template = 'bkg_license_email_copy_license_inform_template';
+	
+		
+	
+		$store = Mage::app()->getStore();
+		$storeid = $store->getId();
+	
+		$data = array();
+		$data['license'] = $license;
+		
+	
+		$res = Mage::helper('bkg_license')->sendEmail($template, $recipients, $data, $storeid);
+	
+		
+	
+		return $res;
+	}
+	
+	
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
@@ -350,6 +407,81 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
     		$item->setCopyId(intval($model->getId()));
     		$item->setProductId($group);
     		$item->save();
+    	}
+
+    }
+    
+    protected function _saveSubscription($data,Varien_Object $model)
+    {
+    	if(!isset($data['period']))
+    	{
+    		return $this;
+    	}
+    	
+    	if(!isset($data['subscripe']))
+    	{
+    		if($model->getPeriod()->getId()){
+    			$model->getPeriod()->delete();
+    			$model->setPeriod(null);
+    		}
+    		$model->setData('period_id',0)->save();
+    		
+    	}
+    	else 
+    	{
+    		$data = $data['period'];
+    		$model->getPeriod()->setData($data)->save();
+    	   	$model->setPeriodId($model->getPeriod()->getId())->save();
+    	}
+    
+    }
+    
+    
+    
+    protected function _saveAuthorizedCustomer($data,$model)
+    {
+
+        if(!isset($data['authorizedcustomer']))
+        {
+            return $this;
+        }
+
+    	$groups = array();
+    	$tmp = $data['authorizedcustomer'];
+
+    	foreach($tmp['value'] as $k=>$v)
+    	{
+    		$groups[] = array('value'=>$v,'pos'=>0,'delete'=>$tmp['delete'][$k]);
+    	}
+
+    	$collection = Mage::getModel('bkg_license/copy_authorizedcustomer')->getCollection();
+    	$collection->addCopyIdFilter(intval($model->getId()));
+
+    	$items = array();
+    	foreach($collection as $item)
+    	{
+    		$items[$item->getIdentifier()] = $item;
+    	}
+
+    	foreach($groups as $group)
+    	{
+    		if((count($items) > 0) && (isset($items[$group['value']]))){
+    			$item = $items[$group['value']];
+    		}else{
+    			$item = Mage::getModel('bkg_license/copy_authorizedcustomer');
+    		}
+
+    		$item->setCopyId(intval($model->getId()));
+    		$item->setCustomerId($group['value']);
+    		
+
+
+    		if($group['delete'])
+    		{
+    			$item->delete();
+    		}else{
+    			$item->save();
+    		}
     	}
 
     }
@@ -519,7 +651,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
     {
     	if(!isset($data['address']))
     	{
-    		return $this;
+    		return array();
     	}
     	
     	$addresses = $data['address']; 
@@ -533,6 +665,7 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
     		$items[$item->getId()] = $item;
     	}
     
+    	$result = array();
     	foreach($addresses as $item)
     	{
     		if((count($items) > 0) && (!empty($items[$item['db_id']]))){
@@ -551,9 +684,11 @@ class Bkg_License_Adminhtml_License_CopyController extends Mage_Adminhtml_Contro
     			$model->delete();
     		}else{
     			$model->save();
+    			$result[] = $model;
     		}
     	}
     
+    	return $result;
     }
     
     

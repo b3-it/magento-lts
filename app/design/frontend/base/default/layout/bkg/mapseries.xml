@@ -43,6 +43,10 @@ Supported layout update handles (special):
          <reference name="head">
          
             <action method="addJs"><script>bkg/ol.buttonctrl.js</script></action>
+            <action method="addJs"><script>bkg/helper.js</script></action>
+            <action method="addJs"><script>bkg/mapseries.js</script></action>
+            <action method="addItem"><type>js</type><name>lib/jquery/loadingoverlay.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bkg/color.js</name></action>
 
          <!-- 
             <action method="addJs"><script>bkg/mapseries/view.js</script></action>

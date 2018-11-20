@@ -14,10 +14,10 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Form extends Mage_Adminhtml_Bloc
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('unit_form', array('legend'=>Mage::helper('bkg_orgunit')->__(' Unit information')));
+      $fieldset = $form->addFieldset('unit_form', array('legend'=>Mage::helper('bkg_orgunit')->__('Organisation Information')));
 
       $fieldset->addField('shortname', 'text', array(
-          'label'     => Mage::helper('bkg_orgunit')->__('Kurzname'),
+          'label'     => Mage::helper('bkg_orgunit')->__('Short Name'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'shortname',
@@ -28,14 +28,20 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Form extends Mage_Adminhtml_Bloc
           //'required'  => true,
           'name'      => 'name',
       ));
+      $fieldset->addField('company', 'text', array(
+          'label'     => Mage::helper('bkg_orgunit')->__('Company'),
+          //'class'     => 'required-entry',
+          'required'  => true,
+          'name'      => 'company',
+      ));
       $fieldset->addField('line', 'text', array(
-          'label'     => Mage::helper('bkg_orgunit')->__('Branche'),
+          'label'     => Mage::helper('bkg_orgunit')->__('Industry'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'line',
       ));
       $fieldset->addField('note', 'text', array(
-          'label'     => Mage::helper('bkg_orgunit')->__('Bemerkung'),
+          'label'     => Mage::helper('bkg_orgunit')->__('Note'),
           //'class'     => 'required-entry',
           //'required'  => true,
           'name'      => 'note',
@@ -43,25 +49,17 @@ class Bkg_Orgunit_Block_Adminhtml_Unit_Edit_Tab_Form extends Mage_Adminhtml_Bloc
 
       // can only be set on creation
       $id = $this->getRequest()->getParam('id');
-      if (!isset($id)) {
-          $fieldset->addField('parent_id', 'select', array(
-              'label'     => Mage::helper('bkg_orgunit')->__('Übergeordnete Organisation'),
-              //'class'     => 'required-entry',
-              //'required'  => true,
-              'name'      => 'parent_id',
-              'options' => Mage::getSingleton('bkg_orgunit/entity_attribute_source_unit')->getOptionArray()
-          ));
-      }else{
 
-          $fieldset->addField('parent_id', 'select', array(
-              'label'     => Mage::helper('bkg_orgunit')->__('Übergeordnete Organisation'),
-              'disabled' => true,
-              'readonly'	=> true,
-              'name'      => 'parent_id',
-              'options' => Mage::getSingleton('bkg_orgunit/entity_attribute_source_unit')->getOptionArray()
-          ));
-
-      }
+      $fieldset->addField('parent_id', 'select', array(
+          'label'     => Mage::helper('bkg_orgunit')->__('Parent Organisation'),
+          // disabled and readonly if this orgunit already exist
+          'disabled' => isset($id),
+          'readonly' => isset($id),
+          //'class'     => 'required-entry',
+          //'required'  => true,
+          'name'      => 'parent_id',
+          'options' => Mage::getSingleton('bkg_orgunit/entity_attribute_source_unit')->getOptionArray()
+      ));
 
       if ( Mage::getSingleton('adminhtml/session')->getunitData() ) {
           $form->setValues(Mage::getSingleton('adminhtml/session')->getunitData());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Magento
  *
@@ -27,40 +28,35 @@
 /**
  * Customer dashboard addresses section
  *
- * @category   Mage
- * @package    Mage_Customer
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @category Mage
+ * @package Mage_Customer
+ * @author Magento Core Team <core@magentocommerce.com>
  */
-
 class Egovs_Base_Block_Customer_Account_Dashboard_Address extends Mage_Customer_Block_Account_Dashboard_Address
 {
-	public function rejectAddressEditing($address_id)
-	{
-		 return Mage::helper('egovsbase/customer_address')->rejectAddressEditing($address_id, $this);
-	}
-	
-	public function getLockedAddressText()
-	{
-		return $this->__('This address is used by additional service. For changeing contact our customer service please!');
-	}
-	
-	public function getDefaultBillingId()
-	{
-		$adr = $this->getCustomer()->getPrimaryBillingAddress();
-		if($adr)
-		{
-			return $adr->getId();
-		}
-		return 0;
-	}
-	
-	public function getDefaultShippingId()
-	{
-		$adr = $this->getCustomer()->getPrimaryShippingAddress();
-		if($adr)
-		{
-			return $adr->getId();
-		}
-		return 0;
-	}
+
+    public function rejectAddressEditing($address)
+    {
+        if (false === $address) {
+            $address = null;
+        } elseif (is_string($address)) {
+            $address = Mage::getModel('customer/address')->load($address);
+        }
+        return Mage::helper('egovsbase/customer_address')->rejectAddressEditing($address, $this);
+    }
+
+    public function getLockedAddressText()
+    {
+        return $this->__('This address is used by additional service. For changeing contact our customer service please!');
+    }
+
+    public function getDefaultBilling()
+    {
+        return $this->getCustomer()->getPrimaryBillingAddress();
+    }
+
+    public function getDefaultShipping()
+    {
+        return $this->getCustomer()->getPrimaryShippingAddress();
+    }
 }

@@ -1,12 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config>
+<?xml version="1.0"?>
 <config>
     <modules>
-   		<TuChemnitz_Base>
-			<active>false</active>
-			<codePool>local</codePool>
-		</TuChemnitz_Base>
-        <TuChemnitz_Voucher>
+     <TuChemnitz_Voucher>
             <active>false</active>
             <codePool>local</codePool>
             <depends>          

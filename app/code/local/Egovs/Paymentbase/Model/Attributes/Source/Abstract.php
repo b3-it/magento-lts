@@ -28,7 +28,9 @@ abstract class Egovs_Paymentbase_Model_Attributes_Source_Abstract extends Mage_E
  			/* @var $collection Mage_Core_Model_Mysql4_Collection_Abstract */
  			$collection = Mage::getModel('paymentbase/haushaltsparameter')->getCollection();
  			if ($this->_type) {
-	    		$collection->getSelect()->where('type = ?', $this->_type);
+	    		$collection->getSelect()
+                    ->where('type = ?', $this->_type)
+                    ->order('title');
 	    		
 	    		foreach ($collection->getItems() as $item) {
 	    			$this->_options[$item->getId()] = $item->getTitle();

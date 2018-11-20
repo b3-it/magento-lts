@@ -1,4 +1,4 @@
-﻿<?php
+﻿﻿<?php
 /**
  * @category    design
  * @package     egov_default
@@ -164,7 +164,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
         <?php if($_pAddress = $this->getAdditionalAddresses()): ?>
         <?php foreach($_pAddress as $_address): ?>
         <div class="box">
-        	<?php if ($_address->getData('org_address_id') === null): ?>
+        	
             <div class="box-title">
                 <h3>
                     <?php echo $this->__('Edit Address') ?>
@@ -172,15 +172,16 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
                     <a class="egov-pencile"
                        href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"
                        title="<?php echo $this->__('Edit Address') ?>"> </a>
+                    <?php if ($_address->getData('org_address_id') === null): ?>
                     <span class="spacer">|</span>
                     <a class="egov-delete"
                        href="javascript:void(0);"
                        class="link-remove"
                        onclick="return deleteAddress('<?php echo $_address->getId() ?>');"
                        title="<?php echo $this->__('Delete Address') ?>"> </a>
+                   <?php endif ?>
                 </h3>
             </div>
-            <?php endif ?>
             <div class="box-content">
                 <address>
                     <?php echo $this->getAddressHtml($_address) ?>
@@ -198,7 +199,7 @@ if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != nul
     </div>
 </div>
 <div class="buttons-set">
-    <button class="button back-button egov-float-left" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
+    <button class="button back-button egov-float-left" type="button" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
         <small>&laquo; </small>
         <?php echo $this->__('Back') ?>
     </button>

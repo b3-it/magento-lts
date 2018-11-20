@@ -72,12 +72,25 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
             }else{
                 $data['show_layer'] = 0;
             }
+            
+            if(isset($data['show_map']))
+            {
+            	$data['show_map'] = 1;
+            }else{
+            	$data['show_map'] = 0;
+            }
 			$store_id     =  intval($this->getRequest()->getParam('store'));
 
 			$model = Mage::getModel('virtualgeo/components_structure');
 			$model->setData($data)
 				->setStoreId($store_id)
 				->setId($this->getRequest()->getParam('id'));
+
+				//var_dump($model);
+				//die();
+            if(!$model->getShowLayer()){
+                $model->unsetData('service_id');
+            }
 
 			try {
 				$model->save();
@@ -104,7 +117,7 @@ class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_StructureController extends
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('virtualgeo/componentsstructureentity');
+				$model = Mage::getModel('virtualgeo/components_structure');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

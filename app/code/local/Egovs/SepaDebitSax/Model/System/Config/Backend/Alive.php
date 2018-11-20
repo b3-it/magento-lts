@@ -27,7 +27,9 @@ class Egovs_SepaDebitSax_Model_System_Config_Backend_Alive extends Mage_Core_Mod
         		set_error_handler(array(Mage::helper('paymentbase'), 'epayblErrorHandler'));
         		Mage::helper('sepadebitsax')->isZmvAlive();        		
         		Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('paymentbase')->__('The mandate management server is alive.'));
-        	} catch (Exception $e) {
+        	} catch (Egovs_SepaDebitSax_Model_SepaMvException $zmve) {
+                Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('paymentbase')->__($zmve->getMessage()));
+            } catch (Exception $e) {
         		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('paymentbase')->__('The mandate management server is not available, check log files for further information.'));
         	}
         	restore_error_handler();

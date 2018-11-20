@@ -25,7 +25,7 @@
 					<h4>
 						<?php echo $this->__('Base Address') ?>
 					</h4>
-					<address>
+					<address id="baseAddress">
 						<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 					</address>
 				</div>
@@ -45,7 +45,7 @@
 					   href="<?php echo $this->getAddressesEditUrl() ?>"
 					   title="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
-				<address>
+				<address id="invoiceAddress">
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 				</address>
 			</div>
@@ -80,7 +80,7 @@
 						 href="<?php echo $this->getEditShippingUrl() ?>"
 						 title="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
-				<address>
+				<address id="shippingAddress">
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 				</address>
 				<?php endif;?>
