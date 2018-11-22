@@ -1,17 +1,17 @@
 <?php
 /**
  * 
-  *-- TODO:: kurze Beschreibung --
-  *
-  *
-  *
-  * @category        	Egovs_Ready_Block_Catalog_Product_Price
-  * @package			package_name
-  * @name            	Egovs_Ready_Block_Catalog_Product_Price
-  * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
-  * @copyright      	Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
-  * @license        	http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
-  *
+ *-- TODO:: kurze Beschreibung --
+ *
+ *
+ *
+ * @category        Egovs
+ * @package			Egovs_Ready
+ * @name            	Egovs_Ready_Block_Catalog_Product_Price
+ * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright      	Copyright (c) 2010 - 2018 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license        	http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
  */
 class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product_Price
 {
@@ -70,7 +70,15 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 	
 		return $this->getData($_taxRateKey);
 	}
-	
+
+    /**
+     * Return false if block is not to be displayed
+     * Return true if block is displayed without tax rate
+     * Return 0 if block is tax free
+     * Return string if block is displayed with tax rate
+     *
+     * @return bool|int|string
+     */
 	public function getFormattedTaxRate() {
 		if ($this->getTaxRate() === null || $this->getProduct()->getTypeId() == 'bundle') {
 			return '';
@@ -78,12 +86,19 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 	
 		$_locale = Mage::app()->getLocale()->getLocaleCode();
 		$_taxRate = Zend_Locale_Format::toFloat($this->getTaxRate(), array('locale' => $_locale));
-		
+
 		if (($_taxRate <= 0.01 && !Mage::getStoreConfigFlag('catalog/price/display_zero_tax_below_price'))
-			|| !Mage::getStoreConfigFlag('catalog/price/display_tax_below_price')
-		) {
-			return false;
-		}
+            || !Mage::getStoreConfigFlag('catalog/price/display_tax_below_price')
+        ) {
+		    return false;
+        }
+        //Reihenfolge wichtig!
+        if ($_taxRate <= 0.01 && Mage::getStoreConfigFlag('catalog/price/display_zero_tax_below_price')) {
+            return 0;
+        }
+        if (!Mage::getStoreConfigFlag('catalog/price/display_formatted_tax_rate_below_price')) {
+            return true;
+        }
 	
 		return $this->__('%s%%', $_taxRate);
 	}

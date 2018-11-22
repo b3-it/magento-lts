@@ -177,6 +177,7 @@ T: {{var telephone}}
                 <display_block_below_price>1</display_block_below_price>
                 <display_tax_below_price>1</display_tax_below_price>
                 <display_zero_tax_below_price>1</display_zero_tax_below_price>
+                <display_formatted_tax_rate_below_price>0</display_formatted_tax_rate_below_price>
                 <display_delivery_time_on_categories>1</display_delivery_time_on_categories>
                 <without_shipping_costs_text>Without Shipping Costs</without_shipping_costs_text>
             </price>
@@ -185,6 +186,9 @@ T: {{var telephone}}
             <options>
                 <enable_agreements>1</enable_agreements>
             </options>
+            <sidebar>
+                <show_subtotal>0</show_subtotal>
+            </sidebar>
         </checkout>
     </default>
 </config>

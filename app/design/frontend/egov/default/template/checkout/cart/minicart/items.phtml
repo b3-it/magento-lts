@@ -18,6 +18,11 @@ $_cartQty = $this->getSummaryCount();
 if(empty($_cartQty)) {
     $_cartQty = 0;
 }
+if ( Mage::getStoreConfig('catalog/price/including_shipping_costs') ) {
+    $_sIncludingShippingCosts = 'incl.';
+} else {
+    $_sIncludingShippingCosts = 'excl.';
+}
 ?>
 <div id="minicart-error-message" class="minicart-message"></div>
 <div id="minicart-success-message" class="minicart-message"></div>
@@ -61,15 +66,26 @@ if(empty($_cartQty)) {
                     <?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?>
                 </span>
                 <?php else: ?>
-                <span class="label">
-                    <?php echo $this->__('Cart Subtotal:') ?>
-                </span>
-                <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
-                <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
-                <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+                    <?php if (Mage::getStoreConfigFlag('checkout/sidebar/show_subtotal')): ?>
+                        <span class="label">
+                            <?php echo $this->__('Cart Subtotal:') ?>
+                        </span>
+                        <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+                        <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+                        <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+                    <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
             </p>
+            <div class="shipping-cost-details">
+        		* <?php echo $this->__($_sIncludingShippingCosts.' Shipping Cost') ?>
+        	</div>
+            <div class="shipping-cost-details">
+                <?php
+                $text = $this->escapeHtml(Mage::getStoreConfig('catalog/price/without_shipping_costs_text'));
+                ?>
+                ** <?php echo $this->__($text) ?>
+            </div>
         </div>
 
 

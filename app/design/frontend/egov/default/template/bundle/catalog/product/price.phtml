@@ -45,7 +45,15 @@ $_product     = $this->getProduct();
 $_priceModel  = $_product->getPriceModel();
 
 list($_minimalPriceTax, $_maximalPriceTax) = $_priceModel->getTotalPrices($_product, null, null, false);
+/** Calculate price with tax */
+//We have to unset min max price to get price with tax
+$min_price = $_product->getData('min_price');
+$max_price = $_product->getData('max_price');
+$_product->unsetData('min_price');
+$_product->unsetData('max_price');
 list($_minimalPriceInclTax, $_maximalPriceInclTax) = $_priceModel->getTotalPrices($_product, null, true, false);
+$_product->setData('min_price', $min_price);
+$_product->setData('max_price', $max_price);
 
 $_weeeTaxAmount = 0;
 ?>
