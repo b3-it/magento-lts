@@ -18,17 +18,37 @@
         <span class="product-image"><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></span>
     <?php endif; ?>
     <div class="product-details">
-        <p class="product-name"><?php if ($this->hasProductUrl()): ?><a href="<?php echo $this->getProductUrl() ?>"><?php endif; ?><?php echo $this->escapeHtml($this->getProductName()) ?><?php if ($this->hasProductUrl()): ?></a><?php endif; ?></p>
+        <p class="product-name">
+            <?php if ($this->hasProductUrl()): ?><a href="<?php echo $this->getProductUrl() ?>"><?php endif; ?>
+                <?php echo $this->escapeHtml($this->getProductName()) ?>
+            <?php if ($this->hasProductUrl()): ?></a><?php endif; ?>
+        </p>
 
         <table class="info-wrapper">
             <tbody>
-                <tr>
-                    <th class="mini-cart-first"><?php echo $this->__('Price'); ?></th>
-                    <td class="mini-cart-secound">
+                <tr class="mini-cart-first">
+                    <td><?php echo $this->__('Price'); ?></td>
+                    <td><?php echo $this->__('Qty'); ?></td>
+                    <td rowspan="2">
+                        <?php if ($isVisibleProduct): ?>
+                            <a href="<?php echo $this->getConfigureUrl() ?>"
+                               title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item')) ?>"
+                               class="btn-edit egov-pencile" title="<?php echo $this->__('Edit item')?>"> </a>
+                            <br /><br />
+                            <?php if (!$this->isOnCheckoutPage()): ?>
+                                <a href="<?php echo $this->getAjaxDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>"
+                                   data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>"
+                                   class="remove egov-delete" title="<?php echo $this->__('Remove Item') ?>"> </a>
+                            <?php else: ?>
+                                <span class="egov-delete" title="<?php echo $this->__('Remove Item') ?>"> </span>
+                            <?php endif; ?>
+                        <?php endif ?>
+                    </td>
+                </tr>
+                <tr class="mini-cart-secound">
+                    <td>
                         <?php if ($canApplyMsrp): ?>
-
                             <span class="map-cart-sidebar-item"><?php echo $this->__('See price before order confirmation.'); ?></span>
-
                         <?php else: ?>
 
                             <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
@@ -64,8 +84,6 @@
                                     <?php endif; ?>
                                 <?php endif; ?>
                             <?php endif; ?>
-
-
 
                             <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
                                 <?php $_incl = $this->helper('checkout')->getPriceInclTax($_item); ?>
@@ -104,23 +122,7 @@
 
                         <?php endif; //Can apply MSRP ?>
                     </td>
-                    <td class="mini-cart-third" rowspan="2">
-                        <?php if ($isVisibleProduct): ?>
-                        <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item')) ?>" class="btn-edit egov-pencile" title="<?php echo $this->__('Edit item')?>"> </a>
-                        <br /><br />
-                        <?php if (!$this->isOnCheckoutPage()): ?>
-                        <a href="<?php echo $this->getAjaxDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>"
-                           data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>"
-                           class="remove egov-delete" title="<?php echo $this->__('Remove Item') ?>"> </a>
-                        <?php else: ?>
-                        <span class="egov-delete" title="<?php echo $this->__('Remove Item') ?>"> </span>
-                        <?php endif; ?>
-                        <?php endif ?>
-                    </td>
-                </tr>
-                <tr class="qty-wrapper">
-                    <th class="mini-cart-first"><?php echo $this->__('Qty'); ?></th>
-                    <td class="mini-cart-secound">
+                    <td>
                         <button id="qbutton-<?php echo $_item->getId(); ?>"
                                 data-item-id="<?php echo $_item->getId(); ?>"
                                 disabled="disabled"
@@ -130,21 +132,20 @@
                             <?php echo $this->__('ok'); ?>
                         </button>
                         <input
-                            id="qinput-<?php echo $_item->getId(); ?>"
-                            type="tel"
-                            pattern="\d*"
-                            data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
-                            data-item-id="<?php echo $_item->getId(); ?>"
-                            data-cart-item-id="<?php echo $_item->getSku(); ?>"
-                            class="qty cart-item-quantity input-text" name=""
-                            value="<?php echo $this->getQty()?>"
+                                id="qinput-<?php echo $_item->getId(); ?>"
+                                type="tel"
+                                pattern="\d*"
+                                data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
+                                data-item-id="<?php echo $_item->getId(); ?>"
+                                data-cart-item-id="<?php echo $_item->getSku(); ?>"
+                                class="qty cart-item-quantity input-text" name=""
+                                value="<?php echo $this->getQty()?>"
                             <?php if ($this->isOnCheckoutPage()) echo 'disabled'; ?>
-                            />
+                        />
                     </td>
                 </tr>
             </tbody>
         </table>
-
 
         <?php if ($_options = $this->getOptionList()):?>
         <div class="truncated">
@@ -162,9 +163,8 @@
                 <?php endforeach; ?>
             </dl>
           </div>
-        <a href="#" onclick="return false;" class="details"><?php echo $this->__('Details') ?></a>
+        <a href="javascript:void(0)" onclick="return false;" class="details"><?php echo $this->__('Details') ?></a>
         </div>
         <?php endif; ?>
-
     </div>
 </li>
