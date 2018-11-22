@@ -45,7 +45,7 @@ class Egovs_Ready_Block_Bundle_Catalog_Product_Price extends Mage_Bundle_Block_C
          */
         $_priceModel  = $product->getPriceModel();
 
-        if ($product->getPriceType() == 1) {
+        if (!$product->isComposite() || $product->getPriceType() == 1) {
             $_taxPercent = $product->getTaxPercent();
 
             if (is_null($_taxPercent)) {
@@ -85,9 +85,16 @@ class Egovs_Ready_Block_Bundle_Catalog_Product_Price extends Mage_Bundle_Block_C
 	}
 	
 	public function getTaxRate() {
-		$_taxRateKey = 'tax_rate_' . $this->getProduct()->getId();
+        $product = $this->getProduct();
+        if ($product->getPriceType() == Mage_Bundle_Model_Product_Price::PRICE_TYPE_DYNAMIC
+            && $this->getFormatProduct()
+        ) {
+            $product = $this->getFormatProduct();
+        }
+	    $_taxRateKey = 'tax_rate_' . $product->getId();
 		if (!$this->getData($_taxRateKey)) {
-			$this->setData($_taxRateKey, $this->_loadTaxCalculationRate($this->getProduct()));
+
+			$this->setData($_taxRateKey, $this->_loadTaxCalculationRate($product));
 		}
 	
 		return $this->getData($_taxRateKey);
@@ -96,14 +103,13 @@ class Egovs_Ready_Block_Bundle_Catalog_Product_Price extends Mage_Bundle_Block_C
     /**
      * Return false if block is not to be displayed
      * Return 0 if block is tax free
-     * Return empty string if disabled
      * Forced return true to display block without tax rate
      *
      * @return bool|int|string
      */
 	public function getFormattedTaxRate() {
 		if ($this->getTaxRate() === null || $this->displayBothPrices()) {
-			return '';
+			return false;
 		}
 	
 		$_locale = Mage::app()->getLocale()->getLocaleCode();

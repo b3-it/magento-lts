@@ -69,10 +69,9 @@
                                 <?php else: ?>
                                     <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
                                 <?php endif; ?>
-                                <?php if ($this->getItem()->getTaxPercent() > 0 && $this->helper('tax')->displayCartPriceExclTax()): ?>
+                                <?php if (($this->getItem()->getTaxPercent() > 0 || $this->getItem()->isChildrenCalculated()) && $this->helper('tax')->displayCartPriceExclTax()): ?>
                                     <span class="tax-details">&nbsp;<?php echo $this->__('excl. Tax'); ?></span>
-                                <?php endif; ?>
-                                <?php if ($this->getItem()->getTaxPercent() < 0.01): ?>
+                                <?php elseif ($this->getItem()->getTaxPercent() < 0.01): ?>
                                     <span class="tax-details">&nbsp;<?php echo $this->__('Tax Free'); ?></span>
                                 <?php endif; ?>
                                 </div>
@@ -120,10 +119,9 @@
                                 <?php else: ?>
                                     <?php echo $this->helper('checkout')->formatPrice($_incl-$_item->getWeeeTaxDisposition()) ?>
                                 <?php endif; ?>
-                                <?php if ($this->getItem()->getTaxPercent() > 0 && $this->helper('tax')->displayCartPriceInclTax()): ?>
+                                <?php if (($this->getItem()->getTaxPercent() > 0 || $this->getItem()->isChildrenCalculated()) && $this->helper('tax')->displayCartPriceInclTax()): ?>
                                     <span class="tax-details">&nbsp;<?php echo $this->__('incl. Tax'); ?></span>
-                                <?php endif; ?>
-                                <?php if ($this->getItem()->getTaxPercent() < 0.01): ?>
+                                <?php elseif ($this->getItem()->getTaxPercent() < 0.01): ?>
                                     <span class="tax-details">&nbsp;<?php echo $this->__('Tax Free'); ?></span>
                                 <?php endif; ?>
                                 </div>
