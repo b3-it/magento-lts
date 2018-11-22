@@ -48,6 +48,7 @@
         clear: both;
         position: relative;
         background-color: $global-minicart-background;
+        line-height: normal;
     }
 
     .block-cart {
@@ -153,9 +154,13 @@
                     text-align: left;
                 }
 
-                .price {
+                .price, .shipping-cost-details {
                     display: inline-block;
                     float: right;
+                }
+
+                .shipping-cost-details {
+                    margin-left: 5px;
                 }
             }
         }
