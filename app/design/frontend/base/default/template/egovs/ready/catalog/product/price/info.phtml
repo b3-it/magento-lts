@@ -13,7 +13,8 @@
 ?>
 <?php
 /** 
- * @var $this Mage_Core_Block_Template
+ * @var $this \Mage_Core_Block_Template
+ * @see Egovs_Ready_Block_Catalog_Product_Price
  * @see Egovs_Ready_Block_Catalog_Product_Price::_toHtml()
  */
 ?>
@@ -28,10 +29,16 @@
     ?>
     <?php if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ): ?>
         <span class="tax-details">
-        	<?php if ($this->getFormattedTaxRate() !== false): ?>
-        		<?php echo $this->__( 'Excl. %s Tax', $this->getFormattedTaxRate() ) ?>
-        		<span class="tax-separator">, </span>
-        	<?php endif ?>
+            <?php if ($this->getFormattedTaxRate() !== false): ?>
+                <?php if ($this->getFormattedTaxRate() === 0): ?>
+                    <?php echo $this->__( 'Tax Free' ); ?>
+                <?php elseif ($this->getFormattedTaxRate() === true): ?>
+                    <?php echo $this->__( 'Excl. Tax'); ?>
+                <?php else: ?>
+                    <?php echo $this->__( 'Excl. %s Tax', $this->getFormattedTaxRate() ); ?>
+                <?php endif ?>
+                <span class="tax-separator">, </span>
+            <?php endif ?>
         	<span class="shipping-cost-details">
         		<?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?>
         	</span>
@@ -39,9 +46,15 @@
     <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX ): ?>
         <span class="tax-details">
         	<?php if ($this->getFormattedTaxRate() !== false): ?>
-		        <?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?>
-		        <span class="tax-separator">, </span>
-		    <?php endif ?>
+                <?php if ($this->getFormattedTaxRate() === 0): ?>
+                    <?php echo $this->__( 'Tax Free' ); ?>
+                <?php elseif ($this->getFormattedTaxRate() === true): ?>
+                    <?php echo $this->__( 'Incl. Tax'); ?>
+                <?php else: ?>
+                    <?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ); ?>
+                <?php endif ?>
+                <span class="tax-separator">, </span>
+            <?php endif ?>
 	        <span class="shipping-cost-details">
 	            <?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?>
 	        </span>
@@ -51,15 +64,22 @@
     <?php endif ?>
 <?php else: ?>
 	<?php if ($this->getFormattedTaxRate() !== false): ?>
-	    <?php if( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ): ?>
-	        <span class="tax-details"><?php echo $this->__( 'Excl. %s Tax', $this->getFormattedTaxRate() ) ?></span>
+        <?php
+            $_taxPostfix = $this->getFormattedTaxRate() === true ? 'Tax' : '% Tax';
+        ?>
+        <span class="tax-details">
+        <?php if ($this->getFormattedTaxRate() === 0): ?>
+            <?php echo $this->__( 'Tax Free' ); ?>
+	    <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ): ?>
+	        <?php echo $this->__( 'Excl. '.$_taxPostfix, $this->getFormattedTaxRate() ) ?>
 	    <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX ): ?>
-	        <span class="tax-details"><?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?></span>
+	        <?php echo $this->__( 'Incl. '.$_taxPostfix, $this->getFormattedTaxRate() ) ?>
 	 	<?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
-	        <span class="tax-details"><?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?></span>    
+	        <?php echo $this->__( 'Incl. '.$_taxPostfix, $this->getFormattedTaxRate() ) ?>
 	    <?php endif ?>
+        </span>
     <?php endif ?>
-    <?php if ( $this->getProduct()->isVirtual() && ($wscText = $this->getWithoutShippingCostsText())): ?>
+    <?php if ( !$this->getShowShippingLink() && ($wscText = $this->getWithoutShippingCostsText())): ?>
         <?php if ($this->getFormattedTaxRate() !== false): ?>
             <span class="tax-separator">, </span>
         <?php endif ?>

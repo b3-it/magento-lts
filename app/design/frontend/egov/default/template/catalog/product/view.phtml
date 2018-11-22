@@ -60,8 +60,8 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
                     </div>
                   <?php endif; ?>
                     <div class="price-info">
-                        <?php if(!$_hidePrice) echo $this->getPriceHtml($_product); ?>
                         <?php if(!$_hidePrice) echo $this->getChildHtml('bundle_prices'); ?>
+                        <?php if(!$_hidePrice) echo $this->getPriceHtml($_product); ?>
                         <?php if(!$_hidePrice) echo $this->getTierPriceHtml(); ?>
                     </div>
 
