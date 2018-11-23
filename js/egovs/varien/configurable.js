@@ -22,10 +22,14 @@ Product.ConfigEgovsReady = Class.create(Product.Config, {
         if(price){
             if (this.taxConfig.showBothPrices) {
                 str+= ' ' + this.formatPrice(excl, true) + ' (' + this.formatPrice(price, true) + ' ' + this.taxConfig.inclTaxTitle + ')';
-            } else if (this.taxConfig.showIncludeTax) {
-                str+= ' ' + this.formatPrice(price, true) + ' (' + this.taxConfig.inclTaxTitle + ')';
+            } else if (this.taxConfig.currentTax > 0) {
+                if (this.taxConfig.showIncludeTax) {
+                    str += ' ' + this.formatPrice(price, true) + ' (' + this.taxConfig.inclTaxTitle + ')';
+                } else {
+                    str += ' ' + this.formatPrice(price, true) + ' (' + addTaxConfig.exclTaxTitle + ')';
+                }
             } else {
-                str+= ' ' + this.formatPrice(price, true) + ' (' + addTaxConfig.exclTaxTitle + ')';
+                str += ' ' + this.formatPrice(price, true) + ' (' + addTaxConfig.taxFreeTitle + ')';
             }
         }
         return str;

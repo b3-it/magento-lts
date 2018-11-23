@@ -19,6 +19,7 @@ class Egovs_Ready_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
         $additionalConfig = array();
         $addTaxConfig = array(
             'exclTaxTitle'      => Mage::helper('catalog')->__('Excl. Tax'),
+            'taxFreeTitle'      => Mage::helper('catalog')->__('Tax Free'),
         );
         $additionalConfig['addTaxConfig'] = $addTaxConfig;
 
