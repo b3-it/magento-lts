@@ -15,6 +15,11 @@
             <imprint>
                 <class>Egovs_Ready_Block_Imprint</class>
             </imprint>
+            <catalog>
+                <rewrite>
+                    <product_view_type_configurable>Egovs_Ready_Block_Catalog_Product_View_Type_Configurable</product_view_type_configurable>
+                </rewrite>
+            </catalog>
         </blocks>
         <helpers>
             <egovsready>
