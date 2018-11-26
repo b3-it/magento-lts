@@ -26,11 +26,13 @@
 ?>
 <?php  $_order = $this->getOrder() ?>
 <table class="data-table linearize-table-large" id="my-orders-table" summary="<?php echo Mage::helper('core')->quoteEscape($this->__('Items Ordered')) ?>">
-    <col class="order-item-product" />
-    <col class="order-item-sku" width="1" />
-    <col class="order-item-price" width="1" />
-    <col class="order-item-qty" width="1" />
-    <col class="order-item-subtotal" width="1" />
+    <colgroup>
+        <col class="order-item-product" />
+        <col class="order-item-sku" width="60" />
+        <col class="order-item-price" width="80" />
+        <col class="order-item-qty" width="1" />
+        <col class="order-item-subtotal" width="80" />
+    </colgroup>
     <thead>
         <tr>
             <th><?php echo $this->__('Product') ?></th>

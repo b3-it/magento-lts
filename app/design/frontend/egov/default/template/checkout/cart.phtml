@@ -25,16 +25,18 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
     <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="shopping-cart-table" class="cart-table data-table">
-            <col class="product-cart-image" width="50" />
-            <col class="roduct-cart-info" />
-            <col class="product-cart-price" />
-            <col class="product-cart-price" />
-            <col class="product-cart-total" />
-            <col class="product-cart-remove" width="20" />
-        <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <col class="" />
-            <col class="" />
-        <?php endif; ?>
+            <colgroup>
+                <col class="product-cart-image" width="50" />
+                <col class="roduct-cart-info" />
+                <col class="product-cart-price" />
+                <col class="product-cart-price" />
+                <col class="product-cart-total" />
+                <col class="product-cart-remove" width="20" />
+                <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                    <col class="" />
+                    <col class="" />
+                <?php endif; ?>
+            </colgroup>
             <thead>
                 <tr>
                     <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
