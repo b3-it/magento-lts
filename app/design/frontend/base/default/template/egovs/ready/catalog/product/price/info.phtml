@@ -56,11 +56,6 @@ $_taxPostfix = $this->getFormattedTaxRate() === true ? 'Tax' : '% Tax';
         }
     ?>
     <?php if (!$this->getExcludeContainer()): ?>
-        <span class="tax-separator">,&nbsp;</span>
-    <?php else: ?>
-        ,&nbsp;
-    <?php endif; ?>
-    <?php if (!$this->getExcludeContainer()): ?>
         <span class="shipping-cost-details"><?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?></span>
     <?php else: ?>
         <?php echo $this->__("$_sIncludingShippingCosts Shipping Cost") ?>
