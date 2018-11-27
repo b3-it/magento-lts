@@ -19,7 +19,7 @@
  * needs please refer to http://www.magento.com for more information.
  *
  * @category    design
- * @package     dwd_default
+ * @package     rwd_default
  * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -27,34 +27,34 @@
 <?php  $_order = $this->getOrder() ?>
 <p class="order-links"><a href="<?php echo $this->getPrintAllInvoicesUrl($_order) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print All Invoices') ?></a></p>
 <?php foreach ($_order->getInvoiceCollection() as $_invoice): ?>
-    <h2 class="sub-title">
-        <?php echo $this->__('Invoice #') ?><?php echo $_invoice->getIncrementId(); ?>
-        <span class="separator">|</span>
-        <a href="<?php echo $this->getPrintInvoiceUrl($_invoice) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print Invoice') ?></a>
-    </h2>
+    <h2 class="sub-title"><?php echo $this->__('Invoice #') ?><?php echo $_invoice->getIncrementId(); ?> <span class="separator">|</span> <a href="<?php echo $this->getPrintInvoiceUrl($_invoice) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print Invoice') ?></a></h2>
     <h3 class="table-caption"><?php echo $this->__('Items Invoiced') ?></h3>
-    <table class="cart-table data-table linearize-table" id="my-invoice-table-<?php echo $_invoice->getId(); ?>">
-        <colgroup>
-            <col />
-            <col width="1" />
-            <col width="1" />
-            <col width="1" />
-        </colgroup>
+    <table class="data-table linearize-table" id="my-invoice-table-<?php echo $_invoice->getId(); ?>">
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
         <thead>
         <tr>
             <th><?php echo $this->__('Product Name') ?></th>
-            <th class="a-right">
+            <th><?php echo $this->__('SKU') ?></th>
+            <th class="a-right" data-rwd-label="<?php echo $this->__('Price') ?>">
                 <?php echo $this->__('Price') ?>
-                <?php if (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
+                <?php if ($_order->getTaxAmount() <= 0.009): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Tax Free')) ?>
+                <?php elseif (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
                     <?php echo sprintf(' (%s)', $this->__('Excl. Tax')) ?>
                 <?php else: ?>
                     <?php echo sprintf(' (%s)', $this->__('Incl. Tax')) ?>
                 <?php endif; ?>
             </th>
-            <th class="a-center"><span class="nobr"><?php echo $this->__('Qty Invoiced') ?></span></th>
-            <th class="a-right">
+            <th class="a-center" data-rwd-label="<?php echo $this->__('Qty Invoiced') ?>"><span class="nobr"><?php echo $this->__('Qty Invoiced') ?></span></th>
+            <th class="a-right" data-rwd-label="<?php echo $this->__('Subtotal') ?>">
                 <?php echo $this->__('Subtotal') ?>
-                <?php if (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
+                <?php if ($_order->getTaxAmount() <= 0.009): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Tax Free')) ?>
+                <?php elseif (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
                     <?php echo sprintf(' (%s)', $this->__('Excl. Tax')) ?>
                 <?php else: ?>
                     <?php echo sprintf(' (%s)', $this->__('Incl. Tax')) ?>

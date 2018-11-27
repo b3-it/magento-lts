@@ -30,7 +30,9 @@
                 <th class="space number"><?php echo $this->__('Order #') ?></th>
                 <th class="space date"><?php echo $this->__('Date') ?></th>
                 <th class="space ship"><?php echo $this->__('Ship To') ?></th>
-                <th class="space total"><span class="nobr"><?php echo $this->__('Order Total') ?></span></th>
+                <th class="space total">
+                    <span class="nobr"><?php echo $this->__('Order Total') . sprintf(' (%s)', $this->__('Incl. Tax')) ?></span>
+                </th>
                 <th class="space status"><?php echo $this->__('Status') ?></th>
                 <th class="space view">&nbsp;</th>
             </tr>

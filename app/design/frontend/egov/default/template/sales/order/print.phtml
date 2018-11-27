@@ -24,21 +24,45 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php
-    /** @var \Mage_Sales_Model_Order $_order */
-    $_order = $this->getOrder();
-?>
-<table class="data-table linearize-table-large" id="my-orders-table" summary="<?php echo Mage::helper('core')->quoteEscape($this->__('Items Ordered')) ?>">
-    <colgroup>
-        <col class="order-item-product" />
-        <col class="order-item-sku" width="60" />
-        <col class="order-item-price" width="80" />
-        <col class="order-item-qty" width="1" />
-        <col class="order-item-subtotal" width="80" />
-    </colgroup>
+<?php $_order = $this->getOrder() ?>
+<h1><?php echo $this->__('Order #%s', $_order->getRealOrderId()) ?></h1>
+<p class="order-date"><?php echo $this->__('Order Date: %s', $this->formatDate($_order->getCreatedAtStoreDate(), 'long')) ?></p>
+<div class="col2-set">
+    <?php if (!$_order->getIsVirtual()): ?>
+    <div class="col-1">
+        <h2><?php echo $this->__('Shipping Address') ?></h2>
+        <address><?php echo $_order->getShippingAddress()->format('html') ?></address>
+    </div>
+    <div class="col-2">
+    <?php else: ?>
+    <div class="col-1">
+    <?php endif; ?>
+        <h2><?php echo $this->__('Billing Address') ?></h2>
+        <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
+    </div>
+<?php if (!$_order->getIsVirtual()): ?>
+</div>
+<div class="col2-set">
+    <div class="col-1">
+        <h2><?php echo $this->__('Shipping Method') ?></h2>
+         <?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
+    </div>
+<?php endif; ?>
+    <div class="col-2">
+        <h2><?php echo $this->__('Payment Method') ?></h2>
+        <?php echo $this->getPaymentInfoHtml() ?>
+    </div>
+</div>
+<h2><?php echo $this->__('Items Ordered') ?></h2>
+<table class="data-table" id="my-orders-table">
+    <col />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
     <thead>
         <tr>
-            <th><?php echo $this->__('Product') ?></th>
+            <th><?php echo $this->__('Product Name') ?></th>
             <th><?php echo $this->__('SKU') ?></th>
             <th class="a-right">
                 <?php echo $this->__('Price') ?>
@@ -66,27 +90,14 @@
     <tfoot>
         <?php echo $this->getChildHtml('order_totals') ?>
     </tfoot>
-        <?php $_items = $_order->getItemsCollection(); ?>
-        <?php $_index = 0; ?>
-            <?php $_count = $_items->count(); ?>
-        <?php foreach ($_items as $_item): ?>
-        <?php if ($_item->getParentItem()) continue; ?>
-        <tbody>
-            <?php echo $this->getItemHtml($_item) ?>
-            <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId()): ?>
-            <tr class="border<?php echo ($_index++ > $_count ?' last':'') ?>" id="order-item-gift-message-<?php echo $_item->getId() ?>" style="display:none;">
-                <?php $_giftMessage=$this->helper('giftmessage/message')->getGiftMessageForEntity($_item); ?>
-                <td class="gift-message-row" colspan="7">
-                    <a href="#" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close')) ?>" onclick="return giftMessageToogle('<?php echo $_item->getId() ?>');" class="btn-close"><?php echo $this->__('Close') ?></a>
-                    <dl class="gift-message">
-                        <dt><strong><?php echo $this->__('From:') ?></strong> <?php echo $this->escapeHtml($_giftMessage->getRecipient()) ?></dt>
-                        <dt><strong><?php echo $this->__('To:') ?></strong> <?php echo $this->escapeHtml($_giftMessage->getSender()) ?></dt>
-                        <dd><?php echo $this->helper('giftmessage/message')->getEscapedGiftMessage($_item) ?></dd>
-                    </dl>
-                </td>
-            </tr>
-            <?php endif ?>
-        </tbody>
+    <?php $_items = $_order->getItemsCollection(); ?>
+    <?php $_count = $_items->count(); ?>
+    <?php foreach ($_items as $_item): ?>
+    <?php if ($_item->getParentItem()) continue; ?>
+    <tbody>
+        <?php echo $this->getItemHtml($_item) ?>
+    </tbody>
         <?php endforeach; ?>
 </table>
 <script type="text/javascript">decorateTable('my-orders-table', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})</script>
+<script type="text/javascript">window.print();</script>
