@@ -179,6 +179,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 				->setFormattedWeight($this->getFormattedWeight())
 				->toHtml()
 			;
+            $_htmlTemplate = preg_replace('/((?<=\>)[\s]+)|([\s]+(?=\<))/i', '', $_htmlTemplate);
 			$_htmlObject->setHtml($_htmlTemplate);
 	
 			$this->_addDeliveryTimeHtml($_htmlObject);

@@ -15,6 +15,7 @@
  *
  * @method bool getDisableShippingInfo()
  * @method setDisableShippingInfo($disable)
+ * @method $this setPriceDisplayType($getPriceDisplayType)
  */
 class Egovs_Ready_Block_Catalog_Product_Price_Info extends Mage_Core_Block_Template
 {
@@ -239,6 +240,7 @@ class Egovs_Ready_Block_Catalog_Product_Price_Info extends Mage_Core_Block_Templ
             return $_html;
         }
 
+        $_html = preg_replace('/((?<=\>)[\s]+)|([\s]+(?=\<))/i', '', $_html);
         $_htmlObject = new Varien_Object();
         $_htmlObject->setHtml($_html);
 
@@ -265,4 +267,10 @@ class Egovs_Ready_Block_Catalog_Product_Price_Info extends Mage_Core_Block_Templ
 	
 		return Mage::app()->getTranslator()->translate($args);
 	}
+
+	public function setIncludeContainer($flag = true) {
+        $this->setExcludeContainer(!$flag);
+
+        return $this;
+    }
 }

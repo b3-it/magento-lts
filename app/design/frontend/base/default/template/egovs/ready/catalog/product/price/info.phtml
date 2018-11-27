@@ -19,6 +19,34 @@
  */
 ?>
 <?php $shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl() ?>
+<?php
+$_taxPrefix = 'Incl.';
+if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ) {
+    $_taxPrefix = 'Excl.';
+}
+$_taxPostfix = $this->getFormattedTaxRate() === true ? 'Tax' : '% Tax';
+?>
+
+<?php if (!$this->getExcludeContainer()): ?>
+    <span class="tax-details">
+<?php endif; ?>
+<?php if ($this->getFormattedTaxRate() !== false): ?>
+    <?php if ($this->getFormattedTaxRate() === 0): ?>
+        <?php echo $this->__( 'Tax Free' ); ?>
+    <?php else: ?>
+        <?php echo $this->__( "$_taxPrefix $_taxPostfix", $this->getFormattedTaxRate() ) ?>
+    <?php endif ?>
+<?php endif ?>
+<?php if ( (!empty( $shippingCostUrl ) && $this->getShowShippingLink()) || $this->getWithoutShippingCostsText()): ?>
+    <?php if (!$this->getExcludeContainer()): ?>
+        <span class="tax-separator">,&nbsp;</span>
+    <?php else: ?>
+        ,&nbsp;
+    <?php endif; ?>
+<?php endif; ?>
+<?php if (!$this->getExcludeContainer()): ?>
+    </span>
+<?php endif; ?>
 <?php if( !empty( $shippingCostUrl ) && $this->getShowShippingLink() ): ?>
 	<?php
         if ( $this->getIsIncludingShippingCosts() ) {
@@ -27,63 +55,23 @@
         	$_sIncludingShippingCosts = 'excl.';
         }
     ?>
-    <?php if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ): ?>
-        <span class="tax-details">
-            <?php if ($this->getFormattedTaxRate() !== false): ?>
-                <?php if ($this->getFormattedTaxRate() === 0): ?>
-                    <?php echo $this->__( 'Tax Free' ); ?>
-                <?php elseif ($this->getFormattedTaxRate() === true): ?>
-                    <?php echo $this->__( 'Excl. Tax'); ?>
-                <?php else: ?>
-                    <?php echo $this->__( 'Excl. %s Tax', $this->getFormattedTaxRate() ); ?>
-                <?php endif ?>
-                <span class="tax-separator">, </span>
-            <?php endif ?>
-        	<span class="shipping-cost-details">
-        		<?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?>
-        	</span>
-        </span>
-    <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX ): ?>
-        <span class="tax-details">
-        	<?php if ($this->getFormattedTaxRate() !== false): ?>
-                <?php if ($this->getFormattedTaxRate() === 0): ?>
-                    <?php echo $this->__( 'Tax Free' ); ?>
-                <?php elseif ($this->getFormattedTaxRate() === true): ?>
-                    <?php echo $this->__( 'Incl. Tax'); ?>
-                <?php else: ?>
-                    <?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ); ?>
-                <?php endif ?>
-                <span class="tax-separator">, </span>
-            <?php endif ?>
-	        <span class="shipping-cost-details">
-	            <?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?>
-	        </span>
-        </span>
-    <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
-            <span class="shipping-cost-details"><?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl) ?></span>
-    <?php endif ?>
+    <?php if (!$this->getExcludeContainer()): ?>
+        <span class="tax-separator">,&nbsp;</span>
+    <?php else: ?>
+        ,&nbsp;
+    <?php endif; ?>
+    <?php if (!$this->getExcludeContainer()): ?>
+        <span class="shipping-cost-details"><?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?></span>
+    <?php else: ?>
+        <?php echo $this->__("$_sIncludingShippingCosts Shipping Cost") ?>
+    <?php endif; ?>
 <?php else: ?>
-	<?php if ($this->getFormattedTaxRate() !== false): ?>
-        <?php
-            $_taxPostfix = $this->getFormattedTaxRate() === true ? 'Tax' : '% Tax';
-        ?>
-        <span class="tax-details">
-        <?php if ($this->getFormattedTaxRate() === 0): ?>
-            <?php echo $this->__( 'Tax Free' ); ?>
-	    <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ): ?>
-	        <?php echo $this->__( 'Excl. '.$_taxPostfix, $this->getFormattedTaxRate() ) ?>
-	    <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX ): ?>
-	        <?php echo $this->__( 'Incl. '.$_taxPostfix, $this->getFormattedTaxRate() ) ?>
-	 	<?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
-	        <?php echo $this->__( 'Incl. '.$_taxPostfix, $this->getFormattedTaxRate() ) ?>
-	    <?php endif ?>
-        </span>
-    <?php endif ?>
     <?php if ( !$this->getShowShippingLink() && ($wscText = $this->getWithoutShippingCostsText())): ?>
-        <?php if ($this->getFormattedTaxRate() !== false): ?>
-            <span class="tax-separator">, </span>
-        <?php endif ?>
-        <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
+        <?php if (!$this->getExcludeContainer()): ?>
+            <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
+        <?php else: ?>
+            <?php echo $this->__($wscText) ?>
+        <?php endif; ?>
     <?php endif; ?>
 <?php endif ?>
 <?php if ($this->getDisplayProductWeight()): ?>
