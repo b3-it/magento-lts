@@ -138,11 +138,27 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
     }
 	
 	public function showShippingLink() {
-		return !$this->getProduct()->isVirtual();
+		return !$this->isVirtual();
 	}
 
 	public function isVirtual() {
-        return $this->getProduct()->isVirtual();
+	    if (!$this->getIsVirtual()) {
+            if (($instance = $this->getProduct()->getTypeInstance()) instanceof Mage_Catalog_Model_Product_Type_Grouped) {
+                $isVirtual = true;
+                /** @var \Mage_Catalog_Model_Product $associatedProduct */
+                foreach ($instance->getAssociatedProducts() as $associatedProduct) {
+                    if (!$associatedProduct->isVirtual()) {
+                        $isVirtual = false;
+                        break;
+                    }
+                }
+            } else {
+                $isVirtual = $this->getProduct()->isVirtual();
+            }
+            $this->setIsVirtual($isVirtual);
+        }
+
+	    return $this->getIsVirtual();
     }
 	
 	public function getDisplayProductWeight() {
