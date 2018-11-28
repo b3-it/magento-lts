@@ -92,7 +92,7 @@ class Varien_Autoload
         }
         $classFile.= '.php';
         //echo $classFile;die();
-        return include $classFile;
+        return @include $classFile;
     }
 
     /**

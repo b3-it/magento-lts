@@ -160,7 +160,8 @@ class Mage_Sendfriend_Block_Send extends Mage_Core_Block_Template
      */
     public function getRecipientsCount()
     {
-        return count($this->getFormData()->getData('recipients/email'));
+        $recipientsEmail = $this->getFormData()->getData('recipients/email');
+        return (is_array($recipientsEmail)) ? count($recipientsEmail) : 0;
     }
 
     /**
