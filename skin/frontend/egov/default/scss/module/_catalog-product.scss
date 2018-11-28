@@ -140,7 +140,7 @@
 
             .add-to-cart-buttons {
                 float: left;
-                max-width: 180px;
+                max-width: 220px;
 
                 button {
                     font-size: 0.9em;
@@ -185,12 +185,12 @@
         //    }
         //}
 
-        #additional-product-images {
-            position: absolute;
-            width: 39%;
-            left: 57%;
-            top: 245px;
-        }
+        //#additional-product-images {
+        //    position: absolute;
+        //    width: 39%;
+        //    left: 57%;
+        //    top: 245px;
+        //}
 
         .product-img-box {
             width: $global-product-image-2L-width;
@@ -211,7 +211,7 @@
 
             .add-to-cart-buttons {
                 float: left;
-                max-width: 180px;
+                max-width: 220px;
 
                 button {
                     font-size: 0.9em;
