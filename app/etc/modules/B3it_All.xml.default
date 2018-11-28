@@ -6,10 +6,6 @@
            <active>false</active>
            <codePool>local</codePool>
 	    </B3it_Admin>
-	    <B3it_Base>
-           <active>false</active>
-           <codePool>local</codePool>
-	    </B3it_Base>
         <B3it_Ids>
             <active>false</active>
             <codePool>local</codePool>
