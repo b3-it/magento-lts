@@ -46,6 +46,10 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
 	      			'name'      => 'product',
 	      			
 	      	));
+          $fieldset->addField('product_id', 'hidden', array(
+              'name'      => 'product_id',
+              //'values'    => $products
+          ));
       }
       else
       {
@@ -78,14 +82,54 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
       ));
 
 
+      $fieldset = $form->addFieldset('event_form1', array('legend'=>Mage::helper('eventmanager')->__('Participant Certificate')));
+      $pdfs = Mage::getModel('pdftemplate/template')->toOptionArray('participation_certificate');
 
-      if ( Mage::getSingleton('adminhtml/session')->getEventManagerData() )
-      {
-          $form->setValues(Mage::getSingleton('adminhtml/session')->getEventManagerData());
-          Mage::getSingleton('adminhtml/session')->setEventManagerData(null);
-      } elseif ( Mage::registry('event_data') ) {
-          $form->setValues(Mage::registry('event_data')->getData());
+      $fieldset->addField('pdftemplate_id', 'select', array(
+          'label'     => Mage::helper('eventmanager')->__('Pdf Template'),
+          'name'      => 'pdftemplate_id',
+          'values'    => $pdfs,
+      ));
+
+      $data =  Mage::registry('event_data');
+
+      if(empty($data->getData('signature_original_filename'))){
+          $fieldset->addField('signature_original_filename', 'imagefile', array(
+              'label'     => Mage::helper('eventmanager')->__('Signature Image'),
+              'name'      => 'signature_original_filename',
+
+          ));
       }
+      else{
+          $fieldset->addField('signature_filename', 'hidden', array(
+              'name' => 'signature_filename',
+          ));
+
+          $fieldset->addField('signature_original_filename', 'text', array(
+              'label'     => Mage::helper('eventmanager')->__('File'),
+              'class'     => 'readonly',
+              'readonly'  => true,
+              'name'      => 'signature_original_filename',
+          ));
+
+          $fieldset->addField('delete_signature', 'checkbox', array(
+              'label'     => Mage::helper('eventmanager')->__('Delete File'),
+              //'class'     => 'readonly',
+              //'readonly'  => true,
+              'name'      => 'delete_signature',
+          ));
+      }
+
+      $fieldset->addField('signature_title', 'text', array(
+          'label'     => Mage::helper('eventmanager')->__('Signature Title'),
+          //'class'     => 'readonly',
+          //'readonly'  => true,
+          'name'      => 'signature_title',
+      ));
+
+      $form->setValues($data);
+
+
       return parent::_prepareForm();
   }
 }

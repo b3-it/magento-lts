@@ -21,5 +21,10 @@ class Bfr_EventManager_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		return $collection;
 	}
+
+	public function getSignaturePath()
+    {
+        return  Mage::getBaseDir('var') . DS . 'signature';
+    }
 		
 }

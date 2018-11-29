@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bfr_EventManager>
-            <version>0.1.2</version>
+            <version>0.1.3</version>
         </Bfr_EventManager>
     </modules>
     <frontend>
@@ -223,5 +223,10 @@
                 </position>
             </fields>
         </eventbundle_personal>
+        <pdftemplate>
+            <types>
+                <participation_certificate>Participation Certificate</participation_certificate>
+            </types>
+        </pdftemplate>
     </global>
 </config>

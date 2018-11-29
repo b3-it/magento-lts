@@ -10,6 +10,65 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+
+/**
+ *  @method int getParticipantId()
+ *  @method setParticipantId(int $value)
+ *  @method int getEventId()
+ *  @method setEventId(int $value)
+ *  @method int getOrderId()
+ *  @method setOrderId(int $value)
+ *  @method int getOrderItemId()
+ *  @method setOrderItemId(int $value)
+ *  @method string getPrefix()
+ *  @method setPrefix(string $value)
+ *  @method string getFirstname()
+ *  @method setFirstname(string $value)
+ *  @method string getLastname()
+ *  @method setLastname(string $value)
+ *  @method string getEmail()
+ *  @method setEmail(string $value)
+ *  @method string getCompany()
+ *  @method setCompany(string $value)
+ *  @method string getCompany2()
+ *  @method setCompany2(string $value)
+ *  @method string getCompany3()
+ *  @method setCompany3(string $value)
+ *  @method string getCity()
+ *  @method setCity(string $value)
+ *  @method string getStreet()
+ *  @method setStreet(string $value)
+ *  @method string getPostcode()
+ *  @method setPostcode(string $value)
+ *  @method string getNote()
+ *  @method setNote(string $value)
+ *  @method string getPostfix()
+ *  @method setPostfix(string $value)
+ *  @method int getStatus()
+ *  @method setStatus(int $value)
+ *  @method int getVip()
+ *  @method setVip(int $value)
+ *  @method int getOnlineEval()
+ *  @method setOnlineEval(int $value)
+ *  @method int getInternal()
+ *  @method setInternal(int $value)
+ *  @method int getRoleId()
+ *  @method setRoleId(int $value)
+ *  @method int getJobId()
+ *  @method setJobId(int $value)
+ *  @method  getCreatedTime()
+ *  @method setCreatedTime( $value)
+ *  @method  getUpdateTime()
+ *  @method setUpdateTime( $value)
+ *  @method string getPhone()
+ *  @method setPhone(string $value)
+ *  @method string getCountry()
+ *  @method setCountry(string $value)
+ *  @method string getTitle()
+ *  @method setTitle(string $value)
+ *  @method string getPosition()
+ *  @method setPosition(string $value)
+ */
 class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
 {
     public function _construct()
@@ -159,7 +218,40 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     {
     	$res = Mage::getResourceModel('eventmanager/participant');
     	$res->changeStatus($itemIds,$newStatus);
-    	
-    	
+
     }
+
+    /**
+     * Teilnahmebestätigung anzeigen
+     */
+    public function showPdf($event)
+    {
+        $pdf = $this->_createPdf($event);
+        $pdf->render();
+        return;
+    }
+
+
+    protected function _createPdf($event,$mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_DIRECT_OUTPUT)
+    {
+        $pdf = Mage::getModel('eventmanager/participant_pdf');
+        //$pdf->preparePdf();
+        $pdf->Mode =  $mode;
+
+        $helper = Mage::getModel('eventmanager/participant_helper');
+
+        $helper->setParticipant($this);
+        $helper->setEvent($event);
+        return $pdf->getPdf(array($helper));//->save($path);
+    }
+
+    public function createPdfFile()
+    {
+
+
+
+    }
+
+
+
 }

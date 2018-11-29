@@ -325,6 +325,25 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                 'is_system' => true,
         ));
 
+      $this->addColumn('pa_action1',
+          array(
+              'header'    =>  Mage::helper('eventmanager')->__('Action'),
+              'width'     => '100',
+              'type'      => 'action',
+              'getter'    => 'getId',
+              'actions'   => array(
+                  array(
+                      'caption'   => Mage::helper('eventmanager')->__('Participation Ceritificate'),
+                      'url'       => array('base'=> '*/*/ceritificate'),
+                      'field'     => 'id'
+                  )
+              ),
+              'filter'    => false,
+              'sortable'  => false,
+              'index'     => 'stores',
+              'is_system' => true,
+          ));
+
 		$this->addExportType('*/*/exportparticipantsCsv', Mage::helper('eventmanager')->__('CSV'));
 		$this->addExportType('*/*/exportparticipantsXml', Mage::helper('eventmanager')->__('XML'));
 
@@ -353,6 +372,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                          'values' => $statuses
                      )
              )
+        ));
+        $this->getMassactionBlock()->addItem('certificate', array(
+            'label'=> Mage::helper('eventmanager')->__('Certificate E-Mail'),
+            'url'  => $this->getUrl('*/eventmanager_event/masscertificate', array('_current'=>true, 'event' => $this->getEvent()->getId())),
+
         ));
 
         $events = array();
