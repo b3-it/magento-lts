@@ -14,6 +14,7 @@
 ?>
 
 <?php
+$shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl();
 $_cartQty = $this->getSummaryCount();
 if(empty($_cartQty)) {
     $_cartQty = 0;
@@ -78,7 +79,7 @@ if ( Mage::getStoreConfig('catalog/price/including_shipping_costs') ) {
             <?php endif; ?>
             </p>
             <div class="shipping-cost-details">
-        		* <?php echo $this->__($_sIncludingShippingCosts.' Shipping Cost') ?>
+        		* <?php echo $this->__($_sIncludingShippingCosts . ' <a href="%s">Shipping Cost</a>', $shippingCostUrl) ?>
         	</div>
             <div class="shipping-cost-details">
                 <?php
