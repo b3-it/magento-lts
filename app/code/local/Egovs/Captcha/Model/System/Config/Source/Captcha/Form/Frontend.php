@@ -26,8 +26,8 @@ class Egovs_Captcha_Model_System_Config_Source_Captcha_Form_Frontend extends Mag
         }
 
         foreach ($options as $option) {
-            if ($option['name'] === 'guest_checkout'
-                || $option['name'] === 'sendfriend_send'
+            if ($option['value'] === 'guest_checkout'
+                || $option['value'] === 'sendfriend_send'
             ) {
                 continue;
             }
