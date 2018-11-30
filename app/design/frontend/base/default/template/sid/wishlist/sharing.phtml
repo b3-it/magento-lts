@@ -35,7 +35,7 @@
         <h2 class="legend"><?php echo $this->__('Sharing Information') ?></h2>
         <ul class="form-list">
 	        <li class="wide">
-	            <label for="email_address" class="required"><em>*</em><?php echo $this->__('Email addresses, separated by commas or line breaks') ?></label>
+	            <label for="email_address" class="required"><em>*</em><?php echo $this->__('Up to 5 email addresses, separated by commas or line breaks') ?></label>
 	            <div class="input-box">
 		           	<textarea name="emails" cols="60" rows="5" id="email_address" class="validate-emails required-entry"><?php echo $this->getEnteredData('emails') ?></textarea>
 		        </div>
@@ -46,14 +46,7 @@
 	            	<textarea id="message" name="message" cols="60" rows="5"><?php echo $this->getEnteredData('message') ?></textarea>
                 </div>
 	        </li>
-	        <!-- <?php if($this->helper('wishlist')->isRssAllow()): ?>
-	        <li class="control">
-	        	<div class="input-box">
-	            	<input type="checkbox" name="rss_url" id="rss_url" value="1" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Check this checkbox if you want to add a link to an rss feed to your wishlist.')) ?>" class="checkbox" />
-	            </div>
-	            <label for="rss_url"><?php echo $this->__('Check this checkbox if you want to add a link to an rss feed to your wishlist.') ?></label>
-	        </li>
-	        <?php endif; ?> -->
+            <?php echo $this->getChildHtml('wishlist.sharing.form.additional.info'); ?>
 	    </ul>
     </div>
     <p class="required"><?php echo $this->__('* Required Fields') ?></p>

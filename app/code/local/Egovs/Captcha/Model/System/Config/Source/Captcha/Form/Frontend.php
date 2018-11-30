@@ -18,12 +18,23 @@
 class Egovs_Captcha_Model_System_Config_Source_Captcha_Form_Frontend extends Mage_Captcha_Model_Config_Form_Frontend
 {
     public function toOptionArray() {
+        $optionArray = array();
         $options =  parent::toOptionArray();
         $checkoutType = Mage::getStoreConfig('checkout/options/checkout_type');
-        if ($checkoutType === 'multipage') {
-            array_pop($options);
-            array_pop($options);
+        if ($checkoutType !== 'multipage') {
+            return $options;
         }
-        return $options;
+
+        foreach ($options as $option) {
+            if ($option['value'] === 'guest_checkout'
+                || $option['value'] === 'sendfriend_send'
+            ) {
+                continue;
+            }
+
+            $optionArray[] = $option;
+        }
+
+        return $optionArray;
     }
 }

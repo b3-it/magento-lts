@@ -308,6 +308,8 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
         $error   = false;
         if (empty($emails)) {
             $error = $this->__('Email address can\'t be empty.');
+        } elseif (count($emails) > 5) {
+            $error = $this->__('Please enter no more than 5 email addresses.');
         } else {
             foreach ($emails as $index => $email) {
                 $email = trim($email);

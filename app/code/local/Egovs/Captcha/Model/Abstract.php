@@ -185,7 +185,10 @@ abstract class Egovs_Captcha_Model_Abstract extends Mage_Core_Model_Abstract
      */
     public function isRequired($login = null)
     {
-        if ($this->_isUserAuth() || !$this->_isEnabled() || !in_array($this->_formId, $this->_getTargetForms(), true)) {
+        $nonAuthForms = array('wishlist_sharing', 'sendfriend_send');
+
+        if ((!in_array($this->_formId, $nonAuthForms) && $this->_isUserAuth())
+            || !$this->_isEnabled() || !in_array($this->_formId, $this->_getTargetForms(), true)) {
             return false;
         }
 
